@@ -1,68 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git on Windows, CRLF issues
-Date: Wed, 23 Apr 2008 21:37:22 -0400
-Message-ID: <20080424013722.GB31146@sigill.intra.peff.net>
-References: <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness> <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com> <20080422023918.GA5402@sigill.intra.peff.net> <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com> <20080423080826.GA11935@sigill.intra.peff.net> <480F1671.2060602@viscovery.net> <20080423110402.GA27437@sigill.intra.peff.net> <480F218C.3060703@viscovery.net> <20080423214745.GA30057@sigill.intra.peff.net> <7vprsgqiq1.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+Subject: Re: [PATCH 0/5] Fast forward strategies allow, never, and only
+Date: Wed, 23 Apr 2008 22:39:48 -0700
+Message-ID: <402c10cd0804232239p3e49a6d0vdc1ff9acb3636a17@mail.gmail.com>
+References: <402c10cd0803101959q619efa86pbd501e5e2cc018c2@mail.gmail.com>
+	 <402c10cd0803172127u480276c9s4f9d716b4912ad5e@mail.gmail.com>
+	 <7vskym310l.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0803192347q7b4a3fb0s35737f361d53a86a@mail.gmail.com>
+	 <7vbq56ilnj.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0803252050u582111cag18674e0257ac2884@mail.gmail.com>
+	 <402c10cd0803302119r251b3a43te69ce2a52e121ba5@mail.gmail.com>
+	 <402c10cd0804191806h5460eb82y2442517343734b8e@mail.gmail.com>
+	 <7vhcdu2uu5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 03:38:16 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 07:40:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JoqPX-0002Mf-A7
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 03:38:07 +0200
+	id 1JouCF-0002gQ-Jn
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 07:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454AbYDXBhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2008 21:37:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753412AbYDXBhU
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Apr 2008 21:37:20 -0400
-Received: from peff.net ([208.65.91.99]:2674 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752605AbYDXBhT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2008 21:37:19 -0400
-Received: (qmail 12333 invoked by uid 111); 24 Apr 2008 01:37:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 23 Apr 2008 21:37:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Apr 2008 21:37:22 -0400
+	id S1751763AbYDXFjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 01:39:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbYDXFjv
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 01:39:51 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:39463 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbYDXFju (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 01:39:50 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so4197093fkr.5
+        for <git@vger.kernel.org>; Wed, 23 Apr 2008 22:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rr54VTD+I7z1Rz5xUKbiBTy5o11Jhz5oyQd6DryIdxc=;
+        b=brgEDQOHCJxDLYec+R9Pw/b63g+Y+klDG/YcckD9nJ8F8dlhNWPdQcMIU676SNEJPtt4mnn8Bk7le/aoWjwToktWKA1kcb7Tzsm4gMiKA3QHx3gXrhlBUW7dBxS5hCHlYLU8ImBYHCZd9wdNbkwMAztIfLwd6FG7xLe1i1V8k4M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ra4Te8czEDz9bC/x3QDn19vOVtYcEcuozjGMEol0PCVn0VkvcUo6AH5UOZYcjvTSQ+bQBeyarLX0Kw0orET83Ekp5K4ub9uRApsk7WHMdg40c7s+MBNpwcVf/LdzJKbaujS8WNSuFE53vNpR5V2ELnH/RmETSOW2rnwOVIwvIjk=
+Received: by 10.82.140.20 with SMTP id n20mr2148507bud.86.1209015588799;
+        Wed, 23 Apr 2008 22:39:48 -0700 (PDT)
+Received: by 10.82.156.16 with HTTP; Wed, 23 Apr 2008 22:39:48 -0700 (PDT)
+In-Reply-To: <7vhcdu2uu5.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vprsgqiq1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80284>
 
-On Wed, Apr 23, 2008 at 04:01:10PM -0700, Junio C Hamano wrote:
+On Tue, Apr 22, 2008 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  Sorry, but I am with a rather big backlog and am reluctant to go back the
+>  archive a looong way to pick up and comment on a series when not many
+>  people are wondering what happened to the wonderful series ;-)  Care to
+>  resend and ask for comments from people?
 
-> But once you start saying "even originally the same blob (i.e. identified
-> by one object name) can be rewritten into different result, depending on
-> where in the tree it appears", would it make sense to have blob filters to
-> begin with?
-> 
-> Shouldn't that kind of of context sensitive (in the space dimension -- you
-> can introduce the context sensitivity in the time dimension by saying
-> there may even be cases where you would want to filter differently
-> depending on the path and which commit the blob appears, which is even
-> worse) filtering be best left to the tree or index filter?
+ I resending these patches for you to coment.  The patch series
+consists of the following five patches:
 
-Yes, that was my original reasoning. But I think the problem then is
-that the blob filter isn't terribly useful. IOW, it is not really a
-separate filter, but rather an optimizing pattern for an index filter,
-so maybe calling it a blob filter is the wrong approach, and it would be
-better as a short perl script in contrib/filter-branch. Then you could
-call:
+  0001-New-merge-tests.patch
+  0002-Introduce-ff-fast-forward-option.patch
+  0003-Restructure-git-merge.sh.patch
+  0004-Head-reduction-before-selecting-merge-strategy.patch
+  0005-Introduce-fast-forward-option-only.patch
 
-  git filter-branch --index-filter '
-    /path/to/git/contrib/filter-branch/dos2unix \
-      "*.txt" "*.c"
-  '
+The first patch add some tests.  The second, fourth, and fifth adds
+new features and they are all trivial.  I was able to make the fourth
+patch trivial as well by actually doing the real work of finding the
+reduced parents in the third patch.  The third patch computes the
+reduced parents but uses it only to determine whether we are
+up-to-date or do a fast forward.
 
--Peff
+There are probably some minor adjustments to the documentation we
+should do. The patch series uses the term actual-parents and
+reduced-parents in the code and the documentation.  Maybe we should
+use the term actual-heads and reduced-heads instead?  I am not sure
+that all the documentation for 0004 should be included.  Please give
+me some advise regarding this.
+
+-- 
+Sverre Hvammen Johansen
