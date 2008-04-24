@@ -1,72 +1,65 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: [ANN] Pyrite prerelease
-Date: Thu, 24 Apr 2008 01:42:02 -0500
-Message-ID: <5d46db230804232342q1d92064bq7ea4fdba6f1551b6@mail.gmail.com>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: git-gui hangs on read
+Date: Thu, 24 Apr 2008 08:54:10 +0200
+Message-ID: <48102E92.3090601@isy.liu.se>
+References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com> <20080422001311.GS29771@spearce.org> <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com> <20080422232530.GK29771@spearce.org> <480EF84A.4020308@isy.liu.se> <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com> <480F4C6E.9070400@isy.liu.se> <20080424010015.GS29771@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 24 08:42:57 2008
+Cc: Benjamin Collins <ben.collins@acm.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 24 08:55:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JovAV-00046q-QK
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 08:42:56 +0200
+	id 1JovMC-0007Dj-QI
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 08:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbYDXGmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2008 02:42:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbYDXGmH
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 02:42:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:12862 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750860AbYDXGmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2008 02:42:05 -0400
-Received: by an-out-0708.google.com with SMTP id d31so799090and.103
-        for <git@vger.kernel.org>; Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
-Received: by 10.100.211.8 with SMTP id j8mr4734145ang.11.1209019322158;
-        Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
-Received: by 10.70.13.16 with HTTP; Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
-Content-Disposition: inline
+	id S1751111AbYDXGyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 02:54:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbYDXGyO
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 02:54:14 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:47818 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750776AbYDXGyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 02:54:13 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 45C5125A3E;
+	Thu, 24 Apr 2008 08:54:12 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 18880-07; Thu, 24 Apr 2008 08:54:11 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id B108C25A3D;
+	Thu, 24 Apr 2008 08:54:11 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <20080424010015.GS29771@spearce.org>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80297>
 
-The official posting can be seen at
-http://pyrite.sophiasuchtig.com/2008/04/announce-001prealpha.html
+On 04/24/2008 03:00 AM, Shawn O. Pearce wrote:
+> Just turn the d**n spell checker off:
+> 
+> 	git config --global gui.spellingdictionary none
+> 
+> That will keep us from evening trying to launch aspell, and since
+> its global (in your ~/.gitconfig) it should default into every
+> repository you have, or create.
 
-Hey Everyone,
+Thanks, even better!  Though, I can't seem to find this option (and 
+other ones indicated by the source) documented anywhere.  Where would be 
+the place to put such information?  For git options the place seems to 
+be the git config help, but given that the git gui is maintained 
+independently the choice is less obvious to me.
 
-I am proud to announce the first pre-release of Pyrite 0.01prealpha. You
-can pull from git://gitorious.org/pyrite/mainline.git or
-http://git.gitorious.org/pyrite/mainline.git ( I think I will use gitorious for
-hosting since tuxfamily doesn't have an http clones, although I will
-sort-of miss the RSS feed).
-
-Why such a timid name? This is because it has taken me longer than I
-wanted to reach a point where I felt others could reasonably use and
-contribute to the project. There is still much work to be done before it
-is ready for a general purpose release. However, I need to see if
-people are really interested in both helping develop and, more
-importantly, using Pyrite and I feel that getting a release out there will
-help me gauge that.
-
-When I started this project, I had a good idea of what I wanted to
-accomplish but I wasn't entirely sure how I would do it. At this point I
-have an idea of how the interface should be presented and I will work
-to get it right. I hope people will have input on what improvements they
-would like to see to the UI.
-
-Other things that I want to do before making a general purpose release
-is to tie up some loose ends like proper rebasing and a graphical merge
-tool (at least support for external merge tools). That's just the tip of the
-iceberg though since I have plans to also do a gui and a web interface.
-
-Feel free to contact me about this if you are interested in using, testing
-or developing.
-
-Thanks,
-Govind.
+/Gustaf
