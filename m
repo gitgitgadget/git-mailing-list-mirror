@@ -1,65 +1,62 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: git-gui hangs on read
-Date: Thu, 24 Apr 2008 08:54:10 +0200
-Message-ID: <48102E92.3090601@isy.liu.se>
-References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com> <20080422001311.GS29771@spearce.org> <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com> <20080422232530.GK29771@spearce.org> <480EF84A.4020308@isy.liu.se> <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com> <480F4C6E.9070400@isy.liu.se> <20080424010015.GS29771@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git on Windows, CRLF issues
+Date: Thu, 24 Apr 2008 09:11:07 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804240909220.26553@eeepc-johanness>
+References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>  <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>  <20080422023918.GA5402@sigill.intra.peff.net>  <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com> 
+ <20080423080826.GA11935@sigill.intra.peff.net>  <480F1671.2060602@viscovery.net>  <20080423110402.GA27437@sigill.intra.peff.net>  <480F218C.3060703@viscovery.net>  <20080423214745.GA30057@sigill.intra.peff.net>  <7vprsgqiq1.fsf@gitster.siamese.dyndns.org>
+ <32541b130804231604r4c439fa5va5c01bfd53a22cc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Benjamin Collins <ben.collins@acm.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Apr 24 08:55:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 10:12:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JovMC-0007Dj-QI
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 08:55:01 +0200
+	id 1JowYe-00046d-Nm
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 10:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751111AbYDXGyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2008 02:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbYDXGyO
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 02:54:14 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:47818 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776AbYDXGyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2008 02:54:13 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 45C5125A3E;
-	Thu, 24 Apr 2008 08:54:12 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 18880-07; Thu, 24 Apr 2008 08:54:11 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id B108C25A3D;
-	Thu, 24 Apr 2008 08:54:11 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <20080424010015.GS29771@spearce.org>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1751272AbYDXILK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 04:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbYDXILK
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 04:11:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48138 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751132AbYDXILI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 04:11:08 -0400
+Received: (qmail invoked by alias); 24 Apr 2008 08:11:06 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp045) with SMTP; 24 Apr 2008 10:11:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kXWs7wewkFS6vh+qqVfo+VnRw6FYiDyRnZU9S9O
+	5gST8UV5lhp9gG
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <32541b130804231604r4c439fa5va5c01bfd53a22cc7@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80298>
 
-On 04/24/2008 03:00 AM, Shawn O. Pearce wrote:
-> Just turn the d**n spell checker off:
-> 
-> 	git config --global gui.spellingdictionary none
-> 
-> That will keep us from evening trying to launch aspell, and since
-> its global (in your ~/.gitconfig) it should default into every
-> repository you have, or create.
+Hi,
 
-Thanks, even better!  Though, I can't seem to find this option (and 
-other ones indicated by the source) documented anywhere.  Where would be 
-the place to put such information?  For git options the place seems to 
-be the git config help, but given that the git gui is maintained 
-independently the choice is less obvious to me.
+On Wed, 23 Apr 2008, Avery Pennarun wrote:
 
-/Gustaf
+> What I really want is the equivalent of "dos2unix --recursive *.c *.txt 
+> etc" for all commits.
+
+I start to wonder if "git fast-export --all | my-intelligent-perl-script | 
+git fast-import" would not be a better solution here.
+
+All you would have to do is to detect when a blob begins, and how long it 
+is, and work with that.  If your trees do not contain any binary files, it 
+should be trivial.
+
+Ciao,
+Dscho
