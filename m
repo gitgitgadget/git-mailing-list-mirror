@@ -1,82 +1,77 @@
-From: "Matt Graham" <mdg149@gmail.com>
-Subject: Re: Different Versions
-Date: Thu, 24 Apr 2008 10:57:19 -0400
-Message-ID: <1c5969370804240757i1349432at55fb2a7aeae1da63@mail.gmail.com>
-References: <899199.2868131209043100219.JavaMail.servlet@kundenserver>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-gc doesn't clean up leftover objects after git-filter-branch unless you clone first
+Date: Thu, 24 Apr 2008 11:43:55 -0400
+Message-ID: <32541b130804240843k471ecfeteb1008c44a56808b@mail.gmail.com>
+References: <32541b130804230841h32c07f3arc94cccfaf0b156a3@mail.gmail.com>
+	 <7vve28sdys.fsf@gitster.siamese.dyndns.org>
+	 <20080423221316.GE30057@sigill.intra.peff.net>
+	 <20080424012836.GA30812@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: rjtaylor@havocinspired.co.uk
-X-From: git-owner@vger.kernel.org Thu Apr 24 16:59:13 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 24 17:45:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jp2tn-0008QK-UM
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 16:58:12 +0200
+	id 1Jp3d3-0001uG-PO
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 17:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753182AbYDXO5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2008 10:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbYDXO5Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 10:57:25 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:21416 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663AbYDXO5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2008 10:57:24 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so324222ywh.1
-        for <git@vger.kernel.org>; Thu, 24 Apr 2008 07:57:19 -0700 (PDT)
+	id S1764012AbYDXPoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 11:44:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764000AbYDXPn7
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 11:43:59 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:27110 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763961AbYDXPn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 11:43:57 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so3124328fgb.17
+        for <git@vger.kernel.org>; Thu, 24 Apr 2008 08:43:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5MRQCoC1vGe3drmry92h3r7ZT3B56TKMXifNblEoZ3I=;
-        b=mosjnUSL1Fcxt/+qPe/27GxlY7M98FI1pKm658+En6kPneQfZMFjEuDYAy1KpePjQJCuL0tkByBhKHajUnqRuEOxE6IzWDolxVdxAzOvTIuID6n+cefoy2deU/wXkxYtl5I+HSkznqLfsb0iCqVxoAr/DJHyejUlWEKQgUlk4l8=
+        bh=ceXEUI6EHSvD+zJxUXhM1/S/Yv146lp7lsvrSO2tX88=;
+        b=N+L1B/Oxd0VccKDY8a1qhxKrTcki9eoL4Ozql4TcPDX8p2fNJ1ak5Nk1VU6/PO8cJpdBu9nmha/K2u8XUr20z5fW/kszTz9wQInoS7UJz+O3jwlYGxbYNYPrnNww4/qVtWi33EU8LtEcAB139o/bqP5jRau1I4kMfK627o7s8KI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=U+2oG6EFleEXVRLUAgBwyjgkfOkoBeTH0Exc+SLFbzpvVQ/W5V5rXZig6u8If7kf9nfVdT2RmRs4uIj9hROijWt0kEzAJAkxp+FZODXm+j7HyWz7FGPJiIEwos6HSzKJf8l6plty7bgdakLhMLzapPHzM8iKOiYVu6JyXP8u/Uw=
-Received: by 10.142.115.10 with SMTP id n10mr485200wfc.8.1209049039147;
-        Thu, 24 Apr 2008 07:57:19 -0700 (PDT)
-Received: by 10.142.170.10 with HTTP; Thu, 24 Apr 2008 07:57:19 -0700 (PDT)
-In-Reply-To: <899199.2868131209043100219.JavaMail.servlet@kundenserver>
+        b=I+S0rGfi+gF6cSHStmPTZLRtx5+/MmrbXWSxHPIO8hDWsl7CHpyU7R3N/OeJMeKGYd3Vtu2hzRlTXAwSaJWLteYSMbd5LqrfFL2lWRoAbhNBK76JcNyjYxBw8sGDfnr49/fByU66YEYbTRsiHZ+odzPeJ2tiOAji/g3h8dMI3Kc=
+Received: by 10.82.150.20 with SMTP id x20mr2567511bud.18.1209051835158;
+        Thu, 24 Apr 2008 08:43:55 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Thu, 24 Apr 2008 08:43:55 -0700 (PDT)
+In-Reply-To: <20080424012836.GA30812@sigill.intra.peff.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80306>
 
-I've always had trouble when dev servers and live servers have
-differences.  Apart from how well 1.4 and 1.5 might work with
-eachother, I'd recommend building from latest stable (1.5.5.1) on both
-machines anyway.  I build on 7.10 and the 2-line default instructions
-at the top of git/INSTALL work pretty well.
+On 4/23/08, Jeff King <peff@peff.net> wrote:
+>  +
+>  +Notes
+>  +-----
+>  +
+>  +git-gc tries very hard to be safe about the garbage it collects. In
+>  +particular, it will keep not only objects referenced by your current set
+>  +of branches and tags, but also objects referenced by the index, remote
+>  +tracking branches, refs saved by linkgit:git-filter-branch[1] in
+>  +refs/original/, or reflogs (which may references commits in branches
+>  +that were later amended or rewound).
+>  +
+>  +If you are expecting some objects to be collected and it isn't, check
+>  +all of those locations and decide whether it makes sense in your case to
+>  +remove those references.
+>  +
 
-I get an error if I try to build the info, so just leave out the info
-and install-info, and it should be ok.
+This information would have helped me quite a bit when I first
+encountered this problem.  It would be nice if it also showed up under
+git-prune (since git-gc doesn't delete anything itself, if I
+understand correctly).  Also a link to some information about reflogs
+(even just to "see also" git-reflog) would help, since I didn't hear
+about reflogs at all until after I joined the mailing list.
 
-
-On Thu, Apr 24, 2008 at 9:18 AM,  <rjtaylor@havocinspired.co.uk> wrote:
-> Hi,
->
->  First post, hope this is going to the right place.
->
->  I'm in a fairly restricted situation were I have a Live Web Server and a Dev Web Server. Now the Live box is running Ubuntu 7.04, and installs git version 1.4.* through apt-get. On the Dev box I've got Ubuntu 7.10, and this installs git version 1.5.*.
->
->  Each seem to use slightly different commands, e.g. to initialise a repository.
->
->  My question is am I ok to use git versions 1.4.* and 1.5.* together, or am I going to have problems? Should I down great my Dev box to Ubuntu 7.04 to get git version 1.4* so they are the same?
->
->  I can't take down the Live box, or upgrade git on it, hence the fairly restricted situation.
->
->  Any advice would be appreciated.
->
->  Regards
->
->  Ryan
->  --
->  To unsubscribe from this list: send the line "unsubscribe git" in
->  the body of a message to majordomo@vger.kernel.org
->  More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Avery
