@@ -1,63 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Git on Windows, CRLF issues
-Date: Thu, 24 Apr 2008 08:25:56 +0200
-Message-ID: <481027F4.5060905@viscovery.net>
-References: <alpine.DEB.1.00.0804212145570.21181@perkele.intern.softwolves.pp.se>	 <alpine.DEB.1.00.0804212104560.2298@eeepc-johanness>	 <32541b130804211453x77f3fd49hef645a417a9919ca@mail.gmail.com>	 <20080422023918.GA5402@sigill.intra.peff.net>	 <32541b130804220951p224c9be7ya4e8de5056481fd1@mail.gmail.com>	 <20080423080826.GA11935@sigill.intra.peff.net>	 <480F1671.2060602@viscovery.net> <32541b130804231302i732dbf08v88f8909f241ab99@mail.gmail.com>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: [ANN] Pyrite prerelease
+Date: Thu, 24 Apr 2008 01:42:02 -0500
+Message-ID: <5d46db230804232342q1d92064bq7ea4fdba6f1551b6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Karlsson <peter@softwolves.pp.se>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 08:26:56 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 24 08:42:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jouus-0007x3-Kf
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 08:26:47 +0200
+	id 1JovAV-00046q-QK
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 08:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbYDXG0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2008 02:26:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbYDXGZ7
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 02:25:59 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:14832 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbYDXGZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2008 02:25:59 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jouu4-0005O3-L5; Thu, 24 Apr 2008 08:25:56 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4CA476B7; Thu, 24 Apr 2008 08:25:56 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <32541b130804231302i732dbf08v88f8909f241ab99@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751023AbYDXGmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 02:42:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbYDXGmH
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 02:42:07 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:12862 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750860AbYDXGmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 02:42:05 -0400
+Received: by an-out-0708.google.com with SMTP id d31so799090and.103
+        for <git@vger.kernel.org>; Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
+Received: by 10.100.211.8 with SMTP id j8mr4734145ang.11.1209019322158;
+        Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
+Received: by 10.70.13.16 with HTTP; Wed, 23 Apr 2008 23:42:02 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80296>
 
-Avery Pennarun schrieb:
-> On 4/23/08, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> In practice, this is not sufficient. The blob filter must have an
->>  opportunity to decide what it wants to do, not just blindly munge every
->>  blob. The minimum is a path name, e.g. in $1:
-> 
-> Actually, it may not have been intentional, but because of the way
-> 'eval' works, the munge script will find that $path already contains
-> the path of the file being munged.  Works for me.
+The official posting can be seen at
+http://pyrite.sophiasuchtig.com/2008/04/announce-001prealpha.html
 
-Yes, of course! So I stand corrected, and Jeff's patch makes sense.
+Hey Everyone,
 
-For consistency's sake, the path should be made available in, say,
-GIT_BLOB_PATH just like the commit is available in GIT_COMMIT.
+I am proud to announce the first pre-release of Pyrite 0.01prealpha. You
+can pull from git://gitorious.org/pyrite/mainline.git or
+http://git.gitorious.org/pyrite/mainline.git ( I think I will use gitorious for
+hosting since tuxfamily doesn't have an http clones, although I will
+sort-of miss the RSS feed).
 
--- Hannes
+Why such a timid name? This is because it has taken me longer than I
+wanted to reach a point where I felt others could reasonably use and
+contribute to the project. There is still much work to be done before it
+is ready for a general purpose release. However, I need to see if
+people are really interested in both helping develop and, more
+importantly, using Pyrite and I feel that getting a release out there will
+help me gauge that.
+
+When I started this project, I had a good idea of what I wanted to
+accomplish but I wasn't entirely sure how I would do it. At this point I
+have an idea of how the interface should be presented and I will work
+to get it right. I hope people will have input on what improvements they
+would like to see to the UI.
+
+Other things that I want to do before making a general purpose release
+is to tie up some loose ends like proper rebasing and a graphical merge
+tool (at least support for external merge tools). That's just the tip of the
+iceberg though since I have plans to also do a gui and a web interface.
+
+Feel free to contact me about this if you are interested in using, testing
+or developing.
+
+Thanks,
+Govind.
