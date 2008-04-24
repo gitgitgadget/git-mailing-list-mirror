@@ -1,77 +1,58 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Different Versions
-Date: Thu, 24 Apr 2008 21:50:41 +0200
-Message-ID: <20080424195041.GA5905@steel.home>
-References: <899199.2868131209043100219.JavaMail.servlet@kundenserver>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: rjtaylor@havocinspired.co.uk
-X-From: git-owner@vger.kernel.org Thu Apr 24 21:52:10 2008
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Excruciatingly slow git-svn imports
+Date: Thu, 24 Apr 2008 12:57:24 -0700
+Message-ID: <2C39C19D-0B81-4879-92DC-C0436DB6E84E@midwinter.com>
+References: <CC0F600D-71F3-493A-AA9C-AF901C1A58C4@adacore.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 22:04:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jp7Ti-0007qw-AK
-	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 21:51:34 +0200
+	id 1Jp7gd-0004WO-BX
+	for gcvg-git-2@gmane.org; Thu, 24 Apr 2008 22:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763660AbYDXTuq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Apr 2008 15:50:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763661AbYDXTup
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 15:50:45 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:53257 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763659AbYDXTuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2008 15:50:44 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+CMY=
-Received: from tigra.home (Fab05.f.strato-dslnet.de [195.4.171.5])
-	by post.webmailer.de (klopstock mo29) (RZmta 16.27)
-	with ESMTP id u06764k3OGxwlt ; Thu, 24 Apr 2008 21:50:41 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 66190277BD;
-	Thu, 24 Apr 2008 21:50:41 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id C2B6456D28; Thu, 24 Apr 2008 21:50:41 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <899199.2868131209043100219.JavaMail.servlet@kundenserver>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1761194AbYDXUEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2008 16:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761000AbYDXUEH
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Apr 2008 16:04:07 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:47864 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760874AbYDXUEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2008 16:04:06 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Apr 2008 16:04:06 EDT
+Received: (qmail 31116 invoked from network); 24 Apr 2008 19:57:24 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=jRDyBfhcmCBnGq/mrP8LzGoKs0VZVCK6PZ+3uslHdzFRvvbiG9qzEA0qvGuLQqH1  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 24 Apr 2008 19:57:24 -0000
+In-Reply-To: <CC0F600D-71F3-493A-AA9C-AF901C1A58C4@adacore.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80315>
 
-rjtaylor@havocinspired.co.uk, Thu, Apr 24, 2008 15:18:20 +0200:
-> I=E2=80=99m in a fairly restricted situation were I have a Live Web S=
-erver
-> and a Dev Web Server. Now the Live box is running Ubuntu 7.04, and
-> installs git version 1.4.* through apt-get. On the Dev box I=E2=80=99=
-ve got
-> Ubuntu 7.10, and this installs git version 1.5.*.
->=20
-> Each seem to use slightly different commands, e.g. to initialise a
-> repository.=20
->=20
-> My question is am I ok to use git versions 1.4.* and 1.5.* together,
-> or am I going to have problems?
+On Apr 24, 2008, at 11:54 AM, Geert Bosch wrote:
 
-apart from the different commands - no.
+> I'm trying to import a 9.7G, 130K revision svn repository
+> but it seems to only import about 6K revisions per day on fast  
+> hardware
+> using a recent git (1.5.5).
 
-> Should I down great my Dev box to Ubuntu 7.04 to get git version
-> 1.4* so they are the same?
+I've found that git-svn gets slower as it runs. Try interrupting the  
+clone and running "git svn fetch" -- it should pick up where it left  
+off and will be MUCH faster if my experience is any indication. When I  
+clone the big svn repository at work I usually restart it every 1000  
+revisions or so and it finishes in a fraction of the time it takes if  
+I let it do everything in a single run.
 
-no, no need to downgrade anything
-
-> Any advice would be appreciated.
-
-get the git source, checkout the 1.4.x version you have on your Live
-Web Server, compile and install it in your $HOME on developnment
-machine and try things out before doing them on production system.
-
-But it is actually quite simple to uninstall the old git on both
-systems, compile the newest git, and just install it everywhere.
+-Steve
