@@ -1,94 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 5/5] documentation: web--browse: add a note about konqueror
-Date: Fri, 25 Apr 2008 08:25:41 +0200
-Message-ID: <20080425082541.968266fd.chriscool@tuxfamily.org>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: git-gui hangs on read
+Date: Fri, 25 Apr 2008 08:45:40 +0200
+Message-ID: <48117E14.7010505@isy.liu.se>
+References: <b3889dff0804210723s620363fdscba43c79dbb62d55@mail.gmail.com> <20080422001311.GS29771@spearce.org> <b3889dff0804220634u58a5ed21yf8a4f369471c6534@mail.gmail.com> <20080422232530.GK29771@spearce.org> <480EF84A.4020308@isy.liu.se> <b3889dff0804230716n1b5dde1ctb7b0c1dd83f2d1ff@mail.gmail.com> <480F4C6E.9070400@isy.liu.se> <20080424010015.GS29771@spearce.org> <48102E92.3090601@isy.liu.se> <20080425010245.GZ29771@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Pascal Obry <pascal@obry.net>,
-	Xavier Maillard <xma@gnu.org>,
-	=?UTF-8?Q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97?=
-	 =?UTF-8?Q?=E3=81=AA=E3=81=AA=E3=81=93?=
-X-From: git-owner@vger.kernel.org Fri Apr 25 08:21:34 2008
+Cc: Benjamin Collins <ben.collins@acm.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 25 08:46:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JpHJF-0001PZ-5i
-	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 08:21:25 +0200
+	id 1JpHhY-0000C9-Il
+	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 08:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489AbYDYGUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2008 02:20:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbYDYGUe
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 02:20:34 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:51595 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755401AbYDYGUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2008 02:20:33 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 81DA61AB2E6;
-	Fri, 25 Apr 2008 08:20:32 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 317D61AB2D7;
-	Fri, 25 Apr 2008 08:20:32 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1755699AbYDYGpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2008 02:45:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674AbYDYGpp
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 02:45:45 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:52899 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755595AbYDYGpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2008 02:45:44 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 2134525969;
+	Fri, 25 Apr 2008 08:45:42 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 02042-04; Fri, 25 Apr 2008 08:45:41 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 72F7325953;
+	Fri, 25 Apr 2008 08:45:41 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <20080425010245.GZ29771@spearce.org>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80327>
 
-This note explains how to work around the fact that we try to use
-kfmclient to launch konqueror.
+On 04/25/2008 03:02 AM, Shawn O. Pearce wrote:
+> Gustaf Hendeby <hendeby@isy.liu.se> wrote:
+>> On 04/24/2008 03:00 AM, Shawn O. Pearce wrote:
+>>> Just turn the d**n spell checker off:
+>>>
+>>> 	git config --global gui.spellingdictionary none
+>>>
+>>> That will keep us from evening trying to launch aspell, and since
+>>> its global (in your ~/.gitconfig) it should default into every
+>>> repository you have, or create.
+>> Thanks, even better!  Though, I can't seem to find this option (and 
+>> other ones indicated by the source) documented anywhere.  Where would be 
+>> the place to put such information?  For git options the place seems to 
+>> be the git config help, but given that the git gui is maintained 
+>> independently the choice is less obvious to me.
+> 
+> As far as documenting the git-gui options, maybe they should go into
+> either Documentation/git-gui.txt or into Documentation/config.txt
+> in the main git.git project.  The latter almost makes sense because
+> git-gui does store its preferences in the same config file, and that
+> file describes the valid keys and what they mean.
+> 
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-web--browse.txt |   24 +++++++++++++++++++++++-
- 1 files changed, 23 insertions(+), 1 deletions(-)
+My first thought about the documentation was to put it in 
+Documentation/config.txt but wouldn't that be strange if someone uses a 
+git-gui other than the one bundled with the git version used?  On the 
+other hand, if the keys don't ever change that is not a big problem.
 
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index ddbae5b..92ef574 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -20,7 +20,7 @@ The following browsers (or commands) are currently supported:
- 
- * firefox (this is the default under X Window when not using KDE)
- * iceweasel
--* konqueror (this is the default under KDE)
-+* konqueror (this is the default under KDE, see 'Note about konqueror' below)
- * w3m (this is the default outside graphical environments)
- * links
- * lynx
-@@ -71,6 +71,28 @@ variable exists then "git web--browse" will treat the specified tool
- as a custom command and will use a shell eval to run the command with
- the URLs passed as arguments.
- 
-+Note about konqueror
-+--------------------
-+
-+When 'konqueror' is specified by the a command line option or a
-+configuration variable, we launch 'kfmclient' to try to open the HTML
-+man page on an already opened konqueror in a new tab if possible.
-+
-+For consistency, we also try such a trick if 'brower.konqueror.path' is
-+set to something like 'A_PATH_TO/konqueror'. That means we will try to
-+launch 'A_PATH_TO/kfmclient' instead.
-+
-+If you really want to use 'konqueror', then you can use something like
-+the following:
-+
-+------------------------------------------------
-+	[web]
-+		browser = konq
-+
-+	[browser "konq"]
-+		cmd = A_PATH_TO/konqueror
-+------------------------------------------------
-+
- Note about git config --global
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--- 
-1.5.5.130.g3ab1e.dirty
+I'll try to have a go at writing some docs, but it won't be until late 
+next week because my daytime work is killing me right now.
+
+/Gustaf
