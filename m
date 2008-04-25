@@ -1,65 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] Introduce fast forward option only
-Date: Fri, 25 Apr 2008 11:59:14 -0700
-Message-ID: <7v7ielpxq5.fsf@gitster.siamese.dyndns.org>
-References: <402c10cd0804232253g3ff8665dk89e2ddcc38353752@mail.gmail.com>
- <m3lk32p5z9.fsf@localhost.localdomain>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH/RFC] More colors for pretty format: yellow, purple, cyan,
+ white and black
+Date: Fri, 25 Apr 2008 22:42:08 +0200
+Message-ID: <48124220.50300@lsrfire.ath.cx>
+References: <c19f1c910804241026q14f95af7qa0289018d08ac23a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 21:00:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Tom ten Thij <mail@tomtenthij.nl>
+X-From: git-owner@vger.kernel.org Fri Apr 25 22:43:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JpT9g-0000Rm-N5
-	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 21:00:21 +0200
+	id 1JpUl7-00058k-09
+	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 22:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760834AbYDYS70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2008 14:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757040AbYDYS70
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 14:59:26 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39085 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759598AbYDYS7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2008 14:59:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BA4B24A5E;
-	Fri, 25 Apr 2008 14:59:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 13BC94A5B; Fri, 25 Apr 2008 14:59:16 -0400 (EDT)
-In-Reply-To: <m3lk32p5z9.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri, 25 Apr 2008 03:46:41 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763118AbYDYUmR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2008 16:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761119AbYDYUmR
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 16:42:17 -0400
+Received: from india601.server4you.de ([85.25.151.105]:37888 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754171AbYDYUmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2008 16:42:16 -0400
+Received: from [10.0.1.200] (p57B7D583.dip.t-dialin.net [87.183.213.131])
+	by india601.server4you.de (Postfix) with ESMTPSA id 07EE92F804E;
+	Fri, 25 Apr 2008 22:42:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
+In-Reply-To: <c19f1c910804241026q14f95af7qa0289018d08ac23a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80346>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Tom ten Thij schrieb:
+> Add support for other colors in pretty format the same way %Cred
+> works.
 
-> "Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
->
->> This feature is needed for git integration with accurev.
->> See the documentation for an explanation of this feature.
->
-> I'd rather have description of the change in the commit message
-> itself.  You can add "See the documentation for details", but the
-> basic description, like:
->
->    This commit introcudes fast forward option 'only'.  With --ff=only
->    merge succeeds only if it resolves to fast-forward merge.
->  
-> It would be nice to have described either in commit message, or in the
-> documentation, _why_ it is needed for integration with AccuRev,
-> i.e. what features of AccuRev or of integration requires this.
+Hmm.  Currently you can get the same effect by adding the escape codes
+to the format string directly.  Arguably, --pretty=3Dformat should hono=
+ur
+the  config variable color.diff and the options --color and --no-color
+to make the colour placeholders useful (both your extended set and the
+current one).
 
-Including this message, I agree with what Jakub said as comments to this
-series.  Readers of "git log" 6 months from now should not have to suffer
-"See Documentation", and reviewers of this series right now should not
-have to guess why it is a good idea and is worth reviewing by actually
-reading the patch.
+Ren=E9
