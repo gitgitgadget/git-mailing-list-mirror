@@ -1,240 +1,129 @@
-From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
-Subject: [PATCH v2.2] Teach rebase interactive the mark command
-Date: Fri, 25 Apr 2008 11:44:48 +0200
-Message-ID: <1209116688-12266-1-git-send-email-joerg@alea.gnuu.de>
-References: <20080425091117.GA23726@alea.gnuu.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 4/5] Head reduction before selecting merge strategy
+Date: Fri, 25 Apr 2008 03:31:14 -0700 (PDT)
+Message-ID: <m3prsep6oy.fsf@localhost.localdomain>
+References: <402c10cd0804232252g43606767r10344ebbb2a44af9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com,
-	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 25 11:48:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 12:32:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JpKXd-0005VX-PD
-	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 11:48:30 +0200
+	id 1JpLDs-000198-2N
+	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 12:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759185AbYDYJrn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2008 05:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759126AbYDYJrm
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 05:47:42 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:2485 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758602AbYDYJrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2008 05:47:36 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 47305EC057; Fri, 25 Apr 2008 11:47:35 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JpKU4-0004gf-Nm; Fri, 25 Apr 2008 11:44:48 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1JpKU4-0003CC-E5; Fri, 25 Apr 2008 11:44:48 +0200
-X-Mailer: git-send-email 1.5.5.1
-In-Reply-To: <20080425091117.GA23726@alea.gnuu.de>
+	id S1751477AbYDYKbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2008 06:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbYDYKbS
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 06:31:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:6918 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159AbYDYKbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2008 06:31:17 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1414445nfb.21
+        for <git@vger.kernel.org>; Fri, 25 Apr 2008 03:31:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=mQjARrNF67JFXRCMFly/hLipaKJZnZ/PcanMcOjw1vs=;
+        b=q5zyNhmAggosvy9KBmoQy9l50ex/Dg7lvP7Ve2vvj8dfgN3vFG6U0e4ywbgkRXWrK+oEChv4PgbnERHCSPIoUxXXDGqSz+4n45Vp28qBe0F3v6F9FT+/7x7Z9D6ltVa1iDsCDPM43YjGDFWvZtqntQTsyCzvXPOHx27FvLoczjs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=tZeYMTdCzhAG/8WmUsqE+pLo0TLIXuO/kQvn80NHNIQ1CDJjYsIayuXRBwtptyz+r93V9qJiRfQcVoc/QlZnxTMRKE1DiChhgANRk36ZW9nQav+cjz57rdEi8Jv44Ca+KqPp9y9QBJnSPgpP2MPQE2sxTSB/W82FZtsKxeVpwqs=
+Received: by 10.210.115.15 with SMTP id n15mr2170581ebc.81.1209119476402;
+        Fri, 25 Apr 2008 03:31:16 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.255.239])
+        by mx.google.com with ESMTPS id 32sm2501319nfu.7.2008.04.25.03.31.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Apr 2008 03:31:14 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3PAV9pH023127;
+	Fri, 25 Apr 2008 12:31:10 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3PAUrCB023123;
+	Fri, 25 Apr 2008 12:30:53 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <402c10cd0804232252g43606767r10344ebbb2a44af9@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80335>
 
-This new command can be used to set symbolic marks for an commit while
-doing a rebase. This symbolic name can later be used for merges or
-resets.
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
 
-The decision to use references for the marks and not files like done wi=
-th
-the rewritten commits for preserve merges was made to ensure no commit
-objects get lost if prune is started while (a long term) rebase is
-running. This also unifies the checking of the validity of marks and
-references by using rev-parse for it.
+> See the documentation for an explanation of this feature.
 
-The format of the marks is as close as possible to the format of the
-marks used by fast-export and fast-import, i.e. :001 =3D=3D :1 and =E2=80=
-=9C:12a=E2=80=9D is
-an invalid mark. It differs from the format of fast-import in that poin=
-t
-that the colon is not required after the mark command, i.e. =E2=80=9Cma=
-rk 12=E2=80=9D is
-the same as =E2=80=9Cmark :12=E2=80=9D. This should ease the writing of=
- commads.
+I think I get the idea now.
 
-Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
----
- git-rebase--interactive.sh    |   31 +++++++++++++++++++++++++++++++
- t/t3404-rebase-interactive.sh |   17 +++++++++++++++++
- 2 files changed, 48 insertions(+), 0 deletions(-)
+You want to generalize fast-forward merge, or what's equivalent make
+fast-formard merge to be special case of head reduction.  This should
+be written both in commit message and in documentation.  Do I
+understand your goal correctly?
 
-That's the diff to the last version:
->diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
->index eaf5563..1751b08 100755
->--- a/git-rebase--interactive.sh
->+++ b/git-rebase--interactive.sh
->@@ -105,13 +105,11 @@ die_with_patch () {
-> }
->=20
-> cleanup_before_quit () {
->-	rm -rf "$DOTEST" &&
->-	for ref in "$GIT_DIR/$mark_prefix"*
->+	for ref in $(git for-each-ref --format=3D'%(refname)' "${mark_prefix=
-%/}")
-> 	do
->-		test "$ref" =3D "$GIT_DIR/$mark_prefix*" && continue
->-		git update-ref -d "${ref#$GIT_DIR/}" "${ref#$GIT_DIR/}" || \
->-			return 1
->+		git update-ref -d "$ref" "$ref" || return 1
-> 	done
->+	rm -rf "$DOTEST"
-> }
->=20
-> die_abort () {
->@@ -194,14 +192,12 @@ peek_next_command () {
-> }
->=20
-> mark_to_ref () {
->-	case "$1" in
->-	:[0-9]*)
->-		echo "$mark_prefix$(printf %d ${1#:} 2>/dev/null)"
->-		;;
->-	*)
->+	if expr match "$1" "^:[0-9][0-9]*$" >/dev/null
->+	then
->+		echo "$mark_prefix$(printf %d ${1#:})"
->+	else
-> 		echo "$1"
->-		;;
->-	esac
->+	fi
-> }
->=20
-> do_next () {
->@@ -285,6 +281,8 @@ do_next () {
-> 		mark_action_done
->=20
-> 		mark=3D$(mark_to_ref :${sha1#:})
->+		test :${sha1#:} =3D "$mark" && die "Invalid mark '$sha1'"
->+
-> 		git rev-parse --verify "$mark" > /dev/null 2>&1 && \
-> 			warn "mark $sha1 already exist; overwriting it"
->=20
+With head reduction comes three things:
+ * the merge strategy used
+ * recorded parents
+ * generated merge commit message
+The simplest way would be to use reduced head for all three things,
+I think.
 
+But I also think that this commit in series is the most controversial
+one; is it realy needed for other commits?  I would put it then as the
+last commit in series...
+ 
+> +If more than one commit are specified on the command line, git will
+> +try to reduce the number of commits used (reduced parents) by
+> +eliminating commits than can be reached from other commits.  The
+> +commit message will reflect the commits specified on the command line
+> +but the merge strategy will be selected based on the reduced parents
+> +including `HEAD`.  The reduced parents are the parents recorded in the
+> +merge commit object.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 531ee94..c0abc01 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -35,6 +35,8 @@ mark the corrected paths with 'git add <paths>', and
- run 'git rebase --continue'"
- export GIT_CHERRY_PICK_HELP
-=20
-+mark_prefix=3Drefs/rebase-marks/
-+
- warn () {
- 	echo "$*" >&2
- }
-@@ -105,6 +107,10 @@ die_with_patch () {
- }
-=20
- cleanup_before_quit () {
-+	for ref in $(git for-each-ref --format=3D'%(refname)' "${mark_prefix%=
-/}")
-+	do
-+		git update-ref -d "$ref" "$ref" || return 1
-+	done
- 	rm -rf "$DOTEST"
- }
-=20
-@@ -244,6 +250,15 @@ peek_next_command () {
- 	sed -n "1s/ .*$//p" < "$TODO"
- }
-=20
-+mark_to_ref () {
-+	if expr match "$1" "^:[0-9][0-9]*$" >/dev/null
-+	then
-+		echo "$mark_prefix$(printf %d ${1#:})"
-+	else
-+		echo "$1"
-+	fi
-+}
-+
- do_next () {
- 	rm -f "$DOTEST"/message "$DOTEST"/author-script \
- 		"$DOTEST"/amend || exit
-@@ -321,6 +336,17 @@ do_next () {
- 			die_with_patch $sha1 ""
- 		fi
- 		;;
-+	mark)
-+		mark_action_done
-+
-+		mark=3D$(mark_to_ref :${sha1#:})
-+		test :${sha1#:} =3D "$mark" && die "Invalid mark '$sha1'"
-+
-+		git rev-parse --verify "$mark" > /dev/null 2>&1 && \
-+			warn "mark $sha1 already exist; overwriting it"
-+
-+		git update-ref "$mark" HEAD || die "update-ref failed"
-+		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
- 		die_with_patch $sha1 "Please fix this in the file $TODO."
-@@ -533,10 +559,15 @@ do
-=20
- # Rebase $SHORTUPSTREAM..$SHORTHEAD onto $SHORTONTO
- #
-+# In the todo insn whenever you need to refer to a commit, in addition
-+# to the usual commit object name, you can use ':mark' syntax to refer
-+# to a commit previously marked with the 'mark' insn.
-+#
- # Commands:
- #  pick =3D use commit
- #  edit =3D use commit, but stop for amending
- #  squash =3D use commit, but meld into previous commit
-+#  mark :mark =3D mark the current HEAD for later reference
- #
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 8d29878..fa3560e 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -82,6 +82,9 @@ for line in $FAKE_LINES; do
- 	case $line in
- 	squash|edit)
- 		action=3D"$line";;
-+	mark*)
-+		echo "mark ${line#mark}"
-+		echo "mark ${line#mark}" >> "$1";;
- 	*)
- 		echo sed -n "${line}s/^pick/$action/p"
- 		sed -n "${line}p" < "$1".tmp
-@@ -189,6 +192,20 @@ test_expect_success '-p handles "no changes" grace=
-fully' '
- 	test $HEAD =3D $(git rev-parse HEAD)
- '
-=20
-+test_expect_success 'setting marks works' '
-+	git checkout master &&
-+	FAKE_LINES=3D"mark:0 2 1 mark:42 3 edit 4" git rebase -i HEAD~4 &&
-+	marks_dir=3D.git/refs/rebase-marks &&
-+	test -d $marks_dir &&
-+	test $(ls $marks_dir | wc -l) -eq 2 &&
-+	test "$(git rev-parse HEAD~4)" =3D \
-+		"$(git rev-parse refs/rebase-marks/0)" &&
-+	test "$(git rev-parse HEAD~2)" =3D \
-+		"$(git rev-parse refs/rebase-marks/42)" &&
-+	git rebase --abort &&
-+	ls $marks_dir | wc -l | grep -Fx 0
-+'
-+
- test_expect_success 'preserve merges with -p' '
- 	git checkout -b to-be-preserved master^ &&
- 	: > unrelated-file &&
---=20
-1.5.5.1
+Is it a correct solution, to use provided (specified) heads for
+generation of merge commit message, but use reduced heads for
+selecting merge strategy _and_ also as parents recorded in merge
+commits?  Perhaps it is; but IMHO you should have written it in the
+commit message, and defend this decision in commit message.
+
+> +
+> +The following shows master and three topic branches.  topicB is based
+> +on topicA, topicA is previously branched off from master, and topicC
+> +is based on the tip of the master branch:
+> +
+> +------------
+> +                    o---o---o  topicB
+> +                   /
+> +          o---o---o  topicA
+> +         /
+> +    o---o---o---o---o---o  master
+> +                         \
+> +                          o---o  topicC
+> +------------
+
+I think I would start with simpler example without 'topicC', of
+reduction of octopus to two-parent ordinary merge.
+
+> diff --git a/git-merge.sh b/git-merge.sh
+> index 7c34b6c..7c70c56 100755
+> --- a/git-merge.sh
+> +++ b/git-merge.sh
+> @@ -337,11 +337,16 @@ set x $remoteheads ; shift
+> 
+>  find_reduced_parents "$@"
+> 
+> -actual_parents=$(git rev-parse "$@")
+
+This was introduced by some of your earlier commits, isn't it?
+
+[...]
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
