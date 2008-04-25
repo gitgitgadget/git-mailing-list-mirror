@@ -1,130 +1,170 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/5] New merge tests
-Date: Fri, 25 Apr 2008 02:37:35 -0700 (PDT)
-Message-ID: <m3tzhqp96h.fsf@localhost.localdomain>
-References: <402c10cd0804232243u700f4f6fv130d69283c40ff1d@mail.gmail.com>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH v2] Make mark parsing much more restrictive
+Date: Fri, 25 Apr 2008 11:04:24 +0200
+Message-ID: <1209114264-10742-1-git-send-email-joerg@alea.gnuu.de>
+References: <20080422231515.GJ29771@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 11:38:36 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, spearce@spearce.org,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 25 11:48:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JpKNv-0002RY-Ra
-	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 11:38:28 +0200
+	id 1JpKXc-0005VX-EO
+	for gcvg-git-2@gmane.org; Fri, 25 Apr 2008 11:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759715AbYDYJhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2008 05:37:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759638AbYDYJhj
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 05:37:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:12979 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759386AbYDYJhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2008 05:37:37 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so1410275nfb.21
-        for <git@vger.kernel.org>; Fri, 25 Apr 2008 02:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=AytXem2xRU+JWWrA3htjbI4c5tvS3/FgJypzRq9hvW4=;
-        b=w6dImvjAQwclX66hjuiQx91rgObFc9POOpf+SThxEeD6GqcCCuXu2avPR6xFMQWRHC+IkKrNtjzT9SF5nlADSxxaW+bfS7WaQvTRzYzNt0VrNa0Qm5JyuDIUJUuuuNUASq2yzzTzLkweqq7Z4iUNxNBtnpaFrvpyekxJazDeGvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=JYFa+YYAic8maYbf5l988P8Pz1ZMWksEXQHZQ0bXq5J0ZOYvVmMs6gcwNCHbBppoB5fjR6FtOXClkoki8OlBLSFB+ptZxcNaaKP63U+fg5l2apSO/8uT62oZm3T2+s/vOXQycQCwDTCHeLrlUCr/40jkqZiw99v+q5pIKZTM99M=
-Received: by 10.210.21.13 with SMTP id 13mr2112157ebu.75.1209116256712;
-        Fri, 25 Apr 2008 02:37:36 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.255.239])
-        by mx.google.com with ESMTPS id i8sm2451300nfh.1.2008.04.25.02.37.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Apr 2008 02:37:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3P9bT8W022802;
-	Fri, 25 Apr 2008 11:37:30 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3P9bAMl022794;
-	Fri, 25 Apr 2008 11:37:10 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <402c10cd0804232243u700f4f6fv130d69283c40ff1d@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758756AbYDYJrj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2008 05:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758830AbYDYJrh
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Apr 2008 05:47:37 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:2481 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751640AbYDYJrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2008 05:47:36 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 8CE53EC054; Fri, 25 Apr 2008 11:47:34 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JpJqy-0004gO-TT; Fri, 25 Apr 2008 11:04:25 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JpJqy-0002nc-LM; Fri, 25 Apr 2008 11:04:24 +0200
+X-Mailer: git-send-email 1.5.5.1
+In-Reply-To: <20080422231515.GJ29771@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80331>
 
-"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
+The current implementation of mark parsing doesn't care for trailing
+garbage like in :12a and doesn't check for unsigned numbers, i.e. it
+accepts :-12 as a valid mark.
 
-> Introduce new merge tests for preparation of new features:
-> 
->   --ff=<fast forward option>
->   Head reduction
->   --ff=only
+This patch enforces a number follows the colon and there comes nothing
+after the bignum.
 
-I think you should describe here _what_ is tested by the new test(s),
-and how it is named.
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ fast-import.c |   49 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 38 insertions(+), 11 deletions(-)
 
-BTW. the test itself is a bit short on comments...
- 
-> +create_merge_msgs() {
-[...]
-> +verify_diff() {
-[...]
-> +verify_merge() {
-[...]
-> +verify_head() {
-[...]
-> +verify_parents() {
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Jrg Sommer <joerg@alea.gnuu.de> wrote:
+> >
+> > Another question: Is :0 a valid mark? In import_marks() is a check =
+for
+> > !mark, but I haven't seen it anywhere else.
+>=20
+> No, in fast-import ":0" is _not_ a valid mark.
 
-It would be nice to have 1 or 2 lines description of those functions,
-perhaps with calling convention.  See for example comments in
-t/test-lib.sh (some of which are in t/README instead ;-).
+Then I propose the following patch.
 
-> +verify_merge() {
-> +       verify_diff "$2" "$1" "[OOPS] bad merge result" &&
-> +       if test $(git ls-files -u | wc -l) -gt 0
-
-What are conventions used by other tests?  Somehow I doublt is is
-"[OOPS]"...
-
-Instead of
-       if test $(git ls-files -u | wc -l) -gt 0
-you should write IMHO
-       if test -n "$(git ls-files -u)"
-or just
-       if test "$(git ls-files -u)"
-
-[...]
-> +test_expect_success 'setup' '
-> +       git add file &&
-> +       test_tick &&
-> +       git commit -m "commit 0" &&
-> +       git tag c0 &&
-> +       c0=$(git rev-parse HEAD) &&
-[...]
-> +'
-
-It would be nice if you have provides, as comment to this step,
-ASCII-art graph of commits you want to have created.
-
-BTW. instead of
-       c0=$(git rev-parse HEAD) &&
-you can use
-       c0=$(git rev-parse c0^{}) &&
-
-or even "c0^{commit}".
-
-[...]
-> +test_expect_success 'merge c1 with c0 and c0' '
-> +       git reset --hard c1 &&
-> +       git config branch.master.mergeoptions "" &&
-
-Not "git config --unset branch.master.mergeoptions"?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+diff --git a/fast-import.c b/fast-import.c
+index 73e5439..0c71da8 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1690,12 +1690,31 @@ static void skip_optional_lf(void)
+ 		ungetc(term_char, stdin);
+ }
+=20
++static inline uintmax_t parse_mark(const const char *str, char **after=
+_mark)
++{
++	char *am;
++	uintmax_t m;
++
++	if (!str || str[0] !=3D ':' || !isdigit(str[1]))
++		return 0;
++
++	m =3D strtoumax(&str[1], &am, 10);
++	if (m !=3D UINTMAX_MAX || errno =3D=3D 0) {
++		*after_mark =3D am;
++		return m;
++	}
++	return 0;
++}
++
+ static void cmd_mark(void)
+ {
+-	if (!prefixcmp(command_buf.buf, "mark :")) {
+-		next_mark =3D strtoumax(command_buf.buf + 6, NULL, 10);
++	uintmax_t mark;
++	char *after_mark =3D NULL;
++
++	if (!prefixcmp(command_buf.buf, "mark ") &&
++		(next_mark =3D parse_mark(&command_buf.buf[5], &after_mark)) &&
++		*after_mark =3D=3D '\0')
+ 		read_next_command();
+-	}
+ 	else
+ 		next_mark =3D 0;
+ }
+@@ -1877,8 +1896,8 @@ static void file_change_m(struct branch *b)
+ 	}
+=20
+ 	if (*p =3D=3D ':') {
+-		char *x;
+-		oe =3D find_mark(strtoumax(p + 1, &x, 10));
++		char *x =3D NULL;
++		oe =3D find_mark(parse_mark(p, &x));
+ 		hashcpy(sha1, oe->sha1);
+ 		p =3D x;
+ 	} else if (!prefixcmp(p, "inline")) {
+@@ -2045,7 +2064,10 @@ static int cmd_from(struct branch *b)
+ 		hashcpy(b->branch_tree.versions[0].sha1, t);
+ 		hashcpy(b->branch_tree.versions[1].sha1, t);
+ 	} else if (*from =3D=3D ':') {
+-		uintmax_t idnum =3D strtoumax(from + 1, NULL, 10);
++		char *after_mark;
++		uintmax_t idnum =3D parse_mark(from, &after_mark);
++		if (!idnum || *after_mark !=3D '\0')
++			die("Not a valid mark: %s", from);
+ 		struct object_entry *oe =3D find_mark(idnum);
+ 		if (oe->type !=3D OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", idnum);
+@@ -2080,7 +2102,10 @@ static struct hash_list *cmd_merge(unsigned int =
+*count)
+ 		if (s)
+ 			hashcpy(n->sha1, s->sha1);
+ 		else if (*from =3D=3D ':') {
+-			uintmax_t idnum =3D strtoumax(from + 1, NULL, 10);
++			char *after_mark;
++			uintmax_t idnum =3D parse_mark(from, &after_mark);
++			if (!idnum || *after_mark !=3D '\0')
++				die("Not a valid mark: %s", from);
+ 			struct object_entry *oe =3D find_mark(idnum);
+ 			if (oe->type !=3D OBJ_COMMIT)
+ 				die("Mark :%" PRIuMAX " not a commit", idnum);
+@@ -2228,7 +2253,10 @@ static void cmd_new_tag(void)
+ 		hashcpy(sha1, s->sha1);
+ 	} else if (*from =3D=3D ':') {
+ 		struct object_entry *oe;
+-		from_mark =3D strtoumax(from + 1, NULL, 10);
++		char *after_mark;
++		from_mark =3D parse_mark(from, &after_mark);
++		if (!from_mark || *after_mark !=3D '\0')
++			die("Not a valid mark: %s", from);
+ 		oe =3D find_mark(from_mark);
+ 		if (oe->type !=3D OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", from_mark);
+@@ -2333,9 +2361,8 @@ static void import_marks(const char *input_file)
+ 		if (line[0] !=3D ':' || !end)
+ 			die("corrupt mark line: %s", line);
+ 		*end =3D 0;
+-		mark =3D strtoumax(line + 1, &end, 10);
+-		if (!mark || end =3D=3D line + 1
+-			|| *end !=3D ' ' || get_sha1(end + 1, sha1))
++		mark =3D parse_mark(line, &end);
++		if (!mark || *end !=3D ' ' || get_sha1(end + 1, sha1))
+ 			die("corrupt mark line: %s", line);
+ 		e =3D find_object(sha1);
+ 		if (!e) {
+--=20
+1.5.5.1
