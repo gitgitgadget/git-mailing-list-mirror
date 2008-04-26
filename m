@@ -1,67 +1,74 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Merge *to* branch instead of merge *from* branch?
-Date: Sat, 26 Apr 2008 19:17:32 -0400
-Message-ID: <32541b130804261617y1fb2a8d9jf8fc6f58ca07b44f@mail.gmail.com>
-References: <alpine.DEB.1.00.0804270037220.1149@perkele.intern.softwolves.pp.se>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git-format-patch: add a new format.cc configuration
+	variable
+Date: Sun, 27 Apr 2008 01:27:37 +0200
+Message-ID: <20080426232737.GR4012@genesis.frugalware.org>
+References: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Sun Apr 27 01:18:31 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CFO0SFgG+t1lcV5s"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Apr 27 01:28:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jptf0-00083D-70
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 01:18:26 +0200
+	id 1Jptot-0001ZV-4b
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 01:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109AbYDZXRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 19:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753010AbYDZXRi
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 19:17:38 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:27085 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139AbYDZXRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 19:17:37 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so4249222fgb.17
-        for <git@vger.kernel.org>; Sat, 26 Apr 2008 16:17:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ocjYaNP+KXcaQW6a2kVP3tTav1/FjwZWt4ONXfo8H4Q=;
-        b=xgQpr+HBSEwvGnGLB4B5czS3bFhUSUewxHEHpctyaGdAMXxoz1XWcFqSDyrkh560Hp3xKBWYhu8kLvJcq1G5eSKj8jxTkbUj2za8shlBeTIZ3NmeYZZUi0CqDZs0H+taPMwxJPTHYWE2gV7M3K/xFo3vdFaHPbZ+b0vfizt74IE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rHRMkONGzHW+I857zo1N6erxpP/Wbe/AyYdea2ADrcbOX0nljNUE83/jWMw/rtZl3SUTT/jpzaTvvtiM+jAg2dWhmJBpSWyOjAiEkWawI0s7KlPKPanHL/FSKRO1MgDiRuo9oVmpGR7RjiZy4b3wgiIF1yssFX5yF2mqSVkDVVI=
-Received: by 10.82.183.19 with SMTP id g19mr3138188buf.80.1209251852281;
-        Sat, 26 Apr 2008 16:17:32 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Sat, 26 Apr 2008 16:17:32 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0804270037220.1149@perkele.intern.softwolves.pp.se>
+	id S1753341AbYDZX1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 19:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbYDZX1o
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 19:27:44 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:45505 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752521AbYDZX1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 19:27:44 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C42FF1B25A1;
+	Sun, 27 Apr 2008 01:27:40 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 3684C44659;
+	Sun, 27 Apr 2008 01:24:00 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 222B311904D3; Sun, 27 Apr 2008 01:27:37 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80398>
 
-On 4/26/08, Peter Karlsson <peter@softwolves.pp.se> wrote:
->  Is there any way of not having to do the "git checkout master" first?
-> Basically I want a flag to merge or checkout saying that I want to merge my
-> branch into the branch I'm switching to. I can't seem to find any such flag.
 
-How about this?
+--CFO0SFgG+t1lcV5s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git merge master
-git branch -D master
-git branch master HEAD
+On Sat, Apr 26, 2008 at 11:31:13PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> I am wary... should this not be specific to send-email?  IOW should=20
+> format-patch not be left alone?
 
-In other words, just make a copy of your current branch after merging
-and call it the new 'master'.  That's all fast forwarding would do
-anyhow.
+Yes and no. :-) I first searched for a --cc option in send-email, then
+realized that only format-patch has one. So I made it configurable,
+instead of adding a new option to send-email for the very same purpose
+format-patch already has an option. But I may be wrong.
 
-Have fun,
+--CFO0SFgG+t1lcV5s
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Avery
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkgTumkACgkQe81tAgORUJZClgCfWfFvyKoAZoOfCirTh2+LVUrF
+DxsAn0Vib+QQZ33nKski1VWFFQwbabcL
+=mLjM
+-----END PGP SIGNATURE-----
+
+--CFO0SFgG+t1lcV5s--
