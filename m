@@ -1,64 +1,55 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Simplify and fix --first-parent implementation
-Date: Sat, 26 Apr 2008 13:59:56 +0200
-Message-ID: <20080426115956.GB19558@cuci.nl>
-References: <20080425234556.D60FD5461@aristoteles.cuci.nl> <7viqy5o4om.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 26 Apr 2008 08:27:42 -0400
+Message-ID: <20080426122741.GA32457@sigill.intra.peff.net>
+References: <20080425234556.D60FD5461@aristoteles.cuci.nl> <7viqy5o4om.fsf@gitster.siamese.dyndns.org> <20080426115956.GB19558@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 14:00:50 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Sat Apr 26 14:28:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jpj5F-00061y-Fu
-	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 14:00:49 +0200
+	id 1JpjW9-00075I-Pl
+	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 14:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338AbYDZL76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 07:59:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbYDZL76
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 07:59:58 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:51836 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750770AbYDZL76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 07:59:58 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 01052545E; Sat, 26 Apr 2008 13:59:56 +0200 (CEST)
+	id S1752615AbYDZM1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 08:27:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYDZM1n
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 08:27:43 -0400
+Received: from peff.net ([208.65.91.99]:2824 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752305AbYDZM1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 08:27:42 -0400
+Received: (qmail 18444 invoked by uid 111); 26 Apr 2008 12:27:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 26 Apr 2008 08:27:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Apr 2008 08:27:42 -0400
 Content-Disposition: inline
-In-Reply-To: <7viqy5o4om.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080426115956.GB19558@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80371>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->> ---
->No explanation of what the patch does, nor justification of why it is a
->good change?
+On Sat, Apr 26, 2008 at 01:59:56PM +0200, Stephen R. van den Berg wrote:
 
-Sorry, thought that one-line description was enough.  I'll resubmit this
-one more verbosely.
+> >Please also sign your patch.
+> 
+> Just with git-commit -s ?  Or do I need to get gpg involved?
 
->Please also sign your patch.
+With git-commit -s; check out Documentation/SubmittingPatches.
 
-Just with git-commit -s ?  Or do I need to get gpg involved?
+> P.S. No reaction on the other patches means that they're accepted, or do
+> I need to resubmit them as well (signed)?
 
->The original code makes sure all the parents of the given commits are
->marked as SEEN (and SYMMETRIC_LEFT if needed), even when only it traverses
->the first parent.  By leaving the loop early, you are changing the
->semantics of the code.  Other parents, when reached from other paths while
->traversing the commit ancestry chain, will behave differently between the
->version with your patch and without.
+I for one would have liked to see more explanation on your "check for
+circular references" patch. I am not clear on what circumstances create
+such circular references.
 
-Yes, I was and am aware of that.  The previous behaviour appears to be bogus.
-I'll elaborate on resubmission.
-
-P.S. No reaction on the other patches means that they're accepted, or do
-I need to resubmit them as well (signed)?
--- 
-Sincerely,                                                          srb@cuci.nl
-           Stephen R. van den Berg.
+-Peff
