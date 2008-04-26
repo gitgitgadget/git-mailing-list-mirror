@@ -1,74 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] git-format-patch: add a new format.cc configuration
-	variable
-Date: Sun, 27 Apr 2008 01:27:37 +0200
-Message-ID: <20080426232737.GR4012@genesis.frugalware.org>
-References: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CFO0SFgG+t1lcV5s"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Apr 27 01:28:43 2008
+From: Richard Quirk <richard.quirk@gmail.com>
+Subject: [PATCH] bash: Add completion for gitk --merge
+Date: Sun, 27 Apr 2008 01:32:14 +0200
+Message-ID: <1209252734-10861-1-git-send-email-richard.quirk@gmail.com>
+Cc: Richard Quirk <richard.quirk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 27 01:33:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jptot-0001ZV-4b
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 01:28:39 +0200
+	id 1JpttE-0002LT-M7
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 01:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753341AbYDZX1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 19:27:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbYDZX1o
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 19:27:44 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:45505 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752521AbYDZX1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 19:27:44 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C42FF1B25A1;
-	Sun, 27 Apr 2008 01:27:40 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3684C44659;
-	Sun, 27 Apr 2008 01:24:00 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 222B311904D3; Sun, 27 Apr 2008 01:27:37 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753430AbYDZXcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 19:32:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753010AbYDZXcV
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 19:32:21 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:63599 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751246AbYDZXcV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 19:32:21 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1664874nfb.21
+        for <git@vger.kernel.org>; Sat, 26 Apr 2008 16:32:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=O1OdEEzwyaZ1M0UOdP2uFa6sMZ11ulFFlmHU9WHxS+g=;
+        b=BH9hQjIbf/t7g+pxYsJErneXynC8OfYzrjfGwK06c2QQrGvvgKXkuKekPl5cI5aMKYEgbZkhXnyjxsGirNG63pDCcQYnj3f5nzRrvKkL8MOkO+RfnlJq38kIe+Mq0ILb6957CDaGttYUXo/4mCpsmw51BHCm51yUMKA751oVsow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=m/Hmk8dGdiWSeaLA0cTuGQHM1yRSoQwJ4qcPRFBMa17BRA71tlU9KA4FrkG8pFhQgASUGyFeWbxvb5My1YCqUnW3Jc0+j2BXOZHG5tyh2U5AA/BpL1JSqIDbQv33Fy8gcfh7AibmIqRmRWoclf+gA8FON0x28Yvg5GscmWcXwsQ=
+Received: by 10.210.118.7 with SMTP id q7mr4174029ebc.198.1209252736060;
+        Sat, 26 Apr 2008 16:32:16 -0700 (PDT)
+Received: from localhost ( [84.77.18.6])
+        by mx.google.com with ESMTPS id 6sm33920494nfv.5.2008.04.26.16.32.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 Apr 2008 16:32:15 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.1.79.g57cf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80399>
 
+Option is only completed when .git/MERGE_HEAD is present.
 
---CFO0SFgG+t1lcV5s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Richard Quirk <richard.quirk@gmail.com>
+---
+ contrib/completion/git-completion.bash |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-On Sat, Apr 26, 2008 at 11:31:13PM +0100, Johannes Schindelin <Johannes.Sch=
-indelin@gmx.de> wrote:
-> I am wary... should this not be specific to send-email?  IOW should=20
-> format-patch not be left alone?
-
-Yes and no. :-) I first searched for a --cc option in send-email, then
-realized that only format-patch has one. So I made it configurable,
-instead of adding a new option to send-email for the very same purpose
-format-patch already has an option. But I may be wrong.
-
---CFO0SFgG+t1lcV5s
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
-
-iEYEARECAAYFAkgTumkACgkQe81tAgORUJZClgCfWfFvyKoAZoOfCirTh2+LVUrF
-DxsAn0Vib+QQZ33nKski1VWFFQwbabcL
-=mLjM
------END PGP SIGNATURE-----
-
---CFO0SFgG+t1lcV5s--
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 665a895..2565aa6 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1346,9 +1346,14 @@ _git ()
+ _gitk ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
++	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	local merge=""
++	if [ -f $g/MERGE_HEAD ]; then
++		local merge="--merge"
++	fi
+ 	case "$cur" in
+ 	--*)
+-		__gitcomp "--not --all"
++		__gitcomp "--not --all $merge"
+ 		return
+ 		;;
+ 	esac
+-- 
+1.5.5.1.79.g57cf
