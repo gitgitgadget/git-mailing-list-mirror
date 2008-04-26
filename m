@@ -1,134 +1,64 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] rev-parse: teach "--verify" to be quiet when using "-q" or
- "--quiet"
-Date: Sat, 26 Apr 2008 13:57:23 +0200
-Message-ID: <20080426135723.2b9e7c16.chriscool@tuxfamily.org>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCH] Simplify and fix --first-parent implementation
+Date: Sat, 26 Apr 2008 13:59:56 +0200
+Message-ID: <20080426115956.GB19558@cuci.nl>
+References: <20080425234556.D60FD5461@aristoteles.cuci.nl> <7viqy5o4om.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 13:53:11 2008
+X-From: git-owner@vger.kernel.org Sat Apr 26 14:00:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jpixn-0003ur-BM
-	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 13:53:07 +0200
+	id 1Jpj5F-00061y-Fu
+	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 14:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753178AbYDZLwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 07:52:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753070AbYDZLwU
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 07:52:20 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:33692 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752783AbYDZLwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 07:52:20 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id E0CB51AB2E1
-	for <git@vger.kernel.org>; Sat, 26 Apr 2008 13:52:17 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id B091F1AB2D4
-	for <git@vger.kernel.org>; Sat, 26 Apr 2008 13:52:17 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1751338AbYDZL76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 07:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbYDZL76
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 07:59:58 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:51836 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbYDZL76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 07:59:58 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 01052545E; Sat, 26 Apr 2008 13:59:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7viqy5o4om.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80370>
 
-Currently "git rev-parse --verify <something>" is often used with
-its error output redirected to /dev/null. This patch makes it
-easier to do that.
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>> ---
+>No explanation of what the patch does, nor justification of why it is a
+>good change?
 
-The -q|--quiet option is designed to work the same way as it does
-for "git symbolic-ref".
+Sorry, thought that one-line description was enough.  I'll resubmit this
+one more verbosely.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-rev-parse.txt |    5 +++++
- builtin-rev-parse.c             |   20 ++++++++++++++++----
- 2 files changed, 21 insertions(+), 4 deletions(-)
+>Please also sign your patch.
 
-	By the way it's strange that for example:
+Just with git-commit -s ?  Or do I need to get gpg involved?
 
-	$ git rev-parse --verify <good-rev> <junk>
+>The original code makes sure all the parents of the given commits are
+>marked as SEEN (and SYMMETRIC_LEFT if needed), even when only it traverses
+>the first parent.  By leaving the loop early, you are changing the
+>semantics of the code.  Other parents, when reached from other paths while
+>traversing the commit ancestry chain, will behave differently between the
+>version with your patch and without.
 
-	works whatever <junk> is, as long as <good-rev> can be
-	parsed.
+Yes, I was and am aware of that.  The previous behaviour appears to be bogus.
+I'll elaborate on resubmission.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 6513c2e..110e7ba 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -52,6 +52,11 @@ OPTIONS
- 	The parameter given must be usable as a single, valid
- 	object name.  Otherwise barf and abort.
- 
-+-q, --quiet::
-+	Only meaningful in `--verify` mode. Do not output an error
-+	message if the first argument is not a valid object name;
-+	instead exit with non-zero status silently.
-+
- --sq::
- 	Usually the output is made one line per flag and
- 	parameter.  This option makes output a single line,
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 0351d54..9384a99 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -365,9 +365,17 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static void die_no_single_rev(int quiet)
-+{
-+	if (quiet)
-+		exit(1);
-+	else
-+		die("Needed a single revision");
-+}
-+
- int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- {
--	int i, as_is = 0, verify = 0;
-+	int i, as_is = 0, verify = 0, quiet = 0;
- 	unsigned char sha1[20];
- 
- 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
-@@ -432,6 +440,10 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				verify = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--quiet") || !strcmp(arg, "-q")) {
-+				quiet = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--short") ||
- 			    !prefixcmp(arg, "--short=")) {
- 				filter &= ~(DO_FLAGS|DO_NOREV);
-@@ -549,7 +561,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (show_flag(arg) && verify)
--				die("Needed a single revision");
-+				die_no_single_rev(quiet);
- 			continue;
- 		}
- 
-@@ -568,11 +580,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		if (!show_file(arg))
- 			continue;
- 		if (verify)
--			die("Needed a single revision");
-+			die_no_single_rev(quiet);
- 		verify_filename(prefix, arg);
- 	}
- 	show_default();
- 	if (verify && revs_count != 1)
--		die("Needed a single revision");
-+		die_no_single_rev(quiet);
- 	return 0;
- }
+P.S. No reaction on the other patches means that they're accepted, or do
+I need to resubmit them as well (signed)?
 -- 
-1.5.5.130.g68d41
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
