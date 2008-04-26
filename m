@@ -1,90 +1,185 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Simplify and fix --first-parent implementation
-Date: Sat, 26 Apr 2008 12:13:38 -0700
-Message-ID: <7vfxt8mntp.fsf@gitster.siamese.dyndns.org>
-References: <20080425234556.D60FD5461@aristoteles.cuci.nl>
- <7viqy5o4om.fsf@gitster.siamese.dyndns.org> <20080426115956.GB19558@cuci.nl>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH 2/2] Make ls-remote http://... list HEAD, like for
+ git://...
+Date: Sat, 26 Apr 2008 15:53:12 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804261542080.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Sat Apr 26 21:14:53 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: John Wiegley <johnw@newartisans.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 26 21:54:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jppr7-00073O-DI
-	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 21:14:41 +0200
+	id 1JpqTD-0001GD-3i
+	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 21:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759865AbYDZTNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 15:13:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760056AbYDZTNy
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 15:13:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45445 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759720AbYDZTNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 15:13:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF7D34D58;
-	Sat, 26 Apr 2008 15:13:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id EF1D74D57; Sat, 26 Apr 2008 15:13:45 -0400 (EDT)
-In-Reply-To: <20080426115956.GB19558@cuci.nl> (Stephen R. van den Berg's
- message of "Sat, 26 Apr 2008 13:59:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755654AbYDZTxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 15:53:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762013AbYDZTxR
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 15:53:17 -0400
+Received: from iabervon.org ([66.92.72.58]:47488 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762033AbYDZTxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 15:53:13 -0400
+Received: (qmail 26970 invoked by uid 1000); 26 Apr 2008 19:53:12 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Apr 2008 19:53:12 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80388>
 
-"Stephen R. van den Berg" <srb@cuci.nl> writes:
+This makes a struct ref able to represent a symref, and makes http.c
+able to recognize one, and makes transport.c look for "HEAD" as a ref
+in the list, and makes it dereference symrefs for the resulting ref,
+if any.
 
-> P.S. No reaction on the other patches means that they're accepted, or do
-> I need to resubmit them as well (signed)?
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+Getting HEAD for HTTP turns out to be surprisingly tricky. First, you need 
+to look for it explicitly, because it's not in info/refs. Then, it's 
+normally a symref, so you have to be able to handle that as a response. 
+And you don't have the list of things it can reference at that point in 
+the code.
 
-No reaction means just that.  I either haven't looked at them, or after
-having looked at them I did not find them interesting enough to comment
-on.
+In any case, it will be useful to be able to have the response from 
+transport_get_remote_refs() able to mention that HEAD is a symref, and 
+what it links to, so that the HEAD detection can use the remote repo's 
+actual information (instead of guessing) when the remote repo provides 
+that information.
 
-The latter does not mean they are rejected, though.  Remember, my review
-is NOT the only thing that counts here, other people's review and
-comment too here, and it tends to take time.
+ cache.h     |    1 +
+ http.c      |    5 ++++-
+ remote.c    |   23 ++++++++++++++++++++++-
+ remote.h    |    2 ++
+ transport.c |   14 ++++++++++++++
+ 5 files changed, 43 insertions(+), 2 deletions(-)
 
-The proposed commit log message would express why the change was needed.
-It would present a use case that is useful (and argue why that use case is
-worth supporting), that is not easily supported with the existing code,
-and how the patch makes it so.  When I review a patch posted on the list,
-here are the things I consider.  This is pretty much personal, and other
-people may do things in different order:
-
- (0) The merit of the patch itself is not obvious from the diff, but there
-     is no explanation; or
-
- (1) The argument to support the use case may not be convincing or may be
-     outright wrong; or
-
- (2) Even if the argument is convincing, the claim that the current code
-     does not support it may be false; or
-
- (3) The patch may not be the right way to support it and there may be
-     better ways; or
-
- (4) The patch may make the new use case supported, but breaks existing
-     use cases.
-
-I look at (0) to _guess_ why the submitter thought the patch was a good
-idea when I have nothing better to do (but that seldom happens these days)
-or the submitter is new to the list.
-
-Patches in (1) and (2) categories may get comments on what the patch tries
-to achieve, and for that I do not have to look at the diff.  I tend start
-to look at the diff for patches in categories (3) and (4).
-
-The ideal case is obviously:
-
- (5) The merit of the patch itself is very clear and there is a good
-     explanation in the commit log message.
+diff --git a/cache.h b/cache.h
+index 50b28fa..7674277 100644
+--- a/cache.h
++++ b/cache.h
+@@ -624,6 +624,7 @@ struct ref {
+ 	struct ref *next;
+ 	unsigned char old_sha1[20];
+ 	unsigned char new_sha1[20];
++	char *symref;
+ 	unsigned int force:1,
+ 		merge:1,
+ 		nonfastforward:1,
+diff --git a/http.c b/http.c
+index c8df13b..acf746a 100644
+--- a/http.c
++++ b/http.c
+@@ -626,7 +626,10 @@ int http_fetch_ref(const char *base, struct ref *ref)
+ 			strbuf_rtrim(&buffer);
+ 			if (buffer.len == 40)
+ 				ret = get_sha1_hex(buffer.buf, ref->old_sha1);
+-			else
++			else if (!prefixcmp(buffer.buf, "ref: ")) {
++				ref->symref = xstrdup(buffer.buf + 5);
++				ret = 0;
++			} else
+ 				ret = 1;
+ 		} else {
+ 			ret = error("Couldn't get %s for %s\n%s",
+diff --git a/remote.c b/remote.c
+index 06ad156..a54f0f7 100644
+--- a/remote.c
++++ b/remote.c
+@@ -706,13 +706,22 @@ struct ref *copy_ref_list(const struct ref *ref)
+ 	return ret;
+ }
+ 
++void free_ref(struct ref *ref)
++{
++	if (!ref)
++		return;
++	free(ref->remote_status);
++	free(ref->symref);
++	free(ref);
++}
++
+ void free_refs(struct ref *ref)
+ {
+ 	struct ref *next;
+ 	while (ref) {
+ 		next = ref->next;
+ 		free(ref->peer_ref);
+-		free(ref);
++		free_ref(ref);
+ 		ref = next;
+ 	}
+ }
+@@ -1146,3 +1155,15 @@ int get_fetch_map(const struct ref *remote_refs,
+ 
+ 	return 0;
+ }
++
++int resolve_remote_symref(struct ref *ref, struct ref *list)
++{
++	if (!ref->symref)
++		return 0;
++	for (; list; list = list->next)
++		if (!strcmp(ref->symref, list->name)) {
++			hashcpy(ref->old_sha1, list->old_sha1);
++			return 0;
++		}
++	return 1;
++}
+diff --git a/remote.h b/remote.h
+index a38774b..ab82308 100644
+--- a/remote.h
++++ b/remote.h
+@@ -62,6 +62,8 @@ int check_ref_type(const struct ref *ref, int flags);
+  */
+ void free_refs(struct ref *ref);
+ 
++int resolve_remote_symref(struct ref *ref, struct ref *list);
++
+ /*
+  * Removes and frees any duplicate refs in the map.
+  */
+diff --git a/transport.c b/transport.c
+index 393e0e8..b012a28 100644
+--- a/transport.c
++++ b/transport.c
+@@ -441,10 +441,14 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 	struct ref *ref = NULL;
+ 	struct ref *last_ref = NULL;
+ 
++	struct walker *walker;
++
+ 	if (!transport->data)
+ 		transport->data = get_http_walker(transport->url,
+ 						transport->remote);
+ 
++	walker = transport->data;
++
+ 	refs_url = xmalloc(strlen(transport->url) + 11);
+ 	sprintf(refs_url, "%s/info/refs", transport->url);
+ 
+@@ -500,6 +504,16 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+ 
+ 	strbuf_release(&buffer);
+ 
++	ref = alloc_ref(strlen("HEAD") + 1);
++	strcpy(ref->name, "HEAD");
++	if (!walker->fetch_ref(walker, ref) &&
++	    !resolve_remote_symref(ref, refs)) {
++		ref->next = refs;
++		refs = ref;
++	} else {
++		free(ref);
++	}
++
+ 	return refs;
+ }
+ 
+-- 
+1.5.4.3.610.gea6cd
