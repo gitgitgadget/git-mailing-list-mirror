@@ -1,82 +1,55 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-format-patch: add a new format.cc configuration variable
-Date: Sat, 26 Apr 2008 23:19:06 +0200
-Message-ID: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 26 23:20:10 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-format-patch: add a new format.cc configuration
+ variable
+Date: Sat, 26 Apr 2008 23:31:13 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness>
+References: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Apr 27 00:32:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JproX-0006yE-9r
-	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 23:20:09 +0200
+	id 1Jpsw1-0007QP-DP
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 00:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbYDZVTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 17:19:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbYDZVTW
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 17:19:22 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:45229 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751214AbYDZVTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 17:19:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 8EB841B25A1;
-	Sat, 26 Apr 2008 23:19:20 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2F9E344659;
-	Sat, 26 Apr 2008 23:15:42 +0200 (CEST)
-Received: from vmobile.example.net (dsl5401CCC2.pool.t-online.hu [84.1.204.194])
-	by genesis.frugalware.org (Postfix) with ESMTP id DE83B11901AE;
-	Sat, 26 Apr 2008 23:19:19 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 8FE01186104; Sat, 26 Apr 2008 23:19:06 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1
+	id S1756686AbYDZWbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 18:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756581AbYDZWbI
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 18:31:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48034 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756555AbYDZWbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 18:31:07 -0400
+Received: (qmail invoked by alias); 26 Apr 2008 22:31:05 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp045) with SMTP; 27 Apr 2008 00:31:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cKZBd3LEcHYceXw5jctSHS9+omFdP2S3BUp5awi
+	RCaOa8NA7TyGKO
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80395>
 
-Some projects prefer to always CC patches to a given mailing list. In
-these cases, it's handy to configure that address once.
+Hi,
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- Documentation/git-format-patch.txt |    1 +
- builtin-log.c                      |    7 +++++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+On Sat, 26 Apr 2008, Miklos Vajna wrote:
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index b5207b7..b2bdcb2 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -168,6 +168,7 @@ and file suffix, and number patches when outputting more than one.
-         subjectprefix = CHANGE
-         suffix = .txt
-         numbered = auto
-+        cc = <email>
- ------------
- 
- 
-diff --git a/builtin-log.c b/builtin-log.c
-index 1670d0b..d7907c9 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -485,6 +485,13 @@ static int git_format_config(const char *var, const char *value)
- 		fmt_patch_suffix = xstrdup(value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.cc")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		ALLOC_GROW(extra_cc, extra_cc_nr + 1, extra_cc_alloc);
-+		extra_cc[extra_cc_nr++] = xstrdup(value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		return 0;
- 	}
--- 
-1.5.5.1.91.g499fc.dirty
+> Some projects prefer to always CC patches to a given mailing list. In
+> these cases, it's handy to configure that address once.
+
+I am wary... should this not be specific to send-email?  IOW should 
+format-patch not be left alone?
+
+Ciao,
+Dscho
