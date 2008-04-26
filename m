@@ -1,37 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH resend] make "git push" update origin and mirrors, "git push --mirror" update mirrors
-Date: Sat, 26 Apr 2008 13:01:26 -0400
-Message-ID: <20080426170126.GC29771@spearce.org>
-References: <4812DA50.3000702@gnu.org>
+Subject: Re: Welcome to Git's GSoC 2008!
+Date: Sat, 26 Apr 2008 13:29:45 -0400
+Message-ID: <20080426172945.GD29771@spearce.org>
+References: <20080422013201.GA4828@spearce.org> <m3d4odq3w1.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Apr 26 19:02:26 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 26 19:30:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jpnn3-0006JZ-Cu
-	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 19:02:21 +0200
+	id 1JpoEP-0008Ej-2z
+	for gcvg-git-2@gmane.org; Sat, 26 Apr 2008 19:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758704AbYDZRBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2008 13:01:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758651AbYDZRBd
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 13:01:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54613 "EHLO
+	id S1755476AbYDZR3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2008 13:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754614AbYDZR3t
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Apr 2008 13:29:49 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60639 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757996AbYDZRBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2008 13:01:33 -0400
+	with ESMTP id S1753490AbYDZR3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2008 13:29:48 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1Jpnm5-00066V-Ue; Sat, 26 Apr 2008 13:01:22 -0400
+	id 1JpoDU-0007zp-FU; Sat, 26 Apr 2008 13:29:40 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4E6D720FBAE; Sat, 26 Apr 2008 13:01:26 -0400 (EDT)
+	id 4453D20FBAE; Sat, 26 Apr 2008 13:29:45 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <4812DA50.3000702@gnu.org>
+In-Reply-To: <m3d4odq3w1.fsf@localhost.localdomain>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,39 +42,42 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80382>
 
-Paolo Bonzini <bonzini@gnu.org> wrote:
-> This patch builds on the infrastructure for remote.<nick>.mirror and
-> tweaks the behavior of "git push".  The idea is that "git push",
-> "git push --all", "git push --mirror", instead of defaulting to origin,
-> become DWIM commands:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> I have found three another Git-related Google Summer of Code 2008
+> projects by other organizations:
 > 
-> - "git push" pushes to origin *and* to all mirrors
-> 
-> - "git push --all" pushes to origin with --all.  I didn't make it push
->   to mirrors because --all and --mirror are incompatible.
-> 
-> - "git push --mirror" only updates mirror repositories, without touching
->   origin.
-> 
-> This is useful when a project has a public repository managed by the
-> integrator, but the integrator also wants to publish his own mirror
-> somewhere.  In this case, the integrator will just do "git push".
+>     Git plugin for Anjuta IDE  (GNOME)
 
-Sorry, I don't really see a use case behind this.  `git push` today
-will push to origin all branches that exist both locally and already
-on the remote.  If you want to push to multiple locations, just
-specify the other URLs in the remote.origin.url configuration list.
-Linus added support for that years ago.
+This project was new to me; prior to your message I did not know
+about it.  Thanks.
 
-> Similarly, if a developer uses the integrator's repository but
-> wishes to publish his own mirror somewhere, he can just do "git push
-> --mirror".
+>     KDevelop DVCS support      (KDE)
 
-Why not just have a remote named "my-mirror" and do `git push my-mirror`?
-Yes, its on keystroke longer to type.  Call it foo.  `git push foo` would
-be shorter, and not require code changes in Git.
+I contacted this student/mentor pair and offered them our mailing
+list address if they have questions.  Apparently the project is
+trying to create some common DVCS abstractions but wants to use
+Git as the first supported tool.
+
+>     Git# implementation        (Mono Project)
+
+I was talking to one of the two students on #git the other day.
+Robin and I both think they are probably better off just taking jgit
+and compiling it with ikvm so it runs on the Mono CLR.  From there
+they can build their interface in C#.  Excluding the copyright header
+in every source file, jgit is about 24,300 lines of code right now.
+That's a lot to write in a summer, especially if you don't know
+Git as well as say I do.
+
+There is some concern from people who are close to the summer of code
+program that two students working on the same project this summer may
+result in one's success being dependent upon the other's success.
+This sort of dependency is not permitted under the Summer of Code
+rules, as it can be quite unfair to an otherwise successful student.
+
+It will be interesting to see how everyone's project turns out at
+the end of the summer.
 
 -- 
 Shawn.
