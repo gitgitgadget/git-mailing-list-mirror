@@ -1,95 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git show documentation: no longer refer to git-diff-tree
- options
-Date: Sun, 27 Apr 2008 10:33:26 -0700
-Message-ID: <7v3ap7gq3d.fsf@gitster.siamese.dyndns.org>
-References: <1209262661-14370-1-git-send-email-vmiklos@frugalware.org>
- <7vod7wkuue.fsf@gitster.siamese.dyndns.org>
- <200804270730.m3R7UTTp011092@mi1.bluebottle.com>
- <20080427114504.GT4012@genesis.frugalware.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH resend] make "git push" update origin and mirrors, "git push --mirror" update mirrors
+Date: Sun, 27 Apr 2008 13:34:46 -0400
+Message-ID: <20080427173446.GM29771@spearce.org>
+References: <4812DA50.3000702@gnu.org> <20080426170126.GC29771@spearce.org> <7vzlrgmrvb.fsf@gitster.siamese.dyndns.org> <20080427043014.GI29771@spearce.org> <20080427044049.GJ29771@spearce.org> <7vabjflvlh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: nanako3@bluebottle.com, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:34:43 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 19:35:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqAln-0005WA-RY
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:34:36 +0200
+	id 1JqAmp-0005qd-LR
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762401AbYD0Rdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 13:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757284AbYD0Rdv
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:33:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41902 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762833AbYD0Rdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 13:33:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 82A853DDE;
-	Sun, 27 Apr 2008 13:33:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id ABBCA3DDD; Sun, 27 Apr 2008 13:33:42 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757369AbYD0Rew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 13:34:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757284AbYD0Rev
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:34:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45447 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754606AbYD0Rev (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 13:34:51 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JqAlt-0004RD-SW; Sun, 27 Apr 2008 13:34:41 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 99B3520FBAE; Sun, 27 Apr 2008 13:34:46 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vabjflvlh.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80466>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > I _hate_ the default remote. [...]
+> 
+> It sounds as if you want to say it a bit stronger than that --- to you,
+> defaulting to 'origin' is not of "little to no" but "negative" value, is
+> it?
+> 
+> But I think we are minotiry.  To people with "CVS migrant" workflow,
+> cloning from _the_ central repo, hacking, and then pushing back will never
+> involve anything other than 'origin' and local repositories, and I am
+> sympathetic when they want to say "git push" and have it default to that
+> single other repository.
 
-> I just checked each option one by one and right, I haven't found any
-> other option that could be useful for git-show either. Given that the
-> wording of -s for git-show is quite different, I think it would be
-> easier to just document -s in git-show as well. Like this?
+Yes, I think we are in the minority.  Many people come to Git from
+a centralized system so the idea of just a single place to pull/push
+from makes perfect sense to them.
 
-Hmm, yes but not exactly.
+But then they later wonder why they need `git pull origin branch`
+to merge in branch, when they usually just say `git pull`.  What is
+the need for that funny keyword `origin`?  Why do I have to say
+where to get the branch from sometimes and not others?
 
-You lost --stat, --name-only and friends that were implied by mentioning
-"diff-tree".
+I think this argument is like the one we had with `git pull . branch`
+vs. `git merge branch`.  However we probably could have gotten users
+to accept `git merge . branch`, as the main argument there was the
+fact that git-merge (the natural command to invoke) didn't actually do
+what the user wanted, and git-pull did.
 
-I agree your _motivation_ behind your original patch is good.  Saying "see
-also that page if you want to do very exotic and rarely useful operation"
-is one thing, but saying "described are most often used ones" and not
-describing enough is bad.
+Just take the above as the rantings of someone who knows git a
+little too well, and has tried to teach it to people who don't,
+and they all have asked about the funny (to them) need for origin
+in git-pull/git-push command line sometimes (no refspecs) and not
+others (with refspecs).
 
-Perhaps we would want to include diff-options.txt.  There may be some
-options that are no-op or always-on in the context of "git show" in the
-file, but we already have an infrastracture to turn parts of the inclusion
-on and off depending on which manual page includes it.
-
-> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-> index dccf0e2..299b611 100644
-> --- a/Documentation/git-show.txt
-> +++ b/Documentation/git-show.txt
-> @@ -25,12 +25,6 @@ with \--name-only).
->  
->  For plain blobs, it shows the plain contents.
->  
-> -The command takes options applicable to the linkgit:git-diff-tree[1] command to
-> -control how the changes the commit introduces are shown.
-> -
-> -This manual page describes only the most frequently used options.
-> -
-> -
->  OPTIONS
->  -------
->  <object>::
-> @@ -38,6 +32,9 @@ OPTIONS
->  	For a more complete list of ways to spell object names, see
->  	"SPECIFYING REVISIONS" section in linkgit:git-rev-parse[1].
->  
-> +-s::
-> +	Don't show a textural diff for commits.
-> +
->  include::pretty-options.txt[]
->  
->  
-> -- 
-> 1.5.5.1.91.g499fc.dirty
+-- 
+Shawn.
