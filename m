@@ -1,59 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-format-patch: add a new format.cc configuration
- variable
-Date: Sun, 27 Apr 2008 12:53:34 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804271252200.16320@eeepc-johanness>
-References: <1209244746-12649-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0804262330370.7944@eeepc-johanness> <20080426232737.GR4012@genesis.frugalware.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [RESEND] [PATCH] Fix tree mode of the file list for files
+	containing curly brackets
+Date: Sun, 27 Apr 2008 21:53:53 +1000
+Message-ID: <18452.26961.14738.430774@cargo.ozlabs.ibm.com>
+References: <20080314214904.GA5914@steel.home>
+	<20080427105700.GA28896@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Apr 27 13:54:18 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 13:55:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jq5SS-0003w9-Tz
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 13:54:17 +0200
+	id 1Jq5TG-00048e-Pa
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 13:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762259AbYD0Lx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 07:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762229AbYD0Lx2
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 07:53:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40392 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762047AbYD0Lx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 07:53:27 -0400
-Received: (qmail invoked by alias); 27 Apr 2008 11:53:25 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp023) with SMTP; 27 Apr 2008 13:53:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+WPdRLWHaWeSccran4dCC3vB41kL7k4JkCUawsap
-	pyk07ycqNxXNUk
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080426232737.GR4012@genesis.frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1762526AbYD0LyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 07:54:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762657AbYD0LyQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 07:54:16 -0400
+Received: from ozlabs.org ([203.10.76.45]:35178 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762421AbYD0LyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 07:54:14 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7DF87DDE24; Sun, 27 Apr 2008 21:54:07 +1000 (EST)
+In-Reply-To: <20080427105700.GA28896@steel.home>
+X-Mailer: VM 7.19 under Emacs 22.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80445>
 
-Hi,
+Alex Riesen writes:
 
-On Sun, 27 Apr 2008, Miklos Vajna wrote:
+> As far as I could understand the online documentation the [lindex ...]
+> thing expects an array, which a string produced by git-ls-tree is not.
+> So [split ...] it first, to get a real Tcl string-array.
 
-> On Sat, Apr 26, 2008 at 11:31:13PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > I am wary... should this not be specific to send-email?  IOW should 
-> > format-patch not be left alone?
-> 
-> Yes and no. :-) I first searched for a --cc option in send-email, then
-> realized that only format-patch has one.
+Unfortunately that will do the wrong thing if the filename contains a
+tab character.  I think the right thing is to split the line textually
+at the tab, then treat the first part as a list (which will be OK
+since it consists of words without special characters, separated by
+spaces), and the second part as the filename.  That is what I was
+trying to do anyway, but I forgot to strip off the part after the tab,
+which is why lindex got unhappy with it.  Here's the patch I'm about
+to commit.
 
-You are completely correct, sorry.  Hmm.  I would have preferred 
-send-email inserting that header, oh well.
+Paul.
 
-Ciao,
-Dscho
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 9a4d9c4..da685aa 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -4992,11 +4992,12 @@ proc gettreeline {gtf id} {
+ 	if {$diffids eq $nullid} {
+ 	    set fname $line
+ 	} else {
+-	    if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
+ 	    set i [string first "\t" $line]
+ 	    if {$i < 0} continue
+-	    set sha1 [lindex $line 2]
+ 	    set fname [string range $line [expr {$i+1}] end]
++	    set line [string range $line 0 [expr {$i-1}]]
++	    if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
++	    set sha1 [lindex $line 2]
+ 	    if {[string index $fname 0] eq "\""} {
+ 		set fname [lindex $fname 0]
+ 	    }
