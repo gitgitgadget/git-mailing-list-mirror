@@ -1,93 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: More on --pretty with git-diff-tree
-Date: Sun, 27 Apr 2008 14:16:51 -0700
-Message-ID: <7vzlrfdmm4.fsf@gitster.siamese.dyndns.org>
-References: <200804271940.44940.jnareb@gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: git doesn't finds the parent of a commit
+Date: Sun, 27 Apr 2008 23:46:21 +0200
+Message-ID: <20080427214621.GA30793@cuci.nl>
+References: <slrng019fg.nd8.joerg@alea.gnuu.de> <20080413094131.GA9437@xp.machine.xx> <slrng0v8h8.ujv.joerg@alea.gnuu.de> <200804240801.13674.chriscool@tuxfamily.org> <20080424060857.GX29771@spearce.org> <20080427104704.GA11784@alea.gnuu.de> <20080427173731.GA9523@cuci.nl> <7vtzhnf3w5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 27 23:18:00 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 23:47:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqEFy-0004HL-Ok
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 23:17:59 +0200
+	id 1JqEiT-0004Ib-B2
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 23:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbYD0VRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 17:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbYD0VRK
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 17:17:10 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbYD0VRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 17:17:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DEF604CC3;
-	Sun, 27 Apr 2008 17:17:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 238A44CC0; Sun, 27 Apr 2008 17:17:02 -0400 (EDT)
-In-Reply-To: <200804271940.44940.jnareb@gmail.com> (Jakub Narebski's message
- of "Sun, 27 Apr 2008 19:40:42 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751058AbYD0VqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 17:46:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbYD0VqX
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 17:46:23 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:37078 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042AbYD0VqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 17:46:23 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 00835545E; Sun, 27 Apr 2008 23:46:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzhnf3w5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80488>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>> I've had similar symptoms when I had circular references in the
+>> repository.  They're not reported by any of the existing checks, I've
+>> submitted a patch (resent it just now) which causes git to check for
+>> (and report) circular references when using --topo-order on e.g.
+>> git-rev-list.
 
-> Mention that --pretty=<format> option is used by git-diff-tree only
-> if both --stdin and -v options are provided.
+>Assuming that we never have SHA-1 hash collisions, the graft mechansim is
+>practically the only way to get yourself into the circular reference
+>situation.
 
-Interesting.
+True, I think.
 
-    $ git diff-tree --pretty=fuller --stat v1.5.5
-    commit 1d2375ddfee18bd3effd2c1f98527cc2f8b1df0a
-    Author:     Junio C Hamano <gitster@pobox.com>
-    AuthorDate: Mon Apr 7 21:57:43 2008 -0700
-    Commit:     Junio C Hamano <gitster@pobox.com>
-    CommitDate: Mon Apr 7 21:57:43 2008 -0700
+>Perhaps we should check this circularity when we install grafts instead of
+>special casing the topo-order codepath?  How expensive would that
+>alternative approach be?
 
-        GIT 1.5.5
+Not practical in its current form.
+Checking for circular references is O(n) in CPU and memory use relative
+to the number of commits in the entire repository.
 
-        Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-     Documentation/RelNotes-1.5.5.txt |    8 +-------
-     Documentation/git.txt            |    5 +++++
-     GIT-VERSION-GEN                  |    2 +-
-     3 files changed, 7 insertions(+), 8 deletions(-)
-
-Also:
-
-    $ git rev-parse v1.5.5^0 | git diff-tree --pretty=short --dirstat --stdin
-    commit 1d2375ddfee18bd3effd2c1f98527cc2f8b1df0a
-    Author: Junio C Hamano <gitster@pobox.com>
-
-        GIT 1.5.5
-
-      89.2% Documentation/
-
-There are two distinct uses for diff-tree, and by understanding it you
-would be freed from the confusion.
-
- * You can compare two arbitrary tree-ish, and because a commit is a
-   tree-ish, comparing two commits is a special case of this.  There is no
-   reason to expect commit logs to be shown in such a use, and formatting
-   options would naturally be ineffective.
-
- * You can give a commit and ask the command to give difference ``for the
-   commit'', in other words, the diff between its parent and the given
-   commit.  --stdin is a special case to drive this mechanism repeatedly,
-   one commit at a time.  This is showing the diff as one of the
-   characteristic of the commit, and allowing to show other attributes of
-   the commit such as its message and timestamp makes sense, so formatting
-   options take effect.
-
-   As you can see from the above two examples, -v does not have much to do
-   with this.
+Consider:
+- The proposed check in the topo-order path is very low-cost, it costs a
+  single decrement/increment per commit (and will detect other circular
+  references not caused by the grafts mechanism, if they ever should occur).
+- If it is being done during the grafts install, then there should be a
+  flag-file (at least), which indicates when the grafts file has changed
+  since the last check.
+- It could/should be added to git-fsck.
+-- 
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
