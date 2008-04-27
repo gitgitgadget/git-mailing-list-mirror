@@ -1,109 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Documentation: More on --pretty with git-diff-tree
-Date: Sun, 27 Apr 2008 19:40:42 +0200
-Message-ID: <200804271940.44940.jnareb@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use the modern syntax of git-diff-files in
+	t2002-checkout-cache-u.sh
+Date: Sun, 27 Apr 2008 19:49:07 +0200
+Message-ID: <20080427174907.GB3828@steel.home>
+References: <20080427113123.GA3712@steel.home> <7viqy3gqn9.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:42:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 19:50:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqAsg-0008LL-4W
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:41:42 +0200
+	id 1JqB0g-0002a8-TB
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757902AbYD0Rkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 13:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbYD0Rkz
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:40:55 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:46732 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755824AbYD0Rky (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 13:40:54 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so587961ugc.16
-        for <git@vger.kernel.org>; Sun, 27 Apr 2008 10:40:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=L2L3j/TPwOKwHXWyy6GqvTkt2rs8nOZH9SyJZbfZ510=;
-        b=iwCW9HeNOZwUYdIYyfDNDaMn+F37wvursGoPnSPE5uPcDYtKElMLaaTBjWB9RSPeqfK2YmJjTQTNihoh8sLICDkuQRxHHaNypLcLV1hiO8LPIIEHD1kjryDetGNvNjwKBseVZZeJqfm3AmxE34O7bUQQdjQ+eAAVuPJXVIUmTqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=nFiMZ3kH+GSiaXj8IqFsZEAL2FCWKElg4dHm/u/XKgVcSqoSovt47Az5htl4ECxHO/wSSzS7RlP8H1pRYRd46O9Ut8jlMvDoAtc1/nFLfxEmdUyegGrENNardGPv5G8FO2E4FvBP4P/J4yUmeXJgXYXyYQEe669Aa+KuUowfkuM=
-Received: by 10.66.221.6 with SMTP id t6mr3641166ugg.0.1209318053172;
-        Sun, 27 Apr 2008 10:40:53 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.207.149])
-        by mx.google.com with ESMTPS id z40sm7885501ikz.4.2008.04.27.10.40.49
-        (version=SSLv3 cipher=OTHER);
-        Sun, 27 Apr 2008 10:40:52 -0700 (PDT)
-User-Agent: KMail/1.9.3
+	id S1756878AbYD0RtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 13:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757754AbYD0RtK
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:49:10 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:14497 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755725AbYD0RtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 13:49:09 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarHHww/x
+Received: from tigra.home (Fad24.f.strato-dslnet.de [195.4.173.36])
+	by post.webmailer.de (fruni mo50) (RZmta 16.27)
+	with ESMTP id z06d85k3RF8oVA ; Sun, 27 Apr 2008 19:49:07 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B87C0277BD;
+	Sun, 27 Apr 2008 19:49:07 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B637456D28; Sun, 27 Apr 2008 19:49:07 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7viqy3gqn9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80473>
 
-Mention that --pretty=<format> option is used by git-diff-tree only
-if both --stdin and -v options are provided.  Because of that it doesn't
-make sense to list pretty formats in git-diff-tree(1); linking to
-git-show(1) should be enough.
+Junio C Hamano, Sun, Apr 27, 2008 19:21:30 +0200:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+> > As a nice side effect it also fixes t2002-checkout-cache-u.sh on FreeBSD 4,
+> > /bin/sh of which has problems interpreting "! command" construction.
+> >
+> > Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> > ---
+> >
+> > To be honest - it was the other way around: I wanted to fix the test
+> > on FreeBSD, but ended up using --exit-code and test_must_fail
+> 
+> Do you mean /bin/sh there misinterprets "! cmd1 | cmd2" as "(! cmd1) |
+> cmd2" and always returns true or something silly like that?  I see a few
+> other places in t3400, t3700, t5302, t7002, etc. that use that construct
+> without an obvious workaround "! (cmd1 | cmd2)" which t0030 uses.
 
-Above changes appear only in git-diff-tree(1) manpage.
+Yes. That one was just a place I very slowly got to (I have not much
+motivation and only one _very remote_ (and production) machine to try
+things on).
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I have stumbled upon this when trying to simplify generating
-'commitdiff_plain' view in gitweb.
+> >  test_expect_success \
+> >  'with -u, git checkout-index picks up stat information from new files.' '
+> >  rm -f path0 &&
+> >  git read-tree $t &&
+> >  git checkout-index -u -f -a &&
+> > -git diff-files | diff - /dev/null'
+> > +git diff-files --exit-code'
+> 
+> Is this something FreeBSD 4 has trouble with as well (not a request to
+> drop this hunk but asking for info)?
 
-"make doc" compiles without errors, and produces expected result.
-
- Documentation/git-diff-tree.txt  |    6 +++++-
- Documentation/pretty-options.txt |    3 +++
- 2 files changed, 8 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index 58d02c6..afe82e3 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -24,6 +24,7 @@ Note that "git-diff-tree" can use the tree encapsulated in a commit object.
- 
- OPTIONS
- -------
-+:git-diff-tree: 1
- include::diff-options.txt[]
- 
- <tree-ish>::
-@@ -104,7 +105,10 @@ include::pretty-options.txt[]
- 	if the diff itself is empty.
- 
- 
--include::pretty-formats.txt[]
-+Pretty Formats
-+--------------
-+
-+For description of pretty formats see for example linkgit:git-show[1]
- 
- 
- Limiting Output
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 6d66c74..8c101b9 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -3,6 +3,9 @@
- 	Pretty-print the contents of the commit logs in a given format,
- 	where '<format>' can be one of 'oneline', 'short', 'medium',
- 	'full', 'fuller', 'email', 'raw' and 'format:<string>'.
-+ifdef::git-diff-tree[]
-+	This option is used for "git-diff-tree --stdin -v" combination.
-+endif::git-diff-tree[]
- 	When omitted, the format defaults to 'medium'.
- +
- Note: you can specify the default pretty format in the repository
--- 
-1.5.5
+No, this is just the same file and similar construction (use external
+diff just to figure out if there are any differences). This is why I
+(re)named the patch for "modern syntax". It is named "make t2002 work
+on FreeBSD4" in my tree.
