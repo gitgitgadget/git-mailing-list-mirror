@@ -1,70 +1,85 @@
-From: Richard Quirk <richard.quirk@gmail.com>
-Subject: [PATCH] Documentation gitk: Describe what --merge does
-Date: Sun, 27 Apr 2008 17:51:09 +0200
-Message-ID: <1209311469-7561-1-git-send-email-richard.quirk@gmail.com>
-Cc: Richard Quirk <richard.quirk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 27 17:52:03 2008
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [RESEND] [PATCH] Fix tree mode of the file list for files
+	containing curly brackets
+Date: Sun, 27 Apr 2008 18:51:56 +0200
+Message-ID: <20080427165156.GA3828@steel.home>
+References: <20080314214904.GA5914@steel.home> <20080427105700.GA28896@steel.home> <18452.26961.14738.430774@cargo.ozlabs.ibm.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Apr 27 18:52:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jq9AX-0002Xq-OL
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 17:52:02 +0200
+	id 1JqA7L-0002Rh-Cf
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 18:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755625AbYD0PvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 11:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753155AbYD0PvO
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 11:51:14 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:59116 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752747AbYD0PvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 11:51:14 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so1739474nfb.21
-        for <git@vger.kernel.org>; Sun, 27 Apr 2008 08:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=T7edm97ugPkOaw77kqBo/lxtldouoes9y6Vvh/Zq71g=;
-        b=o+hHIWjJTaWeBdZp4f6hkjvofgpBmgEtNqw8V4GQOo3k24HQsRy+k1NFOGiuyS8/US47In7k8N0vFDVbuGxxhGcMwDA1RBv3KV96sD43tUyQh30XnQpgZb9FLPHsHgpSplo59FmtM8i7CJkO6ukGL8+v6eO8JJeNG22AAOLETJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=XZ/TxKjzFpJzPseo63pXVWuNSoO3BF25L8McK+1vY8rDTf3UPWfpqr9D3douofE244AVLJ817KNtaXzwvN1336yt2VTQjpzPvXVW0wE/9t8hyOod7f/yujkSeuRrO7hUiGwPQFmze2RsM7w3NQeEFso5BkzrrxsUzzY9p8aj/5A=
-Received: by 10.210.30.1 with SMTP id d1mr4779355ebd.91.1209311472820;
-        Sun, 27 Apr 2008 08:51:12 -0700 (PDT)
-Received: from localhost ( [84.77.29.188])
-        by mx.google.com with ESMTPS id f4sm35902365nfh.26.2008.04.27.08.51.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 Apr 2008 08:51:12 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.1.79.g57cf
+	id S1754103AbYD0Qv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 12:51:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbYD0Qv7
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 12:51:59 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:57296 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753860AbYD0Qv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 12:51:58 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarZw4lh2bA==
+Received: from tigra.home (Faeb6.f.strato-dslnet.de [195.4.174.182])
+	by post.webmailer.de (klopstock mo12) (RZmta 16.27)
+	with ESMTP id N0625ek3RC0jpc ; Sun, 27 Apr 2008 18:51:56 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C2F67277BD;
+	Sun, 27 Apr 2008 18:51:56 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B10EC56D28; Sun, 27 Apr 2008 18:51:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <18452.26961.14738.430774@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80455>
 
-Signed-off-by: Richard Quirk <richard.quirk@gmail.com>
----
- Documentation/gitk.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+Paul Mackerras, Sun, Apr 27, 2008 13:53:53 +0200:
+> Alex Riesen writes:
+> 
+> > As far as I could understand the online documentation the [lindex ...]
+> > thing expects an array, which a string produced by git-ls-tree is not.
+> > So [split ...] it first, to get a real Tcl string-array.
+> 
+> Unfortunately that will do the wrong thing if the filename contains a
+> tab character.  I think the right thing is to split the line textually
+> at the tab, then treat the first part as a list (which will be OK
+> since it consists of words without special characters, separated by
+> spaces), and the second part as the filename.  That is what I was
+> trying to do anyway, but I forgot to strip off the part after the tab,
+> which is why lindex got unhappy with it.  Here's the patch I'm about
+> to commit.
+> 
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index ed3ba83..edd6547 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -41,6 +41,11 @@ frequently used options.
- 
- 	Show all branches.
- 
-+--merge::
-+
-+	Show the differences between HEAD and MERGE_HEAD for files with
-+	conflicts after a merge.
-+
- <revs>::
- 
- 	Limit the revisions to show. This can be either a single revision
--- 
-1.5.5.1.79.g57cf
+FWIW, it does the right thing for me:
+
+    $ git init
+    Initialized empty Git repository in .git/
+    $ >a
+    $ git add .
+    $ gci -m.
+    Created initial commit 86ee2fa: .
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 a
+    $ git mv a ' { b } '
+    $ gci -m.
+    Created commit 2a90dc5: .
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     rename a =>  { b }  (100%)
+    $ gitk
+    $ happy
+    The program 'happy' is currently not installed.  You can install it by typing:
+    sudo apt-get install happy
+    bash: happy: command not found
