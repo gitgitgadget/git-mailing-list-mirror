@@ -1,383 +1,661 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 7/8] Provide API access to init_db()
-Date: Sun, 27 Apr 2008 13:39:27 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0804271305000.19665@iabervon.org>
+Subject: [PATCH 8/8] Build in clone
+Date: Sun, 27 Apr 2008 13:39:30 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0804271311570.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1079593605-1209317946=:19665"
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:40:39 2008
+X-From: git-owner@vger.kernel.org Sun Apr 27 19:40:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqArZ-0007og-Te
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:40:34 +0200
+	id 1JqAra-0007og-QG
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:40:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757848AbYD0Rjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 13:39:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755056AbYD0Rjg
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:39:36 -0400
-Received: from iabervon.org ([66.92.72.58]:42197 "EHLO iabervon.org"
+	id S1757874AbYD0Rjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 13:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755824AbYD0Rjo
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:39:44 -0400
+Received: from iabervon.org ([66.92.72.58]:42199 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757152AbYD0Rje (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 13:39:34 -0400
-Received: (qmail 12803 invoked by uid 1000); 27 Apr 2008 17:39:27 -0000
+	id S1757560AbYD0Rjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 13:39:42 -0400
+Received: (qmail 12807 invoked by uid 1000); 27 Apr 2008 17:39:30 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Apr 2008 17:39:27 -0000
+  by localhost with SMTP; 27 Apr 2008 17:39:30 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+Content-ID: <alpine.LNX.1.00.0804271339290.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80471>
 
-The caller first calls set_git_dir() to specify the GIT_DIR, and then
-calls init_db() to initialize it. This also cleans up various parts of
-the code to account for the fact that everything is done with GIT_DIR
-set, so it's unnecessary to pass the specified directory around.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+--1547844168-1079593605-1209317946=:19665
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LNX.1.00.0804271339291.19665@iabervon.org>
+
+Thanks to Johannes Schindelin for various comments and improvements,
+including supporting cloning full bundles.
 ---
-Rebased onto current origin/master.
+This also pretty much requires my db/learn-HEAD series in order to have 
+http URLs work right, since getting HEAD is more important in clone than 
+fetch.
 
- builtin-init-db.c |  201 ++++++++++++++++++++++++++++-------------------------
- cache.h           |    4 +
- 2 files changed, 110 insertions(+), 95 deletions(-)
+ Makefile                                      |    2 +-
+ builtin-clone.c                               |  544 +++++++++++++++++++++++++
+ builtin.h                                     |    1 +
+ git-clone.sh => contrib/examples/git-clone.sh |    0 
+ git.c                                         |    1 +
+ 5 files changed, 547 insertions(+), 1 deletions(-)
+ create mode 100644 builtin-clone.c
+ rename git-clone.sh => contrib/examples/git-clone.sh (100%)
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index a76f5d3..1ea8bb2 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -104,12 +104,14 @@ static void copy_templates_1(char *path, int baselen,
- 	}
- }
+diff --git a/Makefile b/Makefile
+index 9d84c8d..d5f763b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -235,7 +235,6 @@ BASIC_LDFLAGS =
  
--static void copy_templates(const char *git_dir, int len, const char *template_dir)
-+static void copy_templates(const char *template_dir)
- {
- 	char path[PATH_MAX];
- 	char template_path[PATH_MAX];
- 	int template_len;
- 	DIR *dir;
-+	const char *git_dir = get_git_dir();
-+	int len = strlen(git_dir);
- 
- 	if (!template_dir)
- 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
-@@ -156,6 +158,8 @@ static void copy_templates(const char *git_dir, int len, const char *template_di
- 	}
- 
- 	memcpy(path, git_dir, len);
-+	if (len && path[len - 1] != '/')
-+		path[len++] = '/';
- 	path[len] = 0;
- 	copy_templates_1(path, len,
- 			 template_path, template_len,
-@@ -163,8 +167,9 @@ static void copy_templates(const char *git_dir, int len, const char *template_di
- 	closedir(dir);
- }
- 
--static int create_default_files(const char *git_dir, const char *template_path)
-+static int create_default_files(const char *template_path)
- {
-+	const char *git_dir = get_git_dir();
- 	unsigned len = strlen(git_dir);
- 	static char path[PATH_MAX];
- 	struct stat st1;
-@@ -183,19 +188,15 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	/*
- 	 * Create .git/refs/{heads,tags}
- 	 */
--	strcpy(path + len, "refs");
--	safe_create_dir(path, 1);
--	strcpy(path + len, "refs/heads");
--	safe_create_dir(path, 1);
--	strcpy(path + len, "refs/tags");
--	safe_create_dir(path, 1);
-+	safe_create_dir(git_path("refs"), 1);
-+	safe_create_dir(git_path("refs/heads"), 1);
-+	safe_create_dir(git_path("refs/tags"), 1);
- 
- 	/* First copy the templates -- we might have the default
- 	 * config file there, in which case we would want to read
- 	 * from it after installing.
- 	 */
--	path[len] = 0;
--	copy_templates(path, len, template_path);
-+	copy_templates(template_path);
- 
- 	git_config(git_default_config);
- 
-@@ -204,14 +205,10 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	 * shared-repository settings, we would need to fix them up.
- 	 */
- 	if (shared_repository) {
--		path[len] = 0;
--		adjust_shared_perm(path);
--		strcpy(path + len, "refs");
--		adjust_shared_perm(path);
--		strcpy(path + len, "refs/heads");
--		adjust_shared_perm(path);
--		strcpy(path + len, "refs/tags");
--		adjust_shared_perm(path);
-+		adjust_shared_perm(get_git_dir());
-+		adjust_shared_perm(git_path("refs"));
-+		adjust_shared_perm(git_path("refs/heads"));
-+		adjust_shared_perm(git_path("refs/tags"));
- 	}
- 
- 	/*
-@@ -251,8 +248,10 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 		/* allow template config file to override the default */
- 		if (log_all_ref_updates == -1)
- 		    git_config_set("core.logallrefupdates", "true");
--		if (work_tree != git_work_tree_cfg)
-+		if (prefixcmp(git_dir, work_tree) ||
-+		    strcmp(git_dir + strlen(work_tree), "/.git")) {
- 			git_config_set("core.worktree", work_tree);
-+		}
- 	}
- 
- 	/* Check if symlink is supported in the work tree */
-@@ -272,42 +271,92 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	return reinit;
- }
- 
--static void guess_repository_type(const char *git_dir)
-+int init_db(const char *template_dir, unsigned int flags)
+ SCRIPT_SH += git-am.sh
+ SCRIPT_SH += git-bisect.sh
+-SCRIPT_SH += git-clone.sh
+ SCRIPT_SH += git-filter-branch.sh
+ SCRIPT_SH += git-lost-found.sh
+ SCRIPT_SH += git-merge-octopus.sh
+@@ -481,6 +480,7 @@ BUILTIN_OBJS += builtin-check-ref-format.o
+ BUILTIN_OBJS += builtin-checkout-index.o
+ BUILTIN_OBJS += builtin-checkout.o
+ BUILTIN_OBJS += builtin-clean.o
++BUILTIN_OBJS += builtin-clone.o
+ BUILTIN_OBJS += builtin-commit-tree.o
+ BUILTIN_OBJS += builtin-commit.o
+ BUILTIN_OBJS += builtin-config.o
+diff --git a/builtin-clone.c b/builtin-clone.c
+new file mode 100644
+index 0000000..a7c075d
+--- /dev/null
++++ b/builtin-clone.c
+@@ -0,0 +1,544 @@
++/*
++ * Builtin "git clone"
++ *
++ * Copyright (c) 2007 Kristian Høgsberg <krh@redhat.com>,
++ *		 2008 Daniel Barkalow <barkalow@iabervon.org>
++ * Based on git-commit.sh by Junio C Hamano and Linus Torvalds
++ *
++ * Clone a repository into a different directory that does not yet exist.
++ */
++
++#include "cache.h"
++#include "parse-options.h"
++#include "fetch-pack.h"
++#include "refs.h"
++#include "tree.h"
++#include "tree-walk.h"
++#include "unpack-trees.h"
++#include "transport.h"
++#include "strbuf.h"
++#include "dir.h"
++
++/*
++ * Overall FIXMEs:
++ *  - respect DB_ENVIRONMENT for .git/objects.
++ *
++ * Implementation notes:
++ *  - dropping use-separate-remote and no-separate-remote compatibility
++ *
++ */
++static const char * const builtin_clone_usage[] = {
++	"git-clone [options] [--] <repo> [<dir>]",
++	NULL
++};
++
++static int option_quiet, option_no_checkout, option_bare;
++static int option_local, option_no_hardlinks, option_shared;
++static char *option_template, *option_reference, *option_depth;
++static char *option_origin = NULL;
++static char *option_upload_pack = "git-upload-pack";
++
++static struct option builtin_clone_options[] = {
++	OPT__QUIET(&option_quiet),
++	OPT_BOOLEAN('n', "no-checkout", &option_no_checkout,
++		    "don't create a checkout"),
++	OPT_BOOLEAN(0, "bare", &option_bare, "create a bare repository"),
++	OPT_BOOLEAN(0, "naked", &option_bare, "create a bare repository"),
++	OPT_BOOLEAN('l', "local", &option_local,
++		    "to clone from a local repository"),
++	OPT_BOOLEAN(0, "no-hardlinks", &option_no_hardlinks,
++		    "don't use local hardlinks, always copy"),
++	OPT_BOOLEAN('s', "shared", &option_shared,
++		    "setup as shared repository"),
++	OPT_STRING(0, "template", &option_template, "path",
++		   "path the template repository"),
++	OPT_STRING(0, "reference", &option_reference, "repo",
++		   "reference repository"),
++	OPT_STRING('o', "origin", &option_origin, "branch",
++		   "use <branch> instead or 'origin' to track upstream"),
++	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
++		   "path to git-upload-pack on the remote"),
++	OPT_STRING(0, "depth", &option_depth, "depth",
++		    "create a shallow clone of that depth"),
++
++	OPT_END()
++};
++
++static char *get_repo_path(const char *repo, int *is_bundle)
 +{
-+	const char *sha1_dir;
-+	char *path;
-+	int len, reinit;
++	static char *suffix[] = { "/.git", ".git", "" };
++	static char *bundle_suffix[] = { ".bundle", "" };
++	struct stat st;
++	int i;
 +
-+	safe_create_dir(get_git_dir(), 0);
-+
-+	/* Check to see if the repository version is right.
-+	 * Note that a newly created repository does not have
-+	 * config file, so this will not fail.  What we are catching
-+	 * is an attempt to reinitialize new repository with an old tool.
-+	 */
-+	check_repository_format();
-+
-+	reinit = create_default_files(template_dir);
-+
-+	sha1_dir = get_object_directory();
-+	len = strlen(sha1_dir);
-+	path = xmalloc(len + 40);
-+	memcpy(path, sha1_dir, len);
-+
-+	safe_create_dir(sha1_dir, 1);
-+	strcpy(path+len, "/pack");
-+	safe_create_dir(path, 1);
-+	strcpy(path+len, "/info");
-+	safe_create_dir(path, 1);
-+
-+	if (shared_repository) {
-+		char buf[10];
-+		/* We do not spell "group" and such, so that
-+		 * the configuration can be read by older version
-+		 * of git. Note, we use octal numbers for new share modes,
-+		 * and compatibility values for PERM_GROUP and
-+		 * PERM_EVERYBODY.
-+		 */
-+		sprintf(buf, "%d", shared_repository);
-+		if (shared_repository == PERM_GROUP)
-+			sprintf(buf, "%d", OLD_PERM_GROUP);
-+		else if (shared_repository == PERM_EVERYBODY)
-+			sprintf(buf, "%d", OLD_PERM_EVERYBODY);
-+		else
-+			sprintf(buf, "0%o", shared_repository);
-+
-+		git_config_set("core.sharedrepository", buf);
-+		git_config_set("receive.denyNonFastforwards", "true");
++	for (i = 0; i < ARRAY_SIZE(suffix); i++) {
++		const char *path;
++		path = mkpath("%s%s", repo, suffix[i]);
++		if (!stat(path, &st) && S_ISDIR(st.st_mode)) {
++			*is_bundle = 0;
++			return xstrdup(make_absolute_path(path));
++		}
 +	}
 +
-+	if (!(flags & INIT_DB_QUIET))
-+		printf("%s%s Git repository in %s/\n",
-+		       reinit ? "Reinitialized existing" : "Initialized empty",
-+		       shared_repository ? " shared" : "",
-+		       get_git_dir());
++	for (i = 0; i < ARRAY_SIZE(bundle_suffix); i++) {
++		const char *path;
++		path = mkpath("%s%s", repo, bundle_suffix[i]);
++		if (!stat(path, &st) && S_ISREG(st.st_mode)) {
++			*is_bundle = 1;
++			return xstrdup(make_absolute_path(path));
++		}
++	}
 +
-+	return 0;
++	return NULL;
 +}
 +
-+static int guess_repository_type(const char *git_dir)
- {
- 	char cwd[PATH_MAX];
- 	const char *slash;
- 
--	if (0 <= is_bare_repository_cfg)
--		return;
--	if (!git_dir)
--		return;
--
- 	/*
- 	 * "GIT_DIR=. git init" is always bare.
- 	 * "GIT_DIR=`pwd` git init" too.
- 	 */
- 	if (!strcmp(".", git_dir))
--		goto force_bare;
-+		return 1;
- 	if (!getcwd(cwd, sizeof(cwd)))
- 		die("cannot tell cwd");
- 	if (!strcmp(git_dir, cwd))
--		goto force_bare;
-+		return 1;
- 	/*
- 	 * "GIT_DIR=.git or GIT_DIR=something/.git is usually not.
- 	 */
- 	if (!strcmp(git_dir, ".git"))
--		return;
-+		return 0;
- 	slash = strrchr(git_dir, '/');
- 	if (slash && !strcmp(slash, "/.git"))
--		return;
-+		return 0;
- 
- 	/*
- 	 * Otherwise it is often bare.  At this point
- 	 * we are just guessing.
- 	 */
-- force_bare:
--	is_bare_repository_cfg = 1;
--	return;
-+	return 1;
- }
- 
- static const char init_db_usage[] =
-@@ -322,11 +371,9 @@ static const char init_db_usage[] =
- int cmd_init_db(int argc, const char **argv, const char *prefix)
- {
- 	const char *git_dir;
--	const char *sha1_dir;
- 	const char *template_dir = NULL;
--	char *path;
--	int len, i, reinit;
--	int quiet = 0;
-+	unsigned int flags = 0;
-+	int i;
- 
- 	for (i = 1; i < argc; i++, argv++) {
- 		const char *arg = argv[1];
-@@ -337,7 +384,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 		else if (!prefixcmp(arg, "--shared="))
- 			shared_repository = git_config_perm("arg", arg+9);
- 		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
--		        quiet = 1;
-+			flags |= INIT_DB_QUIET;
- 		else
- 			usage(init_db_usage);
- 	}
-@@ -354,71 +401,35 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 		    GIT_WORK_TREE_ENVIRONMENT,
- 		    GIT_DIR_ENVIRONMENT);
- 
--	guess_repository_type(git_dir);
--
--	if (is_bare_repository_cfg <= 0) {
--		git_work_tree_cfg = xcalloc(PATH_MAX, 1);
--		if (!getcwd(git_work_tree_cfg, PATH_MAX))
--			die ("Cannot access current working directory.");
--		if (access(get_git_work_tree(), X_OK))
--			die ("Cannot access work tree '%s'",
--			     get_git_work_tree());
--	}
--
- 	/*
- 	 * Set up the default .git directory contents
- 	 */
--	git_dir = getenv(GIT_DIR_ENVIRONMENT);
- 	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
--	safe_create_dir(git_dir, 0);
--
--	/* Check to see if the repository version is right.
--	 * Note that a newly created repository does not have
--	 * config file, so this will not fail.  What we are catching
--	 * is an attempt to reinitialize new repository with an old tool.
--	 */
--	check_repository_format();
--
--	reinit = create_default_files(git_dir, template_dir);
- 
--	/*
--	 * And set up the object store.
--	 */
--	sha1_dir = get_object_directory();
--	len = strlen(sha1_dir);
--	path = xmalloc(len + 40);
--	memcpy(path, sha1_dir, len);
--
--	safe_create_dir(sha1_dir, 1);
--	strcpy(path+len, "/pack");
--	safe_create_dir(path, 1);
--	strcpy(path+len, "/info");
--	safe_create_dir(path, 1);
--
--	if (shared_repository) {
--		char buf[10];
--		/* We do not spell "group" and such, so that
--		 * the configuration can be read by older version
--		 * of git. Note, we use octal numbers for new share modes,
--		 * and compatibility values for PERM_GROUP and
--		 * PERM_EVERYBODY.
--		 */
--		if (shared_repository == PERM_GROUP)
--			sprintf(buf, "%d", OLD_PERM_GROUP);
--		else if (shared_repository == PERM_EVERYBODY)
--			sprintf(buf, "%d", OLD_PERM_EVERYBODY);
--		else
--			sprintf(buf, "0%o", shared_repository);
--		git_config_set("core.sharedrepository", buf);
--		git_config_set("receive.denyNonFastforwards", "true");
-+	if (is_bare_repository_cfg < 0)
-+		is_bare_repository_cfg = guess_repository_type(git_dir);
++static char *guess_dir_name(const char *repo, int is_bundle)
++{
++	const char *p, *start, *end, *limit;
++	int after_slash_or_colon;
 +
-+	if (!is_bare_repository_cfg) {
-+		if (git_dir) {
-+			const char *git_dir_parent = strrchr(git_dir, '/');
-+			if (git_dir_parent) {
-+				char *rel = xstrndup(git_dir, git_dir_parent - git_dir);
-+				git_work_tree_cfg = xstrdup(make_absolute_path(rel));
-+				free(rel);
-+			}
++	/* Guess dir name from repository: strip trailing '/',
++	 * strip trailing '[:/]*.{git,bundle}', strip leading '.*[/:]'. */
++
++	after_slash_or_colon = 1;
++	limit = repo + strlen(repo);
++	start = repo;
++	end = limit;
++	for (p = repo; p < limit; p++) {
++		const char *prefix = is_bundle ? ".bundle" : ".git";
++		if (!prefixcmp(p, prefix)) {
++			if (!after_slash_or_colon)
++				end = p;
++			p += strlen(prefix) - 1;
++		} else if (!prefixcmp(p, ".bundle")) {
++			if (!after_slash_or_colon)
++				end = p;
++			p += 7;
++		} else if (*p == '/' || *p == ':') {
++			if (end == limit)
++				end = p;
++			after_slash_or_colon = 1;
++		} else if (after_slash_or_colon) {
++			start = p;
++			end = limit;
++			after_slash_or_colon = 0;
 +		}
-+		if (!git_work_tree_cfg) {
-+			git_work_tree_cfg = xcalloc(PATH_MAX, 1);
-+			if (!getcwd(git_work_tree_cfg, PATH_MAX))
-+				die ("Cannot access current working directory.");
++	}
++
++	return xstrndup(start, end - start);
++}
++
++static int is_directory(const char *path)
++{
++	struct stat buf;
++
++	return !stat(path, &buf) && S_ISDIR(buf.st_mode);
++}
++
++static void setup_reference(const char *repo)
++{
++	const char *ref_git;
++	char *ref_git_copy;
++
++	struct remote *remote;
++	struct transport *transport;
++	const struct ref *extra;
++
++	ref_git = make_absolute_path(option_reference);
++
++	if (is_directory(mkpath("%s/.git/objects", ref_git)))
++		ref_git = mkpath("%s/.git", ref_git);
++	else if (!is_directory(mkpath("%s/objects", ref_git)))
++		die("reference repository '%s' is not a local directory.",
++		    option_reference);
++
++	ref_git_copy = xstrdup(ref_git);
++
++	add_to_alternates_file(ref_git_copy);
++
++	remote = remote_get(ref_git_copy);
++	transport = transport_get(remote, ref_git_copy);
++	for (extra = transport_get_remote_refs(transport); extra;
++	     extra = extra->next)
++		add_extra_ref(extra->name, extra->old_sha1, 0);
++
++	transport_disconnect(transport);
++
++	free(ref_git_copy);
++}
++
++static void copy_or_link_directory(char *src, char *dest)
++{
++	struct dirent *de;
++	struct stat buf;
++	int src_len, dest_len;
++	DIR *dir;
++
++	dir = opendir(src);
++	if (!dir)
++		die("failed to open %s\n", src);
++
++	if (mkdir(dest, 0777)) {
++		if (errno != EEXIST)
++			die("failed to create directory %s\n", dest);
++		else if (stat(dest, &buf))
++			die("failed to stat %s\n", dest);
++		else if (!S_ISDIR(buf.st_mode))
++			die("%s exists and is not a directory\n", dest);
++	}
++
++	src_len = strlen(src);
++	src[src_len] = '/';
++	dest_len = strlen(dest);
++	dest[dest_len] = '/';
++
++	while ((de = readdir(dir)) != NULL) {
++		strcpy(src + src_len + 1, de->d_name);
++		strcpy(dest + dest_len + 1, de->d_name);
++		if (stat(src, &buf)) {
++			warning ("failed to stat %s\n", src);
++			continue;
 +		}
-+		if (access(get_git_work_tree(), X_OK))
-+			die ("Cannot access work tree '%s'",
-+			     get_git_work_tree());
- 	}
- 
--	if (!quiet)
--		printf("%s%s Git repository in %s/\n",
--		       reinit ? "Reinitialized existing" : "Initialized empty",
--		       shared_repository ? " shared" : "",
--		       git_dir);
++		if (S_ISDIR(buf.st_mode)) {
++			if (de->d_name[0] != '.')
++				copy_or_link_directory(src, dest);
++			continue;
++		}
++
++		if (unlink(dest) && errno != ENOENT)
++			die("failed to unlink %s\n", dest);
++		if (option_no_hardlinks) {
++			if (copy_file(dest, src, 0666))
++				die("failed to copy file to %s\n", dest);
++		} else {
++			if (link(src, dest))
++				die("failed to create link %s\n", dest);
++		}
++	}
++}
++
++static const struct ref *clone_local(const char *src_repo,
++				     const char *dest_repo)
++{
++	const struct ref *ret;
++	char src[PATH_MAX];
++	char dest[PATH_MAX];
++	struct remote *remote;
++	struct transport *transport;
++
++	if (option_shared)
++		add_to_alternates_file(src_repo);
++	else {
++		snprintf(src, PATH_MAX, "%s/objects", src_repo);
++		snprintf(dest, PATH_MAX, "%s/objects", dest_repo);
++		copy_or_link_directory(src, dest);
++	}
++
++	remote = remote_get(src_repo);
++	transport = transport_get(remote, src_repo);
++	ret = transport_get_remote_refs(transport);
++	transport_disconnect(transport);
++	return ret;
++}
++
++static const char *junk_work_tree;
++static const char *junk_git_dir;
++pid_t junk_pid;
++
++static void remove_junk(void)
++{
++	struct strbuf sb;
++	if (getpid() != junk_pid)
++		return;
++	strbuf_init(&sb, 0);
++	if (junk_git_dir) {
++		strbuf_addstr(&sb, junk_git_dir);
++		remove_dir_recursively(&sb, 0);
++		strbuf_reset(&sb);
++	}
++	if (junk_work_tree) {
++		strbuf_addstr(&sb, junk_work_tree);
++		remove_dir_recursively(&sb, 0);
++		strbuf_reset(&sb);
++	}
++}
++
++static void remove_junk_on_signal(int signo)
++{
++	remove_junk();
++	signal(SIGINT, SIG_DFL);
++	raise(signo);
++}
++
++static const struct ref *locate_head(const struct ref *refs,
++				     const struct ref *mapped_refs,
++				     const struct ref **remote_head_p)
++{
++	const struct ref *remote_head = NULL;
++	const struct ref *remote_master = NULL;
++	const struct ref *r;
++	for (r = refs; r; r = r->next)
++		if (!strcmp(r->name, "HEAD"))
++			remote_head = r;
++
++	for (r = mapped_refs; r; r = r->next)
++		if (!strcmp(r->name, "refs/heads/master"))
++			remote_master = r;
++
++	if (remote_head_p)
++		*remote_head_p = remote_head;
++
++	/* If there's no HEAD value at all, never mind. */
++	if (!remote_head)
++		return NULL;
++
++	/* If refs/heads/master could be right, it is. */
++	if (remote_master && !hashcmp(remote_master->old_sha1,
++				      remote_head->old_sha1))
++		return remote_master;
++
++	/* Look for another ref that points there */
++	for (r = mapped_refs; r; r = r->next)
++		if (r != remote_head &&
++		    !hashcmp(r->old_sha1, remote_head->old_sha1))
++			return r;
++
++	/* Nothing is the same */
++	return NULL;
++}
++
++static struct ref *write_remote_refs(const struct ref *refs,
++		struct refspec *refspec, const char *reflog)
++{
++	struct ref *local_refs = NULL;
++	struct ref **tail = &local_refs;
++	struct ref *r;
++
++	get_fetch_map(refs, refspec, &tail, 0);
++	get_fetch_map(refs, tag_refspec, &tail, 0);
++
++	for (r = local_refs; r; r = r->next)
++		update_ref(reflog,
++			   r->peer_ref->name, r->old_sha1, NULL, 0, DIE_ON_ERR);
++	return local_refs;
++}
++
++int cmd_clone(int argc, const char **argv, const char *prefix)
++{
++	int use_local_hardlinks = 1;
++	int use_separate_remote = 1;
++	int is_bundle = 0;
++	struct stat buf;
++	const char *repo_name, *repo, *work_tree, *git_dir;
++	char *path, *dir;
++	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
++	char branch_top[256], key[256], value[256];
++	struct strbuf reflog_msg;
++
++	struct refspec refspec;
++
++	junk_pid = getpid();
++
++	argc = parse_options(argc, argv, builtin_clone_options,
++			     builtin_clone_usage, 0);
++
++	if (argc == 0)
++		die("You must specify a repository to clone.");
++
++	if (option_no_hardlinks)
++		use_local_hardlinks = 0;
++
++	if (option_bare) {
++		if (option_origin)
++			die("--bare and --origin %s options are incompatible.",
++			    option_origin);
++		option_no_checkout = 1;
++		use_separate_remote = 0;
++	}
++
++	if (!option_origin)
++		option_origin = "origin";
++
++	repo_name = argv[0];
++
++	path = get_repo_path(repo_name, &is_bundle);
++	if (path)
++		repo = path;
++	else if (!strchr(repo_name, ':'))
++		repo = xstrdup(make_absolute_path(repo_name));
++	else
++		repo = repo_name;
++
++	if (argc == 2)
++		dir = xstrdup(argv[1]);
++	else
++		dir = guess_dir_name(repo_name, is_bundle);
++
++	if (!stat(dir, &buf))
++		die("destination directory '%s' already exists.", dir);
++
++	strbuf_init(&reflog_msg, 0);
++	strbuf_addf(&reflog_msg, "clone: from %s", repo);
++
++	if (option_bare)
++		work_tree = NULL;
++	else {
++		work_tree = getenv("GIT_WORK_TREE");
++		if (work_tree && !stat(work_tree, &buf))
++			die("working tree '%s' already exists.", work_tree);
++	}
++
++	if (option_bare || work_tree)
++		git_dir = xstrdup(dir);
++	else {
++		work_tree = dir;
++		git_dir = xstrdup(mkpath("%s/.git", dir));
++	}
++
++	if (!option_bare) {
++		junk_work_tree = work_tree;
++		if (mkdir(work_tree, 0755))
++			die("could not create work tree dir '%s'.", work_tree);
++		set_git_work_tree(work_tree);
++	}
++	junk_git_dir = git_dir;
++	atexit(remove_junk);
++	signal(SIGINT, remove_junk_on_signal);
++
++	setenv(CONFIG_ENVIRONMENT, xstrdup(mkpath("%s/config", git_dir)), 1);
++
 +	set_git_dir(make_absolute_path(git_dir));
- 
--	return 0;
-+	return init_db(template_dir, flags);
- }
-diff --git a/cache.h b/cache.h
-index b337b3d..2fdd463 100644
---- a/cache.h
-+++ b/cache.h
-@@ -324,6 +324,10 @@ extern const char *prefix_filename(const char *prefix, int len, const char *path
- extern void verify_filename(const char *prefix, const char *name);
- extern void verify_non_filename(const char *prefix, const char *name);
- 
-+#define INIT_DB_QUIET 0x0001
 +
-+extern int init_db(const char *template_dir, unsigned int flags);
++	fprintf(stderr, "Initialize %s\n", git_dir);
++	init_db(option_template, option_quiet ? INIT_DB_QUIET : 0);
 +
- #define alloc_nr(x) (((x)+16)*3/2)
- 
- /*
++	if (option_reference)
++		setup_reference(git_dir);
++
++	git_config(git_default_config);
++
++	if (option_bare) {
++		strcpy(branch_top, "refs/heads/");
++
++		git_config_set("core.bare", "true");
++	} else {
++		snprintf(branch_top, sizeof(branch_top),
++			 "refs/remotes/%s/", option_origin);
++
++		/* Configure the remote */
++		snprintf(key, sizeof(key), "remote.%s.url", option_origin);
++		git_config_set(key, repo);
++
++		snprintf(key, sizeof(key), "remote.%s.fetch", option_origin);
++		snprintf(value, sizeof(value),
++				"+refs/heads/*:%s*", branch_top);
++		git_config_set_multivar(key, value, "^$", 0);
++	}
++
++	refspec.force = 0;
++	refspec.pattern = 1;
++	refspec.src = "refs/heads/";
++	refspec.dst = branch_top;
++
++	if (path && !is_bundle)
++		refs = clone_local(path, git_dir);
++	else {
++		struct remote *remote = remote_get(argv[0]);
++		struct transport *transport = transport_get(remote, argv[0]);
++
++		transport_set_option(transport, TRANS_OPT_KEEP, "yes");
++
++		if (option_depth)
++			transport_set_option(transport, TRANS_OPT_DEPTH,
++					     option_depth);
++
++		if (option_quiet)
++			transport->verbose = -1;
++
++		refs = transport_get_remote_refs(transport);
++		transport_fetch_refs(transport, refs);
++	}
++
++	clear_extra_refs();
++
++	mapped_refs = write_remote_refs(refs, &refspec, reflog_msg.buf);
++
++	head_points_at = locate_head(refs, mapped_refs, &remote_head);
++
++	if (head_points_at) {
++		/* Local default branch link */
++		create_symref("HEAD", head_points_at->name, NULL);
++
++		if (!option_bare) {
++			struct strbuf head_ref;
++			const char *head = head_points_at->name;
++
++			if (!prefixcmp(head, "refs/heads/"))
++				head += 11;
++
++			/* Set up the initial local branch */
++
++			/* Local branch initial value */
++			update_ref(reflog_msg.buf, "HEAD",
++				   head_points_at->old_sha1,
++				   NULL, 0, DIE_ON_ERR);
++
++			strbuf_init(&head_ref, 0);
++			strbuf_addstr(&head_ref, branch_top);
++			strbuf_addstr(&head_ref, "HEAD");
++
++			/* Remote branch link */
++			create_symref(head_ref.buf,
++				      head_points_at->peer_ref->name,
++				      reflog_msg.buf);
++
++			snprintf(key, sizeof(key), "branch.%s.remote", head);
++			git_config_set(key, option_origin);
++			snprintf(key, sizeof(key), "branch.%s.merge", head);
++			git_config_set(key, head_points_at->name);
++		}
++	} else if (remote_head) {
++		/* Source had detached HEAD pointing somewhere. */
++		if (!option_bare)
++			update_ref(reflog_msg.buf, "HEAD",
++				   remote_head->old_sha1,
++				   NULL, REF_NODEREF, DIE_ON_ERR);
++	} else {
++		/* Nothing to checkout out */
++		if (!option_no_checkout)
++			warning("remote HEAD refers to nonexistent ref, "
++				"unable to checkout.\n");
++		option_no_checkout = 1;
++	}
++
++	if (!option_no_checkout) {
++		struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
++		struct unpack_trees_options opts;
++		struct tree *tree;
++		struct tree_desc t;
++		int fd;
++
++		/* We need to be in the new work tree for the checkout */
++		setup_work_tree();
++
++		fd = hold_locked_index(lock_file, 1);
++
++		memset(&opts, 0, sizeof opts);
++		opts.update = 1;
++		opts.verbose_update = !option_quiet;
++		opts.dst_index = &the_index;
++
++		tree = parse_tree_indirect(remote_head->old_sha1);
++		parse_tree(tree);
++		init_tree_desc(&t, tree->buffer, tree->size);
++		unpack_trees(1, &t, &opts);
++
++		if (write_cache(fd, active_cache, active_nr) ||
++		    commit_locked_index(lock_file))
++			die("unable to write new index file");
++	}
++
++	strbuf_release(&reflog_msg);
++	junk_pid = 0;
++	return 0;
++}
+diff --git a/builtin.h b/builtin.h
+index 95126fd..23a90de 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -24,6 +24,7 @@ extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
+ extern int cmd_cherry(int argc, const char **argv, const char *prefix);
+ extern int cmd_cherry_pick(int argc, const char **argv, const char *prefix);
++extern int cmd_clone(int argc, const char **argv, const char *prefix);
+ extern int cmd_clean(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+diff --git a/git-clone.sh b/contrib/examples/git-clone.sh
+similarity index 100%
+rename from git-clone.sh
+rename to contrib/examples/git-clone.sh
+diff --git a/git.c b/git.c
+index c4e4644..4e7845a 100644
+--- a/git.c
++++ b/git.c
+@@ -286,6 +286,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "cherry", cmd_cherry, RUN_SETUP },
+ 		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
++		{ "clone", cmd_clone },
+ 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
 -- 
 1.5.4.3.610.gea6cd
+--1547844168-1079593605-1209317946=:19665--
