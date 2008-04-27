@@ -1,56 +1,87 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH resend] make "git push" update origin and mirrors, "git
- push --mirror" update mirrors
-Date: Sun, 27 Apr 2008 11:03:12 +0200
-Message-ID: <48144150.8040001@gnu.org>
-References: <4812DA50.3000702@gnu.org> <20080426170126.GC29771@spearce.org> <7vzlrgmrvb.fsf@gitster.siamese.dyndns.org> <20080427043014.GI29771@spearce.org> <20080427044049.GJ29771@spearce.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [RFH] Installing qgit under OS X 10.5.2 [was: Aloha]
+Date: Sun, 27 Apr 2008 11:24:21 +0200
+Message-ID: <e5bfff550804270224s10ea9dacu8899aa3523926895@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Apr 27 11:04:06 2008
+Cc: drmark@gmail.com, "Shawn O. Pearce" <spearce@spearce.org>
+To: "git mailing list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 27 11:25:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jq2nh-0003xd-Qn
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 11:04:02 +0200
+	id 1Jq38A-00083N-Nw
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 11:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752394AbYD0JDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 05:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYD0JDP
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 05:03:15 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:16001 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752282AbYD0JDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 05:03:14 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so4414978fgb.17
-        for <git@vger.kernel.org>; Sun, 27 Apr 2008 02:03:13 -0700 (PDT)
+	id S1752608AbYD0JYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 05:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbYD0JYX
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 05:24:23 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:24075 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751756AbYD0JYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 05:24:22 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so3540548wff.4
+        for <git@vger.kernel.org>; Sun, 27 Apr 2008 02:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=lUHA3M5HRBrbphChQfdCByHiVf5OpluYH4JBAx4DNBg=;
-        b=hL8T1Av1Opio/jsnS9V6gRQ8mT4jXiCAgFMCGLgyAvtOLtL6LXUAJQ3eKDmO14jMeiHQXQof3hugBVxhBB6BQHE3NWL5/5NlFzz6YJWXpTUP/J5rTgm5+q3L3VlCOhs9mqbyuRDAvnw59P0dicbB/6wD29j/KQ5o3F+LOzXiPIA=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=KBNtqxcOMItlye+Mn8Lx+MlB2vDP/CSGHx6X8rJ3UpA=;
+        b=jPO1BrLzJHg9gbNyjG+IBWoinCenotHdxN77Cs/SxDbpfMPjv3ht3haKwMW0wnqGpOSqsGlXbChOBZMtZOBIvdnm5M7qmjf4Z2XYB7Cx857nm+dr9mfEj3hhfWMNLq7n3CjhU25ZmguMdfgch9uD4/kus/Ll57LzNZnaV3/XcRM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=E7H6ToaX6ujh+WjPSvk9rl12X5G2BlrZ0QPxLiOc115w4O2uFT/8FXpnRZQmQJKkWUpDPbBRlOTFgDwkPqgpywElj9zv94ElblaptRQM+eex7CC+Zx9fjdLCazmiUgn8+ZnmWnOhFzgx3OslPxn2xrbSsQWjQy6JU19R/TK9Jjk=
-Received: by 10.86.31.18 with SMTP id e18mr5172215fge.38.1209286993360;
-        Sun, 27 Apr 2008 02:03:13 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id 12sm3680239fgg.6.2008.04.27.02.03.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 27 Apr 2008 02:03:12 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <20080427044049.GJ29771@spearce.org>
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mRZwJhoenZg9bCgcHjDRjzSUsjSdQO2tevCwxigK/gHFnMp1RbhtBjhTpO1C0NaajPk/boV4VUGUgbMU+2LCHmHLXTGlGZMD74cH9qFpXF0KXpwMBiwSSL7w58EjJVDGqFPVoWykXWnZWAoVHf7GXGMgkqr3IVH7NvcYyAVrgo4=
+Received: by 10.143.167.19 with SMTP id u19mr1783508wfo.247.1209288261316;
+        Sun, 27 Apr 2008 02:24:21 -0700 (PDT)
+Received: by 10.142.212.18 with HTTP; Sun, 27 Apr 2008 02:24:21 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80435>
 
-Patch withdrawn, I'll send a different series.
+Aloha everybody,
 
-Paolo
+    I don't have a OS X to test myself, so I would really appreciate
+if someone on the list, lucky owner of a MAC, could help us with
+this...
+
+Thanks a lot in advance
+Marco
+
+
+
+---------- Forwarded message ----------
+From: Mark A. Lane, Ph.D. <drmark@gmail.com>
+Date: Sun, Apr 27, 2008 at 10:05 AM
+Subject: Aloha, quick qgit question
+To: mcostalba@gmail.com
+
+
+Aloha,
+
+I am sorry to bother you. Thank you for writing qgit. I really enjoy
+it. I have been using version 2.0 for a while and like it a lot.
+
+I have been trying to get the 3-21-08 version to compile on OS X
+10.5.2 and I have not succeeded. Are there instructions or do you have
+advice on the proper compile steps?
+
+I have searched Google and have not found the answer. I have Qt4
+installed as well as the xcode tools. The normal ./configure, make,
+make install doesn't work. I also tried the qmake process and can't
+get that to work either.
+
+I would be happy to write up the instructions and host them if you can help me.
+
+Thanks!
+
+Mark
+
+-- 
+Mark A. Lane, Ph.D.
