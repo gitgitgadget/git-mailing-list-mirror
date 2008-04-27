@@ -1,84 +1,52 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH resend] make "git push" update origin and mirrors, "git push --mirror" update mirrors
-Date: Sun, 27 Apr 2008 13:34:46 -0400
-Message-ID: <20080427173446.GM29771@spearce.org>
-References: <4812DA50.3000702@gnu.org> <20080426170126.GC29771@spearce.org> <7vzlrgmrvb.fsf@gitster.siamese.dyndns.org> <20080427043014.GI29771@spearce.org> <20080427044049.GJ29771@spearce.org> <7vabjflvlh.fsf@gitster.siamese.dyndns.org>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: git doesn't finds the parent of a commit (was: How to fetch missing pack)
+Date: Sun, 27 Apr 2008 19:37:31 +0200
+Message-ID: <20080427173731.GA9523@cuci.nl>
+References: <slrng019fg.nd8.joerg@alea.gnuu.de> <20080413094131.GA9437@xp.machine.xx> <slrng0v8h8.ujv.joerg@alea.gnuu.de> <200804240801.13674.chriscool@tuxfamily.org> <20080424060857.GX29771@spearce.org> <20080427104704.GA11784@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:35:44 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 27 19:38:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqAmp-0005qd-LR
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:35:40 +0200
+	id 1JqApP-0006oV-AX
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 19:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757369AbYD0Rew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 13:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757284AbYD0Rev
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:34:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45447 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754606AbYD0Rev (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 13:34:51 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JqAlt-0004RD-SW; Sun, 27 Apr 2008 13:34:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 99B3520FBAE; Sun, 27 Apr 2008 13:34:46 -0400 (EDT)
+	id S1755318AbYD0Rhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 13:37:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755725AbYD0Rhc
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 13:37:32 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:43465 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754949AbYD0Rhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 13:37:32 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 41691545E; Sun, 27 Apr 2008 19:37:31 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vabjflvlh.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080427104704.GA11784@alea.gnuu.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80467>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > I _hate_ the default remote. [...]
-> 
-> It sounds as if you want to say it a bit stronger than that --- to you,
-> defaulting to 'origin' is not of "little to no" but "negative" value, is
-> it?
-> 
-> But I think we are minotiry.  To people with "CVS migrant" workflow,
-> cloning from _the_ central repo, hacking, and then pushing back will never
-> involve anything other than 'origin' and local repositories, and I am
-> sympathetic when they want to say "git push" and have it default to that
-> single other repository.
+J?rg Sommer wrote:
+>% git rev-parse b63e99500137c913bd801a2f22b6cf88c63b95c5~1
+>b63e99500137c913bd801a2f22b6cf88c63b95c5~1
+>fatal: ambiguous argument 'b63e99500137c913bd801a2f22b6cf88c63b95c5~1': unknown revision or path not in the working tree.
+>Use '--' to separate paths from revisions
 
-Yes, I think we are in the minority.  Many people come to Git from
-a centralized system so the idea of just a single place to pull/push
-from makes perfect sense to them.
+>Can someone tell me what I'm doing wrong?
 
-But then they later wonder why they need `git pull origin branch`
-to merge in branch, when they usually just say `git pull`.  What is
-the need for that funny keyword `origin`?  Why do I have to say
-where to get the branch from sometimes and not others?
-
-I think this argument is like the one we had with `git pull . branch`
-vs. `git merge branch`.  However we probably could have gotten users
-to accept `git merge . branch`, as the main argument there was the
-fact that git-merge (the natural command to invoke) didn't actually do
-what the user wanted, and git-pull did.
-
-Just take the above as the rantings of someone who knows git a
-little too well, and has tried to teach it to people who don't,
-and they all have asked about the funny (to them) need for origin
-in git-pull/git-push command line sometimes (no refspecs) and not
-others (with refspecs).
-
+I've had similar symptoms when I had circular references in the
+repository.  They're not reported by any of the existing checks, I've
+submitted a patch (resent it just now) which causes git to check for
+(and report) circular references when using --topo-order on e.g.
+git-rev-list.
 -- 
-Shawn.
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
