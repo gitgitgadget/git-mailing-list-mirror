@@ -1,146 +1,122 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: git doesn't finds the parent of a commit (was: How to fetch
-	missing pack)
-Date: Sun, 27 Apr 2008 12:47:04 +0200
-Message-ID: <20080427104704.GA11784@alea.gnuu.de>
-References: <slrng019fg.nd8.joerg@alea.gnuu.de> <20080413094131.GA9437@xp.machine.xx> <slrng0v8h8.ujv.joerg@alea.gnuu.de> <200804240801.13674.chriscool@tuxfamily.org> <20080424060857.GX29771@spearce.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [RESEND] [PATCH] Fix tree mode of the file list for files
+	containing curly brackets
+Date: Sun, 27 Apr 2008 12:57:00 +0200
+Message-ID: <20080427105700.GA28896@steel.home>
+References: <20080314214904.GA5914@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 27 12:50:14 2008
+X-From: git-owner@vger.kernel.org Sun Apr 27 12:57:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jq4SU-0004Jl-7L
-	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 12:50:14 +0200
+	id 1Jq4Zu-0005yc-Pz
+	for gcvg-git-2@gmane.org; Sun, 27 Apr 2008 12:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272AbYD0Kt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 06:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbYD0Kt0
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 06:49:26 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:3221 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752863AbYD0Kt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 06:49:26 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 40A40488064; Sun, 27 Apr 2008 12:49:24 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jq4PQ-0007Uj-9g; Sun, 27 Apr 2008 12:47:04 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jq4PQ-00034M-BX; Sun, 27 Apr 2008 12:47:04 +0200
+	id S1753276AbYD0K5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 06:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYD0K5G
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 06:57:06 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:50204 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752732AbYD0K5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 06:57:04 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarZw4lh2bA==
+Received: from tigra.home (Faeb6.f.strato-dslnet.de [195.4.174.182])
+	by post.webmailer.de (mrclete mo12) (RZmta 16.27)
+	with ESMTP id N00407k3R8BYPE ; Sun, 27 Apr 2008 12:57:00 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id AAC97277BD;
+	Sun, 27 Apr 2008 12:57:00 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 80B7B56D28; Sun, 27 Apr 2008 12:57:00 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080424060857.GX29771@spearce.org>
+In-Reply-To: <20080314214904.GA5914@steel.home>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80439>
 
+As far as I could understand the online documentation the [lindex ...]
+thing expects an array, which a string produced by git-ls-tree is not.
+So [split ...] it first, to get a real Tcl string-array.
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For instance:
 
-Hi,
+    $ git init
+    $ date >file
+    $ git add . && git commit -m1
+    $ git mv file '{a-b}.a.b'
+    $ git commit -m2
+    $ git mv file '{a-b}.a.b{'
+    $ git commit -m3
+    $ git mv file '{a-b}.a .b{'
+    $ git commit -m4
+    $ gitk
 
-Shawn O. Pearce schrieb am Thu 24. Apr, 02:08 (-0400):
-> If you know the name of the objects you are missing, you can
-> make a temporary pack to transfer the list of objects:
->=20
-> 	# at good repo
-> 	#
-> 	git pack-objects --stdout <object.list >save.pack
->=20
-> 	# at bad repo
-> 	#
-> 	git index-pack --stdin <save.pack
+Now switch the file list from "Patch" to "Tree":
 
-I didn't know the list of objects I'm missing, but I used this little
-script do find them:
+    list element in braces followed by ".a.b" instead of space
+    list element in braces followed by ".a.b" instead of space
+	while executing
+    "lindex $line 1"
+	(procedure "gettreeline" line 9)
+	invoked from within
+    "gettreeline file11 4b155a05282eeccd7c8fd381b22ed442efde2850"
+	("eval" body line 1)
+	invoked from within
+    "eval $script"
+	(procedure "dorunq" line 9)
+	invoked from within
+    "dorunq"
+	("after" script)
 
-anchor=3D7cb192eab0251911e2ca77d4ecceb621dd2d34f5
-while true
-do
-    outp=3D$(git log --pretty=3Draw --raw $anchor 2>&1 >/dev/null)
-    echo $outp
-    [ $#outp -eq 0 ] && break
-    cmt=3D${${outp##* \(}%\)}
-    git cat-file -t $cmt >/dev/null 2>&1 && \
-      cmt=3D$(git cat-file commit $cmt |grep '^tree ')
-    echo ${cmt##* } | ssh server cd git\; git pack-objects --stdout | \
-      git index-pack --stdin >/dev/null
-done
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+Alex Riesen, Fri, Mar 14, 2008 22:49:04 +0100:
+> +	    set la [split "$line" " \t"]
+> +	    if {$diffids ne $nullid2 && [lindex $la 1] ne "blob"} continue
+> +	    set sha1 [lindex $la 2]
+> +	    set fname [lindex $la 3]
 
-Maybe it helps someone else. :)
+And, as I actually do know nothing about Tcl, it does not work for
+files with spaces. The last lindex is obviuosly wrong, it breaks names
+with whitespaces.
 
-But now, there's something else broken.
+I rebased the patch on current master.
 
-% git cat-file commit b63e99500137c913bd801a2f22b6cf88c63b95c5
-tree 68a58fb97935f35c6fb7bcbcfed73b1697db000a
-parent 3f061887c562b20d3ed3d1f764462cf986a1ad12
-author Wincent Colaiuta <win@wincent.com> 1195996542 +0100
-committer Junio C Hamano <gitster@pobox.com> 1196019475 -0800
+ gitk-git/gitk |   12 ++++--------
+ 1 files changed, 4 insertions(+), 8 deletions(-)
 
-Add "--patch" option to git-add--interactive
-
-When the "--patch" option is supplied, the patch_update_cmd() function is
-=E2=80=A6
-
-% git cat-file commit 3f061887c562b20d3ed3d1f764462cf986a1ad12
-tree 636a0f9c085aac7ba539ef2ace03b3081481891a
-parent 324ccbd6a09816af830b22b02bbeb06349141849
-author Junio C Hamano <gitster@pobox.com> 1196014210 -0800
-committer Junio C Hamano <gitster@pobox.com> 1196014993 -0800
-
-add -i: Fix running from a subdirectory
-
-This fixes the pathspec interactive_add() passes to the underlying
-=E2=80=A6
-
-% git rev-parse b63e99500137c913bd801a2f22b6cf88c63b95c5~1
-b63e99500137c913bd801a2f22b6cf88c63b95c5~1
-fatal: ambiguous argument 'b63e99500137c913bd801a2f22b6cf88c63b95c5~1': unk=
-nown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-
-Can someone tell me what I'm doing wrong?
-
-> Note that you may need to do this several times; e.g. if you are
-> missing a tree you won't know what blobs you are missing until
-> you load the tree and run fsck --full again to parse the tree and
-> discover the missing blobs.
-
-fsck --full reports only dangling objects, no breakage.
-
-Bye, J=C3=B6rg.
---=20
-Die zehn Gebote Gottes enthalten 172 W=C3=B6rter, die amerikanische
-Unabh=C3=A4ngigkeitserkl=C3=A4rung 300 W=C3=B6rter, die Verordnung der euro=
-p=C3=A4ischen
-Gemeinschaft =C3=BCber den Import von Karamelbonbons exakt 25911 W=C3=B6rte=
-r.
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIFFmowe0mZwH1VIARAqUZAKDAZKDjQ+jnB1PZ5H0tJ4H4Y1MuFQCeKnyp
-v/oOMwyVRZNwquTrkJKjdXI=
-=NyP8
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 9a4d9c4..5599878 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -4992,14 +4992,10 @@ proc gettreeline {gtf id} {
+ 	if {$diffids eq $nullid} {
+ 	    set fname $line
+ 	} else {
+-	    if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
+-	    set i [string first "\t" $line]
+-	    if {$i < 0} continue
+-	    set sha1 [lindex $line 2]
+-	    set fname [string range $line [expr {$i+1}] end]
+-	    if {[string index $fname 0] eq "\""} {
+-		set fname [lindex $fname 0]
+-	    }
++	    set la [split "$line" " \t"]
++	    if {$diffids ne $nullid2 && [lindex $la 1] ne "blob"} continue
++	    set sha1 [lindex $la 2]
++	    set fname [lindex [split "$line" "\t"] 1]
+ 	    lappend treeidlist($id) $sha1
+ 	}
+ 	lappend treefilelist($id) $fname
