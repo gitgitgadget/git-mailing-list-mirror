@@ -1,69 +1,62 @@
-From: Frederik Hohlfeld <frederik.hohlfeld@gmail.com>
-Subject: Re: git ML archive for download
-Date: Mon, 28 Apr 2008 14:11:00 +0000 (UTC)
-Message-ID: <loom.20080428T140950-459@post.gmane.org>
-References: <4d44224d0804270017j4e290cb4jdadc21a83602f203@mail.gmail.com> <20080427072123.GA6163@sigill.intra.peff.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Simple problem
+Date: Mon, 28 Apr 2008 19:47:51 +0200
+Message-ID: <20080428174751.GA6710@steel.home>
+References: <fv4u49$oks$1@ger.gmane.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 19:41:18 2008
+Cc: git@vger.kernel.org
+To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 19:48:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqXLi-00040V-0s
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:41:10 +0200
+	id 1JqXT2-0006PT-Nf
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935113AbYD1RkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 13:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934445AbYD1RkF
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:40:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:53893 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933293AbYD1RkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 13:40:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JqXKc-000651-7B
-	for git@vger.kernel.org; Mon, 28 Apr 2008 17:40:02 +0000
-Received: from e179251037.adsl.alicedsl.de ([85.179.251.37])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 17:40:02 +0000
-Received: from frederik.hohlfeld by e179251037.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 17:40:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 85.179.251.37 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9b5) Gecko/2008041514 Firefox/3.0b5)
+	id S933785AbYD1Rr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 13:47:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933769AbYD1Rr4
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:47:56 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:45355 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933329AbYD1Rrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 13:47:55 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarKZBJxGkw==
+Received: from tigra.home (Faada.f.strato-dslnet.de [195.4.170.218])
+	by post.webmailer.de (mrclete mo8) (RZmta 16.27)
+	with ESMTP id f0148ck3SGaeKp ; Mon, 28 Apr 2008 19:47:52 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E6F38277BD;
+	Mon, 28 Apr 2008 19:47:51 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id C04DC56D28; Mon, 28 Apr 2008 19:47:51 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <fv4u49$oks$1@ger.gmane.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80570>
 
-Jeff King <peff <at> peff.net> writes:
-
+Kenneth P. Turvey, Mon, Apr 28, 2008 18:31:05 +0200:
+> I ran into an issue earlier today that I didn't know how to easily solve 
+> in git.  I'm sure it is easy to handle, but I wasn't sure how.  
 > 
-> On Sun, Apr 27, 2008 at 09:17:51AM +0200, Frederik Hohlfeld wrote:
+> I removed a file and then realized I'd hit the wrong one.  So all I 
+> wanted to do was to get the file back the way it was in the last commit.  
 > 
-> > I know that Gmane, MARC et al. are archiving the git ML, but is there
-> > a way to download all messages as mbox (or whatever, I can convert
-> > formats)? I may be stupid, but I don't see a "get everything" link.
+> Basically I wanted something similar to:
 > 
-> Try:
+> svn update myfile
 > 
-> http://gmane.org/export.php
 
-Thanks, I really missed that.
+git checkout HEAD filename
 
-Alas, it doesn't let me download many articles, and Gmane doesn't seem to have
-the list from the beginning, right?
-
-Anyone who would be willing to send me his archive?
-
-Thanks
-Frederik
+but mostly just "git checkout filename"
