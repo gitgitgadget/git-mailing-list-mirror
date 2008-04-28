@@ -1,81 +1,67 @@
-From: Patrick Altman <paltman@gmail.com>
-Subject: Re: Git Library?
-Date: Mon, 28 Apr 2008 16:17:22 -0500
-Message-ID: <F427C4D4-7264-4341-A714-23D9DD39E229@gmail.com>
-References: <5FCF765E-F3FF-438C-B4C1-FFB3262831A0@gmail.com> <m3y76xofgm.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-daemon: fix for rotating logs
+Date: Mon, 28 Apr 2008 22:23:07 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804282222150.19187@eeepc-johanness>
+References: <20080428182114.GF26880@genesis.frugalware.org> <20080428182917.GA4794@glandium.org> <alpine.DEB.1.00.0804281937240.19187@eeepc-johanness> <20080428190047.GG26880@genesis.frugalware.org> <20080428192837.GB21950@cuci.nl>
+ <alpine.DEB.1.00.0804282052050.19187@eeepc-johanness> <20080428204323.GA22815@cuci.nl> <alpine.DEB.1.00.0804282153290.19187@eeepc-johanness> <20080428210003.GB22815@cuci.nl> <alpine.DEB.1.00.0804282209230.19187@eeepc-johanness>
+ <20080428211328.GC22815@cuci.nl>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 23:18:24 2008
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Mon Apr 28 23:23:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqaju-0006Li-W3
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 23:18:23 +0200
+	id 1Jqap8-0008AP-I7
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 23:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964803AbYD1VR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 17:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936733AbYD1VR2
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 17:17:28 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:5784 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936776AbYD1VR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 17:17:27 -0400
-Received: by py-out-1112.google.com with SMTP id u52so8061312pyb.10
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 14:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        bh=0PkoE38mxNqQv6cuonIjhyCFkLLb0WBi7f1/Fa0xgwY=;
-        b=Bbuqhlv0XHyedi2rFo/4cW2KSwLQdP6itpn5N4glKvizUco70gjxWDQp0gwmyZziLhuqG6fEqCn82k+IealobLSjp5iwDL/Upnj2xxptZuJnv6IxgT7rqOSH2Vz2Cb14EFkGWX7hvYdkqvgjNAkgsj4Occ/paPjISnBcWbmr7oU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        b=HVVt5crGFogF1Yd0o65mZGNA+7xKcmPJwvOTefZJ/KBB8U7JYVhQ5HY5JHD3+kNhZzFoMcgCAyb8pO4AHIlkQv6TvJlzI/Ue9VritBRGgbVYUAWY4S6Wuc5M0uagDHT7kIUv1mHf+fS3UnTEliN9t1XJ9RmuX8LVZE2Lk3MiNL8=
-Received: by 10.35.92.18 with SMTP id u18mr13988899pyl.33.1209417444691;
-        Mon, 28 Apr 2008 14:17:24 -0700 (PDT)
-Received: from PatrickMac.SME ( [71.4.241.34])
-        by mx.google.com with ESMTPS id w67sm17718720pyg.20.2008.04.28.14.17.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Apr 2008 14:17:23 -0700 (PDT)
-In-Reply-To: <m3y76xofgm.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.919.2)
+	id S964835AbYD1VW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 17:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934894AbYD1VW6
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 17:22:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35652 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933811AbYD1VW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 17:22:57 -0400
+Received: (qmail invoked by alias); 28 Apr 2008 21:22:55 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.st-andrews.ac.uk) [141.5.11.5]
+  by mail.gmx.net (mp032) with SMTP; 28 Apr 2008 23:22:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VWB1GGg3VzCVZF9Bdc5aR7DQDSe9tA2gxR/dduO
+	q5kMxPFeOn8Zdy
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080428211328.GC22815@cuci.nl>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80618>
 
+Hi,
 
-On Apr 28, 2008, at 4:08 PM, Jakub Narebski wrote:
+On Mon, 28 Apr 2008, Stephen R. van den Berg wrote:
 
-> Patrick Altman <paltman@gmail.com> writes:
->
->> I want to write a Mac OSX UI for git.
->
-> Something like GitNub?
+> Johannes Schindelin wrote:
+> >On Mon, 28 Apr 2008, Stephen R. van den Berg wrote:
+> >> Johannes Schindelin wrote:
+> >> >On Mon, 28 Apr 2008, Stephen R. van den Berg wrote:
+> >> >> - rotatelog rotates logfiles in /var/log and communicates with syslogd
+> >> >>   to make sure syslogd starts new logfiles in /var/log
+> >> >> - And then git-daemon hangs on which system/library call?
+> 
+> >I can do better than that.  I attached to the process, and like I said, it 
+> >hung in close().
+> 
+> On which descriptor?  (I.e. what does the descriptor point to?)
 
-Not really.  GitNub is really an interface for GitHub.  I am thinking  
-something more like ZigVersion, http://zigzig.com/, for Git instead of  
-Subversion.
+Sorry, that I don't remember, but I strongly suspect the syslog 
+descriptor, since the backtrace showed "syslog()" a few levels up of 
+close().
 
->> Is there a documented/undocumented API for interacting with git in
->> process?  Or would I be better off "shelling out" to the git command
->> line?
->
-> Take a look how other GUIs does it.
-
-git-gui is written in TCL I believe, which I do not want to use.
-GitNub is the only other GUI of sorts that i am aware of but like I  
-mentioned above, that really is more of a GitHub interface and less of  
-a git interface.
-
-I think that this point I am just going to use NTask and the like in  
-Cocoa/Objective-C to wrap the command line utilities.
-
-Thanks,
-Patrick
+Ciao,
+Dscho
