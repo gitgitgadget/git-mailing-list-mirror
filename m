@@ -1,97 +1,259 @@
-From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH] Use perl instead of tac
-Date: Mon, 28 Apr 2008 15:15:55 +0000 (UTC)
-Message-ID: <slrng1bqhb.25r.joerg@alea.gnuu.de>
-References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com>
- <20080427064250.GA5455@sigill.intra.peff.net>
- <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com>
- <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com>
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
+	whitespace.
+Date: Mon, 28 Apr 2008 18:30:03 +0200
+Message-ID: <20080428163003.GA6449@alea.gnuu.de>
+References: <20080427151610.GB57955@Hermes.local> <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness> <7vej8rgq62.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804281112500.2949@eeepc-johanness> <slrng1bdsf.25r.joerg@alea.gnuu.de> <alpine.DEB.1.00.0804281409030.5399@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:48:22 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:48:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqWW9-0001PC-9F
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:47:53 +0200
+	id 1JqWWA-0001PC-J6
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936071AbYD1QrF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 12:47:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936039AbYD1QrE
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:47:04 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:1425 "EHLO uucp.gnuu.de"
+	id S964808AbYD1QrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 12:47:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936155AbYD1QrJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:47:09 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:1427 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936010AbYD1QrB (ORCPT <rfc822;git@vger.kernel.org>);
+	id S935981AbYD1QrB (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2008 12:47:01 -0400
 Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id EBDB3488068; Mon, 28 Apr 2008 18:46:59 +0200 (CEST)
-Received: from news by alea.gnuu.de with local (Exim 4.63)
-	(envelope-from <news@alea.gnuu.de>)
-	id 1JqV5A-0004HR-1a
-	for git@vger.kernel.org; Mon, 28 Apr 2008 17:15:56 +0200
-Path: not-for-mail
-Newsgroups: local.mailinglist.git
-X-Trace: alea.gnuu.de 1209395755 16388 192.168.0.5 (28 Apr 2008 15:15:55 GMT)
-X-Complaints-To: usenet@alea.gnuu.de
-User-Agent: slrn/pre0.9.9-102 (Linux)
+	id 2B8F6488069; Mon, 28 Apr 2008 18:47:00 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JqWEu-0004HX-Od; Mon, 28 Apr 2008 18:30:04 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JqWEt-0003ra-RM; Mon, 28 Apr 2008 18:30:03 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0804281409030.5399@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80563>
 
-Hallo Randal,
 
-Randal L. Schwartz <merlyn@stonehenge.com> wrote:
->>>>>> "J=C3=B6rg" =3D=3D J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
->
-> J=C3=B6rg> What about using a shell function and a *big* variable or =
-an intermediate
-> J=C3=B6rg> file?
->
-> What makes you think that's any more faster or efficient than calling=
- Perl
-> at this point?
+--jRHKVT23PllUwdXP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Nothing. My intention was not the speed, but the dependency on Perl. Bu=
-t
-your are right. Except from the point that my suggestion is broken, it'=
-s
-*much* slower:
+Hi,
 
-% time dash -c 'while IFS=3D read -r line; do rev=3D"$line
-$rev"; done; printf "%s" "$rev"' < gitk-git/gitk-wish DN
-dash -c  < gitk-git/gitk-wish > /dev/null 2> /dev/null  17,89s user 2,6=
-8s system 96% cpu 21,352 total
+Johannes Schindelin schrieb am Mon 28. Apr, 14:42 (+0100):
+> On Mon, 28 Apr 2008, J=C3=B6rg Sommer wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > On Sun, 27 Apr 2008, Junio C Hamano wrote:
+> > >
+> > >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > >>=20
+> > >> > ...  It did not help that I hated the fact that that series change=
+d=20
+> > >> > the original design without even understanding it.
+> > >>=20
+> > >> Care to elaborate on this point further?  I do not get it.
+> > >
+> > > The original implementation of -p was modeled closely after=20
+> > > filter-branch, in that it created a subdirectory (dotest/rewritten)=
+=20
+> > > containing the new commit names for those commits that were rewritten.
+> >=20
+> > But that wasn't the way rebase -i works.
+>=20
+> I know exactly how it works. D'oh.
+>=20
+> > You had to jump in before pick_one does anything which clearly shows yo=
+u=20
+> > did something different from the default way.
+>=20
+> That is bullshit.  I did not do anything "different from the default way"=
+=2E =20
+> I carefully designed an interface that was easy to understand, because it=
+=20
+> mimicked how you would do the same _by hand_, but without the hassle to=
+=20
+> actually having to do everything by hand.
+>=20
+> In other words, rebase -i is just a cherry-pick in a loop.
 
-% time tac < gitk-git/gitk-wish DN
-tac < gitk-git/gitk-wish > /dev/null 2> /dev/null  0,01s user 0,01s sys=
-tem 91% cpu 0,017 total
+But not rebase -i -p.
 
-% time perl -e 'print reverse <>' < gitk-git/gitk-wish DN
-perl -e 'print reverse <>' < gitk-git/gitk-wish > /dev/null 2> /dev/nul=
-l  0,07s user 0,01s system 59% cpu 0,141 total
+> And _exactly_ the same should have been done for -p.
 
-But I doubt this hurts, because we don't have such a big input.
+But you didn't do it.
 
-% wc -l git.c
-390 git.c
+> Namely, _not_ introduce some artificial marks, but use the _commit
+> names_!
 
-% time dash -c 'while IFS=3D read -r line; do rev=3D"$line
-$rev"; done; printf "%s" "$rev"' < git.c DN
-dash -c  < git.c > /dev/null 2> /dev/null  0,04s user 0,04s system 62% =
-cpu 0,115 total
+I don't buy, you don't use marks (notes on paper or git tags) when you reba=
+se
+a branch with at least 8 commits and 2 merges.
 
-And what about something like this: 'tac || rev || perl =E2=80=A6'
+And Junio discribed how he would do such a rebase and it included marks.
+And I follow how. So no, they aren't artificial.
+
+> > > Now, whenever a commit was picked, the parents would be looked up in=
+=20
+> > > dotest/rewritten, and replaced with the rewritten name (or left=20
+> > > unchanged if they were not rewritten).
+> >=20
+> > This approach doesn't work when you change the order of commits.
+> > Take the commit A, B and C in this order and reorder them to A C B:
+> > 1. pick A, A^ was not rewritten, nothing changed, A stays the same
+> > 2. pick C, C^ was not rewritten, nothing changed, C stays the same
+> > 3. pick B, B^ was not rewritten, nothing changed, B stays the same
+>=20
+> You carefully ignored how I intended the parents to be used: only for=20
+> merges.
+
+And why does this test fail? Please tell me, as you =E2=80=9Cknow exactly h=
+ow it
+works.=E2=80=9D
+
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 9cf873f..83c2964 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -361,4 +361,10 @@ test_expect_success 'rebase with a file named HEAD in =
+worktree' '
+=20
+ '
+=20
++test_expect_success 'rebase with a file named HEAD in worktree' '
++       head=3D$(git rev-parse HEAD) &&
++       FAKE_LINES=3D"1 3 2" git rebase -i -p HEAD~3 &&
++       test $(git rev-parse HEAD) !=3D $head
++'
++
+ test_done
+
+* FAIL 25: rebase with a file named HEAD in worktree
+
+                head=3D$(git rev-parse HEAD) &&
+                FAKE_LINES=3D"1 3 2" git rebase -i -p HEAD~3 &&
+                test $(git rev-parse HEAD) !=3D $head
+
+> > > Basically, the output of rebase -i -p is ugly now, because you have=
+=20
+> > > _two_ ways of specifying things,
+> >=20
+> > > I have the feeling that I have to repeat my point again, so that it i=
+s not=20
+> > > ignored -- again.  Maybe an example would help:
+> > >
+> > > -- snip --
+> > > pick abcdefg This is the first commit to be picked
+> > > reset cdefghij
+> > > pick zyxwvux A commit in a side-branch
+> > > merge recursive abcdefg
+
+Where do you tell which merge should be redone?
+
+> > > -- snap --
+> > >
+> > > I am convinced that this syntax does not need much explanation.
+> >=20
+> > But above you said this syntax + mark is =E2=80=9Cugly=E2=80=9D. Strang=
+e.
+>=20
+> You know, I find it strange how you try to make a _point_ in=20
+> misunderstanding me.  Did I not mention that the way to have _two_ ways t=
+o=20
+> reference commits was ugly?  You did not even bother to remove that part=
+=20
+> from what you quoted.
+
+Because Junio told you about it. And I don't find your suggestion in
+<alpine.DEB.1.00.0804141506270.28504@racer> very readable:
+
+| I would like it much better, if there was something like
+|
+| pick 5cc8f37 (init: show "Reinit" message even in ...)
+| pick 18d077c (quiltimport: fix misquoting of parse...)
+| merge 9876543:5cc8f37,18d077c (Merge blub)
+        ^^^^^^^^^^^^^^^
+| reset 5cc8f37
+| ...
+
+I don't see why you complain about the marks and suggest to use
+9876543:5cc8f37,18d077c. In a short example like yours it doesn't hurd,
+but put 10 line between the merge an the pick and maybe change move one
+of the merged commits behind the merge.
+
+pick 8a785dc Add tests to catch problems with un-unlinkable symlinks
+pick 8d14ac9 Test: catch if trash cannot be removed
+pick 29dc133 git-merge-one-file: fix longstanding stupid thinko
+pick deda26b Merge branch 'jc/makefile'
+pick 7f8ab8d Don't update unchanged merge entries
+pick 198724a fast-import: Allow "reset" to delete a new branch without error
+pick 20fd60b t1000: use "test_must_fail git frotz", not "! git frotz"
+pick 7092882 Update draft release notes for 1.5.5
+pick c817faa Resurrect git-rerere to contrib/examples
+pick 1eaa541 Merge branch 'maint'
+pick 81d6650 Start draft ReleaseNotes for 1.5.4.5
+merge 9876543:81d6650,198724a (Merge blub)
+pick e637122 rebase -m: do not trigger pre-commit verification
+
+pick 8a785dc Add tests to catch problems with un-unlinkable symlinks
+pick 8d14ac9 Test: catch if trash cannot be removed
+pick 29dc133 git-merge-one-file: fix longstanding stupid thinko
+pick deda26b Merge branch 'jc/makefile'
+pick 7f8ab8d Don't update unchanged merge entries
+pick 198724a fast-import: Allow "reset" to delete a new branch without error
+mark #1
+pick 20fd60b t1000: use "test_must_fail git frotz", not "! git frotz"
+pick 7092882 Update draft release notes for 1.5.5
+pick c817faa Resurrect git-rerere to contrib/examples
+pick 1eaa541 Merge branch 'maint'
+pick 81d6650 Start draft ReleaseNotes for 1.5.4.5
+merge 9876543:81d6650,#1 (Merge blub)
+pick e637122 rebase -m: do not trigger pre-commit verification
+
+> > > A patch implementing a syntax like this would have won my unilateral=
+=20
+> > > approval
+> >=20
+> > I doubt this. You refused any changes to your idea and your code from=
+=20
+> > the beginning. You didn't answer questions and doesn't take part on the=
+=20
+> > discussion [1] about the new syntax.
+>=20
+> Well, you carefully ignored (but removed from the quoted text) my=20
+> explanation.
+
+Sorry no, Junio made his proposal on Mar 24 and merge the code on Apr 25.
+I treat this as a adequate time window to propose a _better_ idea.
 
 Bye, J=C3=B6rg.
 --=20
-Was der Bauer nicht kennt, das frisst er nicht. W=C3=BCrde der St=C3=A4=
-dter kennen,
-was er frisst, er w=C3=BCrde umgehend Bauer werden.
-                                                       Oliver Hassencam=
-p
+=E2=80=9CUnfortunately, the current generation of mail programs do not have
+ checkers to see if the sender knows what he is talking about=E2=80=9D
+            (Andrew S. Tanenbaum)
+
+--jRHKVT23PllUwdXP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIFfuLwe0mZwH1VIARAt2oAJ9U8nUB5o98WbM6RvhmjRd5N4BQLACgjleF
+525p5wPJIyNAjk++aOgpYlE=
+=4+Ab
+-----END PGP SIGNATURE-----
+
+--jRHKVT23PllUwdXP--
