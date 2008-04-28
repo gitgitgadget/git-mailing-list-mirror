@@ -1,67 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Use perl instead of tac
-Date: Mon, 28 Apr 2008 19:34:45 +0200
-Message-ID: <vpqej8pnaru.fsf@bauges.imag.fr>
-References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com>
-	<20080427064250.GA5455@sigill.intra.peff.net>
-	<739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com>
-	<slrng1be8l.25r.joerg@alea.gnuu.de>
-	<86k5iib0g9.fsf@blue.stonehenge.com>
-	<slrng1bqhb.25r.joerg@alea.gnuu.de>
+From: Frederik Hohlfeld <frederik.hohlfeld@gmail.com>
+Subject: Re: git ML archive for download
+Date: Mon, 28 Apr 2008 14:11:00 +0000 (UTC)
+Message-ID: <loom.20080428T140950-459@post.gmane.org>
+References: <4d44224d0804270017j4e290cb4jdadc21a83602f203@mail.gmail.com> <20080427072123.GA6163@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Mon Apr 28 19:40:18 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 19:41:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqXKZ-0003al-SI
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:40:00 +0200
+	id 1JqXLi-00040V-0s
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934662AbYD1Ri7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 13:38:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934621AbYD1Ri7
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:38:59 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:60506 "EHLO harmonie.imag.fr"
+	id S935113AbYD1RkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 13:40:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934445AbYD1RkF
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:40:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:53893 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933699AbYD1Ri6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2008 13:38:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m3SHbsbS026536;
-	Mon, 28 Apr 2008 19:37:55 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JqXFV-0006IC-Sg; Mon, 28 Apr 2008 19:34:45 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JqXFV-0001aI-QU; Mon, 28 Apr 2008 19:34:45 +0200
-In-Reply-To: <slrng1bqhb.25r.joerg@alea.gnuu.de> (=?iso-8859-1?Q?=22J=F6rg?=
- Sommer"'s message of "Mon\, 28 Apr 2008 15\:15\:55 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 28 Apr 2008 19:37:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S933293AbYD1RkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 13:40:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JqXKc-000651-7B
+	for git@vger.kernel.org; Mon, 28 Apr 2008 17:40:02 +0000
+Received: from e179251037.adsl.alicedsl.de ([85.179.251.37])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 17:40:02 +0000
+Received: from frederik.hohlfeld by e179251037.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 17:40:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 85.179.251.37 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9b5) Gecko/2008041514 Firefox/3.0b5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80569>
 
-J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
+Jeff King <peff <at> peff.net> writes:
 
-> And what about something like this: 'tac || rev || perl =E2=80=A6'
+> 
+> On Sun, Apr 27, 2008 at 09:17:51AM +0200, Frederik Hohlfeld wrote:
+> 
+> > I know that Gmane, MARC et al. are archiving the git ML, but is there
+> > a way to download all messages as mbox (or whatever, I can convert
+> > formats)? I may be stupid, but I don't see a "get everything" link.
+> 
+> Try:
+> 
+> http://gmane.org/export.php
 
-Be careful: rev and tac are different. tac reverses lines, while rev
-reverses chars inside lines.
+Thanks, I really missed that.
 
-My 2 cents,
+Alas, it doesn't let me download many articles, and Gmane doesn't seem to have
+the list from the beginning, right?
 
---=20
-Matthieu
+Anyone who would be willing to send me his archive?
+
+Thanks
+Frederik
