@@ -1,53 +1,71 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Yet another Git tutorial
-Date: Mon, 28 Apr 2008 12:42:49 -0400
-Message-ID: <9784D772-3CC5-47A5-9FD2-DB4F729FC069@silverinsanity.com>
-References: <2D3D2E55-74C7-4373-BC22-9CF4C26C197D@newartisans.com> <4557C7EE-2B56-4836-A2AC-09EAF05FD95C@silverinsanity.com> <4815FE06.90002@gnu.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: John Wiegley <johnw@newartisans.com>,
-	git list <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:44:18 2008
+From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: git doesn't finds the parent of a commit
+Date: Mon, 28 Apr 2008 14:14:34 +0000 (UTC)
+Message-ID: <slrng1bmua.25r.joerg@alea.gnuu.de>
+References: <slrng019fg.nd8.joerg@alea.gnuu.de>
+ <20080413094131.GA9437@xp.machine.xx> <slrng0v8h8.ujv.joerg@alea.gnuu.de>
+ <200804240801.13674.chriscool@tuxfamily.org>
+ <20080424060857.GX29771@spearce.org> <20080427104704.GA11784@alea.gnuu.de>
+ <20080427173731.GA9523@cuci.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:48:14 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqWSG-0008BR-9H
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:43:52 +0200
+	id 1JqWW9-0001PC-UN
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935329AbYD1Qm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 12:42:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934174AbYD1Qmz
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:42:55 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:55620 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935347AbYD1Qmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 12:42:51 -0400
-Received: from [192.168.1.7] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 93FD91FFD6C5;
-	Mon, 28 Apr 2008 16:42:45 +0000 (UTC)
-In-Reply-To: <4815FE06.90002@gnu.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S936102AbYD1QrH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 12:47:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936061AbYD1QrG
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:47:06 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:1424 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935979AbYD1QrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 12:47:01 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id B6B81488067; Mon, 28 Apr 2008 18:46:59 +0200 (CEST)
+Received: from news by alea.gnuu.de with local (Exim 4.63)
+	(envelope-from <news@alea.gnuu.de>)
+	id 1JqU7m-0004GM-L9
+	for git@vger.kernel.org; Mon, 28 Apr 2008 16:14:34 +0200
+Path: not-for-mail
+Newsgroups: local.mailinglist.git
+X-Trace: alea.gnuu.de 1209392074 16388 192.168.0.5 (28 Apr 2008 14:14:34 GMT)
+X-Complaints-To: usenet@alea.gnuu.de
+User-Agent: slrn/pre0.9.9-102 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80561>
 
+Hallo,
 
-On Apr 28, 2008, at 12:40 PM, Paolo Bonzini wrote:
-
->> (p.4) On my system, `echo "Hello, world\!" > greeting` puts the  
->> backslash into greeting.  Of course, leaving it out leaves an error.
+"Stephen R. van den Berg" <srb@cuci.nl> wrote:
+> J?rg Sommer wrote:
+>>% git rev-parse b63e99500137c913bd801a2f22b6cf88c63b95c5~1
+>>b63e99500137c913bd801a2f22b6cf88c63b95c5~1
+>>fatal: ambiguous argument 'b63e99500137c913bd801a2f22b6cf88c63b95c5~1=
+': unknown revision or path not in the working tree.
+>>Use '--' to separate paths from revisions
 >
-> Using single quotes, as in `echo 'Hello, world!'`, should work fine.
+>>Can someone tell me what I'm doing wrong?
+>
+> I've had similar symptoms when I had circular references in the
+> repository.
 
-Of course, I forget this simple option.
+No, this was not my problem. But I found the reason with bisect:
+=2Egit/shallow. I've started with a shallow clone, but forgot it. Is it
+possible that git warns about this or ignores the shallow entry if the
+parent of the commit is available?
 
-~~ Brian
+Bye, J=C3=B6rg.
+--=20
+Dein Gesicht wird dir geschenkt. L=C3=A4cheln musst du selber! (Inga He=
+rmann)
