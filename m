@@ -1,66 +1,62 @@
-From: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
-Subject: Simple problem
-Date: Mon, 28 Apr 2008 16:31:05 +0000 (UTC)
-Message-ID: <fv4u49$oks$1@ger.gmane.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Simple problem
+Date: Mon, 28 Apr 2008 11:35:55 -0500
+Message-ID: <18453.64747.540905.586259@lisa.zopyra.com>
+References: <fv4u49$oks$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:32:58 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:37:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqWGq-0003Z3-VR
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:32:05 +0200
+	id 1JqWLU-0005Ti-0T
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934848AbYD1QbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 12:31:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934101AbYD1QbQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:31:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:57891 "EHLO ciao.gmane.org"
+	id S935861AbYD1QgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 12:36:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933669AbYD1QgA
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:36:00 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:60796 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934566AbYD1QbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 12:31:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JqWG1-0002T3-2n
-	for git@vger.kernel.org; Mon, 28 Apr 2008 16:31:13 +0000
-Received: from pool-71-161-56-12.clppva.east.verizon.net ([71.161.56.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 16:31:13 +0000
-Received: from kt-usenet by pool-71-161-56-12.clppva.east.verizon.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 16:31:13 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pool-71-161-56-12.clppva.east.verizon.net
-User-Agent: Pan/0.129 (Benson & Hedges Moscow Gold)
+	id S965443AbYD1Qf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 12:35:59 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id m3SGZvZ05372;
+	Mon, 28 Apr 2008 10:35:57 -0600
+In-Reply-To: <fv4u49$oks$1@ger.gmane.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80556>
 
-I ran into an issue earlier today that I didn't know how to easily solve 
-in git.  I'm sure it is easy to handle, but I wasn't sure how.  
+On Monday, April 28, 2008 at 16:31:05 (+0000) Kenneth P. Turvey writes:
+>I ran into an issue earlier today that I didn't know how to easily solve 
+>in git.  I'm sure it is easy to handle, but I wasn't sure how.  
+>
+>I removed a file and then realized I'd hit the wrong one.  So all I 
+>wanted to do was to get the file back the way it was in the last commit.  
+>
+>Basically I wanted something similar to:
+>
+>svn update myfile
+>
+>in subversion.  
+>
+>I got it back by using a diff and just deleting all the minus signs at 
+>the beginning of the lines, but I'm sure this isn't the way to handle 
+>this.  Strangely this simple case wasn't covered by any of the tutorials 
+>I looked at. 
 
-I removed a file and then realized I'd hit the wrong one.  So all I 
-wanted to do was to get the file back the way it was in the last commit.  
+% rm file
+[oops]
+% git checkout file
 
-Basically I wanted something similar to:
 
-svn update myfile
-
-in subversion.  
-
-I got it back by using a diff and just deleting all the minus signs at 
-the beginning of the lines, but I'm sure this isn't the way to handle 
-this.  Strangely this simple case wasn't covered by any of the tutorials 
-I looked at. 
-
-Thanks.
-
--- 
-Kenneth P. Turvey <kt-usenet@squeakydolphin.com>
+Bill
