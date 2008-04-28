@@ -1,62 +1,64 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Simple problem
-Date: Mon, 28 Apr 2008 11:35:55 -0500
-Message-ID: <18453.64747.540905.586259@lisa.zopyra.com>
-References: <fv4u49$oks$1@ger.gmane.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] clone: detect and fail on excess parameters
+Date: Mon, 28 Apr 2008 18:36:42 +0200
+Message-ID: <20080428163642.GA22790@neumann>
+References: <7vfxtcsbis.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:37:00 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:38:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqWLU-0005Ti-0T
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:36:52 +0200
+	id 1JqWMt-0005zq-8g
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935861AbYD1QgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 12:36:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933669AbYD1QgA
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:36:00 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60796 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965443AbYD1Qf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 12:35:59 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id m3SGZvZ05372;
-	Mon, 28 Apr 2008 10:35:57 -0600
-In-Reply-To: <fv4u49$oks$1@ger.gmane.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S936173AbYD1Qgr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 12:36:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936140AbYD1Qgp
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:36:45 -0400
+Received: from francis.fzi.de ([141.21.7.5]:48322 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S936090AbYD1Qgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 12:36:44 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 28 Apr 2008 18:36:40 +0200
+Content-Disposition: inline
+In-Reply-To: <7vfxtcsbis.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 28 Apr 2008 16:36:40.0850 (UTC) FILETIME=[094ACF20:01C8A94E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80557>
 
-On Monday, April 28, 2008 at 16:31:05 (+0000) Kenneth P. Turvey writes:
->I ran into an issue earlier today that I didn't know how to easily solve 
->in git.  I'm sure it is easy to handle, but I wasn't sure how.  
->
->I removed a file and then realized I'd hit the wrong one.  So all I 
->wanted to do was to get the file back the way it was in the last commit.  
->
->Basically I wanted something similar to:
->
->svn update myfile
->
->in subversion.  
->
->I got it back by using a diff and just deleting all the minus signs at 
->the beginning of the lines, but I'm sure this isn't the way to handle 
->this.  Strangely this simple case wasn't covered by any of the tutorials 
->I looked at. 
+Hi,
 
-% rm file
-[oops]
-% git checkout file
+On Wed, Apr 23, 2008 at 10:53:47AM -0700, Junio C Hamano wrote:
+> "git clone [options] $src $dst excess-garbage" simply ignored
+> excess-garbage without giving any diagnostic message.  Fix it.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> [...]
+> --- a/git-clone.sh
+> +++ b/git-clone.sh
+> @@ -219,6 +219,7 @@ fi
+>  if test -n "$2"
+>  then
+>  	dir=3D"$2"
+> +	test $# =3D=3D 2 || die "excess parameter to git-clone"
+                ^^
+I think you mean:
+
+    test $# =3D 2 || die "excess parameter to git-clone"
+
+I just noticed because it broke t1020-subdirectory at me.
 
 
-Bill
+Best,
+G=E1bor
