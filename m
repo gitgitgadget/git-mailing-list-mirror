@@ -1,79 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Dumb idea on git library for script languages
-Date: Mon, 28 Apr 2008 00:31:02 -0700 (PDT)
-Message-ID: <m38wyyphai.fsf@localhost.localdomain>
-References: <1209366216.17090.4.camel@prosumer>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rebase--interactive: Replace unportable 'tac' by a sed script.
+Date: Mon, 28 Apr 2008 09:44:48 +0200
+Message-ID: <48158070.7090007@viscovery.net>
+References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tsgates <tsgatesv@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 09:32:02 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git list <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 09:45:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqNqC-000519-FU
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 09:32:00 +0200
+	id 1JqO3X-0008Vq-P2
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 09:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765516AbYD1HbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 03:31:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763654AbYD1HbM
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 03:31:12 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:42270 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765506AbYD1HbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 03:31:11 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so1830804nfb.21
-        for <git@vger.kernel.org>; Mon, 28 Apr 2008 00:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=oi6jYyZ1Z+pNs5HT4tiuMORdfofJGYAlBoxduc88Nd4=;
-        b=o1rajtfV61f9mKrcPzz1BoEpMOqkALNNsa/cXrobbQrTjDjgfwlWlHnbiLOWxVKHIt6DYgap01L/EFIIiG+Zhwmd2ZCajtbsiBmWtwRaiy5dkg5JBKpRMTbYvevGmVkSFa5NSkKjIklzOjLhp08oM0t51HThMnLqQ1/kteH2fOE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=TvmpNgr6Yw1uxXwpm4SyF3TkozUTOKnehdygE1O3r2FLyOI2panTR2tSG2Cs7F3Hevslh5e9qBDVTB0AwGxDWwYwQYr+cbH1UpBr+BhMlFGJCScblNywMGsmtCAMuagvY1fR2SWeugccnzaKJ4HrwYW4aqzMHiFPNi4vtENBGPE=
-Received: by 10.210.61.8 with SMTP id j8mr5364447eba.199.1209367867301;
-        Mon, 28 Apr 2008 00:31:07 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.207.149])
-        by mx.google.com with ESMTPS id g17sm7982024nfd.10.2008.04.28.00.31.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Apr 2008 00:31:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3S7V3M7021017;
-	Mon, 28 Apr 2008 09:31:04 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3S7V2Cn021014;
-	Mon, 28 Apr 2008 09:31:02 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1209366216.17090.4.camel@prosumer>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1763654AbYD1Ho6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 03:44:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763346AbYD1Ho6
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 03:44:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:63931 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763632AbYD1Ho5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 03:44:57 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JqO2a-0005XE-Tv; Mon, 28 Apr 2008 09:44:51 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A9A726C4; Mon, 28 Apr 2008 09:44:48 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com>
+X-Spam-Score: 0.2 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80507>
 
-tsgates <tsgatesv@gmail.com> writes:
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-> When I try to use git in python, there are no fancy ways not to fork any
-> processes.  (except not active git library) I know it is design policy
-> of git, one job for one process.
-> 
-> Anyhow, I need to call git in python and perl, so I try to think.
-[...]
-> If there are any other good suggestions or recommendations on it, please
-> recommend it.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+Brian Gernhardt schrieb:
+> -    tac | \
+> +    perl -e 'print reverse <>' | \
 
-Please take a look at libgit-thin project, which was Google Summer of
-Code 2007 project; it was meant to create PyGit, git bindings for
-Python.  I don't know how far it is/got advanced.
+Here's my try, which avoids the perl hammer. ;)
 
-InterfacesFrontendsAndTools page on Git Wiki mentions it.
+Sorry, I can't test this at the moment due to an unrelated breakage
+that I first have to chase down.
 
+-- Hannes
+
+PS: I picked the sed script from this patch by Simon 'corecode' Schubert:
+
+http://article.gmane.org/gmane.comp.version-control.git/37074
+
+ git-rebase--interactive.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 1751b08..a9ac332 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -469,7 +469,7 @@ create_extended_todo_list () {
+ 	test -n "${last_parent:-}" -a "${last_parent:-}" != $SHORTUPSTREAM && \
+ 		echo reset $last_parent
+ 	) | \
+-	tac | \
++	sed -ne '1!G;$p;h' | \
+ 	while read cmd args
+ 	do
+ 		: ${commit_mark_list:=} ${last_commit:=000}
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.5.1.930.g66f94.dirty
