@@ -1,86 +1,81 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: git-send-email: Skipping  - not found.
-Date: Mon, 28 Apr 2008 16:15:24 -0500
-Message-ID: <48163E6C.60104@freescale.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Patrick Altman <paltman@gmail.com>
+Subject: Re: Git Library?
+Date: Mon, 28 Apr 2008 16:17:22 -0500
+Message-ID: <F427C4D4-7264-4341-A714-23D9DD39E229@gmail.com>
+References: <5FCF765E-F3FF-438C-B4C1-FFB3262831A0@gmail.com> <m3y76xofgm.fsf@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 23:16:38 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 23:18:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqai6-0005gw-2B
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 23:16:30 +0200
+	id 1Jqaju-0006Li-W3
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 23:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936286AbYD1VPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 17:15:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935577AbYD1VPm
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 17:15:42 -0400
-Received: from de01egw02.freescale.net ([192.88.165.103]:64024 "EHLO
-	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935987AbYD1VPl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 17:15:41 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id m3SLFPFO020264
-	for <git@vger.kernel.org>; Mon, 28 Apr 2008 14:15:25 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m3SLFO7D005915
-	for <git@vger.kernel.org>; Mon, 28 Apr 2008 16:15:24 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1.13) Gecko/20080313 SeaMonkey/1.1.9
+	id S964803AbYD1VR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 17:17:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936733AbYD1VR2
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 17:17:28 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:5784 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936776AbYD1VR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 17:17:27 -0400
+Received: by py-out-1112.google.com with SMTP id u52so8061312pyb.10
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 14:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=0PkoE38mxNqQv6cuonIjhyCFkLLb0WBi7f1/Fa0xgwY=;
+        b=Bbuqhlv0XHyedi2rFo/4cW2KSwLQdP6itpn5N4glKvizUco70gjxWDQp0gwmyZziLhuqG6fEqCn82k+IealobLSjp5iwDL/Upnj2xxptZuJnv6IxgT7rqOSH2Vz2Cb14EFkGWX7hvYdkqvgjNAkgsj4Occ/paPjISnBcWbmr7oU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=HVVt5crGFogF1Yd0o65mZGNA+7xKcmPJwvOTefZJ/KBB8U7JYVhQ5HY5JHD3+kNhZzFoMcgCAyb8pO4AHIlkQv6TvJlzI/Ue9VritBRGgbVYUAWY4S6Wuc5M0uagDHT7kIUv1mHf+fS3UnTEliN9t1XJ9RmuX8LVZE2Lk3MiNL8=
+Received: by 10.35.92.18 with SMTP id u18mr13988899pyl.33.1209417444691;
+        Mon, 28 Apr 2008 14:17:24 -0700 (PDT)
+Received: from PatrickMac.SME ( [71.4.241.34])
+        by mx.google.com with ESMTPS id w67sm17718720pyg.20.2008.04.28.14.17.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 28 Apr 2008 14:17:23 -0700 (PDT)
+In-Reply-To: <m3y76xofgm.fsf@localhost.localdomain>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80616>
-
-When I issue this command:
-
-git-send-email  --from Timur Tabi <timur@freescale.com> --suppress-cc=all --to
-timur@tabi.org --smtp-server remotesmtp.freescale.net
-0001--PATCH-Update-CS4270-driver-to-ASoC-V2.patch
-
-I get this output:
-
-Skipping  - not found.
-0001--PATCH-Update-CS4270-driver-to-ASoC-V2.patch
-OK. Log says:
-Server: remotesmtp.freescale.net
-MAIL FROM:<timur@freescale.com>
-RCPT TO:<timur@tabi.org>
-From: Timur Tabi <timur@freescale.com>
-To: timur@tabi.org
-Subject: [PATCH] Update CS4270 driver to ASoC V2
-Date: Mon, 28 Apr 2008 16:13:34 -0500
-Message-Id: <1209417214-17376-1-git-send-email-timur@freescale.com>
-X-Mailer: git-send-email 1.5.5
-
-Result: 250 2.0.0 m3SLDY4k005131 Message accepted for delivery
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80617>
 
 
-I don't know enough about Perl to debug this, but I presume the problem is in
-this code:
+On Apr 28, 2008, at 4:08 PM, Jakub Narebski wrote:
 
-for my $f (@ARGV) {
-	if (-d $f) {
-		opendir(DH,$f)
-			or die "Failed to opendir $f: $!";
+> Patrick Altman <paltman@gmail.com> writes:
+>
+>> I want to write a Mac OSX UI for git.
+>
+> Something like GitNub?
 
-		push @files, grep { -f $_ } map { +$f . "/" . $_ }
-				sort readdir(DH);
+Not really.  GitNub is really an interface for GitHub.  I am thinking  
+something more like ZigVersion, http://zigzig.com/, for Git instead of  
+Subversion.
 
-	} elsif (-f $f) {
-		push @files, $f;
+>> Is there a documented/undocumented API for interacting with git in
+>> process?  Or would I be better off "shelling out" to the git command
+>> line?
+>
+> Take a look how other GUIs does it.
 
-	} else {
-		print STDERR "Skipping $f - not found.\n";
-	}
-}
+git-gui is written in TCL I believe, which I do not want to use.
+GitNub is the only other GUI of sorts that i am aware of but like I  
+mentioned above, that really is more of a GitHub interface and less of  
+a git interface.
 
-My guess is that "$f", at some point, is an empty string or a blank space.
+I think that this point I am just going to use NTask and the like in  
+Cocoa/Objective-C to wrap the command line utilities.
 
--- 
-Timur Tabi
-Linux kernel developer at Freescale
+Thanks,
+Patrick
