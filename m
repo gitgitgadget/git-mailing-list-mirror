@@ -1,68 +1,61 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: About git and the use of SHA-1
-Date: Mon, 28 Apr 2008 15:34:50 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0804281515480.19665@iabervon.org>
-References: <200804281829.11866.henrikau@orakel.ntnu.no>
+From: "Bob Hiestand" <bob.hiestand@gmail.com>
+Subject: Re: Yet another Git tutorial
+Date: Mon, 28 Apr 2008 14:45:44 -0500
+Message-ID: <cc29171c0804281245n7715c2fta2b5c8f3155bfa40@mail.gmail.com>
+References: <2D3D2E55-74C7-4373-BC22-9CF4C26C197D@newartisans.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Henrik Austad <henrikau@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:36:00 2008
+To: "John Wiegley" <johnw@newartisans.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:47:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqZ8j-0004Hw-OT
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 21:35:54 +0200
+	id 1JqZJY-00089k-2e
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 21:47:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936031AbYD1Tez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 15:34:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbYD1Tey
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 15:34:54 -0400
-Received: from iabervon.org ([66.92.72.58]:36909 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935156AbYD1Tew (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 15:34:52 -0400
-Received: (qmail 6773 invoked by uid 1000); 28 Apr 2008 19:34:50 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Apr 2008 19:34:50 -0000
-In-Reply-To: <200804281829.11866.henrikau@orakel.ntnu.no>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S932340AbYD1Tpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 15:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbYD1Tpu
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 15:45:50 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:28356 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932155AbYD1Tpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 15:45:49 -0400
+Received: by rn-out-0910.google.com with SMTP id e11so2015912rng.17
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 12:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YhrJSUyHRCERttmJl4eDzs4vLU9Z2aCeIcMnXY3cjk0=;
+        b=R7LqS02aW7sNUXl7f6PeOjZ4PpzfIp57eKh/Gcfg9HGyS1/30mhVmoDBG35AJnEotxugweDIMVxVdQKploraDfrpCSdEwL6+kYTyOz7gdTEztwwvBvS95vcGY0eZStZTAKu6Bsu7RqAgBsnNaxWhqbsrea2+0Hme2dpR+ihmVDk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iBCeNfwSlbGQg08enaJ83zNQDDhahap3wRGAb+VxXgatml/4ev9EtftOhNiMqhThTdMDuVbgzvozRNlz9fgXv07vaY7NAgE7XqM4GDrVVQWgRVd2wLS9hi+MlgYd8psP9ivctJ2YRmyjLyky9PWSMqqYgkvYKh2+aTs5+tlGTn8=
+Received: by 10.142.212.19 with SMTP id k19mr968929wfg.86.1209411944371;
+        Mon, 28 Apr 2008 12:45:44 -0700 (PDT)
+Received: by 10.142.13.12 with HTTP; Mon, 28 Apr 2008 12:45:44 -0700 (PDT)
+In-Reply-To: <2D3D2E55-74C7-4373-BC22-9CF4C26C197D@newartisans.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80598>
 
-On Mon, 28 Apr 2008, Henrik Austad wrote:
+On Mon, Apr 28, 2008 at 1:39 AM, John Wiegley <johnw@newartisans.com> wrote:
 
-> Hi list!
-> 
-> As far as I have gathered, the SHA-1-sum is used as a identifier for commits, 
-> and that is the primary reason for using sha1.  However, several places 
-> (including the google tech-talk featuring Linus himself) states that the id's 
-> are cryptographically secure.
-> 
-> As discussed in [1], SHA-1 is not as secure as it once was (and this was in 
-> 2005), and I'm wondering - are there any plans for migrating to another 
-> hash-algorithm? I.e. SHA-2, whirlpool..
+>   http://www.newartisans.com/blog_files/git.from.bottom.up.php
 
-No. The cryptographic security we care about is that it's impractical to 
-come up with another set of content that hashes to the same value as a 
-given set of content. The known attacks on SHA-1 (and more broken earlier 
-hashes in the same general class) only allow the attacker to produce two 
-files that will collide. Now, it's true that this would allow somebody to 
-produce a commit where some people see the "good" blob and some people see 
-the "evil" blob, but (a) the "good" blob contains some large chunk of 
-random data, which is a major red flag by itself, and (b) all of these 
-people have to be taking data from the attacker.
+  Under the section "Doing a mixed reset" you mention that "It doesn't
+change the working tree, and it doesn't change any of
+the repository's references."  However, doing a --mixed reset does
+change your references, just not your working tree.
 
-If somebody gives you some source, and it's got some large random chunk in 
-it, and the behavior of the object depends on the content of this chunk, 
-and it's unspecified where this chunk comes from, you should be aware 
-that they might be able to swap this chunk for a different chunk. But such 
-a file is pretty blatantly malicious anyway.
+Thank you,
 
-	-Daniel
-*This .sig left intentionally blank*
+bob
