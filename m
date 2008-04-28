@@ -1,62 +1,56 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Simple problem
-Date: Mon, 28 Apr 2008 19:47:51 +0200
-Message-ID: <20080428174751.GA6710@steel.home>
-References: <fv4u49$oks$1@ger.gmane.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 19:48:47 2008
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Use perl instead of tac
+Date: Mon, 28 Apr 2008 13:50:56 -0400
+Message-ID: <6F09BF8D-BD4B-4A33-951C-7707A270803B@silverinsanity.com>
+References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com> <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com> <slrng1bqhb.25r.joerg@alea.gnuu.de> <vpqej8pnaru.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=WINDOWS-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 28 19:52:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqXT2-0006PT-Nf
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:48:45 +0200
+	id 1JqXWA-0007MH-9K
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933785AbYD1Rr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 13:47:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933769AbYD1Rr4
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:47:56 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:45355 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933329AbYD1Rrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 13:47:55 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarKZBJxGkw==
-Received: from tigra.home (Faada.f.strato-dslnet.de [195.4.170.218])
-	by post.webmailer.de (mrclete mo8) (RZmta 16.27)
-	with ESMTP id f0148ck3SGaeKp ; Mon, 28 Apr 2008 19:47:52 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E6F38277BD;
-	Mon, 28 Apr 2008 19:47:51 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id C04DC56D28; Mon, 28 Apr 2008 19:47:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <fv4u49$oks$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S965077AbYD1RvA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 13:51:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934342AbYD1RvA
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:51:00 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:32893 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934275AbYD1Ru7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2008 13:50:59 -0400
+Received: from [192.168.1.7] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 701551FFD6C5;
+	Mon, 28 Apr 2008 17:50:52 +0000 (UTC)
+In-Reply-To: <vpqej8pnaru.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80571>
 
-Kenneth P. Turvey, Mon, Apr 28, 2008 18:31:05 +0200:
-> I ran into an issue earlier today that I didn't know how to easily solve 
-> in git.  I'm sure it is easy to handle, but I wasn't sure how.  
-> 
-> I removed a file and then realized I'd hit the wrong one.  So all I 
-> wanted to do was to get the file back the way it was in the last commit.  
-> 
-> Basically I wanted something similar to:
-> 
-> svn update myfile
-> 
 
-git checkout HEAD filename
+On Apr 28, 2008, at 1:34 PM, Matthieu Moy wrote:
 
-but mostly just "git checkout filename"
+> J=F6rg Sommer <joerg@alea.gnuu.de> writes:
+>
+>> And what about something like this: 'tac || rev || perl =85'
+>
+> Be careful: rev and tac are different. tac reverses lines, while rev
+> reverses chars inside lines.
+
+Indeed you are correct.  This is a mistake I made in my original =20
+email, which people have been parroting.  My mistake, sorry.
+
+~~ Brian
