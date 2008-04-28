@@ -1,85 +1,70 @@
-From: Nico Schottelius <nico-git-20080428@schottelius.org>
-Subject: Re: git push: failed to push some refs and missing commit
-Date: Mon, 28 Apr 2008 19:56:10 +0200
-Message-ID: <20080428175610.GB10794@denkbrett.schottelius.org>
-References: <20080428171020.GF23412@denkbrett.schottelius.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
+ whitespace.
+Date: Mon, 28 Apr 2008 19:01:32 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804281851520.19187@eeepc-johanness>
+References: <20080427151610.GB57955@Hermes.local> <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness> <7vej8rgq62.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804281112500.2949@eeepc-johanness> <7vd4oac5qf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 19:57:11 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 20:02:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqXb5-0000Tc-1a
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:57:03 +0200
+	id 1JqXgB-0002FN-EW
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 20:02:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933424AbYD1R4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 13:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933249AbYD1R4P
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:56:15 -0400
-Received: from mx2.schottelius.org ([62.65.138.77]:33750 "EHLO
-	mx2.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932787AbYD1R4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 13:56:14 -0400
-Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.schottelius.org (Postfix) with ESMTPSA id 8CF183480F7
-	for <git@vger.kernel.org>; Mon, 28 Apr 2008 19:56:06 +0200 (CEST)
-Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
-	id D6CC52DA02; Mon, 28 Apr 2008 19:56:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080428171020.GF23412@denkbrett.schottelius.org>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: denkbrett running Linux 2.6.25-denkbrett on x86_64
+	id S935467AbYD1SB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 14:01:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935430AbYD1SB1
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 14:01:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43275 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S935349AbYD1SB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 14:01:26 -0400
+Received: (qmail invoked by alias); 28 Apr 2008 18:01:23 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.st-andrews.ac.uk) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 28 Apr 2008 20:01:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+3hRsYrpe3mdOE0Z6dXj6DAdSIF/iXB+sLdavvJI
+	4LtkVzGwGRy0jC
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vd4oac5qf.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80573>
 
+Hi,
 
---eJnRUKwClWJh1Khz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 28 Apr 2008, Junio C Hamano wrote:
 
-Nico Schottelius [Mon, Apr 28, 2008 at 07:10:20PM +0200]:
-> Error 2:
->=20
-> I miss a commit, that removed the function hideContent();
-> [...]
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Maybe an example would help:
+> >
+> > -- snip --
+> > pick abcdefg This is the first commit to be picked
+> > reset cdefghij
+> > pick zyxwvux A commit in a side-branch
+> > merge recursive abcdefg
+> > -- snap --
+> 
+> Indeed it does.  "reset cdefghij" --- does it reset to the exact cdefghij
+> commit, or cdefghij commit after rewriting?
 
-I found out that one of our webdevs used git push -f, which may be
-a good reason for that.
+In the example, it would be the original commit.  However, a "reset 
+abcdefg" _after_ the "pick abcdefg" line would refer to the _rewritten_ 
+commit.
 
-Could error 1 also be caused by that?
+The rationale: you are most likely not wanting to reference _both_ the 
+original _and_ the rewritten commit.
 
-Nico
-
-
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---eJnRUKwClWJh1Khz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIFg+6uL75KpiFGIwRAm0mAJwIHFwMyRyj5jwASfFq2PgYPjEudQCeIx3l
-1TSiUGgJRbrCVDOtpFo62Dw=
-=XnQA
------END PGP SIGNATURE-----
-
---eJnRUKwClWJh1Khz--
+Ciao,
+Dscho
