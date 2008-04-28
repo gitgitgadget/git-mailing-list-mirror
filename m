@@ -1,387 +1,1157 @@
 From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH 4/7] make "git push" update all push repositories.
-Date: Mon, 28 Apr 2008 11:32:15 -0400
-Message-ID: <d941a7a16cb7d5529b22a47f1dc7b986ba66ee56.1209391615.git.bonzini@gnu.org>
+Subject: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Mon, 28 Apr 2008 11:32:18 -0400
+Message-ID: <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org>
 References: <4812DA50.3000702@gnu.org>
  <cover.1209391614.git.bonzini@gnu.org>
  <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org>
  <ff298458e7efc14721fdc0420432bf33efd76784.1209391614.git.bonzini@gnu.org>
  <65b938da49b447129297d4dbf20191be52d16670.1209391614.git.bonzini@gnu.org>
+ <d941a7a16cb7d5529b22a47f1dc7b986ba66ee56.1209391615.git.bonzini@gnu.org>
+ <b5b9b866e5f942d024831d528ae599e3e6ce31da.1209391615.git.bonzini@gnu.org>
+ <22f5914b1ffff814fa2387ff5cb762e0099aaa6b.1209391615.git.bonzini@gnu.org>
 Cc: spearce@spearce.org, gitster@pobox.com, peff@peff.net,
 	johannes.schindelin@gmx.de, srb@cuci.nl
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 17:34:44 2008
+X-From: git-owner@vger.kernel.org Mon Apr 28 17:34:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqVMo-0004Kp-0j
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 17:34:10 +0200
+	id 1JqVMm-0004Kp-Nr
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 17:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934486AbYD1PdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 11:33:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934865AbYD1PdA
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 11:33:00 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:60626 "EHLO
+	id S935750AbYD1Pc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 11:32:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935743AbYD1Pc6
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 11:32:58 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60621 "EHLO
 	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935656AbYD1Pcg (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S935590AbYD1Pcg (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2008 11:32:36 -0400
 Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
 	(envelope-from <bonzini@gnu.org>)
-	id 1JqVL0-0004fB-MQ; Mon, 28 Apr 2008 11:32:18 -0400
+	id 1JqVL0-0004fH-Tz; Mon, 28 Apr 2008 11:32:19 -0400
 X-Mailer: git-send-email 1.5.5.1.89.g36c79d
-In-Reply-To: <65b938da49b447129297d4dbf20191be52d16670.1209391614.git.bonzini@gnu.org>
+In-Reply-To: <22f5914b1ffff814fa2387ff5cb762e0099aaa6b.1209391615.git.bonzini@gnu.org>
 In-Reply-To: <cover.1209391614.git.bonzini@gnu.org>
 References: <cover.1209391614.git.bonzini@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80542>
 
-This patch builds on the infrastructure for "git remote add --push"
-to make the behavior of "git push" more general.  Because now remotes
-can be explicitly designated for pushing (previously, you had no
-way to do this *and* keep the "matching refspecs" behavior of "git push"),
-now "git push" and "git push --mirror" can work like this:
+This patch parallels what a previous patch did to "git push".
+It makes "git fetch" with no repository argument similar to
+"git remote update" with no default group set.  Of course,
+"git fetch" with no arguments honors skipDefaultUpdate too.
 
-- "git push" pushes to all push remotes.
-
-- "git push --mirror" only updates mirror repositories, without touching
-  other push remotes.
-
-Furthermore, "git push --all" is now invalid without a repository.
-I did this because --all and --mirror are incompatible, and so the
-operation of a DWIM "git push --all" would probably not be what
-the user meant.
-
-Among the use cases of this, consider when a project has a public
-repository managed by the integrator, but the integrator also wants to
-publish his own topic branches somewhere.  In this case, the integrator can
-just do "git push" and push the public branches to the public repository,
-as well as his own topic branches to his own unofficial mirror.
+The patch also modifies the existing tests so that they do not execute
+git-fetch without arguments.  In the case of t5515, tests that executed
+git-fetch without arguments are removed completely.  A new test is
+added to t5510 that tests the new operation mode.
 
 Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 ---
- Documentation/git-push.txt   |   22 +++++++++--
- Documentation/git-remote.txt |   10 +++---
- builtin-push.c               |   67 ++++++++++++++++++++++++++++------
- t/t5400-send-pack.sh         |    2 +-
- t/t5517-push-mirror.sh       |   82 ++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 161 insertions(+), 22 deletions(-)
+ Documentation/git-fetch.txt               |    7 ++
+ builtin-fetch.c                           |  109 ++++++++++++++++-------------
+ t/t5510-fetch.sh                          |   19 +++++-
+ t/t5515-fetch-merge-logic.sh              |    8 +--
+ t/t5515/fetch.br-branches-default         |    8 --
+ t/t5515/fetch.br-branches-default-merge   |    9 ---
+ t/t5515/fetch.br-branches-default-octopus |   10 ---
+ t/t5515/fetch.br-branches-one             |    8 --
+ t/t5515/fetch.br-branches-one-merge       |    9 ---
+ t/t5515/fetch.br-branches-one-octopus     |    9 ---
+ t/t5515/fetch.br-config-explicit          |   11 ---
+ t/t5515/fetch.br-config-explicit-merge    |   11 ---
+ t/t5515/fetch.br-config-explicit-octopus  |   11 ---
+ t/t5515/fetch.br-config-glob              |   11 ---
+ t/t5515/fetch.br-config-glob-merge        |   11 ---
+ t/t5515/fetch.br-config-glob-octopus      |   11 ---
+ t/t5515/fetch.br-remote-explicit          |   11 ---
+ t/t5515/fetch.br-remote-explicit-merge    |   11 ---
+ t/t5515/fetch.br-remote-explicit-octopus  |   11 ---
+ t/t5515/fetch.br-remote-glob              |   11 ---
+ t/t5515/fetch.br-remote-glob-merge        |   11 ---
+ t/t5515/fetch.br-remote-glob-octopus      |   11 ---
+ t/t5515/fetch.br-unconfig                 |   11 ---
+ t/t5515/fetch.master                      |   11 ---
+ t/t5515/refs.br-branches-default          |   12 ---
+ t/t5515/refs.br-branches-default-merge    |   12 ---
+ t/t5515/refs.br-branches-default-octopus  |   12 ---
+ t/t5515/refs.br-branches-one              |   12 ---
+ t/t5515/refs.br-branches-one-merge        |   12 ---
+ t/t5515/refs.br-branches-one-octopus      |   12 ---
+ t/t5515/refs.br-config-explicit           |   15 ----
+ t/t5515/refs.br-config-explicit-merge     |   15 ----
+ t/t5515/refs.br-config-explicit-octopus   |   15 ----
+ t/t5515/refs.br-config-glob               |   15 ----
+ t/t5515/refs.br-config-glob-merge         |   15 ----
+ t/t5515/refs.br-config-glob-octopus       |   15 ----
+ t/t5515/refs.br-remote-explicit           |   15 ----
+ t/t5515/refs.br-remote-explicit-merge     |   15 ----
+ t/t5515/refs.br-remote-explicit-octopus   |   15 ----
+ t/t5515/refs.br-remote-glob               |   15 ----
+ t/t5515/refs.br-remote-glob-merge         |   15 ----
+ t/t5515/refs.br-remote-glob-octopus       |   15 ----
+ t/t5515/refs.br-unconfig                  |   11 ---
+ t/t5515/refs.master                       |   11 ---
+ 44 files changed, 88 insertions(+), 536 deletions(-)
+ delete mode 100644 t/t5515/fetch.br-branches-default
+ delete mode 100644 t/t5515/fetch.br-branches-default-merge
+ delete mode 100644 t/t5515/fetch.br-branches-default-octopus
+ delete mode 100644 t/t5515/fetch.br-branches-one
+ delete mode 100644 t/t5515/fetch.br-branches-one-merge
+ delete mode 100644 t/t5515/fetch.br-branches-one-octopus
+ delete mode 100644 t/t5515/fetch.br-config-explicit
+ delete mode 100644 t/t5515/fetch.br-config-explicit-merge
+ delete mode 100644 t/t5515/fetch.br-config-explicit-octopus
+ delete mode 100644 t/t5515/fetch.br-config-glob
+ delete mode 100644 t/t5515/fetch.br-config-glob-merge
+ delete mode 100644 t/t5515/fetch.br-config-glob-octopus
+ delete mode 100644 t/t5515/fetch.br-remote-explicit
+ delete mode 100644 t/t5515/fetch.br-remote-explicit-merge
+ delete mode 100644 t/t5515/fetch.br-remote-explicit-octopus
+ delete mode 100644 t/t5515/fetch.br-remote-glob
+ delete mode 100644 t/t5515/fetch.br-remote-glob-merge
+ delete mode 100644 t/t5515/fetch.br-remote-glob-octopus
+ delete mode 100644 t/t5515/fetch.br-unconfig
+ delete mode 100644 t/t5515/fetch.master
+ delete mode 100644 t/t5515/refs.br-branches-default
+ delete mode 100644 t/t5515/refs.br-branches-default-merge
+ delete mode 100644 t/t5515/refs.br-branches-default-octopus
+ delete mode 100644 t/t5515/refs.br-branches-one
+ delete mode 100644 t/t5515/refs.br-branches-one-merge
+ delete mode 100644 t/t5515/refs.br-branches-one-octopus
+ delete mode 100644 t/t5515/refs.br-config-explicit
+ delete mode 100644 t/t5515/refs.br-config-explicit-merge
+ delete mode 100644 t/t5515/refs.br-config-explicit-octopus
+ delete mode 100644 t/t5515/refs.br-config-glob
+ delete mode 100644 t/t5515/refs.br-config-glob-merge
+ delete mode 100644 t/t5515/refs.br-config-glob-octopus
+ delete mode 100644 t/t5515/refs.br-remote-explicit
+ delete mode 100644 t/t5515/refs.br-remote-explicit-merge
+ delete mode 100644 t/t5515/refs.br-remote-explicit-octopus
+ delete mode 100644 t/t5515/refs.br-remote-glob
+ delete mode 100644 t/t5515/refs.br-remote-glob-merge
+ delete mode 100644 t/t5515/refs.br-remote-glob-octopus
+ delete mode 100644 t/t5515/refs.br-unconfig
+ delete mode 100644 t/t5515/refs.master
 
-	I think it is too early to warn if there is no push refspec for.
-	origin (as I'll do for git-fetch in the final patch of the series).
-	After all, clones made with any current version of git do *not*
-	have a remote.origin.push refspec.
+	The patch is a little more complicated than necessary because
+	some global variables were shadowed by locals.  That's a useful
+	cleanup of its own.
 
-	This changes the behavior of "git push" if the user has a remote
-	with push refspecs in his configuration; in this case the user
-	should execute "git config remote.origin.push :" so that "git
-	push" considers the origin remote too.  This should be written in
-	the release notes.
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 0cc44d7..a1436f4 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -29,6 +29,14 @@ OPTIONS
- 	The "remote" repository that is destination of a push
- 	operation.  See the section <<URLS,GIT URLS>> below.
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index d982f96..f212d89 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -31,6 +31,13 @@ branches you are not interested in, you will not get them.
  
-+	Unless \--all or \--tags are given, it is possible to
-+	omit the destination repository and refspec.  In this
-+	case, git will push to all remotes that have a
-+	`remote.<name>.push` configuration line.  In case
-+	git finds none, it will push to the "origin" remote;
-+	this however is only done for backwards compatibility
-+	with older versions of git.
+ OPTIONS
+ -------
++<repository>::
++        The "remote" repository whose updates are to be
++	fetched.  If no repository is specified, all remotes
++	which do not have the configuration parameter
++	remote.<name>.skipDefaultUpdate set to true will
++	be updated.  (See linkgit:git-config[1])
 +
- <refspec>::
- 	The canonical format of a <refspec> parameter is
- 	`+?<src>:<dst>`; that is, an optional plus `+`, followed
-@@ -71,8 +79,14 @@ nor in any Push line of the corresponding remotes file---see below).
- 	be mirrored to the remote repository.  Newly created local
- 	refs will be pushed to the remote end, locally updated refs
- 	will be force updated on the remote end, and deleted refs
--	will be removed from the remote end.  This is the default
--	if the configuration option `remote.<remote>.mirror` is
-+	will be removed from the remote end.
-+
-+	For every repository that git tries as a destination, it will
-+	also look up the corresponding configuration option
-+	`remote.<repository>.mirror` and enables mirror mode
-+	if it is set.  Furthermore, if `git push --mirror` is used
-+	without specifying a destination repository, git will
-+	only push to those remotes that have the configuration option
- 	set.
+ include::fetch-options.txt[]
  
- \--dry-run::
-@@ -99,8 +113,8 @@ nor in any Push line of the corresponding remotes file---see below).
- 	remote repository to lose commits; use it with care.
+ include::pull-fetch-param.txt[]
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index e4486e4..d4aaf67 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -23,11 +23,13 @@ enum {
+ };
  
- \--repo=<repo>::
--	When no repository is specified the command defaults to
--	"origin"; this overrides it.
-+	Overrides the default behavior of the command when no repository
-+	is specified, so that <repo> is used as the destination repository.
+ static int append, force, keep, update_head_ok, verbose, quiet;
+-static int tags = TAGS_DEFAULT;
++static int fetch_tags = TAGS_DEFAULT;
+ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *transport;
++static struct refspec *refs;
++static int ref_count = 0;
  
- \--thin, \--no-thin::
- 	These options are passed to `git-send-pack`.  Thin
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index e779905..d313a2f 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -47,8 +47,9 @@ With `-m <master>` option, `$GIT_DIR/remotes/<name>/HEAD` is set
- up to point at remote's `<master>` branch instead of whatever
- branch the `HEAD` at the remote repository actually points at.
- +
--`\--push` mode adds a `push` configuration line for the remote.
--It also affects the operation of mirror mode.
-+`\--push` mode configures the remote so that `git push` with
-+no arguments will attempt pushing to it.  It also affects the
-+operation of `\--mirror`.
- +
- Mirror mode, enabled with `\--mirror`, specifies that one of the
- repositories (either the current one or the remote one) is giving
-@@ -102,9 +103,8 @@ be updated.  (See linkgit:git-config[1]).
- DISCUSSION
- ----------
- 
--The remote configuration is achieved using the `remote.origin.url` and
--`remote.origin.fetch` configuration variables.  (See
--linkgit:git-config[1]).
-+The remote configuration is achieved using the `remote.<name>.*`
-+configuration variables.  (See linkgit:git-config[1]).
- 
- Examples
- --------
-diff --git a/builtin-push.c b/builtin-push.c
-index b35aad6..f877e49 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -48,14 +48,12 @@ static void set_refspecs(const char **refs, int nr)
- 	}
+ static struct option builtin_fetch_options[] = {
+ 	OPT__QUIET(&quiet),
+@@ -38,9 +40,9 @@ static struct option builtin_fetch_options[] = {
+ 		   "path to upload pack on remote end"),
+ 	OPT_BOOLEAN('f', "force", &force,
+ 		    "force overwrite of local branch"),
+-	OPT_SET_INT('t', "tags", &tags,
++	OPT_SET_INT('t', "tags", &fetch_tags,
+ 		    "fetch all tags and associated objects", TAGS_SET),
+-	OPT_SET_INT('n', NULL, &tags,
++	OPT_SET_INT('n', NULL, &fetch_tags,
+ 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
+ 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
+ 	OPT_BOOLEAN('u', "update-head-ok", &update_head_ok,
+@@ -523,15 +525,44 @@ static void find_non_local_tags(struct transport *transport,
+ 	path_list_clear(&new_refs, 0);
  }
  
--static int do_push(const char *repo, int flags)
-+static int do_push(struct remote *remote, int flags)
- {
- 	int i, errs;
--	struct remote *remote = remote_get(repo);
--
--	if (!remote)
--		die("bad repository '%s'", repo);
--
-+	const char **push_refspec = refspec;
-+	int push_refspec_nr = refspec_nr;
-+
- 	if (remote->mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
- 
-@@ -70,8 +68,8 @@ static int do_push(const char *repo, int flags)
- 	if (!refspec
- 		&& !(flags & TRANSPORT_PUSH_ALL)
- 		&& remote->push_refspec_nr) {
--		refspec = remote->push_refspec;
--		refspec_nr = remote->push_refspec_nr;
-+		push_refspec = remote->push_refspec;
-+		push_refspec_nr = remote->push_refspec_nr;
- 	}
- 	errs = 0;
- 	for (i = 0; i < remote->url_nr; i++) {
-@@ -86,7 +84,7 @@ static int do_push(const char *repo, int flags)
- 
- 		if (verbose)
- 			fprintf(stderr, "Pushing to %s\n", remote->url[i]);
--		err = transport_push(transport, refspec_nr, refspec, flags);
-+		err = transport_push(transport, push_refspec_nr, push_refspec, flags);
- 		err |= transport_disconnect(transport);
- 
- 		if (!err)
-@@ -98,6 +96,27 @@ static int do_push(const char *repo, int flags)
- 	return !!errs;
- }
- 
-+static int num_push_remotes;
-+
-+static int push_to_remote(struct remote *remote, void *priv)
+-static int do_fetch(struct transport *transport,
+-		    struct refspec *refs, int ref_count)
++static void set_option(const char *name, const char *value)
 +{
-+	int *p_flags = priv;
-+	int rc;
-+
-+	/* With "git-push --mirror", only push to mirrors.  */
-+	if ((*p_flags & TRANSPORT_PUSH_MIRROR) && !remote->mirror)
-+		return 0;
-+	if (!remote->push_refspec_nr)
-+		return 0;
-+
-+	num_push_remotes++;
-+	rc = do_push (remote, *p_flags);
-+
-+	/* No command-line errors should occur.  */
-+	assert (rc != -1);
-+	return rc;
++	int r = transport_set_option(transport, name, value);
++	if (r < 0)
++		die("Option \"%s\" value \"%s\" is not valid for %s\n",
++			name, value, transport->url);
++	if (r > 0)
++		warning("Option \"%s\" is ignored for %s\n",
++			name, transport->url);
 +}
 +
- int cmd_push(int argc, const char **argv, const char *prefix)
++
++static int do_fetch(struct remote *remote)
  {
- 	int flags = 0;
-@@ -108,6 +127,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	int tags = 0;
- 	int rc;
- 	const char *repo = NULL;	/* default repository */
-+	struct remote *remote;
+ 	struct ref *ref_map;
+ 	struct ref *rm;
+-	int autotags = (transport->remote->fetch_tags == 1);
+-	if (transport->remote->fetch_tags == 2 && tags != TAGS_UNSET)
++	int autotags = (remote->fetch_tags == 1);
++	int tags = fetch_tags;
++
++	if (!remote->url_nr)
++		die("Where do you want to fetch from today?");
++
++	transport = transport_get(remote, remote->url[0]);
++	assert (transport->url);
++	if (verbose >= 2)
++		transport->verbose = 1;
++	if (quiet)
++		transport->verbose = -1;
++	if (upload_pack)
++		set_option(TRANS_OPT_UPLOADPACK, upload_pack);
++	if (keep)
++		set_option(TRANS_OPT_KEEP, "yes");
++	if (depth)
++		set_option(TRANS_OPT_DEPTH, depth);
++
++	if (remote->fetch_tags == 2 && tags != TAGS_UNSET)
+ 		tags = TAGS_SET;
+-	if (transport->remote->fetch_tags == -1)
++	if (remote->fetch_tags == -1)
+ 		tags = TAGS_UNSET;
  
- 	struct option options[] = {
- 		OPT__VERBOSE(&verbose),
-@@ -143,9 +163,32 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		set_refspecs(argv + 1, argc - 1);
+ 	if (!transport->get_refs_list || !transport->fetch)
+@@ -544,6 +575,7 @@ static int do_fetch(struct transport *transport,
+ 		if (!fp)
+ 			return error("cannot open %s: %s\n", filename, strerror(errno));
+ 		fclose(fp);
++		append = 1;
  	}
  
--	rc = do_push(repo, flags);
-+	if (!repo) {
-+		/* Don't attempt to figure DWIM behavior when refspecs are
-+		   provided.  */
-+		if (all || tags)
-+			die("please specify destination repository together "
-+			    "with --all or --tags");
+ 	ref_map = get_ref_map(transport, refs, ref_count, tags, &autotags);
+@@ -557,7 +589,7 @@ static int do_fetch(struct transport *transport,
+ 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
+ 	if (fetch_refs(transport, ref_map)) {
+ 		free_refs(ref_map);
+-		return 1;
++		goto error;
+ 	}
+ 	free_refs(ref_map);
+ 
+@@ -576,27 +608,26 @@ static int do_fetch(struct transport *transport,
+ 	}
+ 
+ 	transport_disconnect(transport);
+-
+ 	return 0;
 +
-+		assert (!refspec);
-+		rc = for_each_remote (push_to_remote, &flags);
-+		if (rc)
-+			return rc;
-+		if (num_push_remotes)
-+			return 0;
++error:
++	unlock_pack ();
++	return 1;
+ }
+ 
+-static void set_option(const char *name, const char *value)
++static int fetch_one_remote(struct remote *remote, void *unused)
+ {
+-	int r = transport_set_option(transport, name, value);
+-	if (r < 0)
+-		die("Option \"%s\" value \"%s\" is not valid for %s\n",
+-			name, value, transport->url);
+-	if (r > 0)
+-		warning("Option \"%s\" is ignored for %s\n",
+-			name, transport->url);
++	if (remote->skip_default_update || !remote->url_nr)
++		return 0;
 +
-+		/* Fallback: use origin, but not for "git push --mirror".  */
-+		if (mirror)
-+			die("no mirrors configured, use git-push --mirror <repo> to force operation");
-+	}
-+
-+	remote = remote_get(repo);
-+	if (!remote)
-+		die("bad repository '%s'", repo);
-+
-+	rc = do_push(remote, flags);
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
++	do_fetch (remote);
+ }
+ 
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	struct remote *remote;
+ 	int i;
+-	static const char **refs = NULL;
+-	int ref_nr = 0;
++	static const char **arg_refs = NULL;
+ 
+ 	/* Record the command line for the reflog */
+ 	strbuf_addstr(&default_rla, "fetch");
+@@ -606,29 +637,9 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
+ 
+-	if (argc == 0)
+-		remote = remote_get(NULL);
 -	else
--		return rc;
-+
-+	return rc;
+-		remote = remote_get(argv[0]);
+-
+-	transport = transport_get(remote, remote->url[0]);
+-	if (verbose >= 2)
+-		transport->verbose = 1;
+-	if (quiet)
+-		transport->verbose = -1;
+-	if (upload_pack)
+-		set_option(TRANS_OPT_UPLOADPACK, upload_pack);
+-	if (keep)
+-		set_option(TRANS_OPT_KEEP, "yes");
+-	if (depth)
+-		set_option(TRANS_OPT_DEPTH, depth);
+-
+-	if (!transport->url)
+-		die("Where do you want to fetch from today?");
+-
+ 	if (argc > 1) {
+ 		int j = 0;
+-		refs = xcalloc(argc + 1, sizeof(const char *));
++		arg_refs = xcalloc(argc + 1, sizeof(const char *));
+ 		for (i = 1; i < argc; i++) {
+ 			if (!strcmp(argv[i], "tag")) {
+ 				char *ref;
+@@ -640,16 +651,18 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 				strcat(ref, argv[i]);
+ 				strcat(ref, ":refs/tags/");
+ 				strcat(ref, argv[i]);
+-				refs[j++] = ref;
++				arg_refs[j++] = ref;
+ 			} else
+-				refs[j++] = argv[i];
++				arg_refs[j++] = argv[i];
+ 		}
+-		refs[j] = NULL;
+-		ref_nr = j;
++		arg_refs[j] = NULL;
++		ref_count = j;
+ 	}
++	refs = parse_fetch_refspec(ref_count, arg_refs);
+ 
+ 	signal(SIGINT, unlock_pack_on_signal);
+-	atexit(unlock_pack);
+-	return do_fetch(transport,
+-			parse_fetch_refspec(ref_nr, refs), ref_nr);
++	if (argc == 0)
++		return for_each_remote (fetch_one_remote, NULL);
++	else
++		return do_fetch (remote_get(argv[0]));
  }
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 2b6b6e3..ab01b2a 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -118,7 +118,7 @@ test_expect_success \
- 	mkdir parent && cd parent &&
- 	git-init && touch file && git-add file && git-commit -m add &&
- 	cd .. &&
--	git-clone parent child && cd child && git-push --all &&
-+	git-clone parent child && cd child && git-push --all origin &&
- 	cd ../parent &&
- 	git-branch -a >branches && ! grep origin/master branches
- '
-diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
-index cacc08c..9afa741 100755
---- a/t/t5517-push-mirror.sh
-+++ b/t/t5517-push-mirror.sh
-@@ -29,6 +29,26 @@ mk_repo_pair () {
- 	)
- }
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 6946557..28da6bd 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -45,7 +45,7 @@ test_expect_success "fetch test" '
+ 	echo >file updated by origin &&
+ 	git commit -a -m "updated by origin" &&
+ 	cd two &&
+-	git fetch &&
++	git fetch one &&
+ 	test -f .git/refs/heads/one &&
+ 	mine=`git rev-parse refs/heads/one` &&
+ 	his=`cd ../one && git rev-parse refs/heads/master` &&
+@@ -55,12 +55,29 @@ test_expect_success "fetch test" '
+ test_expect_success "fetch test for-merge" '
+ 	cd "$D" &&
+ 	cd three &&
++	git fetch two &&
++	test -f .git/refs/heads/two &&
++	test -f .git/refs/heads/one &&
++	master_in_two=`cd ../two && git rev-parse master` &&
++	one_in_two=`cd ../two && git rev-parse one` &&
++	{
++		echo "$master_in_two	not-for-merge"
++		echo "$one_in_two	"
++	} >expected &&
++	cut -f -2 .git/FETCH_HEAD >actual &&
++	diff expected actual'
++
++test_expect_success "fetch all remotes" '
++	cd "$D" &&
++	cd three &&
+ 	git fetch &&
+ 	test -f .git/refs/heads/two &&
+ 	test -f .git/refs/heads/one &&
++	master_in_origin=`cd .. && git rev-parse master` &&
+ 	master_in_two=`cd ../two && git rev-parse master` &&
+ 	one_in_two=`cd ../two && git rev-parse one` &&
+ 	{
++		echo "$master_in_origin	not-for-merge"
+ 		echo "$master_in_two	not-for-merge"
+ 		echo "$one_in_two	"
+ 	} >expected &&
+diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
+index 65c3774..8568b4b 100755
+--- a/t/t5515-fetch-merge-logic.sh
++++ b/t/t5515-fetch-merge-logic.sh
+@@ -91,10 +91,7 @@ test_expect_success setup '
+ # Merge logic depends on branch properties and Pull: or .fetch lines
+ for remote in $remotes ; do
+     for branch in "" "-merge" "-octopus" ; do
+-cat <<EOF
+-br-$remote$branch
+-br-$remote$branch $remote
+-EOF
++	echo br-$remote$branch $remote
+     done
+ done > tests
  
-+# a more complicated setup where we have also an origin repo
-+mk_repo_three () {
-+	rm -rf master mirror origin &&
-+	mkdir mirror &&
-+	(
-+		cd mirror &&
-+		git init
-+	) &&
-+	mkdir origin &&
-+	(
-+		cd origin &&
-+		git init
-+		echo one >foo && git add foo && git commit -m one
-+	) &&
-+	git clone origin master &&
-+	(
-+		cd master &&
-+		git remote add --push --mirror up ../mirror
-+	)
-+}
- 
- # BRANCH tests
- test_expect_success 'push mirror creates new branches' '
-@@ -264,4 +284,66 @@ test_expect_success 'remote.foo.mirror=no has no effect' '
- 
- '
- 
-+test_expect_success 'mirrors are updated by "git push"' '
-+
-+	mk_repo_three &&
-+	(
-+		cd master &&
-+		git branch keep master &&
-+		git branch remove master &&
-+		git push &&
-+		git branch -D remove
-+		git push
-+	) &&
-+	(
-+		cd mirror &&
-+		git show-ref -s --verify refs/heads/keep &&
-+		invert git show-ref -s --verify refs/heads/remove
-+	) &&
-+	(
-+		cd origin &&
-+		invert git show-ref -s --verify refs/heads/keep &&
-+		invert git show-ref -s --verify refs/heads/remove
-+	)
-+
-+'
-+
-+test_expect_success '"git push --all mirror" fails and does not leave half updates' '
-+
-+	mk_repo_three &&
-+	(
-+		cd master &&
-+		git branch b1 master &&
-+		invert git push --all mirror
-+	) &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/heads/b1
-+	)
-+
-+'
-+
-+test_expect_success 'mirrors are not updated by "git push --repo" or "git push <repo>"' '
-+
-+	mk_repo_three &&
-+	(
-+		cd master &&
-+		git branch b1 master &&
-+		git push origin
-+		git branch b2 master &&
-+		git push --repo=origin
-+	) &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/heads/b1 &&
-+		invert git show-ref -s --verify refs/heads/b2
-+	) &&
-+	(
-+		cd origin &&
-+		invert git show-ref -s --verify refs/heads/b1 &&
-+		invert git show-ref -s --verify refs/heads/b2
-+	)
-+
-+'
-+
- test_done
+@@ -103,7 +100,6 @@ done > tests
+ # Use two branches completely unrelated from the arguments,
+ # the clone default and one without branch properties
+ for branch in master br-unconfig ; do
+-    echo $branch
+     for remote in $remotes ; do
+ 	echo $branch $remote
+     done
+@@ -140,7 +136,7 @@ do
+ 		{
+ 			echo "# $cmd"
+ 			set x $cmd; shift
+-			git symbolic-ref HEAD refs/heads/$1 ; shift
++			git symbolic-ref HEAD refs/heads/$1; shift
+ 			rm -f .git/FETCH_HEAD
+ 			rm -f .git/refs/heads/*
+ 			rm -f .git/refs/remotes/rem/*
+diff --git a/t/t5515/fetch.br-branches-default b/t/t5515/fetch.br-branches-default
+deleted file mode 100644
+index 2e0414f..0000000
+--- a/t/t5515/fetch.br-branches-default
++++ /dev/null
+@@ -1,8 +0,0 @@
+-# br-branches-default
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f		branch 'master' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-branches-default-merge b/t/t5515/fetch.br-branches-default-merge
+deleted file mode 100644
+index ca2cc1d..0000000
+--- a/t/t5515/fetch.br-branches-default-merge
++++ /dev/null
+@@ -1,9 +0,0 @@
+-# br-branches-default-merge
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-branches-default-octopus b/t/t5515/fetch.br-branches-default-octopus
+deleted file mode 100644
+index ec39c54..0000000
+--- a/t/t5515/fetch.br-branches-default-octopus
++++ /dev/null
+@@ -1,10 +0,0 @@
+-# br-branches-default-octopus
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-branches-one b/t/t5515/fetch.br-branches-one
+deleted file mode 100644
+index 12ac8d2..0000000
+--- a/t/t5515/fetch.br-branches-one
++++ /dev/null
+@@ -1,8 +0,0 @@
+-# br-branches-one
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-branches-one-merge b/t/t5515/fetch.br-branches-one-merge
+deleted file mode 100644
+index b4b3b35..0000000
+--- a/t/t5515/fetch.br-branches-one-merge
++++ /dev/null
+@@ -1,9 +0,0 @@
+-# br-branches-one-merge
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-branches-one-octopus b/t/t5515/fetch.br-branches-one-octopus
+deleted file mode 100644
+index 96e3029..0000000
+--- a/t/t5515/fetch.br-branches-one-octopus
++++ /dev/null
+@@ -1,9 +0,0 @@
+-# br-branches-one-octopus
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-explicit b/t/t5515/fetch.br-config-explicit
+deleted file mode 100644
+index e2fa9c8..0000000
+--- a/t/t5515/fetch.br-config-explicit
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-explicit
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f		branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-explicit-merge b/t/t5515/fetch.br-config-explicit-merge
+deleted file mode 100644
+index ec1a723..0000000
+--- a/t/t5515/fetch.br-config-explicit-merge
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-explicit-merge
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-explicit-octopus b/t/t5515/fetch.br-config-explicit-octopus
+deleted file mode 100644
+index 7011dfc..0000000
+--- a/t/t5515/fetch.br-config-explicit-octopus
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-explicit-octopus
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-glob b/t/t5515/fetch.br-config-glob
+deleted file mode 100644
+index e75ec2f..0000000
+--- a/t/t5515/fetch.br-config-glob
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-glob
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-glob-merge b/t/t5515/fetch.br-config-glob-merge
+deleted file mode 100644
+index ce8f739..0000000
+--- a/t/t5515/fetch.br-config-glob-merge
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-glob-merge
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-config-glob-octopus b/t/t5515/fetch.br-config-glob-octopus
+deleted file mode 100644
+index 938e532..0000000
+--- a/t/t5515/fetch.br-config-glob-octopus
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-config-glob-octopus
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-explicit b/t/t5515/fetch.br-remote-explicit
+deleted file mode 100644
+index 83534d2..0000000
+--- a/t/t5515/fetch.br-remote-explicit
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-explicit
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f		branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-explicit-merge b/t/t5515/fetch.br-remote-explicit-merge
+deleted file mode 100644
+index a9064dd..0000000
+--- a/t/t5515/fetch.br-remote-explicit-merge
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-explicit-merge
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-explicit-octopus b/t/t5515/fetch.br-remote-explicit-octopus
+deleted file mode 100644
+index ecf020d..0000000
+--- a/t/t5515/fetch.br-remote-explicit-octopus
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-explicit-octopus
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-glob b/t/t5515/fetch.br-remote-glob
+deleted file mode 100644
+index 94e6ad3..0000000
+--- a/t/t5515/fetch.br-remote-glob
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-glob
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-glob-merge b/t/t5515/fetch.br-remote-glob-merge
+deleted file mode 100644
+index 09362e2..0000000
+--- a/t/t5515/fetch.br-remote-glob-merge
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-glob-merge
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b		branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-remote-glob-octopus b/t/t5515/fetch.br-remote-glob-octopus
+deleted file mode 100644
+index b08e046..0000000
+--- a/t/t5515/fetch.br-remote-glob-octopus
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-remote-glob-octopus
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689		branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8		branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.br-unconfig b/t/t5515/fetch.br-unconfig
+deleted file mode 100644
+index 65ce6d9..0000000
+--- a/t/t5515/fetch.br-unconfig
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# br-unconfig
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/fetch.master b/t/t5515/fetch.master
+deleted file mode 100644
+index 950fd07..0000000
+--- a/t/t5515/fetch.master
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# master
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	branch 'master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	branch 'one' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	branch 'three' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	branch 'two' of ../
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	tag 'tag-master' of ../
+-8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	tag 'tag-one' of ../
+-22feea448b023a2d864ef94b013735af34d238ba	not-for-merge	tag 'tag-one-tree' of ../
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	tag 'tag-three' of ../
+-0e3b14047d3ee365f4f2a1b673db059c3972589c	not-for-merge	tag 'tag-three-file' of ../
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	tag 'tag-two' of ../
+diff --git a/t/t5515/refs.br-branches-default b/t/t5515/refs.br-branches-default
+deleted file mode 100644
+index 21917c1..0000000
+--- a/t/t5515/refs.br-branches-default
++++ /dev/null
+@@ -1,12 +0,0 @@
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/heads/branches-default
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-branches-default-merge b/t/t5515/refs.br-branches-default-merge
+deleted file mode 100644
+index 21917c1..0000000
+--- a/t/t5515/refs.br-branches-default-merge
++++ /dev/null
+@@ -1,12 +0,0 @@
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/heads/branches-default
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-branches-default-octopus b/t/t5515/refs.br-branches-default-octopus
+deleted file mode 100644
+index 21917c1..0000000
+--- a/t/t5515/refs.br-branches-default-octopus
++++ /dev/null
+@@ -1,12 +0,0 @@
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/heads/branches-default
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-branches-one b/t/t5515/refs.br-branches-one
+deleted file mode 100644
+index 8a705a5..0000000
+--- a/t/t5515/refs.br-branches-one
++++ /dev/null
+@@ -1,12 +0,0 @@
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/heads/branches-one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-branches-one-merge b/t/t5515/refs.br-branches-one-merge
+deleted file mode 100644
+index 8a705a5..0000000
+--- a/t/t5515/refs.br-branches-one-merge
++++ /dev/null
+@@ -1,12 +0,0 @@
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/heads/branches-one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-branches-one-octopus b/t/t5515/refs.br-branches-one-octopus
+deleted file mode 100644
+index 8a705a5..0000000
+--- a/t/t5515/refs.br-branches-one-octopus
++++ /dev/null
+@@ -1,12 +0,0 @@
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/heads/branches-one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-explicit b/t/t5515/refs.br-config-explicit
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-explicit
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-explicit-merge b/t/t5515/refs.br-config-explicit-merge
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-explicit-merge
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-explicit-octopus b/t/t5515/refs.br-config-explicit-octopus
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-explicit-octopus
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-glob b/t/t5515/refs.br-config-glob
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-glob
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-glob-merge b/t/t5515/refs.br-config-glob-merge
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-glob-merge
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-config-glob-octopus b/t/t5515/refs.br-config-glob-octopus
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-config-glob-octopus
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-explicit b/t/t5515/refs.br-remote-explicit
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-explicit
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-explicit-merge b/t/t5515/refs.br-remote-explicit-merge
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-explicit-merge
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-explicit-octopus b/t/t5515/refs.br-remote-explicit-octopus
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-explicit-octopus
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-glob b/t/t5515/refs.br-remote-glob
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-glob
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-glob-merge b/t/t5515/refs.br-remote-glob-merge
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-glob-merge
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-remote-glob-octopus b/t/t5515/refs.br-remote-glob-octopus
+deleted file mode 100644
+index 9bbbfd9..0000000
+--- a/t/t5515/refs.br-remote-glob-octopus
++++ /dev/null
+@@ -1,15 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/rem/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/rem/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/rem/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/rem/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.br-unconfig b/t/t5515/refs.br-unconfig
+deleted file mode 100644
+index 13e4ad2..0000000
+--- a/t/t5515/refs.br-unconfig
++++ /dev/null
+@@ -1,11 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
+diff --git a/t/t5515/refs.master b/t/t5515/refs.master
+deleted file mode 100644
+index 13e4ad2..0000000
+--- a/t/t5515/refs.master
++++ /dev/null
+@@ -1,11 +0,0 @@
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/HEAD
+-754b754407bf032e9a2f9d5a9ad05ca79a6b228f refs/remotes/origin/master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/remotes/origin/one
+-0567da4d5edd2ff4bb292a465ba9e64dcad9536b refs/remotes/origin/three
+-6134ee8f857693b96ff1cc98d3e2fd62b199e5a8 refs/remotes/origin/two
+-6c9dec2b923228c9ff994c6cfe4ae16c12408dc5 refs/tags/tag-master
+-8e32a6d901327a23ef831511badce7bf3bf46689 refs/tags/tag-one
+-22feea448b023a2d864ef94b013735af34d238ba refs/tags/tag-one-tree
+-c61a82b60967180544e3c19f819ddbd0c9f89899 refs/tags/tag-three
+-0e3b14047d3ee365f4f2a1b673db059c3972589c refs/tags/tag-three-file
+-525b7fb068d59950d185a8779dc957c77eed73ba refs/tags/tag-two
 -- 
 1.5.5
