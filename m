@@ -1,78 +1,119 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Simple problem
-Date: Mon, 28 Apr 2008 18:49:45 +0200
-Message-ID: <20080428164945.GA14445@atjola.homenet>
-References: <fv4u49$oks$1@ger.gmane.org> <18453.64747.540905.586259@lisa.zopyra.com>
+From: Nico Schottelius <nico-git-20080428@schottelius.org>
+Subject: git push: failed to push some refs and missing commit
+Date: Mon, 28 Apr 2008 19:10:20 +0200
+Message-ID: <20080428171020.GF23412@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Kenneth P. Turvey" <kt-usenet@squeakydolphin.com>,
-	git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:50:59 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ULyIDA2m8JTe+TiX"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 19:11:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqWYo-0002cR-Jf
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 18:50:39 +0200
+	id 1JqWsk-0001GQ-Ty
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 19:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936819AbYD1Qtv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2008 12:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936818AbYD1Qtv
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 12:49:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52266 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S936817AbYD1Qtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 12:49:49 -0400
-Received: (qmail invoked by alias); 28 Apr 2008 16:49:47 -0000
-Received: from i577B85F9.versanet.de (EHLO atjola.local) [87.123.133.249]
-  by mail.gmx.net (mp013) with SMTP; 28 Apr 2008 18:49:47 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+wy9gaRtqwW3T+ZgnHlyhJ2RzUVmsqF10k9+b7SJ
-	CLTmYOuOlEDY9A
+	id S1763103AbYD1RKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 13:10:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933547AbYD1RKY
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 13:10:24 -0400
+Received: from mx2.schottelius.org ([62.65.138.77]:53749 "EHLO
+	mx2.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763103AbYD1RKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 13:10:23 -0400
+Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.schottelius.org (Postfix) with ESMTPSA id 7538A1D584F;
+	Mon, 28 Apr 2008 19:10:16 +0200 (CEST)
+Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
+	id 92C041E1A5; Mon, 28 Apr 2008 19:10:20 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <18453.64747.540905.586259@lisa.zopyra.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Unix-Info: http://unix.schottelius.org/
+X-Netzseite: http://nico.schottelius.org/
+X-System-Info: denkbrett running Linux 2.6.25-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80565>
 
-On 2008.04.28 11:35:55 -0500, Bill Lear wrote:
-> On Monday, April 28, 2008 at 16:31:05 (+0000) Kenneth P. Turvey write=
-s:
-> >I ran into an issue earlier today that I didn't know how to easily s=
-olve=20
-> >in git.  I'm sure it is easy to handle, but I wasn't sure how. =20
-> >
-> >I removed a file and then realized I'd hit the wrong one.  So all I=20
-> >wanted to do was to get the file back the way it was in the last com=
-mit. =20
-> >
-> >Basically I wanted something similar to:
-> >
-> >svn update myfile
-> >
-> >in subversion. =20
-> >
-> >I got it back by using a diff and just deleting all the minus signs =
-at=20
-> >the beginning of the lines, but I'm sure this isn't the way to handl=
-e=20
-> >this.  Strangely this simple case wasn't covered by any of the tutor=
-ials=20
-> >I looked at.=20
->=20
-> % rm file
-> [oops]
-> % git checkout file
 
-That restores the version from the index, so it will fail if you did
-"git rm file". To get the file from HEAD use "git checkout HEAD --
-file".
+--ULyIDA2m8JTe+TiX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Bj=F6rn
+Hello!
+
+Error 1:
+
+When doing git-push once I get:
+
+chdebfl0@u0160:~/public_html/nello$ git-push
+Counting objects: 43, done.
+Compressing objects: 100% (19/19), done.
+Writing objects: 100% (24/24), 6.94 KiB, done.
+Total 24 (delta 17), reused 3 (delta 2)
+Unpacking objects: 100% (24/24), done.
+To /home/server/git/web/nello/.git
+   9299071..06c9c06  master -> master
+error: failed to push some refs to '/home/server/git/web/nello/.git'
+chdebfl0@u0160:~/public_html/nello$ git-status
+# On branch master
+nothing to commit (working directory clean)
+
+Doing git-fetch does not fetch, as there is nothing new, git-push
+succeeds the second time:
+
+chdebfl0@u0160:~/public_html/nello$ git-fetch
+chdebfl0@u0160:~/public_html/nello$ git-push
+Everything up-to-date
+chdebfl0@u0160:~/public_html/nello$=20
+
+Error 2:
+
+I miss a commit, that removed the function hideContent();
+
+If I do
+
+% git-log -p -ShideContent
+
+I see two commits:
+
+- the first one, that introduced the function
+- the second one that I used to git checkout <firstcommit> filename it again
+
+It seems some other files have been modified without having an log entry.
+
+Anyone an idea, what could be the reason for it?
+
+Sincerly
+
+Nico
+
+PS: Please CC me, I am not subscribed.
+
+--=20
+Think about Free and Open Source Software (FOSS).
+http://nico.schottelius.org/documentations/foss/the-term-foss/
+
+PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+
+--ULyIDA2m8JTe+TiX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIFgT8uL75KpiFGIwRAngIAKDZxyGV5FSR3XKu2Lr2IoQ9jOECQQCgl6qP
+xTqOBNRxcXEmkG+90/ed7fc=
+=p9Bx
+-----END PGP SIGNATURE-----
+
+--ULyIDA2m8JTe+TiX--
