@@ -1,63 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: my git problem
-Date: Mon, 28 Apr 2008 19:49:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804281948270.19187@eeepc-johanness>
-References: <20080427112938.4dbe8e2a.akpm@linux-foundation.org> <alpine.LFD.1.10.0804271204510.3119@woody.linux-foundation.org> <20080427124454.6a606305.akpm@linux-foundation.org> <alpine.LFD.1.10.0804271315010.3119@woody.linux-foundation.org>
- <20080428114509.240ef4ae.akpm@linux-foundation.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Mon, 28 Apr 2008 20:19:48 +0200
+Message-ID: <48161544.90500@gnu.org>
+References: <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 20:50:29 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com,
+	peff@peff.net, johannes.schindelin@gmx.de, srb@cuci.nl
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 20:55:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqYQe-0004HI-DX
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 20:50:20 +0200
+	id 1JqYVp-0006n6-ET
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 20:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966069AbYD1Std (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 14:49:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965917AbYD1StZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 14:49:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50088 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965859AbYD1StW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 14:49:22 -0400
-Received: (qmail invoked by alias); 28 Apr 2008 18:49:17 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.st-andrews.ac.uk) [141.5.11.5]
-  by mail.gmx.net (mp007) with SMTP; 28 Apr 2008 20:49:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19QadFcsB9QHQzrLpYrzKdDttQKRiUzgmQbJtLa1Z
-	mr8NykKhQ3M15R
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080428114509.240ef4ae.akpm@linux-foundation.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S932284AbYD1Syx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 14:54:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbYD1Syx
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 14:54:53 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:4015 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729AbYD1Syw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 14:54:52 -0400
+Received: by fk-out-0910.google.com with SMTP id 19so5917540fkr.5
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 11:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=heD7vbZuKR0bQtyx5bTdI8/JBlJ7W/06l5HcpXvBdQI=;
+        b=Tql1Y70ZOPH5Q/qmGW0KqwlE6mvlvhKx07hT36H8VLRldc9KWAE5SySCzSv4fe50GedfYhKmdO3vh7/lh728X5BWF9zYW3Pxp4JqgyBFo6z06h5nO69pMcQKDte4DhUh8m4PuO34ts1PyI8Unl8SBrP0UbGRQK0EgdUBHwEvC6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=l9en0gSneICVkPf8txLz/sN5RStgVrpMQxhP5y4qCjetOo6zhm1tIIGHu9w8fBTwqjLBavgMFNHjRkgzT4LBD6YJ8+mgnESDeq9hAmbWYznWVeFnRyYb4DU3doMUQzQPEJrcUiBnkwEFsZm1vUJJoAEX6mECvJYYPnss2mw4Hlg=
+Received: by 10.86.95.2 with SMTP id s2mr8407112fgb.7.1209408890745;
+        Mon, 28 Apr 2008 11:54:50 -0700 (PDT)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id 3sm5316766fge.7.2008.04.28.11.54.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Apr 2008 11:54:50 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <20080428181012.GB6710@steel.home>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80584>
 
-Hi,
+> my v4l2
+> repo (which is a pretty collection of all kinds of remotes)
 
-On Mon, 28 Apr 2008, Andrew Morton wrote:
+I can add a global boolean configuration to change the default value of 
+skipDefaultRemote.
 
-> hm, weirdness.
-> 
-> y:/usr/src/git26> git-diff origin...git-ia64   
-> y:/usr/src/git26> git-log origin...git-ia64 | wc -l
-> 15574
-> 
-> I'd have expected git-log to operate on the same patches as git-diff.
-> 
-> I'm sure there's a logical explanation for this ;)
-
-Yes.  git-diff with "..." will show you the diff of git-ia64 since the 
-branch point, whereas log will show you _all_ the logs (both in origin and 
-in git-ia64) since the branch point.
-
-Ciao,
-Dscho
+Paolo
