@@ -1,64 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
-	whitespace.
-Date: Mon, 28 Apr 2008 05:41:19 -0400
-Message-ID: <20080428094119.GA20499@sigill.intra.peff.net>
-References: <20080427151610.GB57955@Hermes.local> <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness> <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use whitespace.
+Date: Mon, 28 Apr 2008 10:56:05 +0100
+Message-ID: <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com>
+References: <20080427151610.GB57955@Hermes.local>
+	 <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness>
+	 <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com>
+	 <20080428094119.GA20499@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 11:42:09 2008
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 28 11:57:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqPs9-0003BD-7p
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 11:42:09 +0200
+	id 1JqQ6T-0007Ow-Tr
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 11:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882AbYD1JlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 05:41:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758583AbYD1JlV
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 05:41:21 -0400
-Received: from peff.net ([208.65.91.99]:2399 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753744AbYD1JlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 05:41:21 -0400
-Received: (qmail 5440 invoked by uid 111); 28 Apr 2008 09:41:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 28 Apr 2008 05:41:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2008 05:41:19 -0400
+	id S1765098AbYD1J4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 05:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765100AbYD1J4I
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 05:56:08 -0400
+Received: from rv-out-0708.google.com ([209.85.198.244]:30497 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1765098AbYD1J4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 05:56:06 -0400
+Received: by rv-out-0506.google.com with SMTP id k29so2872852rvb.1
+        for <git@vger.kernel.org>; Mon, 28 Apr 2008 02:56:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=BDmLWwGMuKsJJmP6Vi/XZeshxGoTw5BnUN0bwvOYWX0=;
+        b=cr6qQE3MrZsxiIWjbW72Y6qywnQJrOj+fDr9spYbJUP7mPrBbMek96bSzzuZgujM3cXAXZkmNmlsh31kW8Ttcw/amIFPDpML+Hc2HZpikJp3DAfzp/QutcnoJ99/3ZOSmSXR62LxvpRDjyLxKGBg3xcuVqd/fXLJQ8EQNFxc3xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tDKcJGnrCIkQPzxeNzTRId04CVIcUniztx5evZxuGfiYwAS0maB4NRY3sUTzQsYTzfJCxZHM1lbz8K9n4TaEUFIMjf/gGVGFAg+KDvxDGrpDiLAIlO+Vs97Bm3ukbNxMaATOgpHQxRGTDD843sYz1xQtZWBUrc3aud8gtHhh25o=
+Received: by 10.141.141.3 with SMTP id t3mr2323380rvn.52.1209376565670;
+        Mon, 28 Apr 2008 02:56:05 -0700 (PDT)
+Received: by 10.140.142.5 with HTTP; Mon, 28 Apr 2008 02:56:05 -0700 (PDT)
+In-Reply-To: <20080428094119.GA20499@sigill.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80519>
 
-On Sun, Apr 27, 2008 at 11:32:24AM -0400, Brian Gernhardt wrote:
+2008/4/28 Jeff King <peff@peff.net>:
+> If a failing test, then I wonder if we could get a few people to set up
+> automated tests on alternate platforms. IIRC, Junio makes sure that
+> master always passes test on his Linux box and KO (Debian and Redhat, I
+> think?). Other platforms could "git pull && make test" daily. I could
+> probably do Solaris (once I get the tests to complete pass at all!) and
+> FreeBSD 6.
 
-> Eh, not everyone's perfect.  I would have used `rev` instead of `tac` and 
-> still been wrong for Solaris.  But it seems that the `wc -l` whitespace 
-> issue seems to hit nearly everyone at some point, so I thought it would be 
-> a good candidate for CodingStyle.
->
-> Personally, I'd love to have the time to review all the patches to catch 
-> these issues while still on the list instead of waiting until they hit 
-> next and I tried to compile it.  But I don't always notice, have time, or 
-> care myself.
+I could run automated build / test [/ bisect?] cycles on AIX if of any interest.
 
-BTW, how did you discover this bug? Through normal use, or was there a
-failing test?
-
-If a failing test, then I wonder if we could get a few people to set up
-automated tests on alternate platforms. IIRC, Junio makes sure that
-master always passes test on his Linux box and KO (Debian and Redhat, I
-think?). Other platforms could "git pull && make test" daily. I could
-probably do Solaris (once I get the tests to complete pass at all!) and
-FreeBSD 6.
-
--Peff
+Mike
