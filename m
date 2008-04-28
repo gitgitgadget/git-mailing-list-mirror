@@ -1,90 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-daemon: fix for rotating logs
-Date: Mon, 28 Apr 2008 15:24:07 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804281523040.5399@eeepc-johanness>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 28 16:25:39 2008
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 2/7] add push line in git-clone
+Date: Mon, 28 Apr 2008 11:32:13 -0400
+Message-ID: <ff298458e7efc14721fdc0420432bf33efd76784.1209391614.git.bonzini@gnu.org>
+References: <4812DA50.3000702@gnu.org>
+ <cover.1209391614.git.bonzini@gnu.org>
+ <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org>
+Cc: spearce@spearce.org, gitster@pobox.com, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 17:34:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqUID-0001Wl-Sm
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 16:25:22 +0200
+	id 1JqVMg-0004Kp-Rv
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 17:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934698AbYD1OX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 10:23:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933677AbYD1OX7
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 10:23:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47542 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934825AbYD1OX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 10:23:58 -0400
-Received: (qmail invoked by alias); 28 Apr 2008 14:23:56 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.st-andrews.ac.uk) [141.5.11.5]
-  by mail.gmx.net (mp044) with SMTP; 28 Apr 2008 16:23:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+LVad9CyuLEXDQHFm6VXL3dC4UDyoWhnWe1pjUif
-	V1iP5dlh1Qb3ad
-X-X-Sender: user@eeepc-johanness
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S934368AbYD1Pcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 11:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935671AbYD1Pch
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 11:32:37 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60625 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935623AbYD1Pcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 11:32:35 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1JqVL0-0004f7-Ex; Mon, 28 Apr 2008 11:32:18 -0400
+X-Mailer: git-send-email 1.5.5.1.89.g36c79d
+In-Reply-To: <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org>
+In-Reply-To: <cover.1209391614.git.bonzini@gnu.org>
+References: <cover.1209391614.git.bonzini@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80540>
 
+This patch makes git-clone add a remote.origin.push line, using the
+new ":" special refspec.  This is useful in the following patches that
+modify the behavior of "git push"; right now, it only adds clarity.
 
-With rotating logs, there is a problem when the syslog is opened only once 
-(in the beginning).  So open the log everytime we write something, and 
-close it directly after writing.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 ---
- daemon.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+ git-clone.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/daemon.c b/daemon.c
-index 2b4a6f1..a887c72 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -90,7 +90,9 @@ static void logreport(int priority, const char *err, va_list params)
- 	msglen = vsnprintf(buf + buflen, maxlen, err, params);
+diff --git a/git-clone.sh b/git-clone.sh
+index 2636159..7a5570a 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -480,6 +480,8 @@ then
+ 	# Set up the mappings to track the remote branches.
+ 	git config remote."$origin".fetch \
+ 		"+refs/heads/*:$remote_top/*" '^$' &&
++	git config remote."$origin".push \
++		":" '^$' &&
  
- 	if (log_syslog) {
-+		openlog("git-daemon", 0, LOG_DAEMON);
- 		syslog(priority, "%s", buf);
-+		closelog();
- 		return;
- 	}
- 
-@@ -767,8 +769,11 @@ static void child_handler(int signo)
- 				const char *dead = "";
- 				if (!WIFEXITED(status) || WEXITSTATUS(status) > 0)
- 					dead = " (with error)";
--				if (log_syslog)
-+				if (log_syslog) {
-+					openlog("git-daemon", 0, LOG_DAEMON);
- 					syslog(LOG_INFO, "[%d] Disconnected%s", pid, dead);
-+					closelog();
-+				}
- 				else
- 					fprintf(stderr, "[%d] Disconnected%s\n", pid, dead);
- 			}
-@@ -1149,10 +1154,8 @@ int main(int argc, char **argv)
- 		usage(daemon_usage);
- 	}
- 
--	if (log_syslog) {
--		openlog("git-daemon", 0, LOG_DAEMON);
-+	if (log_syslog)
- 		set_die_routine(daemon_die);
--	}
- 
- 	if (inetd_mode && (group_name || user_name))
- 		die("--user and --group are incompatible with --inetd");
+ 	# Write out remote.$origin config, and update our "$head_points_at".
+ 	case "$head_points_at" in
 -- 
-1.5.4.4.GIT
+1.5.5
