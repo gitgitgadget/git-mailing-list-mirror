@@ -1,65 +1,63 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH resend] make "git push" update origin and mirrors, "git
 	push --mirror" update mirrors
-Date: Sun, 27 Apr 2008 21:21:13 -0400
-Message-ID: <20080428012113.GA15121@sigill.intra.peff.net>
-References: <4812DA50.3000702@gnu.org> <20080426170126.GC29771@spearce.org> <7vzlrgmrvb.fsf@gitster.siamese.dyndns.org> <20080427043014.GI29771@spearce.org> <20080427044049.GJ29771@spearce.org> <7vabjflvlh.fsf@gitster.siamese.dyndns.org> <20080427173446.GM29771@spearce.org>
+Date: Sun, 27 Apr 2008 21:26:13 -0400
+Message-ID: <20080428012613.GB15121@sigill.intra.peff.net>
+References: <4812DA50.3000702@gnu.org> <20080426170126.GC29771@spearce.org> <7vzlrgmrvb.fsf@gitster.siamese.dyndns.org> <20080427043014.GI29771@spearce.org> <20080427044049.GJ29771@spearce.org> <7vabjflvlh.fsf@gitster.siamese.dyndns.org> <20080427173446.GM29771@spearce.org> <7vy76zf449.fsf@gitster.siamese.dyndns.org> <4814E097.7030407@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 03:22:22 2008
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 03:27:11 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqI4S-0007th-V7
-	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 03:22:21 +0200
+	id 1JqI92-0000XE-Ac
+	for gcvg-git-2@gmane.org; Mon, 28 Apr 2008 03:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602AbYD1BVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2008 21:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbYD1BVR
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 21:21:17 -0400
-Received: from peff.net ([208.65.91.99]:3341 "EHLO peff.net"
+	id S1752939AbYD1B0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2008 21:26:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbYD1B0R
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Apr 2008 21:26:17 -0400
+Received: from peff.net ([208.65.91.99]:1182 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752066AbYD1BVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2008 21:21:17 -0400
-Received: (qmail 6539 invoked by uid 111); 28 Apr 2008 01:21:14 -0000
+	id S1752066AbYD1B0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2008 21:26:16 -0400
+Received: (qmail 6866 invoked by uid 111); 28 Apr 2008 01:26:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 27 Apr 2008 21:21:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Apr 2008 21:21:13 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 27 Apr 2008 21:26:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Apr 2008 21:26:13 -0400
 Content-Disposition: inline
-In-Reply-To: <20080427173446.GM29771@spearce.org>
+In-Reply-To: <4814E097.7030407@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80495>
 
-On Sun, Apr 27, 2008 at 01:34:46PM -0400, Shawn O. Pearce wrote:
+On Sun, Apr 27, 2008 at 10:22:47PM +0200, Paolo Bonzini wrote:
 
-> Just take the above as the rantings of someone who knows git a
-> little too well, and has tried to teach it to people who don't,
-> and they all have asked about the funny (to them) need for origin
-> in git-pull/git-push command line sometimes (no refspecs) and not
-> others (with refspecs).
+> I think "git pull" is different, because it is more often fetching from  
+> one defined place (while Shawn said that he has a need for one-to-many  
+> "git push"es and so do I).  For "git pull", the branch config provides a  
+> valuable default more often than for "git push".
 
-I know git pretty well, and I find that particular distinction (that is,
-needing to specify the remote if using refspecs, but not otherwise)
-annoying.  And it _is_ a bit funny, but it has nothing to do with
-concepts. It is purely a syntactic issue that relying on order of
-arguments means you can't default earlier ones but specify later ones.
+I think it is highly dependent on your workflow. I would have said the
+exact opposite.
 
-Whether you hit this particular syntactic funniness depends totally on
-your workflow. If you don't tend to default that particular argument,
-then you won't see it. But there are plenty of workflows where you
-never need to specify a remote, and then typing "git push master:foo"
-makes you stop and blink for a second when it fails.
+For example, on one project, I keep a "working" repo on my laptop where
+I develop and integrate work from others. I get their work by pulling
+individually from other developers. But when I push, it always goes to
+one place: my "publish" repo, where the other developers will grab my
+changes.
 
-Of course, I don't think there is a reasonable fix now, short of "git
-push --ref master:foo".
+In that workflow, I pull from many different places, but always push to
+one. I assumed that is actually similar to the Linus "integrator"
+workflow (although I think he just does one-shot pulls without defining
+remotes).
 
 -Peff
