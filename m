@@ -1,52 +1,93 @@
-From: Fredrik Skolmli <fredrik@frsk.net>
-Subject: Re: About git and the use of SHA-1
-Date: Tue, 29 Apr 2008 23:52:01 +0200
-Message-ID: <20080429215201.GB14547@frsk.net>
-References: <alpine.LFD.1.10.0804291132060.23581@xanadu.home> <7f9d599f0804290859y6a579302m5db9f7f827b320a4@mail.gmail.com> <alpine.LFD.1.10.0804291232130.23581@xanadu.home> <7f9d599f0804291048n2c706f3amdf159ffe86bdbc8@mail.gmail.com> <alpine.LFD.1.10.0804291352120.23581@xanadu.home> <7f9d599f0804291102j4a30c344h18d12d03a6d5953b@mail.gmail.com> <alpine.LNX.1.00.0804291410340.19665@iabervon.org> <7f9d599f0804291331v2f44bee1y29c1580d68a3107a@mail.gmail.com> <20080429205031.GA14547@frsk.net> <7f9d599f0804291439m6f5dd242jb31b84e1a0205cdc@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 23:53:11 +0200
+Message-ID: <20080429215311.GC2413@steel.home>
+References: <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home> <48179625.3050704@gnu.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Geoffrey Irving <irving@naml.us>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:53:21 2008
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:54:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxlC-0007TM-ES
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:53:14 +0200
+	id 1Jqxly-0007oP-F3
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754416AbYD2VwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755709AbYD2VwF
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:52:05 -0400
-Received: from cassarossa.samfundet.no ([129.241.93.19]:45018 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753128AbYD2VwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:52:03 -0400
-Received: from asterix.samfundet.no ([2001:700:300:1800::f] ident=postfix)
-	by cassarossa.samfundet.no with esmtp (Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1Jqxk1-0004oM-Nx; Tue, 29 Apr 2008 23:52:02 +0200
-Received: by asterix.samfundet.no (Postfix, from userid 1000)
-	id 8D103A6035A; Tue, 29 Apr 2008 23:52:01 +0200 (CEST)
+	id S1752857AbYD2VxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbYD2VxP
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:53:15 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:8221 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbYD2VxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:53:14 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+D1WRsg==
+Received: from tigra.home (Fabc8.f.strato-dslnet.de [195.4.171.200])
+	by post.webmailer.de (mrclete mo27) (RZmta 16.27)
+	with ESMTP id k008edk3TI9CnQ ; Tue, 29 Apr 2008 23:53:12 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 078BF277BD;
+	Tue, 29 Apr 2008 23:53:12 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id CB1D556D28; Tue, 29 Apr 2008 23:53:11 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7f9d599f0804291439m6f5dd242jb31b84e1a0205cdc@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <48179625.3050704@gnu.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80750>
 
-On Tue, Apr 29, 2008 at 02:39:46PM -0700, Geoffrey Irving wrote:
+Paolo Bonzini, Tue, Apr 29, 2008 23:41:57 +0200:
+>> Hmm... Which one do you mean? I cannot find his reply to message-id
+>> <cover.1209391614.git.bonzini@gnu.org>
+>
+> http://permalink.gmane.org/gmane.comp.version-control.git/80720
+>
 
-> This is an example of a hash collision, not conditional rendering
-> based on the current date.  I.e., you didn't actually read my email or
-> the email I was replying to. :)
+Just received it
 
-Ah, you're right. Didn't notice the part about dates. Sorry ;-)
+>>> are also a start towards that, even though I don't think your 
+>>> transition  plan is feasible (also because it would break "git remote 
+>>> update"  completely).
+>>
+>> Which part of "warn people in git-fetch" will break "git remote update"?
+>> Or what will break after the "git remote add" start setting
+>> skipDefaultUpdate?
+>
+> People will expect the new remotes to be, ehm, updated by "git remote  
+> update".
+>
 
--- 
-Regards,
-Fredrik Skolmli
+Ah, right. How about a warning, then? Like:
+
+    $ git remote add abc host:src/project
+    warning: fetch and push without arguments WILL update the references of "abc"
+    $
+
+>> It is not. It seem to propose, instead of fixing existing behaviour,
+>
+> Do you know how to "fix" existing behavior?
+>
+
+Never considered it broken. OTOH, it hasn't occured to me to run "git
+push" without arguments. And I do expect "git fetch" to fetch just the
+remote my current branch is related to (and not all remotes).
+
+> I mean, I just wonder why as long as I had one remote only, I could  
+> write "git push", while now I have to write "git push origin && git push  
+> mirror".  The patch to "git fetch" comes from this observation too, and  
+> I think it is a good idea, even though I'm less attached to it and it  
+> would influence my workflow much less.
+
+Have you tested your patches in your workflow? Worked with them for
+some weeks? Gave them to your peers?
