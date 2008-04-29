@@ -1,104 +1,118 @@
-From: Richard Purdie <rpurdie@rpsys.net>
-Subject: Re: Tracability in git commits
-Date: Tue, 29 Apr 2008 22:56:39 +0100
-Message-ID: <1209506199.5642.66.camel@dax.rpnet.com>
-References: <1209473739.5642.31.camel@dax.rpnet.com>
-	 <7vd4o873cm.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: point git-prune users to git-gc
+Date: Tue, 29 Apr 2008 15:05:03 -0700
+Message-ID: <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
+References: <32541b130804230841h32c07f3arc94cccfaf0b156a3@mail.gmail.com>
+ <7vve28sdys.fsf@gitster.siamese.dyndns.org>
+ <20080423221316.GE30057@sigill.intra.peff.net>
+ <20080424012836.GA30812@sigill.intra.peff.net>
+ <32541b130804240843k471ecfeteb1008c44a56808b@mail.gmail.com>
+ <20080424161407.GA23737@sigill.intra.peff.net>
+ <32541b130804240959y3b05d4b5u67ac7a7c14bf187e@mail.gmail.com>
+ <20080429204514.GA21029@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:58:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 30 00:06:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxqM-0000oN-4c
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:58:34 +0200
+	id 1Jqxxn-00039D-R3
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 00:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307AbYD2V5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753251AbYD2V5q
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:57:46 -0400
-Received: from tim.rpsys.net ([194.106.48.114]:57719 "EHLO tim.rpsys.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751111AbYD2V5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:57:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id m3TLuthe018082;
-	Tue, 29 Apr 2008 22:56:55 +0100
-Received: from tim.rpsys.net ([127.0.0.1])
- by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 17959-04; Tue, 29 Apr 2008 22:56:48 +0100 (BST)
-Received: from [192.168.1.3] (dax.rpnet.com [192.168.1.3])
-	(authenticated bits=0)
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id m3TLubUN018072
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Apr 2008 22:56:43 +0100
-In-Reply-To: <7vd4o873cm.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.1 
-X-Virus-Scanned: amavisd-new at rpsys.net
+	id S1752848AbYD2WF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 18:05:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753333AbYD2WF2
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 18:05:28 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56558 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbYD2WF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 18:05:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F9673EFA;
+	Tue, 29 Apr 2008 18:05:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B3E763EF6; Tue, 29 Apr 2008 18:05:16 -0400 (EDT)
+In-Reply-To: <20080429204514.GA21029@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 29 Apr 2008 16:45:14 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5D117A30-1638-11DD-BF0C-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80754>
 
-On Tue, 2008-04-29 at 14:34 -0700, Junio C Hamano wrote:
-> Richard Purdie <rpurdie@rpsys.net> writes:
-> 
-> > Assuming a shared server using something like gitosis each set of
-> > commits is made under a certain ssh ID and what I'd like is to be able
-> > to validate that against the commits so we could tell that commits A-D
-> > were made by ID Z.
-> 
-> First of all, you need to learn the differences between making commits and
-> updating remote repositories.  Push does not create commits, it only
-> propagates a new part of commit DAG created elsewhere.
+Jeff King <peff@peff.net> writes:
 
-I understand that, yes. I also understood the remote repository to be
-able to accept or reject commits/merges through its hooks?
+> Yes, I don't think there is any reason for most people to use git-prune
+> at all, unless they are trying specifically to prune and don't want the
+> other gc effects to happen.
+>
+> Junio, please correct me if I'm wrong there.
 
-> When you grant rights to a person to update the tip of a branch of a
-> repository, you are saying that you trust the person to advance the
-> history recorded on that branch in a way that is compatible with the goal
-> of the branch of your repository.
+Well, this is a hard statement to make corrections to.  If A is defined to
+be a subset of B, and A is generally useful, the only reason to do B is
+when you want the effect of B without anything else.  So your statement
+cannot be incorrect.
 
-but you can put a policy in place for that in the hooks if desired?
+However, in order to help people decide when to run B (or, if there ever
+be a case where they might want to), there needs a discussion what other
+things that _might_ be unwanted A does in addition to B.
 
-> Whether you like it or not, git is a distributed system and git does not
-> care how that other person came up with the new part of the history.  The
-> person may find somebody else's work that is useful and apply patches to
-> his history (introducing commits whose authors are not himself), or merge
-> it (introducing commits whose committer are not himself), but you trust
-> that the person who does so uses good judgement, the same good judgement
-> he uses when making changes on his own.
+For that reason,...
 
-I appreciate this can happen and is often part of the normal workflow. I
-have no objection to that, its more a question about whether it can be
-controlled or at least logged...
+> diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+> index f151cff..f92bb8c 100644
+> --- a/Documentation/git-prune.txt
+> +++ b/Documentation/git-prune.txt
+> @@ -13,6 +13,9 @@ SYNOPSIS
+>  DESCRIPTION
+>  -----------
+>  
+> +NOTE: In most cases, users should run linkgit:git-gc[1], which calls
+> +git-prune. See the section "NOTES", below.
+> +
 
-> And then the branch you granted the right to update its tip to that person
-> is updated, using that added part of the history.  The updates to the tip
-> will be recorded in reflog to record who updated the tip and when, which
-> would allow you to go back and point your finger at the person who
-> introduced problematic new history and at that point you really do not
-> care if the problem you have with the new history was due to faulty
-> commits the pusher made himself, was introduced by a merge the pusher did,
-> or was applied by the pusher from his mailbox.
+I think this note upfront is not helping readers very much (this is
+git-prune documentation after all -- they are interested in the command
+and not gc), but ...
 
-This sounds like my answer, it's possible to trace who did what from the
-reflog. Which area of code is responsible for updating the reflog, is it
-in git itself or is it in the form of a hook? 
+>  This runs `git-fsck --unreachable` using all the refs
+>  available in `$GIT_DIR/refs`, optionally with additional set of
+>  objects specified on the command line, and prunes all
+> @@ -50,6 +53,23 @@ borrows from your repository via its
+>  $ git prune $(cd ../another && $(git-rev-parse --all))
+>  ------------
+>  
+> +Notes
+> +-----
+> +
+> +In most cases, users will not need to call git-prune directly, but
+> +should instead call linkgit:git-gc[1], which handles pruning along with
+> +many other housekeeping tasks.
 
-I'm asking since if the repository is read/write for several users,
-faking the log is easy. If you use something like gitosis it runs under
-one user and faking is hard due to the restricted access. There is
-probably a need to feed extra information into whatever is making the
-log, or generate an additional log though due to the single user?
+... this paragraph should be made a bit fatter by mentioning what "other
+housekeeping tasks" are.
 
-Thanks,
-
-Richard
+> +For a description of which objects are considered for pruning, see
+> +git-fsck's --unreachable option.
+> +
+> +See Also
+> +--------
+> +
+> +linkgit:git-fsck[1],
+> +linkgit:git-gc[1],
+> +linkgit:git-reflog[1]
+> +
+>  Author
+>  ------
+>  Written by Linus Torvalds <torvalds@osdl.org>
+> -- 
+> 1.5.5.1.172.g4dce
