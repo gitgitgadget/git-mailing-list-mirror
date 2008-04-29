@@ -1,84 +1,67 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: About git and the use of SHA-1
-Date: Tue, 29 Apr 2008 09:21:36 +0200
-Message-ID: <4816CC80.9080705@op5.se>
-References: <200804281829.11866.henrikau@orakel.ntnu.no>	 <alpine.LNX.1.00.0804281515480.19665@iabervon.org>	 <200804282329.21336.henrikau@orakel.ntnu.no> <4816C26D.9010304@op5.se> <f9d2a5e10804290009p17d291d5wf14e2bb58bedca63@mail.gmail.com>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: cvsimport and branches with "(" in the name
+Date: Tue, 29 Apr 2008 08:22:02 +0100
+Message-ID: <320075ff0804290022r56c9f4efx74a13d3502be212@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Henrik Austad <henrikau@orakel.ntnu.no>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Russ Dill <russ.dill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 09:22:33 2008
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 09:23:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqkAa-0001FR-CO
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 09:22:32 +0200
+	id 1JqkAv-0001L0-GG
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 09:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615AbYD2HVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 03:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752424AbYD2HVp
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 03:21:45 -0400
-Received: from mail.op5.se ([193.201.96.20]:48312 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752054AbYD2HVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 03:21:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 214881F08028;
-	Tue, 29 Apr 2008 09:21:46 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hISQtTR8VGds; Tue, 29 Apr 2008 09:21:41 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id 1C4F21F08063;
-	Tue, 29 Apr 2008 09:21:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <f9d2a5e10804290009p17d291d5wf14e2bb58bedca63@mail.gmail.com>
+	id S1753834AbYD2HWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 03:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751404AbYD2HWF
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 03:22:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:26657 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753536AbYD2HWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 03:22:04 -0400
+Received: by fg-out-1718.google.com with SMTP id l27so5118201fgb.17
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 00:22:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=ARu3E+LWZXKpUYA4CJOyqP/p4eUk57f08gT5PVTVeWw=;
+        b=rnTYLo467Hh4xJo+RRopKGTCK1owD6wJHLP7BKvZNFtBzPqqjElP05+lRtk+JNSp/o2F5iKA6OFkhp7FU0efPTIJ1B6acgGz2oA/gUTk8ZXqCPjfvA+rjF23LekxPdbuhvB4UOkkoYKYNhaCCotCSPjq3TBFlIeWmc1z6UXoUZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hrnyFznIgFcagz5aucfxx3zLKzd0rYgK7/LZtKtK7ymBZCHkRRPhV9zIZ7kz4SBdGIxDdSA5Az23gUrZ0Imdn/u6V+tuJtqALhoTt6V36FblQM+8v3i3hExuC3MmtRnS4/p92QZb3zTGcnfDiFBGP0yetQK/7D2k2bzuz+8n/kY=
+Received: by 10.82.159.2 with SMTP id h2mr3808325bue.25.1209453722768;
+        Tue, 29 Apr 2008 00:22:02 -0700 (PDT)
+Received: by 10.82.168.20 with HTTP; Tue, 29 Apr 2008 00:22:02 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80665>
 
-Russ Dill wrote:
->>  Colliding objects can never enter a repository. Git is lazy and will reuse the
->>  already existing colliding object with the same name instead.
->>
-> 
-> I think you are missing the point. One of the pluses behind originally
-> using SHA-1 and the signed tags is that the system as a whole is
-> cryptographically secure. You can verify from the public key of
-> whoever made the tag that yes, this really is the source and history
-> they tagged. Not only can DNS attacks be made, fooling users into
-> thinking that they are really connecting to kernel.org, or whatever
-> else server they expect to be connecting to, but also, the server
-> itself may be hacked and objects replaced.
-> 
+git 1.5.4.4 on ubuntu, I cvsimport a repository that has an oddly
+named branch - I get
 
-If the server is hacked and objects are replaced, they will either
-no longer match their cryptographic signature, meaning they'll be
-new objects or git will determine that they are corrupt, or they
-*will* match an existing object, but then that object won't be
-propagated to other repositories since git refuses to overwrite
-already existing objects. Either way, gits refusal to overwrite
-objects it already has plays a part in making malicious actions
-futile, since malicious code is only worth something if it's
-propagated and actually used.
+sh: Syntax error: "(" unexpected
+Cannot write branch ChapelHill_3_0(iteration2)_esap_demo for update:
+Bad file descriptor
 
-> I'm just not sure how much time it would take to find a collision.
+though the end of my -v log shows
 
-Even crypto-experts are arguing about that, so I'm not surprised.
+Tree ID 46f13621661205b02a80d7d431a2c59be500ae45
+Parent ID d635ccf06e1cac3afacc4fba6e70bba7f771ead2
+Committed patch 1956 (ChapelHill_3_0(iteration2)_esap_demo +0000
+2006-12-04 10:28:31)
+Commit ID 76c991af0c690d9ae5471c0b661dfba3b3df18c6
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+and refs/heads has a correctly named file
+
+My guess is something in the guts isn't liking the ( character, when
+committing the next patch.
+
+Any ideas on how to diagnose / fix it further ?
