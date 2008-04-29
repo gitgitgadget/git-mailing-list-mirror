@@ -1,76 +1,90 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: [DOC] more explanation about --git-dir and --work-tree options
-Date: Wed, 30 Apr 2008 06:30:04 +0900
-Message-ID: <200804292130.m3TLUcxl026222@mi0.bluebottle.com>
-References: <48162EF0.6050705@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 23:33:23 +0200
+Message-ID: <20080429213323.GA2413@steel.home>
+References: <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Liu Yubao <yubao.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:31:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:34:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxQ7-0007yp-D6
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:31:27 +0200
+	id 1JqxSo-0000cZ-BF
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835AbYD2Vaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbYD2Vaj
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:30:39 -0400
-Received: from mi0.bluebottle.com ([206.188.25.15]:56892 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751563AbYD2Vai (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:30:38 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m3TLUcxl026222
-	for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:30:38 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:in-reply-to:references:
-	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
-	b=tw840Fl7Slxj7ttGTnr75twCirCjHbgbiafqdgH8JvQ2WoN4No6GSZRC8tl5SMen8
-	1Q073BiUauOoTNUN065Q4RRCt6AvclfwIGbpKtVhvQeAeSANQEwRfoK98mjjBvO
-Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m3TLUQs9007661
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Apr 2008 14:30:35 -0700
-In-reply-to: <48162EF0.6050705@gmail.com>
-X-Trusted-Delivery: <05d24ccea8407ed29c10a2f334c94309>
+	id S1752691AbYD2Vd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYD2Vd0
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:33:26 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:39829 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752161AbYD2VdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:33:25 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+D1WRsg==
+Received: from tigra.home (Fabc8.f.strato-dslnet.de [195.4.171.200])
+	by post.webmailer.de (klopstock mo15) (RZmta 16.27)
+	with ESMTP id U06328k3THNCJM ; Tue, 29 Apr 2008 23:33:24 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 83E7D277BD;
+	Tue, 29 Apr 2008 23:33:23 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 3F36156D28; Tue, 29 Apr 2008 23:33:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <48178FD6.90104@gnu.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80741>
 
-Quoting Liu Yubao <yubao.liu@gmail.com>:
-
-> I find these two options bring me surprise:
+Paolo Bonzini, Tue, Apr 29, 2008 23:15:02 +0200:
+>>> 2) the patch does not touch refs/heads/* unless you are tweaking your 
+>>>  configuration (and quite heavily so).  IMHO that's using enough rope 
+>>>  that you really ought to know about the reflog and... look for 
+>>> backwards  incompatible changes in the release notes!
+>>
+>> Since when do you depend on people reading release notes and
+>> immediately and correctly changing their behaviour?
 >
->    git init $HOME
->    git add ~/.vimrc ~/.gvimrc ~/.vim
->    cd $HOME/work/xxx
->    ....do some work, then change ~/.vimrc without changing
->        working directory
->    git --git-dir $HOME/.git status
+> I don't, that's why I never expected all patches to go in 1.5.6.
 >
-> I use --git-dir because I have another .git in $HOME/work/xxx, the
-> last command surprises me much, it tells me .vim* are all deleted!
 
-The behavior at the end user level was outlined earlier in the message http://marc.info/?l=git&m=120390208721287&w=2
+Oh, the next minor release...
 
-A later message http://marc.info/?l=git&m=120445414611494&w=2 proposed an implementation change and described how the various pieces appear to programmers but it was lost when the code was scrapped.
+> I sent them together to provide a single coherent series and an aim for  
+> a transition plan -- which I'd prefer to work out with the git  
+> community, who knows the release mechanics much better than I do.  Jeff  
+> King's reply to the cover letter is a start towards that; your e-mails  
 
-I think it is a good idea to add a documentation like this to at least describe the behavior visible by the end users.
+Hmm... Which one do you mean? I cannot find his reply to message-id
+<cover.1209391614.git.bonzini@gnu.org>
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+> are also a start towards that, even though I don't think your transition  
+> plan is feasible (also because it would break "git remote update"  
+> completely).
 
-----------------------------------------------------------------------
-Finally - A spam blocker that actually works.
-http://www.bluebottle.com/tag/4
+Which part of "warn people in git-fetch" will break "git remote update"?
+Or what will break after the "git remote add" start setting
+skipDefaultUpdate?
+
+>>> 4) one man's stupidity is another man's... [fill in]  In particular, 
+>>> did  you understand the rationale for this change?  Do you have any   
+>>> alternative ideas?
+>>
+>> Do you have a convincing one by now?
+>
+> See the (long) cover letter.
+>
+
+It is not. It seem to propose, instead of fixing existing behaviour,
+change it incompatibly. And dangerously, I believe.
