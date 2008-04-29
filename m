@@ -1,69 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Tue, 29 Apr 2008 16:17:42 -0700
-Message-ID: <7vzlrc45ex.fsf@gitster.siamese.dyndns.org>
-References: <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home>
- <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se>
- <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home>
- <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home>
- <48179625.3050704@gnu.org>
- <alpine.DEB.1.00.0804292324040.13650@eeepc-johanness>
- <20080429230237.GA22598@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: point git-prune users to git-gc
+Date: Tue, 29 Apr 2008 19:19:17 -0400
+Message-ID: <20080429231917.GB22646@sigill.intra.peff.net>
+References: <32541b130804230841h32c07f3arc94cccfaf0b156a3@mail.gmail.com> <7vve28sdys.fsf@gitster.siamese.dyndns.org> <20080423221316.GE30057@sigill.intra.peff.net> <20080424012836.GA30812@sigill.intra.peff.net> <32541b130804240843k471ecfeteb1008c44a56808b@mail.gmail.com> <20080424161407.GA23737@sigill.intra.peff.net> <32541b130804240959y3b05d4b5u67ac7a7c14bf187e@mail.gmail.com> <20080429204514.GA21029@sigill.intra.peff.net> <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com,
-	srb@cuci.nl
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 01:19:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 01:20:09 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqz6D-0006jR-5F
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:19:01 +0200
+	id 1Jqz7H-00078J-PS
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:20:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753585AbYD2XSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 19:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbYD2XSL
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:18:11 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36086 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753277AbYD2XSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 19:18:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 671BC3456;
-	Tue, 29 Apr 2008 19:18:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 6CB3B3451; Tue, 29 Apr 2008 19:17:57 -0400 (EDT)
-In-Reply-To: <20080429230237.GA22598@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 29 Apr 2008 19:02:37 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 86A81B06-1642-11DD-9486-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1754753AbYD2XTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 19:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754751AbYD2XTS
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:19:18 -0400
+Received: from peff.net ([208.65.91.99]:1560 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754644AbYD2XTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 19:19:18 -0400
+Received: (qmail 23817 invoked by uid 111); 29 Apr 2008 23:19:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Apr 2008 19:19:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2008 19:19:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80769>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Apr 29, 2008 at 03:05:03PM -0700, Junio C Hamano wrote:
 
-> I wonder this a bit, too, and I am even somebody who _likes_ the new
-> behavior. But there is a difference between "should have been designed
-> this way in the first place" and "is currently designed some other way,
-> and will cause pain to switch it to this way."
->
-> So it might simply not be worth the trouble to change. OTOH, I think
-> this is how we end up with many commands to do slightly different
-> things, which can end up confusing new users. I'm not sure what the
-> right answer is.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yes, I don't think there is any reason for most people to use git-prune
+> > at all, unless they are trying specifically to prune and don't want the
+> > other gc effects to happen.
+> >
+> > Junio, please correct me if I'm wrong there.
+> 
+> Well, this is a hard statement to make corrections to.  If A is defined to
+> be a subset of B, and A is generally useful, the only reason to do B is
+> when you want the effect of B without anything else.  So your statement
+> cannot be incorrect.
 
-Well, the thing is, push and fetch are different, so expecting the same
-behaviour and syntax from them is a lost cause to begin with.  Even if we
-were designing fetch and push right now, I do not necessarily think the
-series shows a way that "should have been designed in the first place".
+Heh. Sorry, I got very sloppy with my wording...there was an
+11-month-old child yelling in my ear. :)
+
+My meaning was: "people who want to clean up their repo but don't know
+the right command stumble upon git-prune. They probably should be using
+git-gc instead. People who know that they want to prune presumably know
+enough to ignore the warning note."
+
+> However, in order to help people decide when to run B (or, if there ever
+> be a case where they might want to), there needs a discussion what other
+> things that _might_ be unwanted A does in addition to B.
+
+Fair enough.
+
+> > --- a/Documentation/git-prune.txt
+> > +++ b/Documentation/git-prune.txt
+> > @@ -13,6 +13,9 @@ SYNOPSIS
+> >  DESCRIPTION
+> >  -----------
+> >  
+> > +NOTE: In most cases, users should run linkgit:git-gc[1], which calls
+> > +git-prune. See the section "NOTES", below.
+> > +
+> 
+> I think this note upfront is not helping readers very much (this is
+> git-prune documentation after all -- they are interested in the command
+> and not gc), but ...
+
+I'm not so sure that they are interested in the prune command. At first
+I started with just a note near the end, but the point of this is
+specifically to deal with users who "stumble" upon prune, either from
+reading the command list (i.e., trying to match a command to the
+objective they want to perform) or from pre-gc tutorials or emails which
+mention it.
+
+> > +Notes
+> > +-----
+> > +
+> > +In most cases, users will not need to call git-prune directly, but
+> > +should instead call linkgit:git-gc[1], which handles pruning along with
+> > +many other housekeeping tasks.
+> 
+> ... this paragraph should be made a bit fatter by mentioning what "other
+> housekeeping tasks" are.
+
+OK, I was trying to imply "go look at git-gc for those tasks" so they
+didn't have to be repeated. Would you prefer it be spelled out
+explicitly here, or is a more firm pointer OK?
+
+-Peff
