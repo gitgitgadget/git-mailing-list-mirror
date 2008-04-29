@@ -1,82 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Tue, 29 Apr 2008 15:23:30 -0700
-Message-ID: <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
- <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
- <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
- <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
- <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
- <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
- <20080422095549.GB3752@alea.gnuu.de>
- <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
- <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
- <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
- <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
- <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
- <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 23:26:46 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804292324040.13650@eeepc-johanness>
+References: <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org>
+ <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home> <48179625.3050704@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 30 00:24:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com,
+	peff@peff.net, srb@cuci.nl
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 00:27:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqyFR-0008By-MI
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 00:24:30 +0200
+	id 1JqyID-0000X8-N8
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 00:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753883AbYD2WXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 18:23:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbYD2WXm
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 18:23:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59777 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749AbYD2WXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 18:23:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0AB4E304C;
-	Tue, 29 Apr 2008 18:23:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 205E93047; Tue, 29 Apr 2008 18:23:32 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> (Johannes
- Schindelin's message of "Tue, 29 Apr 2008 22:25:59 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E9F87AB4-163A-11DD-8B71-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1754783AbYD2W0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 18:26:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYD2W0e
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 18:26:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34170 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752786AbYD2W0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 18:26:33 -0400
+Received: (qmail invoked by alias); 29 Apr 2008 22:26:31 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp057) with SMTP; 30 Apr 2008 00:26:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19i13YMopZi43p3hMF9yJe47MM01FNmQPTCN50R0J
+	4G+Gm7QYgBwiee
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <48179625.3050704@gnu.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80759>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> It is a simple matter of the word "acyclic" in the term "DAG".  It means 
-> that whenever you need to refer to a commit, it either comes before or 
-> after the commit you need it for, not both directions.
+On Tue, 29 Apr 2008, Paolo Bonzini wrote:
 
-I fell in the same "acyclic" fallacy before I realized it was a mistake,
-especially after thought about the "rewritten B needs to be used more than
-twice as a merge source" issue.  That's why I earlier said the beauty of
-your approach is attractive but it "unfortunately" breaks down.
+> I mean, I just wonder why as long as I had one remote only, I could 
+> write "git push", while now I have to write "git push origin && git push 
+> mirror".  The patch to "git fetch" comes from this observation too, and 
+> I think it is a good idea, even though I'm less attached to it and it 
+> would influence my workflow much less.
 
-For "rebase -i", the tool needs to spit out insns (and again I'd prefer
-not to require the tools to be clever to be able to write them out), and
-the generated sequence needs to be easily understood by the end user who
-needs to be able to edit (e.g. drop lines, reorder them, s/pick/edit/) and
-easily visualize what the resulting shape of the history would be.  If we
-limit ourselves to the context of a non-merge-preserving "rebase -i", the
-insns will not need 'mark' (nor 'merge') and the resulting todo file would
-look identical in both approaches.
+I wonder why you need to make such a big change, which _is_ incompatible, 
+and not do the obvious thing, namely introduce a subcommand to "git 
+remote" which does the "push" equivalent of "git remote update"...
 
-But we also would want to have a sequencer generic enough to be capable of
-faithfully reproducing a history with merges.
+Do you really think that it is a good idea to push down a huge change like 
+this down everybody else's throat, just because you do not want to type 
+"git remote ..." but "git fetch ..." in your workflow?
+
+Ciao,
+Dscho
