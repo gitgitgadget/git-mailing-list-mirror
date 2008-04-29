@@ -1,65 +1,80 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Tue, 29 Apr 2008 23:21:32 +0200
-Message-ID: <4817915C.6060009@gnu.org>
-References: <4816E40A.4020700@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <4816E0F6.3030302@op5.se> <200804292108.m3TL8moV011790@mi1.bluebottle.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Tue, 29 Apr 2008 22:25:59 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com,
-	peff@peff.net, johannes.schindelin@gmx.de, srb@cuci.nl
-To: =?UTF-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:22:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:26:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxHb-0004vD-59
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:22:39 +0200
+	id 1JqxLS-0006C5-4a
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755518AbYD2VVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754940AbYD2VVv
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:21:51 -0400
-Received: from hu-out-0506.google.com ([72.14.214.226]:12333 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753891AbYD2VVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:21:50 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so182164hue.21
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=3aQn1ZxQ+l35OKB9DYj63yHOmU5mU8voIhYAwjarGJE=;
-        b=YmpNEEcunzevDNKXMz4smfjWVcTOVV5hrzabzO8lZXbe7USumCtg20tK4o72jjZhPCV21OSkaKA/BXeSkc5enVL3WP3ouIDDNme0+zkrflazDF9FB9RWtldjmm9romyj0yLzOMrfzWqyoeQ1IeFdlZkytMcpSyYCtqjPOsYtil0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=HFOux16pralLGan0xnp4QBfluLV4W+N2j01OdGq06yRlEuHl5yVXuJavL/CGX3U0cyID/XGk7dZDjqDcGYAPPpT+5GnIjhSZ31jUArI2nB6ZV/eeIknvrBqzXU+m5211B5TfMdINS1FrX8C02yoF8akh3ppRiTHMHEkDDr2rQMA=
-Received: by 10.86.87.5 with SMTP id k5mr352956fgb.51.1209504107703;
-        Tue, 29 Apr 2008 14:21:47 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id 3sm395001fge.7.2008.04.29.14.21.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Apr 2008 14:21:47 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <200804292108.m3TL8moV011790@mi1.bluebottle.com>
-X-Enigmail-Version: 0.95.6
+	id S1751081AbYD2VZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbYD2VZu
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:25:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44224 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751007AbYD2VZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:25:49 -0400
+Received: (qmail invoked by alias); 29 Apr 2008 21:25:47 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp046) with SMTP; 29 Apr 2008 23:25:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+YnTxgNnaY5UJ6oYuh2f6zZmxzCFydR7CI3F6K0p
+	P9uYFRPbRtb6/F
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80739>
 
-> Sorry but then why does this patch have to even touch "git fetch"?  
-> Isn't it enough to run "git remote update"?
+Hi,
 
-I'm tired of answering.  Please read the cover letter.  It's not about 
-adding new features (it does in patches 1 to 3, but only as means to an 
-end).  It's about rationalizing existing behavior so that "newbie usage 
-patterns" generalize better, and patches 4 and 7 are the most important 
-(and the most controversial) in this respect.
+On Tue, 29 Apr 2008, Junio C Hamano wrote:
 
-Paolo
+> The problem is that both of you stopped reading after the part you 
+> quoted.
+
+I did not.  But I assumed that Hannes' example showed that it is always 
+possible to reorder the commands such that you there is no problem with 
+interpreting a short commit name as the original commit _until_ that 
+commit is rewritten, and _then_ as the rewritten commit.
+
+It is a simple matter of the word "acyclic" in the term "DAG".  It means 
+that whenever you need to refer to a commit, it either comes before or 
+after the commit you need it for, not both directions.
+
+And I tried to make clear that I thought deeply about the issue by 
+mentioning that you can always use "edit" to stop somewhere and mark (even 
+by a lightweight tag), should you need to split a commit such that you 
+need to reference both the original and the rewritten commit.
+
+I think the balance to cut here is that of usability.  You can cater for 
+the obscure cases, but that just does not make sense.  With some recipe -- 
+as illustrated by Hannes -- it is very easy to see what it does, and as 
+easy to modify it, should that be necessary.
+
+The alternative is obviously easier for the cases that next to nobody will 
+need.
+
+So no, your argument does not convince me, and I still think that I 
+understood it correctly from the start.
+
+Ciao,
+Dscho
