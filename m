@@ -1,84 +1,88 @@
-From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: entry terminator/separator behavior in show_log()
-Date: Tue, 29 Apr 2008 01:58:42 -0700
-Message-ID: <20080429085839.GA19705@adamsimpkins.net>
-References: <20080428045504.GA24981@adamsimpkins.net> <7vtzhmc63w.fsf@gitster.siamese.dyndns.org>
-Reply-To: Adam Simpkins <adam@adamsimpkins.net>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 11:02:02 +0200
+Message-ID: <4816E40A.4020700@gnu.org>
+References: <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <4816E0F6.3030302@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 10:59:36 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Apr 29 11:03:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqlgT-0004ZC-8R
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 10:59:33 +0200
+	id 1Jqljl-00060p-Qe
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 11:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754163AbYD2I6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 04:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbYD2I6o
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 04:58:44 -0400
-Received: from smtp202.iad.emailsrvr.com ([207.97.245.202]:45612 "EHLO
-	smtp202.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119AbYD2I6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 04:58:44 -0400
-Received: from relay10.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay10.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 462171B4274;
-	Tue, 29 Apr 2008 04:58:43 -0400 (EDT)
-Received: by relay10.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 1F88C1B425F;
-	Tue, 29 Apr 2008 04:58:43 -0400 (EDT)
-Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id 1F39514100C1; Tue, 29 Apr 2008 01:58:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vtzhmc63w.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754208AbYD2JCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 05:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753355AbYD2JCG
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 05:02:06 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:58270 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbYD2JCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 05:02:04 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so2154305nfb.21
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 02:02:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=OaillPSkNpKZz7+yP3FZfFQcWYVzXZUdHQF+OqbvRWM=;
+        b=QrIk5wsvueU53DXKoJT/KXIkUolzhYuP4xHrSfeTJ2HxH5gIPQg7q7tkUBEgKmiJcgMQB3ex6zjtbsL+D/GuyyK5zSgkLQ8apcaPvKxR50IbQ6GZBWrk5jMYBLb+2VWcBaytbXldC7UWLe85qdp09kpsFHPwrr8WqIcWPbm0feM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=Z5etS14zYt2D6p0BoAQg56T0iqB+S4EB25rOmdO6BB0OOL6P7XhnoxIvdF7VSBsCIpO810+/PCcZpK6XedUX7gvkNRtg1Wqs/v93slOwDYqTN6bSjgvhq7h+U0Yeq9WX1mQdkB4tBUvQWrMNxR3TwTyT5qMkzf9dU2YvwmVLikk=
+Received: by 10.210.51.10 with SMTP id y10mr7059599eby.57.1209459723658;
+        Tue, 29 Apr 2008 02:02:03 -0700 (PDT)
+Received: from scientist-2.local ( [195.176.178.209])
+        by mx.google.com with ESMTPS id i5sm28665244mue.7.2008.04.29.02.02.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 29 Apr 2008 02:02:02 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <4816E0F6.3030302@op5.se>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80672>
 
-On Mon, Apr 28, 2008 at 09:10:59AM -0700, Junio C Hamano wrote:
-> Adam Simpkins <adam@adamsimpkins.net> writes:
+
+>> Sorry, how does the patch make you lose some of your work (as opposed 
+>> to some of your time, which is possible as is the case for every 
+>> backwards incompatible change)?
 > 
-> > - I don't really like the behavior for any of the cases under 2.2.2.
-> >
-> >   I especially don't like the fact that the output does not end in a
-> >   terminating newline for case 2.2.2.1.
+> Because I will lose some of the refs and then have to dig them up in the
+> reflog.
 > 
-> This is exactly why I did tformat so that we do not have to have a complex
-> special case (Jeff and I exchanged a few weatherbaloon patches on the list
-> trying out heuristics) to avoid breaking existing scripts that use format.
+> I'm not comfortable with the reflog. I appreciate its usefulness, but I'm
+> thoroughly unhappy when I'm forced to use it.
 
-Hmm.  Here's another possible option to kick around:
+So am I, but still it would lose time (to dig refs up in the reflog), 
+not work (e.g. having to rewrite code).  I think we're in agreement on 
+this part.
 
-Modify the argument parsing code to set use_terminator for
---pretty=format when -z is not supplied.  In other words:
+> Yes, I understand the rationale, and I do have an alternative idea, which
+> is to make it configurable.
 
-  - If the -z argument is used (diffopt->line_termination is '\0'),
-    the code has separator semantics, just like it always has.
-    '\0' appears between the entries, and not at the end of the last
-    one.
+Then sorry, but I think you don't understand the rationale.  The cover 
+letter has excerpts from other git hackers' e-mails that explain it 
+better than I can.  But shortly speaking, the point of the patch is to 
+remove the "magic" operation of "git fetch" as "git fetch origin". 
+Removing is quite the opposite of "add a configuration option that 
+disables it, but leave the old behavior as default".
 
-  - If the -z argument is not used (diffopt->line_termination is '\n'),
-    the code has terminator semantics.  '\n' appears at the end of each
-    entry.
+> Now that I think about it, it's probably useful to have it
+> togglable via command-line switch as well. Something along the
+> lines of "git fetch --all-remotes", perhaps.
 
-The only change to the current behavior is that if the -z option is
-not used, an extra newline will appear at the end of the output.  This
-might confuse some scripts that don't use -z.
+Making it accessible via a command-line switch is pointless, as we 
+already have "git remote update" for that.
 
-The nice thing about this change is that now all of the cases under
-2.2.2 from my initial email behave identically.  These cases are the
-most annoying to distinguish and handle correctly for the new --graph
-code, so it would make the graph logic simpler.
-
-Do you think this change would be acceptable, or would it still break
-too many scripts?
-
--- 
-Adam Simpkins
-adam@adamsimpkins.net
+Paolo
