@@ -1,71 +1,53 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: cvsexportcommit and cvsimport's -k option
-Date: Tue, 29 Apr 2008 21:46:42 +0200
-Message-ID: <200804292146.42262.robin.rosenberg.lists@dewire.com>
-References: <f6c6e2a5cc39.481773ba@rwth-aachen.de>
+From: "Mike Coleman" <tutufan@gmail.com>
+Subject: bug: git-diff silently fails when run outside of a repository (v1.5.4.2)
+Date: Tue, 29 Apr 2008 15:04:32 -0500
+Message-ID: <3c6c07c20804291304n36976417wf3c2a13303aa3133@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lars Alexander Noschinski <Lars.Noschinski@rwth-aachen.de>
-X-From: git-owner@vger.kernel.org Tue Apr 29 21:48:08 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 29 22:06:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqvnj-0002If-FN
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 21:47:43 +0200
+	id 1Jqw4q-0000vR-Sa
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 22:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712AbYD2Tqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 15:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754469AbYD2Tqu
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 15:46:50 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:15952 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754390AbYD2Tqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 15:46:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C65C11456304;
-	Tue, 29 Apr 2008 21:46:45 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id srbn0cb3cK3E; Tue, 29 Apr 2008 21:46:45 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 394ED1456300;
-	Tue, 29 Apr 2008 21:46:45 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <f6c6e2a5cc39.481773ba@rwth-aachen.de>
+	id S1759264AbYD2UEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 16:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759174AbYD2UEe
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 16:04:34 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:31680 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759059AbYD2UEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 16:04:33 -0400
+Received: by wa-out-1112.google.com with SMTP id m16so220884waf.23
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=APg569XYZwDXsNgpRWePE754K+8pnjdvXthorzjjffM=;
+        b=rsdufBvFLkvsdDqFkSvrY7wv91GScGphKPZUj91fMW8b241r7TC95kPujoLxtTFSABS9+4WoszFdUio5z0MTP2i7YqsY0hoPmBcKUrdAWImZ4JS4v3qhzKUR19Li3ndn3D3iQNOuLvsWi/9nsBw/nh3qoJINcC+y17/3zbRnQHM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fyDwXiitmuUrgRqJxfP/hJabgr8nCpvFFnd6KskszI80PuflDePJjWWb29geYF+iPQSEps33Xaz+1wBKvn+mUuiBaYA7f2h2mioKxSVbfrnEbfD509LOtuQdV7Crg4pu8YGk+gSAGEAU4vrELA6UOgvBwgpgD6sNYzY7YQ5KB3E=
+Received: by 10.114.126.1 with SMTP id y1mr5080760wac.41.1209499472451;
+        Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
+Received: by 10.114.92.7 with HTTP; Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80722>
 
-tisdagen den 29 april 2008 19.15.06 skrev Lars Alexander Noschinski:
-> ... hack away ...
-> git-cvsimport -i -r cvs -kk -v -d $CVSREPOS
-> git-rebase cvs # If work was done in the meantime
-> git-cvsexportcommit -cpuv $COMMIT # Multiple times, if necessary
-> git-cvsimport -i -r cvs -kk -v -d $CVSREPOS
-> git-checkout -b master cvs # commit ids are changed now
->
-> As far as I am concerned, this works fairly well, accept when for any
-> reason a line containing a CVS keyword (e.g. $Id$) is contained in a
-> changeset. In this case, patching fails, and I have to investigate why it
-> fails, eventually just copying the old version from the cvs repository.
->
-> Would it be possible to add an option to cvsexportcommit to detect such
-> killed keywords and ignore them?
+At least in version 1.5.4.2, git-diff silently fails when not run
+inside a repository.  It should give an error diagnostic, especially
+since "no output" would otherwise be a meaningful response.
 
-Sure, but is it necessary? If the cvs checkout you use is checked out
-with -kk there shouldn't be any problem.
+I think there are other git programs that have this problem as well.
 
-If not, start by thinking up a few testcase for inclusion in 
-t9200-git-cvsexportcommit.sh that illustrates the problem. Then we can
-change cvsexporcommit until the new tests pass.
-
--- robin
+Mike
