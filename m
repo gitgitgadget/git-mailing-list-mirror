@@ -1,69 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Tue, 29 Apr 2008 23:55:49 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
- <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 19:02:37 -0400
+Message-ID: <20080429230237.GA22598@sigill.intra.peff.net>
+References: <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home> <48179625.3050704@gnu.org> <alpine.DEB.1.00.0804292324040.13650@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 00:56:31 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Paolo Bonzini <bonzini@gnu.org>, Alex Riesen <raa.lkml@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, srb@cuci.nl
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 30 01:03:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqykO-0000Uk-KK
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 00:56:29 +0200
+	id 1Jqyr7-0002Oe-HS
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750698AbYD2Wzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 18:55:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755881AbYD2Wzl
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 18:55:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34681 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755273AbYD2Wzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 18:55:39 -0400
-Received: (qmail invoked by alias); 29 Apr 2008 22:55:37 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp014) with SMTP; 30 Apr 2008 00:55:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/z2Ko0HKHzPNydPy1PhL6Dku5gs7AU1KMUXpR1vr
-	cAP6RyJLRQ/6Cm
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751916AbYD2XCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 19:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbYD2XCi
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:02:38 -0400
+Received: from peff.net ([208.65.91.99]:1948 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751027AbYD2XCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 19:02:38 -0400
+Received: (qmail 22622 invoked by uid 111); 29 Apr 2008 23:02:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Apr 2008 19:02:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2008 19:02:37 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0804292324040.13650@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80763>
 
-hi,
+On Tue, Apr 29, 2008 at 11:26:46PM +0100, Johannes Schindelin wrote:
 
-On Tue, 29 Apr 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> I wonder why you need to make such a big change, which _is_ incompatible, 
+> and not do the obvious thing, namely introduce a subcommand to "git 
+> remote" which does the "push" equivalent of "git remote update"...
 > 
-> > It is a simple matter of the word "acyclic" in the term "DAG".  It means 
-> > that whenever you need to refer to a commit, it either comes before or 
-> > after the commit you need it for, not both directions.
-> 
-> I fell in the same "acyclic" fallacy before I realized it was a mistake, 
-> especially after thought about the "rewritten B needs to be used more 
-> than twice as a merge source" issue.  That's why I earlier said the 
-> beauty of your approach is attractive but it "unfortunately" breaks 
-> down.
+> Do you really think that it is a good idea to push down a huge change like 
+> this down everybody else's throat, just because you do not want to type 
+> "git remote ..." but "git fetch ..." in your workflow?
 
-I do not understand.  The topological order assures that you have 
-rewritten every commit that needs to be rewritten before rewriting the 
-current commit.
+I wonder this a bit, too, and I am even somebody who _likes_ the new
+behavior. But there is a difference between "should have been designed
+this way in the first place" and "is currently designed some other way,
+and will cause pain to switch it to this way."
 
-Puzzled,
-Dscho
+So it might simply not be worth the trouble to change. OTOH, I think
+this is how we end up with many commands to do slightly different
+things, which can end up confusing new users. I'm not sure what the
+right answer is.
+
+-Peff
