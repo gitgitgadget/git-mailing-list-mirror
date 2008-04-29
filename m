@@ -1,85 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Tue, 29 Apr 2008 09:12:50 +0200
-Message-ID: <4816CA72.8070405@viscovery.net>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de> <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [BUG] git svn accepts to clone an empty SVN repo, but then fails to dcommit
+Date: Tue, 29 Apr 2008 00:15:52 -0700
+Message-ID: <20080429071552.GH24171@muzzle>
+References: <vpq3apbm8k3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-1?Q?J=F6?= =?ISO-8859-1?Q?rg_Sommer?= 
-	<joerg@alea.gnuu.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 09:13:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 29 09:16:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqk26-0007Uh-CC
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 09:13:46 +0200
+	id 1Jqk4w-00086S-7G
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 09:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754443AbYD2HM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 03:12:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbYD2HM4
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 03:12:56 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:59859 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754414AbYD2HM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 03:12:56 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jqk1D-0001cI-Eq; Tue, 29 Apr 2008 09:12:52 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1BD676D9; Tue, 29 Apr 2008 09:12:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753144AbYD2HPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 03:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752424AbYD2HPy
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 03:15:54 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53680 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751721AbYD2HPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 03:15:53 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id F098A2DC08C;
+	Tue, 29 Apr 2008 00:15:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <vpq3apbm8k3.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80662>
 
-Junio C Hamano schrieb:
-> This is just a minor syntax issue and I am not sure why we got into this
-> misunderstanding, but let's try again.  Suppose you want to recreate this
-> history on top of a different O'.  For merges, upper parents are earlier
-> ones:
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> Hi,
 > 
->      A         reset O'
->     / \        pick  B
->    /   X       reset O'
->   /   / \      pick A
->  O---B   Z     merge B -- recreate X
->   \   \ /      reset O'
->    \   Y       pick C
->     \ /        merge B? -- recreate Y
->      C         reset B -- go back to recreated X
->                merge B? -- recreate Z
+> All is in the title ;-).
 > 
-> The above sequence does not work.
+> The command
+> 
+>   git svn clone (URL of an empty SVN repo here)
+> 
+> works, creates an empty git repository. I can perform the initial
+> commit there, but then, "git svn dcommit" says :
+> 
+> Use of uninitialized value in concatenation (.) or string at /home/moy/local/usr/bin/git-svn line 414.
+> Committing to  ...
+> Unable to determine upstream SVN information from HEAD history
+> 
+> I guess a correct management of the initial commit in git-svn would be
+> hard to implement, but at least, the error message can be improved.
+> First step is something like the patch below, and better would be for
+> "git svn clone" to warn that it won't be able to do much with the
+> cloned repo.
 
-Because it is hand-crafted. I'd expect rebase to suggest a series that
-works as long as the user doesn't modify it. Like this:
+Thanks Matthieu,
 
-	reset O'
-	pick C
-	reset O'
-	pick B
-	merge C -- recreate Y
-	reset O'
-	pick A
-	merge B -- recreate X
-	merge Y -- recreate Z
+It shouldn't be *that* hard to implement being able to start an empty
+SVN repository from scratch, actually.  Of course, there are about
+a billion other things people have been asking for in git-svn that I
+keep forgetting to implement.
 
-Here all commit names are clearly the original in the first insn that
-references it, and the rewritten version in later references. No marks needed.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-If the user modifies the insns, he better knows what he's doing, in
-particular, when it's necessary to rebuild such complex histories.
-
--- Hannes
+> diff --git a/git-svn.perl b/git-svn.perl
+> index b864b54..9a70c1e 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -410,10 +410,12 @@ sub cmd_dcommit {
+>         $head ||= 'HEAD';
+>         my @refs;
+>         my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
+> -       print "Committing to $url ...\n";
+> +       if ($url) {
+> +               print "Committing to $url ...\n";
+> +       }
+>         unless ($gs) {
+>                 die "Unable to determine upstream SVN information from ",
+> -                   "$head history\n";
+> +                   "$head history.\nPerhaps the repository is empty.";
+>         }
+>         my $last_rev;
+>         my ($linear_refs, $parents) = linearize_history($gs, \@refs);
+> 
+-- 
+Eric Wong
