@@ -1,78 +1,119 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git-daemon: fix for rotating logs
-Date: Tue, 29 Apr 2008 08:17:27 +0200
-Message-ID: <4816BD77.1060709@op5.se>
-References: <alpine.DEB.1.00.0804281523040.5399@eeepc-johanness> <7vtzhmaqpd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804281908290.19187@eeepc-johanness> <20080428182114.GF26880@genesis.frugalware.org> <20080428182917.GA4794@glandium.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [updated PATCH] Same default as cvsimport when using --use-log-author
+Date: Mon, 28 Apr 2008 23:18:23 -0700
+Message-ID: <20080429061823.GE24171@muzzle>
+References: <20080427173246.10023.5687.stgit@aristoteles.cuci.nl> <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 08:18:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 08:19:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqjAU-0002gd-1S
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 08:18:22 +0200
+	id 1JqjBr-0002zJ-IS
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 08:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204AbYD2GRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 02:17:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbYD2GRa
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 02:17:30 -0400
-Received: from mail.op5.se ([193.201.96.20]:48331 "EHLO mail.op5.se"
+	id S1754541AbYD2GSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 02:18:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbYD2GSy
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 02:18:54 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53519 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751922AbYD2GRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 02:17:30 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1DCF11F0807D;
-	Tue, 29 Apr 2008 08:17:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UeymMJYRZH51; Tue, 29 Apr 2008 08:17:31 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id 4266F1F08063;
-	Tue, 29 Apr 2008 08:17:31 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <20080428182917.GA4794@glandium.org>
+	id S1754664AbYD2GSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 02:18:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 998162DC08B;
+	Mon, 28 Apr 2008 23:18:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80651>
 
-Mike Hommey wrote:
-> On Mon, Apr 28, 2008 at 08:21:14PM +0200, Miklos Vajna wrote:
->> On Mon, Apr 28, 2008 at 07:08:50PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>>>> With rotating logs, there is a problem when the syslog is opened only 
->>>>> once (in the beginning).  So open the log everytime we write 
->>>>> something, and close it directly after writing.
->>>> Gaah, this is ugly.
->>>>
->>>> Is this something all the daemons need to deal with?
->>> I have no idea, but it seems to fix a real issue.
->> logrotate supports sending a signal (typically SIGHUP) to the process
->> after it rotated the log. Couldn't we just re-open the log on SIGHUP?
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Stephen R. van den Berg" <srb@cuci.nl> writes:
 > 
-> Isn't the problem that git-daemon loses its connection to the syslog
-> daemon when logrotate sighups syslog?
+> > git-svn supports an experimental option --use-log-author which currently
+> > results in:
+> >
+> > Author: foobaruser <unknown>
+> 
+> I have a question about this.  Is the "<unknown> coming from...
+> 
+> > This patches harmonises the result with cvsimport, and makes
+> > git-svn --use-log-author produce:
+> >
+> > Author: foobaruser <foobaruser>
+> > ...
+> > diff --git a/git-svn.perl b/git-svn.perl
+> > index b151049..846e739 100755
+> > --- a/git-svn.perl
+> > +++ b/git-svn.perl
+> > @@ -2434,6 +2434,9 @@ sub make_log_entry {
+> >  		} else {
+> >  			($name, $email) = ($name_field, 'unknown');
+> >  		}
+> 
+> ... this 'unknown' we see here?
+> 
+> > +	        if (!defined $email) {
+> > +		    $email = $name;
+> > +	        }
+> >  	}
+> 
+> I would think not -- if that is the case, the codepath you added as a fix
+> would not trigger.  Which means in some other cases, the 'unknown' we see
+> above in the context also still happens.  Is it a good thing?  Maybe we
+> would also want to make it consistently do "somebody <somebody>" instead,
+> by doing...
+> 
+> 	} else {
+> 		$name = $name_field;
+> 	}
+>         if (!defined $email) {
+> 	    $email = $name;
+>         }
 > 
 
-It really shouldn't. The connection to the syslog daemon is just a
-unix socket (/dev/log) which is used to send whatever passes for
-UDP packets on unix domain sockets. Since the socket isn't re-created
-by syslogd (well, a sane syslogd anyways), but rather just open()'ed
-for reading, no program should ever need to reconnect.
+I don't think Stephen's patch ever gets triggered, either.
+
+This section of code was done by Andy, so I can't tell his motivations
+for using 'unknown' the way he did.
+
+$email does appear to get set correctly for the first two elsifs cases
+here in the existing code:
+
+		if (!defined $name_field) {
+			#
+		} elsif ($name_field =~ /(.*?)\s+<(.*)>/) {
+			($name, $email) = ($1, $2);
+		} elsif ($name_field =~ /(.*)@/) {
+			($name, $email) = ($1, $name_field);
+		} else {
+			($name, $email) = ($name_field, $name_field);
+
+So I propose the following one-line change instead of Stephen's:
+
+diff --git a/git-svn.perl b/git-svn.perl
+index b151049..301a5b4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2432,7 +2432,7 @@ sub make_log_entry {
+ 		} elsif ($name_field =~ /(.*)@/) {
+ 			($name, $email) = ($1, $name_field);
+ 		} else {
+-			($name, $email) = ($name_field, 'unknown');
++			($name, $email) = ($name_field, $name_field);
+ 		}
+ 	}
+ 	if (defined $headrev && $self->use_svm_props) {
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Eric Wong
