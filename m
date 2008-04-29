@@ -1,93 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Tue, 29 Apr 2008 23:53:11 +0200
-Message-ID: <20080429215311.GC2413@steel.home>
-References: <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home> <48179625.3050704@gnu.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/7] limit the usage of the default remote "origin" to
+ the minimum
+Date: Tue, 29 Apr 2008 14:56:24 -0700
+Message-ID: <7vwsmg5nqv.fsf@gitster.siamese.dyndns.org>
+References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org>
+ <20080429193536.GA19340@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
-	johannes.schindelin@gmx.de, srb@cuci.nl
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:54:05 2008
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	srb@cuci.nl
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:57:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqxly-0007oP-F3
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:54:02 +0200
+	id 1JqxpH-0000Tf-Kb
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857AbYD2VxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbYD2VxP
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:53:15 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:8221 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633AbYD2VxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:53:14 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+D1WRsg==
-Received: from tigra.home (Fabc8.f.strato-dslnet.de [195.4.171.200])
-	by post.webmailer.de (mrclete mo27) (RZmta 16.27)
-	with ESMTP id k008edk3TI9CnQ ; Tue, 29 Apr 2008 23:53:12 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 078BF277BD;
-	Tue, 29 Apr 2008 23:53:12 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id CB1D556D28; Tue, 29 Apr 2008 23:53:11 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48179625.3050704@gnu.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753021AbYD2V4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:56:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYD2V4h
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:56:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54843 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753021AbYD2V4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:56:36 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 49C133827;
+	Tue, 29 Apr 2008 17:56:35 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5D9EA3823; Tue, 29 Apr 2008 17:56:26 -0400 (EDT)
+In-Reply-To: <20080429193536.GA19340@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 29 Apr 2008 15:35:36 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 22BE502A-1637-11DD-BEAC-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80751>
 
-Paolo Bonzini, Tue, Apr 29, 2008 23:41:57 +0200:
->> Hmm... Which one do you mean? I cannot find his reply to message-id
->> <cover.1209391614.git.bonzini@gnu.org>
->
-> http://permalink.gmane.org/gmane.comp.version-control.git/80720
->
+Jeff King <peff@peff.net> writes:
 
-Just received it
+> ... The principle of "remove defaults from code, and
+> put them into the automatically generated config file" makes sense to
+> me. It gives users an easy place to look to understand and change such
+> behavior. So even without the rest of the patches, I think this is an
+> improvement.
 
->>> are also a start towards that, even though I don't think your 
->>> transition  plan is feasible (also because it would break "git remote 
->>> update"  completely).
->>
->> Which part of "warn people in git-fetch" will break "git remote update"?
->> Or what will break after the "git remote add" start setting
->> skipDefaultUpdate?
->
-> People will expect the new remotes to be, ehm, updated by "git remote  
-> update".
->
+If the removal of defaults do not break expectations of users of an
+existing repository, I'd agree.  Is it the case, or the lack of default
+that is supposed to be there now suddenly makes the tool do unexpected
+things?
 
-Ah, right. How about a warning, then? Like:
+>> Patch 4 is a reworking of my previous patch.  Instead of having "git
+>> push" push to "all mirrors plus the magic origin branch", it will
+>> push to "all remotes having a push refspec".  In the future, this
+>> will always include the origin branch because of patch 2, while
+>> right now the origin branch is still used if no remote has a
+>> push refspec (for backwards compatibility -- more discussion in the
+>> patch log message).
 
-    $ git remote add abc host:src/project
-    warning: fetch and push without arguments WILL update the references of "abc"
-    $
+Didn't we already have this discussion and don't we already have a way to
+define a remote that you can use to push to more than one places?
 
->> It is not. It seem to propose, instead of fixing existing behaviour,
->
-> Do you know how to "fix" existing behavior?
->
+>> This patch may cause incompatibilities to be warned about in
+>> the release notes.  Luckily, these incompatibilities only affect
+>> users that already know their way in .git/config, because no porcelain
+>> command creates push refspecs.
 
-Never considered it broken. OTOH, it hasn't occured to me to run "git
-push" without arguments. And I do expect "git fetch" to fetch just the
-remote my current branch is related to (and not all remotes).
+"Knowledgeable people all _can_ work around the change" does not change
+the fact that you are forcing existing users unnecessary change to their
+configurations.  Why does this patch need to break existing users setups?
 
-> I mean, I just wonder why as long as I had one remote only, I could  
-> write "git push", while now I have to write "git push origin && git push  
-> mirror".  The patch to "git fetch" comes from this observation too, and  
-> I think it is a good idea, even though I'm less attached to it and it  
-> would influence my workflow much less.
+> ... I
+> assume people still with ancient .git/remotes files? Are those actually
+> deprecated?
 
-Have you tested your patches in your workflow? Worked with them for
-some weeks? Gave them to your peers?
+No.
+
+Neither .git/branches.  When you interact with hundreds of remote
+repositories, one interesting branch per each, like akpm does, the format
+of one-file-per-remote is far easier and simpler to work with.
