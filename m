@@ -1,95 +1,85 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Wed, 30 Apr 2008 06:08:03 +0900
-Message-ID: <200804292108.m3TL8moS011790@mi1.bluebottle.com>
-References: <4816E40A.4020700@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <4816E0F6.3030302@op5.se>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [updated PATCH] Same default as cvsimport when using --use-log-author
+Date: Tue, 29 Apr 2008 23:13:56 +0200
+Message-ID: <20080429211356.GA6825@cuci.nl>
+References: <20080427173246.10023.5687.stgit@aristoteles.cuci.nl> <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org> <20080429061823.GE24171@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Andreas Ericsson <ae@op5.se>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com,
-	peff@peff.net, johannes.schindelin@gmx.de, srb@cuci.nl
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:09:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:14:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqx52-0008PX-Ip
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:09:41 +0200
+	id 1Jqx9z-0001nn-4j
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756802AbYD2VIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:08:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756757AbYD2VIu
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:08:50 -0400
-Received: from mi1.bluebottle.com ([206.188.25.14]:35807 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753802AbYD2VIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:08:49 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m3TL8moS011790
-	for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:08:48 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:in-reply-to:references:
-	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
-	b=1TFfsBAeDR/OCgsV0t9QtTUtogLPByCVjg71+zL5+T1NGFaC2DunB65jfUQecOj+x
-	mRiMVZrC1+ftDNPDWuhBpvbPAnkOmtclv+Y+Fe0ZYa0H8jyWqvwY+X9pvW3ADry
-Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m3TL8Qem021716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Apr 2008 14:08:34 -0700
-In-reply-to: <4816E40A.4020700@gnu.org>
-X-Trusted-Delivery: <02a4c4bb3e854ec4ae763ffa4fbd4132>
+	id S1754002AbYD2VN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:13:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbYD2VN6
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:13:58 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:46400 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257AbYD2VN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:13:57 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 17BD7545E; Tue, 29 Apr 2008 23:13:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080429061823.GE24171@muzzle>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80734>
 
-Quoting Paolo Bonzini <bonzini@gnu.org>:
+Eric Wong wrote:
+>Junio C Hamano <gitster@pobox.com> wrote:
+>> "Stephen R. van den Berg" <srb@cuci.nl> writes:
+>> > git-svn supports an experimental option --use-log-author which currently
+>> > results in:
 
->>> Sorry, how does the patch make you lose some of your work (as
->>> opposed to some of your time, which is possible as is the case for
->>> every backwards incompatible change)?
->>
->> Because I will lose some of the refs and then have to dig them up in the
->> reflog.
->>
->> I'm not comfortable with the reflog. I appreciate its usefulness, but I'm
->> thoroughly unhappy when I'm forced to use it.
->
-> So am I, but still it would lose time (to dig refs up in the reflog),
-> not work (e.g. having to rewrite code).  I think we're in agreement on
-> this part.
->
->> Yes, I understand the rationale, and I do have an alternative idea, which
->> is to make it configurable.
->
-> Then sorry, but I think you don't understand the rationale.  The cover
-> letter has excerpts from other git hackers' e-mails that explain it
-> better than I can.  But shortly speaking, the point of the patch is to
-> remove the "magic" operation of "git fetch" as "git fetch
-> origin". Removing is quite the opposite of "add a configuration option
-> that disables it, but leave the old behavior as default".
->
->> Now that I think about it, it's probably useful to have it
->> togglable via command-line switch as well. Something along the
->> lines of "git fetch --all-remotes", perhaps.
->
-> Making it accessible via a command-line switch is pointless, as we
-> already have "git remote update" for that.
->
-> Paolo
+>> > Author: foobaruser <unknown>
 
-Sorry but then why does this patch have to even touch "git fetch"?  Isn't it enough to run "git remote update"?
+>> I have a question about this.  Is the "<unknown> coming from...
 
+I have to correct myself here.  What happens is that if in the commit
+message there is no From: or Signed-off-by: to be found to parse, that
+results in an empty $name_field, and causes $email to stay undefined,
+which eventually results in the same silly generated UUID-domain I'm
+trying to get rid of.
+
+So it's not triggering the 'unknown' above.
+
+>> I would think not -- if that is the case, the codepath you added as a fix
+>> would not trigger.  Which means in some other cases, the 'unknown' we see
+>> above in the context also still happens.  Is it a good thing?  Maybe we
+>> would also want to make it consistently do "somebody <somebody>" instead,
+>> by doing...
+
+>I don't think Stephen's patch ever gets triggered, either.
+
+Well, it is triggered, but rather because $name_field is empty, and
+consequently $email is never set.
+
+>$email does appear to get set correctly for the first two elsifs cases
+>here in the existing code:
+
+>So I propose the following one-line change instead of Stephen's:
+
+>diff --git a/git-svn.perl b/git-svn.perl
+>@@ -2432,7 +2432,7 @@ sub make_log_entry {
+>-			($name, $email) = ($name_field, 'unknown');
+>+			($name, $email) = ($name_field, $name_field);
+
+That is a good change (IMO), but I still need my patch (or something
+similar) to cover the undefined $name_field case.  Proposed new patch
+follows.
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
 
-----------------------------------------------------------------------
-Get a free email account with anti spam protection.
-http://www.bluebottle.com/tag/2
+"There's a lot to be said for not saying a lot."
