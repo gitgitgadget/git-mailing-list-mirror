@@ -1,88 +1,134 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Tue, 29 Apr 2008 11:02:02 +0200
-Message-ID: <4816E40A.4020700@gnu.org>
-References: <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <4816E0F6.3030302@op5.se>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [updated PATCH] Same default as cvsimport when using --use-log-author
+Date: Tue, 29 Apr 2008 10:52:24 +0100
+Message-ID: <20080429095213.GY5401@shadowen.org>
+References: <20080427173246.10023.5687.stgit@aristoteles.cuci.nl> <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org> <20080429061823.GE24171@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
-	johannes.schindelin@gmx.de, srb@cuci.nl
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Apr 29 11:03:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Apr 29 11:53:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqljl-00060p-Qe
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 11:02:58 +0200
+	id 1JqmWg-0005aq-VI
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 11:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754208AbYD2JCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 05:02:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753355AbYD2JCG
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 05:02:06 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:58270 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341AbYD2JCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 05:02:04 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so2154305nfb.21
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 02:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=OaillPSkNpKZz7+yP3FZfFQcWYVzXZUdHQF+OqbvRWM=;
-        b=QrIk5wsvueU53DXKoJT/KXIkUolzhYuP4xHrSfeTJ2HxH5gIPQg7q7tkUBEgKmiJcgMQB3ex6zjtbsL+D/GuyyK5zSgkLQ8apcaPvKxR50IbQ6GZBWrk5jMYBLb+2VWcBaytbXldC7UWLe85qdp09kpsFHPwrr8WqIcWPbm0feM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=Z5etS14zYt2D6p0BoAQg56T0iqB+S4EB25rOmdO6BB0OOL6P7XhnoxIvdF7VSBsCIpO810+/PCcZpK6XedUX7gvkNRtg1Wqs/v93slOwDYqTN6bSjgvhq7h+U0Yeq9WX1mQdkB4tBUvQWrMNxR3TwTyT5qMkzf9dU2YvwmVLikk=
-Received: by 10.210.51.10 with SMTP id y10mr7059599eby.57.1209459723658;
-        Tue, 29 Apr 2008 02:02:03 -0700 (PDT)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id i5sm28665244mue.7.2008.04.29.02.02.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Apr 2008 02:02:02 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <4816E0F6.3030302@op5.se>
-X-Enigmail-Version: 0.95.6
+	id S1752054AbYD2JwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 05:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYD2JwY
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 05:52:24 -0400
+Received: from hellhawk.shadowen.org ([80.68.90.175]:4535 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751483AbYD2JwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 05:52:23 -0400
+Received: from localhost ([127.0.0.1] helo=pinky)
+	by hellhawk.shadowen.org with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1JqmVZ-0001uH-Fu; Tue, 29 Apr 2008 10:52:21 +0100
+Content-Disposition: inline
+In-Reply-To: <20080429061823.GE24171@muzzle>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80673>
 
-
->> Sorry, how does the patch make you lose some of your work (as opposed 
->> to some of your time, which is possible as is the case for every 
->> backwards incompatible change)?
+On Mon, Apr 28, 2008 at 11:18:23PM -0700, Eric Wong wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > "Stephen R. van den Berg" <srb@cuci.nl> writes:
+> > 
+> > > git-svn supports an experimental option --use-log-author which currently
+> > > results in:
+> > >
+> > > Author: foobaruser <unknown>
+> > 
+> > I have a question about this.  Is the "<unknown> coming from...
+> > 
+> > > This patches harmonises the result with cvsimport, and makes
+> > > git-svn --use-log-author produce:
+> > >
+> > > Author: foobaruser <foobaruser>
+> > > ...
+> > > diff --git a/git-svn.perl b/git-svn.perl
+> > > index b151049..846e739 100755
+> > > --- a/git-svn.perl
+> > > +++ b/git-svn.perl
+> > > @@ -2434,6 +2434,9 @@ sub make_log_entry {
+> > >  		} else {
+> > >  			($name, $email) = ($name_field, 'unknown');
+> > >  		}
+> > 
+> > ... this 'unknown' we see here?
+> > 
+> > > +	        if (!defined $email) {
+> > > +		    $email = $name;
+> > > +	        }
+> > >  	}
+> > 
+> > I would think not -- if that is the case, the codepath you added as a fix
+> > would not trigger.  Which means in some other cases, the 'unknown' we see
+> > above in the context also still happens.  Is it a good thing?  Maybe we
+> > would also want to make it consistently do "somebody <somebody>" instead,
+> > by doing...
+> > 
+> > 	} else {
+> > 		$name = $name_field;
+> > 	}
+> >         if (!defined $email) {
+> > 	    $email = $name;
+> >         }
+> > 
 > 
-> Because I will lose some of the refs and then have to dig them up in the
-> reflog.
+> I don't think Stephen's patch ever gets triggered, either.
 > 
-> I'm not comfortable with the reflog. I appreciate its usefulness, but I'm
-> thoroughly unhappy when I'm forced to use it.
+> This section of code was done by Andy, so I can't tell his motivations
+> for using 'unknown' the way he did.
 
-So am I, but still it would lose time (to dig refs up in the reflog), 
-not work (e.g. having to rewrite code).  I think we're in agreement on 
-this part.
+My motivation was that we had picked up a field which is supposed to be
+in RFC822 From: format, ie Name <email>, and dispite trying pretty hard
+we had not been able to find something that looked like an email to put
+in the email field of the git author et al.  So we didn't really know,
+hence 'unknown'.
 
-> Yes, I understand the rationale, and I do have an alternative idea, which
-> is to make it configurable.
+That said it is not at all clear that putting 'unknown' in this field to
+avoid putting an invalid email in this field makes much sense as it of
+itself is just as invalid.  So I would probabally be just as happy with
+your option here.
 
-Then sorry, but I think you don't understand the rationale.  The cover 
-letter has excerpts from other git hackers' e-mails that explain it 
-better than I can.  But shortly speaking, the point of the patch is to 
-remove the "magic" operation of "git fetch" as "git fetch origin". 
-Removing is quite the opposite of "add a configuration option that 
-disables it, but leave the old behavior as default".
+> $email does appear to get set correctly for the first two elsifs cases
+> here in the existing code:
+> 
+> 		if (!defined $name_field) {
+> 			#
+> 		} elsif ($name_field =~ /(.*?)\s+<(.*)>/) {
+> 			($name, $email) = ($1, $2);
+> 		} elsif ($name_field =~ /(.*)@/) {
+> 			($name, $email) = ($1, $name_field);
+> 		} else {
+> 			($name, $email) = ($name_field, $name_field);
+> 
+> So I propose the following one-line change instead of Stephen's:
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index b151049..301a5b4 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2432,7 +2432,7 @@ sub make_log_entry {
+>  		} elsif ($name_field =~ /(.*)@/) {
+>  			($name, $email) = ($1, $name_field);
+>  		} else {
+> -			($name, $email) = ($name_field, 'unknown');
+> +			($name, $email) = ($name_field, $name_field);
+>  		}
+>  	}
+>  	if (defined $headrev && $self->use_svm_props) {
+> 
+> -- 
+> Eric Wong
 
-> Now that I think about it, it's probably useful to have it
-> togglable via command-line switch as well. Something along the
-> lines of "git fetch --all-remotes", perhaps.
-
-Making it accessible via a command-line switch is pointless, as we 
-already have "git remote update" for that.
-
-Paolo
+-apw
