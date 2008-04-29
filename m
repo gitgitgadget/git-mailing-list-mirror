@@ -1,53 +1,64 @@
-From: "Mike Coleman" <tutufan@gmail.com>
-Subject: bug: git-diff silently fails when run outside of a repository (v1.5.4.2)
-Date: Tue, 29 Apr 2008 15:04:32 -0500
-Message-ID: <3c6c07c20804291304n36976417wf3c2a13303aa3133@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-send-email: Skipping  - not found.
+Date: Tue, 29 Apr 2008 16:06:19 -0400
+Message-ID: <20080429200619.GA20509@sigill.intra.peff.net>
+References: <48163E6C.60104@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 29 22:06:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 22:07:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqw4q-0000vR-Sa
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 22:05:49 +0200
+	id 1Jqw6p-0001p9-Mi
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 22:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759264AbYD2UEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 16:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759174AbYD2UEe
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 16:04:34 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:31680 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759059AbYD2UEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 16:04:33 -0400
-Received: by wa-out-1112.google.com with SMTP id m16so220884waf.23
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=APg569XYZwDXsNgpRWePE754K+8pnjdvXthorzjjffM=;
-        b=rsdufBvFLkvsdDqFkSvrY7wv91GScGphKPZUj91fMW8b241r7TC95kPujoLxtTFSABS9+4WoszFdUio5z0MTP2i7YqsY0hoPmBcKUrdAWImZ4JS4v3qhzKUR19Li3ndn3D3iQNOuLvsWi/9nsBw/nh3qoJINcC+y17/3zbRnQHM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fyDwXiitmuUrgRqJxfP/hJabgr8nCpvFFnd6KskszI80PuflDePJjWWb29geYF+iPQSEps33Xaz+1wBKvn+mUuiBaYA7f2h2mioKxSVbfrnEbfD509LOtuQdV7Crg4pu8YGk+gSAGEAU4vrELA6UOgvBwgpgD6sNYzY7YQ5KB3E=
-Received: by 10.114.126.1 with SMTP id y1mr5080760wac.41.1209499472451;
-        Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
-Received: by 10.114.92.7 with HTTP; Tue, 29 Apr 2008 13:04:32 -0700 (PDT)
+	id S1757838AbYD2UGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 16:06:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756320AbYD2UGV
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 16:06:21 -0400
+Received: from peff.net ([208.65.91.99]:3480 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756153AbYD2UGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 16:06:20 -0400
+Received: (qmail 10684 invoked by uid 111); 29 Apr 2008 20:06:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Apr 2008 16:06:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2008 16:06:19 -0400
 Content-Disposition: inline
+In-Reply-To: <48163E6C.60104@freescale.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80723>
 
-At least in version 1.5.4.2, git-diff silently fails when not run
-inside a repository.  It should give an error diagnostic, especially
-since "no output" would otherwise be a meaningful response.
+On Mon, Apr 28, 2008 at 04:15:24PM -0500, Timur Tabi wrote:
 
-I think there are other git programs that have this problem as well.
+> When I issue this command:
+> 
+> git-send-email  --from Timur Tabi <timur@freescale.com> --suppress-cc=all --to
+> timur@tabi.org --smtp-server remotesmtp.freescale.net
+> 0001--PATCH-Update-CS4270-driver-to-ASoC-V2.patch
 
-Mike
+Surely that is not the command you issued, since it lacks shell quoting
+around your name and email address.
+
+> I don't know enough about Perl to debug this, but I presume the problem is in
+> this code:
+> [...]
+> for my $f (@ARGV) {
+> [...]
+> 		print STDERR "Skipping $f - not found.\n";
+
+Yes, that is what is producing the error message. But that is the first
+time we ever look at @ARGV, let alone modify it. So the error is almost
+certainly caused by a blank argument being passed on the command line.
+And we can't debug that unless you show us the exact shell invocation
+that was used.
+
+-Peff
