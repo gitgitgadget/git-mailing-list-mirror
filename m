@@ -1,131 +1,144 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Add tests for sendemail.cc configuration variable
-Date: Tue, 29 Apr 2008 12:56:47 +0200
-Message-ID: <1209466607-10454-1-git-send-email-vmiklos@frugalware.org>
-References: <7vprsbf3hz.fsf@gitster.siamese.dyndns.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 13:09:10 2008
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: About git and the use of SHA-1
+Date: Tue, 29 Apr 2008 14:27:46 +0200
+Message-ID: <48171442.4050707@op5.se>
+References: <200804281829.11866.henrikau@orakel.ntnu.no>	 <alpine.LNX.1.00.0804281515480.19665@iabervon.org>	 <200804282329.21336.henrikau@orakel.ntnu.no> <4816C26D.9010304@op5.se>	 <f9d2a5e10804290009p17d291d5wf14e2bb58bedca63@mail.gmail.com>	 <4816CC80.9080705@op5.se> <bd6139dc0804290405w4a7a94a7s15a85285b2122f2f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Russ Dill <russ.dill@gmail.com>,
+	Henrik Austad <henrikau@orakel.ntnu.no>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Tue Apr 29 14:28:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqnht-00033p-11
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 13:09:09 +0200
+	id 1Jqowp-0006Hi-Ht
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 14:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576AbYD2LIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 07:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbYD2LIW
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 07:08:22 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:40530 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753828AbYD2LIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 07:08:21 -0400
-X-Greylist: delayed 683 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Apr 2008 07:08:21 EDT
-Received: from vmobile.example.net (dhcp-79.r.wlan.bme.hu [152.66.144.79])
-	by yugo.frugalware.org (Postfix) with ESMTP id CDA7E1DDC5B;
-	Tue, 29 Apr 2008 12:56:56 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 7722B18610C; Tue, 29 Apr 2008 12:56:47 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1
-In-Reply-To: <7vprsbf3hz.fsf@gitster.siamese.dyndns.org>
+	id S1752931AbYD2M1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 08:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbYD2M1u
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 08:27:50 -0400
+Received: from mail.op5.se ([193.201.96.20]:43620 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752070AbYD2M1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 08:27:49 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 498BD1F08090;
+	Tue, 29 Apr 2008 14:27:53 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PwV9lYslvnf1; Tue, 29 Apr 2008 14:27:52 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id 48C671F0808B;
+	Tue, 29 Apr 2008 14:27:52 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
+In-Reply-To: <bd6139dc0804290405w4a7a94a7s15a85285b2122f2f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80679>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+Sverre Rabbelier wrote:
+> On Tue, Apr 29, 2008 at 9:21 AM, Andreas Ericsson <ae@op5.se> wrote:
+>> Russ Dill wrote:
+>>  If the server is hacked and objects are replaced, they will either
+>>  no longer match their cryptographic signature, meaning they'll be
+>>  new objects or git will determine that they are corrupt, or they
+> 
+> We were assuming here that once SHA-1 is broken really determined
+> hackers will be able to come up with objects that -do- match the
+> SHA-1, so the above is not relevant.
+> 
+>>  *will* match an existing object, but then that object won't be
+>>  propagated to other repositories since git refuses to overwrite
+>>  already existing objects. [...]
+> 
+> What about new users cloning the repo? They're just out of luck?
 
-On Sun, Apr 27, 2008 at 01:26:48PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks, the idea makes sense.
->
-> Tests?
+Only until someone who's already cloned the repository fetches
+from it, at which point the collision will be detected.
 
-Here it is.
+> I
+> don't think this argument holds, if we want to 'advertise' that git is
+> cryptographically secure we can do so only as long as our hashing
+> algorithm is. (As such, should SHA-1 ever be fully broken we'd need to
+> either switch to another algorithm or stop advertising being
+> cryptographically secure.)
+> 
 
-(Sorry for the duplication, I forgot to CC the list.)
+True. So far though, the only attacks that have been successful requires
+that the attacker is allowed to create both the colliding data-sets,
+and so far none has been found that would allow the attacker to follow
+any kind of syntactical rules what so ever, so from a practical point
+of view, SHA1 is 100% secure *for sourcecode*.
 
- t/t9001-send-email.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 66 insertions(+), 0 deletions(-)
+>From a theoretical point of view, no hash is 100% secure, so changing
+algorithm buys us nothing.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index c0973b4..af655cf 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -166,4 +166,70 @@ test_expect_success 'second message is patch' '
- 	grep "Subject:.*Second" msgtxt2
- '
- 
-+cat >expected-show-all-headers <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<cc@example.com>,<author@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: cc@example.com, A <author@example.com>
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success 'sendemail.cc set' '
-+	git config sendemail.cc cc@example.com &&
-+	git send-email \
-+		--dry-run \
-+		--from="Example <from@example.com>" \
-+		--to=to@example.com \
-+		--smtp-server relay.example.com \
-+		$patches |
-+	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
-+		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
-+		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
-+		>actual-show-all-headers &&
-+	test_cmp expected-show-all-headers actual-show-all-headers
-+'
-+
-+cat >expected-show-all-headers <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: A <author@example.com>
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success 'sendemail.cc unset' '
-+	git config --unset sendemail.cc &&
-+	git send-email \
-+		--dry-run \
-+		--from="Example <from@example.com>" \
-+		--to=to@example.com \
-+		--smtp-server relay.example.com \
-+		$patches |
-+	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
-+		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
-+		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
-+		>actual-show-all-headers &&
-+	test_cmp expected-show-all-headers actual-show-all-headers
-+'
-+
- test_done
+Besides, "cryprographically secure" is not the same as "will never ever
+be broken", because all hashes are obviously susceptible to brute-force
+attacks. "Cryptographically secure" means, insofar as I've understood it
+that given a source-file and a key, it would take such an extremely
+long time to find a different data-set that hashes to the same key that
+the result is unusable because the original source is obsolete.
+
+That is why legal documents are always signed with the "most secure"
+(or rather, "least insecure") of all available hashes. For our
+purposes, SHA1 suffices until someone comes up with a relatively
+trivial way of creating a collision within the parameters above.
+
+
+>>  [...] Either way, gits refusal to overwrite
+>>  objects it already has plays a part in making malicious actions
+>>  futile, since malicious code is only worth something if it's
+>>  propagated and actually used.
+> 
+> Of course this is true, it makes it a lot harder to do damage, but it
+> doesn't eliminate the problem, it's just a free 'extra protection'.
+> Yes, malicious code is only worth something if it's propagated and
+> actually used, no, it is not impossible to do so in git if/when SHA-1
+> turns out to have collisions every other file.
+> 
+
+Points of fact so far:
+* It possible to create objects with colliding names (SHA1 hash keys).
+  This holds true whichever algorithm we use, although it will be more
+  difficult with a stronger algorithm.
+* It is impossible to distribute the colliding content to already cloned
+  repositories. This also holds true for all hash algorithms.
+
+I've been arguing that the value of the first point is so greatly
+diminished by the second, that even if SHA1 turns out to be horribly
+broken, projects using git will still have a decent protection against
+malicious code entering the repository without the knowledge of one of
+the authors.
+
+You've been arguing that SHA1 is not theoretically secure, which is
+obviously true since no hash is theoretically secure.
+
+I can think of one way to make git a lot more resilient to hash
+collisions, regardless of which hash is used, namely: Add the length
+of the hashed object to the hash.
+
+In order for an evil-minded hacker to succeed in doing any real harm,
+he/she now has to create a conflicting file which is valid for its
+type (be it C, PHP, JPEG, AVI, PDF or whatever) and is also the same
+length as the original source, without being allowed to create the
+original object.
+
 -- 
-1.5.5.1.100.ge64d7
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
