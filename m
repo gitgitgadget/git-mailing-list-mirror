@@ -1,73 +1,116 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Wed, 30 Apr 2008 17:06:53 +0400
-Message-ID: <20080430130653.GD6160@dpotapov.dyndns.org>
-References: <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness> <7v63u05khw.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness> <7v1w4o3zle.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: [DOC] more explanation about --git-dir and --work-tree options
+Date: Tue, 29 Apr 2008 17:49:44 +0200
+Message-ID: <fv7g2s$g59$1@ger.gmane.org>
+References: <48162EF0.6050705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 30 15:08:51 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 30 15:12:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrC2K-0002wM-Nq
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 15:07:53 +0200
+	id 1JrC5U-0004TC-0I
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 15:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757673AbYD3NHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 09:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756983AbYD3NHE
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 09:07:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:46099 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755898AbYD3NHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 09:07:01 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so1426156ugc.16
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 06:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=n0CwhgBtviVxq5K38PNznV4Xl/9hNfwbcGqVWjeYkcA=;
-        b=MWXMzXKMlT1tzK7PG/WppYsGx5XUmqwyNEaaJ5HKkxIFMVoay+AS9SQUVaLFsTn1MYQLEAxpWLzar4aEO/MUSYNJoz1mwRXIYrstUMR+dErlzmwOqLvHb8OFuV1roPU+nrrqJB1SVHZHvW5WYaHX/5vAeRLfFx5IKot0vGniNJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=dixnsyRgUeAD3Of0mA5mVuL0nuTI2bMl5solcPHYTJanDuvGVurWMI8mvEfaxFc2NrODZuermskgc6vxk/oIQoWgy6tmmrlJmNG+7meKlWDAG7yuhU4JhSzNbYYY+6aZ0EpJsiZFzOBiPdemQb+aEwxlzUyoNeyVxVrEWXMAyMg=
-Received: by 10.67.115.4 with SMTP id s4mr7935230ugm.1.1209560819037;
-        Wed, 30 Apr 2008 06:06:59 -0700 (PDT)
-Received: from localhost ( [85.141.190.2])
-        by mx.google.com with ESMTPS id u14sm924194gvf.6.2008.04.30.06.06.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Apr 2008 06:06:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758587AbYD3NKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 09:10:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758594AbYD3NKL
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 09:10:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:41876 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751493AbYD3NKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 09:10:09 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JrC4Q-0008W8-EZ
+	for git@vger.kernel.org; Wed, 30 Apr 2008 13:10:02 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 13:10:02 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 13:10:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <48162EF0.6050705@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80836>
 
-On Wed, Apr 30, 2008 at 09:47:02AM +0100, Johannes Schindelin wrote:
+Liu Yubao venit, vidit, dixit 28.04.2008 22:09:
+> Hi,
 > 
-> I cannot bring myself to feel that this is messy.  The more I think about 
-> it, the clearer it becomes for me that the pick call should use the 
-> original commit, whereas the merge call should use the rewritten commit 
-> (and should therefore only be called when all ancestors of that merge 
-> which need rebasing were rebased already).
->
+> I find these two options bring me surprise:
+> 
+>    git init $HOME
+>    git add ~/.vimrc ~/.gvimrc ~/.vim
+>    cd $HOME/work/xxx
+>    ....do some work, then change ~/.vimrc without changing
+>        working directory
+>    git --git-dir $HOME/.git status
+> 
+> I use --git-dir because I have another .git in $HOME/work/xxx, the
+> last command surprises me much, it tells me .vim* are all deleted!
+> 
+> After checking the code, I realize git thinks the current working
+> directory as top directory of the working tree if --git-dir is specified
+> without --work-tree option.
 
-Maybe, it would be better if re-written commits were marked a bit
-differently, so there will be no confusion about whether an original
-or re-written commit is referred. For instance, re-written commits can
-be marked by adding apostrophe at the end, so if the original commit
-was "abcdef" then the re-written should be called as "abcdef'". At
-least, it will make plain clear for anyone where in merge rewritten
-commits are mentioned. Otherwise, it looks too magical to me.
+Yes, I found this surprising at first, too. And I noticed later on why 
+things are the way they are, just as you did. :)
 
-Dmitry
+More doc on this is certainly helpful.
+
+> And here is my supplement to the documentation.
+
+> +	variable and the '--work-tree' command line option. It can be
+> +	a absolute path or relative path to the directory specified by
+
+"an absolute path or a relative...""
+
+> +	--git-dir or GIT_DIR.
+> +	Note: If --git-dir or GIT_DIR are specified but none of
+> +	--work-tree, GIT_WORK_TREE and core.worktree is specified,
+
+I would probably interchange "is" and "are" here.
+
+Same changes in the following.
+
+I often find myself wanting to operate on a repo without cd'ing to it. While
+
+( cd repo && git command args)
+
+is certainly an option I find the following shell functions helpful:
+
+alias g=git
+function gg ()
+{
+   local _gg="$1";
+   shift;
+   git --git-dir="${_gg}/.git" --work-tree="${_gg}" "$@"
+}
+
+That way,
+
+gg repo command args
+
+runs git in a different location while
+
+g command args
+
+works as usual (and is shorter).
+
+Now I'm just waiting for the experts to tell me that cd'ing to repo is 
+completely different from specifying --git-dir and --work-tree, and that 
+either way is completely wrong. (I'm still stupid and ugly, but I want 
+to become clever and smart.) ;)
+
+Michael
