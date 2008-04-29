@@ -1,103 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Yet another Git tutorial
-Date: Mon, 28 Apr 2008 17:17:06 -0700
-Message-ID: <7vskx5a519.fsf@gitster.siamese.dyndns.org>
-References: <2D3D2E55-74C7-4373-BC22-9CF4C26C197D@newartisans.com>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Mon, 28 Apr 2008 17:25:05 -0700
+Message-ID: <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+ <20080422095549.GB3752@alea.gnuu.de>
+ <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
+ <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Wiegley <johnw@newartisans.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 02:18:15 2008
+Cc: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 29 02:26:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqdXw-0000ia-Nr
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 02:18:13 +0200
+	id 1Jqdfb-0002qo-6z
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 02:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934007AbYD2ARN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2008 20:17:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932531AbYD2ARN
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 20:17:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62200 "EHLO
+	id S1754336AbYD2AZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2008 20:25:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755313AbYD2AZU
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Apr 2008 20:25:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63507 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765973AbYD2ARM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2008 20:17:12 -0400
+	with ESMTP id S1754288AbYD2AZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2008 20:25:19 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 862025877;
-	Mon, 28 Apr 2008 20:17:11 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DC2DE5A09;
+	Mon, 28 Apr 2008 20:25:17 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 94E615876; Mon, 28 Apr 2008 20:17:08 -0400 (EDT)
-In-Reply-To: <2D3D2E55-74C7-4373-BC22-9CF4C26C197D@newartisans.com> (John
- Wiegley's message of "Mon, 28 Apr 2008 02:39:46 -0400")
+ ESMTP id 031E15A07; Mon, 28 Apr 2008 20:25:13 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80636>
 
-Page #5; after teaching "cat-file -t" it would make sense to teach
-"cat-file blob" to view what was stored.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Page #5; likewise, "cat-file -t HEAD" to inspect and "cat-file commit
-HEAD" to show its contents would be a much better "bottom-up" way to show
-how the pieces fit together, instead of doing "show --pretty=format:%T".
+> On Tue, 22 Apr 2008, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > So I really hate the idea of introducing yet other marks when we already 
+>> > have unique identifiers: the (abbreviated) commit names.
+>> 
+>> Didn't I give you an example why commit object names are _not_ unique
+>> identifiers already?
+>
+> By that reasoning, rebase -i cannot work anyway: it relies on the 
+> abbreviated identifiers, not on anything else, for the "pick" command.
 
-Page #6; "HEAD tag"???
+No, read the message again and think for 5 minutes.
 
-Page #6; s/my system/my repository/, as you use that word a few lines
-later.
+Picking the same commit twice does not make any sense, neither does
+picking the resulting commit from an earlier operation in the same
+sequencer run.  Which means that the commit object name for 'pick' can
+mean _only_ the pre-rewritten commit object, not 'the result of an earlier
+operation that used that commit'.  And you always pick on top of the
+current (detached) HEAD.
 
-You use "id", "hash id", "hash number", "hash" etc. and have your readers
-guess that you are talking about the same thing.  It would be better to
-use a single word consistently (the official name of this number is the
-"object name").
+Reset is different.  You can reset either to the named commit to start
+building from a known state that existed before the sequencer run started,
+or reset to the result of pick (or merge) of the named commit, and your
+proposal breaks down here, because you cannot tell between the two.
 
-s/index cache/the index/.
+To rebuild this history on top of a commit O' elsewhere:
 
-s/tree owns blob/tree holds blob/, perhaps.
+        O---A---B
+             \   \
+              D---E---F---G
+                         / 
+                        X
 
-Page #9; before this point, your tree owned blobs but now suddenly it
-references trees and blobs.  There should be a mention of this recursive
-construction of a tree earlier soon after you introduced the tree
-objects. 
+you would need to:
 
-Page #11: s/name:file/name:path/; notice that it can be non-files such as
-symlinks and trees.
+	pick A
+        pick B
+        reset <<to the state after "pick A">>
+        pick D
+        merge <<the state after "pick B">>
+        pick F
+        merge X (taken from somebody else)
 
-Page #12: s/name{tree}/name^{tree}/.
+and the syntax proposed to express <<the above part>> can either be your
+"the result of the last operation that used the named commit", which is
+simple in some cases, or "named commit, be it with mark or standard sha-1
+expression".
 
-Page #12: name1..name2; "between name1 and name2, inclusive"?  This
-excludes the left end.  "Everything reachable from name2 except the ones
-reachable from name1".
-
-Page #12: name1...name2.  This is a symmetric difference for "git log"
-family of commands (iow when you talk about set of commits) which means
-"Reachable either from name1 or name2 but not from both".  When used with
-"git diff" to name two endpoints, this means what you described
-(differences since the common ancestor of these two to name2).
-
-Page #12: master..; it would also be useful to mention ..other here.
-
-Page #17: The example makes me wonder what you did exactly to commit I.
-It would contain roughly an equivalent of squashed B+C together, which may
-or may not be what you want.
-
-Page #18: There is no "two different things" reason behind the name.  It
-was originally called "directory cache" and then renamed to "the index".
-These days, most of the time we use these two words interchangeably, but
-when we are picky, index tends to mean the file on the filesystem
-(i.e. $GIT_INDEX_FILE aka $GIT_DIR/index) while cache tends to mean the
-in-core structure (i.e. the_index.cache aka active_cache).
-
-Page #22: "git reset --mixed" will remove blobs???  You surely did not
-mean that.  It just reverts the staged contents to that of the HEAD (or
-whichever commit you named and moved your HEAD to).
-
-Page #24: saves your work in the stash "for the current branch"???  There
-is no per-branch stash.  You can stash, switch branches and then apply the
-stashed change to the other branch.
+Introducing a 'mark' insn to mark the previous result you may want to go
+back to is one way to solve this without ambiguity.  Then abbreviated
+object name won't have to be mapped as in your proposal.
