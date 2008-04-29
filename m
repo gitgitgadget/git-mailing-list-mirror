@@ -1,92 +1,131 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: About git and the use of SHA-1
-Date: Tue, 29 Apr 2008 13:05:46 +0200
-Message-ID: <bd6139dc0804290405w4a7a94a7s15a85285b2122f2f@mail.gmail.com>
-References: <200804281829.11866.henrikau@orakel.ntnu.no>
-	 <alpine.LNX.1.00.0804281515480.19665@iabervon.org>
-	 <200804282329.21336.henrikau@orakel.ntnu.no> <4816C26D.9010304@op5.se>
-	 <f9d2a5e10804290009p17d291d5wf14e2bb58bedca63@mail.gmail.com>
-	 <4816CC80.9080705@op5.se>
-Reply-To: sverre@rabbelier.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Russ Dill" <russ.dill@gmail.com>,
-	"Henrik Austad" <henrikau@orakel.ntnu.no>,
-	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Apr 29 13:06:56 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add tests for sendemail.cc configuration variable
+Date: Tue, 29 Apr 2008 12:56:47 +0200
+Message-ID: <1209466607-10454-1-git-send-email-vmiklos@frugalware.org>
+References: <7vprsbf3hz.fsf@gitster.siamese.dyndns.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 13:09:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqnfQ-0001xQ-4I
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 13:06:36 +0200
+	id 1Jqnht-00033p-11
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 13:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753889AbYD2LFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 07:05:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753828AbYD2LFr
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 07:05:47 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:2736 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753477AbYD2LFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 07:05:47 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so4458831wff.4
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 04:05:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=O4z1WxZiWgKF9hcykJHIb6CnwTjJP2Rg+qMOxKA4AbU=;
-        b=usbAlj/Qjt7CNQYbuWyb8eAjco7DNpGnndnYy/Inikgctr82d0gorDw8r2qVHMIx3OOsXBnfLg8PWg9oVtCkBA/OEFGyN6ctAE3Awi54WsVhdC3UAgr4CdczS6B79CW2abHRGQY3ZvbReYfPMb0SsmnrxOV0QuCJc0ybqGVBtVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uQiQtAwEJF7vcF/AfrLouGHx1QIBjV+0wgjKQO/2TQm1+OVv1g54BiFXXrywSl7V9GSWE+PTim/L2AenKV6h+aYNpbRIK6e+CiTBXiICITIsXTH1X8HBRSxMda33jh0Qq96dBiH+vs1jzObzxaIl9wvAuH066PA5Wox28M6VJjk=
-Received: by 10.143.2.19 with SMTP id e19mr455226wfi.90.1209467146662;
-        Tue, 29 Apr 2008 04:05:46 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Tue, 29 Apr 2008 04:05:46 -0700 (PDT)
-In-Reply-To: <4816CC80.9080705@op5.se>
-Content-Disposition: inline
+	id S1754576AbYD2LIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 07:08:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbYD2LIW
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 07:08:22 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:40530 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753828AbYD2LIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 07:08:21 -0400
+X-Greylist: delayed 683 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Apr 2008 07:08:21 EDT
+Received: from vmobile.example.net (dhcp-79.r.wlan.bme.hu [152.66.144.79])
+	by yugo.frugalware.org (Postfix) with ESMTP id CDA7E1DDC5B;
+	Tue, 29 Apr 2008 12:56:56 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 7722B18610C; Tue, 29 Apr 2008 12:56:47 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.1
+In-Reply-To: <7vprsbf3hz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80678>
 
-On Tue, Apr 29, 2008 at 9:21 AM, Andreas Ericsson <ae@op5.se> wrote:
-> Russ Dill wrote:
->  If the server is hacked and objects are replaced, they will either
->  no longer match their cryptographic signature, meaning they'll be
->  new objects or git will determine that they are corrupt, or they
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-We were assuming here that once SHA-1 is broken really determined
-hackers will be able to come up with objects that -do- match the
-SHA-1, so the above is not relevant.
+On Sun, Apr 27, 2008 at 01:26:48PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks, the idea makes sense.
+>
+> Tests?
 
->  *will* match an existing object, but then that object won't be
->  propagated to other repositories since git refuses to overwrite
->  already existing objects. [...]
+Here it is.
 
-What about new users cloning the repo? They're just out of luck? I
-don't think this argument holds, if we want to 'advertise' that git is
-cryptographically secure we can do so only as long as our hashing
-algorithm is. (As such, should SHA-1 ever be fully broken we'd need to
-either switch to another algorithm or stop advertising being
-cryptographically secure.)
+(Sorry for the duplication, I forgot to CC the list.)
 
->  [...] Either way, gits refusal to overwrite
->  objects it already has plays a part in making malicious actions
->  futile, since malicious code is only worth something if it's
->  propagated and actually used.
+ t/t9001-send-email.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 66 insertions(+), 0 deletions(-)
 
-Of course this is true, it makes it a lot harder to do damage, but it
-doesn't eliminate the problem, it's just a free 'extra protection'.
-Yes, malicious code is only worth something if it's propagated and
-actually used, no, it is not impossible to do so in git if/when SHA-1
-turns out to have collisions every other file.
-
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index c0973b4..af655cf 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -166,4 +166,70 @@ test_expect_success 'second message is patch' '
+ 	grep "Subject:.*Second" msgtxt2
+ '
+ 
++cat >expected-show-all-headers <<\EOF
++0001-Second.patch
++(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
++Dry-OK. Log says:
++Server: relay.example.com
++MAIL FROM:<from@example.com>
++RCPT TO:<to@example.com>,<cc@example.com>,<author@example.com>
++From: Example <from@example.com>
++To: to@example.com
++Cc: cc@example.com, A <author@example.com>
++Subject: [PATCH 1/1] Second.
++Date: DATE-STRING
++Message-Id: MESSAGE-ID-STRING
++X-Mailer: X-MAILER-STRING
++
++Result: OK
++EOF
++
++test_expect_success 'sendemail.cc set' '
++	git config sendemail.cc cc@example.com &&
++	git send-email \
++		--dry-run \
++		--from="Example <from@example.com>" \
++		--to=to@example.com \
++		--smtp-server relay.example.com \
++		$patches |
++	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
++		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
++		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
++		>actual-show-all-headers &&
++	test_cmp expected-show-all-headers actual-show-all-headers
++'
++
++cat >expected-show-all-headers <<\EOF
++0001-Second.patch
++(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
++Dry-OK. Log says:
++Server: relay.example.com
++MAIL FROM:<from@example.com>
++RCPT TO:<to@example.com>,<author@example.com>
++From: Example <from@example.com>
++To: to@example.com
++Cc: A <author@example.com>
++Subject: [PATCH 1/1] Second.
++Date: DATE-STRING
++Message-Id: MESSAGE-ID-STRING
++X-Mailer: X-MAILER-STRING
++
++Result: OK
++EOF
++
++test_expect_success 'sendemail.cc unset' '
++	git config --unset sendemail.cc &&
++	git send-email \
++		--dry-run \
++		--from="Example <from@example.com>" \
++		--to=to@example.com \
++		--smtp-server relay.example.com \
++		$patches |
++	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
++		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
++		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
++		>actual-show-all-headers &&
++	test_cmp expected-show-all-headers actual-show-all-headers
++'
++
+ test_done
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.5.5.1.100.ge64d7
