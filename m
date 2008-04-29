@@ -1,85 +1,87 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [updated PATCH] Same default as cvsimport when using --use-log-author
-Date: Tue, 29 Apr 2008 23:13:56 +0200
-Message-ID: <20080429211356.GA6825@cuci.nl>
-References: <20080427173246.10023.5687.stgit@aristoteles.cuci.nl> <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org> <20080429061823.GE24171@muzzle>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Tue, 29 Apr 2008 23:15:02 +0200
+Message-ID: <48178FD6.90104@gnu.org>
+References: <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:14:48 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:16:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqx9z-0001nn-4j
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:14:47 +0200
+	id 1JqxBE-0002Fi-PH
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002AbYD2VN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:13:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbYD2VN6
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:13:58 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:46400 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbYD2VN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:13:57 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 17BD7545E; Tue, 29 Apr 2008 23:13:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080429061823.GE24171@muzzle>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753183AbYD2VPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:15:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYD2VPQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:15:16 -0400
+Received: from hu-out-0506.google.com ([72.14.214.226]:7837 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbYD2VPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:15:15 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so179043hue.21
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:15:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=gNcnUPnvidize/35fZHaraOr3cY+DgxWAN5ToyK6wXA=;
+        b=eXCK/IqYzbI3ptSUi2ZkwY3tJwmdQtv4TzmPW/OZ/FHRwAnzayCiEDSrQa3Mj5yEnMb+vtN4VmTf7a7K1a9lkaBu3pgcc3/ggcXTo8lupdljiqQVMvuw0qvJ4f57U62bM3Z1dO1Gr39ecNvU2aeEJK1JG2Pc7iHrggSZ/q3Sd1A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=vhObnoyXY+86IkP9lur1pa+rFOJmVIGiXExTEMzboyXzlerlQQNoqIFFFedOL0K8forYLgN+i7xTu/H0VchfgC49oJSYTiwPUH58T6ALoK7stGjfGDcGIlmCkwhTOdeuKEJcJ3VWcS4PownFjBIOEP7/E1h3TfipBBexoiKTfao=
+Received: by 10.86.79.19 with SMTP id c19mr383969fgb.19.1209503711211;
+        Tue, 29 Apr 2008 14:15:11 -0700 (PDT)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id e11sm44360fga.1.2008.04.29.14.15.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 29 Apr 2008 14:15:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+In-Reply-To: <20080429204417.GC6301@steel.home>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80735>
 
-Eric Wong wrote:
->Junio C Hamano <gitster@pobox.com> wrote:
->> "Stephen R. van den Berg" <srb@cuci.nl> writes:
->> > git-svn supports an experimental option --use-log-author which currently
->> > results in:
+>> 2) the patch does not touch refs/heads/* unless you are tweaking your  
+>> configuration (and quite heavily so).  IMHO that's using enough rope  
+>> that you really ought to know about the reflog and... look for backwards  
+>> incompatible changes in the release notes!
+> 
+> Since when do you depend on people reading release notes and
+> immediately and correctly changing their behaviour?
 
->> > Author: foobaruser <unknown>
+I don't, that's why I never expected all patches to go in 1.5.6.
 
->> I have a question about this.  Is the "<unknown> coming from...
+I sent them together to provide a single coherent series and an aim for 
+a transition plan -- which I'd prefer to work out with the git 
+community, who knows the release mechanics much better than I do.  Jeff 
+King's reply to the cover letter is a start towards that; your e-mails 
+are also a start towards that, even though I don't think your transition 
+plan is feasible (also because it would break "git remote update" 
+completely).
 
-I have to correct myself here.  What happens is that if in the commit
-message there is no From: or Signed-off-by: to be found to parse, that
-results in an empty $name_field, and causes $email to stay undefined,
-which eventually results in the same silly generated UUID-domain I'm
-trying to get rid of.
+>> 4) one man's stupidity is another man's... [fill in]  In particular, did  
+>> you understand the rationale for this change?  Do you have any  
+>> alternative ideas?
+> 
+> Do you have a convincing one by now?
 
-So it's not triggering the 'unknown' above.
+See the (long) cover letter.
 
->> I would think not -- if that is the case, the codepath you added as a fix
->> would not trigger.  Which means in some other cases, the 'unknown' we see
->> above in the context also still happens.  Is it a good thing?  Maybe we
->> would also want to make it consistently do "somebody <somebody>" instead,
->> by doing...
+> And an acceptable transition plan?
+> ("Read RelNotes!", yes, you mentioned. Another one?)
 
->I don't think Stephen's patch ever gets triggered, either.
+See above.
 
-Well, it is triggered, but rather because $name_field is empty, and
-consequently $email is never set.
-
->$email does appear to get set correctly for the first two elsifs cases
->here in the existing code:
-
->So I propose the following one-line change instead of Stephen's:
-
->diff --git a/git-svn.perl b/git-svn.perl
->@@ -2432,7 +2432,7 @@ sub make_log_entry {
->-			($name, $email) = ($name_field, 'unknown');
->+			($name, $email) = ($name_field, $name_field);
-
-That is a good change (IMO), but I still need my patch (or something
-similar) to cover the undefined $name_field case.  Proposed new patch
-follows.
--- 
-Sincerely,                                                          srb@cuci.nl
-           Stephen R. van den Berg.
-
-"There's a lot to be said for not saying a lot."
+Paolo
