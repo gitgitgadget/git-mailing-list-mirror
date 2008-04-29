@@ -1,89 +1,89 @@
-From: "Mike Coleman" <tutufan@gmail.com>
-Subject: Re: bug: git-diff silently fails when run outside of a repository (v1.5.4.2)
-Date: Tue, 29 Apr 2008 18:03:08 -0500
-Message-ID: <3c6c07c20804291603q4fbe957eq3e3da39d4a2e29c0@mail.gmail.com>
-References: <3c6c07c20804291304n36976417wf3c2a13303aa3133@mail.gmail.com>
-	 <7vabjc5l3r.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Tue, 29 Apr 2008 16:06:35 -0700
+Message-ID: <7v63u05khw.fsf@gitster.siamese.dyndns.org>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+ <20080422095549.GB3752@alea.gnuu.de>
+ <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
+ <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
+ <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
+ <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
+ <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
+ <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
+ <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 01:03:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 30 01:07:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqyrf-0002Yz-58
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:03:59 +0200
+	id 1JqyvO-0003dC-JD
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbYD2XDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 19:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbYD2XDM
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:03:12 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:39170 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbYD2XDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 19:03:11 -0400
-Received: by wr-out-0506.google.com with SMTP id c48so254858wra.1
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 16:03:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=nYfutjPyTqit6Iyf8PwMDTepOx1gppgTGT5jJIhUijQ=;
-        b=px4Ts1JYCvE1YQpT2ri3lrUWmzGxlcHxJAPLob0VS62xnMoP/C7yR+mu598QhhWbdqpnL86tmjVdOAIYP6EHv8U83wQUjRY6Kkkn3fB7fVtQdICJY000hEEI1FJaEE0TXuuChqD08NKcWw47uZ92WYwpRAZxFgPlR4y79bOtyYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=o7QbpqkKDP0zXllhrv2P5eDgTVGqs4W7t7He0bbKhzCnyTnoVwffaZh6W7CuGQIJJCH8IHarNPB3DSt+tVUywePAzF3TPmhGKfmD6G5ZVHZD8wM4i/h8fgNnheJMNbq2fF6eKJZiYxaak/9Nx2lUq3nMCTKRDMmjlEGViI58mo8=
-Received: by 10.115.75.1 with SMTP id c1mr22245wal.84.1209510188769;
-        Tue, 29 Apr 2008 16:03:08 -0700 (PDT)
-Received: by 10.114.92.7 with HTTP; Tue, 29 Apr 2008 16:03:08 -0700 (PDT)
-In-Reply-To: <7vabjc5l3r.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755001AbYD2XGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 19:06:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755083AbYD2XGy
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:06:54 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754935AbYD2XGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 19:06:53 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DD68F2E36;
+	Tue, 29 Apr 2008 19:06:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 11B1B2E34; Tue, 29 Apr 2008 19:06:46 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness> (Johannes
+ Schindelin's message of "Tue, 29 Apr 2008 23:55:49 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F40943A2-1640-11DD-95CA-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80765>
 
-Oh, I didn't realize that.  It doesn't seem to be mentioned on the man
-page, though I can't necessarily claim that I would have seen it if it
-had.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Even so, this seems like a bug.  If I do this:
-
-    $ cd /
-    $ git-diff
-
-there is no error message and no error status.  A diagnostic would be
-very helpful.
-
-Mike
-
-
-
-On Tue, Apr 29, 2008 at 5:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Mike Coleman" <tutufan@gmail.com> writes:
+> On Tue, 29 Apr 2008, Junio C Hamano wrote:
 >
->  > At least in version 1.5.4.2, git-diff silently fails when not run
->  > inside a repository.  It should give an error diagnostic, especially
->  > since "no output" would otherwise be a meaningful response.
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > It is a simple matter of the word "acyclic" in the term "DAG".  It means 
+>> > that whenever you need to refer to a commit, it either comes before or 
+>> > after the commit you need it for, not both directions.
+>> 
+>> I fell in the same "acyclic" fallacy before I realized it was a mistake, 
+>> especially after thought about the "rewritten B needs to be used more 
+>> than twice as a merge source" issue.  That's why I earlier said the 
+>> beauty of your approach is attractive but it "unfortunately" breaks 
+>> down.
 >
->  Unfortunately this does not have enough information to go by, as unlike
->  many other programs, "git diff" contains a hack to be usable as a better
->  (for certain definition of "better" I may not necessarily agree with) GNU
->  diff replacement when run outside a repository.
->
->  i.e.
->
->         mkdir -p /var/tmp/junk
->         cd /var/tmp/junk
->         rm -fr .git ;# make sure it is not a repository
->         echo >a hello
->         echo >b world
->         git diff --color a b
->
->  is supposed to work.
->
+> I do not understand.  The topological order assures that you have 
+> rewritten every commit that needs to be rewritten before rewriting the 
+> current commit.
+
+Perhaps it would help to go back to the message J6t incompletely quoted,
+and try the example with the parent order of Y swapped (i.e. B == Y^2, C
+== Y^1)
+
+Recreating X and Y both need to refer to the rewritten B as the parameter
+to "merge" insn.  You create X first then you cannot refer to B anymore to
+recreate Y.  The other way around you cannot name B to recreate X.
