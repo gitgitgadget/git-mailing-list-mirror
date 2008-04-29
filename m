@@ -1,105 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: point git-prune users to git-gc
-Date: Tue, 29 Apr 2008 19:19:17 -0400
-Message-ID: <20080429231917.GB22646@sigill.intra.peff.net>
-References: <32541b130804230841h32c07f3arc94cccfaf0b156a3@mail.gmail.com> <7vve28sdys.fsf@gitster.siamese.dyndns.org> <20080423221316.GE30057@sigill.intra.peff.net> <20080424012836.GA30812@sigill.intra.peff.net> <32541b130804240843k471ecfeteb1008c44a56808b@mail.gmail.com> <20080424161407.GA23737@sigill.intra.peff.net> <32541b130804240959y3b05d4b5u67ac7a7c14bf187e@mail.gmail.com> <20080429204514.GA21029@sigill.intra.peff.net> <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Wed, 30 Apr 2008 00:31:17 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de> <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+ <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness> <7v63u05khw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 01:20:09 2008
+X-From: git-owner@vger.kernel.org Wed Apr 30 01:32:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jqz7H-00078J-PS
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:20:08 +0200
+	id 1JqzIl-0001q6-G3
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 01:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753AbYD2XTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 19:19:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754751AbYD2XTS
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:19:18 -0400
-Received: from peff.net ([208.65.91.99]:1560 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754644AbYD2XTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 19:19:18 -0400
-Received: (qmail 23817 invoked by uid 111); 29 Apr 2008 23:19:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Apr 2008 19:19:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2008 19:19:17 -0400
-Content-Disposition: inline
-In-Reply-To: <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
+	id S1755317AbYD2XbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 19:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755059AbYD2XbK
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 19:31:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32895 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754094AbYD2XbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 19:31:09 -0400
+Received: (qmail invoked by alias); 29 Apr 2008 23:31:05 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp017) with SMTP; 30 Apr 2008 01:31:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kamk7rEEkUk9pSww8+2fqJQd+CEpADfEdWiwjIo
+	2TPiWcTnDQIj2L
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7v63u05khw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80770>
 
-On Tue, Apr 29, 2008 at 03:05:03PM -0700, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
+On Tue, 29 Apr 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Yes, I don't think there is any reason for most people to use git-prune
-> > at all, unless they are trying specifically to prune and don't want the
-> > other gc effects to happen.
+> > On Tue, 29 Apr 2008, Junio C Hamano wrote:
 > >
-> > Junio, please correct me if I'm wrong there.
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> 
+> >> > It is a simple matter of the word "acyclic" in the term "DAG".  It 
+> >> > means that whenever you need to refer to a commit, it either comes 
+> >> > before or after the commit you need it for, not both directions.
+> >> 
+> >> I fell in the same "acyclic" fallacy before I realized it was a 
+> >> mistake, especially after thought about the "rewritten B needs to be 
+> >> used more than twice as a merge source" issue.  That's why I earlier 
+> >> said the beauty of your approach is attractive but it "unfortunately" 
+> >> breaks down.
+> >
+> > I do not understand.  The topological order assures that you have 
+> > rewritten every commit that needs to be rewritten before rewriting the 
+> > current commit.
 > 
-> Well, this is a hard statement to make corrections to.  If A is defined to
-> be a subset of B, and A is generally useful, the only reason to do B is
-> when you want the effect of B without anything else.  So your statement
-> cannot be incorrect.
-
-Heh. Sorry, I got very sloppy with my wording...there was an
-11-month-old child yelling in my ear. :)
-
-My meaning was: "people who want to clean up their repo but don't know
-the right command stumble upon git-prune. They probably should be using
-git-gc instead. People who know that they want to prune presumably know
-enough to ignore the warning note."
-
-> However, in order to help people decide when to run B (or, if there ever
-> be a case where they might want to), there needs a discussion what other
-> things that _might_ be unwanted A does in addition to B.
-
-Fair enough.
-
-> > --- a/Documentation/git-prune.txt
-> > +++ b/Documentation/git-prune.txt
-> > @@ -13,6 +13,9 @@ SYNOPSIS
-> >  DESCRIPTION
-> >  -----------
-> >  
-> > +NOTE: In most cases, users should run linkgit:git-gc[1], which calls
-> > +git-prune. See the section "NOTES", below.
-> > +
+> Perhaps it would help to go back to the message J6t incompletely quoted, 
+> and try the example with the parent order of Y swapped (i.e. B == Y^2, C 
+> == Y^1)
 > 
-> I think this note upfront is not helping readers very much (this is
-> git-prune documentation after all -- they are interested in the command
-> and not gc), but ...
+> Recreating X and Y both need to refer to the rewritten B as the 
+> parameter to "merge" insn.  You create X first then you cannot refer to 
+> B anymore to recreate Y.  The other way around you cannot name B to 
+> recreate X.
 
-I'm not so sure that they are interested in the prune command. At first
-I started with just a note near the end, but the point of this is
-specifically to deal with users who "stumble" upon prune, either from
-reading the command list (i.e., trying to match a command to the
-objective they want to perform) or from pre-gc tutorials or emails which
-mention it.
+If you refer to "B" as the "short name of the original commit which refers 
+to the rewritten commit as soon as B was rewritten", then I really do not 
+see the problem.
 
-> > +Notes
-> > +-----
-> > +
-> > +In most cases, users will not need to call git-prune directly, but
-> > +should instead call linkgit:git-gc[1], which handles pruning along with
-> > +many other housekeeping tasks.
-> 
-> ... this paragraph should be made a bit fatter by mentioning what "other
-> housekeeping tasks" are.
+Every commit has 0..n parents.  These are properly identified before 
+rebasing.  Some of them have to be rewritten, because they are rebased.
 
-OK, I was trying to imply "go look at git-gc for those tasks" so they
-didn't have to be repeated. Would you prefer it be spelled out
-explicitly here, or is a more firm pointer OK?
+So if you order the commits topologically, so that ancestors come first, 
+you will have to jump around a bit with the "reset" command, but you can 
+basically make sure that all parents that needed rewriting were 
+rewritten already before rewriting that commit.
 
--Peff
+Now, if you want to split a commit, you may want to refer to the original 
+commit instead of an already rewritten commit, but I think that this 
+occasion is rare enough, that we can ask the user to tag that commit, and 
+refer to that commit by its tag in the todo list.
+
+Or you write down the original's long name and use that one.
+
+But if you use the _default_ todo list, i.e. you want to rebase preserving 
+merges without interfering manually with the process, what I said about 
+the topological ordering still holds true.
+
+At no point will you need to refer _both_ to the original _and_ to the 
+rewritten commit name.
+
+Come to think of it, I cannot think of a (default) case where the 
+_original_ name of a to-be-rewritten commit has to be referred to, except 
+for the "pick" command.
+
+Ciao,
+Dscho
