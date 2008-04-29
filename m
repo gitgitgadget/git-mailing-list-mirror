@@ -1,93 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-daemon: fix for rotating logs
-Date: Tue, 29 Apr 2008 16:16:03 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804291615000.27457@eeepc-johanness>
-References: <alpine.DEB.1.00.0804281523040.5399@eeepc-johanness> <7vtzhmaqpd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804281908290.19187@eeepc-johanness> <20080428182114.GF26880@genesis.frugalware.org> <20080428182917.GA4794@glandium.org>
- <4816BD77.1060709@op5.se> <alpine.DEB.1.00.0804291153230.27457@eeepc-johanness> <4816FFEB.8050308@op5.se>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [regression?] "git status -a" reports modified for empty submodule directory
+Date: Tue, 29 Apr 2008 23:31:59 +0800
+Message-ID: <46dff0320804290831u7ef1a78ag2988d5d12f782bdb@mail.gmail.com>
+References: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Apr 29 17:17:39 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 17:33:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqrZV-00034o-Us
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 17:16:46 +0200
+	id 1JqrpD-0000pw-41
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 17:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932413AbYD2PPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 11:15:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbYD2PPy
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 11:15:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35297 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932401AbYD2PPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 11:15:51 -0400
-Received: (qmail invoked by alias); 29 Apr 2008 15:15:49 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp036) with SMTP; 29 Apr 2008 17:15:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Puu5KiH/PTsnIrg4Okaa+bsTTpVgkcoBFgpKYCK
-	7JN7zdgQUcFwwZ
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <4816FFEB.8050308@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1759664AbYD2PcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 11:32:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761128AbYD2PcF
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 11:32:05 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:19959 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758727AbYD2PcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 11:32:03 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so54888wxd.4
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 08:31:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=22+TuhbsppoltJzCvy1egPtWsUZD2GOJSzts2Ctj/xg=;
+        b=BgIM76wCQo+1q5goioglG7FQFpuVhY5NEpJoBP8dKPR9l7LiH4k/OjHBbJEubg3xrtOp/q93F/3MqNF9o6ul312bcgodiHvzjon4J/+jLFNKHiJzV8Osb2V+sfMcO57DuynNCdBiWnkBMcZhMqKwFc+2Ep+R5E7su31Vlki811M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=se5bMuRVOoWlvFd4YofTpkPVK95mWQfItBVbz8klYAC63RNIHnWFCPYgDSueCHz+apLoIdw2pbhkdnkUkUgtpbJIQrs9hcIOeIqIMMolK/gHZTsUE0Ds6QVRfDqzJFJfTUp5XOwjxdHzCQ1SVi7G416WiHH/EaUc4CV+TnKukcQ=
+Received: by 10.100.133.1 with SMTP id g1mr1736246and.88.1209483119877;
+        Tue, 29 Apr 2008 08:31:59 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Tue, 29 Apr 2008 08:31:59 -0700 (PDT)
+In-Reply-To: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80690>
 
-Hi,
+On Tue, Apr 22, 2008 at 7:01 PM, Ping Yin <pkufranky@gmail.com> wrote:
+> # create a super project super
+>  $ mkdir super && cd super && git init
+>  $ touch foo && git add foo && git commit -m "add foo"
+>
+>  # create a sub project sub
+>  $ mkdir sub && cd sub && git init
+>  $ touch bar && git add bar && git commit -m "add bar"
+>
+>  # add sub project to super project
+>  $ cd ..
+>  $ git add sub && git commit -m 'add sub'
+>
+>  # remote contents of subproject
+>  $ rm -rf sub/* sub/.git
+>
+>  # git status -a regression
+>  $ git status
+>  # On branch master
+>  nothing to commit (working directory clean)
+>  $ git status -a
+>  # On branch master
+>  # Changes to be committed:
+>  #   (use "git reset HEAD <file>..." to unstage)
+>  #
+>  #       deleted:    sub
+>  #
+>
 
-On Tue, 29 Apr 2008, Andreas Ericsson wrote:
+Another regression following
 
-> Johannes Schindelin wrote:
-> 
-> > On Tue, 29 Apr 2008, Andreas Ericsson wrote:
-> > 
-> > > Mike Hommey wrote:
-> > > > On Mon, Apr 28, 2008 at 08:21:14PM +0200, Miklos Vajna wrote:
-> > > > > On Mon, Apr 28, 2008 at 07:08:50PM +0100, Johannes Schindelin 
-> > > > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > > > > > With rotating logs, there is a problem when the syslog is 
-> > > > > > > > opened only once (in the beginning).  So open the log 
-> > > > > > > > everytime we write something, and close it directly after 
-> > > > > > > > writing.
-> > > > > > > Gaah, this is ugly.
-> > > > > > >
-> > > > > > > Is this something all the daemons need to deal with?
-> > > > > > I have no idea, but it seems to fix a real issue.
-> > > > > logrotate supports sending a signal (typically SIGHUP) to the 
-> > > > > process after it rotated the log. Couldn't we just re-open the 
-> > > > > log on SIGHUP?
-> > > > Isn't the problem that git-daemon loses its connection to the 
-> > > > syslog daemon when logrotate sighups syslog?
-> > > >
-> > > It really shouldn't. The connection to the syslog daemon is just a 
-> > > unix socket (/dev/log) which is used to send whatever passes for UDP 
-> > > packets on unix domain sockets. Since the socket isn't re-created by 
-> > > syslogd (well, a sane syslogd anyways), but rather just open()'ed 
-> > > for reading, no program should ever need to reconnect.
-> > 
-> > What can I say?  The problem just went away with my workaround.  Is it 
-> > possible that I have to catch SIGHUP, and closelog() && openlog()?  
-> > But why do other daemons seem to not have that problem at all?
-> > 
-> 
-> Other daemons don't get SIGHUP'ed when logs are rotated. I think 
-> something else is going on there.
-> 
-> What syslogd are you using? Perhaps it insists on re-creating the 
-> socket. That might cause the behaviour you're seeing, but then you 
-> should probably see it in a ton of other daemons as well.
+In the super project super with empty submodule directory sub
+$ git diff
+diff --git a/sub b/sub
+deleted file mode 160000
+index f2c0d45..0000000
+--- a/sub
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit f2c0d4509a3178c...
 
-This is sysklogd from Ubuntu, compiled for amd64.  The timestamp on 
-/dev/log is older than a month.
 
-Thanks,
-Dscho
+-- 
+Ping Yin
