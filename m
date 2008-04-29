@@ -1,69 +1,52 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 0/7] limit the usage of the default remote "origin" to
-	the minimum
-Date: Tue, 29 Apr 2008 23:42:10 +0200
-Message-ID: <20080429214210.GB2413@steel.home>
-References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <20080429193536.GA19340@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Fredrik Skolmli <fredrik@frsk.net>
+Subject: Re: About git and the use of SHA-1
+Date: Tue, 29 Apr 2008 23:52:01 +0200
+Message-ID: <20080429215201.GB14547@frsk.net>
+References: <alpine.LFD.1.10.0804291132060.23581@xanadu.home> <7f9d599f0804290859y6a579302m5db9f7f827b320a4@mail.gmail.com> <alpine.LFD.1.10.0804291232130.23581@xanadu.home> <7f9d599f0804291048n2c706f3amdf159ffe86bdbc8@mail.gmail.com> <alpine.LFD.1.10.0804291352120.23581@xanadu.home> <7f9d599f0804291102j4a30c344h18d12d03a6d5953b@mail.gmail.com> <alpine.LNX.1.00.0804291410340.19665@iabervon.org> <7f9d599f0804291331v2f44bee1y29c1580d68a3107a@mail.gmail.com> <20080429205031.GA14547@frsk.net> <7f9d599f0804291439m6f5dd242jb31b84e1a0205cdc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	spearce@spearce.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	srb@cuci.nl
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:43:09 2008
+Cc: git@vger.kernel.org
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:53:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxbN-0003za-Cw
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:43:05 +0200
+	id 1JqxlC-0007TM-ES
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752799AbYD2VmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYD2VmO
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:42:14 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:49229 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752532AbYD2VmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:42:13 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+D1WRsg==
-Received: from tigra.home (Fabc8.f.strato-dslnet.de [195.4.171.200])
-	by post.webmailer.de (fruni mo22) (RZmta 16.27)
-	with ESMTP id R062e6k3TK1SsR ; Tue, 29 Apr 2008 23:42:11 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id B85B9277BD;
-	Tue, 29 Apr 2008 23:42:10 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 8680A56D28; Tue, 29 Apr 2008 23:42:10 +0200 (CEST)
+	id S1754416AbYD2VwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755709AbYD2VwF
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:52:05 -0400
+Received: from cassarossa.samfundet.no ([129.241.93.19]:45018 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753128AbYD2VwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:52:03 -0400
+Received: from asterix.samfundet.no ([2001:700:300:1800::f] ident=postfix)
+	by cassarossa.samfundet.no with esmtp (Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1Jqxk1-0004oM-Nx; Tue, 29 Apr 2008 23:52:02 +0200
+Received: by asterix.samfundet.no (Postfix, from userid 1000)
+	id 8D103A6035A; Tue, 29 Apr 2008 23:52:01 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080429193536.GA19340@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7f9d599f0804291439m6f5dd242jb31b84e1a0205cdc@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80749>
 
-Jeff King, Tue, Apr 29, 2008 21:35:36 +0200:
-> On Mon, Apr 28, 2008 at 05:23:53PM +0200, Paolo Bonzini wrote:
-> > This patch may cause incompatibilities to be warned about in
-> > the release notes.  Luckily, these incompatibilities only affect
-> > users that already know their way in .git/config, because no porcelain
-> > command creates push refspecs.
-> 
-> I think you understand the compatibility issues, but I think it needs to
-> be not "warned in the release notes" but "warned in the release notes,
-> followed by a period of adjustment, and then the change". And maybe it
-> would even make sense to wait for a larger-number version change (like
-> 1.6.0).
+On Tue, Apr 29, 2008 at 02:39:46PM -0700, Geoffrey Irving wrote:
 
-But please, make this "period of adjustment" actually visible to the
-USER WHO DOES NOT READ RELEASE NOTES. Say loud and clear when you do
-something different. And better yet - do not do anything unexpected
-just yet. Describe it, print instructions about changing
-configuration. So that next less-minor-release with changed behavior
-(but the warning still in place) is less of a surprise.
+> This is an example of a hash collision, not conditional rendering
+> based on the current date.  I.e., you didn't actually read my email or
+> the email I was replying to. :)
+
+Ah, you're right. Didn't notice the part about dates. Sorry ;-)
+
+-- 
+Regards,
+Fredrik Skolmli
