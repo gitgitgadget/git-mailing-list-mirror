@@ -1,119 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [updated PATCH] Same default as cvsimport when using --use-log-author
-Date: Mon, 28 Apr 2008 23:18:23 -0700
-Message-ID: <20080429061823.GE24171@muzzle>
-References: <20080427173246.10023.5687.stgit@aristoteles.cuci.nl> <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [updated PATCH] Protect current tags, import tags into remote
+ tree
+Date: Mon, 28 Apr 2008 23:18:33 -0700
+Message-ID: <7vbq3t89qe.fsf@gitster.siamese.dyndns.org>
+References: <20080427173246.10023.94820.stgit@aristoteles.cuci.nl>
+ <7vmynec60v.fsf@gitster.siamese.dyndns.org> <20080428184859.GA21950@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 08:19:52 2008
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Tue Apr 29 08:19:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqjBr-0002zJ-IS
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 08:19:47 +0200
+	id 1JqjBs-0002zJ-VF
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 08:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541AbYD2GSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 02:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbYD2GSy
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 02:18:54 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53519 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754664AbYD2GSw (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754773AbYD2GS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 02:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbYD2GS5
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 02:18:57 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45429 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753748AbYD2GSw (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 29 Apr 2008 02:18:52 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 998162DC08B;
-	Mon, 28 Apr 2008 23:18:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vbq3vf2k4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A48793962;
+	Tue, 29 Apr 2008 02:18:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id EDE2638FE; Tue, 29 Apr 2008 02:18:40 -0400 (EDT)
+In-Reply-To: <20080428184859.GA21950@cuci.nl> (Stephen R. van den Berg's
+ message of "Mon, 28 Apr 2008 20:48:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80652>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Stephen R. van den Berg" <srb@cuci.nl> writes:
-> 
-> > git-svn supports an experimental option --use-log-author which currently
-> > results in:
-> >
-> > Author: foobaruser <unknown>
-> 
-> I have a question about this.  Is the "<unknown> coming from...
-> 
-> > This patches harmonises the result with cvsimport, and makes
-> > git-svn --use-log-author produce:
-> >
-> > Author: foobaruser <foobaruser>
-> > ...
-> > diff --git a/git-svn.perl b/git-svn.perl
-> > index b151049..846e739 100755
-> > --- a/git-svn.perl
-> > +++ b/git-svn.perl
-> > @@ -2434,6 +2434,9 @@ sub make_log_entry {
-> >  		} else {
-> >  			($name, $email) = ($name_field, 'unknown');
-> >  		}
-> 
-> ... this 'unknown' we see here?
-> 
-> > +	        if (!defined $email) {
-> > +		    $email = $name;
-> > +	        }
-> >  	}
-> 
-> I would think not -- if that is the case, the codepath you added as a fix
-> would not trigger.  Which means in some other cases, the 'unknown' we see
-> above in the context also still happens.  Is it a good thing?  Maybe we
-> would also want to make it consistently do "somebody <somebody>" instead,
-> by doing...
-> 
-> 	} else {
-> 		$name = $name_field;
-> 	}
->         if (!defined $email) {
-> 	    $email = $name;
->         }
-> 
+"Stephen R. van den Berg" <srb@cuci.nl> writes:
 
-I don't think Stephen's patch ever gets triggered, either.
+> Rerunning cvsimport on a regular basis causes the import to (re)create
+> all the tags from CVS again; if this is done in your regular tags space,
+> this is a mess at best, or overwrites whatever renamed tags you
+> carefully created which happen to match with old CVS tagnames.
+> ...
+> - git-svn and git-cvsimport cross the boundary to a different VCS and
+>   therefore can/should use an extra barrier before (auto)converting to
+>   git native tags (and branches).
 
-This section of code was done by Andy, so I can't tell his motivations
-for using 'unknown' the way he did.
+That sounds like a sound argument, and perhaps people may wish we did so
+from the day one.  Alas, we didn't.
 
-$email does appear to get set correctly for the first two elsifs cases
-here in the existing code:
+So the course of action would be to do these over a long period of time.
 
-		if (!defined $name_field) {
-			#
-		} elsif ($name_field =~ /(.*?)\s+<(.*)>/) {
-			($name, $email) = ($1, $2);
-		} elsif ($name_field =~ /(.*)@/) {
-			($name, $email) = ($1, $name_field);
-		} else {
-			($name, $email) = ($name_field, $name_field);
+ - introduce this as an option now;
 
-So I propose the following one-line change instead of Stephen's:
+ - give another option to explicitly ask for the current behaviour;
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b151049..301a5b4 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2432,7 +2432,7 @@ sub make_log_entry {
- 		} elsif ($name_field =~ /(.*)@/) {
- 			($name, $email) = ($1, $name_field);
- 		} else {
--			($name, $email) = ($name_field, 'unknown');
-+			($name, $email) = ($name_field, $name_field);
- 		}
- 	}
- 	if (defined $headrev && $self->use_svm_props) {
+ - perhaps give an advance warning that this optional behaviour will
+   become the default; and
 
--- 
-Eric Wong
+ - finally swap the default behaviour.
+
+if people agree with this change, that is.
