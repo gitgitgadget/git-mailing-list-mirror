@@ -1,71 +1,74 @@
-From: Tom Widmer <tom.widmer@googlemail.com>
-Subject: Re: About git and the use of SHA-1
-Date: Tue, 29 Apr 2008 18:08:28 +0100
-Message-ID: <fv7kmc$2br$1@ger.gmane.org>
-References: <200804281829.11866.henrikau@orakel.ntnu.no>
+From: Lars Alexander Noschinski <Lars.Noschinski@rwth-aachen.de>
+Subject: cvsexportcommit and cvsimport's -k option
+Date: Tue, 29 Apr 2008 19:15:06 +0200
+Message-ID: <f6c6e2a5cc39.481773ba@rwth-aachen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 29 19:10:24 2008
+X-From: git-owner@vger.kernel.org Tue Apr 29 19:16:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqtKe-00044b-Mk
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 19:09:33 +0200
+	id 1JqtQt-0006k7-LT
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 19:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759689AbYD2RIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 13:08:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759670AbYD2RIs
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 13:08:48 -0400
-Received: from main.gmane.org ([80.91.229.2]:37987 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752814AbYD2RIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 13:08:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JqtJs-00026I-AS
-	for git@vger.kernel.org; Tue, 29 Apr 2008 17:08:44 +0000
-Received: from 82.109.240.196 ([82.109.240.196])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 17:08:44 +0000
-Received: from tom.widmer by 82.109.240.196 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 17:08:44 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 82.109.240.196
-User-Agent: Thunderbird 2.0.0.12 (Windows/20080213)
-In-Reply-To: <200804281829.11866.henrikau@orakel.ntnu.no>
+	id S1751035AbYD2RPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 13:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbYD2RPJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 13:15:09 -0400
+Received: from mta-2.ms.rz.RWTH-Aachen.DE ([134.130.7.73]:35969 "EHLO
+	mta-2.ms.rz.rwth-aachen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751035AbYD2RPI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Apr 2008 13:15:08 -0400
+Received: from ironport-out-2.rz.rwth-aachen.de ([134.130.3.59])
+ by mta-2.ms.rz.RWTH-Aachen.de
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0K0300GOIJX6PU70@mta-2.ms.rz.RWTH-Aachen.de> for
+ git@vger.kernel.org; Tue, 29 Apr 2008 19:15:06 +0200 (CEST)
+Received: from smarthost-1.ms.rz.rwth-aachen.de (HELO smarthost.rwth-aachen.de)
+ ([134.130.7.89]) by ironport-in-2.rz.rwth-aachen.de with ESMTP; Tue,
+ 29 Apr 2008 19:15:06 +0200
+Received: from msg-int.RWTH-Aachen.DE
+ (store-2.ms.rz.RWTH-Aachen.DE [134.130.7.105])	by smarthost.rwth-aachen.de
+ (8.13.8+Sun/8.13.8/1) with ESMTP id m3THF60b005074	for <git@vger.kernel.org>;
+ Tue, 29 Apr 2008 19:15:06 +0200 (CEST)
+Received: from [134.130.7.66] (Forwarded-For: [137.226.194.26])
+ by msg-store-b.ms.rz.RWTH-Aachen.DE (mshttpd); Tue, 29 Apr 2008 19:15:06 +0200
+X-Mailer: Sun Java(tm) System Messenger Express 6.2-8.04 (built Feb 28 2007)
+Content-language: de
+Content-disposition: inline
+X-Accept-Language: de
+X-IronPort-AV: E=Sophos;i="4.25,723,1199660400";   d="scan'208";a="41031861"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80706>
 
-Henrik Austad wrote:
-> Hi list!
-> 
-> As far as I have gathered, the SHA-1-sum is used as a identifier for commits, 
-> and that is the primary reason for using sha1.  However, several places 
-> (including the google tech-talk featuring Linus himself) states that the id's 
-> are cryptographically secure.
-> 
-> As discussed in [1], SHA-1 is not as secure as it once was (and this was in 
-> 2005), and I'm wondering - are there any plans for migrating to another 
-> hash-algorithm? I.e. SHA-2, whirlpool..
-> 
-> [1] http://www.schneier.com/blog/archives/2005/02/cryptanalysis_o.html
+[Please CC me on answers, as I'm not subscribed.]
 
-Why not wait until the results of:
-http://www.csrc.nist.gov/groups/ST/hash/index.html
-are available. That will surely be soon enough (I think 2012 is the
-expected finish date), and should prevent having to switch again in the
-future.
+Hello!
 
-The necessity or otherwise of improving the hashing will be clearer by
-then too.
+Im using git to work on an CVS project. My work cycle is as follows:
 
-Tom
+... hack away ...
+git-cvsimport -i -r cvs -kk -v -d $CVSREPOS
+git-rebase cvs # If work was done in the meantime
+git-cvsexportcommit -cpuv $COMMIT # Multiple times, if necessary
+git-cvsimport -i -r cvs -kk -v -d $CVSREPOS
+git-checkout -b master cvs # commit ids are changed now
+
+As far as I am concerned, this works fairly well, accept when for any reason
+a line containing a CVS keyword (e.g. $Id$) is contained in a changeset. In
+this case, patching fails, and I have to investigate why it fails, eventually
+just copying the old version from the cvs repository.
+
+Would it be possible to add an option to cvsexportcommit to detect such
+killed keywords and ignore them?
+
+
+Greetings,
+   Lars.
