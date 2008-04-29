@@ -1,87 +1,106 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
-Date: Tue, 29 Apr 2008 23:15:02 +0200
-Message-ID: <48178FD6.90104@gnu.org>
-References: <cover.1209391614.git.bonzini@gnu.org> <55a4068681841e6c3579f4183b469fc7aa4de266.1209391615.git.bonzini@gnu.org> <20080428181012.GB6710@steel.home> <48161544.90500@gnu.org> <20080428213339.GC10600@steel.home> <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Tue, 29 Apr 2008 14:16:48 -0700
+Message-ID: <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-1-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-2-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+ <20080422095549.GB3752@alea.gnuu.de>
+ <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
+ <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
+ <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
+ <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
+ <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	spearce@spearce.org, gitster@pobox.com, peff@peff.net,
-	johannes.schindelin@gmx.de, srb@cuci.nl
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:16:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:18:14 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxBE-0002Fi-PH
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:16:05 +0200
+	id 1JqxCz-00031M-Hf
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753183AbYD2VPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYD2VPQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:15:16 -0400
-Received: from hu-out-0506.google.com ([72.14.214.226]:7837 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214AbYD2VPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:15:15 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so179043hue.21
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=gNcnUPnvidize/35fZHaraOr3cY+DgxWAN5ToyK6wXA=;
-        b=eXCK/IqYzbI3ptSUi2ZkwY3tJwmdQtv4TzmPW/OZ/FHRwAnzayCiEDSrQa3Mj5yEnMb+vtN4VmTf7a7K1a9lkaBu3pgcc3/ggcXTo8lupdljiqQVMvuw0qvJ4f57U62bM3Z1dO1Gr39ecNvU2aeEJK1JG2Pc7iHrggSZ/q3Sd1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=vhObnoyXY+86IkP9lur1pa+rFOJmVIGiXExTEMzboyXzlerlQQNoqIFFFedOL0K8forYLgN+i7xTu/H0VchfgC49oJSYTiwPUH58T6ALoK7stGjfGDcGIlmCkwhTOdeuKEJcJ3VWcS4PownFjBIOEP7/E1h3TfipBBexoiKTfao=
-Received: by 10.86.79.19 with SMTP id c19mr383969fgb.19.1209503711211;
-        Tue, 29 Apr 2008 14:15:11 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id e11sm44360fga.1.2008.04.29.14.15.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Apr 2008 14:15:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <20080429204417.GC6301@steel.home>
-X-Enigmail-Version: 0.95.6
+	id S1754648AbYD2VRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:17:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754027AbYD2VRD
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:17:03 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47249 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754021AbYD2VRB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:17:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D58B324C;
+	Tue, 29 Apr 2008 17:16:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 2664C3244; Tue, 29 Apr 2008 17:16:53 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> (Johannes
+ Schindelin's message of "Tue, 29 Apr 2008 11:52:32 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 99D54854-1631-11DD-B74D-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80736>
 
->> 2) the patch does not touch refs/heads/* unless you are tweaking your  
->> configuration (and quite heavily so).  IMHO that's using enough rope  
->> that you really ought to know about the reflog and... look for backwards  
->> incompatible changes in the release notes!
-> 
-> Since when do you depend on people reading release notes and
-> immediately and correctly changing their behaviour?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I don't, that's why I never expected all patches to go in 1.5.6.
+> On Tue, 29 Apr 2008, Johannes Sixt wrote:
+>
+>> Junio C Hamano schrieb:
+>> > This is just a minor syntax issue and I am not sure why we got into 
+>> > this misunderstanding, but let's try again.  Suppose you want to 
+>> > recreate this history on top of a different O'.  For merges, upper 
+>> > parents are earlier ones:
+>> > 
+>> >      A         reset O'
+>> >     / \        pick  B
+>> >    /   X       reset O'
+>> >   /   / \      pick A
+>> >  O---B   Z     merge B -- recreate X
+>> >   \   \ /      reset O'
+>> >    \   Y       pick C
+>> >     \ /        merge B? -- recreate Y
+>> >      C         reset B -- go back to recreated X
+>> >                merge B? -- recreate Z
+>> > 
+>> > The above sequence does not work.
+>> 
+>> Because it is hand-crafted. I'd expect rebase to suggest a series that 
+>> works as long as the user doesn't modify it. Like this:
+>> 
+>> 	reset O'
+>> 	pick C
+>> 	reset O'
+>> 	pick B
+>> 	merge C -- recreate Y
+>> 	reset O'
+>> 	pick A
+>> 	merge B -- recreate X
+>> 	merge Y -- recreate Z
+>> 
+>> Here all commit names are clearly the original in the first insn that 
+>> references it, and the rewritten version in later references. No marks 
+>> needed.
+>> 
+>> If the user modifies the insns, he better knows what he's doing, in 
+>> particular, when it's necessary to rebuild such complex histories.
+>
+> I fully agree.  rebase -i is _not_ about the same goal as git-sequencer.  
+> rebase -i is about user interaction.  sequencer is about having a common 
+> plumbing for the different porcelains.
 
-I sent them together to provide a single coherent series and an aim for 
-a transition plan -- which I'd prefer to work out with the git 
-community, who knows the release mechanics much better than I do.  Jeff 
-King's reply to the cover letter is a start towards that; your e-mails 
-are also a start towards that, even though I don't think your transition 
-plan is feasible (also because it would break "git remote update" 
-completely).
-
->> 4) one man's stupidity is another man's... [fill in]  In particular, did  
->> you understand the rationale for this change?  Do you have any  
->> alternative ideas?
-> 
-> Do you have a convincing one by now?
-
-See the (long) cover letter.
-
-> And an acceptable transition plan?
-> ("Read RelNotes!", yes, you mentioned. Another one?)
-
-See above.
-
-Paolo
+The problem is that both of you stopped reading after the part you quoted.
