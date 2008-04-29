@@ -1,89 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] limit the usage of the default remote "origin" to
- the minimum
-Date: Tue, 29 Apr 2008 14:56:24 -0700
-Message-ID: <7vwsmg5nqv.fsf@gitster.siamese.dyndns.org>
-References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org>
- <20080429193536.GA19340@sigill.intra.peff.net>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH] Allow local branching to set up rebase by default.
+Date: Tue, 29 Apr 2008 17:56:45 -0400
+Message-ID: <76718490804291456r7d1ef385q4e51a5705fdd26ef@mail.gmail.com>
+References: <1209502182-39800-1-git-send-email-dustin@spy.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	spearce@spearce.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	srb@cuci.nl
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:57:30 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Dustin Sallings" <dustin@spy.net>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:57:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JqxpH-0000Tf-Kb
-	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:57:28 +0200
+	id 1JqxpU-0000XS-D6
+	for gcvg-git-2@gmane.org; Tue, 29 Apr 2008 23:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbYD2V4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 17:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYD2V4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:56:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54843 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753021AbYD2V4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 17:56:36 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 49C133827;
-	Tue, 29 Apr 2008 17:56:35 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 5D9EA3823; Tue, 29 Apr 2008 17:56:26 -0400 (EDT)
-In-Reply-To: <20080429193536.GA19340@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 29 Apr 2008 15:35:36 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 22BE502A-1637-11DD-BEAC-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1753105AbYD2V4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 17:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753242AbYD2V4r
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 17:56:47 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:11748 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753053AbYD2V4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 17:56:46 -0400
+Received: by wa-out-1112.google.com with SMTP id m16so283815waf.23
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 14:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=pmZVQaxQo1embB6YDdIm5gAoZLv8snD/BBWQi1ytECc=;
+        b=C3Uyfc9/0WLoe+Meooh8EHMtNOjEZoorL546xH54zhJQZz6cElqoBO5v6K3EoPG/R/vkmrQ9pF8bPg0ZeJykq9x/JDMnEx3KD4ydLVRbN9YC5nBoJ9oajXBr3DHgkNJRO/K3KP7jVTKpwjHo1s/xHPtdEH2JRM2Qc6y/mDbiRNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Td4qfwZl/cbOOSgJVuZMrgMxQLhxR/pqjjJT4+MgcUamCq7q97QseMuD6MhRe2lWLiYJtimQ4SflVnVvoujiQrlPQ5tOnzU2ER+zyXrPiCJgKjQv7eHCLxoQHpPtu+kvqwRAFw1Qm6TNj0OYIAvLDDN+bADHCWhlrOMv58lTAPM=
+Received: by 10.114.166.1 with SMTP id o1mr8586080wae.5.1209506205558;
+        Tue, 29 Apr 2008 14:56:45 -0700 (PDT)
+Received: by 10.114.13.5 with HTTP; Tue, 29 Apr 2008 14:56:45 -0700 (PDT)
+In-Reply-To: <1209502182-39800-1-git-send-email-dustin@spy.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80752>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Apr 29, 2008 at 4:49 PM, Dustin Sallings <dustin@spy.net> wrote:
+> Change cd67e4d4 introduced a new configuration parameter that told
+>  pull to automatically perform a rebase instead of a merge.  I use this
+>  feature quite a bit in topic branches and would like it to be the
+>  default behavior for a topic branch.
+>
+>  If the parameter branch.autosetuprebase applies for a branch that's
+>  being created, that branch will have branch.<name>.rebase set to true.
+>
+>  See the documentation for how this may be applied.
+>
 
-> ... The principle of "remove defaults from code, and
-> put them into the automatically generated config file" makes sense to
-> me. It gives users an easy place to look to understand and change such
-> behavior. So even without the rest of the patches, I think this is an
-> improvement.
+I've had this change parked in one of my branches forever. Consider
+this a UI suggestion to go with the new config option?
 
-If the removal of defaults do not break expectations of users of an
-existing repository, I'd agree.  Is it the case, or the lack of default
-that is supposed to be there now suddenly makes the tool do unexpected
-things?
+    [WIP] new --rebase option to set branch.*.rebase for new branches
 
->> Patch 4 is a reworking of my previous patch.  Instead of having "git
->> push" push to "all mirrors plus the magic origin branch", it will
->> push to "all remotes having a push refspec".  In the future, this
->> will always include the origin branch because of patch 2, while
->> right now the origin branch is still used if no remote has a
->> push refspec (for backwards compatibility -- more discussion in the
->> patch log message).
+    Add a --rebase option to git-branch and git-checkout. If given, it
+    implies --track but additionally sets branch.<newbranch>.rebase to true.
 
-Didn't we already have this discussion and don't we already have a way to
-define a remote that you can use to push to more than one places?
-
->> This patch may cause incompatibilities to be warned about in
->> the release notes.  Luckily, these incompatibilities only affect
->> users that already know their way in .git/config, because no porcelain
->> command creates push refspecs.
-
-"Knowledgeable people all _can_ work around the change" does not change
-the fact that you are forcing existing users unnecessary change to their
-configurations.  Why does this patch need to break existing users setups?
-
-> ... I
-> assume people still with ancient .git/remotes files? Are those actually
-> deprecated?
-
-No.
-
-Neither .git/branches.  When you interact with hundreds of remote
-repositories, one interesting branch per each, like akpm does, the format
-of one-file-per-remote is far easier and simpler to work with.
+    [NOTE TO SELF: this is based off the old next branch, and also it sitting on
+    top of my old --track changes, so it will need to be reworked.]
