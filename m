@@ -1,115 +1,120 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Making submodules easier to work with (auto-update on checkout
- or merge, stash & restore submodules)
-Date: Wed, 30 Apr 2008 08:14:05 +0200
-Message-ID: <48180E2D.6020907@op5.se>
-References: <8B885217-8C18-417E-8F11-BB6661792CD3@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Wed, 30 Apr 2008 08:25:13 +0200
+Message-ID: <481810C9.3030409@viscovery.net>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de> <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de> <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292355060.1
+ 7469@eeepc-johanness> <7v63u05khw.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness> <7v1w4o3zle.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tim Harper <timcharper@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 08:15:10 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-8859-1?Q?J=F6?= =?ISO-8859-1?Q?rg_Sommer?= 
+	<joerg@alea.gnuu.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 08:26:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr5au-0006Ru-1X
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 08:15:08 +0200
+	id 1Jr5lZ-0001Ci-86
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 08:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759470AbYD3GOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 02:14:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758568AbYD3GOL
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 02:14:11 -0400
-Received: from mail.op5.se ([193.201.96.20]:52090 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756177AbYD3GOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 02:14:09 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 7AB271F08038;
-	Wed, 30 Apr 2008 08:14:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ym2iYK+UH7N3; Wed, 30 Apr 2008 08:14:15 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id 2C7FD1F0801D;
-	Wed, 30 Apr 2008 08:14:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
-In-Reply-To: <8B885217-8C18-417E-8F11-BB6661792CD3@gmail.com>
+	id S1755733AbYD3GZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 02:25:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757276AbYD3GZU
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 02:25:20 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:13350 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755610AbYD3GZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 02:25:18 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Jr5kg-0004kM-Cc; Wed, 30 Apr 2008 08:25:14 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0C7BC6B7; Wed, 30 Apr 2008 08:25:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7v1w4o3zle.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80799>
 
-Tim Harper wrote:
-> OVERVIEW:
-> On the Git TextMate Bundle, I've automated a lot of the submodule 
-> commands to make them not a terrible pain to work with. (don't get me 
-> wrong - I really like the git submodule implementation, I just don't 
-> like how hard it is to work with).
+Junio C Hamano schrieb:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> "WARTS" WITH EXISTING IMPLEMENTATION
-> 1) The submodule stays in the working copy when changing to a branch 
-> that does not have a submodule.  This can break a build and cause 
-> problems.  To work around, I have to delete the folder completely 
-> (git-clean).  Then, when I switch back to the branch again, I have to 
-> re-download the submodule.
-> 2) I have to type "git checkout branch && git submodule init && git 
-> submodule update" to be sure that I really have the whole contents of 
-> the branch.  That's 3 commands, and a lot of typing.
-> 3) If I don't run "git submodule update", and carelessly run "git commit 
-> -a" or "git add .", I risk propagating a submodule version from another 
-> branch or undoing an important change.
+>> On Tue, 29 Apr 2008, Junio C Hamano wrote:
+>>> Perhaps it would help to go back to the message J6t incompletely quoted, 
+>>> and try the example with the parent order of Y swapped (i.e. B == Y^2, C 
+>>> == Y^1)
+>>>
+>>> Recreating X and Y both need to refer to the rewritten B as the 
+>>> parameter to "merge" insn.  You create X first then you cannot refer to 
+>>> B anymore to recreate Y.  The other way around you cannot name B to 
+>>> recreate X.
+>> If you refer to "B" as the "short name of the original commit which refers 
+>> to the rewritten commit as soon as B was rewritten", then I really do not 
+>> see the problem.
 > 
-> SUGGESTED ALGORITHM (AS HAS BEEN IMPLEMENTED IN THE GIT TEXTMATE BUNDLE)
-> When pulling / merging / changing branches:
-> 1) cache all submodules to ~/.git/submodules_cache
->    a) move from the working directory to a folder that is a MD5 hex-hash 
-> of both the submodule path and the submodule url
-> 2) execute the pull / merge / branch change
-> 3) restore all defined submodules to ~/.git/submodules_cache (only the 
-> submodules that are still defined after the merge / change / pull)
-> 4) execute git submodule init && git submodule update
+> Hmmm.  Perhaps you are thinking about using not just A, B, C but also
+> names like X, Y, and Z in the insn sequence?  I was operating under the
+> impression that you used only single parent commits to name things, and a
+> name will stand for the result of the last operation that used the name
+> (e.g. after "pick B", B names the result of cherry-picking the original B
+> to detached HEAD).
 > 
 > 
-> PITFALLS:
-> pitfall)
-> If you commit a change on a submodule that's not on a branch, 
-> auto-updating submodules will make it difficult to revive that change.
+>                  A
+>                 / \
+>                /   X
+>               /   / \
+>              O---B   Z
+>               \   \ /
+>                \   Y
+>                 \ /
+>                  C
 > 
-> workaround)
-> Don't allow the user to commit unless they are on a branch.
+>             X = checkout A, merge B
+>             Y = checkout C, merge B
+>             Z = checkout X, merge Y
 > 
-> ... couldn't think of anymore.  Anyone?
+> I start from Q, create A', B' and C' with:
 > 
-> CONCLUSION
-> So far, this algorithm holds up well in my use cases, and has made 
-> submodule management seamless for me (I don't have to know that I'm 
-> working with submodules).  It's resolved every one of the above outlined 
-> interface warts.
+> 	reset Q
+> 	pick A
+>         reset Q
+>         pick B
+>         reset Q
+>         pick C
 > 
-> Would it be a good idea to build this algorithm into git?  What would be 
-> the best approach?  Am I completely overlooking something by designing 
-> the Git TextMate bundle to handle submodules this way?
+> Then I can recreate X by doing
 > 
+> 	reset A
+>         merge B
+> 
+> The problem I had was to figure out the way to go back to "rewritten X".
+> I assumed you would say "B" because that is the last insn in the sequence
+> that used that name.
+> 
+> But instead you are thinking of letting me just say "X", and somehow make
+> the machinery guess by noticing "Ah, original X is a merge between
+> original A and B, and we have a merge between rewritten A and rewritten B,
+> so we will treat that merge as rewritten "X"?
 
-I don't use submodules at the moment, but I have several "lib-ish" pieces
-of code that would benefit greatly from becoming submodules. The not-exactly
-seamlessness of them has so far been a hindrance though, but it sounds as
-if your changes (assuming they don't affect anything else) should make lessen
-the submodule headaches somewhat.
+You had used this notion in your post:
 
-So, where be the patches?
+	merge B -- recreate X
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Did you mean the '-- recreate X' part as just a comment? I understood it
+as part of the instruction, namely to say that the result of the merge is
+the rewritten X. In this case you can refer to X in subsequent insns
+unambiguously (keep in mind that it is actually the abbreviated SHA1 of
+the original merge commit).
+
+-- Hannes
