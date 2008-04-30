@@ -1,64 +1,86 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
+From: "Ping Yin" <pkufranky@gmail.com>
 Subject: Re: git-rebase and reflog
-Date: Wed, 30 Apr 2008 12:05:14 -0500
-Message-ID: <4818A6CA.5000409@nrlssc.navy.mil>
-References: <46dff0320804300904i3402b5e7wf827f6759bc52901@mail.gmail.com>	 <m3d4o7nvt2.fsf@localhost.localdomain> <46dff0320804300956x7e4f34efle39f6cad2e98a2de@mail.gmail.com>
+Date: Thu, 1 May 2008 01:13:24 +0800
+Message-ID: <46dff0320804301013o17da30cg1fd847beca94ff58@mail.gmail.com>
+References: <46dff0320804300904i3402b5e7wf827f6759bc52901@mail.gmail.com>
+	 <m3d4o7nvt2.fsf@localhost.localdomain>
+	 <46dff0320804300956x7e4f34efle39f6cad2e98a2de@mail.gmail.com>
+	 <4818A6CA.5000409@nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 19:06:41 2008
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Brandon Casey" <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Apr 30 19:14:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrFkz-0004rR-6v
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:06:13 +0200
+	id 1JrFsj-0008Rw-OT
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756173AbYD3RFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 13:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755782AbYD3RFZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:05:25 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45085 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754579AbYD3RFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 13:05:24 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m3UH5EIY016298;
-	Wed, 30 Apr 2008 12:05:14 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 30 Apr 2008 12:05:14 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <46dff0320804300956x7e4f34efle39f6cad2e98a2de@mail.gmail.com>
-X-OriginalArrivalTime: 30 Apr 2008 17:05:14.0592 (UTC) FILETIME=[5B969600:01C8AAE4]
-X-Virus-Status: Clean
+	id S1754269AbYD3RN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 13:13:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754486AbYD3RN0
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:13:26 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:52520 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753677AbYD3RNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 13:13:25 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so584407wxd.4
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 10:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=u0dcZmExIP67UKnylKPGCgEWmcZTdUdQ453aLy01xh8=;
+        b=yFe9saTd/D9d3nFboeE1lKzFs1YghNJFNNhulSSBJb6p6GWxjjVAY3Yqll34bZg9htLznw6VUA5JO2Zy8bExXtb0oZqOkYsSSVd9OA6Bo95JbZv2mIkgCcA5ttscJck4VZQB3BsemzqU2G2JLc2edW2bQEba7RpqtJ6qGrtujeA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=urWrWElGC6mO3tdyMHtIBi4vpIKEVeJfDHpaxiY1wbBrU+5cM8F5UDATwV7rAx9eLrA1axkNkxW2hZQFYC2sTc3wolwvqYCYr91t0cr3mGxx+wPsfdXV+CbIQ6/N1XmOx5oYYh6gpMCkxKWJYCntbkL/fVGiw0EExN+72KZgf+w=
+Received: by 10.100.214.19 with SMTP id m19mr1661422ang.50.1209575604207;
+        Wed, 30 Apr 2008 10:13:24 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Wed, 30 Apr 2008 10:13:24 -0700 (PDT)
+In-Reply-To: <4818A6CA.5000409@nrlssc.navy.mil>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80850>
 
-Ping Yin wrote:
+On Thu, May 1, 2008 at 1:05 AM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> Ping Yin wrote:
+>
+>  > If your are right, how can i look over the branch reflog. I know the
+>  > master@{1} syntax, but i want to see master@{1}, master@{2} until
+>  > master@{n} in a single command just as how 'git reflog' shows HEAD@{1}
+>  >  to HEAD@{n}.
+>
+>  Have you checked the documentation for 'git reflog'?
+>
+>  It says:
+>
+>    The subcommand "show" (which is also the default, in the absence of any
+>    subcommands) will take all the normal log options, and show the log of
+>    the reference provided in the command-line (or `HEAD`, by default).
+>
+>  So, 'git reflog show master' should get you what you want.
 
-> If your are right, how can i look over the branch reflog. I know the
-> master@{1} syntax, but i want to see master@{1}, master@{2} until
-> master@{n} in a single command just as how 'git reflog' shows HEAD@{1}
->  to HEAD@{n}.
+Oh, i missed that. Maybe we should add an example section.
 
-Have you checked the documentation for 'git reflog'?
+>
+>  You may also want to check out the '-g' option to git-log. For example,
+>  'git log -g master'.
 
-It says:
+Oh, wonderful.
 
-   The subcommand "show" (which is also the default, in the absence of any
-   subcommands) will take all the normal log options, and show the log of
-   the reference provided in the command-line (or `HEAD`, by default).
+However, i still think the intemediate commits of git-rebase needn't
+go into HEAD's reflog because it's totally useless.
 
-So, 'git reflog show master' should get you what you want.
 
-You may also want to check out the '-g' option to git-log. For example,
-'git log -g master'.
 
--brandon
+-- 
+Ping Yin
