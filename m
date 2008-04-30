@@ -1,117 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: bug: git-diff silently fails when run outside of a repository
- (v1.5.4.2)
-Date: Wed, 30 Apr 2008 01:56:39 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0804300155320.17469@eeepc-johanness>
-References: <3c6c07c20804291304n36976417wf3c2a13303aa3133@mail.gmail.com> <7vabjc5l3r.fsf@gitster.siamese.dyndns.org> <3c6c07c20804291603q4fbe957eq3e3da39d4a2e29c0@mail.gmail.com> <7vskx444h5.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: point git-prune users to git-gc
+Date: Tue, 29 Apr 2008 18:01:52 -0700
+Message-ID: <7v63u040lb.fsf@gitster.siamese.dyndns.org>
+References: <32541b130804230841h32c07f3arc94cccfaf0b156a3@mail.gmail.com>
+ <7vve28sdys.fsf@gitster.siamese.dyndns.org>
+ <20080423221316.GE30057@sigill.intra.peff.net>
+ <20080424012836.GA30812@sigill.intra.peff.net>
+ <32541b130804240843k471ecfeteb1008c44a56808b@mail.gmail.com>
+ <20080424161407.GA23737@sigill.intra.peff.net>
+ <32541b130804240959y3b05d4b5u67ac7a7c14bf187e@mail.gmail.com>
+ <20080429204514.GA21029@sigill.intra.peff.net>
+ <7vskx45ncg.fsf@gitster.siamese.dyndns.org>
+ <20080429231917.GB22646@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Coleman <tutufan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 02:57:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 30 03:02:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr0dH-00059F-8o
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 02:57:15 +0200
+	id 1Jr0im-0006il-Ep
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 03:02:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756003AbYD3A41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 20:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755895AbYD3A40
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 20:56:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44823 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755818AbYD3A40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 20:56:26 -0400
-Received: (qmail invoked by alias); 30 Apr 2008 00:56:24 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp025) with SMTP; 30 Apr 2008 02:56:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19kIA8B96hkpK7haj2W0okM+Rbpj2PmTlaZPc1WEW
-	yXWZ7qAdfxQxk4
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vskx444h5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755153AbYD3BCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 21:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755694AbYD3BCG
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 21:02:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53791 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755153AbYD3BCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 21:02:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A25A17BE;
+	Tue, 29 Apr 2008 21:02:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 45F3417B4; Tue, 29 Apr 2008 21:01:59 -0400 (EDT)
+In-Reply-To: <20080429231917.GB22646@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 29 Apr 2008 19:19:17 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0BFD4A52-1651-11DD-B106-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80777>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Tue, 29 Apr 2008, Junio C Hamano wrote:
+> I'm not so sure that they are interested in the prune command. At first
+> I started with just a note near the end, but the point of this is
+> specifically to deal with users who "stumble" upon prune, either from
+> reading the command list (i.e., trying to match a command to the
+> objective they want to perform) or from pre-gc tutorials or emails which
+> mention it.
 
-> "Mike Coleman" <tutufan@gmail.com> writes:
-> 
-> > On Tue, Apr 29, 2008 at 5:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> "Mike Coleman" <tutufan@gmail.com> writes:
-> >>
-> >>  > At least in version 1.5.4.2, git-diff silently fails when not run
-> >>  > inside a repository.  It should give an error diagnostic, especially
-> >>  > since "no output" would otherwise be a meaningful response.
-> >>
-> >>  Unfortunately this does not have enough information to go by, as unlike
-> >>  many other programs, "git diff" contains a hack to be usable as a better
-> >>  (for certain definition of "better" I may not necessarily agree with) GNU
-> >>  diff replacement when run outside a repository.
-> >>
-> >>  i.e.
-> >>
-> >>         mkdir -p /var/tmp/junk
-> >>         cd /var/tmp/junk
-> >>         rm -fr .git ;# make sure it is not a repository
-> >>         echo >a hello
-> >>         echo >b world
-> >>         git diff --color a b
-> >>
-> >>  is supposed to work.
-> 
-> > Oh, I didn't realize that.  It doesn't seem to be mentioned on the man
-> > page, though I can't necessarily claim that I would have seen it if it
-> > had.
-> >
-> > Even so, this seems like a bug.  If I do this:
-> >
-> >     $ cd /
-> >     $ git-diff
-> >
-> > there is no error message and no error status.  A diagnostic would be
-> > very helpful.
-> 
-> Ah, that indeed is not very helpful.
-> 
-> Unfortunately, every time I look at this hack, I seem to find an unrelated
-> bug in it.  Here is today's.
-> 
-> 	$ for i in 1 2 3; do >/var/tmp/$i; done
->         $ cd /
->         $ git diff /var/tmp/1
->         Segmentation Fault
-> 
-> When nongit is true, we know the user has to be asking --no-index diff, so
-> perhaps we can fix it by doing something like this?
-> 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 069e450..cfd629d 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -264,6 +264,9 @@ int setup_diff_no_index(struct rev_info *revs,
->  			DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
->  			break;
->  		}
-> +	if (nongit && argc != i + 2)
-> +		die("git diff [--no-index] takes two paths");
-> +
->  	if (argc != i + 2 || (!is_outside_repo(argv[i + 1], nongit, prefix) &&
->  				!is_outside_repo(argv[i], nongit, prefix)))
->  		return -1;
+Ah, you are right.  People tend to stop reading when they _think_ they
+heard enough even though they haven't.  The note upfront is good, and I
+suspect we would not have to reword the latter parts either then.
 
-That looks to me as if the second if() should have triggered, and the 
-caller of setup_diff_no_index() should have errored out.
+>> > +Notes
+>> > +-----
+>> > +
+>> > +In most cases, users will not need to call git-prune directly, but
+>> > +should instead call linkgit:git-gc[1], which handles pruning along with
+>> > +many other housekeeping tasks.
+>> 
+>> ... this paragraph should be made a bit fatter by mentioning what "other
+>> housekeeping tasks" are.
+>
+> OK, I was trying to imply "go look at git-gc for those tasks" so they
+> didn't have to be repeated. Would you prefer it be spelled out
+> explicitly here, or is a more firm pointer OK?
 
-Ciao,
-Dscho "who has too many issues with git-submodule right now"
+Will apply as is.
+
+Thanks.
