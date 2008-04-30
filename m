@@ -1,96 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] commit: Show the committer ident when is different
-	from the parent
-Date: Wed, 30 Apr 2008 11:10:47 -0400
-Message-ID: <20080430151047.GA3482@sigill.intra.peff.net>
-References: <1209545236-4266-1-git-send-email-sbejar@gmail.com> <1209545236-4266-4-git-send-email-sbejar@gmail.com> <20080430145017.GA922@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Use perl instead of tac
+Date: Wed, 30 Apr 2008 11:25:38 -0400
+Message-ID: <5374CF8E-3E6E-480B-A23B-13BE85C7ABCF@silverinsanity.com>
+References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com> <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com> <slrng1bqhb.25r.joerg@alea.gnuu.de> <04EB077D-CB35-4253-A9EA-2085890C3639@silverinsanity.com> <20080430090206.GA21826@alea.gnuu.de>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 17:12:43 2008
+To: =?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Wed Apr 30 17:26:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrDyA-0005y4-AA
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 17:11:42 +0200
+	id 1JrECU-0004Ww-Fv
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 17:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757114AbYD3PKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 11:10:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756173AbYD3PKv
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 11:10:51 -0400
-Received: from peff.net ([208.65.91.99]:2770 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755510AbYD3PKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 11:10:50 -0400
-Received: (qmail 19296 invoked by uid 111); 30 Apr 2008 15:10:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Apr 2008 11:10:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2008 11:10:47 -0400
-Content-Disposition: inline
-In-Reply-To: <20080430145017.GA922@sigill.intra.peff.net>
+	id S1752200AbYD3PZm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2008 11:25:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbYD3PZl
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 11:25:41 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:38830 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbYD3PZl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2008 11:25:41 -0400
+Received: from [192.168.1.7] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 1C91A1FFD6C5;
+	Wed, 30 Apr 2008 15:25:36 +0000 (UTC)
+In-Reply-To: <20080430090206.GA21826@alea.gnuu.de>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80840>
 
-On Wed, Apr 30, 2008 at 10:50:17AM -0400, Jeff King wrote:
 
-> It segfaults for me, since you try to strdup NULL. I think you want to
-> return "" if there is no initial commit, so you can strcmp against the
-> current committer (or alternatively, explicitly check for NULL).
-> [...]
->     IOW, put in a blank line on either side, but not between the two
->     identities if both are shown.
+On Apr 30, 2008, at 5:02 AM, J=F6rg Sommer wrote:
 
-Fixes for these are below (no commit message; I think you should respin
-the series rather than making this a separate patch). I didn't look at
-putting it into wt-status.c, but I think that is worth pursuing.
+>> I also dislike the large lists this is carrying around in shell
+>> variables.  If I'm reading it correctly, the tag list could be =20
+>> replaced
+>> by invocations of "git describe --exact-match".
+>
+> Yes. How to get all tags of a commit?
+>
+> % git tag foo v1.5.5
+> % git describe --exact-match 9d831805195ba40b62f632acc6bb6e53d3
+> warning: tag 'v1.5.5' is really 'foo' here
+> v1.5.5
 
----
- builtin-commit.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+I wish I could be clever and say I pointed this out as an obviously =20
+wrong answer or similar.  But, no, I simply didn't think of that.  The =
+=20
+long list may be required, despite my concerns about it..  :-(
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 30828c5..4e62510 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -472,6 +472,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
- 	const char *author_ident;
- 	const char *committer_ident;
- 	const char *parent_ident;
-+	int showed_ident = 0;
- 
- 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
- 		return 0;
-@@ -582,15 +583,20 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
- 					 getenv("GIT_COMMITTER_EMAIL")));
- 		if (strcmp(author_ident, committer_ident))
- 			fprintf(fp,
--				"# Author:    %s\n",
-+				"%s# Author:    %s\n",
-+				showed_ident++ ? "" : "#\n",
- 				fmt_name(author_name, author_email));
- 
--		parent_ident = xstrdup(get_parent_ident());
--		if (strcmp(parent_ident, committer_ident))
-+		parent_ident = get_parent_ident();
-+		if (!parent_ident || strcmp(parent_ident, committer_ident))
- 			fprintf(fp,
--				"# Committer: %s\n",
-+				"%s# Committer: %s\n",
-+				showed_ident++ ? "" : "#\n",
- 				committer_ident);
- 
-+		if (showed_ident)
-+			fprintf(fp, "#\n");
-+
- 		saved_color_setting = wt_status_use_color;
- 		wt_status_use_color = 0;
- 		commitable = run_status(fp, index_file, prefix, 1);
--- 
-1.5.5.1.183.g593d89.dirty
+Those concerns being: overrunning the length of a shell variable, the =20
+speed of constructing and searching the list, over-complexity of the =20
+code.  But, of course, if there isn't another way to do it right then =20
+the list stays.
+
+~~ Brian
