@@ -1,75 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-rebase and reflog
-Date: Wed, 30 Apr 2008 09:37:17 -0700 (PDT)
-Message-ID: <m3d4o7nvt2.fsf@localhost.localdomain>
-References: <46dff0320804300904i3402b5e7wf827f6759bc52901@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] commit: Show the committer ident when is different
+	from the parent
+Date: Wed, 30 Apr 2008 12:37:01 -0400
+Message-ID: <20080430163701.GA6544@sigill.intra.peff.net>
+References: <1209545236-4266-1-git-send-email-sbejar@gmail.com> <1209545236-4266-4-git-send-email-sbejar@gmail.com> <20080430145017.GA922@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:38:16 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:38:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrFJv-0002Kq-Rz
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 18:38:16 +0200
+	id 1JrFJu-0002Kq-FM
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 18:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757312AbYD3Qhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 12:37:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755767AbYD3Qha
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 12:37:30 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:8318 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760565AbYD3QhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 12:37:25 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so216663fgg.17
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 09:37:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=kcjgpjGzZJdRl3z1+1enMDJHWOc5RcV4aPBpACCmyxc=;
-        b=qXLwswnQ4wvTCpk2MZHzhfTEmECN0EsnFt0ekPu5VGSpN2J6pY5nWr5ENMVTD8HNFQjkE6tByw/26vMAtv8oEATnWqxvgzyM7O+dMyuT3C8Hi5VicnpOHkTGWi+jf37O/PDMLteu6DVoqmufx6OTfK8qzhhBeelsWaYCE+zw33U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=r7CAqhQhKGXuHOg/oxqK6xDzItmASZNrcA4NoNfjNEg9CyhvkslK58H/y9Y+9UNZDxgzIlugFrlQLfnhYc5ZxVnYFYoC7p8fm7lHhXFNC0NLgk53/BJtNEEazjSDsejlc15oWB7XPJ6rQPLOtREcUpmnRv29cTjAiqg6NzVo0vA=
-Received: by 10.86.73.17 with SMTP id v17mr1497636fga.63.1209573438633;
-        Wed, 30 Apr 2008 09:37:18 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.201.205])
-        by mx.google.com with ESMTPS id e11sm909248fga.1.2008.04.30.09.37.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Apr 2008 09:37:17 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3UGbDo2004437;
-	Wed, 30 Apr 2008 18:37:14 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3UGbDmN004434;
-	Wed, 30 Apr 2008 18:37:13 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <46dff0320804300904i3402b5e7wf827f6759bc52901@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757688AbYD3QhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 12:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757664AbYD3QhG
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 12:37:06 -0400
+Received: from peff.net ([208.65.91.99]:4254 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755767AbYD3QhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 12:37:05 -0400
+Received: (qmail 24764 invoked by uid 111); 30 Apr 2008 16:37:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Apr 2008 12:37:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2008 12:37:01 -0400
+Content-Disposition: inline
+In-Reply-To: <20080430145017.GA922@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80845>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
+On Wed, Apr 30, 2008 at 10:50:17AM -0400, Jeff King wrote:
 
-> The history of git-rebase will go into reflog. This kind of behaviour
-> makes me annoyed when using git-reflog where i can see so many useless
-> intermediate log entries (generated by rebase).
-> 
-> So how about not recording the intermediate commits to reflog?
+> A few other comments (I like the idea overall):
 
-If I remember and understand it correctly, because currently rebase
-uses detached HEAD, the intermediate steps would go into HEAD reflog,
-but only final step would go into branch reflog...
+Actually, thinking about this a bit more (and using it), I'm not sure
+that the best rule for showing the committer is "differs from the
+previous committer." For example, if I am building on Junio's git.git,
+the committer name is shown, even though I have made many commits in
+this repo already.
 
-Please correct me if I am wrong.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+So if the goal is to show the committer name only when it "matters", I
+don't think you have succeeded.
+
+-Peff
