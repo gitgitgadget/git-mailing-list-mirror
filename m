@@ -1,91 +1,75 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 1/7] add special "matching refs" refspec
-Date: Wed, 30 Apr 2008 11:35:00 +0200
-Message-ID: <48183D44.8080507@gnu.org>
-References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org> <7vfxt31ys6.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Tracability in git commits
+Date: Wed, 30 Apr 2008 03:06:43 -0700 (PDT)
+Message-ID: <m3lk2vodw4.fsf@localhost.localdomain>
+References: <1209473739.5642.31.camel@dax.rpnet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org, peff@peff.net,
-	johannes.schindelin@gmx.de, srb@cuci.nl
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 11:36:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Richard Purdie <rpurdie@rpsys.net>
+X-From: git-owner@vger.kernel.org Wed Apr 30 12:07:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr8jD-0000az-8Z
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 11:35:55 +0200
+	id 1Jr9E8-0001Zf-2S
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 12:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbYD3JfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 05:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753690AbYD3JfF
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 05:35:05 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:27285 "EHLO
+	id S1756368AbYD3KGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 06:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754848AbYD3KGr
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 06:06:47 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:28248 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbYD3JfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 05:35:02 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so88459fgg.17
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 02:34:59 -0700 (PDT)
+	with ESMTP id S1755932AbYD3KGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 06:06:46 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so97392fgg.17
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 03:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=PSZx7oMiUXeifMI/OisGioXH81wfZ+hRygKn66CqwBw=;
-        b=WkuIQXbL5uitObMX7WIGI4jfnSxOYXc+GFHZZEMyK9QRdEVN4iEZriG7PdE0kHUXQJNy8Awk3PNNd3Lhz/hlgOOoP5SC5N22Bj9R02CNPOZqMXAZksZYlRey8AjYKHImua7/i630GIOBnsRD4DBmeWtIeHSyn9s4Z/jbRVxxIKU=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=+DSLMw21N6NWoEq4IdxotGVy20INW7mKMFSK5HJ5EC0=;
+        b=CualjSo7JJF1pvnwhnE2G+sCAMqYfVu/1SlkLVhpumCo7L6wirEkDrS2H+s4aei6JsW01ddrPvyydseKFEu+WbM4kqn04yZSyA0HiYK8c6O2I7JvXm2ce92NCosX81r6pSw++ydmCPTWQ+N0Txc1TQO7WWh4F7XkQpQnpPCRGkA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=IFk/2UhT3OnchUTQh8HS67SdZyRH7g+zOjqtX/reBhuPrhLZg9/I2Ap98Z1R0de/tSnHtew3PmIkxwYLEpF+9IO37xg2jW0h5NkJk8IHidxXSokpCTtj5Sgz7veevSBuSBbS5E8MOeKiiZzZ6f9dimrYitHB+TxbIT0HwGPiPxA=
-Received: by 10.86.54.3 with SMTP id c3mr718465fga.58.1209548098921;
-        Wed, 30 Apr 2008 02:34:58 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
-        by mx.google.com with ESMTPS id 4sm383310fge.5.2008.04.30.02.34.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Apr 2008 02:34:58 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <7vfxt31ys6.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=WZTvhkB07pit+xcsarhnmuhsq1wVa1REbPIkGh/jDWSxkR0ZNsimJyBicqnhZcTsTMvem04/0dsVBJuVcs1LDYy9LiR+3odvxqg9o9n/1DZRn0haGXz7hisQpbXW9n/fMy1geUbSZAWNd6ccKAWBZU0+A84t3z43FklY5snfnuA=
+Received: by 10.86.74.15 with SMTP id w15mr765957fga.4.1209550005068;
+        Wed, 30 Apr 2008 03:06:45 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.201.205])
+        by mx.google.com with ESMTPS id d4sm354367fga.4.2008.04.30.03.06.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 30 Apr 2008 03:06:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3UA6bwr001436;
+	Wed, 30 Apr 2008 12:06:40 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3UA6Zvv001433;
+	Wed, 30 Apr 2008 12:06:36 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1209473739.5642.31.camel@dax.rpnet.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80820>
 
+Richard Purdie <rpurdie@rpsys.net> writes:
 
->> +		if (rs[i].matching &&
->> +		    (matching_refs == -1 || rs[i].force)) {
->> +			matching_refs = i;
->> +			continue;
->> +		}
->
-> It is probably better to document that you would force if you have both
-> "+:" and ":" for the same remote, even though I am not sure if allowing
-> that (instead of diagnosing it as an error) is the right thing to do.
+> I've been wondering about whether its possible to provide some degree of
+> traceability of commits to a shared git repository. The potential
+> nightmare scenario is one developer making a commit pretending to be
+> someone else.
+[cut]
 
-I screwed up here.  I was sure that something like
+If you really need that, perhaps you would be better with using
+Monotone, with its elaborate security and trust-related features?
 
-         push = refs/heads/*:refs/heads/*
-         push = +refs/heads/*:refs/heads/*
+IIRC we recommended Monotone to IPSec folks here...
 
-would also force, instead the first one wins.  I'm ok with just removing 
-the "|| rs[i].force" part.
-
-> Is it an error to have both ":" and "some:other" refspecs for the same
-> remote?  If so who makes the check?
-
-No, it is not an error.  For example, it allows to have a
-
-	push = refs/tags/*:refs/tags/*
-	push = :
-
-refspec, which pushes all tags but only pushes branches if there is a 
-matching ref on the other side.  I don't have a use for this, but it 
-made sense to support the general case.
-
-> Otherwise this patch seems to be very cleanly done.  Especially I like how
-> the updated match_refs() looks.
-
-Thanks.  Should I resubmit?
-
-Paolo
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
