@@ -1,63 +1,87 @@
-From: "Richard Quirk" <richard.quirk@gmail.com>
-Subject: Re: help with git usage
-Date: Wed, 30 Apr 2008 13:50:45 +0200
-Message-ID: <cac9e4380804300450k763fa22dr19260b2c75f11c96@mail.gmail.com>
-References: <200804291738.m3THc2hC030601@rs40.luxsci.com>
-	 <cac9e4380804300122v4f23251cqbc36640a07379c8@mail.gmail.com>
-	 <m3hcdjocdc.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Wed, 30 Apr 2008 12:56:44 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804301253520.2136@eeepc-johanness>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <7vabjm78v2.fsf@gitster.siamese.dyndns.org> <20080422095549.GB3752@alea.gnuu.de> <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness> <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
+ <7vk5ig745b.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness> <7v63u05khw.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness> <7v1w4o3zle.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness> <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 13:51:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 13:57:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrAqe-0008Sl-Ul
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 13:51:45 +0200
+	id 1JrAw9-000211-W2
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 13:57:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988AbYD3Lu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 07:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755815AbYD3Lu4
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 07:50:56 -0400
-Received: from hu-out-0506.google.com ([72.14.214.227]:55709 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752914AbYD3Luz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 07:50:55 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so626807hue.21
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 04:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=JfAtiUYSneHmS3QdQatqYsYESxYmvTkTt9w/BRX3JLM=;
-        b=qle8yFItCc0fU35X6wOTgOnK6xiRIdxpb9kZr+bSD7v6mJS7puLyZOHJ5jE0aa+Y5Johq5Q5+PPzwXDXe/I94843Tgy+tK0nZpEyWJ3LNP8hvAhQH4unoRv7MOobzD0KsBNB2THP4nAyiKWgp+J65ZVZ9BO1Xd/KUFKbt8KhMWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ICkx/ot8YroqatGE8Jvvvt1ZjwGNCphMKh16W6CdK67/PXUdKWo4oTcZYQzVa1tZ33YuAMmzeDB5W8RYCvKtHPu7HDpBdJQnT/FREa3cAlHFlu3Zs0w2IzSdkZUFQUV4Wo3eGxH8YuYiIRCVJR3m+oXxnCtytXI7VWf5BX9V8uA=
-Received: by 10.70.118.4 with SMTP id q4mr923534wxc.9.1209556251769;
-        Wed, 30 Apr 2008 04:50:51 -0700 (PDT)
-Received: by 10.70.23.17 with HTTP; Wed, 30 Apr 2008 04:50:45 -0700 (PDT)
-In-Reply-To: <m3hcdjocdc.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1757937AbYD3L4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 07:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757930AbYD3L4i
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 07:56:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43376 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756526AbYD3L4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 07:56:37 -0400
+Received: (qmail invoked by alias); 30 Apr 2008 11:56:35 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.st-andrews.ac.uk) [141.5.11.5]
+  by mail.gmx.net (mp048) with SMTP; 30 Apr 2008 13:56:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Cy5VxLmPCI7EU+Xrn8LBl5suppDCOCCe4mlca44
+	YA69mH/KkTr6gn
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80829>
 
-On Wed, Apr 30, 2008 at 12:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->
->  > If you use Vim, I'd recommend the vcscommand plugin - see
->  > http://code.google.com/p/vcscommand/
->
->  Could you add infomration about this to Git Wiki
->
->   http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
->  somewhere in "Editors and IDE integration" subsection?
->
+Hi,
 
-Certainly. I've added a note about it to the end of that section.
+On Wed, 30 Apr 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> But instead you are thinking of letting me just say "X", and somehow 
+> >> make the machinery guess by noticing "Ah, original X is a merge between 
+> >> original A and B, and we have a merge between rewritten A and rewritten 
+> >> B, so we will treat that merge as rewritten "X"?
+> >> 
+> >> I actually was hoping we could avoid that, which feels messy.
+> > ...
+> > But this got me thinking, and I think that to leave out the first parent 
+> > was another mistake I made, so I really would like to have this syntax:
+> >
+> > 	merge <orig-commit> <parent1> <parent2>... <message>
+> >
+> > This would allow to change the parents in the interactive rebase, and if 
+> > <parent1> is not the current commit at that point, it would implicitly 
+> > call "reset".
+> >
+> > What appeals to me is the simplicity of this approach: you refer to the 
+> > commits by calling them by their (original) name.
+> 
+> Ok, that clears my confusion, but it raises another issue.
+> 
+> In the context of "rebase -i", this may not be a problem, but by forcing
+> us to name commits always with original commits, we cannot build (instead
+> of rebuild) a history that does not yet exist using the sequencer
+> machinery, can we?
+
+The idea I hinted at was to refer to them by another name than the short 
+name.  Then we can use the sequencer machinery.
+
+I still maintain that it is such a rare need (even if you are a power user 
+of it) that it makes sense to cater for other, simpler uses.
+
+Ciao,
+Dscho
