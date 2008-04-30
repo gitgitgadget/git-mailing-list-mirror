@@ -1,156 +1,118 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH 3/3] commit: Show the committer ident when is different from the parent
-Date: Wed, 30 Apr 2008 10:47:16 +0200
-Message-ID: <1209545236-4266-4-git-send-email-sbejar@gmail.com>
-References: <1209545236-4266-1-git-send-email-sbejar@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Wed, 30 Apr 2008 02:19:27 -0700
+Message-ID: <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
+ <1208132469-26471-3-git-send-email-joerg@alea.gnuu.de>
+ <1208132469-26471-4-git-send-email-joerg@alea.gnuu.de>
+ <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
+ <20080422095549.GB3752@alea.gnuu.de>
+ <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
+ <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
+ <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
+ <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
+ <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
+ <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
+ <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness>
+ <7v63u05khw.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness>
+ <7v1w4o3zle.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 10:48:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 30 11:20:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr7zW-0002ei-Cp
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 10:48:42 +0200
+	id 1Jr8UQ-0004C2-5j
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 11:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757611AbYD3Iru convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2008 04:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757590AbYD3Iru
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 04:47:50 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:59837 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757410AbYD3Irt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 04:47:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so75288fgg.17
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 01:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        bh=hAGbWpSAI/+hNertfz3qSX/SJz3GGBIlOatktDfNF8E=;
-        b=xFAPfTFvZ9kKCtFeEJzHBu6xCLjDU6WZHbTyhbgm2dFtXtqr3WaQC8hctZB23i9r7G5ohykACrWLbsVonNml6jC0Fy+zEzAfTQ29VP4goApCZdkqzLNOycuDctItWlv0sdFe9cShAax5Yg/TneUm1RMcb0Mo7JpaUjMo+TzPJRg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:mime-version:content-type:content-transfer-encoding;
-        b=tZrLuRdov+MqzJua/uX28tz9qYi/II2tPRKBHkdlWfBdVwShT56dmk9otB696Z46mAkepNE9dRLuze24r7E9gZ0Vr4ztnNwOWB2EF/Hm3k/pk0iREBWu1viMIOw9xuB8i3+dQ0NPxj1BfB+GxWMKWkgsxLh6p8MRklLYGMRta6U=
-Received: by 10.86.66.11 with SMTP id o11mr1286772fga.74.1209545268423;
-        Wed, 30 Apr 2008 01:47:48 -0700 (PDT)
-Received: from localhost ( [91.13.102.119])
-        by mx.google.com with ESMTPS id e10sm918121muf.3.2008.04.30.01.47.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Apr 2008 01:47:47 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.1.148.g37726
-In-Reply-To: <1209545236-4266-1-git-send-email-sbejar@gmail.com>
+	id S1756999AbYD3JTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 05:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757013AbYD3JTp
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 05:19:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61986 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbYD3JTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 05:19:44 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A7643834;
+	Wed, 30 Apr 2008 05:19:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E49353832; Wed, 30 Apr 2008 05:19:34 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness> (Johannes
+ Schindelin's message of "Wed, 30 Apr 2008 09:47:02 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 90D2B394-1696-11DD-9AB6-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80816>
 
-To remind the committer ident in case it is not what you want
-(taken from the gecos field, want to use different ident in
-different repositories).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
-Hi,
+>> But instead you are thinking of letting me just say "X", and somehow 
+>> make the machinery guess by noticing "Ah, original X is a merge between 
+>> original A and B, and we have a merge between rewritten A and rewritten 
+>> B, so we will treat that merge as rewritten "X"?
+>> 
+>> I actually was hoping we could avoid that, which feels messy.
+> ...
+> But this got me thinking, and I think that to leave out the first parent 
+> was another mistake I made, so I really would like to have this syntax:
+>
+> 	merge <orig-commit> <parent1> <parent2>... <message>
+>
+> This would allow to change the parents in the interactive rebase, and if 
+> <parent1> is not the current commit at that point, it would implicitly 
+> call "reset".
+>
+> What appeals to me is the simplicity of this approach: you refer to the 
+> commits by calling them by their (original) name.
 
-  it does not work with the initial commit, I don't know why.
-  Even with this:
-	if (!commit)
-		return NULL;
+Ok, that clears my confusion, but it raises another issue.
 
-  Can someone help me? Thanks
+In the context of "rebase -i", this may not be a problem, but by forcing
+us to name commits always with original commits, we cannot build (instead
+of rebuild) a history that does not yet exist using the sequencer
+machinery, can we?
 
- builtin-commit.c  |   30 ++++++++++++++++++++++++++++++
- t/t7502-commit.sh |   12 ++++++++++++
- 2 files changed, 42 insertions(+), 0 deletions(-)
+If we want to transplant "^C ^N O" in this history elsewhere:
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index c51c70f..06582ef 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -437,6 +437,29 @@ static void determine_author_info()
- 	author_date =3D date;
- }
-=20
-+const char *get_parent_ident()
-+{
-+	unsigned char sha1[20];
-+	struct commit *commit;
-+	const char *a, *lb, *rb, *eol;
-+
-+
-+	get_sha1("HEAD", sha1);
-+	commit =3D lookup_commit_reference(sha1);
-+	if (!commit)
-+		return NULL;
-+
-+	a =3D strstr(commit->buffer, "\ncommitter ");
-+
-+	lb =3D strstr(a + 11, " <");
-+	rb =3D strstr(a + 11, "> ");
-+	eol =3D strchr(a + 11, '\n');
-+	if (!lb || !rb || !eol)
-+		return NULL;
-+
-+	return xstrndup(a + 11, rb + 1 - (a + 11));
-+}
-+
- static int prepare_to_commit(const char *index_file, const char *prefi=
-x)
- {
- 	struct stat statbuf;
-@@ -448,6 +471,7 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix)
- 	const char *hook_arg2 =3D NULL;
- 	const char *author_ident;
- 	const char *committer_ident;
-+	const char *parent_ident;
-=20
- 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
- 		return 0;
-@@ -561,6 +585,12 @@ static int prepare_to_commit(const char *index_fil=
-e, const char *prefix)
- 				"# Author:    %s\n",
- 				fmt_name(author_name, author_email));
-=20
-+		parent_ident =3D xstrdup(get_parent_ident());
-+		if (strcmp(parent_ident, committer_ident))
-+			fprintf(fp,
-+				"# Committer: %s\n",
-+				committer_ident);
-+
- 		saved_color_setting =3D wt_status_use_color;
- 		wt_status_use_color =3D 0;
- 		commitable =3D run_status(fp, index_file, prefix, 1);
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 95acf4c..96b5dcb 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -164,6 +164,18 @@ test_expect_success 'author different from committ=
-er' '
- 	test_cmp expect actual
- '
-=20
-+GIT_COMMITTER_NAME=3D"C. O. Mitter"
-+export GIT_COMMITTER_NAME
-+echo "# Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >> expe=
-ct
-+
-+test_expect_success 'committer different from the parent committer' '
-+
-+	echo >>negative &&
-+	git commit -e -m "sample"
-+	head -n 6 .git/COMMIT_EDITMSG >actual &&
-+	test_cmp expect actual
-+'
-+
- pwd=3D`pwd`
- cat >> .git/FAKE_EDITOR << EOF
- #! /bin/sh
---=20
-1.5.5.1.148.g37726
+      --o---C---N
+               / 
+          B---M
+         /   /
+        O---A
+
+while inserting a new fix-up commit F on top of B before we merge that
+side branch to rewritten A:
+
+              --o---C---N'
+                       / 
+              B'--X---M'
+             /       /
+        O---Q-------A'
+
+Would/Should the machinery somehow figure out that the merge between the
+rewritten A (which is A') and an inserted commit X (which is made on top
+of the rewritten B) corresponds to M in the original history?
+
+This is not a made up example, but something I have to do once (on my
+non-git days) or many more times (on my git days) every day when
+rebuilding 'pu' on top of updated 'next' using updated tips of topic
+branches.  I was hoping that the sequencer mechanism can help me
+automating the process a bit more.
