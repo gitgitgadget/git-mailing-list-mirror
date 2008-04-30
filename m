@@ -1,92 +1,123 @@
-From: Manoj Srivastava <srivasta@ieee.org>
-Subject: Re: [PATCH] Documentation: rename "hooks.txt" to "githooks.txt" and make it a man page
-Date: Wed, 30 Apr 2008 11:28:31 -0500
-Organization: Manoj Srivastava's Home
-Message-ID: <87ej8ngvdc.fsf@anzu.internal.golden-gryphon.com>
-References: <20080430080820.ef5a4c2a.chriscool@tuxfamily.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Documentation: rename "hooks.txt" to "githooks.txt" and
+ make it a man page
+Date: Wed, 30 Apr 2008 23:11:53 +0200
+Message-ID: <20080430231153.113a75cd.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 22:41:14 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Pieter de Bie <pdebie@ai.rug.nl>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 23:07:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrJ6z-0004pQ-1u
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 22:41:09 +0200
+	id 1JrJWg-0006pf-Ja
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 23:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932880AbYD3UkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 16:40:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759748AbYD3UkK
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 16:40:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:46412 "EHLO ciao.gmane.org"
+	id S1754853AbYD3VGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 17:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756100AbYD3VGx
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 17:06:53 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:45455 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758162AbYD3UkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 16:40:08 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JrJ5u-0005Li-MI
-	for git@vger.kernel.org; Wed, 30 Apr 2008 20:40:02 +0000
-Received: from tiamat.golden-gryphon.com ([204.117.95.118])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 20:40:02 +0000
-Received: from srivasta by tiamat.golden-gryphon.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 20:40:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: git@vger.kernel.org
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: tiamat.golden-gryphon.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux) (x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAACYAAAAwCAMAAABKbPgaAAAAM1BMVEUAAADIjH/0rp1KPz79
-	0b+ic2nlpJc2Ly2AY17VlYb4uqi2gHQXFBN2WVXgno5iT02Xa2Nx+jaIAAACVElEQVQ4jeWU23bj
-	IAxFLUAggQX6/6+dI9LGTpo+9mlYiXNhc3TnOP50naZE0tqvgEk+soutnNfQ8yPTWMTENhNrjI+Y
-	+N7POVt8tAzpn2vJlsmttbyfrdkP7hx5iezteGzsbOts7xT+tC1mcG+LtRP2X/16bEQExuyx1uZW
-	vscrAWUT8aE0aDBeBuw8nS5u4WgWyDCllOZUBeyWgbWbGrBsTDpTx0qpphlcYPcgJLvBXFClPMg5
-	6WH2JidLIAaDF5aAed7uPTH4bjw0bZvfajp2tHc1F+cBm+Vr9YomGSwNhbmcczYEWUu5MBpYvCLV
-	F+ZIKwQfYB+CBXnIRQFvIRhK6l96PemsFLEPFxi+MPxiTYH0Ave1InPsIYes3NJb42ytBSmmysyj
-	lIQYHJm6Im1WbQ0kWMesKFRFPKTDzJ3GhWUn2KWKEkWlKthoACLm2eWJQQh2qKbAUgQxa+8TVjn1
-	aySm8656ookCfCc5TRzvnZ6YOu3NpHg+uR5YuRkNF/b5IHq5Y7Ve6c2+sR4hqIZ3+5DCt3ukh8Eo
-	vFIXVJxqfMdbkd/BF3YaQkB/2RIUHPMS7RLVAHefrYzWZVQ/ei4peBsROFLi90ltQyvF5I05t4Zs
-	L4C9DODJ2AZCUf8UitGjCIdfx15QQkfZibTOGT3edxns5fY6F2rstKcTwiiaJnQwvYkdzTlaTqNH
-	IkSmGdLrON45tGsMNDoSYr4bxH5emHEFaoFjKBahHXFXfLx9cR9p6ejJXihuxPz57gWHZkWovbPl
-	9gsU8eImtBi++3D+f+sfT/Mg79fyEz8AAAAASUVORK5CYII=
-X-URL: http://www.golden-gryphon.com/
-Mail-Copies-To: never
-X-Face: #q.#]5@vq!Jz+E0t_/;Y^gTjR\T^"B'fbeuVGiyKrvbfKJl!^e|e:iu(kJ6c|QYB57LP*|t
- &YlP~HF/=h:GA6o6W@I#deQL-%#.6]!z:6Cj0kd#4]>*D,|0djf'CVlXkI,>aV4\}?d_KEqsN{Nnt7
- 78"OsbQ["56/!nisvyB/uA5Q.{)gm6?q.j71ww.>b9b]-sG8zNt%KkIa>xWg&1VcjZk[hBQ>]j~`Wq
- Xl,y1a!(>6`UM{~'X[Y_,Bv+}=L\SS*mA8=s;!=O`ja|@PEzb&i0}Qp,`Z\:6:OmRi*
-Cancel-Lock: sha1:Wyj5lM/FfBo71RWZt0HZi/UoTXQ=
+	id S1754394AbYD3VGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 17:06:52 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 16B161AB2A9;
+	Wed, 30 Apr 2008 23:06:51 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id B5E6C1AB2E1;
+	Wed, 30 Apr 2008 23:06:49 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80872>
 
-Hi,
+Also now "gitcli(5)" becomes "gitcli(7)".
 
-        The documentation patch says:
---- /dev/null
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/Makefile                    |    5 ++---
+ Documentation/gitcli.txt                  |    2 +-
+ Documentation/{hooks.txt => githooks.txt} |   20 ++++++++++++++++++--
+ 3 files changed, 21 insertions(+), 6 deletions(-)
+ rename Documentation/{hooks.txt => githooks.txt} (98%)
+
+	Here is a patch made with "git format-patch -M ..."
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 43781fb..4144d1e 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -2,8 +2,8 @@ MAN1_TXT= \
+ 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt)) \
+ 	gitk.txt
+-MAN5_TXT=gitattributes.txt gitignore.txt gitcli.txt gitmodules.txt
+-MAN7_TXT=git.txt
++MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
++MAN7_TXT=git.txt gitcli.txt
+ 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+@@ -18,7 +18,6 @@ ARTICLES += cvs-migration
+ ARTICLES += diffcore
+ ARTICLES += howto-index
+ ARTICLES += repository-layout
+-ARTICLES += hooks
+ ARTICLES += everyday
+ ARTICLES += git-tools
+ ARTICLES += glossary
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 7ee5ce3..835cb05 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -1,4 +1,4 @@
+-gitcli(5)
++gitcli(7)
+ =========
+ 
+ NAME
+diff --git a/Documentation/hooks.txt b/Documentation/githooks.txt
+similarity index 98%
+rename from Documentation/hooks.txt
+rename to Documentation/githooks.txt
+index 44fbe58..62ee065 100644
+--- a/Documentation/hooks.txt
 +++ b/Documentation/githooks.txt
-@@ -0,0 +1,301 @@
- [snip]
-+pre-applypatch
-+--------------
+@@ -1,5 +1,17 @@
+-Hooks used by git
+-=================
++githooks(5)
++===========
 +
-+This hook is invoked by `git-am`.  It takes no parameter,
-+and is invoked after the patch is applied, but before a commit
-+is made.  Exiting with non-zero status causes the working tree
-+after application of the patch not committed.
-
-        I am afraid I can't parse the final sentence: I assume it means
- that the patched working tree is not committed, but the missing verb
- makes it harder for non-native speakers of the english language to
- understand what is meant here.
-
-        manoj
++NAME
++----
++githooks - Hooks used by git
++
++SYNOPSIS
++--------
++$GIT_DIR/hooks/*
++
++
++DESCRIPTION
++-----------
+ 
+ Hooks are little scripts you can place in `$GIT_DIR/hooks`
+ directory to trigger action at certain points.  When
+@@ -283,3 +295,7 @@ pre-auto-gc
+ This hook is invoked by `git-gc --auto`. It takes no parameter, and
+ exiting with non-zero status from this script causes the `git-gc --auto`
+ to abort.
++
++GIT
++---
++Part of the linkgit:git[7] suite
 -- 
-Backed up the system lately?
-Manoj Srivastava <srivasta@acm.org> <http://www.golden-gryphon.com/>  
-1024D/BF24424C print 4966 F272 D093 B493 410B  924B 21BA DABB BF24 424C
+1.5.5.1.100.gc23d
