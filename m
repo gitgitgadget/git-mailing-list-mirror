@@ -1,62 +1,55 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/3] commit: Show the committer ident when is different
-	from the parent
-Date: Wed, 30 Apr 2008 19:52:24 +0200
-Message-ID: <20080430175224.GA4131@steel.home>
-References: <1209545236-4266-1-git-send-email-sbejar@gmail.com> <1209545236-4266-4-git-send-email-sbejar@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Broken commit 72269ad9564b700e6aab30338e35b4e6ffea854d
+Date: Wed, 30 Apr 2008 11:04:08 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0804301101130.2980@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?iso-8859-15?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 19:53:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 20:05:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrGUY-0007MP-IC
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:53:18 +0200
+	id 1JrGgG-0003Qt-SW
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 20:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760803AbYD3Rw2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2008 13:52:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760760AbYD3Rw2
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:52:28 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:38943 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760304AbYD3Rw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 13:52:26 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarZw4cjU0g==
-Received: from tigra.home (Faed6.f.strato-dslnet.de [195.4.174.214])
-	by post.webmailer.de (mrclete mo28) (RZmta 16.27)
-	with ESMTP id 3008fck3UG4jv8 ; Wed, 30 Apr 2008 19:52:24 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id B1F7A277BD;
-	Wed, 30 Apr 2008 19:52:24 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 7810656D28; Wed, 30 Apr 2008 19:52:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1209545236-4266-4-git-send-email-sbejar@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754798AbYD3SEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 14:04:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755462AbYD3SEg
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 14:04:36 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:47678 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755222AbYD3SEf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2008 14:04:35 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3UI49Qx026676
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 Apr 2008 11:04:10 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m3UI48f2027351;
+	Wed, 30 Apr 2008 11:04:08 -0700
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80861>
 
-Santi B=E9jar, Wed, Apr 30, 2008 10:47:16 +0200:
-> To remind the committer ident in case it is not what you want
-> (taken from the gecos field, want to use different ident in
-> different repositories).
 
-Like: show committer id always if the repo is any kind of a public
-project. Which maybe ok, I'd better always see what id I use to work
-on, for example, Git.
+.. and more embarrassingly, it's attributed to me, although I'm pretty 
+sure it wasn't buggy when I sent it out.
 
-I like the idea in general, but the implementation could be refined.
-Maybe consider looking at user.name (whether the repo has an ident
-set)? This is usually done conciously, and the user wont need this
-reminder.
+The code in builtin-fetch-pack.c now reads
+
+	if (commit->object.parsed)
+		parse_commit(commit);
+
+which is obviously totally insane. There's a '!' missing.
+
+		Linus
