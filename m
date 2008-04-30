@@ -1,80 +1,60 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Making submodules easier to work with (auto-update on checkout or merge, stash & restore submodules)
-Date: Thu, 1 May 2008 01:21:16 +0800
-Message-ID: <46dff0320804301021t59740377vece412ea71d67cf4@mail.gmail.com>
-References: <8B885217-8C18-417E-8F11-BB6661792CD3@gmail.com>
-	 <alpine.DEB.1.00.0804301121240.17469@eeepc-johanness>
-	 <32541b130804300947s6083156etc6514cc13c24af13@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] rename limit improvements
+Date: Wed, 30 Apr 2008 13:21:37 -0400
+Message-ID: <20080430172136.GA22601@sigill.intra.peff.net>
+References: <20080426063209.5615dd5e.akpm@linux-foundation.org> <20080426135737.GA382@sigill.intra.peff.net> <20080426070656.e7a01d91.akpm@linux-foundation.org> <20080426145236.GA4367@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Tim Harper" <timcharper@gmail.com>, git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 19:22:12 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 19:22:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrG0M-00036Z-Ib
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:22:07 +0200
+	id 1JrG0h-0003Ev-EA
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757976AbYD3RVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 13:21:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757951AbYD3RVT
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:21:19 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:44552 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757869AbYD3RVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 13:21:18 -0400
-Received: by an-out-0708.google.com with SMTP id d40so127379and.103
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 10:21:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hFEu117OiJ4MgfGDKeZM6tksBSWbEkdBXl9SPwAgt64=;
-        b=ghLHum8iayagwwXjcs8LcY2drObE47yDJHArVoZkHe34acxXzVixXsUU8dVeMHsglIkejOw2oOIBHn6hotycsDnHLp7BUDwYFkiDahhzX1e9UzWSndS1FO0NyRcQoxmxvKYROfdZbyHDZj4jBnQ7u8mFOpsmPlAfnrDwtGOKAQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g6plElx/9G0C3gENWSgIforj+Dl9a0QjmL3X7PrfyBhDi4593Z6AS0bhw6Chk94H2v4XsAK5zgxGpXtNPSgi+4Kb29SBFXlUIeReHXeqfGyz2ugWeNVvWZjQoJd/i4oaQxWQ9QLTqvdX7vuysk2ohcwhqtfP+dqRk+ON2KB0fcU=
-Received: by 10.100.127.15 with SMTP id z15mr1668260anc.61.1209576076801;
-        Wed, 30 Apr 2008 10:21:16 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Wed, 30 Apr 2008 10:21:16 -0700 (PDT)
-In-Reply-To: <32541b130804300947s6083156etc6514cc13c24af13@mail.gmail.com>
+	id S1757999AbYD3RVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 13:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757997AbYD3RVj
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:21:39 -0400
+Received: from peff.net ([208.65.91.99]:4941 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757951AbYD3RVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 13:21:38 -0400
+Received: (qmail 27730 invoked by uid 111); 30 Apr 2008 17:21:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Apr 2008 13:21:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2008 13:21:37 -0400
 Content-Disposition: inline
+In-Reply-To: <20080426145236.GA4367@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80852>
 
-On Thu, May 1, 2008 at 12:47 AM, Avery Pennarun <apenwarr@gmail.com> wrote:
-> On 4/30/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->  >  On Tue, 29 Apr 2008, Tim Harper wrote:
+On Sat, Apr 26, 2008 at 10:52:36AM -0400, Jeff King wrote:
 
->
->  Not true.  If ".gitmodules" is different between branches, then
->  .git/config will have the wrong information.  I think this was the
->  reason for the "read .gitmodules directly and don't worry about
->  .git/config" discussion/patches earlier.
+> > Perhaps the default should be bumped up a bit based on your measurements,
+> > dunno.
+> 
+> Probably. I'll work up a patch for that, as well as suppressing the
+> message on diffstat (where you really shouldn't care, and it serves only
+> to scare users).
 
-I tried hard to avoid 'git submodule init' in that series.
-Unfortuately, few people agreed with me.
+Here's a patch series trying to improve rename limits, based on my
+discussion with Andrew and from some previous comments about the
+settings[1].
 
+Patch 1 allows separate renamelimit values for diff vs merge. Patch 2
+bumps up the default values based on some measurements I did in
+February. Patch 3 turns off the mostly cluttering warning message except
+for merges.
 
->  We had some discussion on the list earlier about having submodule
->  checkouts automatically acquire a branch name, so that commits don't
->  get lost as easily.  I was going to think about this more and
->  eventually submit a patch, but I haven't gotten to it yet.  Anyway,
->  the idea is that you have a branch by default, so that you don't end
->  up in the useless situation of not being on a branch, which encourages
->  checking in without being on a branch, in the first place.
->
+[1]: http://permalink.gmane.org/gmane.comp.version-control.git/73470
 
-I like this idea and it is very useful for me.
-
-
--- 
-Ping Yin
+-Peff
