@@ -1,63 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] commit: Show the committer ident when is different
-	from the parent
-Date: Wed, 30 Apr 2008 15:26:39 -0400
-Message-ID: <20080430192639.GC30344@sigill.intra.peff.net>
-References: <1209545236-4266-1-git-send-email-sbejar@gmail.com> <1209545236-4266-4-git-send-email-sbejar@gmail.com> <20080430145017.GA922@sigill.intra.peff.net> <20080430163701.GA6544@sigill.intra.peff.net> <8aa486160804301223w574fe425n5d0678020ff1e7b4@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Tracability in git commits
+Date: Wed, 30 Apr 2008 21:46:51 +0200
+Message-ID: <20080430194651.GC23672@genesis.frugalware.org>
+References: <1209473739.5642.31.camel@dax.rpnet.com> <7vd4o873cm.fsf@gitster.siamese.dyndns.org> <46dff0320804301033k1dea34ecx863ecfa8e386e0af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-To: Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 21:27:40 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="i7F3eY7HS/tUJxUd"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Richard Purdie <rpurdie@rpsys.net>, git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 21:48:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrHxm-0000Nw-DE
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 21:27:34 +0200
+	id 1JrIHo-0000Xz-2p
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 21:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763472AbYD3T0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2008 15:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763454AbYD3T0l
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 15:26:41 -0400
-Received: from peff.net ([208.65.91.99]:2127 "EHLO peff.net"
+	id S932391AbYD3Tqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 15:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbYD3Tqt
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 15:46:49 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:60127 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762067AbYD3T0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 15:26:40 -0400
-Received: (qmail 3442 invoked by uid 111); 30 Apr 2008 19:26:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Apr 2008 15:26:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2008 15:26:39 -0400
+	id S932332AbYD3Tqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 15:46:48 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 292031B2505;
+	Wed, 30 Apr 2008 21:46:47 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id BC2B1446E1;
+	Wed, 30 Apr 2008 21:45:49 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B26151190ACB; Wed, 30 Apr 2008 21:46:51 +0200 (CEST)
+Mail-Followup-To: Ping Yin <pkufranky@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Richard Purdie <rpurdie@rpsys.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <8aa486160804301223w574fe425n5d0678020ff1e7b4@mail.gmail.com>
+In-Reply-To: <46dff0320804301033k1dea34ecx863ecfa8e386e0af@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80866>
 
-On Wed, Apr 30, 2008 at 09:23:43PM +0200, Santi B=C3=A9jar wrote:
 
-> >  I like the idea in general, but the implementation could be refine=
-d.
-> >  Maybe consider looking at user.name (whether the repo has an ident
-> >  set)? This is usually done conciously, and the user wont need this
-> >  reminder.
->=20
-> Maybe only show the committer ident when both happens:
->=20
-> 1) the committer ident is different from the parent
-> 2) the committer ident is set automatically
+--i7F3eY7HS/tUJxUd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Honestly, I think just "2)" is probably fine (where automatically
-presumably means "from GECOS"). I see what you are trying to accomplish
-with "1)", but it's so workflow specific as to be useless.
+On Thu, May 01, 2008 at 01:33:53AM +0800, Ping Yin <pkufranky@gmail.com> wrote:
+> I don't find reflog for bare repository, or must i enable it manually?
 
-> P.D.: Jeff, thanks for the amending patch.
+Right, reflog is disabled by default for bare repos.
 
-No problem.
+--i7F3eY7HS/tUJxUd
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--Peff
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkgYzKsACgkQe81tAgORUJYsSgCdFdR7L8b+kz8cQlSol4a0WgpJ
+ElgAn2Yn4n/fkOPiisMJ7zi0iStwpW7N
+=Wd42
+-----END PGP SIGNATURE-----
+
+--i7F3eY7HS/tUJxUd--
