@@ -1,142 +1,139 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: help with git usage
-Date: Wed, 30 Apr 2008 00:39:52 -0700 (PDT)
-Message-ID: <m3tzhjokox.fsf@localhost.localdomain>
-References: <200804291738.m3THc2hC030601@rs40.luxsci.com>
-	<alpine.LNX.1.00.0804291354070.19665@iabervon.org>
+Subject: Re: my git problem
+Date: Wed, 30 Apr 2008 01:17:50 -0700 (PDT)
+Message-ID: <m3prs7oixp.fsf@localhost.localdomain>
+References: <20080427112938.4dbe8e2a.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0804271204510.3119@woody.linux-foundation.org>
+	<20080427124454.6a606305.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0804271315010.3119@woody.linux-foundation.org>
+	<20080428114509.240ef4ae.akpm@linux-foundation.org>
+	<alpine.DEB.1.00.0804281948270.19187@eeepc-johanness>
+	<20080428120917.dd9f01e8.akpm@linux-foundation.org>
+	<alpine.DEB.1.00.0804282012140.19187@eeepc-johanness>
+	<alpine.LFD.1.10.0804281222190.3119@woody.linux-foundation.org>
+	<20080429171519.GA21310@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Quinlan <danq@brtt.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 09:40:49 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 10:18:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr6vo-0005Bq-LW
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 09:40:49 +0200
+	id 1Jr7WY-0001Wy-ST
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 10:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756127AbYD3HkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 03:40:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756105AbYD3HkA
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 03:40:00 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:28131 "EHLO
+	id S1754109AbYD3IR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 04:17:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754967AbYD3IR5
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 04:17:57 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:30971 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756126AbYD3Hj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 03:39:58 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so1365753ugc.16
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 00:39:55 -0700 (PDT)
+	with ESMTP id S1754935AbYD3IRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 04:17:54 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so1371678ugc.16
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 01:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=lrdN41N8Wgv+T0sG3KYkQ69O7Fb9o9EcuFsfwulBBxE=;
-        b=KV1KMBML4nx+05ZWLEzG9I2XsTusC/hhLumzLmrf74lfMqF2JUVVxmQs0xE/9xZZ1TpHgh/ylh4vzQiqSRpELtjSod+k2ZoOdLBxKBne0KGJT31dsoEqfvNVZ+8WWH/pJ5WEtYgHtmpqLECBWGAsNuDO7Q2WHzUQ1ab+vUfBl4I=
+        bh=GQaW8AoVWp/K72ZN399ViPYVGNVYgPOQW9Hdz3Sr2ZQ=;
+        b=XjIlkUJIMMkfPZVpJyxtlarBLiwG1qnQYbR+/Hd4ywrr9tEabM1nxEccTxxaAGAGElQVa8TkXHyIUdlSEPNcrpkFL0unOAyctOdfdh3Kgp2JIPhjK3SyNlaZIwJs2EGPocaFM5CtSJkqjuEMt5g+ywLPXb2p5SI5c3H/VxWLFqU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=EFYYaRWCbdVPdb+3TohlWOhk2QYSvIaAzzZJF+4IC1xRCttyt/FHoPXP0TSRVh2bnfTIWdFIPtwXM42CfQ4cVf+Jp6xJZniHymjVSYx47Zfy1yZxcApr/NDtjcMA44qgQrmLf00OnlQDbSuqgS9hCuO/ksAa4fk+0uLyoBpv1SQ=
-Received: by 10.67.86.5 with SMTP id o5mr7564462ugl.50.1209541194852;
-        Wed, 30 Apr 2008 00:39:54 -0700 (PDT)
+        b=BGnRP3v/dfDSeVtzD93Y2o2a2WDGgRAq9Mlpd/8VSLtPqtfOVgUON2yyoUtBsWZ38y+cT7SQamd1o5ZjN2bQ52UMS03htwhOoEd2oXQASa7obJoOPPz6zQZb1NAo2q0ZaIX6RIzLUPhKXxWHnycoMUJm/FYovWsujNeCE1sMg7s=
+Received: by 10.67.102.6 with SMTP id e6mr3831615ugm.25.1209543472910;
+        Wed, 30 Apr 2008 01:17:52 -0700 (PDT)
 Received: from localhost.localdomain ( [83.8.241.224])
-        by mx.google.com with ESMTPS id j27sm3376340ugc.65.2008.04.30.00.39.50
+        by mx.google.com with ESMTPS id r38sm3392622ugc.55.2008.04.30.01.17.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Apr 2008 00:39:52 -0700 (PDT)
+        Wed, 30 Apr 2008 01:17:50 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3U7di9p000563;
-	Wed, 30 Apr 2008 09:39:45 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m3U8HgQm000777;
+	Wed, 30 Apr 2008 10:17:42 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3U7dgKK000560;
-	Wed, 30 Apr 2008 09:39:42 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m3U8HcJF000773;
+	Wed, 30 Apr 2008 10:17:38 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LNX.1.00.0804291354070.19665@iabervon.org>
+In-Reply-To: <20080429171519.GA21310@fieldses.org>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80806>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-> On Tue, 29 Apr 2008, Daniel Quinlan wrote:
->
-> > I've been trying to use git for awhile now, (and I've read a lot
-> > of documentation, though maybe my comprehension has not been high
-> > enough) but there are several operations which I can't figure out:
+> On Mon, Apr 28, 2008 at 12:28:38PM -0700, Linus Torvalds wrote:
+>> 
+>> 
+>> On Mon, 28 Apr 2008, Johannes Schindelin wrote:
+>>> 
+>>> On Mon, 28 Apr 2008, Andrew Morton wrote:
+>>>> 
+>>>> That's missing the "logical" bit :)
+>>> 
+>>> Heh, you're right.  I am too used to Git to think how other people would 
+>>> feel about these things... :-)
+>> 
+>> No, you are both wrong.
+>> 
+>> You're wrong because apparently you never did abstract algebra and set 
+>> theory in school.
+[...]
+>> If you know math, git actually does the rigth and very much the *logical* 
+>> thing.
+>> 
+>> So ".." is a simple difference, while "..." is a more complex difference. 
+>> 
+>> They mean different things for different operation types, but that is 
+>> again something a math person takes for granted (ie in algebra, a "+" or 
+>> "-" is just a random operation that follows certain rules: "a-b" means one 
+>> thing for the set of real numbers, and something *totally* different if 
+>> you are talking about set algebra).
+[...]
+> I can sorta buy the argument that "A...B" means most generally "some
+> kind of difference between the three sets A, A^B, and B", and that in
+> the context of "git diff" it's most sensible to take ordering into
+> account and produce some approximation of a diff between A^B and B.  I'd
+> personally have found an entirely separate operator simpler to
+> understand.  But perhaps there's only so many keys on the keyboard.
 
-Many of answers to your questions can be found on GitFaq,
-http://git.or.cz/gitwiki/GitFaq
- 
-> > 1) After cloning a repository from work at home, making some
-> > changes and committing them, I use "git push" to push them back to
-> > the work repository.  The changes seem to make it to the work
-> > repository (I see the commit message in git log), but I can't
-> > figure out how to get the changes into the working set at work.
-> > (evidently not merge, checkout or reset -- seems like it should be
-> > merge, but)
+IMHO adding support for a..b and a...b to git-diff is a bit of trick,
+as a..b and a...b were created to represent a set of revisions (a
+revision range).
 
-What do you mean that reset doesn't work? "git reset --hard HEAD"
-should update index and working tree, even if someone has updated
-HEAD behingd git's back ;-)  NOTE, NOTE, NOTE: this is not a correct
-solution.
+If we have linear history:
 
-> You shouldn't push to a non-bare repository. You should, instead, set up a 
-> bare repository for publishing your changes, and have all of the 
-> repositories you work in be clones of that. The issue is that git doesn't 
-> expect something outside of the repository to change the current branch 
-> (much like CVS doesn't expect something else to update CVS/Entries in your 
-> working directory). Another alternative is, from home, to do:
-> 
-> $ git push origin refs/heads/*:refs/remotes/home/*
-> 
-> Then, at work, you can do:
-> 
-> $ git merge home/master
+   *---*---*---a---*---*---b
 
-And yet another alternative is, if possible, to always use "git pull"
-(or "git fetch").
+then a..b notation for a revision range is very natural, and having
+git-diff interprete "a..b" as "a b" (for git-diff only endpoints
+matter) to allow copy'n'pasting between git-log and git-diff, and
+between git-fetch messages and git-diff was a good extension.
 
-See also "Why won't I see changes in the remote repo after "git push"?"
-http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
-and "How would I use 'git push' to sync out of a firewalled host?"
-http://git.or.cz/gitwiki/GitFaq#head-46de97a5ac549d3adf406c22674b3325ae25d09c
+Now if the history is not linear, as in example below:
 
-> > 2) I can't figure out how to get back the latest (or any other)
-> > version of a file I've modified (or deleted) in the working set.
-> > (Well, I suppose I could checkout the whole tree somewhere else
-> > and copy the relevant file, but I'm hoping there's something
-> > simpler).
->
-> $ git checkout HEAD -- <filename>
-> 
-> (And you can use any commit instead of HEAD to get other versions)
+   *---*---*---x---*---*---b
+                \
+                 \-*---a
 
-See also "How to revert file to version from current commit?"
-http://git.or.cz/gitwiki/GitFaq#head-f2ac5ecb3db6c54e9977bf969c0456091ac332a3
- 
-> > 3) Similarly, I can't use the little context diffs I can see in
-> > git-gui -- I need to see side by side comparisons; I've become
-> > accustomed to tkdiff.  It seems like git mergetool knows how to do
-> > that in some restricted circumstances, but I want to do it outside
-> > the context of a merge.
-> 
-> This I don't know, but you can get particular files from particular 
-> commits output with "git show <commit>:<path>", and you can likely wire 
-> something up.
+then "a..b", which is shortcut for "b ^a" (b --not a), returns x..b
+range (set) of revisions.  If you read "a..b" as "what's in 'b'
+since 'a'" it makes perfect sense.  But "git diff a..b" is still
+"git diff a b", not "git diff x b". 
 
-TkDiff doesn't have support for Git, although I think it wouldn't be
-that hard to add.  Tkere is Google Summer of Code project to add DVCS
-support, with Git as first example DVCS supported, to KDevelop so
-perhaps KDiff3 would learn Git support.
 
->From the various graphical comparison tools, Meld has supposedly Git
-support (http://meld.sourceforge.net/).  Supposedly only because I
-have not tested this; see
-http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-00fbd1ac45fe93dac4653cad3639b3df73d8657e
-
-BTW. I'm working in my spare time to add side-by-side diff, based on
-TkDiff actually, to git-gui.
+It would be perhaps as good notation to have "git diff a..b" mean
+"git diff x b", i.e. be diff between endpoints of "git log a..b",
+and have "git diff a...b" be "git diff a b", i.e. to be diff between
+endpoints^W points of "git log a...b"... but if there is no clean
+winner, simplicity of implementation wins. 
 
 -- 
 Jakub Narebski
