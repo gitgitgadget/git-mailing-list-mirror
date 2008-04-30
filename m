@@ -1,67 +1,108 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Use perl instead of tac
-Date: Wed, 30 Apr 2008 11:25:38 -0400
-Message-ID: <5374CF8E-3E6E-480B-A23B-13BE85C7ABCF@silverinsanity.com>
-References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com> <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com> <slrng1bqhb.25r.joerg@alea.gnuu.de> <04EB077D-CB35-4253-A9EA-2085890C3639@silverinsanity.com> <20080430090206.GA21826@alea.gnuu.de>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Wed Apr 30 17:26:44 2008
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [regression?] "git status -a" reports modified for empty submodule directory
+Date: Wed, 30 Apr 2008 23:56:29 +0800
+Message-ID: <46dff0320804300856w941d948rbcc1cee06f1b41a9@mail.gmail.com>
+References: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
+	 <46dff0320804290831u7ef1a78ag2988d5d12f782bdb@mail.gmail.com>
+	 <7v4p9k7326.fsf@gitster.siamese.dyndns.org>
+	 <4818143C.6050206@viscovery.net>
+	 <7vej8n3imp.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 17:57:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrECU-0004Ww-Fv
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 17:26:30 +0200
+	id 1JrEgL-0001v2-8Q
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 17:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200AbYD3PZm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2008 11:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbYD3PZl
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 11:25:41 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:38830 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbYD3PZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2008 11:25:41 -0400
-Received: from [192.168.1.7] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 1C91A1FFD6C5;
-	Wed, 30 Apr 2008 15:25:36 +0000 (UTC)
-In-Reply-To: <20080430090206.GA21826@alea.gnuu.de>
-X-Mailer: Apple Mail (2.919.2)
+	id S1755851AbYD3P4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 11:56:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755532AbYD3P4b
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 11:56:31 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:54610 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755303AbYD3P4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 11:56:30 -0400
+Received: by an-out-0708.google.com with SMTP id d40so120457and.103
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 08:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=L2s18F5KupXKwWvBMmd3FslzC79aEsVg5jlnN+VoY38=;
+        b=cH4l2EuXztT8pYbQzixBvNTqdmXRd9hp7/XFk82wcaRsODIbgg9pYpVUTpGmuJAC5jTkJHYbShb9/hPREUTc6dp29FjdRt5DuyGEfQY8OTvWj29vuRHz6XO6pOOvLgxrf2Q0WkvYL2MlXUuS76XbqZZ7x5Sl/tIqQknkTGCQ9uQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=adXHjYuonzFWEzZb3fss/1HV5BTqPR1rS5k1m2cOS4f+6QcbFYGIzc3cU5kjKjWciFMujBL8sFCe5wQFpLtD71QYh1W8YaG3PtE6/wiwBQL6PTnjGLdd00K+h70ssSHvKj15hG3r/J00GcYINGtUcStr+TSqv/uCykYvGPo9jjM=
+Received: by 10.100.194.17 with SMTP id r17mr1484233anf.127.1209570989686;
+        Wed, 30 Apr 2008 08:56:29 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Wed, 30 Apr 2008 08:56:29 -0700 (PDT)
+In-Reply-To: <7vej8n3imp.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80841>
 
-
-On Apr 30, 2008, at 5:02 AM, J=F6rg Sommer wrote:
-
->> I also dislike the large lists this is carrying around in shell
->> variables.  If I'm reading it correctly, the tag list could be =20
->> replaced
->> by invocations of "git describe --exact-match".
+On Wed, Apr 30, 2008 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Yes. How to get all tags of a commit?
 >
-> % git tag foo v1.5.5
-> % git describe --exact-match 9d831805195ba40b62f632acc6bb6e53d3
-> warning: tag 'v1.5.5' is really 'foo' here
-> v1.5.5
+>  For example, it has long been known ever since submodules were introduced
+>  that if you work inside a sparsely checked out supermodule you have to use
+>  "commit -a" with care, because the command notices missing submodule, and
+>  there is no way for it to differenciate between the case you _want to_
+>  remove it and the case you did not care about it,
 
-I wish I could be clever and say I pointed this out as an obviously =20
-wrong answer or similar.  But, no, I simply didn't think of that.  The =
-=20
-long list may be required, despite my concerns about it..  :-(
+If i am not misunderstood, there is one way now (although broken now,
+it used this kind of behaviour before git-status became built-in):
+empty directory to denote that the submodule is not checked out and
+unaware, and deleted directory to denote that the submodule is
+deleted.
 
-Those concerns being: overrunning the length of a shell variable, the =20
-speed of constructing and searching the list, over-complexity of the =20
-code.  But, of course, if there isn't another way to do it right then =20
-the list stays.
+Actually, i don't like the empty directory trick, since it will leave
+so many empty directories in a repository with many submodules
+unchecked out.
 
-~~ Brian
+>
+>  That quirk was something people could live with while submodule support
+>  was merely a newly invented curiosity.  But I do not think a command at
+>  high level (iow Porcelain) such as commit and status should be left
+>  unaware of the Policy that equate missing submodule and unmodified one
+>  forever.  We should actively enforce the policy, so that unless you
+>  explicitly ask nicely, the command should consider a missing submodule
+>  just as unmodified, e.g. "commit -a" should not remove unchecked out
+>  submodules.
+>
+>  But then you would need a way to ask nicely.  How?  Perhaps using "git rm",
+>  and low level "update-index --remove".  Do we even need "commit -A"?  I
+>  doubt it --- you do not remove submodules every day.
+>
+>  We'd like to keep the lowest-level unaware of the Policy, which means that
+>  "diff-files" and "diff-index" should report unchecked out submodules.
+>  Otherwise script writers will be left with no way to differenciate missing
+>  and removed submodules.
+
+Good point.
+
+>
+>  Once we start doing this, I think "git diff" Porcelain should fall into
+>  Policy-aware category.
+>
+
+Agree this pilicy.
+
+If this change needs a long way. Should we fix the regression first?
+Anyway, 'git status' and 'git status -a' should behave the same for
+submodules unchecked out. I have tried but i failed. I just found this
+regression was introduced on the first day of built-in status
+
+-- 
+Ping Yin
