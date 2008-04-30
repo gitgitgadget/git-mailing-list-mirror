@@ -1,73 +1,103 @@
-From: "Matt Graham" <mdg149@gmail.com>
-Subject: Re: help with git usage
-Date: Wed, 30 Apr 2008 08:02:05 -0400
-Message-ID: <1c5969370804300502obbc5a63v4c2c1a1175084237@mail.gmail.com>
-References: <200804291738.m3THc2hC030601@rs40.luxsci.com>
-	 <alpine.LNX.1.00.0804291354070.19665@iabervon.org>
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: [PATCH] Use perl instead of tac
+Date: Wed, 30 Apr 2008 11:39:50 +0200
+Message-ID: <20080430093950.GA16806@alea.gnuu.de>
+References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com> <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com> <slrng1bqhb.25r.joerg@alea.gnuu.de> <04EB077D-CB35-4253-A9EA-2085890C3639@silverinsanity.com> <20080430090206.GA21826@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Daniel Quinlan" <danq@brtt.com>, git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 14:03:00 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
+Cc: git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 14:04:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrB1X-0003pj-Jy
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 14:03:00 +0200
+	id 1JrB3E-0004OX-4m
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 14:04:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758836AbYD3MCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 08:02:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756902AbYD3MCJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 08:02:09 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:14766 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757913AbYD3MCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 08:02:08 -0400
-Received: by py-out-1112.google.com with SMTP id u52so768126pyb.10
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 05:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+H/8lDLSE5DNGJY7YoyQ3sDV3RBujAvKOAPBZSq42qo=;
-        b=cAte9xMB9N+9IdHl0zhf68INtUfbW0FSHaIuQB36vFMdQ1Kl/je7uRa1VSqbnBrGqAEAgNdMJYeyvegD8uGS+zZ6LX804s0LbDlAh21rJztkTeTLvt32m2Hejt9iNa1s1vBqYOtO78fOYvgdAIdobcxy1k66hiF5VbMkC5wEsmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZF1gRFC7awy/mc331L3JKOCUNH9xbw3iALPLf1rIQz7SNp+oaiWOaTtMaiAAMahxLn2pBmBVtlyqXR+7+Aka6CI+DSSQcgskqHY+tmt3iKC1Hv8w/dngfmKpt0IszgkIF+UHoB6zVR7e1pdlUF/kdvO3kav/q8k4oQV9arT6bxs=
-Received: by 10.141.20.7 with SMTP id x7mr252972rvi.255.1209556925850;
-        Wed, 30 Apr 2008 05:02:05 -0700 (PDT)
-Received: by 10.141.3.15 with HTTP; Wed, 30 Apr 2008 05:02:05 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.00.0804291354070.19665@iabervon.org>
+	id S1756902AbYD3MDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 08:03:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758529AbYD3MDz
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 08:03:55 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:3096 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758520AbYD3MDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 08:03:53 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 97F6048803A; Wed, 30 Apr 2008 14:03:51 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jr8n0-00053Y-R1; Wed, 30 Apr 2008 11:39:50 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jr8n0-0004Rc-Cv; Wed, 30 Apr 2008 11:39:50 +0200
 Content-Disposition: inline
+In-Reply-To: <20080430090206.GA21826@alea.gnuu.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80831>
 
-On Tue, Apr 29, 2008 at 2:07 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Tue, 29 Apr 2008, Daniel Quinlan wrote:
->
->  > I've been trying to use git for awhile now, (and I've read a lot of
->  > documentation, though maybe my
->  > comprehension has not been high enough) but there are several operations which
->  > I
->  > can't figure out:
->  >
->  > 1) After cloning a repository from work at home, making some changes and
->  > committing them,
->  > I use "git push" to push them back to the work repository.  The changes seem
->  > to make it to the
->  > work repository (I see the commit message in git log), but I can't figure out
->  > how to get the
->  > changes into the working set at work.  (evidently not merge, checkout or reset
->  > -- seems like it
->  > should be merge, but)
->
->  You shouldn't push to a non-bare repository.
 
-Is there any reason it wouldn't be appropriate to make git refuse to
-push to non-bare repositories?
+--mYCpIKhGyMATD0i+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hallo Brian,
+
+J=C3=B6rg Sommer schrieb am Wed 30. Apr, 11:02 (+0200):
+> Brian Gernhardt schrieb am Mon 28. Apr, 15:13 (-0400):
+> > Now that I think about it, the generation of marks could be done by a =
+=20
+> > second loop over the list.  Notice what commits need to be marked in =
+=20
+> > loop 1, then add the mark commands in loop 2.  Both of these loops woul=
+d=20
+> > function in the same direction, removing the need for either tac or per=
+l.
+>=20
+> You are right.
+
+=E2=80=A6 but I found the problem. I don't know how to pass the list from o=
+ne
+subshell to the other.
+
+% { echo pick; echo merge; a=3D12 } | { echo +$a+; while read line; do echo=
+ $line; done; }
+++
+pick
+merge
+
+The only idea I have is a file. Do you have a better idea?
+
+% { echo pick; echo merge; a=3D12 } >/tmp/tmp; \
+  { echo +$a+; while read line; do echo $line; done; } < /tmp/tmp
++12+
+pick
+merge
+
+Bye, J=C3=B6rg.
+--=20
+Viele Leute glauben, dass sie denken, wenn sie lediglich
+ihre Vorurteile neu ordnen.
+
+--mYCpIKhGyMATD0i+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIGD5mwe0mZwH1VIARAjJgAKCsmKj//9ooOojWA/MYec0yYCGClACgomTK
+B7weCpS7PYfP4Y1LzHP50pY=
+=ox4j
+-----END PGP SIGNATURE-----
+
+--mYCpIKhGyMATD0i+--
