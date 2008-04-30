@@ -1,101 +1,86 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH] Use perl instead of tac
-Date: Wed, 30 Apr 2008 11:02:06 +0200
-Message-ID: <20080430090206.GA21826@alea.gnuu.de>
-References: <8D73338C-4EC3-4078-8A34-51DAC1842C2B@silverinsanity.com> <20080427064250.GA5455@sigill.intra.peff.net> <739FA851-F7F5-4CF9-B384-25AA7022B0C2@silverinsanity.com> <slrng1be8l.25r.joerg@alea.gnuu.de> <86k5iib0g9.fsf@blue.stonehenge.com> <slrng1bqhb.25r.joerg@alea.gnuu.de> <04EB077D-CB35-4253-A9EA-2085890C3639@silverinsanity.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: difference between "git reset --hard" and "git checkout -f"
+Date: Wed, 30 Apr 2008 14:16:06 +0200
+Message-ID: <20080430121606.GA23672@genesis.frugalware.org>
+References: <2e24e5b90804300437t39ac16a6ga3cbe0b91d7e5565@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="envbJBWh7q8WU6mo"
+	protocol="application/pgp-signature"; boundary="VbJkn9YxBvnuCH5J"
 Cc: git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 14:04:53 2008
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 14:16:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrB3D-0004OX-GI
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 14:04:43 +0200
+	id 1JrBEl-0000BY-O5
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 14:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758911AbYD3MDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 08:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758710AbYD3MDx
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 08:03:53 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:3093 "EHLO uucp.gnuu.de"
+	id S1756416AbYD3MPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 08:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761488AbYD3MPy
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 08:15:54 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:59190 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758389AbYD3MDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 08:03:53 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 60344488037; Wed, 30 Apr 2008 14:03:50 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jr8CU-00053N-Ox; Wed, 30 Apr 2008 11:02:06 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jr8CU-0002kx-CQ; Wed, 30 Apr 2008 11:02:06 +0200
+	id S1756974AbYD3MPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 08:15:52 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id DE0B01B2505;
+	Wed, 30 Apr 2008 14:15:49 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 5F580446E1;
+	Wed, 30 Apr 2008 14:15:01 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E4C0F1190ACB; Wed, 30 Apr 2008 14:16:06 +0200 (CEST)
+Mail-Followup-To: Sitaram Chamarty <sitaramc@gmail.com>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <04EB077D-CB35-4253-A9EA-2085890C3639@silverinsanity.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <2e24e5b90804300437t39ac16a6ga3cbe0b91d7e5565@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80833>
 
 
---envbJBWh7q8WU6mo
-Content-Type: text/plain; charset=iso-8859-1
+--VbJkn9YxBvnuCH5J
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Brian,
+On Wed, Apr 30, 2008 at 05:07:40PM +0530, Sitaram Chamarty <sitaramc@gmail.=
+com> wrote:
+> I have two questions:
+>=20
+> (1) as in the subject line, what's the difference between these two
+> commands?  (I'm talking about those exact commands, not variations).
+> I am unable to see any.
 
-Brian Gernhardt schrieb am Mon 28. Apr, 15:13 (-0400):
-> This loop-reverse-loop construct is _extremely_ ugly, and I'm having =20
-> problems following it.  None of what this function is doing is =20
-> immediately obvious.  It's a good candidate for a comment or two.
+git checkout is the tool to check out a branch or paths. git reset is to
+reset HEAD (and as a side effect the working directory as well). so i
+think only the sematics differ, there is no difference in practice.
 
-I write one.
+> (2) shouldn't one of these have an option to throw away untracked
+> files also, to get to a pristine HEAD-eqvt state?  Or is it better to
+> force user to use git clean separately for that?
 
-> I also dislike the large lists this is carrying around in shell =20
-> variables.  If I'm reading it correctly, the tag list could be replaced=
-=20
-> by invocations of "git describe --exact-match".
+i would say so. we already require (by default) to use git clean -f, as
+it may wipe out your work (in case you forgot to git add some important
+files), so just adding an other option to perform this dangerous
+operation would not be good imho.
 
-Yes. How to get all tags of a commit?
-
-% git tag foo v1.5.5
-% git describe --exact-match 9d831805195ba40b62f632acc6bb6e53d3
-warning: tag 'v1.5.5' is really 'foo' here
-v1.5.5
-
-> Now that I think about it, the generation of marks could be done by a =20
-> second loop over the list.  Notice what commits need to be marked in =20
-> loop 1, then add the mark commands in loop 2.  Both of these loops would=
-=20
-> function in the same direction, removing the need for either tac or perl.
-
-You are right.
-
-Thanks for your comments.
-
-Bye, J=F6rg.
---=20
-Damit das M=F6gliche entsteht, mu=DF immer wieder das Unm=F6gliche versucht
-werden.                                       (Hermann Hesse)
-
---envbJBWh7q8WU6mo
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+--VbJkn9YxBvnuCH5J
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Version: GnuPG v1.4.8 (GNU/Linux)
 
-iD8DBQFIGDWOwe0mZwH1VIARAlakAJ9Q4UqAVY2VHXWGjaz6r2cvX/SN3ACgmPjN
-oJXAt90n6raGzycJX/MGAbg=
-=kEuZ
+iEYEARECAAYFAkgYYwYACgkQe81tAgORUJbFbgCfcORflGuWPYbMam8gJxUauyWr
+va8AoI/VQr/C7S7DKqFPIVDRFwaOoh4R
+=5yMG
 -----END PGP SIGNATURE-----
 
---envbJBWh7q8WU6mo--
+--VbJkn9YxBvnuCH5J--
