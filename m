@@ -1,57 +1,117 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: cvsimport and branches with "(" in the name
-Date: Tue, 29 Apr 2008 20:45:42 -0400
-Message-ID: <118833cc0804291745m2da2a3bdl21a9440e961afb6@mail.gmail.com>
-References: <320075ff0804290022r56c9f4efx74a13d3502be212@mail.gmail.com>
-	 <20080429155238.GA18494@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bug: git-diff silently fails when run outside of a repository
+ (v1.5.4.2)
+Date: Wed, 30 Apr 2008 01:56:39 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0804300155320.17469@eeepc-johanness>
+References: <3c6c07c20804291304n36976417wf3c2a13303aa3133@mail.gmail.com> <7vabjc5l3r.fsf@gitster.siamese.dyndns.org> <3c6c07c20804291603q4fbe957eq3e3da39d4a2e29c0@mail.gmail.com> <7vskx444h5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "GIT Mailing List" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 02:46:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Coleman <tutufan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 02:57:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr0Su-0002ep-LQ
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 02:46:33 +0200
+	id 1Jr0dH-00059F-8o
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 02:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755336AbYD3App (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 20:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755153AbYD3Apo
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 20:45:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:3862 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754577AbYD3Apo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 20:45:44 -0400
-Received: by fg-out-1718.google.com with SMTP id l27so211140fgb.17
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 17:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=xqWyYzsM8S/J6NBe7rruxU4zGOuV5uFo7VldnRNqfgs=;
-        b=a0T7xLT+9E5ZJRRtJ8rDHzjs+qSLeFNfsClU2lB1eTVj3XNOC45Ah60yGJJDaWQwPrQ+u6pTCYOqYtkQ7jxGWty6dC+Tw03J3Mw4Pr6s3jQaYQUhk7HzGK1Lz2Yzbzg771c3M+lUfLlM0jYBMlk/YhImxfKUA/Cm9TfNM+zDsck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ARjyaadZLKeSrkQ4pJTIeI1n0pdo3Bo/on4N0LL5wG2Be5bp8UG6ylYUmKfA2cswenQ3HC9pvxTWh/Dv6rLYx3yzG4R+3josFIQm5quGQ0BwhXIa6rvWwIiZjQfmMwhw8e8QZp1YZpQuMMfOHajAUNGEPx5hi5AFy2nZ2WPuXy4=
-Received: by 10.86.25.12 with SMTP id 12mr691331fgy.25.1209516342704;
-        Tue, 29 Apr 2008 17:45:42 -0700 (PDT)
-Received: by 10.86.76.7 with HTTP; Tue, 29 Apr 2008 17:45:42 -0700 (PDT)
-In-Reply-To: <20080429155238.GA18494@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1756003AbYD3A41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 20:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755895AbYD3A40
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 20:56:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44823 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755818AbYD3A40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 20:56:26 -0400
+Received: (qmail invoked by alias); 30 Apr 2008 00:56:24 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO eeepc-johanness.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp025) with SMTP; 30 Apr 2008 02:56:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19kIA8B96hkpK7haj2W0okM+Rbpj2PmTlaZPc1WEW
+	yXWZ7qAdfxQxk4
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vskx444h5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80776>
 
->  -       system("git-update-ref $remote/$branch $cid") == 0
->  +       system('git-update-ref', "$remote/$branch", $cid) == 0
+Hi,
 
-I hope there are no further such system calls left.  This could run arbitrary
-commands if one was tricked into importing an evil repository.
+On Tue, 29 Apr 2008, Junio C Hamano wrote:
 
-Morten
+> "Mike Coleman" <tutufan@gmail.com> writes:
+> 
+> > On Tue, Apr 29, 2008 at 5:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> "Mike Coleman" <tutufan@gmail.com> writes:
+> >>
+> >>  > At least in version 1.5.4.2, git-diff silently fails when not run
+> >>  > inside a repository.  It should give an error diagnostic, especially
+> >>  > since "no output" would otherwise be a meaningful response.
+> >>
+> >>  Unfortunately this does not have enough information to go by, as unlike
+> >>  many other programs, "git diff" contains a hack to be usable as a better
+> >>  (for certain definition of "better" I may not necessarily agree with) GNU
+> >>  diff replacement when run outside a repository.
+> >>
+> >>  i.e.
+> >>
+> >>         mkdir -p /var/tmp/junk
+> >>         cd /var/tmp/junk
+> >>         rm -fr .git ;# make sure it is not a repository
+> >>         echo >a hello
+> >>         echo >b world
+> >>         git diff --color a b
+> >>
+> >>  is supposed to work.
+> 
+> > Oh, I didn't realize that.  It doesn't seem to be mentioned on the man
+> > page, though I can't necessarily claim that I would have seen it if it
+> > had.
+> >
+> > Even so, this seems like a bug.  If I do this:
+> >
+> >     $ cd /
+> >     $ git-diff
+> >
+> > there is no error message and no error status.  A diagnostic would be
+> > very helpful.
+> 
+> Ah, that indeed is not very helpful.
+> 
+> Unfortunately, every time I look at this hack, I seem to find an unrelated
+> bug in it.  Here is today's.
+> 
+> 	$ for i in 1 2 3; do >/var/tmp/$i; done
+>         $ cd /
+>         $ git diff /var/tmp/1
+>         Segmentation Fault
+> 
+> When nongit is true, we know the user has to be asking --no-index diff, so
+> perhaps we can fix it by doing something like this?
+> 
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 069e450..cfd629d 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -264,6 +264,9 @@ int setup_diff_no_index(struct rev_info *revs,
+>  			DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
+>  			break;
+>  		}
+> +	if (nongit && argc != i + 2)
+> +		die("git diff [--no-index] takes two paths");
+> +
+>  	if (argc != i + 2 || (!is_outside_repo(argv[i + 1], nongit, prefix) &&
+>  				!is_outside_repo(argv[i], nongit, prefix)))
+>  		return -1;
+
+That looks to me as if the second if() should have triggered, and the 
+caller of setup_diff_no_index() should have errored out.
+
+Ciao,
+Dscho "who has too many issues with git-submodule right now"
