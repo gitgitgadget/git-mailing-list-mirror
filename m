@@ -1,113 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Tracability in git commits
-Date: Tue, 29 Apr 2008 22:51:03 -0400
-Message-ID: <20080430025102.GS29771@spearce.org>
-References: <1209473739.5642.31.camel@dax.rpnet.com> <7vd4o873cm.fsf@gitster.siamese.dyndns.org> <1209506199.5642.66.camel@dax.rpnet.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: About git and the use of SHA-1
+Date: Wed, 30 Apr 2008 14:58:53 +1200
+Message-ID: <46a038f90804291958u14eddc49sb54c7fd4a3a10381@mail.gmail.com>
+References: <200804281829.11866.henrikau@orakel.ntnu.no>
+	 <481733A3.4010802@op5.se>
+	 <alpine.LFD.1.10.0804291132060.23581@xanadu.home>
+	 <7f9d599f0804290859y6a579302m5db9f7f827b320a4@mail.gmail.com>
+	 <alpine.LFD.1.10.0804291232130.23581@xanadu.home>
+	 <7f9d599f0804291048n2c706f3amdf159ffe86bdbc8@mail.gmail.com>
+	 <alpine.LFD.1.10.0804291352120.23581@xanadu.home>
+	 <7f9d599f0804291102j4a30c344h18d12d03a6d5953b@mail.gmail.com>
+	 <alpine.LNX.1.00.0804291410340.19665@iabervon.org>
+	 <7f9d599f0804291331v2f44bee1y29c1580d68a3107a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Richard Purdie <rpurdie@rpsys.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 04:52:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>,
+	"Nicolas Pitre" <nico@cam.org>, "Andreas Ericsson" <ae@op5.se>,
+	"Dmitry Potapov" <dpotapov@gmail.com>,
+	"Henrik Austad" <henrikau@orakel.ntnu.no>, git@vger.kernel.org
+To: "Geoffrey Irving" <irving@naml.us>
+X-From: git-owner@vger.kernel.org Wed Apr 30 04:59:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr2QU-0008Cz-01
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 04:52:10 +0200
+	id 1Jr2Xm-0001Oc-MH
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 04:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754262AbYD3CvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2008 22:51:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752825AbYD3CvL
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 22:51:11 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60271 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530AbYD3CvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2008 22:51:10 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Jr2PF-0000M5-Bg; Tue, 29 Apr 2008 22:50:53 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 98D8120FBAE; Tue, 29 Apr 2008 22:51:03 -0400 (EDT)
+	id S1754927AbYD3C6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2008 22:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbYD3C6z
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Apr 2008 22:58:55 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:4054 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754914AbYD3C6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2008 22:58:54 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so210287wfc.4
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 19:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=FjjwzZVL0ic7hoXr6TwdzQSF7CSQicfVanglueWNHFU=;
+        b=PuAQ8nZ/bdIx+3uMLa2VZtS6wPyWPFqfS5rlSM6svn47iP5Fvqvub7j+EwP3NfKbV1Kbho/E9tCkidg4/+FHFjGH24xAIKLjVTtIXJ+18EQDyBrBAcFUf4vP5omgaPDZOhaKUvZuhtRlgCXAdsm4fIAk/V5N9L/mXWKWHxA7hz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pPjj8wHmWVpFAREPo8y3CGAZ+/IeWaL19t/+xQN+EEXuikfY0S9dU9olsrP7Sg/VKeORTXUAjWu8NIGHc0zs2NuJB9GLbVAiVO1l8OvRj79dfj7qrpziQfOAzZhEEbnRgDPQO5IGs79dRDsIIYVkmGbbRXZXOztBL7DCqQNKhp4=
+Received: by 10.142.99.21 with SMTP id w21mr87116wfb.108.1209524333852;
+        Tue, 29 Apr 2008 19:58:53 -0700 (PDT)
+Received: by 10.142.212.21 with HTTP; Tue, 29 Apr 2008 19:58:53 -0700 (PDT)
+In-Reply-To: <7f9d599f0804291331v2f44bee1y29c1580d68a3107a@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1209506199.5642.66.camel@dax.rpnet.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80782>
 
-Richard Purdie <rpurdie@rpsys.net> wrote:
-> On Tue, 2008-04-29 at 14:34 -0700, Junio C Hamano wrote:
-> > Richard Purdie <rpurdie@rpsys.net> writes:
-> > 
-> > > Assuming a shared server using something like gitosis each set of
-> > > commits is made under a certain ssh ID and what I'd like is to be able
-> > > to validate that against the commits so we could tell that commits A-D
-> > > were made by ID Z.
->
-> [...] I also understood the remote repository to be
-> able to accept or reject commits/merges through its hooks?
+On Wed, Apr 30, 2008 at 8:31 AM, Geoffrey Irving <irving@naml.us> wrote:
+>  I sincerely hope that pdf/postscript don't allow the internal
+>  rendering code to branch based on the current date.  That would be an
+>  absurd security hole, and would indeed make you entirely correct.  If
 
-Yes.  Look at contrib/hooks/update-paranoid for an example hook that
-validates the committer name and email address of each new commit
-matches with the real posix uid performing the push.  I use this
-hook at day-job to validate pushes made by users over SSH through
-a setuid git-receive-pack process.
+PS is Turing complete, and does know about dates. So yes, you can make
+such conditionals.
 
-The receive-pack program was patched to make it safer under setuid.
-My patched version drops the setuid privs if the repository it
-will write to or the hook(s) it will invoke are writable or owned
-by anyone other than the effective uid.
+That original md5 paper with the 2 PDF files is mainly a good example
+that you should trust binary blobs, that's all. The md5 trick is a
+nice demo, but misses the point entirely.
 
-But update-paranoid could be adapted to verify committer name/email
-by some means other than just posix uid, such as by SSH public key.
- 
-> > And then the branch you granted the right to update its tip to that person
-> > is updated, using that added part of the history.  The updates to the tip
-> > will be recorded in reflog to record who updated the tip and when, [...]
-> 
-> This sounds like my answer, it's possible to trace who did what from the
-> reflog. Which area of code is responsible for updating the reflog, is it
-> in git itself or is it in the form of a hook? 
+I can't find it now, but someone had written a PDF file that printed
+Pi computing in inside the PS VM. The tiny file would keep the printer
+churning out paper until it ran out of memory. :-)
 
-Pretty much all of git automatically updates the reflog when a
-change takes place.  On the receiving side of a push event its
-git-receive-pack that is handling the repository updates, and one
-of the functions it calls is to add the event to the branch's reflog.
+cheers,
 
-> I'm asking since if the repository is read/write for several users,
-> faking the log is easy. If you use something like gitosis it runs under
-> one user and faking is hard due to the restricted access. There is
-> probably a need to feed extra information into whatever is making the
-> log, or generate an additional log though due to the single user?
 
-Right.  The reflog events are actually logged using the value of the
-environment variables GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL.
-
-So if you set these with whatever identity you want use prior
-to invoking the server side git-receive-pack, you will get that
-information in the reflog.  By default if these aren't set we use
-the gecos information of the real uid.
-
-Securing a repository means protecting limiting access to it.
-You can reasonably protect a repository by making only a specific
-user able to run git-receive-pack in that repository, but then
-you need to arrange for individual users to execute as that user
-over SSH.  The forced command feature associated with public keys
-is often used for this, and its how gitosis does it.
-
-My setuid hack to receive-pack will likely be retired at day-job
-in the future.  We will either stop using git entirely, or we will
-transfer over to forced commands in a common user authorized_keys,
-like gitosis does.
-
+m
 -- 
-Shawn.
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
