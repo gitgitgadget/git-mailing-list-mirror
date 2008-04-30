@@ -1,141 +1,89 @@
 From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 0/7] limit the usage of the default remote "origin" to
- the minimum
-Date: Wed, 30 Apr 2008 07:24:00 +0200
-Message-ID: <48180270.9080708@gnu.org>
-References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <20080429193536.GA19340@sigill.intra.peff.net> <7vwsmg5nqv.fsf@gitster.siamese.dyndns.org> <20080429231201.GA22646@sigill.intra.peff.net>
+Subject: Re: [PATCH 7/7] make "git fetch" update all fetch repositories
+Date: Wed, 30 Apr 2008 07:28:33 +0200
+Message-ID: <48180381.9070801@gnu.org>
+References: <4816A989.2010204@gnu.org> <20080429053814.GA3332@steel.home> <4816C527.4000406@gnu.org> <4816CB46.1050100@op5.se> <4816D505.1000208@gnu.org> <20080429204417.GC6301@steel.home> <48178FD6.90104@gnu.org> <20080429213323.GA2413@steel.home> <48179625.3050704@gnu.org> <alpine.DEB.1.00.0804292324040.13650@eeepc-johanness> <20080429230237.GA22598@sigill.intra.peff.net> <7vzlrc45ex.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	spearce@spearce.org, johannes.schindelin@gmx.de, srb@cuci.nl,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 07:24:59 2008
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, spearce@spearce.org, srb@cuci.nl
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 07:29:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr4oN-00089S-6v
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 07:24:59 +0200
+	id 1Jr4sb-0000mm-3E
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 07:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630AbYD3FYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 01:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbYD3FYM
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 01:24:12 -0400
-Received: from hu-out-0506.google.com ([72.14.214.224]:38128 "EHLO
+	id S1753315AbYD3F2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 01:28:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbYD3F2e
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 01:28:34 -0400
+Received: from hu-out-0506.google.com ([72.14.214.224]:41770 "EHLO
 	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751232AbYD3FYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 01:24:11 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so349797hue.21
-        for <git@vger.kernel.org>; Tue, 29 Apr 2008 22:23:59 -0700 (PDT)
+	with ESMTP id S1752406AbYD3F2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 01:28:33 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so351935hue.21
+        for <git@vger.kernel.org>; Tue, 29 Apr 2008 22:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=qMaqcP4GCw3tdN2x1hrKc/jvw2WIdmrj2tI3AJtYHCM=;
-        b=sB01E+GwpaIjeH1wZVVXL4DYhLUoMXezOdNm78x3jI7PAv6zuuuS36dQ9UfyZqqxNcznefB/ymzJOK+H4jzUBVo2f/Eo8pvT1Ezwl8QqXE2VZ+5gSkrJO4tAyTHLsuOOI7/gEKlyX6yuDA1RXlEA/Pvc+y8Ke983qR3N/4LIBOY=
+        bh=wQdxnPzdN/t8cUuQ4e7UxX+fVJJAw5rHONvDAVBllPA=;
+        b=mo5p89H5EuhcYs9XimguQg5KKGGGbSM5261jXCdbCj+fYmEIWc9dJkkec5F2lDybqgA5l2/dTEj4HA//INqAiR5dcmh3evalJbu2NPsuyB5TdmtvryG02/Ib/kflYZrinX0v/8S3Jzm+LYqvTLf0ZfvYKw9EJV8lcLB8ldGfRvw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=KFt051v2473zUqbVtxuxI5nesnaCpbez7K+QAl3APIrhUg0nTjpsYTI4V0eMvznV6vIpSbIc/dmlTrwvY6rR1ub68QEnqDuvlQpcQH2xTvMc6y7hsUHcm40nGvbyXW36I0qNqHZKt/Z9l8+wGn97aesci+fSbkRqiuaAiFo6O78=
-Received: by 10.86.25.17 with SMTP id 17mr278571fgy.65.1209533039263;
-        Tue, 29 Apr 2008 22:23:59 -0700 (PDT)
+        b=u3pghl+atKvjB5e9EaL+Ti+mtayr6bL+6xRr3aOX0TyO88eaZ5ECCo7ZF61V65RVUVpaNzjcq3JG/LzGv7vnAVurO5E4TLl9LG7NfxdUG4FVCcn+EFlyPTiMk6TfnW5Tl3+LNO8LFLXq56qyyx71Vm10ta/wnRVFhkbYfnAWx6o=
+Received: by 10.86.54.3 with SMTP id c3mr298203fga.58.1209533311748;
+        Tue, 29 Apr 2008 22:28:31 -0700 (PDT)
 Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id d4sm113584fga.4.2008.04.29.22.23.58
+        by mx.google.com with ESMTPS id d4sm114423fga.4.2008.04.29.22.28.30
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Apr 2008 22:23:58 -0700 (PDT)
+        Tue, 29 Apr 2008 22:28:31 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
-In-Reply-To: <20080429231201.GA22646@sigill.intra.peff.net>
+In-Reply-To: <7vzlrc45ex.fsf@gitster.siamese.dyndns.org>
 X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80793>
 
+> Do you really think that it is a good idea to push down a huge change like 
+> this down everybody else's throat, just because you do not want to type 
+> "git remote ..." but "git fetch ..." in your workflow?
 
->>> ... The principle of "remove defaults from code, and
->>> put them into the automatically generated config file" makes sense to
->>> me. It gives users an easy place to look to understand and change such
->>> behavior. So even without the rest of the patches, I think this is an
->>> improvement.
->> If the removal of defaults do not break expectations of users of an
->> existing repository, I'd agree.  Is it the case, or the lack of default
->> that is supposed to be there now suddenly makes the tool do unexpected
->> things?
+It's not that I don't want.  I couldn't care less, but I just don't see 
+why I should have learnt it in the first place.
+
+>> I wonder this a bit, too, and I am even somebody who _likes_ the new
+>> behavior. But there is a difference between "should have been designed
+>> this way in the first place" and "is currently designed some other way,
+>> and will cause pain to switch it to this way."
+
+Agreed.
+
+>> So it might simply not be worth the trouble to change. OTOH, I think
+>> this is how we end up with many commands to do slightly different
+>> things, which can end up confusing new users. I'm not sure what the
+>> right answer is.
 > 
-> I think in the case of patches 1 and 2 (but without the later patches)
-> it becomes redundant. And of course, Paolo's idea is that it opens us up
-> to changing the default later, in which case it will cease to be
-> redundant. But I think even in the meantime that it gives the user
-> a clue when looking in the config file about what can be tweaked.
+> Well, the thing is, push and fetch are different, so expecting the same
+> behaviour and syntax from them is a lost cause to begin with.  Even if we
+> were designing fetch and push right now, I do not necessarily think the
+> series shows a way that "should have been designed in the first place".
 
-Agreed.  Patches 1 and 2 can definitely go in earlier and can help in 
-the transition (see later).
+To me, "push and pull" are different obviously (because pull modifies 
+two refs, the remote one and the local one).  But "push and fetch" are 
+not so different, so I do expect lots of different options but the gist 
+of the command-line syntax to be the same.
 
-> Didn't we already have this discussion and don't we already have a way to
-> define a remote that you can use to push to more than one places?
-
-No, because you may want to push to some places, and mirror to others. 
-Unfortunately, mirroring is not handled entirely within match_refs but 
-is also special-cased in builtin-send-pack.c.  So you cannot handle it 
-with a magic refspec (like --force), and you are forced to use a 
-separate remote, independent of remote.*.mirror.
-
->>> ... I
->>> assume people still with ancient .git/remotes files? Are those actually
->>> deprecated?
->>
->> Neither .git/branches.  When you interact with hundreds of remote
->> repositories, one interesting branch per each, like akpm does, the format
->> of one-file-per-remote is far easier and simpler to work with.
-> 
-> Then in that case, I think the warning is definitely bogus.
-
-When you use .git/remotes and .git/branches, do you actually use them 
-with the zero-argument versions of "git pull" (and "git fetch")?  I'm 
-not sure about that, actually I very much doubt so.
-
-So here is my plan.
-
-1) Merge patches 1 and 2 now.
-
-2) Add a warning to "git push" if it pushes to something without a push 
-refspec.  Merge patch 3, the doc can say that --push suppresses this 
-warning.  Make sure the warning suggests how to silence it.
-
-3) Merge patch 5 as it is just a cleanup.
-
-4) Merge patch 6.
-
-5) Add a similar warning to "git fetch".
-
-6) Add a warning when "git push" is used with zero-arguments and there 
-is more than one remote with a push refspec.  Something like, "git push 
-will only push to ***.  This may not be what you want, and it may change 
-in future versions of git".
-
-7) If there is a revolt against the warning in (5), revert it and add a 
-warning whenever the "magic origin" behavior is triggered by "git push".
-
-
-For 1.6.0, the remaining changes would be harder to warn about 
-preventively, so this part can be refined:
-
-8) In "git pull", turn the warning into an error.
-
-9) Ditto for "git fetch".
-
-10) Ditto for "git push" if we had to go for (7).  If we didn't, merge 
-patch 4 for 1.6.0.  Put a prominent note in the release notes that "git 
-push" will push to all remotes with a push refspec.  By now, users will 
-have added push refspecs appropriately thanks to the warning in step 2 
-above; so at least "git push" will not stop pushing to origin.
-
-
-In the meanwhile, decide what is the best thing to do for patch 7.  If 
-we decide it is to go in, steps 5 and 9 will have to be replaced with 
-something else (I don't know what).
+There are definitely uncontroversial changes in the series, we can start 
+from there.
 
 Paolo
