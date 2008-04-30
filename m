@@ -1,101 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [regression?] "git status -a" reports modified for empty  
- submodule directory
-Date: Wed, 30 Apr 2008 00:29:50 -0700
-Message-ID: <7vej8n3imp.fsf@gitster.siamese.dyndns.org>
-References: <46dff0320804220401h26d2f2ebg1748a4a310acc0f5@mail.gmail.com>
- <46dff0320804290831u7ef1a78ag2988d5d12f782bdb@mail.gmail.com>
- <7v4p9k7326.fsf@gitster.siamese.dyndns.org> <4818143C.6050206@viscovery.net>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: Re: [PATCH] cvsimport: always pass user data to "system" as a list
+Date: Wed, 30 Apr 2008 08:30:42 +0100
+Message-ID: <320075ff0804300030q227cee39w28bfb8456a97995f@mail.gmail.com>
+References: <20080430043614.GA31019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ping Yin <pkufranky@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 09:30:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 30 09:31:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jr6m9-0002NJ-FG
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 09:30:49 +0200
+	id 1Jr6ms-0002dS-Ij
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 09:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbYD3H37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 03:29:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754463AbYD3H37
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 03:29:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48871 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754759AbYD3H36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 03:29:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B83DD3866;
-	Wed, 30 Apr 2008 03:29:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id CE4073865; Wed, 30 Apr 2008 03:29:53 -0400 (EDT)
-In-Reply-To: <4818143C.6050206@viscovery.net> (Johannes Sixt's message of
- "Wed, 30 Apr 2008 08:39:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3C3404D2-1687-11DD-9C37-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1754463AbYD3Har (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 03:30:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755007AbYD3Har
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 03:30:47 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:34430 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754280AbYD3Haq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 03:30:46 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so53454fgg.17
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 00:30:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gcKgCkMH7CVWneQwTgp+lD/SBI/VTrh83ftIRR5En3A=;
+        b=HS4hhuVIWb517twNMAZR9kpSoOf4236zTmAmCQUewCJy4RW9MEs0OyMOrhluPPRZQidGZWDnxxcsjhaCTHhQMJ7+Fgz3Vqk56Myx3UD6avrM6/j1Dsb76SgcEADekjk9H+zs93Wk9MiVSWKSAl8HxKVnOsftFVjcbJXUHnQMP3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=E1/NhQ3phGan3g9ybOoCSY6SL7jvIS05f0vWxh6TNMKnXE7Q8y6ljB4/t4Kw3ZvZe+vm601+nOjbITVkPmjKluDVwq+q9IsZ2S/6QZlDsLnf1xZHBOc0h6aP9Tc2c7cfmRhjFi1D8jZN66i3ACng4Kdcj3lGxFUd/q8mdL0cy4s=
+Received: by 10.82.105.1 with SMTP id d1mr29731buc.26.1209540642629;
+        Wed, 30 Apr 2008 00:30:42 -0700 (PDT)
+Received: by 10.82.168.20 with HTTP; Wed, 30 Apr 2008 00:30:42 -0700 (PDT)
+In-Reply-To: <20080430043614.GA31019@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80804>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+This fixed my import problem - thanks for the swift identification (my
+perl isn't so hot so it scared me :) )
 
-> Junio C Hamano schrieb:
->> "Ping Yin" <pkufranky@gmail.com> writes:
->> 
->>> In the super project super with empty submodule directory sub
->>> $ git diff
->>> diff --git a/sub b/sub
->>> deleted file mode 160000
->>> index f2c0d45..0000000
->>> --- a/sub
->>> +++ /dev/null
->>> @@ -1 +0,0 @@
->>> -Subproject commit f2c0d4509a3178c...
->> 
->> The repository used to have a subproject and now it doesn't.  Why
->> shouldn't it report the removal?
+On Wed, Apr 30, 2008 at 5:36 AM, Jeff King <peff@peff.net> wrote:
+> This avoids invoking the shell. Not only is it faster, but
+>  it prevents the possibility of interpreting our arguments in
+>  the shell.
 >
-> Because you are not required to have a subproject checked out?
-
-Yes, but.
-
-This is a policy issue, which is not very well enforced currently.
-
-I have been scratching my head to figure out where the right balance we
-should strike at for the past week and a half.
-
-For example, it has long been known ever since submodules were introduced
-that if you work inside a sparsely checked out supermodule you have to use
-"commit -a" with care, because the command notices missing submodule, and
-there is no way for it to differenciate between the case you _want to_
-remove it and the case you did not care about it, so you will end up
-removing unchecked out submodules.
-
-That quirk was something people could live with while submodule support
-was merely a newly invented curiosity.  But I do not think a command at
-high level (iow Porcelain) such as commit and status should be left
-unaware of the Policy that equate missing submodule and unmodified one
-forever.  We should actively enforce the policy, so that unless you
-explicitly ask nicely, the command should consider a missing submodule
-just as unmodified, e.g. "commit -a" should not remove unchecked out
-submodules.
-
-But then you would need a way to ask nicely.  How?  Perhaps using "git rm",
-and low level "update-index --remove".  Do we even need "commit -A"?  I
-doubt it --- you do not remove submodules every day.
-
-We'd like to keep the lowest-level unaware of the Policy, which means that
-"diff-files" and "diff-index" should report unchecked out submodules.
-Otherwise script writers will be left with no way to differenciate missing
-and removed submodules.
-
-Once we start doing this, I think "git diff" Porcelain should fall into
-Policy-aware category.
+>  Signed-off-by: Jeff King <peff@peff.net>
+>  ---
+>  Nigel reported a problem with a CVS branch that had '(' in the name. No
+>  report yet on whether this fixes it, but it should be done regardless.
+>
+>  I checked over git-cvsimport.perl, and this was the only instance I
+>  found.
+>
+>   git-cvsimport.perl |    2 +-
+>   1 files changed, 1 insertions(+), 1 deletions(-)
+>
+>  diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+>  index 95c5eec..bdac5d5 100755
+>  --- a/git-cvsimport.perl
+>  +++ b/git-cvsimport.perl
+>  @@ -772,7 +772,7 @@ sub commit {
+>         waitpid($pid,0);
+>         die "Error running git-commit-tree: $?\n" if $?;
+>
+>  -       system("git-update-ref $remote/$branch $cid") == 0
+>  +       system('git-update-ref', "$remote/$branch", $cid) == 0
+>                 or die "Cannot write branch $branch for update: $!\n";
+>
+>         if ($tag) {
+>  --
+>  1.5.5.1.178.gc1eb9.dirty
+>
+>
