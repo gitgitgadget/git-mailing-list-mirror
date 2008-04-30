@@ -1,60 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/3] rename limit improvements
-Date: Wed, 30 Apr 2008 13:21:37 -0400
-Message-ID: <20080430172136.GA22601@sigill.intra.peff.net>
-References: <20080426063209.5615dd5e.akpm@linux-foundation.org> <20080426135737.GA382@sigill.intra.peff.net> <20080426070656.e7a01d91.akpm@linux-foundation.org> <20080426145236.GA4367@sigill.intra.peff.net>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-rebase and reflog
+Date: Wed, 30 Apr 2008 13:22:34 -0400
+Message-ID: <32541b130804301022l3a072f2p47ccb5639cd8a24e@mail.gmail.com>
+References: <46dff0320804300904i3402b5e7wf827f6759bc52901@mail.gmail.com>
+	 <m3d4o7nvt2.fsf@localhost.localdomain>
+	 <46dff0320804300956x7e4f34efle39f6cad2e98a2de@mail.gmail.com>
+	 <4818A6CA.5000409@nrlssc.navy.mil>
+	 <46dff0320804301013o17da30cg1fd847beca94ff58@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 19:22:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 19:23:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrG0h-0003Ev-EA
-	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:22:27 +0200
+	id 1JrG1w-0003hp-Tu
+	for gcvg-git-2@gmane.org; Wed, 30 Apr 2008 19:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757999AbYD3RVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 13:21:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757997AbYD3RVj
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:21:39 -0400
-Received: from peff.net ([208.65.91.99]:4941 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757951AbYD3RVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 13:21:38 -0400
-Received: (qmail 27730 invoked by uid 111); 30 Apr 2008 17:21:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Apr 2008 13:21:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2008 13:21:37 -0400
+	id S1758096AbYD3RWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 13:22:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758092AbYD3RWi
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 13:22:38 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:30680 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758004AbYD3RWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 13:22:37 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so387288fkq.5
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 10:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ji8mxq7JOWEmeNRx8jkw237VNJecuV3S3ELLdfTY6zw=;
+        b=CChSM/OGkWClOZC7dDxx2OkmDAPfgYK9Wm1GeDmc7Uw54meLsc5oEpSdF/KkOVo9YXfaFcalFNoFwCVFIp0KyQvytcCS8xvxjb89yDt30GjABfLoiMcPK0LL9It2BY8HnL2cmmi9s85pwT2+Y+Q6DT2GqupvvCFdarOng2ZZNuU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MIm4r6QC+x+PIPlngrkBmlgPA6+R88WEXVvW8fL7ZGlSnVVK8caK9WdHkULG9FfjY6ra/c9QNad+mMhr8rVl60EhssGXuQQWUld+8d9w78yTXJCtRG2aDepnpossn5UFo7WiNbnodCql36XmgVL1YyKzfBzF5DJux5KkBySH/kE=
+Received: by 10.82.161.19 with SMTP id j19mr151727bue.48.1209576154339;
+        Wed, 30 Apr 2008 10:22:34 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Wed, 30 Apr 2008 10:22:34 -0700 (PDT)
+In-Reply-To: <46dff0320804301013o17da30cg1fd847beca94ff58@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080426145236.GA4367@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80853>
 
-On Sat, Apr 26, 2008 at 10:52:36AM -0400, Jeff King wrote:
+On 4/30/08, Ping Yin <pkufranky@gmail.com> wrote:
+>  However, i still think the intemediate commits of git-rebase needn't
+>  go into HEAD's reflog because it's totally useless.
 
-> > Perhaps the default should be bumped up a bit based on your measurements,
-> > dunno.
-> 
-> Probably. I'll work up a patch for that, as well as suppressing the
-> message on diffstat (where you really shouldn't care, and it serves only
-> to scare users).
+I don't know, I can imagine a situation where I'm doing a rebase, I
+get a conflict, I type the wrong command, and so I lose a bunch of my
+intermediate work because I was an idiot.  The reflog sounds like it
+would be helpful here as much as anywhere.
 
-Here's a patch series trying to improve rename limits, based on my
-discussion with Andrew and from some previous comments about the
-settings[1].
+Have fun,
 
-Patch 1 allows separate renamelimit values for diff vs merge. Patch 2
-bumps up the default values based on some measurements I did in
-February. Patch 3 turns off the mostly cluttering warning message except
-for merges.
-
-[1]: http://permalink.gmane.org/gmane.comp.version-control.git/73470
-
--Peff
+Avery
