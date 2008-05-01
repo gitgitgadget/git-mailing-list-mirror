@@ -1,97 +1,111 @@
-From: Ittay Dror <ittayd@tikalk.com>
-Subject: Re: detecting rename->commit->modify->commit
-Date: Thu, 01 May 2008 21:58:14 +0300
-Message-ID: <481A12C6.6060900@tikalk.com>
-References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com> <2e24e5b90805010939g182de387i59722605ff93d72e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] commit: Show the committer ident when is different
+ from the parent
+Date: Thu, 01 May 2008 12:02:51 -0700
+Message-ID: <7vd4o5zw2s.fsf@gitster.siamese.dyndns.org>
+References: <1209545236-4266-1-git-send-email-sbejar@gmail.com>
+ <1209545236-4266-4-git-send-email-sbejar@gmail.com>
+ <20080430145017.GA922@sigill.intra.peff.net>
+ <20080430163701.GA6544@sigill.intra.peff.net>
+ <8aa486160804301223w574fe425n5d0678020ff1e7b4@mail.gmail.com>
+ <20080430192639.GC30344@sigill.intra.peff.net>
+ <8aa486160805010134l4746f9afhec546a9d49fd7a6d@mail.gmail.com>
+ <20080501135109.GA10135@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 20:59:37 2008
+Cc: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>,
+	git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 01 21:04:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jre08-0004vQ-FM
-	for gcvg-git-2@gmane.org; Thu, 01 May 2008 20:59:28 +0200
+	id 1Jre4Q-0006tU-4a
+	for gcvg-git-2@gmane.org; Thu, 01 May 2008 21:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758532AbYEAS6j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 May 2008 14:58:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758386AbYEAS6j
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 14:58:39 -0400
-Received: from smtp105.biz.mail.re2.yahoo.com ([206.190.52.174]:29065 "HELO
-	smtp105.biz.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1758301AbYEAS6i (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 May 2008 14:58:38 -0400
-Received: (qmail 43553 invoked from network); 1 May 2008 18:58:37 -0000
-Received: from unknown (HELO ?192.168.1.9?) (ittayd@tikalk.com@84.108.89.36 with plain)
-  by smtp105.biz.mail.re2.yahoo.com with SMTP; 1 May 2008 18:58:33 -0000
-X-YMail-OSG: 9IGhRl8VM1lJ_XoCLTOtcHqId8YC1YpnMBIm8EVn7toQfCzf4j_GfzAJ1uY.ffuZ.3beohEu0TMXB4Xtc0d_ibrxGpxeA.IjMeYYG6igz7iN.lBQEIm18LZYTD7pnyc-
-X-Yahoo-Newman-Property: ymail-3
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <2e24e5b90805010939g182de387i59722605ff93d72e@mail.gmail.com>
+	id S1762863AbYEATDG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 May 2008 15:03:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762800AbYEATDG
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 15:03:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55349 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762575AbYEATDF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 May 2008 15:03:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A779449B9;
+	Thu,  1 May 2008 15:02:59 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id BC86649B2; Thu,  1 May 2008 15:02:54 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 37610C90-17B1-11DD-AF01-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80931>
 
-Sitaram Chamarty wrote:
-> http://www.markshuttleworth.com/archives/123#comment-118655
+Jeff King <peff@peff.net> writes:
+
+> On Thu, May 01, 2008 at 10:34:44AM +0200, Santi B=C3=A9jar wrote:
 >
-Here is the comment from the thread, my comment on it is below:
+>> >  > 1) the committer ident is different from the parent
+>> >  > 2) the committer ident is set automatically
+>> >
+>> >  Honestly, I think just "2)" is probably fine (where automatically
+>> >  presumably means "from GECOS"). I see what you are trying to acco=
+mplish
+>> >  with "1)", but it's so workflow specific as to be useless.
+>>=20
+>> I don't see "1) as workflow specific, it is there to minimize the
+>> number of time it is shown, ie somebody might prefer the automatic
+>> ident, so as long as it does not change it is not shown.
+>
+> Yes, but whether it actually succeeds in minimizing is dependent on t=
+he
+> workflow of the user. I.e., it works great if I tend to build on smal=
+l,
+> personal repositories (or topic branches), or if I tend to receive ot=
+her
+> people's work by patches that I commit myself. But if I am pulling fr=
+om
+> somebody else's repo (as many of us do from git.git), or if I use a
+> shared repo with the other committers, then I am very likely to be
+> building on a parent that was committed by somebody else (and
+> consequently will see the committer mentioned way more often than was
+> intended).
 
- > This is a very strong point for renaming, but it is not necessarily=20
-an universal one.
+The goal of the patch as I understand it is to prevent mistakes of
+committing under a wrong committer ident, isn't it?  Why does "minimizi=
+ng"
+come into the picture?
 
- > Here is one example of the issue: one developer renaming a directory=
-=20
-in his branch, and another adding a file to the original directory in=20
-his branch. What happens at the merge ?
- > - Bazaar renames the directory and puts the new file in the _renamed=
-_=20
-directory.
- > - Git renames the directory with its files, but keeps the old=20
-directory too and adds the new file there.
+Once you have a good algorithm to see when to trigger the warning that =
+the
+user might be using an unintended committer identity, I do not think yo=
+u
+should refrain from issuing the warning when you see the offending
+committer ident and whose commit you are building on top of should not
+affect it.  Otherwise, the user will get the warning once (or not even =
+get
+the warning because the commit was made with a "commit -s -m 'typofix'"
+one liner), and keep using the wrong ident without noticing before
+building up a long chain of commits.  If the identification algorithm i=
+s
+bogus, that would result in too many false hits to be annoying, and in
+that case, (1) I would not apply such a bogus algorithm until it gets
+into reasonable shape, (2) we would improve it after it gets applied an=
+d
+if still makes noise on a hopefully rarer false positive cases, and/or =
+(3)
+the warning will be accompanied with a suggestion to explicitly use
+user.name and/or user.email in the configuration file to allow the user=
+ to
+squelch it.
 
- > Bazaar=92s behavior certainly is better for C. However it is not=20
-universally better.
-
- > For example in Java you cannot rename a file without changing its=20
-contents. So, moving a file to a directory different from where its=20
-author put it will almost certainly break the build.
-
- > The bottom line is, both behaviors can seem valid or broken,=20
-depending on the case. Neither is perfect. At the very abstract level=20
-file renames are _not_ a first-class operation. This is especially=20
-apparent in a language like Java.
-
- > Content movement is the first class operation. Things like moving=20
-functions, etc. The question is how one can handle that and whether the=
-=20
-current strategy has a path for improvement. It could be > argued that=20
-once you commit yourself to explicitly tracking file renames, you are=20
-giving up a slew of opportunities for handling the more general cases.
-
- > One thing is for certain, a 100% ideal solution is impossible. It=20
-would have to be aware of the target programming language _and_ the=20
-build environment.
-
-And my comment is that in this example, about Java, I think that=20
-manually fixing the package name in the file (after noticing the build=20
-is broken) is easy. On the other hand, if the other developer changed=20
-one of the renamed file, then manually merging the change in the file i=
-n=20
-the old location to the file in the new location is not so easy: you=20
-first need to discover that this happened, then merge the two files (an=
-d=20
-you still need to fix the package name).
-
-ittay
-
---=20
-Ittay Dror <ittayd@tikalk.com>
-Tikal <http://www.tikalk.com>
-Tikal Project <http://tikal.sourceforge.net>
+I think the other patch about showing the author when you are committin=
+g
+other's changes is a good move, by the way.
