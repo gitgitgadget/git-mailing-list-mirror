@@ -1,85 +1,97 @@
-From: Jeff King <peff@peff.net>
+From: Ittay Dror <ittayd@tikalk.com>
 Subject: Re: detecting rename->commit->modify->commit
-Date: Thu, 1 May 2008 12:48:29 -0400
-Message-ID: <20080501164829.GA11636@sigill.intra.peff.net>
-References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com> <32541b130805010827r22169651s37c707071f3448f2@mail.gmail.com> <20080501153457.GB11469@sigill.intra.peff.net> <32541b130805010850q165fe1d6me05e670ca93b0892@mail.gmail.com>
+Date: Thu, 01 May 2008 21:58:14 +0300
+Message-ID: <481A12C6.6060900@tikalk.com>
+References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com> <2e24e5b90805010939g182de387i59722605ff93d72e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ittay Dror <ittayd@tikalk.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 18:49:20 2008
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 01 20:59:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrbyA-0007L3-0J
-	for gcvg-git-2@gmane.org; Thu, 01 May 2008 18:49:18 +0200
+	id 1Jre08-0004vQ-FM
+	for gcvg-git-2@gmane.org; Thu, 01 May 2008 20:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758486AbYEAQsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2008 12:48:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757447AbYEAQsa
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 12:48:30 -0400
-Received: from peff.net ([208.65.91.99]:4645 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756142AbYEAQs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2008 12:48:29 -0400
-Received: (qmail 19190 invoked by uid 111); 1 May 2008 16:48:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 01 May 2008 12:48:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 May 2008 12:48:29 -0400
-Content-Disposition: inline
-In-Reply-To: <32541b130805010850q165fe1d6me05e670ca93b0892@mail.gmail.com>
+	id S1758532AbYEAS6j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 May 2008 14:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758386AbYEAS6j
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 14:58:39 -0400
+Received: from smtp105.biz.mail.re2.yahoo.com ([206.190.52.174]:29065 "HELO
+	smtp105.biz.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1758301AbYEAS6i (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 May 2008 14:58:38 -0400
+Received: (qmail 43553 invoked from network); 1 May 2008 18:58:37 -0000
+Received: from unknown (HELO ?192.168.1.9?) (ittayd@tikalk.com@84.108.89.36 with plain)
+  by smtp105.biz.mail.re2.yahoo.com with SMTP; 1 May 2008 18:58:33 -0000
+X-YMail-OSG: 9IGhRl8VM1lJ_XoCLTOtcHqId8YC1YpnMBIm8EVn7toQfCzf4j_GfzAJ1uY.ffuZ.3beohEu0TMXB4Xtc0d_ibrxGpxeA.IjMeYYG6igz7iN.lBQEIm18LZYTD7pnyc-
+X-Yahoo-Newman-Property: ymail-3
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <2e24e5b90805010939g182de387i59722605ff93d72e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80930>
 
-On Thu, May 01, 2008 at 11:50:31AM -0400, Avery Pennarun wrote:
+Sitaram Chamarty wrote:
+> http://www.markshuttleworth.com/archives/123#comment-118655
+>
+Here is the comment from the thread, my comment on it is below:
 
-> I would argue that this is a sort of "directory splitting" operation.
-> That is, all anyone ever did was add some files to a subdir/ that
-> already existed [1], *or* move all the files from subdir/ to a
-> previously-empty bettername/ [2], *or* create a new subdir/ and add
-> files to it [3]. In each case, no merge operation was necessary and it
-> is completely obvious by comparing "before and after" trees which case
-> it was.
+ > This is a very strong point for renaming, but it is not necessarily=20
+an universal one.
 
-I don't see it. I think the steps are exactly the same as in your
-example. Consider:
+ > Here is one example of the issue: one developer renaming a directory=
+=20
+in his branch, and another adding a file to the original directory in=20
+his branch. What happens at the merge ?
+ > - Bazaar renames the directory and puts the new file in the _renamed=
+_=20
+directory.
+ > - Git renames the directory with its files, but keeps the old=20
+directory too and adds the new file there.
 
-  1. You have some files in src/
-  2. All of the files from src/ get moved away
-  3. You merge in somebody else's work which adds a file in src/, but
-     their work is based on a commit which predates 2.
+ > Bazaar=92s behavior certainly is better for C. However it is not=20
+universally better.
 
-The question is: if they had seen 2., would they have put the file into
-src/, or into the new location? I think the answer depends on the
-semantics of the file. If it is semantically an addition to the source
-code that got moved, then yes. If it is a _replacement_ for the
-source code that got moved, then no.
+ > For example in Java you cannot rename a file without changing its=20
+contents. So, moving a file to a directory different from where its=20
+author put it will almost certainly break the build.
 
-> I guess my argument here is just that it should be *possible* to
-> deduce and implement both cases at merge time just fine using git's
-> existing storage model.  It just hasn't been implemented yet.  (And
-> incidentally, I think that's totally awesome and I'd never want to go
-> back to an explicit rename tracking model.)
+ > The bottom line is, both behaviors can seem valid or broken,=20
+depending on the case. Neither is perfect. At the very abstract level=20
+file renames are _not_ a first-class operation. This is especially=20
+apparent in a language like Java.
 
-I think you lack information to decide automatically between the two
-cases listed above. But I think in most cases it would be sufficient for
-the tool to say "this directory seems to have moved, but this new file
-was added in it" and let the user decide which makes sense.
+ > Content movement is the first class operation. Things like moving=20
+functions, etc. The question is how one can handle that and whether the=
+=20
+current strategy has a path for improvement. It could be > argued that=20
+once you commit yourself to explicitly tracking file renames, you are=20
+giving up a slew of opportunities for handling the more general cases.
 
-> I should shut up now because the actual merge machinery scares me and
-> I'm not willing to volunteer to write a patch for this one :)
+ > One thing is for certain, a 100% ideal solution is impossible. It=20
+would have to be aware of the target programming language _and_ the=20
+build environment.
 
-It would probably start not with merge machinery, but with diff
-machinery to detect "directory has moved". But that is also scary. :)
+And my comment is that in this example, about Java, I think that=20
+manually fixing the package name in the file (after noticing the build=20
+is broken) is easy. On the other hand, if the other developer changed=20
+one of the renamed file, then manually merging the change in the file i=
+n=20
+the old location to the file in the new location is not so easy: you=20
+first need to discover that this happened, then merge the two files (an=
+d=20
+you still need to fix the package name).
 
-You could also do this totally _outside_ of git, similar to
-git-mergetool. Wait until you get a conflict, and then run a script
-which looks at the two endpoints and the merge base and says "Oh, maybe
-this is a good way of resolving."
+ittay
 
--Peff
+--=20
+Ittay Dror <ittayd@tikalk.com>
+Tikal <http://www.tikalk.com>
+Tikal Project <http://tikal.sourceforge.net>
