@@ -1,150 +1,66 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: reflog/show question
-Date: Thu, 1 May 2008 09:45:40 +0930
-Message-ID: <93c3eada0804301715r724e8b8xf0ed64ebe016beea@mail.gmail.com>
-References: <93c3eada0804271859p1b4d8b52i811bdc5e42672822@mail.gmail.com>
-	 <20080428092410.GD16153@sigill.intra.peff.net>
-	 <93c3eada0804281847q267611aeke51b482cfbe100d6@mail.gmail.com>
-	 <20080429201214.GB20509@sigill.intra.peff.net>
-	 <93c3eada0804291506n7432b348p2b726926b5fc8f80@mail.gmail.com>
-	 <20080429230715.GB22598@sigill.intra.peff.net>
-	 <93c3eada0804291712u19c1047bl6d44df4ca025bb4d@mail.gmail.com>
-	 <93c3eada0804291726l454ccbbv96217d6657d79ded@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Tracability in git commits
+Date: Wed, 30 Apr 2008 20:28:27 -0400
+Message-ID: <20080501002827.GX29771@spearce.org>
+References: <1209473739.5642.31.camel@dax.rpnet.com> <7vd4o873cm.fsf@gitster.siamese.dyndns.org> <46dff0320804301033k1dea34ecx863ecfa8e386e0af@mail.gmail.com> <20080430194651.GC23672@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 01 02:16:45 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Ping Yin <pkufranky@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Richard Purdie <rpurdie@rpsys.net>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu May 01 02:29:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrMTY-0005GJ-AD
-	for gcvg-git-2@gmane.org; Thu, 01 May 2008 02:16:40 +0200
+	id 1JrMfr-00081Q-UC
+	for gcvg-git-2@gmane.org; Thu, 01 May 2008 02:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760565AbYEAAPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 20:15:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760766AbYEAAPn
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 20:15:43 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:54160 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760363AbYEAAPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 20:15:42 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so339026fgg.17
-        for <git@vger.kernel.org>; Wed, 30 Apr 2008 17:15:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=53EHXYiQHoCE9678lCPmf6SA/7kQMqGZnSV1PX7NWq8=;
-        b=ZJ2Dl+00zw+eEOjyiqBrCgh4xEG742NfIlMghVCxpTHAhyiW3GJifsahraf01lbR1R/A1vJvuDT91WlvgC5b6omjGXFbecGMm4MPhWWK/G89txdImaZiMwr/HEblK5FWIXi8Wb0FkQRzk4v+UB46DEbwz2X1OouMq5zrtCxdDi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NtxarJa6u6gAVg+QzjVBF9pi8Tk5L0neIBVbC7fJfBHPbDTDB7vfTfXKgQpMcWmb9t2ru8n+PztVwuh5M05194UI32DpWzLEx+ATtr7kbnJBvC+hUxsZemhCl6uq+Nea85h+qgrC1ePHENgQHQNl8PFrMIim1noCOnB/wZarBh8=
-Received: by 10.82.191.3 with SMTP id o3mr195700buf.34.1209600940239;
-        Wed, 30 Apr 2008 17:15:40 -0700 (PDT)
-Received: by 10.82.105.8 with HTTP; Wed, 30 Apr 2008 17:15:40 -0700 (PDT)
-In-Reply-To: <93c3eada0804291726l454ccbbv96217d6657d79ded@mail.gmail.com>
+	id S1756259AbYEAA2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 20:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbYEAA2g
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 20:28:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59956 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755498AbYEAA2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 20:28:35 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JrMeo-0005JF-Sl; Wed, 30 Apr 2008 20:28:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5699020FBAE; Wed, 30 Apr 2008 20:28:27 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <20080430194651.GC23672@genesis.frugalware.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80882>
 
-N.B. This problem has vanished -- which means its probably something I
-messed up. I haven't
-worked out what yet, but I will.  Apologies for any time wasted.
+Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Thu, May 01, 2008 at 01:33:53AM +0800, Ping Yin <pkufranky@gmail.com> wrote:
+> > I don't find reflog for bare repository, or must i enable it manually?
+> 
+> Right, reflog is disabled by default for bare repos.
 
-Cheers,
-Geoff.
+`git config core.logAllRefUpdates true` right after you make the
+repository solves that nicely.  I actually have a script that I use
+to make a new bare central repo:
 
-On Wed, Apr 30, 2008 at 9:56 AM, Geoff Russell
-<geoffrey.russell@gmail.com> wrote:
->
-> On Wed, Apr 30, 2008 at 9:42 AM, Geoff Russell
->  <geoffrey.russell@gmail.com> wrote:
->  >
->  > On Wed, Apr 30, 2008 at 8:37 AM, Jeff King <peff@peff.net> wrote:
->  >  > On Wed, Apr 30, 2008 at 07:36:23AM +0930, Geoff Russell wrote:
->  >  >
->  >  >  > > Hmm. Are you sure that the commit you got from HEAD@{"3 minutes ago"}
->  >  >  > >  actually _has_ the file data/node/node.data? If it doesn't, then you get
->  >  >  >
->  >  >
->  >  > > Later today (touch wood) I'll prepare as small a test case as
->  >  >  > possible, then send
->  >  >  > a tar.gz of the .git directory. Okay?
->  >  >
->  >  >  That would be great, thanks.
->  >
->  >  Attached is tar.gz of working directory (.) - so unpack in a new directory.
->  >
->  >        git show HEAD@{"N seconds ago"}:data/node/.gitignore
->  >
->  >  works fine for values of N back to creationof file
->  >
->  >  But:
->  >
->  >        git show HEAD@{"N seconds ago"}:data/node/node.newds1
->  >
->  >  doesn't work for any values of N.
->  >
->  >  During my attempts to create this example, I managed created a
->  >  directory which where
->  >  the show command failed for both files, but when I changed the commit
->  >  message, the
->  >  show worked for .gitignore but not the node file. Hence my suspicion
->  >  of that the slashes
->  >  in the path are being interpreted as requesting a commit message match ...?
->  >
->  >  I hope you can track it down, I will install the latest version of git
->  >  later on today to
->  >  confirm the behaviour is still happening.
->
->  I just confirmed behaviour is still the same in 1.5.5
->
->  Geoff.
->
->
->
->
->
->  >
->  >  Thanks,
->  >  Geoff Russell
->  >
->  >  >
->  >  >  -Peff
->  >
->  >
->  > >
->  >
->  >
->  >
->  >  --
->  >  6 Fifth Ave,
->  >  St Morris, S.A. 5068
->  >  Australia
->  >  Ph: 041 8805 184 / 08 8332 5069
->  >
->
->
->
->  --
->  6 Fifth Ave,
->  St Morris, S.A. 5068
->  Australia
->  Ph: 041 8805 184 / 08 8332 5069
->
+	#!/bin/sh
+	git --git-dir="$1" init &&
+	git --git-dir="$1" config core.logAllRefUpdates true ||
+	exit
 
-
+;-)
 
 -- 
-6 Fifth Ave,
-St Morris, S.A. 5068
-Australia
-Ph: 041 8805 184 / 08 8332 5069
+Shawn.
