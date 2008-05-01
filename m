@@ -1,66 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Tracability in git commits
-Date: Wed, 30 Apr 2008 20:28:27 -0400
-Message-ID: <20080501002827.GX29771@spearce.org>
-References: <1209473739.5642.31.camel@dax.rpnet.com> <7vd4o873cm.fsf@gitster.siamese.dyndns.org> <46dff0320804301033k1dea34ecx863ecfa8e386e0af@mail.gmail.com> <20080430194651.GC23672@genesis.frugalware.org>
+From: "Matt Graham" <mdg149@gmail.com>
+Subject: Re: Files need updating following a clone?
+Date: Wed, 30 Apr 2008 20:32:03 -0400
+Message-ID: <1c5969370804301732i282064f7r55858d54a6796791@mail.gmail.com>
+References: <65e5553a-a630-4b1a-9c81-f0ed7d9d7361@c19g2000prf.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ping Yin <pkufranky@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Richard Purdie <rpurdie@rpsys.net>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu May 01 02:29:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: edpark <edpark@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 01 02:32:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrMfr-00081Q-UC
-	for gcvg-git-2@gmane.org; Thu, 01 May 2008 02:29:24 +0200
+	id 1JrMjF-0000QP-OZ
+	for gcvg-git-2@gmane.org; Thu, 01 May 2008 02:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756259AbYEAA2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2008 20:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbYEAA2g
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 20:28:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59956 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbYEAA2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2008 20:28:35 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JrMeo-0005JF-Sl; Wed, 30 Apr 2008 20:28:19 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5699020FBAE; Wed, 30 Apr 2008 20:28:27 -0400 (EDT)
+	id S1751412AbYEAAcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2008 20:32:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbYEAAcF
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Apr 2008 20:32:05 -0400
+Received: from rv-out-0708.google.com ([209.85.198.241]:31618 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751202AbYEAAcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2008 20:32:04 -0400
+Received: by rv-out-0506.google.com with SMTP id k29so405049rvb.1
+        for <git@vger.kernel.org>; Wed, 30 Apr 2008 17:32:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=LAEoPMnlTG/mFe25km13W1pYF6JTwabku8RZUqAIwaQ=;
+        b=gtE7QKuAxp0FAmnebAAKhLvk4eazBtYUP10g/IZPw25H7o9MAyG6c2ZVJ3LluV06z7CFFBaVmfqmT4kPSeSnHMi8XeOP+Ju2mNCQlSrdCVfB1GSlN1TqkMLmpTJxkFwYZP0FbIb4TRuMMnXCjGTvphdWzOZbbZw7Gi8nppF/3Bs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pop9EqAbAAK5LV3o5NtqoQ5D59apVftuZcnOEt2APczeA+Cr9gLlq2ibGkyg2yvKw40Fm+SlqF8osvuCrKV5sGFPkTIfjUcLCGXsTEDo0WljambC8KPR9xgxflSgPlXc6M707zJAO8lLVxX/2coVGygLRJJ3GTecANpi6M+uzPY=
+Received: by 10.141.197.8 with SMTP id z8mr575394rvp.285.1209601923420;
+        Wed, 30 Apr 2008 17:32:03 -0700 (PDT)
+Received: by 10.141.3.15 with HTTP; Wed, 30 Apr 2008 17:32:03 -0700 (PDT)
+In-Reply-To: <65e5553a-a630-4b1a-9c81-f0ed7d9d7361@c19g2000prf.googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <20080430194651.GC23672@genesis.frugalware.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80883>
 
-Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, May 01, 2008 at 01:33:53AM +0800, Ping Yin <pkufranky@gmail.com> wrote:
-> > I don't find reflog for bare repository, or must i enable it manually?
-> 
-> Right, reflog is disabled by default for bare repos.
+On Wed, Apr 30, 2008 at 7:12 PM, edpark <edpark@gmail.com> wrote:
+> This is really strange and I'm wondering if anyone here can help me
+>  out.
+>
+>  I just cloned a remote repository and when I execute a 'git status'
+>  right after it says that some files need to be updated:
+>
+>  utsd.txt:   needs update
+>
+>  If I just cloned a remote repo how did these files get modified?  How
+>  can I make git realize that these files aren't modified?
+>  Further, if I clone to a different machine then the git on that
+>  machine doesn't indicate that any files were modified (??).
 
-`git config core.logAllRefUpdates true` right after you make the
-repository solves that nicely.  I actually have a script that I use
-to make a new bare central repo:
-
-	#!/bin/sh
-	git --git-dir="$1" init &&
-	git --git-dir="$1" config core.logAllRefUpdates true ||
-	exit
-
-;-)
-
--- 
-Shawn.
+What systems are you using?  Someone recently posted a probably
+unrelated issue when mixing macs and windows.
+http://article.gmane.org/gmane.comp.version-control.git/80548/match=mac+modified
