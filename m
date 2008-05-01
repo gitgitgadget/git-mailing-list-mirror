@@ -1,79 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Thu, 01 May 2008 12:04:38 -0700
-Message-ID: <7vy76tyhfd.fsf@gitster.siamese.dyndns.org>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
- <7vabjm78v2.fsf@gitster.siamese.dyndns.org>
- <20080422095549.GB3752@alea.gnuu.de>
- <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
- <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
- <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
- <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
- <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
- <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
- <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness>
- <7v63u05khw.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness>
- <7v1w4o3zle.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
- <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804301253520.2136@eeepc-johanness>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 01 21:05:57 2008
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: detecting rename->commit->modify->commit
+Date: Thu, 1 May 2008 12:12:33 -0700
+Message-ID: <D0968007-2A38-44DB-B26F-3D273F20D428@midwinter.com>
+References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com> <32541b130805010827r22169651s37c707071f3448f2@mail.gmail.com> <20080501153457.GB11469@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Ittay Dror <ittayd@tikalk.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 01 21:13:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jre6I-0007Jl-Dz
-	for gcvg-git-2@gmane.org; Thu, 01 May 2008 21:05:50 +0200
+	id 1JreDd-0002Fi-VP
+	for gcvg-git-2@gmane.org; Thu, 01 May 2008 21:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763591AbYEATE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2008 15:04:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763443AbYEATEz
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 15:04:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55692 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761900AbYEATEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2008 15:04:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9BAAF4A3A;
-	Thu,  1 May 2008 15:04:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id B4D684A37; Thu,  1 May 2008 15:04:47 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7AB3CC12-17B1-11DD-8823-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1758618AbYEATMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2008 15:12:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758239AbYEATMh
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 15:12:37 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:39594 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758226AbYEATMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 May 2008 15:12:37 -0400
+Received: (qmail 32175 invoked from network); 1 May 2008 19:12:34 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Os04ZMNB7Uep94zAMPUX61gZRSdMsXgEqZOCqQ61rizy/uxgdbrBgnasm9jUMQiu  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 1 May 2008 19:12:34 -0000
+In-Reply-To: <20080501153457.GB11469@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80934>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On May 1, 2008, at 8:34 AM, Jeff King wrote:
+> So I don't think you can always track the intent automatically.
 
-> The idea I hinted at was to refer to them by another name than the short 
-> name.  Then we can use the sequencer machinery.
->
-> I still maintain that it is such a rare need (even if you are a power user 
-> of it) that it makes sense to cater for other, simpler uses.
+That is absolutely true. You have to pick one case or the other as the  
+default unless there's some way to tell the system your intent either  
+at merge time or at move time.
 
-As usual, I am greedy and I would want to have both supported in such a
-way that (1) simple things are simple and (2) the language is expressive
-enough that complex things are possible.  And I try to stress that while
-we are still in the drawing board phase, because it would be painful to
-change once we start with a language without enough expressiveness.
+However, that leaves the question of which default will be wrong the  
+least often.
 
-And that was where my "Can the approach to use the original commit ID to
-stand for rewritten one express everything we would want to do in the
-future, not just limited to 'rebase -i -p'" series of questions came
-from.
+In my personal experience, I think a directory rename has almost  
+always meant that I would want new files to appear in the new  
+directory rather than to recreate the old directory. I can't think of  
+a single time when I've wanted git's current behavior (though maybe  
+it's happened on occasion) but the current behavior has tripped me up  
+more than once and forced me to do extra work shuffling things around  
+by hand post-merge. I acknowledge that there exist cases where the  
+current behavior is correct -- but in my experience they're the  
+minority.
+
+Of course, the discussion is moot anyway until someone writes code to  
+detect the situation; my impression is the current behavior is the way  
+it is simply because it's what naturally happens in the absence of  
+merge-time detection of a directory getting renamed.
+
+-Steve
