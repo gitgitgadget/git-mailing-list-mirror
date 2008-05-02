@@ -1,71 +1,69 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: To page or not to page
-Date: Fri, 2 May 2008 12:58:25 -0400
-Message-ID: <2161C3E5-69E8-4160-8468-43E8B1049746@sb.org>
-References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <7vlk2txn8n.fsf@gitster.siamese.dyndns.org> <8C3474E2-3A4F-44E8-B301-C36939C7BA11@sb.org> <702ACF8F-B6D0-42FD-9B38-7C5A4F775E90@simplicidade.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Sitaram Chamarty" <sitaramc@gmail.com>
+Subject: Re: detecting rename->commit->modify->commit
+Date: Fri, 2 May 2008 22:29:29 +0530
+Message-ID: <2e24e5b90805020959h42258110vfd6fb4957643e6fc@mail.gmail.com>
+References: <4819CF50.2020509@tikalk.com>
+	 <20080501144524.GA10876@sigill.intra.peff.net>
+	 <4819DCF1.7090504@tikalk.com>
+	 <20080501152035.GB11145@sigill.intra.peff.net>
+	 <20080501203940.GA3524@mithlond.arda.local>
+	 <2e24e5b90805011906g769723f0g3ffbbe6588cf23d0@mail.gmail.com>
+	 <7vtzhhxwep.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pedro Melo <melo@simplicidade.org>
-X-From: git-owner@vger.kernel.org Fri May 02 18:59:24 2008
+Cc: "Teemu Likonen" <tlikonen@iki.fi>, "Jeff King" <peff@peff.net>,
+	"Ittay Dror" <ittayd@tikalk.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 02 19:00:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrybQ-0002Os-CJ
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 18:59:20 +0200
+	id 1JrycP-0002oC-FY
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 19:00:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301AbYEBQ63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 12:58:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbYEBQ63
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 12:58:29 -0400
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:46390
-	"EHLO randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752017AbYEBQ62 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2008 12:58:28 -0400
-Received: from [192.168.0.215] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 39C55EEF84;
-	Fri,  2 May 2008 09:58:27 -0700 (PDT)
-In-Reply-To: <702ACF8F-B6D0-42FD-9B38-7C5A4F775E90@simplicidade.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1762613AbYEBQ7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 12:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762378AbYEBQ7d
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 12:59:33 -0400
+Received: from ti-out-0910.google.com ([209.85.142.191]:24100 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762222AbYEBQ7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 12:59:32 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so303888tic.23
+        for <git@vger.kernel.org>; Fri, 02 May 2008 09:59:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=zEnt5vy7OqHwHKz/6wyIWRO0Exo61pwlCPRH+JV5OmY=;
+        b=CXOrAmeRvn7irWaIF1qYpNh99SYlaBGeEq8ZKJwTHuDHNF52Q/e/C/VXML8sUC3+9z6lW18806Fh+pKi5CGexz6BTjCnvGd/1Pk/LEZp2zYkDQSMefeY3t8P8Lvut7E9/kg38rQBZJ2zOXwGEr7+lPZw6wgqIGNVNCm4WXebBpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MljtE5zoriXteeDzx33IqXHToOCbDUOksPTW/FUlQ7eJ4ShmYWuEw9aIjTTqLZhRGcnyFN7w8br/1U+1s9fIZh+tuFLbRKEE5dhvoRM+7jtJuDwU3nfvGFco+4qd6LGrLAlfzHi5UWS7p+3jMbYfZiGLQ4rrnmNiT/WBkhbn8wI=
+Received: by 10.110.73.3 with SMTP id v3mr323774tia.21.1209747569755;
+        Fri, 02 May 2008 09:59:29 -0700 (PDT)
+Received: by 10.110.52.10 with HTTP; Fri, 2 May 2008 09:59:29 -0700 (PDT)
+In-Reply-To: <7vtzhhxwep.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81012>
 
-On May 2, 2008, at 5:41 AM, Pedro Melo wrote:
+On Fri, May 2, 2008 at 8:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  The option to -M<num>, -C<num>, -B<num>/<num> are "raise or lower the
+>  similarity threshold to <num> / 10^N" where N is the number of digits in
+>  <num>.  IOW, you will always be expressing number between 0 and 1.
 
->> Even if I put FX into LESS (I have it set normally so it contains  
->> R), it still doesn't behave correctly. I compulsively clear my  
->> terminal screen whenever I don't need the current contents, but  
->> with FX in LESS, `git status` throws the output at the bottom of my  
->> terminal, leaving a lot of blank space at the top. This is  
->> extremely irritating to me.
->
-> hmms... I remember you being a Mac user. I'm on 10.4.11 and with
->
-> LESS=iFMRSXW
-> LESSCHARSET=utf-8
->
-> it works as if no pager has been set.
+Thanks.  The only mention of this I find (now) is in a file called
+diffcore.txt, which appears to exist only in the HTML documentation,
+but not in the "man" pages anywhere, as of 1.5.5.
 
-Except that's not true. As I've mentioned before, if I've cleared the  
-terminal, and I run less with FX set, and the output is less than the  
-height of my terminal, all the output ends up at the bottom of my  
-terminal and the rest of the terminal is blank space. It's rather  
-annoying, because it's the exact opposite of how I usually work (I  
-compulsively clear my terminal so I can work at the top of the window  
-instead of the bottom).
+[ I pulled a few hairs out trying to find it in the man pages :-) ]
 
--Kevin
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+I'd submit a patch, but a guy who takes the easy way out even to get
+the documentation (essentially doing a checkout of the "man" branch)
+would certainly not be able to test it :-(
