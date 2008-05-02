@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/3] Documentation: rename "hooks.txt" to "githooks.txt" and
- make it a man page
-Date: Fri, 2 May 2008 05:30:47 +0200
-Message-ID: <20080502053047.ac68841e.chriscool@tuxfamily.org>
+Subject: [PATCH 3/3] Documentation: convert tutorials to man pages
+Date: Fri, 2 May 2008 05:30:51 +0200
+Message-ID: <20080502053051.c8066c4e.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -16,200 +15,549 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrlvN-0002fZ-2v
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 05:27:05 +0200
+	id 1JrlvN-0002fZ-UL
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 05:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990AbYEBD0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2008 23:26:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbYEBD0B
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 23:26:01 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:45840 "EHLO smtp1-g19.free.fr"
+	id S1756285AbYEBD0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2008 23:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbYEBD0F
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 May 2008 23:26:05 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:45847 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754477AbYEBDZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2008 23:25:48 -0400
+	id S1755827AbYEBDZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 May 2008 23:25:53 -0400
 Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 4B0391AB2B8;
-	Fri,  2 May 2008 05:25:47 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 75E2C1AB2BB;
+	Fri,  2 May 2008 05:25:51 +0200 (CEST)
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id DCE7F1AB2AC;
-	Fri,  2 May 2008 05:25:46 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with SMTP id D42BF1AB2AC;
+	Fri,  2 May 2008 05:25:50 +0200 (CEST)
 X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80953>
 
-Also now "gitcli(5)" becomes "gitcli(7)".
+This patch renames the following documents and at the same time converts
+them to the man page format:
+
+cvs-migration.txt -> gitcvs-migration.txt
+everyday.txt      -> giteveryday.txt
+tutorial.txt      -> gittutorial.txt
+tutorial-2.txt    -> gittutorial-2.txt
+
+Other documents that reference the above ones are change accordingly.
+
+In "giteveryday.txt" some changes were needed to make links inside
+the document accepted by the documentation tool chain.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/Makefile                    |    5 ++---
- Documentation/cvs-migration.txt           |    2 +-
- Documentation/git-commit.txt              |    4 ++--
- Documentation/git-rev-parse.txt           |    2 +-
- Documentation/git.txt                     |    2 +-
- Documentation/gitcli.txt                  |    2 +-
- Documentation/{hooks.txt => githooks.txt} |   20 ++++++++++++++++++--
- Documentation/repository-layout.txt       |    2 +-
- Documentation/user-manual.txt             |    2 +-
- 9 files changed, 28 insertions(+), 13 deletions(-)
- rename Documentation/{hooks.txt => githooks.txt} (98%)
+ Documentation/Makefile                             |    9 +--
+ Documentation/core-tutorial.txt                    |    4 +-
+ Documentation/git.txt                              |   12 ++--
+ .../{cvs-migration.txt => gitcvs-migration.txt}    |   68 ++++++++++++------
+ Documentation/{everyday.txt => giteveryday.txt}    |   76 +++++++++++++-------
+ .../{tutorial-2.txt => gittutorial-2.txt}          |   35 +++++++--
+ Documentation/{tutorial.txt => gittutorial.txt}    |   40 ++++++++---
+ Documentation/user-manual.txt                      |   18 +++---
+ 8 files changed, 175 insertions(+), 87 deletions(-)
+ rename Documentation/{cvs-migration.txt => gitcvs-migration.txt} (83%)
+ rename Documentation/{everyday.txt => giteveryday.txt} (89%)
+ rename Documentation/{tutorial-2.txt => gittutorial-2.txt} (95%)
+ rename Documentation/{tutorial.txt => gittutorial.txt} (96%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 43781fb..4144d1e 100644
+index 4144d1e..9a8043f 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -2,8 +2,8 @@ MAN1_TXT= \
- 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+@@ -3,7 +3,8 @@ MAN1_TXT= \
  		$(wildcard git-*.txt)) \
  	gitk.txt
--MAN5_TXT=gitattributes.txt gitignore.txt gitcli.txt gitmodules.txt
--MAN7_TXT=git.txt
-+MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
-+MAN7_TXT=git.txt gitcli.txt
+ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
+-MAN7_TXT=git.txt gitcli.txt
++MAN7_TXT=git.txt gitcli.txt gittutorial.txt gittutorial-2.txt \
++	gitcvs-migration.txt giteveryday.txt
  
  MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
  MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
-@@ -18,7 +18,6 @@ ARTICLES += cvs-migration
+@@ -11,14 +12,10 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
+ 
+ DOC_HTML=$(MAN_HTML)
+ 
+-ARTICLES = tutorial
+-ARTICLES += tutorial-2
+-ARTICLES += core-tutorial
+-ARTICLES += cvs-migration
++ARTICLES = core-tutorial
  ARTICLES += diffcore
  ARTICLES += howto-index
  ARTICLES += repository-layout
--ARTICLES += hooks
- ARTICLES += everyday
+-ARTICLES += everyday
  ARTICLES += git-tools
  ARTICLES += glossary
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index 00f2e36..374bc87 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -137,7 +137,7 @@ Advanced Shared Repository Management
+ # with their own formatting rules.
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 5a55312..b50b5dd 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -8,7 +8,7 @@ This tutorial explains how to use the "core" git programs to set up and
+ work with a git repository.
  
- Git allows you to specify scripts called "hooks" to be run at certain
- points.  You can use these, for example, to send all commits to the shared
--repository to a mailing list.  See link:hooks.html[Hooks used by git].
-+repository to a mailing list.  See linkgit:githooks[5][Hooks used by git].
+ If you just need to use git as a revision control system you may prefer
+-to start with link:tutorial.html[a tutorial introduction to git] or
++to start with linkgit:gittutorial[7][a tutorial introduction to git] or
+ link:user-manual.html[the git user manual].
  
- You can enforce finer grained permissions using update hooks.  See
- link:howto/update-hook-example.txt[Controlling access to branches using
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 4bb51cc..c3c9f5b 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -87,7 +87,7 @@ OPTIONS
+ However, an understanding of these low-level tools can be helpful if
+@@ -1581,7 +1581,7 @@ suggested in the previous section may be new to you. You do not
+ have to worry. git supports "shared public repository" style of
+ cooperation you are probably more familiar with as well.
  
- --no-verify::
- 	This option bypasses the pre-commit and commit-msg hooks.
--	See also link:hooks.html[hooks].
-+	See also linkgit:githooks[5][hooks].
+-See link:cvs-migration.html[git for CVS users] for the details.
++See linkgit:gitcvs-migration[7][git for CVS users] for the details.
  
- --allow-empty::
- 	Usually recording a commit that has the exact same tree as its
-@@ -292,7 +292,7 @@ order).
- HOOKS
- -----
- This command can run `commit-msg`, `prepare-commit-msg`, `pre-commit`,
--and `post-commit` hooks.  See link:hooks.html[hooks] for more
-+and `post-commit` hooks.  See linkgit:githooks[5][hooks] for more
- information.
- 
- 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 110e7ba..b6b2fe9 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -347,7 +347,7 @@ Each line of options has this format:
- 
- 	* Use `*` to mean that this option should not be listed in the usage
- 	  generated for the `-h` argument. It's shown for `--help-all` as
--	  documented in linkgit:gitcli[5].
-+	  documented in linkgit:gitcli[7].
- 
- 	* Use `!` to not make the corresponding negated long option available.
- 
+ Bundling your work together
+ ---------------------------
 diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6f445b1..adcd3e0 100644
+index adcd3e0..1c3c56e 100644
 --- a/Documentation/git.txt
 +++ b/Documentation/git.txt
-@@ -364,7 +364,7 @@ File/Directory Structure
+@@ -20,12 +20,12 @@ Git is a fast, scalable, distributed revision control system with an
+ unusually rich command set that provides both high-level operations
+ and full access to internals.
  
- Please see the link:repository-layout.html[repository layout] document.
+-See this link:tutorial.html[tutorial] to get started, then see
+-link:everyday.html[Everyday Git] for a useful minimum set of commands, and
+-"man git-commandname" for documentation of each command.  CVS users may
+-also want to read link:cvs-migration.html[CVS migration].  See
+-link:user-manual.html[Git User's Manual] for a more in-depth
+-introduction.
++See this linkgit:gittutorial[7][tutorial] to get started, then see
++linkgit:giteveryday[7][Everyday Git] for a useful minimum set of
++commands, and "man git-commandname" for documentation of each command.
++CVS users may also want to read linkgit:gitcvs-migration[7][CVS
++migration].  See link:user-manual.html[Git User's Manual] for a more
++in-depth introduction.
  
--Read link:hooks.html[hooks] for more details about each hook.
-+Read linkgit:githooks[5][hooks] for more details about each hook.
- 
- Higher level SCMs may provide and manage additional information in the
- `$GIT_DIR`.
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 7ee5ce3..835cb05 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -1,4 +1,4 @@
--gitcli(5)
-+gitcli(7)
- =========
- 
- NAME
-diff --git a/Documentation/hooks.txt b/Documentation/githooks.txt
-similarity index 98%
-rename from Documentation/hooks.txt
-rename to Documentation/githooks.txt
-index 1283ab4..67c0809 100644
---- a/Documentation/hooks.txt
-+++ b/Documentation/githooks.txt
-@@ -1,5 +1,17 @@
--Hooks used by git
+ The COMMAND is either a name of a Git command (see below) or an alias
+ as defined in the configuration file (see linkgit:git-config[1]).
+diff --git a/Documentation/cvs-migration.txt b/Documentation/gitcvs-migration.txt
+similarity index 83%
+rename from Documentation/cvs-migration.txt
+rename to Documentation/gitcvs-migration.txt
+index 374bc87..4e5ea33 100644
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/gitcvs-migration.txt
+@@ -1,14 +1,25 @@
+-git for CVS users
 -=================
-+githooks(5)
-+===========
-+
++gitcvs-migration(7)
++===================
+ 
+-Git differs from CVS in that every working tree contains a repository with
+-a full copy of the project history, and no repository is inherently more
+-important than any other.  However, you can emulate the CVS model by
+-designating a single shared repository which people can synchronize with;
+-this document explains how to do that.
 +NAME
 +----
-+githooks - Hooks used by git
++gitcvs-migration - git for CVS users
 +
 +SYNOPSIS
 +--------
-+$GIT_DIR/hooks/*
++git cvsimport *
 +
++DESCRIPTION
++-----------
++
++Git differs from CVS in that every working tree contains a repository
++with a full copy of the project history, and no repository is
++inherently more important than any other.  However, you can emulate
++the CVS model by designating a single shared repository which people
++can synchronize with; this document explains how to do that.
+ 
+ Some basic familiarity with git is required.  This
+-link:tutorial.html[tutorial introduction to git] and the
++linkgit:gittutorial[7][tutorial introduction to git] and the
+ link:glossary.html[git glossary] should be sufficient.
+ 
+ Developing against a shared repository
+@@ -30,19 +41,20 @@ $ git pull origin
+ ------------------------------------------------
+ 
+ which merges in any work that others might have done since the clone
+-operation.  If there are uncommitted changes in your working tree, commit
+-them first before running git pull.
++operation.  If there are uncommitted changes in your working tree,
++commit them first before running git pull.
+ 
+ [NOTE]
+ ================================
+ The `pull` command knows where to get updates from because of certain
+ configuration variables that were set by the first `git clone`
+-command; see `git config -l` and the linkgit:git-config[1] man
+-page for details.
++command; see `git config -l` and the linkgit:git-config[1] man page
++for details.
+ ================================
+ 
+-You can update the shared repository with your changes by first committing
+-your changes, and then using the linkgit:git-push[1] command:
++You can update the shared repository with your changes by first
++committing your changes, and then using the linkgit:git-push[1]
++command:
+ 
+ ------------------------------------------------
+ $ git push origin master
+@@ -71,12 +83,12 @@ Setting Up a Shared Repository
+ 
+ We assume you have already created a git repository for your project,
+ possibly created from scratch or from a tarball (see the
+-link:tutorial.html[tutorial]), or imported from an already existing CVS
+-repository (see the next section).
++linkgit:gittutorial[7][tutorial]), or imported from an already
++existing CVS repository (see the next section).
+ 
+-Assume your existing repo is at /home/alice/myproject.  Create a new "bare"
+-repository (a repository without a working tree) and fetch your project into
+-it:
++Assume your existing repo is at /home/alice/myproject.  Create a new
++"bare" repository (a repository without a working tree) and fetch your
++project into it:
+ 
+ ------------------------------------------------
+ $ mkdir /pub/my-repo.git
+@@ -136,12 +148,13 @@ Advanced Shared Repository Management
+ -------------------------------------
+ 
+ Git allows you to specify scripts called "hooks" to be run at certain
+-points.  You can use these, for example, to send all commits to the shared
+-repository to a mailing list.  See linkgit:githooks[5][Hooks used by git].
++points.  You can use these, for example, to send all commits to the
++shared repository to a mailing list.  See linkgit:githooks[5][Hooks
++used by git].
+ 
+ You can enforce finer grained permissions using update hooks.  See
+-link:howto/update-hook-example.txt[Controlling access to branches using
+-update hooks].
++link:howto/update-hook-example.txt[Controlling access to branches
++using update hooks].
+ 
+ Providing CVS Access to a git Repository
+ ----------------------------------------
+@@ -170,3 +183,12 @@ variants of this model.
+ 
+ With a small group, developers may just pull changes from each other's
+ repositories without the need for a central maintainer.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++linkgit:giteveryday[7], link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/everyday.txt b/Documentation/giteveryday.txt
+similarity index 89%
+rename from Documentation/everyday.txt
+rename to Documentation/giteveryday.txt
+index e598cdd..d7c3a35 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/giteveryday.txt
+@@ -1,27 +1,39 @@
+-Everyday GIT With 20 Commands Or So
+-===================================
++giteveryday(7)
++==============
+ 
+-<<Basic Repository>> commands are needed by people who have a
+-repository --- that is everybody, because every working tree of
+-git is a repository.
++NAME
++----
++giteveryday - Everyday GIT With 20 Commands Or So
+ 
+-In addition, <<Individual Developer (Standalone)>> commands are
+-essential for anybody who makes a commit, even for somebody who
+-works alone.
++SYNOPSIS
++--------
++git *
+ 
+-If you work with other people, you will need commands listed in
+-the <<Individual Developer (Participant)>> section as well.
++DESCRIPTION
++-----------
+ 
+-People who play the <<Integrator>> role need to learn some more
+-commands in addition to the above.
++<<Basic_Repository,'Basic Repository'>> commands are needed by people
++who have a repository --- that is everybody, because every working
++tree of git is a repository.
+ 
+-<<Repository Administration>> commands are for system
+-administrators who are responsible for the care and feeding
+-of git repositories.
++In addition, <<Individual_Developer_Standalone,'Individual Developer
++(Standalone)'>> commands are essential for anybody who makes a commit,
++even for somebody who works alone.
++
++If you work with other people, you will need commands listed in the
++<<Individual_Developer_Participant,'Individual Developer
++(Participant)'>> section as well.
++
++People who play the <<Integrator,'Integrator'>> role need to learn
++some more commands in addition to the above.
+ 
++<<Repository_Administration,'Repository Administration'>> commands are
++for system administrators who are responsible for the care and feeding
++of git repositories.
+ 
+-Basic Repository[[Basic Repository]]
+-------------------------------------
++[[Basic_Repository]]
++Basic Repository
++----------------
+ 
+ Everybody uses these commands to maintain git repositories.
+ 
+@@ -60,8 +72,9 @@ $ git gc <1>
+ then remove the other packs.
+ 
+ 
+-Individual Developer (Standalone)[[Individual Developer (Standalone)]]
+-----------------------------------------------------------------------
++[[Individual_Developer_Standalone]]
++Individual Developer (Standalone)
++---------------------------------
+ 
+ A standalone individual developer does not exchange patches with
+ other people, and works alone in a single repository, using the
+@@ -147,8 +160,9 @@ combined and include `\--max-count=10` (show 10 commits),
+ directory, since `v2.43` tag.
+ 
+ 
+-Individual Developer (Participant)[[Individual Developer (Participant)]]
+-------------------------------------------------------------------------
++[[Individual_Developer_Participant]]
++Individual Developer (Participant)
++----------------------------------
+ 
+ A developer working as a participant in a group project needs to
+ learn how to communicate with others, and uses these commands in
+@@ -248,8 +262,9 @@ tag.
+ without a formal "merging".
+ 
+ 
+-Integrator[[Integrator]]
+-------------------------
++[[Integrator]]
++Integrator
++----------
+ 
+ A fairly central person acting as the integrator in a group
+ project receives changes made by others, reviews and integrates
+@@ -335,8 +350,9 @@ everything `ko-next` has.
+ <13> push the tag out, too.
+ 
+ 
+-Repository Administration[[Repository Administration]]
+-------------------------------------------------------
++[[Repository_Administration]]
++Repository Administration
++-------------------------
+ 
+ A repository administrator uses the following tools to set up
+ and maintain access to the repository by developers.
+@@ -454,3 +470,13 @@ ftp> cp -r .git /home/user/myproject.git
+ +
+ <1> make sure your info/refs and objects/info/packs are up-to-date
+ <2> upload to public HTTP server hosted by your ISP.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
++Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/tutorial-2.txt b/Documentation/gittutorial-2.txt
+similarity index 95%
+rename from Documentation/tutorial-2.txt
+rename to Documentation/gittutorial-2.txt
+index 7fac47d..4af9073 100644
+--- a/Documentation/tutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -1,8 +1,19 @@
+-A tutorial introduction to git: part two
+-========================================
++gittutorial-2(7)
++==============
+ 
+-You should work through link:tutorial.html[A tutorial introduction to
+-git] before reading this tutorial.
++NAME
++----
++gittutorial-2 - A tutorial introduction to git: part two
++
++SYNOPSIS
++--------
++git *
++
++DESCRIPTION
++-----------
++
++You should work through linkgit:gittutorial[7][A tutorial introduction
++to git] before reading this tutorial.
+ 
+ The goal of this tutorial is to introduce two fundamental pieces of
+ git's architecture--the object database and the index file--and to
+@@ -387,14 +398,14 @@ What next?
+ 
+ At this point you should know everything necessary to read the man
+ pages for any of the git commands; one good place to start would be
+-with the commands mentioned in link:everyday.html[Everyday git].  You
+-should be able to find any unknown jargon in the
++with the commands mentioned in linkgit:giteveryday[7][Everyday git].
++You should be able to find any unknown jargon in the
+ link:glossary.html[Glossary].
+ 
+ The link:user-manual.html[Git User's Manual] provides a more
+ comprehensive introduction to git.
+ 
+-The link:cvs-migration.html[CVS migration] document explains how to
++The linkgit:gitcvs-migration[7][CVS migration] document explains how to
+ import a CVS repository into git, and shows how to use git in a
+ CVS-like way.
+ 
+@@ -404,3 +415,13 @@ link:howto-index.html[howtos].
+ For git developers, the link:core-tutorial.html[Core tutorial] goes
+ into detail on the lower-level git mechanisms involved in, for
+ example, creating a new commit.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:giteveryday[7],
++linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
++Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/tutorial.txt b/Documentation/gittutorial.txt
+similarity index 96%
+rename from Documentation/tutorial.txt
+rename to Documentation/gittutorial.txt
+index e2bbda5..470f7f7 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -1,12 +1,24 @@
+-A tutorial introduction to git (for version 1.5.1 or newer)
+-===========================================================
++gittutorial(7)
++==============
++
++NAME
++----
++gittutorial - A tutorial introduction to git (for version 1.5.1 or newer)
++
++SYNOPSIS
++--------
++git *
 +
 +DESCRIPTION
 +-----------
  
- Hooks are little scripts you can place in `$GIT_DIR/hooks`
- directory to trigger action at certain points.  When
-@@ -284,3 +296,7 @@ pre-auto-gc
- This hook is invoked by `git-gc --auto`. It takes no parameter, and
- exiting with non-zero status from this script causes the `git-gc --auto`
- to abort.
+ This tutorial explains how to import a new project into git, make
+ changes to it, and share changes with other developers.
+ 
+-If you are instead primarily interested in using git to fetch a project,
+-for example, to test the latest version, you may prefer to start with
+-the first two chapters of link:user-manual.html[The Git User's Manual].
++If you are instead primarily interested in using git to fetch a
++project, for example, to test the latest version, you may prefer to
++start with the first two chapters of link:user-manual.html[The Git
++User's Manual].
+ 
+ First, note that you can get documentation for a command such as "git
+ diff" with:
+@@ -381,7 +393,7 @@ see linkgit:git-pull[1] for details.
+ 
+ Git can also be used in a CVS-like mode, with a central repository
+ that various users push changes to; see linkgit:git-push[1] and
+-link:cvs-migration.html[git for CVS users].
++linkgit:gitcvs-migration[7][git for CVS users].
+ 
+ Exploring history
+ -----------------
+@@ -560,7 +572,7 @@ is based:
+     used to create commits, check out working directories, and
+     hold the various trees involved in a merge.
+ 
+-link:tutorial-2.html[Part two of this tutorial] explains the object
++linkgit:gittutorial-2[7][Part two of this tutorial] explains the object
+ database, the index file, and a few other odds and ends that you'll
+ need to make the most of git.
+ 
+@@ -579,6 +591,16 @@ digressions that may be interesting at this point are:
+     smart enough to perform a close-to-optimal search even in the
+     case of complex non-linear history with lots of merged branches.
+ 
+-  * link:everyday.html[Everyday GIT with 20 Commands Or So]
++  * linkgit:giteveryday[7][Everyday GIT with 20 Commands Or So]
 +
++  * linkgit:gitcvs-migration[7][git for CVS users].
++
++SEE ALSO
++--------
++linkgit:gittutorial-2[7], linkgit:giteveryday[7],
++linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
++Manual]
+ 
+-  * link:cvs-migration.html[git for CVS users].
 +GIT
 +---
-+Part of the linkgit:git[7] suite
-diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
-index bbaed2e..7fd187b 100644
---- a/Documentation/repository-layout.txt
-+++ b/Documentation/repository-layout.txt
-@@ -124,7 +124,7 @@ hooks::
- 	commands.  A handful of sample hooks are installed when
- 	`git init` is run, but all of them are disabled by
- 	default.  To enable, they need to be made executable.
--	Read link:hooks.html[hooks] for more details about
-+	Read linkgit:githooks[5][hooks] for more details about
- 	each hook.
- 
- index::
++Part of the linkgit:git[7] suite.
 diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 86b91a5..e2db850 100644
+index e2db850..b2c4f2c 100644
 --- a/Documentation/user-manual.txt
 +++ b/Documentation/user-manual.txt
-@@ -1881,7 +1881,7 @@ $ chmod a+x hooks/post-update
+@@ -1988,22 +1988,22 @@ way to publish a work-in-progress patch series, and it is an acceptable
+ compromise as long as you warn other developers that this is how you
+ intend to manage the branch.
  
- (For an explanation of the last two lines, see
- linkgit:git-update-server-info[1], and the documentation
--link:hooks.html[Hooks used by git].)
-+linkgit:githooks[5][Hooks used by git].)
+-It's also possible for a push to fail in this way when other people have
+-the right to push to the same repository.  In that case, the correct
+-solution is to retry the push after first updating your work by either a
+-pull or a fetch followed by a rebase; see the
++It's also possible for a push to fail in this way when other people
++have the right to push to the same repository.  In that case, the
++correct solution is to retry the push after first updating your work
++by either a pull or a fetch followed by a rebase; see the
+ <<setting-up-a-shared-repository,next section>> and
+-link:cvs-migration.html[git for CVS users] for more.
++linkgit:gitcvs-migration[7][git for CVS users] for more.
  
- Advertise the URL of proj.git.  Anybody else should then be able to
- clone or pull from that URL, for example with a command line like:
+ [[setting-up-a-shared-repository]]
+ Setting up a shared repository
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ Another way to collaborate is by using a model similar to that
+-commonly used in CVS, where several developers with special rights
+-all push to and pull from a single shared repository.  See
+-link:cvs-migration.html[git for CVS users] for instructions on how to
+-set this up.
++commonly used in CVS, where several developers with special rights all
++push to and pull from a single shared repository.  See
++linkgit:gitcvs-migration[7][git for CVS users] for instructions on how
++to set this up.
+ 
+ However, while there is nothing wrong with git's support for shared
+ repositories, this mode of operation is not generally recommended,
 -- 
 1.5.5.1.124.g7e5fa.dirty
