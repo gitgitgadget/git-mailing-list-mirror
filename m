@@ -1,65 +1,83 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: To page or not to page
-Date: Fri, 2 May 2008 12:34:10 +0200
-Message-ID: <807E185B-BEE5-4AAF-8DF4-EE597681D61C@wincent.com>
-References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <7vlk2txn8n.fsf@gitster.siamese.dyndns.org> <8C3474E2-3A4F-44E8-B301-C36939C7BA11@sb.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri May 02 12:35:29 2008
+From: "Elijah Newren" <newren@gmail.com>
+Subject: EasyGit [Was: Re: my git problem]
+Date: Fri, 2 May 2008 05:41:45 -0600
+Message-ID: <51419b2c0805020441l7a52f9d2q6bfc8eb4e18e4e7e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Andrew Morton" <akpm@linux-foundation.org>, git@vger.kernel.org,
+	"Havoc Pennington" <hp@pobox.com>
+To: "Carl Worth" <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Fri May 02 13:42:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jrsbr-0005QX-7O
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 12:35:23 +0200
+	id 1Jrtev-0001Rz-Ro
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 13:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758246AbYEBKeg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2008 06:34:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757570AbYEBKef
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 06:34:35 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:34321 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756068AbYEBKef convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2008 06:34:35 -0400
-Received: from cuzco.lan (228.pool85-53-21.dynamic.orange.es [85.53.21.228])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m42AYBYE027889
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 2 May 2008 06:34:13 -0400
-In-Reply-To: <8C3474E2-3A4F-44E8-B301-C36939C7BA11@sb.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1762420AbYEBLlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 07:41:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762501AbYEBLlt
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 07:41:49 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:41085 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760581AbYEBLls (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 07:41:48 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so907115wra.1
+        for <git@vger.kernel.org>; Fri, 02 May 2008 04:41:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=gzI+K+U4Ovrqg0FTvuML98qUgDs9WRLpObZILEoGWN0=;
+        b=tBc07RvON0fL0dL1/muu2nR0OisWDE8/hraC/VyiJNfac09iPYyoUvctdRrrpA+3Le6QHgN8VRvWPYC2q+D1Ima4tBE3FhKbms5+IKPVv4OGk9YfiaoMo69FPKNhw0Kr0U7k9xH6RLg34IQjxPh+CdqC7gJKrpyWw7zJw4m5zL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=VUfDj9PaR+xmji26Zct+pSrANC+RttHiXxc4iFPZE9s3MSI+dXNMPrw6+faPpVJQYHI7sV8hVL7mIR9mWeXQajRIw1Xj4S97slZLHla1/wuEAPC6Fv/G3BgRgubv4NZs9peQXNb8erPO/qnMparKJeS1TP+Qg8VUKtURc053Wsg=
+Received: by 10.114.200.2 with SMTP id x2mr2912287waf.143.1209728505356;
+        Fri, 02 May 2008 04:41:45 -0700 (PDT)
+Received: by 10.114.73.10 with HTTP; Fri, 2 May 2008 04:41:45 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80979>
 
-El 2/5/2008, a las 8:04, Kevin Ballard escribi=F3:
+On Thu, May 1, 2008 at 12:01 AM, Carl Worth <cworth@cworth.org> wrote:
+>  Or maybe go Elijah's route and invent a new top-level command name in
+>  which issues like this can get fixed. (I've been lukewarm on the idea
+>  after watching the cogito attempt eventually be abandoned. I'd really
+>  much rather see Elijah's ideas get pushed down into git itself for the
+>  most part. But it's tough when backwards-compatibility prevents fixing
+>  some things that are obviously confusing people.)
 
-> Is there any good reason to make git-status use the pager? The =20
-> output is very rarely long enough to warrant it, and if I need a =20
-> pager I can always just pipe it to less myself.
+Except my route really doesn't fix things like this since I also
+pushed for backwards compatibility.  You'll note that Havoc used
+EasyGit and Git interchangably (both in his description and probably
+on his projects), since all I've really done so far in EasyGit is
+* provide built-in tutorial-oriented documentation
+* check for common user mistakes and warn about them
+* add subcommand options in a way that breaks up the near cylic
+knowledge dependence of git subcommands so that they can be learned in
+a layered/hierarchical fashion
+* add some gratuitous svn-compatibility commands to ease the
+transition for svn users
 
-I for one welcome this change and often have status output that is =20
-long enough to warrant using a pager. I am constantly seeing more than =
-=20
-a full screen of results and then either re-running the command as =20
-"git -p status" or otherwise scrolling upwards to see the part of the =20
-status output that is actually interesting to me. It has often annoyed =
-=20
-me that commands like "git log" have always given me a highly usable =20
-default behaviour "out of the box" (one of the first things I noticed =20
-about Git when I started using it that made me think, "ah, that's a =20
-nice touch") while "git status" didn't.
+I agree that it would be nice to get this stuff (other than the last
+point that likely doesn't make sense for git-core) into git
+itself...if the community wants it.  Starting as a separate project
+simply allowed me to make mistakes and figure out what works; I've
+seen lots of proposals in the past for fixing up git and lots of them
+end up breaking special use cases -- I've had a number of those myself
+in EasyGit (and may still have some) and had to go back and fix them
+up or find other solutions.
 
-But evidently given that there has been so much backlash against the =20
-patch the only way to keep everyone happy will be to make this =20
-configurable.
+Also, as Havoc pointed out pretty clearly, what I've done in eg is
+helpful for people getting started but there's a lot more
+learnability/usability issues that need to be addressed.  I thought it
+made more sense to address those first, so that's my next step.
 
-Cheers,
-Wincent
+Elijah
