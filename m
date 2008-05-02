@@ -1,63 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: To page or not to page
-Date: Fri, 2 May 2008 08:55:54 -0400
-Message-ID: <20080502125553.GB2923@sigill.intra.peff.net>
-References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <20080502060930.GA1079@sigill.intra.peff.net> <7vd4o5xm62.fsf@gitster.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk: synchronize highlighting in file view for 'f'&'b' commands
+Date: Fri, 2 May 2008 22:49:41 +1000
+Message-ID: <18459.3557.603906.871664@cargo.ozlabs.ibm.com>
+References: <279b37b20803171300v748b5d23rcc5c0e534429d1be@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 02 14:57:03 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric Raible" <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 02 14:57:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jruod-0004CQ-CM
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 14:56:43 +0200
+	id 1JrupT-0004dm-Ot
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 14:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932147AbYEBMzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 08:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765105AbYEBMzz
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 08:55:55 -0400
-Received: from peff.net ([208.65.91.99]:1424 "EHLO peff.net"
+	id S1764361AbYEBM4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 08:56:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761544AbYEBM4s
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 08:56:48 -0400
+Received: from ozlabs.org ([203.10.76.45]:47848 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764557AbYEBMzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 08:55:54 -0400
-Received: (qmail 1744 invoked by uid 111); 2 May 2008 12:55:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 02 May 2008 08:55:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 May 2008 08:55:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd4o5xm62.fsf@gitster.siamese.dyndns.org>
+	id S1760760AbYEBM4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 08:56:46 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 8DB5CDDE01; Fri,  2 May 2008 22:56:43 +1000 (EST)
+In-Reply-To: <279b37b20803171300v748b5d23rcc5c0e534429d1be@mail.gmail.com>
+X-Mailer: VM 7.19 under Emacs 22.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80986>
 
-On Thu, May 01, 2008 at 11:19:49PM -0700, Junio C Hamano wrote:
+Eric Raible writes:
 
-> Heh, I like it.  I briefly thought that pager.cat-file may wreak havoc on
-> scripts, but our pager machanism should be clever enough not to, and
-> cat-file is a valid variable name in the configuration file format ;-).
+> Previously, 'b', backspace, and delete all did the same thing.
+> This changes 'b' to perform the inverse of 'f'.  And both of
+> them now highlight the filename of the currently diff.
 
-Yes, I sort of assumed that the pager "auto" setting would take care of
-most things. I guess somebody could be crazy enough to set pager to
-"always" and pager.mailinfo to "true", but I'm not sure that's worth
-avoiding.
+OK, but...
 
-My bigger worry is that this affects only builtins. Which makes it
-sufficient for turning off the pager for anything that does USE_PAGER.
-But you can't turn _on_ the pager for arbitrary commands (e.g.,
-pager.pull would be ignored). And some commands use pagers from
-sub-commands; e.g., git-stash calls git-diff to show a stash; so turning
-off the pager entails setting pager.diff, with no way to differentiate
-between stash and regular diff.
+> +    set file [regsub -- "-* (.*?) -*" [$ctext get $loc "$loc lineend"] "\\1"]
+> +    set cline [$cflist search -regexp [subst {^$file$}] 0.0]
 
-So it would be inconsistent and expose implementation details. But maybe
-that is OK for now, and we just say "well, everything will become a
-builtin eventually." ;)
+This seems to be working out the index of the line we want to
+highlight in the file list, but both the callers of highlightfile can
+supply that info much more easily by incrementing a count as they go
+through $difffilestart, as far as I can tell.
 
--Peff
+Paul.
