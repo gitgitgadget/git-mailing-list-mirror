@@ -1,64 +1,114 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: [PATCH] gitk: disable "Reset %s branch to here" when on a detached head
-Date: Fri, 2 May 2008 16:56:57 +0200
-Message-ID: <200805021656.57929.barra_cuda@katamail.com>
-References: <200803181535.53635.barra_cuda@katamail.com> <18459.3700.934377.597975@cargo.ozlabs.ibm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: To page or not to page
+Date: Fri, 2 May 2008 11:36:28 -0400
+Message-ID: <20080502153628.GA6294@sigill.intra.peff.net>
+References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <20080502060930.GA1079@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri May 02 16:55:44 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Fri May 02 17:37:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrwfB-0005yB-5h
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 16:55:05 +0200
+	id 1JrxKP-0000M4-8h
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 17:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024AbYEBOyQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2008 10:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755824AbYEBOyQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 10:54:16 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:49935 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752797AbYEBOyP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2008 10:54:15 -0400
-Received: (qmail 14632 invoked by uid 89); 2 May 2008 14:49:08 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
-	version=3.2.3
-Received: from unknown (HELO host198-57-static.104-80-b.business.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.198)
-  by smtp2-pc with SMTP; 2 May 2008 14:49:07 -0000
-User-Agent: KMail/1.9.7
-In-Reply-To: <18459.3700.934377.597975@cargo.ozlabs.ibm.com>
+	id S934413AbYEBPga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 11:36:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762065AbYEBPga
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 11:36:30 -0400
+Received: from peff.net ([208.65.91.99]:1641 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934144AbYEBPg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 11:36:29 -0400
+Received: (qmail 12809 invoked by uid 111); 2 May 2008 15:36:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 02 May 2008 11:36:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 May 2008 11:36:28 -0400
 Content-Disposition: inline
+In-Reply-To: <20080502060930.GA1079@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81007>
 
-On Friday 02 May 2008, Paul Mackerras wrote:
-> > -=A0=A0=A0=A0=A0$menu entryconfigure 7 -label [mc "Reset %s branch =
-to here" $mainhead]
-> > +=A0=A0=A0=A0=A0if {$mainhead ne {}} {
-> > +=A0=A0=A0=A0=A0 =A0 =A0$menu entryconfigure 7 -label [mc "Reset %s=
- branch to here" $mainhead]
-> > +=A0=A0=A0=A0=A0} else {
-> > +=A0=A0=A0=A0=A0 =A0 =A0$menu entryconfigure 7 -label [mc "Reset %s=
- branch to here" $mainhead] -state disabled
->=20
-> I wonder if we can make this message something more appropriate than
-> "Reset =A0branch to here" (since $mainhead has to be the empty string
-> here)? =A0Not sure what I would suggest though. :)
+On Fri, May 02, 2008 at 02:09:30AM -0400, Jeff King wrote:
 
-Oh, you're right. I'd say either "Reset detached head to here" greyed o=
-ut
-(i.e. change the words as little as possible), or something more
-explicative like "Detached head: reset not possible". I'd go for the fi=
-rst,
-but I'm really not sure about this: you'd better seek suggestions from =
-a
-native speaker :).
+> > I agree with you; I don't like it at all. Probably whether or not to use
+> > a pager for a given command should be controlled by a "pager.<cmd>"
+> > config variable.
+> 
+> Here is a quick and dirty patch to do that. It should probably be split
+> into two (there is a big code movement of the commands array), and it
+> needs documentation and tests. But I'm going to sleep for now.
+
+Here is a cleaner patch. Rather than looking at all of pager.*, it waits
+until we see which command to execute, and just looks up pager.cmd (we
+end up having to parse the config the same number of times). And we
+don't have to munge the static global commands array, which just feels a
+little cleaner.
+
+Still no documentation, and still not a "real" patch; I am curious to
+see the list reaction on the issues I raised elsewhere in the thread
+(like the user-facing inconsistencies).
+
+---
+ git.c |   30 +++++++++++++++++++++++++++++-
+ 1 files changed, 29 insertions(+), 1 deletions(-)
+
+diff --git a/git.c b/git.c
+index 89b431f..68d8b37 100644
+--- a/git.c
++++ b/git.c
+@@ -230,6 +230,25 @@ struct cmd_struct {
+ 	int option;
+ };
+ 
++static const char *pager_command_key;
++static int pager_command_value;
++
++int pager_command_config(const char *var, const char *value)
++{
++	if (!prefixcmp(var, "pager.") && !strcmp(var + 6, pager_command_key))
++		pager_command_value = git_config_bool(var, value);
++	return 0;
++}
++
++/* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
++int check_pager_config(const char *cmd)
++{
++	pager_command_key = cmd;
++	pager_command_value = -1;
++	git_config(pager_command_config);
++	return pager_command_value;
++}
++
+ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ {
+ 	int status;
+@@ -239,8 +258,17 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ 	prefix = NULL;
+ 	if (p->option & RUN_SETUP)
+ 		prefix = setup_git_directory();
+-	if (p->option & USE_PAGER)
++	switch (check_pager_config(p->cmd)) {
++	case 0:
++		break;
++	case 1:
+ 		setup_pager();
++		break;
++	default:
++		if (p->option & USE_PAGER)
++			setup_pager();
++		break;
++	}
+ 	if (p->option & NEED_WORK_TREE)
+ 		setup_work_tree();
+ 
+-- 
+1.5.5.1.221.ga481.dirty
