@@ -1,70 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Documentation: convert tutorials to man pages
-Date: Fri, 2 May 2008 08:49:01 -0400
-Message-ID: <20080502124900.GA2923@sigill.intra.peff.net>
-References: <20080502053051.c8066c4e.chriscool@tuxfamily.org> <8fe92b430805020255r1a06e169te583c371bde83ade@mail.gmail.com>
+Subject: Re: To page or not to page
+Date: Fri, 2 May 2008 08:55:54 -0400
+Message-ID: <20080502125553.GB2923@sigill.intra.peff.net>
+References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <20080502060930.GA1079@sigill.intra.peff.net> <7vd4o5xm62.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 14:49:53 2008
+Cc: Kevin Ballard <kevin@sb.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 02 14:57:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jruhz-0001Io-02
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 14:49:51 +0200
+	id 1Jruod-0004CQ-CM
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 14:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934950AbYEBMtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 08:49:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934935AbYEBMtF
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 08:49:05 -0400
-Received: from peff.net ([208.65.91.99]:3616 "EHLO peff.net"
+	id S932147AbYEBMzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 08:55:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765105AbYEBMzz
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 08:55:55 -0400
+Received: from peff.net ([208.65.91.99]:1424 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934804AbYEBMtC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 08:49:02 -0400
-Received: (qmail 1267 invoked by uid 111); 2 May 2008 12:49:00 -0000
+	id S1764557AbYEBMzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 08:55:54 -0400
+Received: (qmail 1744 invoked by uid 111); 2 May 2008 12:55:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 02 May 2008 08:49:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 May 2008 08:49:01 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 02 May 2008 08:55:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 May 2008 08:55:54 -0400
 Content-Disposition: inline
-In-Reply-To: <8fe92b430805020255r1a06e169te583c371bde83ade@mail.gmail.com>
+In-Reply-To: <7vd4o5xm62.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80985>
 
-On Fri, May 02, 2008 at 11:55:10AM +0200, Jakub Narebski wrote:
+On Thu, May 01, 2008 at 11:19:49PM -0700, Junio C Hamano wrote:
 
-> On 5/2/08, Christian Couder <chriscool@tuxfamily.org> wrote:
-> > This patch renames the following documents and at the same time converts
-> >  them to the man page format:
-> >
-> >  cvs-migration.txt -> gitcvs-migration.txt
-> >  everyday.txt      -> giteveryday.txt
-> >  tutorial.txt      -> gittutorial.txt
-> >  tutorial-2.txt    -> gittutorial-2.txt
-> 
-> I like the rest of the series, but this I have serious doubts about. I think
-> that manpage format is just not suitable for guides and tutorials (larger
-> works), especially that we have HTML and beginnings of info versions.
-> 
-> Beside, the filenames looks stupid... githooks would go in a pinch, but
-> other names...
+> Heh, I like it.  I briefly thought that pager.cat-file may wreak havoc on
+> scripts, but our pager machanism should be clever enough not to, and
+> cat-file is a valid variable name in the configuration file format ;-).
 
-I don't know about that:
+Yes, I sort of assumed that the pager "auto" setting would take care of
+most things. I guess somebody could be crazy enough to set pager to
+"always" and pager.mailinfo to "true", but I'm not sure that's worth
+avoiding.
 
-  $ man perlretut | wc -l
-  2348
+My bigger worry is that this affects only builtins. Which makes it
+sufficient for turning off the pager for anything that does USE_PAGER.
+But you can't turn _on_ the pager for arbitrary commands (e.g.,
+pager.pull would be ignored). And some commands use pagers from
+sub-commands; e.g., git-stash calls git-diff to show a stash; so turning
+off the pager entails setting pager.diff, with no way to differentiate
+between stash and regular diff.
 
-which is basically the same thing (funny name, and very long). At least
-for me, looking at a manpage is much more convenient than info or HTML.
-It's quick to load and easy to search through. Sure, the HTML will look
-a lot nicer. But it seems like if even a few people use the man version,
-the almost zero effort to generate them is worth it (though I would
-argue that it should remain "tutorial.txt" and "tutorial.html", but
-generate "gittutorial.1").
+So it would be inconsistent and expose implementation details. But maybe
+that is OK for now, and we just say "well, everything will become a
+builtin eventually." ;)
 
 -Peff
