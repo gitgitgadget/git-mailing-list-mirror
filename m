@@ -1,62 +1,56 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] Make words boundary for --color-words configurable
-Date: Fri, 2 May 2008 11:14:08 +0300
-Message-ID: <20080502081408.GA11420@mithlond.arda.local>
-References: <1209699564-2800-1-git-send-email-pkufranky@gmail.com> <alpine.DEB.1.00.0805020839200.2691@eeepc-johanness>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] git-bisect.sh: don't accidentally override existing branch "bisect"
+Date: Fri, 2 May 2008 10:22:32 +0200
+Message-ID: <20080502082232.GA20020@diana.vm.bytemark.co.uk>
+References: <20080430164613.28314.qmail@b31db398e1accc.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 02 10:15:20 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Fri May 02 10:24:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JrqQ9-0000Eq-EP
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 10:15:09 +0200
+	id 1JrqYc-0004LE-OS
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 10:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756823AbYEBIOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 04:14:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755937AbYEBIOU
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 04:14:20 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:54198 "EHLO
-	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756760AbYEBIOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 04:14:19 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.0.013.9)
-        id 481786910026C95D; Fri, 2 May 2008 11:14:16 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JrqPA-00035J-W0; Fri, 02 May 2008 11:14:08 +0300
+	id S1753675AbYEBIXH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2008 04:23:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752592AbYEBIXG
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 04:23:06 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4777 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753675AbYEBIXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 04:23:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JrqXI-0005H3-00; Fri, 02 May 2008 09:22:32 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805020839200.2691@eeepc-johanness>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20080430164613.28314.qmail@b31db398e1accc.315fe32.mid.smarden.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80969>
 
-Johannes Schindelin wrote (2008-05-02 08:45 +0100):
+On 2008-04-30 16:46:13 +0000, Gerrit Pape wrote:
 
-> On Fri, 2 May 2008, Ping Yin wrote:
-> 
-> > Previously --color-words only allow spaces as words boundary.
-> > However, just space is not enough. For example, when i rename
-> > a function from foo to bar, following example doesn't show as
-> > expected when using --color-words.
-> 
-> Thanks for starting this.
-> 
-> However, as Junio pointed out, it is easier to specify
-> word-characters, rather than non-word characters (think TAB), and...
+> If a branch named "bisect" or "new-bisect" already was created in
+> the repo by other means than git bisect, doing a git bisect used to
+> override the branch without a warning. Now if the branch "bisect" or
+> "new-bisect" already exists, and it was not created by git bisect
+> itself, git bisect start fails with an appropriate error message.
+> Additionally, if checking out a new bisect state fails due to a
+> merge problem, git bisect cleans up the temporary branch
+> "new-bisect".
 
-Just a quick note from someone who is not so much a programmer but who
-uses Git to track text/LaTex/etc. files with human languages: Please
-don't make this kind of things too Ascii-specific and too much
-byte-is-interpreted-as-character type thing. 
+Makes me wonder why bisect has to use a branch at all, and not just a
+detached HEAD ... I seem to recall this having been discussed before,
+but I can't find it now.
 
-In general, my opinion is that with international text it's better to
-define word boundary characters than trying to maintain a _huge_ list of
-characters used within words in different human languages.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
