@@ -1,102 +1,101 @@
-From: Aidan Van Dyk <aidan@highrise.ca>
-Subject: Re: To page or not to page
-Date: Fri, 2 May 2008 10:00:40 -0400
-Message-ID: <20080502140040.GI18081@yugib.highrise.ca>
-References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <7vlk2txn8n.fsf@gitster.siamese.dyndns.org> <8C3474E2-3A4F-44E8-B301-C36939C7BA11@sb.org> <807E185B-BEE5-4AAF-8DF4-EE597681D61C@wincent.com> <20080502123656.GA2680@sigill.intra.peff.net>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] Make boundary characters for --color-words configurable
+Date: Fri, 2 May 2008 22:26:45 +0800
+Message-ID: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
+References: <46dff0320805012128l6cb15e1ekd40f84a9eac724d1@mail.gmail.com>
+	 <1209736766-8029-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6zdv2QT/q3FMhpsV"
-Cc: Wincent Colaiuta <win@wincent.com>, Kevin Ballard <kevin@sb.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 02 16:20:54 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, "Ping Yin" <pkufranky@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 02 16:27:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jrw7a-0005xQ-8N
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 16:20:22 +0200
+	id 1JrwEh-0000sO-6m
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 16:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761168AbYEBOTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 10:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761316AbYEBOTe
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 10:19:34 -0400
-Received: from yugib.highrise.ca ([205.150.199.213]:35786 "EHLO
-	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657AbYEBOTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 10:19:33 -0400
-X-Greylist: delayed 1132 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 May 2008 10:19:33 EDT
-Received: from localhost (yugib.highrise.ca [205.150.199.213])
-	by yugib.highrise.ca (Postfix) with ESMTP id 573CB111E39;
-	Fri,  2 May 2008 10:00:40 -0400 (EDT)
+	id S1752468AbYEBO0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 10:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756815AbYEBO0r
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 10:26:47 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:35506 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752266AbYEBO0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 10:26:47 -0400
+Received: by an-out-0708.google.com with SMTP id d40so313378and.103
+        for <git@vger.kernel.org>; Fri, 02 May 2008 07:26:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=m9OWokFr89ONRvuuxxfoqNdfSoirRfvn0MpKSmNZ3qI=;
+        b=mYel97YN4NFxHU6pr7934VzgU41yCvcKQOMf/xq4fh/9sccum3Vfs/DbTMhGgumJUmNzhfAjL9HzbRpZ0b43bt0wAAVTXGMpWGkFJ8RbczPdlnQUZabeVK4aovtCv/kt5lGCHNA/C39DlaIa16PNn9RccFFTDIBwx9yPJb3yesk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iHtNtcQe+Yydu3pGB/+FEn487wVID3hvl3Wn6bAtJtRLmNBWQCkmVbnCByRDt7xKv7mM7XSHst9Uu8jC0qzBOAS/7RrbDRMlEmYRtI7Y/X/VMvauN5+yO98zb4UJDFQT/qGxb5W0bPpD+tHlpHhT39Ur+s0OLP1Mg2HU/x9q1v0=
+Received: by 10.100.47.13 with SMTP id u13mr4637921anu.125.1209738405900;
+        Fri, 02 May 2008 07:26:45 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Fri, 2 May 2008 07:26:45 -0700 (PDT)
+In-Reply-To: <1209736766-8029-1-git-send-email-pkufranky@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080502123656.GA2680@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81002>
 
+On Fri, May 2, 2008 at 9:59 PM, Ping Yin <pkufranky@gmail.com> wrote:
+> Previously --color-words only allow spaces as boundary characters.
+>  However, just space is not enough. For example, when i rename a function
+>  from foo to bar, following example doesn't show as expected when using
+>  --color-words.
+>
+>  ------------------
+>  - if (foo(arg))
+>  + if (bar(arg))
+>  ------------------
+>
+>  It shows as "if <r>(foo(arg))</r><g>(foo(arg))</g>". Actually, it's the
+>  best to show as "if (<r>foo</r><g>bar</g>(arg))". Here "r" and "g"
+>  represent "red" and "green" separately.
+>
+>  This patch introduces a configuration diff.nonwordchars to make
+>  --color-words treat both spaces and characters in diff.nonwordchars as
+>  boundary characters.
+>
+>  If we set diff.nonwordchars to "()", the example above will show as
+>  "if (<r>foo(</r><g>bar(</g>arg))". It's much better, athough not the best,
+>
 
---6zdv2QT/q3FMhpsV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Oh, there are some problems, assuming "{}" are set as diff.nonwordchars
 
-* Jeff King <peff@peff.net> [080501 00:00]:
-> On Fri, May 02, 2008 at 12:34:10PM +0200, Wincent Colaiuta wrote:
-> 
-> > But evidently given that there has been so much backlash against the  
-> > patch the only way to keep everyone happy will be to make this  
-> > configurable.
-> 
-> Agreed.
-> 
-> But I wonder why there seems to be such a split between people who
-> clearly have short git-status output, and those who have long git-status
-> output.
-> 
-> I keep my "untracked files" list tidy. IOW, I always get:
-> 
->   $ git status
->   # On branch master
->   nothing to commit (working directory clean)
-> 
-> and if I don't, then I should be taking some action to commit things,
-> clean them up, or add them to my .git/info/exclude file. Do other people
-> generally carry around a lot of cruft that "git status" reports?
+1. Trailing boundary character lost, for example
+----------------------------
+$ git diff-
+- foo{
++ foo
+$ git diff --color-words
+foo
+----------------------------
+With --color-words,  i can't know the trailing '{' is removed. This
+problem exists even without my patch. In that case, only trainling
+spaces are  lost.
 
-I like the change.  I don't usually have long git status output; I
-manage my .gitignore and $GITDIR/info/exclude religously.  But in
-those cases, the pager has no affect (LESS=FRSX), so it doesn't bother
-me.
-
-But sometime I have done something which affects a lot of files.  Either
-on purpose, or by accident, and suddenly git status has lots of output.
-And I'm usually not thinking git status will have reams of output and
-at that time, I really like *not* having to re-run the command with -p
-or | $PAGER.
-
-a.
+2. Trailing removed words shows at new line instead of the same line
+----------------------------
+$ git diff
+- foo bar
++ foo
+(note: no space after foo)
+$ git diff --color-words
+foo
+<red>bar</red>
+--------------------------------
+bar should show in the same line with bar. This is not related to my patch.
 
 
 -- 
-Aidan Van Dyk                                             Create like a god,
-aidan@highrise.ca                                       command like a king,
-http://www.highrise.ca/                                   work like a slave.
-
---6zdv2QT/q3FMhpsV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFIGx6IuVxNPsxNPScRAgJEAKCcp62BiK0LJMVThdUyQoD24INdEQCgkZaw
-YooWyEXvhgEq4bR1q39OTTE=
-=udJn
------END PGP SIGNATURE-----
-
---6zdv2QT/q3FMhpsV--
+Ping Yin
