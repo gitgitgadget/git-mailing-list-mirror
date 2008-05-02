@@ -1,65 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: To page or not to page
-Date: Fri, 2 May 2008 08:53:40 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805020851250.2691@eeepc-johanness>
-References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <7vlk2txn8n.fsf@gitster.siamese.dyndns.org> <20080502061108.GA1052@sigill.intra.peff.net>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] Make words boundary for --color-words configurable
+Date: Fri, 2 May 2008 11:14:08 +0300
+Message-ID: <20080502081408.GA11420@mithlond.arda.local>
+References: <1209699564-2800-1-git-send-email-pkufranky@gmail.com> <alpine.DEB.1.00.0805020839200.2691@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 02 09:54:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 02 10:15:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jrq64-0001p3-Tc
-	for gcvg-git-2@gmane.org; Fri, 02 May 2008 09:54:25 +0200
+	id 1JrqQ9-0000Eq-EP
+	for gcvg-git-2@gmane.org; Fri, 02 May 2008 10:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbYEBHxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 03:53:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbYEBHxY
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 03:53:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40277 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752284AbYEBHxX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 03:53:23 -0400
-Received: (qmail invoked by alias); 02 May 2008 07:53:21 -0000
-Received: from R595c.r.pppool.de (EHLO eeepc-johanness.samsung.router) [89.54.89.92]
-  by mail.gmx.net (mp002) with SMTP; 02 May 2008 09:53:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19TuPNNxNtTrCf8Krwec1uFGsGEXJkgyjGWjNDTDP
-	H3Afsmk8Vbewca
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080502061108.GA1052@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756823AbYEBIOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 04:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755937AbYEBIOU
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 04:14:20 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:54198 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756760AbYEBIOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 04:14:19 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.0.013.9)
+        id 481786910026C95D; Fri, 2 May 2008 11:14:16 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JrqPA-00035J-W0; Fri, 02 May 2008 11:14:08 +0300
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805020839200.2691@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/80968>
 
-Hi,
+Johannes Schindelin wrote (2008-05-02 08:45 +0100):
 
-On Fri, 2 May 2008, Jeff King wrote:
-
-> On Thu, May 01, 2008 at 10:56:40PM -0700, Junio C Hamano wrote:
+> On Fri, 2 May 2008, Ping Yin wrote:
 > 
-> > Hmmm, I thought I heard you cheered on that patch?  Perhaps it was 
-> > somebody else.
+> > Previously --color-words only allow spaces as words boundary.
+> > However, just space is not enough. For example, when i rename
+> > a function from foo to bar, following example doesn't show as
+> > expected when using --color-words.
 > 
-> Definitely not me. I think it was Dscho.
+> Thanks for starting this.
+> 
+> However, as Junio pointed out, it is easier to specify
+> word-characters, rather than non-word characters (think TAB), and...
 
-Yep.
+Just a quick note from someone who is not so much a programmer but who
+uses Git to track text/LaTex/etc. files with human languages: Please
+don't make this kind of things too Ascii-specific and too much
+byte-is-interpreted-as-character type thing. 
 
-I find it amazingly useful to see the first part, you know, the part with 
-the staged changes, instead of them whizzing by and me only seeing the 
-last part of the untracked files.  And of course, I do not even see the 
-label "Untracked files:", because there are so many.
-
-I agree, though, that the paging only makes sense with FSRX (not only 
-FX!), and that "less" should have that as default, too.
-
-Ciao,
-Dscho
+In general, my opinion is that with international text it's better to
+define word boundary characters than trying to maintain a _huge_ list of
+characters used within words in different human languages.
