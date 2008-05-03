@@ -1,156 +1,91 @@
-From: Heikki Orsila <heikki.orsila@iki.fi>
-Subject: [PATCH] Cleanup xread() loops to use read_in_full()
-Date: Sat, 3 May 2008 16:27:26 +0300
-Message-ID: <20080503132726.GA15655@zakalwe.fi>
+From: "Frodo Baggins" <frodo.drogo@gmail.com>
+Subject: Trouble merging to master when topic branch has a dir added
+Date: Sat, 3 May 2008 19:21:46 +0530
+Message-ID: <1cdff3fa0805030651j5d1936bdh4f7999163b7444ba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 03 15:28:23 2008
+X-From: git-owner@vger.kernel.org Sat May 03 15:52:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsHmk-0005Xn-Sb
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 15:28:19 +0200
+	id 1JsIAZ-0004qT-Ea
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 15:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755136AbYECN1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 09:27:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754984AbYECN1b
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 09:27:31 -0400
-Received: from zakalwe.fi ([80.83.5.154]:37365 "EHLO zakalwe.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754891AbYECN1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 09:27:30 -0400
-Received: by zakalwe.fi (Postfix, from userid 1023)
-	id C727F2BC8E; Sat,  3 May 2008 16:27:26 +0300 (EEST)
+	id S1752007AbYECNvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 09:51:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbYECNvs
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 09:51:48 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:58347 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034AbYECNvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 09:51:47 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1316959fgg.17
+        for <git@vger.kernel.org>; Sat, 03 May 2008 06:51:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=hCUlK5VuUQqKXqOMS4xaRAFKeoK1U3++4zo58f5nSSo=;
+        b=hsjyLY98KcErnONDC1v77IxRwHDepXxWC4vRbHChR0kXxcYcw19M+eN6bwxlFKpQ+A2IvbmRHWvrrZR2S/BbxSD+nRrHGvxDuvkHqBToMdth5Fkbk+I69rPjMbjy/GhdB5X1Spo8dY81oUG09oQiBcx/lVuUD1XWphUpj7oYuik=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=BQsSkP+tg7iWdkbPP73c5aDKpNogl0R6dTO4C5cHpovxyWFykUb1vLM5yezxxEu+ibp1xkO4AiI4khIG3Uoryn+9COoCdRBquIMvFJDhAkb12peFcWIE4KwVLd5XQxpvUMYSksSSHp+GfzG17qH/1o/7YUSZoARg2PnlqDShE8c=
+Received: by 10.86.90.13 with SMTP id n13mr7166355fgb.3.1209822706207;
+        Sat, 03 May 2008 06:51:46 -0700 (PDT)
+Received: by 10.86.81.16 with HTTP; Sat, 3 May 2008 06:51:46 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81079>
 
-Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
----
- combine-diff.c |   17 ++++++++---------
- pack-write.c   |    8 ++------
- pkt-line.c     |   15 +++++----------
- sha1_file.c    |   14 ++++----------
- 4 files changed, 19 insertions(+), 35 deletions(-)
+Hi,
+This is a newbie question.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index f1e7a4d..7420146 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -701,7 +701,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 		else if (0 <= (fd = open(elem->path, O_RDONLY)) &&
- 			 !fstat(fd, &st)) {
- 			size_t len = xsize_t(st.st_size);
--			size_t sz = 0;
-+			ssize_t done;
- 			int is_file, i;
- 
- 			elem->mode = canon_mode(st.st_mode);
-@@ -716,14 +716,13 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 
- 			result_size = len;
- 			result = xmalloc(len + 1);
--			while (sz < len) {
--				ssize_t done = xread(fd, result+sz, len-sz);
--				if (done == 0 && sz != len)
--					die("early EOF '%s'", elem->path);
--				else if (done < 0)
--					die("read error '%s'", elem->path);
--				sz += done;
--			}
-+
-+			done = read_in_full(fd, result, len);
-+			if (done < 0)
-+				die("read error '%s'", elem->path);
-+			else if (done < len)
-+				die("early EOF '%s'", elem->path);
-+
- 			result[len] = 0;
- 		}
- 		else {
-diff --git a/pack-write.c b/pack-write.c
-index 665e2b2..c66c8af 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -183,7 +183,6 @@ void fixup_pack_header_footer(int pack_fd,
- 
- char *index_pack_lockfile(int ip_out)
- {
--	int len, s;
- 	char packname[46];
- 
- 	/*
-@@ -193,11 +192,8 @@ char *index_pack_lockfile(int ip_out)
- 	 * case, we need it to remove the corresponding .keep file
- 	 * later on.  If we don't get that then tough luck with it.
- 	 */
--	for (len = 0;
--		 len < 46 && (s = xread(ip_out, packname+len, 46-len)) > 0;
--		 len += s);
--	if (len == 46 && packname[45] == '\n' &&
--		memcmp(packname, "keep\t", 5) == 0) {
-+	if (read_in_full(ip_out, packname, 46) == 46 && packname[45] == '\n' &&
-+	    memcmp(packname, "keep\t", 5) == 0) {
- 		char path[PATH_MAX];
- 		packname[45] = 0;
- 		snprintf(path, sizeof(path), "%s/pack/pack-%s.keep",
-diff --git a/pkt-line.c b/pkt-line.c
-index 355546a..f5d0086 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -65,16 +65,11 @@ void packet_write(int fd, const char *fmt, ...)
- 
- static void safe_read(int fd, void *buffer, unsigned size)
- {
--	size_t n = 0;
--
--	while (n < size) {
--		ssize_t ret = xread(fd, (char *) buffer + n, size - n);
--		if (ret < 0)
--			die("read error (%s)", strerror(errno));
--		if (!ret)
--			die("The remote end hung up unexpectedly");
--		n += ret;
--	}
-+	ssize_t ret = read_in_full(fd, buffer, size);
-+	if (ret < 0)
-+		die("read error (%s)", strerror(errno));
-+	else if (ret < size)
-+		die("The remote end hung up unexpectedly");
- }
- 
- int packet_read_line(int fd, char *buffer, unsigned size)
-diff --git a/sha1_file.c b/sha1_file.c
-index c2ab7ea..3516777 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2466,16 +2466,10 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
- 
- int read_pack_header(int fd, struct pack_header *header)
- {
--	char *c = (char*)header;
--	ssize_t remaining = sizeof(struct pack_header);
--	do {
--		ssize_t r = xread(fd, c, remaining);
--		if (r <= 0)
--			/* "eof before pack header was fully read" */
--			return PH_ERROR_EOF;
--		remaining -= r;
--		c += r;
--	} while (remaining > 0);
-+	if (read_in_full(fd, header, sizeof(*header)) < sizeof(*header))
-+		/* "eof before pack header was fully read" */
-+		return PH_ERROR_EOF;
-+
- 	if (header->hdr_signature != htonl(PACK_SIGNATURE))
- 		/* "protocol error (pack signature mismatch detected)" */
- 		return PH_ERROR_PACK_SIGNATURE;
+I created a topic branch and made a few commits which added a few
+directories. I'd like to merge these changes back to master.
+I get the following error messages.
+
+frodo@laptop-zion:~/src/c/logger$ ls
+logger-inc  logger-src  Makefile  test-driver
+frodo@laptop-zion:~/src/c/logger$ git branch
+  debug-printf-help
+  debug-static
+  master
+* split-into-dirs
+frodo@laptop-zion:~/src/c/logger$ git checkout master
+fatal: Entry 'logger-src/logger.cpp' would be overwritten by merge.
+Cannot merge.
+
+I think the above error is due to the fact that the branch master did
+not have these directories.
+
+frodo@laptop-zion:~/src/c/logger$ git-ls-tree master
+100644 blob 82ccb7971fc36db2bc54bb5a590f97cd37c998fb    .gitignore
+100644 blob 9971a5a432d575cc682145454e5260f83e1b9fb3    Makefile
+100644 blob b8f6c213ebb831ed8704b7f0e0e665212b808649    client.cpp
+100644 blob d01aaec4138862ccae4be9de2c672ddaeccfa21d    logger.cpp
+100644 blob 37c15a22b325934ea685a76cfd528c2bf6464f2b    logger.h
+frodo@laptop-zion:~/src/c/logger$ git-ls-tree split-into-dirs
+100644 blob 82ccb7971fc36db2bc54bb5a590f97cd37c998fb    .gitignore
+100644 blob 7c497aff60175ce212415c1737e224f517f785e9    Makefile
+040000 tree 4f181412688afaa30929b752cc1fb3f2cda3cba9    logger-inc
+       <=== new dir
+040000 tree 4fb363dac2a00d93d1a958f74021fcd0e3bc861e    logger-src
+      <===
+040000 tree bb2b91b6ec1d11d23ab8e7a3c8935504079f6bf3    test-driver         <===
+
+
+Could someone help me out with this?
+frodo@laptop-zion:~/src/c/logger$ git --version
+git version 1.5.2.5
+
+Regards,
+Frodo B
 -- 
-1.5.4.4
+Never laugh at live dragons.
+                              -- Bilbo Baggins
