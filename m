@@ -1,62 +1,70 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] --color-words: Make the word characters configurable
-Date: Sat, 3 May 2008 17:43:37 +0300
-Message-ID: <20080503144337.GA7987@mithlond.arda.local>
-References: <46dff0320805012128l6cb15e1ekd40f84a9eac724d1@mail.gmail.com> <1209736766-8029-1-git-send-email-pkufranky@gmail.com> <alpine.DEB.1.00.0805031501290.30431@racer>
+From: "Matt Graham" <mdg149@gmail.com>
+Subject: Re: [PATCH] I don't known anyone who understands what it means when they do a merge and see "file.txt: needs update". "file.txt: has changes" is much clearer.
+Date: Sat, 3 May 2008 11:24:02 -0400
+Message-ID: <1c5969370805030824h3ecdb967ub0c57f6fc9cbba58@mail.gmail.com>
+References: <1209798522-13618-1-git-send-email-timcharper@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 03 16:44:44 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Tim Harper" <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 03 17:24:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsIyg-0005YQ-St
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 16:44:43 +0200
+	id 1JsJbc-0001ew-28
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 17:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755829AbYECOnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 10:43:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbYECOnp
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 10:43:45 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:59266 "EHLO
-	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755600AbYECOno (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 10:43:44 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.0.013.9)
-        id 481AE2A7000C305A; Sat, 3 May 2008 17:43:41 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JsIxd-0002Tg-CR; Sat, 03 May 2008 17:43:37 +0300
+	id S1756914AbYECPYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 11:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756870AbYECPYH
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 11:24:07 -0400
+Received: from wx-out-0506.google.com ([66.249.82.230]:7880 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755871AbYECPYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 11:24:04 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so218564wxd.4
+        for <git@vger.kernel.org>; Sat, 03 May 2008 08:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=MN1N0Naj0e7kE1pAWb+c0ahW+8OtjUDeMVAGkGlS0WY=;
+        b=Gh7s+ViBXuCxe+1QO9smTAaclpSLWIjvH/8QXXAceN8SvGQZu6BxY0rHOm+tSQD+SkIRNUq2Vf2j69TGzZPyKHF3HZe0XYJNHE0qqJ8IAaSZcTEhdpIs3A5yLBiXSfhN3WbGNs8dBzjxklra96121iqkTs2mdbXJ6h7ytnMCXcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XdhlBdh6GAQKnoDexip824p/U61wet9IF+J8nqqSNX6LnMMv9VeDJg/CrHClLkhfLkgQ9DHi9+vcT/MR+6w/ZalXfIOQxCjIVG9RHrUxRFu4eRjga95GwbqqeWfCSk+o8MT11+Vkh5haAhZBcG6pEcX14fCcTab9KnZOZDa7OCY=
+Received: by 10.142.47.6 with SMTP id u6mr1728028wfu.159.1209828242744;
+        Sat, 03 May 2008 08:24:02 -0700 (PDT)
+Received: by 10.142.170.10 with HTTP; Sat, 3 May 2008 08:24:02 -0700 (PDT)
+In-Reply-To: <1209798522-13618-1-git-send-email-timcharper@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805031501290.30431@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81097>
 
-Johannes Schindelin wrote (2008-05-03 15:03 +0100):
-
-> Now, you can specify which characters are to be interpreted as word
-> characters with "--color-words=A-Za-z", or by setting the config
-> variable diff.wordCharacters.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Sat, May 3, 2008 at 3:08 AM, Tim Harper <timcharper@gmail.com> wrote:
 > ---
-> 
-> 	I would have preferred an approach like this.
+>   read-cache.c |    2 +-
+>   1 files changed, 1 insertions(+), 1 deletions(-)
+>
+>  diff --git a/read-cache.c b/read-cache.c
+>  index a92b25b..971667d 100644
+>  --- a/read-cache.c
+>  +++ b/read-cache.c
+>  @@ -999,7 +999,7 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
+>                         }
+>                         if (quiet)
+>                                 continue;
+>  -                       printf("%s: needs update\n", ce->name);
+>  +                       printf("%s: has changes\n", ce->name);
+>                         has_errors = 1;
+>                         continue;
+>                 }
+>  --
+>  1.5.5.1
 
-Unfortunately this does not work at all with other than Ascii
-characters. It makes --color-words completely unusable for anything
-other than Ascii text. Sorry.
-
-Ping Yin's version has also the problem that UTF-8 multibyte characters
-U+0080..U+10FFFF don't work in diff.nonwordchars. Fortunately the most
-important word delimiters are in U+0000..U+007F (=Ascii) area so Ping's
-version is perfectly usable with Unicode text. (Even the old
---color-words behaviour with only SPACE as non-word char was perfectly
-usable with Unicode text.) I, too, would like to see Ping's patch series
-merged in.
+Yes, "needs update" is definitely cryptic and confusing.
