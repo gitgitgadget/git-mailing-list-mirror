@@ -1,80 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Sat, 03 May 2008 10:09:26 -0700
-Message-ID: <7vtzhfuxfd.fsf@gitster.siamese.dyndns.org>
-References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804221127360.4460@eeepc-johanness>
- <7vy775ygjm.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness>
- <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness>
- <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org> <4816CA72.8070405@viscovery.net>
- <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness>
- <7vk5ig745b.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness>
- <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness>
- <7v63u05khw.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness>
- <7v1w4o3zle.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
- <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0804301253520.2136@eeepc-johanness>
- <7vy76tyhfd.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0805031340550.30431@racer>
+Subject: Re: [PATCH] --color-words: Make the word characters configurable
+Date: Sat, 03 May 2008 10:43:22 -0700
+Message-ID: <7vmyn7uvut.fsf@gitster.siamese.dyndns.org>
+References: <46dff0320805012128l6cb15e1ekd40f84a9eac724d1@mail.gmail.com>
+ <1209736766-8029-1-git-send-email-pkufranky@gmail.com>
+ <alpine.DEB.1.00.0805031501290.30431@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>,
-	git@vger.kernel.org
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 03 19:10:37 2008
+X-From: git-owner@vger.kernel.org Sat May 03 19:44:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsLFr-0002F3-8F
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 19:10:35 +0200
+	id 1JsLmu-0004PH-8U
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 19:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760330AbYECRJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 13:09:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759543AbYECRJj
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 13:09:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48743 "EHLO
+	id S932551AbYECRne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 13:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932536AbYECRnd
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 13:43:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53679 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759419AbYECRJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 13:09:38 -0400
+	with ESMTP id S932527AbYECRnc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 13:43:32 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D6BAA25C5;
-	Sat,  3 May 2008 13:09:37 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DC4793E3E;
+	Sat,  3 May 2008 13:43:29 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0DD1825C4; Sat,  3 May 2008 13:09:30 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0805031340550.30431@racer> (Johannes
- Schindelin's message of "Sat, 3 May 2008 13:45:40 +0100 (BST)")
+ ESMTP id F01143E3C; Sat,  3 May 2008 13:43:25 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0805031501290.30431@racer> (Johannes
+ Schindelin's message of "Sat, 3 May 2008 15:03:17 +0100 (BST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B60314C0-1933-11DD-89BF-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 71314C40-1938-11DD-BB28-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81103>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> And I try to stress that while we are still in the drawing board phase, 
->> because it would be painful to change once we start with a language 
->> without enough expressiveness.
+> Now, you can specify which characters are to be interpreted as word 
+> characters with "--color-words=A-Za-z", or by setting the config variable 
+> diff.wordCharacters.
 >
-> Unfortunately, we are no longer in the drawing board phase, because the 
-> offending code is already in 'next'.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	I would have preferred an approach like this.
 
-What does that mean?  "Now we are committed to it, so I will stop
-complaining and work within the overall design in a more constructive
-way"?
+Hmmm...
 
-We have precedence of even reverting the whole series from 'next'. When
-there is a better design available, I think it is perfectly fine to
-improve what is in 'next' in a way that is not backward compatible with
-stuff that has not hit 'master'.  That is what 'next' is for.
+> diff --git a/README b/README
+> index 548142c..0e325e2 100644
+> --- a/README
+> +++ b/README
+> @@ -4,7 +4,7 @@
+>  
+>  ////////////////////////////////////////////////////////////////
+>  
+> -"git" can mean anything, depending on your mood.
+> +"git" cann mean anything, depending on your mood.
+
+Heh.
+
+> @@ -456,7 +514,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
+>  	plus.ptr = xmalloc(plus.size);
+>  	memcpy(plus.ptr, diff_words->plus.text.ptr, plus.size);
+>  	for (i = 0; i < plus.size; i++)
+> -		if (isspace(plus.ptr[i]))
+> +		if (!word_character[(unsigned char)plus.ptr[i]])
+>  			plus.ptr[i] = '\n';
+>  	diff_words->plus.current = 0;
+
+I do not think there is much difference between specifying the set of word
+characters and the set of non-word characters, especially as long as your
+definition of "character" is limited to 8-bit bytes.  By enumerating word
+characters, your patch is letting the user specify non word characters
+that are remainder from the 256-element set.  By the way, I think you
+meant to do the same for the "minus" side a few lines above this hunk.
+
+I commented on the patch from Ping earier about a quite different issue.
+I was wondering if we can avoid losing the non-word character information.
+The original code replaces any isspace byte with LF, but a whitespace is a
+whitespace is a whitespace so there won't be much loss of information, but
+making the above isspace() configurable means that now you are going to
+drop non-space non-word characters from the output set.
+
+Instead of dropping the original character and replacing it with LF,
+I thought a more sensible approach would be to _insert_ a line break
+between runs of word characters and non-word characters (while probably
+dropping a LF in the original).  That is, instead of what the current
+implementation of the above loop does to "ab  c d" (i.e. rewrite it to
+"ab\n\nc\nd"), rewrite it to "ab\n  \nc\n \nd".  Which feels more consistent
+with the way how \b should work.
