@@ -1,76 +1,61 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH] gitk: Update German translation
-Date: Sat, 3 May 2008 10:03:09 +0200
-Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
-Message-ID: <200805031003.09458.stimming@tuhh.de>
-References: <200805012142.10151.stimming@tuhh.de> <200805022033.01407.stimming@tuhh.de> <18460.6645.918108.615194@cargo.ozlabs.ibm.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: Best way to optimize a git repository?
+Date: Sat, 3 May 2008 12:02:35 +0200
+Message-ID: <20080503100235.GA16989@cuci.nl>
+References: <2729632a0805021734h72196639x8789a00ce9be4059@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat May 03 11:21:44 2008
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Sat May 03 12:03:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsDw4-0001F8-1Z
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 11:21:40 +0200
+	id 1JsEaT-0004dg-EL
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 12:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758383AbYECJUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 05:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758465AbYECJUw
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 05:20:52 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:49094 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758332AbYECJUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 05:20:51 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m439Kk8c010675
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sat, 3 May 2008 11:20:47 +0200
-Received: from [192.168.2.102] (p54901ED6.dip0.t-ipconnect.de [84.144.30.214])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m439KjU3032638
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 3 May 2008 11:20:46 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <18460.6645.918108.615194@cargo.ozlabs.ibm.com>
+	id S1761135AbYECKCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 06:02:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760899AbYECKCh
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 06:02:37 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:48095 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758637AbYECKCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 06:02:37 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 3CB255461; Sat,  3 May 2008 12:02:35 +0200 (CEST)
 Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+In-Reply-To: <2729632a0805021734h72196639x8789a00ce9be4059@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81065>
 
-Am Samstag, 3. Mai 2008 09:53 schrieb Paul Mackerras:
-> Christian Stimming writes:
-> > > Well, the commits aren't in date order, strictly speaking, and the
-> > > last commit isn't necessarily the oldest (though the first commit will
-> > > in fact be the newest).  How about:
-> > >
-> > > <Home>	Move to head of list
-> > > <End>	Move to tail of list
-> > >
-> > > Would that be any clearer?
-> >
-> > I think "head of list" and "tail of list" are more the terms about the
-> > implementation detail and not so much an explanation that is easily
-> > understood for the user. I think some combination using the word "top"
-> > should rather be used to make it really clear we're talking about the
-> > upper end of the window.
->
-> The list isn't just a detail, it's what the user sees in the top pane:
-> the commits, listed in some order.
->
-> How about "top of list" and "bottom of list"?  Or "start of list" and
-> "end of list"?
+skillzero@gmail.com wrote:
+>I want to periodically optimize my repositories even if it takes a
+>long time to run the command. Should I do 'git gc --aggressive', 'git
 
-I think "top of list" and "bottom of list" would work quite well.
+>I also read somewhere (but can't find now) that some of these commands
+>shouldn't be run while other people might be accessing the repository.
 
-Regards,
+Caveat emptor, indeed.
 
-Christian
+I have in my /etc/gitconfig the following:
+
+[repack]
+   UseDeltaBaseOffset = true
+[pack]
+   compression = 9
+[alias]
+   packall = !rm -rf .git/ORIG_HEAD .git/FETCH_HEAD .git/index .git/logs .git/info/refs .git/objects/pack/pack-*.keep .git/refs/original .git/refs/patches .git/patches && git prune --expire now && git repack -a -d --window=200 && git gc
+
+A subsequent "git packall" does the trick, but this is best done on an
+otherwise idle repository.
+-- 
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
+"What do I do when I see someone *extremely gorgeous*?
+ I stare, I smile, and when I get tired... I put the mirror down."
