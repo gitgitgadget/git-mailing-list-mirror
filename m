@@ -1,62 +1,62 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: git and peer review
-Date: Sat, 3 May 2008 22:27:35 +0800
-Message-ID: <46dff0320805030727x7d7c473ao5e39f077a73f3523@mail.gmail.com>
-References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
-	 <18071eea0805030654j42c21212wd1ccf4df42662000@mail.gmail.com>
-	 <46dff0320805030703g68de70edtc0371b2261059827@mail.gmail.com>
-	 <1cdff3fa0805030722p3cfed058oae77d0dd9fb31dee@mail.gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] --color-words: Make the word characters configurable
+Date: Sat, 3 May 2008 17:43:37 +0300
+Message-ID: <20080503144337.GA7987@mithlond.arda.local>
+References: <46dff0320805012128l6cb15e1ekd40f84a9eac724d1@mail.gmail.com> <1209736766-8029-1-git-send-email-pkufranky@gmail.com> <alpine.DEB.1.00.0805031501290.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Thomas Adam" <thomas.adam22@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Frodo Baggins" <frodo.drogo@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 16:28:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 03 16:44:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsIiw-0008CF-EK
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 16:28:26 +0200
+	id 1JsIyg-0005YQ-St
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 16:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943AbYECO1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 10:27:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754766AbYECO1j
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 10:27:39 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:40723 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754759AbYECO1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 10:27:38 -0400
-Received: by an-out-0708.google.com with SMTP id d40so402287and.103
-        for <git@vger.kernel.org>; Sat, 03 May 2008 07:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=n515LxoJU2/+nMCcpveYbnY5V4cbX4+wBd8NMeWKOZc=;
-        b=fCWZv4dQOR6RycCPgYIRFeCgiWSiunXIbpibRHRc9A33n/kT+87iqHjx265t5Svy3eZBG1tK2AiYI/b4NijGiMRhaOCh0P0zBDwTLGZos/ARQ3UK2Ltvqrvx+K5uZIaB5GNIH2Oq9MIg46QFlxuhqiAjLk7hb01ss401qZKqQzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=i1588pPcTxFiXtS7aLtHE+Kr5AvsBZ0Fc5KAN13SkPVA7EljckAYRdGCyCbSNBrVqiC/8DXVsF/xtyd8+O9c0SBP6aDAMgMMbinNfP1x75FUH+RpXOL4q9yqJ0gDXctVVl0zKq35eJK2wnXXcGA4q7q6Kq7lyvID61zC+HWMjhE=
-Received: by 10.100.14.17 with SMTP id 17mr5964164ann.23.1209824855928;
-        Sat, 03 May 2008 07:27:35 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Sat, 3 May 2008 07:27:35 -0700 (PDT)
-In-Reply-To: <1cdff3fa0805030722p3cfed058oae77d0dd9fb31dee@mail.gmail.com>
+	id S1755829AbYECOnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 10:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbYECOnp
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 10:43:45 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:59266 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755600AbYECOno (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 10:43:44 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.0.013.9)
+        id 481AE2A7000C305A; Sat, 3 May 2008 17:43:41 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JsIxd-0002Tg-CR; Sat, 03 May 2008 17:43:37 +0300
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805031501290.30431@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81096>
 
-On Sat, May 3, 2008 at 10:22 PM, Frodo Baggins <frodo.drogo@gmail.com> wrote:
-> On Sat, May 3, 2008 at 7:33 PM, Ping Yin <pkufranky@gmail.com> wrote:
->  >  Sorry, but what does SOB stand for?
->  Signed Off By ?
+Johannes Schindelin wrote (2008-05-03 15:03 +0100):
 
-Or, right. THX.
+> Now, you can specify which characters are to be interpreted as word
+> characters with "--color-words=A-Za-z", or by setting the config
+> variable diff.wordCharacters.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> 
+> 	I would have preferred an approach like this.
 
+Unfortunately this does not work at all with other than Ascii
+characters. It makes --color-words completely unusable for anything
+other than Ascii text. Sorry.
 
--- 
-Ping Yin
+Ping Yin's version has also the problem that UTF-8 multibyte characters
+U+0080..U+10FFFF don't work in diff.nonwordchars. Fortunately the most
+important word delimiters are in U+0000..U+007F (=Ascii) area so Ping's
+version is perfectly usable with Unicode text. (Even the old
+--color-words behaviour with only SPACE as non-word char was perfectly
+usable with Unicode text.) I, too, would like to see Ping's patch series
+merged in.
