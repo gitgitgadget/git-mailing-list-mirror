@@ -1,98 +1,156 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: [PATCH] Make boundary characters for --color-words configurable
-Date: Sat, 03 May 2008 15:22:15 +0200
-Message-ID: <481C6707.5060308@dirk.my1.cc>
-References: <20080502143650.GB3079@mithlond.arda.local> <1209774178-26552-1-git-send-email-pkufranky@gmail.com>
+From: Heikki Orsila <heikki.orsila@iki.fi>
+Subject: [PATCH] Cleanup xread() loops to use read_in_full()
+Date: Sat, 3 May 2008 16:27:26 +0300
+Message-ID: <20080503132726.GA15655@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: tlikonen@iki.fi, gitster@pobox.com, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 15:23:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 03 15:28:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsHhr-0003xo-6S
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 15:23:15 +0200
+	id 1JsHmk-0005Xn-Sb
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 15:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866AbYECNWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 09:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYECNWX
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 09:22:23 -0400
-Received: from smtprelay08.ispgateway.de ([80.67.29.8]:47731 "EHLO
-	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752601AbYECNWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 09:22:23 -0400
-Received: from [84.176.81.131] (helo=[192.168.2.100])
-	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1JsHgt-0000L4-6A; Sat, 03 May 2008 15:22:15 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <1209774178-26552-1-git-send-email-pkufranky@gmail.com>
-X-Df-Sender: 757646
+	id S1755136AbYECN1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 09:27:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754984AbYECN1b
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 09:27:31 -0400
+Received: from zakalwe.fi ([80.83.5.154]:37365 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754891AbYECN1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 09:27:30 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id C727F2BC8E; Sat,  3 May 2008 16:27:26 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81078>
 
-Hi Ping,
+Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
+---
+ combine-diff.c |   17 ++++++++---------
+ pack-write.c   |    8 ++------
+ pkt-line.c     |   15 +++++----------
+ sha1_file.c    |   14 ++++----------
+ 4 files changed, 19 insertions(+), 35 deletions(-)
 
-I highly appreciate your effort into "diff --color-words"
-and hope it makes it into the the next release. I wanted
-to change the behaviour as well, but when I saw that
-git-diff is a builtin, I had to give up. I hoped it was
-a perl script and could insert some "\b" regexes somewhere,
-but I was wrong. I'm using Git for Windows, you know.
-
-However, I'd like to ask you whether you've done any research
-in how to use "--color-words" in gitk? gitk seems to color
-the lines only by means of a '+' or '-' sign in the first
-column. Hardcoded. I managed to add a checkbox to gitk that
-adds the '--color-words' switch to git diff, but when checked
-the output is just muddled up. All of those ^] characters
-whithin the code. :-(
-
-Dirk
-
-Ping Yin schrieb:
-> Signed-off-by: Ping Yin <pkufranky@gmail.com>
-> ---
->   
->> I think config variables should be in alphabetical order in config.txt.
->> Hence your diff.nonwordchars is not in the right place
->>     
->
-> THX, this is fixing patch
->
->  Documentation/config.txt |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index eb05592..812ec2c 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -537,6 +537,10 @@ diff.external::
->  	program only on a subset of your files, you might want to
->  	use linkgit:gitattributes[5] instead.
->  
-> +diff.nonwordchars::
-> +	Specify additional boundary characters other than spaces for
-> +	--color-words.
-> +
->  diff.renameLimit::
->  	The number of files to consider when performing the copy/rename
->  	detection; equivalent to the git diff option '-l'.
-> @@ -546,10 +550,6 @@ diff.renames::
->  	will enable basic rename detection.  If set to "copies" or
->  	"copy", it will detect copies, as well.
->  
-> -diff.nonwordchars::
-> -    Specify additional boundary characters other than spaces for
-> -    --color-words.
-> -
->  fetch.unpackLimit::
->  	If the number of objects fetched over the git native
->  	transfer is below this
->   
+diff --git a/combine-diff.c b/combine-diff.c
+index f1e7a4d..7420146 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -701,7 +701,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 		else if (0 <= (fd = open(elem->path, O_RDONLY)) &&
+ 			 !fstat(fd, &st)) {
+ 			size_t len = xsize_t(st.st_size);
+-			size_t sz = 0;
++			ssize_t done;
+ 			int is_file, i;
+ 
+ 			elem->mode = canon_mode(st.st_mode);
+@@ -716,14 +716,13 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 
+ 			result_size = len;
+ 			result = xmalloc(len + 1);
+-			while (sz < len) {
+-				ssize_t done = xread(fd, result+sz, len-sz);
+-				if (done == 0 && sz != len)
+-					die("early EOF '%s'", elem->path);
+-				else if (done < 0)
+-					die("read error '%s'", elem->path);
+-				sz += done;
+-			}
++
++			done = read_in_full(fd, result, len);
++			if (done < 0)
++				die("read error '%s'", elem->path);
++			else if (done < len)
++				die("early EOF '%s'", elem->path);
++
+ 			result[len] = 0;
+ 		}
+ 		else {
+diff --git a/pack-write.c b/pack-write.c
+index 665e2b2..c66c8af 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -183,7 +183,6 @@ void fixup_pack_header_footer(int pack_fd,
+ 
+ char *index_pack_lockfile(int ip_out)
+ {
+-	int len, s;
+ 	char packname[46];
+ 
+ 	/*
+@@ -193,11 +192,8 @@ char *index_pack_lockfile(int ip_out)
+ 	 * case, we need it to remove the corresponding .keep file
+ 	 * later on.  If we don't get that then tough luck with it.
+ 	 */
+-	for (len = 0;
+-		 len < 46 && (s = xread(ip_out, packname+len, 46-len)) > 0;
+-		 len += s);
+-	if (len == 46 && packname[45] == '\n' &&
+-		memcmp(packname, "keep\t", 5) == 0) {
++	if (read_in_full(ip_out, packname, 46) == 46 && packname[45] == '\n' &&
++	    memcmp(packname, "keep\t", 5) == 0) {
+ 		char path[PATH_MAX];
+ 		packname[45] = 0;
+ 		snprintf(path, sizeof(path), "%s/pack/pack-%s.keep",
+diff --git a/pkt-line.c b/pkt-line.c
+index 355546a..f5d0086 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -65,16 +65,11 @@ void packet_write(int fd, const char *fmt, ...)
+ 
+ static void safe_read(int fd, void *buffer, unsigned size)
+ {
+-	size_t n = 0;
+-
+-	while (n < size) {
+-		ssize_t ret = xread(fd, (char *) buffer + n, size - n);
+-		if (ret < 0)
+-			die("read error (%s)", strerror(errno));
+-		if (!ret)
+-			die("The remote end hung up unexpectedly");
+-		n += ret;
+-	}
++	ssize_t ret = read_in_full(fd, buffer, size);
++	if (ret < 0)
++		die("read error (%s)", strerror(errno));
++	else if (ret < size)
++		die("The remote end hung up unexpectedly");
+ }
+ 
+ int packet_read_line(int fd, char *buffer, unsigned size)
+diff --git a/sha1_file.c b/sha1_file.c
+index c2ab7ea..3516777 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2466,16 +2466,10 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
+ 
+ int read_pack_header(int fd, struct pack_header *header)
+ {
+-	char *c = (char*)header;
+-	ssize_t remaining = sizeof(struct pack_header);
+-	do {
+-		ssize_t r = xread(fd, c, remaining);
+-		if (r <= 0)
+-			/* "eof before pack header was fully read" */
+-			return PH_ERROR_EOF;
+-		remaining -= r;
+-		c += r;
+-	} while (remaining > 0);
++	if (read_in_full(fd, header, sizeof(*header)) < sizeof(*header))
++		/* "eof before pack header was fully read" */
++		return PH_ERROR_EOF;
++
+ 	if (header->hdr_signature != htonl(PACK_SIGNATURE))
+ 		/* "protocol error (pack signature mismatch detected)" */
+ 		return PH_ERROR_PACK_SIGNATURE;
+-- 
+1.5.4.4
