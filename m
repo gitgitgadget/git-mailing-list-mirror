@@ -1,87 +1,72 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
-	configurable
-Date: Sat, 3 May 2008 21:41:26 +0300
-Message-ID: <20080503184126.GA21187@mithlond.arda.local>
-References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com> <1209815828-6548-1-git-send-email-pkufranky@gmail.com> <1209815828-6548-2-git-send-email-pkufranky@gmail.com> <1209815828-6548-3-git-send-email-pkufranky@gmail.com> <1209815828-6548-4-git-send-email-pkufranky@gmail.com> <1209815828-6548-5-git-send-email-pkufranky@gmail.com> <7vy76rtfns.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org
+From: Tim Harper <timcharper@gmail.com>
+Subject: Re: [PATCH] I don't known anyone who understands what it means when they do a merge and see "file.txt: needs update".  "file.txt: has changes" is much clearer.
+Date: Sat, 3 May 2008 14:10:48 -0600
+Message-ID: <3DE78C03-DA35-4CB5-8D3D-0529A89065EC@gmail.com>
+References: <1209798522-13618-1-git-send-email-timcharper@gmail.com> <alpine.DEB.1.00.0805031509170.30431@racer> <7v3aozwcj6.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 03 20:42:31 2008
+X-From: git-owner@vger.kernel.org Sat May 03 22:11:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsMgl-0007L4-1B
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 20:42:27 +0200
+	id 1JsO57-0003qt-No
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 22:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbYECSle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 14:41:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbYECSle
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 14:41:34 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:51172 "EHLO
-	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751633AbYECSld (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 14:41:33 -0400
-Received: from mithlond.arda.local (80.220.180.181) by jenni2.rokki.sonera.fi (8.0.013.9)
-        id 481789310035A942; Sat, 3 May 2008 21:41:29 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JsMfm-0005Zp-IC; Sat, 03 May 2008 21:41:26 +0300
-Content-Disposition: inline
-In-Reply-To: <7vy76rtfns.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752157AbYECUKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 16:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYECUKx
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 16:10:53 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:63700 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905AbYECUKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 16:10:52 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so502890wfd.4
+        for <git@vger.kernel.org>; Sat, 03 May 2008 13:10:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=SZHN1+mLQXUyXicAp1XvAssV1R5k3Kn3Y0S3OGnG7BI=;
+        b=cR0Y9lmLhnC+zeGnQWG3J6DMTv+Kvpn5ozgP8XEC6a336vCqlUUbUSQnz34I69C0DNhzJ5WcAJ74xhwmxE826IJ9AMOPBVEosgPS1ePl3WmZfQdlxi3OAb6QLDYGZFNG1KVNkUjrnu05IM2pNIswCrohgAVP4lyMhXLmPv9gEBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=HQi3rHRrT59zEuutRHqLoWH/oeLTXseJ/NhWUaDGNVg9AADZqhdZA3yHq3UFGUPl0E0H0QCm8g23wdOAYzvAlAMRZpVB7caUmGquAn8LwmpPCod6idK2lKlmBMrkr/CIW80u91JzrbetUCM8tbRdvzuxBNY2gJYFCZdttXTtq9A=
+Received: by 10.142.128.6 with SMTP id a6mr1814659wfd.206.1209845452345;
+        Sat, 03 May 2008 13:10:52 -0700 (PDT)
+Received: from ?10.0.0.103? ( [208.186.134.104])
+        by mx.google.com with ESMTPS id 20sm11482658wfi.11.2008.05.03.13.10.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 May 2008 13:10:51 -0700 (PDT)
+In-Reply-To: <7v3aozwcj6.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81114>
 
-Junio C Hamano wrote (2008-05-03 11:18 -0700):
+I ran all of the tests with the patch apply, and they all pass.  Is  
+that enough indication?
 
-> Has this series been ever tested?
-> 
-> $ git diff one two
-> diff --git a/one b/two
-> index f9facd3..10c6195 100644
-> --- a/one
-> +++ b/two
-> @@ -1 +1 @@
-> -A quick(brown) fox
-> +A quick(yellow) fox
-> 
-> $ tail -n 2 .git/config
-> [diff]
->         nonwordchars = "()"
-> 
-> $ git diff --color-words one two
-> diff --git a/one b/two
-> index f9facd3..10c6195 100644
-> --- a/one
-> +++ b/two
-> @@ -1 +1 @@
-> A quick(<red>brown)</red><green>yellow)</green> fox
+Tim
 
-I've been testing but not quite sure what to think about the above
-output. Is this more natural and expected output:
+On May 3, 2008, at 10:57 AM, Junio C Hamano wrote:
 
-  A quick(<red>brown</red><green>yellow</green>) fox
-
-i.e. no ()'s between the changed words? Although this
-
-  -A quick brown fox
-  +A quick yellow fox
-
-has always became this:
-
-  A quick <red>brown</red> <green>yellow</green> fox
-                    ------^
-  (Notice space here)           
-
-So there is kind of "added space" but I guess technically it's actually
-like this:
-
-  A quick <red>brown </red><green>yellow </green>fox
-
-So I think space is consistent with parentheses in your example.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> On Sat, 3 May 2008, Tim Harper wrote:
+>>
+>>> -			printf("%s: needs update\n", ce->name);
+>>> +			printf("%s: has changes\n", ce->name);
+>>
+>> How about "local changes"?
+>
+> Aren't there Porcelain and end-user scripts that relies on the  
+> output by
+> doing "sed -ne s'/: needs update$//p"?
+>
