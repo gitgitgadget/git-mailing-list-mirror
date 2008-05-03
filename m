@@ -1,103 +1,92 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: [PATCH] Rename ENT_INEXISTENT to ENT_NONEXISTENT
-Date: Sat,  3 May 2008 08:07:18 +0800
-Message-ID: <1209773238-25987-1-git-send-email-pkufranky@gmail.com>
-References: <7vfxt0wdkq.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat May 03 02:08:11 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Parent-less branches
+Date: Fri, 02 May 2008 17:17:43 -0700 (PDT)
+Message-ID: <m38wys6y1q.fsf@localhost.localdomain>
+References: <20080502232008.GA20092@ulrik-ibook>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pedro Melo <melo@simplicidade.org>
+To: Ulrik Sverdrup <ulrik.sverdrup@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 03 02:18:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Js5IQ-0002kk-Nn
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 02:08:11 +0200
+	id 1Js5SV-0005F7-PS
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 02:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764588AbYECAHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2008 20:07:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765292AbYECAHW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 20:07:22 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:35259 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758427AbYECAHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2008 20:07:22 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 7E25F470AE; Sat,  3 May 2008 08:07:18 +0800 (CST)
-X-Mailer: git-send-email 1.5.5.1.117.g73010
-In-Reply-To: <7vfxt0wdkq.fsf@gitster.siamese.dyndns.org>
+	id S1758630AbYECARr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2008 20:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759381AbYECARr
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 May 2008 20:17:47 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:30222 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758474AbYECARq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2008 20:17:46 -0400
+Received: by ug-out-1314.google.com with SMTP id h3so178760ugf.16
+        for <git@vger.kernel.org>; Fri, 02 May 2008 17:17:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=KH7oLHyOQgo/C0hLu8o5WTLUH8py/oEv5uhzl0ujCLQ=;
+        b=mdy2eEDJgHFhmM2e1OFhFwHB/5uait3ZUY2ZDyheQSV9c1Tu+9qLTbHtx0QjLp7OsVX4yEI61+yaS091SQAFP1Z1vOiTy+F+nFXUuPxMR7zT4DDudAhraN9wWc0YGPfb96um79ChEfpx7ebcxMCCdzBAmvR0K5rWnnO1NIM/fI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=JeCREP7whD9FXYG2VJ/QfiNhcP7BE+LY/Dp34MPsX0hCDdkfp8IT7gmC5dwDzrbE1QMuGuTEyIuag2daKiUBlTD2Ig/VS34YxnuRwPKJWvKz4QLTG2+crY9fzMV8OFLCPJtiObtHIjg04ixdT3nvM6Emmbai2eHQF3wvN4D/22o=
+Received: by 10.67.196.2 with SMTP id y2mr642111ugp.60.1209773864351;
+        Fri, 02 May 2008 17:17:44 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.251.103])
+        by mx.google.com with ESMTPS id b30sm6066465ika.3.2008.05.02.17.17.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 May 2008 17:17:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m430HdT8022995;
+	Sat, 3 May 2008 02:17:40 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m430HbO7022992;
+	Sat, 3 May 2008 02:17:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080502232008.GA20092@ulrik-ibook>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81051>
 
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
-> By the way, "inexistent" is a word, but somehow it sounds quite awkward.
-> Perhaps one of NONEXISTENT (more common), REMOVED (run_diff_files() takes
-> a SILENT_ON_REMOVED option) or or MISSING (update-index --refresh takes an
-> IGNORE_MISSING option) is better? 
+Ulrik Sverdrup <ulrik.sverdrup@gmail.com> writes:
+> Wincent Colaiuta <win@wincent.com> writes:
+>>
+>> I wanted to do this just the other day, but I did it all inside the  
+>> one repo, and made some notes on the process here:
+>> 
+>> http://rails.wincent.com/wiki/Creating_independent_branches_with_Git
+>> 
+>> Basically, using "git write-tree" and "git commit-tree" plumbing.
+> 
+> I think I've seen this done much simpler, in this blog post:
+> 
+> http://madduck.net/blog/2007.07.11:creating-a-git-branch-without-ancestry/
 
-I prefer nonexistent because removed or missing has the meaning that the
-user has removed it. However, it may be not this case (althogh it is at
-current time).
+And it is mentioned in http://git.or.cz/gitwiki/BlogPosts, athough not
+yet in either GitTips or GitFaq.
 
 
- diff-lib.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+In short the solution is to create content-less branch using:
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 72c2a7b..61a1b7c 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -339,7 +339,7 @@ int run_diff_files_cmd(struct rev_info *revs, int argc, const char **argv)
- }
+  $ git symbolic-ref HEAD refs/heads/newbranch
+  $ rm .git/index
  
- #define ENT_STAGABLE 1
--#define ENT_INEXISTENT 2
-+#define ENT_NONEXISTENT 2
- #define ENT_NOTGITDIR 3		/* Existent but not stagable (not a git dir) */
- /*
-  * Check the status of a work tree entity
-@@ -350,10 +350,10 @@ static int check_work_tree_entity(const struct cache_entry *ce, struct stat *st,
- 	if (lstat(ce->name, st) < 0) {
- 		if (errno != ENOENT && errno != ENOTDIR)
- 			return -1;
--		return ENT_INEXISTENT;
-+		return ENT_NONEXISTENT;
- 	}
- 	if (has_symlink_leading_path(ce->name, symcache))
--		return ENT_INEXISTENT;
-+		return ENT_NONEXISTENT;
- 	if (S_ISDIR(st->st_mode)) {
- 		unsigned char sub[20];
- 		if (resolve_gitlink_ref(ce->name, "HEAD", sub))
-@@ -407,7 +407,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			       sizeof(struct combine_diff_parent)*5);
- 
- 			changed = check_work_tree_entity(ce, &st, symcache);
--			if (changed != ENT_INEXISTENT)
-+			if (changed != ENT_NONEXISTENT)
- 				dpath->mode = ce_mode_from_stat(ce, st.st_mode);
- 			else {
- 				if (changed < 0) {
-@@ -471,7 +471,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			continue;
- 
- 		changed = check_work_tree_entity(ce, &st, symcache);
--		if (changed == ENT_INEXISTENT) {
-+		if (changed == ENT_NONEXISTENT) {
- 			if (changed < 0) {
- 				perror(ce->name);
- 				continue;
-@@ -531,7 +531,7 @@ static int get_stat_data(struct cache_entry *ce,
- 		changed = check_work_tree_entity(ce, &st, cbdata->symcache);
- 		if (changed < 0)
- 			return -1;
--		else if (changed == ENT_INEXISTENT) {
-+		else if (changed == ENT_NONEXISTENT) {
- 			if (match_missing) {
- 				*sha1p = sha1;
- 				*modep = mode;
+then commit.
+
+> Even though your instructions seem more complicated than they are since
+> they mix setting up the parentless branch and preparing the first
+> commit content.
+
 -- 
-1.5.5.1.117.g73010
+Jakub Narebski
+Poland
+ShadeHawk on #git
