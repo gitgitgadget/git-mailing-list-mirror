@@ -1,123 +1,58 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH v2 3/5] diff.c: Fix --color-words showing trailing deleted words at another line
-Date: Sat,  3 May 2008 19:57:06 +0800
-Message-ID: <1209815828-6548-4-git-send-email-pkufranky@gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 2/5] diff.c: Use show variable name in fn_out_diff_words_aux
+Date: Sat, 3 May 2008 20:01:15 +0800
+Message-ID: <46dff0320805030501s4bf2c68dh336efd8ba375d207@mail.gmail.com>
 References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
- <1209815828-6548-1-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-2-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
-Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
+	 <1209815828-6548-1-git-send-email-pkufranky@gmail.com>
+	 <1209815828-6548-2-git-send-email-pkufranky@gmail.com>
+	 <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, "Ping Yin" <pkufranky@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 03 13:58:20 2008
+X-From: git-owner@vger.kernel.org Sat May 03 14:02:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsGNa-0004et-MX
-	for gcvg-git-2@gmane.org; Sat, 03 May 2008 13:58:15 +0200
+	id 1JsGRK-0005kd-33
+	for gcvg-git-2@gmane.org; Sat, 03 May 2008 14:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbYECL5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 07:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757347AbYECL5V
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 07:57:21 -0400
-Received: from mail.qikoo.org ([60.28.205.235]:41300 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754629AbYECL5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 07:57:16 -0400
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id C2BB8470B0; Sat,  3 May 2008 19:57:08 +0800 (CST)
-X-Mailer: git-send-email 1.5.5.1.121.g26b3
+	id S1763395AbYECMBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 08:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763441AbYECMBS
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 08:01:18 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:60080 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763395AbYECMBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 08:01:17 -0400
+Received: by an-out-0708.google.com with SMTP id d40so394276and.103
+        for <git@vger.kernel.org>; Sat, 03 May 2008 05:01:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=kYOZCEiF60FPMCyuNi0dmNkJ1ZsDtdTgs8txu+4N050=;
+        b=I9r+3RODFsUdx26vU61q9FKYsm6tJ8JcHSXooV6IvAW3jrrhIqmTZfYFEayDE7X3SUy4z0AI85EChY/gBi2KQNnSGqDqAv/L5zE7VaAd4iVG0M+zJ2D4uTI6CcTM1OPgKD5/JJojtxDi/tijTR48opWF2xDJPDGsMrJHimTB1hE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=etIqhUmXI5BRbTnSLCn/gtbOLvCTNbz4gLwale/4HvL61A4+ml35JI47rxFCfaVeLUGgdKLMbIAjKhWmkgp8dBV5bd4RFdtxj8QBz4LIZgI2fIWR+veF16KMJ4fmpNT+fxBJcIM6+1AWZDkyH15/lkk9jseCEcjoT/pHRfaSsJ4=
+Received: by 10.100.12.1 with SMTP id 1mr5885938anl.22.1209816076070;
+        Sat, 03 May 2008 05:01:16 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Sat, 3 May 2008 05:01:15 -0700 (PDT)
 In-Reply-To: <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81073>
 
-With --color-words, following example will show deleted word "bar" at
-another line. (<r> represents red)
-------------------
-$ git diff
-- foo bar
-+ foo
-$ git diff --color-words
-foo
-<r>bar</r>
-------------------
+On Sat, May 3, 2008 at 7:57 PM, Ping Yin <pkufranky@gmail.com> wrote:
+> Signed-off-by: Ping Yin <pkufranky@gmail.com>
+>  ---
 
-This wrong behaviour is a bug in fn_out_diff_words_aux which always
-outputs a newline after handling the diff line beginning with "+" and
-ending with a newline.
-
-Instead, we always supress the newline when using print_word, and in
-fn_out_diff_words_aux, a newline is shown only in following cases:
-
-  - true minus.suppressed_newline followd by a line beginning with
-    '-', ' ' or '@' (i.e. not '+')
-  - true plus.suppressed_newline followd by a line beginning with
-    '+', ' ' or '@' (i.e. not '-')
-
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
- diff.c |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index b5f7141..11316fe 100644
---- a/diff.c
-+++ b/diff.c
-@@ -409,6 +409,7 @@ static void print_word(FILE *file, struct diff_words_buffer *buffer, int len, in
- static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- {
- 	struct diff_words_data *diff_words;
-+	char cm;
- 	struct diff_words_buffer *dm, *dp;
- 	FILE *df;
- 
-@@ -417,10 +418,11 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- 	dp = &(diff_words->plus);
- 	df = diff_words->file;
- 
--	if (dm->suppressed_newline) {
--		if (line[0] != '+')
--			putc('\n', df);
-+	if ((dm->suppressed_newline && line[0] != '+') ||
-+			(dp->suppressed_newline && line[0] != '-')) {
-+		putc('\n', df);
- 		dm->suppressed_newline = 0;
-+		dp->suppressed_newline = 0;
- 	}
- 
- 	len--;
-@@ -429,11 +431,14 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- 			print_word(df, dm, len, DIFF_FILE_OLD, 1);
- 			break;
- 		case '+':
--			print_word(df, dp, len, DIFF_FILE_NEW, 0);
-+			print_word(df, dp, len, DIFF_FILE_NEW, 1);
- 			break;
- 		case ' ':
--			print_word(df, dp, len, DIFF_PLAIN, 0);
-+			cm = dm->text.ptr[dm->current + len - 1];
-+			print_word(df, dp, len, DIFF_PLAIN, 1);
- 			dm->current += len;
-+			if (cm == '\n')
-+				dm->suppressed_newline = 1;
- 			break;
- 	}
- }
-@@ -475,9 +480,11 @@ static void diff_words_show(struct diff_words_data *diff_words)
- 	free(plus.ptr);
- 	diff_words->minus.text.size = diff_words->plus.text.size = 0;
- 
--	if (diff_words->minus.suppressed_newline) {
-+	if (diff_words->minus.suppressed_newline ||
-+			diff_words->plus.suppressed_newline) {
- 		putc('\n', diff_words->file);
- 		diff_words->minus.suppressed_newline = 0;
-+		diff_words->plus.suppressed_newline = 0;
- 	}
- }
- 
+Sorry, the wrong title, s/show/short/
 -- 
-1.5.5.1.121.g26b3
+Ping Yin
