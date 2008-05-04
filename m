@@ -1,74 +1,72 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Parent-less branches
-Date: Sun, 4 May 2008 01:50:44 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805040139310.19665@iabervon.org>
-References: <20080502232008.GA20092@ulrik-ibook>  <m38wys6y1q.fsf@localhost.localdomain> <bd6139dc0805021746q40b384c3nb36a8605d9475a7f@mail.gmail.com>
+From: Ittay Dror <ittayd@tikalk.com>
+Subject: Re: merge renamed files/directories?
+Date: Sun, 04 May 2008 09:08:12 +0300
+Message-ID: <481D52CC.1030503@tikalk.com>
+References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com>	 <32541b130805010827r22169651s37c707071f3448f2@mail.gmail.com>	 <20080501153457.GB11469@sigill.intra.peff.net>	 <D0968007-2A38-44DB-B26F-3D273F20D428@midwinter.com>	 <20080501231427.GD21731@sigill.intra.peff.net>	 <481CA742.4080909@tikalk.com> <32541b130805031111r4cbea8e1l19c34ac05016a89b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Ulrik Sverdrup <ulrik.sverdrup@gmail.com>, git@vger.kernel.org,
-	Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pedro Melo <melo@simplicidade.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Sun May 04 07:51:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 04 08:09:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsX8a-0006rw-CA
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 07:51:52 +0200
+	id 1JsXPV-0001rp-60
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 08:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbYEDFuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 01:50:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbYEDFuq
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 01:50:46 -0400
-Received: from iabervon.org ([66.92.72.58]:36986 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751092AbYEDFuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 01:50:46 -0400
-Received: (qmail 15538 invoked by uid 1000); 4 May 2008 05:50:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 May 2008 05:50:44 -0000
-In-Reply-To: <bd6139dc0805021746q40b384c3nb36a8605d9475a7f@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751970AbYEDGIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 02:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbYEDGIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 02:08:16 -0400
+Received: from smtp107.biz.mail.re2.yahoo.com ([206.190.52.176]:41230 "HELO
+	smtp107.biz.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751231AbYEDGIP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 May 2008 02:08:15 -0400
+Received: (qmail 15855 invoked from network); 4 May 2008 06:08:14 -0000
+Received: from unknown (HELO ?10.10.2.7?) (ittayd@tikalk.com@212.143.191.180 with plain)
+  by smtp107.biz.mail.re2.yahoo.com with SMTP; 4 May 2008 06:08:14 -0000
+X-YMail-OSG: dPol5RkVM1nGr7fEeXYZR04h1pPZoZW.NqIZmCaVLGtNSTqUnCXROrcppnTHScaRb8oE0enoN3hGNMK1Z64_k4fZ.tKdV.tUwmt4MX8PQTet_9I.buYBRMD9jcpdbVsiMYWjpvVJMjXv4L7rIyXez.gU
+X-Yahoo-Newman-Property: ymail-3
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <32541b130805031111r4cbea8e1l19c34ac05016a89b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81147>
 
-On Sat, 3 May 2008, Sverre Rabbelier wrote:
 
-> On Sat, May 3, 2008 at 2:17 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> >  In short the solution is to create content-less branch using:
-> >
-> >   $ git symbolic-ref HEAD refs/heads/newbranch
-> >   $ rm .git/index
-> >
-> >  then commit.
-> 
-> I guess what Pedro is asking is if there isn't a builtin way to do
-> this. Which, if I understand correctly, there isn't. Perhaps though
-> something like "git branch -N newbranchname" which then creates a new
-> parentless branch. It could just be a shell script that does the
-> above, but I wonder if there are no side-effects of the above? It
-> sounds somewhat 'messy' to remove the index? Too 'low level' to do for
-> a user I mean, what if sometime in the future we decide to store
-> something in the index that -is- important? I reckon it would be
-> cleaner to add an option for this.
 
-If sometime in the future we decide to store something in the index that 
-is important, we'll definitely want to remove the index, because whatever 
-it is will be both important and -wrong- for a new parentless commit, 
-since a new root should have all the default values, not values acquired 
-during the other history in the repo.
+Avery Pennarun wrote:
+> Git already works fine for renames.  The only situation where
+> something funny happens is if you rename a whole directory and someone
+> else creates a file in the old directory.  (In that case, the new file
+> ends up in the old place instead of the new place.)  However, even in
+> that case, there is still no conflict and no manual merging necessary.
+>
+>   
+Sorry, but this is not the situation as I have experienced it with a 
+local repository I have. I renamed a directory (without changing any 
+files in it). 'git diff <commit>^ <commit>' shows the rename fine, but 
+'git log -p -M -C <initial commit>..' does not (that is, the history for 
+files in that directory is shown from the rename commit only). Obviously 
+git-diff is not any better.
+> In fact, as someone else pointed out, renaming a java file requires
+> you to modify the file anyhow, so having git auto-move the file to
+> another directory *still* wouldn't make it work any better.
+>
+>   
+Sure it will, because otherwise I need to move it and still need to fix 
+it. And there are many other file formats and languages where such a 
+move will not require any change (I think it is funny that Java is a 
+justification for not doing something for a tool primarily used by C 
+people). Also, what happens if I change the file in the new location and 
+someone else changes it in the old location? Will I need to do a manual 
+merge?
 
-On the other hand, a builtin command of that sort probably ought to make 
-sure that there aren't any uncommitted changes before doing this. And it 
-should probably be called "git checkout -b name -N", since it makes it 
-your current branch, rather than creating it like "git branch ..." would 
-suggest.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Ittay Dror <ittayd@tikalk.com>
+Tikal <http://www.tikalk.com>
+Tikal Project <http://tikal.sourceforge.net>
