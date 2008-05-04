@@ -1,67 +1,68 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] git-svn: Make create-ignore use git add -f
-Date: Mon,  5 May 2008 00:33:09 +0200
-Message-ID: <1209940390-22622-1-git-send-email-hendeby@isy.liu.se>
-Cc: gitster@pobox.com, normalperson@yhbt.net,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 05 00:34:08 2008
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
+Date: Mon, 5 May 2008 09:28:18 +1000
+Message-ID: <18462.18066.769759.585596@cargo.ozlabs.ibm.com>
+References: <20080430172136.GA22601@sigill.intra.peff.net>
+	<20080430172553.GC23747@sigill.intra.peff.net>
+	<481CA227.1000801@ramsay1.demon.co.uk>
+	<20080504192332.GB13029@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 05 01:32:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsmmV-0002W2-As
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 00:34:07 +0200
+	id 1Jsngs-0000Dq-4C
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 01:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbYEDWdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 18:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755686AbYEDWdP
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 18:33:15 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:63722 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753537AbYEDWdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 18:33:13 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 1B6A0259AC;
-	Mon,  5 May 2008 00:33:12 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 12503-01; Mon,  5 May 2008 00:33:10 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 18B322594C;
-	Mon,  5 May 2008 00:33:10 +0200 (MEST)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id 0A99F177A2; Mon,  5 May 2008 00:33:10 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.246.gafa4
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1751715AbYEDXbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 19:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbYEDXbZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 19:31:25 -0400
+Received: from ozlabs.org ([203.10.76.45]:44417 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751622AbYEDXbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 19:31:24 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id BCB35DDE06; Mon,  5 May 2008 09:31:22 +1000 (EST)
+In-Reply-To: <20080504192332.GB13029@sigill.intra.peff.net>
+X-Mailer: VM 7.19 under Emacs 22.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81211>
 
-When having a svn:ignore that ignores the .gitignore file the -f
-option to git add must be used to avoid git complaining about adding
-an ignored file and hence stop the process of creating .gitignores.
+Jeff King writes:
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Hrm. Is gitk on cygwin somehow squishing stderr and stdout together? Or
+> does gitk in general look at what happens on stderr?
+> 
+> Because while I am happy that removing this message fixes your problem,
+> it is a little disconcerting to think that we can break gitk just by
+> issuing a warning diagnostic on stderr.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 81afb5c..d6d7b1a 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -612,7 +612,7 @@ sub cmd_create_ignore {
- 		print GITIGNORE "$s\n";
- 		close(GITIGNORE)
- 		  or fatal("Failed to close `$ignore': $!");
--		command_noisy('add', $ignore);
-+		command_noisy('add', '-f', $ignore);
- 	});
- }
- 
--- 
-1.5.5.1.246.gafa4
+It's a more general Tcl thing - if you are reading from a process, and
+the process writes to stderr, and the script hasn't explicitly
+redirected stderr, the Tcl infrastructure assumes that the process is
+signalling an error, even if the exit status is 0.  Gitk does redirect
+stderr (to stdout) when it does a git reset, but not for other
+commands.
+
+At the moment I don't think there is a good way in Tcl to get hold of
+the stderr output if a subcommand returns a non-zero exit status, but
+ignore it if the exit status is 0, other than by redirecting stderr to
+a temporary file, which has its own problems.  Tcl can bundle stderr
+in with stdout, or ignore it, or take it as an error indication, or
+send it to a file.
+
+So if git commands can avoid writing non-error messages to stderr,
+that will make my life easier...
+
+Paul.
