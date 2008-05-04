@@ -1,57 +1,73 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
-	configurable
-Date: Mon, 5 May 2008 00:27:08 +0300
-Message-ID: <20080504212708.GA5660@mithlond.arda.local>
-References: <1209815828-6548-2-git-send-email-pkufranky@gmail.com> <1209815828-6548-3-git-send-email-pkufranky@gmail.com> <1209815828-6548-4-git-send-email-pkufranky@gmail.com> <1209815828-6548-5-git-send-email-pkufranky@gmail.com> <7vy76rtfns.fsf@gitster.siamese.dyndns.org> <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com> <alpine.DEB.1.00.0805041040560.30431@racer> <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com> <7v63ttq0y8.fsf@gitster.siamese.dyndns.org> <m3ve1t6bli.fsf@localhost.localdomain>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: OSX, ZFS, UTF8, git - somebody hates me in this list
+Date: Sun, 4 May 2008 17:52:08 -0400
+Message-ID: <20080504215208.GG29038@spearce.org>
+References: <86wsm9dbhk.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junio@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 23:28:07 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Sun May 04 23:53:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JslkZ-0002Pd-GX
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 23:28:03 +0200
+	id 1Jsm90-0000T8-0c
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 23:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054AbYEDV1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 17:27:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754027AbYEDV1P
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 17:27:15 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:32904 "EHLO
-	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753939AbYEDV1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 17:27:15 -0400
-Received: from mithlond.arda.local (80.220.180.181) by jenni2.rokki.sonera.fi (8.0.013.9)
-        id 48178931004126D4; Mon, 5 May 2008 00:27:10 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1Jsljg-00030P-1X; Mon, 05 May 2008 00:27:08 +0300
+	id S1754853AbYEDVwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 17:52:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754345AbYEDVwN
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 17:52:13 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38736 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754033AbYEDVwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 17:52:12 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jsm7l-0002BP-J4; Sun, 04 May 2008 17:52:01 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AC85A20FBAE; Sun,  4 May 2008 17:52:08 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <m3ve1t6bli.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <86wsm9dbhk.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81202>
 
-Jakub Narebski wrote (2008-05-04 13:47 -0700):
-
-> Would it be possible instead of in-line word diff, use word coloring
-> to enhance traditional diff format?  Something like
+"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
 > 
->      -/Hello/ world.
->      +/Hi,/ world.
+> repeat by:
+>     0) download the OSX ZFS drivers
+>     1) Make a ZFS partition on OSX.
+>     2) Clone git.git to the ZFS partition
+>     3) immediately type git-status:
 > 
-> (We could use bold, or reverse for marking changed fragment, or use
-> color only for changed fragment).
+>     # On branch master
+>     # Untracked files:
+>     #   (use "git add <file>..." to include in what will be committed)
+>     #
+>     #       "gitweb/test/Ma\314\210rchen"
+>     nothing added to commit but untracked files present (use "git add" to track)
 
-That would be helpful too, no doubt. I'm advocating the word diff
-because it's extremely useful with human languages. Lines don't have
-(usually) any special meaning there so in this context words are the
-most useful units.
+Isn't this just the normal HFS+ name mangling?
+
+Apparently the ZFS port to Mac OS X includes the same braindamaged
+UTF normalization that is applied to HFS+ volumes, which means
+they have reused the code or pushed it higher in their VFS layer.
+Linus has started to add support for teaching Git about this sort
+of brain damaged filesystem, but nobody has implemented the Mac OS
+X specific name hashing function required to make Git see that the
+name it got from the readdir(3) call is the same name Git passed
+to the OS, just encoded differently.
+
+-- 
+Shawn.
