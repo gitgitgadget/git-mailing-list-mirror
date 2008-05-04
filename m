@@ -1,168 +1,119 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
- configurable
-Date: Sun, 04 May 2008 13:16:47 -0700
-Message-ID: <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
-References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
- <1209815828-6548-1-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-2-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-4-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-5-git-send-email-pkufranky@gmail.com>
- <7vy76rtfns.fsf@gitster.siamese.dyndns.org>
- <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com>
- <alpine.DEB.1.00.0805041040560.30431@racer>
- <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
+From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
+Subject: Re: git and peer review
+Date: Mon, 05 May 2008 08:21:54 +1200
+Message-ID: <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
+References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Ping Yin" <pkufranky@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 04 22:17:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 04 22:38:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jskef-00085G-Ne
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 22:17:54 +0200
+	id 1JskyC-0005dX-Mu
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 22:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756150AbYEDURF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 16:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756003AbYEDURE
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 16:17:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44753 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754655AbYEDURD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 May 2008 16:17:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 560394518;
-	Sun,  4 May 2008 16:17:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C8D344513; Sun,  4 May 2008 16:16:52 -0400 (EDT)
-In-Reply-To: Junio C. Hamano's message of "(unknown date)"
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0D761B6A-1A17-11DD-88FA-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1752355AbYEDUhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 16:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbYEDUhP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 16:37:15 -0400
+Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:19746 "EHLO
+	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752355AbYEDUhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 16:37:14 -0400
+X-Greylist: delayed 914 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 May 2008 16:37:14 EDT
+Received: from AKLEXVS01.mitacad.com ([10.112.5.36]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 5 May 2008 08:21:56 +1200
+Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.136]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 5 May 2008 08:21:55 +1200
+In-Reply-To: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
+	(Ping Yin's message of "Sat, 3 May 2008 09:02:41 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-OriginalArrivalTime: 04 May 2008 20:21:55.0919 (UTC) FILETIME=[7F612DF0:01C8AE24]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1026-15890.000
+X-TM-AS-Result: No--16.116000-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81198>
 
-Let's step back a bit and try to clarify the problem with a bit of
-illustration.
+On Sat, May 03 2008, Ping Yin wrote:
 
-The motivation behind "word diff" is because line oriented diff is
-sometimes unwieldy.
+[...]
 
-    -Hello world.
-    +Hi, world.
+> I am in a company environment and i want to enforce a policy that
+> every commit must be reviewed before pushed to central repository. I
+> think i can use hooks to enforce such kind of policy.
 
-A na=C3=AFve strategy to solve this would be to convert the input into =
-one
-character a line while changing the representation of characters into
-their codepoints, take the diff between them, and synthesize the result
-back, like this:
+I'm in a similar environment, although it's only me using git (via
+git-svn) at the moment.
 
-    preimage        postimage       char-diff
-    48 H            48 H             48 H
-    65 e                            -65 e
-    6c l                            -6c l
-    6c l                            -6c l
-    6f o                            -6f o
-                    69 i            +69 i
-                    2c ,            +2c ,
-    20 ' '          20 ' '           20 ' '=20
-    77 w            77 w             77 w  =20
-    6f o            6f o             6f o  =20
-    72 r            72 r             72 r  =20
-    6c l            6c l             6c l  =20
-    64 d            64 d             64 d  =20
-    2e .            2e .             2e .  =20
-    0a '\n'         0a '\n'          0a '\n'
+> One way i want to try is to check in the hook whether every pushed
+> commit has a "Reviewed-by " line .  Any suggestion?
+>
+> And one question, how to add a "Reviewed-by" line automatically?
+>
+> The reviewers sit near each other, so we do face-to-face peer review
+> and don't pass patches by email.
+> Say,  i have prepared a patch series,
 
-That would produce "H/ello/i,/ world.\n" which is very suboptimal for
-human consumption because it chomps a word "Hello" and "Hi" in the midd=
-le.
-We instead can do this word by word (note that I am doing this as a
-thought experiment, to illustrate what the problem is and what should
-conceptually happen, not suggesting this particular implementation):
+I'm very interested in good ways of doing this face-to-face review.
 
-    preimage        postimage       word-diff
-    48656c6c6f                      -48656c6c6f Hello
-                    4869            +4869       Hi
-                    2c              +2c         ,
-    20              20               20         ' '
-    776f726c64      776f726c64       776f726c64 world     =20
-    2e              2e               2e         .
-    0a              0a               0a         '\n'
+At the moment I'm using gitk to step through the patch series along with
+the patch to gitk that adds a context-menu entry to lauch an external
+diff tool when a side-by-side diff is easier to read.
 
-Which would give you "/Hello/Hi,/ world.\n".
+This is okay, but it's a bit of a pain to make changes while the review
+is in progress (git rebase -i, s/pick/edit on the appropriate line, make
+changes, git commit --amend, git rebase --continue).  Perhaps stgit or
+guilt would help with this.
 
-Another my favorite example:
+> Case 1
+>     I ask someone to review my patches at my machine. If the review
+> passes, i have to add Reviewed-by line to each commit and then merge
+> it to the master branch. However, i find no easy way to add
+> reviewed-by line. Maybe adding --reviewed-by  option to cherry-pick or
+> rebase or merge?
+>
+> Case 2
+>    The reviewer is the maintainer, so i ask him to pull and review. So
+> now it is his turn to add review-by line. But still, how?
 
-    -if (i > 1)
-    +while (i >=3D 0)
-       =20
-    preimage       postimage        word-diff
-    6966                            -6966       if
-                   7768696c65       +7768696c65 while
-    20             20                20         ' '
-    28             28                28         ( =20
-    69             69                69         i =20
-    20             20                20         ' '
-    3e                              -3e         >
-                   3e3d             +3e3d       >=3D
-    20             20                20         ' '
-    31                              -31         1 =20
-                   30               +30         0 =20
-    29             29                29         )
+I do something similar using git filter-branch --msg-filter.  I have a
+little shell script call git-add-checked (our convention is to have a
+"checked: " line in the commit message):
 
-which should yield "/if/while/ (i />/>=3D/ /1/0/)".
+--8<---------------cut here---------------start------------->8---
+#!/bin/sh
 
-So the overall algorithm I think should be is:
+usage() {
+    cat <<EOF
+Usage: git-add-checked <checker> [<filter-branch options>] <rev-list options>
+EOF
+}
 
- - make the input into stream of tokens, where a token is either a run =
-of
-   word characters only, non-word punct characters only, or whitespaces
-   only;
+checker="$1"
+[ -n "$checker" ] || { usage >&2; exit 2; }
+shift
 
- - compute the diff over the stream of tokens;
+set -x
+git filter-branch --msg-filter "sed '\$a\\
+\\
+checked: $checker'" "$@"
+--8<---------------cut here---------------end--------------->8---
 
- - emit common tokens in white, deleted in red and added in green.
+Then, after getting my changes reviewed, I just do:
 
-Notice that you do not have to special case LF in any way if you go thi=
-s
-route.
+$ git-add-checked joe.bloggs trunk..
 
-You could do this with only two classes, and use a different tokenizati=
-on
-rule: a token is either a run of word characters only, or each byte of =
-non
-word character becomes individual token.  This however would yield a
-suboptimal result:
+This adds a "checked: joe.bloggs" line at the end of the commit message
+for all of the commits on the current branch since trunk (which is a
+remote branch maintained by git-svn).
 
-    -if (i > 1)
-    +while (i >=3D 0)
-       =20
-    preimage       postimage        word-diff
-    6966                            -6966       if
-                   7768696c65       +7768696c65 while
-    20             20                20         ' '
-    28             28                28         ( =20
-    69             69                69         i =20
-    20             20                20         ' '
-    3e             3e                3e         >
-                   3d               +3d         =3D
-    20             20                20         ' '
-    31                              -31         1 =20
-                   30               +30         0 =20
-    29             29                29         )
-
-This would give "/if/while/ (i >//=3D/ /1/0/)".  A logical unit ">=3D" =
-is
-chomped into two tokens, which is suboptimal for the same reason why th=
-e
-output "H/ello/i,/" from the original char-diff based one was suboptima=
-l.
+Regards,
+Toby.
