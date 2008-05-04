@@ -1,74 +1,90 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH 3/4] Fix diff regression for submodules not checked out
-Date: Sun, 4 May 2008 15:10:05 +0800
-Message-ID: <46dff0320805040010s2dce0f7cr82548088e08ff54a@mail.gmail.com>
-References: <46dff0320804300856w941d948rbcc1cee06f1b41a9@mail.gmail.com>
-	 <1209735336-4690-1-git-send-email-pkufranky@gmail.com>
-	 <1209735336-4690-2-git-send-email-pkufranky@gmail.com>
-	 <1209735336-4690-3-git-send-email-pkufranky@gmail.com>
-	 <1209735336-4690-4-git-send-email-pkufranky@gmail.com>
-	 <7vfxt0wdkq.fsf@gitster.siamese.dyndns.org>
-	 <7vej8ir2ik.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] --color-words: Make the word characters configurable
+Date: Sun, 4 May 2008 10:18:21 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805041010000.30431@racer>
+References: <46dff0320805012128l6cb15e1ekd40f84a9eac724d1@mail.gmail.com> <1209736766-8029-1-git-send-email-pkufranky@gmail.com> <alpine.DEB.1.00.0805031501290.30431@racer> <20080503144337.GA7987@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 04 09:12:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Sun May 04 11:19:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsYO6-0005i9-J7
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 09:11:59 +0200
+	id 1JsaNG-0000q7-C6
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 11:19:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363AbYEDHK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 03:10:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbYEDHK2
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 03:10:28 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:21355 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754340AbYEDHKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 03:10:06 -0400
-Received: by an-out-0708.google.com with SMTP id d40so449148and.103
-        for <git@vger.kernel.org>; Sun, 04 May 2008 00:10:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZIcn19mQ7pD7UaSGUfDfjxxCd5PojGfDc6bFn6nhjfU=;
-        b=Pd90FUgAzhaF6+A/VCH3mZr7IyRaZ9nURbzsieP3qNRe1GtasGNvgQrqv0xsrvQQSbsNaYwmbDPa+1gM4HMU3PXYWJH+BVX1K0FzCljw4af28ZdW3Ko6cMToqz4Y/vfSIcomQ+kRZyrbf02je1J4yMHOrWukACT6iGfhhEC+4oE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iilTkOeokONKjW9qiH6RVh5N5iNP5C5teyiVfzH3nO16mlNKQKVOFhC3Zz9zzhigv3VsBx3Xg27aAB1+9fKBzLODqX15tHEwrWgEOAL6Z+uhEMa06i7agA0gPPJRi1D2/NGNDw+RyD5zKQRJkUdGY2NIFKV0UjptqO59fNGe+uE=
-Received: by 10.100.194.5 with SMTP id r5mr6444271anf.104.1209885005935;
-        Sun, 04 May 2008 00:10:05 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Sun, 4 May 2008 00:10:05 -0700 (PDT)
-In-Reply-To: <7vej8ir2ik.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753706AbYEDJS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 05:18:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753734AbYEDJS0
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 05:18:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34238 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753607AbYEDJSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 05:18:25 -0400
+Received: (qmail invoked by alias); 04 May 2008 09:18:23 -0000
+Received: from dslb-088-067-220-031.pools.arcor-ip.net (EHLO dslb-088-067-220-031.pools.arcor-ip.net) [88.67.220.31]
+  by mail.gmx.net (mp045) with SMTP; 04 May 2008 11:18:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Lyoo9CvrL/lpp8wV9nycWEcyvC910A1wC91xZtJ
+	ojhv/jYzxlHmPp
+X-X-Sender: gene099@racer
+In-Reply-To: <20080503144337.GA7987@mithlond.arda.local>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81152>
 
-On Sun, May 4, 2008 at 2:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->  > The second case is "not checked out -- treat me as unmodified", and the
->  > third case is "the user does not want the submodule there", and the latter
->  > is still reported as "removed".  That is exactly what your patch does.
->
->  Having looked at the code a bit more, I do not think we need the
->  three-kind distinction for this part.
->
->  The attached patch would be both sufficient and cleaner.  The real change
->  is a single-liner, and everything else is additional comment ;-)  I'd
->  follow it up with s/check_work_tree_entity/check_removed/ for
->  clarification.
->
+Hi,
 
-Fine, it's cleaner.
+On Sat, 3 May 2008, Teemu Likonen wrote:
 
--- 
-Ping Yin
+> Johannes Schindelin wrote (2008-05-03 15:03 +0100):
+> 
+> > Now, you can specify which characters are to be interpreted as word
+> > characters with "--color-words=A-Za-z", or by setting the config
+> > variable diff.wordCharacters.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 
+> > 	I would have preferred an approach like this.
+> 
+> Unfortunately this does not work at all with other than Ascii 
+> characters. It makes --color-words completely unusable for anything 
+> other than Ascii text. Sorry.
+
+Sorry, but the original way was also only meant for ASCII.  The fact that 
+isspace() happens to work with UTF-8 does _not_ mean that it was any more 
+useful with non-ASCII: think UTF-16.
+
+So no, I do not buy into your ASCII argument at all.
+
+> Ping Yin's version has also the problem that UTF-8 multibyte characters
+> U+0080..U+10FFFF don't work in diff.nonwordchars. Fortunately the most
+> important word delimiters are in U+0000..U+007F (=Ascii) area so Ping's
+> version is perfectly usable with Unicode text.
+>
+> (Even the old --color-words behaviour with only SPACE as non-word char 
+> was perfectly usable with Unicode text.)
+
+See above.
+
+> I, too, would like to see Ping's patch series merged in.
+
+I have no problems with the intention.  But I have problems with the 
+design.  It is no less ASCII-bound than what I proposed, it wants you to 
+specify what does _not_ make a word character (making every newbie, and 
+me, too, going "Huh?").
+
+And I also commented on the artificial limitations by design: I think it 
+is a big mistake to limit the user's options when it would be easy not to, 
+just because the designer could not think of useful applications.
+
+Ciao,
+Dscho
