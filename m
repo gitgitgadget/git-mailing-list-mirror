@@ -1,137 +1,66 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
-Date: Sun, 4 May 2008 14:52:58 +0200
-Message-ID: <20080504125258.GA3399@alea.gnuu.de>
-References: <7v63u05khw.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness> <7v1w4o3zle.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness> <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804301253520.2136@eeepc-johanness> <7vy76tyhfd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805031340550.30431@racer> <7vtzhfuxfd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805041032070.30431@racer>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Repository from hell (gitk stresstest)
+Date: Sun, 4 May 2008 15:36:49 +0200
+Message-ID: <20080504133649.GA31370@cuci.nl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tKW2IUtsqtDRztdT"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 04 15:09:21 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 04 15:38:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsdxw-0006Zk-Mx
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 15:09:21 +0200
+	id 1JsePl-0006eD-H0
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 15:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbYEDNIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 09:08:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751922AbYEDNIa
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 09:08:30 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:1562 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751441AbYEDNI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 09:08:29 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 7CB7848804E; Sun,  4 May 2008 15:08:27 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jsdi7-00089T-50; Sun, 04 May 2008 14:52:59 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jsdi6-0002dc-JM; Sun, 04 May 2008 14:52:58 +0200
+	id S1752270AbYEDNgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 09:36:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753280AbYEDNgv
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 09:36:51 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:42975 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752270AbYEDNgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 09:36:50 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 2D1855461; Sun,  4 May 2008 15:36:49 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805041032070.30431@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81175>
 
+Just in case someone wants to see how gitk performs on a tree with 8
+main branches and littered with backports (single-patch-cross-merges
+between branches), have a look at:  git://git.cuci.nl/pike
 
---tKW2IUtsqtDRztdT
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Start gitk with --all to view it in full glory (of course).
 
-Hi,
-
-Johannes Schindelin schrieb am Sun 04. May, 10:38 (+0100):
-> 	pick 1234567 Clean up rebase -i -p
-> 	tag cleanup
-> 	...
-> 	merge 2345678 cleanup master
->=20
-> Yes, you read that correctly, I think that allowing plain ref names is=20
-> very valuable.  AFAICT my original implementation allows that (dunno abou=
-t=20
-> the current code).
-
-Your code is still used and you can do things like:
-
-merge abc --strategy=3DYOUR_STRATEGY master 022ef38 my_tag
-
-And I think it's really easy to do a git-describe for each ref that is not
-marked of reset and merge commands
-
-=46rom fec670a4dc6fdf484a197687db5fbd0a4f668449 Mon Sep 17 00:00:00 2001
-=46rom: =3D?utf-8?q?J=3DC3=3DB6rg=3D20Sommer?=3D <joerg@alea.gnuu.de>
-Date: Sun, 4 May 2008 14:52:01 +0200
-Subject: [PATCH] Use names instead of sha1 ID for reset and merge if possib=
-le
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
-Content-Transfer-Encoding: 8bit
-
-Sometimes it's much more helpful to see the name of a branch or a tag as
-the argument of a merge or reset command.
-
-Signed-off-by: J=F6rg Sommer <joerg@alea.gnuu.de>
----
- git-rebase--interactive.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2a01182..2bd858c 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -493,6 +493,10 @@ create_extended_todo_list () {
- 			if tmp=3D$(get_value_from_list $args "$commit_mark_list")
- 			then
- 				args=3D":$tmp"
-+			elif tmp=3D$(git describe --all --exact-match $args \
-+				2>/dev/null)
-+			then
-+				args=3D"$tmp"
- 			fi
- 			;;
- 		merge)
-@@ -503,6 +507,10 @@ create_extended_todo_list () {
- 					"$commit_mark_list")
- 				then
- 					new_args=3D"$new_args :$tmp"
-+				elif tmp=3D$(git describe --all --exact-match \
-+					$i 2>/dev/null)
-+				then
-+					new_args=3D"$new_args $tmp"
- 				else
- 					new_args=3D"$new_args $i"
- 				fi
---=20
-1.5.5.1
-
-Bye, J=F6rg.
---=20
-Diskutiere nie mit einem Idioten:
-Sie ziehen Dich auf ihr Niveau herab und schlagen Dich dann mit
-Erfahrung.
-
---tKW2IUtsqtDRztdT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIHbGqwe0mZwH1VIARAjdwAKC4dO/DmwoVqIo1FinmWBRlVgNkjACfbCdq
-lg3wQn7fW0ZPkI5MwUDp8hs=
-=nVAY
------END PGP SIGNATURE-----
-
---tKW2IUtsqtDRztdT--
+Some notes:
+- The branches are interconnected through their first-parents as follows:
+   v0 --o--o--o--o--o--o--o-------- 7.7
+         \  \  \  \  \  \  \
+          \  \  \  \  \  \  o------ 7.6
+           \  \  \  \  \  o-------- 7.4
+            \  \  \  \  o-------- 7.2
+             \  \  \  o-------- 7.0
+              \  \     \
+               \  \     o------ nt-tools
+                \  o-------- 0.6
+                 o--------- 0.5
+- As one can see, gitk deals with the numerous backports just fine,
+  except that it uses a bit (too) much screen realestate perhaps at
+  times.
+- I find the Branches, Follows and Precedes display of gitk confusing
+  on occasion, when inside this entanglement of backports.
+  Most notably, IMO:
+  + It should only show the main branch you're on (i.e. when determining
+    the branch, please use the first-parent information only, and
+    disregard any parents that come from merges).
+  + The "Follows" and "Precedes" list might look cleaner when
+    displaying only the tags which are on the same main branch the
+    current commit is part of.
+-- 
+Sincerely,                                                          srb@cuci.nl
+           Stephen R. van den Berg.
