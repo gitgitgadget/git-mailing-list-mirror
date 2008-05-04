@@ -1,86 +1,68 @@
-From: "Geoffrey Irving" <irving@naml.us>
-Subject: git push won't push to a local branch
-Date: Sun, 4 May 2008 11:49:38 -0700
-Message-ID: <7f9d599f0805041149w1955138crf269853196391e51@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git push won't push to a local branch
+Date: Sun, 4 May 2008 21:19:36 +0200
+Message-ID: <20080504191936.GA3119@atjola.homenet>
+References: <7f9d599f0805041149w1955138crf269853196391e51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 04 20:50:28 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Sun May 04 21:20:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsjI4-0007eZ-1l
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 20:50:28 +0200
+	id 1Jsjl7-0007OV-PR
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 21:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbYEDStj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 14:49:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbYEDStj
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 14:49:39 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:36304 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754118AbYEDStj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 14:49:39 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so808049rvb.1
-        for <git@vger.kernel.org>; Sun, 04 May 2008 11:49:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=X/sSkm/1diYjjhpTtBGoEsRBxc3I7O6+o20LokRbur4=;
-        b=noO+3jvY8df28UieEuug2ljAMM3HmVTfe1BIW+V1CTXk41gXUE2tTxNxrR21fD3VfIezafHK3esIQMGzsOaD4TplfpnyTCEBms4dVLgf9N2LX0g0ynQbjsNojX4IbyudKbjZ9BYe10CO8uypQIhvsBCmh2FfkuT/yWF00f55L4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=GIfpYluFr9Slj4wHIqU76JXBWMoOUBWU3OY/LZSsbaLmuyYugJP9To1WipM4C2vHxoKWVzrM9UGkkA7EnBg9CwiyEM/1NncJQZGeDCtlpkcI5z5H7Xsb5zjGVdeQZpw8vmJWBkCTcYgKI+kR2LfzmRmOEHB+ieS3z/XXP50N7ck=
-Received: by 10.140.157.1 with SMTP id f1mr2414273rve.220.1209926978449;
-        Sun, 04 May 2008 11:49:38 -0700 (PDT)
-Received: by 10.140.178.16 with HTTP; Sun, 4 May 2008 11:49:38 -0700 (PDT)
+	id S1754404AbYEDTTm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 15:19:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbYEDTTm
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 15:19:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36006 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754279AbYEDTTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 15:19:41 -0400
+Received: (qmail invoked by alias); 04 May 2008 19:19:38 -0000
+Received: from i577B991F.versanet.de (EHLO atjola.local) [87.123.153.31]
+  by mail.gmx.net (mp018) with SMTP; 04 May 2008 21:19:38 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19rnVl8MTBrtcncHcoKiACq+TnjAZACmT1Xy/nP0f
+	hNhdX3EhmcJluP
 Content-Disposition: inline
-X-Google-Sender-Auth: 0a6e3b81f7deb834
+In-Reply-To: <7f9d599f0805041149w1955138crf269853196391e51@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81191>
 
-Hello,
+On 2008.05.04 11:49:38 -0700, Geoffrey Irving wrote:
+> Hello,
+>=20
+> There's an asymmetry between push and pull that seems unnecessary:
+> pull can pull from local branches, but push can't push to them.  Is
+> there a reason for this asymmetry?
+>=20
+> In more detail, if I have a working copy with two branches, local and
+> master, I can use git pull to pull changes from master to local:
+>=20
+> % git checkout local
+> % git pull . master
+> ... pulls changes from master to local branch
+>=20
+> If I make a change in local and try to do the reverse with git push,
+> it gives a confusing non-error message and doesn't do anything:
+>=20
+> % git checkout local
+> % git rm scratch/pcomm.h
+> % git commit
+> % git push . master
+> Everything up-to-date
 
-There's an asymmetry between push and pull that seems unnecessary:
-pull can pull from local branches, but push can't push to them.  Is
-there a reason for this asymmetry?
+You're pushing master to master ;-) Try "git push . local:master".
 
-In more detail, if I have a working copy with two branches, local and
-master, I can use git pull to pull changes from master to local:
-
-% git checkout local
-% git pull . master
-... pulls changes from master to local branch
-
-If I make a change in local and try to do the reverse with git push,
-it gives a confusing non-error message and doesn't do anything:
-
-% git checkout local
-% git rm scratch/pcomm.h
-% git commit
-% git push . master
-Everything up-to-date
-
-I can simulate the desired effect by switching to master and doing a pull.
-
-% git checkout master
-Switched to branch "master"
-% git pull . local
-Updating 0080774..7e8d678
-Fast forward
- scratch/pcomm.h |  146 -------------------------------------------------------
- 1 files changed, 0 insertions(+), 146 deletions(-)
- delete mode 100644 scratch/pcomm.h
-
-I'd prefer not to have to switch my checkout to master to accomplish
-this, since I'll end up with a corrupted working copy if I push from
-somewhere else to master at the same time (I want to avoid multiple
-repository copies to save space).
-
-Thanks,
-Geoffrey
+Bj=F6rn
