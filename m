@@ -1,89 +1,69 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH v3 5/6] fn_out_diff_words_aux: Handle common diff line more carefully
-Date: Mon, 5 May 2008 00:53:17 +0800
-Message-ID: <46dff0320805040953i4230a686j8e8d63eaa6728c2f@mail.gmail.com>
-References: <1209815828-6548-1-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-1-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-2-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-3-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-4-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-5-git-send-email-pkufranky@gmail.com>
-	 <1209874815-14411-6-git-send-email-pkufranky@gmail.com>
-	 <alpine.DEB.1.00.0805041053380.30431@racer>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation: convert "diffcore" and "repository-layout" to man pages
+Date: Sun, 4 May 2008 19:13:52 +0200
+Message-ID: <200805041913.54900.jnareb@gmail.com>
+References: <20080504183433.baf3058e.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 04 18:54:08 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio Hamano <junkio@cox.net>, Pieter de Bie <pdebie@ai.rug.nl>,
+	Manoj Srivastava <srivasta@ieee.org>,
+	"Thomas Adam" <thomas.adam22@gmail.com>, Jeff King <peff@peff.net>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun May 04 19:14:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JshTS-00051y-E5
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 18:54:06 +0200
+	id 1JshnY-0003EZ-TJ
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 19:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751062AbYEDQxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 12:53:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbYEDQxS
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 12:53:18 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:19011 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbYEDQxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 12:53:18 -0400
-Received: by an-out-0708.google.com with SMTP id d40so472101and.103
-        for <git@vger.kernel.org>; Sun, 04 May 2008 09:53:17 -0700 (PDT)
+	id S1751425AbYEDROF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 13:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbYEDROE
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 13:14:04 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:36588 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108AbYEDROC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 13:14:02 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so960432nfc.21
+        for <git@vger.kernel.org>; Sun, 04 May 2008 10:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=5dqklfwldtE6h+ZdfuHXGXr5QheRgijZA+HMN8J9u+0=;
-        b=co73z/2iqug0xXt5B7+n7Rv/hPloeB1yQmEqVgxTP5+fa2AjGzHubFwvz1IpMzxd9JRfrMNb9rJMOCbfkR7q2anmkoutqCUBaKjkh0WLaGZ8k1qJ7WzyMxD7eFLN45gC7X40U739HOFCloYLgD62IDx14NgivNpAprgobhShVIY=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=6FwB+ltibicb0KMK1nlXKEjQgvOrDhtFPT/ZW2/kfDc=;
+        b=xdZHyguew7WcaoZ1LBZ8MSk/toy5Ds5A3Ie0jBz47ikQ0bBmdsEs64YCckbtXseIHz6QZO+XoO3xJF1xO/Ewy4ZH3CUAr2KKu99cmTT/RwfuMfD89o23KcTZpWc+IzF+la95IDKRJABn9K99/kf/rSk44gD4WOXk7vdWoVStabc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ckZVPxgdDqjBytNx+fykZs5iutZ0mS9rgy52KVvipyxnu89eTK7AovrpDPLAYigaNoUShwycOfdW5ggZ4eAfHeVWruF+k8Zhuh0gV5p0Gq8MeAsE+kiaifzUD6CqEEGA3Jn2JuzSnrQZ6L/4PhjnubCZMAo4t2Banr4+rgOYmyU=
-Received: by 10.100.33.4 with SMTP id g4mr6718481ang.111.1209919997063;
-        Sun, 04 May 2008 09:53:17 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Sun, 4 May 2008 09:53:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0805041053380.30431@racer>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=eiFo9f8yfMzOCc/kMHQOVfWGqmcOSqScy6Nnjd2HCwWaVASlOkx44AtcWZ8zrskLv2OnXcg0noFlnM24yajizVPjxFBM18fag5Mx3kEEeXEnn8Ny5IdA2M/eQ973gSxJo6AE67ZeYhzCHLdQRHks+gihrLE3/coEYB+WqAhFHo0=
+Received: by 10.210.34.2 with SMTP id h2mr4844673ebh.122.1209921240942;
+        Sun, 04 May 2008 10:14:00 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.224.254])
+        by mx.google.com with ESMTPS id y37sm9664654iky.8.2008.05.04.10.13.56
+        (version=SSLv3 cipher=OTHER);
+        Sun, 04 May 2008 10:13:59 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080504183433.baf3058e.chriscool@tuxfamily.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81189>
 
-On Sun, May 4, 2008 at 5:54 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
->
->  On Sun, 4 May 2008, Ping Yin wrote:
->
->  > Before feeding minus and plus lines into xdi_diff, we replace non word
->  > characters with '\n'. So we need recover the replaced character (always
->  > the last character) in the callback fn_out_diff_words_aux.
->  >
->  > Therefore, a common diff line beginning with ' ' is not always a real
->  > common line.
->
->  Umm, why?
+On Sun, 4 May 2008, Christian Couder wrote:
 
-Because we need recover the replaced character.
+> This patch renames the following documents and at the same time conve=
+rts
+> them to the man format:
+>=20
+> difcore.txt =A0 =A0 =A0 =A0 =A0 -> gitdiffcore.txt
+> repository-layout.txt -> gitrepository-layout.txt
 
-Say, for a common diff line " foo", after restoring the replaced
-character, the corresponding line in minus and plus may be different.
-For example, "foo(" and "foo)".
+I'd rather use git-repository-layout.txt
 
->  > And we should check the last characters of the common diff line. If they
->  > are different, we should output the first len-1 characters as the common
->  > part and then the last characters in minus and plus separately.
->
->  Umm, why?
-
-Explained.
-
-
-
--- 
-Ping Yin
+--=20
+Jakub Narebski
+Poland
