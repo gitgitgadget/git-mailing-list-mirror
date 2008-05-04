@@ -1,69 +1,155 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [RFC/PATCH] gitweb: Allow project description in project_index
-	file
-Date: Sun, 4 May 2008 04:03:09 +0200
-Message-ID: <20080504020309.GR23672@genesis.frugalware.org>
-References: <200805011220.58871.jnareb@gmail.com> <200805021230.05907.jnareb@gmail.com> <20080502130456.GN23672@genesis.frugalware.org> <200805031103.14960.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+S4DbcR7QPeSsP0V"
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 04:04:03 2008
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [PATCH v3 4/6] --color-words: Make non-word characters configurable
+Date: Sun,  4 May 2008 12:20:13 +0800
+Message-ID: <1209874815-14411-5-git-send-email-pkufranky@gmail.com>
+References: <1209815828-6548-1-git-send-email-pkufranky@gmail.com>
+ <1209874815-14411-1-git-send-email-pkufranky@gmail.com>
+ <1209874815-14411-2-git-send-email-pkufranky@gmail.com>
+ <1209874815-14411-3-git-send-email-pkufranky@gmail.com>
+ <1209874815-14411-4-git-send-email-pkufranky@gmail.com>
+Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 04 06:21:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsTa6-00018w-H8
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 04:04:02 +0200
+	id 1JsVip-0004qs-JV
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 06:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753926AbYEDCDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 22:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbYEDCDO
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 22:03:14 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:47079 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753852AbYEDCDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 22:03:14 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 0A5281B2508;
-	Sun,  4 May 2008 04:03:12 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id CF7EC4465E;
-	Sun,  4 May 2008 04:00:22 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CEF5C1190ACB; Sun,  4 May 2008 04:03:09 +0200 (CEST)
-Mail-Followup-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <200805031103.14960.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751149AbYEDEU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 00:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbYEDEUY
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 00:20:24 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:54657 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750840AbYEDEUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 00:20:19 -0400
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 2133E470B1; Sun,  4 May 2008 12:20:15 +0800 (CST)
+X-Mailer: git-send-email 1.5.5.1.121.g26b3
+In-Reply-To: <1209874815-14411-4-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81127>
 
+Previously --color-words only allow spaces as non-word characters.
+However, just space is not enough. For example, when i rename a function
+from foo to bar, following example doesn't show as expected when using
+--color-words.
 
---+S4DbcR7QPeSsP0V
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  - if (foo(arg))
+  + if (bar(arg))
 
-On Sat, May 03, 2008 at 11:03:13AM +0200, Jakub Narebski <jnareb@gmail.com> wrote:
-> Also, the format is described in more elaborate way; please comment...
+Assuming "r" and "g" represent "red" and "green" separately. It shows as
 
-Not that my opinion matters here too much, but I like it. :-)
+  if <r>(foo(arg))</r><g>(foo(arg))</g>
 
---+S4DbcR7QPeSsP0V
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Actually, it's the best to show as
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
+  if (<r>foo</r><g>bar</g>(arg))
 
-iEYEARECAAYFAkgdGV0ACgkQe81tAgORUJZfmwCdHzLqIXtPAZhMwn5Sw0U97ez7
-/ngAnRMmVYyK5LIFFVVVD/gFxIFqAiWa
-=JvTG
------END PGP SIGNATURE-----
+This patch introduces a configuration diff.nonwordchars to allow configurable
+non-word characters (both spaces and chars in diff.nonwordchars)
+for --color-words.
 
---+S4DbcR7QPeSsP0V--
+Now, with diff.nonwordchars set to "()", the example above will show as
+
+  if (<r>foo(</r><g>bar(</g>arg))
+
+It's much better, athough not the best,
+
+NOTE:
+
+With current implementation (i.e. to replace non word characters with
+LF before feeding into xdi_diff), we can't get the best output.
+
+A more sensible implementation is to use 'insert' instead of 'replace'.
+Say, to insert a line break between runs of word characters and non-word
+characters or between non-word characters.
+
+That is, "foo>=bar" will be rewritten as "foo\n>\n=\nbar" instead of
+"foo\n\nbar".
+
+Signed-off-by: Ping Yin <pkufranky@gmail.com>
+---
+ Documentation/config.txt       |    4 ++++
+ Documentation/diff-options.txt |    1 +
+ diff.c                         |   12 +++++++++++-
+ 3 files changed, 16 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 824e416..812ec2c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -537,6 +537,10 @@ diff.external::
+ 	program only on a subset of your files, you might want to
+ 	use linkgit:gitattributes[5] instead.
+ 
++diff.nonwordchars::
++	Specify additional boundary characters other than spaces for
++	--color-words.
++
+ diff.renameLimit::
+ 	The number of files to consider when performing the copy/rename
+ 	detection; equivalent to the git diff option '-l'.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 13234fa..70acc14 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -95,6 +95,7 @@ endif::git-format-patch[]
+ 
+ --color-words::
+ 	Show colored word diff, i.e. color words which have changed.
++	The non-word characters can be configured with diff.nonwordchars.
+ 
+ --no-renames::
+ 	Turn off rename detection, even when the configuration
+diff --git a/diff.c b/diff.c
+index c7a0d77..eb7c086 100644
+--- a/diff.c
++++ b/diff.c
+@@ -23,6 +23,7 @@ static int diff_rename_limit_default = 100;
+ int diff_use_color_default = -1;
+ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index = 1;
++static const char *diff_non_word_chars = "";
+ 
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	"\033[m",	/* reset */
+@@ -159,6 +160,10 @@ int git_diff_ui_config(const char *var, const char *value)
+ 		external_diff_cmd_cfg = xstrdup(value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.nonwordchars")) {
++		diff_non_word_chars = value ? xstrdup(value) : "";
++		return 0;
++	}
+ 	if (!prefixcmp(var, "diff.")) {
+ 		const char *ep = strrchr(var, '.');
+ 
+@@ -443,6 +448,11 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 	}
+ }
+ 
++static int is_non_word_char(char c)
++{
++	return isspace(c) || !!strchr(diff_non_word_chars, c);
++}
++
+ static void mmfile_copy_set_boundary(mmfile_t *dest, mmfile_t *src) {
+ 	int i;
+ 
+@@ -450,7 +460,7 @@ static void mmfile_copy_set_boundary(mmfile_t *dest, mmfile_t *src) {
+ 	dest->ptr = xmalloc(dest->size);
+ 	memcpy(dest->ptr, src->ptr, dest->size);
+ 	for (i = 0; i < dest->size; i++)
+-		if (isspace(dest->ptr[i]))
++		if (is_non_word_char(dest->ptr[i]))
+ 			dest->ptr[i] = '\n';
+ }
+ 
+-- 
+1.5.5.1.121.g26b3
