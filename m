@@ -1,98 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: merge renamed files/directories?
-Date: Sun, 04 May 2008 02:34:23 -0700 (PDT)
-Message-ID: <m3zlr65s6j.fsf@localhost.localdomain>
-References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com>
-	<32541b130805010827r22169651s37c707071f3448f2@mail.gmail.com>
-	<20080501153457.GB11469@sigill.intra.peff.net>
-	<D0968007-2A38-44DB-B26F-3D273F20D428@midwinter.com>
-	<20080501231427.GD21731@sigill.intra.peff.net>
-	<481CA742.4080909@tikalk.com>
-	<32541b130805031111r4cbea8e1l19c34ac05016a89b@mail.gmail.com>
-	<481D52CC.1030503@tikalk.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/13] Teach rebase interactive the mark command
+Date: Sun, 4 May 2008 10:38:49 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805041032070.30431@racer>
+References: <7vabkoufzq.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804221810180.4460@eeepc-johanness> <7v3ap5a4ny.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804290138170.27457@eeepc-johanness> <7vk5ih8ckp.fsf@gitster.siamese.dyndns.org>
+ <4816CA72.8070405@viscovery.net> <alpine.DEB.1.00.0804291147450.27457@eeepc-johanness> <7vk5ig745b.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804292220120.13650@eeepc-johanness> <7viqy05mhp.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0804292355060.17469@eeepc-johanness> <7v63u05khw.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300016130.17469@eeepc-johanness> <7v1w4o3zle.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804300938190.17469@eeepc-johanness>
+ <7vr6cn1yzk.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0804301253520.2136@eeepc-johanness> <7vy76tyhfd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805031340550.30431@racer> <7vtzhfuxfd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Ittay Dror <ittayd@tikalk.com>
-X-From: git-owner@vger.kernel.org Sun May 04 11:36:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 04 11:40:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsacn-0005Hg-H4
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 11:35:17 +0200
+	id 1Jsah3-0007M7-Lo
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 11:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077AbYEDJe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 05:34:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754052AbYEDJe3
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 05:34:29 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:19106 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753873AbYEDJe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 05:34:28 -0400
-Received: by ug-out-1314.google.com with SMTP id h3so488377ugf.16
-        for <git@vger.kernel.org>; Sun, 04 May 2008 02:34:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=JPg9SM+9f4iwUxpQWdRbRkVn711k7ysRxNIY+eczDc4=;
-        b=TXvi/hGoM43wYY0lk7pwai6MO5G9ATAFA6gKPgZWrefsV0xF3WTgm/DZw17j/X0LOGNBTCphVkaZrC78hIFmOsN41rKKVFmGAlB0BMuYtrZj42o1y7Rn1wV4sfj/nvce5SiL7quW35HqmvMk7HIkqMCQncftcpBZM20Do5+vSLQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=EVio/GTvDZyrVlme7LisoppVYqUig1CFohtvz21hw/Ws1n8teSocwwakpp45winNLE8aGcQnTJud3N/6c9lIh9YDDsi4+q+XV4hkol/ZimvShqQbiUaAtfaSH5OB7ztJRn6mW4IhQ13fgVIsiHbk6YpS7r1RQMRudtA/lCoy+Vk=
-Received: by 10.67.40.15 with SMTP id s15mr2761183ugj.53.1209893664648;
-        Sun, 04 May 2008 02:34:24 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.224.254])
-        by mx.google.com with ESMTPS id b36sm8779156ika.5.2008.05.04.02.34.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 May 2008 02:34:23 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m449YGEb032691;
-	Sun, 4 May 2008 11:34:16 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m449YCER032687;
-	Sun, 4 May 2008 11:34:12 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <481D52CC.1030503@tikalk.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753512AbYEDJix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 05:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbYEDJix
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 05:38:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43366 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752189AbYEDJiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 05:38:52 -0400
+Received: (qmail invoked by alias); 04 May 2008 09:38:51 -0000
+Received: from dslb-088-067-220-031.pools.arcor-ip.net (EHLO dslb-088-067-220-031.pools.arcor-ip.net) [88.67.220.31]
+  by mail.gmx.net (mp011) with SMTP; 04 May 2008 11:38:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/xvYpxRi7xWcA2t1kK5AHX7ajZQEwWksmHPDa/wG
+	gJ6g34prKT0vaX
+X-X-Sender: gene099@racer
+In-Reply-To: <7vtzhfuxfd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81156>
 
-Ittay Dror <ittayd@tikalk.com> writes:
-> Avery Pennarun wrote:
+Hi,
 
-> > Git already works fine for renames.  The only situation where
-> > something funny happens is if you rename a whole directory and someone
-> > else creates a file in the old directory.  (In that case, the new file
-> > ends up in the old place instead of the new place.)  However, even in
-> > that case, there is still no conflict and no manual merging necessary.
->
-> Sorry, but this is not the situation as I have experienced it with a
-> local repository I have. I renamed a directory (without changing any
-> files in it). 'git diff <commit>^ <commit>' shows the rename fine, but
-> 'git log -p -M -C <initial commit>..' does not (that is, the history
-> for files in that directory is shown from the rename commit
-> only). Obviously git-diff is not any better.
+On Sat, 3 May 2008, Junio C Hamano wrote:
 
-This is one thing where git differs from other SCMs.  In "git log --
-<path>" (that is what I assume you have used) the <path> argument is
-path limiter.  It allows to specify more than one directory or a file.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> And I try to stress that while we are still in the drawing board 
+> >> phase, because it would be painful to change once we start with a 
+> >> language without enough expressiveness.
+> >
+> > Unfortunately, we are no longer in the drawing board phase, because 
+> > the offending code is already in 'next'.
+> 
+> What does that mean?  "Now we are committed to it, so I will stop 
+> complaining and work within the overall design in a more constructive 
+> way"?
 
-Unfortunately currently "git log --follow=<file>" works only for single
-files, and doesn't yet work for directories; which is caused, among
-other things, by the lack of directory rename detection in git.
+Fine.
 
-> [...] Also, what happens if I change the file in the new location
-> and someone else changes it in the old location? Will I need to do a
-> manual merge?
+I think that the "mark" mechanism is a fine thing for scripts that import 
+into Git.  There, the limitation to integers in a certain range does not 
+hurt.
 
-No, rename detection should make automatic merge possible.
+The "mark" mechanism could even be used to implement a user-friendly 
+rebase -i -p, but I think that _exposing_ it is a mistake.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Sure, I could imagine that _editing_ a list of commits, you want to mark a 
+commit (why not "tag", which would be much more consistent with the rest 
+of Git?), but name it something human-readable, such as
+
+	pick 1234567 Clean up rebase -i -p
+	tag cleanup
+	...
+	merge 2345678 cleanup master
+
+Yes, you read that correctly, I think that allowing plain ref names is 
+very valuable.  AFAICT my original implementation allows that (dunno about 
+the current code).
+
+I actually grow fonder and fonder of the ' idea (rewritten commits can be 
+referenced by their short commit name with a single apostroph appended, 
+and if that commit was not rewritten at all, it falls back to the original 
+commit).
+
+That should please you, and the other guy commenting on the "magic".
+
+In the meantime I am also convinced that it could be implemented in an 
+elegant way.
+
+Ciao,
+Dscho
