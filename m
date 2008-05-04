@@ -1,186 +1,353 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: EasyGit [Was: Re: my git problem]
-Date: Sun, 4 May 2008 12:00:45 +0200
-Message-ID: <200805041200.46099.chriscool@tuxfamily.org>
-References: <51419b2c0805020441l7a52f9d2q6bfc8eb4e18e4e7e@mail.gmail.com> <51419b2c0805020454p144698e4l843e8edab00ddeb7@mail.gmail.com>
+Subject: [PATCH] Documentation: convert "glossary" and "core-tutorial" to
+ man pages
+Date: Sun, 4 May 2008 12:21:57 +0200
+Message-ID: <20080504122157.ca98c75d.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Havoc Pennington" <hp@pobox.com>,
-	"Carl Worth" <cworth@cworth.org>
-To: "Elijah Newren" <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 11:56:45 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Pieter de Bie <pdebie@ai.rug.nl>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Manoj Srivastava <srivasta@ieee.org>,
+	"Thomas Adam" <thomas.adam22@gmail.com>, Jeff
+X-From: git-owner@vger.kernel.org Sun May 04 12:18:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsaxY-0004Yl-3o
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 11:56:44 +0200
+	id 1JsbI6-0001gB-0A
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 12:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230AbYEDJzz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 05:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754071AbYEDJzz
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 05:55:55 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:51371 "EHLO smtp1-g19.free.fr"
+	id S1754373AbYEDKRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 06:17:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbYEDKRI
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 06:17:08 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:53642 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754216AbYEDJzy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 May 2008 05:55:54 -0400
+	id S1754322AbYEDKRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 06:17:06 -0400
 Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id BF94E1AB2F9;
-	Sun,  4 May 2008 11:55:51 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 7102E1AB2F0;
-	Sun,  4 May 2008 11:55:51 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <51419b2c0805020454p144698e4l843e8edab00ddeb7@mail.gmail.com>
-Content-Disposition: inline
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 871A01AB2ED;
+	Sun,  4 May 2008 12:17:04 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 676C31AB2D7;
+	Sun,  4 May 2008 12:17:02 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81163>
 
-Le vendredi 2 mai 2008, Elijah Newren a =E9crit :
->
-> EasyGit (eg) is a single-file script/porcelain that looks and feels l=
-ike
-> core git.  In contrast to other simple-to-use porcelains, eg has all =
-the
-> same capabilities as git (in particular, it does not remove the index=
-)
-> and uses the same general syntax as core git.  Eg primarily reduces t=
-he
-> learning curve associated with git and prevents common user errors.
->
-> Changes:
->   Most of the changes in eg relative to git boil down to:
->     - plugging a large gap in git documentation (namely, providing a
->       tutorial-oriented built-in help system)
+This patch renames the following documents and at the same time converts
+them to the man format:
 
-I had a look at it. And I have a few comments that I prefixed with '#'=20
-below.
+core-tutorial.txt -> gitcore-tutorial.txt
+glossary.txt      -> gitglossary.txt
 
-$ eg help
-[...]
-Time saving commands
-  eg bisect     Find the change that introduced a bug by binary search
-[...]
+But as the glossary is included in the user manual and as the new
+gitglossary man page cannot be included as a whole in the user manual,
+the actual glossary content is now in its own "glossary-content.txt"
+new file. And this file is included by both the user manual and the
+gitglossary man page.
 
-#=A0What did they do to my beloved bisect? I need to have a look.
+Other documents that reference the above ones are changed accordingly
+and sometimes improved a little too.
+---
+ Documentation/Makefile                             |    7 ++---
+ Documentation/git.txt                              |   13 +++++++--
+ .../{core-tutorial.txt => gitcore-tutorial.txt}    |   26 ++++++++++++++++---
+ Documentation/gitcvs-migration.txt                 |    6 +++-
+ Documentation/giteveryday.txt                      |    5 ++-
+ Documentation/gitglossary.txt                      |   25 +++++++++++++++++++
+ Documentation/gittutorial-2.txt                    |   11 ++++----
+ Documentation/gittutorial.txt                      |    5 ++-
+ .../{glossary.txt => glossary-content.txt}         |    3 --
+ Documentation/user-manual.txt                      |    5 +++-
+ 10 files changed, 80 insertions(+), 26 deletions(-)
+ rename Documentation/{core-tutorial.txt => gitcore-tutorial.txt} (99%)
+ create mode 100644 Documentation/gitglossary.txt
+ rename Documentation/{glossary.txt => glossary-content.txt} (99%)
 
-$ eg help bisect
-Sorry, bisect is not overridden or modified for eg, and no
-help has been written for it.  If you're feeling brave, you may
-want to try running 'git help bisect'.
 
-# So they did nothing to it. Good ;-)
-# But then why don't they ask people to use "git bisect" directly inste=
-ad
-# of "eg bisect" ?
-#
-#=A0And they point to "git help bisect", good point.
-# No need to "feel brave" to look at "git help bisect" though,=A0becaus=
-e I
-# think it is quite good. But I guess this is a generic=A0message aimed=
- at
-# other commands.=20
+	This is another patch to convert some help documents to
+	man pages. It should apply on top of the previous ones.
 
-$ eg help clone
-[...]
-See also
-  Run 'man git-clone' for a comprehensive list of options available.
-  eg clone is designed to accept the same options as git clone, and
-  with the same meanings unless specified otherwise in the above
-  "Differences" section.
 
-# The output is longer than my terminal's 41 lines so I don't see=A0its=
- top
-# because there is no paging.=20
-# And why ask people to use "man git-clone" here, instead of "git help
-# clone" ?
-
-$ git clone -h
-[...]
-
-#=A0"git clone -h" show more options in 18 lines only, but no examples
-#=A0and no description.
-#
-# I am not sure that the "Differences from git clone" part from "eg hel=
-p
-# clone" is really usefull for beginners.
-
-$ eg changes --details
-[...]
-
-# Very long output but it's paged.
-
-$ eg help help
-[...]
-Differences from git help:
-  eg help uses its own help system, ignoring the one from git help...ex=
-cept
-  that eg help will call git help if asked for help on a subcommand it =
-does
-  not recognize.
-
-  "git help COMMAND" simply calls "man git-COMMAND".  The git man pages=
- are
-  really nice for people who are experts with git; they are comprehensi=
-ve
-  and detailed.
-
-# It's not true that "eg help will call git help if asked for help on a
-# subcommand it does not recognize", it only display the same message a=
-s
-# for "eg help bisect" above.
-#=20
-# Also it's not exactly true that '"git help COMMAND" simply calls "man
-# git-COMMAND". If you use "git help -w COMMAND" or if you have
-# the "help.format" set to "web", you get a HTML man page opened in a n=
-ew
-#=A0tab in firefox (or something like that).
-#
-# And why not pointing to "git COMMAND -h" too, as it should give a "lo=
-ng
-# usage" string that is often usefull and easier to use as the man page=
- ?=20
-
-[...]
->
->   I would like to see the parts of eg that the community likes
->   incorporated into git core.  I do not know which changes would be
-> wanted or welcome, and it may turn out that some of my changes show
-> ignorance of certain aspects of git (some such cases have previously =
-been
-> uncovered already...and fixed).  But the discussion can't hurt, and a
-> number of the solutions I used in eg I have not found in searches of
-> previous discussions in the archives.
-
-What I like about the built-in help system in eg is that there are lots=
- of=20
-examples displayed. I think the git man pages are somewhat lacking in t=
-his=20
-area. (Some examples are still using the "git-COMMAND" syntax for examp=
-le.)=20
-
-The built-in help text in eg also seems simpler and easier to understan=
-d,=20
-but it may be because there are fewer options and simpler commands to=20
-explain.
-
-So here are some things that could be done to improve git help system:
-
-- find a way to make users know that they can get long usage help using=
- "git=20
-COMMAND -h"
-- find a way to display some examples on the command line without the f=
-ull=20
-man page
-- add and improve examples in man pages
-- add some simpler explanations to man pages and perhaps move more comp=
-lex=20
-explanations to a "DETAILED DESCRIPTION" part of the man page
-- improve man pages in other ways
-
-Thanks,
-Christian.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 9a8043f..5ec7bd8 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -4,7 +4,8 @@ MAN1_TXT= \
+ 	gitk.txt
+ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
+ MAN7_TXT=git.txt gitcli.txt gittutorial.txt gittutorial-2.txt \
+-	gitcvs-migration.txt giteveryday.txt
++	gitcvs-migration.txt giteveryday.txt gitcore-tutorial.txt \
++	gitglossary.txt
+ 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+@@ -12,12 +13,10 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
+ 
+ DOC_HTML=$(MAN_HTML)
+ 
+-ARTICLES = core-tutorial
+-ARTICLES += diffcore
++ARTICLES = diffcore
+ ARTICLES += howto-index
+ ARTICLES += repository-layout
+ ARTICLES += git-tools
+-ARTICLES += glossary
+ # with their own formatting rules.
+ SP_ARTICLES = howto/revert-branch-rebase howto/using-merge-subtree user-manual
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 1c3c56e..855e90e 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -172,7 +172,7 @@ See the references above to get started using git.  The following is
+ probably more detail than necessary for a first-time user.
+ 
+ The link:user-manual.html#git-concepts[git concepts chapter of the
+-user-manual] and the link:core-tutorial.html[Core tutorial] both provide
++user-manual] and the linkgit:gitcore-tutorial[7][Core tutorial] both provide
+ introductions to the underlying git architecture.
+ 
+ See also the link:howto-index.html[howto] documents for some useful
+@@ -372,7 +372,7 @@ Higher level SCMs may provide and manage additional information in the
+ 
+ Terminology
+ -----------
+-Please see the link:glossary.html[glossary] document.
++Please see the linkgit:gitglossary[7][glossary] document.
+ 
+ 
+ Environment Variables
+@@ -516,7 +516,7 @@ Discussion[[Discussion]]
+ 
+ More detail on the following is available from the
+ link:user-manual.html#git-concepts[git concepts chapter of the
+-user-manual] and the link:core-tutorial.html[Core tutorial].
++user-manual] and the linkgit:gitcore-tutorial[7][Core tutorial].
+ 
+ A git project normally consists of a working directory with a ".git"
+ subdirectory at the top level.  The .git directory contains, among other
+@@ -577,6 +577,13 @@ The documentation for git suite was started by David Greaves
+ <david@dgreaves.com>, and later enhanced greatly by the
+ contributors on the git-list <git@vger.kernel.org>.
+ 
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
++linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
++link:user-manual.html[The Git User's Manual]
++
+ GIT
+ ---
+ Part of the linkgit:git[7] suite
+diff --git a/Documentation/core-tutorial.txt b/Documentation/gitcore-tutorial.txt
+similarity index 99%
+rename from Documentation/core-tutorial.txt
+rename to Documentation/gitcore-tutorial.txt
+index b50b5dd..5995a2e 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/gitcore-tutorial.txt
+@@ -1,8 +1,16 @@
+-A git core tutorial for developers
+-==================================
++gitcore-tutorial(7)
++===================
+ 
+-Introduction
+-------------
++NAME
++----
++gitcore-tutorial - A git core tutorial for developers
++
++SYNOPSIS
++--------
++git *
++
++DESCRIPTION
++-----------
+ 
+ This tutorial explains how to use the "core" git programs to set up and
+ work with a git repository.
+@@ -1679,3 +1687,13 @@ merge two at a time, documenting how you resolved the conflicts,
+ and the reason why you preferred changes made in one side over
+ the other.  Otherwise it would make the project history harder
+ to follow, not easier.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
++link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
+index 4e5ea33..3eaf4b8 100644
+--- a/Documentation/gitcvs-migration.txt
++++ b/Documentation/gitcvs-migration.txt
+@@ -20,7 +20,7 @@ can synchronize with; this document explains how to do that.
+ 
+ Some basic familiarity with git is required.  This
+ linkgit:gittutorial[7][tutorial introduction to git] and the
+-link:glossary.html[git glossary] should be sufficient.
++linkgit:gitglossary[7][git glossary] should be sufficient.
+ 
+ Developing against a shared repository
+ --------------------------------------
+@@ -187,7 +187,9 @@ repositories without the need for a central maintainer.
+ SEE ALSO
+ --------
+ linkgit:gittutorial[7], linkgit:gittutorial-2[7],
+-linkgit:giteveryday[7], link:user-manual.html[The Git User's Manual]
++linkgit:giteveryday[7], linkgit:gitcore-tutorial[7],
++linkgit:gitglossary[7],
++link:user-manual.html[The Git User's Manual]
+ 
+ GIT
+ ---
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+index d7c3a35..6b33242 100644
+--- a/Documentation/giteveryday.txt
++++ b/Documentation/giteveryday.txt
+@@ -474,8 +474,9 @@ ftp> cp -r .git /home/user/myproject.git
+ SEE ALSO
+ --------
+ linkgit:gittutorial[7], linkgit:gittutorial-2[7],
+-linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
+-Manual]
++linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
++linkgit:gitglossary[7],
++link:user-manual.html[The Git User's Manual]
+ 
+ GIT
+ ---
+diff --git a/Documentation/gitglossary.txt b/Documentation/gitglossary.txt
+new file mode 100644
+index 0000000..e8475a0
+--- /dev/null
++++ b/Documentation/gitglossary.txt
+@@ -0,0 +1,25 @@
++gitglossary(7)
++==============
++
++NAME
++----
++gitglossary - A GIT Glossary
++
++SYNOPSIS
++--------
++*
++
++DESCRIPTION
++-----------
++
++include::glossary-content.txt[]
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
++link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
+index 4af9073..c7f59bd 100644
+--- a/Documentation/gittutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -390,7 +390,7 @@ in the index file is identical to the one in the working directory.
+ In addition to being the staging area for new commits, the index file
+ is also populated from the object database when checking out a
+ branch, and is used to hold the trees involved in a merge operation.
+-See the link:core-tutorial.html[core tutorial] and the relevant man
++See the linkgit:gitcore-tutorial[7][core tutorial] and the relevant man
+ pages for details.
+ 
+ What next?
+@@ -400,7 +400,7 @@ At this point you should know everything necessary to read the man
+ pages for any of the git commands; one good place to start would be
+ with the commands mentioned in linkgit:giteveryday[7][Everyday git].
+ You should be able to find any unknown jargon in the
+-link:glossary.html[Glossary].
++linkgit:gitglossary[7][Glossary].
+ 
+ The link:user-manual.html[Git User's Manual] provides a more
+ comprehensive introduction to git.
+@@ -412,15 +412,16 @@ CVS-like way.
+ For some interesting examples of git use, see the
+ link:howto-index.html[howtos].
+ 
+-For git developers, the link:core-tutorial.html[Core tutorial] goes
++For git developers, the linkgit:gitcore-tutorial[7][Core tutorial] goes
+ into detail on the lower-level git mechanisms involved in, for
+ example, creating a new commit.
+ 
+ SEE ALSO
+ --------
+ linkgit:gittutorial[7], linkgit:giteveryday[7],
+-linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
+-Manual]
++linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
++linkgit:gitglossary[7],
++link:user-manual.html[The Git User's Manual]
+ 
+ GIT
+ ---
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index 470f7f7..34469be 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -598,8 +598,9 @@ digressions that may be interesting at this point are:
+ SEE ALSO
+ --------
+ linkgit:gittutorial-2[7], linkgit:giteveryday[7],
+-linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
+-Manual]
++linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
++linkgit:gitglossary[7],
++link:user-manual.html[The Git User's Manual]
+ 
+ GIT
+ ---
+diff --git a/Documentation/glossary.txt b/Documentation/glossary-content.txt
+similarity index 99%
+rename from Documentation/glossary.txt
+rename to Documentation/glossary-content.txt
+index 51b6353..f981fee 100644
+--- a/Documentation/glossary.txt
++++ b/Documentation/glossary-content.txt
+@@ -1,6 +1,3 @@
+-GIT Glossary
+-============
+-
+ [[def_alternate_object_database]]alternate object database::
+ 	Via the alternates mechanism, a <<def_repository,repository>>
+ 	can inherit part of its <<def_object_database,object database>>
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index b2c4f2c..a99489e 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4252,7 +4252,10 @@ You see, Git is actually the best tool to find out about the source of Git
+ itself!
+ 
+ [[glossary]]
+-include::glossary.txt[]
++GIT Glossary
++============
++
++include::glossary-content.txt[]
+ 
+ [[git-quick-start]]
+ Appendix A: Git Quick Reference
+-- 
+1.5.5.1.124.g7e5fa.dirty
