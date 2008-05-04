@@ -1,84 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
-Date: Sat, 03 May 2008 17:10:57 -0700
-Message-ID: <7vy76rrkry.fsf@gitster.siamese.dyndns.org>
-References: <20080430172136.GA22601@sigill.intra.peff.net>
- <20080430172553.GC23747@sigill.intra.peff.net>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] I don't known anyone who understands what it means when they do a merge and see "file.txt: needs update". "file.txt: has changes" is much clearer.
+Date: Sat, 3 May 2008 20:21:53 -0400
+Message-ID: <32541b130805031721n29cf470cx391fe0e8b4943706@mail.gmail.com>
+References: <1209798522-13618-1-git-send-email-timcharper@gmail.com>
+	 <alpine.DEB.1.00.0805031509170.30431@racer>
+	 <7v3aozwcj6.fsf@gitster.siamese.dyndns.org>
+	 <3DE78C03-DA35-4CB5-8D3D-0529A89065EC@gmail.com>
+	 <7v63tvszgo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 04 02:12:04 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Tim Harper" <timcharper@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 04 02:23:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsRpj-0004N3-Ij
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 02:12:04 +0200
+	id 1JsS0K-0006Xz-Oy
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 02:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754163AbYEDALQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2008 20:11:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754821AbYEDALQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 20:11:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38096 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753068AbYEDALP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2008 20:11:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3EC5E4132;
-	Sat,  3 May 2008 20:11:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 002F14131; Sat,  3 May 2008 20:11:07 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9BD3EFC6-196E-11DD-8E2C-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1752945AbYEDAV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2008 20:21:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbYEDAV5
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 May 2008 20:21:57 -0400
+Received: from fk-out-0910.google.com ([209.85.128.189]:20132 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751916AbYEDAV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2008 20:21:56 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so128997fkq.5
+        for <git@vger.kernel.org>; Sat, 03 May 2008 17:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=VLBZ+V/3Afwbf6f0cVuBmR4HxXers9XoG1eM15U4xRI=;
+        b=AUZ6KAziLzJqSBdrOmHp0AKhpb/YWKe72TCaoBZISMlVhMEpIJdT5XpOMZlA8qquarr6MOMOP7dBv4BtlwlSJXJeWe0PF0lRsSFAeFKGix/fAXXX3WPO0ix362/lDkLLC9777aXHg6Zq8moXx1wEEzxZScN7j22pIQDF95Q841I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=C1dQ8K5K0Ewkra275COdCOI38qrRY/ZD9jTBGi+Fq9AIBnbg8U1bSmyx1m43VdGj3511sK1pgrSvIP+Ap6mzPqkEytSAvLJQWklFGYR5YlQEc/r/yGTqzqosbPW87kdXUYbDEO9oFJTvvTx6bspW/uMRXeCZiZHGFqW6sVk2Io8=
+Received: by 10.82.113.6 with SMTP id l6mr443220buc.17.1209860513570;
+        Sat, 03 May 2008 17:21:53 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Sat, 3 May 2008 17:21:53 -0700 (PDT)
+In-Reply-To: <7v63tvszgo.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81122>
 
-Jeff King <peff@peff.net> writes:
-
-> In many cases, the warning ends up as clutter, because the
-> diff is being done "behind the scenes" from the user (e.g.,
-> when generating a commit diffstat), and whether we show
-> renames or not is not particularly interesting to the user.
+On 5/3/08, Junio C Hamano <gitster@pobox.com> wrote:
+> > I ran all of the tests with the patch apply, and they all pass.  Is
+>  > that enough indication?
 >
-> However, in the case of a merge (which is what motivated the
-> warning in the first place), it is a useful hint as to why a
-> merge with renames might have failed.
->
-> This patch makes the warning optional based on the code
-> calling into diffcore. We default to not showing the
-> warning, but turn it on for merges.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This neglects the case where the user specifically does a diff asking
-> for renames, but we turn it off. Maybe when "-M" is specified on the
-> commandline to git-diff, we should set this option as well.
+> Of course not.  Where does end-user scripts come into play when you are
+>  running the testsuite?
 
-That sounds sensible.  Like this?
+I thought user scripts weren't supposed to rely on the porcelain
+output?  It seems to change rather frequently anyway.
 
-diff --git a/diff.c b/diff.c
-index f735519..e8a9286 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2443,6 +2443,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
- 			return -1;
- 		options->detect_rename = DIFF_DETECT_RENAME;
-+		options->warn_on_too_large_rename = 1;
- 	}
- 	else if (!prefixcmp(arg, "-C")) {
- 		if (options->detect_rename == DIFF_DETECT_COPY)
-@@ -2450,6 +2451,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
- 			return -1;
- 		options->detect_rename = DIFF_DETECT_COPY;
-+		options->warn_on_too_large_rename = 1;
- 	}
- 	else if (!strcmp(arg, "--no-renames"))
- 		options->detect_rename = 0;
+Avery
