@@ -1,78 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Pay attention to GIT_DIR when searching the git
- directory
-Date: Mon, 5 May 2008 14:39:46 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805051437040.30431@racer>
-References: <1209946178-29398-1-git-send-email-joerg@alea.gnuu.de> <alpine.DEB.1.00.0805051234260.30431@racer> <20080505125302.GA11523@alea.gnuu.de>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.11
+Date: Sun, 4 May 2008 21:02:04 +0200
+Message-ID: <20080504190204.GA25329@diku.dk>
+References: <20080406200533.GA20537@diku.dk> <481CD4E9.3080709@obry.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-994315661-1209994787=:30431"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Mon May 05 15:40:50 2008
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Mon May 05 15:44:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt0vo-0001kJ-OC
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:40:41 +0200
+	id 1Jt0zD-00033A-0j
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437AbYEENjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 09:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbYEENjw
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:39:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33055 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751601AbYEENjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 09:39:51 -0400
-Received: (qmail invoked by alias); 05 May 2008 13:39:49 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp005) with SMTP; 05 May 2008 15:39:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19tF2ISCFRt26KQMT2689lKrGibV3Fru1O/umIPL7
-	fR+ScDoOL/tqr/
-X-X-Sender: gene099@racer
-In-Reply-To: <20080505125302.GA11523@alea.gnuu.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758489AbYEENnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 09:43:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755982AbYEENnW
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:43:22 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:33453 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758489AbYEENnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 09:43:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 0552652C45D;
+	Mon,  5 May 2008 15:43:19 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id q1oKUfMVpOb7; Mon,  5 May 2008 15:43:17 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id A0B3052C328;
+	Mon,  5 May 2008 14:51:13 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 3588B70F09B; Sun,  4 May 2008 21:00:01 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id ABB3F1DCDCF; Sun,  4 May 2008 21:02:04 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <481CD4E9.3080709@obry.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81281>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello Pascal,
 
---8323329-994315661-1209994787=:30431
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+Pascal Obry <pascal@obry.net> wrote Sat, May 03, 2008:
+> I see that the '@' key can now move from chunk to chunk. This is nice but 
+> it would be more user friendly if after staging a hunk the cursor was not 
+> moved to the first line! I think it would be better to have the cursor on 
+> top of the next hunk.
 
-Hi,
+Great that you noticed.
 
-On Mon, 5 May 2008, Jörg Sommer wrote:
+About your suggestion, Jeff suggested something similar for the blame
+view when jumping to parents ealier in this thread. I will put in the
+TODO list an entry about adding a general mechanism for saving and
+restoring states across reloads and refreshes.  The status and tree
+views already have something like this and the stage and blame view are
+good candidates as well. When the main view will support refreshing
+there will be one more potential user.
 
-> Johannes Schindelin schrieb am Mon 05. May, 12:36 (+0100):
->
-> > Please keep in mind that the commit log is meant to demonstrate the 
-> > _intention_ of the patches.
-> 
-> The intention is that the variable GIT_DIR is respected when searching 
-> for the git dir.
-
-AFAICT the core of git respects GIT_DIR very much.  Reading your oneline, 
-indeed, the whole commit message, scared me a bit, because I thought that 
-there was a bug in core git.
-
-Your commit message completely misses out on the fact that it fixes a bug 
-in a _hook_, and a _contributed_ at that.
-
-So I would have known _exactly_ what you did if your oneline had read
-
-	contrib/hooks/setgitperms: respect GIT_DIR
-
-Don't you agree?
-
-Ciao,
-Dscho
-
---8323329-994315661-1209994787=:30431--
+-- 
+Jonas Fonseca
