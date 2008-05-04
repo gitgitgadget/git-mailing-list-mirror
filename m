@@ -1,68 +1,51 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git push won't push to a local branch
-Date: Sun, 4 May 2008 21:19:36 +0200
-Message-ID: <20080504191936.GA3119@atjola.homenet>
-References: <7f9d599f0805041149w1955138crf269853196391e51@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
+Date: Sun, 4 May 2008 15:20:15 -0400
+Message-ID: <20080504192015.GA13029@sigill.intra.peff.net>
+References: <20080430172136.GA22601@sigill.intra.peff.net> <20080430172553.GC23747@sigill.intra.peff.net> <7vy76rrkry.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Geoffrey Irving <irving@naml.us>
-X-From: git-owner@vger.kernel.org Sun May 04 21:20:38 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 04 21:21:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsjl7-0007OV-PR
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 21:20:30 +0200
+	id 1Jsjlg-0007b9-2o
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 21:21:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbYEDTTm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 15:19:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbYEDTTm
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 15:19:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36006 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754279AbYEDTTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 15:19:41 -0400
-Received: (qmail invoked by alias); 04 May 2008 19:19:38 -0000
-Received: from i577B991F.versanet.de (EHLO atjola.local) [87.123.153.31]
-  by mail.gmx.net (mp018) with SMTP; 04 May 2008 21:19:38 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19rnVl8MTBrtcncHcoKiACq+TnjAZACmT1Xy/nP0f
-	hNhdX3EhmcJluP
+	id S1754982AbYEDTUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 15:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754779AbYEDTUP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 15:20:15 -0400
+Received: from peff.net ([208.65.91.99]:4576 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754608AbYEDTUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 15:20:14 -0400
+Received: (qmail 26636 invoked by uid 111); 4 May 2008 19:20:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 04 May 2008 15:20:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 04 May 2008 15:20:15 -0400
 Content-Disposition: inline
-In-Reply-To: <7f9d599f0805041149w1955138crf269853196391e51@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7vy76rrkry.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81192>
 
-On 2008.05.04 11:49:38 -0700, Geoffrey Irving wrote:
-> Hello,
->=20
-> There's an asymmetry between push and pull that seems unnecessary:
-> pull can pull from local branches, but push can't push to them.  Is
-> there a reason for this asymmetry?
->=20
-> In more detail, if I have a working copy with two branches, local and
-> master, I can use git pull to pull changes from master to local:
->=20
-> % git checkout local
-> % git pull . master
-> ... pulls changes from master to local branch
->=20
-> If I make a change in local and try to do the reverse with git push,
-> it gives a confusing non-error message and doesn't do anything:
->=20
-> % git checkout local
-> % git rm scratch/pcomm.h
-> % git commit
-> % git push . master
-> Everything up-to-date
+On Sat, May 03, 2008 at 05:10:57PM -0700, Junio C Hamano wrote:
 
-You're pushing master to master ;-) Try "git push . local:master".
+> > This neglects the case where the user specifically does a diff asking
+> > for renames, but we turn it off. Maybe when "-M" is specified on the
+> > commandline to git-diff, we should set this option as well.
+> 
+> That sounds sensible.  Like this?
 
-Bj=F6rn
+I would have ack'd this, except it seems that the message produces some
+problems with gitk, which explicitly calls diff-tree with -C (see the
+message elsewhere in this thread from Ramsay Jones).
+
+-Peff
