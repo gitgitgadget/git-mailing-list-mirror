@@ -1,119 +1,109 @@
-From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
-Subject: Re: git and peer review
-Date: Mon, 05 May 2008 08:21:54 +1200
-Message-ID: <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
-References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words configurable
+Date: Sun, 04 May 2008 13:47:28 -0700 (PDT)
+Message-ID: <m3ve1t6bli.fsf@localhost.localdomain>
+References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
+	<1209815828-6548-1-git-send-email-pkufranky@gmail.com>
+	<1209815828-6548-2-git-send-email-pkufranky@gmail.com>
+	<1209815828-6548-3-git-send-email-pkufranky@gmail.com>
+	<1209815828-6548-4-git-send-email-pkufranky@gmail.com>
+	<1209815828-6548-5-git-send-email-pkufranky@gmail.com>
+	<7vy76rtfns.fsf@gitster.siamese.dyndns.org>
+	<46dff0320805031732x25286707r991358162046c07c@mail.gmail.com>
+	<alpine.DEB.1.00.0805041040560.30431@racer>
+	<46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
+	<7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 22:38:20 2008
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Ping Yin" <pkufranky@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 04 22:48:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JskyC-0005dX-Mu
-	for gcvg-git-2@gmane.org; Sun, 04 May 2008 22:38:05 +0200
+	id 1Jsl8H-0000FX-8W
+	for gcvg-git-2@gmane.org; Sun, 04 May 2008 22:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbYEDUhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 16:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbYEDUhP
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 16:37:15 -0400
-Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:19746 "EHLO
-	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752355AbYEDUhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 16:37:14 -0400
-X-Greylist: delayed 914 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 May 2008 16:37:14 EDT
-Received: from AKLEXVS01.mitacad.com ([10.112.5.36]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 5 May 2008 08:21:56 +1200
-Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.136]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 5 May 2008 08:21:55 +1200
-In-Reply-To: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
-	(Ping Yin's message of "Sat, 3 May 2008 09:02:41 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-OriginalArrivalTime: 04 May 2008 20:21:55.0919 (UTC) FILETIME=[7F612DF0:01C8AE24]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1026-15890.000
-X-TM-AS-Result: No--16.116000-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1752725AbYEDUrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 16:47:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYEDUrc
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 16:47:32 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:11641 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472AbYEDUrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 16:47:31 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so983861nfc.21
+        for <git@vger.kernel.org>; Sun, 04 May 2008 13:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=s1P9U62uutZYnzzEVUHkKFNghkRfaQ0xQ7jV5cvTtuM=;
+        b=ahHrJQmgEySAtyF/uQOfKtSZmWymdUnXx2ly5X1ANou4MQLg5GET0Sueo48NhzJ/UsWL+PFRF+CBG1CbPU0sDE+/vKT5mBRlfr4D4RSBMPdNKTa4KqVw16LM3cqUjP9yPiogR1KK/HujeA7AGPOeNkmEqssvdZC9X3RC+8lo0JY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=w1vmWQMRkUXYV3Xae++dCDLsyJYhSlJfO7272MoCHF0VbehFvMt8X1XK8nbBE2TLxteDvHwDHPL2swQwqfKveV8uDLyEoEcylh6dZ5h8W+obs/jFL1GW9qTs+PiQqFTVX5gaeqoNvhnUMFk+ws7Oe7qRIVLA28gcHVEYgDnkQvk=
+Received: by 10.210.34.2 with SMTP id h2mr4982878ebh.110.1209934049529;
+        Sun, 04 May 2008 13:47:29 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.224.254])
+        by mx.google.com with ESMTPS id z33sm10066478ikz.0.2008.05.04.13.47.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 04 May 2008 13:47:28 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m44KlQrS004400;
+	Sun, 4 May 2008 22:47:26 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m44Kl60K004396;
+	Sun, 4 May 2008 22:47:07 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81199>
 
-On Sat, May 03 2008, Ping Yin wrote:
+Junio C Hamano <junio@pobox.com> writes:
 
+> Let's step back a bit and try to clarify the problem with a bit of
+> illustration.
+> 
+> The motivation behind "word diff" is because line oriented diff is
+> sometimes unwieldy.
+> 
+>     -Hello world.
+>     +Hi, world.
 [...]
+> We instead can do this word by word (note that I am doing this as a
+> thought experiment, to illustrate what the problem is and what should
+> conceptually happen, not suggesting this particular implementation):
+> 
+>     preimage        postimage       word-diff
+>     48656c6c6f                      -48656c6c6f Hello
+>                     4869            +4869       Hi
+>                     2c              +2c         ,
+>     20              20               20         ' '
+>     776f726c64      776f726c64       776f726c64 world      
+>     2e              2e               2e         .
+>     0a              0a               0a         '\n'
+> 
+> Which would give you "/Hello/Hi,/ world.\n".
 
-> I am in a company environment and i want to enforce a policy that
-> every commit must be reviewed before pushed to central repository. I
-> think i can use hooks to enforce such kind of policy.
+Would it be possible instead of in-line word diff, use word coloring
+to enhance traditional diff format?  Something like
 
-I'm in a similar environment, although it's only me using git (via
-git-svn) at the moment.
+     -/Hello/ world.
+     +/Hi,/ world.
 
-> One way i want to try is to check in the hook whether every pushed
-> commit has a "Reviewed-by " line .  Any suggestion?
->
-> And one question, how to add a "Reviewed-by" line automatically?
->
-> The reviewers sit near each other, so we do face-to-face peer review
-> and don't pass patches by email.
-> Say,  i have prepared a patch series,
+(We could use bold, or reverse for marking changed fragment, or use
+color only for changed fragment).
 
-I'm very interested in good ways of doing this face-to-face review.
-
-At the moment I'm using gitk to step through the patch series along with
-the patch to gitk that adds a context-menu entry to lauch an external
-diff tool when a side-by-side diff is easier to read.
-
-This is okay, but it's a bit of a pain to make changes while the review
-is in progress (git rebase -i, s/pick/edit on the appropriate line, make
-changes, git commit --amend, git rebase --continue).  Perhaps stgit or
-guilt would help with this.
-
-> Case 1
->     I ask someone to review my patches at my machine. If the review
-> passes, i have to add Reviewed-by line to each commit and then merge
-> it to the master branch. However, i find no easy way to add
-> reviewed-by line. Maybe adding --reviewed-by  option to cherry-pick or
-> rebase or merge?
->
-> Case 2
->    The reviewer is the maintainer, so i ask him to pull and review. So
-> now it is his turn to add review-by line. But still, how?
-
-I do something similar using git filter-branch --msg-filter.  I have a
-little shell script call git-add-checked (our convention is to have a
-"checked: " line in the commit message):
-
---8<---------------cut here---------------start------------->8---
-#!/bin/sh
-
-usage() {
-    cat <<EOF
-Usage: git-add-checked <checker> [<filter-branch options>] <rev-list options>
-EOF
-}
-
-checker="$1"
-[ -n "$checker" ] || { usage >&2; exit 2; }
-shift
-
-set -x
-git filter-branch --msg-filter "sed '\$a\\
-\\
-checked: $checker'" "$@"
---8<---------------cut here---------------end--------------->8---
-
-Then, after getting my changes reviewed, I just do:
-
-$ git-add-checked joe.bloggs trunk..
-
-This adds a "checked: joe.bloggs" line at the end of the commit message
-for all of the commits on the current branch since trunk (which is a
-remote branch maintained by git-svn).
-
-Regards,
-Toby.
+IMHO current output is nice, unless you have long lines and not very
+wide screen...
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
