@@ -1,101 +1,66 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: merge renamed files/directories?
-Date: Mon, 5 May 2008 16:07:57 -0700
-Message-ID: <ADDE27A8-6329-4C09-BC07-8EB023BA6D48@midwinter.com>
-References: <4819CF50.2020509@tikalk.com> <481D52CC.1030503@tikalk.com> <32541b130805050940x1297e907ofc67ee65494897eb@mail.gmail.com> <200805052349.35867.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.10.0805051512060.32269@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Caio Marcelo" <cmarcelo@gmail.com>
+Subject: Re: Binary files in format-patch
+Date: Mon, 5 May 2008 20:10:59 -0300
+Message-ID: <d280d7f10805051610u3b020dafxb9e832ecdf14c68c@mail.gmail.com>
+References: <d280d7f10805051555x67bd7e87o999a2c9e19663b92@mail.gmail.com>
+	 <20080505230153.GL29038@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Ittay Dror <ittayd@tikalk.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 06 01:08:51 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 06 01:11:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt9ne-0003sL-Oy
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 01:08:51 +0200
+	id 1Jt9qa-0004bg-OC
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 01:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbYEEXIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 19:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYEEXH7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 19:07:59 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:55716 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751747AbYEEXH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 19:07:59 -0400
-Received: (qmail 11514 invoked from network); 5 May 2008 23:07:58 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=gq0pK9V0xUrca9Kxv+Y9xzavQet41CuRwYkXaUUrKXusBJLauebf3+oBIV0GTCIg  ;
-Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
-  by localhost with SMTP; 5 May 2008 23:07:58 -0000
-In-Reply-To: <alpine.LFD.1.10.0805051512060.32269@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752592AbYEEXLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 19:11:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbYEEXLD
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 19:11:03 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:46435 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752008AbYEEXLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 19:11:01 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so892042fkq.5
+        for <git@vger.kernel.org>; Mon, 05 May 2008 16:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rLpf5/PS56mdaoB60vDRhlZ0gsDMuy9TjD2dJIHsZsM=;
+        b=aJ9CEVR2DF9/bhnkvvB7yohC7odGtPfPZzGLtID7nSpnTlrqpumZhdNj6yW0apzscUO0opXI7Nidm+a0DcqrJFXDaeBiiQeJUUnYCGRXUS6vnt5VZAzI3/Lle3lW5pCj31JYRTJ+X4UEIMtlpOqsjfhvzXFdZUKGuvMaDZfftAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GwlubjMLDhxbKr9j98GRqYV25p5to5FeElfy6rCeQu/gXlVMBZicHUGyD2Zlo5oXg6Pbbp++v+KgrxauG3P9yhjpTT/NtrM/JeM0TuX6prQ9IkEprvJ7EnE9phOhxab9VTBi/IA7EQ4ueWfUIqrVIPfeGg8qNnmRbVPpD6tO0W0=
+Received: by 10.78.166.1 with SMTP id o1mr22936hue.74.1210029059292;
+        Mon, 05 May 2008 16:10:59 -0700 (PDT)
+Received: by 10.78.140.8 with HTTP; Mon, 5 May 2008 16:10:59 -0700 (PDT)
+In-Reply-To: <20080505230153.GL29038@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81315>
 
-On May 5, 2008, at 3:20 PM, Linus Torvalds wrote:
-> I really don't understand why people expect a directory rename to be
-> handled automatically, when it is (a) not that common and (b) not  
-> obvious
-> what the solution is, but MOST OF ALL (c) so damn _easy_ to handle it
-> manually after-the-fact when you notice that something doesn't  
-> compile!
+>  > Their contents are not relevant for us, and doesn't help much in a
+>  > mailing list. Taking a peek at the code I've found out this:
+>
+>  Why then are they committed in Git and being modified?  If the
+>  files aren't relevant, why are they tracked?
 
-Assuming all you track with git is source code that has dependencies  
-such that a compile command fails cleanly when things end up in the  
-wrong directory, sure.
+Sorry, I wasn't very clear there. The binary content is mostly icons,
+that get added and updated now and then, so outside of the scope of
+our code review mailing list -- but relevant to the project itself.
+(The patches themselves are accessible by other means other than the
+ML too, so reviewers can pull and get proper versions).
 
-If you're using git to, say, track a tree of documentation files or  
-images that are referred to using relative URLs in HTML pages,  
-detecting the breakage is less trivial unless you have a really solid  
-automated QA process that can check for dangling references.
+Considering that, any of the proposed solutions make more sense now? :-)
 
-Are directory renames as common as file renames? Certainly not. But  
-they happen often enough that it's annoying to have to manually clean  
-up after them. Note that I did not say it is difficult or impossible  
-to manually clean up after them. I think the number of people who've  
-mentioned this on the list should stand as some kind of refutation of  
-the idea that directory renames are so vanishingly rare as to not be  
-worth mentioning. I've run into the problem a few times myself.
 
-> and "Tadaa! All done". Your merge that was *fundamentally  
-> impossible* to
-> do automatically, was trivially done manually, with no actual big
-> head-scratiching involved.
-
-$ mkdir parent
-$ cd parent
-$ hg init
-$ mkdir subdir1
-$ echo "I am the walrus" > subdir1/file1
-$ hg add subdir1/file1
-$ hg commit -m 'initial commit'
-$ cd ..
-$ hg clone parent child
-$ cd child
-$ hg mv subdir1 subdir2
-$ hg commit -m 'rename subdir1 to subdir2'
-$ cd ../parent
-$ echo 'I love prunes' > subdir1/file2
-$ hg add subdir1/file2
-$ hg commit -m 'new file in subdir'
-$ cd ../child
-$ hg pull
-$ hg merge
-$ ls subdir2
-file1   file2
-
-Doesn't seem *fundamentally* impossible to produce the results that  
-are most likely to be what people want. (Which doesn't equal  
-"guaranteed to be 100% correct 100% of the time or your money back" --  
-as you say, merging is an inexact science.)
-
--Steve
+Cheers,
+  Caio Marcelo
