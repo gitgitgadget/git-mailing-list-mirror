@@ -1,73 +1,90 @@
 From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH] I don't known anyone who understands what it means when they do a merge and see "file.txt: needs update". "file.txt: has changes" is much clearer.
-Date: Mon, 5 May 2008 12:35:06 -0400
-Message-ID: <32541b130805050935l7257a5e3t9b44d61abe28db37@mail.gmail.com>
-References: <1209798522-13618-1-git-send-email-timcharper@gmail.com>
-	 <alpine.DEB.1.00.0805031509170.30431@racer>
-	 <7v3aozwcj6.fsf@gitster.siamese.dyndns.org>
-	 <3DE78C03-DA35-4CB5-8D3D-0529A89065EC@gmail.com>
-	 <7v63tvszgo.fsf@gitster.siamese.dyndns.org>
-	 <32541b130805031721n29cf470cx391fe0e8b4943706@mail.gmail.com>
-	 <7vtzhesvxu.fsf@gitster.siamese.dyndns.org>
+Subject: Re: merge renamed files/directories?
+Date: Mon, 5 May 2008 12:40:24 -0400
+Message-ID: <32541b130805050940x1297e907ofc67ee65494897eb@mail.gmail.com>
+References: <4819CF50.2020509@tikalk.com> <4819D98E.1040004@tikalk.com>
+	 <32541b130805010827r22169651s37c707071f3448f2@mail.gmail.com>
+	 <20080501153457.GB11469@sigill.intra.peff.net>
+	 <D0968007-2A38-44DB-B26F-3D273F20D428@midwinter.com>
+	 <20080501231427.GD21731@sigill.intra.peff.net>
+	 <481CA742.4080909@tikalk.com>
+	 <32541b130805031111r4cbea8e1l19c34ac05016a89b@mail.gmail.com>
+	 <481D52CC.1030503@tikalk.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Tim Harper" <timcharper@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 05 18:36:08 2008
+Cc: git@vger.kernel.org
+To: "Ittay Dror" <ittayd@tikalk.com>
+X-From: git-owner@vger.kernel.org Mon May 05 18:41:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt3fV-0005iK-VX
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 18:36:02 +0200
+	id 1Jt3ka-0007y6-Qz
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 18:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755149AbYEEQfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 12:35:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755179AbYEEQfM
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 12:35:12 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:8103 "EHLO
+	id S1755340AbYEEQk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 12:40:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbYEEQk1
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 12:40:27 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:13934 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755105AbYEEQfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 12:35:10 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so748558fkq.5
-        for <git@vger.kernel.org>; Mon, 05 May 2008 09:35:07 -0700 (PDT)
+	with ESMTP id S1755286AbYEEQk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 12:40:26 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so751051fkq.5
+        for <git@vger.kernel.org>; Mon, 05 May 2008 09:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=vW7hbQzjxct/aBU+NTtPvofyACEFEmt4UNyfgCs1Rmw=;
-        b=vXsBFOMz5bp+M5wu4qJ1ZEos6NmUe/La0dXcM+Lo/XAcYVx+zKkQ10n06riVpT6v8pl1nLMeK+mNYUFiJKMyQ3euFHd5irGOpX6DvBlkuHnkGPflyUFL99Lxpu0NfpdgOuD28m4DE8qzRzFnWy/LSnu7sf33j7sobIfq4CUguXI=
+        bh=3mE5zJKMMEOfE9Ftql6+KskXR5HvWesVnrFzaqa0tJQ=;
+        b=f72h2WqWphzneYjAGFq+bLF0fw9MoSulFdhihXEN5scqVxt0dxcDwDIGA3+9JtPyxWEM9lLvUC2J6vhtr2OUXV8iG77DdAlWli4kIKIGnXsb9x0tG6i/2/IvcpbBLaQQqqGChaSq7VnR0wcOCrPjg9UxtKKuW5G7WSpr8WHxJn4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LSES6wyWq2gYYNq/n14e1PC0TyHo+XZRN34o6QOkgLYWlS4XpnT6dtTlnI0AfYQzQklhhIn9CZv9ETfwTMn/jII891poxcHHHC/qrXZqOIfLsU48X2aN3vGuUzx3pAhuRB3haV5DBL++3EOzrL5kQf5Wb4hkLWTviXhFSJhUrpw=
-Received: by 10.82.182.1 with SMTP id e1mr70912buf.41.1210005306892;
-        Mon, 05 May 2008 09:35:06 -0700 (PDT)
-Received: by 10.82.166.12 with HTTP; Mon, 5 May 2008 09:35:06 -0700 (PDT)
-In-Reply-To: <7vtzhesvxu.fsf@gitster.siamese.dyndns.org>
+        b=sNdfLGxQSoeH6pLu25AMFotXFNNQw8QKH0bb1FiGj0aZCMTdVYirnhJJivKpFyhsGOmO03Z87CLqxvGZwpF48q9G06pnnLLcY0uBCBVSQkerVX+jzBLfRZF+h3AFMaqobsT9Qz7kdPAUAx8eczZMS0iYWM8NdF4bytKP6ZgcXK8=
+Received: by 10.82.135.7 with SMTP id i7mr582228bud.42.1210005625023;
+        Mon, 05 May 2008 09:40:25 -0700 (PDT)
+Received: by 10.82.166.12 with HTTP; Mon, 5 May 2008 09:40:24 -0700 (PDT)
+In-Reply-To: <481D52CC.1030503@tikalk.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81297>
 
-On 5/3/08, Junio C Hamano <gitster@pobox.com> wrote:
-> "Avery Pennarun" <apenwarr@gmail.com> writes:
->  > On 5/3/08, Junio C Hamano <gitster@pobox.com> wrote:
->  >> Of course not.  Where does end-user scripts come into play when you are
->  >>  running the testsuite?
->  >
->  > I thought user scripts weren't supposed to rely on the porcelain
->  > output?  It seems to change rather frequently anyway.
+On 5/4/08, Ittay Dror <ittayd@tikalk.com> wrote:
+>  Avery Pennarun wrote:
+> > In fact, as someone else pointed out, renaming a java file requires
+> > you to modify the file anyhow, so having git auto-move the file to
+> > another directory *still* wouldn't make it work any better.
 >
-> Wasn't the patch about changing output from "update-index --refresh",
->  which is as low as you can get?
+> Sure it will, because otherwise I need to move it and still need to fix it.
+> And there are many other file formats and languages where such a move will
+> not require any change (I think it is funny that Java is a justification for
+> not doing something for a tool primarily used by C people).
 
-Hmm, perhaps the problem then is that we're using plumbing output and
-presenting it to the user as part of the porcelain.  Is there an
-elegant way to fix that?
+I mentioned Java because you mentioned you were working in java.
+
+The particular problem with Java doesn't happen to C people.  Imagine,
+for example, that I add a new file, lib/foo.c, to lib/lib.a (thus they
+have to modify lib/Makefile), while someone else renames "lib" to
+"bettername".
+
+When I merge, if git would create bettername/foo.c (it currently
+won't) and properly automerge bettername/Makefile (it will), then the
+program would still compile correctly.  However this doesn't work in
+Java: lib/foo.java would include the word "lib" in its contents (in
+the namespace declaration) and so there's no way automatic merging
+would have resulted in a version that compiles correctly.
+
+So what I said isn't to *justify* git's behaviour, merely to point out
+that in java's case, there seems to be no way to get fully automatic
+merging that would work.  In C, this case would have worked, if only
+git supported directory renames.
+
+In neither case is it very much work to fix by hand, though :)
+
+Have fun,
 
 Avery
