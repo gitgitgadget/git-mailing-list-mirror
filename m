@@ -1,97 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
- configurable
-Date: Mon, 5 May 2008 13:14:44 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805051312560.30431@racer>
-References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com> <1209815828-6548-1-git-send-email-pkufranky@gmail.com> <1209815828-6548-2-git-send-email-pkufranky@gmail.com> <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
- <1209815828-6548-4-git-send-email-pkufranky@gmail.com> <1209815828-6548-5-git-send-email-pkufranky@gmail.com> <7vy76rtfns.fsf@gitster.siamese.dyndns.org> <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com> <alpine.DEB.1.00.0805041040560.30431@racer>
- <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com> <7v63ttq0y8.fsf@gitster.siamese.dyndns.org> <m3ve1t6bli.fsf@localhost.localdomain>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH] post-merge: Add it's not executed if merge failed.
+Date: Mon,  5 May 2008 11:06:49 +0200
+Message-ID: <1209978409-19396-1-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junio@pobox.com>, Ping Yin <pkufranky@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 05 14:15:45 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 05 14:18:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JszbV-0003uX-FW
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 14:15:37 +0200
+	id 1Jszdw-0004lW-Tr
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 14:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbYEEMOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 08:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbYEEMOt
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 08:14:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59731 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751731AbYEEMOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 08:14:48 -0400
-Received: (qmail invoked by alias); 05 May 2008 12:14:47 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp054) with SMTP; 05 May 2008 14:14:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+GjX8vwnSGEf05hcNvuTciXjytfnrAJCQY9IeMES
-	PnYT+CxNVt/08O
-X-X-Sender: gene099@racer
-In-Reply-To: <m3ve1t6bli.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751133AbYEEMRV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 08:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbYEEMRV
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 08:17:21 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:3283 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750891AbYEEMRU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 08:17:20 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id ED0BB488038; Mon,  5 May 2008 14:17:18 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jsweo-0003cH-6a; Mon, 05 May 2008 11:06:50 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1Jswen-00053C-S5; Mon, 05 May 2008 11:06:49 +0200
+X-Mailer: git-send-email 1.5.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81277>
 
-Hi,
 
-On Sun, 4 May 2008, Jakub Narebski wrote:
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ Documentation/hooks.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-> Junio C Hamano <junio@pobox.com> writes:
-> 
-> > Let's step back a bit and try to clarify the problem with a bit of
-> > illustration.
-> > 
-> > The motivation behind "word diff" is because line oriented diff is
-> > sometimes unwieldy.
-> > 
-> >     -Hello world.
-> >     +Hi, world.
-> [...]
-> > We instead can do this word by word (note that I am doing this as a
-> > thought experiment, to illustrate what the problem is and what should
-> > conceptually happen, not suggesting this particular implementation):
-> > 
-> >     preimage        postimage       word-diff
-> >     48656c6c6f                      -48656c6c6f Hello
-> >                     4869            +4869       Hi
-> >                     2c              +2c         ,
-> >     20              20               20         ' '
-> >     776f726c64      776f726c64       776f726c64 world      
-> >     2e              2e               2e         .
-> >     0a              0a               0a         '\n'
-> > 
-> > Which would give you "/Hello/Hi,/ world.\n".
-> 
-> Would it be possible instead of in-line word diff, use word coloring
-> to enhance traditional diff format?  Something like
-> 
->      -/Hello/ world.
->      +/Hi,/ world.
-> 
-> (We could use bold, or reverse for marking changed fragment, or use
-> color only for changed fragment).
-> 
-> IMHO current output is nice, unless you have long lines and not very
-> wide screen...
-
--S ;-)
-
-IIRC the code to display was not too complicated for the current mode, so 
-it should be relatively simple for the mode you desire.
-
-But first let's agree on the semantics of the "tokens", as Junio calls 
-them, okay?
-
-Ciao,
-Dscho
+diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
+index 44fbe58..43764e3 100644
+--- a/Documentation/hooks.txt
++++ b/Documentation/hooks.txt
+@@ -136,7 +136,8 @@ post-merge
+ This hook is invoked by `git-merge`, which happens when a `git pull`
+ is done on a local repository.  The hook takes a single parameter, a s=
+tatus
+ flag specifying whether or not the merge being done was a squash merge=
+=2E
+-This hook cannot affect the outcome of `git-merge`.
++This hook cannot affect the outcome of `git-merge` and is not executed=
+,
++if the merge failed due to conflicts.
+=20
+ This hook can be used in conjunction with a corresponding pre-commit h=
+ook to
+ save and restore any form of metadata associated with the working tree
+--=20
+1.5.5.1
