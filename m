@@ -1,61 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git and peer review
-Date: Mon, 5 May 2008 15:48:31 +0200
-Message-ID: <20080505134831.GA12733@diana.vm.bytemark.co.uk>
-References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com> <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
+Date: Mon, 5 May 2008 09:59:55 -0400
+Message-ID: <20080505135954.GA17334@sigill.intra.peff.net>
+References: <20080430172136.GA22601@sigill.intra.peff.net> <20080430172553.GC23747@sigill.intra.peff.net> <481CA227.1000801@ramsay1.demon.co.uk> <20080504192332.GB13029@sigill.intra.peff.net> <18462.18066.769759.585596@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ping Yin <pkufranky@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Toby Allsopp <Toby.Allsopp@navman.co.nz>
-X-From: git-owner@vger.kernel.org Mon May 05 15:50:23 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon May 05 16:00:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt14y-0005LQ-0B
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:50:08 +0200
+	id 1Jt1FD-0000ze-UC
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 16:00:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755727AbYEENtT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 09:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbYEENtT
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:49:19 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3028 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753288AbYEENtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 09:49:19 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Jt13P-0003ed-00; Mon, 05 May 2008 14:48:31 +0100
+	id S1755712AbYEEN74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 09:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754973AbYEEN74
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:59:56 -0400
+Received: from peff.net ([208.65.91.99]:2634 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752338AbYEEN7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 09:59:55 -0400
+Received: (qmail 32229 invoked by uid 111); 5 May 2008 13:59:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 May 2008 09:59:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2008 09:59:55 -0400
 Content-Disposition: inline
-In-Reply-To: <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <18462.18066.769759.585596@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81283>
 
-On 2008-05-05 08:21:54 +1200, Toby Allsopp wrote:
+On Mon, May 05, 2008 at 09:28:18AM +1000, Paul Mackerras wrote:
 
-> At the moment I'm using gitk to step through the patch series along
-> with the patch to gitk that adds a context-menu entry to lauch an
-> external diff tool when a side-by-side diff is easier to read.
->
-> This is okay, but it's a bit of a pain to make changes while the
-> review is in progress (git rebase -i, s/pick/edit on the appropriate
-> line, make changes, git commit --amend, git rebase --continue).
-> Perhaps stgit or guilt would help with this.
+> At the moment I don't think there is a good way in Tcl to get hold of
+> the stderr output if a subcommand returns a non-zero exit status, but
+> ignore it if the exit status is 0, other than by redirecting stderr to
+> a temporary file, which has its own problems.  Tcl can bundle stderr
+> in with stdout, or ignore it, or take it as an error indication, or
+> send it to a file.
+> 
+> So if git commands can avoid writing non-error messages to stderr,
+> that will make my life easier...
 
-Yes, StGit helps here. "stg edit <patchname>" lets you edit the commit
-message of any patch.
+In that case, Junio, perhaps we should restrict this particular warning
+just to merge.
 
-( In the master branch, but not yet released, is an emacs mode for
-  StGit. It displays the list of patches (name + first line of commit
-  message), and you can press "=3D" to view the patch (including the
-  commit message), and "e" to edit its commit message. )
+However, there a number of other warnings that can get printed on
+stderr, many of them related to reflogs. So I suspect with some reflog
+conditions (like a reflog that only goes back 1 day) you could end up
+with a tcl error for "gitk HEAD@{2.days.ago}".
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-Peff
