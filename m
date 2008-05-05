@@ -1,100 +1,158 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: git and peer review
-Date: Mon, 5 May 2008 08:52:38 +0800
-Message-ID: <46dff0320805041752t1190534dy3740c88f5380098f@mail.gmail.com>
-References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com>
-	 <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Toby Allsopp" <Toby.Allsopp@navman.co.nz>
-X-From: git-owner@vger.kernel.org Mon May 05 02:53:43 2008
+From: Florian Ragwitz <rafl@debian.org>
+Subject: [PATCH] Add a --signoff option to cherry-pick/revert.
+Date: Mon,  5 May 2008 02:25:09 +0200
+Message-ID: <1209947109-13910-1-git-send-email-rafl@debian.org>
+Cc: Florian Ragwitz <rafl@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 05 02:55:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsoxa-0007ZN-Kx
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 02:53:43 +0200
+	id 1Jsoyv-0007nv-Pb
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 02:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbYEEAwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 20:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbYEEAwk
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 20:52:40 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:64640 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750733AbYEEAwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 20:52:39 -0400
-Received: by an-out-0708.google.com with SMTP id d40so496652and.103
-        for <git@vger.kernel.org>; Sun, 04 May 2008 17:52:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=P3Ukt5Rph8GndzATSEpt3bwLJnTRYFhNM7+9LgSr1pQ=;
-        b=e9JLOrxaZvnVP/uPx4pWFWuEVe0ygaT/nVhQNykZzfzSayyjeawsHtdNv6jny7HuUtf6Sz9fGF6FJuFE640gJhd1U6bgWID6MX6IM0HGG/OMSvZ//Qtp0wUOkmPGrMkyWifhW4JOrs0xMerhwy/bbgQ3Qii+0y4UHqT+b84dgoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ipv+/b0k+RfyOazCojMynrm0tnxS9h2KVDQRFNxQhsEGjWBQccE5gzE12dEtzg+ReoPSoGo3S4VYilRlSShhas7QLgql7kllj8TvBtDayGI0oaADFtYueDOmLG1XqKCdbWvzQbhr8KQioZe7rLYGRjO/BALOgZqR/movMJTl0Po=
-Received: by 10.100.212.13 with SMTP id k13mr7033711ang.43.1209948758383;
-        Sun, 04 May 2008 17:52:38 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Sun, 4 May 2008 17:52:38 -0700 (PDT)
-In-Reply-To: <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
-Content-Disposition: inline
+	id S1752035AbYEEAyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 20:54:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYEEAyS
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 20:54:18 -0400
+Received: from weedy.perldition.org ([85.10.210.75]:58155 "EHLO
+	weedy.perldition.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751371AbYEEAyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 20:54:17 -0400
+X-Greylist: delayed 1743 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 May 2008 20:54:16 EDT
+Received: from p4fd720ca.dip0.t-ipconnect.de ([79.215.32.202]:49027 helo=ata.xb.lan)
+	by weedy.perldition.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.60)
+	(envelope-from <rafl@debian.org>)
+	id 1JsoUw-0005DB-B0; Mon, 05 May 2008 02:24:06 +0200
+Received: from rafl by ata.xb.lan with local (Exim 4.69)
+	(envelope-from <rafl@debian.org>)
+	id 1JsoVx-0003ck-Jw; Mon, 05 May 2008 02:25:09 +0200
+X-Mailer: git-send-email 1.5.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81214>
 
-On Mon, May 5, 2008 at 4:21 AM, Toby Allsopp <Toby.Allsopp@navman.co.nz> wrote:
-> On Sat, May 03 2008, Ping Yin wrote:
->
->  > Case 1
->  >     I ask someone to review my patches at my machine. If the review
->  > passes, i have to add Reviewed-by line to each commit and then merge
->  > it to the master branch. However, i find no easy way to add
->  > reviewed-by line. Maybe adding --reviewed-by  option to cherry-pick or
->  > rebase or merge?
->  >
->  > Case 2
->  >    The reviewer is the maintainer, so i ask him to pull and review. So
->  > now it is his turn to add review-by line. But still, how?
->
->  I do something similar using git filter-branch --msg-filter.  I have a
->  little shell script call git-add-checked (our convention is to have a
->  "checked: " line in the commit message):
->
->  --8<---------------cut here---------------start------------->8---
->  #!/bin/sh
->
->  usage() {
->     cat <<EOF
->  Usage: git-add-checked <checker> [<filter-branch options>] <rev-list options>
->  EOF
->  }
->
->  checker="$1"
->  [ -n "$checker" ] || { usage >&2; exit 2; }
->  shift
->
->  set -x
->  git filter-branch --msg-filter "sed '\$a\\
->  \\
->  checked: $checker'" "$@"
->  --8<---------------cut here---------------end--------------->8---
->
->  Then, after getting my changes reviewed, I just do:
->
->  $ git-add-checked joe.bloggs trunk..
->
->  This adds a "checked: joe.bloggs" line at the end of the commit message
->  for all of the commits on the current branch since trunk (which is a
->  remote branch maintained by git-svn).
->
+Also modify documentation and tests to reflect this change.
 
-Great, very useful for me. THX.
+Signed-off-by: Florian Ragwitz <rafl@debian.org>
+---
+ Documentation/git-cherry-pick.txt |    3 +++
+ Documentation/git-revert.txt      |    3 +++
+ builtin-revert.c                  |   25 ++++++++++++++++++++-----
+ t/t3501-revert-cherry-pick.sh     |   19 +++++++++++++++++++
+ 4 files changed, 45 insertions(+), 5 deletions(-)
 
-
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index f0beb41..ec8bd50 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -39,6 +39,9 @@ OPTIONS
+ 	development branch), adding this information can be
+ 	useful.
+ 
++-s|--signoff::
++	Add Signed-off-by line at the end of the commit message.
++
+ -r::
+ 	It used to be that the command defaulted to do `-x`
+ 	described above, and `-r` was to disable it.  Now the
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 93e20f7..a35a376 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -27,6 +27,9 @@ OPTIONS
+ 	message prior to committing the revert. This is the default if
+ 	you run the command from a terminal.
+ 
++-s|--signoff::
++	Add Signed-off-by line at the end of the commit message.
++
+ -m parent-number|--mainline parent-number::
+ 	Usually you cannot revert a merge because you do not know which
+ 	side of the merge should be considered the mainline.  This
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 607a2f0..ccf591c 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -33,7 +33,7 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
+ 
+-static int edit, no_replay, no_commit, mainline;
++static int edit, no_replay, no_commit, mainline, signoff;
+ static enum { REVERT, CHERRY_PICK } action;
+ static struct commit *commit;
+ 
+@@ -53,6 +53,7 @@ static void parse_args(int argc, const char **argv)
+ 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
+ 		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
+ 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
++		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
+ 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
+ 		OPT_END(),
+ 	};
+@@ -404,10 +405,24 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	 */
+ 
+ 	if (!no_commit) {
+-		if (edit)
+-			return execl_git_cmd("commit", "-n", NULL);
+-		else
+-			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
++		const char *args[6];
++		int i = 0;
++
++		args[i++] = "commit";
++		args[i++] = "-n";
++
++		if (!edit) {
++			args[i++] = "-F";
++			args[i++] = defmsg;
++		}
++
++		if (signoff) {
++			args[i++] = "-s";
++		}
++
++		args[i] = NULL;
++
++		return execv_git_cmd(args);
+ 	}
+ 	free(reencoded_message);
+ 
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 6da2128..2f74f74 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -50,6 +50,25 @@ test_expect_success 'cherry-pick after renaming branch' '
+ 
+ '
+ 
++test_expect_success 'cherry-pick signoff' '
++
++	git checkout rename2 &&
++	git cherry-pick -s added &&
++	test -f opos &&
++	git cat-file commit HEAD | sed "1,/^$/d" > output &&
++	grep Signed-off-by output
++'
++
++test_expect_success 'revert signoff' '
++
++	git checkout rename1 &&
++	git revert -s added &&
++	test -f spoo &&
++	git cat-file commit HEAD | sed "1,/^$/d" > output &&
++	grep Signed-off-by output
++
++'
++
+ test_expect_success 'revert after renaming branch' '
+ 
+ 	git checkout rename1 &&
 -- 
-Ping Yin
+1.5.5.1
