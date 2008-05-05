@@ -1,68 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Pay attention to GIT_DIR when searching the git
- directory
-Date: Mon, 5 May 2008 12:36:11 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805051234260.30431@racer>
-References: <1209946178-29398-1-git-send-email-joerg@alea.gnuu.de>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] graph API: eliminate unnecessary indentation
+Date: Mon, 5 May 2008 19:38:38 +0800
+Message-ID: <46dff0320805050438m44c266f4w77e23e823663be6b@mail.gmail.com>
+References: <1209897414-10091-4-git-send-email-adam@adamsimpkins.net>
+	 <1209974223-2875-1-git-send-email-adam@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1342725-1209987372=:30431"
-Cc: git@vger.kernel.org, jjengla@sandia.gov
-To: =?ISO-8859-15?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Mon May 05 13:37:15 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Adam Simpkins" <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Mon May 05 13:39:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsz0D-0007iR-4a
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 13:37:05 +0200
+	id 1Jsz2W-0008VS-I8
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 13:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbYEELgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 07:36:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbYEELgR
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 07:36:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35900 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751406AbYEELgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 07:36:16 -0400
-Received: (qmail invoked by alias); 05 May 2008 11:36:14 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp017) with SMTP; 05 May 2008 13:36:14 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194+cIjZXV4Iav7Nwq7mHB/+V/Zf0qtjCy2x39BuZ
-	BFpsMkSw8jwk4B
-X-X-Sender: gene099@racer
-In-Reply-To: <1209946178-29398-1-git-send-email-joerg@alea.gnuu.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754673AbYEELik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 07:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754734AbYEELik
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 07:38:40 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:8444 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754374AbYEELij (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 07:38:39 -0400
+Received: by an-out-0708.google.com with SMTP id d40so533369and.103
+        for <git@vger.kernel.org>; Mon, 05 May 2008 04:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Uvko5SvJCZRdBYUjNJcnWp228B0a8dTJbF+wwb56NWQ=;
+        b=ttEIStXvHKDwCFJisMnOIyDk3YkiIKNnW6FvmykhiL+/FZ1yKsIFVjuM9VF/1bHz4ln/jIA3b1vs/LhGJgLCdVHCF4yRHdSLL6fKpS3uWhtlS255CHmlUWErIIyIUINO6OwS4robNA/uvEXu4wouwQuIuW9y8VYlPkUQBbtCjmY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FFQ/J9C/XeO5n088Z5+ONJKKINtrN/0EW64yzhSesIfVLLtIJIeoqbH1LfhGHUH7A10p2PeoFz6GJeUDdESBlPbRv0Td7Wop0dT3vIXYFtFR7PdmOY1ZHjuBK4sNbXXDrNHOTdWk9z/Q7T2g0G8Fk5cm3hjeRyp2MvJ+N31HP68=
+Received: by 10.100.120.6 with SMTP id s6mr7403827anc.72.1209987518092;
+        Mon, 05 May 2008 04:38:38 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Mon, 5 May 2008 04:38:38 -0700 (PDT)
+In-Reply-To: <1209974223-2875-1-git-send-email-adam@adamsimpkins.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81269>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, May 5, 2008 at 3:57 PM, Adam Simpkins <adam@adamsimpkins.net> wrote:
+> This change improves the calculation of the amount of horizontal
+>  padding, so that there is always exactly 1 space of padding.
+>  Previously, most commits had 3 spaces of padding, but commits that
+>  didn't have any children in the graph had only 1 space of padding.
+>
+>  Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
+>  ---
+>
+>  This fixes the issue reported by Ping Yin.
+>
 
---8323329-1342725-1209987372=:30431
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Yes, this patch has fix that problem. THX.
 
-Hi,
-
-On Mon, 5 May 2008, Jörg Sommer wrote:
-
-> Signed-off-by: Jörg Sommer <joerg@alea.gnuu.de>
-
-Am I the only one wondering what the subject tries to tell me?
-
->  contrib/hooks/setgitperms.perl |    2 +-
-
-This tells me more...
-
-Please keep in mind that the commit log is meant to demonstrate the 
-_intention_ of the patches.  If you do not say _what_ is affected by the 
-change, you only confuse the readers.
-
-Ciao,
-Dscho
---8323329-1342725-1209987372=:30431--
+-- 
+Ping Yin
