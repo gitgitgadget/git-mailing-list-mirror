@@ -1,69 +1,61 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-0.11
-Date: Sun, 4 May 2008 21:02:04 +0200
-Message-ID: <20080504190204.GA25329@diku.dk>
-References: <20080406200533.GA20537@diku.dk> <481CD4E9.3080709@obry.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git and peer review
+Date: Mon, 5 May 2008 15:48:31 +0200
+Message-ID: <20080505134831.GA12733@diana.vm.bytemark.co.uk>
+References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com> <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Mon May 05 15:44:12 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ping Yin <pkufranky@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Toby Allsopp <Toby.Allsopp@navman.co.nz>
+X-From: git-owner@vger.kernel.org Mon May 05 15:50:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt0zD-00033A-0j
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:44:11 +0200
+	id 1Jt14y-0005LQ-0B
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758489AbYEENnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 09:43:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755982AbYEENnW
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:43:22 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:33453 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758489AbYEENnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 09:43:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 0552652C45D;
-	Mon,  5 May 2008 15:43:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id q1oKUfMVpOb7; Mon,  5 May 2008 15:43:17 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id A0B3052C328;
-	Mon,  5 May 2008 14:51:13 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 3588B70F09B; Sun,  4 May 2008 21:00:01 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id ABB3F1DCDCF; Sun,  4 May 2008 21:02:04 +0200 (CEST)
+	id S1755727AbYEENtT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 09:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbYEENtT
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:49:19 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3028 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753288AbYEENtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 09:49:19 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Jt13P-0003ed-00; Mon, 05 May 2008 14:48:31 +0100
 Content-Disposition: inline
-In-Reply-To: <481CD4E9.3080709@obry.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81282>
 
-Hello Pascal,
+On 2008-05-05 08:21:54 +1200, Toby Allsopp wrote:
 
-Pascal Obry <pascal@obry.net> wrote Sat, May 03, 2008:
-> I see that the '@' key can now move from chunk to chunk. This is nice but 
-> it would be more user friendly if after staging a hunk the cursor was not 
-> moved to the first line! I think it would be better to have the cursor on 
-> top of the next hunk.
+> At the moment I'm using gitk to step through the patch series along
+> with the patch to gitk that adds a context-menu entry to lauch an
+> external diff tool when a side-by-side diff is easier to read.
+>
+> This is okay, but it's a bit of a pain to make changes while the
+> review is in progress (git rebase -i, s/pick/edit on the appropriate
+> line, make changes, git commit --amend, git rebase --continue).
+> Perhaps stgit or guilt would help with this.
 
-Great that you noticed.
+Yes, StGit helps here. "stg edit <patchname>" lets you edit the commit
+message of any patch.
 
-About your suggestion, Jeff suggested something similar for the blame
-view when jumping to parents ealier in this thread. I will put in the
-TODO list an entry about adding a general mechanism for saving and
-restoring states across reloads and refreshes.  The status and tree
-views already have something like this and the stage and blame view are
-good candidates as well. When the main view will support refreshing
-there will be one more potential user.
+( In the master branch, but not yet released, is an emacs mode for
+  StGit. It displays the list of patches (name + first line of commit
+  message), and you can press "=3D" to view the patch (including the
+  commit message), and "e" to edit its commit message. )
 
--- 
-Jonas Fonseca
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
