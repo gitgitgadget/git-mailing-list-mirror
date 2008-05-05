@@ -1,67 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Mon, 05 May 2008 17:12:20 +0200
-Message-ID: <481F23D4.2090909@viscovery.net>
-References: <20080416062925.8028e952@zebulon.innova-card.com>	 <20080416063739.4B72647879@blf.utvinternet.co.uk>	 <20080505042546.GA7164@shion.is.fushizen.net>	 <200805051608.55200.brian.foster@innova-card.com> <a537dd660805050744h7602e553u21c70168a621fe76@mail.gmail.com>
+From: "Jun Ma" <sync.jma@gmail.com>
+Subject: git checkout -b -f v1.5.5.1
+Date: Mon, 5 May 2008 23:48:36 +0800
+Message-ID: <dcf6addc0805050848v91589c6i6c2fca168b7644d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Bryan Donlan <bdonlan@fushizen.net>
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Mon May 05 17:13:18 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 05 17:49:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt2NP-0005EE-DT
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 17:13:15 +0200
+	id 1Jt2wb-0003m6-4q
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 17:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755853AbYEEPMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 11:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755926AbYEEPMZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 11:12:25 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:6620 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755628AbYEEPMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 11:12:25 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jt2MW-00024b-Ov; Mon, 05 May 2008 17:12:21 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 76E9F6D9; Mon,  5 May 2008 17:12:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <a537dd660805050744h7602e553u21c70168a621fe76@mail.gmail.com>
-X-Spam-Score: 2.2 (++)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5, PLING_QUERY=0.514
+	id S1752741AbYEEPsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 11:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYEEPsj
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 11:48:39 -0400
+Received: from el-out-1112.google.com ([209.85.162.181]:25671 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbYEEPsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 11:48:38 -0400
+Received: by el-out-1112.google.com with SMTP id n30so729100elf.21
+        for <git@vger.kernel.org>; Mon, 05 May 2008 08:48:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=9ejBTCHdEsUYTSMowZ4LpE92aqPYXRknOw2pX0b10Ng=;
+        b=eZrrxFVYWXy3sTxwsQtecRM7UEzJ4guspyGAcVewACFTB3esFUH1pCu8t5kdGuWh988Jr0LQ7+qdTeZYytvpfyaaybgEt4dYwoXuDQ0L7SSguL8avbiDZ079HeKmtv/i3aDzsoauHG7b4Pl9+UIzTG8Ms47QqYtP9gjRtUa4vog=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cmOjMdAcEF+f7to731a0GvvOJL+ZEwePnltGCTUx+S8mW3ry0LgB4E91Sf8ogELfIcHc+cnxui1aWfEgWnJp3QVe5DYTiAQjKcGsQyo6gRYb/w5YzaQJ2xZ5wqnYlLrIXtNX1/YlH+bcrPRwoKtf7PSGLBT3M/49W5OEPQgdPVo=
+Received: by 10.142.81.7 with SMTP id e7mr2560195wfb.320.1210002516349;
+        Mon, 05 May 2008 08:48:36 -0700 (PDT)
+Received: by 10.142.97.21 with HTTP; Mon, 5 May 2008 08:48:36 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81289>
 
-Brian Foster schrieb:
->  What I don't know is the root-cause, that is, WHY
->  this was done.  It wasn't a disc-space issue, and
->  I've no evidence it was a network-bandwidth issue,
->  but there is some anecdotal evidence it was some
->  sort of a CPU-cycles issue, albeit just what the
->  performance hit was is unknown.
+Hi, all
+     I just mistaken 'git checkout -b 1.5.5.1 v1.5.5.1' to 'git
+checkout -b -f v1.5.5.1', and I don't how to delete it ,
 
-How about this theory:
+  537  git-branch -D -f
+  538  git-branch -D \-f
+  539  git-branch -D "\-f"
 
-What happens if you fire up gitk as simple as
+     all the above operations were failed. :(
 
-   $ gitk
+     PS: Would it be better if we do checking on branch name to avoid
+this case?
 
-in the history if no grafts are present? Some months ago this took ages to
-complete, and even today you get a *huge* list of commits in a *short*
-window; hence, the scrollbar thumb is tiny, and if you succeed to get hold
-of it without a magnifying glass, it scrolls way more than a page of
-commits if you move it by only one pixel.
-
-No wonder that $user wants to have a shorter history. So $user, being
-smart, truncates the history at a suitable point with a graft.
-
--- Hannes
+-- 
+FIXME if it is wrong.
