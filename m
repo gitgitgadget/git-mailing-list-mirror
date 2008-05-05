@@ -1,90 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: OSX, ZFS, UTF8, git - somebody hates me in this list
-Date: Mon, 5 May 2008 12:45:38 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805051240150.32269@woody.linux-foundation.org>
-References: <86wsm9dbhk.fsf@blue.stonehenge.com> <20080504215208.GG29038@spearce.org> <86skwxd97d.fsf@blue.stonehenge.com> <8663tsbqg0.fsf@blue.stonehenge.com> <alpine.LFD.1.10.0805051049440.32269@woody.linux-foundation.org> <905315640805051200g4c155d15xada4f17e5e2fc424@mail.gmail.com>
- <86fxswa7ra.fsf@blue.stonehenge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
+Date: Mon, 05 May 2008 12:52:59 -0700
+Message-ID: <7vd4o0o7dw.fsf@gitster.siamese.dyndns.org>
+References: <20080430172136.GA22601@sigill.intra.peff.net>
+ <20080430172553.GC23747@sigill.intra.peff.net>
+ <481CA227.1000801@ramsay1.demon.co.uk>
+ <20080504192332.GB13029@sigill.intra.peff.net>
+ <18462.18066.769759.585596@cargo.ozlabs.ibm.com>
+ <20080505135954.GA17334@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tarmigan <tarmigan+git@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Mon May 05 21:47:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 05 21:54:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt6e6-0004nH-Gx
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 21:46:46 +0200
+	id 1Jt6l7-0008NG-Sf
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 21:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753062AbYEETpu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 15:45:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYEETpu
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 15:45:50 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46135 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752982AbYEETpt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 May 2008 15:45:49 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m45JjeTP017417
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 5 May 2008 12:45:41 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m45Jjd8n001579;
-	Mon, 5 May 2008 12:45:39 -0700
-In-Reply-To: <86fxswa7ra.fsf@blue.stonehenge.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.422 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752966AbYEETxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 15:53:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753240AbYEETxN
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 15:53:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53899 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752933AbYEETxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 15:53:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CA91823AD;
+	Mon,  5 May 2008 15:53:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E1EDD23A6; Mon,  5 May 2008 15:53:02 -0400 (EDT)
+In-Reply-To: <20080505135954.GA17334@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 5 May 2008 09:59:55 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E3375DA2-1ADC-11DD-BCFE-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81308>
 
+Jeff King <peff@peff.net> writes:
 
+> On Mon, May 05, 2008 at 09:28:18AM +1000, Paul Mackerras wrote:
+>
+>> At the moment I don't think there is a good way in Tcl to get hold of
+>> the stderr output if a subcommand returns a non-zero exit status, but
+>> ignore it if the exit status is 0, other than by redirecting stderr to
+>> a temporary file, which has its own problems.  Tcl can bundle stderr
+>> in with stdout, or ignore it, or take it as an error indication, or
+>> send it to a file.
+>> 
+>> So if git commands can avoid writing non-error messages to stderr,
+>> that will make my life easier...
+>
+> In that case, Junio, perhaps we should restrict this particular warning
+> just to merge.
 
-On Mon, 5 May 2008, Randal L. Schwartz wrote:
->=20
-> As I posted in a followup, without twiddling anything, ZFS on OSX
-> is case *sensitive*, but apparently still "normalizes", which is caus=
-ing
-> the trip-up.  I'll look to see if there are any parameters I can twea=
-k
-> to keep it from doing that, but I doubt it.
+I am not sure if we really want to work around Tcl's braindamage like
+that.
 
-Well, the good news is that while the utf-8 normalization is crazy, you=
-'re=20
-pretty unlikely to actually hit it in practice. The git archive has the=
-=20
-M=E4rchen file on purpose to find these kinds of issues, but it's harml=
-ess=20
-appart from the annoyance.
-
-Yes, some projects will have i18n support that may have files with spec=
-ial=20
-characters on purpose, and they can cause problems. Not least exactly=20
-because OS X does all the normalization exactly the wrong way (ie it ch=
-ose=20
-the _unusual_ way to do things, expanding strings to their longest form=
-at=20
-rather than their shortest format), but I would expect it to be very ra=
-re=20
-in general, partly because it doesn't really matter what SCM you use to=
-=20
-track things, and you'll have similar issues if you ever develop anythi=
-ng=20
-across OS's.
-
-We can fix it. Junio hasn't merged my stupid infrastructure into core g=
-it=20
-yet, and I still don't really care enough or have a OS X box to test on=
-=20
-(I've got a couple of mac minis, but they run that other OS ;), but we'=
-ll=20
-get the insane OS X crap handled *some* day.
-
-			Linus
+There is no stdwarn or stdinfo stream and I think it is a bug on the
+receiving end to assume that anything that comes to stderr is an error.
