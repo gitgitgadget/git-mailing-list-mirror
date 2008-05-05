@@ -1,158 +1,127 @@
-From: Florian Ragwitz <rafl@debian.org>
-Subject: [PATCH] Add a --signoff option to cherry-pick/revert.
-Date: Mon,  5 May 2008 02:25:09 +0200
-Message-ID: <1209947109-13910-1-git-send-email-rafl@debian.org>
-Cc: Florian Ragwitz <rafl@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 05 02:55:07 2008
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words configurable
+Date: Mon, 5 May 2008 09:40:47 +0800
+Message-ID: <46dff0320805041840g1b9362d3u138b9d40cde160f2@mail.gmail.com>
+References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
+	 <1209815828-6548-2-git-send-email-pkufranky@gmail.com>
+	 <1209815828-6548-3-git-send-email-pkufranky@gmail.com>
+	 <1209815828-6548-4-git-send-email-pkufranky@gmail.com>
+	 <1209815828-6548-5-git-send-email-pkufranky@gmail.com>
+	 <7vy76rtfns.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com>
+	 <alpine.DEB.1.00.0805041040560.30431@racer>
+	 <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
+	 <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 05 03:41:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsoyv-0007nv-Pb
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 02:55:06 +0200
+	id 1Jspi0-0007yK-ED
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 03:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbYEEAyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 20:54:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYEEAyS
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 20:54:18 -0400
-Received: from weedy.perldition.org ([85.10.210.75]:58155 "EHLO
-	weedy.perldition.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbYEEAyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 20:54:17 -0400
-X-Greylist: delayed 1743 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 May 2008 20:54:16 EDT
-Received: from p4fd720ca.dip0.t-ipconnect.de ([79.215.32.202]:49027 helo=ata.xb.lan)
-	by weedy.perldition.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.60)
-	(envelope-from <rafl@debian.org>)
-	id 1JsoUw-0005DB-B0; Mon, 05 May 2008 02:24:06 +0200
-Received: from rafl by ata.xb.lan with local (Exim 4.69)
-	(envelope-from <rafl@debian.org>)
-	id 1JsoVx-0003ck-Jw; Mon, 05 May 2008 02:25:09 +0200
-X-Mailer: git-send-email 1.5.5.1
+	id S1753537AbYEEBkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 21:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753424AbYEEBkv
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 21:40:51 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:11857 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753419AbYEEBku (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 21:40:50 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so349960ywe.1
+        for <git@vger.kernel.org>; Sun, 04 May 2008 18:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=lvkRUY59dCNeG1ee2b86c6hiMs/q9KoyMi5HPnVw7PU=;
+        b=dvJ0QU2YunG13GqOslQdzFMyNx9L2s/CCyDm1rhwqd3MtSP8fXw3khxlGEyk2IiGT1RSHO0PSG457+fgdnw00uMINEeY39ekl9lik5zgm++8VqRp+0kpNjs58TMhlK2on99Xjq/PjWTgrmZmnMeSHEmiv8nbHKV0ss800uA4kfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fyTy5nlurfYD14sjJMp1vrvy2Jf29+vPe+1JH5I+HBxRnV7fjXn1IwtVJe6b5+/Jwkd6HAQa/Yjs4TOlPJXr/5JHGrmNSKCWjWp5ypaSrgEg3PtM1z3+VZlN8cgnVuSM/uV+pAe8DO6tz7xdoHc5XH65mF4zD/2rU1n9OxWn92g=
+Received: by 10.150.83.22 with SMTP id g22mr5573669ybb.146.1209951647701;
+        Sun, 04 May 2008 18:40:47 -0700 (PDT)
+Received: by 10.151.114.1 with HTTP; Sun, 4 May 2008 18:40:47 -0700 (PDT)
+In-Reply-To: <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81215>
 
-Also modify documentation and tests to reflect this change.
+On 5/5/08, Junio C Hamano <junio@pobox.com> wrote:
+>
+> So the overall algorithm I think should be is:
+>
+>  - make the input into stream of tokens, where a token is either a run of
+>   word characters only, non-word punct characters only, or whitespaces
+>   only;
+>
+>  - compute the diff over the stream of tokens;
+>
+>  - emit common tokens in white, deleted in red and added in green.
+>
+> Notice that you do not have to special case LF in any way if you go this
+> route.
+>
+> You could do this with only two classes, and use a different tokenization
+> rule: a token is either a run of word characters only, or each byte of non
+> word character becomes individual token.  This however would yield a
+> suboptimal result:
+>
+>    -if (i > 1)
+>    +while (i >= 0)
+>
+>    preimage       postimage        word-diff
+>    6966                            -6966       if
+>                   7768696c65       +7768696c65 while
+>    20             20                20         ' '
+>    28             28                28         (
+>    69             69                69         i
+>    20             20                20         ' '
+>    3e             3e                3e         >
+>                   3d               +3d         =
+>    20             20                20         ' '
+>    31                              -31         1
+>                   30               +30         0
+>    29             29                29         )
+>
+> This would give "/if/while/ (i >//=/ /1/0/)".  A logical unit ">=" is
+> chomped into two tokens, which is suboptimal for the same reason why the
+> output "H/ello/i,/" from the original char-diff based one was suboptimal.
+>
 
-Signed-off-by: Florian Ragwitz <rafl@debian.org>
----
- Documentation/git-cherry-pick.txt |    3 +++
- Documentation/git-revert.txt      |    3 +++
- builtin-revert.c                  |   25 ++++++++++++++++++++-----
- t/t3501-revert-cherry-pick.sh     |   19 +++++++++++++++++++
- 4 files changed, 45 insertions(+), 5 deletions(-)
+For this example,both "/if/while/ (i />/>=/ /1/0/)" and  "/if/while/
+(i >//=/ /1/0/)" are fine to me. However, the run of non-word
+characters shouldn't always be considered as a single token.
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index f0beb41..ec8bd50 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -39,6 +39,9 @@ OPTIONS
- 	development branch), adding this information can be
- 	useful.
- 
-+-s|--signoff::
-+	Add Signed-off-by line at the end of the commit message.
-+
- -r::
- 	It used to be that the command defaulted to do `-x`
- 	described above, and `-r` was to disable it.  Now the
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 93e20f7..a35a376 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -27,6 +27,9 @@ OPTIONS
- 	message prior to committing the revert. This is the default if
- 	you run the command from a terminal.
- 
-+-s|--signoff::
-+	Add Signed-off-by line at the end of the commit message.
-+
- -m parent-number|--mainline parent-number::
- 	Usually you cannot revert a merge because you do not know which
- 	side of the merge should be considered the mainline.  This
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 607a2f0..ccf591c 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -33,7 +33,7 @@ static const char * const cherry_pick_usage[] = {
- 	NULL
- };
- 
--static int edit, no_replay, no_commit, mainline;
-+static int edit, no_replay, no_commit, mainline, signoff;
- static enum { REVERT, CHERRY_PICK } action;
- static struct commit *commit;
- 
-@@ -53,6 +53,7 @@ static void parse_args(int argc, const char **argv)
- 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
- 		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
- 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
-+		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
- 		OPT_END(),
- 	};
-@@ -404,10 +405,24 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	 */
- 
- 	if (!no_commit) {
--		if (edit)
--			return execl_git_cmd("commit", "-n", NULL);
--		else
--			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
-+		const char *args[6];
-+		int i = 0;
-+
-+		args[i++] = "commit";
-+		args[i++] = "-n";
-+
-+		if (!edit) {
-+			args[i++] = "-F";
-+			args[i++] = defmsg;
-+		}
-+
-+		if (signoff) {
-+			args[i++] = "-s";
-+		}
-+
-+		args[i] = NULL;
-+
-+		return execv_git_cmd(args);
- 	}
- 	free(reencoded_message);
- 
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 6da2128..2f74f74 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -50,6 +50,25 @@ test_expect_success 'cherry-pick after renaming branch' '
- 
- '
- 
-+test_expect_success 'cherry-pick signoff' '
-+
-+	git checkout rename2 &&
-+	git cherry-pick -s added &&
-+	test -f opos &&
-+	git cat-file commit HEAD | sed "1,/^$/d" > output &&
-+	grep Signed-off-by output
-+'
-+
-+test_expect_success 'revert signoff' '
-+
-+	git checkout rename1 &&
-+	git revert -s added &&
-+	test -f spoo &&
-+	git cat-file commit HEAD | sed "1,/^$/d" > output &&
-+	grep Signed-off-by output
-+
-+'
-+
- test_expect_success 'revert after renaming branch' '
- 
- 	git checkout rename1 &&
+For example
+
+  - **************
+  + ************
+
+If  just a '+' is removed, surely "************/*//" is better.
+
+And when designing, i think it's better to take multi-byte characters
+into account. For multi-byte characters (especially CJK), every
+character should be considered as a token. if we consider either a run
+of word characters or a run of non-word characters as a single token,
+there is no way to specify every character as a token.
+
+So from this viewpoint, is it better to use single-token character or
+something else instead of non-word character?
+
+Another consideration: Space information is also important for me when
+using --color-words. However, i can't distinguish between the removed
+spaces and added spaces in current implementaion. So how about use
+red/green background color for removed/added spaces?
+
 -- 
-1.5.5.1
+Ping Yin
