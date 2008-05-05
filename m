@@ -1,113 +1,93 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: merge renamed files/directories?
-Date: Mon, 5 May 2008 23:49:35 +0200
-Message-ID: <200805052349.35867.robin.rosenberg.lists@dewire.com>
-References: <4819CF50.2020509@tikalk.com> <481D52CC.1030503@tikalk.com> <32541b130805050940x1297e907ofc67ee65494897eb@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: To page or not to page
+Date: Mon, 5 May 2008 17:59:25 -0400
+Message-ID: <20080505215924.GA9228@sigill.intra.peff.net>
+References: <70F76C0E-E16D-4047-873D-7FD19FDBB55D@sb.org> <20080502054508.GA28506@sigill.intra.peff.net> <20080502060930.GA1079@sigill.intra.peff.net> <7vd4o5xm62.fsf@gitster.siamese.dyndns.org> <20080502125553.GB2923@sigill.intra.peff.net> <7v1w4ky3hh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Ittay Dror" <ittayd@tikalk.com>, git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 05 23:52:41 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Kevin Ballard <kevin@sb.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 00:00:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt8a9-0004BA-Qa
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 23:50:50 +0200
+	id 1Jt8jE-00085U-FV
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 00:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760040AbYEEVt7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 17:49:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757646AbYEEVt7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 17:49:59 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:20813 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757870AbYEEVt6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 May 2008 17:49:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 5D631802ABA;
-	Mon,  5 May 2008 23:49:56 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id v3vtGrd9VJx5; Mon,  5 May 2008 23:49:55 +0200 (CEST)
-Received: from [10.9.0.10] (unknown [10.9.0.10])
-	by dewire.com (Postfix) with ESMTP id BF8E98027E1;
-	Mon,  5 May 2008 23:49:54 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <32541b130805050940x1297e907ofc67ee65494897eb@mail.gmail.com>
+	id S1760362AbYEEV7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 17:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760400AbYEEV7Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 17:59:24 -0400
+Received: from peff.net ([208.65.91.99]:4360 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760316AbYEEV7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 17:59:23 -0400
+Received: (qmail 32208 invoked by uid 111); 5 May 2008 21:59:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 May 2008 17:59:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2008 17:59:25 -0400
 Content-Disposition: inline
+In-Reply-To: <7v1w4ky3hh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81310>
 
-m=E5ndagen den 5 maj 2008 18.40.24 skrev Avery Pennarun:
-> On 5/4/08, Ittay Dror <ittayd@tikalk.com> wrote:
-> >  Avery Pennarun wrote:
-> > > In fact, as someone else pointed out, renaming a java file requir=
-es
-> > > you to modify the file anyhow, so having git auto-move the file t=
-o
-> > > another directory *still* wouldn't make it work any better.
-> >
-> > Sure it will, because otherwise I need to move it and still need to=
- fix
-> > it. And there are many other file formats and languages where such =
-a move
-> > will not require any change (I think it is funny that Java is a
-> > justification for not doing something for a tool primarily used by =
-C
-> > people).
->
-> I mentioned Java because you mentioned you were working in java.
->
-> The particular problem with Java doesn't happen to C people.  Imagine=
-,
-> for example, that I add a new file, lib/foo.c, to lib/lib.a (thus the=
-y
-> have to modify lib/Makefile), while someone else renames "lib" to
-> "bettername".
->
-> When I merge, if git would create bettername/foo.c (it currently
-> won't) and properly automerge bettername/Makefile (it will), then the
-> program would still compile correctly.  However this doesn't work in
-> Java: lib/foo.java would include the word "lib" in its contents (in
-> the namespace declaration) and so there's no way automatic merging
-> would have resulted in a version that compiles correctly.
+On Fri, May 02, 2008 at 11:18:02AM -0700, Junio C Hamano wrote:
 
-You will always find corner cases. Line-by line merge happens to
-work, not because it is the theoretically correct way, but because we
-have discovered that it nearly always works so our need for more
-specialized merging is not huge. We have also adapted our development
-practices to the way line-by-line merging works, i.e. we avoid binary
-files and funny text file formats.
+> Jeff King <peff@peff.net> writes:
+> 
+> > My bigger worry is that this affects only builtins. Which makes it
+> > sufficient for turning off the pager for anything that does USE_PAGER.
+> 
+> Hmm. How about doing things this way?
+> 
+>  - at the beginning of handle_options() remember argv[0]
+> 
+>  - restructure handle_options() so that it does not run setup_pager() and
+>    setenv("GIT_PAGER", "cat", 1) inside the loop, but instead remember
+>    what we had on the command line;
+> 
+>  - after the handle_options() loop, if we saw an explicit --pager,
+>    --no-pager, that's the decision;
+> 
+>  - otherwise:
+> 
+>    - look at argv[0] to see what the command is;
+> 
+>    - do the config thing to see if there is user preference; if there is
+>      one, that setting decides;
+> 
+>    - otherwise:
+> 
+>      - see the built-in defaults;
+> 
+>  - and finally use or not use pager depending on what we found above.
 
-> So what I said isn't to *justify* git's behaviour, merely to point ou=
-t
-> that in java's case, there seems to be no way to get fully automatic
-> merging that would work.  In C, this case would have worked, if only
-> git supported directory renames.
+OK, that makes some sense. I think some of what you describe is just
+refactoring (e.g., it doesn't matter if we actually do things when we
+see --no-pager or afterwards, since it always takes precedence). The key
+things are:
 
-Sure, a merge that understands this is java and does the correct thing.=
- Evn
-your case for C (with hypotetical directory rename detection) would fai=
-l if=20
-the renamed directory was used in an #include-statement (like #include=20
-<lib/foo.h>) Say someone thinks xxdiff should move to lib/xxdiff, while=
-=20
-someone else adds a new reference to <xxdiff/xxdiff.h>. To resolve all =
-cases=20
-you must have tools that understand what they are doing. Directyry rena=
-me
-detection only solves a few cases, but it may be easy enough to impleme=
-nt to=20
-warrant the effort to get the tick in the box.
+  - work not just on running builtins, but before we even figure out
+    whether we have a builtin or a script
 
->
-> In neither case is it very much work to fix by hand, though :),
+  - in my patch the config just says "ignore the default USE_PAGER", but
+    it really should be "turn off the pager via GIT_PAGER=cat". That way
+    you can say pager.stash = false, and it will impact the git-diff
+    invocation run by stash.
 
-I agree on that.
+But that isn't to say the refactoring isn't worth doing to keep things
+clean. I will take a stab at restructuring it the way you specified.
 
--- robin
+There is one remaining annoyance, though: this code is only run via the
+git wrapper. That means that you will get different behavior for
+"git-stash" versus "git stash". To make that work, we would have to put
+equivalent support into each script (although we could hit several at
+once with git-sh-setup.sh) and each non-builtin.
+
+-Peff
