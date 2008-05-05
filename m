@@ -1,68 +1,64 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
-Date: Mon, 5 May 2008 09:28:18 +1000
-Message-ID: <18462.18066.769759.585596@cargo.ozlabs.ibm.com>
-References: <20080430172136.GA22601@sigill.intra.peff.net>
-	<20080430172553.GC23747@sigill.intra.peff.net>
-	<481CA227.1000801@ramsay1.demon.co.uk>
-	<20080504192332.GB13029@sigill.intra.peff.net>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH] Pay attention to GIT_DIR when searching the git directory
+Date: Mon,  5 May 2008 02:09:38 +0200
+Message-ID: <1209946178-29398-1-git-send-email-joerg@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 05 01:32:24 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jjengla@sandia.gov,
+	=?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 05 02:12:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsngs-0000Dq-4C
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 01:32:22 +0200
+	id 1JsoJv-0007wq-Qp
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 02:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbYEDXbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 19:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbYEDXbZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 19:31:25 -0400
-Received: from ozlabs.org ([203.10.76.45]:44417 "EHLO ozlabs.org"
+	id S1753212AbYEEAL4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 20:11:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbYEEAL4
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 20:11:56 -0400
+Received: from banki.eumelnet.de ([83.246.114.63]:2605 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751622AbYEDXbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 19:31:24 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id BCB35DDE06; Mon,  5 May 2008 09:31:22 +1000 (EST)
-In-Reply-To: <20080504192332.GB13029@sigill.intra.peff.net>
-X-Mailer: VM 7.19 under Emacs 22.1.1
+	id S1752786AbYEEALz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 20:11:55 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 2AB92488034; Mon,  5 May 2008 02:11:54 +0200 (CEST)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JsoGw-0000OG-VK; Mon, 05 May 2008 02:09:39 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JsoGw-0007eW-M0; Mon, 05 May 2008 02:09:38 +0200
+X-Mailer: git-send-email 1.5.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81212>
 
-Jeff King writes:
 
-> Hrm. Is gitk on cygwin somehow squishing stderr and stdout together? Or
-> does gitk in general look at what happens on stderr?
-> 
-> Because while I am happy that removing this message fixes your problem,
-> it is a little disconcerting to think that we can break gitk just by
-> issuing a warning diagnostic on stderr.
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
+---
+ contrib/hooks/setgitperms.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It's a more general Tcl thing - if you are reading from a process, and
-the process writes to stderr, and the script hasn't explicitly
-redirected stderr, the Tcl infrastructure assumes that the process is
-signalling an error, even if the exit status is 0.  Gitk does redirect
-stderr (to stdout) when it does a git reset, but not for other
-commands.
-
-At the moment I don't think there is a good way in Tcl to get hold of
-the stderr output if a subcommand returns a non-zero exit status, but
-ignore it if the exit status is 0, other than by redirecting stderr to
-a temporary file, which has its own problems.  Tcl can bundle stderr
-in with stdout, or ignore it, or take it as an error indication, or
-send it to a file.
-
-So if git commands can avoid writing non-error messages to stderr,
-that will make my life easier...
-
-Paul.
+diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms=
+=2Eperl
+index dab7c8e..0b1bcf2 100644
+--- a/contrib/hooks/setgitperms.perl
++++ b/contrib/hooks/setgitperms.perl
+@@ -51,7 +51,7 @@ if ((@ARGV < 0) || !GetOptions(
+ die $usage unless ($read_mode xor $write_mode);
+=20
+ my $topdir =3D `git-rev-parse --show-cdup` or die "\n"; chomp $topdir;
+-my $gitdir =3D $topdir . '.git';
++my $gitdir =3D $ENV{GIT_DIR} || $topdir . '.git';
+ my $gitmeta =3D $topdir . '.gitmeta';
+=20
+ if ($write_mode) {
+--=20
+1.5.5.1
