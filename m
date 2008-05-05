@@ -1,110 +1,90 @@
-From: Mitch Tishmack <mitcht.git@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: OSX, ZFS, UTF8, git - somebody hates me in this list
-Date: Mon, 5 May 2008 14:32:30 -0500
-Message-ID: <A9FCB174-C3CC-4DB4-91CA-9AFA32AAF11E@gmail.com>
+Date: Mon, 5 May 2008 12:45:38 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805051240150.32269@woody.linux-foundation.org>
 References: <86wsm9dbhk.fsf@blue.stonehenge.com> <20080504215208.GG29038@spearce.org> <86skwxd97d.fsf@blue.stonehenge.com> <8663tsbqg0.fsf@blue.stonehenge.com> <alpine.LFD.1.10.0805051049440.32269@woody.linux-foundation.org> <905315640805051200g4c155d15xada4f17e5e2fc424@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+ <86fxswa7ra.fsf@blue.stonehenge.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tarmigan <tarmigan+git@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 05 21:33:27 2008
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Mon May 05 21:47:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt6RA-00081c-Gc
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 21:33:24 +0200
+	id 1Jt6e6-0004nH-Gx
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 21:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752445AbYEETcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 15:32:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYEETcf
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 15:32:35 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:33699 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024AbYEETce (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 15:32:34 -0400
-Received: by py-out-1112.google.com with SMTP id u52so1583702pyb.10
-        for <git@vger.kernel.org>; Mon, 05 May 2008 12:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        bh=Z3Jvpcs02erhS5zCw+FdUU08pxdaj6ueJAgh7FAlY1I=;
-        b=vdr+LggRP6cRCLiW8PfaPdXKDJG6mGrNNwk6JXfcnuvyH1FfBElOQm9TQfVHkI7wsk+SsGMqtCJ9TQ1pNYpPXlYbVtyfC/U19UDIaxBrKGpaKS8Y01w5MbJlRv6BE4MGe6mrMZMJHGvvgrTTwaNQTabU5cxZi0FJ8TirFH8PNOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
-        b=dW8c360A4bDiVvCsj6cvCZNBwFTTMja2mjvVUlXEX0zp7QK75JSecOL53GDtcTVkxZ7t8GNHz8NxuD6WAwO5uhcxbs4rGesLWkAYBx/BGVHhmfK3ASK2bkgQrgALHBLzul0fOkSONMZbowzxnNqDt7NGyba3Uw+Cdu6rEsnTVPw=
-Received: by 10.35.61.17 with SMTP id o17mr1292638pyk.4.1210015953475;
-        Mon, 05 May 2008 12:32:33 -0700 (PDT)
-Received: from ?192.168.3.159? ( [71.216.112.176])
-        by mx.google.com with ESMTPS id f24sm1401255pyh.26.2008.05.05.12.32.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 05 May 2008 12:32:32 -0700 (PDT)
-In-Reply-To: <905315640805051200g4c155d15xada4f17e5e2fc424@mail.gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1753062AbYEETpu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 15:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYEETpu
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 15:45:50 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46135 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752982AbYEETpt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 May 2008 15:45:49 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m45JjeTP017417
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 5 May 2008 12:45:41 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m45Jjd8n001579;
+	Mon, 5 May 2008 12:45:39 -0700
+In-Reply-To: <86fxswa7ra.fsf@blue.stonehenge.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.422 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81307>
 
 
-On May 5, 2008, at 02:00 PM, Tarmigan wrote:
->
-> Not sure if that is always the case.  This thread suggests otherwise:
-> http://opensolaris.org/jive/thread.jspa?threadID=53303&tstart=0
->
-> Case sensitivity and mangling look like they are configurable.  See
-> the "casesensitivity" and "normalization" options at
-> http://docs.sun.com/app/docs/doc/819-2240/zfs-1m
->
-> ZFS on OSX may just default to "insensitive" and some form of
-> normalization especially if they were/are thinking about making it the
-> default fs and wanted backwards compatibility for broken apps.
-> Randal, can you make a new FS with casesensitivity=sensitive and
-> normalization=none and see how it behaves?
 
-Those are only valid in OpenSolaris at the moment, they do nothing on  
-the Leopard zfs beta:
-macbookprov2# zfs set casesensitivity=sensitive zfs
-cannot set property for 'zfs': invalid property 'casesensitivity'
-macbookprov2# zfs set normalization=none zfs
-cannot set property for 'zfs': invalid property 'normalization'
-macbookprov2# uname -a
-Darwin macbookprov2.local 9.2.2 Darwin Kernel Version 9.2.2: Tue Mar   
-4 21:17:34 PST 2008; root:xnu-1228.4.31~1/RELEASE_I386 i386
-macbookprov2# zfs get all zfs
-NAME  PROPERTY       VALUE                  SOURCE
-zfs   type           filesystem             -
-zfs   creation       Sun May  4 22:03 2008  -
-zfs   used           38.3M                  -
-zfs   available      922M                   -
-zfs   referenced     38.2M                  -
-zfs   compressratio  1.00x                  -
-zfs   mounted        yes                    -
-zfs   quota          none                   default
-zfs   reservation    none                   default
-zfs   recordsize     128K                   default
-zfs   mountpoint     /Volumes/zfs           default
-zfs   sharenfs       off                    default
-zfs   checksum       on                     default
-zfs   compression    off                    default
-zfs   atime          on                     default
-zfs   devices        on                     default
-zfs   exec           on                     default
-zfs   setuid         on                     default
-zfs   readonly       off                    default
-zfs   zoned          off                    default
-zfs   snapdir        hidden                 default
-zfs   aclmode        groupmask              default
-zfs   aclinherit     secure                 default
-zfs   canmount       on                     default
-zfs   shareiscsi     off                    default
-zfs   xattr          on                     default
-zfs   copies         1                      default
-zfs   version        1                      -
+On Mon, 5 May 2008, Randal L. Schwartz wrote:
+>=20
+> As I posted in a followup, without twiddling anything, ZFS on OSX
+> is case *sensitive*, but apparently still "normalizes", which is caus=
+ing
+> the trip-up.  I'll look to see if there are any parameters I can twea=
+k
+> to keep it from doing that, but I doubt it.
 
-mitch
+Well, the good news is that while the utf-8 normalization is crazy, you=
+'re=20
+pretty unlikely to actually hit it in practice. The git archive has the=
+=20
+M=E4rchen file on purpose to find these kinds of issues, but it's harml=
+ess=20
+appart from the annoyance.
+
+Yes, some projects will have i18n support that may have files with spec=
+ial=20
+characters on purpose, and they can cause problems. Not least exactly=20
+because OS X does all the normalization exactly the wrong way (ie it ch=
+ose=20
+the _unusual_ way to do things, expanding strings to their longest form=
+at=20
+rather than their shortest format), but I would expect it to be very ra=
+re=20
+in general, partly because it doesn't really matter what SCM you use to=
+=20
+track things, and you'll have similar issues if you ever develop anythi=
+ng=20
+across OS's.
+
+We can fix it. Junio hasn't merged my stupid infrastructure into core g=
+it=20
+yet, and I still don't really care enough or have a OS X box to test on=
+=20
+(I've got a couple of mac minis, but they run that other OS ;), but we'=
+ll=20
+get the insane OS X crap handled *some* day.
+
+			Linus
