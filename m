@@ -1,75 +1,68 @@
-From: Mark Hills <mark@pogo.org.uk>
-Subject: Re: [PATCH] Be more careful with objects directory permissions on 
-  clone
-Date: Mon, 5 May 2008 11:25:15 +0100 (BST)
-Message-ID: <alpine.BSO.1.10.0805051121090.32248@zrgural.vwaro.pbz>
-References: <alpine.BSO.1.10.0805041234570.5819@zrgural.vwaro.pbz> <481ECCF0.6080308@viscovery.net> <alpine.BSO.1.10.0805051047260.7723@zrgural.vwaro.pbz> <481EDC4B.2010105@viscovery.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 05 12:26:09 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: OSX, ZFS, UTF8, git - somebody hates me in this list
+Date: Mon, 5 May 2008 12:33:25 +0200
+Message-ID: <C836878F-7163-4AE2-91A4-E6A0F0AF3914@wincent.com>
+References: <86wsm9dbhk.fsf@blue.stonehenge.com> <20080504215208.GG29038@spearce.org> <86skwxd97d.fsf@blue.stonehenge.com> <86k5i9d91w.fsf@blue.stonehenge.com> <20080505065259.GA25070@old.davidb.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Mon May 05 12:34:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsxtW-0002xG-Qw
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 12:26:07 +0200
+	id 1Jsy1b-0005Zg-B5
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 12:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753771AbYEEKZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 06:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbYEEKZR
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 06:25:17 -0400
-Received: from mailout.ijneb.com ([212.13.201.26]:32081 "EHLO
-	metheny.ijneb.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752229AbYEEKZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 06:25:16 -0400
-Received: from localhost ([127.0.0.1] ident=mark)
-	by metheny.ijneb.com with esmtp (Exim 4.69)
-	(envelope-from <mark@pogo.org.uk>)
-	id 1Jsxsh-0008UM-Vc; Mon, 05 May 2008 11:25:16 +0100
-In-Reply-To: <481EDC4B.2010105@viscovery.net>
-X-SA-Exim-Connect-IP: 127.0.0.1
-X-SA-Exim-Mail-From: mark@pogo.org.uk
+	id S1752631AbYEEKdk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2008 06:33:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751776AbYEEKdj
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 06:33:39 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:45382 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbYEEKdj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 May 2008 06:33:39 -0400
+Received: from cuzco.lan (228.pool85-53-21.dynamic.orange.es [85.53.21.228])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m45AXU5K007820
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 5 May 2008 06:33:32 -0400
+In-Reply-To: <20080505065259.GA25070@old.davidb.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81266>
 
-On Mon, 5 May 2008, Johannes Sixt wrote:
-
-> Mark Hills schrieb:
->> On Mon, 5 May 2008, Johannes Sixt wrote:
->>
->>> Mark Hills schrieb:
->>>>          cd "$repo" &&
->>>> -        find objects -depth -print | cpio $cpio_quiet_flag -pumd$l
->>>> "$GIT_DIR/" || \
->>>> +        # Create dirs using umask and permissions and destination
->>>> +        find objects -type d -print | (cd "$GIT_DIR" && xargs mkdir
->>>> -p) &&
->>>> +        # Copy 0444 permissions on files
->>>> +        find objects -type f -print | cpio $cpio_quiet_flag -pumd$l
->>>> "$GIT_DIR/" || \
->>>
->>> Wouldn't that be better:
->>>
->>>     find objects ! -type d -print | cpio ...
->>>
->>> ?
->>
->> This was my first suggestion, unfortunately it shows up broken behaviour
->> in all but the latest version of cpio. It creates 0700 directory
->> permissions which is even worse.
+El 5/5/2008, a las 8:52, David Brown escribi=F3:
+> On Sun, May 04, 2008 at 03:00:11PM -0700, Randal L. Schwartz wrote:
 >
-> Sorry, I should have mentioned that I meant to keep the 'find | xargs
-> mkdir' and replace only the second 'find | cpio'.
+>> Ahh, oddly enough, it does exactly the same on HFS+, but *not* UFS, =
+=20
+>> which is
+>> why I hadn't noticed it yet, since all of my things I mirror are on =
+=20
+>> my UFS
+>> partition, just in case they have case-colliding names.
+>
+> Anyone know if 'case sensitive' HFS+ does name mangling?  Perhaps =20
+> ZFS can
+> also be formed as case sensitive.
 
-Ah, I see.
+I believe case-sensitive HFS+ also mangles names.
 
-I tend to think that an inclusive match has less scope for future bad 
-behaviour than an exclusive match. Have I missed the possiblity that there 
-may be content in the objects directory which is not a directory or file?
+I for one am pretty disappointed that Apple has chosen to bring across =
+=20
+this undesirable behaviour from their legacy file system to a =20
+completely new one, when this would have been a perfect opportunity =20
+for them to break with the bad design decisions of the past. It's =20
+still pre-release, of course, so I guess there's still hope that their =
+=20
+final version might not preserve this flaw.
 
-Mark
+Wincent
