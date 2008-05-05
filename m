@@ -1,371 +1,70 @@
 From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH] Documentation: convert "glossary" and "core-tutorial" to man pages
-Date: Mon, 5 May 2008 09:50:48 +0800
-Message-ID: <46dff0320805041850u4e40c5c2s360fd9198537cf68@mail.gmail.com>
-References: <20080504122157.ca98c75d.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/3] log --graph and rev-list --graph
+Date: Mon, 5 May 2008 10:13:43 +0800
+Message-ID: <46dff0320805041913t31c05a36w92be4a81a3da07af@mail.gmail.com>
+References: <1209897414-10091-1-git-send-email-adam@adamsimpkins.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Junio Hamano" <junkio@cox.net>,
-	"Pieter de Bie" <pdebie@ai.rug.nl>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Manoj Srivastava" <srivasta@ieee.org>,
-	"Thomas Adam" <thomas.adam22@gmail.com>,
-	"Jeff King" <peff@peff.net>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: "Christian Couder" <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon May 05 03:51:46 2008
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Adam Simpkins" <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Mon May 05 04:14:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jsprj-0001Pd-Hc
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 03:51:44 +0200
+	id 1JsqE1-0006hG-0h
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 04:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753641AbYEEBuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2008 21:50:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753542AbYEEBuy
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 21:50:54 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:27269 "EHLO
+	id S1753998AbYEECN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 22:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753975AbYEECN4
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 22:13:56 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:1434 "EHLO
 	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752097AbYEEBux (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2008 21:50:53 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so351267ywe.1
-        for <git@vger.kernel.org>; Sun, 04 May 2008 18:50:48 -0700 (PDT)
+	with ESMTP id S1753971AbYEECN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2008 22:13:56 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so354484ywe.1
+        for <git@vger.kernel.org>; Sun, 04 May 2008 19:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=xdNvsxXO8F+jGK+AV3yEiaHl6vRcGz0DAtMzo1vL7VE=;
-        b=dsABIS2r/qvc6JLKLNM2gIWucAoVN0bWo8it5z+H7geLyU1MxPFJpWXSS/FqRGIR9LmEFb6cOo1YhCYMfDMn2RyZez7PIhIMnUvL/i9nsZNR8XX9CVVgTSPEWnU5IysTX4HQRm8ionr2BtaMdWsk0RTt/exTARoBLNbWkHqqm7M=
+        bh=knB3Z8Wf1Row2aLqyhMDdqLmpTPd2gAyX+a/iknbPBM=;
+        b=F9w1BXU9Y5ggqdw6oNn0uanZLEZIym58u/nAEChRSDp6Ec2uPvoMoDmtYImmYrzHCemm8qOi6tva6ALDp6ZHh1VpKlkP78Hfh+DV0K2JrMzo5PFXMyan7YY3m6uUClGhfLUUtJDWmvm+t3to9wI2vkHR8/6xBvQ1gpYTYvUoRMI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LtTrBi9/XkWNkpFp5aVA6wS9GwzBlo62L9aPANmo1RDKdr4Of1ts7peyqpwAmIq3ryyL02Nm8m40WOZ6/uUr1D4CVFlOP1+iybA+jeqqzvq2L+neTBwt4P36feFl4I+s1ulCMp0vFIwsZSw5fPri4zqyneuJbhrT8unksiPjbIA=
-Received: by 10.150.86.39 with SMTP id j39mr5548094ybb.214.1209952248703;
-        Sun, 04 May 2008 18:50:48 -0700 (PDT)
-Received: by 10.151.114.1 with HTTP; Sun, 4 May 2008 18:50:48 -0700 (PDT)
-In-Reply-To: <20080504122157.ca98c75d.chriscool@tuxfamily.org>
+        b=FKr+0bI9TK8DBOYZIW48jXkPNKwAm6hgOurUTBfhqTpOaB0JXFXlhtJ+3bvVz2pa7OZs5laoH8AB3HcIpuoCyD0z1fSDxXlSWMe8m6YdOni0zZa7+qvKJB91I6vtvu26Yl517JJ5u4GDyt25JG7RHmtZam4wLovQEXyKHdTGv5Q=
+Received: by 10.150.79.42 with SMTP id c42mr5574951ybb.167.1209953623059;
+        Sun, 04 May 2008 19:13:43 -0700 (PDT)
+Received: by 10.151.114.1 with HTTP; Sun, 4 May 2008 19:13:43 -0700 (PDT)
+In-Reply-To: <1209897414-10091-1-git-send-email-adam@adamsimpkins.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81217>
 
-On Sun, May 4, 2008 at 6:21 PM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> This patch renames the following documents and at the same time converts
->  them to the man format:
+On Sun, May 4, 2008 at 6:36 PM, Adam Simpkins <adam@adamsimpkins.net> wrote:
+> This patch series adds a new --graph option to the log and rev-list
+>  commands.  This is pretty much the same code that I sent out in early
+>  April, but updated to work with the log entry termination fixes in the
+>  latest master branch.
 >
->  core-tutorial.txt -> gitcore-tutorial.txt
->  glossary.txt      -> gitglossary.txt
+>  Adam Simpkins (3):
+>   revision API: split parent rewriting and parent printing options
+>   Add history graph API
+>   log and rev-list: add --graph option
 >
->  But as the glossary is included in the user manual and as the new
->  gitglossary man page cannot be included as a whole in the user manual,
->  the actual glossary content is now in its own "glossary-content.txt"
->  new file. And this file is included by both the user manual and the
->  gitglossary man page.
->
->  Other documents that reference the above ones are changed accordingly
->  and sometimes improved a little too.
->  ---
->   Documentation/Makefile                             |    7 ++---
->   Documentation/git.txt                              |   13 +++++++--
->   .../{core-tutorial.txt => gitcore-tutorial.txt}    |   26 ++++++++++++++++---
->   Documentation/gitcvs-migration.txt                 |    6 +++-
->   Documentation/giteveryday.txt                      |    5 ++-
->   Documentation/gitglossary.txt                      |   25 +++++++++++++++++++
->   Documentation/gittutorial-2.txt                    |   11 ++++----
->   Documentation/gittutorial.txt                      |    5 ++-
->   .../{glossary.txt => glossary-content.txt}         |    3 --
->   Documentation/user-manual.txt                      |    5 +++-
->   10 files changed, 80 insertions(+), 26 deletions(-)
->   rename Documentation/{core-tutorial.txt => gitcore-tutorial.txt} (99%)
->   create mode 100644 Documentation/gitglossary.txt
->   rename Documentation/{glossary.txt => glossary-content.txt} (99%)
->
->
->         This is another patch to convert some help documents to
->         man pages. It should apply on top of the previous ones.
->
->
->  diff --git a/Documentation/Makefile b/Documentation/Makefile
->  index 9a8043f..5ec7bd8 100644
->  --- a/Documentation/Makefile
->  +++ b/Documentation/Makefile
->  @@ -4,7 +4,8 @@ MAN1_TXT= \
->         gitk.txt
->   MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
->   MAN7_TXT=git.txt gitcli.txt gittutorial.txt gittutorial-2.txt \
->  -       gitcvs-migration.txt giteveryday.txt
->  +       gitcvs-migration.txt giteveryday.txt gitcore-tutorial.txt \
->  +       gitglossary.txt
->
->   MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
->   MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
->  @@ -12,12 +13,10 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
->
->   DOC_HTML=$(MAN_HTML)
->
->  -ARTICLES = core-tutorial
->  -ARTICLES += diffcore
->  +ARTICLES = diffcore
->   ARTICLES += howto-index
->   ARTICLES += repository-layout
->   ARTICLES += git-tools
->  -ARTICLES += glossary
->   # with their own formatting rules.
->   SP_ARTICLES = howto/revert-branch-rebase howto/using-merge-subtree user-manual
->   API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
->  diff --git a/Documentation/git.txt b/Documentation/git.txt
->  index 1c3c56e..855e90e 100644
->  --- a/Documentation/git.txt
->  +++ b/Documentation/git.txt
->  @@ -172,7 +172,7 @@ See the references above to get started using git.  The following is
->   probably more detail than necessary for a first-time user.
->
->   The link:user-manual.html#git-concepts[git concepts chapter of the
->  -user-manual] and the link:core-tutorial.html[Core tutorial] both provide
->  +user-manual] and the linkgit:gitcore-tutorial[7][Core tutorial] both provide
->   introductions to the underlying git architecture.
->
->   See also the link:howto-index.html[howto] documents for some useful
->  @@ -372,7 +372,7 @@ Higher level SCMs may provide and manage additional information in the
->
->   Terminology
->   -----------
->  -Please see the link:glossary.html[glossary] document.
->  +Please see the linkgit:gitglossary[7][glossary] document.
->
->
->   Environment Variables
->  @@ -516,7 +516,7 @@ Discussion[[Discussion]]
->
->   More detail on the following is available from the
->   link:user-manual.html#git-concepts[git concepts chapter of the
->  -user-manual] and the link:core-tutorial.html[Core tutorial].
->  +user-manual] and the linkgit:gitcore-tutorial[7][Core tutorial].
->
->   A git project normally consists of a working directory with a ".git"
->   subdirectory at the top level.  The .git directory contains, among other
->  @@ -577,6 +577,13 @@ The documentation for git suite was started by David Greaves
->   <david@dgreaves.com>, and later enhanced greatly by the
->   contributors on the git-list <git@vger.kernel.org>.
->
->  +SEE ALSO
->  +--------
->  +linkgit:gittutorial[7], linkgit:gittutorial-2[7],
->  +linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
->  +linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
->  +link:user-manual.html[The Git User's Manual]
->  +
->   GIT
->   ---
->   Part of the linkgit:git[7] suite
->  diff --git a/Documentation/core-tutorial.txt b/Documentation/gitcore-tutorial.txt
->  similarity index 99%
->  rename from Documentation/core-tutorial.txt
->  rename to Documentation/gitcore-tutorial.txt
->  index b50b5dd..5995a2e 100644
->  --- a/Documentation/core-tutorial.txt
->  +++ b/Documentation/gitcore-tutorial.txt
->  @@ -1,8 +1,16 @@
->  -A git core tutorial for developers
->  -==================================
->  +gitcore-tutorial(7)
->  +===================
->
->  -Introduction
->  -------------
->  +NAME
->  +----
->  +gitcore-tutorial - A git core tutorial for developers
->  +
->  +SYNOPSIS
->  +--------
->  +git *
->  +
->  +DESCRIPTION
->  +-----------
->
->   This tutorial explains how to use the "core" git programs to set up and
->   work with a git repository.
->  @@ -1679,3 +1687,13 @@ merge two at a time, documenting how you resolved the conflicts,
->   and the reason why you preferred changes made in one side over
->   the other.  Otherwise it would make the project history harder
->   to follow, not easier.
->  +
->  +SEE ALSO
->  +--------
->  +linkgit:gittutorial[7], linkgit:gittutorial-2[7],
->  +linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
->  +link:user-manual.html[The Git User's Manual]
->  +
->  +GIT
->  +---
->  +Part of the linkgit:git[7] suite.
->  diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
->  index 4e5ea33..3eaf4b8 100644
->  --- a/Documentation/gitcvs-migration.txt
->  +++ b/Documentation/gitcvs-migration.txt
->  @@ -20,7 +20,7 @@ can synchronize with; this document explains how to do that.
->
->   Some basic familiarity with git is required.  This
->   linkgit:gittutorial[7][tutorial introduction to git] and the
->  -link:glossary.html[git glossary] should be sufficient.
->  +linkgit:gitglossary[7][git glossary] should be sufficient.
->
->   Developing against a shared repository
->   --------------------------------------
->  @@ -187,7 +187,9 @@ repositories without the need for a central maintainer.
->   SEE ALSO
->   --------
->   linkgit:gittutorial[7], linkgit:gittutorial-2[7],
->  -linkgit:giteveryday[7], link:user-manual.html[The Git User's Manual]
->  +linkgit:giteveryday[7], linkgit:gitcore-tutorial[7],
->  +linkgit:gitglossary[7],
->  +link:user-manual.html[The Git User's Manual]
->
->   GIT
->   ---
->  diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
->  index d7c3a35..6b33242 100644
->  --- a/Documentation/giteveryday.txt
->  +++ b/Documentation/giteveryday.txt
->  @@ -474,8 +474,9 @@ ftp> cp -r .git /home/user/myproject.git
->   SEE ALSO
->   --------
->   linkgit:gittutorial[7], linkgit:gittutorial-2[7],
->  -linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
->  -Manual]
->  +linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
->  +linkgit:gitglossary[7],
->  +link:user-manual.html[The Git User's Manual]
->
->   GIT
->   ---
->  diff --git a/Documentation/gitglossary.txt b/Documentation/gitglossary.txt
->  new file mode 100644
->  index 0000000..e8475a0
->  --- /dev/null
->  +++ b/Documentation/gitglossary.txt
->  @@ -0,0 +1,25 @@
->  +gitglossary(7)
->  +==============
->  +
->  +NAME
->  +----
->  +gitglossary - A GIT Glossary
->  +
->  +SYNOPSIS
->  +--------
->  +*
->  +
->  +DESCRIPTION
->  +-----------
->  +
->  +include::glossary-content.txt[]
->  +
->  +SEE ALSO
->  +--------
->  +linkgit:gittutorial[7], linkgit:gittutorial-2[7],
->  +linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
->  +link:user-manual.html[The Git User's Manual]
->  +
->  +GIT
->  +---
->  +Part of the linkgit:git[7] suite.
->  diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
->  index 4af9073..c7f59bd 100644
->  --- a/Documentation/gittutorial-2.txt
->  +++ b/Documentation/gittutorial-2.txt
->  @@ -390,7 +390,7 @@ in the index file is identical to the one in the working directory.
->   In addition to being the staging area for new commits, the index file
->   is also populated from the object database when checking out a
->   branch, and is used to hold the trees involved in a merge operation.
->  -See the link:core-tutorial.html[core tutorial] and the relevant man
->  +See the linkgit:gitcore-tutorial[7][core tutorial] and the relevant man
->   pages for details.
->
->   What next?
->  @@ -400,7 +400,7 @@ At this point you should know everything necessary to read the man
->   pages for any of the git commands; one good place to start would be
->   with the commands mentioned in linkgit:giteveryday[7][Everyday git].
->   You should be able to find any unknown jargon in the
->  -link:glossary.html[Glossary].
->  +linkgit:gitglossary[7][Glossary].
->
->   The link:user-manual.html[Git User's Manual] provides a more
->   comprehensive introduction to git.
->  @@ -412,15 +412,16 @@ CVS-like way.
->   For some interesting examples of git use, see the
->   link:howto-index.html[howtos].
->
->  -For git developers, the link:core-tutorial.html[Core tutorial] goes
->  +For git developers, the linkgit:gitcore-tutorial[7][Core tutorial] goes
->   into detail on the lower-level git mechanisms involved in, for
->   example, creating a new commit.
->
->   SEE ALSO
->   --------
->   linkgit:gittutorial[7], linkgit:giteveryday[7],
->  -linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
->  -Manual]
->  +linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
->  +linkgit:gitglossary[7],
->  +link:user-manual.html[The Git User's Manual]
->
->   GIT
->   ---
->  diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
->  index 470f7f7..34469be 100644
->  --- a/Documentation/gittutorial.txt
->  +++ b/Documentation/gittutorial.txt
->  @@ -598,8 +598,9 @@ digressions that may be interesting at this point are:
->   SEE ALSO
->   --------
->   linkgit:gittutorial-2[7], linkgit:giteveryday[7],
->  -linkgit:gitcvs-migration[7], link:user-manual.html[The Git User's
->  -Manual]
->  +linkgit:gitcvs-migration[7], linkgit:gitcore-tutorial[7],
->  +linkgit:gitglossary[7],
->  +link:user-manual.html[The Git User's Manual]
->
->   GIT
->   ---
->  diff --git a/Documentation/glossary.txt b/Documentation/glossary-content.txt
->  similarity index 99%
->  rename from Documentation/glossary.txt
->  rename to Documentation/glossary-content.txt
->  index 51b6353..f981fee 100644
->  --- a/Documentation/glossary.txt
->  +++ b/Documentation/glossary-content.txt
->  @@ -1,6 +1,3 @@
->  -GIT Glossary
->  -============
->  -
->   [[def_alternate_object_database]]alternate object database::
->         Via the alternates mechanism, a <<def_repository,repository>>
->         can inherit part of its <<def_object_database,object database>>
->  diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
->  index b2c4f2c..a99489e 100644
->  --- a/Documentation/user-manual.txt
->  +++ b/Documentation/user-manual.txt
->  @@ -4252,7 +4252,10 @@ You see, Git is actually the best tool to find out about the source of Git
->   itself!
->
->   [[glossary]]
->  -include::glossary.txt[]
->  +GIT Glossary
->  +============
->  +
->  +include::glossary-content.txt[]
->
->   [[git-quick-start]]
->   Appendix A: Git Quick Reference
->  --
 
-THX very much for the great work.
+Is the indention between ba7f5b and 38254 intentional?
+
+* ba7f5b log and rev-list: add --graph option
+*   38254 Add history graph API
+*   12918 revision API: split parent rewriting
+*   c697a Cleanup xread() loops to use read_in_full()
+M     47179Merge branch 'maint'
 
 -- 
 Ping Yin
