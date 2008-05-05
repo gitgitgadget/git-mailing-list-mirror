@@ -1,60 +1,91 @@
-From: "Jun Ma" <sync.jma@gmail.com>
-Subject: git checkout -b -f v1.5.5.1
-Date: Mon, 5 May 2008 23:48:36 +0800
-Message-ID: <dcf6addc0805050848v91589c6i6c2fca168b7644d5@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: git checkout -b -f v1.5.5.1
+Date: Mon, 5 May 2008 17:58:30 +0200
+Message-ID: <20080505155830.GC18443@leksak.fem-net>
+References: <dcf6addc0805050848v91589c6i6c2fca168b7644d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 05 17:49:55 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IpbVkmxF4tDyP/Kb"
+Cc: git@vger.kernel.org
+To: Jun Ma <sync.jma@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 05 18:00:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt2wb-0003m6-4q
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 17:49:37 +0200
+	id 1Jt37C-0008Pt-TY
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 18:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752741AbYEEPsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 11:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYEEPsj
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 11:48:39 -0400
-Received: from el-out-1112.google.com ([209.85.162.181]:25671 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbYEEPsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 11:48:38 -0400
-Received: by el-out-1112.google.com with SMTP id n30so729100elf.21
-        for <git@vger.kernel.org>; Mon, 05 May 2008 08:48:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=9ejBTCHdEsUYTSMowZ4LpE92aqPYXRknOw2pX0b10Ng=;
-        b=eZrrxFVYWXy3sTxwsQtecRM7UEzJ4guspyGAcVewACFTB3esFUH1pCu8t5kdGuWh988Jr0LQ7+qdTeZYytvpfyaaybgEt4dYwoXuDQ0L7SSguL8avbiDZ079HeKmtv/i3aDzsoauHG7b4Pl9+UIzTG8Ms47QqYtP9gjRtUa4vog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=cmOjMdAcEF+f7to731a0GvvOJL+ZEwePnltGCTUx+S8mW3ry0LgB4E91Sf8ogELfIcHc+cnxui1aWfEgWnJp3QVe5DYTiAQjKcGsQyo6gRYb/w5YzaQJ2xZ5wqnYlLrIXtNX1/YlH+bcrPRwoKtf7PSGLBT3M/49W5OEPQgdPVo=
-Received: by 10.142.81.7 with SMTP id e7mr2560195wfb.320.1210002516349;
-        Mon, 05 May 2008 08:48:36 -0700 (PDT)
-Received: by 10.142.97.21 with HTTP; Mon, 5 May 2008 08:48:36 -0700 (PDT)
+	id S1754568AbYEEP7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 11:59:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbYEEP7q
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 11:59:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58271 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754064AbYEEP7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 11:59:46 -0400
+Received: (qmail invoked by alias); 05 May 2008 15:59:44 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp032) with SMTP; 05 May 2008 17:59:44 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+4Ckszj5e4dlGJRqtx1zdDIT+1xcy1ERXm6v1ISN
+	BxvvgEd1LQ1SV/
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1Jt35C-0005vr-8u; Mon, 05 May 2008 17:58:30 +0200
+Mail-Followup-To: Jun Ma <sync.jma@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <dcf6addc0805050848v91589c6i6c2fca168b7644d5@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81290>
 
-Hi, all
-     I just mistaken 'git checkout -b 1.5.5.1 v1.5.5.1' to 'git
-checkout -b -f v1.5.5.1', and I don't how to delete it ,
 
-  537  git-branch -D -f
-  538  git-branch -D \-f
-  539  git-branch -D "\-f"
+--IpbVkmxF4tDyP/Kb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-     all the above operations were failed. :(
+Hi,
 
-     PS: Would it be better if we do checking on branch name to avoid
-this case?
+>      I just mistaken 'git checkout -b 1.5.5.1 v1.5.5.1' to 'git
+> checkout -b -f v1.5.5.1', and I don't how to delete it ,
 
--- 
-FIXME if it is wrong.
+Try
+  git branch -D -- -f
+
+>   537  git-branch -D -f
+>   538  git-branch -D \-f
+>   539  git-branch -D "\-f"
+>=20
+>      all the above operations were failed. :(
+
+In all cases, git-branch gets -f as parameter, because your shell "expands"
+them to -f.
+
+> PS: Would it be better if we do checking on branch name to avoid this cas=
+e?
+
+What do you want to check for?
+No leading dashes?
+
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+
+--IpbVkmxF4tDyP/Kb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIHy6mbt3SB/zFBA8RAoNJAKCPs31bwloq2Ityqr/nIs0Gi127JgCeMqiv
+4bT7hA0jNY3bQzh/KwXunwA=
+=qDY9
+-----END PGP SIGNATURE-----
+
+--IpbVkmxF4tDyP/Kb--
