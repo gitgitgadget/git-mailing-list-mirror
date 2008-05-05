@@ -1,147 +1,71 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Documentation status (was Re: [PATCH 3/3] Documentation: convert tutorials to man pages)
-Date: Mon, 5 May 2008 05:48:58 +0200
-Message-ID: <200805050548.58905.chriscool@tuxfamily.org>
-References: <20080502053051.c8066c4e.chriscool@tuxfamily.org> <200805030604.32123.chriscool@tuxfamily.org> <7vfxszuvs6.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	"Manoj Srivastava" <srivasta@ieee.org>,
-	"Ping Yin" <pkufranky@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 05 05:45:20 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: Associating tags with changelogs
+Date: Sun, 4 May 2008 23:56:31 -0400
+Message-ID: <436ECC5F-0664-4379-8F69-0121AE5F496E@sb.org>
+References: <218b69370805042040h66d02979jac6bd64456a9d304@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Zack Brown" <zacharyb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 05 05:57:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JsrdX-0008KI-MN
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 05:45:12 +0200
+	id 1JsrpW-0002Av-Q2
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 05:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757169AbYEEDoM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2008 23:44:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757408AbYEEDoK
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 23:44:10 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:43676 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755543AbYEEDoH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 May 2008 23:44:07 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 95DAB1AB2BA;
-	Mon,  5 May 2008 05:44:05 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 379491AB2AE;
-	Mon,  5 May 2008 05:44:05 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vfxszuvs6.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753026AbYEED4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2008 23:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752932AbYEED4i
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 May 2008 23:56:38 -0400
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:38146 "EHLO
+	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752202AbYEED4h (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 May 2008 23:56:37 -0400
+Received: from [192.168.0.215] (c-24-91-11-245.hsd1.ma.comcast.net [24.91.11.245])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 6D12518DAB8;
+	Sun,  4 May 2008 20:56:35 -0700 (PDT)
+In-Reply-To: <218b69370805042040h66d02979jac6bd64456a9d304@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81222>
 
-Le samedi 3 mai 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > About man page sections, Perl is consistent because every thing is =
-in
-> > section 1.
+Sounds like you want git describe --contains.
+
+-Kevin Ballard
+
+On May 4, 2008, at 11:40 PM, Zack Brown wrote:
+
+> I'm using git to extract changelog entries into a MySQL database, and
+> I want to be able to associate each changelog with the official
+> release in which it first appears. I can use "git-tag -l" to see a
+> list of the tags, and I can use "git-log tag1..tag2" to view all the
+> changelogs between two tags, but neither of these are exactly what I
+> want.
 >
-> I do not think it is a good example to follow, though.
-
-I agree.
-
-> > Now for git we already have git commands in section 1 and some
-> > other documentation (gitattributes, gitignore, gitmodules) in secti=
-on 5
-> > and "git" in section 7. Do we want to keep "git" alone in section 7=
- and
-> > put tutorials in section 1 ? Or put everything in section 1 ?
+> My script keeps track of the most recent changelog entry that it has
+> processed into the MySQL database, so the next time it runs, it picks
+> up from that entry, using "`git-log sha1string.. --pretty=fuller", and
+> inserts only the changelogs since that entry into the database.
 >
-> My preference is to move git(7) to git(1) because it is describing a
-> command at the end-user level (distros are much better than us to com=
-e up
-> with a way to deal with conflict resolution between us and the other
-> git), keep file format description in section 5 (that's where they be=
-long
-> to).
+> What I'd like is to still be able to get only the entries since that
+> sha1 string, while somehow identifying the tag of the release
+> encompassing each entry listed in that set. Then when I input the
+> changelog into my database, I can associate it with the proper
+> official release (or -rc candidate).
+>
+> Is there a command to do that? I don't see anything in the man pages  
+> for it.
 
-Ok, I will do that.
-Then what about tutorials (that I put in section 7) ?
-
-After the patch I just sent and if I move git(7) to git(1) we will have=
-:
-
-Section 1:
-
-git, gitk, git-COMMAND
-
-Section 5:
-
-gitattributes gitignore gitmodules githooks gitdiffcore gitrepository-l=
-ayout
-
-Section 7:
-
-gitcli gittutorial gittutorial-2 gitcvs-migration giteveryday=20
-gitcore-tutorial gitglossary
-
-The logic is:
-
-- the commands are in section 1 with a name git-COMMAND
-- the documents about files and file formats are in section 5 with a na=
-me=20
-gitSTUFF so that it is different from commands
-- the tutorials and manual stuff are in section 7 with a name gitSTUFF =
-so=20
-that it is different from commands
-
-Jakub suggests to use "git-core-tutorial" instead of "gitcore-tutorial"=
-=20
-and "git-repository-layout" instead of "gitrepository-layout" but=20
-that would break the gitSTUFF logic for section 5 and 7, except if we d=
-ecide=20
-to name everything git-STUFF in these sections too.
-
-Naming everything "git-STUFF" also makes "git help STUFF" works with no=
- code=20
-change, and is perhaps more readable.
-
-Then there are also the following documents that I may not convert to m=
-an=20
-pages:
-
-- howto-index:
-
-This file lists and describes the documents in the "howto" directory. T=
-here=20
-are 11 documents in this directory but only 2 of them are converted by =
-the=20
-Makefile into HTML. And those that are converted have their own formati=
-ng=20
-rules according to the Makefile. So in the current state there is no po=
-int=20
-to convert the "howto-index".
-
-- user-manual:
-
-It also has its own formatting rules. But it may be usefull to convert =
-it=20
-though it will be big (the .txt has 4550 lines).
-
-- git-tools:
-
-It lists and describe the git related tools, but seems a bit outdated a=
-nd=20
-does not follow the gitSTUFF convention.=20
-
-- technical/*
-
-Only the api-* documents here are converted to HTML and many of them ar=
-e=20
-stubs. They have their own formating rules too.
-
-Thanks,
-Christian.
-=20
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
