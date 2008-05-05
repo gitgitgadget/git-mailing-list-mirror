@@ -1,149 +1,150 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: help with git usage
-Date: Thu, 08 May 2008 22:01:06 +0200
-Message-ID: <48235C02.9010808@dirk.my1.cc>
-References: <200804291738.m3THc2hC030601@rs40.luxsci.com> <alpine.LNX.1.00.0804291354070.19665@iabervon.org> <m3tzhjokox.fsf@localhost.localdomain> <200805072242.m47Mg1o0015578@rs40.luxsci.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH amend] git-bisect.sh: don't accidentally override existing
+	branch "bisect"
+Date: Mon, 5 May 2008 07:43:00 +0000
+Message-ID: <20080505074300.5555.qmail@11d6801606c1fe.315fe32.mid.smarden.org>
+References: <20080430164613.28314.qmail@b31db398e1accc.315fe32.mid.smarden.org> <200804302330.18354.chriscool@tuxfamily.org> <20080502085620.3361.qmail@17e811992e6d42.315fe32.mid.smarden.org> <200805031042.32190.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Daniel Quinlan <danq@brtt.com>
-X-From: git-owner@vger.kernel.org Thu May 08 22:02:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon May 05 09:43:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuCJi-0002zy-Gh
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 22:02:14 +0200
+	id 1JsvMY-0002VQ-Oh
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 09:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751996AbYEHUBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 16:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbYEHUBM
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 16:01:12 -0400
-Received: from smtprelay07.ispgateway.de ([80.67.29.7]:55809 "EHLO
-	smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347AbYEHUBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 16:01:09 -0400
-Received: from [84.176.119.123] (helo=[192.168.2.100])
-	by smtprelay07.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1JuCId-0006xU-7H; Thu, 08 May 2008 22:01:07 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <200805072242.m47Mg1o0015578@rs40.luxsci.com>
-X-Df-Sender: 757646
+	id S1753586AbYEEHnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 03:43:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbYEEHnG
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 03:43:06 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:41067 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753548AbYEEHnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 03:43:05 -0400
+Received: (qmail 5556 invoked by uid 1000); 5 May 2008 07:43:00 -0000
+Content-Disposition: inline
+In-Reply-To: <200805031042.32190.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81554>
 
-Hi,
+If a branch named "bisect" or "new-bisect" already was created in the
+repo by other means than git bisect, doing a git bisect used to override
+the branch without a warning.  Now if the branch "bisect" or
+"new-bisect" already exists, and it was not created by git bisect itself,
+git bisect start fails with an appropriate error message.  Additionally,
+if checking out a new bisect state fails due to a merge problem, git
+bisect cleans up the temporary branch "new-bisect".
 
-what about using git-describe? At work we use sth. similar to the
-following script. Let's call it 'git-stamp':
+The accidental override has been noticed by Andres Salomon, reported
+through
+ http://bugs.debian.org/478647
 
--------------
-#!/usr/bin/bash
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
 
-if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
-    here=$(pwd)
-    topdir=$(git rev-parse --show-cdup)
-    cd ${topdir:-'./'}
-    desc=$(git describe)
-    if [ $(git diff-index --name-only HEAD | wc -l) -ne 0 ]; then
-        desc="$desc-dirty"
-    fi
-    cd $here
-    echo $desc
-    exit 0;
-else
-    echo "Not inside a git working tree."
-    exit 1;
-fi
--------------
+On Sat, May 03, 2008 at 10:42:31AM +0200, Christian Couder wrote:
+> Le vendredi 2 mai 2008, Gerrit Pape a ?crit :
+> > -   git branch -f new-bisect "$bisect_rev"
+> > -   git checkout -q new-bisect || exit
+> > +   git branch -D new-bisect
+> 
+> Doesn't this output an error if the branch "new-bisect" does not
+> exists ?
 
-Basically it outputs the output of 'git-describe'. When something
-whithin your working dir is currently *not* checked in, it outputs
-"$(git-describe)-dirty".
-
-Some sort of "-D$(git-stamp)" compiler switch would do the thing.
-Depending on your makefile or scons-script this would yield to a
-complete recompile of everything when only one file has changed.
-
-In our environment we patch $(git-stamp) into some "version.c"
-so the whole application only gets recompiled when version.c
-has changed.
-
-HTH,
-    Dirk
+It does, thanks.  Another amend, direct stderr to /dev/null.
 
 
+ Documentation/git-bisect.txt |    2 +-
+ git-bisect.sh                |   19 ++++++++++++-------
+ t/t6030-bisect-porcelain.sh  |   18 ++++++++++++++++++
+ 3 files changed, 31 insertions(+), 8 deletions(-)
 
-Daniel Quinlan schrieb:
-> Thanks for your earlier responses, they were very helpful.
->
-> On Apr 30, 2008, at 1:39 AM, Jakub Narebski wrote:
->
->> Daniel Barkalow <barkalow@iabervon.org> writes:
->>
->>> On Tue, 29 Apr 2008, Daniel Quinlan wrote:
->>>
->>>> I've been trying to use git for awhile now, (and I've read a lot
->>>> of documentation, though maybe my comprehension has not been high
->>>> enough) but there are several operations which I can't figure out:
->>
->> Many of answers to your questions can be found on GitFaq,
->> http://git.or.cz/gitwiki/GitFaq
->
-> I should have read this earlier.  I don't really understand the
-> details, but I get the idea:  make the central repository bare.
->
->>
->
->>>> 3) Similarly, I can't use the little context diffs I can see in
->>>> git-gui -- I need to see side by side comparisons; I've become
->>>> accustomed to tkdiff.  It seems like git mergetool knows how to do
->>>> that in some restricted circumstances, but I want to do it outside
->>>> the context of a merge.
->>>
->>> This I don't know, but you can get particular files from particular
->>> commits output with "git show <commit>:<path>", and you can likely wire
->>> something up.
->>
->> From the various graphical comparison tools, Meld has supposedly Git
->> support (http://meld.sourceforge.net/).  Supposedly only because I
->> have not tested this; see
->> http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-00fbd1ac45fe93dac4653cad3639b3df73d8657e 
->>
->>
->
-> I found no mention of git on the meld man page or in the meld mailing 
-> list.
->
-> Here's a (perhaps naive) perl script which uses "git show" and wraps 
-> around
-> the original tkdiff.  Other cvs users might find it useful, though it 
-> can surely
-> be improved.
->
->
->
->
->
-> I'm looking for a way to embed some identifying information about version
-> into compiled programs.  I hasten to add that I am not looking to 
-> expand RCS-like
-> tags.  Unlike CVS/RCS, git provides a single value that characterizes 
-> the whole
-> distribution, at least if everything is committed.  So, something like 
-> "git log | head -1 | awk '{print $2}'"
-> probably provides a value which I can embed into executables and 
-> libraries, tying
-> them to a particular source configuration.  I'm just curious if 
-> there's a better approach
-> to getting the commit hash.
->
-> -- danq
->
->
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 698ffde..1c7e38d 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -85,7 +85,7 @@ Oh, and then after you want to reset to the original head, do a
+ $ git bisect reset
+ ------------------------------------------------
+ 
+-to get back to the master branch, instead of being in one of the
++to get back to the original branch, instead of being in one of the
+ bisection branches ("git bisect start" will do that for you too,
+ actually: it will reset the bisection state, and before it does that
+ it checks that you're not using some old bisection branch).
+diff --git a/git-bisect.sh b/git-bisect.sh
+index d8d9bfd..b5171c9 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -69,14 +69,19 @@ bisect_start() {
+ 	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref -q HEAD) ||
+ 	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
+ 	die "Bad HEAD - I need a HEAD"
++	#
++	# Check that we either already have BISECT_START, or that the
++	# branches bisect, new-bisect don't exist, to not override them.
++	#
++	test -s "$GIT_DIR/BISECT_START" ||
++		if git show-ref --verify -q refs/heads/bisect ||
++		    git show-ref --verify -q refs/heads/new-bisect; then
++			die 'The branches "bisect" and "new-bisect" must not exist.'
++		fi
+ 	start_head=''
+ 	case "$head" in
+ 	refs/heads/bisect)
+-		if [ -s "$GIT_DIR/BISECT_START" ]; then
+-		    branch=`cat "$GIT_DIR/BISECT_START"`
+-		else
+-		    branch=master
+-		fi
++		branch=`cat "$GIT_DIR/BISECT_START"`
+ 		git checkout $branch || exit
+ 		;;
+ 	refs/heads/*|$_x40)
+@@ -328,8 +333,8 @@ bisect_next() {
+ 	exit_if_skipped_commits "$bisect_rev"
+ 
+ 	echo "Bisecting: $bisect_nr revisions left to test after this"
+-	git branch -f new-bisect "$bisect_rev"
+-	git checkout -q new-bisect || exit
++	git branch -D new-bisect 2> /dev/null
++	git checkout -q -b new-bisect "$bisect_rev" || exit
+ 	git branch -M new-bisect bisect
+ 	git show-branch "$bisect_rev"
+ }
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 5e3e544..05f1e15 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -284,6 +284,24 @@ test_expect_success 'bisect starting with a detached HEAD' '
+ 
+ '
+ 
++test_expect_success 'bisect refuses to start if branch bisect exists' '
++	git bisect reset &&
++	git branch bisect &&
++	test_must_fail git bisect start &&
++	git branch -d bisect &&
++	git checkout -b bisect &&
++	test_must_fail git bisect start &&
++	git checkout master &&
++	git branch -d bisect
++'
++
++test_expect_success 'bisect refuses to start if branch new-bisect exists' '
++	git bisect reset &&
++	git branch new-bisect &&
++	test_must_fail git bisect start &&
++	git branch -d new-bisect
++'
++
+ #
+ #
+ test_done
+-- 
+1.5.5.1
