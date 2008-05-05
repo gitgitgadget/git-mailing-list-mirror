@@ -1,95 +1,120 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: [PATCH] Pay attention to GIT_DIR when searching the git
-	directory
-Date: Mon, 5 May 2008 14:53:02 +0200
-Message-ID: <20080505125302.GA11523@alea.gnuu.de>
-References: <1209946178-29398-1-git-send-email-joerg@alea.gnuu.de> <alpine.DEB.1.00.0805051234260.30431@racer>
+From: Jim Cromie <jim.cromie@gmail.com>
+Subject: request - trailing # comments are silently non-functional in .gitignore
+Date: Mon, 05 May 2008 07:36:24 -0600
+Message-ID: <481F0D58.50204@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Cc: git@vger.kernel.org, jjengla@sandia.gov
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 05 15:22:32 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 05 15:37:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jt0dh-0002u3-VP
-	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:21:58 +0200
+	id 1Jt0sa-0000Og-9M
+	for gcvg-git-2@gmane.org; Mon, 05 May 2008 15:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755017AbYEENVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2008 09:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbYEENVG
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:21:06 -0400
-Received: from banki.eumelnet.de ([83.246.114.63]:4766 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754973AbYEENVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2008 09:21:05 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id D65DCEC058; Mon,  5 May 2008 15:21:03 +0200 (CEST)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jt0Bj-00045Q-4e; Mon, 05 May 2008 14:53:03 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1Jt0Bi-00030w-OL; Mon, 05 May 2008 14:53:02 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805051234260.30431@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755714AbYEENgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2008 09:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755680AbYEENgb
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 May 2008 09:36:31 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:41789 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755579AbYEENga (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2008 09:36:30 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so1189285wra.1
+        for <git@vger.kernel.org>; Mon, 05 May 2008 06:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=IIKVVWcWBdaSzktr8zxx2m92aTVxqb+WTVBzApfQwzM=;
+        b=JldtmV3/6n64e+dOYPzFhGkZRsBrie5q/q4EiM998FnxlEp22oKPqtAT6d4lOiIaXuyaBBaOdoOKw9waPgzlEfQA3XGlPB/FLWyWiN0CI3DeFSYaOo+SV4CgQOMbgD9JcYJq3K0n3ReAw55PoQB/hns1NgKdHpbT1P5UC6VNhKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=Yfbs1SsqoVKakh2sr5pUe2x19aAoQMGG93VUiAgt0Tp0NkEdOZ5uYzTrb83CcVs3HWOqCsfqf9Qa278WL2+t2ZZtsfI2DmsVF/YQpSPb5KMxyPop4TbEOOPlYZSEzUsEYa3HQIt67ey+F9bgqu2bkpOwLYQ6pKj1C9ayMbwYz9s=
+Received: by 10.114.132.5 with SMTP id f5mr5665551wad.125.1209994588949;
+        Mon, 05 May 2008 06:36:28 -0700 (PDT)
+Received: from harpo.jimc.earth ( [24.8.147.90])
+        by mx.google.com with ESMTPS id q18sm12894401pog.2.2008.05.05.06.36.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 05 May 2008 06:36:27 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080226)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81279>
 
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+perl is starting to use git, so Im a new user.
 
-Hi,
+I wrote a script to generate .gitignore from a MANIFEST,
+so I used a universal ignore, followed by explicit *attends*
 
-Johannes Schindelin schrieb am Mon 05. May, 12:36 (+0100):
-> On Mon, 5 May 2008, J=C3=B6rg Sommer wrote:
->=20
-> >  contrib/hooks/setgitperms.perl |    2 +-
->=20
-> This tells me more...
->=20
-> Please keep in mind that the commit log is meant to demonstrate the=20
-> _intention_ of the patches.
+# ignore everything
+*
+# watch these files
+!perl.h
+...
 
-The intention is that the variable GIT_DIR is respected when searching
-for the git dir.
+while testing this, I discovered that trailing comments silently
+invalidate the rule, so this line is ineffective:
 
-> If you do not say _what_ is affected by the change, you only confuse
-> the readers.
+*  # ignore everything. We attend to MANIFEST entries next...
 
-Do you want something like =E2=80=9Cinitialization: Pay attention to GIT_DI=
-R when
-searching the git directory=E2=80=9D?
 
-Is there a document with guidelines for commit messages, e.g. write the
-first letter upper or lower case?
 
-Bye, J=C3=B6rg.
---=20
-Die Katze steht im Mittelpunkt unserer Arbeit.
-Alles was wir tun, ist f=C3=BCr sie.
+Explicit MANIFEST support / file inclusion
 
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
-Content-Disposition: inline
+    !<MANIFEST
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+the above could mean dont-ignore all files named in MANIFEST (1st field: 
+/^(\S+)/)
 
-iD8DBQFIHwMuwe0mZwH1VIARAr6vAJ9aoxpZXXNKYvvBBoOEpH6sKyopHgCaA21B
-YtakaTI9Mt72Vv+Dlol7QrY=
-=VevS
------END PGP SIGNATURE-----
 
---gKMricLos+KVdGMg--
+This describes use of other .gitignores (but Im not suggesting this be 
+supported)
+
+    <`find . -name .gitignore`
+
+However, this might be useful
+
+    !<`cut -d\  -f2 MANIFEST-odd`
+
+Id accept that this might be too much shell-ish magic for your tastes,
+
+
+
+Preprocessor Support
+
+Perl uses XS to interface to C libs etc, and needs to process foo.xs -> 
+foo.c
+which is then compiled to make foo.o.  Heres an excerpt from a makefile
+
+
+# --- MakeMaker xs_c section:
+
+.xs.c:
+        $(XSUBPPRUN) $(XSPROTOARG) $(XSUBPPARGS) $(XSUBPP_EXTRA_ARGS) 
+$*.xs > $*.xsc && $(MV) $*.xsc $*.c
+
+
+
+
+It would be nice if this kind of dependency were usable as an 
+ignoral-directive,
+ignore foo.c if foo.xs exists.
+
+some alternatives:
+
+:*.c:*.xs:
+    - colons signal different kind of line, and delimit 2 specs
+    - the 2 * must match same literals (perhaps why make dev's left them 
+out)
+
+*.c!*.xs
+    - here '!' serves as separator of 2 fields
+    - also suggests attend to the 2nd field (which is arguably desirable)
+       if so, it needs to be attended even if *.c is missing (it is 
+until built)
