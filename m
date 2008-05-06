@@ -1,93 +1,88 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCHv4 2/4] commit: Show author if different from committer
-Date: Tue, 06 May 2008 16:34:52 -0700
-Message-ID: <7vej8fgg6b.fsf@gitster.siamese.dyndns.org>
-References: <1209917092-12146-1-git-send-email-sbejar@gmail.com>
- <1209917092-12146-3-git-send-email-sbejar@gmail.com>
+From: Roman Shaposhnik <rvs@sun.com>
+Subject: Re: Making submodules easier to work with
+Date: Tue, 06 May 2008 16:47:02 -0700
+Message-ID: <1210117622.25663.1110.camel@work.sfbay.sun.com>
+References: <8B885217-8C18-417E-8F11-BB6661792CD3@gmail.com>
+ <alpine.DEB.1.00.0804301121240.17469@eeepc-johanness>
+ <BC221793-3FB5-4249-8E8D-819C1B413592@gmail.com>
+ <32541b130804301331o70310831raf71db7cbb51d507@mail.gmail.com>
+ <EFEF26F9-D5D6-4BAC-9A8F-6D96E45AFAF7@gmail.com>
+ <32541b130804301448i537a0b98ta01cecc472e20aec@mail.gmail.com>
+ <1209594215.25663.864.camel@work.sfbay.sun.com>
+ <32541b130804301528k70ae2f7eq5229c0b4bb1d3788@mail.gmail.com>
+ <20080501183837.GA4772@pvv.org>
+ <32541b130805011255t4b37a73cx9d670b9250e787c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 01:36:25 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7BIT
+Cc: Finn Arne Gangstad <finnag@pvv.org>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 01:43:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtWhn-0003wH-Nl
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 01:36:20 +0200
+	id 1JtWoa-0006As-29
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 01:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756542AbYEFXfI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 May 2008 19:35:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755922AbYEFXfI
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 19:35:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59073 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755400AbYEFXfG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 19:35:06 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CB3751632;
-	Tue,  6 May 2008 19:35:04 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id E80C41630; Tue,  6 May 2008 19:35:01 -0400 (EDT)
-In-Reply-To: <1209917092-12146-3-git-send-email-sbejar@gmail.com> (Santi
- =?utf-8?Q?B=C3=A9jar's?= message of "Sun, 4 May 2008 18:04:50 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0DFD6692-1BC5-11DD-9DAE-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S934167AbYEFXmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 19:42:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934235AbYEFXmO
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 19:42:14 -0400
+Received: from sca-es-mail-2.Sun.COM ([192.18.43.133]:56593 "EHLO
+	sca-es-mail-2.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934234AbYEFXmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 19:42:11 -0400
+Received: from fe-sfbay-09.sun.com ([192.18.43.129])
+	by sca-es-mail-2.sun.com (8.13.7+Sun/8.12.9) with ESMTP id m46Ng96j014835
+	for <git@vger.kernel.org>; Tue, 6 May 2008 16:42:10 -0700 (PDT)
+Received: from conversion-daemon.fe-sfbay-09.sun.com by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0K0H000010F7K600@fe-sfbay-09.sun.com> (original mail from rvs@sun.com)
+ for git@vger.kernel.org; Tue, 06 May 2008 16:42:09 -0700 (PDT)
+Received: from [129.146.84.200] by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPSA id <0K0H00K1K0I6BD20@fe-sfbay-09.sun.com>; Tue,
+ 06 May 2008 16:42:06 -0700 (PDT)
+In-reply-to: <32541b130805011255t4b37a73cx9d670b9250e787c6@mail.gmail.com>
+X-Mailer: Evolution 2.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81388>
 
-Santi B=C3=A9jar <sbejar@gmail.com> writes:
+On Thu, 2008-05-01 at 15:55 -0400, Avery Pennarun wrote:
+> >  o Branching "crawler" means branching "os-lib"
+> >  o You can send a patch that contains changes both to "crawler" and "os-lib"
+> >   and get it applied in a resonable way as ONE modification (and git-am
+> >   would do the right thing)
+> >  o Merging branch a and branch b in "crawler" also merges the matching
+> >   branches a and b in "os-lib".
+> >  o Pushing the supermodule also pushes the submodules
+> 
+> The above would fit fine into my workflow, although it might be more
+> fancy than I really need.  Personally, I don't mind thinking of my
+> submodules as separate projects (ie. I should expect to commit,
+> branch, merge, and push separately).  But if the above features
+> existed I would adjust my working style to use them, just for the
+> added day-to-day convenience factor.
+> 
+> Doing things like a single patch against one repo is a bit messy,
+> because (presumably) you'd have the same commit message in both repos,
+> which wouldn't really make sense.
 
-> That would help reassure anybody while committing other's changes.
->
-> Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
-> ---
->  builtin-commit.c  |   25 ++++++++++++++++++++++---
->  t/t7502-commit.sh |   12 ++++++++++++
->  2 files changed, 34 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index a37d8c3..d03b6b2 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -47,6 +47,7 @@ static enum {
-> =20
->  static char *logfile, *force_author, *template_file;
->  static char *edit_message, *use_message;
-> +static char *author_name, *author_email, *author_date;
->  static int all, edit_flag, also, interactive, only, amend, signoff;
->  static int quiet, verbose, untracked_files, no_verify, allow_empty;
->  /*
-> @@ -395,7 +396,7 @@ static int is_a_merge(const unsigned char *sha1)
-> =20
->  static const char sign_off_header[] =3D "Signed-off-by: ";
-> =20
-> -static void determine_author_info(struct strbuf *sb)
-> +static void determine_author_info(void)
->  {
->  	char *name, *email, *date;
-> =20
+May be my brain is saturated with "partial cloning" but somehow the 
+following looks like an interesting twist on a decentralized SCM:
+imagine that the picture given by Finn Arne Gangstad weren't 
+static. IOW, os-lib wasn't really a separate component to begin
+with but was first developed as part of a "crawler" and only
+when the other team started to implement "indexer" there was
+a need for os-lib to be shared between two independent projects.
+Is there any nice way to express such a dynamic history sharing,
+short of truly refactoring os-lib into a separate Git repository
+and treating it either as a submodule or a subtree-merge?
 
-The parameter list here should be "(void)" like the above (I've already
-touched up).
-
-> @@ -545,6 +552,17 @@ static int prepare_to_commit(const char *index_f=
-ile, const char *prefix)
->  		if (only_include_assumed)
->  			fprintf(fp, "# %s\n", only_include_assumed);
-> =20
-> +		author_ident =3D xstrdup(fmt_name(author_name, author_email));
-> +		committer_ident =3D
-> +			xstrdup(fmt_name(getenv("GIT_COMMITTER_NAME"),
-> +					 getenv("GIT_COMMITTER_EMAIL")));
-
-The lifetime of these two variables are inside "if (use_editor)" so it
-would be better to move the decl inside it.  Then it would become more
-obvious that these two leaks and are safe to free at the end of the
-scope.
+Thanks,
+Roman.
