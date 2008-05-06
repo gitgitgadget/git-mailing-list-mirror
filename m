@@ -1,65 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: merge renamed files/directories?
-Date: Tue, 6 May 2008 09:39:01 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805060936270.32269@woody.linux-foundation.org>
-References: <4819CF50.2020509@tikalk.com> <481D52CC.1030503@tikalk.com> <32541b130805050940x1297e907ofc67ee65494897eb@mail.gmail.com> <200805052349.35867.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.10.0805051512060.32269@woody.linux-foundation.org>
- <ADDE27A8-6329-4C09-BC07-8EB023BA6D48@midwinter.com> <alpine.LFD.1.10.0805051724510.32269@woody.linux-foundation.org> <20080506154709.GF6918@mit.edu> <alpine.LFD.1.10.0805060851470.32269@woody.linux-foundation.org> <48208817.4060005@tikalk.com>
+From: "Paul Holbrook" <paul.holbrook@gmail.com>
+Subject: Accessing a single repository with different addresses?
+Date: Tue, 6 May 2008 12:51:13 -0400
+Message-ID: <8c0610ed0805060951x70ede89bq5a93e69aece8c8c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, Steven Grimm <koreth@midwinter.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Ittay Dror <ittayd@tikalk.com>
-X-From: git-owner@vger.kernel.org Tue May 06 18:40:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 06 18:52:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtQDi-0000RS-2H
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 18:40:50 +0200
+	id 1JtQOg-0004vQ-RE
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 18:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758492AbYEFQkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 12:40:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759259AbYEFQkA
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 12:40:00 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50492 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752626AbYEFQj7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 12:39:59 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m46Gd3vq021846
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 May 2008 09:39:04 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m46Gd1O9016584;
-	Tue, 6 May 2008 09:39:02 -0700
-In-Reply-To: <48208817.4060005@tikalk.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.42 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1765077AbYEFQvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 12:51:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760626AbYEFQvT
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 12:51:19 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:20642 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758998AbYEFQvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 12:51:16 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so381436ugf.16
+        for <git@vger.kernel.org>; Tue, 06 May 2008 09:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=/K3rZYDNhCC7f3hyOqvSBzmrCR2DddgwFrP9KCiBJxs=;
+        b=AcA/g4UNKwc9fp0i6rCWq6TjwzdqdFfp5uw9ChB7+admGq7A2yh7FuofD+EAjC4SLabv/DARZz/Xn6Zfqobaz6urFg2ZeBp8O8Nvtiw9ADCGH+NU6/2BrwYEJCwQRUbKynkmpu8SDLfaGPq3TxCYZMrp7osx47JmwWGb1Vp5GeA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pnkiXh21GTb9e3FRfnpcepbBq8a3bJ9sB44U4NRz0++7Jl9P048cG6LJJHMRg0NPnLp6juoJi+SA4dqK3eW9W/KaS1UAV6ZT8KP+8wh0eD8cbaZZtt+yi4FYG/Bb4Ks54Lov7oz+Z9kdoMzWRhhH/pjjMPl3hS2CCeWJYAZRafQ=
+Received: by 10.67.89.17 with SMTP id r17mr5627727ugl.2.1210092673349;
+        Tue, 06 May 2008 09:51:13 -0700 (PDT)
+Received: by 10.66.224.13 with HTTP; Tue, 6 May 2008 09:51:13 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81369>
 
+I have two machines at home that I've been using to play with git: a
+desktop box and a laptop.  I set up a repository on the desktop, and
+cloned it to the laptop via ssh, but using just a local 192.168.x.x
+address.  However, when I leave the house, I'd still like to be able
+to talk to the desktop repository, which I can still do via ssh back
+to the house - but now the address for that very same repository is
+not a 192 address, but a DNS name.   What's the best way to handle
+this?
 
+I'm aware that with git I don't need to have the all-the-time
+connectivity to make it work - but when I leave the house,  there may
+be changes on the desktop repository that I haven't yet pulled to the
+laptop.  I still want to be able to get at those when I'm away from
+home.
 
-On Tue, 6 May 2008, Ittay Dror wrote:
-> 
-> And no, it's not a common problem, but I don't like the fact that a merge
-> conflict happens and the SCM doesn't tell me about it.
-
-I do agree that the most irritating feature of it is the silent clean 
-merge. When it's not obvious what the right thing to do is, generally a 
-merge strategy should try to warn, or even generate a conflict.
-
-That said, anybody who thinks that "merge was automatic and successful" 
-means that the mege was _correct_ is sadly mistaken. So you really 
-shouldn't depend on it, and yeah, I strongly suggest building and testing 
-after a merge (and before you push the result out), so that you can fix 
-any issues.
-
-			Linus
+-- Paul
