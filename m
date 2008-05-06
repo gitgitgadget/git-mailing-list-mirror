@@ -1,72 +1,116 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: git-checkout sometimes silently fails
-Date: Tue, 6 May 2008 12:22:56 -0700
-Message-ID: <20080506122256.04ca7d77.akpm@linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH] Documentation/config.txt: Add git-gui options
+Date: Tue,  6 May 2008 21:39:05 +0200
+Message-ID: <1210102745-7415-1-git-send-email-hendeby@isy.liu.se>
+Cc: Gustaf Hendeby <hendeby@isy.liu.se>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 21:24:29 2008
+X-From: git-owner@vger.kernel.org Tue May 06 21:40:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtSlv-00085l-9A
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 21:24:19 +0200
+	id 1JtT1C-0005zG-Od
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 21:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757179AbYEFTXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 15:23:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757140AbYEFTXa
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 15:23:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46229 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752542AbYEFTX3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 15:23:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m46JMuh9032550
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 6 May 2008 12:22:58 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m46JMuNx023083
-	for <git@vger.kernel.org>; Tue, 6 May 2008 12:22:56 -0700
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.776 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1761579AbYEFTjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 15:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756867AbYEFTjK
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 15:39:10 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:43737 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762772AbYEFTjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 15:39:08 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 7C8082593F
+	for <git@vger.kernel.org>; Tue,  6 May 2008 21:39:06 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 06536-03; Tue,  6 May 2008 06:03:43 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id A043D25783;
+	Tue,  6 May 2008 21:39:05 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id 9271C177A0; Tue,  6 May 2008 21:39:05 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.1.274.g25dd
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81378>
+
+The 'git gui' has a number of options that can be specified using the
+options dialog. Sometimes it is convenient to be able to specify these
+from the command line, therefor document these options.
+
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
+
+This manual update was initiated by the problem with git gui freezing
+up at start when only aspell previous to version 0.6 is available.
+For the moment a fix is to set gui.spellingdictionary="none", however
+this option isn't documented anywhere but in code.  I think it would
+be nice to have this option and other used by git gui documented
+somewhere, even if for no other reason than to understand what is in
+your .gitconfig.
+
+This patch introduces some more of the git gui specific options in
+config.txt with the reset of the git options (as suggested by Shawn.).
+An option would be to put the documentation in git-gui.txt and link to
+there from config.txt.  This way the config documentation does get
+less cluttered, and it makes it possible to have different
+documentation for different versions of git gui.  Does anyone have any
+opinions?  Maybe it is only me that think the options needs to be
+documented at?
+
+/Gustaf
 
 
-I've had this happen before and I don't know what to do to make it stop. 
-Usually sufficient fiddling will prevent it from happening.
+ Documentation/config.txt |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
 
-
-y:/usr/src/git26> cat .git/branches/linux-next 
-git+ssh://master.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git
-
-y:/usr/src/git26> git-checkout master
-Switched to branch "master"
-y:/usr/src/git26> cat kernel/*.c|sum
-34439  2057
-y:/usr/src/git26> git-checkout linux-next
-Switched to branch "linux-next"
-y:/usr/src/git26> cat kernel/*.c|sum     
-34439  2057
-y:/usr/src/git26> git-checkout origin 
-Note: moving to "origin" which isn't a local branch
-If you want to create a new branch from this checkout, you may do so
-(now or later) by using -b with the checkout command again. Example:
-  git checkout -b <new_branch_name>
-HEAD is now at 5717922... Merge branch 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jwessel/linux-2.6-kgdb
-y:/usr/src/git26> cat kernel/*.c|sum          
-34439  2057
-
-
-y:/usr/src/git26> git --version
-git version 1.5.5.rc1
-
-help?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fe43b12..06ab05e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -673,6 +673,37 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
+ is one of "ext" and "pserver") to make them apply only for the given
+ access method.
+ 
++gui.commitmsgwidth::
++	Defines how wide the commit message window is in the
++	linkgit:git-gui[1]. "75" is the default.
++
++gui.diffcontext::
++	Specify how many context lines should be used by in calls to
++	diff made in the linkgit:git-gui[1]. The default is "5".
++
++gui.matchtrackingbranch::
++	Determine if new branches created with linkgit:git-gui[1] should
++	default to track remote branches with matching names. Default:
++	"false".
++
++gui.newbranchtemplate::
++	Is used as suggested name when creating new branches using the
++	linkgit:git-gui[1].
++
++gui.pruneduringfetch::
++	"true" if linkgit:git-gui[1] should prune tracking branches when
++	performing a fetch. The default value is "false".
++
++gui.trustmtime::
++	Determine if linkgit:git-gui[1] should trust the file modification
++	timestamp or not. By default the timestamps are not trusted.
++
++gui.spellingdictionary::
++	Specify the dictionary used for spell checking commit messages in
++	the linkgit:git-gui[1]. When set to "none" spelling is turned off,
++	making linkgit:git-gui[1] to start on systems with aspell previous
++	to version 0.6.
++
+ help.browser::
+ 	Specify the browser that will be used to display help in the
+ 	'web' format. See linkgit:git-help[1].
+-- 
+1.5.5.1.273.g1810b
