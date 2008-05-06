@@ -1,92 +1,85 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git-checkout sometimes silently fails
-Date: Tue, 6 May 2008 23:50:49 +0200
-Message-ID: <20080506215049.GC4647@steel.home>
-References: <20080506122256.04ca7d77.akpm@linux-foundation.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 06 23:52:09 2008
+From: Tim Harper <timcharper@gmail.com>
+Subject: Re: [PATCH] I don't known anyone who understands what it means when they do a merge and see "file.txt: needs update". "file.txt: has changes" is much clearer.
+Date: Tue, 6 May 2008 15:50:56 -0600
+Message-ID: <F1DEC707-3E1B-4211-9F97-171D01B13A8E@gmail.com>
+References: <1209798522-13618-1-git-send-email-timcharper@gmail.com> <alpine.DEB.1.00.0805031509170.30431@racer> <7v3aozwcj6.fsf@gitster.siamese.dyndns.org> <3DE78C03-DA35-4CB5-8D3D-0529A89065EC@gmail.com> <7v63tvszgo.fsf@gitster.siamese.dyndns.org> <32541b130805031721n29cf470cx391fe0e8b4943706@mail.gmail.com> <7vtzhesvxu.fsf@gitster.siamese.dyndns.org> <32541b130805050935l7257a5e3t9b44d61abe28db37@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 23:52:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtV4h-0005kl-3x
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 23:51:51 +0200
+	id 1JtV4y-0005qy-BF
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 23:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084AbYEFVuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 17:50:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753950AbYEFVuy
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 17:50:54 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:54373 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753319AbYEFVux (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 17:50:53 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMna1oX+2lO0Q==
-Received: from tigra.home (Fa9c9.f.strato-dslnet.de [195.4.169.201])
-	by post.webmailer.de (klopstock mo4) (RZmta 16.34)
-	with ESMTP id h0367ek46JIEYI ; Tue, 6 May 2008 23:50:50 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 12398277BD;
-	Tue,  6 May 2008 23:50:50 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id E629C56D28; Tue,  6 May 2008 23:50:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080506122256.04ca7d77.akpm@linux-foundation.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754568AbYEFVvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 17:51:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbYEFVvH
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 17:51:07 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:36723 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754546AbYEFVvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 17:51:04 -0400
+Received: by wr-out-0506.google.com with SMTP id c48so10105wra.1
+        for <git@vger.kernel.org>; Tue, 06 May 2008 14:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=O0Fafh1S81HC4szOFj9oixQDyN5hlanh4T8hYdFH7kk=;
+        b=DpHwLmz/ITZcABV2G5Zgz5Y+B0SM0/tDWBGk8IUaZKEAtf0DE/xAS8VlzchGZLQpAEOa6G+RKzGPOQFMRNIzFprRUqXzPioFXBfyNbB2+DW9gHH+2r9mAguQd/Jo8U/w4s5RcTrZCsQrEEJNivNXC4S4KynyTu8Mfm+guZzUyMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=kSn9uwE2wUnU66Ix/tgrqRf0MeyhH5BYMggjeCIxnSPKRN+wrG7f5avICn56ZD4xUpR5XWr6pH2A2D+guagq1oU102efYzpMp+e3MOvbPw8J1gggHQow53O/KCMgsbvHzJnAdfdH5fuAH7c+qOListsCyQTN0raQ+G35q4XVjlA=
+Received: by 10.143.8.10 with SMTP id l10mr545649wfi.181.1210110662025;
+        Tue, 06 May 2008 14:51:02 -0700 (PDT)
+Received: from ?10.0.1.193? ( [66.182.89.5])
+        by mx.google.com with ESMTPS id 31sm2763253wff.10.2008.05.06.14.50.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 May 2008 14:50:59 -0700 (PDT)
+In-Reply-To: <32541b130805050935l7257a5e3t9b44d61abe28db37@mail.gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81382>
 
-Andrew Morton, Tue, May 06, 2008 21:22:56 +0200:
-> 
-> I've had this happen before and I don't know what to do to make it stop. 
-> Usually sufficient fiddling will prevent it from happening.
-> 
-> 
-> y:/usr/src/git26> cat .git/branches/linux-next 
-> git+ssh://master.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git
-> 
-> y:/usr/src/git26> git-checkout master
-> Switched to branch "master"
-> y:/usr/src/git26> cat kernel/*.c|sum
-> 34439  2057
-> y:/usr/src/git26> git-checkout linux-next
-> Switched to branch "linux-next"
-> y:/usr/src/git26> cat kernel/*.c|sum     
-> 34439  2057
+Yeah: I was thinking about it earlier and came at the same conclusion.
 
-This is not a good indication of a failed checkout (they could point
-to the same commit, for one). Try "gitk master...linux-next" (or "git
-log master..linux-next", "git diff master linux-next")
+There's a "porcelain" interface for a lot of commands.  Does the  
+concept need to be furthered for this case?
 
-> y:/usr/src/git26> git-checkout origin 
-> Note: moving to "origin" which isn't a local branch
-> If you want to create a new branch from this checkout, you may do so
-> (now or later) by using -b with the checkout command again. Example:
->   git checkout -b <new_branch_name>
-> HEAD is now at 5717922... Merge branch 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jwessel/linux-2.6-kgdb
+On another note - I've been running with this change for several days,  
+and everything seems to be alright.
 
-This is not an error. The commit was checked out (and HEAD was
-"detached").
+Tim
 
-> y:/usr/src/git26> cat kernel/*.c|sum          
-> 34439  2057
 
-Again, it is no indication nothing happened. "gitk HEAD...linux-next"
 
-> y:/usr/src/git26> git --version
-> git version 1.5.5.rc1
-> 
-> help?
+On May 5, 2008, at 10:35 AM, Avery Pennarun wrote:
 
-Look at "git branch -av" (it shows both local and remote branches and
-commits they point to). Maybe it will give you a hint. "gitk --all" is
-interesting too, seldom though (it becomes very confusing very fast if
-you have many branches with complicated history each).
+> On 5/3/08, Junio C Hamano <gitster@pobox.com> wrote:
+>> "Avery Pennarun" <apenwarr@gmail.com> writes:
+>>> On 5/3/08, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Of course not.  Where does end-user scripts come into play when  
+>>>> you are
+>>>> running the testsuite?
+>>>
+>>> I thought user scripts weren't supposed to rely on the porcelain
+>>> output?  It seems to change rather frequently anyway.
+>>
+>> Wasn't the patch about changing output from "update-index --refresh",
+>> which is as low as you can get?
+>
+> Hmm, perhaps the problem then is that we're using plumbing output and
+> presenting it to the user as part of the porcelain.  Is there an
+> elegant way to fix that?
+>
+> Avery
