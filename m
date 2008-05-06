@@ -1,57 +1,77 @@
-From: "Ryan Taylor" <ryan.taylor@leeds-art.ac.uk>
-Subject: Mirroring mySQL using Git
-Date: Tue, 6 May 2008 14:03:01 +0100
-Message-ID: <4B58A837F454E14AA0453EDBADE96A62B5F2A2@mildred.leeds-art.ac.uk>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: Mirroring mySQL using Git
+Date: Tue, 6 May 2008 14:24:22 +0100
+Message-ID: <20080506132422.GA13125@bit.office.eurotux.com>
+References: <4B58A837F454E14AA0453EDBADE96A62B5F2A2@mildred.leeds-art.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 06 15:04:47 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+Cc: git@vger.kernel.org
+To: Ryan Taylor <ryan.taylor@leeds-art.ac.uk>
+X-From: git-owner@vger.kernel.org Tue May 06 15:25:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtMpy-0008JG-Cy
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 15:04:06 +0200
+	id 1JtNAV-0000Xs-69
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 15:25:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471AbYEFNDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 09:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755475AbYEFNDM
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 09:03:12 -0400
-Received: from mail.leeds-art.ac.uk ([195.195.164.241]:30392 "EHLO
-	mildred.leeds-art.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755455AbYEFNDL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 09:03:11 -0400
-Received: (qmail 6391 invoked from network); 6 May 2008 13:03:07 -0000
-Received: from 17.130.10.172.in-addr.arpa (HELO mildred.leeds-art.ac.uk) (172.10.130.17)
-  by 0 with SMTP; 6 May 2008 13:03:06 -0000
-X-ECSC-UBE-ID: 6382.1210078986.1
-X-ECSC-UBE-IP: 172.10.130.17
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-x-cr-hashedpuzzle: 4MY= AEJQ Ajvl CnyA Crbc EN9B ES7m FJTT Frcn Hr0q HxAg ICI3 IzwH J1x2 LbB7 Ljie;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{5F59CE34-DEE9-47AF-87F5-FD5E16BE3645};cgB5AGEAbgAuAHQAYQB5AGwAbwByAEAAbABlAGUAZABzAC0AYQByAHQALgBhAGMALgB1AGsA;Tue, 06 May 2008 13:03:01 GMT;TQBpAHIAcgBvAHIAaQBuAGcAIABtAHkAUwBRAEwAIAB1AHMAaQBuAGcAIABHAGkAdAA=
-Content-class: urn:content-classes:message
-x-cr-puzzleid: {5F59CE34-DEE9-47AF-87F5-FD5E16BE3645}
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Mirroring mySQL using Git
-Thread-Index: AcivVmG1Pw/KrZB7TLCO1P2xM9+G1gAIDIigAAC4vSA=
+	id S1751142AbYEFNYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 09:24:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbYEFNYa
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 09:24:30 -0400
+Received: from os.eurotux.com ([216.75.63.6]:57881 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751023AbYEFNYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 09:24:30 -0400
+Received: (qmail 7445 invoked from network); 6 May 2008 13:24:28 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 6 May 2008 13:24:28 -0000
+Content-Disposition: inline
+In-Reply-To: <4B58A837F454E14AA0453EDBADE96A62B5F2A2@mildred.leeds-art.ac.uk>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81358>
 
-Hi,
 
-I'm wanting to mirror my mysql databases from my live web box to my dev
-box. The database are updated by a CMS on the live box and I need to be
-able to transfer these updates to the dev box.
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Is this possible with git?
+On Tue, May 06, 2008 at 02:03:01PM +0100, Ryan Taylor wrote:
+> Hi,
+>=20
+> I'm wanting to mirror my mysql databases from my live web box to my dev
+> box. The database are updated by a CMS on the live box and I need to be
+> able to transfer these updates to the dev box.
+>=20
+> Is this possible with git?
 
-And if so how?
+You'd be better off with asynchronous replication. See
+<http://dev.mysql.com/doc/refman/5.0/en/replication.html>.
 
-Cheers
+Note that you go the git route, or other file-based solution, you'll
+have to freeze operations to the filesystem where the DBs reside, or
+you'll corrupt the copy.
 
-Ryan
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkggXAYACgkQinSul6a7oB98xQCdHoD0g5l/SxDKdpl4wRotP1Jw
+46oAn3Vu5Ed34cE0bnFVRl5n19MPqs3O
+=Nq5C
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
