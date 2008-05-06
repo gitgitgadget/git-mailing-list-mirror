@@ -1,88 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: fsck --full is Ok, but clones are not, "missing commits"?!
-Date: Tue, 06 May 2008 13:12:51 +0200
-Message-ID: <48203D33.5020900@viscovery.net>
-References: <20080416062925.8028e952@zebulon.innova-card.com>	 <a537dd660805050744h7602e553u21c70168a621fe76@mail.gmail.com>	 <481F23D4.2090909@viscovery.net>	 <200805061231.30135.brian.foster@innova-card.com> <a537dd660805060358q6e39947blda348917d5853294@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: Excruciatingly slow git-svn imports
+Date: Tue, 6 May 2008 07:23:30 -0400
+Message-ID: <4484D251-B919-40AE-849B-1162F057550C@adacore.com>
+References: <CC0F600D-71F3-493A-AA9C-AF901C1A58C4@adacore.com> <2C39C19D-0B81-4879-92DC-C0436DB6E84E@midwinter.com> <20080429071122.GG24171@muzzle> <2B9E6C04-69F1-42BD-AE60-AFCE401E093E@adacore.com> <20080506032846.GA15521@untitled> <32541b130805052056g450b69cfg46693bc3c0c5a1ed@mail.gmail.com> <20080506042508.GA23465@untitled>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Bryan Donlan <bdonlan@fushizen.net>
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Tue May 06 13:14:14 2008
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 06 13:24:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtL7V-0006jU-Op
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 13:14:06 +0200
+	id 1JtLHS-0002Kh-8A
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 13:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbYEFLM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 07:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbYEFLM4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 07:12:56 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:44164 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142AbYEFLMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 07:12:55 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JtL6J-0003bx-Rg; Tue, 06 May 2008 13:12:52 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9D4886B7; Tue,  6 May 2008 13:12:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <a537dd660805060358q6e39947blda348917d5853294@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 2.2 (++)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5, PLING_QUERY=0.514
+	id S1752620AbYEFLXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 07:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbYEFLXc
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 07:23:32 -0400
+Received: from rock.gnat.com ([205.232.38.15]:53979 "EHLO rock.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751453AbYEFLXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 07:23:32 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id 6E2FE2A9927;
+	Tue,  6 May 2008 07:23:31 -0400 (EDT)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id oHS4zc4GGR0N; Tue,  6 May 2008 07:23:31 -0400 (EDT)
+Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTP id 243282A98E4;
+	Tue,  6 May 2008 07:23:31 -0400 (EDT)
+In-Reply-To: <20080506042508.GA23465@untitled>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81351>
 
-Brian Foster schrieb:
-> Johannes Sixt wrote:
->> What happens if you fire up gitk as simple as
->>
->>    $ gitk
->>
->> in the history if no grafts are present? Some months ago this took ages to
->> complete, and even today you get a *huge* list of commits in a *short*
->> window; hence, the scrollbar thumb is tiny, and if you succeed to get hold
->> of it without a magnifying glass, it scrolls way more than a page of
->> commits if you move it by only one pixel.
->>
->> No wonder that $user wants to have a shorter history. So $user, being
->> smart, truncates the history at a suitable point with a graft.
-> 
-> Hannes,
-> 
->  Unfortunately, I cannot fire up `gitk' in the exact
->  same configuration anymore (that server machine is now
->  being used for other purposes, albeit I'm supposed to
->  get the hard disc).  The git on the now-vanished server
->  was v1.5.3, but that's probably not relevant, since the
->  repository must have been created with a much older git
->  (it goes back multiple years).
-> 
->  All the (now-)installed gits I've seen are 1.5.<something>.
->  I do not see any noticeable performance issue with 1.5.2.5
->  (nor with 1.5.5)?  The scrollbar is, as you say, unusable.
 
-For me, the unusable scrollbar alone would be reason enough to truncate
-the history. Once it is truncated, performance is no longer an issue
-(whether or not it was an issue in the first place).
+On May 6, 2008, at 00:25, Eric Wong wrote:
 
->  But how important is `gitk'?  Is it something that'd be
->  used frequently enough for the formerly-poor performance
->  to be such an issue that creating and maintaining such a
->  "truncated" repository is worthwhile?
+> When using "svn cp" on a top-level directory, it *should*
+> just show up as a single file change in the log entry.
+> Something like:
+>
+>  A /project/branch/my-new-branch (from /project/trunk:1234)
+>
+> This would not take much memory at all.
+> However, I've also occasionally seen stuff like this:
+>
+>  A /project/branch/my-new-branch
+>  A /project/branch/my-new-branch/file1 (from /project/trunk/ 
+> file1:1234)
+>  A /project/branch/my-new-branch/file2 (from /project/trunk/ 
+> file2:1234)
+>  A /project/branch/my-new-branch/file3 (from /project/trunk/ 
+> file3:1234)
+>  .... many more files and directories along the same lines ...
 
-Well, I have gitk running all the time. So, yes, it is "important." But I
- run it basically as 'gitk --all --not origin' and press F5 frequently.
-With this set of arguments the scrollbar remains usable, and performance
-is not an issue, even on Windows.
+This is exactly what I'm experiencing.
+> This is what I suspect Geert is seeing in his repository and causing
+> problems.  Perhaps something caused by cvs2svn importing those tags  
+> into
+> SVN originally?
 
--- Hannes
+Yes, most likely. BTW, the conversion from CVS to SVN took about a day
+on slightly slower hardware.
+
+   -Geert
