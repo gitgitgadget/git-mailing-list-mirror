@@ -1,58 +1,58 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
-Date: Tue, 6 May 2008 14:31:59 +0100
-Message-ID: <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com>
-References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>
+From: Barry Roberts <blr@robertsr.us>
+Subject: Noob question on using branches
+Date: Tue, 06 May 2008 09:47:48 -0600
+Message-ID: <48207DA4.80502@robertsr.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Tim Harper" <timcharper@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 15:33:15 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 06 17:49:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtNHm-0003bl-HH
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 15:32:50 +0200
+	id 1JtPPI-0002uu-Sy
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 17:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506AbYEFNcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 09:32:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbYEFNcA
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 09:32:00 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:12685 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754385AbYEFNcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 09:32:00 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1682636rvb.1
-        for <git@vger.kernel.org>; Tue, 06 May 2008 06:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=CNoeAMP3TsUr14IRJDrFEw70iDsh+j2zaTuomLBjqvM=;
-        b=IqXO13Drz5Mab63x/zhm1QZqB3eXyv4sjkqKmQ2d3zkDMa7YkA5b0zRkYEZTD7vjur1l3RBKDStzmpPArkaQLU6cdn+HS65aevJIXPfqhVXI05+4NKoKlKBJwS71JUMk114t+CqDUVj7H+7TvwetOSqkKpDRMNrVYaTw6ssVbvw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dxc32STCoWPKZKpLX1M84M1XYswNCFyTGyQeOKs1kfAwPPym0lk27wIlYLxwHhfc7PK1zhHtQLYCKyTgBX/iCsefUcRGHdFlEH+v/PCxmyMu3/ZSUG6GX/ovEejR56//oujI+zVkQmwR42Tuu3eIdog8ak5ILXp250/KeaXQWZM=
-Received: by 10.141.141.3 with SMTP id t3mr354396rvn.52.1210080719713;
-        Tue, 06 May 2008 06:31:59 -0700 (PDT)
-Received: by 10.140.142.5 with HTTP; Tue, 6 May 2008 06:31:59 -0700 (PDT)
-In-Reply-To: <1209833972-12256-1-git-send-email-timcharper@gmail.com>
-Content-Disposition: inline
+	id S1758406AbYEFPr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 11:47:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758063AbYEFPrz
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 11:47:55 -0400
+Received: from qmta08.emeryville.ca.mail.comcast.net ([76.96.30.80]:47048 "EHLO
+	QMTA08.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755529AbYEFPry (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 11:47:54 -0400
+Received: from OMTA08.emeryville.ca.mail.comcast.net ([76.96.30.12])
+	by QMTA08.emeryville.ca.mail.comcast.net with comcast
+	id NEE31Z0050FhH24A807d00; Tue, 06 May 2008 15:46:08 +0000
+Received: from dalmuti.xactvalue.com ([76.27.63.88])
+	by OMTA08.emeryville.ca.mail.comcast.net with comcast
+	id NFnp1Z00A1uEJYk8U00000; Tue, 06 May 2008 15:47:51 +0000
+X-Authority-Analysis: v=1.0 c=1 a=ATkW8okCTpsXDSITe1sA:9
+ a=MKWnMxMkexC3clFx1eXsglEb424A:4 a=gi0PWCVxevcA:10
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81361>
 
-2008/5/3 Tim Harper <timcharper@gmail.com>:
-> When doing a merge, the message says "file.txt: needs update", or "file.txt: not uptodate, cannot merge".   While internally 'uptodate' makes sense, from the outside it's a mystery.
->
->  This patch will make git a little more human friendly, reporting "file.txt: has local changes".
+I have a branch in my git repository that is a "released" branch.  It 
+only gets defect fixes as they are needed to patch our production servers.
 
-Documentation/git-checkout.txt should also change in this case,
-otherwise users will see different output to that described and
-possibly get confused if following along with the examples.
+I want to get all those defect fixes back into the master, but I don't 
+want changes from the master getting into the production branch, so I 
+don't think I want to do:
+git checkout master
+git merge production
 
-Mike
+right?
+
+It looks like "git pull --squash . production" will do what I want.  Is 
+that correct, or is there a better way?  git cherry-pick seems 
+cumbersome when I already know I want everything in the branch (unless 
+there's a way to tell cherry-pick to get the whole branch and I've 
+missed that).
+
+Thanks,
+Barry Roberts
