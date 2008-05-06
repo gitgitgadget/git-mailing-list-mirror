@@ -1,67 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Be more careful with objects directory permissions on 
- clone
-Date: Mon, 05 May 2008 23:53:00 -0700
-Message-ID: <7vprrzhqk3.fsf@gitster.siamese.dyndns.org>
-References: <alpine.BSO.1.10.0805041234570.5819@zrgural.vwaro.pbz>
- <481ECCF0.6080308@viscovery.net>
- <alpine.BSO.1.10.0805051047260.7723@zrgural.vwaro.pbz>
- <481EDC4B.2010105@viscovery.net>
- <alpine.BSO.1.10.0805051121090.32248@zrgural.vwaro.pbz>
- <481EE478.9000704@viscovery.net>
- <alpine.BSO.1.10.0805051742020.10940@zrgural.vwaro.pbz>
+From: Adam Simpkins <adam@adamsimpkins.net>
+Subject: Re: [PATCH 3/3] log and rev-list: add --graph option
+Date: Tue, 6 May 2008 00:01:36 -0700
+Message-ID: <20080506070135.GA24803@adamsimpkins.net>
+References: <1209897414-10091-1-git-send-email-adam@adamsimpkins.net> <1209897414-10091-2-git-send-email-adam@adamsimpkins.net> <1209897414-10091-3-git-send-email-adam@adamsimpkins.net> <1209897414-10091-4-git-send-email-adam@adamsimpkins.net> <7vtzhcgci1.fsf@gitster.siamese.dyndns.org>
+Reply-To: Adam Simpkins <adam@adamsimpkins.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Mark Hills <mark@pogo.org.uk>
-X-From: git-owner@vger.kernel.org Tue May 06 08:54:05 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 09:02:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtH3s-0007Ko-6p
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 08:54:04 +0200
+	id 1JtHC4-0001Gk-PG
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 09:02:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417AbYEFGxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 02:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbYEFGxP
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 02:53:15 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65401 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbYEFGxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 02:53:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CEB6C44B6;
-	Tue,  6 May 2008 02:53:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 1B34A44B4; Tue,  6 May 2008 02:53:06 -0400 (EDT)
-In-Reply-To: <alpine.BSO.1.10.0805051742020.10940@zrgural.vwaro.pbz> (Mark
- Hills's message of "Mon, 5 May 2008 17:46:42 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 174325FC-1B39-11DD-BFDB-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1753081AbYEFHBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 03:01:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753090AbYEFHBo
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 03:01:44 -0400
+Received: from smtp182.iad.emailsrvr.com ([207.97.245.182]:56468 "EHLO
+	smtp182.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922AbYEFHBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 03:01:44 -0400
+Received: from relay8.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay8.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 9B5E21B6B2E;
+	Tue,  6 May 2008 03:01:39 -0400 (EDT)
+Received: by relay8.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 776861B6AE3;
+	Tue,  6 May 2008 03:01:39 -0400 (EDT)
+Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
+	id 2334F14100C2; Tue,  6 May 2008 00:01:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vtzhcgci1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81341>
 
-Mark Hills <mark@pogo.org.uk> writes:
+On Mon, May 05, 2008 at 11:41:58PM -0700, Junio C Hamano wrote:
+> Adam Simpkins <adam@adamsimpkins.net> writes:
+> 
+> > diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+> > index 476a870..f868290 100644
+> > --- a/builtin-rev-list.c
+> > +++ b/builtin-rev-list.c
+> > ...
+> > @@ -96,9 +98,50 @@ static void show_commit(struct commit *commit)
+> >  		pretty_print_commit(revs.commit_format, commit,
+> >  				    &buf, revs.abbrev, NULL, NULL,
+> >  				    revs.date_mode, 0);
+> > -		if (buf.len)
+> > -			printf("%s%c", buf.buf, hdr_termination);
+> > +		if (revs.graph) {
+> > ...
+> > +		} else {
+> > +			if (buf.len) {
+> > +				fwrite(buf.buf, sizeof(char), buf.len, stdout);
+> > +				putchar('\n');
+> 
+> Now hdr_termination can never be NUL, iow you broke "rev-list -v -z"?
 
-> diff --git a/git-clone.sh b/git-clone.sh
-> index 8c7fc7f..9d88d1c 100755
-> --- a/git-clone.sh
-> +++ b/git-clone.sh
-> @@ -334,7 +334,10 @@ yes)
->  			fi
->  		fi &&
->  		cd "$repo" &&
-> -		find objects -depth -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
-> +		# Create dirs using umask and permissions and destination
-> +		find objects -type d -print | (cd "$GIT_DIR" && xargs mkdir -p) &&
-> +		# Copy existing 0444 permissions on content
-> +		find objects ! -type d -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
->  			exit 1
+Whoops.  Sorry about that.  I didn't notice the "-v" option.
 
-Looks much better.  Thanks.
+(BTW, I don't think the "-z" option comes into play here.  Just
+"rev-list -v" by itself results in a NUL character after each entry
+instead of a newline.)
+
+> I'll squash in a minimum fix, because otherwise this breaks existing
+> tests.
+
+Thanks!
+
+-- 
+Adam Simpkins
+adam@adamsimpkins.net
