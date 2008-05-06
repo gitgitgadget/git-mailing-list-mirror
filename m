@@ -1,65 +1,58 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 2/7] add push line in git-clone
-Date: Tue, 06 May 2008 10:37:56 +0200
-Message-ID: <482018E4.9000908@gnu.org>
-References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org> <ff298458e7efc14721fdc0420432bf33efd76784.1209391614.git.bonzini@gnu.org> <7vve1yzgfc.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: OSX, ZFS, UTF8, git - somebody hates me in this list
+Date: Tue, 6 May 2008 09:48:05 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805060946510.30431@racer>
+References: <86wsm9dbhk.fsf@blue.stonehenge.com> <20080504215208.GG29038@spearce.org> <86skwxd97d.fsf@blue.stonehenge.com> <8663tsbqg0.fsf@blue.stonehenge.com> <alpine.LFD.1.10.0805051049440.32269@woody.linux-foundation.org> <905315640805051200g4c155d15xada4f17e5e2fc424@mail.gmail.com>
+ <86fxswa7ra.fsf@blue.stonehenge.com> <alpine.LFD.1.10.0805051240150.32269@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org, peff@peff.net,
-	johannes.schindelin@gmx.de, srb@cuci.nl
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 06 10:38:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Tarmigan <tarmigan+git@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue May 06 10:49:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtIhA-0002cX-7N
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 10:38:44 +0200
+	id 1JtIr5-00068I-RT
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 10:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680AbYEFIhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 04:37:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbYEFIhy
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 04:37:54 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:59760 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753668AbYEFIhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 04:37:53 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1280946nfc.21
-        for <git@vger.kernel.org>; Tue, 06 May 2008 01:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=n8GvRTykVA9mGm62EjAxypuY6y9rAytajz9xAWqZ5UM=;
-        b=EaQuNV8Z+kYdWeirlh2LeBgpwN5DBsIYjpn28cGWUVMPR788E76oTVAePBwQEv9YYv0LSg7SLOCs8hiMF2Ct6SnNPo8ciBRtAdCm3DuVDNO95mtp1mu74sYHITH772ir8zWXXvzKkiCDv8Dd1ItbZFu5w9DKxXsUHWnWMmSw2wc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=VlQVcbB2D7yNh99izAQaXOE+D+ciiCg4nEksjELnBWrN0D37bTNoKo25jo2bd/JouZbgDt/gxNPgYHHO64V8xka4NfvCKkPQMrOF3W3qNNCWcUqnc5rocamYKuvRR4+e2ZSr2lqnw3qHuAU0v8/LM0jwxkirs2cIeL5obBb4PLk=
-Received: by 10.210.16.16 with SMTP id 16mr440161ebp.41.1210063069632;
-        Tue, 06 May 2008 01:37:49 -0700 (PDT)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id s10sm646124muh.10.2008.05.06.01.37.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 May 2008 01:37:48 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <7vve1yzgfc.fsf@gitster.siamese.dyndns.org>
+	id S1755227AbYEFIsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 04:48:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754967AbYEFIsL
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 04:48:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50682 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754637AbYEFIsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 04:48:10 -0400
+Received: (qmail invoked by alias); 06 May 2008 08:48:08 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp027) with SMTP; 06 May 2008 10:48:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/oA7R6x1Hoi8StVUU1+7/4oINReGrdzqdAq5Y0Rw
+	OtNAiDkwxsJgq2
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.LFD.1.10.0805051240150.32269@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81345>
 
+Hi,
 
-> Used together with [1/7], this change is Ok in a homogeneous environment,
-> but it would break people who use git of different vintage on the same
-> repository (think of a repository on a networked filesystem).  You clone
-> like this, and older git won't grok the push configuration anymore.
-> 
-> It may look a very minor point, but I think it deserves mentioning.
+On Mon, 5 May 2008, Linus Torvalds wrote:
 
-I think it is reasonable to require cloning with the 
-least-common-denominator version in this case.  Think of what happened 
-if the pack format changed.
+> We can fix it. Junio hasn't merged my stupid infrastructure into core 
+> git yet, and I still don't really care enough or have a OS X box to test 
+> on (I've got a couple of mac minis, but they run that other OS ;), but 
+> we'll get the insane OS X crap handled *some* day.
 
-Paolo
+FWIW I think you can reproduce on Linux.  AFAIR there is some code in the 
+hfs or hfsplus modules to perform the same UTF-8 normalization.
+
+Ciao,
+Dscho
