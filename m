@@ -1,55 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to git-archive ignore some files?
-Date: Tue, 06 May 2008 15:08:25 -0700
-Message-ID: <7vk5i7gk6e.fsf@gitster.siamese.dyndns.org>
-References: <1210097731.5238.3.camel@omicron.ep.petrobras.com.br>
- <BAYC1-PASMTP023026B88005E512F95384AED60@CEZ.ICE>
- <4820CC35.3090202@lsrfire.ath.cx>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 3/3] diff: make "too many files" rename warning optional
+Date: Tue, 06 May 2008 23:29:07 +0100
+Message-ID: <4820DBB3.8020009@ramsay1.demon.co.uk>
+References: <20080430172136.GA22601@sigill.intra.peff.net> <20080430172553.GC23747@sigill.intra.peff.net> <481CA227.1000801@ramsay1.demon.co.uk> <20080504192332.GB13029@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Victor Bogado da Silva Lins <victor@bogado.net>,
-	Sean Estabrooks <seanlkml@sympatico.ca>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed May 07 00:09:41 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 07 00:38:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtVLp-0003m7-Nc
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 00:09:34 +0200
+	id 1JtVnO-0004Dw-7A
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 00:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933398AbYEFWIl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 May 2008 18:08:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933342AbYEFWIl
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 18:08:41 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42969 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932694AbYEFWIj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 18:08:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6EE552BB1;
-	Tue,  6 May 2008 18:08:35 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id BC7052BAE; Tue,  6 May 2008 18:08:30 -0400 (EDT)
-In-Reply-To: <4820CC35.3090202@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Tue, 06 May 2008 23:23:01 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F8E1318C-1BB8-11DD-B313-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1760402AbYEFWhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 18:37:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759919AbYEFWhM
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 18:37:12 -0400
+Received: from anchor-post-37.mail.demon.net ([194.217.242.87]:38091 "EHLO
+	anchor-post-37.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754729AbYEFWhK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 18:37:10 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-37.mail.demon.net with esmtp (Exim 4.68)
+	id 1JtVmU-0003Tl-O9; Tue, 06 May 2008 22:37:07 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <20080504192332.GB13029@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81384>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Jeff King wrote:
+> On Sat, May 03, 2008 at 06:34:31PM +0100, Ramsay Jones wrote:
+>>
+>> The git command issued by gitk appears to be:
+>>    git diff-tree -r -p -C --no-commit-id -U3 1d6aeb410dc19893adbc0209bcf859f35ff1c7d6
+> 
+> Hrm. Is gitk on cygwin somehow squishing stderr and stdout together? Or
+> does gitk in general look at what happens on stderr?
 
-> To really solve this without external tools, git-archive needed to gr=
-ow
-> an --exclude option like git-ls-files, though.
+maybe. After further testing, the above "git diff-tree..." does indeed issue the
+warning on stderr; on both cygwin and Linux.
 
-Because exclude is never about ignoring what is already tracked, an opt=
-ion
-"like" git-ls-files would not help this case, I am afraid.
+[I forgot to type ./git-diff-tree as I had not installed the new git yet, since
+it does not pass "make test".  That is a different problem for another day...]
+
+It appears that gitk on Linux is quite happy with that message on stderr, but on
+cygwin it chokes.
+
+> 
+> Because while I am happy that removing this message fixes your problem,
+> it is a little disconcerting to think that we can break gitk just by
+> issuing a warning diagnostic on stderr.
+
+Indeed.
+
+Also note that the warning is issued twice, since gitk issues that same
+command twice; viz:
+
+    $ GIT_TRACE=/home/ramsay/git-trace gitk --all & # exit asap
+    $ cat /home/ramsay/git-trace
+    trace: built-in: git 'config' '--get' 'i18n.commitencoding'
+    trace: built-in: git 'rev-parse' '--git-dir'
+    trace: built-in: git 'rev-parse' '--no-revs' '--no-flags' '--all'
+    trace: built-in: git 'rev-parse' '--is-inside-work-tree'
+    trace: built-in: git 'show-ref' '-d'
+    trace: built-in: git 'symbolic-ref' 'HEAD'
+    trace: built-in: git 'log' '--no-color' '-z' '--pretty=raw' '--topo-order' '--parents' '--boundary' '--all' '--'
+    trace: built-in: git 'diff-index' '--cached' 'HEAD'
+    trace: built-in: git 'rev-parse' '--git-dir'
+    trace: built-in: git 'diff-tree' '-r' '--no-commit-id' '1d6aeb410dc19893adbc0209bcf859f35ff1c7d6'
+    trace: built-in: git 'diff-files'
+    trace: built-in: git 'diff-tree' '-r' '-p' '-C' '--no-commit-id' '-U3' '1d6aeb410dc19893adbc0209bcf859f35ff1c7d6'
+    trace: built-in: git 'diff-tree' '-r' '-p' '-C' '--no-commit-id' '-U3' '1d6aeb410dc19893adbc0209bcf859f35ff1c7d6'
+    $
+
+NOTE: I get exactly the same trace on Linux and cygwin.
+
+As a quick-fix, I added a "-l300" parameter to the above git command in ~/bin/gitk.
+[diff.renamelimit only affects git-diff]
+
+All the Best,
+
+Ramsay Jones
