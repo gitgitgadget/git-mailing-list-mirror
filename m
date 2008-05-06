@@ -1,71 +1,72 @@
-From: Sebastian Schuberth <sschuberth@visageimaging.com>
-Subject: [PATCH] mergetool: Make ECMerge use the settings as specified by
- the user in the GUI
-Date: Tue, 06 May 2008 12:53:56 +0200
-Message-ID: <482038C4.6050402@visageimaging.com>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: git workshop
+Date: Tue, 6 May 2008 13:36:08 +0200
+Message-ID: <46d6db660805060436j32336211gcb8a969b4dc08923@mail.gmail.com>
+References: <200805061216.26881.nadim@khemir.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 13:25:40 2008
+Cc: git@vger.kernel.org
+To: "nadim khemir" <nadim@khemir.net>
+X-From: git-owner@vger.kernel.org Tue May 06 13:37:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtLIS-0002mk-7s
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 13:25:24 +0200
+	id 1JtLTg-0006u4-4D
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 13:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbYEFLYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 07:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbYEFLYg
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 07:24:36 -0400
-Received: from iris-63.mc.com ([63.96.239.141]:42528 "EHLO mc.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752483AbYEFLYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 07:24:35 -0400
-X-Greylist: delayed 1833 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2008 07:24:35 EDT
-Received: from CHM-EMAIL2.ad.mc.com by mc.com (8.8.8+Sun/SMI-SVR4)
-	id GAA16652; Tue, 6 May 2008 06:53:57 -0400 (EDT)
-Received: from ber-email1.ad.mc.com ([192.168.212.30]) by CHM-EMAIL2.ad.mc.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 6 May 2008 06:53:57 -0400
-Received: from [192.168.213.119] ([192.168.213.119]) by ber-email1.ad.mc.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 6 May 2008 12:53:56 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-X-OriginalArrivalTime: 06 May 2008 10:53:56.0446 (UTC) FILETIME=[7B41C7E0:01C8AF67]
+	id S1752345AbYEFLgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 07:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbYEFLgL
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 07:36:11 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:8671 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751620AbYEFLgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 07:36:10 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1306794waf.23
+        for <git@vger.kernel.org>; Tue, 06 May 2008 04:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=CRwCKxRf7Yjzq1IO4OozDbYl0TiD4ODbCLhbCNCGRaY=;
+        b=nU2Z2zeC48zJfVf1mqEZDt3sPxDXs0o7mXEC+r4kKgfQK3FpGJVNeCCmZAdHKrAhfW8BI01P/eSdJnru5WVQcxA3NB/TK0K5qVXHsbUy+SgZ6jtHWgoGcmId3czOy/taO/f+MAtHQvZyNZ0WyZYUfg/mZvqn90+8CCOfO3F4LEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iH6f8n5sfzKoTIjS4dan0wEmveMJ/cJNLnS2uxvUf9EvBIVFtXsGI+MEtFMflWHGYsUQ177By6lBEueIRJPqISlw0t0tRYQeciGW+wkP8eCm7U2K9IZxfq0cPO4KZkRoFqdeRbCSL0x5CBgs6MstKMg2l4tvCXn6MHUAA/mVe+8=
+Received: by 10.114.26.18 with SMTP id 18mr543404waz.162.1210073768419;
+        Tue, 06 May 2008 04:36:08 -0700 (PDT)
+Received: by 10.115.16.10 with HTTP; Tue, 6 May 2008 04:36:08 -0700 (PDT)
+In-Reply-To: <200805061216.26881.nadim@khemir.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81353>
 
-When run from the command line, ECMerge does not automatically use the same
-settings for a merge / diff that it would use when starting the GUI and loading
-files manually. In the first case the built-in factory defaults would be used,
-while in the second case the settings the user has specified in the GUI would
-be used, which can be misleading. Specifying the "--default" command line
-option changes this behavior so that always the user specfified GUI settings
-are used.
+On Tue, May 6, 2008 at 12:16 PM, nadim khemir <nadim@khemir.net> wrote:
+> Hi, I'd like to organize a little workshop in Lund (south of Sweden) and I
+>  wonder if any git guru could entertain us.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@visageimaging.com>
----
- git-mergetool.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+hej!
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 5c86f69..fcdec4a 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -237,9 +237,9 @@ merge_file () {
- 	ecmerge)
- 	    touch "$BACKUP"
- 	    if base_present; then
--		"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --mode=merge3 --to="$MERGED"
-+		"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --default --mode=merge3 --to="$MERGED"
- 	    else
--		"$merge_tool_path" "$LOCAL" "$REMOTE" --mode=merge2 --to="$MERGED"
-+		"$merge_tool_path" "$LOCAL" "$REMOTE" --default --mode=merge2 --to="$MERGED"
- 	    fi
- 	    check_unchanged
- 	    ;;
+>
+>  There's a lot of documentation around anf the IRC channel help is world class
+>  but I believe people would start using git (and use it better) if a
+>  presentation was made and some hands on work was done. Being able to present
+>  cases and ask questions would be great too.
+>
+>
+>  is there any screencast? slides presentation with voice?
+
+http://s3.amazonaws.com/djangocasts/001_using_git_with_django.mov
+http://jointheconversation.org/railsgit
+
+http://peepcode.com/products/git (this one you need to pay)
+
 -- 
-1.5.5.GIT
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
