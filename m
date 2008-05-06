@@ -1,64 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Be more careful with objects directory permissions on
- clone
-Date: Tue, 06 May 2008 10:08:58 +0200
-Message-ID: <4820121A.9090606@viscovery.net>
-References: <alpine.BSO.1.10.0805041234570.5819@zrgural.vwaro.pbz> <481ECCF0.6080308@viscovery.net> <alpine.BSO.1.10.0805051047260.7723@zrgural.vwaro.pbz> <481EDC4B.2010105@viscovery.net> <alpine.BSO.1.10.0805051121090.32248@zrgural.vwaro.pbz> <481EE478.9000704@viscovery.net> <alpine.BSO.1.10.0805051742020.10940@zrgural.vwaro.pbz> <fvp14f$8v0$1@ger.gmane.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 2/7] add push line in git-clone
+Date: Tue, 06 May 2008 10:37:56 +0200
+Message-ID: <482018E4.9000908@gnu.org>
+References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org> <ff298458e7efc14721fdc0420432bf33efd76784.1209391614.git.bonzini@gnu.org> <7vve1yzgfc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 10:10:30 2008
+Cc: git@vger.kernel.org, spearce@spearce.org, peff@peff.net,
+	johannes.schindelin@gmx.de, srb@cuci.nl
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 10:38:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtIFG-0007xF-Lc
-	for gcvg-git-2@gmane.org; Tue, 06 May 2008 10:09:55 +0200
+	id 1JtIhA-0002cX-7N
+	for gcvg-git-2@gmane.org; Tue, 06 May 2008 10:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654AbYEFIJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 04:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753791AbYEFIJG
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 04:09:06 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:31802 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752126AbYEFIJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 04:09:01 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JtIEN-0005jC-Cd; Tue, 06 May 2008 10:08:59 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1050C6B7; Tue,  6 May 2008 10:08:59 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <fvp14f$8v0$1@ger.gmane.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754680AbYEFIhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 04:37:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbYEFIhy
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 04:37:54 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:59760 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753668AbYEFIhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 04:37:53 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1280946nfc.21
+        for <git@vger.kernel.org>; Tue, 06 May 2008 01:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=n8GvRTykVA9mGm62EjAxypuY6y9rAytajz9xAWqZ5UM=;
+        b=EaQuNV8Z+kYdWeirlh2LeBgpwN5DBsIYjpn28cGWUVMPR788E76oTVAePBwQEv9YYv0LSg7SLOCs8hiMF2Ct6SnNPo8ciBRtAdCm3DuVDNO95mtp1mu74sYHITH772ir8zWXXvzKkiCDv8Dd1ItbZFu5w9DKxXsUHWnWMmSw2wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=VlQVcbB2D7yNh99izAQaXOE+D+ciiCg4nEksjELnBWrN0D37bTNoKo25jo2bd/JouZbgDt/gxNPgYHHO64V8xka4NfvCKkPQMrOF3W3qNNCWcUqnc5rocamYKuvRR4+e2ZSr2lqnw3qHuAU0v8/LM0jwxkirs2cIeL5obBb4PLk=
+Received: by 10.210.16.16 with SMTP id 16mr440161ebp.41.1210063069632;
+        Tue, 06 May 2008 01:37:49 -0700 (PDT)
+Received: from scientist-2.local ( [195.176.178.209])
+        by mx.google.com with ESMTPS id s10sm646124muh.10.2008.05.06.01.37.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 May 2008 01:37:48 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+In-Reply-To: <7vve1yzgfc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81344>
 
-Jakub Narebski schrieb:
-> Mark Hills wrote:
+
+> Used together with [1/7], this change is Ok in a homogeneous environment,
+> but it would break people who use git of different vintage on the same
+> repository (think of a repository on a networked filesystem).  You clone
+> like this, and older git won't grok the push configuration anymore.
 > 
->> -               find objects -depth -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
->> +               # Create dirs using umask and permissions and destination
->> +               find objects -type d -print | (cd "$GIT_DIR" && xargs mkdir -p) &&
->> +               # Copy existing 0444 permissions on content
->> +               find objects ! -type d -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/" || \
-> 
-> By the way, it is important that previous version had -depth, and
-> proposed one doesn't? Was it about creating directories before files?
+> It may look a very minor point, but I think it deserves mentioning.
 
--depth means that directory names are listed *after* their content.
-Consequently, it was about setting modification times and permissions on
-directories *after* all of their content is created at the destination.
+I think it is reasonable to require cloning with the 
+least-common-denominator version in this case.  Think of what happened 
+if the pack format changed.
 
-The intent of the new version is to not copy permissions of directories;
-and since the modification times don't matter, the absence of -depth is ok.
-
--- Hannes
+Paolo
