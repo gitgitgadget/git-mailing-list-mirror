@@ -1,68 +1,76 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Makefile: update the default build options for AIX
-Date: Wed, 7 May 2008 14:05:25 +0100
-Message-ID: <e2b179460805070605t71bed59eq8dc64e204623fd18@mail.gmail.com>
-References: <1210149355875-git-send-email-mike@abacus.co.uk>
-	 <4821992F.4060201@viscovery.net>
-	 <e2b179460805070551x7a0072e0w4d406ef4112849ce@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
+ configurable
+Date: Wed, 7 May 2008 14:10:50 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805071408360.30431@racer>
+References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>  <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>  <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>  <46dff0320805041840g1b9362d3u138b9d40cde160f2@mail.gmail.com> 
+ <7vprs1ny5e.fsf@gitster.siamese.dyndns.org>  <46dff0320805050510t3bc5fd0eq44e0d58d1bb57629@mail.gmail.com>  <46dff0320805051740o65eee07eqc7073e4fa7996277@mail.gmail.com>  <alpine.DEB.1.00.0805060954470.30431@racer>  <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
+  <alpine.DEB.1.00.0805071223450.30431@racer> <46dff0320805070519m569d9653ja276412fde135f45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Brandon Casey" <casey@nrlssc.navy.mil>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 07 15:07:42 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 15:12:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtjLd-00073G-23
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 15:06:17 +0200
+	id 1JtjQw-00016u-78
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 15:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbYEGNF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 09:05:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbYEGNF1
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 09:05:27 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:30759 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752126AbYEGNFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 09:05:25 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so355970rvb.1
-        for <git@vger.kernel.org>; Wed, 07 May 2008 06:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ve1SiKPU/+uozheWa/+cCI11flIQu9v6g65phEv04uU=;
-        b=vU3/1retK+klCDYcVH6kbue6j0DfCKTfVcNMEUYGokfDKEasSld71DHikpAv27Xswi0T/r33Wx1FU8RhaR1xh32q1vPO5n3B5kmHlA2hMHfqyJxQardsiPQnfn2S8p1VOhbO4qCfmbhyf87CWohxTiY+kT8ALXgP/grg+WNLaWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FJHaxOrittQFUudta7U1rjngRo3VJ6+E6EcMAORl3hVQk+EfdoHckwexdQua24yEPyzZv+KDBQk9jXGsweQrzO9XBpp+fJD1bSCl4+uTL3iuE2ShwtIZwy2o0Qad4q5trRB7QNuAW/tQ83ssWgoJIcHoZtVDnktfAcHrGQG7Tx0=
-Received: by 10.141.96.21 with SMTP id y21mr946627rvl.132.1210165525040;
-        Wed, 07 May 2008 06:05:25 -0700 (PDT)
-Received: by 10.140.142.5 with HTTP; Wed, 7 May 2008 06:05:25 -0700 (PDT)
-In-Reply-To: <e2b179460805070551x7a0072e0w4d406ef4112849ce@mail.gmail.com>
-Content-Disposition: inline
+	id S1751895AbYEGNK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 09:10:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbYEGNK4
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 09:10:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44685 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751052AbYEGNKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 09:10:54 -0400
+Received: (qmail invoked by alias); 07 May 2008 13:10:52 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp014) with SMTP; 07 May 2008 15:10:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ZelF26yrZjgB7avyOM4ZlsEuVtnYUseN8jbse9H
+	YaKwb+xjRuUu96
+X-X-Sender: gene099@racer
+In-Reply-To: <46dff0320805070519m569d9653ja276412fde135f45@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81435>
 
-2008/5/7 Mike Ralphson <mike.ralphson@gmail.com>:
-> 2008/5/7 Johannes Sixt <j.sixt@viscovery.net>:
->  >
->  >  Did you also get this warning? Is _LARGE_FILES support solved in a
->  >  different way on 5.3?
->
->  I don't believe it's anything to do with _LARGE_FILES. Could you try
->  building first with one commented out, then the other? I don't think I
->  have access to a 4.3.3 box any more.
+Hi,
 
-I'm full of it (and I didn't try my own suggestion). It does appear to
-be related to defining _LARGE_FILES.
+On Wed, 7 May 2008, Ping Yin wrote:
 
-I'm afraid I can't see how the current #undef is working, let alone
-suggest how to fix it when fopen is already redefined. 8-(
+> On Wed, May 7, 2008 at 7:24 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >  > So how about this
+> >  >
+> >  > --color-words={char,punct,word}
+> >  >
+> >  >   - char: one char one token
+> >  >   - punct/word: a token can be either a run of word characters or a
+> >  > single punct character.  diff.punctchars is used for punct, and
+> >  > diff.wordchars is used for word.
+> >
+> >  I am rather interested in the semantics, i.e. if you can punch holes into
+> >  this 3-class approach.
+> >
+> >  Bikeshedding comes later ;-)
+> 
+> Sorry, but i can't parse both sentences, especially Bikeshedding and
+> "punch holes into".
 
-Mike
+"punch holes into": find cases where Junio's proposed algorithm breaks 
+down.
+
+"bikeshedding": discussing minor implementation details that are not 
+really interesting at this stage.  See also 
+http://en.wikipedia.org/wiki/Bikeshedding.
+
+Ciao,
+Dscho
