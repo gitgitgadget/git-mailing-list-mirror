@@ -1,63 +1,59 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/2] Documentation: bisect: add a few "git bisect run" examples
-Date: Thu, 8 May 2008 00:18:39 +0200
-Message-ID: <200805080018.40181.chriscool@tuxfamily.org>
-References: <20080507062931.dd72d7e1.chriscool@tuxfamily.org> <vpqlk2mbpao.fsf@bauges.imag.fr> <20080507072536.GJ23672@genesis.frugalware.org>
+From: "Steve Hoelzer" <shoelzer@gmail.com>
+Subject: Re: How can I specify multiple refs on one line in the config file?
+Date: Wed, 7 May 2008 17:19:30 -0500
+Message-ID: <588192970805071519i76c23367ue497e37445fa7c74@mail.gmail.com>
+References: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com>
+	 <18071eea0805071433j5bde8868w305d9a80c00bd2bd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Manoj Srivastava <srivasta@ieee.org>,
-	Thomas Adam <thomas.adam22@gmail.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu May 08 00:14:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git mailing list" <git@vger.kernel.org>
+To: "Thomas Adam" <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 00:20:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtruM-0005AC-Tg
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 00:14:43 +0200
+	id 1Jts0I-00073L-4M
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 00:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763906AbYEGWNx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 May 2008 18:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763385AbYEGWNw
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:13:52 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:60622 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757771AbYEGWNt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 May 2008 18:13:49 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id E2CEF1AB2B0;
-	Thu,  8 May 2008 00:13:48 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 859CF1AB2CE;
-	Thu,  8 May 2008 00:13:47 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080507072536.GJ23672@genesis.frugalware.org>
+	id S1763908AbYEGWTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 18:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763184AbYEGWTg
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:19:36 -0400
+Received: from mu-out-0910.google.com ([209.85.134.190]:17614 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932196AbYEGWTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 18:19:33 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so396617mue.1
+        for <git@vger.kernel.org>; Wed, 07 May 2008 15:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=HBGgzdXfUOwyjiMWqHz1qVzzV+4AcF8zbQazzVNEzxo=;
+        b=xmcEWh8ZzpPesaJ+QNu6AnCLIruF5ddoRl79VwdHrKpQQTkvS2BN0vtSGgZIdB/jEGMTZVrrtlW13QvuARpiXC0tk13gb2KeSPJTtsA8qidwC0/ZMDIiYrEsvMLDU7sBvy04C3cssPCWr4j5upQUK8iJV1RAIF1AadSILw004Ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XitKPzVprHmSXv7vZ8553lUEzwWPhqeFsdcm0qSoNX7xdp/AO4aBeUKAg9SihSXjGfBxcjP7raV3fROFHOfDb0ijNL2ANrt1NSuWk7bTWeDFhOdm9hP1aobVsevcOVEUbEh6EBriQYI0INH5MiTLd7Jz72azp9fx0PjC13KThMs=
+Received: by 10.86.78.4 with SMTP id a4mr4830591fgb.17.1210198770868;
+        Wed, 07 May 2008 15:19:30 -0700 (PDT)
+Received: by 10.86.62.15 with HTTP; Wed, 7 May 2008 15:19:30 -0700 (PDT)
+In-Reply-To: <18071eea0805071433j5bde8868w305d9a80c00bd2bd@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81484>
 
-Le mercredi 7 mai 2008, Miklos Vajna a =E9crit :
-> On Wed, May 07, 2008 at 08:29:03AM +0200, Matthieu Moy=20
-<Matthieu.Moy@imag.fr> wrote:
-> > Perhaps also s/~/./g, since it's not a good idea to put temporary
-> > files in $HOME IMHO.
+On Wed, May 7, 2008 at 4:33 PM, Thomas Adam <thomas.adam22@gmail.com> wrote:
+> I might be misunderstanding you, but to push tags, there's:
 >
-> the point is to have it outside the repo.=20
+> git push --tags
 
-Yes. Especially, if the test case is a new one, the scripts that are us=
-ed=20
-must not have been checked in. Otherwise when bisect will checkout olde=
-r=20
-versions, the scripts will be removed.
+True, but I only want to type "git push". No, it's not _really_
+necessary, but I'd like to set it up that way so I don't have to
+depend on my coworkers (new git users) remembering "--tags".
 
-> at least i regularly have 'git=20
-> clean -f -x -d' in such a script if i don't trust the upstream build
-> system. ;)
+Steve
