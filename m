@@ -1,55 +1,51 @@
-From: vanderkerkoff <mjdavies@glam.ac.uk>
-Subject: Is this mailing list still active?
-Date: Wed, 7 May 2008 02:12:11 -0700 (PDT)
-Message-ID: <17100348.post@talk.nabble.com>
+From: Matthias Kestenholz <mk@spinlock.ch>
+Subject: Re: Is this mailing list still active?
+Date: Wed, 07 May 2008 11:23:44 +0200
+Message-ID: <1210152224.6735.9.camel@futex>
+References: <17100348.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 11:13:22 2008
+Cc: git@vger.kernel.org
+To: vanderkerkoff <mjdavies@glam.ac.uk>
+X-From: git-owner@vger.kernel.org Wed May 07 11:24:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jtfhv-0001Ze-Q8
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 11:13:04 +0200
+	id 1Jtft9-0005sR-O5
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 11:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbYEGJMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 05:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbYEGJMO
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 05:12:14 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:49526 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752303AbYEGJMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 05:12:12 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1Jtfh5-0005Mz-9B
-	for git@vger.kernel.org; Wed, 07 May 2008 02:12:11 -0700
-X-Nabble-From: mjdavies@glam.ac.uk
+	id S1755685AbYEGJXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 05:23:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYEGJXu
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 05:23:50 -0400
+Received: from mail17.bluewin.ch ([195.186.18.64]:51636 "EHLO
+	mail17.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754925AbYEGJXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 05:23:49 -0400
+Received: from futex.feinheit.ch (213.3.44.95) by mail17.bluewin.ch (Bluewin 7.3.121)
+        id 480C93470030C451; Wed, 7 May 2008 09:23:44 +0000
+Received: (nullmailer pid 23974 invoked by uid 1000);
+	Wed, 07 May 2008 09:23:45 -0000
+In-Reply-To: <17100348.post@talk.nabble.com>
+X-Mailer: Evolution 2.22.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81420>
 
+Hello,
 
-Hello everyone
+On Wed, 2008-05-07 at 02:12 -0700, vanderkerkoff wrote:
+> Hello everyone
+> 
+> I'm brand new to git and I found this nabble group/mailing list, but looking
+> at the posts the forum seems to be really popular last year, but this year
+> hardly anything.
 
-I'm brand new to git and I found this nabble group/mailing list, but looking
-at the posts the forum seems to be really popular last year, but this year
-hardly anything.
+Uhm. Yes it is still active. I don't know why the posts don't show up on
+nabble. You might try gmane.
 
-Are people using another forum?
-
-If so, can someone point me in the right direction?
-
-If this is still in use then I'll post here.
-
-Cheers
-
-
--- 
-View this message in context: http://www.nabble.com/Is-this-mailing-list-still-active--tp17100348p17100348.html
-Sent from the git mailing list archive at Nabble.com.
+http://news.gmane.org/gmane.comp.version-control.git/
