@@ -1,84 +1,57 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: How can I specify multiple refs on one line in the config file?
-Date: Thu, 8 May 2008 00:27:51 +0200
-Message-ID: <20080507222751.GC23672@genesis.frugalware.org>
-References: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com> <18071eea0805071433j5bde8868w305d9a80c00bd2bd@mail.gmail.com> <588192970805071519i76c23367ue497e37445fa7c74@mail.gmail.com>
+Date: Wed, 7 May 2008 18:28:13 -0400
+Message-ID: <20080507222813.GF5994@sigill.intra.peff.net>
+References: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YMf7pJGz0wcApMUv"
-Cc: Thomas Adam <thomas.adam22@gmail.com>,
-	git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git mailing list <git@vger.kernel.org>
 To: Steve Hoelzer <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 00:29:04 2008
+X-From: git-owner@vger.kernel.org Thu May 08 00:29:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jts8F-0001J2-Tm
+	id 1Jts8G-0001J2-I8
 	for gcvg-git-2@gmane.org; Thu, 08 May 2008 00:29:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933290AbYEGW17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 18:27:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933033AbYEGW16
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:27:58 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:33501 "EHLO virgo.iok.hu"
+	id S933473AbYEGW2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 18:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933433AbYEGW2P
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:28:15 -0400
+Received: from peff.net ([208.65.91.99]:3131 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763440AbYEGW14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 18:27:56 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2AA281B253A;
-	Thu,  8 May 2008 00:27:52 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id E6F704465E;
-	Thu,  8 May 2008 00:22:54 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id ED1D01190ACB; Thu,  8 May 2008 00:27:51 +0200 (CEST)
-Mail-Followup-To: Steve Hoelzer <shoelzer@gmail.com>,
-	Thomas Adam <thomas.adam22@gmail.com>,
-	git mailing list <git@vger.kernel.org>
+	id S933331AbYEGW2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 18:28:12 -0400
+Received: (qmail 29674 invoked by uid 111); 7 May 2008 22:28:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 07 May 2008 18:28:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 May 2008 18:28:13 -0400
 Content-Disposition: inline
-In-Reply-To: <588192970805071519i76c23367ue497e37445fa7c74@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81486>
 
+On Wed, May 07, 2008 at 04:15:47PM -0500, Steve Hoelzer wrote:
 
---YMf7pJGz0wcApMUv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> How can I specify multiple refs on one line in the config file? For
+> example, I want "git push" to push all heads and all tags by default
+> so I tried this:
+> 
+>     [remote "origin"]
+>     	push = refs/heads/* refs/tags/*
+> 
+> That doesn't work, of course, but I imagine it is possible, and I just
+> can't figure out the syntax.
 
-On Wed, May 07, 2008 at 05:19:30PM -0500, Steve Hoelzer <shoelzer@gmail.com=
-> wrote:
-> On Wed, May 7, 2008 at 4:33 PM, Thomas Adam <thomas.adam22@gmail.com> wro=
-te:
-> > I might be misunderstanding you, but to push tags, there's:
-> >
-> > git push --tags
->=20
-> True, but I only want to type "git push". No, it's not _really_
-> necessary, but I'd like to set it up that way so I don't have to
-> depend on my coworkers (new git users) remembering "--tags".
+I imagine it is possible, too, but not with one line. How about:
 
-are you sure pushing tags by default is a good idea? people regularly
-create local tags to mark a commit before a rebase, to mark a commit as
-a fix for a given bug, etc. those tags aren't interesting for others.
-tags which should be pushed usually rare. then you can use git push
-origin tag v1.0, since you know which tag you really want to push.
+  [remote "origin"]
+    push = refs/heads/*:refs/heads/*
+    push = refs/tags/*:refs/tags/*
 
---YMf7pJGz0wcApMUv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
-
-iEYEARECAAYFAkgiLOcACgkQe81tAgORUJatgwCfc1ncZU7aX/IOsqe89PoYIF1x
-YGkAn36If/PVepw0GAzsyXzNoW0NNZJq
-=xkVK
------END PGP SIGNATURE-----
-
---YMf7pJGz0wcApMUv--
+-Peff
