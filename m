@@ -1,66 +1,111 @@
-From: "Thomas Adam" <thomas.adam22@gmail.com>
-Subject: Re: How can I specify multiple refs on one line in the config file?
-Date: Wed, 7 May 2008 22:33:12 +0100
-Message-ID: <18071eea0805071433j5bde8868w305d9a80c00bd2bd@mail.gmail.com>
-References: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: print an error message when
+ "git rev-list --bisect-vars" fails
+Date: Wed, 7 May 2008 23:54:28 +0200
+Message-ID: <20080507235428.a3579911.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "git mailing list" <git@vger.kernel.org>
-To: "Steve Hoelzer" <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 23:34:07 2008
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed May 07 23:52:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtrH4-0000We-Eo
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 23:34:06 +0200
+	id 1JtrWz-0005nR-0O
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 23:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752186AbYEGVdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 17:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbYEGVdQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 17:33:16 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:10500 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751850AbYEGVdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 17:33:14 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so490516fkq.5
-        for <git@vger.kernel.org>; Wed, 07 May 2008 14:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0c1auYEAXRVNOsSaG+G8GMzBWrBFJTEflWe/8UbHk7Y=;
-        b=iJCHhESQ84drF2C0ureQ7rsdTH53g3Ml+X73jqc6N+cPDzoB7X3tzxy2FWFZPVEcyd4dajyrQvqZGwB6SJOjcCWcfUt22LFNyVdE92rB5T92fVCGir2OZXPIgJ7n8PhszfMbc9O3J7r97wzModRNjl6E5hOl9yNokCaZlDiUu6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ABY5iUzasbqLZVtyrJJquSXz8lqNy6iGPU65Gyw/u1KnbcyaBXo6CK8QNVdvvxptDOwNuH4YDumHNyf9JqZ7LiSt38VlRBQpgej0VSlHwLGZdhgzPCNg/beMqhlFqm0MWlyRlpJzhC/k1kHOMMFtMnMWPT5IQ8QT2S9eITXfv0A=
-Received: by 10.82.146.10 with SMTP id t10mr324271bud.51.1210195992375;
-        Wed, 07 May 2008 14:33:12 -0700 (PDT)
-Received: by 10.82.170.5 with HTTP; Wed, 7 May 2008 14:33:12 -0700 (PDT)
-In-Reply-To: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com>
-Content-Disposition: inline
+	id S1757571AbYEGVtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 17:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755298AbYEGVtj
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 17:49:39 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:36514 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757915AbYEGVth (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 17:49:37 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id DD7F91AB2DB;
+	Wed,  7 May 2008 23:49:35 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 810331AB2C3;
+	Wed,  7 May 2008 23:49:35 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0beta1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81481>
 
-2008/5/7 Steve Hoelzer <shoelzer@gmail.com>:
-> How can I specify multiple refs on one line in the config file? For
->  example, I want "git push" to push all heads and all tags by default
->  so I tried this:
->
->     [remote "origin"]
->         push = refs/heads/* refs/tags/*
->
->  That doesn't work, of course, but I imagine it is possible, and I just
->  can't figure out the syntax.
+Before this patch no error was printed when "git rev-list --bisect-vars"
+failed. This can happen when bad and good revs are mistaken.
 
-I might be misunderstanding you, but to push tags, there's:
+This patch prints an error message on stderr that describe the likely
+failure cause.
 
-git push --tags
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   19 +++++++++++++++++--
+ t/t6030-bisect-porcelain.sh |    7 +++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-I know that's not inclusive of anything else.
-
--- Thomas Adam
+diff --git a/git-bisect.sh b/git-bisect.sh
+index b5171c9..164e8ed 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -224,18 +224,33 @@ bisect_auto_next() {
+ 	bisect_next_check && bisect_next || :
+ }
+ 
++eval_rev_list() {
++	_eval="$1"
++
++	eval $_eval
++	res=$?
++
++	if [ $res -ne 0 ]; then
++		echo >&2 "'git rev-list --bisect-vars' failed:"
++		echo >&2 "maybe you mistake good and bad revs?"
++		exit $res
++	fi
++
++	return $res
++}
++
+ filter_skipped() {
+ 	_eval="$1"
+ 	_skip="$2"
+ 
+ 	if [ -z "$_skip" ]; then
+-		eval $_eval
++		eval_rev_list "$_eval"
+ 		return
+ 	fi
+ 
+ 	# Let's parse the output of:
+ 	# "git rev-list --bisect-vars --bisect-all ..."
+-	eval $_eval | while read hash line
++	eval_rev_list "$_eval" | while read hash line
+ 	do
+ 		case "$VARS,$FOUND,$TRIED,$hash" in
+ 			# We display some vars.
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index ccd459b..b5102fb 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -302,6 +302,13 @@ test_expect_success 'bisect refuses to start if branch new-bisect exists' '
+ 	git branch -d new-bisect
+ '
+ 
++test_expect_success 'bisect errors out if bad and good are mistaken' '
++	git bisect reset &&
++	test_must_fail git bisect start $HASH2 $HASH4 2> rev_list_error &&
++	grep "mistake good and bad" rev_list_error &&
++	git bisect reset
++'
++
+ #
+ #
+ test_done
+-- 
+1.5.5.1.322.g312d.dirty
