@@ -1,168 +1,81 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git-checkout sometimes silently fails
-Date: Wed, 7 May 2008 03:32:40 +0200
-Message-ID: <20080507013240.GA13661@atjola.homenet>
-References: <20080506122256.04ca7d77.akpm@linux-foundation.org> <20080506215049.GC4647@steel.home> <20080506171052.340d643e.akpm@linux-foundation.org> <20080507001919.GA8633@sigill.intra.peff.net> <20080506175442.845ca8fa.akpm@linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-grep: Add ability to limit directory recursion
+Date: Wed, 7 May 2008 03:34:17 +0200
+Message-ID: <200805070334.18500.jnareb@gmail.com>
+References: <1210094304-2450-1-git-send-email-aidan@highrise.ca> <m3iqxr54uy.fsf@localhost.localdomain> <20080507004719.GJ18081@yugib.highrise.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 07 03:33:40 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Aidan Van Dyk <aidan@highrise.ca>
+X-From: git-owner@vger.kernel.org Wed May 07 03:35:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtYXL-00079l-1d
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 03:33:39 +0200
+	id 1JtYYt-0007WR-5x
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 03:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbYEGBcr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 May 2008 21:32:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754601AbYEGBcr
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 21:32:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45290 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751691AbYEGBcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 21:32:45 -0400
-Received: (qmail invoked by alias); 07 May 2008 01:32:43 -0000
-Received: from i577BA259.versanet.de (EHLO atjola.local) [87.123.162.89]
-  by mail.gmx.net (mp009) with SMTP; 07 May 2008 03:32:43 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+eKP9bFj6esBgrP81wk+wV/tS0lDivf2oatKyMMW
-	lXMgwkj95CHysB
+	id S1754855AbYEGBe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 21:34:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754782AbYEGBe0
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 21:34:26 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:13510 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754601AbYEGBeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 21:34:25 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so5167ugf.16
+        for <git@vger.kernel.org>; Tue, 06 May 2008 18:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=7HKwxPaUlr3qtuRcobY8UFdnl2wSjn44T4psnkVbJ2k=;
+        b=XTyfaICNCOQ8/cg8dXiNqhSOfNuuyHm+UlRRLzMbrQlOapO5uFfyJCYOkvx71eQR4+5XrwMaaapU1xMaWoaD2q7ULvOsKbnRR93cb8JSgze4RRzAgEm+ucM6tYuMrdBMzVmH3dXQXM+Tz24wc5wnzMHXHCbSelJN29w6T4DPh2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DTqr8Q6WZkQt1JuzJ+AE9PDOSUj3oyeTylnwrErjpxgBPuf20AuZew8hJgfgFw88Hpx16s6FJ5iakjQ840mvvIYmcYxP/aesSBb/aqqgVdEYzJjP5FFg+FPPR8yIIcLcR+AkWWpvExPVym19L+dTQa9Q/FLrhOzbJsLsrKKR9UY=
+Received: by 10.67.15.2 with SMTP id s2mr1611045ugi.87.1210124063919;
+        Tue, 06 May 2008 18:34:23 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.194.224])
+        by mx.google.com with ESMTPS id z34sm1768800ikz.9.2008.05.06.18.34.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 06 May 2008 18:34:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080507004719.GJ18081@yugib.highrise.ca>
 Content-Disposition: inline
-In-Reply-To: <20080506175442.845ca8fa.akpm@linux-foundation.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81399>
 
-On 2008.05.06 17:54:42 -0700, Andrew Morton wrote:
-> On Tue, 6 May 2008 20:19:19 -0400 Jeff King <peff@peff.net> wrote:
->=20
-> > On Tue, May 06, 2008 at 05:10:52PM -0700, Andrew Morton wrote:
-> >=20
-> > > > > y:/usr/src/git26> git-checkout master
-> > > > > Switched to branch "master"
-> > > > > y:/usr/src/git26> cat kernel/*.c|sum
-> > > > > 34439  2057
-> > > > > y:/usr/src/git26> git-checkout linux-next
-> > > > > Switched to branch "linux-next"
-> > > > > y:/usr/src/git26> cat kernel/*.c|sum    =20
-> > > > > 34439  2057
-> > > >=20
-> > > > This is not a good indication of a failed checkout (they could =
-point
-> > > > to the same commit, for one).
-> > >=20
-> > > How could they?  linux-next includes a directory called ./Next an=
-d a file
-> > > in that directory called ./Next/Trees, and that is not present af=
-ter the
-> > > `git-checkout linux-next'.
-> >=20
-> > But you don't show us that in your example. There is nothing in you=
-r
-> > example to indicate that they are not simply pointing at the same
-> > commit...
-> >=20
-> > > > Try "gitk master...linux-next" (or "git
-> > > > log master..linux-next", "git diff master linux-next")
-> > >=20
-> > > These come up empty.  But there is a 12.4MB diff between mainline=
- and
-> > > linux-next.
-> >=20
-> > And if these all come up empty, then they _are_ pointing to the sam=
-e
-> > commit. When you say "but there is a 12.4MB diff..." do you mean "t=
-here
-> > _should_ be such a diff?" In that case, it seems that your linux-ne=
-xt
-> > ref is pointing to an unexpected commit.
-> >=20
-> > So the problem is not with git-checkout, but rather that you are no=
-t
-> > checking out what you think you are checking out.
->=20
-> That sounds a decent theory.
->=20
-> > And so we need to
-> > figure out how you got into that state.
->=20
-> Well it happens pretty regularly.  I have now lost that state but I'l=
-l save
-> it next time.  I'm not able to pinpoint exactly what causes it to occ=
-ur.
->=20
-> > What command did you use to create the linux-next branch?
->=20
-> I edited=20
->=20
-> y:/usr/src/git26> cat .git/branches/linux-next=20
-> git+ssh://master.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.g=
-it
->=20
-> and did git-fetch once per day, approx.
->=20
-> > Have you used
-> > git-reset to move the branch tip around?
->=20
-> My git-fetching script does that:
->=20
-> doit()
-> {
-> 	tree=3D$1
-> 	upstream=3D$2
->=20
-> 	cd $GIT_TREE
-> 	git reset --hard "$upstream"
-> 	git fetch "$tree" || exit 1
-> 	git merge --no-commit 'test merge' HEAD FETCH_HEAD > /dev/null
->=20
-> 	{
-> 		git_header "$tree"
-> 		git log --no-merges ORIG_HEAD..FETCH_HEAD
-> 		git diff --patch-with-stat ORIG_HEAD
-> 	} >$PULL/$tree.patch
-> 	{
-> 		echo DESC
-> 		echo $tree.patch
-> 		echo EDESC
-> 		git_header "$tree"
-> 		git log --no-merges ORIG_HEAD..FETCH_HEAD
-> 	} >$PULL/$tree.txt
-> 	git reset --hard "$upstream"
-> }
->=20
-> (Linus suggested an updated version of this but afaict that won't cha=
-nge
-> anything)
->=20
-> But, as I say, usually this script leaves the tree in a sane state.  =
-But
-> sometimes it leaves it in a i-cant-check-stuff-out state.  It's not
-> specific to linux-next, either: I've seen this for a long time, on an=
-d off.
-> Prior to linux-next's existence.
+Aidan Van Dyk wrote:
+> * Jakub Narebski <jnareb@gmail.com> [080506 20:34]:
+>> Aidan Van Dyk <aidan@highrise.ca> writes:
+>> 
+>>> This add a -R <limit> option to git-grep which will limit the depth of the
+>>> directories recursed when git is doing a grep.
+>>> 
+>>> This allows you to do something like:
+>>>         git grep -R 1 <pattern>
+>>> and see only the results of the grep on files in the current directory.
+>>> 
+>>> It defaults to a limit of "0" which disables the limiting.
+>> 
+>> Nice idea, although I'm not sure if we shouldn't borrow "-maxdepth"
+>> option from GNU find and friends...
+> 
+> Good idea - I hadn't thought of that, but I like it better.
 
-Hm, that very much looks like it would mess things up whenever you're
-not on the upstream branch already.
+Note that GNU find uses non-standard single-dash long options, and
+that "-maxdepth 0" means do not recurse, but use only files provided
+as arguments.
 
-While this should do no harm:
-git checkout master
-doit linux-next master
+GNU wget on the other hand uses -l DEPTH/--level=DEPTH, and uses -l 0
+(or -l inf) as in your patch, i.e. infinite recursion.
 
-This will make your linux-next branch point to the same commit as
-master:
-git checkout linux-next
-doit linux-next master
-
-Adding a '"git checkout "$upstream"' (maybe with -f?) before the first
-reset --hard should avoid that then.
-
-Bj=F6rn
+-- 
+Jakub Narebski
+Poland
