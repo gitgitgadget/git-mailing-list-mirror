@@ -1,51 +1,73 @@
-From: Dustin Sallings <dustin@spy.net>
-Subject: Re: [PATCH] Allow local branching to set up rebase by default.
-Date: Tue, 6 May 2008 23:01:33 -0700
-Message-ID: <76B5A8CE-EFFF-48BE-AD2C-45527D7AB04D@spy.net>
-References: <1209502182-39800-1-git-send-email-dustin@spy.net> <76718490804291456r7d1ef385q4e51a5705fdd26ef@mail.gmail.com> <02471C27-C99D-43E7-BC58-50F2B86ED159@spy.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dustin Sallings <dustin@spy.net>
-X-From: git-owner@vger.kernel.org Wed May 07 08:03:01 2008
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 2/2] Documentation: bisect: add a few "git bisect run" examples
+Date: Wed, 07 May 2008 08:29:03 +0200
+Message-ID: <vpqlk2mbpao.fsf@bauges.imag.fr>
+References: <20080507062931.dd72d7e1.chriscool@tuxfamily.org>
+	<7vwsm6g14i.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Manoj Srivastava <srivasta@ieee.org>,
+	"Thomas Adam" <thomas.adam22@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 08:33:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jtcjs-00033u-0L
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 08:02:52 +0200
+	id 1JtdCy-0003Dn-Fy
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 08:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755615AbYEGGCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 02:02:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754908AbYEGGB7
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 02:01:59 -0400
-Received: from basket.west.spy.net ([69.230.8.154]:60404 "EHLO
-	mail.west.spy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755331AbYEGGB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 02:01:57 -0400
-Received: from dustinmb.west.spy.net (dustinmb.west.spy.net [192.168.1.56])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by mail.west.spy.net (Postfix) with ESMTP id 1CC044F;
-	Tue,  6 May 2008 23:01:34 -0700 (PDT)
-In-Reply-To: <02471C27-C99D-43E7-BC58-50F2B86ED159@spy.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S1756664AbYEGGcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 02:32:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755680AbYEGGcG
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 02:32:06 -0400
+Received: from imag.imag.fr ([129.88.30.1]:51782 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754106AbYEGGcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 02:32:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m476TrVc016175
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 7 May 2008 08:29:54 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Jtd9D-0004tP-6Q; Wed, 07 May 2008 08:29:03 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Jtd9D-0007ea-2g; Wed, 07 May 2008 08:29:03 +0200
+In-Reply-To: <7vwsm6g14i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 06 May 2008 21\:59\:57 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 07 May 2008 08:29:55 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81408>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Apr 29, 2008, at 14:49, Dustin Sallings wrote:
+>> +------------
+>> +echo "#"\!"/bin/sh" > ~/test.sh
+>> +echo "make install || exit 125" >> ~/test.sh
+>> +echo "~/check_test_case.sh" >> ~/test.sh
+>> +chmod u+x ~/test.sh
+>
+> s/install//; let's not set a bad example of installing first and then
+> testing.
 
-	[a patch]
+Perhaps also s/~/./g, since it's not a good idea to put temporary
+files in $HOME IMHO.
 
-	I haven't seen any activity related to this in a week.  This  
-functionality is interesting to my coworkers and a small sampling I've  
-polled.  Does it require any kind of cleanup, will it be completely  
-rejected, or should I just be more patient?  :)
+Also, using simple quotes instead of double would simplify the
+"#"\!"/bin/sh".
 
 -- 
-Dustin Sallings
+Matthieu
