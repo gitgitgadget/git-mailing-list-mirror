@@ -1,75 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-grep: Add ability to limit directory recursion
-Date: Tue, 06 May 2008 17:34:48 -0700 (PDT)
-Message-ID: <m3iqxr54uy.fsf@localhost.localdomain>
-References: <1210094304-2450-1-git-send-email-aidan@highrise.ca>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: git-checkout sometimes silently fails
+Date: Tue, 6 May 2008 17:43:48 -0700
+Message-ID: <20080506174348.8d99fe4e.akpm@linux-foundation.org>
+References: <20080506122256.04ca7d77.akpm@linux-foundation.org>
+	<20080506215049.GC4647@steel.home>
+	<20080506171052.340d643e.akpm@linux-foundation.org>
+	<7v4p9bge4q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aidan Van Dyk <aidan@highrise.ca>
-X-From: git-owner@vger.kernel.org Wed May 07 02:35:44 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 02:45:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtXdG-0002lg-He
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 02:35:42 +0200
+	id 1JtXmx-0005G4-9g
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 02:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbYEGAex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 20:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752792AbYEGAex
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 20:34:53 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:61830 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779AbYEGAev (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2008 20:34:51 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so484035ugf.16
-        for <git@vger.kernel.org>; Tue, 06 May 2008 17:34:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=M9QrG9CHqb59X03oe3VcqH9Wr59aLIPfJ5ozrDQAvS4=;
-        b=kmabGapP1hbr/DhnyMMdOxNQINZ5pSJHfSwcFYVJpZAk6L7AB79n9lPg9OdJMONvRi1sddJp3pZtDMxiQLW9emAvHc0+xo5izsGNgntHNXUzR5W/it5XDn2j6/nlYevPnlBQQCSqKzSYb3JOzmqsoRdvtDLsc3j22cUuhkiFCUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=ckFfMVrnr/jbQo39+Ayu31aS6wc0OCTX06npQXHpt5lyagE/mVYM9eb2cLcvpjabJrGEQPeQ4xv3m0gGZRlvMWKvbGyInZMW94b3I6CeTQmmuLHipfdi64sxhNF0E8lKJsIkdI0l5lBhNjHWpfFAPwZ90u0H+s8Zj/nqLRhzuLE=
-Received: by 10.66.239.16 with SMTP id m16mr6785632ugh.28.1210120489912;
-        Tue, 06 May 2008 17:34:49 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.194.224])
-        by mx.google.com with ESMTPS id g12sm1947345nfb.28.2008.05.06.17.34.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 May 2008 17:34:48 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m470YnU2022325;
-	Wed, 7 May 2008 02:34:49 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m470YjWZ022322;
-	Wed, 7 May 2008 02:34:45 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1210094304-2450-1-git-send-email-aidan@highrise.ca>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757353AbYEGAok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 20:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754057AbYEGAoj
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 20:44:39 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34090 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757332AbYEGAoh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 20:44:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m470hnlW023185
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 May 2008 17:43:51 -0700
+Received: from y.localdomain (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m470hmYg003216;
+	Tue, 6 May 2008 17:43:49 -0700
+In-Reply-To: <7v4p9bge4q.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; x86_64-redhat-linux-gnu)
+X-Spam-Status: No, hits=-2.778 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81394>
 
-Aidan Van Dyk <aidan@highrise.ca> writes:
+On Tue, 06 May 2008 17:19:01 -0700 Junio C Hamano <gitster@pobox.com> wrote:
 
-> This add a -R <limit> option to git-grep which will limit the depth of the
-> directories recursed when git is doing a grep.
+> Andrew Morton <akpm@linux-foundation.org> writes:
 > 
-> This allows you to do something like:
->         git grep -R 1 <pattern>
-> and see only the results of the grep on files in the current directory.
+> > y:/usr/src/git26> git-branch -av | grep '^\*'
+> > * master               5717922 Merge branch 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jwessel/linux-2.6-kgdb
+> > y:/usr/src/git26> git-checkout linux-next    
+> > Switched to branch "linux-next"
+> > y:/usr/src/git26> git-branch -av | grep '^\*'
+> > * linux-next           5717922 Merge branch 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jwessel/linux-2.6-kgdb
 > 
-> It defaults to a limit of "0" which disables the limiting.
+> So your two local branches 'master' and 'linux-next' both point at the
+> same commit, 5717922.
+> 
+> "git checkout <branchname>" is to check out the local branch name.  You
+> expect "git checkout master" and then "git checkout linux-next" to check
+> out two different commits because linux-next _should_ have been updated to
+> the latest from sfr repository.  But it appears to me that that is not the
+> case.
 
-Nice idea, although I'm not sure if we shouldn't borrow "-maxdepth"
-option from GNU find and friends...
+I did a git-fetch of linux-next yesterday.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Perhaps "git fetch linux-next" hasn't been run, before "git checkout" was
+> attempted?
+
+I reran `git-fetch linux-next' and that downlaoded a heap of stuff (perhaps
+necause linux-next rebases every time?) and after this, `git-checkout
+linux-next' gives me what I expect.
+
+But how come I couldn't check out yesterday's linux-next?
