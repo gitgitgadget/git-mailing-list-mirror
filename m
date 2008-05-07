@@ -1,77 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
- configurable
-Date: Wed, 7 May 2008 12:24:19 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805071223450.30431@racer>
-References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>  <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com>  <alpine.DEB.1.00.0805041040560.30431@racer>  <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com> 
- <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>  <46dff0320805041840g1b9362d3u138b9d40cde160f2@mail.gmail.com>  <7vprs1ny5e.fsf@gitster.siamese.dyndns.org>  <46dff0320805050510t3bc5fd0eq44e0d58d1bb57629@mail.gmail.com>  <46dff0320805051740o65eee07eqc7073e4fa7996277@mail.gmail.com>
-  <alpine.DEB.1.00.0805060954470.30431@racer> <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Makefile: update the default build options for AIX
+Date: Wed, 07 May 2008 13:57:35 +0200
+Message-ID: <4821992F.4060201@viscovery.net>
+References: <1210149355875-git-send-email-mike@abacus.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 13:25:20 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	mike.ralphson@gmail.com
+To: Mike Ralphson <mike@abacus.co.uk>
+X-From: git-owner@vger.kernel.org Wed May 07 13:59:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jthlp-000784-AL
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 13:25:13 +0200
+	id 1JtiIF-0004ZJ-L4
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 13:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbYEGLYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 07:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbYEGLYY
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 07:24:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43443 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750932AbYEGLYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 07:24:23 -0400
-Received: (qmail invoked by alias); 07 May 2008 11:24:21 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp027) with SMTP; 07 May 2008 13:24:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XB1wbSCDXyy0K151NL4qadE3mK/t6j5ZnUKp8OE
-	LsA2IFzbwyD2qR
-X-X-Sender: gene099@racer
-In-Reply-To: <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755769AbYEGL5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 07:57:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755555AbYEGL5p
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 07:57:45 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:57838 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754936AbYEGL5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 07:57:39 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JtiH8-0003q6-W6; Wed, 07 May 2008 13:57:35 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AC31E69F; Wed,  7 May 2008 13:57:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1210149355875-git-send-email-mike@abacus.co.uk>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 0.2 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81428>
 
-Hi,
-
-On Wed, 7 May 2008, Ping Yin wrote:
-
-> On Tue, May 6, 2008 at 4:55 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > > I will come up with an implementation still using diff.nonwordchars few
-> >  > days later.
-> >
-> >  If I did not like the unnecessary negative approach "nonwordchars" (as
-> >  opposed to "wordchars"), it seems even less appropriate now, when you
-> >  actually want to discern between "spaceCharacters",
-> >  "punctuationCharacters" and "wordCharacters".
-> >
+Mike Ralphson schrieb:
+> NO_MKDTEMP is required to build, FREAD_READS_DIRECTORIES and the definition
+> of _LARGE_FILES fix test suite failures and INTERNAL_QSORT is required for
+> adequate performance.
 > 
-> Hmm, punctchars should be a better word than nonwordchars.
+> Tested on AIX v5.3 Maintenance Level 06
 > 
-> So how about this
+> Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
+> ---
+>  Makefile |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
 > 
-> --color-words={char,punct,word}
-> 
->   - char: one char one token
->   - punct/word: a token can be either a run of word characters or a
-> single punct character.  diff.punctchars is used for punct, and
-> diff.wordchars is used for word.
+> diff --git a/Makefile b/Makefile
+> index 7c70b00..4296656 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -632,8 +632,12 @@ endif
+>  ifeq ($(uname_S),AIX)
+>  	NO_STRCASESTR=YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_MKDTEMP = YesPlease
+>  	NO_STRLCPY = YesPlease
+> +	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+> +	INTERNAL_QSORT = UnfortunatelyYes
+>  	NEEDS_LIBICONV=YesPlease
+> +	BASIC_CFLAGS += -D_LARGE_FILES
+>  endif
+>  ifeq ($(uname_S),GNU)
+>  	# GNU/Hurd
 
-I am rather interested in the semantics, i.e. if you can punch holes into 
-this 3-class approach.
+I'm trying this patch on AIX 4.3.3 (sigh!) with gcc3. I get this:
 
-Bikeshedding comes later ;-)
+git-compat-util.h:209:1: warning: "fopen" redefined
+In file included from git-compat-util.h:51,
+                 from builtin.h:4,
+                 from git.c:1:
+/usr/local/lib/gcc-lib/powerpc-ibm-aix4.3.2.0/3.2.1/include/stdio.h:110:1:
+warning: this is the location of the previous definition
 
-Ciao,
-Dscho
+Line 110 in ...include/stdio.h is inside a #ifdef _LARGE_FILES section and
+says:
+
+#define fopen fopen64
+
+Did you also get this warning? Is _LARGE_FILES support solved in a
+different way on 5.3?
+
+-- Hannes
