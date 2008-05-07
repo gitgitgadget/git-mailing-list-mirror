@@ -1,80 +1,79 @@
-From: Luciano Rocha <luciano@eurotux.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Is this mailing list still active?
-Date: Wed, 7 May 2008 10:28:22 +0100
-Message-ID: <20080507092822.GA17438@bit.office.eurotux.com>
+Date: Wed, 07 May 2008 02:35:36 -0700 (PDT)
+Message-ID: <m3ej8e5ue8.fsf@localhost.localdomain>
 References: <17100348.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OgqxwSJOaUobr8KG"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: vanderkerkoff <mjdavies@glam.ac.uk>
-X-From: git-owner@vger.kernel.org Wed May 07 11:29:47 2008
+X-From: git-owner@vger.kernel.org Wed May 07 11:36:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jtfxf-0007fa-KE
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 11:29:20 +0200
+	id 1Jtg4f-0002Ee-Ec
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 11:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbYEGJ2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 05:28:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbYEGJ2a
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 05:28:30 -0400
-Received: from os.eurotux.com ([216.75.63.6]:54448 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809AbYEGJ23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 05:28:29 -0400
-Received: (qmail 3738 invoked from network); 7 May 2008 09:28:26 -0000
-Received: from adsl.eurotux.com (HELO bit.office.eurotux.com) (luciano@213.205.93.24)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 7 May 2008 09:28:26 -0000
-Content-Disposition: inline
+	id S1752771AbYEGJfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 05:35:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbYEGJfm
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 05:35:42 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:46550 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752099AbYEGJfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 05:35:40 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so118341nfc.21
+        for <git@vger.kernel.org>; Wed, 07 May 2008 02:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=+Fw4MHaLhdrSHSaWhkz07UR2wITKX6++A/w7gycYwE8=;
+        b=cFrQXn++YCm17+B599+wHxvht/aTf7NJvhtKYsEEHhvIzqJAlSVq3o3t/SGbdrE6SNw4M7FUWQLlUUfvkFErw9IqemxgZ3I6/G+60HScV8ca96Yb6Tx1UDcgeALq4VBXSAYU/Osh2vpFoumH550dwmdMr7qTOKn/3lL8p9lFSr4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=OaTLacdK3yEJrpUxtF9vryiJUa7yfRtm9Ntka+XiSODgctYgLIfe197oYg+WjBb56u5HaOHe+B5JNJV5vEC8K28nVFplR2LbefXTzz88WjVnh4j/Mzhm1oOdFmJhMAtJ2lhv6X2b4vU1D/QF086G9v92rMe0gXKBTgAidrud6Ys=
+Received: by 10.78.135.20 with SMTP id i20mr491756hud.24.1210152937239;
+        Wed, 07 May 2008 02:35:37 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.194.224])
+        by mx.google.com with ESMTPS id p28sm683666hub.59.2008.05.07.02.35.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 07 May 2008 02:35:36 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m479ZUIq025679;
+	Wed, 7 May 2008 11:35:31 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m479ZS8B025676;
+	Wed, 7 May 2008 11:35:28 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <17100348.post@talk.nabble.com>
-User-Agent: Mutt/1.5.14 (2007-03-31)
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81423>
 
+vanderkerkoff <mjdavies@glam.ac.uk> writes:
 
---OgqxwSJOaUobr8KG
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, May 07, 2008 at 02:12:11AM -0700, vanderkerkoff wrote:
->=20
 > Hello everyone
->=20
-> I'm brand new to git and I found this nabble group/mailing list, but look=
-ing
+> 
+> I'm brand new to git and I found this nabble group/mailing list, but looking
 > at the posts the forum seems to be really popular last year, but this year
 > hardly anything.
 
-Where did you get that idea? This mailing list has had several posts
-each day, including yesterday.
+Errr... the plot of activity at 
 
-> View this message in context: http://www.nabble.com/Is-this-mailing-list-=
-still-active--tp17100348p17100348.html
-> Sent from the git mailing list archive at Nabble.com.
+  http://dir.gmane.org/gmane.comp.version-control.git
 
-Ah. That archive seems to be outdated. See
-<http://vger.kernel.org/vger-lists.html#git> for other archives.
+shows around 80 messages per day.  Perhaps the mailing list archive /
+gateway you use has some problems?  If then, you can use MARC or GMane
+(the later even via NNTP / news / Usenet interface, or RSS feed).
 
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+See http://git.or.cz/gitwiki/GitCommunity
 
---OgqxwSJOaUobr8KG
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkghdjUACgkQinSul6a7oB8SIwCeOqr7SI53dH8hBCivyw5eM4hZ
-XacAoIH4gh94oB7RRRjt2wpih6sqMXOB
-=PtyR
------END PGP SIGNATURE-----
-
---OgqxwSJOaUobr8KG--
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
