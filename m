@@ -1,67 +1,60 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] Makefile: update the default build options for AIX
-Date: Wed, 07 May 2008 09:38:02 -0500
-Message-ID: <4821BECA.8020509@nrlssc.navy.mil>
-References: <1210149355875-git-send-email-mike@abacus.co.uk>	 <4821992F.4060201@viscovery.net> <e2b179460805070551x7a0072e0w4d406ef4112849ce@mail.gmail.com> <4821AB32.8090700@viscovery.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Sort of a feature proposal
+Date: Wed, 07 May 2008 16:48:17 +0200
+Message-ID: <86fxsutbke.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Mike Ralphson <mike.ralphson@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 07 16:45:47 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 07 16:50:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtktL-0008IG-G6
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 16:45:11 +0200
+	id 1JtkxO-00025Q-09
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 16:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762107AbYEGOnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 10:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760787AbYEGOnm
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 10:43:42 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47118 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762332AbYEGOni (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 10:43:38 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m47Ec3aN016147;
-	Wed, 7 May 2008 09:38:03 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 7 May 2008 09:38:03 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <4821AB32.8090700@viscovery.net>
-X-OriginalArrivalTime: 07 May 2008 14:38:03.0304 (UTC) FILETIME=[F49F3A80:01C8B04F]
-X-Virus-Status: Clean
+	id S1756832AbYEGOsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 10:48:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756054AbYEGOsc
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 10:48:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:41174 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754837AbYEGOsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 10:48:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JtkwT-00006y-MN
+	for git@vger.kernel.org; Wed, 07 May 2008 14:48:26 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 May 2008 14:48:25 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 May 2008 14:48:25 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:DdseFkjU0TJrCY6PSNs2/s+Kx94=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81442>
-
-Johannes Sixt wrote:
-> The #define fopen in git-compat-util.h essentially defeats the effect of
-> _LARGE_FILES as far as fopen() calls are concerned: If
-> FREAD_READS_DIRECTORIES is not defined, fopen() would be redirected to
-> fopen64(), but when it is defined, it is redirected to git_fopen(), which
-> in turn uses fopen() instead of fopen64() (due to the #undef in
-> compat/fopen.c).
-> 
-
-How about something like this?
-
-diff --git a/compat/fopen.c b/compat/fopen.c
-index ccb9e89..70b0d4d 100644
---- a/compat/fopen.c
-+++ b/compat/fopen.c
-@@ -1,5 +1,5 @@
-+#undef FREAD_READS_DIRECTORIES
- #include "../git-compat-util.h"
--#undef fopen
- FILE *git_fopen(const char *path, const char *mode)
- {
-        FILE *fp;
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81443>
 
 
--brandon
+Hi, I have some large git repositories on a USB drive (ext3 file
+system).  That means that when replugging the drive, the recorded st_dev
+data in the index is off, meaning that the whole repo directory
+structure gets reread as the stat data of all directories has changed.
+
+That's a nuisance.  Can't we have some heuristic or configuration option
+where we, say, record the st_dev of the _index_ file, and if that has
+changed, we propagate that change to the st_dev of its contents?  I'd
+like to see something that works more efficiently than rescanning the
+whole disk every time I hibernate my computer.
+
+Thanks,
+
+-- 
+David Kastrup
