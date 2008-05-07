@@ -1,140 +1,84 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: git-checkout sometimes silently fails
-Date: Tue, 6 May 2008 17:54:42 -0700
-Message-ID: <20080506175442.845ca8fa.akpm@linux-foundation.org>
-References: <20080506122256.04ca7d77.akpm@linux-foundation.org>
-	<20080506215049.GC4647@steel.home>
-	<20080506171052.340d643e.akpm@linux-foundation.org>
-	<20080507001919.GA8633@sigill.intra.peff.net>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words configurable
+Date: Wed, 7 May 2008 09:15:35 +0800
+Message-ID: <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
+References: <46dff0320805020726y2592732cj9aef0111e5b2288a@mail.gmail.com>
+	 <46dff0320805031732x25286707r991358162046c07c@mail.gmail.com>
+	 <alpine.DEB.1.00.0805041040560.30431@racer>
+	 <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
+	 <7v63ttq0y8.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320805041840g1b9362d3u138b9d40cde160f2@mail.gmail.com>
+	 <7vprs1ny5e.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320805050510t3bc5fd0eq44e0d58d1bb57629@mail.gmail.com>
+	 <46dff0320805051740o65eee07eqc7073e4fa7996277@mail.gmail.com>
+	 <alpine.DEB.1.00.0805060954470.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 07 02:55:51 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 07 03:16:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtXwi-0007Qu-Ir
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 02:55:49 +0200
+	id 1JtYGi-0003R1-Om
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 03:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbYEGAy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2008 20:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753354AbYEGAy7
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 20:54:59 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48739 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752553AbYEGAy6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2008 20:54:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m470sgoj023670
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 May 2008 17:54:44 -0700
-Received: from y.localdomain (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m470sg5S003605;
-	Tue, 6 May 2008 17:54:42 -0700
-In-Reply-To: <20080507001919.GA8633@sigill.intra.peff.net>
-X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; x86_64-redhat-linux-gnu)
-X-Spam-Status: No, hits=-2.778 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754903AbYEGBPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2008 21:15:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbYEGBPk
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 May 2008 21:15:40 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:61416 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754459AbYEGBPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2008 21:15:38 -0400
+Received: by an-out-0708.google.com with SMTP id d40so14199and.103
+        for <git@vger.kernel.org>; Tue, 06 May 2008 18:15:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=i94+LnPy4J6UPRmDJz8PEF2Tp3U2NOvsUM8bmZ4JShc=;
+        b=sC37D8mDL9hGa91wNDgbGkPLpGq73fEOn8WplR63nvj8TXtYd9v3grS8VldgW8EWZ9xa6lj7wKQS8vY80LaJkKowZIQtnk1IDHiAUkEBoiUP73LuYMgNuIBmNREM/LSmor/jqgGM3jA+uVbMiotA6RjQI57jWYQ6pOtTy2FRoFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YlS9HmaExWxN7yHxY37BIEP9Q8M3uynU4iBmDYCQdUljgnbj9txAz5ARmYVri74Q8xTVinHJwRigj9Wp5Ls7w1Kj8pAh5wpmmcgJSJQZgNXJd0mRtRogjNmcxhzI2Hees6WLSfMMh99Zq2MGuX+65ZL3GP5TkIfjIuURio8IV6s=
+Received: by 10.101.68.10 with SMTP id v10mr1927866ank.45.1210122935713;
+        Tue, 06 May 2008 18:15:35 -0700 (PDT)
+Received: by 10.100.32.10 with HTTP; Tue, 6 May 2008 18:15:35 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805060954470.30431@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81397>
 
-On Tue, 6 May 2008 20:19:19 -0400 Jeff King <peff@peff.net> wrote:
+On Tue, May 6, 2008 at 4:55 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> > I will come up with an implementation still using diff.nonwordchars few
+>  > days later.
+>
+>  If I did not like the unnecessary negative approach "nonwordchars" (as
+>  opposed to "wordchars"), it seems even less appropriate now, when you
+>  actually want to discern between "spaceCharacters",
+>  "punctuationCharacters" and "wordCharacters".
+>
 
-> On Tue, May 06, 2008 at 05:10:52PM -0700, Andrew Morton wrote:
-> 
-> > > > y:/usr/src/git26> git-checkout master
-> > > > Switched to branch "master"
-> > > > y:/usr/src/git26> cat kernel/*.c|sum
-> > > > 34439  2057
-> > > > y:/usr/src/git26> git-checkout linux-next
-> > > > Switched to branch "linux-next"
-> > > > y:/usr/src/git26> cat kernel/*.c|sum     
-> > > > 34439  2057
-> > > 
-> > > This is not a good indication of a failed checkout (they could point
-> > > to the same commit, for one).
-> > 
-> > How could they?  linux-next includes a directory called ./Next and a file
-> > in that directory called ./Next/Trees, and that is not present after the
-> > `git-checkout linux-next'.
-> 
-> But you don't show us that in your example. There is nothing in your
-> example to indicate that they are not simply pointing at the same
-> commit...
-> 
-> > > Try "gitk master...linux-next" (or "git
-> > > log master..linux-next", "git diff master linux-next")
-> > 
-> > These come up empty.  But there is a 12.4MB diff between mainline and
-> > linux-next.
-> 
-> And if these all come up empty, then they _are_ pointing to the same
-> commit. When you say "but there is a 12.4MB diff..." do you mean "there
-> _should_ be such a diff?" In that case, it seems that your linux-next
-> ref is pointing to an unexpected commit.
-> 
-> So the problem is not with git-checkout, but rather that you are not
-> checking out what you think you are checking out.
+Hmm, punctchars should be a better word than nonwordchars.
 
-That sounds a decent theory.
+So how about this
 
-> And so we need to
-> figure out how you got into that state.
+--color-words={char,punct,word}
 
-Well it happens pretty regularly.  I have now lost that state but I'll save
-it next time.  I'm not able to pinpoint exactly what causes it to occur.
+  - char: one char one token
+  - punct/word: a token can be either a run of word characters or a
+single punct character.  diff.punctchars is used for punct, and
+diff.wordchars is used for word.
 
-> What command did you use to create the linux-next branch?
+We leave the choice to the user.
 
-I edited 
 
-y:/usr/src/git26> cat .git/branches/linux-next 
-git+ssh://master.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git
-
-and did git-fetch once per day, approx.
-
-> Have you used
-> git-reset to move the branch tip around?
-
-My git-fetching script does that:
-
-doit()
-{
-	tree=$1
-	upstream=$2
-
-	cd $GIT_TREE
-	git reset --hard "$upstream"
-	git fetch "$tree" || exit 1
-	git merge --no-commit 'test merge' HEAD FETCH_HEAD > /dev/null
-
-	{
-		git_header "$tree"
-		git log --no-merges ORIG_HEAD..FETCH_HEAD
-		git diff --patch-with-stat ORIG_HEAD
-	} >$PULL/$tree.patch
-	{
-		echo DESC
-		echo $tree.patch
-		echo EDESC
-		git_header "$tree"
-		git log --no-merges ORIG_HEAD..FETCH_HEAD
-	} >$PULL/$tree.txt
-	git reset --hard "$upstream"
-}
-
-(Linus suggested an updated version of this but afaict that won't change
-anything)
-
-But, as I say, usually this script leaves the tree in a sane state.  But
-sometimes it leaves it in a i-cant-check-stuff-out state.  It's not
-specific to linux-next, either: I've seen this for a long time, on and off.
-Prior to linux-next's existence.
+-- 
+Ping Yin
