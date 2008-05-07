@@ -1,102 +1,162 @@
-From: Jean-Luc Herren <jlh@gmx.ch>
-Subject: [PATCH] gitk: Allow toggling of checkboxes by clicking on the label
-Date: Thu, 08 May 2008 00:43:39 +0200
-Message-ID: <4822309B.9010303@gmx.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 08 00:44:40 2008
+From: Daniel Quinlan <danq@brtt.com>
+Subject: Re: help with git usage
+Date: Wed, 7 May 2008 16:41:27 -0600
+Message-ID: <200805072242.m47Mg1o0015578@rs40.luxsci.com>
+References: <200804291738.m3THc2hC030601@rs40.luxsci.com> <alpine.LNX.1.00.0804291354070.19665@iabervon.org> <m3tzhjokox.fsf@localhost.localdomain>
+Content-Type: multipart/mixed; boundary=Apple-Mail-45--35346685
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 00:45:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtsNK-0005qL-1j
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 00:44:38 +0200
+	id 1JtsOJ-000695-Vc
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 00:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933654AbYEGWnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 18:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932847AbYEGWnp
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:43:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45748 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761931AbYEGWnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 18:43:42 -0400
-Received: (qmail invoked by alias); 07 May 2008 22:43:40 -0000
-Received: from 169-19.79-83.cust.bluewin.ch (EHLO [192.168.123.202]) [83.79.19.169]
-  by mail.gmx.net (mp053) with SMTP; 08 May 2008 00:43:40 +0200
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX18PX2dgKxYPf6Y/YJlHGysF11MnKsLKKRlKp2l3N0
-	jrSu58kiDx7eNR
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-X-Enigmail-Version: 0.95.6
-X-Y-GMX-Trusted: 0
+	id S933360AbYEGWor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 18:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753119AbYEGWoq
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 18:44:46 -0400
+Received: from rs40.luxsci.com ([65.61.166.82]:43488 "EHLO rs40.luxsci.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934077AbYEGWoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 18:44:37 -0400
+Received: from rs40.luxsci.com (localhost [127.0.0.1])
+	by rs40.luxsci.com (8.13.1/8.13.7) with ESMTP id m47MgYDf016033;
+	Wed, 7 May 2008 17:42:34 -0500
+Received: (from root@localhost)
+	by rs40.luxsci.com (8.13.1/8.13.7/Submit) id m47Mg1o0015578;
+	Wed, 7 May 2008 22:42:01 GMT
+Received: (from danq@brtt.com) by Lux Scientiae SMTP Processor; Wed, 07 May 2008 22:42:01 +0000
+In-Reply-To: <m3tzhjokox.fsf@localhost.localdomain>
+X-Comment: Lux Scientiae SMTP Processor Message ID - 1210200121-8308113.50503414
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81490>
 
 
-Signed-off-by: Jean-Luc Herren <jlh@gmx.ch>
----
-I hope this makes any sense, since I do not know any tcl/tk at all.  I
-think being able to click on the label of checkboxes is good manner,
-since otherwise you have to click into a fairly small area.  However,
-this patch unfortunately also reduces the size of the checkbox itself,
-proably because it adapts itself to the small optionfont.  I don't know
-how to fix this other than increasing the size of optionfont, so I'll
-let someone else do this, if this is desired.
+--Apple-Mail-45--35346685
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
 
- gitk-git/gitk |   24 ++++++++++++------------
- 1 files changed, 12 insertions(+), 12 deletions(-)
+Thanks for your earlier responses, they were very helpful.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 9a4d9c4..ef8dcc0 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -8015,14 +8015,14 @@ proc doprefs {} {
-     spinbox $top.maxpct -from 1 -to 100 -width 4 -textvariable maxgraphpct
-     grid x $top.maxpctl $top.maxpct -sticky w
-     frame $top.showlocal
--    label $top.showlocal.l -text [mc "Show local changes"] -font optionfont
--    checkbutton $top.showlocal.b -variable showlocalchanges
--    pack $top.showlocal.b $top.showlocal.l -side left
-+    checkbutton $top.showlocal.b -variable showlocalchanges \
-+	-text [mc "Show local changes"] -font optionfont
-+    pack $top.showlocal.b -side left
-     grid x $top.showlocal -sticky w
-     frame $top.autoselect
--    label $top.autoselect.l -text [mc "Auto-select SHA1"] -font optionfont
--    checkbutton $top.autoselect.b -variable autoselect
--    pack $top.autoselect.b $top.autoselect.l -side left
-+    checkbutton $top.autoselect.b -variable autoselect \
-+	-text [mc "Auto-select SHA1"] -font optionfont
-+    pack $top.autoselect.b -side left
-     grid x $top.autoselect -sticky w
+On Apr 30, 2008, at 1:39 AM, Jakub Narebski wrote:
+
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+>
+>> On Tue, 29 Apr 2008, Daniel Quinlan wrote:
+>>
+>>> I've been trying to use git for awhile now, (and I've read a lot
+>>> of documentation, though maybe my comprehension has not been high
+>>> enough) but there are several operations which I can't figure out:
+>
+> Many of answers to your questions can be found on GitFaq,
+> http://git.or.cz/gitwiki/GitFaq
+
+I should have read this earlier.  I don't really understand the
+details, but I get the idea:  make the central repository bare.
+
+>
+
+>>> 3) Similarly, I can't use the little context diffs I can see in
+>>> git-gui -- I need to see side by side comparisons; I've become
+>>> accustomed to tkdiff.  It seems like git mergetool knows how to do
+>>> that in some restricted circumstances, but I want to do it outside
+>>> the context of a merge.
+>>
+>> This I don't know, but you can get particular files from particular
+>> commits output with "git show <commit>:<path>", and you can likely  
+>> wire
+>> something up.
+>
+> From the various graphical comparison tools, Meld has supposedly Git
+> support (http://meld.sourceforge.net/).  Supposedly only because I
+> have not tested this; see
+> http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-00fbd1ac45fe93dac4653cad3639b3df73d8657e
+>
+
+I found no mention of git on the meld man page or in the meld mailing  
+list.
+
+Here's a (perhaps naive) perl script which uses "git show" and wraps  
+around
+the original tkdiff.  Other cvs users might find it useful, though it  
+can surely
+be improved.
+
+
+--Apple-Mail-45--35346685
+Content-Disposition: attachment;
+	filename=gtkdiff
+Content-Type: application/octet-stream;
+	x-unix-mode=0755;
+	name="gtkdiff"
+Content-Transfer-Encoding: 7bit
+
+: # use perl
+eval 'exec perl -S $0 "$@"'
+if 0;
+
+use strict ;
+
+require "getopts.pl" ;
+our($opt_r) ;
+if ( ! &Getopts('r:nv') || @ARGV != 1 ) { 
+    my $pgm = $0 ; 
+    $pgm =~ s".*/"" ;
+    die ( "Usage: $pgm [-r commit] filename\n" ) ; 
+}
+
+
+my $filename = shift ; 
+if ( ! -f $filename ) { 
+    die ( "$filename not found\n" ) ;
+}
+
+chomp(my $prefix = `git-rev-parse --show-prefix`) ;
+$opt_r = "HEAD" if ! defined $opt_r ;
+my $name = $filename ; 
+$name =~ s".*/"" ;
+my $tmpfile = "/tmp/$name" ;
+system ("git show '$opt_r:$prefix$filename' > $tmpfile" ) ; 
+system ( "tkdiff $tmpfile $filename" ) ;
+unlink "$tmpfile" ;
  
-     label $top.ddisp -text [mc "Diff display options"]
-@@ -8031,14 +8031,14 @@ proc doprefs {} {
-     spinbox $top.tabstop -from 1 -to 20 -width 4 -textvariable tabstop
-     grid x $top.tabstopl $top.tabstop -sticky w
-     frame $top.ntag
--    label $top.ntag.l -text [mc "Display nearby tags"] -font optionfont
--    checkbutton $top.ntag.b -variable showneartags
--    pack $top.ntag.b $top.ntag.l -side left
-+    checkbutton $top.ntag.b -variable showneartags \
-+	-text [mc "Display nearby tags"] -font optionfont
-+    pack $top.ntag.b -side left
-     grid x $top.ntag -sticky w
-     frame $top.ldiff
--    label $top.ldiff.l -text [mc "Limit diffs to listed paths"] -font optionfont
--    checkbutton $top.ldiff.b -variable limitdiffs
--    pack $top.ldiff.b $top.ldiff.l -side left
-+    checkbutton $top.ldiff.b -variable limitdiffs \
-+	-text [mc "Limit diffs to listed paths"] -font optionfont
-+    pack $top.ldiff.b -side left
-     grid x $top.ldiff -sticky w
- 
-     label $top.cdisp -text [mc "Colors: press to choose"]
--- 
-1.5.5.1
+
+--Apple-Mail-45--35346685
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+
+
+
+
+
+I'm looking for a way to embed some identifying information about  
+version
+into compiled programs.  I hasten to add that I am not looking to  
+expand RCS-like
+tags.  Unlike CVS/RCS, git provides a single value that characterizes  
+the whole
+distribution, at least if everything is committed.  So, something like  
+"git log | head -1 | awk '{print $2}'"
+probably provides a value which I can embed into executables and  
+libraries, tying
+them to a particular source configuration.  I'm just curious if  
+there's a better approach
+to getting the commit hash.
+
+-- danq
+
+
+
+--Apple-Mail-45--35346685--
