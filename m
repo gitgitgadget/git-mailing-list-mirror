@@ -1,63 +1,108 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] Makefile: update the default build options for AIX
-Date: Wed, 07 May 2008 12:36:18 -0500
-Message-ID: <4821E892.4080104@nrlssc.navy.mil>
-References: <1210149355875-git-send-email-mike@abacus.co.uk>	 <4821992F.4060201@viscovery.net>	 <e2b179460805070551x7a0072e0w4d406ef4112849ce@mail.gmail.com>	 <4821AB32.8090700@viscovery.net> <4821BECA.8020509@nrlssc.navy.mil>	 <e2b179460805070815u6cc627feo6137084fe7c5a635@mail.gmail.com>	 <4821CD5C.5010506@nrlssc.navy.mil>	 <7vfxsudrt0.fsf@gitster.siamese.dyndns.org> <e2b179460805070920i2ff5798dpacb5c55d851d5ede@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Sort of a feature proposal
+Date: Wed, 07 May 2008 19:39:48 +0200
+Message-ID: <86k5i6rp23.fsf@lola.quinscape.zz>
+References: <86fxsutbke.fsf@lola.quinscape.zz>
+	<alpine.LFD.1.10.0805070924300.3024@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 19:38:42 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 07 19:41:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jtnag-0007rR-0A
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 19:38:06 +0200
+	id 1JtndT-0000nI-If
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 19:40:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761925AbYEGRhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 13:37:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761910AbYEGRhB
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 13:37:01 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54449 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761925AbYEGRg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 13:36:59 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m47HaI24022527;
-	Wed, 7 May 2008 12:36:18 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 7 May 2008 12:36:18 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <e2b179460805070920i2ff5798dpacb5c55d851d5ede@mail.gmail.com>
-X-OriginalArrivalTime: 07 May 2008 17:36:18.0435 (UTC) FILETIME=[DB6AB530:01C8B068]
-X-Virus-Status: Clean
+	id S1753833AbYEGRkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 13:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbYEGRkK
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 13:40:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:52914 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751880AbYEGRkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 13:40:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JtncQ-000110-M2
+	for git@vger.kernel.org; Wed, 07 May 2008 17:39:54 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 May 2008 17:39:54 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 May 2008 17:39:54 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:4UqE0kYnk3ycammLxjb45LxTmeI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81467>
 
-Mike Ralphson wrote:
-> Indeed. Please add ascii-art diagrams and don't use long words. I may
-> then have a chance of understanding how this works,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I think this is simpler than you are making it out to be.
+> On Wed, 7 May 2008, David Kastrup wrote:
+>> 
+>> Hi, I have some large git repositories on a USB drive (ext3 file
+>> system).  That means that when replugging the drive, the recorded st_dev
+>> data in the index is off, meaning that the whole repo directory
+>> structure gets reread as the stat data of all directories has changed.
+>> 
+>> That's a nuisance.  Can't we have some heuristic or configuration option
+>> where we, say, record the st_dev of the _index_ file, and if that has
+>> changed, we propagate that change to the st_dev of its contents?  I'd
+>> like to see something that works more efficiently than rescanning the
+>> whole disk every time I hibernate my computer.
+>
+> Hmm. We shouldn't even be using st_dev any more.
+>
+> How did you compile your git version? By default USE_STDEV should be off, 
+> and it's been that way for a long time (because st_dev is also not 
+> reliable on NFS etc).
 
-All the git source files currently #include git-compat-util.h. When a
-platform is missing a function, we implement that function in the compat/
-subdirectory and add an entry for it in git-compat-util.h.
+Looks that way in my Makefile.  Maybe I am confused: I just did some
+timings (this is ext3 on a USB drive) and got
 
-In this case we found a problem that could be worked around by replacing every
-call to fopen with an internal function. So we did the standard thing of
-creating a new function in the compat/ subdirectory named git_fopen() and added
-macro statements within git-compat-util.h to redefine fopen to be git_fopen.
-But, git_fopen needs to call the _real_ fopen and it _also_ includes git-compat-util.h.
-So, after including git-compat-util.h, we undefined the fopen macro to undo the
-assignment that we had just performed. This doesn't work if the system is also setting
-an fopen macro. So the fix is to avoid clobbering the system setting at all when
-compiling compat/fopen.c
+    git svn rebase
+    Current branch master is up to date.
+    dak@lisa:/lisa/texlive$ time git svn rebase
+    Current branch master is up to date.
 
--brandon
+    real	0m4.581s
+    user	0m2.244s
+    sys	0m1.492s
+    dak@lisa:/lisa/texlive$ cd
+    dak@lisa:~$ sudo umount /lisa;sudo mount /dev/mapper/Medion-reps /lisa;cd /lisa/texlive;time git svn rebase
+    Current branch master is up to date.
+
+    real	0m53.588s
+    user	0m2.248s
+    sys	0m2.388s
+    dak@lisa:/lisa/texlive$ cd;sudo umount /lisa;sudo dmsetup remove /dev/mapper/Medion-reps
+[Unplug and replug the USB drive]
+    dak@lisa:~$ sudo mount /dev/mapper/Medion-reps /lisa;cd /lisa/texlive;time git svn rebase
+    Current branch master is up to date.
+
+    real	0m53.101s
+    user	0m2.324s
+    sys	0m2.380s
+    dak@lisa:/lisa/texlive$ 
+
+If my guess that the device number of LVM does not change when merely
+un- and remounting, but does change when unplugging and replugging is
+correct, it would appear that my idea where the time went was wrong and
+that the device number has nothing whatsoever to do with the large
+amount of lookups (this is a USB2.0 device at High Speed).
+
+Is there a way to completely invalidate the disk cache without
+unmounting?  How do I verify device numbers?
+
+Thanks,
+
+-- 
+David Kastrup
