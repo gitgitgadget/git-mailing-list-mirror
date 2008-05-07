@@ -1,108 +1,80 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Sort of a feature proposal
-Date: Wed, 07 May 2008 19:39:48 +0200
-Message-ID: <86k5i6rp23.fsf@lola.quinscape.zz>
-References: <86fxsutbke.fsf@lola.quinscape.zz>
-	<alpine.LFD.1.10.0805070924300.3024@woody.linux-foundation.org>
+From: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>
+Subject: [PATCH] Make creation of pack/pack-*.keep obey the umask
+Date: Wed, 7 May 2008 11:25:48 -0600
+Message-ID: <20080507172548.GI24525@obsidianresearch.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 19:41:11 2008
+X-From: git-owner@vger.kernel.org Wed May 07 19:50:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtndT-0000nI-If
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 19:40:59 +0200
+	id 1JtnmS-0004qC-Fa
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 19:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753833AbYEGRkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 13:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbYEGRkK
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 13:40:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:52914 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751880AbYEGRkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 13:40:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JtncQ-000110-M2
-	for git@vger.kernel.org; Wed, 07 May 2008 17:39:54 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 May 2008 17:39:54 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 May 2008 17:39:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:4UqE0kYnk3ycammLxjb45LxTmeI=
+	id S1756937AbYEGRtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 13:49:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755425AbYEGRtW
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 13:49:22 -0400
+Received: from quartz.orcorp.ca ([142.179.161.236]:60808 "EHLO
+	quartz.edm.orcorp.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752942AbYEGRtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 13:49:19 -0400
+X-Greylist: delayed 1406 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2008 13:49:19 EDT
+Received: from [10.0.0.11] (helo=jggl.edm.orcorp.ca)
+	by quartz.edm.orcorp.ca with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <jgunthorpe@obsidianresearch.com>)
+	id 1JtnOm-0007JW-DW
+	for git@vger.kernel.org; Wed, 07 May 2008 11:25:48 -0600
+Received: from jgg by jggl.edm.orcorp.ca with local (Exim 4.67)
+	(envelope-from <jgunthorpe@obsidianresearch.com>)
+	id 1JtnOm-000281-7r
+	for git@vger.kernel.org; Wed, 07 May 2008 11:25:48 -0600
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Broken-Reverse-DNS: no host name found for IP address 10.0.0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81468>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Prevents git clone from complaining on shared repositories
 
-> On Wed, 7 May 2008, David Kastrup wrote:
->> 
->> Hi, I have some large git repositories on a USB drive (ext3 file
->> system).  That means that when replugging the drive, the recorded st_dev
->> data in the index is off, meaning that the whole repo directory
->> structure gets reread as the stat data of all directories has changed.
->> 
->> That's a nuisance.  Can't we have some heuristic or configuration option
->> where we, say, record the st_dev of the _index_ file, and if that has
->> changed, we propagate that change to the st_dev of its contents?  I'd
->> like to see something that works more efficiently than rescanning the
->> whole disk every time I hibernate my computer.
->
-> Hmm. We shouldn't even be using st_dev any more.
->
-> How did you compile your git version? By default USE_STDEV should be off, 
-> and it's been that way for a long time (because st_dev is also not 
-> reliable on NFS etc).
+Initialized empty Git repository in /tmp/src/.git/
+cpio: objects/pack/pack-601efa4cfe63e081c0591b463549aeba3f7c6164.keep: Cannot open: Permission denied
+3376 blocks
 
-Looks that way in my Makefile.  Maybe I am confused: I just did some
-timings (this is ext3 on a USB drive) and got
+Signed-off-by: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>
+---
 
-    git svn rebase
-    Current branch master is up to date.
-    dak@lisa:/lisa/texlive$ time git svn rebase
-    Current branch master is up to date.
+I'm uncertain if the keep files should be sticking around for so long,
+commit b8077709 makes it sounds like they are shorted lived lock
+files. In the case I have the keep file contains:
 
-    real	0m4.581s
-    user	0m2.244s
-    sys	0m1.492s
-    dak@lisa:/lisa/texlive$ cd
-    dak@lisa:~$ sudo umount /lisa;sudo mount /dev/mapper/Medion-reps /lisa;cd /lisa/texlive;time git svn rebase
-    Current branch master is up to date.
+fetch-pack 20810 on bertha1
 
-    real	0m53.588s
-    user	0m2.248s
-    sys	0m2.388s
-    dak@lisa:/lisa/texlive$ cd;sudo umount /lisa;sudo dmsetup remove /dev/mapper/Medion-reps
-[Unplug and replug the USB drive]
-    dak@lisa:~$ sudo mount /dev/mapper/Medion-reps /lisa;cd /lisa/texlive;time git svn rebase
-    Current branch master is up to date.
+But, I don't see anything in fetch-pack to erase the keep file.. In
+any event making the file the same permissions as everything else
+can't hurt.
 
-    real	0m53.101s
-    user	0m2.324s
-    sys	0m2.380s
-    dak@lisa:/lisa/texlive$ 
+ index-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-If my guess that the device number of LVM does not change when merely
-un- and remounting, but does change when unplugging and replugging is
-correct, it would appear that my idea where the time went was wrong and
-that the device number has nothing whatsoever to do with the large
-amount of lookups (this is a USB2.0 device at High Speed).
-
-Is there a way to completely invalidate the disk cache without
-unmounting?  How do I verify device numbers?
-
-Thanks,
-
+diff --git a/index-pack.c b/index-pack.c
+index 9c0c278..eb19e98 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -707,7 +707,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 				 get_object_directory(), sha1_to_hex(sha1));
+ 			keep_name = name;
+ 		}
+-		keep_fd = open(keep_name, O_RDWR|O_CREAT|O_EXCL, 0600);
++		keep_fd = open(keep_name, O_RDWR|O_CREAT|O_EXCL, 0666);
+ 		if (keep_fd < 0) {
+ 			if (errno != EEXIST)
+ 				die("cannot write keep file");
 -- 
-David Kastrup
+1.5.4.2
