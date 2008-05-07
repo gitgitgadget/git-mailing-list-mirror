@@ -1,60 +1,73 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Sort of a feature proposal
-Date: Wed, 07 May 2008 16:48:17 +0200
-Message-ID: <86fxsutbke.fsf@lola.quinscape.zz>
+From: "Ryan Taylor" <ryan.taylor@leeds-art.ac.uk>
+Subject: Error when pushing
+Date: Wed, 7 May 2008 16:02:46 +0100
+Message-ID: <4B58A837F454E14AA0453EDBADE96A62B5F606@mildred.leeds-art.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 16:50:16 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 07 17:05:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtkxO-00025Q-09
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 16:49:22 +0200
+	id 1JtlBJ-0000zm-F5
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 17:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832AbYEGOsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 10:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756054AbYEGOsc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 10:48:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:41174 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754837AbYEGOsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 10:48:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JtkwT-00006y-MN
-	for git@vger.kernel.org; Wed, 07 May 2008 14:48:26 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 May 2008 14:48:25 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 May 2008 14:48:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:DdseFkjU0TJrCY6PSNs2/s+Kx94=
+	id S1758755AbYEGPC4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 May 2008 11:02:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758645AbYEGPC4
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 11:02:56 -0400
+Received: from mail.leeds-art.ac.uk ([195.195.164.241]:37622 "EHLO
+	mildred.leeds-art.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757622AbYEGPCy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 May 2008 11:02:54 -0400
+Received: (qmail 31219 invoked from network); 7 May 2008 15:02:52 -0000
+Received: from 17.130.10.172.in-addr.arpa (HELO mildred.leeds-art.ac.uk) (172.10.130.17)
+  by 0 with SMTP; 7 May 2008 15:02:51 -0000
+X-ECSC-UBE-ID: 31213.1210172571.1
+X-ECSC-UBE-IP: 172.10.130.17
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-hashedpuzzle: E0Kf FdvS Frpe Gs4J HHDb Hz56 IrZi IuiH Jksg J1Pq J6/9 KlLH K4kF LYR4 MOig MQS0;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{D14699A1-1C76-45B5-9566-6F24825BB435};cgB5AGEAbgAuAHQAYQB5AGwAbwByAEAAbABlAGUAZABzAC0AYQByAHQALgBhAGMALgB1AGsA;Wed, 07 May 2008 15:02:46 GMT;RQByAHIAbwByACAAdwBoAGUAbgAgAHAAdQBzAGgAaQBuAGcA
+Content-class: urn:content-classes:message
+x-cr-puzzleid: {D14699A1-1C76-45B5-9566-6F24825BB435}
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Error when pushing
+Thread-Index: AciwU1m6Kyxw41j+T1KtKP8woWzADAAAAWTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81444>
 
+Hi,=20
 
-Hi, I have some large git repositories on a USB drive (ext3 file
-system).  That means that when replugging the drive, the recorded st_dev
-data in the index is off, meaning that the whole repo directory
-structure gets reread as the stat data of all directories has changed.
+I'm getting the following error when pushing from my dev box to my live=
+ box:
 
-That's a nuisance.  Can't we have some heuristic or configuration option
-where we, say, record the st_dev of the _index_ file, and if that has
-changed, we propagate that change to the st_dev of its contents?  I'd
-like to see something that works more efficiently than rescanning the
-whole disk every time I hibernate my computer.
+ryant@brewster:/gittest$ git push ryan@bert:/webdata/gittest/
+ryan@bert's password:
+updating 'refs/heads/master'
+=A0 from 60d4194d6d5647f1c18fb7235754984bd4e5a8d9
+=A0 to=A0=A0 97c26890703c1f08e02623e4e84a40e4ca0e0a1e
+Generating pack...
+Done counting 4 objects.
+Result has 3 objects.
+Deltifying 3 objects...
+=A0100% (3/3) done
+Writing 3 objects...
+=A0100% (3/3) done
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking 3 objects
+*** Project description file hasn't been set
+error: hooks/update exited with error code 1
+error: hook declined to update refs/heads/master
+ng refs/heads/master hook declined
+error: failed to push to 'ryan@bert:/webdata/gittest/'
 
-Thanks,
+Can anybody shed any light?
 
--- 
-David Kastrup
+Cheers
+
+Ryan
