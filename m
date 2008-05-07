@@ -1,84 +1,65 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Makefile: update the default build options for AIX
-Date: Wed, 7 May 2008 16:15:58 +0100
-Message-ID: <e2b179460805070815u6cc627feo6137084fe7c5a635@mail.gmail.com>
-References: <1210149355875-git-send-email-mike@abacus.co.uk>
-	 <4821992F.4060201@viscovery.net>
-	 <e2b179460805070551x7a0072e0w4d406ef4112849ce@mail.gmail.com>
-	 <4821AB32.8090700@viscovery.net> <4821BECA.8020509@nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow local branching to set up rebase by default.
+Date: Wed, 07 May 2008 08:19:37 -0700
+Message-ID: <7vwsm6dtva.fsf@gitster.siamese.dyndns.org>
+References: <1209502182-39800-1-git-send-email-dustin@spy.net>
+ <76718490804291456r7d1ef385q4e51a5705fdd26ef@mail.gmail.com>
+ <02471C27-C99D-43E7-BC58-50F2B86ED159@spy.net>
+ <76B5A8CE-EFFF-48BE-AD2C-45527D7AB04D@spy.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed May 07 17:17:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dustin Sallings <dustin@spy.net>
+X-From: git-owner@vger.kernel.org Wed May 07 17:20:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtlOC-0007MI-1C
-	for gcvg-git-2@gmane.org; Wed, 07 May 2008 17:17:04 +0200
+	id 1JtlRb-0000aa-TB
+	for gcvg-git-2@gmane.org; Wed, 07 May 2008 17:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbYEGPQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 11:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754876AbYEGPQD
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 11:16:03 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:62195 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758557AbYEGPP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 11:15:59 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so412487rvb.1
-        for <git@vger.kernel.org>; Wed, 07 May 2008 08:15:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=vWr/fS0J7YK7xJIRQ0kQhFCMhtMDhUDAgG1f23BNa8g=;
-        b=sr8fsbICyauyV2wV2MZyQdVEzcJZb9BZS5LajodAT6d/wM3TVWMcBMePCBVoDhpMQMkOJQcBMJhH2CZA4Y8iy4mwh+L0Z4xlJtDhT3XftQcsLVJVlUUVwDtv7I8wC6xRMi9k11aTth+vKwWv69LwN3/98WpD4XUSjt4QpF6wjoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bFz5cMbmI+iI5fontyASnXOn70PGUTjlbr1AyoLMPBVfYwdnpKlNSkSEE3pKcbNDVcpmc0D2hkC61TnX2t1ogW7fE5q/+HWc/3arWETY4xjoF41OhTB4vyKQKA29BIT1UYpUFGF6Q61Y4B9V6HgOWY7l/iXFHKFiTIpxgtMdJyQ=
-Received: by 10.140.171.4 with SMTP id t4mr1005625rve.230.1210173358875;
-        Wed, 07 May 2008 08:15:58 -0700 (PDT)
-Received: by 10.140.142.5 with HTTP; Wed, 7 May 2008 08:15:58 -0700 (PDT)
-In-Reply-To: <4821BECA.8020509@nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1755916AbYEGPTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 11:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755215AbYEGPTr
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 11:19:47 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34131 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755135AbYEGPTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 11:19:46 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 875314CEC;
+	Wed,  7 May 2008 11:19:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id D694A4CEA; Wed,  7 May 2008 11:19:41 -0400 (EDT)
+In-Reply-To: <76B5A8CE-EFFF-48BE-AD2C-45527D7AB04D@spy.net> (Dustin
+ Sallings's message of "Tue, 6 May 2008 23:01:33 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 05BCA11C-1C49-11DD-8431-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81447>
 
-2008/5/7 Brandon Casey <casey@nrlssc.navy.mil>:
-> Johannes Sixt wrote:
->  > The #define fopen in git-compat-util.h essentially defeats the effect of
->  > _LARGE_FILES as far as fopen() calls are concerned: If
->  > FREAD_READS_DIRECTORIES is not defined, fopen() would be redirected to
->  > fopen64(), but when it is defined, it is redirected to git_fopen(), which
->  > in turn uses fopen() instead of fopen64() (due to the #undef in
->  > compat/fopen.c).
->  >
->
->  How about something like this?
->
->  diff --git a/compat/fopen.c b/compat/fopen.c
->  index ccb9e89..70b0d4d 100644
->  --- a/compat/fopen.c
->  +++ b/compat/fopen.c
->  @@ -1,5 +1,5 @@
->  +#undef FREAD_READS_DIRECTORIES
->   #include "../git-compat-util.h"
->  -#undef fopen
->   FILE *git_fopen(const char *path, const char *mode)
->   {
->         FILE *fp;
->
->
->  -brandon
->
+Dustin Sallings <dustin@spy.net> writes:
 
-Ta. I still get all the warnings with that, was that what you were
-trying to solve? The 64 bit specific tests in t5302 do still pass.
+> On Apr 29, 2008, at 14:49, Dustin Sallings wrote:
+>
+> 	[a patch]
+>
+> 	I haven't seen any activity related to this in a week.  This
+> functionality is interesting to my coworkers and a small sampling I've
+> polled.  Does it require any kind of cleanup, will it be completely
+> rejected, or should I just be more patient?  :)
 
-Mike
+What happened probably is that nobody on the list found it interesting.  I
+do not offhand recall what the patch was about.
+
+You cited <02471C27-C99D-43E7-BC58-50F2B86ED159@spy.net> as the original
+message that your message is a reply to, but I do not seem to be able to
+get it via mail archives.  I am guessing you meant this one:
+
+    Message-ID: <1209502182-39800-1-git-send-email-dustin@spy.net>
+    http://news.gmane.org/gmane.comp.version-control.git/80732
