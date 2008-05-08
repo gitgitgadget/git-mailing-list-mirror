@@ -1,75 +1,58 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] compat/fopen.c: avoid clobbering the system defined fopen macro
-Date: Thu, 8 May 2008 08:27:48 +0100
-Message-ID: <e2b179460805080027pf9ff518xf4fcbb248ecac4bf@mail.gmail.com>
-References: <7vfxsudrt0.fsf@gitster.siamese.dyndns.org>
-	 <4821E81A.4030600@nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] Teach git-svn how to catch up with its tracking branches
+Date: Thu, 8 May 2008 00:33:12 -0700
+Message-ID: <CE2D2A30-CAAF-4903-95EA-B4577932B700@midwinter.com>
+References: <20080508013956.GA24956@midwinter.com> <alpine.DEB.1.00.0805072332300.6948@swallowtail>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu May 08 09:28:49 2008
+Cc: git@vger.kernel.org
+To: Asheesh Laroia <asheesh@asheesh.org>
+X-From: git-owner@vger.kernel.org Thu May 08 09:34:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju0YR-0002oP-TA
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 09:28:40 +0200
+	id 1Ju0df-0004Rd-Ci
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 09:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbYEHH1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 03:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536AbYEHH1u
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 03:27:50 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:37622 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755423AbYEHH1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 03:27:48 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so814874rvb.1
-        for <git@vger.kernel.org>; Thu, 08 May 2008 00:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=i/WNhRBhRtnRLd2dZiwUFD4iBvLvLstgz23m7eaDjuM=;
-        b=pIRHJ2kr87CyHwuHqG714YppMzGFI4j9+/495/hpTvHCGSohwo+TvqYy2F5Xt/opUKvsTVtP0HpDDvCriPUyjtl5hFk9YhUFArSzw3oalPzy2u2pCcqqHhhwQSv+8goQ0kFlfW89GmesZtZb0syQRcsQx8t8dUIPm3Dz/0Hsyts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uBTkUGZxLcQt80yJWg2sf/BZ8AH0CH5QrpKhchRgTfDUCmcWugC0IgJd2+QMoQcp5EwZmz20FhT+MvRRW8TxNtMMqd6ibANCHw6fSNvQ39v1Xm1KvD/dK7xyXUq+Te2+7SjorMwoXZ0qTHXLDKd82WXufZSa/heObydqMb+F6G0=
-Received: by 10.141.176.13 with SMTP id d13mr1379913rvp.196.1210231668371;
-        Thu, 08 May 2008 00:27:48 -0700 (PDT)
-Received: by 10.140.142.5 with HTTP; Thu, 8 May 2008 00:27:48 -0700 (PDT)
-In-Reply-To: <4821E81A.4030600@nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1756488AbYEHHdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 03:33:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755862AbYEHHdP
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 03:33:15 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:42775 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755818AbYEHHdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 03:33:14 -0400
+Received: (qmail 12501 invoked from network); 8 May 2008 07:33:13 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Q8Fwm99y2uoS6bZdkqFEA7ymOJfAjpIgHxBolPZbrbcVacGR0vkUT9ObCvsIYSxr  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 8 May 2008 07:33:13 -0000
+In-Reply-To: <alpine.DEB.1.00.0805072332300.6948@swallowtail>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81510>
 
-2008/5/7 Brandon Casey <casey@nrlssc.navy.mil>:
+On May 7, 2008, at 11:48 PM, Asheesh Laroia wrote:
+> The way I handle it is that, hidden somewhere, I have an account  
+> with a cron job that does this:
 >
-> Some systems define fopen as a macro based on compiler settings.
-> The previous technique for reverting to the system fopen function
-> by merely undefining fopen is inadequate in this case. Instead,
-> avoid defining fopen entirely when compiling this source file.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
->
+> $ git svn fetch
+> $ git push origin refs/remotes/*:refs/heads/*
+> $ git push origin refs/remotes/trunk:refs/heads/master
 
-Tested-by: Mike Ralphson <mike@abacus.co.uk>
+That's a reasonable setup, and I think (without having tried it) that  
+it will be compatible with my patch -- assuming the clones of your  
+origin repository have appropriate svn-remote config entries, they  
+should be able to mix and match fetching from your origin and the real  
+svn repository, and dcommit stuff back to svn.
 
-Both with and without -D_LARGE_FILES. Many thanks.
+Though I'd try that out with a toy svn repo first...
 
-H.Merijn, is this change also ok for your HP-UX?
-
-I guess there may still be a case for not defining _LARGE_FILES by
-default on AIX as all the warnings may be off-putting or mask other
-issues. Maybe instead having a comment for those who need large
-pack-file support? Will submit amended Makefile patch if there's
-interest.
-
-Mike
+-Steve
