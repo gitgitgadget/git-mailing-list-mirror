@@ -1,93 +1,56 @@
-From: Trent Piepho <tpiepho@freescale.com>
-Subject: [PATCH] cvsexportcommit: Create config option for CVS dir
-Date: Thu,  8 May 2008 14:26:55 -0700
-Message-ID: <1210282015-20872-1-git-send-email-tpiepho@freescale.com>
-Cc: Trent Piepho <tpiepho@freescale.com>, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 08 23:30:04 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: git gc & deleted branches
+Date: Thu, 8 May 2008 17:31:07 -0400
+Message-ID: <20080508213107.GA1016@sigill.intra.peff.net>
+References: <alpine.LSU.1.10.0805081920160.8678@bianca.dialin.t-online.de> <20080508183926.GA30613@sigill.intra.peff.net> <alpine.LSU.1.10.0805082051210.10981@bianca.dialin.t-online.de> <48235D99.2040407@nrlssc.navy.mil> <alpine.LSU.1.10.0805082232070.4260@bianca.dialin.t-online.de> <20080508210125.GC32762@sigill.intra.peff.net> <alpine.LFD.1.10.0805081712270.23581@xanadu.home> <20080508211734.GA819@sigill.intra.peff.net> <48236F69.2060900@nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Nicolas Pitre <nico@cam.org>,
+	Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu May 08 23:35:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuDgL-0006Uj-OC
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 23:29:42 +0200
+	id 1JuDiY-0007au-3D
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 23:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598AbYEHV2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 17:28:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbYEHV2w
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 17:28:52 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:38967 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753958AbYEHV2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 17:28:51 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m48LSVeb019918;
-	Thu, 8 May 2008 14:28:31 -0700 (MST)
-Received: from localhost.localdomain (vpn-10-213-160-40.am.freescale.net [10.213.160.40])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m48LSUZ6004470;
-	Thu, 8 May 2008 16:28:30 -0500 (CDT)
-X-Mailer: git-send-email 1.5.4.1
+	id S1752114AbYEHVbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 17:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYEHVbI
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 17:31:08 -0400
+Received: from peff.net ([208.65.91.99]:1333 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751375AbYEHVbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 17:31:06 -0400
+Received: (qmail 25050 invoked by uid 111); 8 May 2008 21:31:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 08 May 2008 17:31:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 May 2008 17:31:07 -0400
+Content-Disposition: inline
+In-Reply-To: <48236F69.2060900@nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81570>
 
-For a given project the directory used with the -w option is almost always
-the same each time.  Let it be specified with 'cvsexportcommit.cvsdir' so
-it's not necessary to manually add it with -w each time.
+On Thu, May 08, 2008 at 04:23:53PM -0500, Brandon Casey wrote:
 
-Signed-off-by: Trent Piepho <tpiepho@freescale.com>
----
- Documentation/git-cvsexportcommit.txt |    8 +++++++-
- git-cvsexportcommit.perl              |    5 +++++
- 2 files changed, 12 insertions(+), 1 deletions(-)
+> > I thought that -A would eventually put them all into a single pack,
+> > killing off the old packs.
+> 
+> '-a' puts everything in a single pack and kills off old packs. Anything that
+> was unreachable is not repacked in the new pack.
+> 
+> '-A' does the same thing but it also repacks the unreachable objects that were
+> previously packed.
 
-diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-index 9a47b4c..363c36d 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -65,11 +65,17 @@ OPTIONS
- -w::
- 	Specify the location of the CVS checkout to use for the export. This
- 	option does not require GIT_DIR to be set before execution if the
--	current directory is within a git repository.
-+	current directory is within a git repository.  The default is the
-+	value of 'cvsexportcommit.cvsdir'.
- 
- -v::
- 	Verbose.
- 
-+CONFIGURATION
-+-------------
-+cvsexportcommit.cvsdir::
-+	The default location of the CVS checkout to use for the export.
-+
- EXAMPLES
- --------
- 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index b6036bd..c93bd9c 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -6,6 +6,7 @@ use File::Temp qw(tempdir);
- use Data::Dumper;
- use File::Basename qw(basename dirname);
- use File::Spec;
-+use Git;
- 
- our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m, $opt_d, $opt_u, $opt_w);
- 
-@@ -15,6 +16,10 @@ $opt_h && usage();
- 
- die "Need at least one commit identifier!" unless @ARGV;
- 
-+# Get git-config settings
-+my $repo = Git->repository();
-+$opt_w = $repo->config('cvsexportcommit.cvsdir') unless defined $opt_w;
-+
- if ($opt_w) {
- 	# Remember where GIT_DIR is before changing to CVS checkout
- 	unless ($ENV{GIT_DIR}) {
--- 
-1.5.4.1
+Ah, indeed. I hadn't looked closely at the -A behavior before. So yes,
+we are never killing off prunable packed objects. Probably we could use
+the same solution as "git prune --expire"; perhaps a
+"--keep-unreachable=2.weeks.ago"?
+
+-Peff
