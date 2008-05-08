@@ -1,87 +1,78 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] compat/fopen.c: avoid clobbering the system defined fopen macro
-Date: Thu, 8 May 2008 08:59:15 +0100
-Message-ID: <e2b179460805080059s76b07f30wedded8b1f5b17dfa@mail.gmail.com>
-References: <7vfxsudrt0.fsf@gitster.siamese.dyndns.org>
-	 <4821E81A.4030600@nrlssc.navy.mil>
-	 <e2b179460805080027pf9ff518xf4fcbb248ecac4bf@mail.gmail.com>
-	 <4822AD19.6000609@viscovery.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Teach git-svn how to catch up with its tracking branches
+Date: Thu, 8 May 2008 10:13:31 +0200
+Message-ID: <20080508081331.GC302@diana.vm.bytemark.co.uk>
+References: <20080508013956.GA24956@midwinter.com> <20080508015806.GA759@pe.Belkin> <064B1E1A-9C5C-49A4-AD08-0397FE4C517E@midwinter.com> <20080508022504.GA931@pe.Belkin> <20080508073851.GA302@diana.vm.bytemark.co.uk> <20080508074332.GB302@diana.vm.bytemark.co.uk> <604A38BB-E6A4-4303-BD7C-BF2968B6828D@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 08 10:00:08 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu May 08 10:14:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju12u-0003OB-5D
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 10:00:08 +0200
+	id 1Ju1Gt-0008W1-13
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 10:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674AbYEHH7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 03:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbYEHH7S
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 03:59:18 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:60142 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578AbYEHH7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 03:59:17 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so826404rvb.1
-        for <git@vger.kernel.org>; Thu, 08 May 2008 00:59:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Jo3mDihqX4UgqgqdCn7SmHqUjM2ucMp7SdIshApT3kY=;
-        b=k0P8P/9aq+MygMLGsMDgTcs8zGXqGecaOXKCthkoOXw03xJ2jsK0XM0b9R3du2+tarqVkEwjKNjNwhsOiIs8K+uyBej7U7LjzeRzwxnPA1RB+yGTWZ7WkhYUte0BGGthqpEumYJRfvBcCB5ikk+YrG4vY40OjH2NVTlCQumtopM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=v2+Q89ZfMY2rq9sL38J/iRIPzRpngMuZZ5E0R0ho+g6sawkBhWicKDUtaVHykXk2wn3M0Wt/b7T7LK+ExcR6HwX2Ep3OWeAHnmBB0llZKUReEN3RUjMMDWzeZqLRP5KqPcxhGHe6pBIbYyOygxXwC70WzRRe3FqoZVC2xSMRwY0=
-Received: by 10.140.133.16 with SMTP id g16mr1386095rvd.231.1210233555856;
-        Thu, 08 May 2008 00:59:15 -0700 (PDT)
-Received: by 10.140.142.5 with HTTP; Thu, 8 May 2008 00:59:15 -0700 (PDT)
-In-Reply-To: <4822AD19.6000609@viscovery.net>
+	id S1753323AbYEHINp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 May 2008 04:13:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbYEHINo
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 04:13:44 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1248 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbYEHINl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 04:13:41 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ju1Fr-0000Pc-00; Thu, 08 May 2008 09:13:31 +0100
 Content-Disposition: inline
+In-Reply-To: <604A38BB-E6A4-4303-BD7C-BF2968B6828D@midwinter.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81517>
 
-2008/5/8 Johannes Sixt <j.sixt@viscovery.net>:
-> Mike Ralphson schrieb:
->> I guess there may still be a case for not defining _LARGE_FILES by
->> default on AIX as all the warnings may be off-putting or mask other
->> issues. Maybe instead having a comment for those who need large
->> pack-file support? Will submit amended Makefile patch if there's
->> interest.
->
-> Since with this patch we are treating fopen specially anyway, we could go
-> one step further and do this, too:
-> ---
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index b2708f3..dad4d48 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -230,6 +230,9 @@ void *gitmemmem(const void *haystack,
->  #endif
->
->  #ifdef FREAD_READS_DIRECTORIES
-> +#ifdef fopen
-> +#undef fopen
-> +#endif
->  #define fopen(a,b) git_fopen(a,b)
->  extern FILE *git_fopen(const char*, const char*);
->  #endif
->
+On 2008-05-08 00:58:48 -0700, Steven Grimm wrote:
 
-Loving your work! Squashes all the related warnings, re-tested etc.
-Technically, is the #ifdef / #endif actually required? Or is
-#undef'ing an undefined macro not portable? I agree it aids clarity
-for no cost.
+> On May 8, 2008, at 12:43 AM, Karl Hasselstr=F6m wrote:
+>
+> > Or even _only_ pull from the git repo. That repo would have to
+> > have some kind of hook to make sure that it's always up-to-date,
+> > then -- just a cron job won't do -- but I'm sure that can be done.
+>
+> If you control both the svn repo and the git repo, you can get close
+> to that with an svn commit trigger, but even then there'll be a race
+> condition when you want to dcommit. You either have to be able to
+> pull from the svn repo when you want to dcommit, or you have to live
+> with the possibility of a dcommit failing because you don't actually
+> have the most recent rev locally.
 
-Mike
+I don't see why this has to be the case. Surely, if the local git repo
+can dcommit without races by importing new revisions from svn, the
+local git repo could dcommit without races by importing new revisions
+from svn via an intermediate git repo. This would require the
+intermediate repo to import new revisions when it gets a pull request,
+but surely that should be doable with a pre-pull hook?
+
+> This ties a bit into the patch I sent a few months back to allow
+> update hooks to change refs. I kind of ran out of spare time to
+> iterate more on that back then, but the ultimate goal there was that
+> you could interact only with the bridge repo, never directly with
+> svn, and the bridge repo would dcommit for you when you pushed to
+> it.
+
+I guess that approach is what I'd really like to see, since that's the
+only one that can guarantee that every git clone of the svn repository
+is identical.
+
+=46urthermore, in this setup the clients wouldn't need to run git-svn a=
+t
+all. Only the bridge would need it.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
