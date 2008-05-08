@@ -1,112 +1,81 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH v2] Documentation/config.txt: Add git-gui options
-Date: Thu,  8 May 2008 10:55:02 +0200
-Message-ID: <1210236902-8008-1-git-send-email-hendeby@isy.liu.se>
-References: <20080507230948.GT29038@spearce.org>
-Cc: git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
-To: spearce@spearce.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu May 08 10:56:23 2008
+From: Holger Schurig <hs4233@mail.mn-solutions.de>
+Subject: How to (re-)create .git/logs/refs
+Date: Thu, 8 May 2008 11:48:43 +0200
+Message-ID: <200805081148.43657.hs4233@mail.mn-solutions.de>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 08 12:00:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju1v2-0007jZ-He
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 10:56:04 +0200
+	id 1Ju2vp-00071Q-0x
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 12:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbYEHIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 04:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYEHIzI
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 04:55:08 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:61740 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753697AbYEHIzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 04:55:05 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id C2C002598F;
-	Thu,  8 May 2008 10:55:03 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 26261-09; Thu,  8 May 2008 07:37:10 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id E30CB2593F;
-	Thu,  8 May 2008 10:55:02 +0200 (MEST)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id D7B2D177A0; Thu,  8 May 2008 10:55:02 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.273.g4b2d7
-In-Reply-To: <20080507230948.GT29038@spearce.org>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1756714AbYEHKAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 06:00:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756690AbYEHKAG
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 06:00:06 -0400
+Received: from s131.mittwaldmedien.de ([62.216.178.31]:24918 "EHLO
+	s131.mittwaldmedien.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756550AbYEHKAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 06:00:04 -0400
+X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 May 2008 06:00:04 EDT
+Received: from lin01.mn-solutions.de (pD95F84B8.dip0.t-ipconnect.de [217.95.132.184])
+	by s131.mittwaldmedien.de (Postfix) with ESMTP id 705265E411F
+	for <git@vger.kernel.org>; Thu,  8 May 2008 11:51:46 +0200 (CEST)
+Received: by lin01.mn-solutions.de (Postfix, from userid 116)
+	id A581E1E004D; Thu,  8 May 2008 11:48:55 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	lin01.mn-logistik.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from mnz66.mn-solutions.de (mnz66.mn-logistik.de [192.168.233.66])
+	by lin01.mn-solutions.de (Postfix) with ESMTP id C8AD81E0004
+	for <git@vger.kernel.org>; Thu,  8 May 2008 11:48:51 +0200 (CEST)
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81520>
 
-The 'git gui' has a number of options that can be specified using the
-options dialog. Sometimes it is convenient to be able to specify these
-from the command line, therefor document these options.
+Hi !
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
-Acked-by: Shawn O. Pearce <speace@spearce.org>
----
+I have an old SVN project with lots of commits from 2005 to 2008
+converted. This was a month ago. In the mean-time, I've made
+some commits from git as well.
 
-This patch differs from the previous one in two ways:
+"git log" shows both types of commit quite nicely.
 
-1. Since Shawn has fixed the problem with the spell checking already
-(thanks!) and it will make its way into git soon, I removed the
-comment about how gui.spellingdictionary="no can used to have git gui
-start with older versions of aspell.  I think it just confuse people
-if it doesn't apply any more.
+"git checkout <sha1>" works also correctly, for arbitrary ancient
+SHA1s.
 
-2. Some of the language looked a bit strange when I read it through
-this time, so I changed some wordings.  A pair of native English eyes
-would probably not be a bad idea.
+"git checkout @{2007-04-01}" doesn't work. I get an error like
+this:
 
-/Gustaf
+  warning: Log for '' only goes back to Thu, 8 May 2008 09:35:38 +0000.
+  fatal: bad object @{2007-04-01}
 
- Documentation/config.txt |   30 ++++++++++++++++++++++++++++++
- 1 files changed, 30 insertions(+), 0 deletions(-)
+However, "git checkout @{2008-05-01}" works, because this commit
+come from git direct, not implicitly from SVN. It seems that
+neiver "git svn clone" nor "examples/git-svnimport.perl"
+creates/updates .git/logs/refs when it creates commits from an
+old SVN repository.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 00f089f..c4d6ccd 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -684,6 +684,36 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
- is one of "ext" and "pserver") to make them apply only for the given
- access method.
- 
-+gui.commitmsgwidth::
-+	Defines how wide the commit message window is in the
-+	linkgit:git-gui[1]. "75" is the default.
-+
-+gui.diffcontext::
-+	Specifies how many context lines should be used in calls to diff
-+	made by the linkgit:git-gui[1]. The default is "5".
-+
-+gui.matchtrackingbranch::
-+	Determines if new branches created with linkgit:git-gui[1] should
-+	default to tracking remote branches with matching names or
-+	not. Default: "false".
-+
-+gui.newbranchtemplate::
-+	Is used as suggested name when creating new branches using the
-+	linkgit:git-gui[1].
-+
-+gui.pruneduringfetch::
-+	"true" if linkgit:git-gui[1] should prune tracking branches when
-+	performing a fetch. The default value is "false".
-+
-+gui.trustmtime::
-+	Determines if linkgit:git-gui[1] should trust the file modification
-+	timestamp or not. By default the timestamps are not trusted.
-+
-+gui.spellingdictionary::
-+	Specifies the dictionary used for spell checking commit messages in
-+	the linkgit:git-gui[1]. When set to "none" spell checking is turned
-+	off.
-+
- help.browser::
- 	Specify the browser that will be used to display help in the
- 	'web' format. See linkgit:git-help[1].
--- 
-1.5.5.1.273.g4b2d7
+
+So my question:
+
+a) is there a way to re-create .git/logs/refs ?
+
+b) is there a simple way to get a list of ISO-dates and
+   associated SHA1?  Then I could use a little python code to
+   determine the SHA1 id that corresponds to some date (I need
+   to access old versions of the source via bitbake and/or
+   www.openembedded.org, so adding a custom fetch method with
+   some python magic is a non-brainer).
