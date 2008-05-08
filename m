@@ -1,106 +1,159 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Making submodules easier to work with
-Date: Thu, 8 May 2008 09:13:33 +0800
-Message-ID: <46dff0320805071813p34abde3aye7f954708e0bc6a7@mail.gmail.com>
-References: <8B885217-8C18-417E-8F11-BB6661792CD3@gmail.com>
-	 <32541b130804301331o70310831raf71db7cbb51d507@mail.gmail.com>
-	 <EFEF26F9-D5D6-4BAC-9A8F-6D96E45AFAF7@gmail.com>
-	 <32541b130804301448i537a0b98ta01cecc472e20aec@mail.gmail.com>
-	 <1209594215.25663.864.camel@work.sfbay.sun.com>
-	 <32541b130804301528k70ae2f7eq5229c0b4bb1d3788@mail.gmail.com>
-	 <20080501183837.GA4772@pvv.org>
-	 <32541b130805011255t4b37a73cx9d670b9250e787c6@mail.gmail.com>
-	 <1210117622.25663.1110.camel@work.sfbay.sun.com>
-	 <32541b130805070914n2d090971rf367c838dcfd9557@mail.gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH] Teach git-svn how to catch up with its tracking branches
+Date: Wed, 7 May 2008 18:39:56 -0700
+Message-ID: <20080508013956.GA24956@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Roman Shaposhnik" <rvs@sun.com>,
-	"Finn Arne Gangstad" <finnag@pvv.org>,
-	"Tim Harper" <timcharper@gmail.com>, git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 03:14:31 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 08 03:40:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtuiL-0003lz-Hr
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 03:14:29 +0200
+	id 1Jtv7q-0001ct-DQ
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 03:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754755AbYEHBNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 21:13:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbYEHBNh
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 21:13:37 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:33889 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285AbYEHBNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 21:13:34 -0400
-Received: by an-out-0708.google.com with SMTP id d40so118447and.103
-        for <git@vger.kernel.org>; Wed, 07 May 2008 18:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=XLHXG0TZF9Hmd3Fe3caxrBcsC4iaGmeA0WFBA/Gjn5k=;
-        b=SktLPQ9vTwUwybZUl3jTBjMo1DGCS5OTXWEYx3/S/4yb4lq1qsSiEUxDYH6Us/Sp2AKPn2fJZ/RvQY8hgx7HiTSMqYeoag8IoISl9Q4IIvVPfefLx1+fo+72uXGX/sQSe6H2x2MUMNthTPgemojgLASq2ckD235560jXae0HjHo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KvqjWlRxRyCJzAMBP0gMINdiGkv7dGC3WHxvRvqK13WWxw2HJ8b9DGbRUpK9HsJHViL3OIpXzke/dTTb5g/zW+qev+GSz+DmtzyOXEcu7yB1X6rvF0ygXQwsQxgsOAlZ0OuZUBjDCwoLS/tt+FU6QzcGp6Mn5wcHukm6CdO859M=
-Received: by 10.100.133.1 with SMTP id g1mr3742292and.88.1210209213373;
-        Wed, 07 May 2008 18:13:33 -0700 (PDT)
-Received: by 10.100.32.10 with HTTP; Wed, 7 May 2008 18:13:33 -0700 (PDT)
-In-Reply-To: <32541b130805070914n2d090971rf367c838dcfd9557@mail.gmail.com>
+	id S1752821AbYEHBj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 21:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbYEHBj7
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 21:39:59 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58879 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751440AbYEHBj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 21:39:57 -0400
+Received: (qmail 25107 invoked by uid 1001); 8 May 2008 01:39:56 -0000
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81496>
 
-On Thu, May 8, 2008 at 12:14 AM, Avery Pennarun <apenwarr@gmail.com> wrote:
-> On 5/6/08, Roman Shaposhnik <rvs@sun.com> wrote:
->  > May be my brain is saturated with "partial cloning" but somehow the
->  >  following looks like an interesting twist on a decentralized SCM:
->  >  imagine that the picture given by Finn Arne Gangstad weren't
->  >  static. IOW, os-lib wasn't really a separate component to begin
->  >  with but was first developed as part of a "crawler" and only
->  >  when the other team started to implement "indexer" there was
->  >  a need for os-lib to be shared between two independent projects.
->  >  Is there any nice way to express such a dynamic history sharing,
->  >  short of truly refactoring os-lib into a separate Git repository
->  >  and treating it either as a submodule or a subtree-merge?
->
->  Personally, I think it would be good enough to split out the os-lib
->  into its own repo using "git-filter-branch --subdirectory-filter", and
->  then link to it in newer versions of your crawler and indexer projects
->  using git-submodule.
->
->  There would be a bit of wastage here, since crawler still contains the
->  history of os-lib, which is the same (even the same tree and file
->  objects!) as the ones in os-lib.
->
->  I can think of two responses to that:
->
->  1) It's not very important, disk space is cheap and git repositories
->  are small, and it's much better to have an accurate history of the
->  crawler project than to overoptimize for space.
->
->  2) If the supermodule and submodule shared the same object repository
->  (eg. the submodule was checked out with
->  --alternate=<supermodule-gitdir>), there would be no need to waste
->  storage space.  If/when I get my act in gear and start submitting
->  git-submodule patches, supporting this behaviour is the direction I'll
->  probably start in.
->  (http://article.gmane.org/gmane.comp.version-control.git/78675)
->
+In environments where a lot of people are sharing an svn repository using
+git-svn, everyone has identical, but individually maintained, tracking
+branches. If the svn repository is very active, it can take a while to
+run "git svn fetch" (which has to individually construct each revision
+by querying the svn server). It's much faster to run "git fetch" against
+another git-svn repository to grab the exact same git revisions you'd get
+from "git svn fetch". But until now, git-svn was confused by this because
+it didn't know how to incrementally rebuild its map of revision IDs.
+The only choice was to completely remove the map file and rebuild it
+from scratch, possibly a lengthy operation when there's a lot of history.
 
-It doesn't change the workflow whether using --alternative (although i
-think it is a good idea).
+With this change, git-svn will try to do an incremental update of its
+revision map if it sees that its tracking branch has svn revisions that
+aren't in the map yet.
 
-The most interesting idea in that thread is the "When checking out a
-submodule, give the submodule's current commit a useful branch name".
-As a heavy submodule user, this will make my life much easier.
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+ git-svn.perl |   62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 58 insertions(+), 4 deletions(-)
 
-
+diff --git a/git-svn.perl b/git-svn.perl
+index e47b1ea..87b104b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1382,6 +1382,7 @@ sub fetch_all {
+ 				$base = $lr if ($lr < $base);
+ 			}
+ 			push @gs, $gs;
++			$gs->sync_rev_map_with_commits;
+ 		}
+ 	}
+ 
+@@ -2114,6 +2115,44 @@ sub gc {
+ 	command_noisy('gc', '--auto');
+ };
+ 
++# sync_rev_map_with_commits:
++# If are commits on the tracking branch that aren't present in our revision
++# map (e.g., because the user has done a git fetch from another git-svn repo
++# rather than a git svn fetch), bring our revision map up to date. This is
++# a no-op if the revision map is already up to date.
++sub sync_rev_map_with_commits {
++	my ($self) = @_;
++	# If we can't pull metadata out of log messages, there's nothing
++	# to import.
++	return if $self->use_svm_props || $self->no_metadata;
++	# If there isn't a revision DB yet, we'll rebuild it from scratch
++	# elsewhere, so don't do anything here.
++	return if ! -e $self->map_path || -z $self->map_path;
++	# Look at the most recent commit with a git-svn-id line.
++	my ($log, $ctx) =
++	    command_output_pipe(qw/rev-list --pretty=raw --no-color /,
++				'--grep=^ *git-svn-id:',
++				'--max-count=1',
++				$self->refname, '--');
++	my ($url, $rev, $uuid, $c);
++	while (<$log>) {
++		if ( m{^commit ($::sha1)$} ) {
++			$c = $1;
++			next;
++		}
++		next unless s{^\s*(git-svn-id:)}{$1};
++		($url, $rev, $uuid) = ::extract_metadata($_);
++	}
++	my ($rev_commit) = $self->rev_map_get($rev, $uuid);
++	if (!$rev_commit) {
++		# The most recent commit in the branch isn't in our
++		# rev map. Pull in data from the revisions between the
++		# highest commit in our map and the head of the branch.
++		my ($max_rev, $max_commit) = $self->rev_map_max(1);
++		$self->rebuild($max_commit);
++	}
++}
++
+ sub do_git_commit {
+ 	my ($self, $log_entry) = @_;
+ 	my $lr = $self->last_rev;
+@@ -2489,6 +2528,7 @@ sub make_log_entry {
+ sub fetch {
+ 	my ($self, $min_rev, $max_rev, @parents) = @_;
+ 	my ($last_rev, $last_commit) = $self->last_rev_commit;
++	$self->sync_rev_map_with_commits;
+ 	my ($base, $head) = $self->get_fetch_range($min_rev, $max_rev);
+ 	$self->ra->gs_fetch_loop_common($base, $head, [$self]);
+ }
+@@ -2535,10 +2575,17 @@ sub rebuild_from_rev_db {
+ 	unlink $path or croak "unlink: $!";
+ }
+ 
++# rebuild:
++# Reconstructs a revision map from the available metadata. If $min_git_rev
++# is specified, this is an incremental rebuild that should stop when it hits
++# the revision in question.
++#
++# Incremental rebuilding is only supported when commits contain git-svn
++# metadata (the default) and not with use_svm_props or no_metadata.
+ sub rebuild {
+-	my ($self) = @_;
++	my ($self, $min_git_rev) = @_;
+ 	my $map_path = $self->map_path;
+-	return if (-e $map_path && ! -z $map_path);
++	return if (!defined $min_git_rev && -e $map_path && ! -z $map_path);
+ 	return unless ::verify_ref($self->refname.'^0');
+ 	if ($self->use_svm_props || $self->no_metadata) {
+ 		my $rev_db = $self->rev_db_path;
+@@ -2550,10 +2597,17 @@ sub rebuild {
+ 		$self->unlink_rev_db_symlink;
+ 		return;
+ 	}
+-	print "Rebuilding $map_path ...\n";
++	my $revs_to_scan;
++	if (defined $min_git_rev) {
++		print "Updating $map_path ...\n";
++		$revs_to_scan = $min_git_rev . ".." . $self->refname;
++	} else {
++		print "Rebuilding $map_path ...\n";
++		$revs_to_scan = $self->refname;
++	}
+ 	my ($log, $ctx) =
+ 	    command_output_pipe(qw/rev-list --pretty=raw --no-color --reverse/,
+-	                        $self->refname, '--');
++	                        $revs_to_scan, '--');
+ 	my $full_url = $self->full_url;
+ 	remove_username($full_url);
+ 	my $svn_uuid = $self->ra_uuid;
 -- 
-Ping Yin
+1.5.5.49.gf43e2
