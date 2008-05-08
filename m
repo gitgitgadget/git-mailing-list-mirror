@@ -1,76 +1,54 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: [PATCH] Teach git-svn how to catch up with its tracking
-	branches
-Date: Wed, 7 May 2008 21:58:06 -0400
-Message-ID: <20080508015806.GA759@pe.Belkin>
-References: <20080508013956.GA24956@midwinter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] Teach git-svn how to catch up with its tracking branches
+Date: Wed, 7 May 2008 19:08:50 -0700
+Message-ID: <064B1E1A-9C5C-49A4-AD08-0397FE4C517E@midwinter.com>
+References: <20080508013956.GA24956@midwinter.com> <20080508015806.GA759@pe.Belkin>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu May 08 04:06:29 2008
+To: Chris Shoemaker <c.shoemaker@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 08 04:09:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JtvWU-0006qE-0N
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 04:06:18 +0200
+	id 1JtvZo-0007jr-8U
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 04:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756285AbYEHCF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 22:05:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756303AbYEHCF3
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 22:05:29 -0400
-Received: from eastrmmtao106.cox.net ([68.230.240.48]:46159 "EHLO
-	eastrmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756258AbYEHCF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 22:05:28 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2008 22:05:27 EDT
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20080508015805.TCMI24465.eastrmmtao103.cox.net@eastrmimpo01.cox.net>;
-          Wed, 7 May 2008 21:58:05 -0400
-Received: from localhost ([68.0.253.29])
-	by eastrmimpo01.cox.net with bizsmtp
-	id Npy61Z00D0epFYL02py66J; Wed, 07 May 2008 21:58:06 -0400
-Received: from chris by localhost with local (Exim 4.66)
-	(envelope-from <c.shoemaker@cox.net>)
-	id 1JtvOY-0000DQ-AU; Wed, 07 May 2008 21:58:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20080508013956.GA24956@midwinter.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1759780AbYEHCIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2008 22:08:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759431AbYEHCIw
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 22:08:52 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58317 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758864AbYEHCIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2008 22:08:51 -0400
+Received: (qmail 26742 invoked from network); 8 May 2008 02:08:50 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=hnMix6UKQXBDwLc++pwrkwbYGhUL1suQZdawqny8unmBeHp/X1TNgUJUtSQfCPSs  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 8 May 2008 02:08:50 -0000
+In-Reply-To: <20080508015806.GA759@pe.Belkin>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81499>
 
-On Wed, May 07, 2008 at 06:39:56PM -0700, Steven Grimm wrote:
-> In environments where a lot of people are sharing an svn repository using
-> git-svn, everyone has identical, but individually maintained, tracking
-> branches. If the svn repository is very active, it can take a while to
-> run "git svn fetch" (which has to individually construct each revision
-> by querying the svn server). It's much faster to run "git fetch" against
-> another git-svn repository to grab the exact same git revisions you'd get
-> from "git svn fetch". But until now, git-svn was confused by this because
-> it didn't know how to incrementally rebuild its map of revision IDs.
-> The only choice was to completely remove the map file and rebuild it
-> from scratch, possibly a lengthy operation when there's a lot of history.
-> 
-> With this change, git-svn will try to do an incremental update of its
-> revision map if it sees that its tracking branch has svn revisions that
-> aren't in the map yet.
+On May 7, 2008, at 6:58 PM, Chris Shoemaker wrote:
+> Second, what will happen when different developers have svn URLs with
+> different schemes, e.g. http vs. svn+ssh?
 
-Since I'm not qualified to review the patch technically , I'll just
-offer encouragement, comment and question.  First, nice work, this
-seems like a very helpful feature.  It might go quite a way toward
-enabling a semi-distributed workflow with an authoritative svn
-upstream.
+That will cause the commit messages to be different, which means you  
+won't have the same commit hashes, so this pretty much won't be  
+useful. (You'd end up fetching the remote repo's entire svn history if  
+you tried to do git fetch.)
 
-Second, what will happen when different developers have svn URLs with
-different schemes, e.g. http vs. svn+ssh?
+The assumption here is that you have exactly the same revision history  
+in your tracking branches as the repo you're fetching from.
 
-Third, I think such a feature surely deserves a mention in
-git-svn.txt.
-
--chris
+-Steve
