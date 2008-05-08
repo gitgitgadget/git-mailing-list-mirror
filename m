@@ -1,53 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How can I specify multiple refs on one line in the config file?
-Date: Wed, 7 May 2008 23:32:45 -0400
-Message-ID: <20080508033245.GA10735@sigill.intra.peff.net>
-References: <588192970805071415wb7b502ch2047ac5e4865c296@mail.gmail.com> <20080507222813.GF5994@sigill.intra.peff.net> <20080507222947.GA6427@sigill.intra.peff.net>
+From: Eric Hanchrow <offby1@blarg.net>
+Subject: Re: Using git from Python
+Date: Wed, 07 May 2008 20:54:06 -0700
+Message-ID: <87lk2l4fj5.fsf@offby1.atm01.sea.blarg.net>
+References: <alpine.DEB.1.10.0805071612510.26718@sf.creativecommons.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git mailing list <git@vger.kernel.org>
-To: Steve Hoelzer <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 05:33:44 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 08 06:09:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jtwt1-0002Th-90
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 05:33:39 +0200
+	id 1JtxRK-0002Du-2D
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 06:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbYEHDct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2008 23:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752871AbYEHDct
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 May 2008 23:32:49 -0400
-Received: from peff.net ([208.65.91.99]:2179 "EHLO peff.net"
+	id S1750994AbYEHEIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 00:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYEHEIQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 00:08:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:37882 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752222AbYEHDcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2008 23:32:47 -0400
-Received: (qmail 17092 invoked by uid 111); 8 May 2008 03:32:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 07 May 2008 23:32:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 May 2008 23:32:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20080507222947.GA6427@sigill.intra.peff.net>
+	id S1750934AbYEHEIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 00:08:14 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JtxQS-0002Ta-6H
+	for git@vger.kernel.org; Thu, 08 May 2008 04:08:12 +0000
+Received: from q-static-138-125.avvanta.com ([206.124.138.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 May 2008 04:08:12 +0000
+Received: from offby1 by q-static-138-125.avvanta.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 May 2008 04:08:12 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: q-static-138-125.avvanta.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:AAH+VA5k8xFgFrHKCwHNGnof2kk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81504>
 
-On Wed, May 07, 2008 at 06:29:47PM -0400, Jeff King wrote:
+>>>>> "Asheesh" == Asheesh Laroia <asheesh@asheesh.org> writes:
 
-> Aside: configuring a remote as
-> 
->   [remote "origin"]
->     push = refs/heads/*
->     push = refs/tags/*
-> 
-> seems to hang forever. I didn't expect it to _work_, but probably it
-> should eventually terminate. ;)
+    Asheesh> On #git, I was advised to simply call the git command
+    Asheesh> suite.  
 
-Nevermind, this _does_ work. But there seems to be a bug in next that I
-was triggering with my test case. I'll send a separate message about it.
+That's what I'd do ...  (I wonder if it was me who so advised you :-)
 
--Peff
+    Asheesh> That's fine ... but since I figured others may have done
+    Asheesh> this also
+
+As far as I can tell, there is exactly no downside to simply forking a
+subprocess.  Why are you trying to avoid that?
+                      
+    Asheesh> raises Exceptions when the git commands fail for some
+    Asheesh> reason.
+
+If Popen doesn't already raise an exception when the child process
+fails, then it's surely a simple matter to check the exit code, and
+raise the exception yourself.
+
+-- 
+I write [from 5 AM to 7 AM] to discover what I think.  After
+all, the bars aren't open that early.
+        -- Daniel Boorstin, former Librarian of Congress
