@@ -1,62 +1,71 @@
-From: "Doug Reiland" <dreiland@gmail.com>
-Subject: How to capture date/time of push vs. local commit?
-Date: Thu, 8 May 2008 09:48:19 -0400
-Message-ID: <6844644e0805080648g72c4b767l4bcf48ade319bf77@mail.gmail.com>
+From: Matthias Kestenholz <mk@spinlock.ch>
+Subject: Re: How to capture date/time of push vs. local commit?
+Date: Thu, 08 May 2008 16:06:48 +0200
+Message-ID: <1210255608.6737.12.camel@futex>
+References: <6844644e0805080648g72c4b767l4bcf48ade319bf77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 08 15:49:12 2008
+Cc: git@vger.kernel.org
+To: Doug Reiland <dreiland@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 16:09:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju6Uf-00049q-T9
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 15:49:10 +0200
+	id 1Ju6mi-0003oU-Vi
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 16:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbYEHNsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 09:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbYEHNsV
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 09:48:21 -0400
-Received: from rn-out-0910.google.com ([64.233.170.188]:12147 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751381AbYEHNsV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 09:48:21 -0400
-Received: by rn-out-0910.google.com with SMTP id e11so192397rng.17
-        for <git@vger.kernel.org>; Thu, 08 May 2008 06:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=rdeN8tfL41TPRNBJ7gFyq8JC/UthQ2Rbi9tgx9JvTKI=;
-        b=i+Q4gxJtYrWYi0ipftXMCuLx4Zm6/DFKHVO5gEjw5VmB2qiE1fyAwS4LkfoUdTT/S7XatDKfcxc692eVeg5qFgoSoGwaf+qb93/v9dd5oeQ1xoZtZA3m2d88PPj9XZev7Szn9ksuJ293fglU1UUMfuOz6gmqLp0oG8cy1gBZgpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=B/uEouD8I8NLOt3HD0TnJAbanovlSwXFaf96i2/TZE7r6y2chGM2XU6e6G5lQpKRQL5sE3HXMxqGxntKaMXbu3blCtB/WwIZSNpIcCNz9VdrXklNlTBjh4zIKzBEiiNPPNnxJkl4V7tj2c71aEFYHGVFEyEohg55/0oVioUNU/c=
-Received: by 10.115.77.1 with SMTP id e1mr3036044wal.208.1210254499293;
-        Thu, 08 May 2008 06:48:19 -0700 (PDT)
-Received: by 10.115.73.6 with HTTP; Thu, 8 May 2008 06:48:19 -0700 (PDT)
-Content-Disposition: inline
+	id S1753791AbYEHOGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 10:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbYEHOGx
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 10:06:53 -0400
+Received: from mail21.bluewin.ch ([195.186.18.66]:32821 "EHLO
+	mail21.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753100AbYEHOGv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 10:06:51 -0400
+Received: from futex.feinheit.ch (83.78.107.78) by mail21.bluewin.ch (Bluewin 7.3.121)
+        id 480C94D600364C6B; Thu, 8 May 2008 14:07:30 +0000
+Received: (nullmailer pid 10344 invoked by uid 1000);
+	Thu, 08 May 2008 14:06:48 -0000
+In-Reply-To: <6844644e0805080648g72c4b767l4bcf48ade319bf77@mail.gmail.com>
+X-Mailer: Evolution 2.22.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81529>
 
-I have a main repository that folks clone and push to. Using git-log
-for example on the main repository can show some confusing (too me at
-least) date.
+Doug,
 
-For example, I clone. I make changes to my repository and commit on
-Monday. I don't push my changes to the main repository until
-Wednesday.
+On Thu, 2008-05-08 at 09:48 -0400, Doug Reiland wrote:
+> I have a main repository that folks clone and push to. Using git-log
+> for example on the main repository can show some confusing (too me at
+> least) date.
+> 
+> For example, I clone. I make changes to my repository and commit on
+> Monday. I don't push my changes to the main repository until
+> Wednesday.
+> 
+> git-log on main repository show changes made on Monday.
+> This makes it hard to determine when folks really got stuff into the
+> main repository.
+> 
+> Is there way to change this so (in my example), I can determine those
+> changes weren't in place until Wednesday? Something in configuration
+> file or perhaps just a different option to git-log.
+> 
+> Thanks in advance.
 
-git-log on main repository show changes made on Monday.
-This makes it hard to determine when folks really got stuff into the
-main repository.
+This is the nature of a distributed version control system. The
+timestamps cannot be used to establish a ordering of commits.
 
-Is there way to change this so (in my example), I can determine those
-changes weren't in place until Wednesday? Something in configuration
-file or perhaps just a different option to git-log.
+If you have reflogs enabled on the server (see man git-reflog) the
+information there can help you find out when the pushes have been made.
+There is no mechanism to transfer these reflogs into your local
+repository, since reflogs are always local to a single repository. If
+you have access to the server, you can examine the reflogs there. (f.e.
+using git log -g or git reflog)
 
-Thanks in advance.
+-- 
+http://spinlock.ch/blog/
