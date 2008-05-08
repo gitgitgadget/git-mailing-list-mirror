@@ -1,57 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git gc & deleted branches
-Date: Thu, 8 May 2008 17:01:25 -0400
-Message-ID: <20080508210125.GC32762@sigill.intra.peff.net>
-References: <alpine.LSU.1.10.0805081920160.8678@bianca.dialin.t-online.de> <20080508183926.GA30613@sigill.intra.peff.net> <alpine.LSU.1.10.0805082051210.10981@bianca.dialin.t-online.de> <48235D99.2040407@nrlssc.navy.mil> <alpine.LSU.1.10.0805082232070.4260@bianca.dialin.t-online.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: url.<base>.insteadOf and git-clone
+Date: Thu, 8 May 2008 17:11:38 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805081707570.19665@iabervon.org>
+References: <48232158.6090708@tordek.com.ar>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Guido Ostkamp <git@ostkamp.fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu May 08 23:02:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Guillermo O. Freschi" <tordek@tordek.com.ar>
+X-From: git-owner@vger.kernel.org Thu May 08 23:13:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuDFm-0002oc-TV
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 23:02:15 +0200
+	id 1JuDPj-0007UX-BZ
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 23:12:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760454AbYEHVBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 17:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbYEHVBZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 17:01:25 -0400
-Received: from peff.net ([208.65.91.99]:4359 "EHLO peff.net"
+	id S1757246AbYEHVLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 17:11:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760060AbYEHVLl
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 17:11:41 -0400
+Received: from iabervon.org ([66.92.72.58]:42992 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755963AbYEHVBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 17:01:24 -0400
-Received: (qmail 22990 invoked by uid 111); 8 May 2008 21:01:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 08 May 2008 17:01:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 May 2008 17:01:25 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.10.0805082232070.4260@bianca.dialin.t-online.de>
+	id S1756374AbYEHVLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 17:11:40 -0400
+Received: (qmail 11863 invoked by uid 1000); 8 May 2008 21:11:38 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 May 2008 21:11:38 -0000
+In-Reply-To: <48232158.6090708@tordek.com.ar>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81565>
 
-On Thu, May 08, 2008 at 10:52:19PM +0200, Guido Ostkamp wrote:
+On Thu, 8 May 2008, Guillermo O. Freschi wrote:
 
->> And be assured that the objects referenced by a deleted branch will be  
->> removed from the repository eventually as long as 'git gc --prune' is  
->> run periodically.
->
-> Ok. I did not know about the 'prune' option yet as it neither mentioned in 
-> the "Git Tutorial" nor "Everyday Git", there only 'git gc' is used with no 
-> options.
+> Nearly gone insane about this: adding a configuration like
+> [url "ssh://example.com/foo"]
+>     insteadOf = foo:
+> 
+> works for git-fetch and git-pull (of what I've tested), but does not on git-clone (As of version 1.5.5.GIT).
+> 
+> Given that this config appears on the git-clone manpage, am I to assume it's a bug?
 
-It is deprecated; see 25ee9731.
+At this point, it's a documentation bug; it's a new feature for programs 
+other than clone that will eventually be supported in clone but is not 
+yet. The documentation makes the currently-overly-optimistic assumption 
+that clone supports all of the common stuff.
 
-According to that commit message, prune is now a no-op. However, it
-looks like it is still used for trigger a "repack -a" rather than
-"repack -A". I don't know if it is worth making that behavior available
-through some more sane command line option (I would think people who
-really know that they want "repack -a" would just call it).
-
--Peff
+	-Daniel
+*This .sig left intentionally blank*
