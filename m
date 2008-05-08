@@ -1,71 +1,51 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
+From: Eric Hanchrow <offby1@blarg.net>
 Subject: Re: How to capture date/time of push vs. local commit?
-Date: Thu, 08 May 2008 16:06:48 +0200
-Message-ID: <1210255608.6737.12.camel@futex>
+Date: Thu, 08 May 2008 06:57:55 -0700
+Message-ID: <87hcd85258.fsf@offby1.atm01.sea.blarg.net>
 References: <6844644e0805080648g72c4b767l4bcf48ade319bf77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Doug Reiland <dreiland@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 16:09:29 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 08 16:10:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju6mi-0003oU-Vi
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 16:07:49 +0200
+	id 1Ju6o5-0004Rn-Cr
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 16:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753791AbYEHOGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 10:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbYEHOGx
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 10:06:53 -0400
-Received: from mail21.bluewin.ch ([195.186.18.66]:32821 "EHLO
-	mail21.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753100AbYEHOGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 10:06:51 -0400
-Received: from futex.feinheit.ch (83.78.107.78) by mail21.bluewin.ch (Bluewin 7.3.121)
-        id 480C94D600364C6B; Thu, 8 May 2008 14:07:30 +0000
-Received: (nullmailer pid 10344 invoked by uid 1000);
-	Thu, 08 May 2008 14:06:48 -0000
-In-Reply-To: <6844644e0805080648g72c4b767l4bcf48ade319bf77@mail.gmail.com>
-X-Mailer: Evolution 2.22.1 
+	id S1753875AbYEHOIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 10:08:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbYEHOIX
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 10:08:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:54725 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753136AbYEHOIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 10:08:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ju6n9-0005IN-04
+	for git@vger.kernel.org; Thu, 08 May 2008 14:08:15 +0000
+Received: from q-static-138-125.avvanta.com ([206.124.138.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 May 2008 14:08:14 +0000
+Received: from offby1 by q-static-138-125.avvanta.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 May 2008 14:08:14 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: q-static-138-125.avvanta.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:zJDnQI8o10TbZBLDEBc81rTZD8c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81530>
 
-Doug,
-
-On Thu, 2008-05-08 at 09:48 -0400, Doug Reiland wrote:
-> I have a main repository that folks clone and push to. Using git-log
-> for example on the main repository can show some confusing (too me at
-> least) date.
-> 
-> For example, I clone. I make changes to my repository and commit on
-> Monday. I don't push my changes to the main repository until
-> Wednesday.
-> 
-> git-log on main repository show changes made on Monday.
-> This makes it hard to determine when folks really got stuff into the
-> main repository.
-> 
-> Is there way to change this so (in my example), I can determine those
-> changes weren't in place until Wednesday? Something in configuration
-> file or perhaps just a different option to git-log.
-> 
-> Thanks in advance.
-
-This is the nature of a distributed version control system. The
-timestamps cannot be used to establish a ordering of commits.
-
-If you have reflogs enabled on the server (see man git-reflog) the
-information there can help you find out when the pushes have been made.
-There is no mechanism to transfer these reflogs into your local
-repository, since reflogs are always local to a single repository. If
-you have access to the server, you can examine the reflogs there. (f.e.
-using git log -g or git reflog)
-
+I would think you could get what you want with sufficient grovelling of
+the files in .../.git/logs/.
 -- 
-http://spinlock.ch/blog/
+It is a truth universally acknowledged, that any language in
+possession of a rich syntax, must be in want of a rewrite.
+        -- Piers Cawley
