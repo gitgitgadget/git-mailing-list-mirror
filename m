@@ -1,108 +1,81 @@
-From: Dustin Sallings <dustin@spy.net>
-Subject: Re: [PATCH] Allow local branching to set up rebase by default.
-Date: Thu, 8 May 2008 10:32:59 -0700
-Message-ID: <585390AA-289C-4B2F-B851-DD383C6C7A73@spy.net>
-References: <1209502182-39800-1-git-send-email-dustin@spy.net> <7vprrycce9.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 08 19:33:59 2008
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: git gc & deleted branches
+Date: Thu, 8 May 2008 19:45:31 +0200 (CEST)
+Message-ID: <alpine.LSU.1.10.0805081920160.8678@bianca.dialin.t-online.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 08 20:06:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuA0E-0002X1-Bz
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 19:33:58 +0200
+	id 1JuAVV-0006at-AM
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 20:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbYEHRdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 13:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbYEHRdI
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 13:33:08 -0400
-Received: from basket.west.spy.net ([69.230.8.154]:62462 "EHLO
-	mail.west.spy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572AbYEHRdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 13:33:05 -0400
-Received: from dhcp-60.corp01.caring.com (dsl092-049-060.sfo4.dsl.speakeasy.net [66.92.49.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by mail.west.spy.net (Postfix) with ESMTP id 6D4FF54;
-	Thu,  8 May 2008 10:33:00 -0700 (PDT)
-In-Reply-To: <7vprrycce9.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1756448AbYEHSF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 14:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761500AbYEHSF1
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 14:05:27 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50571 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751001AbYEHSF0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 May 2008 14:05:26 -0400
+X-Greylist: delayed 1189 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 May 2008 14:05:26 EDT
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 99244105EF6
+	for <git@vger.kernel.org>; Thu,  8 May 2008 13:45:36 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 08 May 2008 13:45:36 -0400
+X-Sasl-enc: thyc2rmwzZ61tDDltNO5XFPecYxb6dyT8EHpruhNUjpS 1210268736
+Received: from [192.168.2.100] (p549A6B5C.dip.t-dialin.net [84.154.107.92])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DEFEE18202
+	for <git@vger.kernel.org>; Thu,  8 May 2008 13:45:35 -0400 (EDT)
+User-Agent: Alpine 1.10 (LSU 1032 2008-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81546>
 
+Hello,
 
-	Hi, thanks for the response.
+I'm trying to reclaim space from an abandoned branch (never involved in 
+any merge) using 'git gc', but it doesn't appear to work:
 
-On May 7, 2008, at 9:22, Junio C Hamano wrote:
+   mkdir testrepo
+   cd testrepo
+   git init
+   dd if=/dev/urandom bs=1024k count=10 of=file
+   git add file
+   git commit -a -m 'initial checkin'
+   git checkout -b test
+   dd if=/dev/urandom bs=1024k count=10 of=file
+   git commit -a -m 'branch checkin'
+   git checkout master
+   du -s .    # returns 30960
+   git branch -D test
+   git gc
+   du -s .    # returns 30916
 
-> You got no reactions, neither
-> positive nor negative, partly due to this sentence, I suspect.
+Here I had expected ~20000 since the branch uses ~10000.
 
-	I got one response from someone who said he had implemented the same  
-thing in one of his branches.  That seemed to confirm the idea for  
-me.  Some additional features were suggested to be built on top of  
-this, but I didn't read it as necessary for proceeding.
+My config is
 
-> Please sign-off your patches (see Documentation/SubmittingPatches).
+[gc]
+         reflogExpire = 0
+         reflogExpireUnreachable = 0
+         rerereresolved = 0
+         rerereunresolved = 0
+         packrefs = 1
 
-	Oh thanks, I hadn't seen this.  I read it as well as the  
-CodingGuidelines document.
+I also tried 'git-pack-refs --all' or 'git-pack-refs --prune' but to no 
+avail.
 
->> +	When `never`, rebase is never automatically set to true.
->> +	When `local`, rebase is set to true for tracked branches of
->> +	other local branches.
->> +	When `remote`, rebase is set to true for tracked branches of
->> +	remote branches.
->> +	When `always`, rebase will be set to true for all tracking
->> +	branches.
->> +	This option defaults to never.
->
-> How does this interact with a similarly named configuration option,
-> autosetupmerge, whose settings can be false, true, and always?
+What am I doing wrong?
 
-	I can direct the user to the autosetupmerge config documentation  
-since it also documents the flags that override its behavior.  Is this  
-acceptable?
+Thanks for any hints.
 
->> branch.<name>.remote::
->> 	When in branch <name>, it tells `git fetch` which remote to fetch.
->> 	If this option is not given, `git fetch` defaults to remote  
->> "origin".
->
-> This is not your fault, but can anybody guess what the exact command
-> sequence to cause the named branch to be advanced by rebasing, only by
-> reading this entry?
->
->    branch.<name>.rebase::
->            When true, rebase the branch <name> on top of the fetched  
-> branch,
->            instead of merging the default branch from the default  
-> remote.
->
-> I can't.  Perhaps we would need "when "git pull" is run" or  
-> something at
-> the end.
+Regards
 
-	I'll submit this as a separate patch.
-
-> Is this correct?
-
-	[...]
-
-> You might want to check how the setup_tracking() decides when to say
-> remote/local in its printf().
-
-	Oh thanks, I clearly didn't understand this and just relied on my  
-tests passing by coincidence.
-
-	I'll resubmit my patch with your recommendations, thanks.
-
--- 
-Dustin Sallings
+Guido
