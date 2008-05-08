@@ -1,92 +1,112 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: [PATCH] Teach git-svn how to catch up with its tracking
-	branches
-Date: Thu, 8 May 2008 04:21:41 -0400
-Message-ID: <20080508082141.GB2197@pe.Belkin>
-References: <20080508013956.GA24956@midwinter.com> <alpine.DEB.1.00.0805072332300.6948@swallowtail>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Asheesh Laroia <asheesh@asheesh.org>
-X-From: git-owner@vger.kernel.org Thu May 08 10:22:36 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH v2] Documentation/config.txt: Add git-gui options
+Date: Thu,  8 May 2008 10:55:02 +0200
+Message-ID: <1210236902-8008-1-git-send-email-hendeby@isy.liu.se>
+References: <20080507230948.GT29038@spearce.org>
+Cc: git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
+To: spearce@spearce.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 08 10:56:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ju1Oc-0002k1-KZ
-	for gcvg-git-2@gmane.org; Thu, 08 May 2008 10:22:35 +0200
+	id 1Ju1v2-0007jZ-He
+	for gcvg-git-2@gmane.org; Thu, 08 May 2008 10:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050AbYEHIVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2008 04:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbYEHIVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 04:21:45 -0400
-Received: from eastrmmtao103.cox.net ([68.230.240.9]:49012 "EHLO
-	eastrmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbYEHIVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2008 04:21:43 -0400
-Received: from eastrmimpo02.cox.net ([68.1.16.120])
-          by eastrmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20080508082143.CTBF24465.eastrmmtao103.cox.net@eastrmimpo02.cox.net>;
-          Thu, 8 May 2008 04:21:43 -0400
-Received: from localhost ([68.0.253.29])
-	by eastrmimpo02.cox.net with bizsmtp
-	id NwMh1Z00D0epFYL02wMhoA; Thu, 08 May 2008 04:21:42 -0400
-Received: from chris by localhost with local (Exim 4.66)
-	(envelope-from <c.shoemaker@cox.net>)
-	id 1Ju1Nl-0000gj-KX; Thu, 08 May 2008 04:21:41 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805072332300.6948@swallowtail>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753728AbYEHIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2008 04:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYEHIzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 May 2008 04:55:08 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:61740 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753697AbYEHIzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2008 04:55:05 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id C2C002598F;
+	Thu,  8 May 2008 10:55:03 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 26261-09; Thu,  8 May 2008 07:37:10 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id E30CB2593F;
+	Thu,  8 May 2008 10:55:02 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id D7B2D177A0; Thu,  8 May 2008 10:55:02 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.1.273.g4b2d7
+In-Reply-To: <20080507230948.GT29038@spearce.org>
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81519>
 
-On Wed, May 07, 2008 at 11:48:17PM -0700, Asheesh Laroia wrote:
-> On Wed, 7 May 2008, Steven Grimm wrote:
->
->> In environments where a lot of people are sharing an svn repository using
->> git-svn, everyone has identical, but individually maintained, tracking
->> branches.
->
-> To further muddy the waters, let me talk about my setup, also one with a 
-> "central git repository" from which all developers clone, and also one 
-> based on a Subversion tree.
->
-> The way I handle it is that, hidden somewhere, I have an account with a 
-> cron job that does this:
->
-> $ git svn fetch
-> $ git push origin refs/remotes/*:refs/heads/*
-> $ git push origin refs/remotes/trunk:refs/heads/master
->
-> The first push synchronizes "origin" to have the same branches as this 
-> git-svn copy of the git repository, and the second updates "origin" so that 
-> it has a "master"; without that second step, "git clone" will error out 
-> when it get to its checkout phase.
+The 'git gui' has a number of options that can be specified using the
+options dialog. Sometimes it is convenient to be able to specify these
+from the command line, therefor document these options.
 
-This got me thinking about a potential design for a git-svnserver.
-[Warning: engineering hack ahead, proceeed with caution.]
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+Acked-by: Shawn O. Pearce <speace@spearce.org>
+---
 
-Instead of re-implementing any part of svn, just use a stock svn repo
-+ server.  From the svn post-commit hook, update a git-svn repo as
-above.  From the git post-commit, do a git-svn rebase.  Of course, you
-need a shared lock between the two pairs of pre/post commit hooks.
+This patch differs from the previous one in two ways:
 
-The problem of attribution in svn from git-svn is probably easier to
-solve from within the context of a post-commit hook.  The problem of
-having to round-trip git commits through svn in a way that changes
-their ids remains.  Effectively, that means commits have to be
-considered "unpublished" (for the purpose of not basing other work
-upon them) until they are pushed to the git-half of the git+svn.
+1. Since Shawn has fixed the problem with the spell checking already
+(thanks!) and it will make its way into git soon, I removed the
+comment about how gui.spellingdictionary="no can used to have git gui
+start with older versions of aspell.  I think it just confuse people
+if it doesn't apply any more.
 
-Still, this scenario is a pretty gentle migration path from svn to git
-- one that allows regular git users to use only git-core, not git-svn,
-and still allows svn clients to work.  Maybe some git-alias magic
-could hide the fact that a git push has to really become a push +
-fetch.
+2. Some of the language looked a bit strange when I read it through
+this time, so I changed some wordings.  A pair of native English eyes
+would probably not be a bad idea.
 
+/Gustaf
 
--chris
+ Documentation/config.txt |   30 ++++++++++++++++++++++++++++++
+ 1 files changed, 30 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 00f089f..c4d6ccd 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -684,6 +684,36 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
+ is one of "ext" and "pserver") to make them apply only for the given
+ access method.
+ 
++gui.commitmsgwidth::
++	Defines how wide the commit message window is in the
++	linkgit:git-gui[1]. "75" is the default.
++
++gui.diffcontext::
++	Specifies how many context lines should be used in calls to diff
++	made by the linkgit:git-gui[1]. The default is "5".
++
++gui.matchtrackingbranch::
++	Determines if new branches created with linkgit:git-gui[1] should
++	default to tracking remote branches with matching names or
++	not. Default: "false".
++
++gui.newbranchtemplate::
++	Is used as suggested name when creating new branches using the
++	linkgit:git-gui[1].
++
++gui.pruneduringfetch::
++	"true" if linkgit:git-gui[1] should prune tracking branches when
++	performing a fetch. The default value is "false".
++
++gui.trustmtime::
++	Determines if linkgit:git-gui[1] should trust the file modification
++	timestamp or not. By default the timestamps are not trusted.
++
++gui.spellingdictionary::
++	Specifies the dictionary used for spell checking commit messages in
++	the linkgit:git-gui[1]. When set to "none" spell checking is turned
++	off.
++
+ help.browser::
+ 	Specify the browser that will be used to display help in the
+ 	'web' format. See linkgit:git-help[1].
+-- 
+1.5.5.1.273.g4b2d7
