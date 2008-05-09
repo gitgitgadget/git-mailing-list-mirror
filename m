@@ -1,65 +1,53 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] git-format-patch: add --no-binary to omit binary changes in the patch.
-Date: Fri, 9 May 2008 19:24:39 +0200
-Message-ID: <200805091924.39992.robin.rosenberg.lists@dewire.com>
-References: <1210096079-32399-1-git-send-email-cmarcelo@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 19:27:31 2008
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [PATCH] builtin-commit.c: add -u as short name for --untracked-files
+Date: Fri, 9 May 2008 22:42:55 +0530
+Message-ID: <20080509171258.6257E406A1@sita-laptop.atc.tcs.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 19:27:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuWMI-00081v-Pn
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:26:15 +0200
+	id 1JuWMX-0008A8-9R
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:26:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763868AbYEIRZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 13:25:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763174AbYEIRZZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:25:25 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:8926 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1762163AbYEIRZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 13:25:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 6BFAE1434CBA;
-	Fri,  9 May 2008 19:25:22 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TgcgCqbh+qyg; Fri,  9 May 2008 19:25:22 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id E55DC1434CB3;
-	Fri,  9 May 2008 19:25:21 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1210096079-32399-1-git-send-email-cmarcelo@gmail.com>
-Content-Disposition: inline
+	id S1765098AbYEIRZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 13:25:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765020AbYEIRZa
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:25:30 -0400
+Received: from 61.11.49.253.static-hyderabad.vsnl.net.in ([61.11.49.253]:42867
+	"EHLO sita-laptop.atc.tcs.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1764761AbYEIRZ3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 May 2008 13:25:29 -0400
+X-Greylist: delayed 745 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2008 13:25:29 EDT
+Received: by sita-laptop.atc.tcs.com (Postfix, from userid 500)
+	id 6257E406A1; Fri,  9 May 2008 22:42:58 +0530 (IST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81626>
 
-tisdagen den 6 maj 2008 19.47.59 skrev Caio Marcelo de Oliveira Filho:
-> Add a new option --no-binary to git-format-patch so that no binary
-> changes are included in the generated patches, only notices that those
-> files changed.  This generate patches that cannot be applied, but still
-> is useful for generating mails for code review purposes.
->
-> See also: commit e47f306d4bf964def1a0b29e8f7cea419471dffd, where --binary
-> option was turned on by default.
->
-> Signed-off-by: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
-> ---
->
-> This is a first try on the patch.  The extra option affects only
-> git-format-patch, since the special case (activating --binary if
-> --text wasn't set) is only there.
+This makes the C code consistent with the documentation and the old shell
+code.
 
-Fine with me.
+Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
+---
+ builtin-commit.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
--- robin
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 256181a..b79ff9c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -101,7 +101,7 @@ static struct option builtin_commit_options[] = {
+ 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
+ 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+-	OPT_BOOLEAN(0, "untracked-files", &untracked_files, "show all untracked files"),
++	OPT_BOOLEAN('u', "untracked-files", &untracked_files, "show all untracked files"),
+ 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
+ 	OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spaces and #comments from message"),
+ 
+-- 
+1.5.5.1.178.g1f811.dirty
