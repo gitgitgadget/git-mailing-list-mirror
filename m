@@ -1,200 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 1/2] Avoid some unnecessary lstat() calls
-Date: Fri, 9 May 2008 09:11:43 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805090904100.3142@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0805090856350.3142@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git gc & deleted branches
+Date: Fri, 09 May 2008 12:12:22 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0805091205580.23581@xanadu.home>
+References: <20080508210125.GC32762@sigill.intra.peff.net>
+ <alpine.LFD.1.10.0805081712270.23581@xanadu.home>
+ <20080508211734.GA819@sigill.intra.peff.net>
+ <48236F69.2060900@nrlssc.navy.mil>
+ <20080508213107.GA1016@sigill.intra.peff.net>
+ <48237344.6070405@nrlssc.navy.mil>
+ <20080508214454.GA1939@sigill.intra.peff.net>
+ <48237650.5060008@nrlssc.navy.mil>
+ <20080508224827.GA2938@sigill.intra.peff.net>
+ <loom.20080509T011318-478@post.gmane.org>
+ <20080509041921.GA14773@sigill.intra.peff.net>
+ <E1B43061-69C7-43D7-9A57-34B7C55DF345@adacore.com>
+ <48246A44.7020303@nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 09 18:14:00 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Geert Bosch <bosch@adacore.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri May 09 18:14:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuVDT-0000oo-9Q
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 18:13:03 +0200
+	id 1JuVDr-00013u-F9
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 18:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbYEIQMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 12:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754991AbYEIQMO
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 12:12:14 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56025 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751656AbYEIQML (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2008 12:12:11 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m49GBi3B024381
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 9 May 2008 09:11:45 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m49GBhJQ014602;
-	Fri, 9 May 2008 09:11:44 -0700
-In-Reply-To: <alpine.LFD.1.10.0805090856350.3142@woody.linux-foundation.org>
+	id S1755553AbYEIQMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 12:12:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753283AbYEIQMh
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 12:12:37 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33111 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505AbYEIQMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 12:12:36 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K0L00FP2ZO5H1A0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 09 May 2008 12:12:07 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <48246A44.7020303@nrlssc.navy.mil>
 User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.93 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81620>
+
+On Fri, 9 May 2008, Brandon Casey wrote:
+
+> Geert Bosch wrote:
+> > 
+> > On May 9, 2008, at 00:19, Jeff King wrote:
+> > 
+> >> I like it. It makes an easy rule to say "packed objects _never_ get
+> >> pruned, they only get demoted to loose objects." And then of course
+> >> we have sane rules for pruning loose objects.
+> > 
+> > Isn't there an issue with the "git gc" triggering because there
+> > may be too many loose unreferenced objects?
+> > Still, I do like the approach.
+> 
+> This would be an argument for going the extra mile and having the loose
+> objects adopt the timestamp of their pack file. In the normal case they
+> would probably be pruned immediately during the same git-gc run.
+
+Well, not necessarily.  If you created a large branch yesterday and you 
+are deleting it today, then if you repacked in between means that those 
+loose objects won't be more than one day old.  Yet there could be enough 
+of them to trigger auto gc.  But that auto gc won't pack those objects 
+since they are unreferenced.  Hence auto gc will trigger all the time 
+without making any progress.
+
+> > Maybe unreferenced objects and old refs should go to a .git/lost+found
+> > directory and be expired from there. This has a couple of benefits:
+> 
+> >   -  Objects will not be accessible by ordinary git commands for a while,
+> >      before they are really removed, avoiding surprises
+> 
+> Unreferenced objects are sometimes used by other repositories which have
+> this repository listed as an alternate. So it may not be a good idea to
+> make the unreferenced objects inaccessible.
+
+Nah.  If this is really the case then you shouldn't be running gc at all 
+in the first place.
 
 
-The commit sequence used to do
-
-	if (file_exists(p->path))
-		add_file_to_cache(p->path, 0);
-
-where both "file_exists()" and "add_file_to_cache()" needed to do a 
-lstat() on the path to do their work.
-
-This cuts down 'lstat()' calls for the partial commit case by two 
-for each path we know about (because we do this twice per path).
-
-Just move the lstat() to the caller instead (that's all that 
-"file_exists()" really does), and pass the stat information down to the 
-add_to_cache() function.
-
-This essentially makes 'add_to_index()' the core function that adds a path 
-to the index, getting the index pointer, the pathname and the stat 
-information as arguments. There are then shorthand helper functions that 
-use this core function:
-
- - 'add_to_cache()' is just 'add_to_index()' with the default index
-
- - 'add_file_to_cache/index()' is the same, but does the lstat() call 
-   itself, so you can pass just the pathname if you don't already have the 
-   stat information available.
-
-So old users of the 'add_file_to_xyzzy()' are essentially left unchanged, 
-and this just exposes the more generic helper function that can take 
-existing stat information into account.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- builtin-commit.c |    6 ++++--
- cache.h          |    2 ++
- read-cache.c     |   29 +++++++++++++++++------------
- 3 files changed, 23 insertions(+), 14 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 256181a..6433f86 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -175,9 +175,11 @@ static void add_remove_files(struct path_list *list)
- {
- 	int i;
- 	for (i = 0; i < list->nr; i++) {
-+		struct stat st;
- 		struct path_list_item *p = &(list->items[i]);
--		if (file_exists(p->path))
--			add_file_to_cache(p->path, 0);
-+
-+		if (!lstat(p->path, &st))
-+			add_to_cache(p->path, &st, 0);
- 		else
- 			remove_file_from_cache(p->path);
- 	}
-diff --git a/cache.h b/cache.h
-index 80a8842..4803b03 100644
---- a/cache.h
-+++ b/cache.h
-@@ -261,6 +261,7 @@ static inline void remove_name_hash(struct cache_entry *ce)
- #define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
- #define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
- #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
-+#define add_to_cache(path, st, verbose) add_to_index(&the_index, (path), (st), (verbose))
- #define add_file_to_cache(path, verbose) add_file_to_index(&the_index, (path), (verbose))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL)
- #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
-@@ -365,6 +366,7 @@ extern int add_index_entry(struct index_state *, struct cache_entry *ce, int opt
- extern struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int really);
- extern int remove_index_entry_at(struct index_state *, int pos);
- extern int remove_file_from_index(struct index_state *, const char *path);
-+extern int add_to_index(struct index_state *, const char *path, struct stat *, int verbose);
- extern int add_file_to_index(struct index_state *, const char *path, int verbose);
- extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, int refresh);
- extern int ce_same_name(struct cache_entry *a, struct cache_entry *b);
-diff --git a/read-cache.c b/read-cache.c
-index e71c3b7..f0d74b3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -461,21 +461,18 @@ static struct cache_entry *create_alias_ce(struct cache_entry *ce, struct cache_
- 	return new;
- }
- 
--int add_file_to_index(struct index_state *istate, const char *path, int verbose)
-+int add_to_index(struct index_state *istate, const char *path, struct stat *st, int verbose)
- {
- 	int size, namelen;
--	struct stat st;
-+	mode_t st_mode = st->st_mode;
- 	struct cache_entry *ce, *alias;
- 	unsigned ce_option = CE_MATCH_IGNORE_VALID|CE_MATCH_RACY_IS_DIRTY;
- 
--	if (lstat(path, &st))
--		die("%s: unable to stat (%s)", path, strerror(errno));
--
--	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode) && !S_ISDIR(st.st_mode))
-+	if (!S_ISREG(st_mode) && !S_ISLNK(st_mode) && !S_ISDIR(st_mode))
- 		die("%s: can only add regular files, symbolic links or git-directories", path);
- 
- 	namelen = strlen(path);
--	if (S_ISDIR(st.st_mode)) {
-+	if (S_ISDIR(st_mode)) {
- 		while (namelen && path[namelen-1] == '/')
- 			namelen--;
- 	}
-@@ -483,10 +480,10 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
- 	ce = xcalloc(1, size);
- 	memcpy(ce->name, path, namelen);
- 	ce->ce_flags = namelen;
--	fill_stat_cache_info(ce, &st);
-+	fill_stat_cache_info(ce, st);
- 
- 	if (trust_executable_bit && has_symlinks)
--		ce->ce_mode = create_ce_mode(st.st_mode);
-+		ce->ce_mode = create_ce_mode(st_mode);
- 	else {
- 		/* If there is an existing entry, pick the mode bits and type
- 		 * from it, otherwise assume unexecutable regular file.
-@@ -495,18 +492,18 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
- 		int pos = index_name_pos_also_unmerged(istate, path, namelen);
- 
- 		ent = (0 <= pos) ? istate->cache[pos] : NULL;
--		ce->ce_mode = ce_mode_from_stat(ent, st.st_mode);
-+		ce->ce_mode = ce_mode_from_stat(ent, st_mode);
- 	}
- 
- 	alias = index_name_exists(istate, ce->name, ce_namelen(ce), ignore_case);
--	if (alias && !ce_stage(alias) && !ie_match_stat(istate, alias, &st, ce_option)) {
-+	if (alias && !ce_stage(alias) && !ie_match_stat(istate, alias, st, ce_option)) {
- 		/* Nothing changed, really */
- 		free(ce);
- 		ce_mark_uptodate(alias);
- 		alias->ce_flags |= CE_ADDED;
- 		return 0;
- 	}
--	if (index_path(ce->sha1, path, &st, 1))
-+	if (index_path(ce->sha1, path, st, 1))
- 		die("unable to index file %s", path);
- 	if (ignore_case && alias && different_name(ce, alias))
- 		ce = create_alias_ce(ce, alias);
-@@ -518,6 +515,14 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
- 	return 0;
- }
- 
-+int add_file_to_index(struct index_state *istate, const char *path, int verbose)
-+{
-+	struct stat st;
-+	if (lstat(path, &st))
-+		die("%s: unable to stat (%s)", path, strerror(errno));
-+	return add_to_index(istate, path, &st, verbose);
-+}
-+
- struct cache_entry *make_cache_entry(unsigned int mode,
- 		const unsigned char *sha1, const char *path, int stage,
- 		int refresh)
+Nicolas
