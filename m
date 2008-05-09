@@ -1,81 +1,94 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: worktree: incorrect handling of directory argument
-Date: Sat, 10 May 2008 00:12:52 +0100
-Message-ID: <20080509231252.GA14822@lapse.madduck.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Java Git (aka jgit) library switching license to BSD/EPL
+Date: Fri, 9 May 2008 19:38:28 -0400
+Message-ID: <20080509233828.GE29038@spearce.org>
+References: <20080509021158.GA29038@spearce.org> <alpine.LFD.1.10.0805091214170.23581@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 10 01:13:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Dave Watson <dwatson@mimvista.com>,
+	Philippe Ombredanne <philippe@easyeclipse.org>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat May 10 01:40:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jubmc-0006Cq-Az
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 01:13:46 +0200
+	id 1JucBo-00055E-75
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 01:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756299AbYEIXM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 19:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756268AbYEIXM4
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 19:12:56 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:57682 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755086AbYEIXMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 19:12:55 -0400
-Received: from lapse.madduck.net (chiu.ifi.unizh.ch [130.60.75.74])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 9FCA2A83C2
-	for <git@vger.kernel.org>; Sat, 10 May 2008 01:12:51 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 021E74FD40; Sat, 10 May 2008 00:12:52 +0100 (IST)
+	id S1760378AbYEIXio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 19:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760371AbYEIXin
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 19:38:43 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60709 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760363AbYEIXik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 19:38:40 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JucAN-00089S-VD; Fri, 09 May 2008 19:38:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7DE6420FBAE; Fri,  9 May 2008 19:38:28 -0400 (EDT)
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/7081/Fri May  9 17:52:50 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <alpine.LFD.1.10.0805091214170.23581@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81635>
 
+Nicolas Pitre <nico@cam.org> wrote:
+> On Thu, 8 May 2008, Shawn O. Pearce wrote:
+> 
+> > Nico, Linus, Junio, Daniel, Dscho, et.al.:
+> > 
+> >   We would appreciate it if you could provide a statement saying
+> >   you have no current copyright ownership interest in jgit, and that
+> >   you do not currently own nor invented any patents related to the
+> >   "Git technology" that this code might need to use to function as
+> >   a Git implementation.
+> 
+> I do not have any such copyright nor patent claims for the jgit code.
+> 
+> As long as the C version remains the authoritative reference 
+> implementation for protocol and data format,
 
---17pEHd4RhPHOinZp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't think anyone is going to argue with that.  Its very unlikey
+that jgit would unseat C git as the Git implementation used by
+everyone.  But I do hope that jgit grows more in popularity as more
+people come to Git, especially Java users/developers.
 
-Hi,
+> and any algorithmic 
+> improvements made to the jgit source can be merged back into the C 
+> version using the GPL, then I have no issue with the license used by 
+> jgit either.
 
-If I set core.worktree to ../.. instead of ../../, then a file foo
-will be unpacked by checkout-index to be the literal ../..foo, not
-=2E./../foo. I suppose core.worktree should always be treated as
-a directory.
+This shouldn't be a problem.  We're moving to a 3-clause BSD.  As I
+understand it, anyone can take code under a 3-clause BSD license,
+make a few changes, and release the modified version under the GPL,
+and the original BSD project can't take those changes back in due
+to the changes being licensed under the GPL.  From what I have
+read this has happened several times in the Linux kernel with code
+obtained from *BSD.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"everyone has a little secret he keeps,
- i like the fires when the city sleeps."
-                                                  -- mc 900 ft jesus
-=20
-spamtraps: madduck.bogus@madduck.net
+So long as someone is willing to port the improved algorithm across
+langauges from Java->C, even if it is a direct translation, it can
+still be included in C Git.
 
---17pEHd4RhPHOinZp
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+Thanks for the reply Nico (and everyone else), it is most appreciated.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIJNpyIgvIgzMMSnURAuH6AJ96+9m5PVtEUTW7Ir1QccnFiOJagwCgiQKR
-DXIYbg1uj7dT5s8d2jD+69w=
-=/t85
------END PGP SIGNATURE-----
-
---17pEHd4RhPHOinZp--
+-- 
+Shawn.
