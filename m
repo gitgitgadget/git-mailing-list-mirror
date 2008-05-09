@@ -1,55 +1,75 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git gc & deleted branches
-Date: Fri, 09 May 2008 10:56:14 -0500
-Message-ID: <4824741E.4080807@nrlssc.navy.mil>
-References: <48236F69.2060900@nrlssc.navy.mil> <20080508213107.GA1016@sigill.intra.peff.net> <48237344.6070405@nrlssc.navy.mil> <20080508214454.GA1939@sigill.intra.peff.net> <48237650.5060008@nrlssc.navy.mil> <20080508224827.GA2938@sigill.intra.peff.net> <loom.20080509T011318-478@post.gmane.org> <20080509041921.GA14773@sigill.intra.peff.net> <E1B43061-69C7-43D7-9A57-34B7C55DF345@adacore.com> <48246A44.7020303@nrlssc.navy.mil> <20080509155323.GA28966@sigill.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 0/2] Soem core git optimizations
+Date: Fri, 9 May 2008 09:04:03 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805090856350.3142@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Geert Bosch <bosch@adacore.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 09 17:57:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 09 18:06:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuUyS-0002pn-Vl
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 17:57:33 +0200
+	id 1JuV6U-0005sx-M5
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 18:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754855AbYEIP4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 11:56:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754805AbYEIP4o
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 11:56:44 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37661 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754762AbYEIP4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 11:56:44 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m49FuEsi004146;
-	Fri, 9 May 2008 10:56:14 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 9 May 2008 10:56:14 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <20080509155323.GA28966@sigill.intra.peff.net>
-X-OriginalArrivalTime: 09 May 2008 15:56:14.0926 (UTC) FILETIME=[35DF6EE0:01C8B1ED]
+	id S1754399AbYEIQEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 12:04:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754547AbYEIQEm
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 12:04:42 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35675 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754335AbYEIQEm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 May 2008 12:04:42 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m49G4538023923
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 9 May 2008 09:04:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m49G43n6014296;
+	Fri, 9 May 2008 09:04:04 -0700
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.93 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81618>
 
-Jeff King wrote:
-> On Fri, May 09, 2008 at 10:14:12AM -0500, Brandon Casey wrote:
-> 
->>>   -  Objects will not be accessible by ordinary git commands for a while,
->>>      before they are really removed, avoiding surprises
->> Unreferenced objects are sometimes used by other repositories which have
->> this repository listed as an alternate. So it may not be a good idea to
->> make the unreferenced objects inaccessible.
-> 
-> But that is precisely what we're going to do, but in two weeks. Isn't it
-> better to have the dependent repo fail while the change is recoverable?
 
-good point.
+I notice that Junio merged my fnmatch-avoidance patch, but I have a few 
+other optimizations that I track in my private tree that I have sent out 
+but probably didn't get much attention. They do matter from a performance 
+angle, even if not as much as avoiding fnmatch did.
 
--b
+The first patch is obvious and pretty trivial: just moving lstat() calls 
+up a bit in the call-chain, so that you don't end up unnecessarily doing 
+two lstat() calls after each other.
+
+The second patch is the symlink detection rewrite, which avoids a _lot_ of 
+unnecessary lstat calls under some loads by not doing the lstat on the 
+directory path entries over and over for each pathname. It's just a 
+single-deep cache for "last directory seen" and "last symlink seen", and 
+replaces the old code that only cached the last symlink.
+
+Diffstat for the combined thing as follows:
+
+ builtin-apply.c  |    2 +-
+ builtin-commit.c |    6 ++-
+ cache.h          |    4 ++-
+ diff-lib.c       |   10 +++---
+ read-cache.c     |   29 +++++++++++--------
+ symlinks.c       |   82 ++++++++++++++++++++++++++++++++---------------------
+ unpack-trees.c   |   12 +++----
+ 7 files changed, 84 insertions(+), 61 deletions(-)
+
+and while this probably doesn't matter on most loads, the reason I'm 
+re-sending is that I think it's pretty solid and core code. I've been 
+running with both of these patches (and some others) rebased on top of 
+Junio's tree for the last few weeks.
+
+		Linus
