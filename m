@@ -1,94 +1,89 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git-svn: expand svn:keywords, or how else to deal with them?
-Date: Fri, 9 May 2008 11:19:19 +0100
-Message-ID: <20080509101919.GA25037@lapse.madduck.net>
+From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
+Subject: [egit / jgit] Implementation of a file tree iteration using ignore
+ rules.
+Date: Fri, 09 May 2008 15:20:08 +0200
+Message-ID: <48244F88.8060109@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gBBFr7Ir9EOA20Yy"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 09 12:20:24 2008
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: spearce@spearce.org, robin.rosenberg@dewire.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 15:21:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuPi3-00077t-QU
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 12:20:16 +0200
+	id 1JuSX9-0000EH-6M
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 15:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbYEIKT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 06:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbYEIKT0
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 06:19:26 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:34381 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470AbYEIKTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 06:19:25 -0400
-Received: from lapse.madduck.net (chiu.ifi.unizh.ch [130.60.75.74])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 72301A81C1
-	for <git@vger.kernel.org>; Fri,  9 May 2008 12:19:20 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 600124FD40; Fri,  9 May 2008 11:19:19 +0100 (IST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/7076/Fri May  9 09:38:02 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1756174AbYEINUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 09:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756354AbYEINUU
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 09:20:20 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:54123 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517AbYEINUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 09:20:19 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id E8277DE7D696;
+	Fri,  9 May 2008 15:20:16 +0200 (CEST)
+Received: from [84.150.113.84] (helo=[192.168.1.50])
+	by smtp08.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1JuSWG-0007Ta-00; Fri, 09 May 2008 15:20:16 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
+X-Enigmail-Version: 0.95.6
+X-Sender: FloriansKarten@web.de
+X-Provags-ID: V01U2FsdGVkX1+ucAVfgyKj/b+ySRxeaHBbCFjZaLbsQ4HqbujE
+	SElvj3rkS8+ITa8qtcbQXxu1sdMsB/wtubwCaQ/3e11FyGUgJb
+	HSKeDTQiZvseIAXYwd7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81612>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
---gBBFr7Ir9EOA20Yy
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi
 
-Hi,
+I like the idea of a Java implementation of git and would like to
+contribute to the jgit/egit project.
 
-I am using git-svn to track an upstream SVN project, which I then
-package for Debian. Upstream uses $Id:$ all over the source code,
-but I am not ready to argue with him that this ought to be removed.
+In order to get familiar with the code I started to implement a command
+like tool which works like git using the jgit library. I implemented
+very simple versions of the commands "help", "init" and finally wanted
+to implement the "add" command. However, I didn't find any tools to
+determine the files which should be added.
 
-The problem is that I build the Debian packages out of the git-svn
-tree, but use the published tarball. The latter has $Id:$ expanded
-in all files, while the git-svn tree does not - git-svn does not
-expand them.
+So I implemented a factory which returns an Iterable<File> for the
+iteration over all the files in a directory.
 
-The result is that my Debianisation diff now reverts the expansion
-for every single file. This is quite ugly.
+For an example see the unit test testRealisticExample() in the class
+FileIterableFactoryForAddCommandTest:
+http://repo.or.cz/w/egit/florian.git?a=blob;f=org.spearce.jgit.test/tst/org/spearce/jgit/lib/fileiteration/FileIterableFactoryForAddCommandTest.java;h=d3c78f4422c708f26ccb56434053bb711fa3116b;hb=669fd814d34e2f989b5f8eedbcb0d5bcf9743ce7
 
-I realise there are ways to prevent this, but I think that the
-cleanest would be if git-svn could be taught to expand svn:keywords.
+You can view the patches online at:
+http://repo.or.cz/w/egit/florian.git?a=shortlog;h=refs/heads/mailinglist-patches-0
 
-Is this something you could live with, Eric? I am willing to have
-a go at the patch, but my Perl-foo is crap, so I may well fail...
+I signed all patches and formatted them with the code formatter as I
+should. It's ok for me to put the patches under a dual license between a
+3-clause BSD and the EPL[*3*]. Currently all files have a GPL 2 notice.
+I hope that is ok.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"a mathematician is a device for turning coffee into theorems."
-                                                         -- paul erd=F6s
-=20
-spamtraps: madduck.bogus@madduck.net
+If you want I will send the patches to the mailing list, but I don't
+know any automated way to create all the emails. I am not even sure if I
+will get them formatted correctly with Thunderbird 2. It would be cool
+if you could tell me how to send patches via command line.
 
---gBBFr7Ir9EOA20Yy
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
+I hope you like my patches,
+Florian Koeberle
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQFIJCUnIgvIgzMMSnURAim2AJ4g50SiGPDg2Ba5Ss6xNCQb/QwWmQCdGWJT
-t547Gn+bOJvPQEQ/C7hP2pM=
-=cYy3
+iD8DBQFIJE+I59ca4mzhfxMRAqlwAKCSp57SkqvVsBpdt8o3jL6zNdn0kACfeLnZ
+IHErO96fu2rdQcT+JpmroYU=
+=E+vF
 -----END PGP SIGNATURE-----
-
---gBBFr7Ir9EOA20Yy--
