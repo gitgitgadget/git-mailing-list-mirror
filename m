@@ -1,53 +1,72 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [PATCH] builtin-commit.c: add -u as short name for --untracked-files
-Date: Fri, 9 May 2008 22:42:55 +0530
-Message-ID: <20080509171258.6257E406A1@sita-laptop.atc.tcs.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 19:27:40 2008
+From: "Sitaram Chamarty" <sitaramc@gmail.com>
+Subject: Re: mismatch between doc and program in git commit -u (--untracked-files)
+Date: Fri, 9 May 2008 22:56:57 +0530
+Message-ID: <2e24e5b90805091026l30f8802ek6e97d5ad0d3e0c1e@mail.gmail.com>
+References: <2e24e5b90805080310p2cb77814i45a418a0cfc8a2c@mail.gmail.com>
+	 <20080508161342.GB28701@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 19:29:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuWMX-0008A8-9R
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:26:29 +0200
+	id 1JuWNv-0000WJ-48
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765098AbYEIRZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 13:25:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765020AbYEIRZa
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:25:30 -0400
-Received: from 61.11.49.253.static-hyderabad.vsnl.net.in ([61.11.49.253]:42867
-	"EHLO sita-laptop.atc.tcs.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1764761AbYEIRZ3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2008 13:25:29 -0400
-X-Greylist: delayed 745 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2008 13:25:29 EDT
-Received: by sita-laptop.atc.tcs.com (Postfix, from userid 500)
-	id 6257E406A1; Fri,  9 May 2008 22:42:58 +0530 (IST)
+	id S1758149AbYEIR1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 13:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757683AbYEIR1E
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:27:04 -0400
+Received: from ti-out-0910.google.com ([209.85.142.189]:4780 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757002AbYEIR1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 13:27:01 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so489243tic.23
+        for <git@vger.kernel.org>; Fri, 09 May 2008 10:26:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ujHYJsu8lVf/eYCOgUFieofQJ7CgW7CD+lPaIexxEOg=;
+        b=e0YYXBQ9F2fZq0NZwF993t+c8BRHQVbfob+8RX3N2kz7iNxgyW/YT4jTetz+IwgRD55dvQR1I8XMT+HhK9ytjjw6aPgatRVaMlskH9QIwjxzCjhlzG7q9DSsBTRQ9tz5FYdd9aD7/uktzY87n2oXci+xQnhw6x81VxxXW+Y74UM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OXbEh+Z5p9hXpUv52pD6uHQSwniAGVZEycs57R7KV+Egks1CjcL0QR3PDkanDBxE+gms8S942TpRQ5ox5w58DzTbZiONl3baq9c4HTg3cnkrBQ0XWc0Lw+XRDYOTwyt2Ix0Lg3AjcwSUmC3PeISz/y+spbBJalAs5+rj0hc0xb0=
+Received: by 10.110.3.8 with SMTP id 8mr464055tic.11.1210354017598;
+        Fri, 09 May 2008 10:26:57 -0700 (PDT)
+Received: by 10.110.105.1 with HTTP; Fri, 9 May 2008 10:26:57 -0700 (PDT)
+In-Reply-To: <20080508161342.GB28701@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81627>
 
-This makes the C code consistent with the documentation and the old shell
-code.
+On Thu, May 8, 2008 at 9:43 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, May 08, 2008 at 03:40:14PM +0530, Sitaram Chamarty wrote:
+>> The doc for commit says "-u" is a suitable abbreviation for
+>> --untracked-files, but only the latter works.
+>>
+>> I'll submit a patch, but being new, I thought I'd ask which is correct
+>> -- the doc or the code?
 
-Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
----
- builtin-commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> So it should probably be supported. The patch is a one-liner, but I'll
+> leave it as an exercise for you. :)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 256181a..b79ff9c 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -101,7 +101,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
- 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
- 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
--	OPT_BOOLEAN(0, "untracked-files", &untracked_files, "show all untracked files"),
-+	OPT_BOOLEAN('u', "untracked-files", &untracked_files, "show all untracked files"),
- 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
- 	OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spaces and #comments from message"),
- 
--- 
-1.5.5.1.178.g1f811.dirty
+:)
+
+Due to my using gmail which doesn't leave the whitespace alone, I had
+to resort to the clumsy trick of doing a "sendmail -oi -t -f
+sitaramc@gmail.com" from my home machine, and vger's SMTP listener
+decided to greylist the mail.
+
+It'll come through eventually, assuming I keep my laptop switched on
+long enough!
+
+(Although pobox.com seems to have accepted it OK.)
+
+Sitaram
