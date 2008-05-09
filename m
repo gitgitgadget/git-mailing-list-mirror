@@ -1,88 +1,66 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git pull/merge master on other branch
-Date: Fri, 9 May 2008 11:06:47 +0200
-Message-ID: <200805091106.47447.johan@herland.net>
-References: <g00nb3$dlm$1@ger.gmane.org> <200805090824.12772.johan@herland.net> <g011ve$8ln$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Java Git (aka jgit) library switching license to BSD/EPL
+Date: Fri, 9 May 2008 10:57:05 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805091055450.30431@racer>
+References: <20080509021158.GA29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: SungHyun Nam <goweol@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 11:10:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Dave Watson <dwatson@mimvista.com>,
+	Philippe Ombredanne <philippe@easyeclipse.org>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 09 11:58:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuOZr-0007pu-2d
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 11:07:43 +0200
+	id 1JuPMY-0008II-Jg
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 11:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbYEIJGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 05:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbYEIJGy
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 05:06:54 -0400
-Received: from sam.opera.com ([213.236.208.81]:59346 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752802AbYEIJGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 05:06:53 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m4996lwk016307
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 9 May 2008 09:06:48 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <g011ve$8ln$1@ger.gmane.org>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.92.1/7076/Fri May  9 07:38:02 2008 on smtp.opera.com
-X-Virus-Status: Clean
+	id S1753858AbYEIJ5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 05:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752036AbYEIJ5N
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 05:57:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41441 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753423AbYEIJ5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 05:57:12 -0400
+Received: (qmail invoked by alias); 09 May 2008 09:57:11 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp018) with SMTP; 09 May 2008 11:57:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+j15gSgiWjSyPMiLRdlUfAXdnAKunedgaHKgstoA
+	ZNG3iM2U4vJKTT
+X-X-Sender: gene099@racer
+In-Reply-To: <20080509021158.GA29038@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81610>
 
-On Friday 09 May 2008, SungHyun Nam wrote:
-> Johan Herland wrote, at 5/9/2008 3:24 PM:
-> > On Friday 09 May 2008, SungHyun Nam wrote:
-> >> Hello,
-> >>
-> >> If I am on a branch (reguarly rebased), I don't want to switch to
-> >> master branch, but merge origin into master.
-> >> If I switch to master and pull and switch to branch, I have to
-> >> rebuild almost of sources.
-> >>
-> >> How I can pull origin into master without switching to master
-> >> branch?
-> >
-> > You can't; merging requires use of the working tree (to resolve
-> > conflicts).
-> >
-> > However, what you can do is make a local clone of your project
-> > (cheap, because it just hardlinks files from the original repo),
-> > and checkout the master branch in the clone, perform the merge
-> > (after having set up the same origin and retrieved its contents),
-> > and then fetch (or push) the result back into the original repo
-> > (remember: "fetch" instead of "pull", since the latter will
-> > initiate a merge with your current branch).
->
-> I tested and it seems work fine.
->
-> $ mkdir repo; cd repo; git init; echo 'aaa' > a; git add .; git ci -m
-> 'aaa'; cd ..
-> $ git clone repo t; cd t; git co -b test; cd ..
-> $ cd repo; echo 'bbb' >> a; git ci -m 'bbb' a; cd ..
-> $ git clone t t2; cd t2; git remote add central ../repo; git pull
-> central master; git push origin; cd ..
-> $ cd t; git log; git log master; git rebase master
->
-> Did I do correctly?
+Hi,
 
-Looks good, AFAICS
+On Thu, 8 May 2008, Shawn O. Pearce wrote:
 
+> Nico, Linus, Junio, Daniel, Dscho, et.al.:
+> 
+>   We would appreciate it if you could provide a statement saying
+>   you have no current copyright ownership interest in jgit, and that
+>   you do not currently own nor invented any patents related to the
+>   "Git technology" that this code might need to use to function as
+>   a Git implementation.
 
-Have fun! :)
+I confirm that if there is any copyright attributable to me, that I am 
+excited to relicense with whatever license, at the discretion of Shawn O. 
+Pearce.
 
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Thanks,
+Dscho
