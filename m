@@ -1,78 +1,65 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: git pull/merge master on other branch
-Date: Fri, 9 May 2008 12:16:04 -0500
-Message-ID: <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
-References: <g00nb3$dlm$1@ger.gmane.org> <200805090824.12772.johan@herland.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] git-format-patch: add --no-binary to omit binary changes in the patch.
+Date: Fri, 9 May 2008 19:24:39 +0200
+Message-ID: <200805091924.39992.robin.rosenberg.lists@dewire.com>
+References: <1210096079-32399-1-git-send-email-cmarcelo@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri May 09 19:17:13 2008
+Cc: git@vger.kernel.org
+To: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 19:27:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuWDL-0003g6-Hp
-	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:16:59 +0200
+	id 1JuWMI-00081v-Pn
+	for gcvg-git-2@gmane.org; Fri, 09 May 2008 19:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675AbYEIRQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 13:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753674AbYEIRQI
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:16:08 -0400
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:53072 "EHLO
-	randymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753629AbYEIRQH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2008 13:16:07 -0400
-Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a3.g.dreamhost.com (Postfix) with ESMTP id F1746185D64;
-	Fri,  9 May 2008 10:16:05 -0700 (PDT)
-In-Reply-To: <200805090824.12772.johan@herland.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S1763868AbYEIRZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 13:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763174AbYEIRZZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 13:25:25 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:8926 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1762163AbYEIRZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 13:25:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 6BFAE1434CBA;
+	Fri,  9 May 2008 19:25:22 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TgcgCqbh+qyg; Fri,  9 May 2008 19:25:22 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id E55DC1434CB3;
+	Fri,  9 May 2008 19:25:21 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1210096079-32399-1-git-send-email-cmarcelo@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81625>
 
-On May 9, 2008, at 1:24 AM, Johan Herland wrote:
-
-> On Friday 09 May 2008, SungHyun Nam wrote:
->> Hello,
->>
->> If I am on a branch (reguarly rebased), I don't want to switch to
->> master branch, but merge origin into master.
->> If I switch to master and pull and switch to branch, I have to
->> rebuild almost of sources.
->>
->> How I can pull origin into master without switching to master
->> branch?
+tisdagen den 6 maj 2008 19.47.59 skrev Caio Marcelo de Oliveira Filho:
+> Add a new option --no-binary to git-format-patch so that no binary
+> changes are included in the generated patches, only notices that those
+> files changed.  This generate patches that cannot be applied, but still
+> is useful for generating mails for code review purposes.
 >
-> You can't; merging requires use of the working tree (to resolve  
-> conflicts).
+> See also: commit e47f306d4bf964def1a0b29e8f7cea419471dffd, where --binary
+> option was turned on by default.
 >
-> However, what you can do is make a local clone of your project (cheap,
-> because it just hardlinks files from the original repo), and  
-> checkout the
-> master branch in the clone, perform the merge (after having set up  
-> the same
-> origin and retrieved its contents), and then fetch (or push) the  
-> result back
-> into the original repo (remember: "fetch" instead of "pull", since the
-> latter will initiate a merge with your current branch).
+> Signed-off-by: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+> ---
+>
+> This is a first try on the patch.  The extra option affects only
+> git-format-patch, since the special case (activating --binary if
+> --text wasn't set) is only there.
 
+Fine with me.
 
-If you know the pull will just be a fast-foward, then you can do  
-something like
-
-   git fetch origin && git update-ref master origin/master
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+-- robin
