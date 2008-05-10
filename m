@@ -1,136 +1,123 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: git gc & deleted branches
-Date: Fri, 09 May 2008 21:51:15 -0400
-Message-ID: <87y76jx6y4.fsf@jeremyms.com>
-References: <20080508214454.GA1939@sigill.intra.peff.net>
-	<48237650.5060008@nrlssc.navy.mil>
-	<20080508224827.GA2938@sigill.intra.peff.net>
-	<loom.20080509T011318-478@post.gmane.org>
-	<20080509041921.GA14773@sigill.intra.peff.net>
-	<E1B43061-69C7-43D7-9A57-34B7C55DF345@adacore.com>
-	<48246A44.7020303@nrlssc.navy.mil>
-	<alpine.LFD.1.10.0805091205580.23581@xanadu.home>
-	<7vwsm39kft.fsf@gitster.siamese.dyndns.org> <877ie3yqb3.fsf@jeremyms.com>
-	<20080510002014.GH29038@spearce.org>
-	<7vskwr9coz.fsf@gitster.siamese.dyndns.org>
+From: "James Sadler" <freshtonic@gmail.com>
+Subject: Re: git filter-branch --subdirectory-filter
+Date: Sat, 10 May 2008 13:31:37 +1000
+Message-ID: <e5e204700805092031m14c3d6c2kb85b51af5a1ee8f7@mail.gmail.com>
+References: <e5e204700805081801x314b02bek5d53a086b02dac83@mail.gmail.com>
+	 <20080509013300.GA7836@sigill.intra.peff.net>
+	 <e5e204700805090038k373bbabcyfb10d8c93ec5b3a7@mail.gmail.com>
+	 <20080509080039.GA15393@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Geert Bosch <bosch@adacore.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 10 03:52:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 10 05:32:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JueGd-0000pN-Lq
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 03:52:56 +0200
+	id 1JufpM-000309-L3
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 05:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbYEJBwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 21:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbYEJBwD
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 21:52:03 -0400
-Received: from deleuze.hcoop.net ([69.90.123.67]:34259 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768AbYEJBwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 21:52:00 -0400
-Received: from [67.165.107.197] (helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1JueFD-0007su-PY; Fri, 09 May 2008 21:51:28 -0400
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-In-Reply-To: <7vskwr9coz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 May 2008 18:21:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1751403AbYEJDbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 23:31:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbYEJDbk
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 23:31:40 -0400
+Received: from hs-out-0708.google.com ([64.233.178.246]:22728 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751135AbYEJDbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 23:31:38 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so1111312hsl.5
+        for <git@vger.kernel.org>; Fri, 09 May 2008 20:31:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=EoVxM9O6v0CV3la7LAtusC82KXylygCkfbI0YKdaaMY=;
+        b=vorI8wj0BlRwJ2lO0tDGTUVeX3Shtk7pgJD43OU0ZR6nksjKZrMNUVzkgxvqW1kpiuBO2ZSATVLWGtFInJmwZiFrTYygjOU83Ig2AXDZj18HvlXMy/15+S1yiszZDoDRNFz+OEW24Gb8dnSqOpd1TzgyBWCEyBpVV8tIn56tMZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HHAmVDx/iL6+sHbV/KLsyrAeccYaN6eAELYHB2nWFwX/SOfJsAT9Vea7TJKQ0AF770F5G9jVlePk5y2eNiJEMNMt8oM1Tv996FERuqs5Qkwkvur7aosMSyd2Cc8fDYpBvIFSmhdnHun0H775cLvpLe9M/dXFoVl+y1VscasjaVo=
+Received: by 10.90.29.13 with SMTP id c13mr7513282agc.14.1210390297702;
+        Fri, 09 May 2008 20:31:37 -0700 (PDT)
+Received: by 10.90.114.9 with HTTP; Fri, 9 May 2008 20:31:37 -0700 (PDT)
+In-Reply-To: <20080509080039.GA15393@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81643>
 
-Junio C Hamano <gitster@pobox.com> writes:
+2008/5/9 Jeff King <peff@peff.net>:
+> On Fri, May 09, 2008 at 05:38:12PM +1000, James Sadler wrote:
+>
+>> I originally tried --subdirectory-filter by itself to see if it would
+>> do the job, but it filtered more commits than I thought it should
+>> (some commits that touched the subdir were missing after filter-branch
+>> was run).
+>>
+>> I then began to question my understanding of the semantics of
+>> subdirectory-filter.
+>>
+>> Is it meant to:
+>> A) Only keep commits where ALL of the changes in the commit only touch
+>> content under $DIR?
+>> B) Only keep commits where SOME of the changes in the commit touch
+>> content under $DIR?
+>>
+>> I suspected that it was behaving as A.
+>
+> My understanding is that it should behave as B. E.g.:
+>
+>  git init
+>  mkdir subdir1 subdir2
+>  echo content 1 >subdir1/file
+>  echo content 2 >subdir2/file
+>  git add .
+>  git commit -m initial
+>  echo changes 1 >>subdir1/file
+>  git commit -a -m 'only one'
+>  echo more changes 1 >>subdir1/file
+>  echo more changes 2 >>subdir2/file
+>  git commit -a -m 'both'
+>  git filter-branch --subdirectory-filter subdir1
+>  git log --name-status --pretty=oneline
+>
+> should show something like:
+>
+>  b119e21829b6039aa8fe938fb0304a9a7436b84d both
+>  M       file
+>  db2ad8e702f36a1df99dd529aa594e756010b191 only one
+>  M       file
+>  dacb4c2536e61c18079bcc73ea81fa0fb139c097 initial
+>  A       file
+>
 
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> Jeremy Maitin-Shepard <jbms@cmu.edu> wrote:
->>> It is extremely cumbersome to have to worry about whether there are
->>> other concurrent accesses to the repository when running e.g. git gc.
->>> For servers, you may never be able to guarantee that nothing else is
->>> accessing the repository concurrently.  Here is a possible solution:
->>> 
->>> Each git process creates a log file of the references that it has
->>> created.  The log file should be named in some way with e.g. the process
->>> id and start time of the process, and simply consist of a list of
->>> 20-byte sha1 hashes to be considered additional in-use references for
->>> the purpose of garbage collection.
+Behaving as B is definitely the desired behaviour, but I am not observing that.
+I'll see if I can create a test case to demonstrate.  Unfortunately,
+I don't have the right to distribute our repo so will have to attempt
+to reproduce the
+problem another way.
 
-> How would that solve the issue that you should not prune/gc the repository
-> "clone --shared" aka "alternates" borrows from?
+Does anybody have a script that can take an existing repo,
+and create a new one with garbled-but-equivalent commits?  i.e.  file
+and directory structure
+is same with names changed, and there is a one-one relationship
+between lines of text
+in new repo and old one except the lines have been scrambled?  It would be
+a useful tool for distributing private repositories for debugging reasons.
 
-The log files are only for handling in-progress commands editing the
-repository.  I also describe in first part of the e-mail a possible
-solution to that issue as well as the issues created by having multiple
-working directories:
+> IOW, all commits touch subdir1/file, which becomes just 'file'.
+>
+> It could be a bug in git-filter-branch. What version of git are you
+> using?
 
-When you create a new working directory, you would also create in the
-original repository a symlink named
-e.g. orig_repo/.git/peers/<some-arbitrary-name-that-doesn't-matter> that
-points to the .git directory of the newly created working directory.
-git clone -shared would likewise create such a link in the original
-repository.  There could be a separate simple command to "destroy" a
-repository created via clone -shared or via new-work-dir that would
-simply remove this "peer" symlink from any repositories it shares from,
-and then rm -rf the target repository.  The list of repositories that a
-given target repository shares from would be discovered using perhaps
-several different methods, depending on whether it is a new work dir, an
-actual separate repository, or the new type of "shared" repository I
-suggested in my original e-mail, namely one that has its own refs but
-completely shares the object store of the original repository, e.g. via
-a symlink to the original repository's objects directory In any case, I
-believe the information to go "upstream" is already available, and we
-just need to add those "peer" symlinks in order to be able to go
-"downstream".
+I am using git version 1.5.5
 
-There could also be a simple git command to move a repository that would
-take care of updating all of the references that other repositories have
-to it.  Currently it is not possible to write such a command, because
-the "downstream" links are not stored, but with these added symlinks it
-would be possible.
-
-As I said in my previous e-mail, if git gc finds any broken symlinks
-(i.e. symlinks that point to invalid repositories), it would error out,
-because user attention is required to specify whether the symlinks
-correspond to deleted repositories, or to repositories that have been
-moved without making the proper updates.
-
-> By the way, I do not think your "git-commit stopped for two weeks due to a
-> long editing session of the commit message" should result in any object
-> lossage, as the new objects are all reachable from the index, and the new
-> tree nor the new commit hasn't been built while you are typing (rather,
-> not typing) the log message.
-
-> Hmm, a partial commit that uses a temporary index file may lose, come to
-> think of it.  Perhaps we should teach reachable.c about the temporary
-> index file as well.  I dunno.
-
-Well, providing a generic mechanism for telling git about reachable
-things other than the index and refs is precisely what these log files
-would do, and also because they would record the process id and a
-timestamp, stale log files would automatically get cleaned up.  If each
-individual git command has its own special way of trying to keep track
-of temporary references, it is just going to be more complicated and
-more error prone.
+>
+> -Peff
+>
 
 -- 
-Jeremy Maitin-Shepard
+James
