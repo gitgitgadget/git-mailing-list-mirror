@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH 20/22] Added class FileIterableFactoryForAddCommand.
-Date: Sat, 10 May 2008 15:00:38 +0200
-Message-ID: <1210424440-13886-21-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH 17/22] Added the class TreeFilePattern.
+Date: Sat, 10 May 2008 15:00:35 +0200
+Message-ID: <1210424440-13886-18-git-send-email-florianskarten@web.de>
 References: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 10 15:03:47 2008
+X-From: git-owner@vger.kernel.org Sat May 10 15:03:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juojm-0008FZ-9l
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:42 +0200
+	id 1Juojj-0008FZ-IX
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755648AbYEJNBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 09:01:37 -0400
+	id S1755536AbYEJNB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 09:01:27 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,47 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755557AbYEJNBf
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:01:35 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:49490 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbYEJNBZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:01:25 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:49408 "EHLO
 	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755648AbYEJNAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 09:00:53 -0400
+	with ESMTP id S1755557AbYEJNAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 09:00:50 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 2CEC6DA5016A
-	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:52 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 25F66DA5010D
+	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:50 +0200 (CEST)
 Received: from [84.150.90.150] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1Juoh1-000860-01; Sat, 10 May 2008 15:00:51 +0200
+	id 1Juogz-000860-00; Sat, 10 May 2008 15:00:49 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX18dd6agAFrgwlpOeworbYjt7pfutVNCVTrweJG3
-	UFd5iEtn4tCgzmI7jPqPqEeLW0aUV2qkFsmhUo+rO6MsX0KOas
-	uyR3oZYGZwtaPq4kgg8g==
+X-Provags-ID: V01U2FsdGVkX1/tDnBMH9PWMPW5rY5KQMfQKw9k5w+pr3Uky/+H
+	YD6wY4m7uCHgPScZj6XcmBS0FNa6EOu73kHzx5dyOr01usWOsl
+	kSXLY1H6yq9Bc+9+4hWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81678>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../FileIterableFactoryForAddCommand.java          |  118 ++++++++++++=
+ .../jgit/lib/fileiteration/TreeFilePattern.java    |   77 ++++++++++++=
 ++++++++
- 1 files changed, 118 insertions(+), 0 deletions(-)
+ 1 files changed, 77 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/fileitera=
-tion/FileIterableFactoryForAddCommand.java
+tion/TreeFilePattern.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Fi=
-leIterableFactoryForAddCommand.java b/org.spearce.jgit/src/org/spearce/=
-jgit/lib/fileiteration/FileIterableFactoryForAddCommand.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Tr=
+eeFilePattern.java b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiter=
+ation/TreeFilePattern.java
 new file mode 100644
-index 0000000..4674a87
+index 0000000..371c632
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/FileItera=
-bleFactoryForAddCommand.java
-@@ -0,0 +1,118 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/TreeFileP=
+attern.java
+@@ -0,0 +1,77 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -89,116 +89,67 @@ e
 + */
 +package org.spearce.jgit.lib.fileiteration;
 +
-+import java.io.File;
-+import java.io.FileNotFoundException;
-+import java.io.IOException;
-+import java.util.ArrayList;
-+import java.util.Arrays;
 +import java.util.List;
 +
-+import org.spearce.jgit.errors.InvalidPatternException;
-+import org.spearce.jgit.errors.PathNotInProjectDirectoryException;
-+import org.spearce.jgit.lib.GitPathConstants;
-+import org.spearce.jgit.lib.Project;
-+
 +/**
-+ * This class is designed to serve the needs of someone who want to im=
-plement a
-+ * git-add command and needs to determine the files to add.
++ * Represents a pattern like "documents/*.txt" which matches all *.txt=
+ files in
++ * the tree documents.
 + *=20
 + * @author Florian K=C3=B6berle
 + *=20
 + */
-+public class FileIterableFactoryForAddCommand {
-+	private final RuleListToObjectConverter converter =3D new RuleListToO=
-bjectConverter();
++class TreeFilePattern implements FilePattern {
 +
-+	private final IgnoreRuleListFactory ignoreRuleListFactory =3D new Ign=
-oreRuleListFactory();
++	private final List<String> path;
 +
-+	private final AddRuleListFactory addRuleListFactory =3D new AddRuleLi=
-stFactory();
++	private final int offset;
 +
-+	/**
-+	 * @param project
-+	 *            a git project.
-+	 * @param projectSubDirectory
-+	 *            a directory in the projectDirectory.
-+	 * @param filePatternsOfAddCommand
-+	 *            determines the files to iterate over.
-+	 * @return an {@link Iterable} which can be used to iterate over all
-+	 *         matching files in the project directory which are not igno=
-red by
-+	 *         some ignore rules.
-+	 * @throws InvalidPatternException
-+	 * @throws IOException
-+	 *             for some reasons.
-+	 * @throws PathNotInProjectDirectoryException
-+	 *             if projectSubDirectory isn't a subdirectory of the pro=
-ject
-+	 *             directory.
-+	 */
-+	public Iterable<File> createFileTreeIterable(Project project,
-+			File projectSubDirectory, List<String> filePatternsOfAddCommand)
-+			throws InvalidPatternException, PathNotInProjectDirectoryException,
-+			IOException {
-+		final File gitDirectory =3D project.getRepository().getDirectory();
-+		final Rules rules =3D createRules(project.getDirectory(), gitDirecto=
-ry,
-+				projectSubDirectory, filePatternsOfAddCommand);
-+		return new FileTreeIterable(project.getDirectory(), rules, false);
++	private final GlobalFilePattern globalFilePattern;
++
++	public boolean canMatchAtThisDirectoryLevel() {
++		return false;
 +	}
 +
-+	private Rules createRules(File projectDirectory, File gitDirectory,
-+			File workingDirectory, List<String> filePatternsOfAddCommand)
-+			throws InvalidPatternException, PathNotInProjectDirectoryException,
-+			IOException {
-+		final Rule gitDirectoryIgnoreRule =3D createGitDirectoryIgnoreRule()=
-;
-+		final List<Rule> ignoreRuleListFromFiles =3D createExcludeRules(
-+				projectDirectory, gitDirectory);
-+		final List<Rule> includeRules =3D addRuleListFactory.createRuleList(
-+				projectDirectory, workingDirectory, filePatternsOfAddCommand);
-+		final List<Rule> ruleList =3D new ArrayList<Rule>();
-+
-+		ruleList.add(gitDirectoryIgnoreRule);
-+		ruleList.addAll(ignoreRuleListFromFiles);
-+		ruleList.addAll(includeRules);
-+		ruleList.add(new Rule(true, FilePattern.MATCH_ALWAYS));
-+
-+		return converter.createIgnoreRules(ruleList.iterator());
++	TreeFilePattern(List<String> path, GlobalFilePattern globalFilePatter=
+n) {
++		this.path =3D path;
++		this.offset =3D 0;
++		this.globalFilePattern =3D globalFilePattern;
 +	}
 +
-+	private List<Rule> createExcludeRules(File projectDirectory,
-+			File gitDirectory) {
-+		final List<File> possibleIgnoreFiles =3D new ArrayList<File>(2);
-+		possibleIgnoreFiles.add(new File(projectDirectory, ".gitignore"));
-+		possibleIgnoreFiles.add(new File(new File(gitDirectory, "info"),
-+				"exclude"));
++	private TreeFilePattern(List<String> path, int offset,
++			GlobalFilePattern globalFilePattern) {
++		this.path =3D path;
++		this.offset =3D offset;
++		this.globalFilePattern =3D globalFilePattern;
++	}
 +
-+		final List<File> ignoreFiles =3D new ArrayList<File>();
-+		for (File possibleIgnoreFile : possibleIgnoreFiles) {
-+			if (possibleIgnoreFile.isFile()) {
-+				ignoreFiles.add(possibleIgnoreFile);
-+			}
-+		}
-+
++	public FilePattern getPatternForSubDirectory(String directoryName) {
 +		try {
-+			return ignoreRuleListFactory.createIgnoreRuleList(ignoreFiles);
-+		} catch (FileNotFoundException e) {
-+			throw new RuntimeException("unexpected removal of ignore files", e)=
-;
++			if (!path.get(offset).equals(directoryName)) {
++				return FilePattern.MATCH_NEVER;
++			}
++		} catch (IndexOutOfBoundsException e) {
++			throw new IllegalStateException(
++					"The offset of this class doesn't refer to a valid position in pa=
+th");
++		}
++		if (offset =3D=3D path.size() - 1) {
++			return globalFilePattern;
++		} else {
++			return new TreeFilePattern(path, offset + 1, globalFilePattern);
 +		}
 +	}
 +
-+	private Rule createGitDirectoryIgnoreRule() {
-+		final FilePattern gitDirectoryPattern =3D new ComplexFilePattern(Arr=
-ays
-+				.asList(GitPathConstants.REPOSITORY_DIRECTORY_NAME), true);
-+		final Rule gitDirectoryIgnoreRule =3D new Rule(true, gitDirectoryPat=
-tern);
-+		return gitDirectoryIgnoreRule;
++	public boolean isSameForSubDirectories() {
++		return false;
 +	}
++
++	public boolean match(String fileName, boolean fileIsDirectory) {
++		return false;
++	}
++
 +}
 --=20
 1.5.2.5
