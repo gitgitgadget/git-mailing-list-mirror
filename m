@@ -1,36 +1,39 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [egit / jgit] Implementation of a file tree iteration using ignore rules.
-Date: Fri, 9 May 2008 20:11:32 -0400
-Message-ID: <20080510001132.GF29038@spearce.org>
-References: <48244F88.8060109@web.de>
+Subject: Re: git gc & deleted branches
+Date: Fri, 9 May 2008 20:20:14 -0400
+Message-ID: <20080510002014.GH29038@spearce.org>
+References: <20080508214454.GA1939@sigill.intra.peff.net> <48237650.5060008@nrlssc.navy.mil> <20080508224827.GA2938@sigill.intra.peff.net> <loom.20080509T011318-478@post.gmane.org> <20080509041921.GA14773@sigill.intra.peff.net> <E1B43061-69C7-43D7-9A57-34B7C55DF345@adacore.com> <48246A44.7020303@nrlssc.navy.mil> <alpine.LFD.1.10.0805091205580.23581@xanadu.home> <7vwsm39kft.fsf@gitster.siamese.dyndns.org> <877ie3yqb3.fsf@jeremyms.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, robin.rosenberg@dewire.com
-To: Florian =?utf-8?Q?K=C3=B6berle?= <FloriansKarten@web.de>
-X-From: git-owner@vger.kernel.org Sat May 10 02:12:35 2008
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Geert Bosch <bosch@adacore.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Jeremy Maitin-Shepard <jbms@cmu.edu>
+X-From: git-owner@vger.kernel.org Sat May 10 02:21:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuchP-0004dN-Fh
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 02:12:27 +0200
+	id 1JucqO-0007Nd-OS
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 02:21:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757340AbYEJALi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 20:11:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757271AbYEJALh
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 20:11:37 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:40024 "EHLO
+	id S1755900AbYEJAUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 20:20:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753782AbYEJAUx
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 20:20:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44842 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756884AbYEJALg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 20:11:36 -0400
+	with ESMTP id S1754021AbYEJAUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 20:20:51 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JucgN-0002MD-Q6; Fri, 09 May 2008 20:11:23 -0400
+	id 1Jucon-0003na-9l; Fri, 09 May 2008 20:20:05 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 970C820FBAE; Fri,  9 May 2008 20:11:32 -0400 (EDT)
+	id 3D5E320FBAE; Fri,  9 May 2008 20:20:14 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <48244F88.8060109@web.de>
+In-Reply-To: <877ie3yqb3.fsf@jeremyms.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,114 +44,38 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81638>
 
-Florian Kberle <FloriansKarten@web.de> wrote:
+Jeremy Maitin-Shepard <jbms@cmu.edu> wrote:
+> It is extremely cumbersome to have to worry about whether there are
+> other concurrent accesses to the repository when running e.g. git gc.
+> For servers, you may never be able to guarantee that nothing else is
+> accessing the repository concurrently.  Here is a possible solution:
 > 
-> I like the idea of a Java implementation of git and would like to
-> contribute to the jgit/egit project.
+> Each git process creates a log file of the references that it has
+> created.  The log file should be named in some way with e.g. the process
+> id and start time of the process, and simply consist of a list of
+> 20-byte sha1 hashes to be considered additional in-use references for
+> the purpose of garbage collection.
 
-Even better, we'd love to have you contribute!  :-)
- 
-> In order to get familiar with the code I started to implement a command
-> like tool which works like git using the jgit library. I implemented
-> very simple versions of the commands "help", "init"
+I believe we partially considered that in the past and discarded it
+as far too complex implementation-wise for the benefit it gives us.
 
-This is an interesting start.  Did you see the existing "Main" class
-in org.spearce.jgit/src/org/spearce/jgit/pgm?  It sets up and invokes
-a TextBuiltin, which is sort of like the "Command" class you added in
-your first patch.  Though TextBuiltins are created on-the-fly and thus
-are harder/impossible to use to format a "jgit help".
+The current approach of leaving unreachable loose objects around
+for 2 weeks is good enough.  Any Git process that has been running
+for 2 weeks while still not linking everything it needs into the
+reachable refs of that repository is already braindamaged and
+shouldn't be running anymore.
 
-I think your approach of building up a table of commands is likely
-the better one long term, so I am interested in seeing the two unify,
-taking the best from each (from Main and MainProgram that is).
+If we are dealing with a pack file, those are protected by .keep
+"lock files" between the time they are created on disk and the
+time that the git-fetch or git-receive-pack process has finished
+updating the refs to anchor the pack's contents as reachable.
+Every once in a while a stale .keep file gets left behind when a
+process gets killed by the OS, and its damn annoying to clean up.
 
-Please note that jgit is restricted to Java 5 APIs only right now.
-The "MainProgram" class you introduced uses Arrays.copyOfRange()
-which does not compile under Java 5.  I guess it is new in Java 6?
+I'd hate to clean up logs from every little git-add or git-commit
+that aborted in the middle uncleanly.
 
-> and finally wanted
-> to implement the "add" command. However, I didn't find any tools to
-> determine the files which should be added.
-
-Right.  We haven't implemented this properly yet.  So I am very
-happy to see someone starting to approach this.
-
-> So I implemented a factory which returns an Iterable<File> for the
-> iteration over all the files in a directory.
-
-Sadly this is a reimplementation of the already existing FileTreeIterator,
-which is meant to be used within a TreeWalk instance.
-
-The TreeWalk API is meant to iterate over a working directory in
-canonical tree entry name ordering, so that we can walk not just
-a working directory but also the index file and one or more tree
-objects in parallel.  We can even walk multiple working directories
-at once making directory differencing fairly simple.
-
-What is missing here is really two things:
-
- #1)  Take .gitignore and .git/info/exclude (and other patterns) into
-      account as WorkingTreeIterator (base class of FileTreeIterator)
-      loops over the entries in a directory.
-
-      Since .gitignore can be per-directory we may need to add rules
-      as we enter into a subtree (createSubtreeIterator method)
-      and pop rules as we exit a subtree.
-
-      Fortunately the pop part is easy if the rules are held within
-      the WorkingTreeIterator as instance members as pop is already
-      dealt with up inside of TreeWalk by simply discarding the
-      subtree instance and returning back to the parent instance.
-
-  #2) Be able to edit one (or more) index files during a
-      TreeWalk.  I am (sort of) in the middle of that work on my
-      egit/spearce.git fork's dircache branch.
-
-We already have a method for filtering entries during TreeWalk; its
-the TreeFilter API and its many subclasses.  I wonder if the rules
-for say .gitignore could simply be implemented through this API and
-then allow a TreeFilter to be set directly on the WorkingTreeIterator
-to "pre-filter" the entries before they get returned for merging
-in the TreeWalk main loop.
-
-I am certain we need to write new subclasses of TreeFilter to handle
-fnmatch(3C) style glob rules.  But they shouldn't be too difficult.
-For example we already have PathFilter to perform equality testing
-on path names.
-
-Building onto TreeFilter makes for some more interesting cases,
-as we can then feed globs into the revision machinary and actually
-do something like `jgit log -- 'path/*.c'`, with the globbing being
-done _on_the_fly_ at each tree, and not once up front by the shell.
-
- 
-> For an example see the unit test testRealisticExample() in the class
-> FileIterableFactoryForAddCommandTest:
-> http://repo.or.cz/w/egit/florian.git?a=blob;f=org.spearce.jgit.test/tst/org/spearce/jgit/lib/fileiteration/FileIterableFactoryForAddCommandTest.java;h=d3c78f4422c708f26ccb56434053bb711fa3116b;hb=669fd814d34e2f989b5f8eedbcb0d5bcf9743ce7
-> 
-> You can view the patches online at:
-> http://repo.or.cz/w/egit/florian.git?a=shortlog;h=refs/heads/mailinglist-patches-0
-> 
-> I signed all patches and formatted them with the code formatter as I
-> should. It's ok for me to put the patches under a dual license between a
-> 3-clause BSD and the EPL[*3*]. Currently all files have a GPL 2 notice.
-> I hope that is ok.
-
-Thanks.
-
-I'll be writing a script to edit the headers to switch GPL notice to
-EDL (3-clause BSD) notice real soon, and apply it to the bleeding
-edge tree.  We may need to use it a few times to cover everyone's
-topic branches before they merge into the main tree.
- 
-> If you want I will send the patches to the mailing list, but I don't
-> know any automated way to create all the emails. I am not even sure if I
-> will get them formatted correctly with Thunderbird 2. It would be cool
-> if you could tell me how to send patches via command line.
-
-I think the command you are looking for is `git send-email`.
- 
 -- 
 Shawn.
