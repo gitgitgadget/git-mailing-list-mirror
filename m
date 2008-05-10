@@ -1,145 +1,154 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: git gc & deleted branches
-Date: Fri, 09 May 2008 20:07:44 -0400
-Message-ID: <877ie3yqb3.fsf@jeremyms.com>
-References: <20080508210125.GC32762@sigill.intra.peff.net>
-	<alpine.LFD.1.10.0805081712270.23581@xanadu.home>
-	<20080508211734.GA819@sigill.intra.peff.net>
-	<48236F69.2060900@nrlssc.navy.mil>
-	<20080508213107.GA1016@sigill.intra.peff.net>
-	<48237344.6070405@nrlssc.navy.mil>
-	<20080508214454.GA1939@sigill.intra.peff.net>
-	<48237650.5060008@nrlssc.navy.mil>
-	<20080508224827.GA2938@sigill.intra.peff.net>
-	<loom.20080509T011318-478@post.gmane.org>
-	<20080509041921.GA14773@sigill.intra.peff.net>
-	<E1B43061-69C7-43D7-9A57-34B7C55DF345@adacore.com>
-	<48246A44.7020303@nrlssc.navy.mil>
-	<alpine.LFD.1.10.0805091205580.23581@xanadu.home>
-	<7vwsm39kft.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [egit / jgit] Implementation of a file tree iteration using ignore rules.
+Date: Fri, 9 May 2008 20:11:32 -0400
+Message-ID: <20080510001132.GF29038@spearce.org>
+References: <48244F88.8060109@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Nicolas Pitre <nico@cam.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Geert Bosch <bosch@adacore.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 10 02:09:25 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, robin.rosenberg@dewire.com
+To: Florian =?utf-8?Q?K=C3=B6berle?= <FloriansKarten@web.de>
+X-From: git-owner@vger.kernel.org Sat May 10 02:12:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuceS-0003vc-Mv
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 02:09:25 +0200
+	id 1JuchP-0004dN-Fh
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 02:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757196AbYEJAIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2008 20:08:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756576AbYEJAIf
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 20:08:35 -0400
-Received: from deleuze.hcoop.net ([69.90.123.67]:43336 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756485AbYEJAId (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2008 20:08:33 -0400
-Received: from [67.165.107.197] (helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1Jucd1-0004PE-As; Fri, 09 May 2008 20:07:55 -0400
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-In-Reply-To: <7vwsm39kft.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 May 2008 15:33:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1757340AbYEJALi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2008 20:11:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757271AbYEJALh
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 May 2008 20:11:37 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40024 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756884AbYEJALg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2008 20:11:36 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JucgN-0002MD-Q6; Fri, 09 May 2008 20:11:23 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 970C820FBAE; Fri,  9 May 2008 20:11:32 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <48244F88.8060109@web.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81637>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Florian Kberle <FloriansKarten@web.de> wrote:
+> 
+> I like the idea of a Java implementation of git and would like to
+> contribute to the jgit/egit project.
 
-> Nicolas Pitre <nico@cam.org> writes:
->> On Fri, 9 May 2008, Brandon Casey wrote:
->> 
->>> Unreferenced objects are sometimes used by other repositories which have
->>> this repository listed as an alternate. So it may not be a good idea to
->>> make the unreferenced objects inaccessible.
->> 
->> Nah.  If this is really the case then you shouldn't be running gc at all 
->> in the first place.
+Even better, we'd love to have you contribute!  :-)
+ 
+> In order to get familiar with the code I started to implement a command
+> like tool which works like git using the jgit library. I implemented
+> very simple versions of the commands "help", "init"
 
-> True.
+This is an interesting start.  Did you see the existing "Main" class
+in org.spearce.jgit/src/org/spearce/jgit/pgm?  It sets up and invokes
+a TextBuiltin, which is sort of like the "Command" class you added in
+your first patch.  Though TextBuiltins are created on-the-fly and thus
+are harder/impossible to use to format a "jgit help".
 
-> I think the true motivation behind --keep-unreachable is not about the
-> shared object store (aka "alternates") but about races between gc and
-> push (or fetch).  Before push (or fetch) finishes and updates refs, the
-> new objects they create would be dangling _and_ the objects these dangling
-> objects refer to may be packed but unreferenced.  Repacking unreferenced
-> packed objects was a way to avoid losing them.
+I think your approach of building up a table of commands is likely
+the better one long term, so I am interested in seeing the two unify,
+taking the best from each (from Main and MainProgram that is).
 
-I feel like the current approach of (not very well) keeping track of
-which objects are still needed is very messy, not very well defined or
-based on specific solid principles, and prone to errors and losing
-objects.
+Please note that jgit is restricted to Java 5 APIs only right now.
+The "MainProgram" class you introduced uses Arrays.copyOfRange()
+which does not compile under Java 5.  I guess it is new in Java 6?
 
-Things like git clone -shared can only really be used in extremely
-specialized setups, or if pruning of unreferenced objects is completely
-disabled in the source repository, or if specialized scripts are used to
-do the garbage collection that take into account the references of the
-"child" repository.  It is my impression that even repo.or.cz, while it
-has some safe guards, does not even completely safely handle garbage
-collection.  Probably it would be very useful to examples of such
-scripts in contrib.
+> and finally wanted
+> to implement the "add" command. However, I didn't find any tools to
+> determine the files which should be added.
 
-I think that ultimately, some general purpose and reliable solution
-needs to be found to handle the cases of (1) a repository having its
-objects referenced by another via info/alternates; (2) a repository with
-multiple working directories (presumably this should warn/error out
-unless given a force option/detach head and warn if you try to switch
-HEAD for some working directory to the same branch as some other working
-directory).  It seems, btw, that a third type of clone, one which merely
-symlinks the objects directory, would also be useful, once there is a
-solution to the robustness issue.  This would be a case (3) that needs
-to be handled as well.
+Right.  We haven't implemented this properly yet.  So I am very
+happy to see someone starting to approach this.
 
-It seems that clear that ultimately, to handle these three cases, every
-repository needs to know about every other repository, probably via a
-symlink to other repository's .git directory.  Git gc would then also
-examine any refs in this directory, making sure to avoid circular
-references that might result from following the symlinks.  It should
-also probably error out if it finds a symlink that doesn't point to a
-valid git repository, because such a symlink either refers to a
-now-deleted repository for which the symlink needs to be cleaned up, or
-it refers to a repository that was moved and therefore the symlink needs
-to be updated.  Simply ignoring invalid symlinks could result in pruning
-objects that need to be kept for repositories that have moved.
+> So I implemented a factory which returns an Iterable<File> for the
+> iteration over all the files in a directory.
 
-It is extremely cumbersome to have to worry about whether there are
-other concurrent accesses to the repository when running e.g. git gc.
-For servers, you may never be able to guarantee that nothing else is
-accessing the repository concurrently.  Here is a possible solution:
+Sadly this is a reimplementation of the already existing FileTreeIterator,
+which is meant to be used within a TreeWalk instance.
 
-Each git process creates a log file of the references that it has
-created.  The log file should be named in some way with e.g. the process
-id and start time of the process, and simply consist of a list of
-20-byte sha1 hashes to be considered additional in-use references for
-the purpose of garbage collection.  The log file would be cleaned up
-when the process exits, and would also be deleted by any instance of git
-gc that notices a stale log file that doesn't correspond to a running
-process.  To handle shell scripts that need to deal with git-hash-object
-directly, git hash-object could be passed maybe a file descriptor or
-filename of a log file to use instead of creating one.  Maybe the log
-file format could be more complicated, and also support paths to
-e.g. alternate index files to also consider for references.  Things
-would need to be one so that race conditions do not occur, but I think
-something like this would work.
+The TreeWalk API is meant to iterate over a working directory in
+canonical tree entry name ordering, so that we can walk not just
+a working directory but also the index file and one or more tree
+objects in parallel.  We can even walk multiple working directories
+at once making directory differencing fairly simple.
 
+What is missing here is really two things:
+
+ #1)  Take .gitignore and .git/info/exclude (and other patterns) into
+      account as WorkingTreeIterator (base class of FileTreeIterator)
+      loops over the entries in a directory.
+
+      Since .gitignore can be per-directory we may need to add rules
+      as we enter into a subtree (createSubtreeIterator method)
+      and pop rules as we exit a subtree.
+
+      Fortunately the pop part is easy if the rules are held within
+      the WorkingTreeIterator as instance members as pop is already
+      dealt with up inside of TreeWalk by simply discarding the
+      subtree instance and returning back to the parent instance.
+
+  #2) Be able to edit one (or more) index files during a
+      TreeWalk.  I am (sort of) in the middle of that work on my
+      egit/spearce.git fork's dircache branch.
+
+We already have a method for filtering entries during TreeWalk; its
+the TreeFilter API and its many subclasses.  I wonder if the rules
+for say .gitignore could simply be implemented through this API and
+then allow a TreeFilter to be set directly on the WorkingTreeIterator
+to "pre-filter" the entries before they get returned for merging
+in the TreeWalk main loop.
+
+I am certain we need to write new subclasses of TreeFilter to handle
+fnmatch(3C) style glob rules.  But they shouldn't be too difficult.
+For example we already have PathFilter to perform equality testing
+on path names.
+
+Building onto TreeFilter makes for some more interesting cases,
+as we can then feed globs into the revision machinary and actually
+do something like `jgit log -- 'path/*.c'`, with the globbing being
+done _on_the_fly_ at each tree, and not once up front by the shell.
+
+ 
+> For an example see the unit test testRealisticExample() in the class
+> FileIterableFactoryForAddCommandTest:
+> http://repo.or.cz/w/egit/florian.git?a=blob;f=org.spearce.jgit.test/tst/org/spearce/jgit/lib/fileiteration/FileIterableFactoryForAddCommandTest.java;h=d3c78f4422c708f26ccb56434053bb711fa3116b;hb=669fd814d34e2f989b5f8eedbcb0d5bcf9743ce7
+> 
+> You can view the patches online at:
+> http://repo.or.cz/w/egit/florian.git?a=shortlog;h=refs/heads/mailinglist-patches-0
+> 
+> I signed all patches and formatted them with the code formatter as I
+> should. It's ok for me to put the patches under a dual license between a
+> 3-clause BSD and the EPL[*3*]. Currently all files have a GPL 2 notice.
+> I hope that is ok.
+
+Thanks.
+
+I'll be writing a script to edit the headers to switch GPL notice to
+EDL (3-clause BSD) notice real soon, and apply it to the bleeding
+edge tree.  We may need to use it a few times to cover everyone's
+topic branches before they merge into the main tree.
+ 
+> If you want I will send the patches to the mailing list, but I don't
+> know any automated way to create all the emails. I am not even sure if I
+> will get them formatted correctly with Thunderbird 2. It would be cool
+> if you could tell me how to send patches via command line.
+
+I think the command you are looking for is `git send-email`.
+ 
 -- 
-Jeremy Maitin-Shepard
+Shawn.
