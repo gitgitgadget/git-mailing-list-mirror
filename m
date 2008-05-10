@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH 06/22] Added the interface FilePattern.
-Date: Sat, 10 May 2008 15:00:24 +0200
-Message-ID: <1210424440-13886-7-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH 14/22] Added the class IgnoreRuleListFactory.
+Date: Sat, 10 May 2008 15:00:32 +0200
+Message-ID: <1210424440-13886-15-git-send-email-florianskarten@web.de>
 References: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 10 15:03:32 2008
+X-From: git-owner@vger.kernel.org Sat May 10 15:03:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juojb-0008FZ-DV
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:31 +0200
+	id 1Juojf-0008FZ-6V
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070AbYEJNA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 09:00:56 -0400
+	id S1755408AbYEJNBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 09:01:11 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,47 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbYEJNAz
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:00:55 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:44581 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755492AbYEJNAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 09:00:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYEJNBJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:01:09 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:49434 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755540AbYEJNAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 09:00:49 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 415EBDE99C8D
-	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:44 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 57A0DDA4FFD5
+	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:48 +0200 (CEST)
 Received: from [84.150.90.150] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1Juogt-000860-01; Sat, 10 May 2008 15:00:43 +0200
+	id 1Juogx-000860-01; Sat, 10 May 2008 15:00:47 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1+IgL+Xvma06iuO7XodcAS7kzylyYX1YrcaqG7u
-	/ZYr20VRywrc68o2pOJUd+jQYO9mDZ6005HvWM07NjIK7/4/m2
-	bGIUhPwznDETZ+pNCV9A==
+X-Provags-ID: V01U2FsdGVkX18yf92tJItUYVdFBcw2eXJrPXEvwtty+HLZLXlt
+	itPxnwMjHtf3zOq16PjYQuG7PoCuHNL1ysNtt1jA36L0y2Ig7E
+	d6Ublx5rYXNoZTwu3r5g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81668>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../jgit/lib/fileiteration/FilePattern.java        |  107 ++++++++++++=
+ .../lib/fileiteration/IgnoreRuleListFactory.java   |  106 ++++++++++++=
 ++++++++
- 1 files changed, 107 insertions(+), 0 deletions(-)
+ 1 files changed, 106 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/fileitera=
-tion/FilePattern.java
+tion/IgnoreRuleListFactory.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Fi=
-lePattern.java b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteratio=
-n/FilePattern.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Ig=
+noreRuleListFactory.java b/org.spearce.jgit/src/org/spearce/jgit/lib/fi=
+leiteration/IgnoreRuleListFactory.java
 new file mode 100644
-index 0000000..01edbd4
+index 0000000..aaf3aae
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/FilePatte=
-rn.java
-@@ -0,0 +1,107 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/IgnoreRul=
+eListFactory.java
+@@ -0,0 +1,106 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -89,102 +89,96 @@ e
 + */
 +package org.spearce.jgit.lib.fileiteration;
 +
++import java.io.File;
++import java.io.FileNotFoundException;
++import java.util.ArrayList;
++import java.util.LinkedList;
++import java.util.List;
++import java.util.Scanner;
++import java.util.StringTokenizer;
++
 +/**
-+ * A {@link FilePattern} can be used to check if files in a directory =
-matches a
-+ * pattern. It provides with the {@link #getPatternForSubDirectory(Str=
-ing)}
-+ * method {@link FilePattern}s for sub directories.
++ * This class can be used to create lists of {@link Rule} objects from=
+ lines of
++ * .gitignore like files.
 + *=20
-+ * Implementations of this interface should be immutable.
-+ *=20
-+ * @author Florian Koeberle
++ * @author Florian K=C3=B6berle
 + *=20
 + */
-+interface FilePattern {
-+	/**
-+	 * This pattern instance matches always.
-+	 */
-+	public static final FilePattern MATCH_ALWAYS =3D new FilePattern() {
++class IgnoreRuleListFactory {
 +
-+		public FilePattern getPatternForSubDirectory(String directoryName) {
-+			return MATCH_ALWAYS;
++	List<Rule> createIgnoreRuleList(Iterable<String> lineIterable) {
++		LinkedList<Rule> rules =3D new LinkedList<Rule>();
++		for (String line : lineIterable) {
++			final String trimmedLine =3D line.trim();
++			if (trimmedLine.startsWith("#")) {
++				continue;
++			}
++			if (trimmedLine.length() =3D=3D 0) {
++				continue;
++			}
++			rules.add(0, createRule(trimmedLine));
++		}
++		return rules;
++	}
++
++	List<Rule> createIgnoreRuleList(List<File> files)
++			throws FileNotFoundException {
++		final List<String> lines =3D new ArrayList<String>();
++		for (File file : files) {
++			Scanner scanner =3D new Scanner(file);
++			try {
++				while (scanner.hasNextLine()) {
++					lines.add(scanner.nextLine());
++				}
++			} finally {
++				scanner.close();
++			}
++		}
++		return createIgnoreRuleList(lines);
++	}
++
++	private Rule createRule(String trimmedLine) {
++		final boolean exclude;
++		String patternString;
++		if (trimmedLine.startsWith("!")) {
++			exclude =3D false;
++			patternString =3D trimmedLine.substring(1);
++		} else {
++			exclude =3D true;
++			patternString =3D trimmedLine;
 +		}
 +
-+		public boolean match(String fileName, boolean fileIsDirectory) {
-+			return true;
++		final boolean matchDirectoriesOnly;
++		if (patternString.endsWith("/")) {
++			matchDirectoriesOnly =3D true;
++			patternString =3D patternString.substring(0,
++					patternString.length() - 1);
++		} else {
++			matchDirectoriesOnly =3D false;
 +		}
 +
-+		public boolean canMatchAtThisDirectoryLevel() {
-+			return true;
++		final FilePattern pattern;
++		if (patternString.contains("/")) {
++			if (patternString.startsWith("/")) {
++				patternString =3D patternString.substring(1);
++			}
++			final StringTokenizer stringTokenizer =3D new StringTokenizer(
++					patternString, "/");
++			final List<String> patternList =3D new ArrayList<String>();
++			while (stringTokenizer.hasMoreTokens()) {
++				final String token =3D stringTokenizer.nextToken();
++				patternList.add(token);
++			}
++			pattern =3D new ComplexFilePattern(patternList, matchDirectoriesOnl=
+y);
++		} else {
++			pattern =3D new GlobalFilePattern(patternString, matchDirectoriesOn=
+ly);
 +		}
++		return new Rule(exclude, pattern);
++	}
 +
-+		public boolean isSameForSubDirectories() {
-+			return true;
-+		}
-+	};
-+
-+	/**
-+	 * This pattern instance matches never.
-+	 */
-+	public static final FilePattern MATCH_NEVER =3D new FilePattern() {
-+
-+		public FilePattern getPatternForSubDirectory(String directoryName) {
-+			return MATCH_NEVER;
-+		}
-+
-+		public boolean match(String fileName, boolean fileIsDirectory) {
-+			return false;
-+		}
-+
-+		public boolean canMatchAtThisDirectoryLevel() {
-+			return false;
-+		}
-+
-+		public boolean isSameForSubDirectories() {
-+			return true;
-+		}
-+	};
-+
-+	/**
-+	 * @param fileName
-+	 *            the name of the file or directory
-+	 * @param fileIsDirectory
-+	 *            determines if the file is a directory.
-+	 * @return true if the pattern matches.
-+	 */
-+	boolean match(String fileName, boolean fileIsDirectory);
-+
-+	/**
-+	 *=20
-+	 * @param directoryName
-+	 *            the name of a subdirectory.
-+	 * @return a pattern which can be used to match files in sub director=
-ies. A
-+	 *         user may check if the returned value is {@link #MATCH_NEVE=
-R} in
-+	 *         order to do some performance optimizations.
-+	 *=20
-+	 */
-+	FilePattern getPatternForSubDirectory(String directoryName);
-+
-+	/**
-+	 * This method can be used to generate an smaller list of rules, whic=
-h can
-+	 * match.
-+	 *=20
-+	 * @return true if {@link #match(String, boolean)} returns always fal=
-se.
-+	 */
-+	boolean canMatchAtThisDirectoryLevel();
-+
-+	/**
-+	 * @return true if {@link #getPatternForSubDirectory(String)} returns=
- true
-+	 *         for every value.
-+	 */
-+	boolean isSameForSubDirectories();
 +}
-\ No newline at end of file
 --=20
 1.5.2.5
