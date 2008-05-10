@@ -1,106 +1,82 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: git-instaweb should 'just work' on Mac OS X
-Date: Sat, 10 May 2008 18:28:21 -0500
-Message-ID: <5B433437-76F8-4820-A638-48A80ECA3089@sb.org>
-References: <B41867BF-1635-4611-9656-04F8C375BE61@gmail.com> <D1BFDAC1-A959-44BD-A562-D787A68612B1@sb.org> <F08C97B0-A7EE-4A32-9657-DCBDD291502A@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: nathan spindel <nathans@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 01:29:19 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Optimize common pattern of alloc_ref from string
+Date: Sat, 10 May 2008 19:39:19 -0400
+Message-ID: <20080510233918.GA315@sigill.intra.peff.net>
+References: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: kkowalczyk@gmail.com
+X-From: git-owner@vger.kernel.org Sun May 11 01:40:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuyVD-0007QW-4B
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 01:29:19 +0200
+	id 1Juyg8-0001H1-Gj
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 01:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756090AbYEJX2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 19:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756184AbYEJX2a
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 19:28:30 -0400
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:37295 "EHLO
-	randymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755609AbYEJX2a (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 May 2008 19:28:30 -0400
-Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a5.g.dreamhost.com (Postfix) with ESMTP id 9D87A90D5E;
-	Sat, 10 May 2008 16:28:28 -0700 (PDT)
-In-Reply-To: <F08C97B0-A7EE-4A32-9657-DCBDD291502A@gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1754466AbYEJXjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 19:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbYEJXjR
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 19:39:17 -0400
+Received: from peff.net ([208.65.91.99]:4159 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753454AbYEJXjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 19:39:16 -0400
+Received: (qmail 27268 invoked by uid 111); 10 May 2008 23:39:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 10 May 2008 19:39:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 May 2008 19:39:19 -0400
+Content-Disposition: inline
+In-Reply-To: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81716>
 
-On May 10, 2008, at 6:19 PM, nathan spindel wrote:
+On Sat, May 10, 2008 at 04:26:58PM -0700, kkowalczyk@gmail.com wrote:
 
-> On May 10, 2008, at 3:49 PM, Kevin Ballard wrote:
->
->> On May 10, 2008, at 2:27 PM, nathan spindel wrote:
->>
->>> I've investigated what it would take for git-instaweb to 'just  
->>> work' on
->>> Mac OS X 10.5 when running the command with no arguments. This  
->>> would be
->>> of benefit to many Mac git users since they shouldn't be expected to
->>> troubleshoot this problem. Here are the current issues at play:
->>>
->>> - lighttpd does not come with Mac OS X by default, so git-instaweb
->>> currently exits with "lighttpd not found...".
->>>
->>> - git-instaweb doesn't fallback to using other web servers on the  
->>> system
->>> if the default command doesn't exist.
->>>
->>> - Mac OS X does come with webrick and 'git-instaweb -d webrick'  
->>> _does_ just
->>> work. It's probably slower than Apache though (?).
->>>
->>> - Mac OS X also comes with mongrel, which is a great alternative,  
->>> but
->>> git-instaweb doesn't support it.
->>>
->>> - Mac OS X's Apache installation is different than what git-instaweb
->>> expects in a couple areas:
->>> - the Apache binary is called 'httpd', not 'apache2', and git- 
->>> instaweb
->>>   only looks for the latter.
->>> - the modules on Mac OS X live in /usr/libexec/apache2 but by  
->>> default
->>>   git-instaweb looks for /usr/lib/apache2/modules.
->>> - Apache attempts to create its 'accept serialization lock file' at
->>>   /private/var/run/ but that path is only writeable by root (a  
->>> workaround
->>>   is to add a LockFile directive to the conf file that places it
->>>   in $fqgitdir/gitweb/tmp).
->>>
->>> I'm interested in fixing this to make the experience smoother for  
->>> Mac users.
->>> What is the community's preferred avenue of fixing this?
->>
->> If I were to fix this, I'd suggest making apache2 work properly. I  
->> patched the git-svn tests to do this a while back, so you could  
->> look at what's I did there (3644da7214).
->
-> Thanks Kevin. Your patch is similar to how I imagined fixing apache2.
->
-> Would you suggest fixing the other non-starter issue (git-instaweb  
-> doesn't fallback to other daemons if the default doesn't exist)?  Or  
-> maybe changing the default to apache2 on Mac OS X installs (that  
-> seems like a poorer fix)?
+> As a byproduct, fixes one place where string wasn't properly terminated.
 
-I would suggest making it fall back to apache2 if it can't find  
-lighttpd.
+Great. Does this fix a user-visible bug? It would be nice to mention in
+the commit log _which_ place (though after reading the patch carefully,
+it looks like the one interpret_target) so that people looking at the
+commit later can understand exactly what was fixed.
 
--Kevin Ballard
+> -	ref = alloc_ref(strlen(refname) + 1);
+> -	strcpy(ref->name, refname);
+> +	ref = alloc_ref_from_str(refname);
 
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+So this turns a 2-line construct into a 1-line construct...
+
+> +struct ref *alloc_ref_from_str(const char* str)
+> +{
+> +	struct ref *ret;
+> +	unsigned len = strlen(str) + 1;
+> +	char *tmp = xmalloc(sizeof(struct ref) + len);
+> +	ret = (struct ref*)tmp;
+> +	memset(tmp, 0, sizeof(struct ref));
+> +	tmp += sizeof(struct ref);
+> +	memcpy(tmp, str, len);
+> +	return ret;
+> +}
+
+But why do we need an 8-line function to do it?
+
+The only difference I can see over
+
+  struct ref *alloc_ref_from_str(const char *str)
+  {
+    unsigned len = strlen(str) + 1;
+    struct ref *ret = alloc_ref(len);
+    memcpy(ret->name, str, len);
+    return ret;
+  }
+
+is that we avoid memsetting the name portion of the struct to 0 before
+copying to it. It seems like an unproven micro-optimization that makes
+it a bit harder to read.
+
+-Peff
