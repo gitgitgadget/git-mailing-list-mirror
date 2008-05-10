@@ -1,7 +1,7 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH 19/22] Added the class AddRuleListFactory.
-Date: Sat, 10 May 2008 15:00:37 +0200
-Message-ID: <1210424440-13886-20-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH 16/22] Added test class OverallIgnoreRulestest.
+Date: Sat, 10 May 2008 15:00:34 +0200
+Message-ID: <1210424440-13886-17-git-send-email-florianskarten@web.de>
 References: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
@@ -13,11 +13,11 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juojl-0008FZ-LN
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:42 +0200
+	id 1Juojk-0008FZ-6L
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755550AbYEJNBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 09:01:35 -0400
+	id S1755547AbYEJNBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 09:01:30 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,47 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbYEJNBc
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:01:32 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:49482 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbYEJNB3
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:01:29 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:49396 "EHLO
 	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755617AbYEJNAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 09:00:52 -0400
+	with ESMTP id S1755550AbYEJNAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 09:00:50 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 9873DDA4FF6F
-	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:51 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 94A7CDA50155
+	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:49 +0200 (CEST)
 Received: from [84.150.90.150] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1Juoh1-000860-00; Sat, 10 May 2008 15:00:51 +0200
+	id 1Juogy-000860-01; Sat, 10 May 2008 15:00:49 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1/1knXsuoUMotXkQZjnx8mCxWY2ID5b2WAUJWlx
-	QhEC2p/QkH9gfECeSfooOEze2CNiyYfyeQK4tSRfj0nAURRbHV
-	X0EJYf3hltZ57J5xXQFg==
+X-Provags-ID: V01U2FsdGVkX18Wia5rUncOCsTrTsNIkZmkVfXWs41KW1ayMhfl
+	R02GABUJETenp/BNnOnGLH2zJhMGKTJRT8j2DdVDmQUaU3JxWV
+	ZRgkWfAeHcZf+PxbzLBA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81682>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../jgit/lib/fileiteration/AddRuleListFactory.java |  128 ++++++++++++=
+ .../lib/fileiteration/OverallIgnoreRulesTest.java  |  373 ++++++++++++=
 ++++++++
- 1 files changed, 128 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/fileitera=
-tion/AddRuleListFactory.java
+ 1 files changed, 373 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/lib/file=
+iteration/OverallIgnoreRulesTest.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Ad=
-dRuleListFactory.java b/org.spearce.jgit/src/org/spearce/jgit/lib/filei=
-teration/AddRuleListFactory.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/fileiterati=
+on/OverallIgnoreRulesTest.java b/org.spearce.jgit.test/tst/org/spearce/=
+jgit/lib/fileiteration/OverallIgnoreRulesTest.java
 new file mode 100644
-index 0000000..9d2f942
+index 0000000..feb15d7
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/AddRuleLi=
-stFactory.java
-@@ -0,0 +1,128 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/fileiteration/Over=
+allIgnoreRulesTest.java
+@@ -0,0 +1,373 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -89,122 +89,397 @@ e
 + */
 +package org.spearce.jgit.lib.fileiteration;
 +
-+import java.io.File;
-+import java.io.IOException;
 +import java.util.ArrayList;
-+import java.util.Arrays;
-+import java.util.LinkedList;
++import java.util.Collections;
 +import java.util.List;
 +
-+import org.spearce.jgit.errors.InvalidPatternException;
-+import org.spearce.jgit.errors.PathNotInProjectDirectoryException;
++import org.spearce.jgit.lib.fileiteration.Rules;
 +
-+class AddRuleListFactory {
-+	/*
-+	 * The add command of git 1.5.2.5 behaves a little bit stange: "git a=
-dd
-+	 * a/\*z" adds the file "a/b/xyz" but "git add a/x\*" does not.
-+	 *=20
-+	 * The first is parsed as pattern "*z" for whole directory tree "a". =
-The
-+	 * second is parsed as an path.
-+	 *=20
-+	 */
++import junit.framework.TestCase;
 +
-+	private static List<String> getRelativePath(File projectDirectory, Fi=
-le file)
-+			throws PathNotInProjectDirectoryException, IOException {
-+		File currentFile =3D file.getCanonicalFile();
-+		final LinkedList<String> relativePath =3D new LinkedList<String>();
-+		while (!currentFile.equals(projectDirectory)) {
-+			relativePath.addFirst(currentFile.getName());
-+			currentFile =3D currentFile.getParentFile();
-+			if (currentFile =3D=3D null) {
-+				throw new PathNotInProjectDirectoryException();
-+			}
-+		}
-+		return relativePath;
++public class OverallIgnoreRulesTest extends TestCase {
++	private IgnoreRulesFactory factory;
++
++	@Override
++	protected void setUp() throws Exception {
++		factory =3D new IgnoreRulesFactory();
 +	}
 +
-+	List<Rule> createRuleList(File projectDirectory, File workingDirector=
-y,
-+			List<String> filePatternsOfAddCommand)
-+			throws InvalidPatternException, PathNotInProjectDirectoryException,
-+			IOException {
-+
-+		final List<String> pathPrefix =3D getRelativePath(projectDirectory,
-+				workingDirectory);
-+
-+		final List<Rule> ruleList =3D new ArrayList<Rule>(
-+				filePatternsOfAddCommand.size());
-+		for (String pattern : filePatternsOfAddCommand) {
-+			final boolean matchDirectoriesOnly;
-+			if (pattern.endsWith(File.separator)) {
-+				pattern =3D pattern.substring(0, pattern.length() - 1);
-+				matchDirectoriesOnly =3D true;
-+			} else {
-+				matchDirectoriesOnly =3D false;
-+			}
-+
-+			final String[] relativePath =3D pattern.split("[" + File.separator
-+					+ "]");
-+			final List<String> path =3D new ArrayList<String>();
-+			path.addAll(pathPrefix);
-+			path.addAll(Arrays.asList(relativePath));
-+			assert (!path.isEmpty());
-+
-+			final FilePattern filePattern =3D createFilePattern(pattern,
-+					matchDirectoriesOnly, path);
-+			final Rule rule =3D new Rule(false, filePattern);
-+			ruleList.add(rule);
-+
-+		}
-+		return ruleList;
++	public void testSimpleGlobalPattern() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("ab");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertTrue(ignoreRules.toIgnore("ab", false));
++		assertTrue(ignoreRules.toIgnore("ab", true));
++		assertFalse(ignoreRules.toIgnore("abc", false));
++		assertFalse(ignoreRules.toIgnore("abc", true));
 +	}
 +
-+	private static FilePattern createFilePattern(String pattern,
-+			boolean matchDirectoriesOnly, List<String> path)
-+			throws InvalidPatternException {
-+		/*
-+		 * I did several tests with the git-add command, and it seems that i=
-t
-+		 * handles a pattern as a fileGlob, if it has only one star at the
-+		 * beginning of the latest part of the path. Otherwise it handle it =
-as
-+		 * file pattern.
++	public void testGlobalPatternWithOneStar() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("a*c");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertTrue(ignoreRules.toIgnore("ac", false));
++		assertTrue(ignoreRules.toIgnore("ac", true));
++
++		assertTrue(ignoreRules.toIgnore("abc", false));
++		assertTrue(ignoreRules.toIgnore("abc", true));
++
++		assertTrue(ignoreRules.toIgnore("abbc", false));
++		assertTrue(ignoreRules.toIgnore("abbc", true));
++
++		assertTrue(ignoreRules.toIgnore("aabc", false));
++		assertTrue(ignoreRules.toIgnore("aabc", true));
++
++		assertFalse(ignoreRules.toIgnore("cab", false));
++		assertFalse(ignoreRules.toIgnore("cab", true));
++	}
++
++	public void testGlobalPatternWithTwoStars() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("a*c*e");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertTrue(ignoreRules.toIgnore("ace", false));
++		assertTrue(ignoreRules.toIgnore("ace", true));
++
++		assertTrue(ignoreRules.toIgnore("abcde", false));
++		assertTrue(ignoreRules.toIgnore("abcde", true));
++
++		assertTrue(ignoreRules.toIgnore("aHellocWorlde", false));
++		assertTrue(ignoreRules.toIgnore("aHellocWorlde", true));
++
++		assertFalse(ignoreRules.toIgnore("ae", false));
++		assertFalse(ignoreRules.toIgnore("ae", true));
++	}
++
++	public void testGlobalPatternWithDots() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("*.tar.gz");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertTrue(ignoreRules.toIgnore("test.tar.gz", false));
++		assertTrue(ignoreRules.toIgnore("test.tar.gz", true));
++
++		assertTrue(ignoreRules.toIgnore(".tar.gz", false));
++		assertTrue(ignoreRules.toIgnore(".tar.gz", true));
++
++		assertFalse(ignoreRules.toIgnore("test", false));
++		assertFalse(ignoreRules.toIgnore("test", true));
++
++		// test that "." isn't handled as "any character"
++		assertFalse(ignoreRules.toIgnore(".tarogz", false));
++		assertFalse(ignoreRules.toIgnore(".tarogz", true));
++	}
++
++	public void testGlobalPatternDirectoryOnlyRule() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("a/");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertTrue(ignoreRules.toIgnore("a", true));
++		assertFalse(ignoreRules.toIgnore("a", false));
++
++		final Rules ignoreRulesA =3D ignoreRules.getRulesForSubDirectory("a"=
+);
++		assertSame(Rules.IGNORE_ALL, ignoreRulesA);
++
++		final Rules ignoreRulesB =3D ignoreRules.getRulesForSubDirectory("b"=
+);
++		assertTrue(ignoreRulesB.toIgnore("a", true));
++		assertFalse(ignoreRulesB.toIgnore("a", false));
++
++		final Rules ignoreRulesBA =3D ignoreRulesB.getRulesForSubDirectory("=
+a");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesBA);
++
++	}
++
++	public void testSimpleFilePathPattern() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("a/b/c");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertFalse(ignoreRules.toIgnore("a", true));
++		assertFalse(ignoreRules.toIgnore("a", false));
++		assertFalse(ignoreRules.toIgnore("b", true));
++		assertFalse(ignoreRules.toIgnore("b", false));
++		assertFalse(ignoreRules.toIgnore("c", true));
++		assertFalse(ignoreRules.toIgnore("c", false));
++
++		final Rules ignoreRulesA =3D ignoreRules.getRulesForSubDirectory("a"=
+);
++		assertFalse(ignoreRulesA.toIgnore("a", true));
++		assertFalse(ignoreRulesA.toIgnore("a", false));
++		assertFalse(ignoreRulesA.toIgnore("b", true));
++		assertFalse(ignoreRulesA.toIgnore("b", false));
++		assertFalse(ignoreRulesA.toIgnore("c", true));
++		assertFalse(ignoreRulesA.toIgnore("c", false));
++
++		final Rules ignoreRulesAB =3D ignoreRulesA.getRulesForSubDirectory("=
+b");
++		assertFalse(ignoreRulesAB.toIgnore("a", true));
++		assertFalse(ignoreRulesAB.toIgnore("a", false));
++		assertFalse(ignoreRulesAB.toIgnore("b", true));
++		assertFalse(ignoreRulesAB.toIgnore("b", false));
++		assertTrue(ignoreRulesAB.toIgnore("c", true));
++		assertTrue(ignoreRulesAB.toIgnore("c", false));
++
++		final Rules ignoreRulesABA =3D ignoreRulesAB.getRulesForSubDirectory=
+("a");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesABA);
++
++		final Rules ignoreRulesABB =3D ignoreRulesAB.getRulesForSubDirectory=
+("b");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesABB);
++
++		final Rules ignoreRulesABC =3D ignoreRulesAB.getRulesForSubDirectory=
+("c");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesABC);
++	}
++
++	public void testFilePathPatternDirectoryOnlyRule() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("a/b/c/");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertFalse(ignoreRules.toIgnore("a", true));
++		assertFalse(ignoreRules.toIgnore("a", false));
++		assertFalse(ignoreRules.toIgnore("b", true));
++		assertFalse(ignoreRules.toIgnore("b", false));
++		assertFalse(ignoreRules.toIgnore("c", true));
++		assertFalse(ignoreRules.toIgnore("c", false));
++
++		final Rules ignoreRulesA =3D ignoreRules.getRulesForSubDirectory("a"=
+);
++		assertFalse(ignoreRulesA.toIgnore("a", true));
++		assertFalse(ignoreRulesA.toIgnore("a", false));
++		assertFalse(ignoreRulesA.toIgnore("b", true));
++		assertFalse(ignoreRulesA.toIgnore("b", false));
++		assertFalse(ignoreRulesA.toIgnore("c", true));
++		assertFalse(ignoreRulesA.toIgnore("c", false));
++
++		final Rules ignoreRulesAB =3D ignoreRulesA.getRulesForSubDirectory("=
+b");
++		assertFalse(ignoreRulesAB.toIgnore("a", true));
++		assertFalse(ignoreRulesAB.toIgnore("a", false));
++		assertFalse(ignoreRulesAB.toIgnore("b", true));
++		assertFalse(ignoreRulesAB.toIgnore("b", false));
++		assertTrue(ignoreRulesAB.toIgnore("c", true));
++		assertFalse(ignoreRulesAB.toIgnore("c", false));
++
++		final Rules ignoreRulesABA =3D ignoreRulesAB.getRulesForSubDirectory=
+("a");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesABA);
++
++		final Rules ignoreRulesABB =3D ignoreRulesAB.getRulesForSubDirectory=
+("b");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesABB);
++
++		final Rules ignoreRulesABC =3D ignoreRulesAB.getRulesForSubDirectory=
+("c");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesABC);
++	}
++
++	public void testShortPathPattern() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("/alpha");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertTrue(ignoreRules.toIgnore("alpha", true));
++		assertTrue(ignoreRules.toIgnore("alpha", false));
++
++		final Rules ignoreRulesAlpha =3D ignoreRules
++				.getRulesForSubDirectory("alpha");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesAlpha);
++
++		final Rules ignoreRulesBeta =3D ignoreRules
++				.getRulesForSubDirectory("beta");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesBeta);
++	}
++
++	public void testShortDirectoryPathPattern() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("/alpha/");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertTrue(ignoreRules.toIgnore("alpha", true));
++		assertFalse(ignoreRules.toIgnore("alpha", false));
++
++		final Rules ignoreRulesAlpha =3D ignoreRules
++				.getRulesForSubDirectory("alpha");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesAlpha);
++
++		final Rules ignoreRulesBeta =3D ignoreRules
++				.getRulesForSubDirectory("beta");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesBeta);
++	}
++
++	public void testShortPathPatternWithStar() {
++		List<String> lines =3D new ArrayList<String>();
++		lines.add("/.*");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertTrue(ignoreRules.toIgnore(".test", true));
++		assertTrue(ignoreRules.toIgnore(".test", false));
++
++		assertFalse(ignoreRules.toIgnore("test", true));
++		assertFalse(ignoreRules.toIgnore("test", false));
++
++		final Rules ignoreRulesDotTest =3D ignoreRules
++				.getRulesForSubDirectory(".test");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesDotTest);
++
++		final Rules ignoreRulesTest =3D ignoreRules
++				.getRulesForSubDirectory("test");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesTest);
++	}
++
++	public void testPathPatternWith2Times2Stars() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("he*wor*d/*.*");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++
++		assertFalse(ignoreRules.toIgnore("hello", true));
++		assertFalse(ignoreRules.toIgnore("hello", false));
++		final Rules ignoreRulesHello =3D ignoreRules
++				.getRulesForSubDirectory("hello");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesHello);
++
++		assertFalse(ignoreRules.toIgnore("helloworld", true));
++		assertFalse(ignoreRules.toIgnore("helloworld", false));
++		final Rules ignoreRulesHelloWorld =3D ignoreRules
++				.getRulesForSubDirectory("helloworld");
++		assertNotSame(Rules.IGNORE_NOTHING, ignoreRulesHelloWorld);
++
++		assertTrue(ignoreRulesHelloWorld.toIgnore("test.txt", true));
++		assertTrue(ignoreRulesHelloWorld.toIgnore("test.txt", false));
++
++		assertFalse(ignoreRulesHelloWorld.toIgnore("test", true));
++		assertFalse(ignoreRulesHelloWorld.toIgnore("test", false));
++
++		final Rules ignoreRulesTestTxt =3D ignoreRulesHelloWorld
++				.getRulesForSubDirectory("test.txt");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesTestTxt);
++
++		final Rules ignoreRulesTest =3D ignoreRulesHelloWorld
++				.getRulesForSubDirectory("test");
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesTest);
++	}
++
++	public void testEmptyIgnoreList() {
++		final List<String> lines =3D Collections.emptyList();
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRules);
++	}
++
++	public void testOnlyOneNegatedIgnore() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("!a");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRules);
++	}
++
++	public void testOnlyThreeNegatedIgnores() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("!a");
++		lines.add("!a/b/c");
++		lines.add("!b*");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRules);
++	}
++
++	public void testNegatedIgnoreCase1() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("/a");
++		lines.add("!b");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		final Rules ignoreRulesA =3D ignoreRules.getRulesForSubDirectory("a"=
+);
++		final Rules ignoreRulesAB =3D ignoreRulesA.getRulesForSubDirectory("=
+b");
++		final Rules ignoreRulesB =3D ignoreRules.getRulesForSubDirectory("b"=
+);
++		final Rules ignoreRulesC =3D ignoreRules.getRulesForSubDirectory("c"=
+);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesB);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesAB);
++		assertSame(Rules.IGNORE_NOTHING, ignoreRulesC);
++		assertTrue(ignoreRules.toIgnore("a", true));
++		assertTrue(ignoreRules.toIgnore("a", false));
++		assertTrue(ignoreRulesA.toIgnore("c", true));
++		assertTrue(ignoreRulesA.toIgnore("c", false));
++	}
++
++	public void testExceptionOfException() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("*.*");
++		lines.add("!*.c");
++		lines.add("a.c");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertTrue(ignoreRules.toIgnore("b.txt", false));
++		assertTrue(ignoreRules.toIgnore("b.txt", true));
++		assertTrue(ignoreRules.toIgnore("a.c", false));
++		assertTrue(ignoreRules.toIgnore("a.c", true));
++		assertFalse(ignoreRules.toIgnore("b.c", false));
++		assertFalse(ignoreRules.toIgnore("b.c", true));
++	}
++
++	public void testComplexCase() {
++		final List<String> lines =3D new ArrayList<String>();
++		lines.add("*");
++		lines.add("!/alpha/src");
++		lines.add("*~");
++		final Rules ignoreRules =3D factory.createIgnoreRulesFromLines(lines=
+);
++		assertTrue(ignoreRules.toIgnore("beta", true));
++		assertTrue(ignoreRules.toIgnore("alpha", true));
++		final Rules ignoreRulesAlpha =3D ignoreRules
++				.getRulesForSubDirectory("alpha");
++		final Rules ignoreRulesAlphaBin =3D ignoreRulesAlpha
++				.getRulesForSubDirectory("bin");
++		final Rules ignoreRulesAlphaSrc =3D ignoreRulesAlpha
++				.getRulesForSubDirectory("src");
++		assertSame(Rules.IGNORE_ALL, ignoreRulesAlphaBin);
++		assertFalse(ignoreRulesAlphaSrc.toIgnore("com", true));
++		assertFalse(ignoreRulesAlphaSrc.toIgnore("b.java", false));
++		assertTrue(ignoreRulesAlphaSrc.toIgnore("b.java~", true));
++	}
++
++	private class IgnoreRulesFactory {
++		private RuleListToObjectConverter converter =3D new RuleListToObject=
+Converter();
++
++		private IgnoreRuleListFactory listFactory =3D new IgnoreRuleListFact=
+ory();
++
++		/**
++		 * @param ignoreFileLines
++		 *            the lines of a ignore file like .gitignore.
++		 * @return a immutable IgnoreRules object.
 +		 */
-+
-+		final String lastPathElement =3D path.get(path.size() - 1);
-+		final boolean isFileGlob =3D lastPathElement.startsWith("*");
-+		final FilePattern filePattern;
-+		if (isFileGlob) {
-+			filePattern =3D createGlobalOrTreeFilePattern(matchDirectoriesOnly,
-+					path, lastPathElement);
-+		} else {
-+			for (String pathElement : path) {
-+				if (pathElement.contains("*")) {
-+					throw new InvalidPatternException(
-+							"Stars are not allowed here", pattern);
-+				}
-+			}
-+			filePattern =3D new ComplexFilePattern(path, matchDirectoriesOnly);
++		public Rules createIgnoreRulesFromLines(Iterable<String> ignoreFileL=
+ines) {
++			final List<Rule> rules =3D listFactory
++					.createIgnoreRuleList(ignoreFileLines);
++			return converter.createIgnoreRules(rules.iterator());
 +		}
-+		return filePattern;
++
 +	}
 +
-+	private static FilePattern createGlobalOrTreeFilePattern(
-+			final boolean matchDirectoriesOnly, final List<String> path,
-+			final String lastPathElement) {
-+		final GlobalFilePattern globalFilePatternForTree =3D new GlobalFileP=
-attern(
-+				lastPathElement, matchDirectoriesOnly);
-+		final List<String> targetTree =3D path.subList(0, path.size() - 1);
-+		if (targetTree.isEmpty()) {
-+			return globalFilePatternForTree;
-+		} else {
-+			return new TreeFilePattern(targetTree, globalFilePatternForTree);
-+		}
-+	}
 +}
 --=20
 1.5.2.5
