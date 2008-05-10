@@ -1,68 +1,74 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH 0/m] Implementation of a file tree iteration using ignore rules.
-Date: Sat, 10 May 2008 15:00:18 +0200
-Message-ID: <1210424440-13886-1-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH 02/22] Replaced Java 6 API useage with Java 5 equivalent.
+Date: Sat, 10 May 2008 15:00:20 +0200
+Message-ID: <1210424440-13886-3-git-send-email-florianskarten@web.de>
+References: <1210424440-13886-1-git-send-email-florianskarten@web.de>
+Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 10 15:01:38 2008
+X-From: git-owner@vger.kernel.org Sat May 10 15:01:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juohl-0007ej-KA
+	id 1Juohm-0007ej-8B
 	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755479AbYEJNAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755608AbYEJNAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 09:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755500AbYEJNAp
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:00:45 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:49340 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755378AbYEJNAn (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 10 May 2008 09:00:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbYEJNAn
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:00:43 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:44561 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754193AbYEJNAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 09:00:42 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 35868DE983BB
-	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:41 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 4BE3ADA5014B
+	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:42 +0200 (CEST)
 Received: from [84.150.90.150] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1Juogq-000860-00
-	for git@vger.kernel.org; Sat, 10 May 2008 15:00:41 +0200
+	id 1Juogr-000860-01; Sat, 10 May 2008 15:00:41 +0200
 X-Mailer: git-send-email 1.5.5.1
+In-Reply-To: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1/DthVKaXBo+m1kYbVCZoCMgxVhpvPrk9TlR50B
-	dnoK9S76zuQuq2qjdYYsWWdeeHR+C6oECTahCX38UXQ3BmsJ0H
-	F12e++E64DA/bmtwoSgg==
+X-Provags-ID: V01U2FsdGVkX1/iBDnFNr/9QlFTomPPCwZJtwY6eSEtA+m8MZDX
+	jG/sFnZfseFhoKDQ6Gb8IaSj1eADDxOjpXaN3BwGaK8bvWqrLv
+	afkPwDMiU9jVjspKXCPA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81665>
 
-Hi
+Signed-off-by: Florian Koeberle <florianskarten@web.de>
+---
+ .../src/org/spearce/jgit/pgm/MainProgram.java      |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
-here are the patches.
-
-The implementation does a lot of performance optimizations:
-
-1.) Instead of checking all the rules from top to bottom, I simply take the first matching rule beginning from bottom. I actually have intern a list with a inversed order and take then the first matching rule.
-
-
-2.) Each sub directory has it's own optimized rules.
-
-2.1.) Rules which can never match are removed. e.g. There is no need to check the rule "/a" in the directory b.
-
-2.2.) The list is cut at the first rule which match always. *.txt\n/a for example would result in an internal list "ignore all, ignore *.txt" which is then reduced to "ignore all".
-
-2.3.) Ignore rules which are direcly before an "ignore all" all rule are removed. /a\n*.txt for example would result in an intern "ignore *.txt, ignore all" list which is then reduced to "ignore all",
-
-2.4.) "do not ignore" rules at the bottom of the intern list are removed. This optimization would remove !a from "!a\n/b" as it is in the inversed list at the bottom.
-
-2.5.) When converting the rule list into an instance of the Rules interface, rule lists with only one always matching rule are converted to Rules.IGNORE_NOTHING and Rules.IGNORE_ALL objects. These special objects avoid unessary object construction as they reuse themself for sub directories.
-
-
-3.) Only rules are evaluated which could match at the current directory level. e.g. You don't need to check the rule /a/b/c for every file in /a, but only for files in the directory /a/b
-
-
-4.) The Iterator doesn't walk into trees from which it knows that they will never match. It can do so by comparing the rules instance for the directory with the value of Rules.IGNORE_ALL.
-
-Best regards,
-Florian Koeberle
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/MainProgram.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/MainProgram.java
+index 72b0156..69cd96f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/pgm/MainProgram.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/MainProgram.java
+@@ -17,7 +17,6 @@
+ package org.spearce.jgit.pgm;
+ 
+ import java.io.IOException;
+-import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.HashMap;
+ import java.util.Map;
+@@ -59,8 +58,11 @@ public class MainProgram {
+ 			if (command == null) {
+ 				throw new WrongCallException("Require one argument!");
+ 			}
+-			final String[] commandArguments = Arrays.copyOfRange(args, 1,
+-					args.length);
++
++			final String[] commandArguments = new String[args.length - 1];
++			System.arraycopy(args, 1, commandArguments, 0,
++					commandArguments.length);
++
+ 			command.execute(commandArguments);
+ 
+ 		} catch (WrongCallException e) {
+-- 
+1.5.2.5
