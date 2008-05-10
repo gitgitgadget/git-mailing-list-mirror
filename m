@@ -1,92 +1,91 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: git-remote questions: --reference? Plus a git-clone --remote
-	observation.
-Date: Sat, 10 May 2008 12:52:36 +0200
-Message-ID: <20080510105235.GA17577@elte.hu>
+From: "James Sadler" <freshtonic@gmail.com>
+Subject: Re: git filter-branch --subdirectory-filter
+Date: Sat, 10 May 2008 21:38:59 +1000
+Message-ID: <e5e204700805100438v6984593oada51daa4d456fd3@mail.gmail.com>
+References: <e5e204700805081801x314b02bek5d53a086b02dac83@mail.gmail.com>
+	 <20080509013300.GA7836@sigill.intra.peff.net>
+	 <e5e204700805090038k373bbabcyfb10d8c93ec5b3a7@mail.gmail.com>
+	 <20080509080039.GA15393@sigill.intra.peff.net>
+	 <e5e204700805092031m14c3d6c2kb85b51af5a1ee8f7@mail.gmail.com>
+	 <20080510055332.GB11556@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 10 12:54:06 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 10 13:40:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JumiK-0007K5-TA
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 12:54:05 +0200
+	id 1JunR2-00050b-CC
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 13:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752359AbYEJKwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 06:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbYEJKwv
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 06:52:51 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:44996 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752183AbYEJKwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 06:52:50 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1Jumgv-00050O-QS
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Sat, 10 May 2008 12:52:48 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 89B023E21DB; Sat, 10 May 2008 12:52:36 +0200 (CEST)
+	id S1752765AbYEJLjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 07:39:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYEJLjD
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 07:39:03 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:43110 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745AbYEJLjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 07:39:00 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so1507059wxd.4
+        for <git@vger.kernel.org>; Sat, 10 May 2008 04:38:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gT3mLdFO7xfxA10ZRwh9Q29Y8o0u5sihjTrCwscWUVM=;
+        b=Z2B6VRYUDj+YJAtclCbsj/QzVAOlEbsoR7EC3i0Tj3Yfl1y3saYgSwCqUacOP34jqgs3oLT9+85peo7y4pO9cjdVdG4EECY/Owp4aVOdbbrETGpob4JtEz36SwXBqqZaVVxzDjCcZeWEhXDkBdSLHsjGZgQaEJlpvmSGCT2BBDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KA/BvLF06HSP4JiY+H/6EUw3WBBxmpwKmLR83ogOxiyyMOHlLyOFKfMiaICudb7Wiu4RqNAfbIsVBQ+5Cmdm+KI1Ea00vjCf8qBtxic5/5P1mvrr5Q9WFzZ8gSNZ3qvlhy71HNLAMyAcCjxO5I0Vn3haw+L1VKYVM1wi/qk8qPk=
+Received: by 10.90.80.18 with SMTP id d18mr309817agb.27.1210419539660;
+        Sat, 10 May 2008 04:38:59 -0700 (PDT)
+Received: by 10.90.114.9 with HTTP; Sat, 10 May 2008 04:38:59 -0700 (PDT)
+In-Reply-To: <20080510055332.GB11556@sigill.intra.peff.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81662>
 
+2008/5/10 Jeff King <peff@peff.net>:
+> On Sat, May 10, 2008 at 01:31:37PM +1000, James Sadler wrote:
+>
+>> Does anybody have a script that can take an existing repo, and create
+>> a new one with garbled-but-equivalent commits?  i.e.  file and
+>> directory structure is same with names changed, and there is a one-one
+>> relationship between lines of text in new repo and old one except the
+>> lines have been scrambled?  It would be a useful tool for distributing
+>> private repositories for debugging reasons.
+>
+> This is only lightly tested, but the script below should do the trick.
+> It works as an index filter which munges all content in such a way that
+> a particular line is always given the same replacement text. That means
+> that diffs will look approximately the same, but will add and remove
+> lines that say "Fake line XXX" instead of the actual content.
+>
+> You can munge the commit messages themselves by just replacing them with
+> some unique text; in the example below, we just replace them with the
+> md5sum of the content.
+>
+> This will leave the original author, committer, and date, which is
+> presumably non-proprietary.
+>
 
-git-1.5.4.3-2.fc8.
+> <snip>
 
-Today i tried to set up a new tracking repository from scratch and used 
-git-remote to populate it. It took a lot of time because it downloaded 
-it all from the remote site - but i already had most of those commits 
-locally.
+Jeff,
 
-I'm using git-clone --reference quite extensively to speed up the 
-creation of such new repositories, and i'm wondering whether something 
-similar is available/planned for git-remote as well?
+I have run your script on my repo and now have an obfuscated version.
+When I run 'git filter-branch -subdirectory filter $DIR' on this repo, the same
+problem occurs, i.e. there are fewer commits remaining than I would expect.
 
-Also, i noticed a weirdness about "git-clone --reference" today.
+If I place this repo somewhere you can download it, would you be kind enough
+to take a look?  I'll detail the steps required to reproduce in another post.
 
-As per the log below, i tried to use a large repository with lots of 
-remote tracking branches as a reference for cloning - but there were a 
-suprisingly large number of objects to be downloaded - 18K of them.
+Thanks,
 
-When i did the same with a linux-2.6.git repository (Linus's upstream 
-tree), i only had 1915 commits to fetch.
-
-But Linus's tree is already tracked in the linux.trees.git 
-super-repository! I double-checked that both linux-2.6.git and 
-linux.trees.git had the exact same head for Linus's tree. So why did 
---reference=super-tree have to download much more than if i used the 
-smaller reference tree?
-
-now, i'd expect --reference to just fetch every object locally that it 
-can - regardless of the composition of that tree. Apparently it matters 
-what the current head is in a repository that is used via --reference?
-
-	Ingo
-
----------->
-
-$ git-clone --reference=linux.trees.git ssh://master.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86.git linux-tmp6
-Initialized empty Git repository in /home/mingo/linux-tmp6/.git/
-remote: Counting objects: 18014, done.
-remote: Compressing objects:  31% (5273/17009)
-
-$ git-clone --reference=linux-2.6.git ssh://master.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-x86.git linux-tmp5
-Initialized empty Git repository in /home/mingo/linux-tmp5/.git/
-remote: Counting objects: 1915, done.
-remote: Compressing objects: 100% (765/765), done.
+James
