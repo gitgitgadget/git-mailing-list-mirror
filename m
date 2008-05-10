@@ -1,7 +1,7 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH 05/22] Added ProjectSeeker class.
-Date: Sat, 10 May 2008 15:00:23 +0200
-Message-ID: <1210424440-13886-6-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH 06/22] Added the interface FilePattern.
+Date: Sat, 10 May 2008 15:00:24 +0200
+Message-ID: <1210424440-13886-7-git-send-email-florianskarten@web.de>
 References: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
@@ -13,11 +13,11 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juojc-0008FZ-1U
-	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:32 +0200
+	id 1Juojb-0008FZ-DV
+	for gcvg-git-2@gmane.org; Sat, 10 May 2008 15:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755278AbYEJNBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 09:01:00 -0400
+	id S1754070AbYEJNA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 09:00:56 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,66 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755708AbYEJNA5
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:00:57 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:50513 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755404AbYEJNAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 09:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbYEJNAz
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 09:00:55 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:44581 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755492AbYEJNAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 09:00:45 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id C2881DC19A17
-	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:43 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 415EBDE99C8D
+	for <git@vger.kernel.org>; Sat, 10 May 2008 15:00:44 +0200 (CEST)
 Received: from [84.150.90.150] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1Juogt-000860-00; Sat, 10 May 2008 15:00:43 +0200
+	id 1Juogt-000860-01; Sat, 10 May 2008 15:00:43 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210424440-13886-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX19w3LtOLUmVUFyyV86gVJmMNoQwHZGy5xhEYSY1
-	aR3DwwOUyJqLHKXe7fV5V4fPFUw4D4EIK1e3T29sBB6U6ZXLCe
-	rs3ITshY8EfQQETHPx/w==
+X-Provags-ID: V01U2FsdGVkX1+IgL+Xvma06iuO7XodcAS7kzylyYX1YrcaqG7u
+	/ZYr20VRywrc68o2pOJUd+jQYO9mDZ6005HvWM07NjIK7/4/m2
+	bGIUhPwznDETZ+pNCV9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81667>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../src/org/spearce/jgit/lib/Project.java          |    5 +-
- .../src/org/spearce/jgit/lib/ProjectSeeker.java    |  118 ++++++++++++=
+ .../jgit/lib/fileiteration/FilePattern.java        |  107 ++++++++++++=
 ++++++++
- 2 files changed, 122 insertions(+), 1 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/ProjectSe=
-eker.java
+ 1 files changed, 107 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/fileitera=
+tion/FilePattern.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Project.java b/o=
-rg.spearce.jgit/src/org/spearce/jgit/lib/Project.java
-index 6e72486..f6b6a17 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Project.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Project.java
-@@ -19,7 +19,10 @@ package org.spearce.jgit.lib;
- import java.io.File;
-=20
- /**
-- * Represents a project controlled by git. Use {@link ProjectFactory} =
-in order to create an object of this class.
-+ * Represents a project controlled by git. Use {@link ProjectFactory} =
-in order to create an object of this class. If you
-+ * don't want to create a new repository, but need a new {@link Projec=
-t}
-+ * instance then use {@link ProjectSeeker}.
-+ *=20
-  * @author Florian K=C3=B6berle
-  *
-  */
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ProjectSeeker.ja=
-va b/org.spearce.jgit/src/org/spearce/jgit/lib/ProjectSeeker.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/Fi=
+lePattern.java b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteratio=
+n/FilePattern.java
 new file mode 100644
-index 0000000..3aa5284
+index 0000000..01edbd4
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ProjectSeeker.java
-@@ -0,0 +1,118 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/fileiteration/FilePatte=
+rn.java
+@@ -0,0 +1,107 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -106,115 +87,104 @@ e
 + *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  021=
 10-1301
 + */
-+package org.spearce.jgit.lib;
-+
-+import java.io.File;
-+import java.io.IOException;
-+import static org.spearce.jgit.lib.GitPathConstants.OBJECTS_DIRECTORY_=
-NAME;
-+import static org.spearce.jgit.lib.GitPathConstants.REPOSITORY_DIRECTO=
-RY_NAME;
-+import static org.spearce.jgit.lib.GitPathConstants.REFS_DIRECTORY_NAM=
-E;
-+import static org.spearce.jgit.lib.GitPathConstants.HEAD_FILE_NAME;
++package org.spearce.jgit.lib.fileiteration;
 +
 +/**
-+ * Use this class to create instances of {@link Project}.
++ * A {@link FilePattern} can be used to check if files in a directory =
+matches a
++ * pattern. It provides with the {@link #getPatternForSubDirectory(Str=
+ing)}
++ * method {@link FilePattern}s for sub directories.
 + *=20
-+ * @author Florian K=C3=B6berle
++ * Implementations of this interface should be immutable.
++ *=20
++ * @author Florian Koeberle
 + *=20
 + */
-+public class ProjectSeeker {
++interface FilePattern {
++	/**
++	 * This pattern instance matches always.
++	 */
++	public static final FilePattern MATCH_ALWAYS =3D new FilePattern() {
++
++		public FilePattern getPatternForSubDirectory(String directoryName) {
++			return MATCH_ALWAYS;
++		}
++
++		public boolean match(String fileName, boolean fileIsDirectory) {
++			return true;
++		}
++
++		public boolean canMatchAtThisDirectoryLevel() {
++			return true;
++		}
++
++		public boolean isSameForSubDirectories() {
++			return true;
++		}
++	};
 +
 +	/**
-+	 * Find the git repository for the current working directory.
-+	 *=20
-+	 * @return a {@link Repository}.
-+	 * @throws IOException
-+	 *             if the system property user.dir isn't set or if it is
-+	 *             invalid.
++	 * This pattern instance matches never.
 +	 */
-+	public Project findProject() throws IOException {
-+		final String workingDirectoryPath =3D System.getProperty("user.dir")=
-;
-+		if (workingDirectoryPath =3D=3D null) {
-+			throw new IOException("unable to get working directory");
++	public static final FilePattern MATCH_NEVER =3D new FilePattern() {
++
++		public FilePattern getPatternForSubDirectory(String directoryName) {
++			return MATCH_NEVER;
 +		}
-+		final File workingDirectoryFile =3D new File(workingDirectoryPath);
-+		if (!workingDirectoryFile.exists()) {
-+			throw new IOException("Working directory path is invalid");
++
++		public boolean match(String fileName, boolean fileIsDirectory) {
++			return false;
 +		}
-+		return findProject(workingDirectoryFile);
-+	}
++
++		public boolean canMatchAtThisDirectoryLevel() {
++			return false;
++		}
++
++		public boolean isSameForSubDirectories() {
++			return true;
++		}
++	};
 +
 +	/**
-+	 * Checks if a path is a valid git repository. Works similar like the=
- method
-+	 * is_git_directory from the original setup.c file.
-+	 *=20
-+	 * @param directory
-+	 *            the path which should be checked.
-+	 * @return true if the path is a valid git repository.
++	 * @param fileName
++	 *            the name of the file or directory
++	 * @param fileIsDirectory
++	 *            determines if the file is a directory.
++	 * @return true if the pattern matches.
 +	 */
-+	private boolean isRepository(File directory) {
-+		if (!directory.isDirectory()) {
-+			return false;
-+		}
-+
-+		final File objectDirectory =3D new File(directory, OBJECTS_DIRECTORY=
-_NAME);
-+		if (!objectDirectory.isDirectory()) {
-+			return false;
-+		}
-+
-+		final File refsDirectory =3D new File(directory, REFS_DIRECTORY_NAME=
-);
-+		if (!refsDirectory.isDirectory()) {
-+			return false;
-+		}
-+
-+		final File head =3D new File(directory, HEAD_FILE_NAME);
-+		if (!hasValidateHeadRef(head)) {
-+			return false;
-+		}
-+
-+		return true;
-+	}
++	boolean match(String fileName, boolean fileIsDirectory);
 +
 +	/**
-+	 * Checks for example if a path is a valid HEAD file. Should do the s=
-ame
-+	 * like validate_headref from path.c.
 +	 *=20
-+	 * @param path
-+	 *            is the path of the HEAD file.
-+	 * @return true if it has a valid head reference.
++	 * @param directoryName
++	 *            the name of a subdirectory.
++	 * @return a pattern which can be used to match files in sub director=
+ies. A
++	 *         user may check if the returned value is {@link #MATCH_NEVE=
+R} in
++	 *         order to do some performance optimizations.
++	 *=20
 +	 */
-+	private static final boolean hasValidateHeadRef(File path) {
-+		return true; // TODO stub. view int validate_headref(const char
-+		// *path) at path.c
-+	}
++	FilePattern getPatternForSubDirectory(String directoryName);
 +
-+	private Project findProject(File directory) throws IOException {
-+		File currentDirectory =3D directory.getAbsoluteFile();
-+		while (true) {
-+			final File commonGitDirectory =3D new File(directory,
-+					REPOSITORY_DIRECTORY_NAME);
-+			if (isRepository(commonGitDirectory)) {
-+				return new Project(currentDirectory, new Repository(
-+						commonGitDirectory));
-+			}
++	/**
++	 * This method can be used to generate an smaller list of rules, whic=
+h can
++	 * match.
++	 *=20
++	 * @return true if {@link #match(String, boolean)} returns always fal=
+se.
++	 */
++	boolean canMatchAtThisDirectoryLevel();
 +
-+			if (isRepository(currentDirectory)) {
-+				return new Project(null, new Repository(currentDirectory));
-+			}
-+			currentDirectory =3D currentDirectory.getParentFile();
-+			if (currentDirectory =3D=3D null) {
-+				throw new IOException("Can't find git repository");
-+			}
-+		}
-+
-+	}
++	/**
++	 * @return true if {@link #getPatternForSubDirectory(String)} returns=
+ true
++	 *         for every value.
++	 */
++	boolean isSameForSubDirectories();
 +}
+\ No newline at end of file
 --=20
 1.5.2.5
