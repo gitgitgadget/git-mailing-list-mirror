@@ -1,94 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Paginate project list
-Date: Sun, 11 May 2008 00:32:37 +0200
-Message-ID: <200805110032.39729.jnareb@gmail.com>
-References: <200805011220.58871.jnareb@gmail.com> <200805101128.59313.jnareb@gmail.com> <1210444108.11526.139.camel@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+From: Dustin Sallings <dustin@spy.net>
+Subject: Re: [PATCH] Allow tracking branches to set up rebase by default.
+Date: Sat, 10 May 2008 15:36:13 -0700
+Message-ID: <1206EB02-2AE6-4A97-AF00-D16B8E686D9B@spy.net>
+References: <7vprrycce9.fsf@gitster.siamese.dyndns.org> <1210271287-36719-1-git-send-email-dustin@spy.net> <7vfxsq9f3n.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Sun May 11 00:33:44 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 11 00:37:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuxdN-0001w3-4b
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 00:33:41 +0200
+	id 1JuxhG-0002nf-EY
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 00:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751AbYEJWcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 18:32:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754652AbYEJWcv
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 18:32:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:32904 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754474AbYEJWcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 18:32:50 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so428884ugf.16
-        for <git@vger.kernel.org>; Sat, 10 May 2008 15:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=V5j6XMGLsw6UMEEvHxqTTzxUbD1QSTcH1n2/vuafwRE=;
-        b=AMk2E7h5nEx/+6j0VOy0gUFRParoUp4X9QGc8SpnFje2VwMqJf9jzNulif8dRMaFqixt0eoN+coCxP4RECnDwqvxCY/KoHpfZdc6tzNwo9idrimWUdnuY7pHw+qDcDZdCS5GTaMLqf5FwV6o85ggZFj/ZELQRt274qR4cBv2940=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZqpF468UVF3bQVOFisBZHXh/NP7DWXtw9zduwWFT4FDGsGIdgMowOfAOJFD7B/UpUIeA0R3MYu6EW5yV+Pb5HxEaGuU0YGHT66fGR+KpNngjaw96/AW4vOyh614DpiSib4rctVwG2fxIFBkLEJGdxZmd8L9tAkOWhgYvIWtxk+0=
-Received: by 10.66.221.5 with SMTP id t5mr3132562ugg.83.1210458768763;
-        Sat, 10 May 2008 15:32:48 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.226.146])
-        by mx.google.com with ESMTPS id b35sm6611932ugd.51.2008.05.10.15.32.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 10 May 2008 15:32:47 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1210444108.11526.139.camel@localhost.localdomain>
-Content-Disposition: inline
+	id S1756284AbYEJWgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 18:36:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756238AbYEJWgm
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 18:36:42 -0400
+Received: from basket.west.spy.net ([69.230.8.154]:56868 "EHLO
+	mail.west.spy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756184AbYEJWgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 18:36:41 -0400
+Received: from dustinmb.west.spy.net (dustinmb.west.spy.net [192.168.1.56])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(Client did not present a certificate)
+	by mail.west.spy.net (Postfix) with ESMTP id 5C74E34D;
+	Sat, 10 May 2008 15:36:14 -0700 (PDT)
+In-Reply-To: <7vfxsq9f3n.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81709>
-
-On Sun, 10 May 2008, J.H. <warthog19@eaglescrag.net> wrote:
-
-> $page_size should be moved to a configuration directive, with a possible
-> default of 100, and there should be an option to turn it off completely
-> (I.E. kernel.org will likely have it turned off).
-
-If it would be configurable (and I agree that it is probably a good
-idea), it should be per gitweb instance (i.e. global variable), and
-should perhaps be named $project_list_page_size to distinguish it from
-number of items shown (page size) for 'shortlog', 'log' and 'history'
-views.
-
-I guess that value of 0, or perhaps of undef would mean to not divide
-projects list, or project search results, into pages.
-
-BTW. why do you think that kernel.org would be better to have project
-list pagination turned off?
- 
-> It might also be advantageous to generate the entire list and stash that
-> somewhere, (session on the host side?) and run the pagination out of
-> that.
-
-First, when using $projectslist file with new (second patch in series,
-"gitweb: Allow project description in project_index file" most of data
-(well, all except age) would be filled by parsing single file.
-
-Second, the idea is to cache results of filled in @$projlist e.g. using
-Storable, i.e. cache Perl data and not final HTML output.
-
-> Would even allow the user to choose how many items they wish to 
-> see from a drop down maybe?
-
-I think it is also a good idea, at least for search results.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81710>
 
 
-NOTE that this was an RFC patch, meant mainly to provide comments on
-what to improve...
+On May 10, 2008, at 11:41, Junio C Hamano wrote:
+
+> - die_bad_config() takes a variable name without surrounding  
+> explanatory
+>   text.  If you actually tested your patch and looked at the error
+>   message, it would have been blatantly obvious and you would have
+>   noticed it.  Not a good sign.
+>
+> - Test not just the success cases but failure cases; test not just
+>   explicitly configured cases but also default cases.
+
+	You're right, I didn't test misconfiguration cases.  I've updated the  
+patch per your recommendations with a lot more tests and have manually  
+tested the error messages to ensure they make sense.
+
+	Does it make sense in the cases where a value is bad to list the  
+valid values?  I don't see a precedent (so I don't know what format  
+would be most desirable), but it might be friendly.
+
+> Also I suspect that we would want to test cases where
+> autosetuprebase is given but autosetupmerge is not.
+
+	This code isn't so much dependent on that variable, but on the  
+effects of that variable, which may be overridden by the --track and -- 
+no-track parameters.  I think it'd be best to leave the effects of  
+that variable in its own tests wrt tracking since this code doesn't  
+kick in until after the tracking is set up.
+
+> Another thing we might want to address is to move parsing of branch.*
+> configuration variables out of git_default_config().  They are  
+> unnecessary
+> for majority of commands that do not create new branches.  But that  
+> would
+> be a separate topic if we were to do so.
+
+	I agree with this.  I tried initially to not have it be part of the  
+default config parser, but it seemed a lot more disruptive, so I just  
+followed autosetupmerge.
+
+	Thanks for your input again.  New patch to follow.
 
 -- 
-Jakub Narebski
-Poland
+Dustin Sallings
