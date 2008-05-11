@@ -1,67 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Optimize common pattern of alloc_ref from string
-Date: Sun, 11 May 2008 16:32:19 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805111630590.30431@racer>
-References: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Git branches - confusing behavior
+Date: Sun, 11 May 2008 18:39:54 +0300
+Message-ID: <20080511153954.GA8129@mithlond.arda.local>
+References: <4826D8FA.30305@gmail.com> <m31w495apd.fsf@localhost.localdomain> <4826E791.7030407@gmail.com> <20080511125722.GA22075@atjola.homenet> <4826EEDF.4010404@gmail.com> <20080511132752.GA22778@atjola.homenet> <4826F72D.2070205@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Krzysztof Kowalczyk <kkowalczyk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 17:33:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Dima Kagan <dima.kagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 17:40:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvDY0-0001B7-HT
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 17:33:12 +0200
+	id 1JvDfM-0003aZ-Ui
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 17:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716AbYEKPcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 11:32:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752826AbYEKPcX
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 11:32:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53499 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750885AbYEKPcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 11:32:22 -0400
-Received: (qmail invoked by alias); 11 May 2008 15:32:20 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp031) with SMTP; 11 May 2008 17:32:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/0zAcBM3r06D1Fiq+Lr5L+XyTu65rgNdN/Jg9JSW
-	T2FmoG3UCbYaOz
-X-X-Sender: gene099@racer
-In-Reply-To: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753183AbYEKPj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 11:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbYEKPj7
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 11:39:59 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:44012 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751400AbYEKPj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 11:39:58 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.5.014)
+        id 48232FF0001DF1D4; Sun, 11 May 2008 18:39:55 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JvDeU-0002li-6W; Sun, 11 May 2008 18:39:54 +0300
+Content-Disposition: inline
+In-Reply-To: <4826F72D.2070205@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81779>
 
-Hi,
+Dima Kagan wrote (2008-05-11 16:39 +0300):
 
-On Sat, 10 May 2008, kkowalczyk@gmail.com wrote:
+> My proposed change shouldn't necessarily break the described workflow.
+> Git can keep the current behavior for new branches, but automatically
+> 'stash' the changes when checking-out an existing branch. At least
+> having an optional parameter for "auto-stashing" will be nice.
+> 
+> What do you think of that?
 
-> diff --git a/builtin-fetch.c b/builtin-fetch.c
-> index e56617e..f6584ec 100644
-> --- a/builtin-fetch.c
-> +++ b/builtin-fetch.c
-> @@ -508,10 +508,8 @@ static void find_non_local_tags(struct transport *transport,
->  		     will_fetch(head, ref->old_sha1))) {
->  			path_list_insert(ref_name, &new_refs);
->  
-> -			rm = alloc_ref(strlen(ref_name) + 1);
-> -			strcpy(rm->name, ref_name);
-> -			rm->peer_ref = alloc_ref(strlen(ref_name) + 1);
-> -			strcpy(rm->peer_ref->name, ref_name);
-> +			rm = alloc_ref_from_str(ref_name);
-> +			rm->peer_ref = alloc_ref_from_str(ref_name);
-
-Thanks.  This was on my ever-growing TODO list (actually, fix alloc_ref() 
-to take the string length instead of the size to be allocated).
-
-Together with the comments from Peff I am very positive on this patch.
-
-Thanks,
-Dscho
+With the fact that Git's branches are just pointers to a commit (and
+therefore to a history) and that you can checkout anything that refers
+to a commit (branches, tags, SHA1's, relative pointers like
+HEAD@{30.minutes.ago}^2~3) I think such auto-stashing would be make
+things pretty complicated and unintuitive in the big picture. The user
+interface remains simpler if we just learn to use "git stash" to
+temporarily put away changes in the index and the working directory when
+we need to.
