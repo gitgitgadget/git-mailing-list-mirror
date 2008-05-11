@@ -1,83 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/4] t0050: Set core.ignorecase case to activate case
- insensitivity
-Date: Sun, 11 May 2008 10:10:40 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805111005260.3330@woody.linux-foundation.org>
-References: <1210522602-4724-1-git-send-email-prohaska@zib.de> <1210522602-4724-2-git-send-email-prohaska@zib.de> <1210522602-4724-3-git-send-email-prohaska@zib.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun May 11 19:11:39 2008
+From: nathan spindel <nathans@gmail.com>
+Subject: Re: [PATCH] instaweb: make it compatible with Mac OS X 10.5's apache installation.
+Date: Sun, 11 May 2008 10:11:50 -0700
+Message-ID: <843D3D0E-0121-42E2-B285-E1F4AB9415E4@gmail.com>
+References: <1210483565-12415-1-git-send-email-nathans@gmail.com> <1210483565-12415-2-git-send-email-nathans@gmail.com> <7vhcd572e3.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 11 19:12:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvF5G-0000VG-Rj
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 19:11:39 +0200
+	id 1JvF6H-0000pP-N8
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 19:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930AbYEKRKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 13:10:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752637AbYEKRKt
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 13:10:49 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52254 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751245AbYEKRKs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 May 2008 13:10:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4BHAfYC025248
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 11 May 2008 10:10:42 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4BHAe2T015499;
-	Sun, 11 May 2008 10:10:41 -0700
-In-Reply-To: <1210522602-4724-3-git-send-email-prohaska@zib.de>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.923 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754130AbYEKRLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 13:11:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbYEKRLx
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 13:11:53 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:31035 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753421AbYEKRLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 13:11:52 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1969896wfd.4
+        for <git@vger.kernel.org>; Sun, 11 May 2008 10:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=w+8M0NKE5BI8ZPbJb61siT1nfC4hgMWtKWIK8ctqEY8=;
+        b=qPjS2siVo4GXCE87+yerglOERn0OZkZQjUpn+Dm2mEW/k6ms9vViAcENTnPAplfAc7RPvDPBH9FwQPWJ0mClvfdMK6RLLD4q7upOySlVEksCh135HTZS9FhoPZqrXG3VvlZor4JPWZPw1+keZuy9lObZlkeZkzQFZ7lkTXysc0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=H+0iIxjJznqrNZ88VfJTX+bElh+obJVj+QCbCWiidUW/4oiC9/8w7wy6j5PAwbHdYj9Yhemz7MXmGwinTbwEYHP/AjjzPi+G15buW5nnAxvi0bDCYbuuNRetFVA1K9UDPJq3cunupw6+OMc1p107VOonIIWDJnZhiG0CoUSpPkQ=
+Received: by 10.142.158.3 with SMTP id g3mr102060wfe.347.1210525912224;
+        Sun, 11 May 2008 10:11:52 -0700 (PDT)
+Received: from ?10.0.1.4? ( [76.14.71.118])
+        by mx.google.com with ESMTPS id 30sm15646160wfg.9.2008.05.11.10.11.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 11 May 2008 10:11:51 -0700 (PDT)
+In-Reply-To: <7vhcd572e3.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81798>
 
+On May 10, 2008, at 11:58 PM, Junio C Hamano wrote:
 
-
-On Sun, 11 May 2008, Steffen Prohaska wrote:
+> nathan spindel <nathans@gmail.com> writes:
 >
-> Case insensitive file handling is only active when
-> core.ignorecase = true.  Hence, we need to set it to give the tests
-> in t0050 a chance to succeed.  Setting core.ignorecase explicitly
-> allows to test some aspects of case handling even on case sensitive file
-> systems.
+>> When in apache2 mode if there isn't an apache2 binary on the system  
+>> but
+>> there is a httpd command in /usr/sbin/ (like there is on Mac OS X)
+>> use that instead.
+>
+> How would you ensure that httpd is actually Apache and not something  
+> else?
 
-The patch series looks fine to me, but I just wanted to underline the use 
-of that "*some*aspects*" part.
+Good point. How about running it with -v and searching for Apache in  
+the first line?
 
-On a filesystem that is case sensitive, doing "core.ignorecase = true" 
-doesn't magically make git act as if the filesystem was insensitive to 
-case. In particular, since the filesystem very much can contain two 
-different versions of a filename in different case, git will actually 
-notice that, and notice that "CamelCase" and "camelcase" are not 
-necessarily the same file.
+>> +	httpd_only="`echo $httpd | cut -f1 -d' '`"
+>> +	type $httpd_only > /dev/null 2>&1;
+>> +	test $? != 0 && test -x /usr/sbin/httpd && httpd=${httpd/apache2/ 
+>> httpd}
+>
+> I see the same "type" issue as I mentioned, but I see that we use  
+> them in
+> mergetool and web--browse and we haven't heard breakages so perhaps  
+> this
+> is portable enough ;-)
 
-To emulate case insensitivity on filesyststems that are actually 
-sensitive, we could do some tests that do things like
+Yes, inspection of mergetool and web--browse were what led me to use  
+type.  I will see if the other method you suggested can work and use  
+that here if so.
 
-	echo Hello > CamelCase
-	ln CamelCase camelcase
+> Please avoid ${parameter/pattern/string} expansion, which is not  
+> even in
+> POSIX.  It is bashism and unportable.
 
-and now git will see something that is *closer* to a real case-insensitive 
-filesystem: two names that resolve to the same stat information.
+I didn't know that was just a bashism. I'll fix that usage.
 
-It's still obviously not identical (because "readdir()" will get two 
-entries), and as such a test that succeeds in a true case-insensitive 
-environment will not necessarily work in the above fake kind of situation, 
-but at least you can test some cases.
+>> +	if test -z "$module_path"
+>> +	then
+>> +		for path in /usr/lib/apache2/modules /usr/libexec/apache2; do
+>
+> Hmm.  If you do discovery like this, maybe you would want to do  
+> discovery
+> for "httpd" the same way?  After all, why look for it only in /usr/ 
+> sbin?
 
-Renaming the same file to a case that is different is also a worthwhile 
-thing to try to "emulate" case insensitivity.
-
-			Linus
+Yes, it should look in multiple locations.
