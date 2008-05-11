@@ -1,68 +1,80 @@
-From: Tim Stoakes <tim@stoakes.net>
-Subject: Re: [PATCH] Add svn-compatible "blame" output format to git-svn
-Date: Sun, 11 May 2008 23:16:34 +0930
-Message-ID: <20080511134633.GA17723@mail.stoakes.net>
-References: <20080510212504.GA26701@midwinter.com> <7vabix8t3g.fsf@gitster.siamese.dyndns.org> <20080511063601.GA23224@mithlond.arda.local>
+From: "Patrick Aljord" <patcito-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Git branches - confusing behavior
+Date: Sun, 11 May 2008 10:25:04 -0500
+Message-ID: <6b6419750805110825t51730d16y211d2c502a1b302d@mail.gmail.com>
+References: <4826D8FA.30305@gmail.com> <m31w495apd.fsf@localhost.localdomain> <4826E791.7030407@gmail.com> <20080511125722.GA22075@atjola.homenet> <4826EEDF.4010404@gmail.com> <20080511132752.GA22778@atjola.homenet> <4826F72D.2070205@gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Sun May 11 16:11:19 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Dima Kagan" <dima.kagan-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun May 11 17:25:52 2008
+Return-path: <grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from ug-out-1516.google.com ([66.249.92.161])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvCGh-0008I7-UT
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 16:11:16 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbYEKOK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 10:10:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753080AbYEKOK1
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 10:10:27 -0400
-Received: from hosted01.westnet.com.au ([203.10.1.211]:55315 "EHLO
-	hosted01.westnet.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752785AbYEKOK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 10:10:26 -0400
-X-Greylist: delayed 1418 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 May 2008 10:10:26 EDT
-Received: from hosted01.westnet.com.au (hosted01.westnet.com.au [127.0.0.1])
-	by hosted01.westnet.com.au (Postfix) with SMTP id 5D4A83DA4FD;
-	Sun, 11 May 2008 21:46:46 +0800 (WST)
-Received: from mail.stoakes.net (dsl-202-173-137-105.sa.westnet.com.au [202.173.137.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hosted01.westnet.com.au (Postfix) with ESMTP id 59A203DA4E0;
-	Sun, 11 May 2008 21:46:40 +0800 (WST)
-Received: from noodle.stoakes.net (unknown [192.168.20.209])
-	by mail.stoakes.net (Postfix) with ESMTP id DE68728C031;
-	Sun, 11 May 2008 23:16:37 +0930 (CST)
-Received: by noodle.stoakes.net (Postfix, from userid 1000)
-	id 0E4987F01F; Sun, 11 May 2008 23:16:34 +0930 (CST)
-Content-Disposition: inline
-In-Reply-To: <20080511063601.GA23224@mithlond.arda.local>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-PMX-Branch: TNG-Outgoing
-Sender: git-owner@vger.kernel.org
+	id 1JvDQu-0006ZP-C5
+	for gcggu-git-users@m.gmane.org; Sun, 11 May 2008 17:25:52 +0200
+Received: by ug-out-1516.google.com with SMTP id k24so2911992uge.9
+        for <gcggu-git-users@m.gmane.org>; Sun, 11 May 2008 08:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:dkim-signature:domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=x2GwbCeBBxFplEZqtwwJr+TOvNW4USTdzK2ATa2K7MQ=;
+        b=eiYQe/3qhtrLg9CSR/VQV+parsWQBFwYnnhiWKN/+a6NX1ZUeJbUa8J0y8fjR1SDeGfs2zObL+ae0I6V12gMsOHObjLrGjTPwgqzizPWUq0Osoi7ehRLi/nZWpVkvhpuy297iy+ddFBpRGDitEArt1bt0/lk/3B7wjYa77JdAy8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:dkim-signature:domainkey-signature:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=U6AP8I/xpThJPMN9zt1nqB/YXzzojILWxQT/Ve6JOwB3gWV0kPY4iCaHNVz3neJkuLRqdTUBrsQ/HMU9Zf+52w0QogCyXSmZjF2zM7nmaWeymZv+aDZcw6rEOyyIg3rt6WPI7pmydQMONEOOIeI9U5TwU+UNkrzQaMx0sW/uSs4=
+Received: by 10.150.11.6 with SMTP id 6mr137446ybk.3.1210519506349;
+        Sun, 11 May 2008 08:25:06 -0700 (PDT)
+Received: by 10.44.54.11 with SMTP id c11gr44hsa.0;
+	Sun, 11 May 2008 08:25:06 -0700 (PDT)
+X-Sender: patcito-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Apparently-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.22.9 with SMTP id z9mr5833504pyi.1.1210519505525; Sun, 11 May 2008 08:25:05 -0700 (PDT)
+Received: from yw-out-2324.google.com (yw-out-2324.google.com [74.125.46.29]) by mx.google.com with ESMTP id 7si7702478yxg.1.2008.05.11.08.25.04; Sun, 11 May 2008 08:25:05 -0700 (PDT)
+Received-SPF: pass (google.com: domain of patcito-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.46.29 as permitted sender) client-ip=74.125.46.29;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of patcito-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.46.29 as permitted sender) smtp.mail=patcito-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
+Received: by yw-out-2324.google.com with SMTP id 9so1514953ywe.71 for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Sun, 11 May 2008 08:25:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; bh=qRrtHFmcSP7cHIR6UWqtMkrLkBBvqGzsHsYklQB/0LM=; b=YsZ0tB2WmZ6tmqcnn2FjVq151ijXWUTKzkge/Y7PLFsJRkpn5e+WswkdcPCg8EcwYrDhsfCoC2U8+aDqSPN2K1rnjvYChkysALk0mwUWK6ma7VDPt7djkXVNqDBahaNZWIZ9tbYl2BQK/fCLrI54aU+1BkkKMttS5LE99hE+tSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; b=eslqL/3JvmySLN4SLv0oZUuE3tuQ4FBZVqVKttrHkDgHcJVUk/sRAT6LrMaSpfjF/gLcNA7qK/4NT5yRuyPDj65H0uYcZiWhuFl96ooGuSrY+XtODxCdCOd1w7O5a3nnqXoRu4n07Cwn1Q2aXFtmSRMpPEpr5UGDpADrzYJw5Jc=
+Received: by 10.150.50.3 with SMTP id x3mr7210573ybx.32.1210519504474; Sun, 11 May 2008 08:25:04 -0700 (PDT)
+Received: by 10.151.78.10 with HTTP; Sun, 11 May 2008 08:25:04 -0700 (PDT)
+In-Reply-To: <4826F72D.2070205-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81776>
+X-Google-Loop: groups
+Mailing-List: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact git-users-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <git-users.googlegroups.com>
+List-Post: <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:git-users-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/git-users/subscribe>,
+	<mailto:git-users-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81777>
 
-Teemu Likonen(tlikonen@iki.fi)@110508-09:36:
-> Junio C Hamano wrote (2008-05-10 19:36 -0700):
-> 
-> > Steven Grimm <koreth@midwinter.com> writes:
-> > 
-> > > 	I'd actually argue that the svn-compatible format should be the
-> > > 	default one, with git-compatible available as an option.
-> > 
-> > I'd violently agree with it.
-> 
-> Me too!
 
-Likewise, thanks for completing this code.
+On Sun, May 11, 2008 at 8:39 AM, Dima Kagan <dima.kagan-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+> My proposed change shouldn't necessarily break the described workflow. Git can keep the current behavior for new branches, but automatically 'stash' the changes when checking-out an existing branch. At least having an optional parameter for "auto-stashing" will be nice.
+>
+> What do you think of that?
 
-Tim
+you can do just that with an alias, in .git/config add:
 
--- 
-Tim Stoakes
+[alias]
+        auto-stash = !git stash && git checkout $1
+
+then type "git auto-stash master" or "git auto-stash some_branch" and
+it should stash and checkout the branch.
+
+Cheers,
+
+Pat
+
+--~--~---------~--~----~------------~-------~--~----~
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To unsubscribe from this group, send email to git-users-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/git-users?hl=en
+-~----------~----~----~----~------~----~------~--~---
