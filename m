@@ -1,82 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Optimize common pattern of alloc_ref from string
-Date: Sat, 10 May 2008 19:39:19 -0400
-Message-ID: <20080510233918.GA315@sigill.intra.peff.net>
-References: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: regression with funny chars in svn repo url
+Date: Sat, 10 May 2008 17:10:03 -0700
+Message-ID: <20080511000953.GA3128@yp-box.dyndns.org>
+References: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com> <20080407081108.GA28853@soma> <d06901f0804081454r76a373e6h745f99a9dcbd6bc5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: kkowalczyk@gmail.com
-X-From: git-owner@vger.kernel.org Sun May 11 01:40:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Panagiotis Vossos <pavossos@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 02:11:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Juyg8-0001H1-Gj
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 01:40:36 +0200
+	id 1Juz9j-0000hF-Se
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 02:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754466AbYEJXjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 19:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbYEJXjR
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 19:39:17 -0400
-Received: from peff.net ([208.65.91.99]:4159 "EHLO peff.net"
+	id S1752518AbYEKAKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 20:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752660AbYEKAKN
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 20:10:13 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:52523 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753454AbYEJXjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 19:39:16 -0400
-Received: (qmail 27268 invoked by uid 111); 10 May 2008 23:39:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 10 May 2008 19:39:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 May 2008 19:39:19 -0400
+	id S1752362AbYEKAKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 20:10:11 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id B025C2DC08B;
+	Sat, 10 May 2008 17:10:04 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
+In-Reply-To: <d06901f0804081454r76a373e6h745f99a9dcbd6bc5@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81717>
 
-On Sat, May 10, 2008 at 04:26:58PM -0700, kkowalczyk@gmail.com wrote:
+Hi again, sorry I've forgotten about this issue for a while :x
 
-> As a byproduct, fixes one place where string wasn't properly terminated.
+Panagiotis Vossos <pavossos@gmail.com> wrote:
+> On Mon, Apr 7, 2008 at 11:11 AM, Eric Wong <normalperson@yhbt.net> wrote:
+> 
+> > Panagiotis Vossos <pavossos@gmail.com> wrote:
+> >  > I keep a copy of the gtk+ svn repository on my machine and I have
+> >  > noticed the following bug with git-svn:
+> >  >
+> >  > ~/gitproj/gtk+$ git-svn --version
+> >  > git-svn version 1.5.4.5 (svn 1.4.6)
+> >  >
+> >  > ~/gitproj/gtk+$ git-svn rebase
+> >  > Apache got a malformed URI: REPORT request failed on
+> >  > '/svn/gtk+/!svn/vcc/default': Unusable URI: it does not refer to this
+> >  > repository at /usr/local/bin/git-svn line 3821
+> >
+> >  I've known of this bug for a while but didn't track it down until
+> >  now.  Please let me know if this fixes things for you and if
+> >  there are any regressions; thanks.
+> >
+> >  From a9ebe54adf7ae2620fba1f638dee9566f8ccca82 Mon Sep 17 00:00:00 2001
+> >  From: Eric Wong <normalperson@yhbt.net>
+> >  Date: Mon, 7 Apr 2008 00:41:44 -0700
+> >  Subject: [PATCH] git-svn: fix cloning of HTTP URLs with '+' in their path
+> >
+> >  With this, git svn clone -s http://svn.gnome.org/svn/gtk+
+> >  is successful.
+> 
+> First of all, thanks for your reply.
+> 
+> I applied the patch, but now 'git-svn rebase' gives me
+> a different error.
+> 
+> first, some context (I am on a branch based on remote trunk):
+> 
+> ~/gitproj/gtk+$ git log | head
+> commit e350328dee85f872db7689bf4ec7b577419333ee
+> Author: tvb <tvb@7eb1c76a-c725-0410-a3b5-a37faf6256f8>
+> Date:   Sun Apr 6 03:10:23 2008 +0000
+> 
+>         * gtk/gtkwidget.c: Clarified a g_warning message regarding
+>         parsing accelerators from builder files.
+> 
+>     git-svn-id: http://svn.gnome.org/svn/gtk+/trunk@19978
+> 7eb1c76a-c725-0410-a3b5-a37faf6256f8
+> 
+> 
+> Trying with the latest git from the maint branch, with your patch applied:
+> 
+> ~/gitproj/gtk+$ git-svn --version
+> git-svn version 1.5.4.5.dirty (svn 1.4.6)
+> 
+> ~/gitproj/gtk+$ git-svn rebase
+> Index mismatch: d486332848849ca1e0555d4608df396946e20ad0 !=
+> ee3933caad632a093c1f7d98b813298ee806f333
+> rereading e350328dee85f872db7689bf4ec7b577419333ee
+>         M       Makefile.decl
+>         D       gtk/compose-parse.py
+>         D       gtk/gtkimcontextsimpleseqs.h
+>         D       gtk/gtkmountoperation.c
+>         D       gtk/gtkmountoperation.h
+>         M       gtk/gtkprogressbar.c
+>         M       gtk/gtkfilechooserentry.h
+>         M       gtk/gtktreeitem.c
+>         M       gtk/gtkfilechooserdialog.c
+>         M       gtk/gtkwidget.c
+>         M       gtk/gtktreemodelfilter.c
+>         M       gtk/gtkwidget.h
+>         M       gtk/gtkfixed.c
+>         M       gtk/gtkexpander.c
+> [lots and lots of lines snipped]
+>         M       gdk/gdkgc.h
+>         M       gdk/gdkcairo.h
+>         M       gdk/Makefile.am
+>         M       gdk/x11/gdkdisplay-x11.c
+>         M       gdk/x11/gdkkeys-x11.c
+>         M       gdk/x11/gdkscreen-x11.c
+>         M       gdk/x11/gdkprivate-x11.h
+>         M       gdk/x11/gdkgeometry-x11.c
+>         M       gdk/x11/gdkinput-x11.c
+>         M       gdk/x11/gdktestutils-x11.c
+>         M       gdk/x11/gdkwindow-x11.c
+>         M       gdk/x11/gdkcolor-x11.c
+>         M       gdk/x11/gdkmain-x11.c
+>         M       gdk/x11/gdkgc-x11.c
+>         M       Makefile.am
+>         M       examples/scribble-xinput/scribble-xinput.c
+> W: -empty_dir: trunk/modules/other/gail/tests
+> Last fetched revision of refs/remotes/trunk was r19978, but we are
+> about to fetch: r19234!
 
-Great. Does this fix a user-visible bug? It would be nice to mention in
-the commit log _which_ place (though after reading the patch carefully,
-it looks like the one interpret_target) so that people looking at the
-commit later can understand exactly what was fixed.
+Really weird.  This could be a rev_db => rev_map migration issues, but I
+haven't been able to reproduce any of it.  However, for most users
+(those not using noMetadata or useSvmProps options, just blowing away
+rev_db is safe).
 
-> -	ref = alloc_ref(strlen(refname) + 1);
-> -	strcpy(ref->name, refname);
-> +	ref = alloc_ref_from_str(refname);
-
-So this turns a 2-line construct into a 1-line construct...
-
-> +struct ref *alloc_ref_from_str(const char* str)
-> +{
-> +	struct ref *ret;
-> +	unsigned len = strlen(str) + 1;
-> +	char *tmp = xmalloc(sizeof(struct ref) + len);
-> +	ret = (struct ref*)tmp;
-> +	memset(tmp, 0, sizeof(struct ref));
-> +	tmp += sizeof(struct ref);
-> +	memcpy(tmp, str, len);
-> +	return ret;
-> +}
-
-But why do we need an 8-line function to do it?
-
-The only difference I can see over
-
-  struct ref *alloc_ref_from_str(const char *str)
-  {
-    unsigned len = strlen(str) + 1;
-    struct ref *ret = alloc_ref(len);
-    memcpy(ret->name, str, len);
-    return ret;
-  }
-
-is that we avoid memsetting the name portion of the struct to 0 before
-copying to it. It seems like an unproven micro-optimization that makes
-it a bit harder to read.
-
--Peff
+-- 
+Eric Wong
