@@ -1,121 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: Git branches - confusing behavior
-Date: Sun, 11 May 2008 15:40:04 +0200
-Message-ID: <200805111540.05195.jnareb@gmail.com>
-References: <4826D8FA.30305@gmail.com> <m31w495apd.fsf@localhost.localdomain> <4826DF6A.2070306@gmail.com>
+Date: Sun, 11 May 2008 10:03:43 -0400
+Message-ID: <20080511140343.GA11248@mit.edu>
+References: <4826D8FA.30305@gmail.com> <m31w495apd.fsf@localhost.localdomain> <4826E791.7030407@gmail.com> <20080511125722.GA22075@atjola.homenet> <4826EEDF.4010404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
 To: Dima Kagan <dima.kagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 15:41:38 2008
+X-From: git-owner@vger.kernel.org Sun May 11 16:04:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvBnr-0007dl-4M
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 15:41:27 +0200
+	id 1JvCAP-0006By-6h
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 16:04:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540AbYEKNki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 09:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753080AbYEKNki
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 09:40:38 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:47114 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbYEKNkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 09:40:17 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so973881nfc.21
-        for <git@vger.kernel.org>; Sun, 11 May 2008 06:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=iWkXknCP52ZMj02CkgqxAydftW0JXRMfVVhxtnZQCuA=;
-        b=k3JryJojNK9euZRPvsKQURG/IEvvAPSQPzCxNc+6roG+LV1IosxGvlvK3qvWL9yR1Kq+NSvUO3XU1DzaqP3288pQNN+ZdPPdNhwgKWwlOsJRA2lFShFGTeiO2yIpyL9cL1XGSBVEVAwyBo3/B0DBkkAeifdKFl4aSuLc3v4IapE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QulRXRsuPuZQbaIX179SxGvZVm7Ezq0Ojw6FJbTmlq30JSzLgYSdYtCckWJkvHoEWcLXgVVJsGFRwDHpCtA5YKahR8RV6HmOEWFx0iVTJNclRh067v9KkNZLtDDcRgm/GgOGIR4kQL+/RuR4UfUVcLud3+ooRYSSqHoYU4fqwcA=
-Received: by 10.210.136.10 with SMTP id j10mr6256610ebd.43.1210513215108;
-        Sun, 11 May 2008 06:40:15 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.242.178])
-        by mx.google.com with ESMTPS id k10sm9747856nfh.25.2008.05.11.06.40.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 11 May 2008 06:40:13 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4826DF6A.2070306@gmail.com>
+	id S1754668AbYEKODy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 10:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752962AbYEKODy
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 10:03:54 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:35351 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752785AbYEKODx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 10:03:53 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1JvCC0-0008KM-AB; Sun, 11 May 2008 10:06:24 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JvC9Q-0006Cw-BE; Sun, 11 May 2008 10:03:44 -0400
 Content-Disposition: inline
+In-Reply-To: <4826EEDF.4010404@gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81775>
 
-Dima Kagan wrote:
-> Jakub Narebski wrote:
->> Dima Kagan <dima.kagan@gmail.com> writes:
+On Sun, May 11, 2008 at 04:04:31PM +0300, Dima Kagan wrote:
+> > The uncommitted changes survived the branch change and are still in the
+> > working tree, in svn just like in git.
+> > 
+> 
+> Yes, I am aware of that, except one rarely works in one directory on
+> multiple svn branches, because the branches are not private. Git's
+> branches can be private, so perhaps this behavior should be
+> different from SVN?
 
-[...]
-> So if I am working on more than one branch at a time I need to commit
-> my changes every time before I do 'git checkout <branch>'?
-[...]
-Not necessary, see below (and it is not necessary bad).
+So if you *want* to use separate working directories for different
+branches, you can do that in git too.  Some people find that more
+convenient.  Other people don't.  
 
->>> Basically I see that the same file I edited on the 'test_branch'
->>> branch appears to be modified on the 'master' branch as well. This
->>> behavior is unwanted, of course.
->>>
->>> Can someone please tell me, what am doing wrong? Or is this git's
->>> normal behavior?
->> 
->> This is normal, and wanted, behavior.
- 
-> That's a subjective point of view :) I'm coming from the SVN world and
-> uncommitted changes on one branch don't affect other branches. Is
-> there a way I can achieve this behavior with git?  
+Keep in mind, the other difference between git and svn is that until
+commits are published, they can be freely altered.  So many developers
+who use git tend to commit their changes on the "scratch branches",
+and then if they need to modify them, use either "git commit --amend"
+or "git commit --interactive" as necessary to modify the commits on
+the branches until they are just the way they want them.
 
-How would you want git to behave, with "git checkout <branch>" changing 
-branches _in place_, in single working area?  Besides, current 
-behavior, together with "git checkout -m" option, allows to change 
-branches when you have realized (after making some changes) that you 
-are on wrong branch...
+I will often have several different features "in progress" at
+different times, and they are all on scratch branches.  By keeping
+them all on scratch branches, I can test them by creating a new
+scratch integration branch, and merge the various "in progress"
+features together to see how they work together, then go back to the
+individual feature branches to clean them up some more.   
 
+When I'm satisified with a particular branch, I'll use "git rebase
+master" to rebase the work so that it is based off of the head of the
+development branch, and then do a fast forward merge to merge it into
+to development branch.
 
-There are few possible solutions:
+> BTW, Is there a way to do 'svn checkout -b new_branch' into a new directory?
 
-1. Save state before switching branches
+Not as a single step operation, no.  If you put the following in a
+script, it will basically do what you want, though.
 
-1.1. You can simply commit changes before switching branch, perhaps with
-"(WIP)" (work in progress) in the commit message.  Then, when you go 
-back to the branch, you can continue your work, and simply --amend (as 
-in "git commit --amend" a commit.
+cp -rl $old_repo $new_repo
+cd $new_repo
+git checkout $new_branch
 
-1.2. You can use git-stash to save state of your working area (working 
-directory) _and_ index, change branches, and when going back to branch 
-restore state using "git stash apply". I think you can save state even 
-during not resolved merge.
+It does require that your editor save files by renaming the old file
+out of the way to file~ and then writing file as a new file, instead
+of opening the existing file and then doing an O_TRUNC (since that
+will smash the file on the other repo), but as long as your editor is
+hard link friendly, this should work just fine, with minimal disk
+space cost.
 
-1.3. If you use patch management interface on top of Git, like StGit
-(or Guilt), you can simply "stg refresh" a patch, then change branches.  
-When returning to branch, use refresh and/or edit, then create new 
-patch if you think current is finished (you can always go back...).
+Or you can just drop the hard link and just copy the whole repostory
+using "cp -r" --- after all, svn is horribly wasteful of disk space,
+with each repository taking twice the amount of space as the working
+directory, and so if you're used to paying that disk overhead cost
+with SVN, then presumably you won't mind paying that price with git.
+There are smarter ways of working, though, if you don't mind altering
+your work flow a little.
 
-
-2. Use separate working for differen branches: this is what Bazaar does, 
-what Mercurial does by default without 'localbranch' extension, and I 
-think also what Subversion does.   Take a look at contrib/workdir
-on how to manage multiple working areas with single repository; the 
-core.workdir and --working-dir could also be of help.
-
-Note that in this case you have to take care to not have the same branch 
-checked out to two (or more) different working areas, to not stomp on 
-your changes, and to avoid confusion.
-
-
-Final note: you would work better learning SCM "the git way", and not to 
-rely on Subversion bad habits (yes, I know that bad CVS habits are 
-worse...) ;-)
-
--- 
-Jakub Narebski
-Poland
+    	       		   	     	  - Ted
