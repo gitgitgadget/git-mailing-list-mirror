@@ -1,123 +1,157 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [egit / jgit] Implementation of a file tree iteration using ignore rules.
-Date: Sat, 10 May 2008 20:12:31 -0400
-Message-ID: <20080511001231.GI29038@spearce.org>
-References: <48244F88.8060109@web.de> <20080510001132.GF29038@spearce.org> <4825BB3F.4060006@web.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix cloning of HTTP URLs with '+' in their path
+Date: Sat, 10 May 2008 17:14:49 -0700
+Message-ID: <20080511001449.GA29155@yp-box.dyndns.org>
+References: <d06901f0804011111o1da8a197ob6a9aaccb3e1e9a0@mail.gmail.com> <20080407081108.GA28853@soma> <d06901f0804081454r76a373e6h745f99a9dcbd6bc5@mail.gmail.com> <20080511000953.GA3128@yp-box.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Florian =?utf-8?Q?K=C3=B6berle?= <FloriansKarten@web.de>
-X-From: git-owner@vger.kernel.org Sun May 11 02:13:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Panagiotis Vossos <pavossos@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 11 02:15:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuzBt-00017N-51
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 02:13:25 +0200
+	id 1JuzE4-0001Tt-0m
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 02:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbYEKAMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 20:12:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbYEKAMg
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 20:12:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34712 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752729AbYEKAMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 20:12:34 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JuzAs-0002H7-Qk; Sat, 10 May 2008 20:12:22 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5685520FBAE; Sat, 10 May 2008 20:12:31 -0400 (EDT)
+	id S1753454AbYEKAOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 20:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbYEKAOv
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 20:14:51 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:52537 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752736AbYEKAOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 20:14:50 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id ECD2E2DC08B;
+	Sat, 10 May 2008 17:14:49 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4825BB3F.4060006@web.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080511000953.GA3128@yp-box.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81719>
 
-Florian Kberle <FloriansKarten@web.de> wrote:
-> | This is an interesting start.  Did you see the existing "Main" class
-> | in org.spearce.jgit/src/org/spearce/jgit/pgm?  It sets up and invokes
-> | a TextBuiltin, which is sort of like the "Command" class you added in
-> | your first patch.  Though TextBuiltins are created on-the-fly and thus
-> | are harder/impossible to use to format a "jgit help".
->
-> I noticed that the class appeared after a rebase, but didn't have a
-> closer look to it yet.
+With this, git svn clone -s http://svn.gnome.org/svn/gtk+
+is successful.
 
-I guess you started working on an older version, only to later find
-out that I had also done a lot of work in the mean-time.  :-)
+Also modified the funky rename test for this, which _does_
+include escaped '+' signs for HTTP URLs.  SVN seems to accept
+either "+" or "%2B" in filenames and directories (just not the
+main URL), so I'll leave it alone for now.
 
-My jgit contributions come in huge bursts.  RevWalk/TreeWalk was one
-back in March; the transport API (almost 10,000 lines of code itself)
-is the most recent from late April/early May.  Once its fully into
-the mainline I'll probably have to slow down for a couple of months.
-I have to move in July and have a lot of things to do between now
-and then.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl                             |    2 +-
+ t/lib-git-svn.sh                         |    9 ++++++-
+ t/t9115-git-svn-dcommit-funky-renames.sh |   35 +++++++++++++++++++++++++++++-
+ 3 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index e47b1ea..413e0b1 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3673,7 +3673,7 @@ sub escape_uri_only {
+ 	my ($uri) = @_;
+ 	my @tmp;
+ 	foreach (split m{/}, $uri) {
+-		s/([^\w.%-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
++		s/([^\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
+ 		push @tmp, $_;
+ 	}
+ 	join('/', @tmp);
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index 9decd2e..d8f3355 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -73,11 +73,16 @@ for d in \
+ done
  
-> | Please note that jgit is restricted to Java 5 APIs only right now.
-> | The "MainProgram" class you introduced uses Arrays.copyOfRange()
-> | which does not compile under Java 5.  I guess it is new in Java 6?
->
-> Yes it is new in Java 6. A patch fixing this is contained in the patch
-> set I send to the mailing list.
-
-To keep the history bisectable as much as possible it is better
-if you use `git rebase -i` to squash these two changes together,
-so that we never introduce the Java 6 usage into the codebase.
-
-> I had a look at the WorkingTreeIterator and it seems to me that it is
-> possible to reuse my Rules class there.
-> 
-> We could simply give the iterator a member variable of type Rule.
-> 
-> The method loadEntries of WorkingTreeIterator could then use the rules
-> class to filter out unwanted files and directories.
-
-Yea, that sounds right.
+ start_httpd () {
++	repo_base_path="$1"
+ 	if test -z "$SVN_HTTPD_PORT"
+ 	then
+ 		echo >&2 'SVN_HTTPD_PORT is not defined!'
+ 		return
+ 	fi
++	if test -z "$repo_base_path"
++	then
++		repo_base_path=svn
++	fi
  
-> Also note that my Rules implementation would ignore the directory a in
-> the case of "/a\n!/a/b.txt". This means that a directory may not appear
-> in the list entries, but must be used to create another iterator.
-
-Ouch.  I forgot about that fun corner case.  In the context of a
-TreeWalk directory "a" must actually still be reported as an entry so
-that the TreeWalk main loop knows to enter into the subtree iterator.
-However the subtree iterator needs to only have entry "b.txt" within
-its entry list.
+ 	mkdir "$GIT_DIR"/logs
  
-> I suggest to put all the classes from the package
-> org.spearce.jgit.treewalk and the package
-> org.spearce.jgit.lib.fileiteration into one package. Please tell me
-> which package and I will send a patch, or do it yourself. I don't have
-> any outstanding changes.
-
-The treewalk package is already established so I would say add
-them there.  Since you are the original developer and your code is
-not yet in mainline I would ask that you perform the renames.
-
-> I don't see a easy way of porting my Rules implementation to the
-> TreeFilter framework, but as you may noticed it is may not necessary to
-> do so.
-
-The TreeFilter framework is perhaps not the right API for ignore
-rules, that is likely true.  It also works with paths as byte[] and
-not as String, because we get byte[] (generally UTF-8 encoded) data
-from canonical tree objects when reading from the object database.
-Avoiding the conversion for most entries is a huge performance
-improvement for us.
-
-I still won't give up my silly dream for `jgit log -- 'foo/*.c'`,
-but maybe we do need two different implementations to make things
-work out well.
-
+@@ -90,13 +95,13 @@ LockFile logs/accept.lock
+ Listen 127.0.0.1:$SVN_HTTPD_PORT
+ LoadModule dav_module $SVN_HTTPD_MODULE_PATH/mod_dav.so
+ LoadModule dav_svn_module $SVN_HTTPD_MODULE_PATH/mod_dav_svn.so
+-<Location /svn>
++<Location /$repo_base_path>
+ 	DAV svn
+ 	SVNPath $rawsvnrepo
+ </Location>
+ EOF
+ 	"$SVN_HTTPD_PATH" -f "$GIT_DIR"/httpd.conf -k start
+-	svnrepo=http://127.0.0.1:$SVN_HTTPD_PORT/svn
++	svnrepo="http://127.0.0.1:$SVN_HTTPD_PORT/$repo_base_path"
+ }
+ 
+ stop_httpd () {
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 182299c..4acbcb0 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -9,7 +9,7 @@ test_description='git-svn dcommit can commit renames of files with ugly names'
+ 
+ test_expect_success 'load repository with strange names' "
+ 	svnadmin load -q $rawsvnrepo < ../t9115/funky-names.dump &&
+-	start_httpd
++	start_httpd gtk+
+ 	"
+ 
+ test_expect_success 'init and fetch repository' "
+@@ -49,6 +49,39 @@ test_expect_success 'rename pretty file into ugly one' '
+ 	git svn dcommit
+ 	'
+ 
++test_expect_success 'add a file with plus signs' '
++	echo .. > +_+ &&
++	git update-index --add +_+ &&
++	git commit -m plus &&
++	mkdir gtk+ &&
++	git mv +_+ gtk+/_+_ &&
++	git commit -m plus_dir &&
++	git svn dcommit
++	'
++
++test_expect_success 'clone the repository to test rebase' "
++	git svn clone $svnrepo test-rebase &&
++	cd test-rebase &&
++		echo test-rebase > test-rebase &&
++		git add test-rebase &&
++		git commit -m test-rebase &&
++		cd ..
++	"
++
++test_expect_success 'make a commit to test rebase' "
++		echo test-rebase-main > test-rebase-main &&
++		git add test-rebase-main &&
++		git commit -m test-rebase-main &&
++		git svn dcommit
++	"
++
++test_expect_success 'git-svn rebase works inside a fresh-cloned repository' "
++	cd test-rebase &&
++		git svn rebase &&
++		test -e test-rebase-main &&
++		test -e test-rebase
++	"
++
+ stop_httpd
+ 
+ test_done
 -- 
-Shawn.
+Eric Wong
