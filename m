@@ -1,72 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
- configurable
-Date: Sun, 11 May 2008 09:27:31 -0700
-Message-ID: <7vod7c6c24.fsf@gitster.siamese.dyndns.org>
-References: <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
- <7vprs1ny5e.fsf@gitster.siamese.dyndns.org>
- <46dff0320805050510t3bc5fd0eq44e0d58d1bb57629@mail.gmail.com>
- <46dff0320805051740o65eee07eqc7073e4fa7996277@mail.gmail.com>
- <alpine.DEB.1.00.0805060954470.30431@racer>
- <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
- <alpine.DEB.1.00.0805071223450.30431@racer>
- <7viqxqc4gs.fsf@gitster.siamese.dyndns.org>
- <20080508103436.GB3300@mithlond.arda.local>
- <46dff0320805100202j54b0922cy50a2c93c4eff1757@mail.gmail.com>
- <46dff0320805110616s6df19657r1e4c80634267fd81@mail.gmail.com>
+From: "Steve French" <smfrench@gmail.com>
+Subject: Re: CIFS fixes
+Date: Sun, 11 May 2008 11:42:00 -0500
+Message-ID: <524f69650805110942k7ccb065bm2c1e60f1a509af5a@mail.gmail.com>
+References: <524f69650805082054g43823f85i623cb2c11cd01039@mail.gmail.com>
+	 <alpine.LFD.1.10.0805090810390.3142@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Teemu Likonen" <tlikonen@iki.fi>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Ping Yin" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 18:28:44 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun May 11 18:43:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvEPh-0004Hk-Be
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 18:28:41 +0200
+	id 1JvEdU-0000ES-3c
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 18:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbYEKQ1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 12:27:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbYEKQ1s
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 12:27:48 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43367 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbYEKQ1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 12:27:47 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B78036AB;
-	Sun, 11 May 2008 12:27:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id D933936AA; Sun, 11 May 2008 12:27:34 -0400 (EDT)
-In-Reply-To: <46dff0320805110616s6df19657r1e4c80634267fd81@mail.gmail.com>
- (Ping Yin's message of "Sun, 11 May 2008 21:16:11 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2E1DA9C2-1F77-11DD-9FA5-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1751569AbYEKQmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 12:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbYEKQmF
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 12:42:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:49621 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbYEKQmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 12:42:03 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1492290fgg.17
+        for <git@vger.kernel.org>; Sun, 11 May 2008 09:42:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=1l1j+ShXCeKkFIVxODystEY/1/De5at+EY66lAdPpJs=;
+        b=Ye7nnUTHn1AS+80/D73rTHHcxjr9UeQMNFfE01jH9LrRo3G3w7G8/RpO7W+ZVYS0iS4i13ea+HLaIMccxZsE3A5Xt1uKTJlN0tAZaiK6420K7a3bUU0v4g1TxqisP4JWPnbVPHe6ccj+ws2r0nm8HYd/NTED0tLBkb6g4O+vOSk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PPFXsE+10g/Zz/JUaKbQ/xDKa+mGkAL8jZSOI1HNYGYB/nlXD9YNb/qznP7BdR0A3TghiDaymMQbQMyI7Stq9s2HgNWozrZkyhzz1j5FSpjrqqYKEFkWECJV6yemod+DgiPkyob/X6JFMep5kz3hsHaYN5yL79wvmqvoHB2BcJI=
+Received: by 10.78.182.17 with SMTP id e17mr1700226huf.57.1210524120459;
+        Sun, 11 May 2008 09:42:00 -0700 (PDT)
+Received: by 10.78.141.1 with HTTP; Sun, 11 May 2008 09:42:00 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0805090810390.3142@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81791>
 
-"Ping Yin" <pkufranky@gmail.com> writes:
+I am puzzled why I see multiple messages like:
 
-> With following patch, the diff output becomes (i don't know which one is better)
+Merge branch 'master' of /.../torvalds/linux-2.6
+
+when using:
+
+git-request-pull origin
+git://git.kernel.org/pub/scm/linux/kernel/git/sfrench/cifs-2.6.git
+
+I only pulled once (the initial pull after your previous merge of
+cifs-2.6.git tree, but before I added more patches).
+
+On Fri, May 9, 2008 at 10:12 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> OpenOffice.org has {+a }user setting for defining the minimum length for
-> words to be hyphenated. By default the word length is counted from the
-> whole word - even for compound words. For example the {compound +}word
-> 'elokuvalippu' is {+considered }12 characters long. The word will be hyphenated like
->  'elo-ku-va-lip-pu' in all cases when the minimum word length is set to
->  12 or less. If the minimum length is set to 13 or more the word is not
->  hyphenated at all.
+>
+>  On Thu, 8 May 2008, Steve French wrote:
+>  >
+>  > are available in the git repository at:
+>  >
+>  >   git://git.kernel.org/pub/scm/linux/kernel/git/sfrench/cifs-2.6.git master
+>
+>  Ugh. Lots of just merging my code back (a third of all the commits were
+>  just merges). Were there really conflicts going on that required that? It
+>  makes the history harder to read..
+>
+>  But pulled.
+>
+>                 Linus
+>
 
-Yeah, after playing with it a bit, I realize that my original stated goal
-of not playing games with "newline suppression" goes very against what
-color-words, which is a word oriented diff, tries to achieve.  It appears
-that it is necessary to reintroduce suppressed_newline.
+
+
+-- 
+Thanks,
+
+Steve
