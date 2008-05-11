@@ -1,127 +1,93 @@
-From: "Krzysztof Kowalczyk" <kkowalczyk@gmail.com>
-Subject: Re: [PATCH] Optimize common pattern of alloc_ref from string
-Date: Sat, 10 May 2008 17:30:56 -0700
-Message-ID: <7ce338ad0805101730n5b964a0em39d9fdcd9fc45f00@mail.gmail.com>
-References: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com>
-	 <20080510233918.GA315@sigill.intra.peff.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/3] repack: modify behavior of -A option to leave
+ unreferenced objects unpacked
+Date: Sat, 10 May 2008 21:10:53 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0805101157090.23581@xanadu.home>
+References: <7vabj0b1re.fsf@gitster.siamese.dyndns.org>
+ <3927888.1210392047922.JavaMail.teamon@b303.teamon.com>
+ <20080510060345.GC11556@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 11 02:31:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: drafnel@gmail.com, gitster@pobox.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 11 03:12:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JuzTi-0004TT-Rm
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 02:31:51 +0200
+	id 1Jv06b-0002w3-Rf
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 03:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968AbYEKAbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 20:31:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbYEKAbA
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 20:31:00 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:55481 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbYEKAa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 20:30:59 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1020807ywe.1
-        for <git@vger.kernel.org>; Sat, 10 May 2008 17:30:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=s9qa9qQ2LNtdciwyBwhBkL95qyzoghoXuMjzc4APbx4=;
-        b=N0945XKWGkZtTl/SwXsTS3UpuVBK/U3yQyyR1bgOmHJtaM9aCv+QNx5UydmgEGZSA9ky/ll8e03n2nYTM9i5i4phSTgOCxL5uXO3vzUY4AU6Bsu899kCnnzs1+QZGF+QfA7Jnlnzj89a8OQd2Q4jdZY6OzcymMVU5LwlUggu+bU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uUlPQZMwsnAtWeJsaBg0M6gUx2TZ1jpKqZ8gmMAMWLBeoUw2OQSXoRNXdkuBkfAro0fuJjVEOalr+GopUKAs4Djg49VJgonb02At4byF34BqU4irli5d75fJsGT7PMPpox/DZu3dTcm4og91TnfPLdvli0jh7YQuSTDhdvIIo7Q=
-Received: by 10.150.83.22 with SMTP id g22mr4026664ybb.134.1210465856493;
-        Sat, 10 May 2008 17:30:56 -0700 (PDT)
-Received: by 10.150.134.9 with HTTP; Sat, 10 May 2008 17:30:56 -0700 (PDT)
-In-Reply-To: <20080510233918.GA315@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1750735AbYEKBK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 21:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbYEKBK6
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 21:10:58 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35556 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751874AbYEKBK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 21:10:56 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K0O00080JA5HWC0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 10 May 2008 21:10:53 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080510060345.GC11556@sigill.intra.peff.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81722>
 
-On Sat, May 10, 2008 at 4:39 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, May 10, 2008 at 04:26:58PM -0700, kkowalczyk@gmail.com wrote:
->
->> As a byproduct, fixes one place where string wasn't properly terminated.
->
-> Great. Does this fix a user-visible bug? It would be nice to mention in
-> the commit log _which_ place (though after reading the patch carefully,
-> it looks like the one interpret_target) so that people looking at the
-> commit later can understand exactly what was fixed.
+On Sat, 10 May 2008, Jeff King wrote:
 
-It was a subtle memory corruption that wouldn't cause problems in
-99.99% cases, but valgrind would probably catch it. And yes, it's the
-interp_target().
+> Also, should --keep-unreachable be deprecated / removed?
 
->> -     ref = alloc_ref(strlen(refname) + 1);
->> -     strcpy(ref->name, refname);
->> +     ref = alloc_ref_from_str(refname);
->
-> So this turns a 2-line construct into a 1-line construct...
+Depends.  If it has no maintenance cost then we might as well keep it 
+around.
 
-And avoids future prossible mistakes with not terminating the string,
-like the one just commited.
+> I still like Geert's suggestion of unpacking them to a _different_
+> place. That helps to avoid spurious "gc --auto" invocations caused by
+> too many prunable objects. Though it certainly doesn't solve it, and
+> maybe that just needs to be fixed separately.
 
->> +struct ref *alloc_ref_from_str(const char* str)
->> +{
->> +     struct ref *ret;
->> +     unsigned len = strlen(str) + 1;
->> +     char *tmp = xmalloc(sizeof(struct ref) + len);
->> +     ret = (struct ref*)tmp;
->> +     memset(tmp, 0, sizeof(struct ref));
->> +     tmp += sizeof(struct ref);
->> +     memcpy(tmp, str, len);
->> +     return ret;
->> +}
->
-> But why do we need an 8-line function to do it?
->
-> The only difference I can see over
->
->  struct ref *alloc_ref_from_str(const char *str)
->  {
->    unsigned len = strlen(str) + 1;
->    struct ref *ret = alloc_ref(len);
->    memcpy(ret->name, str, len);
->    return ret;
->  }
->
-> is that we avoid memsetting the name portion of the struct to 0 before
-> copying to it. It seems like an unproven micro-optimization that makes
-> it a bit harder to read.
+Having a separate location for objects seems clunky to me.
 
-You're absolutely right - it's a micro-optimization and your version
-might be preferred for clarity. This is the first time I submit a
-patch to git so I don't have a good feel for what kind of treadoffs
-people find acceptable.
+And the fundamental problem isn't solved indeed -- you may end up with 
+many non expired unreachable loose objects already without packing them.
 
-I should also mention that
-static struct ref *try_explicit_object_name(const char *name)
-{
-	unsigned char sha1[20];
-	struct ref *ref;
+> Possibly the "gc --auto" test should be:
+> 
+>   - count objects; if too few, exit
+>   - count unreachable loose objects; if too few, exit
 
-	if (!*name) {
-		ref = alloc_ref(20);
-		strcpy(ref->name, "(delete)");
-		hashclr(ref->new_sha1);
-		return ref;
-	}
-...
+Determining the number of unreachable objects is quite costly, packed or 
+not.  So that isn't a good thing to do on every 'git gc --auto' 
+invokation.
 
-could also be replaced with alloc_ref_str() - I just wasn't 100% sure
-if overallocating 10 bytes (20 - strlen("(delete)")) was just sloppy
-code or does other code relies on that (which is unlikely and if true
-then it wouldn't be good).
+>   - run gc
+> 
+> That means having a lot of unreachable objects will still incur some
+> extra processing, but not as much as a full repack. And it won't bug the
+> user with a "you need to repack" message.
 
-Regards,
+The auto gc performs incremental packing most of the time.  And that is 
+way faster than figuring out which objects are unreachable.
 
--- kjk
+For example, running 'git prune' in my Linux repo takes 16 seconds, even 
+when there is nothing to prune.  Running 'git repack' (with no option so 
+to perform an incremental repack) took less than 2 seconds to pack 541 
+reachable objects that happened to be loose.
+
+I'm now starting to wonder if there is a reason for keeping unreachable 
+objects that used to be packed.  Putting --keep-unreachable aside for 
+now, the only way an unreachable object could have entered a pack is if 
+it used to be reachable before through the commit history or reflog.  
+So if they're not reachable anymore, that's most probably because their 
+reflog expired.  So what's the point for keeping them even longer?  
+What's the reasoning that led to the creation of --keep-unreachable in 
+the first place?
+
+
+Nicolas
