@@ -1,82 +1,104 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Verilog/ASIC development support is insufficient in git , help!
-Date: Sun, 11 May 2008 00:33:48 -0500
-Message-ID: <F975216F-9B61-41FF-A7FE-3D7EF09D137B@sb.org>
-References: <EB66C79C87CF49E59CB39EA4C286AE05@justinuTop> <BA7F9A3C7EDA4CDD99016093B0DB55C0@justinuTop> <B03D1DC3-7088-41AF-BB8B-9A696E7C5B8E@sb.org> <83EE186A7AF140179C6C73B367471EC7@justinuTop>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [RFC/PATCH] gitweb: Paginate project list
+Date: Sat, 10 May 2008 22:53:30 -0700
+Message-ID: <1210485210.11526.145.camel@localhost.localdomain>
+References: <200805011220.58871.jnareb@gmail.com>
+	 <200805101128.59313.jnareb@gmail.com>
+	 <1210444108.11526.139.camel@localhost.localdomain>
+	 <200805110032.39729.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <justin0927@hotmail.com>
-To: "Justin Leung" <jleung@redback.com>
-X-From: git-owner@vger.kernel.org Sun May 11 07:34:55 2008
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 07:55:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv4Cz-0007VJ-TE
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 07:34:54 +0200
+	id 1Jv4WR-00027n-MA
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 07:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbYEKFeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 01:34:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYEKFeD
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 01:34:03 -0400
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:37654 "EHLO
-	randymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751071AbYEKFeB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 May 2008 01:34:01 -0400
-Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a12.g.dreamhost.com (Postfix) with ESMTP id D54A1A8A8D;
-	Sat, 10 May 2008 22:33:59 -0700 (PDT)
-In-Reply-To: <83EE186A7AF140179C6C73B367471EC7@justinuTop>
-X-Priority: 3
-X-Mailer: Apple Mail (2.919.2)
+	id S1750810AbYEKFxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 01:53:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbYEKFxs
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 01:53:48 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:58066 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750792AbYEKFxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 01:53:47 -0400
+Received: from [172.19.0.93] ([76.21.83.184])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m4B5rfsu021141
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 10 May 2008 22:53:42 -0700
+In-Reply-To: <200805110032.39729.jnareb@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-3.fc8) 
+X-Virus-Scanned: ClamAV 0.88.7/7083/Sat May 10 08:55:11 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Sat, 10 May 2008 22:53:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81740>
 
-On May 11, 2008, at 12:29 AM, Justin Leung wrote:
 
-> Hi Kevin,
->
-> The ability of inter-user (designer-verifier) code sync'ing without  
-> letting the incomplete or incompatible RTL code to propagate to the  
-> main build stream is going to facilitate the design flow and  
-> efficiency .
->
-> The ability of local revision control means that no more over  
-> writing of design files until commit .
->
-> I think these 2 things will really buy us alot .
->
-> Justin
->
->> Honestly, it sounds like SVN is actually a good fit here. Just  
->> because git is awesome for many things does not mean it is the end- 
->> all-be-all  of version control systems. SVN still has its place as  
->> the last true centralized system. Given your constraints and  
->> workflow, why do you  think git is better than SVN?
->>
->> -Kevin Ballard
+On Sun, 2008-05-11 at 00:32 +0200, Jakub Narebski wrote:
+> On Sun, 10 May 2008, J.H. <warthog19@eaglescrag.net> wrote:
+> 
+> > $page_size should be moved to a configuration directive, with a possible
+> > default of 100, and there should be an option to turn it off completely
+> > (I.E. kernel.org will likely have it turned off).
+> 
+> If it would be configurable (and I agree that it is probably a good
+> idea), it should be per gitweb instance (i.e. global variable), and
+> should perhaps be named $project_list_page_size to distinguish it from
+> number of items shown (page size) for 'shortlog', 'log' and 'history'
+> views.
+> 
+> I guess that value of 0, or perhaps of undef would mean to not divide
+> projects list, or project search results, into pages.
+> 
+> BTW. why do you think that kernel.org would be better to have project
+> list pagination turned off?
 
-But they come at an expense - no more linear revision numbers, more  
-complex commands, etc. You can't have it both ways.
+If we have caching on I'd rather leave it as a single page, much easier
+to search on and with firefox /<project or name> then <ctrl>+g a couple
+of times is really fast to find what I need.  Also means less to cache
+(good for us) and faster access for most.  I'm going to guess leaving it
+as a single page, unless it gets *very* unwieldy, will be how we leave
+it.
 
-You could always use a main SVN repo and then use git-svn to maintain  
-your own private git repos, do all the code syncing you want there,  
-and then push it back to SVN when you want to send it back to the main  
-build stream. If you go this route, be careful to maintain a linear  
-history on the branch that tracks the SVN repo, as SVN cannot handle  
-merges the way git can. You'll want to either do rebasing or squashed  
-merges (to avoid multiple parents).
+>  
+> > It might also be advantageous to generate the entire list and stash that
+> > somewhere, (session on the host side?) and run the pagination out of
+> > that.
+> 
+> First, when using $projectslist file with new (second patch in series,
+> "gitweb: Allow project description in project_index file" most of data
+> (well, all except age) would be filled by parsing single file.
+> 
+> Second, the idea is to cache results of filled in @$projlist e.g. using
+> Storable, i.e. cache Perl data and not final HTML output.
 
--Kevin Ballard
+I approve of that plan, caching all the html is kinda expensive *hides
+the 20G of gitweb cache he has*
 
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+> 
+> > Would even allow the user to choose how many items they wish to 
+> > see from a drop down maybe?
+> 
+> I think it is also a good idea, at least for search results.
+> 
+> 
+> NOTE that this was an RFC patch, meant mainly to provide comments on
+> what to improve...
+
+I know, that's why I'm chiming in with my thoughts, I like the idea and
+bonus points go to the user configurable display on that.  There are
+definitely sites that can benefit from this and likely at some point
+k.org is going to need have to paginate - just not sure when that point
+is going to get hit.
+
+- John 'Warthog9' Hawley
