@@ -1,89 +1,93 @@
-From: "Steve French" <smfrench@gmail.com>
-Subject: Re: CIFS fixes
-Date: Sun, 11 May 2008 11:53:23 -0500
-Message-ID: <524f69650805110953t6561ff84t1867681bea093d35@mail.gmail.com>
-References: <524f69650805082054g43823f85i623cb2c11cd01039@mail.gmail.com>
-	 <alpine.LFD.1.10.0805090810390.3142@woody.linux-foundation.org>
-	 <524f69650805110942k7ccb065bm2c1e60f1a509af5a@mail.gmail.com>
-	 <alpine.LFD.1.10.0805110948530.3330@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: nathan spindel <nathans@gmail.com>
+Subject: Re: [PATCH] instaweb: if no httpd is specified and lighttpd doesn't exist, fall back on apache2.
+Date: Sun, 11 May 2008 10:00:11 -0700
+Message-ID: <0EB126FA-6752-4C66-B93D-48694159E3B6@gmail.com>
+References: <1210483565-12415-1-git-send-email-nathans@gmail.com> <7vlk2h7318.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 11 18:54:21 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 11 19:01:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvEoT-0003sK-Cz
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 18:54:17 +0200
+	id 1JvEv7-0005oV-AX
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 19:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbYEKQx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 12:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbYEKQx2
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 12:53:28 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:28008 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753421AbYEKQx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 12:53:27 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1708149fkq.5
-        for <git@vger.kernel.org>; Sun, 11 May 2008 09:53:23 -0700 (PDT)
+	id S1752061AbYEKRAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 13:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbYEKRAR
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 13:00:17 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:15298 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbYEKRAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 13:00:16 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1966894wfd.4
+        for <git@vger.kernel.org>; Sun, 11 May 2008 10:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=u+/SoZQ4GvWHfL+QMzfmFtMVpnDg7PPYOKyfpDC6hqA=;
-        b=MfqYPepx2LoDIl5pzpd1uQZQLPWUCUi7/6Z3GZY+8xeZEvyeBEM1kzKBgX4FhJX538LEtNkMXEd8YyzgHeSqKvxskOtjFnUBKgWJeRZI11qQuvPNvqzVqr8SmgqDsrpVu96qrl7TpMiaepUSwc4VRk5KBxf0oDTjA5t9hLSovNk=
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=ZKmf/XZaOBMDV3rBmgJxvZOgEhlTIvLzo+xsc6w7/sg=;
+        b=tWD9NDGe26pU1OREWz+t3QT32iwjI2ShCtqGKk2e3bz3JaVrEDmjmhJTPC9yWFGjAP9vx2x6I4dRe8h41LZ0JFslbPgX0acN2U21ESiqlIdqdjzwZms9h/P98w8E5yP9uF5taS0haid+plVPWnedKP4RYVnCvItj3FoNYkYQlYs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=q5N6A0HY3GGwfwWWTDfm+zesuiDfhdMyyFAJLiCARsQjTF4lSbMVuLAxlS6P0Vx9pqKrdGEmpgOyjw+2XP2gEUgJrdFHcplWd2t9OAO7IH0FdWA10J+GWfscRA+R1Kt2Ozp/tHZNGHXPnZPR62eMsCmAL1UtHVv22XHovHKiXWQ=
-Received: by 10.78.187.17 with SMTP id k17mr1708255huf.7.1210524803581;
-        Sun, 11 May 2008 09:53:23 -0700 (PDT)
-Received: by 10.78.141.1 with HTTP; Sun, 11 May 2008 09:53:23 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0805110948530.3330@woody.linux-foundation.org>
-Content-Disposition: inline
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=BeZds4urjuzu/Xdmi8DBIu5OFvWFb2LSWx5Q9BUpdfg6Bd5oDyU+z9X1/8GuEfLN3w8Bl2yFl7CtW2c5tJyjU132Ggwsy8grhT4/FzkpLNV4xgG/iSsj2j7buyn8exq91s3p9O8vj+Rm02MPoxfe+oggDspRcXljoMlSKwjMxp0=
+Received: by 10.142.240.9 with SMTP id n9mr2892777wfh.79.1210525215521;
+        Sun, 11 May 2008 10:00:15 -0700 (PDT)
+Received: from ?10.0.1.4? ( [76.14.71.118])
+        by mx.google.com with ESMTPS id 28sm16286906wfg.15.2008.05.11.10.00.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 11 May 2008 10:00:15 -0700 (PDT)
+In-Reply-To: <7vlk2h7318.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81794>
 
-That is not what I meant.   I meant that since May 6th I only did one
-- and those messages still showed up.  So I just ran a git-rebase
-origin which removed them
+On May 10, 2008, at 11:44 PM, Junio C Hamano wrote:
 
-On Sun, May 11, 2008 at 11:52 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+> nathan spindel <nathans@gmail.com> writes:
 >
+>> Signed-off-by: nathan spindel <nathans@gmail.com>
+>> ---
+>> git-instaweb.sh |   12 ++++++++++--
+>> 1 files changed, 10 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/git-instaweb.sh b/git-instaweb.sh
+>> index 6f91c8f..b744133 100755
+>> --- a/git-instaweb.sh
+>> +++ b/git-instaweb.sh
+>> @@ -31,8 +31,16 @@ conf="$GIT_DIR/gitweb/httpd.conf"
+>>
+>> # Defaults:
+>>
+>> -# if installed, it doesn't need further configuration (module_path)
+>> -test -z "$httpd" && httpd='lighttpd -f'
+>> +# use lighttpd if it exists, otherwise use apache2
+>> +if test -z "$httpd"
+>> +then
+>> +	if type "lighttpd" > /dev/null 2>&1;
 >
->  On Sun, 11 May 2008, Steve French wrote:
->  >
->  > I am puzzled why I see multiple messages like:
->  >
->  > Merge branch 'master' of /.../torvalds/linux-2.6
->  >
->  > when using:
->  >
->  > git-request-pull origin
->  > git://git.kernel.org/pub/scm/linux/kernel/git/sfrench/cifs-2.6.git
->  >
->  > I only pulled once (the initial pull after your previous merge of
->  > cifs-2.6.git tree, but before I added more patches).
+> The exit code from "type" is very loosely defined by POSIX which  
+> just says
+> it exits >0 to signal that "an error occured".  Presumably it means  
+> there
+> is no such command that is executable on the $PATH, and it may be more
+> portable and reliable than using "which", but this still worries me.
 >
->  You definitely pulled more than once. There's four merges by you. They
->  don't happen by themselves. There's one on April 25, one on the 27th, one
->  on the 28th, and then a final one on May 6th.
+> Doesn't "lighttpd" have an option that reports "I am here" and exit 0,
+> e.g. "--version"?  Then we could instead say:
 >
->  Maybe you'd just forgotten that you did the three previous ones, because
->  there's a delay of a week between those and the last one.
+> 	if lighttpd --version >/dev/null
+>        then
+>        	... use it ...
 >
->                 Linus
->
+> and that would be much nicer...
 
-
-
--- 
-Thanks,
-
-Steve
+I didn't know that the portability of "type" was questionable.  That's  
+a good idea.  Thanks!
