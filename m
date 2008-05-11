@@ -1,79 +1,127 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: "git log --first-parent" shows parents that are not first
-Date: Sun, 11 May 2008 11:23:41 +0900
-Message-ID: <20080511112341.6117@nanako3.bluebottle.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-apply: check for empty files when detecting
+ creation patch
+Date: Sat, 10 May 2008 19:36:02 -0700
+Message-ID: <7vlk2h8t4d.fsf@gitster.siamese.dyndns.org>
+References: <1210257579-30975-1-git-send-email-imre.deak@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 11 04:30:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Imre Deak <imre.deak@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 04:37:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv1KA-0001hg-QV
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 04:30:07 +0200
+	id 1Jv1RK-00039x-RJ
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 04:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501AbYEKC2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2008 22:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbYEKC2w
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 22:28:52 -0400
-Received: from mi1.bluebottle.com ([206.188.25.14]:34451 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752724AbYEKC2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2008 22:28:51 -0400
-Received: from fe1.bluebottle.com (internal.bluebottle.com [206.188.24.43])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4B2Sot0012982
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 10 May 2008 19:28:51 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:subject:date:message-id:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=a32ZBBxct/wfEGB+JfiTYHuLr6Y/j8TY66sFPWP5V420NphoQs5OZNC8as6aPcczt
-	RkzpGzkdQ39pBbJrtNwvclu8y/MkCJ19mwlPhTkwzf3pHFpnzHL2xuxm+uuKcCs
-Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4B2SifI029246
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 10 May 2008 19:28:49 -0700
-X-Trusted-Delivery: <677eb34eb21f5d385ddcba45b48d1774>
+	id S1754069AbYEKCgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2008 22:36:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbYEKCgT
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 May 2008 22:36:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43369 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752724AbYEKCgS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2008 22:36:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DFF5B1002;
+	Sat, 10 May 2008 22:36:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id A11C1369F; Sat, 10 May 2008 22:36:10 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 07E8D854-1F03-11DD-9DC6-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81725>
 
-The result given by "git log --first-parent" ('next' version) is
-unexpected to me.
+Imre Deak <imre.deak@gmail.com> writes:
 
-  % git rev-parse origin/next
-  4eddac518225621c3e4f7285beb879d2b4bad38a
-  % git log --abbrev-commit --pretty=oneline --first-parent origin/next^..origin/next
-  4eddac5... Merge branch 'master' into next
-  1f8115b... Merge branch 'maint'
-  ca1c991... Merge branch 'sg/merge-options' (early part)
-  31a3c6b... Merge branch 'db/learn-HEAD'
-  a064ac1... Merge branch 'jn/webfeed'
-  d576c45... Merge branch 'cc/help'
-  ca1a5ee... Merge branch 'dm/cherry-pick-s'
-  4c4d3ac... Merge branch 'lt/dirmatch-optim'
-  c5445fe... compat-util: avoid macro redefinition warning
-  eb120e6... compat/fopen.c: avoid clobbering the system defined fopen macro
-  bac59f1... Documentation: bisect: add a few "git bisect run" examples
-  d84ae0d... Documentation/config.txt: Add git-gui options
-  921177f... Documentation: improve "add", "pull" and "format-patch" examples
-  c904bf3... Be more careful with objects directory permissions on clone
+> When we can only guess if we have a creation patch, we do
+> this by treating the patch as such if there weren't any old
+> lines. Zero length files can be patched without old lines
+> though, so do an extra check for file size.
 
-I asked for the log between one commit before the tip of "origin/next" and the tip of the branch, following only the first-parent links.  v1.5.5 is not broken and shows the expected result:
+You described what your patch does, but you did not explain why it is a
+good addition.  One way to do so is to illustrate in what occasion what
+the existing code does is insufficient.
 
-  % ~/git-v1.5.5/bin/git log --abbrev-commit --pretty=oneline --first-parent origin/next^..origin/next
-  4eddac5... Merge branch 'master' into next
+> +static size_t existing_file_size(const char *file)
+> +{
+> +	size_t st_size = -1;
+> +
+> +	if (file == NULL)
+> +		return -1;
+> +	if (cached) {
+> +		struct cache_entry *ce;
+> +		int pos;
+> +
+> +		pos = cache_name_pos(file, strlen(file));
+> +		if (pos < 0)
+> +			return -1;
+> +		ce = active_cache[pos];
+> +		st_size = ntohl(ce->ce_size);
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+ntohl()?  I thought ce->ce_* are host-native byte order these days...
 
-----------------------------------------------------------------------
-Finally - A spam blocker that actually works.
-http://www.bluebottle.com/tag/4
+> +	} else {
+> +		struct stat st;
+> +
+> +		if (lstat(file, &st) < 0)
+> +			return -1;
+
+Doesn't this break the use case where "git-apply --stat" is used as an
+improved diffstat outside a git repository?
+
+> @@ -1143,13 +1170,18 @@ static int parse_single_patch(char *line, unsigned long size, struct patch *patc
+>  	if (patch->is_delete < 0 &&
+>  	    (newlines || (patch->fragments && patch->fragments->next)))
+>  		patch->is_delete = 0;
+> +	/* FIXME: How can be there context if it's a creation / deletion? */
+>  	if (!unidiff_zero || context) {
+>  		/* If the user says the patch is not generated with
+>  		 * --unified=0, or if we have seen context lines,
+>  		 * then not having oldlines means the patch is creation,
+>  		 * and not having newlines means the patch is deletion.
+> +		 *
+> +		 * It's also possible that a zero length file is added
+> +		 * to.
+>  		 */
+> -		if (patch->is_new < 0 && !oldlines) {
+> +		if (patch->is_new < 0 && !oldlines &&
+> +		    existing_file_size(patch->old_name) != 0) {
+>  			patch->is_new = 1;
+>  			patch->old_name = NULL;
+>  		}
+
+The user did not say the patch was produced without context, or we do have
+context.  The latter cannot be a creation patch so the new logic is not
+appropriate.  But let's forget that problem for now and look at the case
+where the patch did _not_ have any context, i.e. only added and deleted
+lines.
+
+If the patch did not have context, and the user did not ask for -u0 patch
+when it was produced, it could be a creation patch, but if there are
+deleted lines it cannot be.  That is the original logic.
+
+After your patch, the original logic is allowed to decide that the patch
+is a creation _only if_ you happen to already have a file that is _to be
+created_ in the work tree with some existing contents, or the file does
+not exist.  I do not see a sane logic behind that.  If you were making
+sure that the work tree does _not_ have the file, then I would understand,
+even though I think it is wrong for "apply --stat" case.  If you see a
+file in the work tree, and if you assume the patch would apply to the
+work tree, then the patch cannot be creation!
+
+In general, it is not right to look at the work tree to decide how to
+interpret what the patch means to begin with, but maybe you are trying to
+use work tree status as a hint to disambiguate a corner case that the
+information in a patch we are reading is insufficient, in which case it
+might be Ok.  But I cannot tell what that corner case is.
+
+I am lost.  Please explain what you are trying to fix first before
+explaining how you attempted to fix it.
