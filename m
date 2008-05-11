@@ -1,179 +1,108 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] Add svn-compatible "blame" output format to git-svn
-Date: Sun, 11 May 2008 00:42:56 -0700
-Message-ID: <20080511074247.GA23929@untitled>
-References: <7vabix8t3g.fsf@gitster.siamese.dyndns.org> <20080511051118.GA18207@midwinter.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Optimize common pattern of alloc_ref from string
+Date: Sun, 11 May 2008 04:07:09 -0400
+Message-ID: <20080511080709.GA6971@sigill.intra.peff.net>
+References: <1210462018-47060-1-git-send-email-kkowalczyk@gmail.com> <20080510233918.GA315@sigill.intra.peff.net> <7ce338ad0805101730n5b964a0em39d9fdcd9fc45f00@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sun May 11 09:43:51 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Krzysztof Kowalczyk <kkowalczyk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 10:08:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv6Dk-0006dr-KK
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 09:43:49 +0200
+	id 1Jv6c1-0003uj-5r
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 10:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbYEKHm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 03:42:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbYEKHm6
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 03:42:58 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53234 "EHLO hand.yhbt.net"
+	id S1751478AbYEKIHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 04:07:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYEKIHT
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 04:07:19 -0400
+Received: from peff.net ([208.65.91.99]:1349 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751395AbYEKHm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 03:42:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 7690C2DC08B;
-	Sun, 11 May 2008 00:42:56 -0700 (PDT)
+	id S1751609AbYEKIHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 04:07:07 -0400
+Received: (qmail 8579 invoked by uid 111); 11 May 2008 08:07:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 11 May 2008 04:07:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 May 2008 04:07:09 -0400
 Content-Disposition: inline
-In-Reply-To: <20080511051118.GA18207@midwinter.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7ce338ad0805101730n5b964a0em39d9fdcd9fc45f00@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81747>
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> git-svn blame produced output in the format of git blame; in environments
-> where there are scripts that read the output of svn blame, it's useful
-> to be able to use them with the output of git-svn. The git-compatible
-> format is still available using the new "--git-format" option.
-> 
-> This also fixes a bug in the initial git-svn blame implementation; it was
-> bombing out on uncommitted local changes.
-> 
-> Signed-off-by: Steven Grimm <koreth@midwinter.com>
+On Sat, May 10, 2008 at 05:30:56PM -0700, Krzysztof Kowalczyk wrote:
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+> >> -     ref = alloc_ref(strlen(refname) + 1);
+> >> -     strcpy(ref->name, refname);
+> >> +     ref = alloc_ref_from_str(refname);
+> >
+> > So this turns a 2-line construct into a 1-line construct...
+> 
+> And avoids future prossible mistakes with not terminating the string,
+> like the one just commited.
 
-> ---
+Yes. Please don't interpret my comment as "this change isn't worth it";
+I meant it as "yes, it is good to be simplifying and making this part
+less error prone; I just want to nitpick your exact implementation".
+
+> You're absolutely right - it's a micro-optimization and your version
+> might be preferred for clarity. This is the first time I submit a
+> patch to git so I don't have a good feel for what kind of treadoffs
+> people find acceptable.
+
+OK. Ultimately it is up to Junio. I think your version is a bit complex,
+but at the very least it contains that complexity neatly in one function.
+
+Actually, the version I posted actually has an optimization, too (it
+remembers the strlen calculation to reuse it). I think the simplest
+would just be:
+
+  struct ref *alloc_ref_from_str(cons char *str)
+  {
+    struct ref *ret = alloc_ref(strlen(str) + 1);
+    strcpy(ret->name, str);
+    return ret;
+  }
+
+But really my main worry is that now we have _two_ functions which
+allocate refs, so if "struct ref" ever grows a new field that needs
+initializing, it has to go in two places (whereas if alloc_ref_from_str
+calls alloc_ref, it works automatically).
+
+> I should also mention that
+> static struct ref *try_explicit_object_name(const char *name)
+> {
+> 	unsigned char sha1[20];
+> 	struct ref *ref;
 > 
-> 	The svn-compatible format is now the default.
+> 	if (!*name) {
+> 		ref = alloc_ref(20);
+> 		strcpy(ref->name, "(delete)");
+> 		hashclr(ref->new_sha1);
+> 		return ref;
+> 	}
+> ...
 > 
->  Documentation/git-svn.txt |   15 +++++++++---
->  git-svn.perl              |   55 ++++++++++++++++++++++++++++++++++++---------
->  2 files changed, 55 insertions(+), 15 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index f4ba105..c6b56b4 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -166,11 +166,18 @@ environment). This command has the same behaviour.
->  Any other arguments are passed directly to `git log'
->  
->  'blame'::
-> -       Show what revision and author last modified each line of a file. This is
-> -       identical to `git blame', but SVN revision numbers are shown instead of git
-> -       commit hashes.
-> +       Show what revision and author last modified each line of a file. The
-> +       output of this mode is format-compatible with the output of
-> +       `svn blame' by default. Like the SVN blame command,
-> +       local uncommitted changes in the working copy are ignored;
-> +       the version of the file in the HEAD revision is annotated. Unknown
-> +       arguments are passed directly to git-blame.
->  +
-> -All arguments are passed directly to `git blame'.
-> +--git-format;;
-> +	Produce output in the same format as `git blame', but with
-> +	SVN revision numbers instead of git commit hashes. In this mode,
-> +	changes that haven't been committed to SVN (including local
-> +	working-copy edits) are shown as revision 0.
->  
->  --
->  'find-rev'::
-> diff --git a/git-svn.perl b/git-svn.perl
-> index e47b1ea..77f880e 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -65,7 +65,8 @@ my ($_stdin, $_help, $_edit,
->  	$_template, $_shared,
->  	$_version, $_fetch_all, $_no_rebase,
->  	$_merge, $_strategy, $_dry_run, $_local,
-> -	$_prefix, $_no_checkout, $_url, $_verbose);
-> +	$_prefix, $_no_checkout, $_url, $_verbose,
-> +	$_git_format);
->  $Git::SVN::_follow_parent = 1;
->  my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
->                      'config-dir=s' => \$Git::SVN::Ra::config_dir,
-> @@ -188,7 +189,7 @@ my %cmd = (
->  		    { 'url' => \$_url, } ],
->  	'blame' => [ \&Git::SVN::Log::cmd_blame,
->  	            "Show what revision and author last modified each line of a file",
-> -	            {} ],
-> +		    { 'git-format' => \$_git_format } ],
->  );
->  
->  my $cmd;
-> @@ -225,7 +226,7 @@ unless ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
->  my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
->  
->  read_repo_config(\%opts);
-> -Getopt::Long::Configure('pass_through') if ($cmd && $cmd eq 'log');
-> +Getopt::Long::Configure('pass_through') if ($cmd && ($cmd eq 'log' || $cmd eq 'blame'));
->  my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
->                      'minimize-connections' => \$Git::SVN::Migration::_minimize,
->                      'id|i=s' => \$Git::SVN::default_ref_id,
-> @@ -4468,19 +4469,51 @@ out:
->  }
->  
->  sub cmd_blame {
-> -	my $path = shift;
-> +	my $path = pop;
->  
->  	config_pager();
->  	run_pager();
->  
-> -	my ($fh, $ctx) = command_output_pipe('blame', @_, $path);
-> -	while (my $line = <$fh>) {
-> -		if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
-> -			my (undef, $rev, undef) = ::cmt_metadata($1);
-> -			$rev = sprintf('%-10s', $rev);
-> -			$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
-> +	my ($fh, $ctx, $rev);
-> +
-> +	if ($_git_format) {
-> +		($fh, $ctx) = command_output_pipe('blame', @_, $path);
-> +		while (my $line = <$fh>) {
-> +			if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
-> +				# Uncommitted edits show up as a rev ID of
-> +				# all zeros, which we can't look up with
-> +				# cmt_metadata
-> +				if ($1 !~ /^0+$/) {
-> +					(undef, $rev, undef) =
-> +						::cmt_metadata($1);
-> +					$rev = '0' if (!$rev);
-> +				} else {
-> +					$rev = '0';
-> +				}
-> +				$rev = sprintf('%-10s', $rev);
-> +				$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
-> +			}
-> +			print $line;
-> +		}
-> +	} else {
-> +		($fh, $ctx) = command_output_pipe('blame', '-p', @_, 'HEAD',
-> +						  '--', $path);
-> +		my ($sha1);
-> +		my %authors;
-> +		while (my $line = <$fh>) {
-> +			if ($line =~ /^([[:xdigit:]]{40})\s\d+\s\d+/) {
-> +				$sha1 = $1;
-> +				(undef, $rev, undef) = ::cmt_metadata($1);
-> +				$rev = '0' if (!$rev);
-> +			}
-> +			elsif ($line =~ /^author (.*)/) {
-> +				$authors{$rev} = $1;
-> +				$authors{$rev} =~ s/\s/_/g;
-> +			}
-> +			elsif ($line =~ /^\t(.*)$/) {
-> +				printf("%6s %10s %s\n", $rev, $authors{$rev}, $1);
-> +			}
->  		}
-> -		print $line;
->  	}
->  	command_close_pipe($fh, $ctx);
->  }
-> -- 
-> 1.5.5.49.gf43e2
+> could also be replaced with alloc_ref_str() - I just wasn't 100% sure
+> if overallocating 10 bytes (20 - strlen("(delete)")) was just sloppy
+> code or does other code relies on that (which is unlikely and if true
+> then it wouldn't be good).
+
+It looks like just slop, and should probably be fixed at the same time.
+There are also quite a number of:
+
+  ret = alloc_ref(strlen(name) + 6);
+  sprintf(ret->name, "refs/%s", name);
+
+which are error-prone and owuld be nice to fix. However, I don't think
+there is an easy way short of making ref->name a strbuf. And now it
+seems we are getting into a lot of code churn for a relatively small
+benefit.
+
+-Peff
