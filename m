@@ -1,66 +1,179 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] mergetool: Make ECMerge use the settings as specified by the user in the GUI
-Date: Sun, 11 May 2008 09:33:09 +0200
-Message-ID: <183DBDB1-99BE-42C5-91DE-2488046164B7@zib.de>
-References: <482038C4.6050402@visageimaging.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sebastian Schuberth <sschuberth@visageimaging.com>
-To: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun May 11 09:33:44 2008
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2] Add svn-compatible "blame" output format to git-svn
+Date: Sun, 11 May 2008 00:42:56 -0700
+Message-ID: <20080511074247.GA23929@untitled>
+References: <7vabix8t3g.fsf@gitster.siamese.dyndns.org> <20080511051118.GA18207@midwinter.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sun May 11 09:43:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv63z-0004bv-FR
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 09:33:43 +0200
+	id 1Jv6Dk-0006dr-KK
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 09:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbYEKHcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 03:32:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbYEKHcy
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 03:32:54 -0400
-Received: from mailer.zib.de ([130.73.108.11]:64501 "EHLO mailer.zib.de"
+	id S1751479AbYEKHm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 03:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbYEKHm6
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 03:42:58 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53234 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751339AbYEKHcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 03:32:53 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.14.2/8.14.2) with ESMTP id m4B7WRRC022173;
-	Sun, 11 May 2008 09:32:27 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db97dd2.pool.einsundeins.de [77.185.125.210])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m4B7WQMQ007370
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 11 May 2008 09:32:26 +0200 (MEST)
-In-Reply-To: <482038C4.6050402@visageimaging.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751395AbYEKHm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 03:42:57 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 7690C2DC08B;
+	Sun, 11 May 2008 00:42:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080511051118.GA18207@midwinter.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81746>
 
+Steven Grimm <koreth@midwinter.com> wrote:
+> git-svn blame produced output in the format of git blame; in environments
+> where there are scripts that read the output of svn blame, it's useful
+> to be able to use them with the output of git-svn. The git-compatible
+> format is still available using the new "--git-format" option.
+> 
+> This also fixes a bug in the initial git-svn blame implementation; it was
+> bombing out on uncommitted local changes.
+> 
+> Signed-off-by: Steven Grimm <koreth@midwinter.com>
 
-On May 6, 2008, at 12:53 PM, Sebastian Schuberth wrote:
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> When run from the command line, ECMerge does not automatically use  
-> the same
-> settings for a merge / diff that it would use when starting the GUI  
-> and loading
-> files manually. In the first case the built-in factory defaults  
-> would be used,
-> while in the second case the settings the user has specified in the  
-> GUI would
-> be used, which can be misleading. Specifying the "--default" command  
-> line
-> option changes this behavior so that always the user specfified GUI  
-> settings
-> are used.
-
-
-I tested the change and propose to take the patch.  I needed,
-however, to remove dos line endings from the patch before it
-applied cleanly.
-
-	Steffen
+> ---
+> 
+> 	The svn-compatible format is now the default.
+> 
+>  Documentation/git-svn.txt |   15 +++++++++---
+>  git-svn.perl              |   55 ++++++++++++++++++++++++++++++++++++---------
+>  2 files changed, 55 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index f4ba105..c6b56b4 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -166,11 +166,18 @@ environment). This command has the same behaviour.
+>  Any other arguments are passed directly to `git log'
+>  
+>  'blame'::
+> -       Show what revision and author last modified each line of a file. This is
+> -       identical to `git blame', but SVN revision numbers are shown instead of git
+> -       commit hashes.
+> +       Show what revision and author last modified each line of a file. The
+> +       output of this mode is format-compatible with the output of
+> +       `svn blame' by default. Like the SVN blame command,
+> +       local uncommitted changes in the working copy are ignored;
+> +       the version of the file in the HEAD revision is annotated. Unknown
+> +       arguments are passed directly to git-blame.
+>  +
+> -All arguments are passed directly to `git blame'.
+> +--git-format;;
+> +	Produce output in the same format as `git blame', but with
+> +	SVN revision numbers instead of git commit hashes. In this mode,
+> +	changes that haven't been committed to SVN (including local
+> +	working-copy edits) are shown as revision 0.
+>  
+>  --
+>  'find-rev'::
+> diff --git a/git-svn.perl b/git-svn.perl
+> index e47b1ea..77f880e 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -65,7 +65,8 @@ my ($_stdin, $_help, $_edit,
+>  	$_template, $_shared,
+>  	$_version, $_fetch_all, $_no_rebase,
+>  	$_merge, $_strategy, $_dry_run, $_local,
+> -	$_prefix, $_no_checkout, $_url, $_verbose);
+> +	$_prefix, $_no_checkout, $_url, $_verbose,
+> +	$_git_format);
+>  $Git::SVN::_follow_parent = 1;
+>  my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+>                      'config-dir=s' => \$Git::SVN::Ra::config_dir,
+> @@ -188,7 +189,7 @@ my %cmd = (
+>  		    { 'url' => \$_url, } ],
+>  	'blame' => [ \&Git::SVN::Log::cmd_blame,
+>  	            "Show what revision and author last modified each line of a file",
+> -	            {} ],
+> +		    { 'git-format' => \$_git_format } ],
+>  );
+>  
+>  my $cmd;
+> @@ -225,7 +226,7 @@ unless ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
+>  my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
+>  
+>  read_repo_config(\%opts);
+> -Getopt::Long::Configure('pass_through') if ($cmd && $cmd eq 'log');
+> +Getopt::Long::Configure('pass_through') if ($cmd && ($cmd eq 'log' || $cmd eq 'blame'));
+>  my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
+>                      'minimize-connections' => \$Git::SVN::Migration::_minimize,
+>                      'id|i=s' => \$Git::SVN::default_ref_id,
+> @@ -4468,19 +4469,51 @@ out:
+>  }
+>  
+>  sub cmd_blame {
+> -	my $path = shift;
+> +	my $path = pop;
+>  
+>  	config_pager();
+>  	run_pager();
+>  
+> -	my ($fh, $ctx) = command_output_pipe('blame', @_, $path);
+> -	while (my $line = <$fh>) {
+> -		if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
+> -			my (undef, $rev, undef) = ::cmt_metadata($1);
+> -			$rev = sprintf('%-10s', $rev);
+> -			$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
+> +	my ($fh, $ctx, $rev);
+> +
+> +	if ($_git_format) {
+> +		($fh, $ctx) = command_output_pipe('blame', @_, $path);
+> +		while (my $line = <$fh>) {
+> +			if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
+> +				# Uncommitted edits show up as a rev ID of
+> +				# all zeros, which we can't look up with
+> +				# cmt_metadata
+> +				if ($1 !~ /^0+$/) {
+> +					(undef, $rev, undef) =
+> +						::cmt_metadata($1);
+> +					$rev = '0' if (!$rev);
+> +				} else {
+> +					$rev = '0';
+> +				}
+> +				$rev = sprintf('%-10s', $rev);
+> +				$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
+> +			}
+> +			print $line;
+> +		}
+> +	} else {
+> +		($fh, $ctx) = command_output_pipe('blame', '-p', @_, 'HEAD',
+> +						  '--', $path);
+> +		my ($sha1);
+> +		my %authors;
+> +		while (my $line = <$fh>) {
+> +			if ($line =~ /^([[:xdigit:]]{40})\s\d+\s\d+/) {
+> +				$sha1 = $1;
+> +				(undef, $rev, undef) = ::cmt_metadata($1);
+> +				$rev = '0' if (!$rev);
+> +			}
+> +			elsif ($line =~ /^author (.*)/) {
+> +				$authors{$rev} = $1;
+> +				$authors{$rev} =~ s/\s/_/g;
+> +			}
+> +			elsif ($line =~ /^\t(.*)$/) {
+> +				printf("%6s %10s %s\n", $rev, $authors{$rev}, $1);
+> +			}
+>  		}
+> -		print $line;
+>  	}
+>  	command_close_pipe($fh, $ctx);
+>  }
+> -- 
+> 1.5.5.49.gf43e2
