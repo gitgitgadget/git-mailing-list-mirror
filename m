@@ -1,172 +1,112 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH v2] Add svn-compatible "blame" output format to git-svn
-Date: Sat, 10 May 2008 22:11:18 -0700
-Message-ID: <20080511051118.GA18207@midwinter.com>
-References: <7vabix8t3g.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 11 07:12:09 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: Verilog/ASIC development support is insufficient in git , help!
+Date: Sun, 11 May 2008 00:21:32 -0500
+Message-ID: <B03D1DC3-7088-41AF-BB8B-9A696E7C5B8E@sb.org>
+References: <EB66C79C87CF49E59CB39EA4C286AE05@justinuTop> <BA7F9A3C7EDA4CDD99016093B0DB55C0@justinuTop>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <justin0927@hotmail.com>
+To: "Justin Leung" <jleung@redback.com>
+X-From: git-owner@vger.kernel.org Sun May 11 07:23:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv3qy-00043L-As
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 07:12:08 +0200
+	id 1Jv41V-0005jM-ST
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 07:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843AbYEKFLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 01:11:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbYEKFLT
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 01:11:19 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:41493 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750792AbYEKFLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 01:11:18 -0400
-Received: (qmail 18353 invoked by uid 1001); 11 May 2008 05:11:18 -0000
-Content-Disposition: inline
-In-Reply-To: <7vabix8t3g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750883AbYEKFVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2008 01:21:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbYEKFVr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 01:21:47 -0400
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:58238 "EHLO
+	randymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750810AbYEKFVr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 May 2008 01:21:47 -0400
+Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a5.g.dreamhost.com (Postfix) with ESMTP id 53BFF90A69;
+	Sat, 10 May 2008 22:21:45 -0700 (PDT)
+In-Reply-To: <BA7F9A3C7EDA4CDD99016093B0DB55C0@justinuTop>
+X-Priority: 3
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81734>
 
-git-svn blame produced output in the format of git blame; in environments
-where there are scripts that read the output of svn blame, it's useful
-to be able to use them with the output of git-svn. The git-compatible
-format is still available using the new "--git-format" option.
+On May 11, 2008, at 12:08 AM, Justin Leung wrote:
 
-This also fixes a bug in the initial git-svn blame implementation; it was
-bombing out on uncommitted local changes.
+> Hi all,
+>
+> * This email probably represent the whole hardware ASIC community  
+> about git *
+>
+> I'm evaluating Git as the replacement of CVS for the ASIC group in  
+> my company,
+> but things are moving along very bumpy.
+>
+> I (and many others doing the evaluation) love the tool dearly; we  
+> love the local repository and inter-db sync'ing .
+> I see a lot of potential in productivity and changes in work model  
+> that helps efficiency in ASIC dev.
+>
+> BUT, my managers, some veterans, and directors are EXTREMELY  
+> concerned about the ease-of-use..
+> so much that they are going to pick SVN !  uh-oh....i m serious =(
+>
+> Alot of people argued, why not SVN ? it's CVS++ and it's ease of use  
+> not a problem when comparing to Git.
+>
+> here are the things not fitting right in ASIC dev:
+>
+> - no incremental revision numbers (they are so scared of the 40hex  
+> SHA1)
+>
+> - Inability to reference without SHA1, they want simple numbering  
+> (ie, version 100, 120, 120.1, 130.4.5)
+>
+> - Inability to refer to a file by a simple number
+> (the backend guys will be confused by SHA1; they can't work with  
+> anything more than 4-5 digits)
+>
+> - Complexity of commands (although we can have warpper, but real git  
+> commands for non-sw guys is not going to happen)
+>
+> Most hardware chip designers were using CVS since their first job.
+> It suited the purpose very well.
+>
+> Most RTL design veterans only use less then 5-6 cvs commands in  
+> their whole life (LOL, i m serious) :
+>
+> $ cvs checkout
+> $ cvs update
+> $ cvs log
+> $ cvs diff (tkdiff)
+> $ cvs status
+> $ cvs commit
+>
+> We don't use branches.
+> Our model is strict forward with a centralized, one main branch  
+> model to avoid mistakes .
+> We see branches as evil ; some merges in Verilog codes means another  
+> 10+ hours of simulation and regression.
+>
+> [snip]
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
+Honestly, it sounds like SVN is actually a good fit here. Just because  
+git is awesome for many things does not mean it is the end-all-be-all  
+of version control systems. SVN still has its place as the last true  
+centralized system. Given your constraints and workflow, why do you  
+think git is better than SVN?
 
-	The svn-compatible format is now the default.
+-Kevin Ballard
 
- Documentation/git-svn.txt |   15 +++++++++---
- git-svn.perl              |   55 ++++++++++++++++++++++++++++++++++++---------
- 2 files changed, 55 insertions(+), 15 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index f4ba105..c6b56b4 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -166,11 +166,18 @@ environment). This command has the same behaviour.
- Any other arguments are passed directly to `git log'
- 
- 'blame'::
--       Show what revision and author last modified each line of a file. This is
--       identical to `git blame', but SVN revision numbers are shown instead of git
--       commit hashes.
-+       Show what revision and author last modified each line of a file. The
-+       output of this mode is format-compatible with the output of
-+       `svn blame' by default. Like the SVN blame command,
-+       local uncommitted changes in the working copy are ignored;
-+       the version of the file in the HEAD revision is annotated. Unknown
-+       arguments are passed directly to git-blame.
- +
--All arguments are passed directly to `git blame'.
-+--git-format;;
-+	Produce output in the same format as `git blame', but with
-+	SVN revision numbers instead of git commit hashes. In this mode,
-+	changes that haven't been committed to SVN (including local
-+	working-copy edits) are shown as revision 0.
- 
- --
- 'find-rev'::
-diff --git a/git-svn.perl b/git-svn.perl
-index e47b1ea..77f880e 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -65,7 +65,8 @@ my ($_stdin, $_help, $_edit,
- 	$_template, $_shared,
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
--	$_prefix, $_no_checkout, $_url, $_verbose);
-+	$_prefix, $_no_checkout, $_url, $_verbose,
-+	$_git_format);
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-@@ -188,7 +189,7 @@ my %cmd = (
- 		    { 'url' => \$_url, } ],
- 	'blame' => [ \&Git::SVN::Log::cmd_blame,
- 	            "Show what revision and author last modified each line of a file",
--	            {} ],
-+		    { 'git-format' => \$_git_format } ],
- );
- 
- my $cmd;
-@@ -225,7 +226,7 @@ unless ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
- my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
- 
- read_repo_config(\%opts);
--Getopt::Long::Configure('pass_through') if ($cmd && $cmd eq 'log');
-+Getopt::Long::Configure('pass_through') if ($cmd && ($cmd eq 'log' || $cmd eq 'blame'));
- my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
-                     'minimize-connections' => \$Git::SVN::Migration::_minimize,
-                     'id|i=s' => \$Git::SVN::default_ref_id,
-@@ -4468,19 +4469,51 @@ out:
- }
- 
- sub cmd_blame {
--	my $path = shift;
-+	my $path = pop;
- 
- 	config_pager();
- 	run_pager();
- 
--	my ($fh, $ctx) = command_output_pipe('blame', @_, $path);
--	while (my $line = <$fh>) {
--		if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
--			my (undef, $rev, undef) = ::cmt_metadata($1);
--			$rev = sprintf('%-10s', $rev);
--			$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
-+	my ($fh, $ctx, $rev);
-+
-+	if ($_git_format) {
-+		($fh, $ctx) = command_output_pipe('blame', @_, $path);
-+		while (my $line = <$fh>) {
-+			if ($line =~ /^\^?([[:xdigit:]]+)\s/) {
-+				# Uncommitted edits show up as a rev ID of
-+				# all zeros, which we can't look up with
-+				# cmt_metadata
-+				if ($1 !~ /^0+$/) {
-+					(undef, $rev, undef) =
-+						::cmt_metadata($1);
-+					$rev = '0' if (!$rev);
-+				} else {
-+					$rev = '0';
-+				}
-+				$rev = sprintf('%-10s', $rev);
-+				$line =~ s/^\^?[[:xdigit:]]+(\s)/$rev$1/;
-+			}
-+			print $line;
-+		}
-+	} else {
-+		($fh, $ctx) = command_output_pipe('blame', '-p', @_, 'HEAD',
-+						  '--', $path);
-+		my ($sha1);
-+		my %authors;
-+		while (my $line = <$fh>) {
-+			if ($line =~ /^([[:xdigit:]]{40})\s\d+\s\d+/) {
-+				$sha1 = $1;
-+				(undef, $rev, undef) = ::cmt_metadata($1);
-+				$rev = '0' if (!$rev);
-+			}
-+			elsif ($line =~ /^author (.*)/) {
-+				$authors{$rev} = $1;
-+				$authors{$rev} =~ s/\s/_/g;
-+			}
-+			elsif ($line =~ /^\t(.*)$/) {
-+				printf("%6s %10s %s\n", $rev, $authors{$rev}, $1);
-+			}
- 		}
--		print $line;
- 	}
- 	command_close_pipe($fh, $ctx);
- }
 -- 
-1.5.5.49.gf43e2
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
