@@ -1,90 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] instaweb: make it compatible with Mac OS X 10.5's apache
- installation.
-Date: Sat, 10 May 2008 23:58:44 -0700
-Message-ID: <7vhcd572e3.fsf@gitster.siamese.dyndns.org>
-References: <1210483565-12415-1-git-send-email-nathans@gmail.com>
- <1210483565-12415-2-git-send-email-nathans@gmail.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: "git log --first-parent" shows parents that are not first
+Date: Sun, 11 May 2008 16:03:20 +0900
+Message-ID: <200805110706.m4B76eLE006432@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: nathan spindel <nathans@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 09:00:11 2008
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun May 11 09:07:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jv5XW-0005nZ-Cp
-	for gcvg-git-2@gmane.org; Sun, 11 May 2008 09:00:10 +0200
+	id 1Jv5f3-0007gP-RM
+	for gcvg-git-2@gmane.org; Sun, 11 May 2008 09:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326AbYEKG65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2008 02:58:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbYEKG64
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 02:58:56 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41918 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914AbYEKG64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2008 02:58:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D729636A1;
-	Sun, 11 May 2008 02:58:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 1481A36A0; Sun, 11 May 2008 02:58:51 -0400 (EDT)
-In-Reply-To: <1210483565-12415-2-git-send-email-nathans@gmail.com> (nathan
- spindel's message of "Sat, 10 May 2008 22:26:04 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B863666C-1F27-11DD-8852-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1751334AbYEKHGm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 May 2008 03:06:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbYEKHGm
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 May 2008 03:06:42 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:55857 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751315AbYEKHGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2008 03:06:41 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4B76eLE006432
+	for <git@vger.kernel.org>; Sun, 11 May 2008 00:06:40 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:subject:date:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=iIv8eGSEX2VBA8yZ6g+4qust7+hJ+YPrRTqRtTOQYMmpwQr0XlhpTjxQEND7OKSzW
+	3BC1qZJryztbCQCczOEUAjKNPpLxXo9ifgVVzZY7P5DN1tSIESRTIBc6TDbnq7c
+Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4B76VTD031918
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 11 May 2008 00:06:38 -0700
+X-Trusted-Delivery: <9ef7e0d1af4b05007b212503bf28671a>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81744>
 
-nathan spindel <nathans@gmail.com> writes:
+Quoting =E3=E3=E3=E3=E3=AA=E3=AA=E3  <nanako3@bluebottle.com>:
 
-> When in apache2 mode if there isn't an apache2 binary on the system but
-> there is a httpd command in /usr/sbin/ (like there is on Mac OS X)
-> use that instead.
+> The result given by "git log --first-parent" ('next' version) is
+> unexpected to me.
+>
+>   % git rev-parse origin/next
+>   4eddac518225621c3e4f7285beb879d2b4bad38a
+>   % git log --abbrev-commit --pretty=3Doneline --first-parent origin/=
+next^..origin/next
+>   4eddac5... Merge branch 'master' into next
+>   1f8115b... Merge branch 'maint'
+>   ca1c991... Merge branch 'sg/merge-options' (early part)
+>   31a3c6b... Merge branch 'db/learn-HEAD'
+>   a064ac1... Merge branch 'jn/webfeed'
+>   d576c45... Merge branch 'cc/help'
+>   ca1a5ee... Merge branch 'dm/cherry-pick-s'
+>   4c4d3ac... Merge branch 'lt/dirmatch-optim'
+>   c5445fe... compat-util: avoid macro redefinition warning
+>   eb120e6... compat/fopen.c: avoid clobbering the system defined fope=
+n macro
+>   bac59f1... Documentation: bisect: add a few "git bisect run" exampl=
+es
+>   d84ae0d... Documentation/config.txt: Add git-gui options
+>   921177f... Documentation: improve "add", "pull" and "format-patch" =
+examples
+>   c904bf3... Be more careful with objects directory permissions on cl=
+one
+>
+> I asked for the log between one commit before the tip of "origin/next=
+" and the tip of the branch, following only the first-parent links.  v1=
+=2E5.5 is not broken and shows the expected result:
+>
+>   % ~/git-v1.5.5/bin/git log --abbrev-commit --pretty=3Doneline --fir=
+st-parent origin/next^..origin/next
+>   4eddac5... Merge branch 'master' into next
 
-How would you ensure that httpd is actually Apache and not something else?
+Could you please revert d9c292e8bbd51c84cb9ecd86cb89b8a1b35a2a82?  With
+that patch reverted from 'next', the problem disappears.
 
-> When in apache2 mode and there isn't a module_path specified, look for
-> module paths in /usr/lib/apache2/modules _and_ /usr/libexec/apache2,
-> in that order.
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
 
-This one sounds Ok.
-
->  apache2_conf () {
-> -	test -z "$module_path" && module_path=/usr/lib/apache2/modules
-> +	# if there isn't an apache2 command on the system but there is a httpd
-> +	# command in /usr/sbin/ use that instead for Mac OS X compatibility.
-
-
-> +	httpd_only="`echo $httpd | cut -f1 -d' '`"
-> +	type $httpd_only > /dev/null 2>&1;
-> +	test $? != 0 && test -x /usr/sbin/httpd && httpd=${httpd/apache2/httpd}
-
-I see the same "type" issue as I mentioned, but I see that we use them in
-mergetool and web--browse and we haven't heard breakages so perhaps this
-is portable enough ;-)
-
-Please avoid ${parameter/pattern/string} expansion, which is not even in
-POSIX.  It is bashism and unportable.
-
-> +	if test -z "$module_path"
-> +	then
-> +		for path in /usr/lib/apache2/modules /usr/libexec/apache2; do
-
-Hmm.  If you do discovery like this, maybe you would want to do discovery
-for "httpd" the same way?  After all, why look for it only in /usr/sbin?
-
-> @@ -190,6 +206,7 @@ ServerName "git-instaweb"
->  ServerRoot "$fqgitdir/gitweb"
->  DocumentRoot "$fqgitdir/gitweb"
->  PidFile "$fqgitdir/pid"
-> +LockFile "$fqgitdir/gitweb/logs/accept.lock"
->  Listen $bind$port
-
-We've seen this elsewhere and this part should be Ok.
+----------------------------------------------------------------------
+=46ree pop3 email with a spam filter.
+http://www.bluebottle.com/tag/5
