@@ -1,66 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to backup git
-Date: Mon, 12 May 2008 16:08:21 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805121606010.30431@racer>
-References: <4827DEF6.1050005@gmail.com> <87ej87is50.fsf@offby1.atm01.sea.blarg.net> <alpine.DEB.1.00.0805121428310.30431@racer> <48285087.3090402@gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/5] Make mktag a builtin.
+Date: Mon, 12 May 2008 10:09:31 -0500
+Message-ID: <48285DAB.2040707@nrlssc.navy.mil>
+References: <1210299589-10448-1-git-send-email-drafnel@example.com> <1210299589-10448-2-git-send-email-drafnel@example.com> <7689656.1210299528037.JavaMail.teamon@b301.teamon.com> <7v63tk6992.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 17:09:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 12 17:11:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvZeM-0006iG-SX
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 17:09:15 +0200
+	id 1JvZgv-0007tU-AF
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 17:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbYELPI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 11:08:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYELPI0
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:08:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42877 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751797AbYELPIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 11:08:25 -0400
-Received: (qmail invoked by alias); 12 May 2008 15:08:23 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp023) with SMTP; 12 May 2008 17:08:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19wI/ckstVwa3/HrBdIL1RlsqxqHrhLaxFULLpF7S
-	1GkYHCjAjhOyAB
-X-X-Sender: gene099@racer
-In-Reply-To: <48285087.3090402@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753108AbYELPK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 11:10:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbYELPK5
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:10:57 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46379 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbYELPKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 11:10:55 -0400
+Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
+	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m4CF9WCG010957;
+	Mon, 12 May 2008 10:09:32 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 12 May 2008 10:09:32 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <7v63tk6992.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 12 May 2008 15:09:32.0852 (UTC) FILETIME=[2EF21F40:01C8B442]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81872>
 
-Hi,
-
-[please do not cull the Cc: list]
-
-On Mon, 12 May 2008, bill lam wrote:
-
-> Johannes Schindelin wrote:
-> > > I'd rsync just the .git directory.
+Junio C Hamano wrote:
+> drafnel@gmail.com writes:
 > 
-> Thanks to all responders for quick reply. I still have a related 
-> question. svn has a hotcopy command to ensure integrity so that it is 
-> possible to backup without shutting down the svn server. If someone 
-> update the .git while I am performing backup using tar or rsync? Will 
-> the atomicity of that commit still preserve in my backup copy?
+>> From: Brandon Casey <drafnel@gmail.com>
+>>
+>> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+> 
+>> @@ -306,6 +305,7 @@ BUILT_INS += git-fsck-objects$X
+>>  BUILT_INS += git-get-tar-commit-id$X
+>>  BUILT_INS += git-init$X
+>>  BUILT_INS += git-merge-subtree$X
+>> +BUILT_INS += git-mktag$X
+>>  BUILT_INS += git-peek-remote$X
+>>  BUILT_INS += git-repo-config$X
+>>  BUILT_INS += git-show$X
+>> @@ -423,6 +423,7 @@ LIB_OBJS += log-tree.o
+>>  LIB_OBJS += mailmap.o
+>>  LIB_OBJS += match-trees.o
+>>  LIB_OBJS += merge-file.o
+>> +LIB_OBJS += mktag.o
+> 
+> This is unusual for a builtin.  Why didn't it migrate to builtin-mktag?
 
-No, rsync is particularly dumb in that respect.  The safest thing would be 
-to back up the reflogs first (e.g. with rsync), then repack and then clone 
-(the clone will transmit the objects referenced by the reflogs, too).  
-Note: the same holds _not_ true for a simple fetch.
+I didn't know how to do it.
 
-But then, you usually do not want to back up reflogs anyway, since they 
-are purely local and not visible to anybody else.
+I was trying not to do a code move and a code change at the same time.
+I didn't think I should move the non-builtin mktag.c to builtin-mktag.c,
+and then after I modified mktag to be a builtin I knew I was moving it
+to builtin-tag.c so I didn't see a point to renaming it.
 
-Ciao,
-Dscho
+Also, I decided about those things _before_ I realized how small the changes
+would be to mktag to make it a builtin.
+
+Do you think the modified patch you posted conflicts with the idea that
+"code move should be separate from code change"?
+
+-brandon
