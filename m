@@ -1,68 +1,52 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
-Date: Mon, 12 May 2008 22:09:46 +0300
-Message-ID: <20080512190946.GC5160@mithlond.arda.local>
-References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home>
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: how to backup git
+Date: Mon, 12 May 2008 22:10:02 +0300
+Message-ID: <20080512191002.GQ31039@zakalwe.fi>
+References: <alpine.DEB.1.00.0805121428310.30431@racer> <48285087.3090402@gmail.com> <alpine.DEB.1.00.0805121606010.30431@racer> <20080512152731.GM31039@zakalwe.fi> <alpine.DEB.1.00.0805121804500.30431@racer> <20080512180720.GN31039@zakalwe.fi> <alpine.DEB.1.00.0805121920120.30431@racer> <20080512183615.GO31039@zakalwe.fi> <20080512183803.GP31039@zakalwe.fi> <73584838-DF17-4CDB-92CA-363ED9DA9582@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon May 12 21:11:59 2008
+	bill lam <cbill.lam@gmail.com>, git@vger.kernel.org
+To: Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 12 21:12:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvdR8-0007XA-Lw
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 21:11:51 +0200
+	id 1JvdRA-0007XA-5q
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 21:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760334AbYELTJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 15:09:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758767AbYELTJ6
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 15:09:58 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:35171 "EHLO
-	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758825AbYELTJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 15:09:57 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.5.014)
-        id 48232FF0002E7D16; Mon, 12 May 2008 22:09:50 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1JvdP8-0002EA-1E; Mon, 12 May 2008 22:09:46 +0300
+	id S1758617AbYELTKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 15:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758605AbYELTKG
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 15:10:06 -0400
+Received: from zakalwe.fi ([80.83.5.154]:34937 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757071AbYELTKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 15:10:04 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id E00AD2BBE5; Mon, 12 May 2008 22:10:02 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0805121453250.23581@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <73584838-DF17-4CDB-92CA-363ED9DA9582@gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81911>
 
-Nicolas Pitre wrote (2008-05-12 14:56 -0400):
+On Mon, May 12, 2008 at 12:58:07PM -0600, Tim Harper wrote:
+> In our case, we  
+> don't bother with repository backups here.  Everyone developer has a  
+> full copy of the repository, and any one of them could be used to  
+> create a new "central" git repository.
 
-> On Mon, 12 May 2008, Teemu Likonen wrote:
-> 
-> > Well, I don't really have any problems with the current behaviour;
-> > it just feels a bit strange that, for example, Linus's kernel
-> > repository grew about 90MB after just one update pull and gc.
-> 
-> That looks really odd.  Sure the repo might grow a bit, but 90MB seems
-> really excessive.  How many time did pass between the initial clone
-> and that subsequent pull?
+So you assume everyone syncs everyone else often enough. I don't think 
+many organizations want to rely on that assumption. The point is to 
+have a simple, efficient and manageable backup system that 
+does _not_ require knowledge of Git internals.
 
-As I used the kernel repo just for testing this behaviour in question
-I did both things today. Timestamps tell that there were six hours
-between the initial .keep pack and the new pack created by manual "git
-gc".
-
-> > Also, dangling objects are kept forever in .keep packs (which are
-> > created with "git clone", for example).
-> 
-> A pack obtained via 'git clone' will never contain any dangling
-> objects.
-
-I think it can contain at some later point. For example, if a user first
-fetches all the branches but later decides to track only one branch.
-After deleting unneeded tracking branches and expiring the reflog
-there'll be dangling objects in the original .keep pack created with
-"git clone".
+-- 
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
