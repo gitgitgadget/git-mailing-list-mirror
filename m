@@ -1,96 +1,108 @@
-From: Justin Leung <jleung@redback.com>
-Subject: Re: Verilog/ASIC development support is insufficient in git , help!
-Date: Mon, 12 May 2008 11:51:50 -0700
-Message-ID: <482891C6.1050607@redback.com>
-References: <EB66C79C87CF49E59CB39EA4C286AE05@justinuTop>	 <BA7F9A3C7EDA4CDD99016093B0DB55C0@justinuTop> <46d6db660805110221y1207974dt3be709e1b67cf3d6@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to backup git
+Date: Mon, 12 May 2008 11:54:15 -0700 (PDT)
+Message-ID: <m38wyf4als.fsf@localhost.localdomain>
+References: <4827DEF6.1050005@gmail.com>
+	<87ej87is50.fsf@offby1.atm01.sea.blarg.net>
+	<alpine.DEB.1.00.0805121428310.30431@racer>
+	<48285087.3090402@gmail.com>
+	<alpine.DEB.1.00.0805121606010.30431@racer>
+	<20080512152731.GM31039@zakalwe.fi>
+	<alpine.DEB.1.00.0805121804500.30431@racer>
+	<20080512180720.GN31039@zakalwe.fi>
+	<alpine.DEB.1.00.0805121920120.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, justin0927@hotmail.com
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 20:52:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Heikki Orsila <shdl@zakalwe.fi>, bill lam <cbill.lam@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 12 20:55:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvd8g-0000xm-6C
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 20:52:46 +0200
+	id 1JvdAz-0001l6-Qs
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 20:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754927AbYELSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 14:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbYELSv5
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 14:51:57 -0400
-Received: from prattle.redback.com ([155.53.12.9]:43723 "EHLO
-	prattle.redback.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753876AbYELSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 14:51:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by prattle.redback.com (Postfix) with ESMTP id 89B32BF3DC1;
-	Mon, 12 May 2008 11:51:50 -0700 (PDT)
-Received: from prattle.redback.com ([127.0.0.1])
- by localhost (prattle [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 26725-09; Mon, 12 May 2008 11:51:50 -0700 (PDT)
-Received: from [155.53.72.61] (havant.redback.com [155.53.72.61])
-	by prattle.redback.com (Postfix) with ESMTP id 6AB66BF3DC0;
-	Mon, 12 May 2008 11:51:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-In-Reply-To: <46d6db660805110221y1207974dt3be709e1b67cf3d6@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at redback.com
+	id S1755423AbYELSyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 14:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755493AbYELSyV
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 14:54:21 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:62950 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754666AbYELSyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 14:54:19 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1131632nfc.21
+        for <git@vger.kernel.org>; Mon, 12 May 2008 11:54:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=n6tAtNX4mFhr7UsKSMuD76Gpqu6oLP3crhxkO6lO77k=;
+        b=j//QoqGSX+IJbkNm+Ri7lf+jNJZa7k+UEImaDF4g3q1JIFp4oL2bYbYAHH7kLR26zZM/MUDn+JQRoSwieh+atCCjGUPR8WAP2JH3lrLG06tRYebmPjHzih/ymtcoEIFVLOLZpK7jJPHdWDuIjbqKm9HO6VhPEX4hDtne04RIIYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=rBwcwFA7VoA0hNto99Z3XWNEqD0/OnV/goSpTYROe7xR7mPDvDkmB0g8cvA2hz3Qp6qrd22Yg9WEmhPB+rnOpLcCj3I+NVtD/0Qt+nPGXl+H44cDLQ91Na0Tnl7RkMaBkQJ1I6JAJQqEt/3LiWa34qQkGoN54NiSfQlcleQs9es=
+Received: by 10.210.66.1 with SMTP id o1mr7515972eba.135.1210618457072;
+        Mon, 12 May 2008 11:54:17 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.214.115])
+        by mx.google.com with ESMTPS id c22sm11120632ika.1.2008.05.12.11.54.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 May 2008 11:54:15 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4CIsAgJ014053;
+	Mon, 12 May 2008 20:54:11 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4CIs79A014050;
+	Mon, 12 May 2008 20:54:07 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.DEB.1.00.0805121920120.30431@racer>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81904>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Hi Christian,
+> On Mon, 12 May 2008, Heikki Orsila wrote:
+> 
+>> On Mon, May 12, 2008 at 06:07:28PM +0100, Johannes Schindelin wrote:
+>> 
+>>> On Mon, 12 May 2008, Heikki Orsila wrote:
+ 
+>>>> Is there a simple and efficient mechanism for incremental backups?
+>>> 
+>>> Umm.  "git fetch"?
+>>> 
+>>> Like I said, it does not get the reflogs, but if you want to back up a 
+>>> repository, the safest is to clone once, and fetch later.  Or you 
+>>> could set up a remote with the --mirror option, if you want to 
+>>> preserve the refs' namespaces.
+>> 
+>> Preferably some solution that does not require too much understanding of 
+>> Git internals so that admins will actually use it, instead of hacking 
+>> their own inefficient backup scripts.
+>> 
+>> Could someone please write a "git-backup" script?-)
+> 
+> Heikki, why don't you just go with the "git fetch" approach I described?  
+> We do not need "git backup" when "git fetch" does already what you want.
 
- I personally have no problem dealing without revision numbers .
-I merely used them directly .
+I think that bundles (see git-bundle) would be what you want (please
+read GitFaq/GitTips/"Git in Nutshell" for explanation and use cases).
 
-However, I think I gotta admit that this is a world more than just us .
+"git fetch" (perhaps using bundle) would save state of refs (heads,
+remote branches, tags) and object repository.  To save state of
+working area and index I think it would be best to use 'git-stash'
+before creating backup, and unstash after it; see documentation for
+git-stash.  What is left is: reflogs, configuration, hooks, grafts and
+shallow, repository local excludes file, repository local attributes
+file[*1*].
 
-There's an obvious reason why Windows and MS are still standing, and IE 
-is still the market holder :
-
-we are the minority ..  a lot of people just care to get the work done .
-
-surely i felt defeated, but one lesson to know is that the interface is 
-very important for beginners ;
-
-and a simplified numbering scheme is really what the managers/VPs are 
-looking for to avoid rookie mistakes .
-
-Thanks for the support tho =)
-I know i m not alone
-
- Justin
-
-Christian MICHON wrote:
-> I'm an ASIC designer too.
-> this is unimportant: if they want to track a specific release of a
-> file, it's better to look at what was the file's content from this cut
-> to that cut.
-> just use gitk and git-gui: almost all can be done with these two
-> graphical tools.
->
-> for linear development, yes. but when we were requested to perform
-> maintenance on a specific old cut, this was becoming a nightmare.
-> gitk, git-gui: two commands (actually gitk can be called from git-gui)
-> this is the wrong approach.
-> use branches to reference the different ressources (rtl, simulation, layout).
-> then track these branches between them for deliveries and work/flow.
->
-> use tags to mark specific releases/cuts.
-> you can create an alias: git-show-branch | tail -r
->   
->
-> yes, I used to be scared by sha1 too: I even created numbered tags for
-> each commit. Until I read more about git, and stopped expecting using
-> git as svn/cvs.
->   
-> no, it would kill the right approach: embrace the index, and never look back.
->   
->
-> you have to adapt your methods instead: trust another ASIC designer :-)
->   
+[*1*] Which is not mentioned in Documentation/repository-layout.txt
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
