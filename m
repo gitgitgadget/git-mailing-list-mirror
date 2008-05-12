@@ -1,63 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] instaweb: make it compatible with Mac OS X 10.5's
- apache installation.
-Date: Mon, 12 May 2008 11:42:03 -0700
-Message-ID: <7v7idzz7no.fsf@gitster.siamese.dyndns.org>
-References: <1210534569-48466-1-git-send-email-nathans@gmail.com>
- <B3990C52-0AF9-490C-86E1-B311144C6661@gmail.com>
- <200805121952.55492.chriscool@tuxfamily.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Mon, 12 May 2008 21:43:34 +0300
+Message-ID: <20080512184334.GB5160@mithlond.arda.local>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: nathan spindel <nathans@gmail.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon May 12 20:43:21 2008
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 12 20:44:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvczR-000646-4c
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 20:43:13 +0200
+	id 1Jvd0e-0006WE-Mp
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 20:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900AbYELSmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 14:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756031AbYELSmY
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 14:42:24 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56553 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751588AbYELSmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 14:42:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8855C4D36;
-	Mon, 12 May 2008 14:42:22 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id DFD2D4D35; Mon, 12 May 2008 14:42:17 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 28898378-2053-11DD-8617-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1756582AbYELSni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 14:43:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756220AbYELSnh
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 14:43:37 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:44049 "EHLO
+	jenni1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755436AbYELSnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 14:43:37 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.rokki.sonera.fi (8.5.014)
+        id 482324D8002F313D; Mon, 12 May 2008 21:43:35 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Jvczm-0001zX-Cb; Mon, 12 May 2008 21:43:34 +0300
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805121810501.30431@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81900>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Johannes Schindelin wrote (2008-05-12 18:13 +0100):
 
-> Maybe you can use a function like this not tested one:
->
-> check_cmd() {
-> 	cmd="$1"
->
-> 	if type "$cmd" > /dev/null 2>&1; then
-> 		if "$cmd" -v | grep Apache > /dev/null 2>&1; then
-> 			httpd=$(echo "$cmd" | sed "s/apache2/httpd/")
-> 		fi
-> 	fi
-> }
+> On Mon, 12 May 2008, Teemu Likonen wrote:
+> 
+> > Probably a crazy idea: What if "gc --aggressive" first removed
+> > *.keep files and after packing and garbage-collecting and whatever
+> > it does it would add a .keep file for the newly created pack?
+> 
+> Most .keep files are not meant to be removed by git-gc.  Usually,
+> .keep files are only created interactively (if you _want_ to keep
+> a pack, e.g. when it has been optimally packed and is big), or by
+> git-index-pack while it is writing a pack (IIRC).
+> 
+> So I think it would be wrong for "gc --aggressive" to remove the .keep
+> files.
 
-One worry I have with that approach is if any and all random
-implementations of "httpd" that live somewhere in path do not do any harm
-when started with "-v" option.  Namely, they should exit without becoming
-a daemon and/or start the service.
+I guess you're right. Maybe "gc --aggressive" could delete only certain
+machine-generated .keep files which have an identifier inside?
 
-I am not convinced that would be the case.
+Well, I don't really have any problems with the current behaviour; it
+just feels a bit strange that, for example, Linus's kernel repository
+grew about 90MB after just one update pull and gc. Also, dangling
+objects are kept forever in .keep packs (which are created with "git
+clone", for example).
