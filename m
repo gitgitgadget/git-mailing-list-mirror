@@ -1,76 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words
- configurable
-Date: Mon, 12 May 2008 12:17:26 -0700
-Message-ID: <7vve1jxrg9.fsf@gitster.siamese.dyndns.org>
-References: <46dff0320805040935n22354e1bta85b3f3fe7c16cad@mail.gmail.com>
- <46dff0320805051740o65eee07eqc7073e4fa7996277@mail.gmail.com>
- <alpine.DEB.1.00.0805060954470.30431@racer>
- <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com>
- <alpine.DEB.1.00.0805071223450.30431@racer>
- <7viqxqc4gs.fsf@gitster.siamese.dyndns.org>
- <20080508103436.GB3300@mithlond.arda.local>
- <46dff0320805100202j54b0922cy50a2c93c4eff1757@mail.gmail.com>
- <46dff0320805110616s6df19657r1e4c80634267fd81@mail.gmail.com>
- <7vod7c6c24.fsf@gitster.siamese.dyndns.org>
- <46dff0320805120931u7609a5a2x5433d78e35a62c48@mail.gmail.com>
- <m34p934afu.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Ping Yin" <pkufranky@gmail.com>,
-	"Teemu Likonen" <tlikonen@iki.fi>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 21:18:33 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH] Documentation: Add missing git svn commands
+Date: Mon, 12 May 2008 21:32:39 +0200
+Message-ID: <1210620759-25768-1-git-send-email-hendeby@isy.liu.se>
+Cc: junio@pobox.com, normalperson@yhbt.net,
+	Gustaf Hendeby <hendeby@isy.liu.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 12 21:33:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvdXX-0001qY-PI
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 21:18:28 +0200
+	id 1JvdmK-0007Ks-2P
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 21:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047AbYELTRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 15:17:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753635AbYELTRh
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 15:17:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63238 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753284AbYELTRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 15:17:36 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D19258A1;
-	Mon, 12 May 2008 15:17:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 98AFE581E; Mon, 12 May 2008 15:17:28 -0400 (EDT)
-In-Reply-To: <m34p934afu.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Mon, 12 May 2008 11:57:48 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 13481268-2058-11DD-9D0E-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1759043AbYELTco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 15:32:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759003AbYELTcn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 15:32:43 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:43389 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758510AbYELTcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 15:32:42 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id BD4DF25A9D;
+	Mon, 12 May 2008 21:32:40 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 07376-03; Thu,  8 May 2008 07:37:09 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id F0DE525A98;
+	Mon, 12 May 2008 21:32:39 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id BF342177A0; Mon, 12 May 2008 21:32:39 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.1.328.g4377c
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81913>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
->> To achieve the best, we have to find the pairs of lines (one minus and
->> one plus for each pair) which most match each other, and then do the
->> word diff for each pair.
->
-> Wouldn't be enough to treat run of plus/minus lines as a single block,
-> tokenize, do token-based (as opposed to line-based) diff, then show it
-> using linebreaks of the destination file (pluses line)?
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
+ Documentation/git-svn.txt |   17 +++++++++++++++--
+ 1 files changed, 15 insertions(+), 2 deletions(-)
 
-I tried the "using linebreaks" but I discarded it because I did not think
-it would work.  If we rewrite the last three lines above with this single
-line:
-
-> Wouldn't be enough to use magic?
-
-and apply that algorithm between the two, then we would get a long single
-line that has words painted in red, two lines worth, followed by green "to
-use magic?"  and finally an end-of-line.
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index f4ba105..c02f220 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -189,10 +189,10 @@ All arguments are passed directly to `git blame'.
+ 	independently of git-svn functions.
+ 
+ 'create-ignore'::
+-
+ 	Recursively finds the svn:ignore property on directories and
+ 	creates matching .gitignore files. The resulting files are staged to
+-	be committed, but are not committed.
++	be committed, but are not committed. Use -r/--revision to refer to a
++	specfic revision.
+ 
+ 'show-ignore'::
+ 	Recursively finds and lists the svn:ignore property on
+@@ -216,6 +216,19 @@ All arguments are passed directly to `git blame'.
+ 	argument.  Use the --url option to output only the value of the
+ 	'URL:' field.
+ 
++'proplist'::
++	Lists the properties stored in the Subversion repository about a
++	given file or directory.  Use -r/--revision to refer to a specific
++	Subversion revision.
++
++'propget'::
++	Gets the Subversion property given as the first argument, for a
++	file.  A specific revision can be specified with -r/--revision.
++
++'show-externals'::
++	Shows the Subversion externals.  Use -r/--revision to specify a
++	specific revision.
++
+ --
+ 
+ OPTIONS
+-- 
+1.5.5.1.328.g4377c
