@@ -1,97 +1,97 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Make the exit code of add_file_to_index actually useful
-Date: Mon, 12 May 2008 22:54:14 +0200
-Message-ID: <20080512205414.GH3128@steel.home>
-References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home> <20080302154238.GD2973@steel.home> <alpine.LSU.1.00.0803021555500.22527@racer.site> <7vtzjpoye6.fsf@gitster.siamese.dyndns.org> <20080512175654.GB3128@steel.home> <7vzlqvxt1p.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Mon, 12 May 2008 23:03:04 +0200
+Organization: glandium.org
+Message-ID: <20080512210304.GA17352@glandium.org>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home> <20080512190946.GC5160@mithlond.arda.local> <alpine.LFD.1.10.0805121527550.23581@xanadu.home> <20080512202414.GA8620@mithlond.arda.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dirk =?iso-8859-15?Q?S=FCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 12 22:55:12 2008
+Cc: Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon May 12 23:04:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvf38-0006M7-4g
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 22:55:10 +0200
+	id 1JvfBs-00014H-Hi
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 23:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbYELUyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 16:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbYELUyU
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 16:54:20 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:11771 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892AbYELUyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 16:54:19 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+BInc
-Received: from tigra.home (Fab5c.f.strato-dslnet.de [195.4.171.92])
-	by post.webmailer.de (mrclete mo4) (RZmta 16.34)
-	with ESMTP id h01165k4CHwrjo ; Mon, 12 May 2008 22:54:15 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 6CECF277BD;
-	Mon, 12 May 2008 22:54:15 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 1220456D28; Mon, 12 May 2008 22:54:14 +0200 (CEST)
+	id S1754758AbYELVDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 17:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755461AbYELVDW
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 17:03:22 -0400
+Received: from vuizook.err.no ([194.24.252.247]:52929 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753703AbYELVDV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 17:03:21 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JvfAr-0005Ng-Rw; Mon, 12 May 2008 23:03:16 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JvfAm-0005jo-SS; Mon, 12 May 2008 23:03:04 +0200
 Content-Disposition: inline
-In-Reply-To: <7vzlqvxt1p.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080512202414.GA8620@mithlond.arda.local>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81949>
 
-Junio C Hamano, Mon, May 12, 2008 20:42:58 +0200:
-> >
-> > I corrected the series to use die() again and rebased it off current
-> > master (65ea3b8c). So it is more compatible with libification (does
-> > not hinder it more than previos code) and keep the exit code.
-> 
-> But you did not answer my question in the part you did not quote, did you?
+On Mon, May 12, 2008 at 11:24:14PM +0300, Teemu Likonen wrote:
+> But I have experienced the same earlier with some other post-1.5.5
+> version so I believe you can reproduce this yourself. After cloning
+> Linus's linux-2.6 repo its .git directory weights 209MB. After single
+> "git pull" and "git gc" it was 298MB in my test.
 
-I believe I did:
+I noticed that a while ago: when repacking multiple packs when one has a
+.keep file, the resulting additional pack contains too many blobs and
+trees, contrary to when only packing loose objects:
 
-Date:	Sun, 2 Mar 2008 22:42:41 +0100
-Subject: Re: [PATCH] Make the exit code of add_file_to_index actually useful
-Message-ID: <20080302214241.GB13954@steel.home>
+$ git init
+$ echo a > a; git add a; git commit -m a
+$ git gc
+Counting objects: 3, done.
+Writing objects: 100% (3/3), done.
+Total 3 (delta 0), reused 0 (delta 0)
+$ git verify-pack -v .git/objects/pack/pack-b87e61e2dc18ff37624d7f996f1270f923411530.pack
+4bba7c0583de30efff4097299f89b199ab4a6dff commit 160 116 12
+78981922613b2afb6025042ff6bd878ac1994e85 blob   2 11 167
+aaff74984cccd156a469afa7d9ab10e4777beb24 tree   29 39 128
+.git/objects/pack/pack-b87e61e2dc18ff37624d7f996f1270f923411530.pack: ok
 
-Junio C Hamano, Sun, Mar 02, 2008 17:59:13 +0100:
-> Why is this even needed to begin with?  I am aware of Dirk's original
-> issue discussed elsewhere, but we try fairly hard to be A-O-N when we can
-> afford to, and this option deliberately breaks it.  What is the real
-> reason why such an unreadable (either for privilege or for I/O error)
-> file should not live in .gitignore?
+$ touch .git/objects/pack/pack-b87e61e2dc18ff37624d7f996f1270f923411530.keep
+$ echo b > b; git add b; git commit -m b
+$ git gc
+Counting objects: 3, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), done.
+Total 3 (delta 0), reused 0 (delta 0)
+$ git verify-pack -v
+.git/objects/pack/pack-aa817046e43f278d67c6b85962676246f57bb855.pack
+3683f870be446c7cc05ffaef9fa06415276e1828 tree   58 65 158
+61780798228d17af2d34fce4cfbdf35556832472 blob   2 11 223
+647aed0360e964adc5cedb12e0719fb8bfc05867 commit 208 146 12
+.git/objects/pack/pack-aa817046e43f278d67c6b85962676246f57bb855.pack: ok
 
-Another program keeps the file open. There is an exclusive mode for
-opening files, which locks the files for everyone. I believe it is
-even default mode, unless selected otherwise.
+$ git gc
+Counting objects: 4, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), done.
+Total 4 (delta 0), reused 4 (delta 0)
+$ git verify-pack -v
+.git/objects/pack/pack-5f692a665e062dedad7b4baf692517adec37899d.pack
+3683f870be446c7cc05ffaef9fa06415276e1828 tree   58 65 158
+61780798228d17af2d34fce4cfbdf35556832472 blob   2 11 234
+647aed0360e964adc5cedb12e0719fb8bfc05867 commit 208 146 12
+78981922613b2afb6025042ff6bd878ac1994e85 blob   2 11 223
+.git/objects/pack/pack-5f692a665e062dedad7b4baf692517adec37899d.pack: ok
 
-> Now when somebody either forgets to check the return value from this
-> function, or deliberately ignores it, the resulting index will not match
-> what the code is told to update it with.
-
-I think I got them all in the current code:
-
-    $git grep -E 'add_(file_)?to_(index|cache)'
-    Documentation/technical/api-in-core-index.txt:* add_file_to_index()
-    builtin-add.c:                  if (add_file_to_cache(path, data->flags
-    builtin-add.c:          if (add_file_to_cache(dir.entries[i]->name, ver
-    builtin-commit.c:                       if (add_to_cache(p->path, &st,
-    builtin-mv.c:                   if (add_file_to_cache(path, verbose))
-    cache.h:#define add_to_cache(path, st, verbose) add_to_index(&the_index
-    cache.h:#define add_file_to_cache(path, verbose) add_file_to_index(&the
-    cache.h:extern int add_to_index(struct index_state *, const char *path,
-    cache.h:extern int add_file_to_index(struct index_state *, const char *
-    read-cache.c:int add_to_index(struct index_state *istate, const char *p
-    read-cache.c:int add_file_to_index(struct index_state *istate, const ch
-    read-cache.c:   return add_to_index(istate, path, &st, verbose);
-
-Regarding the return value: isn't it very often a bug to ignore them?
-Or do you mean to say I should have renamed the function so that old
-interface cannot be used accidentally by someone how just knows it
-never returns in case of an error?
+Mike
