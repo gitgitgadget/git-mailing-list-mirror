@@ -1,68 +1,61 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH v2] revision.c: really honor --first-parent
-Date: Mon, 12 May 2008 17:12:36 +0200
-Message-ID: <1210605156-22926-1-git-send-email-hjemli@gmail.com>
-References: <1210547651-32510-1-git-send-email-hjemli@gmail.com>
-Cc: <nanako3@bluebottle.com>, "Stephen R. van den Berg" <srb@cuci.nl>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 12 17:12:04 2008
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: how to backup git
+Date: Mon, 12 May 2008 18:27:31 +0300
+Message-ID: <20080512152731.GM31039@zakalwe.fi>
+References: <4827DEF6.1050005@gmail.com> <87ej87is50.fsf@offby1.atm01.sea.blarg.net> <alpine.DEB.1.00.0805121428310.30431@racer> <48285087.3090402@gmail.com> <alpine.DEB.1.00.0805121606010.30431@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Cc: bill lam <cbill.lam@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 12 17:28:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvZgu-0007tU-MA
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 17:11:53 +0200
+	id 1JvZwv-0006yQ-4Q
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 17:28:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059AbYELPKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 11:10:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbYELPKz
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:10:55 -0400
-Received: from mail43.e.nsc.no ([193.213.115.43]:54848 "EHLO mail43.e.nsc.no"
+	id S1752745AbYELP1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 11:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbYELP1f
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:27:35 -0400
+Received: from zakalwe.fi ([80.83.5.154]:52066 "EHLO zakalwe.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752610AbYELPKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 11:10:54 -0400
-Received: from localhost.localdomain (ti0025a380-3285.bb.online.no [88.88.28.225])
-	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m4CF9auN018366;
-	Mon, 12 May 2008 17:09:39 +0200 (MEST)
-X-Mailer: git-send-email 1.5.5.1.148.g8ee22.dirty
-In-Reply-To: <1210547651-32510-1-git-send-email-hjemli@gmail.com>
+	id S1751201AbYELP1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 11:27:35 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 677FD2BBE5; Mon, 12 May 2008 18:27:31 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805121606010.30431@racer>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81874>
 
-In add_parents_to_list, if any parent of a revision had already been
-SEEN, the current code would continue with the next parent, skipping
-the test for --first-parent. This patch inverts the test for SEEN so
-that the test for --first-parent is always performed.
+On Mon, May 12, 2008 at 04:08:21PM +0100, Johannes Schindelin wrote:
+> No, rsync is particularly dumb in that respect.  The safest thing would be 
+> to back up the reflogs first (e.g. with rsync), then repack and then clone 
+> (the clone will transmit the objects referenced by the reflogs, too).  
+> Note: the same holds _not_ true for a simple fetch.
+> 
+> But then, you usually do not want to back up reflogs anyway, since they 
+> are purely local and not visible to anybody else.
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
-This is a slightly different approach which I think is less ugly.
+Is there a simple and efficient mechanism for incremental backups?
+It should be safe with respect to simultaneous repository access.
+Incrementals should be efficient weven when a user runs "git gc". 
+Preferably I would like to have one file per day: 
+myrepo.YYYY-MM-DD.increment (and occasionally myrepo.YYYY-MM-DD.full)
+I believe this is a common administration problem; 
+something like "git-backup" script/tool would be nice so that not all 
+the admins need consider these issues.
 
- revision.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Currently, I'm doing daily clones of repos, and I preserve those cloned 
+directories.
 
-diff --git a/revision.c b/revision.c
-index 44d780b..2fc26b8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -468,10 +468,10 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit, str
- 		if (parse_commit(p) < 0)
- 			return -1;
- 		p->object.flags |= left_flag;
--		if (p->object.flags & SEEN)
--			continue;
--		p->object.flags |= SEEN;
--		insert_by_date(p, list);
-+		if (!(p->object.flags & SEEN)) {
-+			p->object.flags |= SEEN;
-+			insert_by_date(p, list);
-+		}
- 		if(revs->first_parent_only)
- 			break;
- 	}
 -- 
-1.5.5.1.148.g8ee22.dirty
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
