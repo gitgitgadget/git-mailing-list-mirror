@@ -1,78 +1,75 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: how to backup git
-Date: Mon, 12 May 2008 16:54:27 +0200
-Message-ID: <20080512145426.GN27724@genesis.frugalware.org>
-References: <4827DEF6.1050005@gmail.com> <87ej87is50.fsf@offby1.atm01.sea.blarg.net> <alpine.DEB.1.00.0805121428310.30431@racer> <48285087.3090402@gmail.com>
+From: "Vegard Nossum" <vegard.nossum@gmail.com>
+Subject: Re: [PATCH 1/3] Modified test-lib.sh to output stats to /tmp/git-test-results
+Date: Mon, 12 May 2008 16:55:22 +0200
+Message-ID: <19f34abd0805120755w5d2361d9y86d4b3ba26b2befa@mail.gmail.com>
+References: <1210584832-16402-1-git-send-email-srabbelier@gmail.com>
+	 <1210584832-16402-2-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hnsKUeImFCk/igEn"
-Cc: git@vger.kernel.org
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 16:55:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, dsymonds@gmail.com
+To: "Sverre Rabbelier" <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 12 16:56:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvZQs-0000pT-0c
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 16:55:18 +0200
+	id 1JvZRk-00016a-2i
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 16:56:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbYELOy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 10:54:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbYELOy3
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 10:54:29 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:49006 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbYELOy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 10:54:28 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 7071E1B24FA;
-	Mon, 12 May 2008 16:54:27 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 8A3574465E;
-	Mon, 12 May 2008 16:46:51 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 245DC1190498; Mon, 12 May 2008 16:54:27 +0200 (CEST)
-Mail-Followup-To: bill lam <cbill.lam@gmail.com>, git@vger.kernel.org
+	id S1751691AbYELOzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 10:55:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751686AbYELOzX
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 10:55:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:33788 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751530AbYELOzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 10:55:22 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2698843rvb.1
+        for <git@vger.kernel.org>; Mon, 12 May 2008 07:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0Q8vXDFASlMljBuoL165zPWwgtZmCVYgjeBbdRyCjbk=;
+        b=NGhjdLypLRAgSWuxYFar9pts6O9mUKh2WQXqPr3g3LNE2qZ9mEEg4YfVESs42Un9WKDXYL1AW7uHqRimXLUfENoVqS9jC6Zf9ckQGfqCGz47mLOxgkF7C2JZUQZPSC2W4RKdrzmxE1j3WsyX9xqs+zuDdzkBSiUiGoT7x7ClOIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WffkAVlSwmtfhzmwGag+TgBLjM0Rz3dOom9hdrxN3JALCBKJ0uxhqddxzt0Td/BxX8CPvJoBaAz2Ac2kTFwy11I/QbnMYjuEbYNZZJnHyxpagn/bZMEFmwJGphnMBu5nvk3ltI78xGD99cF3daHPDOdpFbagnYo5p2etVFmFow4=
+Received: by 10.140.249.20 with SMTP id w20mr3736074rvh.21.1210604122069;
+        Mon, 12 May 2008 07:55:22 -0700 (PDT)
+Received: by 10.141.185.13 with HTTP; Mon, 12 May 2008 07:55:22 -0700 (PDT)
+In-Reply-To: <1210584832-16402-2-git-send-email-srabbelier@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <48285087.3090402@gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81869>
+
+Hi!
+
+On Mon, May 12, 2008 at 11:33 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> This change is needed order to aggregate data on the test run later on.
+>  Because writing to the current directory is not possible, we write to /tmp/.
+>  Suggestions for a better location are welcome.
+
+I have seen this in another (sh) script:
+
+die() {
+        echo "$@"
+        exit 1
+}
+
+T=`mktemp` || die "cannot create temp file"
+...
+rm $T
 
 
---hnsKUeImFCk/igEn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Vegard
 
-On Mon, May 12, 2008 at 10:13:27PM +0800, bill lam <cbill.lam@gmail.com> wr=
-ote:
-> Thanks to all responders for quick reply. I still have a related question=
-=2E=20
-> svn has a hotcopy command to ensure integrity so that it is possible to=
-=20
-> backup without shutting down the svn server. If someone update the .git=
-=20
-> while I am performing backup using tar or rsync? Will the atomicity of th=
-at=20
-> commit still preserve in my backup copy?
-
-the only problem can be when someone runs git-gc (as it runs git-prune)
-while you are doing the backup. other commands never remove objects.
-
---hnsKUeImFCk/igEn
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkgoWiIACgkQe81tAgORUJasAQCggZ512CR0HoDJzdm9aeXkNOZa
-FWcAn33b417kiJEj/sHSt5zSfTvWhg5D
-=WLzi
------END PGP SIGNATURE-----
-
---hnsKUeImFCk/igEn--
+-- 
+"The animistic metaphor of the bug that maliciously sneaked in while
+the programmer was not looking is intellectually dishonest as it
+disguises that the error is the programmer's own creation."
+	-- E. W. Dijkstra, EWD1036
