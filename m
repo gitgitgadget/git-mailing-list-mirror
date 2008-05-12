@@ -1,80 +1,59 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: [user confusion] git-config error messages
-Date: Mon, 12 May 2008 16:16:37 +0200
-Message-ID: <20080512141636.GA29590@elte.hu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-merge: include missing options in OPTIONS_SPEC
+Date: Mon, 12 May 2008 16:50:11 +0200
+Message-ID: <1210603811-12613-1-git-send-email-vmiklos@frugalware.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 12 16:17:45 2008
+X-From: git-owner@vger.kernel.org Mon May 12 16:51:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvYqQ-0003N4-00
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 16:17:38 +0200
+	id 1JvZMq-0007fR-Gr
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 16:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275AbYELOQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 10:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbYELOQs
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 10:16:48 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:51885 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbYELOQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 10:16:47 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1JvYpS-0000li-3o
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Mon, 12 May 2008 16:16:44 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id BB15C3E21DB; Mon, 12 May 2008 16:16:34 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1752123AbYELOuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 10:50:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbYELOuR
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 10:50:17 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:56071 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078AbYELOuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 10:50:16 -0400
+Received: from vmobile.example.net (dsl5401CA14.pool.t-online.hu [84.1.202.20])
+	by yugo.frugalware.org (Postfix) with ESMTP id B81941DDC5B
+	for <git@vger.kernel.org>; Mon, 12 May 2008 16:50:14 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 2C579185E19; Mon, 12 May 2008 16:50:11 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.1.211.g65ea3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81867>
 
+--no-squash, --no-commit and --no-ff was missing from the output of
+git-merge --help. This patch fixes the issue.
 
-ok, i thought i'd share this stupid little episode of user error.
-I wanted to enable git-rerere:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ git-merge.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
- $ git-config --add rerere.enabled true
- could not lock config file
-
- #
- # Hm, do remember this option incorrectly? And what lock file?
- #
-
- $ git-config --add rerere.enabled=1
- key does not contain a section: --add
-
- #
- # What section? What key?
- #
-
- $ git-config --add rerere.enabled=true
- key does not contain a section: --add
-
- #
- # Huh? Ok, lets try strace:
- #
-
- $ strace -f git-config --add rerere.enabled true 2>&1 | grep \\.lock
- open(".git/config.lock", O_RDWR|O_CREAT|O_EXCL|O_LARGEFILE, 0666) = -1 ENOENT (No such file or directory)
-
- #
- # Ah, stupid me! I forgot to cd into the Git repository and it tries to 
- # access .git. And i wanted the --global option anyway. So the Git 
- # error messages led me on the completely wrong path.
- #
+diff --git a/git-merge.sh b/git-merge.sh
+index 69b35d8..09c002b 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -15,8 +15,11 @@ no-summary           (synonym to --no-stat)
+ log                  add list of one-line log to merge commit message
+ no-log               don't add list of one-line log to merge commit message
+ squash               create a single commit instead of doing a merge
++no-squash            don't create a single commit instead of merging (default)
+ commit               perform a commit if the merge sucesses (default)
++no-commit            don't perform a commit if the merge sucesses
+ ff                   allow fast forward (default)
++no-ff                don't allow fast forward
+ s,strategy=          merge strategy to use
+ m,message=           message to be used for the merge commit (if any)
+ "
+-- 
+1.5.5.1
