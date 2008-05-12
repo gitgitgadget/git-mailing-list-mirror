@@ -1,65 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to backup git
-Date: Mon, 12 May 2008 18:07:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805121804500.30431@racer>
-References: <4827DEF6.1050005@gmail.com> <87ej87is50.fsf@offby1.atm01.sea.blarg.net> <alpine.DEB.1.00.0805121428310.30431@racer> <48285087.3090402@gmail.com> <alpine.DEB.1.00.0805121606010.30431@racer> <20080512152731.GM31039@zakalwe.fi>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep
+ files?
+Date: Mon, 12 May 2008 18:13:17 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805121810501.30431@racer>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: bill lam <cbill.lam@gmail.com>, git@vger.kernel.org
-To: Heikki Orsila <shdl@zakalwe.fi>
-X-From: git-owner@vger.kernel.org Mon May 12 19:08:29 2008
+Cc: git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon May 12 19:14:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvbVl-0004bs-7e
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 19:08:29 +0200
+	id 1JvbbW-0006w7-2b
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 19:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990AbYELRHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 13:07:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755917AbYELRHc
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 13:07:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41130 "HELO mail.gmx.net"
+	id S1754921AbYELRNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 13:13:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbYELRNU
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 13:13:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40049 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756845AbYELRHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 13:07:30 -0400
-Received: (qmail invoked by alias); 12 May 2008 17:07:28 -0000
+	id S1754921AbYELRNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 13:13:19 -0400
+Received: (qmail invoked by alias); 12 May 2008 17:13:18 -0000
 Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp043) with SMTP; 12 May 2008 19:07:28 +0200
+  by mail.gmx.net (mp018) with SMTP; 12 May 2008 19:13:18 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/IPCghb63IoCqxr/LWYKCuPwHnEOe0GiM+bO8sxg
-	xQW15DO2dsbT7h
+X-Provags-ID: V01U2FsdGVkX1+wfBFz5aywTAF3fc1VcwMGaPHv78FhEVwQkaETNY
+	TRbX0GjYiMKAQL
 X-X-Sender: gene099@racer
-In-Reply-To: <20080512152731.GM31039@zakalwe.fi>
+In-Reply-To: <20080512155243.GA3592@mithlond.arda.local>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81882>
 
 Hi,
 
-On Mon, 12 May 2008, Heikki Orsila wrote:
+On Mon, 12 May 2008, Teemu Likonen wrote:
 
-> On Mon, May 12, 2008 at 04:08:21PM +0100, Johannes Schindelin wrote:
-> > No, rsync is particularly dumb in that respect.  The safest thing 
-> > would be to back up the reflogs first (e.g. with rsync), then repack 
-> > and then clone (the clone will transmit the objects referenced by the 
-> > reflogs, too).  Note: the same holds _not_ true for a simple fetch.
-> > 
-> > But then, you usually do not want to back up reflogs anyway, since 
-> > they are purely local and not visible to anybody else.
-> 
-> Is there a simple and efficient mechanism for incremental backups?
+> Probably a crazy idea: What if "gc --aggressive" first removed *.keep 
+> files and after packing and garbage-collecting and whatever it does it 
+> would add a .keep file for the newly created pack?
 
-Umm.  "git fetch"?
+Most .keep files are not meant to be removed by git-gc.  Usually, .keep 
+files are only created interactively (if you _want_ to keep a pack, e.g. 
+when it has been optimally packed and is big), or by git-index-pack while 
+it is writing a pack (IIRC).
 
-Like I said, it does not get the reflogs, but if you want to back up a 
-repository, the safest is to clone once, and fetch later.  Or you could 
-set up a remote with the --mirror option, if you want to preserve the 
-refs' namespaces.
+So I think it would be wrong for "gc --aggressive" to remove the .keep 
+files.
 
 Ciao,
 Dscho
