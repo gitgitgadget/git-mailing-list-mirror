@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v2 11/24] Added the class FNMatchPattern.
-Date: Mon, 12 May 2008 22:13:29 +0200
-Message-ID: <1210623222-24908-12-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v2 17/24] Added the class TreeFilePattern.
+Date: Mon, 12 May 2008 22:13:35 +0200
+Message-ID: <1210623222-24908-18-git-send-email-florianskarten@web.de>
 References: <1210623222-24908-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 12 22:23:29 2008
+X-From: git-owner@vger.kernel.org Mon May 12 22:23:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JveSj-00086f-EQ
+	id 1JveSi-00086f-QY
 	for gcvg-git-2@gmane.org; Mon, 12 May 2008 22:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755386AbYELUOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 16:14:35 -0400
+	id S1758290AbYELUOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 16:14:33 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,45 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757610AbYELUOd
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 16:14:33 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:40227 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757655AbYELUOa
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 16:14:30 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:40199 "EHLO
 	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754311AbYELUNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 16:13:49 -0400
+	with ESMTP id S1757588AbYELUNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 16:13:53 -0400
 Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id B6947DECFD14
-	for <git@vger.kernel.org>; Mon, 12 May 2008 22:13:46 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 6F1D9DECFCFD
+	for <git@vger.kernel.org>; Mon, 12 May 2008 22:13:53 +0200 (CEST)
 Received: from [84.150.98.143] (helo=localhost.localdomain)
 	by smtp05.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JveP4-00016x-00; Mon, 12 May 2008 22:13:46 +0200
+	id 1JvePA-00016x-00; Mon, 12 May 2008 22:13:52 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210623222-24908-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX18KRJJ02Z7JPkyrBQVo7F5ZTooG/YAjaUXMkK0S
-	K7ZHt0LBaptSR0PL0JkYume3yTea6ZNKG9E79Xb+OHcz2gHcLh
-	g0f3iWJx370HB+JMMg4g==
+X-Provags-ID: V01U2FsdGVkX19NhimdC/CDkYs6gvSFaneA2oQvqe//rtfP5xFL
+	AIOdrvvp01at9Kpyx5TL/JGaeAk4qcuYVmyQA0iUcZjPbtB7cS
+	444MLv0Eb0H1FX9HfOYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81931>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../src/org/spearce/jgit/lib/FNMatchPattern.java   |   81 ++++++++++++=
+ .../jgit/treewalk/rules/TreeFilePattern.java       |   75 ++++++++++++=
 ++++++++
- 1 files changed, 81 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/FNMatchPa=
-ttern.java
+ 1 files changed, 75 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
+s/TreeFilePattern.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/FNMatchPattern.j=
-ava b/org.spearce.jgit/src/org/spearce/jgit/lib/FNMatchPattern.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/TreeF=
+ilePattern.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/=
+TreeFilePattern.java
 new file mode 100644
-index 0000000..005659e
+index 0000000..9234c95
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/FNMatchPattern.java
-@@ -0,0 +1,81 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/TreeFilePatt=
+ern.java
+@@ -0,0 +1,75 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -85,72 +87,65 @@ e
 + *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  021=
 10-1301
 + */
-+package org.spearce.jgit.lib;
++package org.spearce.jgit.treewalk.rules;
 +
-+import java.util.regex.Pattern;
++import java.util.List;
 +
 +/**
-+ * This class represents a pattern which should work like the fnmatch =
-method.
-+ * <code>new FNMatchPattern(exp).matches(input)</code> should do the s=
-ame like
-+ * <code>fnmatch(exp, input, 0) =3D=3D 0</code>
++ * Represents a pattern like "documents/*.txt" which matches all *.txt=
+ files in
++ * the tree documents.
 + *=20
-+ * As this isn't a one to one code port, but written based on the docu=
-mentation
-+ * of fnmatch it can be that the behavior of this class differ in some=
- corner
-+ * cases from the behavior of the fnmatch function.
 + */
-+public class FNMatchPattern {
++class TreeFilePattern implements FilePattern {
 +
-+	private final Pattern regexPattern;
++	private final List<String> path;
 +
-+	private static String toRegexString(String fnmatchPattern) {
-+		final StringBuilder regexStringBuilder =3D new StringBuilder();
-+		char perviosCharacter =3D 0;
-+		for (int i =3D 0; i < fnmatchPattern.length(); i++) {
-+			final char c =3D fnmatchPattern.charAt(i);
-+			switch (c) {
-+			case '^':
-+				if (perviosCharacter =3D=3D '[') {
-+					regexStringBuilder.append('!');
-+				} else {
-+					regexStringBuilder.append("\\x5E");
-+				}
-+				break;
-+			case '.':
-+				regexStringBuilder.append("\\x2E");
-+				break;
-+			case '*':
-+				regexStringBuilder.append(".*");
-+				break;
-+			default:
-+				regexStringBuilder.append(c);
++	private final int offset;
++
++	private final GlobalFilePattern globalFilePattern;
++
++	public boolean canMatchAtThisDirectoryLevel() {
++		return false;
++	}
++
++	TreeFilePattern(List<String> path, GlobalFilePattern globalFilePatter=
+n) {
++		this.path =3D path;
++		this.offset =3D 0;
++		this.globalFilePattern =3D globalFilePattern;
++	}
++
++	private TreeFilePattern(List<String> path, int offset,
++			GlobalFilePattern globalFilePattern) {
++		this.path =3D path;
++		this.offset =3D offset;
++		this.globalFilePattern =3D globalFilePattern;
++	}
++
++	public FilePattern getPatternForSubDirectory(String directoryName) {
++		try {
++			if (!path.get(offset).equals(directoryName)) {
++				return FilePattern.MATCH_NEVER;
 +			}
-+			perviosCharacter =3D c;
++		} catch (IndexOutOfBoundsException e) {
++			throw new IllegalStateException(
++					"The offset of this class doesn't refer to a valid position in pa=
+th");
 +		}
-+		return regexStringBuilder.toString();
++		if (offset =3D=3D path.size() - 1) {
++			return globalFilePattern;
++		} else {
++			return new TreeFilePattern(path, offset + 1, globalFilePattern);
++		}
 +	}
 +
-+	/**
-+	 *=20
-+	 * @param fnmatchPattern
-+	 *            must be a valid fnmatch pattern string.
-+	 */
-+	public FNMatchPattern(String fnmatchPattern) {
-+		final String regularExpression =3D toRegexString(fnmatchPattern);
-+		this.regexPattern =3D Pattern.compile(regularExpression);
++	public boolean isSameForSubDirectories() {
++		return false;
 +	}
 +
-+	/**
-+	 *=20
-+	 * @param stringToMatch
-+	 *            the string to match.
-+	 * @return true when this pattern matches.
-+	 */
-+	public boolean matches(String stringToMatch) {
-+		return regexPattern.matcher(stringToMatch).matches();
++	public boolean match(String fileName, boolean fileIsDirectory) {
++		return false;
 +	}
 +
 +}
