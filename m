@@ -1,77 +1,68 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/5] Make mktag a builtin.
-Date: Mon, 12 May 2008 10:09:31 -0500
-Message-ID: <48285DAB.2040707@nrlssc.navy.mil>
-References: <1210299589-10448-1-git-send-email-drafnel@example.com> <1210299589-10448-2-git-send-email-drafnel@example.com> <7689656.1210299528037.JavaMail.teamon@b301.teamon.com> <7v63tk6992.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 12 17:11:57 2008
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH v2] revision.c: really honor --first-parent
+Date: Mon, 12 May 2008 17:12:36 +0200
+Message-ID: <1210605156-22926-1-git-send-email-hjemli@gmail.com>
+References: <1210547651-32510-1-git-send-email-hjemli@gmail.com>
+Cc: <nanako3@bluebottle.com>, "Stephen R. van den Berg" <srb@cuci.nl>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 12 17:12:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvZgv-0007tU-AF
+	id 1JvZgu-0007tU-MA
 	for gcvg-git-2@gmane.org; Mon, 12 May 2008 17:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108AbYELPK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 11:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbYELPK5
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:10:57 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46379 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbYELPKz (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753059AbYELPKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 12 May 2008 11:10:55 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m4CF9WCG010957;
-	Mon, 12 May 2008 10:09:32 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 12 May 2008 10:09:32 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <7v63tk6992.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 May 2008 15:09:32.0852 (UTC) FILETIME=[2EF21F40:01C8B442]
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbYELPKz
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 11:10:55 -0400
+Received: from mail43.e.nsc.no ([193.213.115.43]:54848 "EHLO mail43.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752610AbYELPKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 11:10:54 -0400
+Received: from localhost.localdomain (ti0025a380-3285.bb.online.no [88.88.28.225])
+	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m4CF9auN018366;
+	Mon, 12 May 2008 17:09:39 +0200 (MEST)
+X-Mailer: git-send-email 1.5.5.1.148.g8ee22.dirty
+In-Reply-To: <1210547651-32510-1-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81873>
 
-Junio C Hamano wrote:
-> drafnel@gmail.com writes:
-> 
->> From: Brandon Casey <drafnel@gmail.com>
->>
->> Signed-off-by: Brandon Casey <drafnel@gmail.com>
-> 
->> @@ -306,6 +305,7 @@ BUILT_INS += git-fsck-objects$X
->>  BUILT_INS += git-get-tar-commit-id$X
->>  BUILT_INS += git-init$X
->>  BUILT_INS += git-merge-subtree$X
->> +BUILT_INS += git-mktag$X
->>  BUILT_INS += git-peek-remote$X
->>  BUILT_INS += git-repo-config$X
->>  BUILT_INS += git-show$X
->> @@ -423,6 +423,7 @@ LIB_OBJS += log-tree.o
->>  LIB_OBJS += mailmap.o
->>  LIB_OBJS += match-trees.o
->>  LIB_OBJS += merge-file.o
->> +LIB_OBJS += mktag.o
-> 
-> This is unusual for a builtin.  Why didn't it migrate to builtin-mktag?
+In add_parents_to_list, if any parent of a revision had already been
+SEEN, the current code would continue with the next parent, skipping
+the test for --first-parent. This patch inverts the test for SEEN so
+that the test for --first-parent is always performed.
 
-I didn't know how to do it.
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+This is a slightly different approach which I think is less ugly.
 
-I was trying not to do a code move and a code change at the same time.
-I didn't think I should move the non-builtin mktag.c to builtin-mktag.c,
-and then after I modified mktag to be a builtin I knew I was moving it
-to builtin-tag.c so I didn't see a point to renaming it.
+ revision.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-Also, I decided about those things _before_ I realized how small the changes
-would be to mktag to make it a builtin.
-
-Do you think the modified patch you posted conflicts with the idea that
-"code move should be separate from code change"?
-
--brandon
+diff --git a/revision.c b/revision.c
+index 44d780b..2fc26b8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -468,10 +468,10 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit, str
+ 		if (parse_commit(p) < 0)
+ 			return -1;
+ 		p->object.flags |= left_flag;
+-		if (p->object.flags & SEEN)
+-			continue;
+-		p->object.flags |= SEEN;
+-		insert_by_date(p, list);
++		if (!(p->object.flags & SEEN)) {
++			p->object.flags |= SEEN;
++			insert_by_date(p, list);
++		}
+ 		if(revs->first_parent_only)
+ 			break;
+ 	}
+-- 
+1.5.5.1.148.g8ee22.dirty
