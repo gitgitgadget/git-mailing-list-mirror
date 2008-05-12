@@ -1,79 +1,92 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-merge: exclude unnecessary options from OPTIONS_SPEC
-Date: Mon, 12 May 2008 19:22:56 +0200
-Message-ID: <1210612976-13534-1-git-send-email-vmiklos@frugalware.org>
-References: <20080512160309.GB4821@artemis.madism.org>
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 12 19:24:10 2008
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/5] Make mktag a builtin.
+Date: Mon, 12 May 2008 12:32:04 -0500
+Message-ID: <48287F14.9040105@nrlssc.navy.mil>
+References: <1210299589-10448-1-git-send-email-drafnel@example.com> <1210299589-10448-2-git-send-email-drafnel@example.com> <7689656.1210299528037.JavaMail.teamon@b301.teamon.com> <7v63tk6992.fsf@gitster.siamese.dyndns.org> <48285DAB.2040707@nrlssc.navy.mil> <alpine.DEB.1.00.0805121803320.30431@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 12 19:33:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvbkt-0002ES-5W
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 19:24:07 +0200
+	id 1Jvbtz-0005cT-3G
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 19:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756839AbYELRXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 13:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbYELRXH
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 13:23:07 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:38142 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751797AbYELRXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 13:23:06 -0400
-Received: from vmobile.example.net (dsl5401CA14.pool.t-online.hu [84.1.202.20])
-	by yugo.frugalware.org (Postfix) with ESMTP id 540A21DDC5B;
-	Mon, 12 May 2008 19:23:04 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 16FB2185E19; Mon, 12 May 2008 19:22:56 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.211.g65ea3.dirty
-In-Reply-To: <20080512160309.GB4821@artemis.madism.org>
+	id S1754031AbYELRcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 13:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754679AbYELRcm
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 13:32:42 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45251 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753656AbYELRcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 13:32:41 -0400
+Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
+	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m4CHW4Gd019085;
+	Mon, 12 May 2008 12:32:04 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 12 May 2008 12:32:04 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <alpine.DEB.1.00.0805121803320.30431@racer>
+X-OriginalArrivalTime: 12 May 2008 17:32:04.0444 (UTC) FILETIME=[181781C0:01C8B456]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81885>
 
-gitcli(5) already documents them, and there are no options named
---no-no-stat, --no-no-summary and --no-no-log.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 12 May 2008, Brandon Casey wrote:
+> 
+>> Junio C Hamano wrote:
+>>> drafnel@gmail.com writes:
+>>>
+>>>> From: Brandon Casey <drafnel@gmail.com>
+>>>>
+>>>> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+>>>> @@ -306,6 +305,7 @@ BUILT_INS += git-fsck-objects$X
+>>>>  BUILT_INS += git-get-tar-commit-id$X
+>>>>  BUILT_INS += git-init$X
+>>>>  BUILT_INS += git-merge-subtree$X
+>>>> +BUILT_INS += git-mktag$X
+>>>>  BUILT_INS += git-peek-remote$X
+>>>>  BUILT_INS += git-repo-config$X
+>>>>  BUILT_INS += git-show$X
+>>>> @@ -423,6 +423,7 @@ LIB_OBJS += log-tree.o
+>>>>  LIB_OBJS += mailmap.o
+>>>>  LIB_OBJS += match-trees.o
+>>>>  LIB_OBJS += merge-file.o
+>>>> +LIB_OBJS += mktag.o
+>>> This is unusual for a builtin.  Why didn't it migrate to builtin-mktag?
+>> I didn't know how to do it.
+>>
+>> I was trying not to do a code move and a code change at the same time.
+> 
+> Why did you not consult Git's own history for guidance?  See e.g.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+I did, but not exhaustively. I found only examples of converting a
+shell/perl script to a c version. That is straight-forward.
 
-On Mon, May 12, 2008 at 06:03:09PM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
-> > I am wondering if our move should be to remove these negatives
-> > instead
-> > of adding more like the quoted patch does.
->
-> We should removing the no-log and no-commit indeed as there are log
-> and
-> commit. the fact that --no-foo exists when --foo exists is documented
-> in
-> gitcli manpage. We can make it even better adding a flag if needed,
-> but
-> I feel it's not.
+> 	$ git log next --diff-filter=A builtin-*.c
 
-Ok, here is an updated version that does this.
+And indeed the first two results here are examples of converting scripts
+to builtin c versions.
 
- git-merge.sh |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+The third result is applicable and converts merge-recursive from a
+standalone c version to builtin.
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 69b35d8..5fc5f52 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -9,11 +9,9 @@ git-merge [options] <remote>...
- git-merge [options] <msg> HEAD <remote>
- --
- stat                 show a diffstat at the end of the merge
--n,no-stat            don't show a diffstat at the end of the merge
-+n                    don't show a diffstat at the end of the merge
- summary              (synonym to --stat)
--no-summary           (synonym to --no-stat)
- log                  add list of one-line log to merge commit message
--no-log               don't add list of one-line log to merge commit message
- squash               create a single commit instead of doing a merge
- commit               perform a commit if the merge sucesses (default)
- ff                   allow fast forward (default)
--- 
-1.5.5.1.211.g65ea3.dirty
+If I had known about (or looked for) the --diff-filter option I would
+have used the 'R' argument, since I am interested in a rename event,
+but it produces no results.
+
+	$ git log next --diff-filter=R builtin-*.c
+
+Adding -M does not help.
+
+-brandon
