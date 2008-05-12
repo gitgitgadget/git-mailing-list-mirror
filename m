@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v2 13/24] Added the class ComplexFilePattern.
-Date: Mon, 12 May 2008 22:13:31 +0200
-Message-ID: <1210623222-24908-14-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v2 23/24] Added the test class AddCommandIterationTest.
+Date: Mon, 12 May 2008 22:13:41 +0200
+Message-ID: <1210623222-24908-24-git-send-email-florianskarten@web.de>
 References: <1210623222-24908-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 12 22:21:56 2008
+X-From: git-owner@vger.kernel.org Mon May 12 22:22:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JveQE-0006mx-GV
-	for gcvg-git-2@gmane.org; Mon, 12 May 2008 22:14:58 +0200
+	id 1JveQH-0006mx-7w
+	for gcvg-git-2@gmane.org; Mon, 12 May 2008 22:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758097AbYELUN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 16:13:59 -0400
+	id S1758321AbYELUOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 16:14:11 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,47 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758063AbYELUN6
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 16:13:58 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:40260 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755974AbYELUNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 16:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758301AbYELUOK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 16:14:10 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:36611 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757992AbYELUN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 16:13:57 -0400
 Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 9C015DECFD1D
-	for <git@vger.kernel.org>; Mon, 12 May 2008 22:13:47 +0200 (CEST)
+	by fmmailgate02.web.de (Postfix) with ESMTP id 63B4CDC4D223
+	for <git@vger.kernel.org>; Mon, 12 May 2008 22:13:56 +0200 (CEST)
 Received: from [84.150.98.143] (helo=localhost.localdomain)
 	by smtp05.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JveP5-00016x-00; Mon, 12 May 2008 22:13:47 +0200
+	id 1JvePD-00016x-01; Mon, 12 May 2008 22:13:55 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1210623222-24908-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX19TFUYgrx5eFJmgDdoG7ZNXMNGffmfnFmClXQLC
-	1hncCukx6dkwMkzesVlCyswf/lzwJgsip9iFhIy/ThGHPzaNx7
-	OoY00LLMoODH1k3u6OJA==
+X-Provags-ID: V01U2FsdGVkX1/DV1tBSoQtFTuLJUpfxgznmp6/rj60BMrztPDF
+	CmKEgDUXDLmSXb5441xwdGu/VeUc42GAvMzwrgADd1Y1l4M7lu
+	SbV8u3/afJVj0LvENgtA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81923>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../jgit/treewalk/rules/ComplexFilePattern.java    |   97 ++++++++++++=
+ .../treewalk/rules/AddCommandIterationTest.java    |  321 ++++++++++++=
 ++++++++
- 1 files changed, 97 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/ComplexFilePattern.java
+ 1 files changed, 321 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/treewalk=
+/rules/AddCommandIterationTest.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Compl=
-exFilePattern.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rul=
-es/ComplexFilePattern.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/rules/=
+AddCommandIterationTest.java b/org.spearce.jgit.test/tst/org/spearce/jg=
+it/treewalk/rules/AddCommandIterationTest.java
 new file mode 100644
-index 0000000..7c2aba0
+index 0000000..a96c880
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/ComplexFileP=
-attern.java
-@@ -0,0 +1,97 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/rules/AddComm=
+andIterationTest.java
+@@ -0,0 +1,321 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -89,90 +89,323 @@ e
 + */
 +package org.spearce.jgit.treewalk.rules;
 +
-+import java.util.List;
++import java.io.File;
++import java.io.IOException;
++import java.io.PrintWriter;
 +import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.HashSet;
++import java.util.Iterator;
++import java.util.List;
++import java.util.NoSuchElementException;
++import java.util.Set;
 +
-+import org.spearce.jgit.lib.FNMatchPattern;
++import junit.framework.TestCase;
 +
-+/**
-+ * A {@link ComplexFilePattern} defines for some components of a file =
-path
-+ * fnmatch like patterns. For example could such a pattern be that the=
- first
-+ * directory must start with an a and that the second directory must e=
-nd with
-+ * and b. In the example the pathes axx/xxb/hello.txt and ayy/yyb woul=
-d match,
-+ * but axx would not match.
-+ *=20
-+ */
-+class ComplexFilePattern implements FilePattern {
-+	private final List<FNMatchPattern> usedPatternList;
++import org.spearce.jgit.errors.InvalidPatternException;
++import org.spearce.jgit.errors.PathNotInProjectDirectoryException;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.lib.WorkTree;
++import org.spearce.jgit.treewalk.LightFileTreeIterable;
 +
-+	private final boolean matchDirectoriesOnly;
++public class AddCommandIterationTest extends TestCase {
 +
-+	private final int offset;
++	private WorkTree workTree;
 +
-+	private ComplexFilePattern(List<FNMatchPattern> List,
-+			boolean matchDirectoriesOnly, int offset) {
-+		this.usedPatternList =3D List;
-+		this.matchDirectoriesOnly =3D matchDirectoriesOnly;
-+		this.offset =3D offset;
++	private AddRulesFactory factory;
++
++	private Iterable<File> createIterable(File workingDirectory,
++			List<String> filePatternsOfAddCommand)
++			throws PathNotInProjectDirectoryException, InvalidPatternException,
++			IOException {
++		final Rules rules =3D factory.createRules(workTree.getDirectory(),
++				workingDirectory, filePatternsOfAddCommand);
++		return new LightFileTreeIterable(workTree.getDirectory(), rules, fal=
+se);
 +	}
 +
-+	ComplexFilePattern(List<String> patternStrings, boolean matchDirector=
-iesOnly) {
-+		this.usedPatternList =3D new ArrayList<FNMatchPattern>(patternString=
-s
-+				.size());
-+		for (String patternString : patternStrings) {
-+			this.usedPatternList.add(new FNMatchPattern(patternString));
++	@Override
++	protected void setUp() throws Exception {
++		final File projectDirectory =3D File.createTempFile("test", "");
++		projectDirectory.delete();
++		projectDirectory.mkdir();
++		projectDirectory.deleteOnExit();
++		this.workTree =3D Repository.createWorkTree(projectDirectory);
++		this.factory =3D new AddRulesFactory();
++	}
++
++	public void testNoPattern() throws Exception {
++		createFile("a.txt");
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				Collections.<String> emptyList());
++		final Set<File> expectedPathes =3D Collections.emptySet();
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
++	}
++
++	public void testTreePattern1() throws Exception {
++		final Set<File> expectedFiles =3D new HashSet<File>();
++		createFile("a.txt");
++		expectedFiles.add(createFile("a", "a.txt"));
++		expectedFiles.add(createFile("a", "a", "a.txt"));
++		expectedFiles.add(createFile("a", "b", "a.txt"));
++		createFile("a", "b", "a.c");
++
++		final File directoryA =3D new File(workTree.getDirectory(), "a");
++
++		final Iterable<File> iterable =3D createIterable(directoryA, Arrays
++				.asList("*.txt"));
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedFiles, iterable);
++	}
++
++	public void testTreePattern2() throws Exception {
++		final Set<File> expectedFiles =3D new HashSet<File>();
++		createFile("a.txt");
++		expectedFiles.add(createFile("a", "a.txt"));
++		expectedFiles.add(createFile("a", "a", "a.txt"));
++		expectedFiles.add(createFile("a", "b", "a.txt"));
++		createFile("a", "b", "a.c");
++
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				Arrays.asList("a" + File.separator + "*.txt"));
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedFiles, iterable);
++	}
++
++	public void testSelectCompleteSubdirectory() throws Exception {
++		final Set<File> expectedPathes =3D new HashSet<File>();
++		final File directoryA =3D new File(workTree.getDirectory(), "a");
++		final File directoryAA =3D new File(directoryA, "a");
++		final File directoryAB =3D new File(directoryA, "b");
++		createFile("a.txt");
++		expectedPathes.add(directoryA);
++		expectedPathes.add(directoryAA);
++		expectedPathes.add(createFile("a", "a.txt"));
++		expectedPathes.add(createFile("a", "a", "a.txt"));
++		expectedPathes.add(directoryAB);
++		expectedPathes.add(createFile("a", "b", "a.txt"));
++		expectedPathes.add(createFile("a", "b", "a.c"));
++
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				Arrays.asList("a"));
++
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
++	}
++
++	public void testSelectTwoSubdirectories() throws Exception {
++		final Set<File> expectedPathes =3D new HashSet<File>();
++		final File directoryA =3D new File(workTree.getDirectory(), "a");
++		final File directoryAA =3D new File(directoryA, "a");
++		final File directoryAB =3D new File(directoryA, "b");
++		createFile("a.txt");
++		createFile("a", "a.txt");
++		expectedPathes.add(directoryAA);
++		expectedPathes.add(createFile("a", "a", "a.txt"));
++		expectedPathes.add(directoryAB);
++		expectedPathes.add(createFile("a", "b", "a.txt"));
++		expectedPathes.add(createFile("a", "b", "a.c"));
++
++		final List<String> patternList =3D new ArrayList<String>(2);
++		patternList.add("a" + File.separator + "a");
++		patternList.add("a" + File.separator + "b");
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				patternList);
++
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
++	}
++
++	public void testTwoDifferentSelects() throws Exception {
++		final Set<File> expectedPathes =3D new HashSet<File>();
++		final File directoryA =3D new File(workTree.getDirectory(), "a");
++		final File directoryAA =3D new File(directoryA, "a");
++		createFile("a.txt");
++		createFile("a", "a.txt");
++		expectedPathes.add(directoryAA);
++		expectedPathes.add(createFile("a", "a", "a.txt"));
++		expectedPathes.add(createFile("a", "b", "a.txt"));
++		expectedPathes.add(createFile("a", "b", "c", "a.txt"));
++		createFile("a", "b", "a.c");
++
++		final List<String> patternList =3D new ArrayList<String>(2);
++		patternList.add("a" + File.separator + "a");
++		patternList.add("a" + File.separator + "b" + File.separator + "*.txt=
+");
++
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				patternList);
++
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
++	}
++
++	public void testRealisticExample() throws Exception {
++		final Set<File> expectedPathes =3D new HashSet<File>();
++
++		// write the .gitignore file
++		final File dotGitIgnoreFile =3D createFile(".gitignore");
++		final PrintWriter dotGitIgnoreFilePrinter =3D new PrintWriter(
++				dotGitIgnoreFile);
++		try {
++			dotGitIgnoreFilePrinter.println("/alpha/config.xml");
++			dotGitIgnoreFilePrinter.println("*.class");
++			dotGitIgnoreFilePrinter.println("!/alpha/test/ressources/");
++			dotGitIgnoreFilePrinter.println("*~");
++		} finally {
++			dotGitIgnoreFilePrinter.close();
 +		}
-+		this.offset =3D 0;
-+		this.matchDirectoriesOnly =3D matchDirectoriesOnly;
++
++		// write the .git/info/exclude file
++		final File repositoryDirectory =3D workTree.getRepository()
++				.getDirectory();
++		final File infoDirectory =3D new File(repositoryDirectory, "info");
++		infoDirectory.mkdir();
++		final File infoExcludeFile =3D new File(infoDirectory, "exclude");
++		final PrintWriter infoExcludeFilePrinter =3D new PrintWriter(
++				infoExcludeFile);
++		try {
++			infoExcludeFilePrinter.println("/alpha/test/ressources/mytest.txt")=
+;
++		} finally {
++			infoExcludeFilePrinter.close();
++		}
++
++		createFile("alpha", "config.xml");
++		expectedPathes.add(createFile("alpha", "src", "Main.java"));
++		createFile("alpha", "src", "Main.class");
++		expectedPathes.add(createFile("alpha", "test", "ressources",
++				"Example.class"));
++		expectedPathes.add(createFile("alpha", "test", "ressources",
++				"input.txt"));
++		createFile("alpha", "test", "ressources", "input.txt~");
++		createFile("alpha", "test", "ressources", "mytest.txt");
++
++		final File alphaDirectory =3D new File(workTree.getDirectory(), "alp=
+ha");
++		final File srcDirectory =3D new File(alphaDirectory, "src");
++		final File testDirectory =3D new File(alphaDirectory, "test");
++		final File ressources =3D new File(testDirectory, "ressources");
++
++		expectedPathes.add(alphaDirectory);
++		expectedPathes.add(srcDirectory);
++		expectedPathes.add(testDirectory);
++		expectedPathes.add(ressources);
++
++		final List<String> patternList =3D new ArrayList<String>(2);
++		patternList.add("alpha");
++
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				patternList);
++
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
 +	}
 +
-+	int getActualPathSize() {
-+		return usedPatternList.size() - offset;
++	public void testSingleFile() throws Exception {
++		createFile("a.txt");
++		createFile("a", "a.txt");
++		createFile("a", "a", "a.txt");
++		final File expectedFile =3D createFile("a", "b", "a.txt");
++		createFile("a", "b", "a.c");
++
++		final String pattern =3D "a" + File.separator + "b" + File.separator
++				+ "a.txt";
++		final Iterable<File> iterable =3D createIterable(workTree.getDirecto=
+ry(),
++				Arrays.asList(pattern));
++		final Set<File> expectedPathes =3D Collections.singleton(expectedFil=
+e);
++		assertIsValidIterable(iterable);
++		assertIterableReturnsSet(expectedPathes, iterable);
 +	}
 +
-+	private FNMatchPattern getPatternOfCurrentLevel() {
-+		return usedPatternList.get(offset);
-+	}
++	/**
++	 * Tests if the specified {@link Iterable} returns the specified set =
+of
++	 * {@link File}s. The assertion will fail if the {@link Iterable} ret=
+urns
++	 * to much, to less files. It will also fail if the {@link Iterable} =
+returns
++	 * a file twice.
++	 *=20
++	 * @param expectedContent
++	 *            the expected set of files.
++	 * @param iterable
++	 *            the {@link Iterable} to test.
++	 */
++	private void assertIterableReturnsSet(Set<File> expectedContent,
++			Iterable<File> iterable) {
++		final Set<File> returnedFiles =3D new HashSet<File>();
++		final List<File> doubleReturnedFiles =3D new ArrayList<File>();
 +
-+	public boolean canMatchAtThisDirectoryLevel() {
-+		return getActualPathSize() =3D=3D 1;
-+	}
-+
-+	public FilePattern getPatternForSubDirectory(String directoryName) {
-+
-+		if (getActualPathSize() > 1) {
-+			if (getPatternOfCurrentLevel().matches(directoryName)) {
-+				return new ComplexFilePattern(usedPatternList,
-+						matchDirectoriesOnly, offset + 1);
-+			} else {
-+				return FilePattern.MATCH_NEVER;
++		final Iterator<File> iterator =3D iterable.iterator();
++		while (iterator.hasNext()) {
++			final File file =3D iterator.next();
++			if (!returnedFiles.add(file)) {
++				doubleReturnedFiles.add(file);
 +			}
 +		}
-+		assert (getActualPathSize() =3D=3D 1);
-+		if (match(directoryName, true)) {
-+			return FilePattern.MATCH_ALWAYS;
-+		} else {
-+			return FilePattern.MATCH_NEVER;
++		final Set<File> missingFiles =3D new HashSet<File>();
++		for (File file : expectedContent) {
++			if (!returnedFiles.contains(file)) {
++				missingFiles.add(file);
++			}
++		}
++		if (!missingFiles.isEmpty()) {
++			fail(String.format("missing pathes: %s", missingFiles));
++		}
++
++		final Set<File> unexpectedFiles =3D new HashSet<File>();
++		for (File file : returnedFiles) {
++			if (!expectedContent.contains(file)) {
++				unexpectedFiles.add(file);
++			}
++		}
++		if (!unexpectedFiles.isEmpty()) {
++			fail(String.format("unexpected pathes: %s", unexpectedFiles));
++		}
++
++		if (!doubleReturnedFiles.isEmpty()) {
++			fail(String.format("multiple times returned pathes: %s",
++					doubleReturnedFiles));
++		}
++
++	}
++
++	private static void assertIsValidIterable(Iterable<File> iterable) {
++		final Iterator<File> iterator =3D iterable.iterator();
++		while (iterator.hasNext()) {
++			iterator.next();
++		}
++		try {
++			iterator.next();
++			fail();
++		} catch (NoSuchElementException e) {
++			// expected
 +		}
 +	}
 +
-+	public boolean match(String fileName, boolean fileIsDirectory) {
-+		if (!fileIsDirectory && matchDirectoriesOnly) {
-+			return false;
++	private File createFile(String... path) throws IOException {
++		File file =3D workTree.getDirectory();
++		for (int i =3D 0; i < path.length; i++) {
++			file =3D new File(file, path[i]);
++			if (i =3D=3D path.length - 1) {
++				file.getParentFile().mkdirs();
++				file.createNewFile();
++				break;
++			}
 +		}
-+		return getPatternOfCurrentLevel().matches(fileName);
++		return file;
 +	}
-+
-+	public boolean isSameForSubDirectories() {
-+		return false;
-+	}
-+
 +}
 --=20
 1.5.4.3
