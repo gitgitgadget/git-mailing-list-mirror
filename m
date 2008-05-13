@@ -1,78 +1,74 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
-Date: Tue, 13 May 2008 07:33:06 +0200
-Organization: glandium.org
-Message-ID: <20080513053306.GA18232@glandium.org>
-References: <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home> <20080512190946.GC5160@mithlond.arda.local> <alpine.LFD.1.10.0805121527550.23581@xanadu.home> <20080512202414.GA8620@mithlond.arda.local> <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org> <20080513001252.GB29038@spearce.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Make the exit code of add_file_to_index actually useful
+Date: Tue, 13 May 2008 08:00:13 +0200
+Message-ID: <20080513060013.GA3622@steel.home>
+References: <20080302154154.GC2973@steel.home> <20080302154238.GD2973@steel.home> <alpine.LSU.1.00.0803021555500.22527@racer.site> <7vtzjpoye6.fsf@gitster.siamese.dyndns.org> <20080512175654.GB3128@steel.home> <7vzlqvxt1p.fsf@gitster.siamese.dyndns.org> <20080512205414.GH3128@steel.home> <7viqxjxj0h.fsf@gitster.siamese.dyndns.org> <20080512224844.GI3128@steel.home> <7vve1jw130.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 13 07:34:17 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dirk S??sserott <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 13 08:01:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvn9U-0000JB-Rb
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 07:34:17 +0200
+	id 1JvnZU-0006ac-Lj
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 08:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889AbYEMFd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 01:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbYEMFd0
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 01:33:26 -0400
-Received: from vuizook.err.no ([194.24.252.247]:60123 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754833AbYEMFdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 01:33:25 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1Jvn8R-0003zQ-Ec; Tue, 13 May 2008 07:33:17 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1Jvn8M-00051E-M4; Tue, 13 May 2008 07:33:06 +0200
+	id S1755691AbYEMGAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 02:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbYEMGAR
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 02:00:17 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:60400 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755691AbYEMGAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 02:00:16 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarO+BInc
+Received: from tigra.home (Fab5c.f.strato-dslnet.de [195.4.171.92])
+	by post.webmailer.de (mrclete mo28) (RZmta 16.34)
+	with ESMTP id 300a08k4D3Yku6 ; Tue, 13 May 2008 08:00:14 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 47FCD277BD;
+	Tue, 13 May 2008 08:00:14 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 103F956D28; Tue, 13 May 2008 08:00:14 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080513001252.GB29038@spearce.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+In-Reply-To: <7vve1jw130.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81990>
 
-On Mon, May 12, 2008 at 08:12:52PM -0400, Shawn O. Pearce wrote:
-> Mike Hommey <mh@glandium.org> wrote:
-> > On Mon, May 12, 2008 at 11:03:04PM +0200, Mike Hommey wrote:
-> > > On Mon, May 12, 2008 at 11:24:14PM +0300, Teemu Likonen wrote:
-> > > > But I have experienced the same earlier with some other post-1.5.5
-> > > > version so I believe you can reproduce this yourself. After cloning
-> > > > Linus's linux-2.6 repo its .git directory weights 209MB. After single
-> > > > "git pull" and "git gc" it was 298MB in my test.
-> > > 
-> > > I noticed that a while ago: when repacking multiple packs when one has a
-> > > .keep file, the resulting additional pack contains too many blobs and
-> > > trees, contrary to when only packing loose objects:
-> > (...)
-> > 
-> > That is, it seems to also contain all the blobs and subtrees for all the
-> > commits the pack contains, even when they already are in the pack having
-> > a .keep file.
+Junio C Hamano, Tue, May 13, 2008 01:32:19 +0200:
+> Alex Riesen <raa.lkml@gmail.com> writes:
 > 
-> I've noticed this too.  Like since day 1 when we added .keep.
-> But uh, nobody else complained and I forgot about it.
+> > Junio C Hamano, Tue, May 13, 2008 00:19:42 +0200:
+> > ...
+> >> I would understand there can be some files that cannot be read.  But when
+> >> there is such a file, why is it Ok to ignore an error to update the
+> >> contents from that file if/when the user asks to index the current
+> >> contents, provided if the contents of that file is to be tracked?  Isn't
+> >> it the true cause of the problem that the file is being tracked but it
+> >> shouldn't?
+> >
+> > No, I don't think so. Consider "git add dir/". It is _not_ 1 (one)
+> > operation. It is many operations (add every file in the "dir/"). Why
+> > should all of them be considered failed just because the third file
+> > from the bottom could not be read (and the user may have not even seen
+> > it, because it wasn't there before, like a temporary file from Excel).
+> > And for a user (for me, at least) "git add" is an intermediate
+> > operation anyway...
 > 
-> My theory (totally unproven) is that the new pack has objects we
-> copied from the .keep pack, because those objects were the best
-> delta-bases for the loose objects we have deltafied and want to
-> store in the new pack.  Except they aren't yet packed in the new
-> pack, so we pack them too.  Tada, duplicates.  :-\
+> Ah, Ok, I was overly cautious, and the worry is unfounded, as long as you
+> do not trigger this "ignore" thing upon "git commit -a".
 
-Well, that does not seem delta related, since my testcase doesn't show
-deltas in the second pack.
-
-Mike
+Yes, builtin-commit.c explicitely keeps its behaviour: the 0 in flags
+argument makes sure die() is called. "Ignore errors" must be requested
+with ADD_FILES_IGNORE_ERRORS.
