@@ -1,133 +1,161 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Use cases for 'git statistics'
-Date: Tue, 13 May 2008 15:07:04 +0200
-Message-ID: <200805131507.04912.jnareb@gmail.com>
-References: <bd6139dc0805080851y2065bedfsf0f388cfd6d85929@mail.gmail.com> <200805121440.12836.jnareb@gmail.com> <bd6139dc0805120604m349b1fbbr39c6dcb8d893e771@mail.gmail.com>
+Subject: Re: How to (re-)create .git/logs/refs
+Date: Tue, 13 May 2008 06:24:34 -0700 (PDT)
+Message-ID: <m33aom5oc2.fsf@localhost.localdomain>
+References: <200805081256.11465.hs4233@mail.mn-solutions.de>
+	<200805130842.06112.hs4233@mail.mn-solutions.de>
+	<alpine.DEB.1.00.0805131244300.30431@racer>
+	<200805131413.14753.hs4233@mail.mn-solutions.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Sverre Rabbelier" <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 15:08:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>
+To: Holger Schurig <hs4233@mail.mn-solutions.de>
+X-From: git-owner@vger.kernel.org Tue May 13 15:26:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvuEe-0007YW-Bo
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 15:08:04 +0200
+	id 1JvuVW-0006SR-1t
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 15:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756209AbYEMNHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 09:07:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755815AbYEMNHN
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 09:07:13 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:12733 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637AbYEMNHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 09:07:12 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2144165fgg.17
-        for <git@vger.kernel.org>; Tue, 13 May 2008 06:07:10 -0700 (PDT)
+	id S1756723AbYEMNYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 09:24:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756926AbYEMNYj
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 09:24:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:62449 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756533AbYEMNYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 09:24:37 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1230402nfc.21
+        for <git@vger.kernel.org>; Tue, 13 May 2008 06:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=+bK650C93Uezdk/6hDzs4tsWYJ19ZSSPd4ADzViUK+A=;
-        b=ZWL5P1q0AqM/VUtOSageJyF4FKnKg5ToTaU0A0hsviwkiWCz9Sg7cb4yKgzACH16CwjK8b08nkOAv1KQwp7xsR+NbWmUSYIM+8bputXkFF71iUGrsZ2khAey9FbXcubT6QlwGpavv5wFvGphcX/lUbf7raudz86HLVJEb3l+qZE=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=CfDaDAzLfWTzIz68aWvwW5Zp/lwZz130MuUbe1/6SEs=;
+        b=PQ0gTKSZYt5EDu2TZwZErjQQv0xFURa4xm0mRMA0kJooKNZnP96oB/Ih76de0YVDE0LrPvH4UFuXjfBntp7mkmHar+3CvtqH6PwXSYP6N5uSRioHxrIa2XRLNfJgogECvs+gFWRaH7t9nyFxYipDDtoRsC6I8t/4I4Wi1ZymT3A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=C9rqfI7/R0tOfFzXO6N6eJ2nnDaQ9Um8Pj0UpL3LOV8v6HWDKipJr1W1GATmoZ7804Z9UPYuAKGMdgFTZkRv9hrX9KffYucJD2afGUv7Txm2pHU4t3XA66fRGeHTq7v+rB+QpDNFyDb45JdbWf6ldmlpXMr2P0rQ17T8q8dHi4o=
-Received: by 10.86.4.2 with SMTP id 2mr14311632fgd.40.1210684029737;
-        Tue, 13 May 2008 06:07:09 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.213.214])
-        by mx.google.com with ESMTPS id l19sm7744392fgb.9.2008.05.13.06.07.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 May 2008 06:07:08 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <bd6139dc0805120604m349b1fbbr39c6dcb8d893e771@mail.gmail.com>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=DGHYSytvtaU3nVmP7/rmbPUovSSXUxwOeodlmXARf8dCWCVtld9dAjFHWy3JkwnHHjzEIx0rBFpueMxAlxiaj9Z93oFveXZEvZO/W8TtKptUTRcH2/YOPtHvEZlqH75v1PJO78xfH4/JX3b06gWDYdegaX2nzQtHiXnVqBqxe7s=
+Received: by 10.210.88.3 with SMTP id l3mr8448871ebb.114.1210685076323;
+        Tue, 13 May 2008 06:24:36 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.213.214])
+        by mx.google.com with ESMTPS id d25sm6014590nfh.27.2008.05.13.06.24.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 May 2008 06:24:34 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4DDOWTb021236;
+	Tue, 13 May 2008 15:24:32 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4DDOUvk021232;
+	Tue, 13 May 2008 15:24:30 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200805131413.14753.hs4233@mail.mn-solutions.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82028>
 
-On Mon, 12 May 2008, Sverre Rabbelier wrote:
-> [Sorry, I hit 'send' instead of 'save']
+Holger Schurig <hs4233@mail.mn-solutions.de> writes:
 
-And now you apparently forgot to add git mailing list to receipients...
-
-> On Mon, May 12, 2008 at 2:40 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>  This is, IMHO, the most complex example (at least to do properly).
->>  It begins with: does given author have code touching given subsystem
->>  (i.e. is it for him/her new contribution wrt. subsystem)? How many
->>  commits he/she has affecting given subsystem? How often he/she rewrites
->>  code? How many bugs were introduced?
+> > Are you sure you understand what @{date} does?  It shows you
+> > the state _this_ repository was in at that date.
 > 
-> Ah, there is a lot more to this example than I thought. Perhaps this
-> data could all be shown and then, using some "importance" metric per
-> item a "grade" can be calculated?
-
-Weighting different statistics, bayesian hypotesis/filtering, expert
-system, machine learning... I guess that would be quite a work to do
-it well.  Probably would require to calculate and adjust scoring of code
-(difficulity) and authors (skill), and matching them...
-
-This is certainly in the "wishlist" scope.
-
->>  Details I think need to be provided by maintainer...
+> Who says so? "man git-rev-parse" just says:
 > 
-> Do you mean Junio, or the user of the program?
-
-I mean that all I can provide is speculation.  I'm not, and never was
-a maintainer of OSS project, and I don't know what criteria one use
-(perhaps unvoiced criteria) to decide whether given patch needs to be
-examined more closely, or the cursory browsing should be enough.
-
->>>>  * Contributor: what happened with my code?
->>>
->>> Do you mean a "track my code" like feature? Showing the movement of a
->>> particular piece of code through the code? (Displaying information
->>> like "moved from foo.c to bar.c in commit 0123456789abcd"?)
->>
->>  I was thinking there about "git blame --reverse".
+> o  A ref followed by the suffix @ with a date specification
+>    enclosed in a brace pair (e.g. {yesterday}, {1 month 2 weeks 3
+>    days 1 hour 1 second ago} or {1979-02-26 18:30:00}) to specify
+>    the value of the ref at a prior point in time. This suffix may
+>    only be used immediately following a ref name and the ref
+>    must have an existing log ($GIT_DIR/logs/<ref>).
 > 
-> Do you mean, filter it's output for a specific user?
+> It just states "at a prior point in time", not "at a prior point 
+> in time in your git repository/checkout".
 
-I mean, given the code at given version, what happened to this code?
-Filtering "git blame --reverse" by user might be one way of solving it.
+Please read carefully: "value of the _ref_" at a given time.
+It means value where ref pointed to at given time.  That of
+course depends on what you did with repository: did you just fetch,
+or perhaps you made those commits, or perhaps you rebased branch,
+or decided that the work you did is wrong and rewound to previous
+version using reset.
 
->>>>  * Searching where to contribute: what are oldest part of code dealing
->>>>   with error messages (find ancient code)?
->>>>
->> Or find the lines with oldest modification stamp with "die" or "warn",
->> or find which messages are oldest, even if wrapper have changed.
+As this is purely local matter, it matter only for _your_
+repository.
+
+> > It is a common misconception that you can reference anything
+> > by date in a distributed setup.  (Before you ask, I will just
+> > mention "clock skew" and "parallel branches" to give you an
+> > idea why this is a misconception.)
 > 
-> In that case, perhaps a regexp would be more suitable, to allow the
-> user to search for any specific line, not just "die" or "warn"?
+> My idea was to use the first commit (from git-rev-log) where the 
+> date is below the specified date.
 
-What I had in mind here, but didn't explain clear enough, was an
-extension to pickaxe search.  You want to find when current error
-message was created, even if the way of handling it (fprintf vs. die)
-changed, or if code was indented, or was moved.
-
-Or find all error messages, in the order they were created, for example
-in git case to find ancient error messages and replace it by something
-more user-friendly (or less selective about choosing friends ;-).
-
->>  P.S. I wonder how hard to be to plug-in such SCM statistic system
->>  into something like project management, see
->>   "Joel On Software: Evidence based scheduling" (of programming tasks)
->>   http://www.joelonsoftware.com/items/2007/10/26.html
+Which might be not what you want, as you can get revision which
+was on some side branch.
+ 
+> To give you some context: Bitbake (from www.openembedded.org) is 
+> a tool that can download software, patch it, configure it, 
+> compile it and create packages out of it. Nothing fancy, except 
+> that it can do this for a huge amount of embedded devices, 
+> usually using a cross-compiler for ARM, MIPS, whatever.
+>
+> And it can download not just tar files, it can also use CVS, SVN, 
+> hg, git and so on.
 > 
-> Interesting article, I think integrating statistics
-> (http://www.statsvn.org/ for example) can be a very powerful tool for
-> project management.
+> In OpenEmbedded, many patch recipes specify the version to use. 
+> If you deal with versioned stuff, e.g. 
+> filename-frob-3.14.tar.bz, this is fine. Sometimes the version 
+> is a SVN revision number. And sometimes it's a git, mercury or 
+> monotone hash. However, the latter beast are almost 
+> non-describing. So many bitbake recipes specify a SRCDATE, and 
+> you can immediately see if SRCDATE=20070501 that it uses an 
+> ancient version of the software, from 1st May 2007. You won't 
+> see that if it would specify 
+> GIT_REV=6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4. Of course you 
+> can do
+> 
+>   GIT_REV=6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4
+>   # This is from 2007 May 1st
+> 
+> but then you're redundant and chances are high that those two 
+> lines get out-of-sync.
+ 
+Thanks for explanation.  This is most useful when proposing solutions
+to real problem...
 
-You meant http://git.koha.org/gitstat/, didn't you? ;-P
+The solution, of course, is to use git-describe output instead of
+full SHA-1 (this of course assumes that you tag your releases).
+Something like "v1.5.5.1-215-gc853afb" is, I think, quite well
+self-described.  There is still place for ambiguity due without
+the shortened sha-1 part due to parallel development, but I think
+no less than using date.
+ 
+> So, when I have SRCDATE=20070501, I'd be happy if git would, for 
+> me, find out that this is 
+> 6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4, even when the commit 
+> 6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4 was not done on my 
+> local machine, but is a commit that I pulled from the outside.
+> 
+> Also, when I do "git checkout @{20070501}", I don't usually mind 
+> if, e.g. because of time-skew or multi-heads, I'm not at the 
+> 17th commit in this area, but on the top-most for which this 
+> condition is true. I can use "git log" and "git reset" or 
+> whatever to dig my way to the state I want, but git would do the 
+> dull work for me.
 
-Siriously, what I had in mind was to integrate author dates and commit
-dates into project management system scheduling.
+You can try 
+
+ $ git checkout "$(git log -1 --pretty=format:%H --before=2007-05-01)"
+
+but YMMV, i.e. if you hit upon correct revision or not would depend
+on luck.
 
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
