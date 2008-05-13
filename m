@@ -1,93 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Paginate project list
-Date: Tue, 13 May 2008 19:04:37 +0200
-Message-ID: <200805131904.38317.jnareb@gmail.com>
-References: <200805011220.58871.jnareb@gmail.com> <200805130855.08133.jnareb@gmail.com> <8c5c35580805130939m1a1ef8e0yd72402f3c79190ea@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git pull/merge master on other branch
+Date: Tue, 13 May 2008 12:24:31 -0500
+Message-ID: <4829CECF.1090900@nrlssc.navy.mil>
+References: <g00nb3$dlm$1@ger.gmane.org> <200805090824.12772.johan@herland.net> <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"John Hawley" <warthog19@eaglescrag.net>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 19:06:54 2008
+Cc: Johan Herland <johan@herland.net>, SungHyun Nam <goweol@gmail.com>,
+	git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue May 13 19:26:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvxwt-0004mY-F8
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 19:05:59 +0200
+	id 1JvyG7-0004fd-QE
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 19:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752631AbYEMREu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 13:04:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754862AbYEMREt
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 13:04:49 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:56353 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883AbYEMREs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 13:04:48 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2214718fgg.17
-        for <git@vger.kernel.org>; Tue, 13 May 2008 10:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=8ehf8b92U5WEoIob1/Oou+3w6uZ69G/FZhfTvma4sng=;
-        b=P4AhaTmEnBrUvoOEe7AgrfOOEJHrbQsBnHSBCvgOaZn2/nf8lwUS89yLb8oKRPQKOU0fz++roRNAS9VzxAy05yrwejt8UVQ7a9kp0XLmYIr/NsAtR6SAF1me7tp7zbAmWYjCKZfNgNuH5fNcL1O/gh0uPkxce9xIgPr0EYYzLus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Kig42oPk4e98fjh+qiUV173C/3bPvVdGaT5laURAGK5Fx+S/lwrUzrAvjgo9LlvyUqPPUvHpINro5mB3G977XkcUtonsmvIePwP4+PiUe4b1OMzFk3bfZoK4Y59IEgZO2WIvsyMI2QTMW6oYfDPUdFiAUyg/ThSEV4RoGbiw4/A=
-Received: by 10.86.84.5 with SMTP id h5mr31951fgb.26.1210698286875;
-        Tue, 13 May 2008 10:04:46 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.213.214])
-        by mx.google.com with ESMTPS id l19sm86494fgb.9.2008.05.13.10.04.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 May 2008 10:04:45 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <8c5c35580805130939m1a1ef8e0yd72402f3c79190ea@mail.gmail.com>
-Content-Disposition: inline
+	id S1757601AbYEMRYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 13:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756592AbYEMRYs
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 13:24:48 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52813 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156AbYEMRYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 13:24:47 -0400
+Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
+	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m4DHOWc7014891;
+	Tue, 13 May 2008 12:24:32 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 13 May 2008 12:24:32 -0500
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
+X-OriginalArrivalTime: 13 May 2008 17:24:32.0366 (UTC) FILETIME=[350BA0E0:01C8B51E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82035>
 
-On Tue, 13 May 2008, Lars Hjemli wrote:
-> On Tue, May 13, 2008 at 8:55 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->>
->> But please take into account that gitweb performance, and I guess any
->> git web interface performance, is I/O bound and not CPU bound (at least
->> according to what I remember from J.H. emails).  So a little more
->> processing is I think less important than avoiding hitting the repos.
+Kevin Ballard wrote:
+> On May 9, 2008, at 1:24 AM, Johan Herland wrote:
 > 
-> Yeah, that's a pretty convincing argument for "cache the data, not the
-> output", at least for gitweb (cgit never touches the repos to generate
-> the project list/search).
+>> On Friday 09 May 2008, SungHyun Nam wrote:
+>>> Hello,
+>>>
+>>> If I am on a branch (reguarly rebased), I don't want to switch to
+>>> master branch, but merge origin into master.
+>>> If I switch to master and pull and switch to branch, I have to
+>>> rebuild almost of sources.
+>>>
+>>> How I can pull origin into master without switching to master
+>>> branch?
+>>
+>> You can't; merging requires use of the working tree (to resolve
+>> conflicts).
+>>
+>> However, what you can do is make a local clone of your project (cheap,
+>> because it just hardlinks files from the original repo), and checkout the
+>> master branch in the clone, perform the merge (after having set up the
+>> same
+>> origin and retrieved its contents), and then fetch (or push) the
+>> result back
+>> into the original repo (remember: "fetch" instead of "pull", since the
+>> latter will initiate a merge with your current branch).
+> 
+> 
+> If you know the pull will just be a fast-foward, then you can do
+> something like
+> 
+>   git fetch origin && git update-ref master origin/master
 
-First, this is less argument for "cache data" against "cache output",
-only against disregarding "cache data" for assumed performance reasons,
-while it "cache data" can be useful in some places.
+I recommend against using update-ref...
+
+and instead suggest using fetch to do all of the work.
+Some variation of:
+
+    git fetch origin master:master
+
+This will only fast-forward the master branch based on the remote origin's
+master branch. update-ref will blindly overwrite the master ref, if you make
+a mistake and its not a fast-forward, you just lost some commits.
+
+The above doesn't update your remotes though, maybe the following would be
+correct, but I haven't tried it.
+
+   git fetch origin && git fetch . remotes/origin/master:master
 
 
-Second, gitweb's projects list page contains "Last Changed" column,
-and you _*have*_ to hit repositories for this data, and backwards
-compatibility prevents from removing that.
 
-You can configure gitweb in such way that project name, owner, and
-project description are read from single 'project_index' file with 
-  "gitweb: Allow project description in project_index file"
-patch.  repo.or.cz can do this.
+Also, I'm surprised no one mentioned the git-new-workdir script in the
+contrib directory. It allows you to have multiple work directories
+which share and update a single repository.
 
-On the other hand mechanism to scan directory, getting owner from
-filesystem owner (plus GECOS) or repository's gitweb.owner configuration,
-and project description from 'description' file in projects repository,
-allow to treat gitweb in similar way to mod_userdir i.e. as service.
-You don't need to register project with gitweb; you need only to create
-it in appropriate place (or put symbolic link there).  kernel.org
-functions this way.
+You could
 
-I wonder how Freedesktop.org does it: it offers both gitweb and cgit
-interfaces, if I remember correctly...
--- 
-Jakub Narebski
-Poland
+    git-new-workdir <path_to_repo> <path_to_newworkdir> master
+    cd <path_to_newworkdir>
+    git pull
+
+-brandon
