@@ -1,59 +1,69 @@
-From: Holger Schurig <hs4233@mail.mn-solutions.de>
-Subject: Re: How to (re-)create .git/logs/refs
-Date: Tue, 13 May 2008 11:11:42 +0200
-Message-ID: <200805131111.42517.hs4233@mail.mn-solutions.de>
-References: <200805081256.11465.hs4233@mail.mn-solutions.de> <alpine.LFD.1.10.0805081313190.23581@xanadu.home> <200805130842.06112.hs4233@mail.mn-solutions.de>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git show documentation: no longer refer to
+	git-diff-tree options
+Date: Tue, 13 May 2008 11:16:18 +0200
+Message-ID: <20080513091618.GA27724@genesis.frugalware.org>
+References: <1210545443-12665-1-git-send-email-vmiklos@frugalware.org> <7vzlqvw23y.fsf@gitster.siamese.dyndns.org> <20080513091126.GZ27724@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 13 11:16:31 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uWAbeGC4mMoqIxdF"
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	nanako3@bluebottle.com
+X-From: git-owner@vger.kernel.org Tue May 13 11:17:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvqc3-0000qm-7X
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:15:59 +0200
+	id 1JvqdA-0001ML-UO
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:17:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755338AbYEMJPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 05:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755399AbYEMJPJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:15:09 -0400
-Received: from s131.mittwaldmedien.de ([62.216.178.31]:12812 "EHLO
-	s131.mittwaldmedien.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754553AbYEMJPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 05:15:08 -0400
-Received: from lin01.mn-solutions.de (pD95FB5E9.dip0.t-ipconnect.de [217.95.181.233])
-	by s131.mittwaldmedien.de (Postfix) with ESMTP id 46D005E40F5;
-	Tue, 13 May 2008 11:15:06 +0200 (CEST)
-Received: by lin01.mn-solutions.de (Postfix, from userid 116)
-	id D77BC1E0038; Tue, 13 May 2008 11:12:14 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	lin01.mn-logistik.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from mnz66.mn-solutions.de (mnz66.mn-logistik.de [192.168.233.66])
-	by lin01.mn-solutions.de (Postfix) with ESMTP id 6067F1E0004;
-	Tue, 13 May 2008 11:12:11 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <200805130842.06112.hs4233@mail.mn-solutions.de>
+	id S1755430AbYEMJQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 05:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754710AbYEMJQU
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:16:20 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:52111 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755399AbYEMJQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 05:16:19 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 663431B2501;
+	Tue, 13 May 2008 11:16:18 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 94B944465E;
+	Tue, 13 May 2008 11:08:16 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 25FC31190498; Tue, 13 May 2008 11:16:18 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	nanako3@bluebottle.com
 Content-Disposition: inline
+In-Reply-To: <20080513091126.GZ27724@genesis.frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82009>
 
-> Okay, then I presume it's a shortcoming that the @{date}
-> syntax uses .git/logs/ref.
 
-Is there any reason sha1_name.c (which is responsible for the @{} 
-syntax) doesn't include list-objects.h and uses 
-traverse_commit_list() for it's purposes?  It wouldn't then need 
-to use .git/logs/ref anymore.
+--uWAbeGC4mMoqIxdF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-If that would be ok, then maybe I find time (in my spare time) 
-and prepare a patch in this direction.
+On Tue, May 13, 2008 at 11:11:26AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> Ouch, somehow I read infdef: as ifdef: so I intenionally did not add
+
+                       ^^^^^^ ifndef, to be correct.
+
+--uWAbeGC4mMoqIxdF
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkgpXGIACgkQe81tAgORUJaIOgCdGIq2rBmIqPiGqA4TiO8Do+bN
+RdMAn1WfULGe5go745UXhkfXvDttAG6G
+=WoP5
+-----END PGP SIGNATURE-----
+
+--uWAbeGC4mMoqIxdF--
