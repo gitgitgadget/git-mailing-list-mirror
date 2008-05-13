@@ -1,83 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH v2 19/24] Added the class AddRuleListFactory.
-Date: Mon, 12 May 2008 21:29:09 -0400
-Message-ID: <20080513012909.GG29038@spearce.org>
-References: <1210623222-24908-1-git-send-email-florianskarten@web.de> <1210623222-24908-20-git-send-email-florianskarten@web.de>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: [PATCH v2 4/5] Make boundary characters for --color-words configurable
+Date: Tue, 13 May 2008 09:37:53 +0800
+Organization: (kooxoo Corp.)
+Message-ID: <20080513013753.GA17536@kooxoo235>
+References: <46dff0320805061815k6aca9020g285b09da2bcf29c3@mail.gmail.com> <alpine.DEB.1.00.0805071223450.30431@racer> <7viqxqc4gs.fsf@gitster.siamese.dyndns.org> <20080508103436.GB3300@mithlond.arda.local> <46dff0320805100202j54b0922cy50a2c93c4eff1757@mail.gmail.com> <46dff0320805110616s6df19657r1e4c80634267fd81@mail.gmail.com> <7vod7c6c24.fsf@gitster.siamese.dyndns.org> <46dff0320805120931u7609a5a2x5433d78e35a62c48@mail.gmail.com> <m34p934afu.fsf@localhost.localdomain> <7vve1jxrg9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Florian Koeberle <florianskarten@web.de>
-X-From: git-owner@vger.kernel.org Tue May 13 03:30:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 13 03:38:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvjLB-0006Oi-TB
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 03:30:06 +0200
+	id 1JvjTd-00087E-Ds
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 03:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbYEMB3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 21:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756354AbYEMB3N
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 21:29:13 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50257 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755904AbYEMB3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 21:29:13 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JvjK8-0003vm-6O; Mon, 12 May 2008 21:29:00 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D39F120FBAE; Mon, 12 May 2008 21:29:09 -0400 (EDT)
+	id S1756494AbYEMBh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 21:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756430AbYEMBh7
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 21:37:59 -0400
+Received: from mail.qikoo.org ([60.28.205.235]:41386 "EHLO mail.qikoo.org"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755904AbYEMBh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 21:37:58 -0400
+Received: by mail.qikoo.org (Postfix, from userid 1029)
+	id 77F1E470AE; Tue, 13 May 2008 09:37:53 +0800 (CST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1210623222-24908-20-git-send-email-florianskarten@web.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <7vve1jxrg9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81979>
 
-Florian Koeberle <florianskarten@web.de> wrote:
-> +class AddRuleListFactory {
-> +	/*
-> +	 * The add command of git 1.5.2.5 behaves a little bit stange: "git add
-> +	 * a/\*z" adds the file "a/b/xyz" but "git add a/x\*" does not.
-> +	 * 
-> +	 * The first is parsed as pattern "*z" for whole directory tree "a". The
-> +	 * second is parsed as an path.
-> +	 * 
-> +	 */
+* Junio C Hamano <gitster@pobox.com> [2008-05-12 12:17:26 -0700]:
 
-Its not strange.  C Git expands each file path to its _full_ path
-and stores that into a buffer, then runs fnmatch() for each pattern
-on the buffer.  If fnmatch() succeeds the path is added to the index.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> >> To achieve the best, we have to find the pairs of lines (one minus and
+> >> one plus for each pair) which most match each other, and then do the
+> >> word diff for each pair.
+> >
+> > Wouldn't be enough to treat run of plus/minus lines as a single block,
+> > tokenize, do token-based (as opposed to line-based) diff, then show it
+> > using linebreaks of the destination file (pluses line)?
+> 
+> I tried the "using linebreaks" but I discarded it because I did not think
+> it would work.  If we rewrite the last three lines above with this single
+> line:
+> 
+> > Wouldn't be enough to use magic?
+> 
+> and apply that algorithm between the two, then we would get a long single
+> line that has words painted in red, two lines worth, followed by green "to
+> use magic?"  and finally an end-of-line.
 
-In the case above we are running a match of "a/\*.z" against
-"a/b/xyz" and that passes.  Or we run "a/x\*" on "a/b/xyz" and it
-fails as the sequence of characters "a/x" does not appear in the
-string "a/b".
+That's why i said with current implementation we can't get the
+best output which i think should be
 
-You are running into this odd corner case because you are not
-treating the pattern passed as something that matches against the
-entire path.  This is one reason why TreeFilter's use the entire
-path when they process an entry for inclusion or exclusion, and why
-TreeWalk has each AbstractTreeIterator append the current entry name
-onto the end of the current path buffer, so we can always examine
-the full path from the root of the repository/working directory.
-
-Trying to avoid the full path in classes like ComplexFilePattern
-is why you are running into this corner case here, and must now do
-extra contortions to somewhat match the behavior of C Git.
-
-At this point I think most of the rules package is overcomplicated
-and overoptimized, and yet doesn't actually quite match the behavior
-of C Git.
-
--- 
-Shawn.
+Wouldn't be enough to {-treat run of plus/minus lines as a single block,}{+use magic?}
+{-tokenize, do token-based (as opposed to line-based) diff, then show it}
+{-using linebreaks of the destination file (pluses line)?}
