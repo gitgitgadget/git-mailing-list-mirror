@@ -1,115 +1,122 @@
-From: Holger Schurig <hs4233@mail.mn-solutions.de>
-Subject: Re: How to (re-)create .git/logs/refs
-Date: Tue, 13 May 2008 14:13:14 +0200
-Message-ID: <200805131413.14753.hs4233@mail.mn-solutions.de>
-References: <200805081256.11465.hs4233@mail.mn-solutions.de> <200805130842.06112.hs4233@mail.mn-solutions.de> <alpine.DEB.1.00.0805131244300.30431@racer>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] instaweb: make it compatible with Mac OS X 10.5's apache installation.
+Date: Tue, 13 May 2008 05:30:19 -0700 (PDT)
+Message-ID: <m37idy5qvz.fsf@localhost.localdomain>
+References: <1210534569-48466-1-git-send-email-nathans@gmail.com>
+	<B3990C52-0AF9-490C-86E1-B311144C6661@gmail.com>
+	<200805121952.55492.chriscool@tuxfamily.org>
+	<7v7idzz7no.fsf@gitster.siamese.dyndns.org>
+	<21CA1226-223D-4347-A119-1D5A2CEA003E@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nicolas Pitre <nico@cam.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 13 14:17:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: nathan spindel <nathans@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 14:31:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvtRn-0005KL-C9
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 14:17:35 +0200
+	id 1Jvtf3-0001TU-JO
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 14:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754287AbYEMMQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 08:16:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753303AbYEMMQp
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 08:16:45 -0400
-Received: from s131.mittwaldmedien.de ([62.216.178.31]:27444 "EHLO
-	s131.mittwaldmedien.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472AbYEMMQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 08:16:44 -0400
-Received: from lin01.mn-solutions.de (pD95FBA72.dip0.t-ipconnect.de [217.95.186.114])
-	by s131.mittwaldmedien.de (Postfix) with ESMTP id 8E5085E4143;
-	Tue, 13 May 2008 14:16:42 +0200 (CEST)
-Received: by lin01.mn-solutions.de (Postfix, from userid 116)
-	id 3EC121E0038; Tue, 13 May 2008 14:13:51 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	lin01.mn-logistik.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from mnz66.mn-solutions.de (mnz66.mn-logistik.de [192.168.233.66])
-	by lin01.mn-solutions.de (Postfix) with ESMTP id 22B591E0004;
-	Tue, 13 May 2008 14:13:44 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <alpine.DEB.1.00.0805131244300.30431@racer>
-Content-Disposition: inline
+	id S1759415AbYEMMa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 08:30:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759289AbYEMMa0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 08:30:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:3029 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757209AbYEMMaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 08:30:23 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2134879fgg.17
+        for <git@vger.kernel.org>; Tue, 13 May 2008 05:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=mANhICZ3R7xdmlFfmJRdBay7gJJpRUms+sk+KRrvcgU=;
+        b=rDmSZ6XlOFNdNwhsW+veEzdbDfkUqAgwyFACzUbZq6LBgV78AweBB0JCNKLYfSE0OJLleFufEDrss7JmZrz1AMfRBr1p/cWpTyPSTJmy5xkL7KQGzGg8WW7NaL5BbK2Gr6CjNLqqxzoKmdTojYpcuCUr1i4FVF9VFYKJlxVy410=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=RvIXu4JxMPPMOY8+h8/uFBd4GwT2EY9iQDhGrkuvM32q0f300KYqAawDVUOfZPWW2Jqiqr5ttPNm4Io7npSvUH4sJMiim7hswbwLyHcBbhnLhm2H8hXmjAeFqbp2U0y+9hB1nwhjKf3AqjAgRM6U/r9z9WB7phXbCI5vXGR/6A0=
+Received: by 10.86.100.19 with SMTP id x19mr16440096fgb.12.1210681821648;
+        Tue, 13 May 2008 05:30:21 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.213.214])
+        by mx.google.com with ESMTPS id 4sm7016868fge.5.2008.05.13.05.30.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 May 2008 05:30:19 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4DCTiaU020816;
+	Tue, 13 May 2008 14:29:45 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4DCTKIg020806;
+	Tue, 13 May 2008 14:29:20 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <21CA1226-223D-4347-A119-1D5A2CEA003E@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82025>
 
-> Are you sure you understand what @{date} does?  It shows you
-> the state _this_ repository was in at that date.
+nathan spindel <nathans@gmail.com> writes:
 
-Who says so?  "man git-rev-parse" just says:
+> On May 12, 2008, at 11:42 AM, Junio C Hamano wrote:
+> 
+>> Christian Couder <chriscool@tuxfamily.org> writes:
+>>
+>>> Maybe you can use a function like this not tested one:
+>>>
+>>> check_cmd() {
+>>> 	cmd="$1"
+>>>
+>>> 	if type "$cmd"> /dev/null 2>&1; then
+>>> 		if "$cmd" -v | grep Apache> /dev/null 2>&1; then
+>>> 			httpd=$(echo "$cmd" | sed "s/apache2/httpd/")
+>>> 		fi
+>>> 	fi
+>>> }
+>>
+>> One worry I have with that approach is if any and all random
+>> implementations of "httpd" that live somewhere in path do not do
+>> any harm when started with "-v" option.  Namely, they should exit
+>> without becoming a daemon and/or start the service.
+>>
+>> I am not convinced that would be the case.
 
-o  A ref followed by the suffix @ with a date specification
-   enclosed in a brace pair (e.g. {yesterday}, {1 month 2 weeks 3
-   days 1 hour 1 second ago} or {1979-02-26 18:30:00}) to specify
-   the value of the ref at a prior point in time. This suffix may
-   only be used immediately following a ref name and the ref
-   must have an existing log ($GIT_DIR/logs/<ref>).
+By the way, it is a bit strange that Apache doesn't understand long
+equivalent of -v, namely --version.
 
+> I agree with that worry. Solving that in the general case is pretty
+> difficult, so I think we could instead look for other clues in the
+> system. Some ideas:
+> 
+> - Use $HTTPD as defined in apachectl. (How portable is that?)
 
-It just states "at a prior point in time", not "at a prior point 
-in time in your git repository/checkout".
+You mean what apachectl returns in Usage: (first line)?
 
+  1014:jnareb@roke:~> /usr/sbin/apachectl          
+  Usage: /usr/sbin/httpd [-D name] [-d directory] [-f file]
 
-> It is a common misconception that you can reference anything
-> by date in a distributed setup.  (Before you ask, I will just
-> mention "clock skew" and "parallel branches" to give you an
-> idea why this is a misconception.)
+> - Inspect the text of 'man httpd' to determine if it's Apache or not.
 
-My idea was to use the first commit (from git-rev-log) where the 
-date is below the specified date.
+Manpages might be not installed.  I think 'httpd -v' is less error
+prone...
 
-To give you some context: Bitbake (from www.openembedded.org) is 
-a tool that can download software, patch it, configure it, 
-compile it and create packages out of it. Nothing fancy, except 
-that it can do this for a huge amount of embedded devices, 
-usually using a cross-compiler for ARM, MIPS, whatever.
+> - Only fallback on the httpd command on Mac OS X 10.5? That's pretty
+> safe.
 
-And it can download not just tar files, it can also use CVS, SVN, 
-hg, git and so on.
-
-In Openembedded, many patch recipes specify the version to use. 
-If you deal with versioned stuff, e.g. 
-filename-frob-3.14.tar.bz, this is fine. Sometimes the version 
-is a SVN revision number. And sometimes it's a git, mercury or 
-monotone hash. However, the latter beast are almost 
-non-describing. So many bitbake recipes specify a SRCDATE, and 
-you can immediately see if SRCDATE=20070501 that it uses an 
-ancient version of the software, from 1st May 2007. You won't 
-see that if it would specify 
-GIT_REV=6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4. Of course you 
-can do
-
-  GIT_REV=6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4
-  # This is from 2007 May 1st
-
-but then you're redundant and chances are high that those two 
-lines get out-of-sync.
+Not only MacOS X has Apache installed as httpd binary.  Some Linux
+distributions do that too.
 
 
-So, when I have SRCDATE=20070501, I'd be happy if git would, for 
-me, find out that this is 
-6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4, even when the commit 
-6e2df4fd066c450b0b3c8e0f1769d4163e2b52c4 was not done on my 
-local machine, but is a commit that I pulled from the outside.
+P.S. I wonder if it would be possible, as absolutely last resort
+fallback, to make git-instaweb to create/use very simple web server in
+Perl, using HTTP::Daemon module (if it is installed), which comes from
+libwww-perl.
 
-Also, when I do "git checkout @{20070501}", I don't usually mind 
-if, e.g. because of time-skew or multi-heads, I'm not at the 
-17th commit in this area, but on the top-most for which this 
-condition is true. I can use "git log" and "git reset" or 
-whatever to dig my way to the state I want, but git would do the 
-dull work for me.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
