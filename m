@@ -1,88 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
-	whitespace.
-Date: Tue, 13 May 2008 05:11:43 -0400
-Message-ID: <20080513091143.GA26248@sigill.intra.peff.net>
-References: <20080427151610.GB57955@Hermes.local> <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness> <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com> <20080428094119.GA20499@sigill.intra.peff.net> <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com>
+From: Holger Schurig <hs4233@mail.mn-solutions.de>
+Subject: Re: How to (re-)create .git/logs/refs
+Date: Tue, 13 May 2008 11:11:42 +0200
+Message-ID: <200805131111.42517.hs4233@mail.mn-solutions.de>
+References: <200805081256.11465.hs4233@mail.mn-solutions.de> <alpine.LFD.1.10.0805081313190.23581@xanadu.home> <200805130842.06112.hs4233@mail.mn-solutions.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 11:12:37 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 13 11:16:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvqYm-00084r-Sf
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:12:37 +0200
+	id 1Jvqc3-0000qm-7X
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757257AbYEMJLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 05:11:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757410AbYEMJLq
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:11:46 -0400
-Received: from peff.net ([208.65.91.99]:4055 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757247AbYEMJLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 05:11:45 -0400
-Received: (qmail 21627 invoked by uid 111); 13 May 2008 09:11:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 13 May 2008 05:11:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 May 2008 05:11:43 -0400
+	id S1755338AbYEMJPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 05:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755399AbYEMJPJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:15:09 -0400
+Received: from s131.mittwaldmedien.de ([62.216.178.31]:12812 "EHLO
+	s131.mittwaldmedien.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754553AbYEMJPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 05:15:08 -0400
+Received: from lin01.mn-solutions.de (pD95FB5E9.dip0.t-ipconnect.de [217.95.181.233])
+	by s131.mittwaldmedien.de (Postfix) with ESMTP id 46D005E40F5;
+	Tue, 13 May 2008 11:15:06 +0200 (CEST)
+Received: by lin01.mn-solutions.de (Postfix, from userid 116)
+	id D77BC1E0038; Tue, 13 May 2008 11:12:14 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	lin01.mn-logistik.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from mnz66.mn-solutions.de (mnz66.mn-logistik.de [192.168.233.66])
+	by lin01.mn-solutions.de (Postfix) with ESMTP id 6067F1E0004;
+	Tue, 13 May 2008 11:12:11 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <200805130842.06112.hs4233@mail.mn-solutions.de>
 Content-Disposition: inline
-In-Reply-To: <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82008>
 
-On Mon, Apr 28, 2008 at 10:56:05AM +0100, Mike Ralphson wrote:
+> Okay, then I presume it's a shortcoming that the @{date}
+> syntax uses .git/logs/ref.
 
-> > If a failing test, then I wonder if we could get a few people to set up
-> > automated tests on alternate platforms. IIRC, Junio makes sure that
-> > master always passes test on his Linux box and KO (Debian and Redhat, I
-> > think?). Other platforms could "git pull && make test" daily. I could
-> > probably do Solaris (once I get the tests to complete pass at all!) and
-> > FreeBSD 6.
-> 
-> I could run automated build / test [/ bisect?] cycles on AIX if of any
-> interest.
+Is there any reason sha1_name.c (which is responsible for the @{} 
+syntax) doesn't include list-objects.h and uses 
+traverse_commit_list() for it's purposes?  It wouldn't then need 
+to use .git/logs/ref anymore.
 
-I think that would be helpful. We seem to have most Linux variants
-pretty well covered. I now have a daily pull/build/test running on a
-FreeBSD 6.1 box. I am going to try to get a Solaris one going, too, but
-I have to first actually get the test scripts to pass _once_. :)
-
-AIX would be nice, since it seems easy to break. ;) OS X would be nice,
-too, though I suspect there are a few developers (Shawn?) who end up
-running the test scripts occasionally anyway.
-
-I am just calling the script below through cron, and it dumps a bunch of
-output if any test fails (at which point I go investigate manually). The
-only argument is the path to a git repo.
-
--- >8 --
-#!/bin/sh
-
-dir=$1; shift
-log="$dir/.autotest.out"
-
-try() {
-  "$@" >"$log" 2>&1
-  case "$?" in
-    0) ;;
-    *) echo >&2 "autotest failed: $*"
-       cat >&2 "$log"
-       exit 1
-       ;;
-  esac
-}
-
-try cd "$dir"
-try git pull
-try gmake
-PATH=/usr/local/bin:/usr/bin:/bin; export PATH
-try gmake test
+If that would be ok, then maybe I find time (in my spare time) 
+and prepare a patch in this direction.
