@@ -1,77 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/4] t5000: tar portability fix
-Date: Tue, 13 May 2008 04:45:32 -0400
-Message-ID: <20080513084532.GB23799@sigill.intra.peff.net>
+Subject: [PATCH 3/4] clone: bsd shell portability fix
+Date: Tue, 13 May 2008 04:45:56 -0400
+Message-ID: <20080513084556.GC23799@sigill.intra.peff.net>
 References: <20080513084338.GA23729@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 13 10:46:25 2008
+X-From: git-owner@vger.kernel.org Tue May 13 10:46:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvq9R-0007nZ-6c
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 10:46:25 +0200
+	id 1Jvq9o-0007uB-Fi
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 10:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758686AbYEMIpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 04:45:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758750AbYEMIpe
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 04:45:34 -0400
-Received: from peff.net ([208.65.91.99]:1105 "EHLO peff.net"
+	id S1757212AbYEMIp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 04:45:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758720AbYEMIp6
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 04:45:58 -0400
+Received: from peff.net ([208.65.91.99]:2306 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757792AbYEMIpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 04:45:34 -0400
-Received: (qmail 19877 invoked by uid 111); 13 May 2008 08:45:33 -0000
+	id S1756970AbYEMIp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 04:45:58 -0400
+Received: (qmail 19923 invoked by uid 111); 13 May 2008 08:45:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 13 May 2008 04:45:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 May 2008 04:45:32 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 13 May 2008 04:45:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 May 2008 04:45:56 -0400
 Content-Disposition: inline
 In-Reply-To: <20080513084338.GA23729@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82003>
 
-The output of 'tar tv' varies from system to system. In
-particular, the t5000 was expecting to parse the date from
-something like:
+When using /bin/sh from FreeBSD 6.1, the value of $? is lost
+when calling a function inside the 'trap' action. This
+resulted in clone erroneously indicating success when it
+should have reported failure.
 
-  -rw-rw-r-- root/root         0 2008-05-13 04:27 file
-
-but FreeBSD's tar produces this:
-
-  -rw-rw-r--  0 root   root        0 May 13 04:27 file
-
-Instead of relying on tar's output, let's just extract the
-file using tar and stat the result using perl.
+As a workaround, we save the value of $? before calling any
+functions.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5000-tar-tree.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ git-clone.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index fa62b6a..9b0baac 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -67,10 +67,10 @@ test_expect_success \
- 
- test_expect_success \
-     'validate file modification time' \
--    'TZ=GMT $TAR tvf b.tar a/a |
--     awk \{print\ \$4,\ \(length\(\$5\)\<7\)\ ?\ \$5\":00\"\ :\ \$5\} \
--     >b.mtime &&
--     echo "2005-05-27 22:00:00" >expected.mtime &&
-+    'mkdir extract &&
-+     $TAR xf b.tar -C extract a/a &&
-+     perl -e '\''print((stat("extract/a/a"))[9], "\n")'\'' >b.mtime &&
-+     echo "1117231200" >expected.mtime &&
-      diff expected.mtime b.mtime'
- 
- test_expect_success \
+diff --git a/git-clone.sh b/git-clone.sh
+index 9d88d1c..547228e 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -240,7 +240,6 @@ die "working tree '$GIT_WORK_TREE' already exists."
+ D=
+ W=
+ cleanup() {
+-	err=$?
+ 	test -z "$D" && rm -rf "$dir"
+ 	test -z "$W" && test -n "$GIT_WORK_TREE" && rm -rf "$GIT_WORK_TREE"
+ 	cd ..
+@@ -248,7 +247,7 @@ cleanup() {
+ 	test -n "$W" && rm -rf "$W"
+ 	exit $err
+ }
+-trap cleanup 0
++trap 'err=$?; cleanup' 0
+ mkdir -p "$dir" && D=$(cd "$dir" && pwd) || usage
+ test -n "$GIT_WORK_TREE" && mkdir -p "$GIT_WORK_TREE" &&
+ W=$(cd "$GIT_WORK_TREE" && pwd) && GIT_WORK_TREE="$W" && export GIT_WORK_TREE
 -- 
 1.5.5.1.296.gf618c
