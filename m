@@ -1,81 +1,70 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH v2] revision.c: really honor --first-parent
-Date: Tue, 13 May 2008 22:15:22 +0200
-Message-ID: <20080513201522.GA11485@cuci.nl>
-References: <1210547651-32510-1-git-send-email-hjemli@gmail.com> <1210605156-22926-1-git-send-email-hjemli@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 0/4] freebsd portability fixes
+Date: Tue, 13 May 2008 22:39:31 +0200
+Message-ID: <20080513203931.GA3981@steel.home>
+References: <20080513084338.GA23729@sigill.intra.peff.net> <20080513090424.GA26181@sigill.intra.peff.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, nanako3@bluebottle.com,
-	git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 22:17:35 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 13 22:41:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw0vw-00019F-Es
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 22:17:12 +0200
+	id 1Jw1Io-0001pm-Ve
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 22:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932069AbYEMUP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 16:15:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761002AbYEMUP0
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 16:15:26 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:47624 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762166AbYEMUPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 16:15:23 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 632A15461; Tue, 13 May 2008 22:15:22 +0200 (CEST)
+	id S1759856AbYEMUjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 16:39:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759284AbYEMUjg
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 16:39:36 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61584 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757985AbYEMUjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 16:39:35 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnareO8OVwvA==
+Received: from tigra.home (Fafac.f.strato-dslnet.de [195.4.175.172])
+	by post.webmailer.de (klopstock mo62) (RZmta 16.34)
+	with ESMTP id v0452fk4DGL7QX ; Tue, 13 May 2008 22:39:32 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 8F19C277BD;
+	Tue, 13 May 2008 22:39:32 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 0DAA556D28; Tue, 13 May 2008 22:39:31 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1210605156-22926-1-git-send-email-hjemli@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080513090424.GA26181@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82041>
 
-Lars Hjemli wrote:
->In add_parents_to_list, if any parent of a revision had already been
->SEEN, the current code would continue with the next parent, skipping
->the test for --first-parent. This patch inverts the test for SEEN so
->that the test for --first-parent is always performed.
+Jeff King, Tue, May 13, 2008 11:04:24 +0200:
+> On Tue, May 13, 2008 at 04:43:39AM -0400, Jeff King wrote:
+> 
+> > With these patches, I can successfully run all test scripts from the
+> > current 'master' on FreeBSD 6.1 (some of them probably affect OS X, too
+> > -- I recall somebody complaining about the '! foo | bar' construct
+> > recently).
+> 
+> Ah, nevermind about OS X. It was 97ad535b from Alex, and he specifically
+> mentioned FreeBSD 4.
+> 
+> Alex, you might want to try re-running the tests with these patches.
+> 
 
-Let's put it this way:
-- If there would have been only one path to any particular point in the
-  tree, then the --first-parent flag makes no differences, because the
-  tree wouldn't contain any merges to begin with.
-- If a tree contains *any* merges (i.e. a commit with multiple parents),
-  then there are always multiple paths to some common ancestor, and
-  therefore depending on which path you travel up first, you sometimes get
-  clashes with the SEEN flag (unpredictable by definition).
-- It would seem logical and sufficient to avoid this unpredictability by
-  utilising the --first-parent flag to present and walk a tree of commits
-  AS IF there were no merges.
-- My original patch did just that, it simplified the code to make sure
-  that all other parents beside the first parent are ignored when
-  walking the tree.
-- Your code now doesn't simplify the (IMO) convoluted walk, and still
-  marks things as seen, even though in the first-parent case, these
-  commits are not really seen at all.  It implies that your code
-  generates differing output, depending on the merges present.
-- The question now is, do we want the output of --first-parent to be
-  immutable with respect to merges being present (but hidden from sight
-  during a --first-parent run), or do we want the output of
-  --first-parent to actually change depending on variations in parents
-  other than the first parent?
+Very good! GnuPG is missing on the system, so t7004 was skipped,
+but everything besides that ran fine. My config.mak:
 
-I'd say it's better to keep the code simpler, and to make sure the
-output does *not* depend on any parents other than the first (as
-implemented in my original patch).
+NO_STRTOUMAX=Yes
+NO_C99_FORMAT=Yes
+SHELL_PATH=/usr/local/bin/bash
 
->This is a slightly different approach which I think is less ugly.
+perl 5.8.6
 
-Your patch is smaller, and therefore (perhaps) less ugly; the resulting
-code and logic of my original patch is simpler (IMHO), and therefore
-cleaner (but it all depends on (the lack of) consensus over the points above).
--- 
-Sincerely,                                                          srb@cuci.nl
-           Stephen R. van den Berg.
-
-"If I had to live my life again, I'd make the same mistakes, only sooner."
+I also have the test-tr patches I sent some time ago in that tree.
