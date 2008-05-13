@@ -1,122 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2] instaweb: make it compatible with Mac OS X 10.5's apache installation.
-Date: Tue, 13 May 2008 05:30:19 -0700 (PDT)
-Message-ID: <m37idy5qvz.fsf@localhost.localdomain>
-References: <1210534569-48466-1-git-send-email-nathans@gmail.com>
-	<B3990C52-0AF9-490C-86E1-B311144C6661@gmail.com>
-	<200805121952.55492.chriscool@tuxfamily.org>
-	<7v7idzz7no.fsf@gitster.siamese.dyndns.org>
-	<21CA1226-223D-4347-A119-1D5A2CEA003E@gmail.com>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: abouy git reset command
+Date: Tue, 13 May 2008 13:34:56 +0100
+Message-ID: <e1dab3980805130534w42ce098qf2ffe2fc89fab98b@mail.gmail.com>
+References: <17202423.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: nathan spindel <nathans@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 14:31:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: amishera <amishera2007@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 14:36:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvtf3-0001TU-JO
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 14:31:18 +0200
+	id 1Jvtjh-00036K-M2
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 14:36:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759415AbYEMMa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 08:30:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759289AbYEMMa0
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 08:30:26 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:3029 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757209AbYEMMaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 08:30:23 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2134879fgg.17
-        for <git@vger.kernel.org>; Tue, 13 May 2008 05:30:21 -0700 (PDT)
+	id S1754554AbYEMMfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 08:35:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754807AbYEMMfP
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 08:35:15 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:58387 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754304AbYEMMfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 08:35:14 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1553465ywe.1
+        for <git@vger.kernel.org>; Tue, 13 May 2008 05:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=mANhICZ3R7xdmlFfmJRdBay7gJJpRUms+sk+KRrvcgU=;
-        b=rDmSZ6XlOFNdNwhsW+veEzdbDfkUqAgwyFACzUbZq6LBgV78AweBB0JCNKLYfSE0OJLleFufEDrss7JmZrz1AMfRBr1p/cWpTyPSTJmy5xkL7KQGzGg8WW7NaL5BbK2Gr6CjNLqqxzoKmdTojYpcuCUr1i4FVF9VFYKJlxVy410=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=FeQzOU3TpSS90WAQQwihDit95M8YVjJp9Cu7R725xmg=;
+        b=tofltLltsy9z6Sb4oDoE4I56go8ka8LBP/2wThqyymR7InTszoUN+h3E+/LL1lowTP6LbZ60YgauHQBrwUE/fipLBYS3XJ9r0M4uYsP4xFnidxQpemFNFYdZ0uw3C8Znesw6cana9mlpaJ5h+eDQ1zYXKRy1jbRKouPJmMiVu5c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=RvIXu4JxMPPMOY8+h8/uFBd4GwT2EY9iQDhGrkuvM32q0f300KYqAawDVUOfZPWW2Jqiqr5ttPNm4Io7npSvUH4sJMiim7hswbwLyHcBbhnLhm2H8hXmjAeFqbp2U0y+9hB1nwhjKf3AqjAgRM6U/r9z9WB7phXbCI5vXGR/6A0=
-Received: by 10.86.100.19 with SMTP id x19mr16440096fgb.12.1210681821648;
-        Tue, 13 May 2008 05:30:21 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.213.214])
-        by mx.google.com with ESMTPS id 4sm7016868fge.5.2008.05.13.05.30.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 May 2008 05:30:19 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4DCTiaU020816;
-	Tue, 13 May 2008 14:29:45 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4DCTKIg020806;
-	Tue, 13 May 2008 14:29:20 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <21CA1226-223D-4347-A119-1D5A2CEA003E@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=v4rR4eA50h9z0iZScH1Iy14s9DkifUgAKyLT1S91CgIAK/RRQoMW1CiFRVqyJqvdRBjDKuZYjfqUNMbSDywYNirfMIvVTERmXrI1saTmoFYFfD3tjMsIclJz0TA7yrEdVvL98SXW+aY+netHALMPHZmXxhOU6k+fmL27BJ7Cq4I=
+Received: by 10.150.83.22 with SMTP id g22mr6927734ybb.134.1210682096523;
+        Tue, 13 May 2008 05:34:56 -0700 (PDT)
+Received: by 10.150.145.6 with HTTP; Tue, 13 May 2008 05:34:56 -0700 (PDT)
+In-Reply-To: <17202423.post@talk.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82026>
 
-nathan spindel <nathans@gmail.com> writes:
+On Tue, May 13, 2008 at 8:07 AM, amishera <amishera2007@gmail.com> wrote:
+> Moreover, can any body tell me the use of
+>
+> git reset --soft
 
-> On May 12, 2008, at 11:42 AM, Junio C Hamano wrote:
-> 
->> Christian Couder <chriscool@tuxfamily.org> writes:
->>
->>> Maybe you can use a function like this not tested one:
->>>
->>> check_cmd() {
->>> 	cmd="$1"
->>>
->>> 	if type "$cmd"> /dev/null 2>&1; then
->>> 		if "$cmd" -v | grep Apache> /dev/null 2>&1; then
->>> 			httpd=$(echo "$cmd" | sed "s/apache2/httpd/")
->>> 		fi
->>> 	fi
->>> }
->>
->> One worry I have with that approach is if any and all random
->> implementations of "httpd" that live somewhere in path do not do
->> any harm when started with "-v" option.  Namely, they should exit
->> without becoming a daemon and/or start the service.
->>
->> I am not convinced that would be the case.
-
-By the way, it is a bit strange that Apache doesn't understand long
-equivalent of -v, namely --version.
-
-> I agree with that worry. Solving that in the general case is pretty
-> difficult, so I think we could instead look for other clues in the
-> system. Some ideas:
-> 
-> - Use $HTTPD as defined in apachectl. (How portable is that?)
-
-You mean what apachectl returns in Usage: (first line)?
-
-  1014:jnareb@roke:~> /usr/sbin/apachectl          
-  Usage: /usr/sbin/httpd [-D name] [-d directory] [-f file]
-
-> - Inspect the text of 'man httpd' to determine if it's Apache or not.
-
-Manpages might be not installed.  I think 'httpd -v' is less error
-prone...
-
-> - Only fallback on the httpd command on Mac OS X 10.5? That's pretty
-> safe.
-
-Not only MacOS X has Apache installed as httpd binary.  Some Linux
-distributions do that too.
-
-
-P.S. I wonder if it would be possible, as absolutely last resort
-fallback, to make git-instaweb to create/use very simple web server in
-Perl, using HTTP::Daemon module (if it is installed), which comes from
-libwww-perl.
+Jakub answered about "git reset --soft" on its own, so I'll just
+mention the situation I use, say, "git reset --soft HEAD~5" which is:
+suppose you realise that you made a really bad mistake 5 commits ago
+(say some obscure bug that could cause data loss) and you've just
+discovered and fixed it in your working tree (checking in bits to the
+index). You don't want to risk ever running a version of your program
+built from any of those commits. What you really _ought_ to do is
+essentially redo those 5 commits removing the bug, but depending how
+rigorous and time constrained your development is you might just want
+to commit your new fixed state with one big change log. "git reset
+--soft HEAD~5" moves HEAD back five commits but leaves your working
+tree and index alone, so the next "git commit" will commit your fixed
+current state after the new HEAD. It's clearly not what you want to do
+if you're working in a careful development team, but I find it useful
+on rare occasions.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
