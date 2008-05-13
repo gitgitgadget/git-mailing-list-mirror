@@ -1,82 +1,97 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation: rev-parse: add a few "--verify" and
- "--default" examples
-Date: Tue, 13 May 2008 06:51:41 +0200
-Message-ID: <20080513065141.69ff4975.chriscool@tuxfamily.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Tue, 13 May 2008 07:08:19 +0200
+Message-ID: <48292243.3050307@gnu.org>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <e1dab3980805121017u4c244d25s76b39cf015f6c5c5@mail.gmail.com> <20080512234906.GX29038@spearce.org> <7vod7bw03a.fsf@gitster.siamese.dyndns.org> <20080513000925.GA29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 13 06:47:52 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Tweed <david.tweed@gmail.com>,
+	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 13 07:09:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvmQZ-0007Sa-5d
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 06:47:51 +0200
+	id 1JvmlH-00033l-7N
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 07:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818AbYEMErB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 00:47:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753912AbYEMErB
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 00:47:01 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:45259 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753701AbYEMErB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 00:47:01 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id DF12A1AB2C9;
-	Tue, 13 May 2008 06:46:59 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id ACE441AB2C6;
-	Tue, 13 May 2008 06:46:59 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1754525AbYEMFIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 01:08:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753760AbYEMFIY
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 01:08:24 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:8642 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753621AbYEMFIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 01:08:23 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2024423fgg.17
+        for <git@vger.kernel.org>; Mon, 12 May 2008 22:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=8pdPbF5vJnu/mMvSQT3SusAnX8QCnyC8T7OBKhxySds=;
+        b=HuOfCv40SXMpFe3AIdYOoqrC240NcOya3Csl3VI1vTx0M8HHRIhaZKKLG7jtrdVr6mHjPF+dGXeT0d+h/qmDWe9iY1zvljvdK3kVyPLUZUq+71Q9TEoRWCZMbSOD7iFu3tbiTfwimYHrfbxmnr+hEOS6emY/qM6OnOTX5sUybCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=SlQd5qgrXWPj0SN2SgbK/GqLvE3MTKJ4vKKPsW5TPa4Q1XTzeXoOesBrMPNjNFiG/nxd/M1gT49x5vbiRoFOatEJFkLVUMgeEl/EQvTleKZH8k+/zPcBYyUIrv7yg3qf8sYGtOZMx+5OkA/yHnYA4Vj1kZ8XFP9YyYk6lK39hZc=
+Received: by 10.86.92.7 with SMTP id p7mr15645159fgb.72.1210655302147;
+        Mon, 12 May 2008 22:08:22 -0700 (PDT)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id l19sm7304410fgb.9.2008.05.12.22.08.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 May 2008 22:08:21 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+In-Reply-To: <20080513000925.GA29038@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81987>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-rev-parse.txt |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+Shawn O. Pearce wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>>> I think git-clone marking a 150M linux-2.6 pack with .keep is wrong;
+>>> most users working with the linux-2.6 sources have sufficient
+>>> hardware to deal with the disk IO required to copy that with 100%
+>>> delta reuse.  But I have a repository at day-job with a 600M pack,
+>>> that's starting to head into the realm where git-gc while running
+>>> on battery on a laptop would prefer to have that .keep.
+>> Perhaps clone can decide to keep the .keep file depending on the size of
+>> the pack then?
+> 
+> Yea, I think that's the better thing to do here.  I'm not sure where
+> the cut-off is, maybe its <512M delete the .keep once the refs are
+> inplace and the objects are ensured to be reachable.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index b6b2fe9..1d10893 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -378,6 +378,31 @@ C?        option C with an optional argument"
- eval `echo "$OPTS_SPEC" | git-rev-parse --parseopt -- "$@" || echo exit $?`
- ------------
- 
-+EXAMPLES
-+--------
-+
-+* Print the SHA1 object name of the current commit:
-++
-+------------
-+$ git rev-parse --verify HEAD
-+------------
-+
-+* Print the commit SHA1 from the revision in the $REV shell variable:
-++
-+------------
-+$ git rev-parse --verify $REV
-+------------
-++
-+This will error out if $REV is empty or not a valid revision.
-+
-+* Same as above:
-++
-+------------
-+$ git rev-parse --default master --verify $REV
-+------------
-++
-+but if $REV is empty, the commit SHA1 from master will be printed.
-+
- 
- Author
- ------
--- 
-1.5.5.1.347.g28d6
+I think separate cutoffs should be in place for file size and number of 
+objects.  Very tight packs probably require hours to repack as efficiently.
+
+By the way, another scenario where I used pack files is when I can only 
+distribute via http because of firewalls.  I make a clone of the 
+original repository and mark the pack as keep; then I push to the 
+distribution site, gc, and mark the pack as keep; then I have every day 
+a cron job that does git-gc.  This way I know that the user will only 
+have to download the third pack.  I think I'll modify the cron job to 
+mark as keep the packs that exceed 2 megabytes or something like that.
+
+Thinking about both use cases, the best would be to have options (common 
+to git-clone, git-remote add, git-gc at least; and available via config 
+keys too) like
+
+   --keep-packs[=THRES1,THRES2,...]
+
+where:
+
+- one threshold would be enough to mark a pack as keep
+- thresholds could be in the form "\d+[kmg]?b" for file size, 
+"\d+[kmg]?" for number of objects.
+- if no threshold is given, the default could be --keep-packs=100k,512MB 
+or whatever is in the config.
+- to mark all packs, use --keep-packs=0
+
+
+Paolo
