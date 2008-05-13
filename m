@@ -1,70 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
-Date: Tue, 13 May 2008 01:22:32 -0400
-Message-ID: <20080513052232.GH29038@spearce.org>
-References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <e1dab3980805121017u4c244d25s76b39cf015f6c5c5@mail.gmail.com> <20080512234906.GX29038@spearce.org> <7vod7bw03a.fsf@gitster.siamese.dyndns.org> <20080513000925.GA29038@spearce.org> <48292243.3050307@gnu.org>
+Date: Tue, 13 May 2008 07:33:06 +0200
+Organization: glandium.org
+Message-ID: <20080513053306.GA18232@glandium.org>
+References: <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home> <20080512190946.GC5160@mithlond.arda.local> <alpine.LFD.1.10.0805121527550.23581@xanadu.home> <20080512202414.GA8620@mithlond.arda.local> <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org> <20080513001252.GB29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Tweed <david.tweed@gmail.com>,
-	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue May 13 07:23:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Teemu Likonen <tlikonen@iki.fi>, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 13 07:34:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvmz4-0006AT-Bv
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 07:23:30 +0200
+	id 1Jvn9U-0000JB-Rb
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 07:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755759AbYEMFWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 01:22:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755401AbYEMFWk
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 01:22:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:56100 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753451AbYEMFWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 01:22:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JvmyA-00081w-BG; Tue, 13 May 2008 01:22:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0E38020FBAE; Tue, 13 May 2008 01:22:32 -0400 (EDT)
+	id S1754889AbYEMFd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 01:33:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbYEMFd0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 01:33:26 -0400
+Received: from vuizook.err.no ([194.24.252.247]:60123 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754833AbYEMFdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 01:33:25 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1Jvn8R-0003zQ-Ec; Tue, 13 May 2008 07:33:17 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1Jvn8M-00051E-M4; Tue, 13 May 2008 07:33:06 +0200
 Content-Disposition: inline
-In-Reply-To: <48292243.3050307@gnu.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080513001252.GB29038@spearce.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81989>
 
-Paolo Bonzini <bonzini@gnu.org> wrote:
-> Shawn O. Pearce wrote:
-> >Junio C Hamano <gitster@pobox.com> wrote:
-> >>Perhaps clone can decide to keep the .keep file depending on the size of
-> >>the pack then?
-> >
-> >Yea, I think that's the better thing to do here.  I'm not sure where
-> >the cut-off is, maybe its <512M delete the .keep once the refs are
-> >inplace and the objects are ensured to be reachable.
+On Mon, May 12, 2008 at 08:12:52PM -0400, Shawn O. Pearce wrote:
+> Mike Hommey <mh@glandium.org> wrote:
+> > On Mon, May 12, 2008 at 11:03:04PM +0200, Mike Hommey wrote:
+> > > On Mon, May 12, 2008 at 11:24:14PM +0300, Teemu Likonen wrote:
+> > > > But I have experienced the same earlier with some other post-1.5.5
+> > > > version so I believe you can reproduce this yourself. After cloning
+> > > > Linus's linux-2.6 repo its .git directory weights 209MB. After single
+> > > > "git pull" and "git gc" it was 298MB in my test.
+> > > 
+> > > I noticed that a while ago: when repacking multiple packs when one has a
+> > > .keep file, the resulting additional pack contains too many blobs and
+> > > trees, contrary to when only packing loose objects:
+> > (...)
+> > 
+> > That is, it seems to also contain all the blobs and subtrees for all the
+> > commits the pack contains, even when they already are in the pack having
+> > a .keep file.
 > 
-> I think separate cutoffs should be in place for file size and number of 
-> objects.  Very tight packs probably require hours to repack as efficiently.
+> I've noticed this too.  Like since day 1 when we added .keep.
+> But uh, nobody else complained and I forgot about it.
+> 
+> My theory (totally unproven) is that the new pack has objects we
+> copied from the .keep pack, because those objects were the best
+> delta-bases for the loose objects we have deltafied and want to
+> store in the new pack.  Except they aren't yet packed in the new
+> pack, so we pack them too.  Tada, duplicates.  :-\
 
-So long as you don't use `gc --aggressive` or `repack -f` the
-tightness of a pack doesn't matter; delta reuse means we copy the
-tight delta from the source pack to the new destination pack.
+Well, that does not seem delta related, since my testcase doesn't show
+deltas in the second pack.
 
-However, you are correct that the more objects in the source pack
-the longer it will take to compute what is reachable, which does
-extend the time needed for even a simple git-gc.
- 
--- 
-Shawn.
+Mike
