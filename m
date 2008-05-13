@@ -1,100 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Paginate project list
-Date: Wed, 14 May 2008 01:28:39 +0200
-Message-ID: <200805140128.40853.jnareb@gmail.com>
-References: <200805011220.58871.jnareb@gmail.com> <200805131904.38317.jnareb@gmail.com> <8c5c35580805131230p37953e33he97803c0609012fa@mail.gmail.com>
+From: Dennis Schridde <devurandom@gmx.net>
+Subject: Re: git-svn feature requests
+Date: Wed, 14 May 2008 01:41:50 +0200
+Message-ID: <200805140141.53414.devurandom@gmx.net>
+References: <200805111804.57784.devurandom@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: multipart/signed;
+  boundary="nextPart3232130.ofD8jp2UEd";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"John Hawley" <warthog19@eaglescrag.net>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 01:29:43 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 14 01:43:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw3wE-0002Mg-2c
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 01:29:42 +0200
+	id 1Jw497-0005ik-Cl
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 01:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756963AbYEMX2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 19:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756822AbYEMX2w
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 19:28:52 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:58767 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756512AbYEMX2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 19:28:51 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so1003937ugf.16
-        for <git@vger.kernel.org>; Tue, 13 May 2008 16:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=gNQQ3bESoLwF56aWi0cOYlHKGhNjb2O+e4mvfB9Gb/U=;
-        b=Q+7pDgh0xAkBwmadnZ4zv2jKkDB1MJe+OTxqk0tfvqsWfbNJdfOsAREV2ZM4Mya5lOPgubgY5kMf5fwahdJ66+hw/DBySU24y7+8u+9jTGijwBBIfOR3u2RTreB2bHzJs/34AB2YuRdVT9nQX0JZ7exx67CTxjeD8Y1q7hLcQ0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=cflZPr60kI2x7Wz3KWcFtUfZJY3aJ35mZR3ZeLTmOq2SyRdk6gpCRsePdAY1KU5BUHzMQOMlcBrODCAgqqQ0QxM1lNex/Nh2T/TTJOS5fvLTLDkXCc4DClXttfcTSZZRlI4NgTHFeoalFj6KR9ZxKvHT6VfrrVjAjJF4sL/QIuk=
-Received: by 10.67.97.1 with SMTP id z1mr7830078ugl.11.1210721328377;
-        Tue, 13 May 2008 16:28:48 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.213.214])
-        by mx.google.com with ESMTPS id y37sm696924iky.8.2008.05.13.16.28.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 May 2008 16:28:46 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <8c5c35580805131230p37953e33he97803c0609012fa@mail.gmail.com>
-Content-Disposition: inline
+	id S1757132AbYEMXmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 19:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbYEMXmG
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 19:42:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49991 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754062AbYEMXmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 19:42:05 -0400
+Received: (qmail invoked by alias); 13 May 2008 23:42:02 -0000
+Received: from hnvr-4dbbb360.pool.einsundeins.de (EHLO ernie.local) [77.187.179.96]
+  by mail.gmx.net (mp046) with SMTP; 14 May 2008 01:42:02 +0200
+X-Authenticated: #19202771
+X-Provags-ID: V01U2FsdGVkX1/OcHZyMUfO0Nuhaudtj5MKY80ZU6hndPUi+OSlUO
+	nBmL8kA/sqPa4p
+User-Agent: KMail/1.9.9
+In-Reply-To: <200805111804.57784.devurandom@gmx.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82054>
 
-On Tue, 13 May 2008, Lars Hjemli wrote:
-> On Tue, May 13, 2008 at 7:04 PM, Jakub Narebski <jnareb@gmail.com>
-> wrote: 
->> On Tue, 13 May 2008, Lars Hjemli wrote:
->>>
->>> [...] (cgit never touches the repos to generate
->>> the project list/search).
-[...]
->>  Second, gitweb's projects list page contains "Last Changed" column,
->>  and you _*have*_ to hit repositories for this data
-> 
-> No you don't. One alternative is to use the post-update hook in each
-> repo to update a separate file with info about last-changed-time.
+--nextPart3232130.ofD8jp2UEd
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Well, adding setting / caching last-changed data using post-update hook
-was one of my early patches to gitweb, but it got shot down. Mainly 
-because the fact that it doesn't work with gitweb as "usergit" service,
-as you won't be able to install hooks into other users repositories, 
-like in the kernel.org case (it should/would work for repo.or.cz etc.).
-Another issue is if you publish via web interface non-bare repo; then
-update is not the only way data arrives at repository (yes, I know that
-post-commit would solve this).
+Am Sonntag, 11. Mai 2008 18:04:54 schrieb Dennis Schridde:
+> Hello!
+>
+> I am missing two features in git-svn, which are:
+> (a) git-svn-dcommit should give credits to other authors when I commit
+> their patches.
+> I imported a patch from another author via git-am, and then svn-dcommited
+> it, but git-svn striped the author information. It should do something
+> like: if (author != me) write(commitmessage, "Author: %author%");
+Addition to this:
+Information like the date of the original commit may also be useful.
 
-> Another (less accurate) alternative is to stat one or more of
-> packed-refs and refs/heads/*; 
+> (b) git-svn-rebase should have the location configurable where it tries to
+> svn-up/svn-commit from/to, instead of searching the commits in the history
+> for git-svn-id tags.
+> I tried to maintain a git-svn clone of a repository, fetching from a svn://
+> address, but when I use it locally I need to commit via svn+ssh://
+> (while "updating" from the git-svn mirror).
+> This did not seem to work. Even after rewriting the svn addresses in the
+> commitlogs git-svn was unable to find the svn repository in the history.
+>
+> I tried to create a patch for this myself, but I clashed a bit with my
+> knowledge of Perl (or the complete lack thereof), so I hope it might be
+> easier for you to do it.
+>
+> Thanks in advance,
+> Dennis
+>
+> PS: Please CC me on replies, because I am not subscribed to this list.
 
-And now, in the times of detached HEAD, also HEAD.
+--nextPart3232130.ofD8jp2UEd
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-BTW. how this work with hierarchical branch names?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
->                               cgit uses both of these alternatives to 
-> avoid hitting the repo (i.e. object-db) when the project list/search
-> page is generated.
+iEYEABECAAYFAkgqJ0EACgkQjqfyF1DtJW7a4QCguwdjjiFo28sXpVXAO/zFMzJa
+mYEAoIQkwFUvzXeJVfgZQEINDdaXt2U8
+=5+QP
+-----END PGP SIGNATURE-----
 
-First is implicit caching of data, made easier because in this case you
-can invalidate cache when it becomes invalid.  Second doesn't hit the 
-object-db, but it hits I/O (perhaps very slightly); and the second 
-solution is what we can pursue for gitweb in addition to caching data.
-
-Additional complication is that currently there is no place for 
-timestamp in project_index format (backward compatibility, unnamed 
-tuple not good design to storing structured/tabular data).
-
--- 
-Jakub Narebski
-Poland
+--nextPart3232130.ofD8jp2UEd--
