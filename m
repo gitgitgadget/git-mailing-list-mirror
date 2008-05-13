@@ -1,65 +1,79 @@
-From: "Kelvie Wong" <kelvie@ieee.org>
-Subject: Re: git pull/merge master on other branch
-Date: Mon, 12 May 2008 20:12:14 -0700
-Message-ID: <94ccbe710805122012t5ef9f8bev502e1933f2f8a8da@mail.gmail.com>
-References: <g00nb3$dlm$1@ger.gmane.org>
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] Add a test for git-add --ignore-errors
+Date: Mon, 12 May 2008 20:48:22 -0700
+Message-ID: <7v3aomx3sp.fsf@gitster.siamese.dyndns.org>
+References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home>
+ <20080302154238.GD2973@steel.home>
+ <alpine.LSU.1.00.0803021555500.22527@racer.site>
+ <7vtzjpoye6.fsf@gitster.siamese.dyndns.org>
+ <20080512175654.GB3128@steel.home> <20080512175745.GC3128@steel.home>
+ <20080512175810.GD3128@steel.home> <20080512175829.GE3128@steel.home>
+ <20080512175848.GF3128@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "SungHyun Nam" <goweol@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 05:13:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 05:49:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jvkwu-000409-Rm
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 05:13:09 +0200
+	id 1JvlW3-0004Li-4H
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 05:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754261AbYEMDMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 23:12:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754953AbYEMDMP
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 23:12:15 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:64950 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754261AbYEMDMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 23:12:14 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so3847824waf.23
-        for <git@vger.kernel.org>; Mon, 12 May 2008 20:12:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=1HpNOih3jALUIhXw6Uv9RMF4RgYLb3qpFodVzQHfy/A=;
-        b=YbbV83dD46Jvd0JPiNnL0xgssJw2vz5yxm2S0p/oFoJ6uWONDLzuQTwp17vHfU3Ej3msbohE4JJmdACqm0IafIXOQBCkh30hbbJhrhkiDMVbpPK+2nozpO9dPRKR/yiuZ2R40H3xkd+vzDJKRt/BEXOZtJJkAaM6Nl3ZERPrmeM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=SJfL37KEovQUAJ2Zye+E49DaJ7JtWe4bWCdKlwAffPbQ1mHCcyAdycjpG4GxETc29kC/58NBBfMiEWSthf3AdrEfiBrJoh6U40SH6Ip1OIWiqQGLpnjdafUo+wfWiJT1AJ5dxrGsypNQblqerU6Jr1CFHT7ltUxsGGmMyjkO6MI=
-Received: by 10.114.156.1 with SMTP id d1mr8561842wae.120.1210648334224;
-        Mon, 12 May 2008 20:12:14 -0700 (PDT)
-Received: by 10.114.81.12 with HTTP; Mon, 12 May 2008 20:12:14 -0700 (PDT)
-In-Reply-To: <g00nb3$dlm$1@ger.gmane.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 06a017d951489f0b
+	id S1755663AbYEMDsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 23:48:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755596AbYEMDsf
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 23:48:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43957 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755037AbYEMDsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 23:48:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 083D73458;
+	Mon, 12 May 2008 23:48:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 1F6F33457; Mon, 12 May 2008 23:48:27 -0400 (EDT)
+In-Reply-To: <20080512175848.GF3128@steel.home> (Alex Riesen's message of
+ "Mon, 12 May 2008 19:58:48 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 75432452-209F-11DD-B9D7-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81984>
 
-On 5/8/08, SungHyun Nam <goweol@gmail.com> wrote:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
->  How I can pull origin into master without switching to master
->  branch?
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>  t/t3700-add.sh |    9 +++++++++
+>  1 files changed, 9 insertions(+), 0 deletions(-)
 >
->  Thanks,
->  namsh
->
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index 287e058..ca3e33d 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -179,4 +179,13 @@ test_expect_success 'git add --refresh' '
+>  	test -z "`git diff-index HEAD -- foo`"
+>  '
+>  
+> +test_expect_success 'git add --ignore-errors' '
+> +	git reset --hard &&
+> +	date >foo1 &&
+> +	date >foo2 &&
+> +	chmod 0 foo2 &&
+> +	git add --verbose --ignore-errors .
+> +	git ls-files |grep foo1
+> +'
+> +
+>  test_done
 
-To do this, one would use the "push" subcommand, with "." as the repository.
-
-git push . origin/master:master
-
-I could have sworn I answered someone the exact same thing a while ago...
--- 
-Kelvie Wong
+I like the fact that you added --ignore-errors and made it still error out
+when it cannot read some files.  Shouldn't we be testing it here with
+"must-fail"?
