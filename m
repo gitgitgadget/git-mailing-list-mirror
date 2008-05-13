@@ -1,69 +1,85 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] git show documentation: no longer refer to
-	git-diff-tree options
-Date: Tue, 13 May 2008 11:16:18 +0200
-Message-ID: <20080513091618.GA27724@genesis.frugalware.org>
-References: <1210545443-12665-1-git-send-email-vmiklos@frugalware.org> <7vzlqvw23y.fsf@gitster.siamese.dyndns.org> <20080513091126.GZ27724@genesis.frugalware.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Tue, 13 May 2008 12:22:37 +0300
+Message-ID: <20080513092237.GA4413@mithlond.arda.local>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <e1dab3980805121017u4c244d25s76b39cf015f6c5c5@mail.gmail.com> <20080512234906.GX29038@spearce.org> <7vod7bw03a.fsf@gitster.siamese.dyndns.org> <20080513000925.GA29038@spearce.org> <48292243.3050307@gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uWAbeGC4mMoqIxdF"
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	nanako3@bluebottle.com
-X-From: git-owner@vger.kernel.org Tue May 13 11:17:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Tweed <david.tweed@gmail.com>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue May 13 11:33:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvqdA-0001ML-UO
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:17:09 +0200
+	id 1Jvqt9-000852-3K
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 11:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755430AbYEMJQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 05:16:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754710AbYEMJQU
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:16:20 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:52111 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755399AbYEMJQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 05:16:19 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 663431B2501;
-	Tue, 13 May 2008 11:16:18 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 94B944465E;
-	Tue, 13 May 2008 11:08:16 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 25FC31190498; Tue, 13 May 2008 11:16:18 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	nanako3@bluebottle.com
+	id S1750874AbYEMJct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 05:32:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbYEMJct
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 05:32:49 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:56983 "EHLO
+	jenni1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750788AbYEMJcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 05:32:48 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.rokki.sonera.fi (8.5.014)
+        id 482324D800382656; Tue, 13 May 2008 12:22:45 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JvqiT-0002F1-Mt; Tue, 13 May 2008 12:22:37 +0300
 Content-Disposition: inline
-In-Reply-To: <20080513091126.GZ27724@genesis.frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <48292243.3050307@gnu.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82010>
 
+Paolo Bonzini wrote (2008-05-13 07:08 +0200):
 
---uWAbeGC4mMoqIxdF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I think separate cutoffs should be in place for file size and number
+> of  objects.  Very tight packs probably require hours to repack as
+> efficiently.
+[...]
+> Thinking about both use cases, the best would be to have options
+> (common  to git-clone, git-remote add, git-gc at least; and available
+> via config  keys too) like
+>
+>   --keep-packs[=THRES1,THRES2,...]
 
-On Tue, May 13, 2008 at 11:11:26AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> Ouch, somehow I read infdef: as ifdef: so I intenionally did not add
+Some thoughts from user interface's point of view. Two assumptions:
 
-                       ^^^^^^ ifndef, to be correct.
+  - gc is daily or weekly operation
+  - gc --aggressive is more like weekly or monthly operation.
 
---uWAbeGC4mMoqIxdF
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+In big repositories gc can feel pretty slow if there are not any .keep
+packs and user runs the command daily. So I think there's a point in
+having a .keep pack in repositories the size of linux-2.6 for example.
+But at the same time I think it would be nice to have an easy UI-way to
+repack with better disk space optimization.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+This started as a crazy idea but maybe it's not so crazy so I'll
+rephrase my previous suggestion. At final stage the command gc
+--aggressive would add new .keep file which contains an identifier like
 
-iEYEARECAAYFAkgpXGIACgkQe81tAgORUJaIOgCdGIq2rBmIqPiGqA4TiO8Do+bN
-RdMAn1WfULGe5go745UXhkfXvDttAG6G
-=WoP5
------END PGP SIGNATURE-----
+  This .keep file was added by "gc --aggressive" and
+  will be automatically deleted at next run.
 
---uWAbeGC4mMoqIxdF--
+(Or something like that, you get the idea.)
+
+At first gc --aggressive looks for .keep files with such identifier and
+deletes them if found. Then it proceeds normally and finally adds new
+.keep file with the same identifier.
+
+This way the "daily" gc would operate very fast (as it leaves .keep
+packs alone), and with gc --aggressive user could easily decide when to
+create new landmark .keep packs (and also prune possible dangling
+objects inside previous .keep packs). Normal user don't need to know the
+details. Just run gc occasionally and maybe gc --aggressive when better
+optimization is needed.
+
+How does this sound?
