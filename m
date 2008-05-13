@@ -1,102 +1,85 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git pull/merge master on other branch
-Date: Tue, 13 May 2008 12:24:31 -0500
-Message-ID: <4829CECF.1090900@nrlssc.navy.mil>
-References: <g00nb3$dlm$1@ger.gmane.org> <200805090824.12772.johan@herland.net> <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use whitespace.
+Date: Tue, 13 May 2008 19:10:30 +0100
+Message-ID: <e2b179460805131110k3cf582fdn9b8bd31046b90ca7@mail.gmail.com>
+References: <20080427151610.GB57955@Hermes.local>
+	 <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness>
+	 <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com>
+	 <20080428094119.GA20499@sigill.intra.peff.net>
+	 <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com>
+	 <20080513091143.GA26248@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, SungHyun Nam <goweol@gmail.com>,
+Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue May 13 19:26:11 2008
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 13 20:11:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvyG7-0004fd-QE
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 19:25:52 +0200
+	id 1JvyyB-0007Sg-Mv
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 20:11:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757601AbYEMRYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 13:24:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756592AbYEMRYs
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 13:24:48 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52813 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753156AbYEMRYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 13:24:47 -0400
-Received: from starfish.gems.nrlssc.navy.mil (starfish.nrlssc.navy.mil [128.160.50.76])
-	by mail.nrlssc.navy.mil (8.13.8/8.13.8) with ESMTP id m4DHOWc7014891;
-	Tue, 13 May 2008 12:24:32 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 13 May 2008 12:24:32 -0500
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
-X-OriginalArrivalTime: 13 May 2008 17:24:32.0366 (UTC) FILETIME=[350BA0E0:01C8B51E]
+	id S1755857AbYEMSKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 14:10:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756774AbYEMSKc
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 14:10:32 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:51583 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754453AbYEMSKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 14:10:31 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so3369026rvb.1
+        for <git@vger.kernel.org>; Tue, 13 May 2008 11:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YrhUiRq7F9T7wns2a2gvBLuUbdBTGi83yy0PQRElne0=;
+        b=nJU02wbvMj1kC4kMUK1N2UR5YvS5NYSBzccI1VQ+0At5wAhttNQ1ioAg0l0DzKV9j/18+z9XrEhskEF2ctifUi/y5ajj067V9gyvqbaaZJI1Pc7Q92SQ2SuIB4Y5xN6Wnc6BqQHi/aOimsjan2qPix4SdVpNJgjlKfVqKCnLB9Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tnPb3xJxxrGcyva0OllmN+C6fkObjf2nAmJiujhMSy74GtmabW9CdNZpKD3LH2Gfyw4fuR0t7I5QLOZnVdTF5vDt+AEPe6NsU2zMOj6opD/IjMMy7UDS9BDmwUVrSkbs+tt/lxjhD1frs63gKpZRBll1rsFEKr5mfMODazEmLvY=
+Received: by 10.140.165.21 with SMTP id n21mr4398655rve.289.1210702230929;
+        Tue, 13 May 2008 11:10:30 -0700 (PDT)
+Received: by 10.141.19.11 with HTTP; Tue, 13 May 2008 11:10:30 -0700 (PDT)
+In-Reply-To: <20080513091143.GA26248@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82036>
 
-Kevin Ballard wrote:
-> On May 9, 2008, at 1:24 AM, Johan Herland wrote:
-> 
->> On Friday 09 May 2008, SungHyun Nam wrote:
->>> Hello,
->>>
->>> If I am on a branch (reguarly rebased), I don't want to switch to
->>> master branch, but merge origin into master.
->>> If I switch to master and pull and switch to branch, I have to
->>> rebuild almost of sources.
->>>
->>> How I can pull origin into master without switching to master
->>> branch?
->>
->> You can't; merging requires use of the working tree (to resolve
->> conflicts).
->>
->> However, what you can do is make a local clone of your project (cheap,
->> because it just hardlinks files from the original repo), and checkout the
->> master branch in the clone, perform the merge (after having set up the
->> same
->> origin and retrieved its contents), and then fetch (or push) the
->> result back
->> into the original repo (remember: "fetch" instead of "pull", since the
->> latter will initiate a merge with your current branch).
-> 
-> 
-> If you know the pull will just be a fast-foward, then you can do
-> something like
-> 
->   git fetch origin && git update-ref master origin/master
+2008/5/13 Jeff King <peff@peff.net>:
+>
+> On Mon, Apr 28, 2008 at 10:56:05AM +0100, Mike Ralphson wrote:
+>  > I could run automated build / test [/ bisect?] cycles on AIX if of any
+>  > interest.
+>
+>  I think that would be helpful. We seem to have most Linux variants
+>  pretty well covered. I now have a daily pull/build/test running on a
+>  FreeBSD 6.1 box. I am going to try to get a Solaris one going, too, but
+>  I have to first actually get the test scripts to pass _once_. :)
+>
+>  AIX would be nice, since it seems easy to break. ;) OS X would be nice,
+>  too, though I suspect there are a few developers (Shawn?) who end up
+>  running the test scripts occasionally anyway.
+>
+>  I am just calling the script below through cron, and it dumps a bunch of
+>  output if any test fails (at which point I go investigate manually). The
+>  only argument is the path to a git repo.
 
-I recommend against using update-ref...
+Thanks - that was a helpful spur to action. I'll check tomorrow how it
+fairs pulling, building, running the tests etc. I've added a couple of
+'try git tag -f's to it, so I have KNOWN_BUILDING and KNOWN_PASSING
+points to pass quickly into bisect if necessary.
 
-and instead suggest using fetch to do all of the work.
-Some variation of:
+I'll shout the first time something breaks (after doing a bit of
+rudimentary investigation), then maybe we can look at a way of
+aggregating the build/test statuses and whether that should be pushed
+to a website (or git repo, obviously) or some kind of alert.
 
-    git fetch origin master:master
-
-This will only fast-forward the master branch based on the remote origin's
-master branch. update-ref will blindly overwrite the master ref, if you make
-a mistake and its not a fast-forward, you just lost some commits.
-
-The above doesn't update your remotes though, maybe the following would be
-correct, but I haven't tried it.
-
-   git fetch origin && git fetch . remotes/origin/master:master
-
-
-
-Also, I'm surprised no one mentioned the git-new-workdir script in the
-contrib directory. It allows you to have multiple work directories
-which share and update a single repository.
-
-You could
-
-    git-new-workdir <path_to_repo> <path_to_newworkdir> master
-    cd <path_to_newworkdir>
-    git pull
-
--brandon
+Cheers, Mike
