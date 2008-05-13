@@ -1,73 +1,59 @@
-From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe+git@gmail.com>
-Subject: Re: Wrong help text on git status -h ?
-Date: Tue, 13 May 2008 11:09:06 +0000 (UTC)
-Message-ID: <loom.20080513T110711-862@post.gmane.org>
-References: <loom.20080423T125136-135@post.gmane.org> <vpqfxtc36j4.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 13 13:10:28 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] Documentation/git-gc.txt: change --aggressive description
+Date: Tue, 13 May 2008 13:13:08 +0200
+Message-ID: <3A0C16C0-601C-408E-BD48-7DB783586C20@ai.rug.nl>
+References: <1210672413-8761-1-git-send-email-pdebie@ai.rug.nl> <20080513105728.GA3088@mithlond.arda.local>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue May 13 13:14:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvsOp-0007mr-II
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 13:10:27 +0200
+	id 1JvsSH-0000ft-FF
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 13:14:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755226AbYEMLJY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 May 2008 07:09:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbYEMLJY
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 07:09:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:49103 "EHLO ciao.gmane.org"
+	id S1751897AbYEMLNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 07:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbYEMLNM
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 07:13:12 -0400
+Received: from smtp-2.orange.nl ([193.252.22.242]:28917 "EHLO smtp-2.orange.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754069AbYEMLJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 07:09:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JvsNh-000163-VO
-	for git@vger.kernel.org; Tue, 13 May 2008 11:09:18 +0000
-Received: from lxsrv96.atlas.de ([194.156.172.86])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 May 2008 11:09:17 +0000
-Received: from stefan.naewe+git by lxsrv96.atlas.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 May 2008 11:09:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.156.172.86 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14)
+	id S1751747AbYEMLNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 07:13:11 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6103.orange.nl (SMTP Server) with ESMTP id 2E5371C00086;
+	Tue, 13 May 2008 13:13:10 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6103.orange.nl (SMTP Server) with ESMTP id E23011C00085;
+	Tue, 13 May 2008 13:13:09 +0200 (CEST)
+X-ME-UUID: 20080513111309926.E23011C00085@mwinf6103.orange.nl
+In-Reply-To: <20080513105728.GA3088@mithlond.arda.local>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82018>
 
-Matthieu Moy <Matthieu.Moy <at> imag.fr> writes:
 
->=20
-> Stefan N=C3=A4we <stefan.naewe+git <at> gmail.com> writes:
->=20
-> > Getting help for commit on 'git status -h' can't be right, can it ?
-> > Or am I missing something?
->=20
-> I'd say: both.
+On 13 mei 2008, at 12:57, Teemu Likonen wrote:
+> This patch might be a good thing. But from ordinary user's point of  
+> view
+> this raises questions: if gc --aggressive really is not that  
+> aggressive
+> then the option itself is misleading. Why not change gc --aggressive  
+> to
+> be really effective? Using high --window/--depth value etc.
 
-Well, I can't be *that* wrong:
+The problem is that you don't know what is aggressive for this  
+repository; that is relative to how it was previously packed.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D478814
+I'd much rather change --aggressive to something like --rebuild, which  
+describes much better what it does. However, I don't think it's easy  
+to just rename a flag, as scripts may depend on it.
 
-=20
-> git status could have been spelled "git commit --dry-run", they're
-> actually the same command, but "git status" stops before launching th=
-e
-> editor and doing the actual commit. So, they take the exact same set
-> of options.
->=20
-> That said, in an ideal world, "git status -h" would mention that the
-> commit message options are ignored with "git status".
->=20
-
-Regards,
-   Stefan
+- Pieter
