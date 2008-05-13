@@ -1,102 +1,86 @@
-From: SungHyun Nam <goweol@gmail.com>
-Subject: Re: git pull/merge master on other branch
-Date: Tue, 13 May 2008 11:22:55 +0900
-Message-ID: <4828FB7F.3030907@gmail.com>
-References: <g00nb3$dlm$1@ger.gmane.org> <200805090824.12772.johan@herland.net> <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: nathan spindel <nathans@gmail.com>
+Subject: Re: [PATCH v2] instaweb: make it compatible with Mac OS X 10.5's apache installation.
+Date: Mon, 12 May 2008 19:54:01 -0700
+Message-ID: <21CA1226-223D-4347-A119-1D5A2CEA003E@gmail.com>
+References: <1210534569-48466-1-git-send-email-nathans@gmail.com> <B3990C52-0AF9-490C-86E1-B311144C6661@gmail.com> <200805121952.55492.chriscool@tuxfamily.org> <7v7idzz7no.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 13 04:23:59 2008
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 13 04:55:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvkBK-0001Vz-9u
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 04:23:58 +0200
+	id 1Jvkfh-000857-0o
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 04:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756401AbYEMCXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 22:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756778AbYEMCXH
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 22:23:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:46045 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756279AbYEMCXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 22:23:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JvkAQ-00038e-5p
-	for git@vger.kernel.org; Tue, 13 May 2008 02:23:03 +0000
-Received: from 203.238.196.197 ([203.238.196.197])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 May 2008 02:23:02 +0000
-Received: from goweol by 203.238.196.197 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 May 2008 02:23:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 203.238.196.197
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <8C649BDA-41CA-4105-86C5-103B4A8BEEC1@sb.org>
+	id S1753396AbYEMCyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2008 22:54:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751695AbYEMCyH
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 22:54:07 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:25745 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969AbYEMCyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2008 22:54:05 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2998586rvb.1
+        for <git@vger.kernel.org>; Mon, 12 May 2008 19:54:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=WAlq49Q8lzvWf5cMkyIUteeCAeRLhnsYKSOd7WVrCFA=;
+        b=nDDJzD1gxgDDYVPTglNm693zeDq4F6Ryb+Fk31Np5gSbSsYzvK+jx9/xgrd7Imn9vxugPKCKlaYWZZS+6JWpi1LVMuGBWgsVFNp4v5nwmpandxhdaDhIES0WLaZ5Kn569p0bBR0b8fwi2yhC9HYG6R5kGs4lyJu4m0OMM3c4604=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=v8s4tvl5r+5i0wBmWhFUIGg1XFRx+gS6GzRVEyX4DrR5SC9aKqJ1VsYkLuJKW5eiBSnYUnuA+0XKGLntPjKBtB+v+/GZToZDKFXCqqWcEc+1xO2gDJeYclt/TtfzIsYakADdUl+9YNrKb/yRcngRnh35A13LHJhR8rJ53L+4d+c=
+Received: by 10.142.49.4 with SMTP id w4mr3571394wfw.220.1210647243015;
+        Mon, 12 May 2008 19:54:03 -0700 (PDT)
+Received: from ?10.0.1.4? ( [76.14.71.118])
+        by mx.google.com with ESMTPS id 29sm19207678wfg.0.2008.05.12.19.54.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 May 2008 19:54:02 -0700 (PDT)
+In-Reply-To: <7v7idzz7no.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81982>
 
-Kevin Ballard wrote, at 5/10/2008 2:16 AM:
- > On May 9, 2008, at 1:24 AM, Johan Herland wrote:
- >
- >> On Friday 09 May 2008, SungHyun Nam wrote:
- >>> Hello,
- >>>
- >>> If I am on a branch (reguarly rebased), I don't want to switch to
- >>> master branch, but merge origin into master.
- >>> If I switch to master and pull and switch to branch, I have to
- >>> rebuild almost of sources.
- >>>
- >>> How I can pull origin into master without switching to master
- >>> branch?
- >>
- >> You can't; merging requires use of the working tree (to resolve
- >> conflicts).
- >>
- >> However, what you can do is make a local clone of your project (cheap,
- >> because it just hardlinks files from the original repo), and 
-checkout the
- >> master branch in the clone, perform the merge (after having set up the
- >> same
- >> origin and retrieved its contents), and then fetch (or push) the
- >> result back
- >> into the original repo (remember: "fetch" instead of "pull", since the
- >> latter will initiate a merge with your current branch).
- >
- >
- > If you know the pull will just be a fast-foward, then you can do
- > something like
- >
- >   git fetch origin && git update-ref master origin/master
+On May 12, 2008, at 11:42 AM, Junio C Hamano wrote:
 
-It seems it worked, but I see a warning message "refname 'master'
-is ambiguous." Can I fix this warning message?
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> Maybe you can use a function like this not tested one:
+>>
+>> check_cmd() {
+>> 	cmd="$1"
+>>
+>> 	if type "$cmd" > /dev/null 2>&1; then
+>> 		if "$cmd" -v | grep Apache > /dev/null 2>&1; then
+>> 			httpd=$(echo "$cmd" | sed "s/apache2/httpd/")
+>> 		fi
+>> 	fi
+>> }
+>
+> One worry I have with that approach is if any and all random
+> implementations of "httpd" that live somewhere in path do not do any  
+> harm
+> when started with "-v" option.  Namely, they should exit without  
+> becoming
+> a daemon and/or start the service.
+>
+> I am not convinced that would be the case.
 
-[test] ~/tmp/t[52]$ git fetch origin
-remote: Counting objects: 5, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
- From /d/user/namsh/tmp/repo/
-    6e13bb5..8d1c620  master     -> origin/master
-[test] ~/tmp/t[53]$ git update-ref master origin/master
-[test] ~/tmp/t[69]$ git log master
-warning: refname 'master' is ambiguous.
-commit a358783b78facffb9a8f69d2189aa716495d95ba
-..
+I agree with that worry. Solving that in the general case is pretty  
+difficult, so I think we could instead look for other clues in the  
+system. Some ideas:
 
-[test] ~/tmp/t[54]$ git rebase master
-warning: refname 'master' is ambiguous.
-warning: refname 'master' is ambiguous.
-First, rewinding head to replay your work on top of it...
-Fast-forwarded test to master.
+- Use $HTTPD as defined in apachectl. (How portable is that?)
 
-regards,
-namsh
+- Inspect the text of 'man httpd' to determine if it's Apache or not.
+
+- Only fallback on the httpd command on Mac OS X 10.5? That's pretty  
+safe.
