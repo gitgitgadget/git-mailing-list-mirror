@@ -1,75 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] revision.c: really honor --first-parent
-Date: Tue, 13 May 2008 15:38:37 -0700
-Message-ID: <7vej85suc2.fsf@gitster.siamese.dyndns.org>
-References: <1210547651-32510-1-git-send-email-hjemli@gmail.com>
- <1210605156-22926-1-git-send-email-hjemli@gmail.com>
- <20080513201522.GA11485@cuci.nl>
- <8c5c35580805131343kc115df6yd7ce3281fb3e6171@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] builtin-apply: check for empty files when detecting
+ creation patch
+Date: Tue, 13 May 2008 15:58:44 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805131552410.3019@woody.linux-foundation.org>
+References: <1210257579-30975-1-git-send-email-imre.deak@gmail.com> <7vlk2h8t4d.fsf@gitster.siamese.dyndns.org> <500f3d130805131316m59898392l46e0dbf7cb352981@mail.gmail.com> <7vprrpswof.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0805131514300.3019@woody.linux-foundation.org>
+ <7vlk2dsujm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>, nanako3@bluebottle.com,
-	git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 00:39:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Imre Deak <imre.deak@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 01:00:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw39s-00042j-M0
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 00:39:45 +0200
+	id 1Jw3TC-0002ac-UG
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 00:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757326AbYEMWiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 18:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757250AbYEMWit
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 18:38:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61987 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756142AbYEMWis (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 18:38:48 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A52DA431D;
-	Tue, 13 May 2008 18:38:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id D6CA94317; Tue, 13 May 2008 18:38:40 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5957EEF0-213D-11DD-A835-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1755271AbYEMW6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 18:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755513AbYEMW6w
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 18:58:52 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:55165 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754906AbYEMW6w (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 May 2008 18:58:52 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4DMwjpE009690
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 13 May 2008 15:58:47 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4DMwi3K004027;
+	Tue, 13 May 2008 15:58:45 -0700
+In-Reply-To: <7vlk2dsujm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-5.417 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82052>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
 
->>  - My original patch did just that, it simplified the code to make sure
->>   that all other parents beside the first parent are ignored when
->>   walking the tree.
->
-> Except for the case where the first parent had been already SEEN; then
-> it would continue to test the next parents until one was found which
-> was not already SEEN and _that_ parent would be treated as if it was
-> first. And as Nanako showed, a simple `git rev-list HEAD^..HEAD` marks
-> both HEAD and HEAD^ as seen. When combined with --first-parent, the
-> result (with your patch) is that HEAD^2 is treated as the first
-> parent. With my patch on top of yours, the walk stops as HEAD^, which
-> is what we probably both want.
->
->>  - Your code now doesn't simplify the (IMO) convoluted walk, and still
->>   marks things as seen, even though in the first-parent case, these
->>   commits are not really seen at all.  It implies that your code
->>   generates differing output, depending on the merges present.
->
-> I don't think so. My code should neither follow nor mark as SEEN any
-> parent but the first (but I could obviously be wrong).
 
-A major part of the "convoluted walk" is the (il-)logic that skipped
-earlier SEEN parents and treated the first unseen one as if it was the
-first parent, which is not exactly Stephen's fault.  It was placed by
-yours truly in the very original code but it was done without much
-thought.
+On Tue, 13 May 2008, Junio C Hamano wrote:
 
-I think your patch is the correct fix for that convolution, regardless of
-the traversal order stability issue Stephen mentions.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> >
+> > So non-/dev/null'ness means absolutely nothing. It means "don't know", and 
+> > we should leave is_new and is_delete as -1.
+> 
+> Ok, then what's the judgement for the original issue?  Is it a user error
+> to have a tracked absolutely empty file in the index?
+
+I think this is the fundamental problem:
+
+	..
+	if (patch->is_new < 0 && !oldlines) {
+		patch->is_new = 1;
+	..
+
+because that logic simply isn't right. (is_new < 0 && !oldlines) does 
+*not* mean that it must be new.
+
+We can say it the other way around, of course:
+
+	if (patch->is_new < 0 && oldlines)
+		patch->is_new = 0;
+
+and that's a valid rule, but I think we already would never set "is_new" 
+to -1 if we had old lines, so that would probably be a pointless thing to 
+do.
+
+So: remove the check for (is_new < 0 && !oldlines) because it doesn't 
+actually add any information, and leave "is_new" as unknown until later 
+when we actually *see* that file or not. Hmm?
+
+		Linus
