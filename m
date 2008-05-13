@@ -1,91 +1,130 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 0/4] freebsd portability fixes
-Date: Tue, 13 May 2008 22:44:42 +0200
-Message-ID: <20080513204442.GB3981@steel.home>
-References: <20080513084338.GA23729@sigill.intra.peff.net> <20080513090424.GA26181@sigill.intra.peff.net> <20080513203931.GA3981@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH v2 19/24] Added the class AddRuleListFactory.
+Date: Tue, 13 May 2008 22:55:45 +0200
+Message-ID: <200805132255.46363.robin.rosenberg.lists@dewire.com>
+References: <1210623222-24908-1-git-send-email-florianskarten@web.de> <20080513012909.GG29038@spearce.org> <48297A88.5040508@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 13 22:46:29 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Florian =?utf-8?q?K=C3=B6berle?= <FloriansKarten@web.de>
+X-From: git-owner@vger.kernel.org Tue May 13 22:59:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw1Nz-0004F6-9o
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 22:46:11 +0200
+	id 1Jw1ZC-0000ey-GO
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 22:57:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932494AbYEMUop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2008 16:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbYEMUop
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 16:44:45 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:8481 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932491AbYEMUoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 16:44:44 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnareO8OVwvA==
-Received: from tigra.home (Fafac.f.strato-dslnet.de [195.4.175.172])
-	by post.webmailer.de (klopstock mo4) (RZmta 16.34)
-	with ESMTP id h0367ek4DIucU4 ; Tue, 13 May 2008 22:44:42 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 49B6C277BD;
-	Tue, 13 May 2008 22:44:42 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 46E0656D28; Tue, 13 May 2008 22:44:42 +0200 (CEST)
+	id S1758401AbYEMU44 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 May 2008 16:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758327AbYEMU44
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 16:56:56 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:6409 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755723AbYEMU4z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 May 2008 16:56:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 453381434CCD;
+	Tue, 13 May 2008 22:56:53 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9+cTm0K7kYym; Tue, 13 May 2008 22:56:52 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 88C7280265F;
+	Tue, 13 May 2008 22:56:52 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <48297A88.5040508@web.de>
 Content-Disposition: inline
-In-Reply-To: <20080513203931.GA3981@steel.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82044>
 
-Alex Riesen, Tue, May 13, 2008 22:39:31 +0200:
-> Jeff King, Tue, May 13, 2008 11:04:24 +0200:
-> > On Tue, May 13, 2008 at 04:43:39AM -0400, Jeff King wrote:
-> > 
-> > > With these patches, I can successfully run all test scripts from the
-> > > current 'master' on FreeBSD 6.1 (some of them probably affect OS X, too
-> > > -- I recall somebody complaining about the '! foo | bar' construct
-> > > recently).
-> > 
-> > Ah, nevermind about OS X. It was 97ad535b from Alex, and he specifically
-> > mentioned FreeBSD 4.
-> > 
-> > Alex, you might want to try re-running the tests with these patches.
-> > 
-> 
-> Very good! GnuPG is missing on the system, so t7004 was skipped,
-> but everything besides that ran fine. My config.mak:
-> 
-> NO_STRTOUMAX=Yes
-> NO_C99_FORMAT=Yes
-> SHELL_PATH=/usr/local/bin/bash
-> 
-> perl 5.8.6
-> 
-> I also have the test-tr patches I sent some time ago in that tree.
-> 
+tisdagen den 13 maj 2008 13.24.56 skrev Florian K=C3=B6berle:
+> Shawn O. Pearce wrote:
+> > Florian Koeberle <florianskarten@web.de> wrote:
+> >> +class AddRuleListFactory {
+> >> +	/*
+> >> +	 * The add command of git 1.5.2.5 behaves a little bit stange: "=
+git add
+> >> +	 * a/\*z" adds the file "a/b/xyz" but "git add a/x\*" does not.
+You mean a/\*/x* does not?
+> >> +	 *=20
+> >> +	 * The first is parsed as pattern "*z" for whole directory tree =
+"a". The
+> >> +	 * second is parsed as an path.
+> >> +	 *=20
+> >> +	 */
+> >=20
+> > Its not strange.  C Git expands each file path to its _full_ path
+> > and stores that into a buffer, then runs fnmatch() for each pattern
+> > on the buffer.  If fnmatch() succeeds the path is added to the inde=
+x.
+> >=20
+> > In the case above we are running a match of "a/\*.z" against
+> > "a/b/xyz" and that passes.  Or we run "a/x\*" on "a/b/xyz" and it
+> > fails as the sequence of characters "a/x" does not appear in the
+> > string "a/b".
+> >=20
+> > You are running into this odd corner case because you are not
+> > treating the pattern passed as something that matches against the
+> > entire path.  This is one reason why TreeFilter's use the entire
+> > path when they process an entry for inclusion or exclusion, and why
+> > TreeWalk has each AbstractTreeIterator append the current entry nam=
+e
+> > onto the end of the current path buffer, so we can always examine
+> > the full path from the root of the repository/working directory.
+> >=20
+> > Trying to avoid the full path in classes like ComplexFilePattern
+> > is why you are running into this corner case here, and must now do
+> > extra contortions to somewhat match the behavior of C Git.
+> >=20
+> > At this point I think most of the rules package is overcomplicated
+> > and overoptimized, and yet doesn't actually quite match the behavio=
+r
+> > of C Git.
+> >=20
+>=20
+> Still I think that the behavior of git-add is strange:
+> For example, if you want to add the following file:
+> a/b/c/test.txt
+> Then I can do this with "a/\*.txt" or "a/b\*.txt" but not with=20
+> "a/\*/c/test.txt"
+>=20
+> I know that I handle "a/b\*.txt" wrong, and I don't know a nice way t=
+o=20
+> implement it in the current rules framework.
+>=20
+> I see three options:
+> 1.) Let the jgit add command work in another way then git-add does.
+> 2.) Don't use the rules framework to determine if a file is selected =
+by=20
+> the add command.
+> 3.) Completely drop the patches
+> [4.) Add some evil hacks to make it working] <- I don't like that ver=
+sion
+>=20
+> Please tell me which way to go, so that I don't waste even more time =
+on=20
+> patches which will never make it in.
 
-I also have the following in git-compat-util.h:
+Correctness is very important. Obviously we will slip bugs trough, but
+not intentionally in a part where legacy behaviour may play an importan=
+t
+role. With these options available I'd select number 2.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 01c4045..161bd50 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -191,6 +191,7 @@ extern size_t gitstrlcpy(char *, const char *, size_t);
- 
- #ifdef NO_STRTOUMAX
- #define strtoumax gitstrtoumax
-+typedef unsigned long long uintmax_t;
- extern uintmax_t gitstrtoumax(const char *, char **, int);
- #endif
- 
+I think your observations are interesting, especially the one you make
+here about a/*/c/test.txt not matching because I don't see from the git
+add manual why it shouldn't. I does not look like a recent git bug eith=
+er.=20
 
-Which is obviously a hack, but I considered too minor an issue. It
-(the missing uintmax_t) is probably something very specific to this
-particular system. I am probably wrong about the issue being minor...
+btw, I should you can use the =C3=B6 in your name in mail and too. It'l=
+l make
+for some interesting testing of non-ascii handling that we need to take
+on (another argument for not complicating handling of names too much).
+I'm sure it will get pretty hairy regardless.
+
+-- robin
