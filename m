@@ -1,79 +1,59 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH] Add a test for git-add --ignore-errors
-Date: Mon, 12 May 2008 20:48:22 -0700
-Message-ID: <7v3aomx3sp.fsf@gitster.siamese.dyndns.org>
-References: <47C95E34.1050306@dirk.my1.cc> <20080302154154.GC2973@steel.home>
- <20080302154238.GD2973@steel.home>
- <alpine.LSU.1.00.0803021555500.22527@racer.site>
- <7vtzjpoye6.fsf@gitster.siamese.dyndns.org>
- <20080512175654.GB3128@steel.home> <20080512175745.GC3128@steel.home>
- <20080512175810.GD3128@steel.home> <20080512175829.GE3128@steel.home>
- <20080512175848.GF3128@steel.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: multiple files for the same hook
+Date: Tue, 13 May 2008 00:21:18 -0400
+Message-ID: <20080513042118.GB4079@sigill.intra.peff.net>
+References: <200805122039.49779.hto@arcor.de> <20080512204445.GT27724@genesis.frugalware.org> <200805122156.30896.hto@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 05:49:32 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Thomas Hunger <hto@arcor.de>
+X-From: git-owner@vger.kernel.org Tue May 13 06:22:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JvlW3-0004Li-4H
-	for gcvg-git-2@gmane.org; Tue, 13 May 2008 05:49:27 +0200
+	id 1Jvm1w-0002NA-Cg
+	for gcvg-git-2@gmane.org; Tue, 13 May 2008 06:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755663AbYEMDsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2008 23:48:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755596AbYEMDsf
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 May 2008 23:48:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43957 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755037AbYEMDsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2008 23:48:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 083D73458;
-	Mon, 12 May 2008 23:48:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 1F6F33457; Mon, 12 May 2008 23:48:27 -0400 (EDT)
-In-Reply-To: <20080512175848.GF3128@steel.home> (Alex Riesen's message of
- "Mon, 12 May 2008 19:58:48 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 75432452-209F-11DD-B9D7-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1753346AbYEMEVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2008 00:21:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753332AbYEMEVW
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 00:21:22 -0400
+Received: from peff.net ([208.65.91.99]:3685 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753312AbYEMEVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2008 00:21:22 -0400
+Received: (qmail 2053 invoked by uid 111); 13 May 2008 04:21:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 13 May 2008 00:21:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 May 2008 00:21:18 -0400
+Content-Disposition: inline
+In-Reply-To: <200805122156.30896.hto@arcor.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/81985>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Mon, May 12, 2008 at 09:56:30PM +0000, Thomas Hunger wrote:
 
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->  t/t3700-add.sh |    9 +++++++++
->  1 files changed, 9 insertions(+), 0 deletions(-)
->
-> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> index 287e058..ca3e33d 100755
-> --- a/t/t3700-add.sh
-> +++ b/t/t3700-add.sh
-> @@ -179,4 +179,13 @@ test_expect_success 'git add --refresh' '
->  	test -z "`git diff-index HEAD -- foo`"
->  '
->  
-> +test_expect_success 'git add --ignore-errors' '
-> +	git reset --hard &&
-> +	date >foo1 &&
-> +	date >foo2 &&
-> +	chmod 0 foo2 &&
-> +	git add --verbose --ignore-errors .
-> +	git ls-files |grep foo1
-> +'
-> +
->  test_done
+> > why would you want so? just create a script named
+> > hooks/post-commit, like:
+> 
+> you are right, it's what we actually do, using --template to set up 
+> our own scripts. If nobody but us needs this it's certainly not worth 
+> bothering.
 
-I like the fact that you added --ignore-errors and made it still error out
-when it cannot read some files.  Shouldn't we be testing it here with
-"must-fail"?
+The problem is that the semantics of calling some of the hooks is not as
+simple as just calling them all in a row. How do you split up the input
+going to the hooks? How do you combine the output coming from the hooks?
+What is the resulting exit code? If one hook fails, do we indicate
+failure? Or if one hook succeeds, do we indicate success?
+
+So before any such code could go into git proper, there would have to be
+agreement on how those issues are resolved. In the meantime, it probably
+makes more sense to implement a "master" post-commit hook that uses the
+semantics that you find useful.
+
+-Peff
