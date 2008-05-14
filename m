@@ -1,69 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rephrased git-describe description
-Date: Wed, 14 May 2008 11:46:45 -0700
-Message-ID: <7v7idwoh9m.fsf@gitster.siamese.dyndns.org>
-References: <1210789855-29413-1-git-send-email-ian.hilt@gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 2/7] add push line in git-clone
+Date: Wed, 14 May 2008 21:07:00 +0200
+Message-ID: <482B3854.9040906@gnu.org>
+References: <4812DA50.3000702@gnu.org> <cover.1209391614.git.bonzini@gnu.org> <af57d23aca6137c1ae7702027ce3742433840872.1209391614.git.bonzini@gnu.org> <ff298458e7efc14721fdc0420432bf33efd76784.1209391614.git.bonzini@gnu.org> <7vve1yzgfc.fsf@gitster.siamese.dyndns.org> <482018E4.9000908@gnu.org> <482B0354.2060207@gnu.org> <7vhcd0oiov.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>
-To: Ian Hilt <ian.hilt@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 20:49:06 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 21:08:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwM0z-0006aB-3o
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 20:47:49 +0200
+	id 1JwMKl-00079a-O5
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 21:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933AbYENSqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 14:46:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbYENSqz
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 14:46:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39009 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754776AbYENSqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 14:46:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 84EBF5926;
-	Wed, 14 May 2008 14:46:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 81A2D5922; Wed, 14 May 2008 14:46:48 -0400 (EDT)
-In-Reply-To: <1210789855-29413-1-git-send-email-ian.hilt@gmail.com> (Ian
- Hilt's message of "Wed, 14 May 2008 14:30:55 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1E49278A-21E6-11DD-8668-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1755652AbYENTHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 15:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757176AbYENTHX
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 15:07:23 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:39602 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755598AbYENTHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 15:07:22 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so14828nfc.21
+        for <git@vger.kernel.org>; Wed, 14 May 2008 12:07:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=x5mdgmjKbBXoUxFUslb5PoMnmKIiM1KGpDkg3OAtCSQ=;
+        b=QWd1UPEl34T2+KpKK4/JQwLrEVQSj7qzT8OuMdvK0C1N41+qztmapGZOGiBX9aal9+TmtnomEe1RRGPfAbV+Ns5sbsPCvZNC32UJcyjAempoaUQAtUbND5dji+gcy0CYUElPFO+TqrjT1I/UBoiF2GpMVEsw3OGds9zI8mFBF/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=kFq+4oUHq+zPX0spXxPRJ5xdgLSmpleLghksZetkrdqOuV+Vcviq5LIigjMBA/epABmDwk06dCIleEClPuFPHKGFJMXw3PKNgElmJWChRNEh1JA2EOxIjoILahZlW76Ax4f7ERe9Yfuth1geRfTMl4DtHMHXVRQXxxa00dskALc=
+Received: by 10.125.122.19 with SMTP id z19mr738241mkm.93.1210792040324;
+        Wed, 14 May 2008 12:07:20 -0700 (PDT)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id d6sm1982602fga.2.2008.05.14.12.07.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 May 2008 12:07:19 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+In-Reply-To: <7vhcd0oiov.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82134>
 
-Ian Hilt <ian.hilt@gmail.com> writes:
+Junio C Hamano wrote:
+> Paolo Bonzini <bonzini@gnu.org> writes:
+> 
+>> Paolo Bonzini wrote:
+>>>> Used together with [1/7], this change is Ok in a homogeneous environment,
+>>>> but it would break people who use git of different vintage on the same
+>>>> repository (think of a repository on a networked filesystem).  You clone
+>>>> like this, and older git won't grok the push configuration anymore.
+>>>>
+>>>> It may look a very minor point, but I think it deserves mentioning.
+>>>
+>>> I think it is reasonable to require cloning with the
+>>> least-common-denominator version in this case.  Think of what
+>>> happened if the pack format changed.
+>> Any news on this (and on 1/7, which is in pu)?
+> 
+> The pack-format change is a big deal and benefit everybody.  Comparing it
+> with this change feels like comparing an apple and a poppy seed, doesn't
+> it?
 
-> git-describe: Make description more readable.
+Yes, but it is the same.  Another example is when remotes started being 
+created in refs/remotes/origin upon cloning.  In general, you cannot 
+expect a clone to be downwards-compatible (or, you should expect a clone 
+*not* to be downwards-compatible).
 
-Thanks, both.  I think the above is meant to be on the Subject: line, and
-the text certainly is more readable.
-
-> Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
-> ---
->  Documentation/git-describe.txt |    7 ++++---
->  1 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-> index d9aa2f2..69e1ab7 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -13,9 +13,10 @@ SYNOPSIS
->  DESCRIPTION
->  -----------
->  The command finds the most recent tag that is reachable from a
-> -commit, and if the commit itself is pointed at by the tag, shows
-> -the tag.  Otherwise, it suffixes the tag name with the number of
-> -additional commits and the abbreviated object name of the commit.
-> +commit.  If the tag points to the commit, then only the tag is
-> +shown.  Otherwise, it suffixes the tag name with the number of
-> +additional commits on top of the tagged object and the
-> +abbreviated object name of the most recent commit.
+Paolo
