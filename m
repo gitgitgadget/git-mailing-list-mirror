@@ -1,74 +1,74 @@
-From: "John W. Linville" <linville@tuxdriver.com>
-Subject: Re: + wireless-fix-iwlwifi-unify-init-driver-flow.patch added to
-	-mm tree
-Date: Wed, 14 May 2008 08:34:32 -0400
-Message-ID: <20080514123432.GB3349@tuxdriver.com>
-References: <200805140405.m4E45oBc015343@imap1.linux-foundation.org> <20080513.213927.191790810.davem@davemloft.net> <20080513215737.fe1bdebd.akpm@linux-foundation.org> <20080513.221529.20855966.davem@davemloft.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: akpm@linux-foundation.org, linux-kernel@vger.kernel.org,
-	ron.rindjunsky@intel.com, sfr@canb.auug.org.au,
-	tomas.winkler@intel.com, git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Wed May 14 14:51:57 2008
+From: Ian Hilt <ian.hilt@gmail.com>
+Subject: [PATCH] Rephrased git-describe description
+Date: Wed, 14 May 2008 10:22:27 -0400
+Message-ID: <1210774947-27995-1-git-send-email-ian.hilt@gmail.com>
+Cc: Ian Hilt <ian.hilt@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 14 16:23:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwGSR-0002q5-Dk
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 14:51:47 +0200
+	id 1JwHsz-00016i-Vt
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 16:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759358AbYENMux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 08:50:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758158AbYENMuw
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 08:50:52 -0400
-Received: from ra.tuxdriver.com ([70.61.120.52]:4185 "EHLO ra.tuxdriver.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758015AbYENMuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 08:50:51 -0400
-Received: from ra.tuxdriver.com (ra.tuxdriver.com [127.0.0.1])
-	by ra.tuxdriver.com (8.14.0/8.14.0) with ESMTP id m4ECoMOk009020
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 May 2008 08:50:32 -0400
-Received: (from uucp@localhost)
-	by ra.tuxdriver.com (8.14.0/8.14.0/Submit) with UUCP id m4ECjAl2008931;
-	Wed, 14 May 2008 08:45:10 -0400
-Received: from linville-t43.local (localhost.localdomain [127.0.0.1])
-	by linville-t43.local (8.14.1/8.13.8) with ESMTP id m4ECYWM4004019;
-	Wed, 14 May 2008 08:34:32 -0400
-Received: (from linville@localhost)
-	by linville-t43.local (8.14.1/8.14.1/Submit) id m4ECYWLC004018;
-	Wed, 14 May 2008 08:34:32 -0400
-Content-Disposition: inline
-In-Reply-To: <20080513.221529.20855966.davem@davemloft.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Spam-Status: No, score=-4.4 required=3.0 tests=ALL_TRUSTED,BAYES_00,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham version=3.1.8-gr1
-X-Spam-Checker-Version: SpamAssassin 3.1.8-gr1 (2007-02-13) on ra.tuxdriver.com
+	id S1754577AbYENOWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 10:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbYENOWW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 10:22:22 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:19244 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752830AbYENOWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 10:22:21 -0400
+Received: by an-out-0708.google.com with SMTP id d40so688095and.103
+        for <git@vger.kernel.org>; Wed, 14 May 2008 07:22:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=mO2sQjWaVmkrIc3FQYzw32OqPLvH4de6dCjCffMEqSA=;
+        b=uRzyTRRTg2bzWvoqv0TPFPH6hhSRyvAmd7un1ueRjA+IjW+1dpDbg1Kvu0CvkFRnCpl7zmIvitg1OqSdGwEEb5u2XbHDE38gxAwwR0OdoFXKZAOJA3ciD/v5wwJLfrOMSFqL/4av9Gh29q81OBYeOddLz6nZ3MtxK9Fop0O5VhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=kjaFC6U4MHVEhLiP9zD8WR4N65ZGqn9YsPupGU5V+XURF8g1MWKZ5t6HeDikzYUFgaZd15W8TO88l+zzJXNB7R5r3JYG9N7sufL/VMdqAbRRi92OFLCuNIg4Nj/YXz15OFzRspZbYsCQMl9G9CrIlHaubuI8KgblvjrXGPjkZmw=
+Received: by 10.100.229.12 with SMTP id b12mr1284926anh.60.1210774938186;
+        Wed, 14 May 2008 07:22:18 -0700 (PDT)
+Received: from sys-0 ( [75.185.208.72])
+        by mx.google.com with ESMTPS id b19sm2359920ana.19.2008.05.14.07.22.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 May 2008 07:22:16 -0700 (PDT)
+Received: by sys-0 (sSMTP sendmail emulation); Wed, 14 May 2008 10:22:27 -0400
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82099>
 
-On Tue, May 13, 2008 at 10:15:29PM -0700, David Miller wrote:
+Made description more readable.
 
-> I used to play this game, it's a lot of work and it sucks.  One
-> "drib" can require fixing up 200 patches down the chain.  And
-> I've had this happen to me all the time in the past when I was
-> rebasing all the time.
+Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
+---
+ Documentation/git-describe.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-I have to agree with Dave.
-
-Moreover, I used to get regular complaints about the old "regular
-rebase" process.  We switched to a "pull and merge" process for 2.6.25,
-and in that period nearly all of the process-related complaints
-disappeared for me.
-
-To some degree this is a "pick your poison" issue, and for most people
-rebasing seems like the deadlier poison.
-
-John
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index d9aa2f2..f3f07e4 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -13,9 +13,10 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ The command finds the most recent tag that is reachable from a
+-commit, and if the commit itself is pointed at by the tag, shows
+-the tag.  Otherwise, it suffixes the tag name with the number of
+-additional commits and the abbreviated object name of the commit.
++commit.  If the tag points to the commit, then only the tag is
++shown.  Otherwise, the number of additional commits on top of the
++tagged object and the abbreviated object name of the most recent
++commit are suffixed to the tag name.
+ 
+ 
+ OPTIONS
 -- 
-John W. Linville
-linville@tuxdriver.com
+1.5.3.7
