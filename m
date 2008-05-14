@@ -1,85 +1,85 @@
-From: Junio C Hamano <junio@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 4/4] filter-branch: fix variable export logic
-Date: Tue, 13 May 2008 21:18:53 -0700
-Message-ID: <7v7idxr00i.fsf@gitster.siamese.dyndns.org>
-References: <20080513084338.GA23729@sigill.intra.peff.net>
- <20080513084638.GD23799@sigill.intra.peff.net>
+Date: Wed, 14 May 2008 00:57:17 -0400
+Message-ID: <20080514045717.GA16592@sigill.intra.peff.net>
+References: <20080513084338.GA23729@sigill.intra.peff.net> <20080513084638.GD23799@sigill.intra.peff.net> <7v7idxr00i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 14 06:20:16 2008
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 06:58:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw8TP-0006cz-IP
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 06:20:15 +0200
+	id 1Jw94B-000619-Be
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 06:58:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005AbYENETD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 00:19:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbYENETD
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 00:19:03 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49678 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbYENETB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 00:19:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EC1838E8;
-	Wed, 14 May 2008 00:19:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 344A738E6; Wed, 14 May 2008 00:18:57 -0400 (EDT)
-In-Reply-To: <20080513084638.GD23799@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 13 May 2008 04:46:38 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E0AB271C-216C-11DD-8672-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1751548AbYENE5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 00:57:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYENE5Z
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 00:57:25 -0400
+Received: from peff.net ([208.65.91.99]:2495 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751548AbYENE5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 00:57:24 -0400
+Received: (qmail 4455 invoked by uid 111); 14 May 2008 04:57:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 14 May 2008 00:57:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2008 00:57:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7idxr00i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82069>
 
-Jeff King <peff@peff.net> writes:
+On Tue, May 13, 2008 at 09:18:53PM -0700, Junio C Hamano wrote:
 
-> filter-branch tries to restore "old" copies of some
-> environment variables by using the construct:
->
->   unset var
->   test -z "$old_var" || var="$old_var" && export var
->
-> However, by the short-circuit logic, we will always run
-> 'export var'.
+> I was confused by this description ("short-circuit logic"), but I do not
+> think there is no short-circuit going on.  This is a simple ignorance of
+> shell syntax.
 
-Thanks.
+Sorry, I meant "you might think we are not going to run this because of
+short circuit, but we always will." So I think the original author was
+confused.
 
-I was confused by this description ("short-circuit logic"), but I do not
-think there is no short-circuit going on.  This is a simple ignorance of
-shell syntax.
+But please feel free to reword in a way that makes more sense.
 
-In a shell scriptlet:
+> I have a mild suspecion that this was simply an artifcat of a careless
+> conversion from export var="$val" form we did in the past.  I should have
+> caught them back then.
 
-	a || b && c
+Nope, it was originally that way (46eb449). Thank goodness for
+git-blame! :)
 
-AND list operator (&&) and OR list operator (||) have the same precedence
-and bind to the left.  Because the second part of OR list is always true,
-we always export.
+> The patch is fine, but I find this easier to read:
+> 
+> +test -z "$ORIG_GIT_DIR" || {
+> +	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
+> +}
+> +test -z "$ORIG_GIT_WORK_TREE" || {
+> +	GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
+> +	export GIT_WORK_TREE
+> +}
+> +test -z "$ORIG_GIT_INDEX_FILE" || {
+> +	GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
+> +	export GIT_INDEX_FILE
+> +}
 
-I have a mild suspecion that this was simply an artifcat of a careless
-conversion from export var="$val" form we did in the past.  I should have
-caught them back then.
+Yes, that is easier to read. Although what also confused me at first was
+the double negation. It is trying to say "if the original existed,
+restore it", but it is written as "the original has no content, OR
+restore it". So
 
-The patch is fine, but I find this easier to read:
+  if test -n "$ORIG_GIT_DIR"
+  then
+    ...
+  fi
 
-+test -z "$ORIG_GIT_DIR" || {
-+	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
-+}
-+test -z "$ORIG_GIT_WORK_TREE" || {
-+	GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
-+	export GIT_WORK_TREE
-+}
-+test -z "$ORIG_GIT_INDEX_FILE" || {
-+	GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
-+	export GIT_INDEX_FILE
-+}
+would be even clearer, though I'm not sure if "-n" has any portability
+concerns.
+
+-Peff
