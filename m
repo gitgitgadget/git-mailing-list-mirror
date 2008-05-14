@@ -1,60 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Submodule on Debian breaks
-Date: Thu, 15 May 2008 13:55:00 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805151354380.30431@racer>
-References: <06D015DD-6F3B-4D2E-8305-BDD062F149E6@peterbengtson.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Wed, 14 May 2008 08:42:45 +0300
+Message-ID: <20080514054245.GA3147@mithlond.arda.local>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <e1dab3980805121017u4c244d25s76b39cf015f6c5c5@mail.gmail.com> <20080512234906.GX29038@spearce.org> <7vod7bw03a.fsf@gitster.siamese.dyndns.org> <20080513000925.GA29038@spearce.org> <48292243.3050307@gnu.org> <20080513092237.GA4413@mithlond.arda.local> <20080513214638.GA14930@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Peter Bengtson <peter@peterbengtson.com>
-X-From: git-owner@vger.kernel.org Thu May 15 14:57:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Bonzini <bonzini@gnu.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Tweed <david.tweed@gmail.com>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu May 15 15:41:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwczy-00078e-2z
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 14:55:54 +0200
+	id 1Jwdeu-0001Ll-7Z
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 15:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbYEOMzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 08:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbYEOMzA
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 08:55:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55929 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750868AbYEOMzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 08:55:00 -0400
-Received: (qmail invoked by alias); 15 May 2008 12:54:57 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp014) with SMTP; 15 May 2008 14:54:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18PTEE8tC8PXGCJwtBI/X0NFCe5tAnPPeNtwRu41Z
-	TsqnVevQvcc4WV
-X-X-Sender: gene099@racer
-In-Reply-To: <06D015DD-6F3B-4D2E-8305-BDD062F149E6@peterbengtson.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751842AbYEONhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 09:37:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbYEONhV
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 09:37:21 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:40419 "EHLO
+	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750902AbYEONhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 09:37:20 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.rokki.sonera.fi (8.5.014)
+        id 482329DB00451619; Wed, 14 May 2008 08:42:53 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Jw9lF-0000yH-M1; Wed, 14 May 2008 08:42:45 +0300
+Content-Disposition: inline
+In-Reply-To: <20080513214638.GA14930@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82205>
 
-Hi,
+Stephen R. van den Berg wrote (2008-05-14 00:46 +0300):
 
-On Thu, 15 May 2008, Peter Bengtson wrote:
-
-> We have problems cloning git repositories containing submodules on 
-> Debian. Cloning them locally, on Debian, or on Mac OS X, works without a 
-> hitch. Cloning them remotely from a Mac OS X repo server to a Mac OS X 
-> client computer also works as expected, as does cloning repos without 
-> submodules.
+> Teemu Likonen wrote:
+> >This way the "daily" gc would operate very fast (as it leaves .keep
+> >packs alone), and with gc --aggressive user could easily decide when to
+> >create new landmark .keep packs (and also prune possible dangling
+> >objects inside previous .keep packs). Normal user don't need to know the
+> >details. Just run gc occasionally and maybe gc --aggressive when better
+> >optimization is needed.
 > 
-> But as soon as a clone of a git repo containing a submodule on the 
-> Debian machine is attempted from another computer, this happens:
+> >How does this sound?
 > 
-> >error: git-upload-pack: git-pack-objects died with error.
+> It sounds sound :-).
+> I like the simplicity.
 
-This is the remote git.  It is probably out of date.
-
-Ciao,
-Dscho
+It turned out that gc --aggressive is not what I thought it was, i.e.
+"pack aggressively and efficiently". So my suggestion implies the
+semantics that --aggressive would do effective compressing.
