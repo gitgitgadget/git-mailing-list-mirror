@@ -1,112 +1,72 @@
-From: Chris Frey <cdfrey@foursquare.net>
-Subject: [PATCH] Updating documentation to match Brandon Casey's proposed git-repack patch.
-Date: Wed, 14 May 2008 03:25:14 -0400
-Message-ID: <20080514072514.GA26202@foursquare.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH] Emacs mode: automatically cd up to root of worktree
+Date: Wed, 14 May 2008 09:38:24 +0200
+Message-ID: <87r6c5uyhb.fsf@lysator.liu.se>
+References: <20080514014309.GA17955@diana.vm.bytemark.co.uk>
+	<20080514014820.7140.28591.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 14 09:26:40 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
+	<kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed May 14 09:39:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwBNk-0003B9-Nh
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 09:26:37 +0200
+	id 1JwBa2-000794-BO
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 09:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbYENHZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 03:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbYENHZd
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 03:25:33 -0400
-Received: from nic.NetDirect.CA ([216.16.235.2]:38136 "EHLO
-	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751724AbYENHZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 03:25:32 -0400
-X-Originating-Ip: 216.16.235.2
-Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
-	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m4E7PE8g029837;
-	Wed, 14 May 2008 03:25:14 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
-X-Net-Direct-Inc-MailScanner: Found to be clean
-X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
-	SpamAssassin (not cached, score=-16.8, required 5,
-	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
-X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
-X-Spam-Status: No
+	id S1752496AbYENHi2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 May 2008 03:38:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYENHi2
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 03:38:28 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:52716 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751875AbYENHi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 03:38:27 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 2368C200A340;
+	Wed, 14 May 2008 09:38:26 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 27020-01-36; Wed, 14 May 2008 09:38:25 +0200 (CEST)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id B91DF200A1D0;
+	Wed, 14 May 2008 09:38:25 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 0AC4D7B4039; Wed, 14 May 2008 09:38:24 +0200 (CEST)
+In-Reply-To: <20080514014820.7140.28591.stgit@yoghurt> ("Karl =?utf-8?Q?Ha?=
+ =?utf-8?Q?sselstr=C3=B6m=22's?= message of "Wed\, 14 May 2008 03\:49\:09
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82082>
 
-I haven't heard any negative commentary on this patch, and I see
-the repack patch is in next, so resending in case it was missed.
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-This patch clarifies the git-prune man page, documenting that it only
-prunes unpacked objects.  git-repack is documented according to
-the new git-repack -A behaviour, which does not depend on
-git-pack-objects --keep-unreachable anymore.
+> git's emacs mode automatically finds the root of the worktree, so tha=
+t
+> the user doesn't have to. Teach StGit's emacs mode the same trick by
+> borrowing the git-get-top-dir function from git.
+>
+> The borrowed code was written by Alexandre Julliard <julliard@winehq.=
+org>.
+>
+> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-Signed-off-by: Chris Frey <cdfrey@foursquare.net>
----
- Documentation/git-prune.txt  |    5 ++++-
- Documentation/git-repack.txt |   14 +++++++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
 
-diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
-index f92bb8c..3178bc4 100644
---- a/Documentation/git-prune.txt
-+++ b/Documentation/git-prune.txt
-@@ -18,12 +18,15 @@ git-prune. See the section "NOTES", below.
- 
- This runs `git-fsck --unreachable` using all the refs
- available in `$GIT_DIR/refs`, optionally with additional set of
--objects specified on the command line, and prunes all
-+objects specified on the command line, and prunes all unpacked
- objects unreachable from any of these head objects from the object database.
- In addition, it
- prunes the unpacked objects that are also found in packs by
- running `git prune-packed`.
- 
-+Note that unreachable, packed objects will remain.  If this is
-+not desired, see linkgit:git-repack[1].
-+
- OPTIONS
- -------
- 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 3d95749..906d3c7 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -8,7 +8,7 @@ git-repack - Pack unpacked objects in a repository
- 
- SYNOPSIS
- --------
--'git-repack' [-a] [-d] [-f] [-l] [-n] [-q] [--window=N] [--depth=N]
-+'git-repack' [-a] [-A] [-d] [-f] [-l] [-n] [-q] [--window=N] [--depth=N]
- 
- DESCRIPTION
- -----------
-@@ -37,6 +37,18 @@ OPTIONS
- 	leaves behind, but `git fsck --full` shows as
- 	dangling.
- 
-+-A::
-+	Same as `-a`, but any unreachable objects in a previous
-+	pack become loose, unpacked objects, instead of being
-+	left in the old pack.  Unreachable objects are never
-+	intentionally added to a pack, even when repacking.
-+	When used with '-d', this option
-+	prevents unreachable objects from being immediately
-+	deleted by way of being left in the old pack and then
-+	removed.  Instead, the loose unreachable objects
-+	will be pruned according to normal expiry rules
-+	with the next linkgit:git-gc[1].
-+
- -d::
- 	After packing, if the newly created packs make some
- 	existing packs redundant, remove the redundant packs.
--- 
-1.5.4.4
+Excellent. It's an itch that I've been meaning to scratch for some time=
+=2E
+
+--=20
+David K=C3=A5gedal
