@@ -1,59 +1,101 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH v2] revision.c: really honor --first-parent
-Date: Wed, 14 May 2008 13:10:34 +0200
-Message-ID: <20080514111034.GA29387@cuci.nl>
-References: <1210547651-32510-1-git-send-email-hjemli@gmail.com> <1210605156-22926-1-git-send-email-hjemli@gmail.com> <20080513201522.GA11485@cuci.nl> <8c5c35580805131343kc115df6yd7ce3281fb3e6171@mail.gmail.com> <7vej85suc2.fsf@gitster.siamese.dyndns.org> <20080514103454.GA28610@cuci.nl> <8c5c35580805140354s62301343n62f8319b1853bfbd@mail.gmail.com>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: mergetool feature request - select remote or local
+Date: Wed, 14 May 2008 07:21:00 -0400
+Message-ID: <200805140721.13719.xenoterracide@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, nanako3@bluebottle.com,
-	git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 13:11:39 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1338329.NDRkf4IWFi";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 14 13:24:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwEtL-0005rp-J2
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 13:11:28 +0200
+	id 1JwF61-0002OG-Fv
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 13:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590AbYENLKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 07:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754876AbYENLKf
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 07:10:35 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:36848 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754856AbYENLKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 07:10:35 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 1D1DF5461; Wed, 14 May 2008 13:10:34 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <8c5c35580805140354s62301343n62f8319b1853bfbd@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755743AbYENLXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 07:23:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756111AbYENLXm
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 07:23:42 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:30619 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755639AbYENLXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 07:23:42 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1835492ywe.1
+        for <git@vger.kernel.org>; Wed, 14 May 2008 04:23:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        bh=v6zhh451GREhq6NwPOexanOZEaqmcthedsZbnGoPfrU=;
+        b=o+ounVh/pa+gWqpG3K4CseaALNQvsUb179AR1A6+BjdtwpooyLpd0eZw9i+F/wnjoItncNejHawXtGFl3XrqgOs0EkuoPT8TtYkAOjfnj8rhIc0UVYMQsViL1ADtAeDKVl7WuIRVpg0TsjO2wmFPwLL+mVWEZUDeY1aLyiOHPMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        b=UlPRzDZrA9NRMoxctLBJFwrfIZqFXodEqikD+r+WfFwvIe9RkoxEBtTpfATER68YDYDUL+qD7RKllgQuQVcBZAf6+fXCxsAL8Dhoaceo/Z+4+sZGaHL72rmOQaGS3GnzdLIlMye7nXbUQJ1YP+q6m658v2Wr35VeSq7KOo+jbAE=
+Received: by 10.150.12.3 with SMTP id 3mr897034ybl.14.1210764218102;
+        Wed, 14 May 2008 04:23:38 -0700 (PDT)
+Received: from ?192.168.0.101? ( [75.128.154.7])
+        by mx.google.com with ESMTPS id 33sm944768yxr.3.2008.05.14.04.23.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 May 2008 04:23:37 -0700 (PDT)
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82097>
 
-Lars Hjemli wrote:
->On Wed, May 14, 2008 at 12:34 PM, Stephen R. van den Berg <srb@cuci.nl> wrote:
->>  So, I'd say, since the current code does not and cannot work reliably
->>  for anyone specifically using --first-parent (with every merge
->>  encountered, the probability of correctness is multiplied by 0.5 at
->>  most/least), you are going to do them a favour anyway by fixing the code,
->>  then why not simplify the convolution and make the code rock-steady (and
->>  implement my patch)?
+--nextPart1338329.NDRkf4IWFi
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->The current 'next' branch in git.git contains your patch with my fixup
->on top and I believe this fixes _both_ the original issue with
->first-parent (thanks to your patch) and the issue Nanako discovered
->(thanks to my patch). Am I missing something?
+sometimes when merge-ing fast forward doesn't work. but you know what the=20
+resolution you want is.
 
-Probably not.  I didn't check 'next' yet, since neither mine nor your
-patch had been Acked on the list (I guess it shows that I don't know the
-procedures here all too well yet).
--- 
-Sincerely,                                                          srb@cuci.nl
-           Stephen R. van den Berg.
+example (current behavior)
+Normal merge conflict for 'css/main.css':
+  {local}: modified
+  {remote}: modified
+Hit return to start merge resolution tool (vimdiff):
 
-What if there were no hypothetical questions?
+but I don't want to. I know the remote updates are right. I could do a git=
+=20
+checkout remotebranch filename but when you have 20 files that need updatin=
+g=20
+this is annoying
+
+my suggestion is this
+Normal merge conflict for 'css/main.css':
+  {local}: modified
+  {remote}: modified
+Use (l)local or (r)remote or (m)anual?=20
+
+also in the event of having 20 files with this issue it would be nice to ha=
+ve=20
+an option after first starting mergetool for remote all or local all.
+
+(note: I am not subscribed to the list)
+=2D-=20
+Caleb Cushing
+
+my blog http://xenoterracide.blogspot.com
+
+--nextPart1338329.NDRkf4IWFi
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkgqyykACgkQQ201sGJR45I3bQCgiNRKSR8rtd9D+0craCyw+Fk0
+gQUAn2gXmbKG2TDkR9jP3VRrS95mHcaW
+=iMlc
+-----END PGP SIGNATURE-----
+
+--nextPart1338329.NDRkf4IWFi--
