@@ -1,74 +1,70 @@
-From: Ian Hilt <ian.hilt@gmail.com>
-Subject: [PATCH] Rephrased git-describe description
-Date: Wed, 14 May 2008 10:22:27 -0400
-Message-ID: <1210774947-27995-1-git-send-email-ian.hilt@gmail.com>
-Cc: Ian Hilt <ian.hilt@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 16:23:44 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] graph.c: fix padding
+Date: Wed, 14 May 2008 15:22:38 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805141522060.30431@racer>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Adam Simpkins <adam@adamsimpkins.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 14 16:24:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwHsz-00016i-Vt
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 16:23:18 +0200
+	id 1JwHtL-0001FZ-4H
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 16:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbYENOWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 10:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbYENOWW
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 10:22:22 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:19244 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752830AbYENOWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 10:22:21 -0400
-Received: by an-out-0708.google.com with SMTP id d40so688095and.103
-        for <git@vger.kernel.org>; Wed, 14 May 2008 07:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=mO2sQjWaVmkrIc3FQYzw32OqPLvH4de6dCjCffMEqSA=;
-        b=uRzyTRRTg2bzWvoqv0TPFPH6hhSRyvAmd7un1ueRjA+IjW+1dpDbg1Kvu0CvkFRnCpl7zmIvitg1OqSdGwEEb5u2XbHDE38gxAwwR0OdoFXKZAOJA3ciD/v5wwJLfrOMSFqL/4av9Gh29q81OBYeOddLz6nZ3MtxK9Fop0O5VhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=kjaFC6U4MHVEhLiP9zD8WR4N65ZGqn9YsPupGU5V+XURF8g1MWKZ5t6HeDikzYUFgaZd15W8TO88l+zzJXNB7R5r3JYG9N7sufL/VMdqAbRRi92OFLCuNIg4Nj/YXz15OFzRspZbYsCQMl9G9CrIlHaubuI8KgblvjrXGPjkZmw=
-Received: by 10.100.229.12 with SMTP id b12mr1284926anh.60.1210774938186;
-        Wed, 14 May 2008 07:22:18 -0700 (PDT)
-Received: from sys-0 ( [75.185.208.72])
-        by mx.google.com with ESMTPS id b19sm2359920ana.19.2008.05.14.07.22.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 May 2008 07:22:16 -0700 (PDT)
-Received: by sys-0 (sSMTP sendmail emulation); Wed, 14 May 2008 10:22:27 -0400
-X-Mailer: git-send-email 1.5.3.7
+	id S1755423AbYENOWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 10:22:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755366AbYENOWj
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 10:22:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54934 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754762AbYENOWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 10:22:38 -0400
+Received: (qmail invoked by alias); 14 May 2008 14:22:36 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp031) with SMTP; 14 May 2008 16:22:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/KctACeyrKLvooImZpHG/AyteIqnhiMn6m9y+5LM
+	sRhzMRbc+/qoXj
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82100>
 
-Made description more readable.
 
-Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
+There were two instances of "%*s" which want to be "%.*s" instead.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-describe.txt |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ graph.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index d9aa2f2..f3f07e4 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -13,9 +13,10 @@ SYNOPSIS
- DESCRIPTION
- -----------
- The command finds the most recent tag that is reachable from a
--commit, and if the commit itself is pointed at by the tag, shows
--the tag.  Otherwise, it suffixes the tag name with the number of
--additional commits and the abbreviated object name of the commit.
-+commit.  If the tag points to the commit, then only the tag is
-+shown.  Otherwise, the number of additional commits on top of the
-+tagged object and the abbreviated object name of the most recent
-+commit are suffixed to the tag name.
+diff --git a/graph.c b/graph.c
+index 9d6ed30..f3e2eed 100644
+--- a/graph.c
++++ b/graph.c
+@@ -422,7 +422,7 @@ static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb)
+ 		return;
  
+ 	extra = graph->width - sb->len;
+-	strbuf_addf(sb, "%*s", (int) extra, "");
++	strbuf_addf(sb, "%.*s", (int) extra, "");
+ }
  
- OPTIONS
+ static void graph_output_padding_line(struct git_graph *graph,
+@@ -496,7 +496,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 		struct column *col = &graph->columns[i];
+ 		if (col->commit == graph->commit) {
+ 			seen_this = 1;
+-			strbuf_addf(sb, "| %*s", graph->expansion_row, "");
++			strbuf_addf(sb, "| %.*s", graph->expansion_row, "");
+ 		} else if (seen_this) {
+ 			strbuf_addstr(sb, "\\ ");
+ 		} else {
 -- 
-1.5.3.7
+1.5.5.1.375.g1becb
