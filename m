@@ -1,128 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Use cases for 'git statistics'
-Date: Wed, 14 May 2008 22:34:54 +0200
-Message-ID: <200805142234.54600.jnareb@gmail.com>
-References: <bd6139dc0805080851y2065bedfsf0f388cfd6d85929@mail.gmail.com> <200805131507.04912.jnareb@gmail.com> <bd6139dc0805130637saf704e1v2ab67c99da3078c3@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep
+ files?
+Date: Wed, 14 May 2008 13:36:39 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805141333050.3019@woody.linux-foundation.org>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home>
+ <20080512190946.GC5160@mithlond.arda.local> <alpine.LFD.1.10.0805121527550.23581@xanadu.home> <20080512202414.GA8620@mithlond.arda.local> <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org> <20080513001252.GB29038@spearce.org>
+ <alpine.LFD.1.10.0805132005550.23581@xanadu.home> <7vy76dperf.fsf@gitster.siamese.dyndns.org> <18474.44155.823000.368851@lapjr.intranet.kiel.bmiag.de> <alpine.LFD.1.10.0805141247560.3019@woody.linux-foundation.org> <alpine.LFD.1.10.0805141314440.3019@woody.linux-foundation.org>
+ <alpine.LFD.1.10.0805141626070.23581@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Sverre Rabbelier" <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 22:36:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Juergen Ruehle <j.ruehle@bmiag.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Hommey <mh@glandium.org>, Teemu Likonen <tlikonen@iki.fi>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 14 22:39:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwNhY-00013K-08
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 22:35:52 +0200
+	id 1JwNkv-0002VS-Sf
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 22:39:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbYENUfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 16:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbYENUfA
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 16:35:00 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:18764 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbYENUe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 16:34:59 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so36465nfc.21
-        for <git@vger.kernel.org>; Wed, 14 May 2008 13:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=AvTcBc7W/6Z6+mIq97484hhIIkfAXMGxRMI6QyYqRe4=;
-        b=MWreelJtARaOk4rX28jJtF8Kg5wr8r42qaz5bY6Apah8E2GaOIRZVT/XUAqlmhLqqr4NZxyeZZ6Qu0V7QHKzJhqQrFioIrXDqo64qj7IsUitCqDAQdOqIJ04pjVjipvWMICHbKajG7dxvGzycR8B5hR8QMqC5QJaW1sW72skqlA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=FQb2wmjCah43+0eHQ2ONHvqCxbjz+1eDXnoD+d2u4mkKZ6qO8uB2WvwVkxndFUR0NebgInozppnQi1CcYgotbo7TzFTI/i7qxH+9t/CMHRwxE4tHt1J5MiTBiqh+KjZ6hQcM266FQ+afTe4GJOIdXEFoNT4Zkw+TS14z7pWYbLw=
-Received: by 10.210.54.19 with SMTP id c19mr1414561eba.168.1210797297508;
-        Wed, 14 May 2008 13:34:57 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.222.61])
-        by mx.google.com with ESMTPS id c9sm2420773nfi.26.2008.05.14.13.34.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 14 May 2008 13:34:54 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <bd6139dc0805130637saf704e1v2ab67c99da3078c3@mail.gmail.com>
-Content-Disposition: inline
+	id S1753307AbYENUi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 16:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbYENUi0
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 16:38:26 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:57380 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751577AbYENUiZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 16:38:25 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4EKafCr016684
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 14 May 2008 13:36:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4EKadB2019604;
+	Wed, 14 May 2008 13:36:40 -0700
+In-Reply-To: <alpine.LFD.1.10.0805141626070.23581@xanadu.home>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.42 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82147>
 
-On Tue, 13 May 2008, Sverre Rabbelier wrote:
-> On Tue, May 13, 2008 at 3:07 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 
-[on helping maintainer decide how closely patch should be examined]
 
->>  Weighting different statistics, bayesian hypotesis/filtering, expert
->>  system, machine learning... I guess that would be quite a work to do
->>  it well.  Probably would require to calculate and adjust scoring of code
->>  (difficulity) and authors (skill), and matching them...
->>
->>  This is certainly in the "wishlist" scope.
+On Wed, 14 May 2008, Nicolas Pitre wrote:
+
+> On Wed, 14 May 2008, Linus Torvalds wrote:
 > 
-> Yeah, I think it would go in the 'c' of 'MoSCoW', but it could be very
-> useful when done right.
-
-Errr... what do you mean by 'MoSCoW'?
-
-[here I think you cut a bit too much]
->>
->>  What I had in mind here, but didn't explain clear enough, was an
->>  extension to pickaxe search.  You want to find when current error
->>  message was created, even if the way of handling it (fprintf vs. die)
->>  changed, or if code was indented, or was moved.
+> > Of course, the more aggressively we prune, the more we end up having to 
+> > depend on the fact that a commit that is in a pack that is marked "keep" 
+> > must *always* have everything that leads to it in that pack or others also 
+> > marked "keep". We effectively have that already (because we've always 
+> > pruned away the commits early), but it's a thing to keep in mind whenever 
+> > we prune even more aggressively.
 > 
-> I'm not familiar with pickaxe, what you suggest sounds like grepping
-> the content also throughout history?
+> I wonder if this is a good thing.  Such a rule would effectively put 
+> restrictions on how objects like big blobs could be distributed amongst 
+> many .keep packs.  I just wish we're not painting ourselves in a corner.
 
-Documentation/glossary.txt (linked from git(7), in "Git User's Manual")
+You can distribute big objects arbitrarily among many .keep packs, but 
+what you can *NOT* do (and which has _always_ been a bug to do) is to have 
+a *.keep pack that refers to objects that are not in a .keep pack!
 
-   pickaxe::
-        The term <<def_pickaxe,pickaxe>> refers to an option to the diffcore
-        routines that help select changes that add or delete a given text
-        string. With the `--pickaxe-all` option, it can be used to view the full
-        <<def_changeset,changeset>> that introduced or removed, say, a
-        particular line of text. See linkgit:git-diff[1].
+So keep<->keep you can do anything you want, and distribute objects any 
+way.
 
-git-diff(1):
+But a keep pack must only refer to objects in itself or in other keep 
+packs.
 
-       -S<string>
-              Look for differences that contain the change in <string>.
+Because otherwise, if we ever hit an object in a keep pack, we'll stop 
+even looking further when we use --unpacked. And that has always been true 
+(admittedly only for "commit" objects, but those are the ones that most 
+commonly refer to other objects, so ..)
 
-       --pickaxe-all
-              When -S finds a change, show all the changes in that changeset, not
-              just the files that contain the change in <string>.
-
-       --pickaxe-regex
-              Make the <string> not a plain string but an extended POSIX regex to
-              match.
-
->>  Or find all error messages, in the order they were created, for example
->>  in git case to find ancient error messages and replace it by something
->>  more user-friendly (or less selective about choosing friends ;-).
-> 
-> I understand what you want, a search for specific content, from old to
-> new, stopping when you have a match?
-
-But let me elaborate a bit. What I wanted in my example is for each
-die("<message>") and error("<message>") to have commit and date where
-<message> was introduced (even if it was in fprintf(stderr, ...) then).
-
->>  Seriously, what I had in mind was to integrate author dates and commit
->>  dates into project management system scheduling.
-> 
-> I'm not sure what gain that would bring though, as it can only provide
-> end dates, not 'starting work now' timestamps...
-
-Well, if you use patch management system such like StGit, it could
-trace when patch was created, when was refreshed, when was temporarily
-abandoned (push, pop, float, new), ans when was finalized (commit or
-clean).
-
-But that is also in the realm of vague ideas, not concrete applications.
--- 
-Jakub Narebski
-Poland
+			Linus
