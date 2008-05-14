@@ -1,69 +1,69 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 4/4] filter-branch: fix variable export logic
-Date: Wed, 14 May 2008 11:33:50 +0200
-Message-ID: <482AB1FE.6030009@gnu.org>
-References: <20080513084338.GA23729@sigill.intra.peff.net> <20080513084638.GD23799@sigill.intra.peff.net> <7v7idxr00i.fsf@gitster.siamese.dyndns.org> <20080514045717.GA16592@sigill.intra.peff.net>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH 2/2] let pack-objects do the writing of unreachable objects as
+ loose objects
+Date: Wed, 14 May 2008 11:12:08 +0200
+Message-ID: <18474.44264.479000.403927@lapjr.intranet.kiel.bmiag.de>
+References: <alpine.LFD.1.10.0805140132500.23581@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 14 11:34:43 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 14 11:36:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwDNj-0003w9-0y
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 11:34:43 +0200
+	id 1JwDPd-0004as-EN
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 11:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbYENJdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 05:33:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752016AbYENJdx
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 05:33:53 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:45792 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751267AbYENJdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 05:33:52 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2472259fgg.17
-        for <git@vger.kernel.org>; Wed, 14 May 2008 02:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=go8KBNRYllImqgXySqjRqxgjhUczcBgWtcIaOEzL8VU=;
-        b=nLypOZqMrMiE6YKFISrLIerV2jo7SLxFme6RPoZC95p+mcUm+leImUK3J1J01kUrmnkcEGOhvyVD9yV91CtvDfBszWOgqe/TDbUNwkrchYJlfRTX6+t7KyGj343akclkpvo/l3uDS9q4wWQDG8zFoMt1wfKxC1SiB5QAh2d5ol8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=wpHupoUFwEOKTfdN+kIgWf2a+4pN/AvCqeJzuNzE0GCFmE8zQF1e5INL546JoHYrFPZSGquDgabARCu7xJkDOmy32gIfj1zlWEi5xohNZTVFX6QZ1xiZIVFCPa8dawbb4ctAMr+qHESelZCuPYQwZx4jqPY2REclUkIY+9QVquE=
-Received: by 10.86.60.14 with SMTP id i14mr1420832fga.75.1210757631664;
-        Wed, 14 May 2008 02:33:51 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
-        by mx.google.com with ESMTPS id e11sm951892fga.1.2008.05.14.02.33.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 May 2008 02:33:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <20080514045717.GA16592@sigill.intra.peff.net>
+	id S1757496AbYENJfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 05:35:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757197AbYENJfh
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 05:35:37 -0400
+Received: from bilbo.bmiag.de ([62.154.210.131]:34501 "EHLO bilbo.bmiag.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757162AbYENJfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 05:35:36 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by bilbo.bmiag.de (Postfix) with ESMTP id 233A53B624;
+	Wed, 14 May 2008 11:12:19 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at bilbo.bmiag.de
+Received: from bilbo.bmiag.de ([127.0.0.1])
+	by localhost (bilbo.bmiag.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VwxLYNww3hMG; Wed, 14 May 2008 11:12:18 +0200 (CEST)
+Received: from eorl.intranet.kiel.bmiag.de (eorl.intranet.kiel.bmiag.de [10.131.2.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by bilbo.bmiag.de (Postfix) with ESMTP id 9FDDE3B623;
+	Wed, 14 May 2008 11:12:15 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 86A263B7F2;
+	Wed, 14 May 2008 11:12:15 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at
+	eorl.intranet.kiel.bmiag.de
+Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eorl.intranet.kiel.bmiag.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FRbWA21wERgj; Wed, 14 May 2008 11:12:11 +0200 (CEST)
+Received: from LAPJR (client174.vpn3.kiel.bmiag.de [10.1.3.174])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 97BC63B787;
+	Wed, 14 May 2008 11:12:08 +0200 (CEST)
+In-Reply-To: <alpine.LFD.1.10.0805140132500.23581@xanadu.home>
+X-Mailer: VM 7.19 under Emacs 22.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82091>
 
+Nicolas Pitre writes:
+ > 
+ > Commit ccc1297226b184c40459e9d373cc9eebfb7bd898 changed the behavior
+ > of 'git repack -A' so unreachable objects are stored as loose objects.
+ > However it did so in a naive and inn efficient way by making packs
+ > about to be deleted inaccessible and feeding their content through
+ > 'git unpack-objects'.  While this works, there are major flaws with
+ > this approach:
 
->   if test -n "$ORIG_GIT_DIR"
->   then
->     ...
->   fi
-> 
-> would be even clearer, though I'm not sure if "-n" has any portability
-> concerns.
-
-It has not.  Some autoconf scripts do
-
-   if test "x$ORIG_GIT_DIR" != x; then
-     ...
-   fi
-
-(and similarly for -z) but that's being phased out.
-
-Paolo
+Doesn't this make git gc --auto a dangerous operation?
