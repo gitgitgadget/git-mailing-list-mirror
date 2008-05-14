@@ -1,119 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/3] diff options: Introduce --ignore-submodules
-Date: Wed, 14 May 2008 18:03:31 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805141803240.30431@racer>
-References: <alpine.DEB.1.00.0805141802480.30431@racer>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Wed, 14 May 2008 10:03:07 -0700
+Message-ID: <7vd4noq0ms.fsf@gitster.siamese.dyndns.org>
+References: <20080512122900.GA13050@mithlond.arda.local>
+ <20080512155243.GA3592@mithlond.arda.local>
+ <alpine.DEB.1.00.0805121810501.30431@racer>
+ <20080512184334.GB5160@mithlond.arda.local>
+ <alpine.LFD.1.10.0805121453250.23581@xanadu.home>
+ <20080512190946.GC5160@mithlond.arda.local>
+ <alpine.LFD.1.10.0805121527550.23581@xanadu.home>
+ <20080512202414.GA8620@mithlond.arda.local>
+ <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org>
+ <20080513001252.GB29038@spearce.org>
+ <alpine.LFD.1.10.0805132005550.23581@xanadu.home>
+ <7vy76dperf.fsf@gitster.siamese.dyndns.org>
+ <18474.44155.823000.368851@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 14 19:04:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Hommey <mh@glandium.org>, Teemu Likonen <tlikonen@iki.fi>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Juergen Ruehle <j.ruehle@bmiag.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed May 14 19:04:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwKOp-0007pN-Fw
+	id 1JwKOo-0007pN-Qp
 	for gcvg-git-2@gmane.org; Wed, 14 May 2008 19:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753494AbYENRDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 13:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYENRDc
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 13:03:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60570 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753407AbYENRDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 13:03:31 -0400
-Received: (qmail invoked by alias); 14 May 2008 17:03:29 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp058) with SMTP; 14 May 2008 19:03:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/2k4UrdL/2M9wMi1Vj9QmuU4fN69a+UZRBIteRDk
-	+mHMsece4NIbfn
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0805141802480.30431@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753304AbYENRDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 13:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYENRDZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 13:03:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50441 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753228AbYENRDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 13:03:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 20CB4433E;
+	Wed, 14 May 2008 13:03:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B8E794335; Wed, 14 May 2008 13:03:10 -0400 (EDT)
+In-Reply-To: <18474.44155.823000.368851@lapjr.intranet.kiel.bmiag.de>
+ (Juergen Ruehle's message of "Wed, 14 May 2008 11:10:19 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A8981FC2-21D7-11DD-A336-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82113>
 
+Juergen Ruehle <j.ruehle@bmiag.de> writes:
 
-The new option --ignore-submodules can now be used to ignore changes in
-submodules.
+> Previously --unpacked would filter on the commit level, ignoring whether the
+> objects comprising the commit actually were packed or unpacked.
+>
+> This makes it impossible to store e.g. excessively large blobs in
+> different packs from the commits referencing them, since the next repack of
+> such a commit will suck all referenced blobs into the same pack.
 
-Why?  Sometimes it is not interesting when a submodule changed.
+Doesn't this patch essentially make the --unpacked option to rev-list and
+the --incremental option to pack-objects the same thing?
 
-For example, when reordering some commits in the superproject, a dirty
-submodule is usually totally uninteresting.  So we will use this option
-in git-rebase to test for a dirty working tree.
+The semantics of the --unpacked has been defined that way from the very
+beginning, and I've always wondered how the option and --incremental
+should interact with each other.  I think the approach your patch takes
+makes sense.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/diff-options.txt |    3 +++
- diff.c                         |    9 +++++++++
- diff.h                         |    1 +
- 3 files changed, 13 insertions(+), 0 deletions(-)
+> This change moves the unpacked check to the output stage and no longer checks
+> the flag during commit traversal and adds a trivial test demonstrating the
+> problem.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 13234fa..859d679 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -228,6 +228,9 @@ endif::git-format-patch[]
- --no-ext-diff::
- 	Disallow external diff drivers.
- 
-+--ignore-submodules::
-+	Ignore changes to submodules in the diff generation.
-+
- --src-prefix=<prefix>::
- 	Show the given source prefix instead of "a/".
- 
-diff --git a/diff.c b/diff.c
-index 439d474..d57bc29 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2496,6 +2496,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_SET(options, ALLOW_EXTERNAL);
- 	else if (!strcmp(arg, "--no-ext-diff"))
- 		DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
-+	else if (!strcmp(arg, "--ignore-submodules"))
-+		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
- 
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
-@@ -3355,6 +3357,9 @@ void diff_addremove(struct diff_options *options,
- 	char concatpath[PATH_MAX];
- 	struct diff_filespec *one, *two;
- 
-+	if (DIFF_OPT_TST(options, IGNORE_SUBMODULES) && S_ISGITLINK(mode))
-+		return;
-+
- 	/* This may look odd, but it is a preparation for
- 	 * feeding "there are unchanged files which should
- 	 * not produce diffs, but when you are doing copy
-@@ -3399,6 +3404,10 @@ void diff_change(struct diff_options *options,
- 	char concatpath[PATH_MAX];
- 	struct diff_filespec *one, *two;
- 
-+	if (DIFF_OPT_TST(options, IGNORE_SUBMODULES) && S_ISGITLINK(old_mode)
-+			&& S_ISGITLINK(new_mode))
-+		return;
-+
- 	if (DIFF_OPT_TST(options, REVERSE_DIFF)) {
- 		unsigned tmp;
- 		const unsigned char *tmp_c;
-diff --git a/diff.h b/diff.h
-index 3a02d38..1dfe1f9 100644
---- a/diff.h
-+++ b/diff.h
-@@ -63,6 +63,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
- #define DIFF_OPT_REVERSE_DIFF        (1 << 15)
- #define DIFF_OPT_CHECK_FAILED        (1 << 16)
- #define DIFF_OPT_RELATIVE_NAME       (1 << 17)
-+#define DIFF_OPT_IGNORE_SUBMODULES   (1 << 18)
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
- #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
--- 
-1.5.5.1.375.g1becb
+Sign-off?
+
+> diff --git a/t/t6009-rev-list-unpacked.sh b/t/t6009-rev-list-unpacked.sh
+> new file mode 100644
+> index 0000000..6b65e83
+> --- /dev/null
+> +++ b/t/t6009-rev-list-unpacked.sh
+> @@ -0,0 +1,32 @@
+> ...
+> +test_expect_success \
+> +    'unpacked object list should not contain foo' '
+> +    test_must_fail "git rev-list --all --unpacked --objects | grep -q \"foo\""
+> +'
+
+Ahhh.  Ugly but don't you mean "! (rev-list | grep)"?
