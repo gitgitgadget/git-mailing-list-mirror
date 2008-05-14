@@ -1,33 +1,33 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Rename path_list to string_list
-Date: Wed, 14 May 2008 18:46:29 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805141846170.30431@racer>
+Subject: [PATCH 2/2] Provide git_config with a callback-data parameter
+Date: Wed, 14 May 2008 18:46:53 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805141846370.30431@racer>
 References: <alpine.DEB.1.00.0805141844580.30431@racer>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 14 19:47:34 2008
+X-From: git-owner@vger.kernel.org Wed May 14 19:47:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwL4X-0002PA-Fw
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 19:47:26 +0200
+	id 1JwL4w-0002ZT-0H
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 19:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202AbYENRqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 13:46:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbYENRqd
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 13:46:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41623 "HELO mail.gmx.net"
+	id S1756610AbYENRq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 13:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757652AbYENRq6
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 13:46:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41434 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753097AbYENRq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 13:46:29 -0400
-Received: (qmail invoked by alias); 14 May 2008 17:46:26 -0000
+	id S1761756AbYENRqx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 13:46:53 -0400
+Received: (qmail invoked by alias); 14 May 2008 17:46:50 -0000
 Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp019) with SMTP; 14 May 2008 19:46:26 +0200
+  by mail.gmx.net (mp022) with SMTP; 14 May 2008 19:46:50 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+v5TB/eVmvpfeoAqGlWiUaej5fdptBmpPJPIJCBS
-	ove/bJ3HTVkgWe
+X-Provags-ID: V01U2FsdGVkX1953b0ocQp5sdyGUacMvMrppZ4cF8cpD7xZYLbWzD
+	PqXrS1A4YHeUkP
 X-X-Sender: gene099@racer
 In-Reply-To: <alpine.DEB.1.00.0805141844580.30431@racer>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
@@ -36,2115 +36,1887 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82119>
 
 
-The name path_list was correct for the first usage of that data structure,
-but it really is a general-purpose string list.
+git_config() only had a function parameter, but no callback data
+parameter.  This assumes that all callback functions only modify
+global variables.
 
-$ perl -i -pe 's/path-list/string-list/g' $(git grep -l path-list)
-$ perl -i -pe 's/path_list/string_list/g' $(git grep -l path_list)
-$ git mv path-list.h string-list.h
-$ git mv path-list.c string-list.c
-$ perl -i -pe 's/has_path/has_string/g' $(git grep -l has_path)
-$ perl -i -pe 's/path/string/g' string-list.[ch]
-
-... and then fix all users of string-list to access the member "string"
-instead of "path"...
+With this patch, every callback gets a void * parameter, and it is hoped
+that this will help the libification effort.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/CodingGuidelines              |    5 +-
- Documentation/technical/api-path-list.txt   |    9 --
- Documentation/technical/api-string-list.txt |   10 ++
- Makefile                                    |    4 +-
- builtin-blame.c                             |    4 +-
- builtin-commit.c                            |   20 ++--
- builtin-fast-export.c                       |   14 ++--
- builtin-fetch.c                             |   20 ++--
- builtin-mailsplit.c                         |   12 +-
- builtin-merge-recursive.c                   |   96 +++++++++---------
- builtin-mv.c                                |   41 ++++----
- builtin-remote.c                            |  123 ++++++++++++------------
- builtin-rerere.c                            |   48 +++++-----
- builtin-shortlog.c                          |   42 ++++----
- builtin-show-ref.c                          |   10 +-
- diff-lib.c                                  |   22 ++--
- mailmap.c                                   |   12 +-
- mailmap.h                                   |    4 +-
- path-list.c                                 |  134 --------------------------
- path-list.h                                 |   28 ------
- reflog-walk.c                               |   10 +-
- shortlog.h                                  |    6 +-
- string-list.c                               |  138 +++++++++++++++++++++++++++
- string-list.h                               |   28 ++++++
- 24 files changed, 424 insertions(+), 416 deletions(-)
- delete mode 100644 Documentation/technical/api-path-list.txt
- create mode 100644 Documentation/technical/api-string-list.txt
- delete mode 100644 path-list.c
- delete mode 100644 path-list.h
- create mode 100644 string-list.c
- create mode 100644 string-list.h
+ alias.c                   |    5 +++--
+ archive-tar.c             |    6 +++---
+ builtin-add.c             |    6 +++---
+ builtin-apply.c           |    6 +++---
+ builtin-blame.c           |    6 +++---
+ builtin-branch.c          |    6 +++---
+ builtin-cat-file.c        |    2 +-
+ builtin-checkout-index.c  |    2 +-
+ builtin-checkout.c        |    2 +-
+ builtin-clean.c           |    6 +++---
+ builtin-clone.c           |    2 +-
+ builtin-commit-tree.c     |    2 +-
+ builtin-commit.c          |    8 ++++----
+ builtin-config.c          |   26 ++++++++++++++------------
+ builtin-diff-files.c      |    2 +-
+ builtin-diff-index.c      |    2 +-
+ builtin-diff-tree.c       |    2 +-
+ builtin-diff.c            |    2 +-
+ builtin-fast-export.c     |    2 +-
+ builtin-fetch-pack.c      |    6 +++---
+ builtin-fmt-merge-msg.c   |    4 ++--
+ builtin-gc.c              |    6 +++---
+ builtin-http-fetch.c      |    2 +-
+ builtin-init-db.c         |    4 ++--
+ builtin-log.c             |   18 +++++++++---------
+ builtin-ls-files.c        |    2 +-
+ builtin-ls-tree.c         |    2 +-
+ builtin-mailinfo.c        |    2 +-
+ builtin-merge-base.c      |    2 +-
+ builtin-merge-recursive.c |    6 +++---
+ builtin-mv.c              |    2 +-
+ builtin-name-rev.c        |    2 +-
+ builtin-pack-objects.c    |    6 +++---
+ builtin-read-tree.c       |    4 +---
+ builtin-reflog.c          |    6 +++---
+ builtin-remote.c          |    8 ++++----
+ builtin-rerere.c          |    6 +++---
+ builtin-reset.c           |    2 +-
+ builtin-rev-list.c        |    2 +-
+ builtin-rev-parse.c       |    2 +-
+ builtin-revert.c          |    2 +-
+ builtin-rm.c              |    2 +-
+ builtin-show-branch.c     |    6 +++---
+ builtin-symbolic-ref.c    |    2 +-
+ builtin-tag.c             |    6 +++---
+ builtin-unpack-objects.c  |    2 +-
+ builtin-update-index.c    |    2 +-
+ builtin-update-ref.c      |    2 +-
+ builtin-verify-pack.c     |    2 +-
+ builtin-verify-tag.c      |    2 +-
+ builtin-write-tree.c      |    2 +-
+ cache.h                   |   10 +++++-----
+ color.c                   |    4 ++--
+ color.h                   |    2 +-
+ config.c                  |   27 ++++++++++++++-------------
+ connect.c                 |    7 ++++---
+ convert.c                 |    4 ++--
+ daemon.c                  |    4 ++--
+ diff.c                    |    8 ++++----
+ diff.h                    |    4 ++--
+ fast-import.c             |    6 +++---
+ hash-object.c             |    2 +-
+ help.c                    |    6 +++---
+ http.c                    |    6 +++---
+ imap-send.c               |    4 ++--
+ index-pack.c              |    6 +++---
+ ll-merge.c                |    4 ++--
+ pager.c                   |    2 +-
+ receive-pack.c            |    6 +++---
+ remote.c                  |    4 ++--
+ setup.c                   |    4 ++--
+ unpack-file.c             |    2 +-
+ var.c                     |    8 ++++----
+ wt-status.c               |    4 ++--
+ wt-status.h               |    2 +-
+ 75 files changed, 179 insertions(+), 176 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 994eb91..2dec38b 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -103,8 +103,9 @@ For C programs:
+diff --git a/alias.c b/alias.c
+index 116cac8..995f3e6 100644
+--- a/alias.c
++++ b/alias.c
+@@ -2,7 +2,8 @@
  
-  - Use the API.  No, really.  We have a strbuf (variable length
-    string), several arrays with the ALLOC_GROW() macro, a
--   path_list for sorted string lists, a hash map (mapping struct
--   objects) named "struct decorate", amongst other things.
-+   string_list for sorted and unsorted string lists, a hash map
-+   (mapping struct objects) named "struct decorate", amongst other
-+   things.
+ static const char *alias_key;
+ static char *alias_val;
+-static int alias_lookup_cb(const char *k, const char *v)
++
++static int alias_lookup_cb(const char *k, const char *v, void *cb)
+ {
+ 	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key)) {
+ 		if (!v)
+@@ -17,6 +18,6 @@ char *alias_lookup(const char *alias)
+ {
+ 	alias_key = alias;
+ 	alias_val = NULL;
+-	git_config(alias_lookup_cb);
++	git_config(alias_lookup_cb, NULL);
+ 	return alias_val;
+ }
+diff --git a/archive-tar.c b/archive-tar.c
+index 4add802..d7598f9 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -220,7 +220,7 @@ static void write_global_extended_header(const unsigned char *sha1)
+ 	strbuf_release(&ext_header);
+ }
  
-  - When you come up with an API, document it.
+-static int git_tar_config(const char *var, const char *value)
++static int git_tar_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "tar.umask")) {
+ 		if (value && !strcmp(value, "user")) {
+@@ -231,7 +231,7 @@ static int git_tar_config(const char *var, const char *value)
+ 		}
+ 		return 0;
+ 	}
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
  
-diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
-deleted file mode 100644
-index d077683..0000000
---- a/Documentation/technical/api-path-list.txt
-+++ /dev/null
-@@ -1,9 +0,0 @@
--path-list API
--=============
--
--Talk about <path-list.h>, things like
--
--* it is not just paths but strings in general;
--* the calling sequence.
--
--(Dscho)
-diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-new file mode 100644
-index 0000000..50fa4d0
---- /dev/null
-+++ b/Documentation/technical/api-string-list.txt
-@@ -0,0 +1,10 @@
-+string-list API
-+===============
-+
-+Talk about <string-list.h>, things like
-+
-+* it can be a sorted list, or an unsorted list;
-+* discuss performance implications;
-+* the calling sequence.
-+
-+(Dscho)
-diff --git a/Makefile b/Makefile
-index 001a846..d3b980d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -357,7 +357,7 @@ LIB_H += pack.h
- LIB_H += pack-revindex.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
--LIB_H += path-list.h
-+LIB_H += string-list.h
- LIB_H += pkt-line.h
- LIB_H += progress.h
- LIB_H += quote.h
-@@ -433,7 +433,7 @@ LIB_OBJS += pager.o
- LIB_OBJS += parse-options.o
- LIB_OBJS += patch-delta.o
- LIB_OBJS += patch-ids.o
--LIB_OBJS += path-list.o
-+LIB_OBJS += string-list.o
- LIB_OBJS += path.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += pretty.o
+ static int write_tar_entry(const unsigned char *sha1,
+@@ -268,7 +268,7 @@ int write_tar_archive(struct archiver_args *args)
+ {
+ 	int plen = args->base ? strlen(args->base) : 0;
+ 
+-	git_config(git_tar_config);
++	git_config(git_tar_config, NULL);
+ 
+ 	archive_time = args->time;
+ 	verbose = args->verbose;
+diff --git a/builtin-add.c b/builtin-add.c
+index 6edb6a9..64f4787 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -206,13 +206,13 @@ static struct option builtin_add_options[] = {
+ 	OPT_END(),
+ };
+ 
+-static int add_config(const char *var, const char *value)
++static int add_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcasecmp(var, "add.ignore-errors")) {
+ 		ignore_add_errors = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ int cmd_add(int argc, const char **argv, const char *prefix)
+@@ -236,7 +236,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	if (add_interactive)
+ 		exit(interactive_add(argc, argv, prefix));
+ 
+-	git_config(add_config);
++	git_config(add_config, NULL);
+ 
+ 	newfd = hold_locked_index(&lock_file, 1);
+ 
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 1103625..bbdf08a 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2979,11 +2979,11 @@ static int apply_patch(int fd, const char *filename, int inaccurate_eof)
+ 	return 0;
+ }
+ 
+-static int git_apply_config(const char *var, const char *value)
++static int git_apply_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "apply.whitespace"))
+ 		return git_config_string(&apply_default_whitespace, var, value);
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ 
+@@ -2999,7 +2999,7 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 
+ 	prefix = setup_git_directory_gently(&is_not_gitdir);
+ 	prefix_length = prefix ? strlen(prefix) : 0;
+-	git_config(git_apply_config);
++	git_config(git_apply_config, NULL);
+ 	if (apply_default_whitespace)
+ 		parse_whitespace_option(apply_default_whitespace);
+ 
 diff --git a/builtin-blame.c b/builtin-blame.c
-index 5c7546d..258ae42 100644
+index 258ae42..3598866 100644
 --- a/builtin-blame.c
 +++ b/builtin-blame.c
-@@ -16,7 +16,7 @@
- #include "quote.h"
- #include "xdiff-interface.h"
- #include "cache-tree.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "mailmap.h"
+@@ -2028,7 +2028,7 @@ static void prepare_blame_range(struct scoreboard *sb,
+ 		usage(blame_usage);
+ }
  
- static char blame_usage[] =
-@@ -48,7 +48,7 @@ static int blank_boundary;
- static int incremental;
- static int cmd_is_annotate;
- static int xdl_opts = XDF_NEED_MINIMAL;
--static struct path_list mailmap;
-+static struct string_list mailmap;
+-static int git_blame_config(const char *var, const char *value)
++static int git_blame_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "blame.showroot")) {
+ 		show_root = git_config_bool(var, value);
+@@ -2038,7 +2038,7 @@ static int git_blame_config(const char *var, const char *value)
+ 		blank_boundary = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
  
- #ifndef DEBUG
- #define DEBUG 0
+ /*
+@@ -2238,7 +2238,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 
+ 	cmd_is_annotate = !strcmp(argv[0], "annotate");
+ 
+-	git_config(git_blame_config);
++	git_config(git_blame_config, NULL);
+ 	save_commit_buffer = 0;
+ 
+ 	opt = 0;
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 19c508a..d279702 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -63,7 +63,7 @@ static int parse_branch_color_slot(const char *var, int ofs)
+ 	die("bad config variable '%s'", var);
+ }
+ 
+-static int git_branch_config(const char *var, const char *value)
++static int git_branch_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "color.branch")) {
+ 		branch_use_color = git_config_colorbool(var, value, -1);
+@@ -76,7 +76,7 @@ static int git_branch_config(const char *var, const char *value)
+ 		color_parse(value, var, branch_colors[slot]);
+ 		return 0;
+ 	}
+-	return git_color_default_config(var, value);
++	return git_color_default_config(var, value, cb);
+ }
+ 
+ static const char *branch_get_color(enum color_branch ix)
+@@ -461,7 +461,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	git_config(git_branch_config);
++	git_config(git_branch_config, NULL);
+ 
+ 	if (branch_use_color == -1)
+ 		branch_use_color = git_use_color_default;
+diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+index f132d58..b488fad 100644
+--- a/builtin-cat-file.c
++++ b/builtin-cat-file.c
+@@ -85,7 +85,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	int opt;
+ 	const char *exp_type, *obj_name;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	if (argc != 3)
+ 		usage("git-cat-file [-t|-s|-e|-p|<type>] <sha1>");
+ 	exp_type = argv[1];
+diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
+index 7e42024..eb1fc9a 100644
+--- a/builtin-checkout-index.c
++++ b/builtin-checkout-index.c
+@@ -166,7 +166,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	int read_from_stdin = 0;
+ 	int prefix_length;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	state.base_dir = "";
+ 	prefix_length = prefix ? strlen(prefix) : 0;
+ 
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 05c0642..2a7c636 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -514,7 +514,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	memset(&opts, 0, sizeof(opts));
+ 	memset(&new, 0, sizeof(new));
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	opts.track = git_branch_track;
+ 
+diff --git a/builtin-clean.c b/builtin-clean.c
+index 6778a03..80a7ff9 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -19,11 +19,11 @@ static const char *const builtin_clean_usage[] = {
+ 	NULL
+ };
+ 
+-static int git_clean_config(const char *var, const char *value)
++static int git_clean_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "clean.requireforce"))
+ 		force = !git_config_bool(var, value);
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ int cmd_clean(int argc, const char **argv, const char *prefix)
+@@ -50,7 +50,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_clean_config);
++	git_config(git_clean_config, NULL);
+ 	if (force < 0)
+ 		force = 0;
+ 	else
+diff --git a/builtin-clone.c b/builtin-clone.c
+index a7c075d..e51ebd6 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -415,7 +415,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (option_reference)
+ 		setup_reference(git_dir);
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	if (option_bare) {
+ 		strcpy(branch_top, "refs/heads/");
+diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
+index 6610d18..e5e4bdb 100644
+--- a/builtin-commit-tree.c
++++ b/builtin-commit-tree.c
+@@ -60,7 +60,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 	struct strbuf buffer;
+ 	int encoding_is_utf8;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	if (argc < 2)
+ 		usage(commit_tree_usage);
 diff --git a/builtin-commit.c b/builtin-commit.c
-index d752243..59af472 100644
+index 59af472..4cc714a 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
-@@ -21,7 +21,7 @@
- #include "strbuf.h"
- #include "utf8.h"
- #include "parse-options.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "unpack-trees.h"
+@@ -806,7 +806,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	const char *index_file;
+ 	int commitable;
  
- static const char * const builtin_commit_usage[] = {
-@@ -147,7 +147,7 @@ static int commit_index_files(void)
-  * Take a union of paths in the index and the named tree (typically, "HEAD"),
-  * and return the paths that match the given pattern in list.
-  */
--static int list_paths(struct path_list *list, const char *with_tree,
-+static int list_paths(struct string_list *list, const char *with_tree,
- 		      const char *prefix, const char **pattern)
- {
- 	int i;
-@@ -166,24 +166,24 @@ static int list_paths(struct path_list *list, const char *with_tree,
- 			continue;
- 		if (!pathspec_match(pattern, m, ce->name, 0))
- 			continue;
--		path_list_insert(ce->name, list);
-+		string_list_insert(ce->name, list);
- 	}
+-	git_config(git_status_config);
++	git_config(git_status_config, NULL);
  
- 	return report_path_error(m, pattern, prefix ? strlen(prefix) : 0);
- }
- 
--static void add_remove_files(struct path_list *list)
-+static void add_remove_files(struct string_list *list)
- {
- 	int i;
- 	for (i = 0; i < list->nr; i++) {
- 		struct stat st;
--		struct path_list_item *p = &(list->items[i]);
-+		struct string_list_item *p = &(list->items[i]);
- 
--		if (!lstat(p->path, &st)) {
--			if (add_to_cache(p->path, &st, 0))
-+		if (!lstat(p->string, &st)) {
-+			if (add_to_cache(p->string, &st, 0))
- 				die("updating files failed");
- 		} else
--			remove_file_from_cache(p->path);
-+			remove_file_from_cache(p->string);
+ 	if (wt_status_use_color == -1)
+ 		wt_status_use_color = git_use_color_default;
+@@ -860,7 +860,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
  	}
  }
  
-@@ -218,7 +218,7 @@ static void create_base_index(void)
- static char *prepare_index(int argc, const char **argv, const char *prefix)
+-int git_commit_config(const char *k, const char *v)
++int git_commit_config(const char *k, const char *v, void *cb)
  {
- 	int fd;
--	struct path_list partial;
-+	struct string_list partial;
- 	const char **pathspec = NULL;
+ 	if (!strcmp(k, "commit.template")) {
+ 		if (!v)
+@@ -869,7 +869,7 @@ int git_commit_config(const char *k, const char *v)
+ 		return 0;
+ 	}
  
- 	if (interactive) {
-@@ -300,7 +300,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 		die("cannot do a partial commit during a merge.");
+-	return git_status_config(k, v);
++	return git_status_config(k, v, cb);
+ }
  
- 	memset(&partial, 0, sizeof(partial));
--	partial.strdup_paths = 1;
-+	partial.strdup_strings = 1;
- 	if (list_paths(&partial, initial_commit ? NULL : "HEAD", prefix, pathspec))
- 		exit(1);
+ static const char commit_utf8_warn[] =
+@@ -897,7 +897,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	unsigned char commit_sha1[20];
+ 	struct ref_lock *ref_lock;
  
+-	git_config(git_commit_config);
++	git_config(git_commit_config, NULL);
+ 
+ 	argc = parse_and_validate_options(argc, argv, builtin_commit_usage);
+ 
+diff --git a/builtin-config.c b/builtin-config.c
+index 8ee01bd..3a441ef 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -18,7 +18,7 @@ static char key_delim = ' ';
+ static char term = '\n';
+ static enum { T_RAW, T_INT, T_BOOL, T_BOOL_OR_INT } type = T_RAW;
+ 
+-static int show_all_config(const char *key_, const char *value_)
++static int show_all_config(const char *key_, const char *value_, void *cb)
+ {
+ 	if (value_)
+ 		printf("%s%c%s%c", key_, delim, value_, term);
+@@ -27,7 +27,7 @@ static int show_all_config(const char *key_, const char *value_)
+ 	return 0;
+ }
+ 
+-static int show_config(const char* key_, const char* value_)
++static int show_config(const char* key_, const char* value_, void *cb)
+ {
+ 	char value[256];
+ 	const char *vptr = value;
+@@ -121,14 +121,14 @@ static int get_value(const char* key_, const char* regex_)
+ 	}
+ 
+ 	if (do_all && system_wide)
+-		git_config_from_file(show_config, system_wide);
++		git_config_from_file(show_config, system_wide, NULL);
+ 	if (do_all && global)
+-		git_config_from_file(show_config, global);
+-	git_config_from_file(show_config, local);
++		git_config_from_file(show_config, global, NULL);
++	git_config_from_file(show_config, local, NULL);
+ 	if (!do_all && !seen && global)
+-		git_config_from_file(show_config, global);
++		git_config_from_file(show_config, global, NULL);
+ 	if (!do_all && !seen && system_wide)
+-		git_config_from_file(show_config, system_wide);
++		git_config_from_file(show_config, system_wide, NULL);
+ 
+ 	free(key);
+ 	if (regexp) {
+@@ -182,7 +182,7 @@ static int get_color_found;
+ static const char *get_color_slot;
+ static char parsed_color[COLOR_MAXLEN];
+ 
+-static int git_get_color_config(const char *var, const char *value)
++static int git_get_color_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, get_color_slot)) {
+ 		if (!value)
+@@ -218,7 +218,7 @@ static int get_color(int argc, const char **argv)
+ 
+ 	get_color_found = 0;
+ 	parsed_color[0] = '\0';
+-	git_config(git_get_color_config);
++	git_config(git_get_color_config, NULL);
+ 
+ 	if (!get_color_found && def_color)
+ 		color_parse(def_color, "command line", parsed_color);
+@@ -230,7 +230,8 @@ static int get_color(int argc, const char **argv)
+ static int stdout_is_tty;
+ static int get_colorbool_found;
+ static int get_diff_color_found;
+-static int git_get_colorbool_config(const char *var, const char *value)
++static int git_get_colorbool_config(const char *var, const char *value,
++		void *cb)
+ {
+ 	if (!strcmp(var, get_color_slot)) {
+ 		get_colorbool_found =
+@@ -265,7 +266,7 @@ static int get_colorbool(int argc, const char **argv)
+ 	get_colorbool_found = -1;
+ 	get_diff_color_found = -1;
+ 	get_color_slot = argv[0];
+-	git_config(git_get_colorbool_config);
++	git_config(git_get_colorbool_config, NULL);
+ 
+ 	if (get_colorbool_found < 0) {
+ 		if (!strcmp(get_color_slot, "color.diff"))
+@@ -298,7 +299,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l")) {
+ 			if (argc != 2)
+ 				usage(git_config_set_usage);
+-			if (git_config(show_all_config) < 0 && file && errno)
++			if (git_config(show_all_config, NULL) < 0 &&
++					file && errno)
+ 				die("unable to read config file %s: %s", file,
+ 				    strerror(errno));
+ 			return 0;
+diff --git a/builtin-diff-files.c b/builtin-diff-files.c
+index e2306c1..907392a 100644
+--- a/builtin-diff-files.c
++++ b/builtin-diff-files.c
+@@ -21,7 +21,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 
+ 	prefix = setup_git_directory_gently(&nongit);
+ 	init_revisions(&rev, prefix);
+-	git_config(git_diff_basic_config); /* no "diff" UI options */
++	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev = 0;
+ 
+ 	if (!setup_diff_no_index(&rev, argc, argv, nongit, prefix))
+diff --git a/builtin-diff-index.c b/builtin-diff-index.c
+index 2b955de..2f44ebf 100644
+--- a/builtin-diff-index.c
++++ b/builtin-diff-index.c
+@@ -17,7 +17,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 	int result;
+ 
+ 	init_revisions(&rev, prefix);
+-	git_config(git_diff_basic_config); /* no "diff" UI options */
++	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev = 0;
+ 
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
+index 832797f..9d2a48f 100644
+--- a/builtin-diff-tree.c
++++ b/builtin-diff-tree.c
+@@ -68,7 +68,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 	int read_stdin = 0;
+ 
+ 	init_revisions(opt, prefix);
+-	git_config(git_diff_basic_config); /* no "diff" UI options */
++	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	nr_sha1 = 0;
+ 	opt->abbrev = 0;
+ 	opt->diff = 1;
+diff --git a/builtin-diff.c b/builtin-diff.c
+index 7c2a841..583291a 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -234,7 +234,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	 */
+ 
+ 	prefix = setup_git_directory_gently(&nongit);
+-	git_config(git_diff_ui_config);
++	git_config(git_diff_ui_config, NULL);
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
 diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index e1c5630..a705029 100755
+index a705029..2e740c2 100755
 --- a/builtin-fast-export.c
 +++ b/builtin-fast-export.c
-@@ -13,7 +13,7 @@
- #include "log-tree.h"
- #include "revision.h"
- #include "decorate.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "utf8.h"
- #include "parse-options.h"
+@@ -372,7 +372,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	};
  
-@@ -286,7 +286,7 @@ static void handle_tag(const char *name, struct tag *tag)
+ 	/* we handle encodings */
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	init_revisions(&revs, prefix);
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index c97a427..de1e8d1 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -635,7 +635,7 @@ static int remove_duplicates(int nr_heads, char **heads)
+ 	return dst;
  }
  
- static void get_tags_and_duplicates(struct object_array *pending,
--				    struct path_list *extra_refs)
-+				    struct string_list *extra_refs)
+-static int fetch_pack_config(const char *var, const char *value)
++static int fetch_pack_config(const char *var, const char *value, void *cb)
  {
- 	struct tag *tag;
- 	int i;
-@@ -307,7 +307,7 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 		case OBJ_TAG:
- 			tag = (struct tag *)e->item;
- 			while (tag && tag->object.type == OBJ_TAG) {
--				path_list_insert(full_name, extra_refs)->util = tag;
-+				string_list_insert(full_name, extra_refs)->util = tag;
- 				tag = (struct tag *)tag->tagged;
- 			}
- 			if (!tag)
-@@ -327,19 +327,19 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 		}
- 		if (commit->util)
- 			/* more than one name for the same object */
--			path_list_insert(full_name, extra_refs)->util = commit;
-+			string_list_insert(full_name, extra_refs)->util = commit;
- 		else
- 			commit->util = full_name;
+ 	if (strcmp(var, "fetch.unpacklimit") == 0) {
+ 		fetch_unpack_limit = git_config_int(var, value);
+@@ -647,7 +647,7 @@ static int fetch_pack_config(const char *var, const char *value)
+ 		return 0;
  	}
+ 
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
  }
  
--static void handle_tags_and_duplicates(struct path_list *extra_refs)
-+static void handle_tags_and_duplicates(struct string_list *extra_refs)
- {
- 	struct commit *commit;
- 	int i;
+ static struct lock_file lock;
+@@ -657,7 +657,7 @@ static void fetch_pack_setup(void)
+ 	static int did_setup;
+ 	if (did_setup)
+ 		return;
+-	git_config(fetch_pack_config);
++	git_config(fetch_pack_config, NULL);
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
+ 	else if (0 <= fetch_unpack_limit)
+diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
+index b72cb59..b892621 100644
+--- a/builtin-fmt-merge-msg.c
++++ b/builtin-fmt-merge-msg.c
+@@ -10,7 +10,7 @@ static const char *fmt_merge_msg_usage =
  
- 	for (i = extra_refs->nr - 1; i >= 0; i--) {
--		const char *name = extra_refs->items[i].path;
-+		const char *name = extra_refs->items[i].string;
- 		struct object *object = extra_refs->items[i].util;
- 		switch (object->type) {
- 		case OBJ_TAG:
-@@ -360,7 +360,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ static int merge_summary;
+ 
+-static int fmt_merge_msg_config(const char *key, const char *value)
++static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
  {
- 	struct rev_info revs;
- 	struct object_array commits = { 0, 0, NULL };
--	struct path_list extra_refs = { NULL, 0, 0, 0 };
-+	struct string_list extra_refs = { NULL, 0, 0, 0 };
- 	struct commit *commit;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "progress", &progress,
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index bfe7711..a3363e0 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -5,7 +5,7 @@
- #include "refs.h"
- #include "commit.h"
- #include "builtin.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "remote.h"
- #include "transport.h"
- #include "run-command.h"
-@@ -446,8 +446,8 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- static int add_existing(const char *refname, const unsigned char *sha1,
- 			int flag, void *cbdata)
+ 	static int found_merge_log = 0;
+ 	if (!strcmp("merge.log", key)) {
+@@ -260,7 +260,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 	unsigned char head_sha1[20];
+ 	const char *current_branch;
+ 
+-	git_config(fmt_merge_msg_config);
++	git_config(fmt_merge_msg_config, NULL);
+ 
+ 	while (argc > 1) {
+ 		if (!strcmp(argv[1], "--log") || !strcmp(argv[1], "--summary"))
+diff --git a/builtin-gc.c b/builtin-gc.c
+index 48f7d95..f5625bb 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -35,7 +35,7 @@ static const char *argv_repack[MAX_ADD] = {"repack", "-d", "-l", NULL};
+ static const char *argv_prune[] = {"prune", "--expire", NULL, NULL};
+ static const char *argv_rerere[] = {"rerere", "gc", NULL};
+ 
+-static int gc_config(const char *var, const char *value)
++static int gc_config(const char *var, const char *value, void *cb)
  {
--	struct path_list *list = (struct path_list *)cbdata;
--	path_list_insert(refname, list);
-+	struct string_list *list = (struct string_list *)cbdata;
-+	string_list_insert(refname, list);
+ 	if (!strcmp(var, "gc.packrefs")) {
+ 		if (value && !strcmp(value, "notbare"))
+@@ -67,7 +67,7 @@ static int gc_config(const char *var, const char *value)
+ 		prune_expire = xstrdup(value);
+ 		return 0;
+ 	}
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ static void append_option(const char **cmd, const char *opt, int max_length)
+@@ -226,7 +226,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(gc_config);
++	git_config(gc_config, NULL);
+ 
+ 	if (pack_refs < 0)
+ 		pack_refs = !is_bare_repository();
+diff --git a/builtin-http-fetch.c b/builtin-http-fetch.c
+index b1f3389..3a06248 100644
+--- a/builtin-http-fetch.c
++++ b/builtin-http-fetch.c
+@@ -18,7 +18,7 @@ int cmd_http_fetch(int argc, const char **argv, const char *prefix)
+ 	int get_verbosely = 0;
+ 	int get_recover = 0;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	while (arg < argc && argv[arg][0] == '-') {
+ 		if (argv[arg][1] == 't') {
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 5650685..0907366 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -144,7 +144,7 @@ static void copy_templates(const char *template_dir)
+ 	strcpy(template_path + template_len, "config");
+ 	repository_format_version = 0;
+ 	git_config_from_file(check_repository_format_version,
+-			     template_path);
++			     template_path, NULL);
+ 	template_path[template_len] = 0;
+ 
+ 	if (repository_format_version &&
+@@ -198,7 +198,7 @@ static int create_default_files(const char *template_path)
+ 	 */
+ 	copy_templates(template_path);
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	/*
+ 	 * We would have created the above under user's umask -- under
+diff --git a/builtin-log.c b/builtin-log.c
+index 9d046b2..3746a36 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -222,7 +222,7 @@ static int cmd_log_walk(struct rev_info *rev)
  	return 0;
  }
  
-@@ -466,8 +466,8 @@ static void find_non_local_tags(struct transport *transport,
- 			struct ref **head,
- 			struct ref ***tail)
+-static int git_log_config(const char *var, const char *value)
++static int git_log_config(const char *var, const char *value, void *cb)
  {
--	struct path_list existing_refs = { NULL, 0, 0, 0 };
--	struct path_list new_refs = { NULL, 0, 0, 1 };
-+	static struct string_list existing_refs = { NULL, 0, 0, 0 };
-+	struct string_list new_refs = { NULL, 0, 0, 1 };
- 	char *ref_name;
- 	int ref_name_len;
- 	const unsigned char *ref_sha1;
-@@ -496,11 +496,11 @@ static void find_non_local_tags(struct transport *transport,
- 			}
- 		}
- 
--		if (!path_list_has_path(&existing_refs, ref_name) &&
--		    !path_list_has_path(&new_refs, ref_name) &&
-+		if (!string_list_has_string(&existing_refs, ref_name) &&
-+		    !string_list_has_string(&new_refs, ref_name) &&
- 		    (has_sha1_file(ref->old_sha1) ||
- 		     will_fetch(head, ref->old_sha1))) {
--			path_list_insert(ref_name, &new_refs);
-+			string_list_insert(ref_name, &new_refs);
- 
- 			rm = alloc_ref_from_str(ref_name);
- 			rm->peer_ref = alloc_ref_from_str(ref_name);
-@@ -511,8 +511,8 @@ static void find_non_local_tags(struct transport *transport,
- 		}
- 		free(ref_name);
+ 	if (!strcmp(var, "format.pretty"))
+ 		return git_config_string(&fmt_pretty, var, value);
+@@ -236,14 +236,14 @@ static int git_log_config(const char *var, const char *value)
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
  	}
--	path_list_clear(&existing_refs, 0);
--	path_list_clear(&new_refs, 0);
-+	string_list_clear(&existing_refs, 0);
-+	string_list_clear(&new_refs, 0);
+-	return git_diff_ui_config(var, value);
++	return git_diff_ui_config(var, value, cb);
  }
  
- static int do_fetch(struct transport *transport,
-diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
-index 46b27cd..29df10f 100644
---- a/builtin-mailsplit.c
-+++ b/builtin-mailsplit.c
-@@ -6,7 +6,7 @@
-  */
- #include "cache.h"
- #include "builtin.h"
--#include "path-list.h"
-+#include "string-list.h"
- 
- static const char git_mailsplit_usage[] =
- "git-mailsplit [-d<prec>] [-f<n>] [-b] -o<directory> <mbox>|<Maildir>...";
-@@ -97,7 +97,7 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
- 	exit(1);
- }
- 
--static int populate_maildir_list(struct path_list *list, const char *path)
-+static int populate_maildir_list(struct string_list *list, const char *path)
+ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
  {
- 	DIR *dir;
- 	struct dirent *dent;
-@@ -118,7 +118,7 @@ static int populate_maildir_list(struct path_list *list, const char *path)
- 			if (dent->d_name[0] == '.')
- 				continue;
- 			snprintf(name, sizeof(name), "%s/%s", *sub, dent->d_name);
--			path_list_insert(name, list);
-+			string_list_insert(name, list);
- 		}
+ 	struct rev_info rev;
  
- 		closedir(dir);
-@@ -134,14 +134,14 @@ static int split_maildir(const char *maildir, const char *dir,
- 	char name[PATH_MAX];
- 	int ret = -1;
- 	int i;
--	struct path_list list = {NULL, 0, 0, 1};
-+	struct string_list list = {NULL, 0, 0, 1};
+-	git_config(git_log_config);
++	git_config(git_log_config, NULL);
  
- 	if (populate_maildir_list(&list, maildir) < 0)
- 		goto out;
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -319,7 +319,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	struct object_array_entry *objects;
+ 	int i, count, ret = 0;
  
- 	for (i = 0; i < list.nr; i++) {
- 		FILE *f;
--		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].path);
-+		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].string);
- 		f = fopen(file, "r");
- 		if (!f) {
- 			error("cannot open mail %s (%s)", file, strerror(errno));
-@@ -161,7 +161,7 @@ static int split_maildir(const char *maildir, const char *dir,
+-	git_config(git_log_config);
++	git_config(git_log_config, NULL);
  
- 	ret = skip;
- out:
--	path_list_clear(&list, 1);
-+	string_list_clear(&list, 1);
- 	return ret;
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -383,7 +383,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info rev;
+ 
+-	git_config(git_log_config);
++	git_config(git_log_config, NULL);
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -416,7 +416,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info rev;
+ 
+-	git_config(git_log_config);
++	git_config(git_log_config, NULL);
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -471,7 +471,7 @@ static void add_header(const char *value)
+ 	extra_hdr[extra_hdr_nr++] = xstrndup(value, len);
  }
  
+-static int git_format_config(const char *var, const char *value)
++static int git_format_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "format.headers")) {
+ 		if (!value)
+@@ -504,7 +504,7 @@ static int git_format_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
+-	return git_log_config(var, value);
++	return git_log_config(var, value, cb);
+ }
+ 
+ 
+@@ -771,7 +771,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	char *add_signoff = NULL;
+ 	struct strbuf buf;
+ 
+-	git_config(git_format_config);
++	git_config(git_format_config, NULL);
+ 	init_revisions(&rev, prefix);
+ 	rev.commit_format = CMIT_FMT_EMAIL;
+ 	rev.verbose_header = 1;
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index dc7eab8..75ba422 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -437,7 +437,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	memset(&dir, 0, sizeof(dir));
+ 	if (prefix)
+ 		prefix_offset = strlen(prefix);
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
+index 7abe333..f4a75dd 100644
+--- a/builtin-ls-tree.c
++++ b/builtin-ls-tree.c
+@@ -122,7 +122,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	unsigned char sha1[20];
+ 	struct tree *tree;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	ls_tree_prefix = prefix;
+ 	if (prefix && *prefix)
+ 		chomp_prefix = strlen(prefix);
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 11f154b..6e23ffd 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -962,7 +962,7 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
+ 	/* NEEDSWORK: might want to do the optional .git/ directory
+ 	 * discovery
+ 	 */
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	def_charset = (git_commit_encoding ? git_commit_encoding : "utf-8");
+ 	metainfo_charset = def_charset;
+diff --git a/builtin-merge-base.c b/builtin-merge-base.c
+index 0108e22..bcf9395 100644
+--- a/builtin-merge-base.c
++++ b/builtin-merge-base.c
+@@ -28,7 +28,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
+ 	unsigned char rev1key[20], rev2key[20];
+ 	int show_all = 0;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	while (1 < argc && argv[1][0] == '-') {
+ 		const char *arg = argv[1];
 diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-index 46e636f..fd4a032 100644
+index fd4a032..25c9a90 100644
 --- a/builtin-merge-recursive.c
 +++ b/builtin-merge-recursive.c
-@@ -13,7 +13,7 @@
- #include "diffcore.h"
- #include "tag.h"
- #include "unpack-trees.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "xdiff-interface.h"
- #include "ll-merge.h"
- #include "interpolate.h"
-@@ -87,8 +87,8 @@ struct stage_data
- 	unsigned processed:1;
- };
- 
--static struct path_list current_file_set = {NULL, 0, 0, 1};
--static struct path_list current_directory_set = {NULL, 0, 0, 1};
-+static struct string_list current_file_set = {NULL, 0, 0, 1};
-+static struct string_list current_directory_set = {NULL, 0, 0, 1};
- 
- static int call_depth = 0;
- static int verbosity = 2;
-@@ -265,9 +265,9 @@ static int save_files_dirs(const unsigned char *sha1,
- 	newpath[baselen + len] = '\0';
- 
- 	if (S_ISDIR(mode))
--		path_list_insert(newpath, &current_directory_set);
-+		string_list_insert(newpath, &current_directory_set);
- 	else
--		path_list_insert(newpath, &current_file_set);
-+		string_list_insert(newpath, &current_file_set);
- 	free(newpath);
- 
- 	return READ_TREE_RECURSIVE;
-@@ -288,9 +288,9 @@ static int get_files_dirs(struct tree *tree)
-  */
- static struct stage_data *insert_stage_data(const char *path,
- 		struct tree *o, struct tree *a, struct tree *b,
--		struct path_list *entries)
-+		struct string_list *entries)
- {
--	struct path_list_item *item;
-+	struct string_list_item *item;
- 	struct stage_data *e = xcalloc(1, sizeof(struct stage_data));
- 	get_tree_entry(o->object.sha1, path,
- 			e->stages[1].sha, &e->stages[1].mode);
-@@ -298,7 +298,7 @@ static struct stage_data *insert_stage_data(const char *path,
- 			e->stages[2].sha, &e->stages[2].mode);
- 	get_tree_entry(b->object.sha1, path,
- 			e->stages[3].sha, &e->stages[3].mode);
--	item = path_list_insert(path, entries);
-+	item = string_list_insert(path, entries);
- 	item->util = e;
- 	return e;
- }
-@@ -307,23 +307,23 @@ static struct stage_data *insert_stage_data(const char *path,
-  * Create a dictionary mapping file names to stage_data objects. The
-  * dictionary contains one entry for every path with a non-zero stage entry.
-  */
--static struct path_list *get_unmerged(void)
-+static struct string_list *get_unmerged(void)
- {
--	struct path_list *unmerged = xcalloc(1, sizeof(struct path_list));
-+	struct string_list *unmerged = xcalloc(1, sizeof(struct string_list));
- 	int i;
- 
--	unmerged->strdup_paths = 1;
-+	unmerged->strdup_strings = 1;
- 
- 	for (i = 0; i < active_nr; i++) {
--		struct path_list_item *item;
-+		struct string_list_item *item;
- 		struct stage_data *e;
- 		struct cache_entry *ce = active_cache[i];
- 		if (!ce_stage(ce))
- 			continue;
- 
--		item = path_list_lookup(ce->name, unmerged);
-+		item = string_list_lookup(ce->name, unmerged);
- 		if (!item) {
--			item = path_list_insert(ce->name, unmerged);
-+			item = string_list_insert(ce->name, unmerged);
- 			item->util = xcalloc(1, sizeof(struct stage_data));
- 		}
- 		e = item->util;
-@@ -348,17 +348,17 @@ struct rename
-  * 'b_tree') to be able to associate the correct cache entries with
-  * the rename information. 'tree' is always equal to either a_tree or b_tree.
-  */
--static struct path_list *get_renames(struct tree *tree,
-+static struct string_list *get_renames(struct tree *tree,
- 					struct tree *o_tree,
- 					struct tree *a_tree,
- 					struct tree *b_tree,
--					struct path_list *entries)
-+					struct string_list *entries)
- {
- 	int i;
--	struct path_list *renames;
-+	struct string_list *renames;
- 	struct diff_options opts;
- 
--	renames = xcalloc(1, sizeof(struct path_list));
-+	renames = xcalloc(1, sizeof(struct string_list));
- 	diff_setup(&opts);
- 	DIFF_OPT_SET(&opts, RECURSIVE);
- 	opts.detect_rename = DIFF_DETECT_RENAME;
-@@ -372,7 +372,7 @@ static struct path_list *get_renames(struct tree *tree,
- 	diff_tree_sha1(o_tree->object.sha1, tree->object.sha1, "", &opts);
- 	diffcore_std(&opts);
- 	for (i = 0; i < diff_queued_diff.nr; ++i) {
--		struct path_list_item *item;
-+		struct string_list_item *item;
- 		struct rename *re;
- 		struct diff_filepair *pair = diff_queued_diff.queue[i];
- 		if (pair->status != 'R') {
-@@ -382,20 +382,20 @@ static struct path_list *get_renames(struct tree *tree,
- 		re = xmalloc(sizeof(*re));
- 		re->processed = 0;
- 		re->pair = pair;
--		item = path_list_lookup(re->pair->one->path, entries);
-+		item = string_list_lookup(re->pair->one->path, entries);
- 		if (!item)
- 			re->src_entry = insert_stage_data(re->pair->one->path,
- 					o_tree, a_tree, b_tree, entries);
- 		else
- 			re->src_entry = item->util;
- 
--		item = path_list_lookup(re->pair->two->path, entries);
-+		item = string_list_lookup(re->pair->two->path, entries);
- 		if (!item)
- 			re->dst_entry = insert_stage_data(re->pair->two->path,
- 					o_tree, a_tree, b_tree, entries);
- 		else
- 			re->dst_entry = item->util;
--		item = path_list_insert(pair->one->path, renames);
-+		item = string_list_insert(pair->one->path, renames);
- 		item->util = re;
- 	}
- 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-@@ -472,12 +472,12 @@ static char *unique_path(const char *path, const char *branch)
- 	for (; *p; ++p)
- 		if ('/' == *p)
- 			*p = '_';
--	while (path_list_has_path(&current_file_set, newpath) ||
--	       path_list_has_path(&current_directory_set, newpath) ||
-+	while (string_list_has_string(&current_file_set, newpath) ||
-+	       string_list_has_string(&current_directory_set, newpath) ||
- 	       lstat(newpath, &st) == 0)
- 		sprintf(p, "_%d", suffix++);
- 
--	path_list_insert(newpath, &current_file_set);
-+	string_list_insert(newpath, &current_file_set);
- 	return newpath;
+@@ -1340,7 +1340,7 @@ static struct commit *get_ref(const char *ref)
+ 	return (struct commit *)object;
  }
  
-@@ -733,13 +733,13 @@ static void conflict_rename_rename(struct rename *ren1,
- 	const char *ren2_dst = ren2->pair->two->path;
- 	const char *dst_name1 = ren1_dst;
- 	const char *dst_name2 = ren2_dst;
--	if (path_list_has_path(&current_directory_set, ren1_dst)) {
-+	if (string_list_has_string(&current_directory_set, ren1_dst)) {
- 		dst_name1 = del[delp++] = unique_path(ren1_dst, branch1);
- 		output(1, "%s is a directory in %s added as %s instead",
- 		       ren1_dst, branch2, dst_name1);
- 		remove_file(0, ren1_dst, 0);
- 	}
--	if (path_list_has_path(&current_directory_set, ren2_dst)) {
-+	if (string_list_has_string(&current_directory_set, ren2_dst)) {
- 		dst_name2 = del[delp++] = unique_path(ren2_dst, branch2);
- 		output(1, "%s is a directory in %s added as %s instead",
- 		       ren2_dst, branch1, dst_name2);
-@@ -789,30 +789,30 @@ static void conflict_rename_rename_2(struct rename *ren1,
- 	free(new_path1);
- }
- 
--static int process_renames(struct path_list *a_renames,
--			   struct path_list *b_renames,
-+static int process_renames(struct string_list *a_renames,
-+			   struct string_list *b_renames,
- 			   const char *a_branch,
- 			   const char *b_branch)
+-static int merge_config(const char *var, const char *value)
++static int merge_config(const char *var, const char *value, void *cb)
  {
- 	int clean_merge = 1, i, j;
--	struct path_list a_by_dst = {NULL, 0, 0, 0}, b_by_dst = {NULL, 0, 0, 0};
-+	struct string_list a_by_dst = {NULL, 0, 0, 0}, b_by_dst = {NULL, 0, 0, 0};
- 	const struct rename *sre;
- 
- 	for (i = 0; i < a_renames->nr; i++) {
- 		sre = a_renames->items[i].util;
--		path_list_insert(sre->pair->two->path, &a_by_dst)->util
-+		string_list_insert(sre->pair->two->path, &a_by_dst)->util
- 			= sre->dst_entry;
+ 	if (!strcasecmp(var, "merge.verbosity")) {
+ 		verbosity = git_config_int(var, value);
+@@ -1354,7 +1354,7 @@ static int merge_config(const char *var, const char *value)
+ 		merge_rename_limit = git_config_int(var, value);
+ 		return 0;
  	}
- 	for (i = 0; i < b_renames->nr; i++) {
- 		sre = b_renames->items[i].util;
--		path_list_insert(sre->pair->two->path, &b_by_dst)->util
-+		string_list_insert(sre->pair->two->path, &b_by_dst)->util
- 			= sre->dst_entry;
- 	}
- 
- 	for (i = 0, j = 0; i < a_renames->nr || j < b_renames->nr;) {
- 		int compare;
- 		char *src;
--		struct path_list *renames1, *renames2, *renames2Dst;
-+		struct string_list *renames1, *renames2, *renames2Dst;
- 		struct rename *ren1 = NULL, *ren2 = NULL;
- 		const char *branch1, *branch2;
- 		const char *ren1_src, *ren1_dst;
-@@ -824,8 +824,8 @@ static int process_renames(struct path_list *a_renames,
- 			compare = -1;
- 			ren1 = a_renames->items[i++].util;
- 		} else {
--			compare = strcmp(a_renames->items[i].path,
--					b_renames->items[j].path);
-+			compare = strcmp(a_renames->items[i].string,
-+					b_renames->items[j].string);
- 			if (compare <= 0)
- 				ren1 = a_renames->items[i++].util;
- 			if (compare >= 0)
-@@ -914,7 +914,7 @@ static int process_renames(struct path_list *a_renames,
- 			}
- 		} else {
- 			/* Renamed in 1, maybe changed in 2 */
--			struct path_list_item *item;
-+			struct string_list_item *item;
- 			/* we only use sha1 and mode of these */
- 			struct diff_filespec src_other, dst_other;
- 			int try_merge, stage = a_renames == renames1 ? 3: 2;
-@@ -928,7 +928,7 @@ static int process_renames(struct path_list *a_renames,
- 
- 			try_merge = 0;
- 
--			if (path_list_has_path(&current_directory_set, ren1_dst)) {
-+			if (string_list_has_string(&current_directory_set, ren1_dst)) {
- 				clean_merge = 0;
- 				output(1, "CONFLICT (rename/directory): Renamed %s->%s in %s "
- 				       " directory %s added in %s",
-@@ -953,7 +953,7 @@ static int process_renames(struct path_list *a_renames,
- 				new_path = unique_path(ren1_dst, branch2);
- 				output(1, "Added as %s instead", new_path);
- 				update_file(0, dst_other.sha1, dst_other.mode, new_path);
--			} else if ((item = path_list_lookup(ren1_dst, renames2Dst))) {
-+			} else if ((item = string_list_lookup(ren1_dst, renames2Dst))) {
- 				ren2 = item->util;
- 				clean_merge = 0;
- 				ren2->processed = 1;
-@@ -1009,8 +1009,8 @@ static int process_renames(struct path_list *a_renames,
- 			}
- 		}
- 	}
--	path_list_clear(&a_by_dst, 0);
--	path_list_clear(&b_by_dst, 0);
-+	string_list_clear(&a_by_dst, 0);
-+	string_list_clear(&b_by_dst, 0);
- 
- 	return clean_merge;
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
  }
-@@ -1088,7 +1088,7 @@ static int process_entry(const char *path, struct stage_data *entry,
- 			sha = b_sha;
- 			conf = "directory/file";
- 		}
--		if (path_list_has_path(&current_directory_set, path)) {
-+		if (string_list_has_string(&current_directory_set, path)) {
- 			const char *new_path = unique_path(path, add_branch);
- 			clean_merge = 0;
- 			output(1, "CONFLICT (%s): There is a directory with name %s in %s. "
-@@ -1179,10 +1179,10 @@ int merge_trees(struct tree *head,
- 		    sha1_to_hex(merge->object.sha1));
  
- 	if (unmerged_cache()) {
--		struct path_list *entries, *re_head, *re_merge;
-+		struct string_list *entries, *re_head, *re_merge;
- 		int i;
--		path_list_clear(&current_file_set, 1);
--		path_list_clear(&current_directory_set, 1);
-+		string_list_clear(&current_file_set, 1);
-+		string_list_clear(&current_directory_set, 1);
- 		get_files_dirs(head);
- 		get_files_dirs(merge);
- 
-@@ -1192,16 +1192,16 @@ int merge_trees(struct tree *head,
- 		clean = process_renames(re_head, re_merge,
- 				branch1, branch2);
- 		for (i = 0; i < entries->nr; i++) {
--			const char *path = entries->items[i].path;
-+			const char *path = entries->items[i].string;
- 			struct stage_data *e = entries->items[i].util;
- 			if (!e->processed
- 				&& !process_entry(path, e, branch1, branch2))
- 				clean = 0;
- 		}
- 
--		path_list_clear(re_merge, 0);
--		path_list_clear(re_head, 0);
--		path_list_clear(entries, 1);
-+		string_list_clear(re_merge, 0);
-+		string_list_clear(re_head, 0);
-+		string_list_clear(entries, 1);
- 
+ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+@@ -1375,7 +1375,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 			subtree_merge = 1;
  	}
- 	else
+ 
+-	git_config(merge_config);
++	git_config(merge_config, NULL);
+ 	if (getenv("GIT_MERGE_VERBOSITY"))
+ 		verbosity = strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
+ 
 diff --git a/builtin-mv.c b/builtin-mv.c
-index fb8ffb4..c0e31d8 100644
+index c0e31d8..09a626e 100644
 --- a/builtin-mv.c
 +++ b/builtin-mv.c
-@@ -7,7 +7,7 @@
- #include "builtin.h"
- #include "dir.h"
- #include "cache-tree.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "parse-options.h"
+@@ -82,7 +82,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	struct string_list deleted = {NULL, 0, 0, 0};
+ 	struct string_list changed = {NULL, 0, 0, 0};
  
- static const char * const builtin_mv_usage[] = {
-@@ -36,13 +36,14 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
- 	return get_pathspec(prefix, result);
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	newfd = hold_locked_index(&lock_file, 1);
+ 	if (read_cache() < 0)
+diff --git a/builtin-name-rev.c b/builtin-name-rev.c
+index 384da4d..cde5de5 100644
+--- a/builtin-name-rev.c
++++ b/builtin-name-rev.c
+@@ -195,7 +195,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, opts, name_rev_usage, 0);
+ 	if (!!all + !!transform_stdin + !!argc > 1) {
+ 		error("Specify either a list, or --all, not both!");
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index f43eb67..70d2f5d 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1760,7 +1760,7 @@ static void prepare_pack(int window, int depth)
+ 	free(delta_list);
  }
  
--static void show_list(const char *label, struct path_list *list)
-+static void show_list(const char *label, struct string_list *list)
+-static int git_pack_config(const char *k, const char *v)
++static int git_pack_config(const char *k, const char *v, void *cb)
  {
- 	if (list->nr > 0) {
- 		int i;
- 		printf("%s", label);
- 		for (i = 0; i < list->nr; i++)
--			printf("%s%s", i > 0 ? ", " : "", list->items[i].path);
-+			printf("%s%s", i > 0 ? ", " : "",
-+					list->items[i].string);
- 		putchar('\n');
+ 	if(!strcmp(k, "pack.window")) {
+ 		window = git_config_int(k, v);
+@@ -1813,7 +1813,7 @@ static int git_pack_config(const char *k, const char *v)
+ 		pack_size_limit_cfg = git_config_ulong(k, v);
+ 		return 0;
  	}
+-	return git_default_config(k, v);
++	return git_default_config(k, v, cb);
  }
-@@ -75,11 +76,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	const char **source, **destination, **dest_path;
- 	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
- 	struct stat st;
--	struct path_list overwritten = {NULL, 0, 0, 0};
--	struct path_list src_for_dst = {NULL, 0, 0, 0};
--	struct path_list added = {NULL, 0, 0, 0};
--	struct path_list deleted = {NULL, 0, 0, 0};
--	struct path_list changed = {NULL, 0, 0, 0};
-+	struct string_list overwritten = {NULL, 0, 0, 0};
-+	struct string_list src_for_dst = {NULL, 0, 0, 0};
-+	struct string_list added = {NULL, 0, 0, 0};
-+	struct string_list deleted = {NULL, 0, 0, 0};
-+	struct string_list changed = {NULL, 0, 0, 0};
  
- 	git_config(git_default_config);
+ static void read_object_list_from_stdin(void)
+@@ -2033,7 +2033,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	rp_av[1] = "--objects"; /* --thin will make it --objects-edge */
+ 	rp_ac = 2;
  
-@@ -189,16 +190,16 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 							" will overwrite!\n",
- 							bad);
- 					bad = NULL;
--					path_list_insert(dst, &overwritten);
-+					string_list_insert(dst, &overwritten);
- 				} else
- 					bad = "Cannot overwrite";
- 			}
- 		} else if (cache_name_pos(src, length) < 0)
- 			bad = "not under version control";
--		else if (path_list_has_path(&src_for_dst, dst))
-+		else if (string_list_has_string(&src_for_dst, dst))
- 			bad = "multiple sources for the same target";
- 		else
--			path_list_insert(dst, &src_for_dst);
-+			string_list_insert(dst, &src_for_dst);
+-	git_config(git_pack_config);
++	git_config(git_pack_config, NULL);
+ 	if (!pack_compression_seen && core_compression_seen)
+ 		pack_compression_level = core_compression_level;
  
- 		if (bad) {
- 			if (ignore_errors) {
-@@ -228,15 +229,15 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			continue;
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 7ac3088..5a09e17 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -104,12 +104,10 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
  
- 		if (cache_name_pos(src, strlen(src)) >= 0) {
--			path_list_insert(src, &deleted);
-+			string_list_insert(src, &deleted);
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
  
- 			/* destination can be a directory with 1 file inside */
--			if (path_list_has_path(&overwritten, dst))
--				path_list_insert(dst, &changed);
-+			if (string_list_has_string(&overwritten, dst))
-+				string_list_insert(dst, &changed);
- 			else
--				path_list_insert(dst, &added);
-+				string_list_insert(dst, &added);
- 		} else
--			path_list_insert(dst, &added);
-+			string_list_insert(dst, &added);
+ 	newfd = hold_locked_index(&lock_file, 1);
+ 
+-	git_config(git_default_config);
+-
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+diff --git a/builtin-reflog.c b/builtin-reflog.c
+index 280e24e..897d1dc 100644
+--- a/builtin-reflog.c
++++ b/builtin-reflog.c
+@@ -329,7 +329,7 @@ static int collect_reflog(const char *ref, const unsigned char *sha1, int unused
+ 	return 0;
+ }
+ 
+-static int reflog_expire_config(const char *var, const char *value)
++static int reflog_expire_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "gc.reflogexpire")) {
+ 		if (!value)
+@@ -343,7 +343,7 @@ static int reflog_expire_config(const char *var, const char *value)
+ 		default_reflog_expire_unreachable = approxidate(value);
+ 		return 0;
  	}
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
  
- 	if (show_only) {
-@@ -245,7 +246,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		show_list("Deleting : ", &deleted);
- 	} else {
- 		for (i = 0; i < changed.nr; i++) {
--			const char *path = changed.items[i].path;
-+			const char *path = changed.items[i].string;
- 			int j = cache_name_pos(path, strlen(path));
- 			struct cache_entry *ce = active_cache[j];
+ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+@@ -352,7 +352,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	unsigned long now = time(NULL);
+ 	int i, status, do_all;
  
-@@ -255,13 +256,13 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		}
+-	git_config(reflog_expire_config);
++	git_config(reflog_expire_config, NULL);
  
- 		for (i = 0; i < added.nr; i++) {
--			const char *path = added.items[i].path;
--			if (add_file_to_cache(path, verbose))
-+			const char *string = added.items[i].string;
-+			if (add_file_to_cache(string, verbose))
- 				die("updating index entries failed");
- 		}
- 
- 		for (i = 0; i < deleted.nr; i++)
--			remove_file_from_cache(deleted.items[i].path);
-+			remove_file_from_cache(deleted.items[i].string);
- 
- 		if (active_cache_changed) {
- 			if (write_cache(newfd, active_cache, active_nr) ||
+ 	save_commit_buffer = 0;
+ 	do_all = status = 0;
 diff --git a/builtin-remote.c b/builtin-remote.c
-index 8b63619..4b4b2fc 100644
+index 4b4b2fc..1e1a87d 100644
 --- a/builtin-remote.c
 +++ b/builtin-remote.c
-@@ -2,7 +2,7 @@
- #include "parse-options.h"
- #include "transport.h"
- #include "remote.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "strbuf.h"
- #include "run-command.h"
- #include "refs.h"
-@@ -37,11 +37,11 @@ static inline const char *skip_prefix(const char *name, const char *prefix)
+@@ -153,7 +153,7 @@ struct branch_info {
  
- static int opt_parse_track(const struct option *opt, const char *arg, int not)
- {
--	struct path_list *list = opt->value;
-+	struct string_list *list = opt->value;
- 	if (not)
--		path_list_clear(list, 0);
-+		string_list_clear(list, 0);
- 	else
--		path_list_append(arg, list);
-+		string_list_append(arg, list);
- 	return 0;
- }
+ static struct string_list branch_list;
  
-@@ -57,7 +57,7 @@ static int fetch_remote(const char *name)
- static int add(int argc, const char **argv)
- {
- 	int fetch = 0, mirror = 0;
--	struct path_list track = { NULL, 0, 0 };
-+	struct string_list track = { NULL, 0, 0 };
- 	const char *master = NULL;
- 	struct remote *remote;
- 	struct strbuf buf, buf2;
-@@ -102,18 +102,18 @@ static int add(int argc, const char **argv)
- 	strbuf_addf(&buf, "remote.%s.fetch", name);
- 
- 	if (track.nr == 0)
--		path_list_append("*", &track);
-+		string_list_append("*", &track);
- 	for (i = 0; i < track.nr; i++) {
--		struct path_list_item *item = track.items + i;
-+		struct string_list_item *item = track.items + i;
- 
- 		strbuf_reset(&buf2);
- 		strbuf_addch(&buf2, '+');
- 		if (mirror)
- 			strbuf_addf(&buf2, "refs/%s:refs/%s",
--					item->path, item->path);
-+					item->string, item->string);
- 		else
- 			strbuf_addf(&buf2, "refs/heads/%s:refs/remotes/%s/%s",
--					item->path, name, item->path);
-+					item->string, name, item->string);
- 		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
- 			return 1;
- 	}
-@@ -141,23 +141,23 @@ static int add(int argc, const char **argv)
- 
- 	strbuf_release(&buf);
- 	strbuf_release(&buf2);
--	path_list_clear(&track, 0);
-+	string_list_clear(&track, 0);
- 
- 	return 0;
- }
- 
- struct branch_info {
- 	char *remote;
--	struct path_list merge;
-+	struct string_list merge;
- };
- 
--static struct path_list branch_list;
-+static struct string_list branch_list;
- 
- static int config_read_branches(const char *key, const char *value)
+-static int config_read_branches(const char *key, const char *value)
++static int config_read_branches(const char *key, const char *value, void *cb)
  {
  	if (!prefixcmp(key, "branch.")) {
  		char *name;
--		struct path_list_item *item;
-+		struct string_list_item *item;
- 		struct branch_info *info;
- 		enum { REMOTE, MERGE } type;
- 
-@@ -171,7 +171,7 @@ static int config_read_branches(const char *key, const char *value)
- 		} else
- 			return 0;
- 
--		item = path_list_insert(name, &branch_list);
-+		item = string_list_insert(name, &branch_list);
- 
- 		if (!item->util)
- 			item->util = xcalloc(sizeof(struct branch_info), 1);
-@@ -186,11 +186,11 @@ static int config_read_branches(const char *key, const char *value)
- 			while (space) {
- 				char *merge;
- 				merge = xstrndup(value, space - value);
--				path_list_append(merge, &info->merge);
-+				string_list_append(merge, &info->merge);
- 				value = skip_prefix(space + 1, "refs/heads/");
- 				space = strchr(value, ' ');
- 			}
--			path_list_append(xstrdup(value), &info->merge);
-+			string_list_append(xstrdup(value), &info->merge);
- 		}
- 	}
- 	return 0;
-@@ -201,13 +201,13 @@ static void read_branches(void)
+@@ -200,7 +200,7 @@ static void read_branches(void)
+ {
  	if (branch_list.nr)
  		return;
- 	git_config(config_read_branches);
--	sort_path_list(&branch_list);
-+	sort_string_list(&branch_list);
+-	git_config(config_read_branches);
++	git_config(config_read_branches, NULL);
+ 	sort_string_list(&branch_list);
  }
  
- struct ref_states {
- 	struct remote *remote;
- 	struct strbuf remote_prefix;
--	struct path_list new, stale, tracked;
-+	struct string_list new, stale, tracked;
- };
- 
- static int handle_one_branch(const char *refname,
-@@ -219,16 +219,16 @@ static int handle_one_branch(const char *refname,
- 	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst = (char *)refname;
- 	if (!remote_find_tracking(states->remote, &refspec)) {
--		struct path_list_item *item;
-+		struct string_list_item *item;
- 		const char *name = skip_prefix(refspec.src, "refs/heads/");
- 		/* symbolic refs pointing nowhere were handled already */
- 		if ((flags & REF_ISSYMREF) ||
--				unsorted_path_list_has_path(&states->tracked,
--					name) ||
--				unsorted_path_list_has_path(&states->new,
--					name))
-+				unsorted_string_list_has_string(
-+					&states->tracked, name) ||
-+				unsorted_string_list_has_string(
-+					&states->new, name))
- 			return 0;
--		item = path_list_append(name, &states->stale);
-+		item = string_list_append(name, &states->stale);
- 		item->util = xstrdup(refname);
- 	}
- 	return 0;
-@@ -244,9 +244,9 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 			die("Could not get fetch map for refspec %s",
- 				states->remote->fetch_refspec[i]);
- 
--	states->new.strdup_paths = states->tracked.strdup_paths = 1;
-+	states->new.strdup_strings = states->tracked.strdup_strings = 1;
- 	for (ref = fetch_map; ref; ref = ref->next) {
--		struct path_list *target = &states->tracked;
-+		struct string_list *target = &states->tracked;
- 		unsigned char sha1[20];
- 		void *util = NULL;
- 
-@@ -257,7 +257,7 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 			if (hashcmp(sha1, ref->new_sha1))
- 				util = &states;
- 		}
--		path_list_append(skip_prefix(ref->name, "refs/heads/"),
-+		string_list_append(skip_prefix(ref->name, "refs/heads/"),
- 				target)->util = util;
- 	}
- 	free_refs(fetch_map);
-@@ -265,14 +265,14 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 	strbuf_addf(&states->remote_prefix,
- 		"refs/remotes/%s/", states->remote->name);
- 	for_each_ref(handle_one_branch, states);
--	sort_path_list(&states->stale);
-+	sort_string_list(&states->stale);
- 
- 	return 0;
- }
- 
- struct branches_for_remote {
- 	const char *prefix;
--	struct path_list *branches;
-+	struct string_list *branches;
- };
- 
- static int add_branch_for_removal(const char *refname,
-@@ -281,13 +281,13 @@ static int add_branch_for_removal(const char *refname,
- 	struct branches_for_remote *branches = cb_data;
- 
- 	if (!prefixcmp(refname, branches->prefix)) {
--		struct path_list_item *item;
-+		struct string_list_item *item;
- 
- 		/* make sure that symrefs are deleted */
- 		if (flags & REF_ISSYMREF)
- 			return unlink(git_path(refname));
- 
--		item = path_list_append(refname, branches->branches);
-+		item = string_list_append(refname, branches->branches);
- 		item->util = xmalloc(20);
- 		hashcpy(item->util, sha1);
- 	}
-@@ -295,12 +295,12 @@ static int add_branch_for_removal(const char *refname,
- 	return 0;
- }
- 
--static int remove_branches(struct path_list *branches)
-+static int remove_branches(struct string_list *branches)
- {
- 	int i, result = 0;
- 	for (i = 0; i < branches->nr; i++) {
--		struct path_list_item *item = branches->items + i;
--		const char *refname = item->path;
-+		struct string_list_item *item = branches->items + i;
-+		const char *refname = item->string;
- 		unsigned char *sha1 = item->util;
- 
- 		if (delete_ref(refname, sha1))
-@@ -316,7 +316,7 @@ static int rm(int argc, const char **argv)
- 	};
- 	struct remote *remote;
- 	struct strbuf buf;
--	struct path_list branches = { NULL, 0, 0, 1 };
-+	struct string_list branches = { NULL, 0, 0, 1 };
- 	struct branches_for_remote cb_data = { NULL, &branches };
- 	int i;
- 
-@@ -334,14 +334,14 @@ static int rm(int argc, const char **argv)
- 
- 	read_branches();
- 	for (i = 0; i < branch_list.nr; i++) {
--		struct path_list_item *item = branch_list.items + i;
-+		struct string_list_item *item = branch_list.items + i;
- 		struct branch_info *info = item->util;
- 		if (info->remote && !strcmp(info->remote, remote->name)) {
- 			const char *keys[] = { "remote", "merge", NULL }, **k;
- 			for (k = keys; *k; k++) {
- 				strbuf_reset(&buf);
- 				strbuf_addf(&buf, "branch.%s.%s",
--						item->path, *k);
-+						item->string, *k);
- 				if (git_config_set(buf.buf, NULL)) {
- 					strbuf_release(&buf);
- 					return -1;
-@@ -363,12 +363,12 @@ static int rm(int argc, const char **argv)
- 
- 	if (!i)
- 		i = remove_branches(&branches);
--	path_list_clear(&branches, 1);
-+	string_list_clear(&branches, 1);
- 
- 	return i;
- }
- 
--static void show_list(const char *title, struct path_list *list)
-+static void show_list(const char *title, struct string_list *list)
- {
- 	int i;
- 
-@@ -378,7 +378,7 @@ static void show_list(const char *title, struct path_list *list)
- 	printf(title, list->nr > 1 ? "es" : "");
- 	printf("\n    ");
- 	for (i = 0; i < list->nr; i++)
--		printf("%s%s", i ? " " : "", list->items[i].path);
-+		printf("%s%s", i ? " " : "", list->items[i].string);
- 	printf("\n");
- }
- 
-@@ -438,7 +438,8 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 
- 			for (i = 0; i < states.stale.nr; i++) {
- 				strbuf_setlen(&buf, prefix_len);
--				strbuf_addstr(&buf, states.stale.items[i].path);
-+				strbuf_addstr(&buf,
-+						states.stale.items[i].string);
- 				result |= delete_ref(buf.buf, NULL);
- 			}
- 
-@@ -451,7 +452,7 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 				states.remote->url[0] : "(no URL)");
- 
- 		for (i = 0; i < branch_list.nr; i++) {
--			struct path_list_item *branch = branch_list.items + i;
-+			struct string_list_item *branch = branch_list.items + i;
- 			struct branch_info *info = branch->util;
- 			int j;
- 
-@@ -460,9 +461,9 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 			printf("  Remote branch%s merged with 'git pull' "
- 				"while on branch %s\n   ",
- 				info->merge.nr > 1 ? "es" : "",
--				branch->path);
-+				branch->string);
- 			for (j = 0; j < info->merge.nr; j++)
--				printf(" %s", info->merge.items[j].path);
-+				printf(" %s", info->merge.items[j].string);
- 			printf("\n");
- 		}
- 
-@@ -493,9 +494,9 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 		}
- cleanup_states:
- 		/* NEEDSWORK: free remote */
--		path_list_clear(&states.new, 0);
--		path_list_clear(&states.stale, 0);
--		path_list_clear(&states.tracked, 0);
-+		string_list_clear(&states.new, 0);
-+		string_list_clear(&states.stale, 0);
-+		string_list_clear(&states.tracked, 0);
- 	}
- 
- 	return result;
-@@ -503,15 +504,15 @@ cleanup_states:
- 
- static int get_one_remote_for_update(struct remote *remote, void *priv)
- {
--	struct path_list *list = priv;
-+	struct string_list *list = priv;
- 	if (!remote->skip_default_update)
--		path_list_append(xstrdup(remote->name), list);
-+		string_list_append(xstrdup(remote->name), list);
- 	return 0;
- }
- 
- struct remote_group {
- 	const char *name;
--	struct path_list *list;
-+	struct string_list *list;
+@@ -515,7 +515,7 @@ struct remote_group {
+ 	struct string_list *list;
  } remote_group;
  
- static int get_remote_group(const char *key, const char *value)
-@@ -522,7 +523,7 @@ static int get_remote_group(const char *key, const char *value)
- 		int space = strcspn(value, " \t\n");
- 		while (*value) {
- 			if (space > 1)
--				path_list_append(xstrndup(value, space),
-+				string_list_append(xstrndup(value, space),
- 						remote_group.list);
- 			value += space + (value[space] != '\0');
- 			space = strcspn(value, " \t\n");
-@@ -535,7 +536,7 @@ static int get_remote_group(const char *key, const char *value)
- static int update(int argc, const char **argv)
+-static int get_remote_group(const char *key, const char *value)
++static int get_remote_group(const char *key, const char *value, void *cb)
  {
- 	int i, result = 0;
--	struct path_list list = { NULL, 0, 0, 0 };
-+	struct string_list list = { NULL, 0, 0, 0 };
- 	static const char *default_argv[] = { NULL, "default", NULL };
+ 	if (!prefixcmp(key, "remotes.") &&
+ 			!strcmp(key + 8, remote_group.name)) {
+@@ -547,7 +547,7 @@ static int update(int argc, const char **argv)
+ 	remote_group.list = &list;
+ 	for (i = 1; i < argc; i++) {
+ 		remote_group.name = argv[i];
+-		result = git_config(get_remote_group);
++		result = git_config(get_remote_group, NULL);
+ 	}
  
- 	if (argc < 2) {
-@@ -553,20 +554,20 @@ static int update(int argc, const char **argv)
- 		result = for_each_remote(get_one_remote_for_update, &list);
- 
- 	for (i = 0; i < list.nr; i++)
--		result |= fetch_remote(list.items[i].path);
-+		result |= fetch_remote(list.items[i].string);
- 
- 	/* all names were strdup()ed or strndup()ed */
--	list.strdup_paths = 1;
--	path_list_clear(&list, 0);
-+	list.strdup_strings = 1;
-+	string_list_clear(&list, 0);
- 
- 	return result;
- }
- 
- static int get_one_entry(struct remote *remote, void *priv)
- {
--	struct path_list *list = priv;
-+	struct string_list *list = priv;
- 
--	path_list_append(remote->name, list)->util = remote->url_nr ?
-+	string_list_append(remote->name, list)->util = remote->url_nr ?
- 		(void *)remote->url[0] : NULL;
- 	if (remote->url_nr > 1)
- 		warning("Remote %s has more than one URL", remote->name);
-@@ -576,16 +577,16 @@ static int get_one_entry(struct remote *remote, void *priv)
- 
- static int show_all(void)
- {
--	struct path_list list = { NULL, 0, 0 };
-+	struct string_list list = { NULL, 0, 0 };
- 	int result = for_each_remote(get_one_entry, &list);
- 
- 	if (!result) {
- 		int i;
- 
--		sort_path_list(&list);
-+		sort_string_list(&list);
- 		for (i = 0; i < list.nr; i++) {
--			struct path_list_item *item = list.items + i;
--			printf("%s%s%s\n", item->path,
-+			struct string_list_item *item = list.items + i;
-+			printf("%s%s%s\n", item->string,
- 				verbose ? "\t" : "",
- 				verbose && item->util ?
- 					(const char *)item->util : "");
+ 	if (!result && !list.nr  && argc == 2 && !strcmp(argv[1], "default"))
 diff --git a/builtin-rerere.c b/builtin-rerere.c
-index c607aad..963b19e 100644
+index 963b19e..0096a42 100644
 --- a/builtin-rerere.c
 +++ b/builtin-rerere.c
-@@ -1,6 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "xdiff/xdiff.h"
- #include "xdiff-interface.h"
- 
-@@ -23,7 +23,7 @@ static const char *rr_path(const char *name, const char *file)
- 	return git_path("rr-cache/%s/%s", name, file);
+@@ -339,7 +339,7 @@ tail_optimization:
+ 	return write_rr(rr, fd);
  }
  
--static void read_rr(struct path_list *rr)
-+static void read_rr(struct string_list *rr)
+-static int git_rerere_config(const char *var, const char *value)
++static int git_rerere_config(const char *var, const char *value, void *cb)
  {
+ 	if (!strcmp(var, "gc.rerereresolved"))
+ 		cutoff_resolve = git_config_int(var, value);
+@@ -348,7 +348,7 @@ static int git_rerere_config(const char *var, const char *value)
+ 	else if (!strcmp(var, "rerere.enabled"))
+ 		rerere_enabled = git_config_bool(var, value);
+ 	else
+-		return git_default_config(var, value);
++		return git_default_config(var, value, cb);
+ 	return 0;
+ }
+ 
+@@ -376,7 +376,7 @@ static int setup_rerere(struct string_list *merge_rr)
+ {
+ 	int fd;
+ 
+-	git_config(git_rerere_config);
++	git_config(git_rerere_config, NULL);
+ 	if (!is_rerere_enabled())
+ 		return -1;
+ 
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 79424bb..e32ddd9 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -186,7 +186,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, options, git_reset_usage,
+ 						PARSE_OPT_KEEP_DASHDASH);
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index a965294..a0f0bf2 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -598,7 +598,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	int bisect_find_all = 0;
+ 	int quiet = 0;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	init_revisions(&revs, prefix);
+ 	revs.abbrev = 0;
+ 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index f8d8548..1d019b3 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -381,7 +381,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 		return cmd_parseopt(argc - 1, argv + 1, prefix);
+ 
+ 	prefix = setup_git_directory();
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 2b57525..0270f9b 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -269,7 +269,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	const char *message, *encoding;
+ 	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	me = action == REVERT ? "revert" : "cherry-pick";
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+ 	parse_args(argc, argv);
+diff --git a/builtin-rm.c b/builtin-rm.c
+index c0a8bb6..22c9bd1 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -144,7 +144,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	const char **pathspec;
+ 	char *seen;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	newfd = hold_locked_index(&lock_file, 1);
+ 
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 019abd3..ee4269d 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -533,7 +533,7 @@ static void append_one_rev(const char *av)
+ 	die("bad sha1 reference %s", av);
+ }
+ 
+-static int git_show_branch_config(const char *var, const char *value)
++static int git_show_branch_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "showbranch.default")) {
+ 		if (!value)
+@@ -547,7 +547,7 @@ static int git_show_branch_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+@@ -611,7 +611,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 	int reflog = 0;
+ 	const char *reflog_base = NULL;
+ 
+-	git_config(git_show_branch_config);
++	git_config(git_show_branch_config, NULL);
+ 
+ 	/* If nothing is specified, try the default first */
+ 	if (ac == 1 && default_num) {
+diff --git a/builtin-symbolic-ref.c b/builtin-symbolic-ref.c
+index d33982b..b49bdb6 100644
+--- a/builtin-symbolic-ref.c
++++ b/builtin-symbolic-ref.c
+@@ -35,7 +35,7 @@ int cmd_symbolic_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, options, git_symbolic_ref_usage, 0);
+ 	if (msg &&!*msg)
+ 		die("Refusing to perform update with empty message");
+diff --git a/builtin-tag.c b/builtin-tag.c
+index 129ff57..e675206 100644
+--- a/builtin-tag.c
++++ b/builtin-tag.c
+@@ -256,7 +256,7 @@ static void set_signingkey(const char *value)
+ 		die("signing key value too long (%.10s...)", value);
+ }
+ 
+-static int git_tag_config(const char *var, const char *value)
++static int git_tag_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "user.signingkey")) {
+ 		if (!value)
+@@ -265,7 +265,7 @@ static int git_tag_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ static void write_tag_body(int fd, const unsigned char *sha1)
+@@ -408,7 +408,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_tag_config);
++	git_config(git_tag_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, options, git_tag_usage, 0);
+ 
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index fecf0be..85043d1 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -493,7 +493,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+ 	int i;
  	unsigned char sha1[20];
- 	char buf[PATH_MAX];
-@@ -43,18 +43,18 @@ static void read_rr(struct path_list *rr)
- 			; /* do nothing */
- 		if (i == sizeof(buf))
- 			die("filename too long");
--		path_list_insert(buf, rr)->util = xstrdup(name);
-+		string_list_insert(buf, rr)->util = xstrdup(name);
- 	}
- 	fclose(in);
- }
  
- static struct lock_file write_lock;
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
  
--static int write_rr(struct path_list *rr, int out_fd)
-+static int write_rr(struct string_list *rr, int out_fd)
+ 	quiet = !isatty(2);
+ 
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index a8795d3..e1ca8de 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -567,7 +567,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	int lock_error = 0;
+ 	struct lock_file *lock_file;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	/* We can't free this memory, it becomes part of a linked list parsed atexit() */
+ 	lock_file = xcalloc(1, sizeof(struct lock_file));
+diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+index e90737c..93c1271 100644
+--- a/builtin-update-ref.c
++++ b/builtin-update-ref.c
+@@ -22,7 +22,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, options, git_update_ref_usage, 0);
+ 	if (msg && !*msg)
+ 		die("Refusing to perform update with empty message.");
+diff --git a/builtin-verify-pack.c b/builtin-verify-pack.c
+index 4958bbb..4c515a0 100644
+--- a/builtin-verify-pack.c
++++ b/builtin-verify-pack.c
+@@ -55,7 +55,7 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ 	int no_more_options = 0;
+ 	int nothing_done = 1;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	while (1 < argc) {
+ 		if (!no_more_options && argv[1][0] == '-') {
+ 			if (!strcmp("-v", argv[1]))
+diff --git a/builtin-verify-tag.c b/builtin-verify-tag.c
+index db81496..92eaa89 100644
+--- a/builtin-verify-tag.c
++++ b/builtin-verify-tag.c
+@@ -90,7 +90,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
  {
- 	int i;
- 	for (i = 0; i < rr->nr; i++) {
--		const char *path = rr->items[i].path;
-+		const char *path = rr->items[i].string;
- 		int length = strlen(path) + 1;
- 		if (write_in_full(out_fd, rr->items[i].util, 40) != 40 ||
- 		    write_in_full(out_fd, "\t", 1) != 1 ||
-@@ -138,7 +138,7 @@ static int handle_file(const char *path,
- 	return hunk_no;
- }
+ 	int i = 1, verbose = 0, had_error = 0;
  
--static int find_conflict(struct path_list *conflict)
-+static int find_conflict(struct string_list *conflict)
- {
- 	int i;
- 	if (read_cache() < 0)
-@@ -151,7 +151,7 @@ static int find_conflict(struct path_list *conflict)
- 		    ce_same_name(e2, e3) &&
- 		    S_ISREG(e2->ce_mode) &&
- 		    S_ISREG(e3->ce_mode)) {
--			path_list_insert((const char *)e2->name, conflict);
-+			string_list_insert((const char *)e2->name, conflict);
- 			i++; /* skip over both #2 and #3 */
- 		}
- 	}
-@@ -198,9 +198,9 @@ static void unlink_rr_item(const char *name)
- 	rmdir(git_path("rr-cache/%s", name));
- }
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
  
--static void garbage_collect(struct path_list *rr)
-+static void garbage_collect(struct string_list *rr)
- {
--	struct path_list to_remove = { NULL, 0, 0, 1 };
-+	struct string_list to_remove = { NULL, 0, 0, 1 };
- 	char buf[1024];
- 	DIR *dir;
- 	struct dirent *e;
-@@ -226,12 +226,12 @@ static void garbage_collect(struct path_list *rr)
- 		cutoff = stat(buf, &st) ? cutoff_noresolve : cutoff_resolve;
- 		if (then < now - cutoff * 86400) {
- 			buf[len + i] = '\0';
--			path_list_insert(xstrdup(name), &to_remove);
-+			string_list_insert(xstrdup(name), &to_remove);
- 		}
- 	}
- 	for (i = 0; i < to_remove.nr; i++)
--		unlink_rr_item(to_remove.items[i].path);
--	path_list_clear(&to_remove, 0);
-+		unlink_rr_item(to_remove.items[i].string);
-+	string_list_clear(&to_remove, 0);
- }
+ 	if (argc == 1)
+ 		usage(builtin_verify_tag_usage);
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index e838d01..c218799 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -18,7 +18,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	unsigned char sha1[20];
+ 	const char *me = "git-write-tree";
  
- static int outf(void *dummy, mmbuffer_t *ptr, int nbuf)
-@@ -267,9 +267,9 @@ static int diff_two(const char *file1, const char *label1,
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	while (1 < argc) {
+ 		const char *arg = argv[1];
+ 		if (!strcmp(arg, "--missing-ok"))
+diff --git a/cache.h b/cache.h
+index c761915..b79df28 100644
+--- a/cache.h
++++ b/cache.h
+@@ -719,10 +719,10 @@ extern int matches_pack_name(struct packed_git *p, const char *name);
+ /* Dumb servers support */
+ extern int update_server_info(int);
+ 
+-typedef int (*config_fn_t)(const char *, const char *);
+-extern int git_default_config(const char *, const char *);
+-extern int git_config_from_file(config_fn_t fn, const char *);
+-extern int git_config(config_fn_t fn);
++typedef int (*config_fn_t)(const char *, const char *, void *);
++extern int git_default_config(const char *, const char *, void *);
++extern int git_config_from_file(config_fn_t fn, const char *, void *);
++extern int git_config(config_fn_t fn, void *);
+ extern int git_parse_long(const char *, long *);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_config_int(const char *, const char *);
+@@ -734,7 +734,7 @@ extern int git_config_set(const char *, const char *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
+ extern const char *git_etc_gitconfig(void);
+-extern int check_repository_format_version(const char *var, const char *value);
++extern int check_repository_format_version(const char *var, const char *value, void *cb);
+ extern int git_env_bool(const char *, int);
+ extern int git_config_system(void);
+ extern int git_config_global(void);
+diff --git a/color.c b/color.c
+index 12a6453..fc0b72a 100644
+--- a/color.c
++++ b/color.c
+@@ -145,14 +145,14 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
  	return 0;
  }
  
--static int do_plain_rerere(struct path_list *rr, int fd)
-+static int do_plain_rerere(struct string_list *rr, int fd)
+-int git_color_default_config(const char *var, const char *value)
++int git_color_default_config(const char *var, const char *value, void *cb)
  {
--	struct path_list conflict = { NULL, 0, 0, 1 };
-+	struct string_list conflict = { NULL, 0, 0, 1 };
- 	int i;
- 
- 	find_conflict(&conflict);
-@@ -282,8 +282,8 @@ static int do_plain_rerere(struct path_list *rr, int fd)
- 	 */
- 
- 	for (i = 0; i < conflict.nr; i++) {
--		const char *path = conflict.items[i].path;
--		if (!path_list_has_path(rr, path)) {
-+		const char *path = conflict.items[i].string;
-+		if (!string_list_has_string(rr, path)) {
- 			unsigned char sha1[20];
- 			char *hex;
- 			int ret;
-@@ -291,7 +291,7 @@ static int do_plain_rerere(struct path_list *rr, int fd)
- 			if (ret < 1)
- 				continue;
- 			hex = xstrdup(sha1_to_hex(sha1));
--			path_list_insert(path, rr)->util = hex;
-+			string_list_insert(path, rr)->util = hex;
- 			if (mkdir(git_path("rr-cache/%s", hex), 0755))
- 				continue;;
- 			handle_file(path, NULL, rr_path(hex, "preimage"));
-@@ -308,7 +308,7 @@ static int do_plain_rerere(struct path_list *rr, int fd)
- 	for (i = 0; i < rr->nr; i++) {
- 		struct stat st;
- 		int ret;
--		const char *path = rr->items[i].path;
-+		const char *path = rr->items[i].string;
- 		const char *name = (const char *)rr->items[i].util;
- 
- 		if (!stat(rr_path(name, "preimage"), &st) &&
-@@ -372,7 +372,7 @@ static int is_rerere_enabled(void)
- 	return 1;
- }
- 
--static int setup_rerere(struct path_list *merge_rr)
-+static int setup_rerere(struct string_list *merge_rr)
- {
- 	int fd;
- 
-@@ -388,7 +388,7 @@ static int setup_rerere(struct path_list *merge_rr)
- 
- int rerere(void)
- {
--	struct path_list merge_rr = { NULL, 0, 0, 1 };
-+	struct string_list merge_rr = { NULL, 0, 0, 1 };
- 	int fd;
- 
- 	fd = setup_rerere(&merge_rr);
-@@ -399,7 +399,7 @@ int rerere(void)
- 
- int cmd_rerere(int argc, const char **argv, const char *prefix)
- {
--	struct path_list merge_rr = { NULL, 0, 0, 1 };
-+	struct string_list merge_rr = { NULL, 0, 0, 1 };
- 	int i, fd;
- 
- 	fd = setup_rerere(&merge_rr);
-@@ -422,16 +422,16 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 		garbage_collect(&merge_rr);
- 	else if (!strcmp(argv[1], "status"))
- 		for (i = 0; i < merge_rr.nr; i++)
--			printf("%s\n", merge_rr.items[i].path);
-+			printf("%s\n", merge_rr.items[i].string);
- 	else if (!strcmp(argv[1], "diff"))
- 		for (i = 0; i < merge_rr.nr; i++) {
--			const char *path = merge_rr.items[i].path;
-+			const char *path = merge_rr.items[i].string;
- 			const char *name = (const char *)merge_rr.items[i].util;
- 			diff_two(rr_path(name, "preimage"), path, path, path);
- 		}
- 	else
- 		usage(git_rerere_usage);
- 
--	path_list_clear(&merge_rr, 1);
-+	string_list_clear(&merge_rr, 1);
- 	return 0;
- }
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index e6a2865..71e6016 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -2,7 +2,7 @@
- #include "cache.h"
- #include "commit.h"
- #include "diff.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "revision.h"
- #include "utf8.h"
- #include "mailmap.h"
-@@ -13,8 +13,8 @@ static const char shortlog_usage[] =
- 
- static int compare_by_number(const void *a1, const void *a2)
- {
--	const struct path_list_item *i1 = a1, *i2 = a2;
--	const struct path_list *l1 = i1->util, *l2 = i2->util;
-+	const struct string_list_item *i1 = a1, *i2 = a2;
-+	const struct string_list *l1 = i1->util, *l2 = i2->util;
- 
- 	if (l1->nr < l2->nr)
- 		return 1;
-@@ -30,8 +30,8 @@ static void insert_one_record(struct shortlog *log,
- {
- 	const char *dot3 = log->common_repo_prefix;
- 	char *buffer, *p;
--	struct path_list_item *item;
--	struct path_list *onelines;
-+	struct string_list_item *item;
-+	struct string_list *onelines;
- 	char namebuf[1024];
- 	size_t len;
- 	const char *eol;
-@@ -64,9 +64,9 @@ static void insert_one_record(struct shortlog *log,
+ 	if (!strcmp(var, "color.ui")) {
+ 		git_use_color_default = git_config_colorbool(var, value, -1);
+ 		return 0;
  	}
  
- 	buffer = xstrdup(namebuf);
--	item = path_list_insert(buffer, &log->list);
-+	item = string_list_insert(buffer, &log->list);
- 	if (item->util == NULL)
--		item->util = xcalloc(1, sizeof(struct path_list));
-+		item->util = xcalloc(1, sizeof(struct string_list));
- 	else
- 		free(buffer);
- 
-@@ -104,11 +104,11 @@ static void insert_one_record(struct shortlog *log,
- 		onelines->alloc = alloc_nr(onelines->nr);
- 		onelines->items = xrealloc(onelines->items,
- 				onelines->alloc
--				* sizeof(struct path_list_item));
-+				* sizeof(struct string_list_item));
- 	}
- 
- 	onelines->items[onelines->nr].util = NULL;
--	onelines->items[onelines->nr++].path = buffer;
-+	onelines->items[onelines->nr++].string = buffer;
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
  }
  
- static void read_from_stdin(struct shortlog *log)
-@@ -219,7 +219,7 @@ void shortlog_init(struct shortlog *log)
- 
- 	read_mailmap(&log->mailmap, ".mailmap", &log->common_repo_prefix);
- 
--	log->list.strdup_paths = 1;
-+	log->list.strdup_strings = 1;
- 	log->wrap = DEFAULT_WRAPLEN;
- 	log->in1 = DEFAULT_INDENT1;
- 	log->in2 = DEFAULT_INDENT2;
-@@ -277,17 +277,17 @@ void shortlog_output(struct shortlog *log)
- {
- 	int i, j;
- 	if (log->sort_by_number)
--		qsort(log->list.items, log->list.nr, sizeof(struct path_list_item),
-+		qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
- 			compare_by_number);
- 	for (i = 0; i < log->list.nr; i++) {
--		struct path_list *onelines = log->list.items[i].util;
-+		struct string_list *onelines = log->list.items[i].util;
- 
- 		if (log->summary) {
--			printf("%6d\t%s\n", onelines->nr, log->list.items[i].path);
-+			printf("%6d\t%s\n", onelines->nr, log->list.items[i].string);
- 		} else {
--			printf("%s (%d):\n", log->list.items[i].path, onelines->nr);
-+			printf("%s (%d):\n", log->list.items[i].string, onelines->nr);
- 			for (j = onelines->nr - 1; j >= 0; j--) {
--				const char *msg = onelines->items[j].path;
-+				const char *msg = onelines->items[j].string;
- 
- 				if (log->wrap_lines) {
- 					int col = print_wrapped_text(msg, log->in1, log->in2, log->wrap);
-@@ -300,14 +300,14 @@ void shortlog_output(struct shortlog *log)
- 			putchar('\n');
- 		}
- 
--		onelines->strdup_paths = 1;
--		path_list_clear(onelines, 1);
-+		onelines->strdup_strings = 1;
-+		string_list_clear(onelines, 1);
- 		free(onelines);
- 		log->list.items[i].util = NULL;
- 	}
- 
--	log->list.strdup_paths = 1;
--	path_list_clear(&log->list, 1);
--	log->mailmap.strdup_paths = 1;
--	path_list_clear(&log->mailmap, 1);
-+	log->list.strdup_strings = 1;
-+	string_list_clear(&log->list, 1);
-+	log->mailmap.strdup_strings = 1;
-+	string_list_clear(&log->mailmap, 1);
- }
-diff --git a/builtin-show-ref.c b/builtin-show-ref.c
-index a323633..add1600 100644
---- a/builtin-show-ref.c
-+++ b/builtin-show-ref.c
-@@ -3,7 +3,7 @@
- #include "refs.h"
- #include "object.h"
- #include "tag.h"
--#include "path-list.h"
-+#include "string-list.h"
- 
- static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*] < ref-list";
- 
-@@ -98,8 +98,8 @@ match:
- 
- static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
- {
--	struct path_list *list = (struct path_list *)cbdata;
--	path_list_insert(refname, list);
-+	struct string_list *list = (struct string_list *)cbdata;
-+	string_list_insert(refname, list);
- 	return 0;
- }
- 
-@@ -114,7 +114,7 @@ static int add_existing(const char *refname, const unsigned char *sha1, int flag
+ static int color_vfprintf(FILE *fp, const char *color, const char *fmt,
+diff --git a/color.h b/color.h
+index ecda556..6cf5c88 100644
+--- a/color.h
++++ b/color.h
+@@ -13,7 +13,7 @@ extern int git_use_color_default;
+ /*
+  * Use this instead of git_default_config if you need the value of color.ui.
   */
- static int exclude_existing(const char *match)
- {
--	static struct path_list existing_refs = { NULL, 0, 0, 0 };
-+	static struct string_list existing_refs = { NULL, 0, 0, 0 };
- 	char buf[1024];
- 	int matchlen = match ? strlen(match) : 0;
+-int git_color_default_config(const char *var, const char *value);
++int git_color_default_config(const char *var, const char *value, void *cb);
  
-@@ -143,7 +143,7 @@ static int exclude_existing(const char *match)
- 			fprintf(stderr, "warning: ref '%s' ignored\n", ref);
- 			continue;
- 		}
--		if (!path_list_has_path(&existing_refs, ref)) {
-+		if (!string_list_has_string(&existing_refs, ref)) {
- 			printf("%s\n", buf);
- 		}
+ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
+ void color_parse(const char *var, const char *value, char *dst);
+diff --git a/config.c b/config.c
+index 5195de1..c2f2bbb 100644
+--- a/config.c
++++ b/config.c
+@@ -111,7 +111,7 @@ static inline int iskeychar(int c)
+ 	return isalnum(c) || c == '-';
+ }
+ 
+-static int get_value(config_fn_t fn, char *name, unsigned int len)
++static int get_value(config_fn_t fn, void *data, char *name, unsigned int len)
+ {
+ 	int c;
+ 	char *value;
+@@ -139,7 +139,7 @@ static int get_value(config_fn_t fn, char *name, unsigned int len)
+ 		if (!value)
+ 			return -1;
  	}
-diff --git a/diff-lib.c b/diff-lib.c
-index fe2ccec..de06be0 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -8,7 +8,7 @@
- #include "diffcore.h"
- #include "revision.h"
- #include "cache-tree.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "unpack-trees.h"
- #include "refs.h"
+-	return fn(name, value);
++	return fn(name, value, data);
+ }
  
-@@ -16,7 +16,7 @@
-  * diff-files
-  */
+ static int get_extended_base_var(char *name, int baselen, int c)
+@@ -197,7 +197,7 @@ static int get_base_var(char *name)
+ 	}
+ }
  
--static int read_directory(const char *path, struct path_list *list)
-+static int read_directory(const char *path, struct string_list *list)
+-static int git_parse_file(config_fn_t fn)
++static int git_parse_file(config_fn_t fn, void *data)
  {
- 	DIR *dir;
- 	struct dirent *e;
-@@ -26,7 +26,7 @@ static int read_directory(const char *path, struct path_list *list)
- 
- 	while ((e = readdir(dir)))
- 		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
--			path_list_insert(e->d_name, list);
-+			string_list_insert(e->d_name, list);
- 
- 	closedir(dir);
+ 	int comment = 0;
+ 	int baselen = 0;
+@@ -228,7 +228,7 @@ static int git_parse_file(config_fn_t fn)
+ 		if (!isalpha(c))
+ 			break;
+ 		var[baselen] = tolower(c);
+-		if (get_value(fn, var, baselen+1) < 0)
++		if (get_value(fn, data, var, baselen+1) < 0)
+ 			break;
+ 	}
+ 	die("bad config file line %d in %s", config_linenr, config_file_name);
+@@ -332,7 +332,7 @@ int git_config_string(const char **dest, const char *var, const char *value)
  	return 0;
-@@ -60,13 +60,13 @@ static int queue_diff(struct diff_options *o,
+ }
  
- 	if (S_ISDIR(mode1) || S_ISDIR(mode2)) {
- 		char buffer1[PATH_MAX], buffer2[PATH_MAX];
--		struct path_list p1 = {NULL, 0, 0, 1}, p2 = {NULL, 0, 0, 1};
-+		struct string_list p1 = {NULL, 0, 0, 1}, p2 = {NULL, 0, 0, 1};
- 		int len1 = 0, len2 = 0, i1, i2, ret = 0;
- 
- 		if (name1 && read_directory(name1, &p1))
- 			return -1;
- 		if (name2 && read_directory(name2, &p2)) {
--			path_list_clear(&p1, 0);
-+			string_list_clear(&p1, 0);
- 			return -1;
- 		}
- 
-@@ -95,14 +95,14 @@ static int queue_diff(struct diff_options *o,
- 			else if (i2 == p2.nr)
- 				comp = -1;
- 			else
--				comp = strcmp(p1.items[i1].path,
--					p2.items[i2].path);
-+				comp = strcmp(p1.items[i1].string,
-+					p2.items[i2].string);
- 
- 			if (comp > 0)
- 				n1 = NULL;
- 			else {
- 				n1 = buffer1;
--				strncpy(buffer1 + len1, p1.items[i1++].path,
-+				strncpy(buffer1 + len1, p1.items[i1++].string,
- 						PATH_MAX - len1);
- 			}
- 
-@@ -110,14 +110,14 @@ static int queue_diff(struct diff_options *o,
- 				n2 = NULL;
- 			else {
- 				n2 = buffer2;
--				strncpy(buffer2 + len2, p2.items[i2++].path,
-+				strncpy(buffer2 + len2, p2.items[i2++].string,
- 						PATH_MAX - len2);
- 			}
- 
- 			ret = queue_diff(o, n1, n2);
- 		}
--		path_list_clear(&p1, 0);
--		path_list_clear(&p2, 0);
-+		string_list_clear(&p1, 0);
-+		string_list_clear(&p2, 0);
- 
- 		return ret;
- 	} else {
-diff --git a/mailmap.c b/mailmap.c
-index f017255..88fc6f3 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -1,8 +1,8 @@
- #include "cache.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "mailmap.h"
- 
--int read_mailmap(struct path_list *map, const char *filename, char **repo_abbrev)
-+int read_mailmap(struct string_list *map, const char *filename, char **repo_abbrev)
+-int git_default_config(const char *var, const char *value)
++int git_default_config(const char *var, const char *value, void *dummy)
  {
- 	char buffer[1024];
+ 	/* This needs a better name */
+ 	if (!strcmp(var, "core.filemode")) {
+@@ -516,7 +516,7 @@ int git_default_config(const char *var, const char *value)
+ 	return 0;
+ }
+ 
+-int git_config_from_file(config_fn_t fn, const char *filename)
++int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ {
+ 	int ret;
  	FILE *f = fopen(filename, "r");
-@@ -54,16 +54,16 @@ int read_mailmap(struct path_list *map, const char *filename, char **repo_abbrev
- 		for (i = 0; i < right_bracket - left_bracket - 1; i++)
- 			email[i] = tolower(left_bracket[i + 1]);
- 		email[right_bracket - left_bracket - 1] = '\0';
--		path_list_insert(email, map)->util = name;
-+		string_list_insert(email, map)->util = name;
+@@ -527,7 +527,7 @@ int git_config_from_file(config_fn_t fn, const char *filename)
+ 		config_file_name = filename;
+ 		config_linenr = 1;
+ 		config_file_eof = 0;
+-		ret = git_parse_file(fn);
++		ret = git_parse_file(fn, data);
+ 		fclose(f);
+ 		config_file_name = NULL;
  	}
+@@ -565,7 +565,7 @@ int git_config_global(void)
+ 	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
+ }
+ 
+-int git_config(config_fn_t fn)
++int git_config(config_fn_t fn, void *data)
+ {
+ 	int ret = 0;
+ 	char *repo_config = NULL;
+@@ -578,7 +578,8 @@ int git_config(config_fn_t fn)
+ 	filename = getenv(CONFIG_ENVIRONMENT);
+ 	if (!filename) {
+ 		if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
+-			ret += git_config_from_file(fn, git_etc_gitconfig());
++			ret += git_config_from_file(fn, git_etc_gitconfig(),
++				data);
+ 		home = getenv("HOME");
+ 		filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
+ 		if (!filename)
+@@ -588,11 +589,11 @@ int git_config(config_fn_t fn)
+ 	if (git_config_global() && home) {
+ 		char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+ 		if (!access(user_config, R_OK))
+-			ret = git_config_from_file(fn, user_config);
++			ret = git_config_from_file(fn, user_config, data);
+ 		free(user_config);
+ 	}
+ 
+-	ret += git_config_from_file(fn, filename);
++	ret += git_config_from_file(fn, filename, data);
+ 	free(repo_config);
+ 	return ret;
+ }
+@@ -622,7 +623,7 @@ static int matches(const char* key, const char* value)
+ 		  !regexec(store.value_regex, value, 0, NULL, 0)));
+ }
+ 
+-static int store_aux(const char* key, const char* value)
++static int store_aux(const char* key, const char* value, void *cb)
+ {
+ 	const char *ep;
+ 	size_t section_len;
+@@ -951,7 +952,7 @@ int git_config_set_multivar(const char* key, const char* value,
+ 		 * As a side effect, we make sure to transform only a valid
+ 		 * existing config file.
+ 		 */
+-		if (git_config_from_file(store_aux, config_filename)) {
++		if (git_config_from_file(store_aux, config_filename, NULL)) {
+ 			error("invalid config file %s", config_filename);
+ 			free(store.key);
+ 			if (store.value_regex != NULL) {
+diff --git a/connect.c b/connect.c
+index d12b105..e92af29 100644
+--- a/connect.c
++++ b/connect.c
+@@ -360,7 +360,8 @@ static char *git_proxy_command;
+ static const char *rhost_name;
+ static int rhost_len;
+ 
+-static int git_proxy_command_options(const char *var, const char *value)
++static int git_proxy_command_options(const char *var, const char *value,
++		void *cb)
+ {
+ 	if (!strcmp(var, "core.gitproxy")) {
+ 		const char *for_pos;
+@@ -404,7 +405,7 @@ static int git_proxy_command_options(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ static int git_use_proxy(const char *host)
+@@ -412,7 +413,7 @@ static int git_use_proxy(const char *host)
+ 	rhost_name = host;
+ 	rhost_len = strlen(host);
+ 	git_proxy_command = getenv("GIT_PROXY_COMMAND");
+-	git_config(git_proxy_command_options);
++	git_config(git_proxy_command_options, NULL);
+ 	rhost_name = NULL;
+ 	return (git_proxy_command && *git_proxy_command);
+ }
+diff --git a/convert.c b/convert.c
+index d8c94cb..1c66844 100644
+--- a/convert.c
++++ b/convert.c
+@@ -323,7 +323,7 @@ static struct convert_driver {
+ 	char *clean;
+ } *user_convert, **user_convert_tail;
+ 
+-static int read_convert_config(const char *var, const char *value)
++static int read_convert_config(const char *var, const char *value, void *cb)
+ {
+ 	const char *ep, *name;
+ 	int namelen;
+@@ -385,7 +385,7 @@ static void setup_convert_check(struct git_attr_check *check)
+ 		attr_ident = git_attr("ident", 5);
+ 		attr_filter = git_attr("filter", 6);
+ 		user_convert_tail = &user_convert;
+-		git_config(read_convert_config);
++		git_config(read_convert_config, NULL);
+ 	}
+ 	check[0].attr = attr_crlf;
+ 	check[1].attr = attr_ident;
+diff --git a/daemon.c b/daemon.c
+index 2b4a6f1..63cd12c 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -306,7 +306,7 @@ struct daemon_service {
+ static struct daemon_service *service_looking_at;
+ static int service_enabled;
+ 
+-static int git_daemon_config(const char *var, const char *value)
++static int git_daemon_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!prefixcmp(var, "daemon.") &&
+ 	    !strcmp(var + 7, service_looking_at->config_name)) {
+@@ -356,7 +356,7 @@ static int run_service(struct interp *itable, struct daemon_service *service)
+ 	if (service->overridable) {
+ 		service_looking_at = service;
+ 		service_enabled = -1;
+-		git_config(git_daemon_config);
++		git_config(git_daemon_config, NULL);
+ 		if (0 <= service_enabled)
+ 			enabled = service_enabled;
+ 	}
+diff --git a/diff.c b/diff.c
+index 439d474..f77edaf 100644
+--- a/diff.c
++++ b/diff.c
+@@ -129,7 +129,7 @@ static int parse_funcname_pattern(const char *var, const char *ep, const char *v
+  * never be affected by the setting of diff.renames
+  * the user happens to have in the configuration file.
+  */
+-int git_diff_ui_config(const char *var, const char *value)
++int git_diff_ui_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "diff.renamelimit")) {
+ 		diff_rename_limit_default = git_config_int(var, value);
+@@ -166,10 +166,10 @@ int git_diff_ui_config(const char *var, const char *value)
+ 			return parse_lldiff_command(var, ep, value);
+ 	}
+ 
+-	return git_diff_basic_config(var, value);
++	return git_diff_basic_config(var, value, cb);
+ }
+ 
+-int git_diff_basic_config(const char *var, const char *value)
++int git_diff_basic_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff.")) {
+ 		int slot = parse_diff_color_slot(var, 11);
+@@ -190,7 +190,7 @@ int git_diff_basic_config(const char *var, const char *value)
+ 		}
+ 	}
+ 
+-	return git_color_default_config(var, value);
++	return git_color_default_config(var, value, cb);
+ }
+ 
+ static char *quote_two(const char *one, const char *two)
+diff --git a/diff.h b/diff.h
+index 3a02d38..f190e02 100644
+--- a/diff.h
++++ b/diff.h
+@@ -181,8 +181,8 @@ extern void diff_unmerge(struct diff_options *,
+ #define DIFF_SETUP_USE_CACHE		2
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
+-extern int git_diff_basic_config(const char *var, const char *value);
+-extern int git_diff_ui_config(const char *var, const char *value);
++extern int git_diff_basic_config(const char *var, const char *value, void *cb);
++extern int git_diff_ui_config(const char *var, const char *value, void *cb);
+ extern int diff_use_color_default;
+ extern void diff_setup(struct diff_options *);
+ extern int diff_opt_parse(struct diff_options *, const char **, int);
+diff --git a/fast-import.c b/fast-import.c
+index 73e5439..36ec5b8 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2352,7 +2352,7 @@ static void import_marks(const char *input_file)
  	fclose(f);
+ }
+ 
+-static int git_pack_config(const char *k, const char *v)
++static int git_pack_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "pack.depth")) {
+ 		max_depth = git_config_int(k, v);
+@@ -2370,7 +2370,7 @@ static int git_pack_config(const char *k, const char *v)
+ 		pack_compression_seen = 1;
+ 		return 0;
+ 	}
+-	return git_default_config(k, v);
++	return git_default_config(k, v, cb);
+ }
+ 
+ static const char fast_import_usage[] =
+@@ -2381,7 +2381,7 @@ int main(int argc, const char **argv)
+ 	unsigned int i, show_stats = 1;
+ 
+ 	setup_git_directory();
+-	git_config(git_pack_config);
++	git_config(git_pack_config, NULL);
+ 	if (!pack_compression_seen && core_compression_seen)
+ 		pack_compression_level = core_compression_level;
+ 
+diff --git a/hash-object.c b/hash-object.c
+index 61e7160..3d77390 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -43,7 +43,7 @@ int main(int argc, char **argv)
+ 	int no_more_flags = 0;
+ 	int hashstdin = 0;
+ 
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	for (i = 1 ; i < argc; i++) {
+ 		if (!no_more_flags && argv[i][0] == '-') {
+diff --git a/help.c b/help.c
+index af80979..d89d437 100644
+--- a/help.c
++++ b/help.c
+@@ -252,7 +252,7 @@ static int add_man_viewer_info(const char *var, const char *value)
  	return 0;
  }
  
--int map_email(struct path_list *map, const char *email, char *name, int maxlen)
-+int map_email(struct string_list *map, const char *email, char *name, int maxlen)
+-static int git_help_config(const char *var, const char *value)
++static int git_help_config(const char *var, const char *value, void *cb)
  {
- 	char *p;
--	struct path_list_item *item;
-+	struct string_list_item *item;
- 	char buf[1024], *mailbuf;
- 	int i;
+ 	if (!strcmp(var, "help.format")) {
+ 		if (!value)
+@@ -269,7 +269,7 @@ static int git_help_config(const char *var, const char *value)
+ 	if (!prefixcmp(var, "man."))
+ 		return add_man_viewer_info(var, value);
  
-@@ -80,7 +80,7 @@ int map_email(struct path_list *map, const char *email, char *name, int maxlen)
- 	for (i = 0; i < p - email; i++)
- 		mailbuf[i] = tolower(email[i]);
- 	mailbuf[i] = 0;
--	item = path_list_lookup(mailbuf, map);
-+	item = string_list_lookup(mailbuf, map);
- 	if (mailbuf != buf)
- 		free(mailbuf);
- 	if (item != NULL) {
-diff --git a/mailmap.h b/mailmap.h
-index 3503fd2..6e48f83 100644
---- a/mailmap.h
-+++ b/mailmap.h
-@@ -1,7 +1,7 @@
- #ifndef MAILMAP_H
- #define MAILMAP_H
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
  
--int read_mailmap(struct path_list *map, const char *filename, char **repo_abbrev);
--int map_email(struct path_list *mailmap, const char *email, char *name, int maxlen);
-+int read_mailmap(struct string_list *map, const char *filename, char **repo_abbrev);
-+int map_email(struct string_list *mailmap, const char *email, char *name, int maxlen);
+ /* most GUI terminals set COLUMNS (although some don't export it) */
+@@ -641,7 +641,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	const char *alias;
  
+ 	setup_git_directory_gently(&nongit);
+-	git_config(git_help_config);
++	git_config(git_help_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, builtin_help_options,
+ 			builtin_help_usage, 0);
+diff --git a/http.c b/http.c
+index acf746a..2a21ccb 100644
+--- a/http.c
++++ b/http.c
+@@ -90,7 +90,7 @@ static void process_curl_messages(void)
+ }
  #endif
-diff --git a/path-list.c b/path-list.c
-deleted file mode 100644
-index 92e5cf2..0000000
---- a/path-list.c
-+++ /dev/null
-@@ -1,134 +0,0 @@
--#include "cache.h"
--#include "path-list.h"
--
--/* if there is no exact match, point to the index where the entry could be
-- * inserted */
--static int get_entry_index(const struct path_list *list, const char *path,
--		int *exact_match)
--{
--	int left = -1, right = list->nr;
--
--	while (left + 1 < right) {
--		int middle = (left + right) / 2;
--		int compare = strcmp(path, list->items[middle].path);
--		if (compare < 0)
--			right = middle;
--		else if (compare > 0)
--			left = middle;
--		else {
--			*exact_match = 1;
--			return middle;
--		}
--	}
--
--	*exact_match = 0;
--	return right;
--}
--
--/* returns -1-index if already exists */
--static int add_entry(struct path_list *list, const char *path)
--{
--	int exact_match;
--	int index = get_entry_index(list, path, &exact_match);
--
--	if (exact_match)
--		return -1 - index;
--
--	if (list->nr + 1 >= list->alloc) {
--		list->alloc += 32;
--		list->items = xrealloc(list->items, list->alloc
--				* sizeof(struct path_list_item));
--	}
--	if (index < list->nr)
--		memmove(list->items + index + 1, list->items + index,
--				(list->nr - index)
--				* sizeof(struct path_list_item));
--	list->items[index].path = list->strdup_paths ?
--		xstrdup(path) : (char *)path;
--	list->items[index].util = NULL;
--	list->nr++;
--
--	return index;
--}
--
--struct path_list_item *path_list_insert(const char *path, struct path_list *list)
--{
--	int index = add_entry(list, path);
--
--	if (index < 0)
--		index = -1 - index;
--
--	return list->items + index;
--}
--
--int path_list_has_path(const struct path_list *list, const char *path)
--{
--	int exact_match;
--	get_entry_index(list, path, &exact_match);
--	return exact_match;
--}
--
--struct path_list_item *path_list_lookup(const char *path, struct path_list *list)
--{
--	int exact_match, i = get_entry_index(list, path, &exact_match);
--	if (!exact_match)
--		return NULL;
--	return list->items + i;
--}
--
--void path_list_clear(struct path_list *list, int free_util)
--{
--	if (list->items) {
--		int i;
--		if (list->strdup_paths) {
--			for (i = 0; i < list->nr; i++)
--				free(list->items[i].path);
--		}
--		if (free_util) {
--			for (i = 0; i < list->nr; i++)
--				free(list->items[i].util);
--		}
--		free(list->items);
--	}
--	list->items = NULL;
--	list->nr = list->alloc = 0;
--}
--
--void print_path_list(const char *text, const struct path_list *p)
--{
--	int i;
--	if ( text )
--		printf("%s\n", text);
--	for (i = 0; i < p->nr; i++)
--		printf("%s:%p\n", p->items[i].path, p->items[i].util);
--}
--
--struct path_list_item *path_list_append(const char *path, struct path_list *list)
--{
--	ALLOC_GROW(list->items, list->nr + 1, list->alloc);
--	list->items[list->nr].path =
--		list->strdup_paths ? xstrdup(path) : (char *)path;
--	return list->items + list->nr++;
--}
--
--static int cmp_items(const void *a, const void *b)
--{
--	const struct path_list_item *one = a;
--	const struct path_list_item *two = b;
--	return strcmp(one->path, two->path);
--}
--
--void sort_path_list(struct path_list *list)
--{
--	qsort(list->items, list->nr, sizeof(*list->items), cmp_items);
--}
--
--int unsorted_path_list_has_path(struct path_list *list, const char *path)
--{
--	int i;
--	for (i = 0; i < list->nr; i++)
--		if (!strcmp(path, list->items[i].path))
--			return 1;
--	return 0;
--}
--
-diff --git a/path-list.h b/path-list.h
-deleted file mode 100644
-index ca2cbba..0000000
---- a/path-list.h
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#ifndef PATH_LIST_H
--#define PATH_LIST_H
--
--struct path_list_item {
--	char *path;
--	void *util;
--};
--struct path_list
--{
--	struct path_list_item *items;
--	unsigned int nr, alloc;
--	unsigned int strdup_paths:1;
--};
--
--void print_path_list(const char *text, const struct path_list *p);
--void path_list_clear(struct path_list *list, int free_util);
--
--/* Use these functions only on sorted lists: */
--int path_list_has_path(const struct path_list *list, const char *path);
--struct path_list_item *path_list_insert(const char *path, struct path_list *list);
--struct path_list_item *path_list_lookup(const char *path, struct path_list *list);
--
--/* Use these functions only on unsorted lists: */
--struct path_list_item *path_list_append(const char *path, struct path_list *list);
--void sort_path_list(struct path_list *list);
--int unsorted_path_list_has_path(struct path_list *list, const char *path);
--
--#endif /* PATH_LIST_H */
-diff --git a/reflog-walk.c b/reflog-walk.c
-index ee1456b..f751fdc 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -3,7 +3,7 @@
- #include "refs.h"
- #include "diff.h"
- #include "revision.h"
--#include "path-list.h"
-+#include "string-list.h"
- #include "reflog-walk.h"
  
- struct complete_reflogs {
-@@ -127,7 +127,7 @@ struct commit_reflog {
- 
- struct reflog_walk_info {
- 	struct commit_info_lifo reflogs;
--	struct path_list complete_reflogs;
-+	struct string_list complete_reflogs;
- 	struct commit_reflog *last_commit_reflog;
- };
- 
-@@ -141,7 +141,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+-static int http_options(const char *var, const char *value)
++static int http_options(const char *var, const char *value, void *cb)
  {
- 	unsigned long timestamp = 0;
- 	int recno = -1;
--	struct path_list_item *item;
-+	struct string_list_item *item;
- 	struct complete_reflogs *reflogs;
- 	char *branch, *at = strchr(name, '@');
- 	struct commit_reflog *commit_reflog;
-@@ -161,7 +161,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 	} else
- 		recno = 0;
- 
--	item = path_list_lookup(branch, &info->complete_reflogs);
-+	item = string_list_lookup(branch, &info->complete_reflogs);
- 	if (item)
- 		reflogs = item->util;
- 	else {
-@@ -189,7 +189,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		}
- 		if (!reflogs || reflogs->nr == 0)
- 			return -1;
--		path_list_insert(branch, &info->complete_reflogs)->util
-+		string_list_insert(branch, &info->complete_reflogs)->util
- 			= reflogs;
+ 	if (!strcmp("http.sslverify", var)) {
+ 		if (curl_ssl_verify == -1) {
+@@ -169,7 +169,7 @@ static int http_options(const char *var, const char *value)
  	}
  
-diff --git a/shortlog.h b/shortlog.h
-index 31ff491..46a0991 100644
---- a/shortlog.h
-+++ b/shortlog.h
-@@ -1,10 +1,10 @@
- #ifndef SHORTLOG_H
- #define SHORTLOG_H
+ 	/* Fall back on the default ones */
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
  
--#include "path-list.h"
-+#include "string-list.h"
+ static CURL* get_curl_handle(void)
+@@ -263,7 +263,7 @@ void http_init(struct remote *remote)
+ 	if (low_speed_time != NULL)
+ 		curl_low_speed_time = strtol(low_speed_time, NULL, 10);
  
- struct shortlog {
--	struct path_list list;
-+	struct string_list list;
- 	int summary;
- 	int wrap_lines;
- 	int sort_by_number;
-@@ -14,7 +14,7 @@ struct shortlog {
+-	git_config(http_options);
++	git_config(http_options, NULL);
  
- 	char *common_repo_prefix;
- 	int email;
--	struct path_list mailmap;
-+	struct string_list mailmap;
+ 	if (curl_ssl_verify == -1)
+ 		curl_ssl_verify = 1;
+diff --git a/imap-send.c b/imap-send.c
+index db65597..1ec1310 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1247,7 +1247,7 @@ static imap_server_conf_t server =
+ static char *imap_folder;
+ 
+ static int
+-git_imap_config(const char *key, const char *val)
++git_imap_config(const char *key, const char *val, void *cb)
+ {
+ 	char imap_key[] = "imap.";
+ 
+@@ -1296,7 +1296,7 @@ main(int argc, char **argv)
+ 	/* init the random number generator */
+ 	arc4_init();
+ 
+-	git_config( git_imap_config );
++	git_config(git_imap_config, NULL);
+ 
+ 	if (!imap_folder) {
+ 		fprintf( stderr, "no imap store specified\n" );
+diff --git a/index-pack.c b/index-pack.c
+index 9c0c278..aaba944 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -765,7 +765,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 	}
+ }
+ 
+-static int git_index_pack_config(const char *k, const char *v)
++static int git_index_pack_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "pack.indexversion")) {
+ 		pack_idx_default_version = git_config_int(k, v);
+@@ -773,7 +773,7 @@ static int git_index_pack_config(const char *k, const char *v)
+ 			die("bad pack.indexversion=%d", pack_idx_default_version);
+ 		return 0;
+ 	}
+-	return git_default_config(k, v);
++	return git_default_config(k, v, cb);
+ }
+ 
+ int main(int argc, char **argv)
+@@ -786,7 +786,7 @@ int main(int argc, char **argv)
+ 	struct pack_idx_entry **idx_objects;
+ 	unsigned char sha1[20];
+ 
+-	git_config(git_index_pack_config);
++	git_config(git_index_pack_config, NULL);
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = argv[i];
+diff --git a/ll-merge.c b/ll-merge.c
+index 5ae7433..9837c84 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -225,7 +225,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ static struct ll_merge_driver *ll_user_merge, **ll_user_merge_tail;
+ static const char *default_ll_merge;
+ 
+-static int read_merge_config(const char *var, const char *value)
++static int read_merge_config(const char *var, const char *value, void *cb)
+ {
+ 	struct ll_merge_driver *fn;
+ 	const char *ep, *name;
+@@ -309,7 +309,7 @@ static void initialize_ll_merge(void)
+ 	if (ll_user_merge_tail)
+ 		return;
+ 	ll_user_merge_tail = &ll_user_merge;
+-	git_config(read_merge_config);
++	git_config(read_merge_config, NULL);
+ }
+ 
+ static const struct ll_merge_driver *find_ll_merge_driver(const char *merge_attr)
+diff --git a/pager.c b/pager.c
+index ca002f9..dbd9414 100644
+--- a/pager.c
++++ b/pager.c
+@@ -33,7 +33,7 @@ void setup_pager(void)
+ 		return;
+ 	if (!pager) {
+ 		if (!pager_program)
+-			git_config(git_default_config);
++			git_config(git_default_config, NULL);
+ 		pager = pager_program;
+ 	}
+ 	if (!pager)
+diff --git a/receive-pack.c b/receive-pack.c
+index e9de36c..cf45020 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -19,7 +19,7 @@ static int report_status;
+ static char capabilities[] = " report-status delete-refs tellme-more ";
+ static int capabilities_sent;
+ 
+-static int receive_pack_config(const char *var, const char *value)
++static int receive_pack_config(const char *var, const char *value, void *cb)
+ {
+ 	if (strcmp(var, "receive.denynonfastforwards") == 0) {
+ 		deny_non_fast_forwards = git_config_bool(var, value);
+@@ -41,7 +41,7 @@ static int receive_pack_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+@@ -638,7 +638,7 @@ int main(int argc, char **argv)
+ 	if (is_repository_shallow())
+ 		die("attempt to push into a shallow repository");
+ 
+-	git_config(receive_pack_config);
++	git_config(receive_pack_config, NULL);
+ 
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
+diff --git a/remote.c b/remote.c
+index 05041ed..c7ba617 100644
+--- a/remote.c
++++ b/remote.c
+@@ -297,7 +297,7 @@ static void read_branches_file(struct remote *remote)
+ 	remote->fetch_tags = 1; /* always auto-follow */
+ }
+ 
+-static int handle_config(const char *key, const char *value)
++static int handle_config(const char *key, const char *value, void *cb)
+ {
+ 	const char *name;
+ 	const char *subkey;
+@@ -419,7 +419,7 @@ static void read_config(void)
+ 		current_branch =
+ 			make_branch(head_ref + strlen("refs/heads/"), 0);
+ 	}
+-	git_config(handle_config);
++	git_config(handle_config, NULL);
+ 	alias_all_urls();
+ }
+ 
+diff --git a/setup.c b/setup.c
+index b8fd476..d630e37 100644
+--- a/setup.c
++++ b/setup.c
+@@ -300,7 +300,7 @@ void setup_work_tree(void)
+ 
+ static int check_repository_format_gently(int *nongit_ok)
+ {
+-	git_config(check_repository_format_version);
++	git_config(check_repository_format_version, NULL);
+ 	if (GIT_REPO_VERSION < repository_format_version) {
+ 		if (!nongit_ok)
+ 			die ("Expected git repo version <= %d, found %d",
+@@ -524,7 +524,7 @@ int git_config_perm(const char *var, const char *value)
+ 	return i & 0666;
+ }
+ 
+-int check_repository_format_version(const char *var, const char *value)
++int check_repository_format_version(const char *var, const char *value, void *cb)
+ {
+ 	if (strcmp(var, "core.repositoryformatversion") == 0)
+ 		repository_format_version = git_config_int(var, value);
+diff --git a/unpack-file.c b/unpack-file.c
+index 65c66eb..bcdc8bb 100644
+--- a/unpack-file.c
++++ b/unpack-file.c
+@@ -31,7 +31,7 @@ int main(int argc, char **argv)
+ 		die("Not a valid object name %s", argv[1]);
+ 
+ 	setup_git_directory();
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 
+ 	puts(create_temp_file(sha1));
+ 	return 0;
+diff --git a/var.c b/var.c
+index c20ac91..724ba87 100644
+--- a/var.c
++++ b/var.c
+@@ -39,13 +39,13 @@ static const char *read_var(const char *var)
+ 	return val;
+ }
+ 
+-static int show_config(const char *var, const char *value)
++static int show_config(const char *var, const char *value, void *cb)
+ {
+ 	if (value)
+ 		printf("%s=%s\n", var, value);
+ 	else
+ 		printf("%s\n", var);
+-	return git_default_config(var, value);
++	return git_default_config(var, value, cb);
+ }
+ 
+ int main(int argc, char **argv)
+@@ -60,11 +60,11 @@ int main(int argc, char **argv)
+ 	val = NULL;
+ 
+ 	if (strcmp(argv[1], "-l") == 0) {
+-		git_config(show_config);
++		git_config(show_config, NULL);
+ 		list_vars();
+ 		return 0;
+ 	}
+-	git_config(git_default_config);
++	git_config(git_default_config, NULL);
+ 	val = read_var(argv[1]);
+ 	if (!val)
+ 		usage(var_usage);
+diff --git a/wt-status.c b/wt-status.c
+index a44c543..9bb5ea6 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -362,7 +362,7 @@ void wt_status_print(struct wt_status *s)
+ 	}
+ }
+ 
+-int git_status_config(const char *k, const char *v)
++int git_status_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "status.submodulesummary")) {
+ 		int is_bool;
+@@ -386,5 +386,5 @@ int git_status_config(const char *k, const char *v)
+ 		wt_status_relative_paths = git_config_bool(k, v);
+ 		return 0;
+ 	}
+-	return git_color_default_config(k, v);
++	return git_color_default_config(k, v, cb);
+ }
+diff --git a/wt-status.h b/wt-status.h
+index 7d61410..f2c7130 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -27,7 +27,7 @@ struct wt_status {
+ 	const char *prefix;
  };
  
- void shortlog_init(struct shortlog *log);
-diff --git a/string-list.c b/string-list.c
-new file mode 100644
-index 0000000..86137c7
---- /dev/null
-+++ b/string-list.c
-@@ -0,0 +1,138 @@
-+#include "cache.h"
-+#include "string-list.h"
-+
-+/* if there is no exact match, point to the index where the entry could be
-+ * inserted */
-+static int get_entry_index(const struct string_list *list, const char *string,
-+		int *exact_match)
-+{
-+	int left = -1, right = list->nr;
-+
-+	while (left + 1 < right) {
-+		int middle = (left + right) / 2;
-+		int compare = strcmp(string, list->items[middle].string);
-+		if (compare < 0)
-+			right = middle;
-+		else if (compare > 0)
-+			left = middle;
-+		else {
-+			*exact_match = 1;
-+			return middle;
-+		}
-+	}
-+
-+	*exact_match = 0;
-+	return right;
-+}
-+
-+/* returns -1-index if already exists */
-+static int add_entry(struct string_list *list, const char *string)
-+{
-+	int exact_match;
-+	int index = get_entry_index(list, string, &exact_match);
-+
-+	if (exact_match)
-+		return -1 - index;
-+
-+	if (list->nr + 1 >= list->alloc) {
-+		list->alloc += 32;
-+		list->items = xrealloc(list->items, list->alloc
-+				* sizeof(struct string_list_item));
-+	}
-+	if (index < list->nr)
-+		memmove(list->items + index + 1, list->items + index,
-+				(list->nr - index)
-+				* sizeof(struct string_list_item));
-+	list->items[index].string = list->strdup_strings ?
-+		xstrdup(string) : (char *)string;
-+	list->items[index].util = NULL;
-+	list->nr++;
-+
-+	return index;
-+}
-+
-+struct string_list_item *string_list_insert(const char *string,
-+		struct string_list *list)
-+{
-+	int index = add_entry(list, string);
-+
-+	if (index < 0)
-+		index = -1 - index;
-+
-+	return list->items + index;
-+}
-+
-+int string_list_has_string(const struct string_list *list, const char *string)
-+{
-+	int exact_match;
-+	get_entry_index(list, string, &exact_match);
-+	return exact_match;
-+}
-+
-+struct string_list_item *string_list_lookup(const char *string,
-+		struct string_list *list)
-+{
-+	int exact_match, i = get_entry_index(list, string, &exact_match);
-+	if (!exact_match)
-+		return NULL;
-+	return list->items + i;
-+}
-+
-+void string_list_clear(struct string_list *list, int free_util)
-+{
-+	if (list->items) {
-+		int i;
-+		if (list->strdup_strings) {
-+			for (i = 0; i < list->nr; i++)
-+				free(list->items[i].string);
-+		}
-+		if (free_util) {
-+			for (i = 0; i < list->nr; i++)
-+				free(list->items[i].util);
-+		}
-+		free(list->items);
-+	}
-+	list->items = NULL;
-+	list->nr = list->alloc = 0;
-+}
-+
-+void print_string_list(const char *text, const struct string_list *p)
-+{
-+	int i;
-+	if ( text )
-+		printf("%s\n", text);
-+	for (i = 0; i < p->nr; i++)
-+		printf("%s:%p\n", p->items[i].string, p->items[i].util);
-+}
-+
-+struct string_list_item *string_list_append(const char *string,
-+		struct string_list *list)
-+{
-+	ALLOC_GROW(list->items, list->nr + 1, list->alloc);
-+	list->items[list->nr].string =
-+		list->strdup_strings ? xstrdup(string) : (char *)string;
-+	return list->items + list->nr++;
-+}
-+
-+static int cmp_items(const void *a, const void *b)
-+{
-+	const struct string_list_item *one = a;
-+	const struct string_list_item *two = b;
-+	return strcmp(one->string, two->string);
-+}
-+
-+void sort_string_list(struct string_list *list)
-+{
-+	qsort(list->items, list->nr, sizeof(*list->items), cmp_items);
-+}
-+
-+int unsorted_string_list_has_string(struct string_list *list,
-+		const char *string)
-+{
-+	int i;
-+	for (i = 0; i < list->nr; i++)
-+		if (!strcmp(string, list->items[i].string))
-+			return 1;
-+	return 0;
-+}
-+
-diff --git a/string-list.h b/string-list.h
-new file mode 100644
-index 0000000..4d6a705
---- /dev/null
-+++ b/string-list.h
-@@ -0,0 +1,28 @@
-+#ifndef PATH_LIST_H
-+#define PATH_LIST_H
-+
-+struct string_list_item {
-+	char *string;
-+	void *util;
-+};
-+struct string_list
-+{
-+	struct string_list_item *items;
-+	unsigned int nr, alloc;
-+	unsigned int strdup_strings:1;
-+};
-+
-+void print_string_list(const char *text, const struct string_list *p);
-+void string_list_clear(struct string_list *list, int free_util);
-+
-+/* Use these functions only on sorted lists: */
-+int string_list_has_string(const struct string_list *list, const char *string);
-+struct string_list_item *string_list_insert(const char *string, struct string_list *list);
-+struct string_list_item *string_list_lookup(const char *string, struct string_list *list);
-+
-+/* Use these functions only on unsorted lists: */
-+struct string_list_item *string_list_append(const char *string, struct string_list *list);
-+void sort_string_list(struct string_list *list);
-+int unsorted_string_list_has_string(struct string_list *list, const char *string);
-+
-+#endif /* PATH_LIST_H */
+-int git_status_config(const char *var, const char *value);
++int git_status_config(const char *var, const char *value, void *cb);
+ extern int wt_status_use_color;
+ extern int wt_status_relative_paths;
+ void wt_status_prepare(struct wt_status *s);
 -- 
 1.5.5.1.375.g1becb
