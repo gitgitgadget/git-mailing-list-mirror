@@ -1,145 +1,133 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/2] Better StGit version tracking
-Date: Wed, 14 May 2008 03:47:00 +0200
-Message-ID: <20080514014502.7043.44236.stgit@yoghurt>
-References: <20080514014309.GA17955@diana.vm.bytemark.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH v2 19/24] Added the class AddRuleListFactory.
+Date: Tue, 13 May 2008 21:49:02 -0400
+Message-ID: <20080514014902.GL29038@spearce.org>
+References: <1210623222-24908-1-git-send-email-florianskarten@web.de> <20080513012909.GG29038@spearce.org> <48297A88.5040508@web.de> <200805132255.46363.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 03:47:59 2008
+Cc: Florian =?utf-8?Q?K=C3=B6berle?= <FloriansKarten@web.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed May 14 03:49:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw661-0004ap-Dh
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 03:47:57 +0200
+	id 1Jw67x-000528-JG
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 03:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbYENBrI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 May 2008 21:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbYENBrH
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 21:47:07 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4088 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228AbYENBrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2008 21:47:06 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Jw655-0004iY-00; Wed, 14 May 2008 02:46:59 +0100
-In-Reply-To: <20080514014309.GA17955@diana.vm.bytemark.co.uk>
-User-Agent: StGIT/0.14.2.152.g77bd
+	id S1757165AbYENBtK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 May 2008 21:49:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756823AbYENBtK
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 May 2008 21:49:10 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55061 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753008AbYENBtH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 May 2008 21:49:07 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Jw66u-0004xc-Rn; Tue, 13 May 2008 21:48:52 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D7D0E20FBAE; Tue, 13 May 2008 21:49:02 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200805132255.46363.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82063>
 
-Instead of claiming to be the latest released version (really, a
-hardcoded string that we hope is the latest released version), run git
-describe to figure out what version we are, just like git does. Fall
-back to a hardcoded value that is generated at install time, or
-supplied in a release tarball.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> tisdagen den 13 maj 2008 13.24.56 skrev Florian K=C3=B6berle:
+> >=20
+> > Still I think that the behavior of git-add is strange:
+> > For example, if you want to add the following file:
+> > a/b/c/test.txt
+> > Then I can do this with "a/\*.txt" or "a/b\*.txt" but not with=20
+> > "a/\*/c/test.txt"
+=2E..
+> Correctness is very important. Obviously we will slip bugs trough, bu=
+t
+> not intentionally in a part where legacy behaviour may play an import=
+ant
+> role. With these options available I'd select number 2.
+>=20
+> I think your observations are interesting, especially the one you mak=
+e
+> here about a/*/c/test.txt not matching because I don't see from the g=
+it
+> add manual why it shouldn't. I does not look like a recent git bug ei=
+ther.=20
 
-Currently, we have to give git describe the --tags flag, since StGit
-release tags are lightweight tags. This means we're going to pick up
-any lightweight tags the user makes, which isn't ideal. The solution
-is to start making annotated release tags, and then remove that flag.
+Wow.  The behavior of git-add makes _no_ sense to me.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+  $ git init
+  $ mkdir -p a/b/c; touch a/b/c/test.txt
+  $ find a
+  a
+  a/b
+  a/b/c
+  a/b/c/test.txt
 
----
+  $ git add 'a/*/test.txt'
+  fatal: pathspec 'a/*/test.txt' did not match any files
 
-Catalin, you might want to pay extra attention the first time you
-release something with this in it. Making sure that
-stgit/builtin_version.py is included in the tarball, for example.
+(sure, ok, even my shell agrees)
 
- setup.py         |    2 ++
- stgit/.gitignore |    1 +
- stgit/version.py |   52 ++++++++++++++++++++++++++++++++++++++++++++++=
-+++++-
- 3 files changed, 54 insertions(+), 1 deletions(-)
+  $ git add 'a/*/c/test.txt'
+  fatal: pathspec 'a/*/c/test.txt' did not match any files
 
+  $ ls a/*/c/test.txt
+  a/b/c/test.txt
 
-diff --git a/setup.py b/setup.py
-index 04ca821..40022a7 100755
---- a/setup.py
-+++ b/setup.py
-@@ -48,6 +48,8 @@ if sys.argv[1] in ['install', 'build']:
-     __check_python_version()
-     __check_git_version()
-=20
-+version.write_builtin_version()
-+
- # ensure readable template files
- old_mask =3D os.umask(0022)
-=20
-diff --git a/stgit/.gitignore b/stgit/.gitignore
-index 0d20b64..4f9c8f1 100644
---- a/stgit/.gitignore
-+++ b/stgit/.gitignore
-@@ -1 +1,2 @@
- *.pyc
-+/builtin_version.py
-diff --git a/stgit/version.py b/stgit/version.py
-index 06ac723..8ee5009 100644
---- a/stgit/version.py
-+++ b/stgit/version.py
-@@ -1,4 +1,54 @@
--version =3D '0.14.2'
-+from stgit.exception import StgException
-+from stgit import run, utils
-+import os.path, re, sys
-+
-+class VersionUnavailable(StgException):
-+    pass
-+
-+def git_describe_version():
-+    path =3D sys.path[0]
-+    try:
-+        v =3D run.Run('git', 'describe', '--tags', '--abbrev=3D4'
-+                    ).cwd(path).output_one_line()
-+    except run.RunException, e:
-+        raise VersionUnavailable(str(e))
-+    if not re.match(r'^v[0-9]', v):
-+        raise VersionUnavailable('%s: bad version' % v)
-+    try:
-+        dirty =3D run.Run('git', 'diff-index', '--name-only', 'HEAD'
-+                        ).cwd(path).raw_output()
-+    except run.RunException, e:
-+        raise VersionUnavailable(str(e))
-+    if dirty:
-+        v +=3D '-dirty'
-+    return re.sub('-', '.', utils.strip_prefix('v', v))
-+
-+def builtin_version():
-+    try:
-+        import builtin_version as bv
-+    except ImportError:
-+        raise VersionUnavailable()
-+    else:
-+        return bv.version
-+
-+def write_builtin_version():
-+    try:
-+        v =3D git_describe_version()
-+    except VersionUnavailable:
-+        return
-+    f =3D file(os.path.join(sys.path[0], 'stgit', 'builtin_version.py'=
-), 'w')
-+    f.write('# This file was generated automatically. Do not edit by h=
-and.\n'
-+            'version =3D %r\n' % v)
-+
-+def get_version():
-+    for v in [git_describe_version, builtin_version]:
-+        try:
-+            return v()
-+        except VersionUnavailable:
-+            pass
-+    return 'unknown-version'
-+
-+version =3D get_version()
-=20
- # minimum version requirements
- git_min_ver =3D '1.5.2'
+(hmm, now my shell says otherwise)
+
+  $ git add 'a/b*/c/test.txt'
+  fatal: pathspec 'a/b*/c/test.txt' did not match any files
+
+  $ ls a/b*/c/test.txt
+  a/b/c/test.txt
+
+(also odd)
+
+This last case does match with fnmatch:
+
+  $ cat fnmatch.c=20
+  #include <fnmatch.h>
+  #include <stdio.h>
+ =20
+  int main (int argc, char *argv[]) {
+  	const char *name =3D argv[1];
+  	const char *patt =3D argv[2];
+  	printf("\"%s\" matches \"%s\" =3D %d\n",
+  		name, patt,
+  		fnmatch(patt, name, 0));
+  	return 0;
+  }
+
+  $ gcc -o fnmatch fnmatch.c
+  $ ./fnmatch a/b/c/test.txt 'a/b*/c/test.txt'
+  "a/b/c/test.txt" matches "a/b*/c/test.txt" =3D 0
+
+So I find it odd that git-add does not match this name, but fnmatch
+does.  I suspect the problem here is git-add has pruned away the
+subdirectory "a/b" and did not enter into it, so the pattern was
+never even given a chance to look at test.txt.  This sounds like
+a bug to me in git's working directory filter.
+
+Even if Linus says matching names incorrectly is not a bug, I'm
+not sure its an implementation detail we should mirror in jgit.
+
+Where does that leave us?  I'm not sure.  But treating git-add as
+a black box and replicating its behavior looks loony to me right now.
+
+--=20
+Shawn.
