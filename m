@@ -1,60 +1,51 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: git-svn and svn:mime-type
-Date: Wed, 14 May 2008 00:46:54 -0500
-Message-ID: <BC05465E-C3A1-49C7-9721-FE5AB822C42E@sb.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 07:48:20 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] add a force_object_loose() function
+Date: Tue, 13 May 2008 23:02:21 -0700
+Message-ID: <7v3aolqv82.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0805140130090.23581@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 14 08:03:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw9qY-0000ya-S8
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 07:48:15 +0200
+	id 1JwA5J-0004rX-UD
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 08:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752668AbYENFrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 01:47:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbYENFrF
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 01:47:05 -0400
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:42726 "EHLO
-	randymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752483AbYENFrD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 01:47:03 -0400
-Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a5.g.dreamhost.com (Postfix) with ESMTP id AD82690C53;
-	Tue, 13 May 2008 22:47:01 -0700 (PDT)
-X-Mailer: Apple Mail (2.919.2)
+	id S1752143AbYENGCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 02:02:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbYENGCj
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 02:02:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64840 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847AbYENGCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 02:02:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8BBFA2494;
+	Wed, 14 May 2008 02:02:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id C49FD2491; Wed, 14 May 2008 02:02:31 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0805140130090.23581@xanadu.home> (Nicolas
+ Pitre's message of "Wed, 14 May 2008 01:32:48 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5A983340-217B-11DD-98FF-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82077>
 
-When adding a binary file with svn, svn:mime-type is set to  
-application/octet-stream automatically. git-svn really should be able  
-to do the same thing. I tried implementing it myself, but I got lost  
-in the mess of perl that is git-svn.perl and couldn't figure out the  
-right place to do it or how to properly detect if the new file is a  
-binary file.
+Nicolas Pitre <nico@cam.org> writes:
 
-This is causing problems because when I commit a new binary file to  
-the macports svn repo using git-svn, an email is sent out with a  
-binary diff of the whole file, because the post-commit hook script on  
-the svn repo uses svn:mime-type to determine if it's a binary file or  
-a text file (which is all well and proper).
+> This is meant to force the creation of a loose object even if it
+> already exists packed.
 
-Any chance somebody who knows more perl or is more familiar with git- 
-svn.perl could take a look at this?
+Thanks, will queue.
 
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+This looks familiar, but much more thorough than what I suggested
+earlier.
