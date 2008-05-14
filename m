@@ -1,67 +1,88 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] cvsexportcommit: chomp only removes trailing
+Subject: [PATCH 1/2 v2] cvsexportcommit: chomp only removes trailing
  whitespace
-Date: Wed, 14 May 2008 23:15:53 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805142313280.30431@racer>
-References: <alpine.DEB.1.00.0805141526160.30431@racer> <7vskwkojhy.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805141936410.30431@racer> <200805142206.53242.robin.rosenberg@dewire.com>
+Date: Wed, 14 May 2008 23:30:43 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805142327520.30431@racer>
+References: <alpine.DEB.1.00.0805141526160.30431@racer> <7vskwkojhy.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805141936410.30431@racer>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu May 15 00:19:48 2008
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 15 00:31:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwPHD-0005Sx-7A
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 00:16:47 +0200
+	id 1JwPVd-000335-B6
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 00:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756724AbYENWPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 18:15:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbYENWPz
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 18:15:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35354 "HELO mail.gmx.net"
+	id S1760148AbYENWao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 18:30:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760098AbYENWao
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 18:30:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32845 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758539AbYENWPx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 18:15:53 -0400
-Received: (qmail invoked by alias); 14 May 2008 22:15:52 -0000
+	id S1760058AbYENWan (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 18:30:43 -0400
+Received: (qmail invoked by alias); 14 May 2008 22:30:41 -0000
 Received: from R2b68.r.pppool.de (EHLO racer.local) [89.54.43.104]
-  by mail.gmx.net (mp058) with SMTP; 15 May 2008 00:15:52 +0200
+  by mail.gmx.net (mp041) with SMTP; 15 May 2008 00:30:41 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/JbQELV+fJqbQnjdhryVsqRCInlERZPQbxtOr8m7
-	X709GVAEGpWpuZ
+X-Provags-ID: V01U2FsdGVkX19uFmwl5Ddu3pcSF0VyZUXvWLrux1cc/KqxSOAAsg
+	d4z8Ze8jGDL5ux
 X-X-Sender: gene099@racer
-In-Reply-To: <200805142206.53242.robin.rosenberg@dewire.com>
+In-Reply-To: <alpine.DEB.1.00.0805141936410.30431@racer>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82154>
 
-Hi,
 
-On Wed, 14 May 2008, Robin Rosenberg wrote:
+In commit fef3a7cc(cvsexportcommit: be graceful when "cvs status"
+reorders the arguments), caution was taken to get the status even
+for files with leading or trailing whitespace.
 
-> > Yes, that is the idea.  The point is: there are at least two different 
-> > implementations of cvs, and I do not want to rely on a particular one.
-> 
-> Does CVSNT add extra spaces?
+However, the author of that commit missed that chomp() removes only
+trailing newlines.  With help of the mailing list, the author realized
+his mistake and provided this patch.
 
-Probably.  At least a CR I would expect.
+The idea is that we do not want to rely on a certain layout of the 
+output of "cvs status".  Therefore we only call it with files that are 
+unambiguous after stripping leading and trailing whitespace.
 
-> A question arises. Can we use cvs update instead? It can be used to 
-> retrieve the latest version (as the -u flag to cvsexportcommit does) and 
-> it will tell you what status each affected file has. cvs update -n will 
-> just give us the status with unambigous file names.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Will it?  The thing is: as far as I can see, cvs is only "porcelain", i.e. 
-the output is meant for users' consumption, not scripts'.
+	On Wed, 14 May 2008, Johannes Schindelin wrote:
 
-So I wanted to be safe, and strip all leading and trailing whitespace, 
-call "cvs status" (if necessary, in several runs, so that no ambiguous 
-file names can be returned).
+	> To prevent bad things from happening, the status is checked on a 
+	> set of files which have unique names with regard to the chomp()ed
+	> name (well, whatever we do to the name, really).
+	> 
+	> So yes, this patch needs an update.
+	> 
+	> Will do so in a couple of hours,
 
-Ciao,
-Dscho
+	And so I did.
+
+ git-cvsexportcommit.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index b6036bd..52ba7de 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -210,7 +210,7 @@ if (@canstatusfiles) {
+ 	my $basename = basename($name);
+ 
+ 	$basename = "no file " . $basename if (exists($added{$basename}));
+-	chomp($basename);
++	$basename =~ s/^\s+(.*?)\s*$/$1/;
+ 
+ 	if (!exists($fullname{$basename})) {
+ 	  $fullname{$basename} = $name;
+-- 
+1.5.5.1.375.g1becb
