@@ -1,89 +1,68 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] Rephrased git-describe description
-Date: Wed, 14 May 2008 11:57:20 -0500
-Message-ID: <19174A63-BE44-4898-9CAD-935BE1A28FFF@sb.org>
-References: <1210774947-27995-1-git-send-email-ian.hilt@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ian Hilt <ian.hilt@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 18:58:51 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Add support for GIT_CEILING_DIRS
+Date: Wed, 14 May 2008 18:02:24 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805141759120.30431@racer>
+References: <482A7CA0.9060908@facebook.com> <alpine.DEB.1.00.0805140903560.30431@racer> <D2EA6017-4607-4A55-8C72-CD2B772CAAE4@sb.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Reiss <dreiss@facebook.com>, git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Wed May 14 19:03:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwKJ3-00056G-HN
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 18:58:21 +0200
+	id 1JwKNn-0007Kq-Sq
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 19:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbYENQ5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 12:57:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYENQ5a
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 12:57:30 -0400
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:37362 "EHLO
-	randymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751895AbYENQ5a (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 12:57:30 -0400
-Received: from [192.168.1.106] (ip68-1-99-99.pn.at.cox.net [68.1.99.99])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a4.g.dreamhost.com (Postfix) with ESMTP id 672A1195A42;
-	Wed, 14 May 2008 09:57:29 -0700 (PDT)
-In-Reply-To: <1210774947-27995-1-git-send-email-ian.hilt@gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1753162AbYENRCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 13:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYENRCY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 13:02:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41413 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752544AbYENRCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 13:02:24 -0400
+Received: (qmail invoked by alias); 14 May 2008 17:02:22 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp013) with SMTP; 14 May 2008 19:02:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18OWxM9FVwOk285d+xxTQunMJ9JRUJwjCQ5mhT5Qj
+	/DE40o01pmZEQ1
+X-X-Sender: gene099@racer
+In-Reply-To: <D2EA6017-4607-4A55-8C72-CD2B772CAAE4@sb.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82110>
 
-Sorry for the double-posting, Ian, but my first email was rejected  
-from the list because my mail client attached an HTML part.
+Hi,
 
-On May 14, 2008, at 9:22 AM, Ian Hilt wrote:
+On Wed, 14 May 2008, Kevin Ballard wrote:
 
-> Made description more readable.
->
-> Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
-> ---
-> Documentation/git-describe.txt |    7 ++++---
-> 1 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-describe.txt b/Documentation/git- 
-> describe.txt
-> index d9aa2f2..f3f07e4 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -13,9 +13,10 @@ SYNOPSIS
-> DESCRIPTION
-> -----------
-> The command finds the most recent tag that is reachable from a
-> -commit, and if the commit itself is pointed at by the tag, shows
-> -the tag.  Otherwise, it suffixes the tag name with the number of
-> -additional commits and the abbreviated object name of the commit.
-> +commit.  If the tag points to the commit, then only the tag is
-> +shown.  Otherwise, the number of additional commits on top of the
-> +tagged object and the abbreviated object name of the most recent
-> +commit are suffixed to the tag name.
+> On May 14, 2008, at 3:23 AM, Johannes Schindelin wrote:
+> 
+> > >@@ -414,6 +415,37 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> > > if (!getcwd(cwd, sizeof(cwd)-1))
+> > >  die("Unable to read current working directory");
+> > >
+> > >+	// Compute min_offset based on GIT_CEILING_DIRS.
+> >
+> >We do not like C99 style comments.  Remember, there are people who compile
+> >Git on something else than the super-latest Linux with cutting-edge GCC.
+> 
+> Out of curiosity, what environment these days doesn't allow C99 comments?
 
+On an SGI/IRIX machine I was working some time ago, GCC was too big for my 
+quota.  And the admin was not willing to install it.
 
-I disagree that this is more readable. Specifically that last  
-sentence. In the original description it tells me what it's doing  
-(suffixing) before it tells me what objects it's using. In your  
-version, it tells me the objects, then tells me what it's doing  
-(suffixing), so I have to effectively process the sentence in reverse.  
-In other words, it took me two readings of your last sentence to match  
-the one reading of the original last sentence.
+But I have to wonder: why argue something as C99 comments, when it is _no 
+problem_ whatsoever to replace them with C89-style comments, especially 
+given the fact that this makes our source code more consistent and thus 
+easier on the eye?
 
-Also, you should use a more descriptive commit description. At the  
-very least, do something like
-
-git-describe: Make description more readable.
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+Ciao,
+Dscho
