@@ -1,78 +1,143 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: + wireless-fix-iwlwifi-unify-init-driver-flow.patch added to
- -mm tree
-Date: Tue, 13 May 2008 22:15:29 -0700 (PDT)
-Message-ID: <20080513.221529.20855966.davem@davemloft.net>
-References: <200805140405.m4E45oBc015343@imap1.linux-foundation.org>
-	<20080513.213927.191790810.davem@davemloft.net>
-	<20080513215737.fe1bdebd.akpm@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 1/2] add a force_object_loose() function
+Date: Wed, 14 May 2008 01:32:48 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0805140130090.23581@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org, linville@tuxdriver.com,
-	ron.rindjunsky@intel.com, sfr@canb.auug.org.au,
-	tomas.winkler@intel.com, git@vger.kernel.org
-To: akpm@linux-foundation.org
-X-From: git-owner@vger.kernel.org Wed May 14 07:17:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 07:33:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jw9ME-0001an-EJ
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 07:16:54 +0200
+	id 1Jw9cj-0005ni-F0
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 07:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbYENFPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 01:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbYENFPh
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 01:15:37 -0400
-Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:47931
-	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1751583AbYENFPg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 01:15:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by sunset.davemloft.net (Postfix) with ESMTP id 208FBC8C1F2;
-	Tue, 13 May 2008 22:15:30 -0700 (PDT)
-In-Reply-To: <20080513215737.fe1bdebd.akpm@linux-foundation.org>
-X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+	id S1750944AbYENFcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 01:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbYENFcu
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 01:32:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35128 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750928AbYENFct (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 01:32:49 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K0U00CPMFEOXM20@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 14 May 2008 01:32:48 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82072>
 
-From: Andrew Morton <akpm@linux-foundation.org>
-Date: Tue, 13 May 2008 21:57:37 -0700
 
-> This is a(nother) case where a toolchain/process problem is forcing us
-> to do something which we don't want to do.  In an ideal world we should
-> tell the git developers "we want x, please" and hopefully they can give
-> it to us.  Because right now, we're having to work around shortcomings
-> in git and we are producing a lesser product as a result of this.  A tool
-> should follow the way in which humans want to work, not vice versa.
+This is meant to force the creation of a loose object even if it
+already exists packed.  Needed for the next commit.
 
-This has beaten like a dead horse a thousand times.  Bringing
-it up again isn't likely to cause further progress. :)
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-> Short-term...  dunno.  Perhaps you could have a two-weekly
-> broadly-announced rebase in which you integrate all these dribs and
-> drags back into their proper place?  Commit them with some well-known
-> identifier in the title so that they can all be located when that time
-> comes?
-> 
-> If you announce such a rebase a day or so beforehand then all the guys
-> who feed into you could get their stuff merged up into your tree to
-> minimise their pain when the rebase happens, perhaps.
-
-This, along with the idea of taking care of all of the "dribs" right
-before the real merge, is error prone.
-
-It means I have to play with large collections of patches all at one
-time.  The reason I use GIT is because I'm stupid and make mistakes,
-therefore I don't like playing with patches.
-
-I used to play this game, it's a lot of work and it sucks.  One
-"drib" can require fixing up 200 patches down the chain.  And
-I've had this happen to me all the time in the past when I was
-rebasing all the time.
-
-Not this specific case, mind you, but it is a real concern in general.
+diff --git a/cache.h b/cache.h
+index a23d1ac..c761915 100644
+--- a/cache.h
++++ b/cache.h
+@@ -527,6 +527,7 @@ extern void * read_sha1_file(const unsigned char *sha1, enum object_type *type,
+ extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
+ extern int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+ extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
++extern int force_object_loose(const unsigned char *sha1, time_t mtime);
+ 
+ extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index d21e23b..206ea2d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2114,26 +2114,16 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+ 	return 0;
+ }
+ 
+-int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
++static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
++			      void *buf, unsigned long len, time_t mtime)
+ {
+-	int size, ret;
++	int fd, size, ret;
+ 	unsigned char *compressed;
+ 	z_stream stream;
+-	unsigned char sha1[20];
+ 	char *filename;
+ 	static char tmpfile[PATH_MAX];
+-	char hdr[32];
+-	int fd, hdrlen;
+ 
+-	/* Normally if we have it in the pack then we do not bother writing
+-	 * it out into .git/objects/??/?{38} file.
+-	 */
+-	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
+ 	filename = sha1_file_name(sha1);
+-	if (returnsha1)
+-		hashcpy(returnsha1, sha1);
+-	if (has_sha1_file(sha1))
+-		return 0;
+ 	fd = open(filename, O_RDONLY);
+ 	if (fd >= 0) {
+ 		/*
+@@ -2194,9 +2184,53 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
+ 		die("unable to write sha1 file");
+ 	free(compressed);
+ 
++	if (mtime) {
++		struct utimbuf utb;
++		utb.actime = mtime;
++		utb.modtime = mtime;
++		if (utime(tmpfile, &utb) < 0)
++			warning("failed utime() on %s: %s",
++				tmpfile, strerror(errno));
++	}
++
+ 	return move_temp_to_file(tmpfile, filename);
+ }
+ 
++int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
++{
++	unsigned char sha1[20];
++	char hdr[32];
++	int hdrlen;
++
++	/* Normally if we have it in the pack then we do not bother writing
++	 * it out into .git/objects/??/?{38} file.
++	 */
++	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
++	if (returnsha1)
++		hashcpy(returnsha1, sha1);
++	if (has_sha1_file(sha1))
++		return 0;
++	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
++}
++
++int force_object_loose(const unsigned char *sha1, time_t mtime)
++{
++	struct stat st;
++	void *buf;
++	unsigned long len;
++	enum object_type type;
++	char hdr[32];
++	int hdrlen;
++
++	if (find_sha1_file(sha1, &st))
++		return 0;
++	buf = read_packed_sha1(sha1, &type, &len);
++	if (!buf)
++		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
++	hdrlen = sprintf(hdr, "%s %lu", typename(type), len) + 1;
++	return write_loose_object(sha1, hdr, hdrlen, buf, len, mtime);
++}
++
+ /*
+  * We need to unpack and recompress the object for writing
+  * it out to a different file.
