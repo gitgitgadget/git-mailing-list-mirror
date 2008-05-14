@@ -1,84 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] diff options: Introduce --ignore-submodules
-Date: Wed, 14 May 2008 19:42:55 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805141940460.30431@racer>
-References: <alpine.DEB.1.00.0805141802480.30431@racer> <alpine.DEB.1.00.0805141803240.30431@racer> <7vbq38oi3j.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rephrased git-describe description
+Date: Wed, 14 May 2008 11:46:45 -0700
+Message-ID: <7v7idwoh9m.fsf@gitster.siamese.dyndns.org>
+References: <1210789855-29413-1-git-send-email-ian.hilt@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 14 20:44:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>
+To: Ian Hilt <ian.hilt@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 20:49:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwLxO-0004lL-VR
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 20:44:07 +0200
+	id 1JwM0z-0006aB-3o
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 20:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760209AbYENSmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 14:42:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760611AbYENSmz
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 14:42:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41580 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759359AbYENSmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 14:42:54 -0400
-Received: (qmail invoked by alias); 14 May 2008 18:42:52 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp008) with SMTP; 14 May 2008 20:42:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BnNsNe0vBJCei95Hsp1nojVZX+jfp5YaKi+2aBo
-	2NKK57qjrcE/6h
-X-X-Sender: gene099@racer
-In-Reply-To: <7vbq38oi3j.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754933AbYENSqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 14:46:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbYENSqz
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 14:46:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39009 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754776AbYENSqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 14:46:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 84EBF5926;
+	Wed, 14 May 2008 14:46:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 81A2D5922; Wed, 14 May 2008 14:46:48 -0400 (EDT)
+In-Reply-To: <1210789855-29413-1-git-send-email-ian.hilt@gmail.com> (Ian
+ Hilt's message of "Wed, 14 May 2008 14:30:55 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1E49278A-21E6-11DD-8668-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82133>
 
-Hi,
+Ian Hilt <ian.hilt@gmail.com> writes:
 
-On Wed, 14 May 2008, Junio C Hamano wrote:
+> git-describe: Make description more readable.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > @@ -3355,6 +3357,9 @@ void diff_addremove(struct diff_options *options,
-> >  	char concatpath[PATH_MAX];
-> >  	struct diff_filespec *one, *two;
-> >  
-> > +	if (DIFF_OPT_TST(options, IGNORE_SUBMODULES) && S_ISGITLINK(mode))
-> > +		return;
-> > +
-> >  	/* This may look odd, but it is a preparation for
-> >  	 * feeding "there are unchanged files which should
-> >  	 * not produce diffs, but when you are doing copy
-> 
-> So both removal and addition of a submodule is an uninteresting event.
+Thanks, both.  I think the above is meant to be on the Subject: line, and
+the text certainly is more readable.
 
-Yes.
-
-> > @@ -3399,6 +3404,10 @@ void diff_change(struct diff_options *options,
-> >  	char concatpath[PATH_MAX];
-> >  	struct diff_filespec *one, *two;
-> >  
-> > +	if (DIFF_OPT_TST(options, IGNORE_SUBMODULES) && S_ISGITLINK(old_mode)
-> > +			&& S_ISGITLINK(new_mode))
-> > +		return;
-> 
-> And a submodule changing from revision A to B is uninteresting.
-> 
-> Is it interesting if something that used to be a blob turns into a
-> submodule, or vice versa?  The code says it is, but I think it would be
-> more convenient to treat it as a removal of blob and addition of a
-> submodule.
-
-The point is: for the sake of a script (which wants to ignore 
-submodules) asking if there is a diff, I think it makes sense to not 
-ignore those changes.  IOW I think my patch is enough for the purpose of 
-getting stash/rebase to behave.
-
-Ciao,
-Dscho
+> Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
+> ---
+>  Documentation/git-describe.txt |    7 ++++---
+>  1 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+> index d9aa2f2..69e1ab7 100644
+> --- a/Documentation/git-describe.txt
+> +++ b/Documentation/git-describe.txt
+> @@ -13,9 +13,10 @@ SYNOPSIS
+>  DESCRIPTION
+>  -----------
+>  The command finds the most recent tag that is reachable from a
+> -commit, and if the commit itself is pointed at by the tag, shows
+> -the tag.  Otherwise, it suffixes the tag name with the number of
+> -additional commits and the abbreviated object name of the commit.
+> +commit.  If the tag points to the commit, then only the tag is
+> +shown.  Otherwise, it suffixes the tag name with the number of
+> +additional commits on top of the tagged object and the
+> +abbreviated object name of the most recent commit.
