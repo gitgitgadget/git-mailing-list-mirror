@@ -1,88 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
-Date: Tue, 13 May 2008 23:43:16 -0700
-Message-ID: <7vy76dperf.fsf@gitster.siamese.dyndns.org>
-References: <20080512122900.GA13050@mithlond.arda.local>
- <20080512155243.GA3592@mithlond.arda.local>
- <alpine.DEB.1.00.0805121810501.30431@racer>
- <20080512184334.GB5160@mithlond.arda.local>
- <alpine.LFD.1.10.0805121453250.23581@xanadu.home>
- <20080512190946.GC5160@mithlond.arda.local>
- <alpine.LFD.1.10.0805121527550.23581@xanadu.home>
- <20080512202414.GA8620@mithlond.arda.local>
- <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org>
- <20080513001252.GB29038@spearce.org>
- <alpine.LFD.1.10.0805132005550.23581@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Mike Hommey <mh@glandium.org>, Teemu Likonen <tlikonen@iki.fi>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed May 14 08:44:43 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] Documentation/git-gc.txt: change --aggressive description
+Date: Wed, 14 May 2008 08:48:19 +0200
+Message-ID: <FCA89971-FDBB-4E44-82CE-C0AA854A4667@ai.rug.nl>
+References: <1210672413-8761-1-git-send-email-pdebie@ai.rug.nl> <alpine.DEB.1.00.0805131251320.30431@racer>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 14 08:49:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwAjD-0008JY-1l
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 08:44:43 +0200
+	id 1JwAnY-000130-B2
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 08:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbYENGn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 02:43:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbYENGn3
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 02:43:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37378 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbYENGn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 02:43:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BDF213DF6;
-	Wed, 14 May 2008 02:43:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C0D963DF1; Wed, 14 May 2008 02:43:19 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.10.0805132005550.23581@xanadu.home> (Nicolas
- Pitre's message of "Tue, 13 May 2008 21:03:31 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0E6F3274-2181-11DD-8E96-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1751508AbYENGsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 02:48:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbYENGsW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 02:48:22 -0400
+Received: from smtp-3.orange.nl ([193.252.22.243]:36294 "EHLO smtp-3.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928AbYENGsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 02:48:21 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6207.orange.nl (SMTP Server) with ESMTP id 33F8A1C00083;
+	Wed, 14 May 2008 08:48:20 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6207.orange.nl (SMTP Server) with ESMTP id CD5961C00082;
+	Wed, 14 May 2008 08:48:19 +0200 (CEST)
+X-ME-UUID: 20080514064819841.CD5961C00082@mwinf6207.orange.nl
+In-Reply-To: <alpine.DEB.1.00.0805131251320.30431@racer>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82080>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> Let's see what happens here even before any packing is attempted
+On 13 mei 2008, at 13:52, Johannes Schindelin wrote:
+>> The documentation for the --aggressive flag was misleading, hinting  
+>> that
+>> running git gc with --aggressive is a good thing. However, -- 
+>> aggressive
+>> only really makes sense if you have a bad pack file, such as from
+>> git-fast-import.
 >
-> |$ git rev-list --objects 492c2e4..9404ef0
-> |362
-> |
-> |$ git rev-list --objects --all \
-> |   --unpacked=pack-6a3438b2702be06697023d80b77e67a73a0b0b5c.pack |
-> |	wc -l
-> |26559
->
-> So this --unpacked= argument (which undocumented semantics I still have 
-> issues with) is certainly not doing what is expected.
+> I disagree.  It makes sense to "git gc --aggressive" also after  
+> cloning
+> from somebody who did not do so.
 
-The output from rev-list is not surprising.  --unpacked=$this.pack implies
-the usual --unpacked behaviour (i.e. only show unpacked objects by not
-traversing into commits that are packed) and at the same time pretends
-that objects in $this.pack are loose.
+The problem with this is that your pack might increase in size, which  
+you can't know in advance. Running "git gc --aggressive" on the git  
+repo for example increases its size from 20MB to 30MB.
 
-It was meant to be used for a partial incremental repacking.  If you have
-a pack to be kept (perhaps a highly packed deep pack that holds the
-earlier parts of the history), marked with .keep, and a handful young
-packs, you would give these young ones with --unpacked, so that the
-resulting single pack contains all that are loose or in these young
-packs.  After that, you can remove all the young packs and loose objects.
+The current wording at least makes it sound as if --aggressive will  
+always result in a smaller pack, which is simply not true. Increasing  
+the window and depth might help, but 250 or even 100 can be too much  
+on any decently size repository.
 
-At least that is the idea.
+How about dropping the last sentence ("Using --aggressive only makes  
+sense if you have a badly packed repository, such as created by git- 
+fast-import.") then?
 
-I am not sure where that rev-list experiment you showed fits in the bigger
-picture, but if that is used for repacking the young packs, perhaps the
-issue is that after the repacking the code forgets to remove the young
-ones whose objects are now moved into the new pack?
+- Pieter
