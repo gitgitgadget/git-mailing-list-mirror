@@ -1,76 +1,90 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: [PATCH] Export GIT_DIR after setting it
-Date: Thu, 15 May 2008 00:23:21 +0100
-Message-ID: <1210807401-11201-1-git-send-email-madduck@madduck.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Why repository grows after "git gc"? / Purpose of *.keep files?
+Date: Wed, 14 May 2008 19:24:01 -0400
+Message-ID: <482B7491.30608@gmail.com>
+References: <20080512122900.GA13050@mithlond.arda.local> <20080512155243.GA3592@mithlond.arda.local> <alpine.DEB.1.00.0805121810501.30431@racer> <20080512184334.GB5160@mithlond.arda.local> <alpine.LFD.1.10.0805121453250.23581@xanadu.home> <20080512190946.GC5160@mithlond.arda.local> <alpine.LFD.1.10.0805121527550.23581@xanadu.home> <20080512202414.GA8620@mithlond.arda.local> <20080512210304.GA17352@glandium.org> <20080512210807.GA22221@glandium.org> <20080513001252.GB29038@spearce.org> <alpine.LFD.1.10.0805132005550.23581@xanadu.home> <7vy76dperf.fsf@gitster.siamese.dyndns.org> <18474.44155.823000.368851@lapjr.intranet.kiel.bmiag.de> <alpine.LFD.1.10.0805141247560.3019@woody.linux-foundation.org> <alpine.LFD.1.10.0805141314440.3019@woody.linux-foundation.org> <alpine.LFD.1.10.0805141626070.
+ 23581@xanadu.home> <alpine.LFD.1.10.0805141333050.3019@woody.linux-foundation.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "martin f. krafft" <madduck@madduck.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 01:24:29 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Juergen Ruehle <j.ruehle@bmiag.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Hommey <mh@glandium.org>, Teemu Likonen <tlikonen@iki.fi>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu May 15 01:25:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwQKf-0001UO-Dx
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 01:24:25 +0200
+	id 1JwQLM-0001eh-8Z
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 01:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbYENXXd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 May 2008 19:23:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754766AbYENXXd
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 19:23:33 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:37546 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754733AbYENXXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 19:23:32 -0400
-Received: from lapse.madduck.net (ruou.ifi.unizh.ch [130.60.75.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id ECE2BA825E;
-	Thu, 15 May 2008 01:23:22 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id AE6D04FD5B; Thu, 15 May 2008 00:23:21 +0100 (IST)
-X-Mailer: git-send-email 1.5.5.1
-X-Virus-Scanned: ClamAV 0.92.1/7125/Thu May 15 00:10:39 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1754999AbYENXYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 19:24:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754766AbYENXYM
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 19:24:12 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:35443 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754908AbYENXYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 19:24:10 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so80557ywe.1
+        for <git@vger.kernel.org>; Wed, 14 May 2008 16:24:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=mTQXPOqAshSyu2+3mWKfwP33BX4eHHXUidpvgtSzcyY=;
+        b=g7H/IPGnoPOuxPItNcym1y95I5XMLIy6lMjZZOqmHD6uVZBf6Z0h5/CTPUtVORgWXq6rxIHEdi3KCko2WKLt4fQ3kn3qB2GPogQG+2rt8hSSSRkxgtjFz2X53DsIO6x3HbixzyTDlKZVCQPL5Zn2dfNjAYY8mt8hCrBuS3sxzJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=TI5Qzmd3Y2GC+cS19t03V8NcYHx5itZ89H4TgA7U1k8pWROkI1XlCRYlPqy72TafxPLkEI/hDkmFjIB+oC5oQoT+5LmyTAM7SRQisJity+duIZ3MKUI6A8hh5ithRRPW5FGCOXfpp1vaFXWB1JX78zbpO6745PUwPqWcB7IYbXU=
+Received: by 10.150.11.2 with SMTP id 2mr1702756ybk.10.1210807447691;
+        Wed, 14 May 2008 16:24:07 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id 33sm233634yxr.3.2008.05.14.16.24.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 May 2008 16:24:07 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <alpine.LFD.1.10.0805141333050.3019@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82161>
 
-git-sh-setup might set GIT_DIR, but not export it. When git-pull, for
-instance, calls cd_to_toplevel, it changes the working directory, and l=
-ater
-calls git-ls-files, which does *not* inherit GIT_DIR since it's not imp=
-orted.
-It thus does the detection again, but in a different environment, since=
- the
-working directory changed. This breaks stuff subtly, especially when
-core.worktree is set.
+Linus Torvalds wrote:
+> 
+> On Wed, 14 May 2008, Nicolas Pitre wrote:
+> 
+>> On Wed, 14 May 2008, Linus Torvalds wrote:
+>>
+>>> Of course, the more aggressively we prune, the more we end up having to 
+>>> depend on the fact that a commit that is in a pack that is marked "keep" 
+>>> must *always* have everything that leads to it in that pack or others also 
+>>> marked "keep". We effectively have that already (because we've always 
+>>> pruned away the commits early), but it's a thing to keep in mind whenever 
+>>> we prune even more aggressively.
+>> I wonder if this is a good thing.  Such a rule would effectively put 
+>> restrictions on how objects like big blobs could be distributed amongst 
+>> many .keep packs.  I just wish we're not painting ourselves in a corner.
+> 
+> You can distribute big objects arbitrarily among many .keep packs, but 
+> what you can *NOT* do (and which has _always_ been a bug to do) is to have 
+> a *.keep pack that refers to objects that are not in a .keep pack!
+> 
+> So keep<->keep you can do anything you want, and distribute objects any 
+> way.
+> 
+> But a keep pack must only refer to objects in itself or in other keep 
+> packs.
+> 
+> Because otherwise, if we ever hit an object in a keep pack, we'll stop 
+> even looking further when we use --unpacked. And that has always been true 
+> (admittedly only for "commit" objects, but those are the ones that most 
+> commonly refer to other objects, so ..)
 
-The patch simply exports GIT_DIR and makes it work such that git-ls-fil=
-es
-doesn't redo the work (wrongly).
-
-Thanks to Bj=C3=B6rn Steinbrink for his help.
-
-Signed-off-by: martin f. krafft <madduck@madduck.net>
----
- git-sh-setup.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index a44b1c7..de90f07 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -128,6 +128,7 @@ get_author_ident_from_commit () {
- if test -z "$NONGIT_OK"
- then
- 	GIT_DIR=3D$(git rev-parse --git-dir) || exit
-+	export GIT_DIR
- 	if [ -z "$SUBDIRECTORY_OK" ]
- 	then
- 		test -z "$(git rev-parse --show-cdup)" || {
---=20
-1.5.5.1
+Sounds like git-fsck needs to start checking for this.
