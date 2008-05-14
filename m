@@ -1,74 +1,84 @@
-From: Ian Hilt <ian.hilt@gmail.com>
-Subject: [PATCH] Rephrased git-describe description
-Date: Wed, 14 May 2008 14:30:55 -0400
-Message-ID: <1210789855-29413-1-git-send-email-ian.hilt@gmail.com>
-Cc: Ian Hilt <ian.hilt@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 20:31:43 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] cvsexportcommit: chomp only removes trailing
+ whitespace
+Date: Wed, 14 May 2008 19:38:55 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805141936410.30431@racer>
+References: <alpine.DEB.1.00.0805141526160.30431@racer> <7vskwkojhy.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 20:40:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwLlN-0007Ys-Vi
-	for gcvg-git-2@gmane.org; Wed, 14 May 2008 20:31:42 +0200
+	id 1JwLtG-0002dc-0o
+	for gcvg-git-2@gmane.org; Wed, 14 May 2008 20:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763081AbYENSas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 14:30:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762988AbYENSas
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 14:30:48 -0400
-Received: from ag-out-0708.google.com ([72.14.246.241]:34855 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762830AbYENSar (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 14:30:47 -0400
-Received: by ag-out-0708.google.com with SMTP id 31so128698agc.10
-        for <git@vger.kernel.org>; Wed, 14 May 2008 11:30:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=GHHkWJeOv17Ld+Ns5SnFtjWAHQYqwG9ZAD7ceILUw4Q=;
-        b=XZkS+S2vw5UVAC2e+myKWT9KUSPEFElqXSjbVhycN7BOLmxJRB5vd1oVIZoGsygCg5Rqf4K+2rHc0mVe0VJ9zZaZZtYRzGCC1x5q2RF6AngtDLeSQsxnFi3rpoTO9PEp804tJ9WnX88jidpjiOuk0K/scv8opXIzspV0AINR5+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=tXsCPMk/Q2+02jSBc+KvDxAJR3ukdBaotjLbNdT8ir4EjYUCh1rNxJ0UmnCMMBci2y7VrtXbaSyEbMs6GCbwUFZMqhsuJ1Bq9NmH82xa53IsMrHkKI6ofhHjRkI/L4be14KQ5mYTHmdomlX4Qac5KMtVQDr18rz4gj9XaH2CSc0=
-Received: by 10.100.141.5 with SMTP id o5mr1726249and.64.1210789845064;
-        Wed, 14 May 2008 11:30:45 -0700 (PDT)
-Received: from sys-0 ( [75.185.208.72])
-        by mx.google.com with ESMTPS id c39sm3307759anc.29.2008.05.14.11.30.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 May 2008 11:30:44 -0700 (PDT)
-Received: by sys-0 (sSMTP sendmail emulation); Wed, 14 May 2008 14:30:55 -0400
-X-Mailer: git-send-email 1.5.3.7
+	id S1759083AbYENSi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 14:38:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757995AbYENSiz
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 14:38:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50048 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757416AbYENSiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 14:38:55 -0400
+Received: (qmail invoked by alias); 14 May 2008 18:38:53 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp047) with SMTP; 14 May 2008 20:38:53 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19eZ5QLgB5eL1YdzVl4Gfcjf3+0dIen70c+8Ru/nj
+	Ou3vfPF16148fN
+X-X-Sender: gene099@racer
+In-Reply-To: <7vskwkojhy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82129>
 
-git-describe: Make description more readable.
+Hi,
 
-Signed-off-by: Ian Hilt <ian.hilt@gmail.com>
----
- Documentation/git-describe.txt |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+On Wed, 14 May 2008, Junio C Hamano wrote:
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index d9aa2f2..69e1ab7 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -13,9 +13,10 @@ SYNOPSIS
- DESCRIPTION
- -----------
- The command finds the most recent tag that is reachable from a
--commit, and if the commit itself is pointed at by the tag, shows
--the tag.  Otherwise, it suffixes the tag name with the number of
--additional commits and the abbreviated object name of the commit.
-+commit.  If the tag points to the commit, then only the tag is
-+shown.  Otherwise, it suffixes the tag name with the number of
-+additional commits on top of the tagged object and the
-+abbreviated object name of the most recent commit.
- 
- 
- OPTIONS
--- 
-1.5.3.7
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > In commit fef3a7cc(cvsexportcommit: be graceful when "cvs status" 
+> > reorders the arguments), caution was taken to get the status even for 
+> > files with leading or trailing whitespace.
+> >
+> > However, the author of that commit missed that chomp() removes only 
+> > trailing whitespace.  But the author realized his mistake.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >
+> > 	Really my fault.
+> 
+> I am not quite sure if I understand what is going on correctly.
+> 
+> Is this about a filename that has leading or trailing whitespace, or 
+> lazily not parsing a protocol message but attempting to match with 
+> possible whitespaces around the place where a filename should be?
+> 
+> If you are saying that the output from cvs status is so unreliable that 
+> we can only strip all whitespaces from both ends and hope for the best 
+> (e.g. files " a" (two leading spaces in the name), "a " (two trailing 
+> spaces in the name), and "a" (no such funny spaces) cannot be 
+> distinguished from cvs status output), then perhaps you would also need 
+> to remove as many trailing whitespaces as you can?
+
+Yes, that is the idea.  The point is: there are at least two different 
+implementations of cvs, and I do not want to rely on a particular one.
+
+To prevent bad things from happening, the status is checked on a set of 
+files which have unique names with regard to the chomp()ed name (well, 
+whatever we do to the name, really).
+
+So yes, this patch needs an update.
+
+Will do so in a couple of hours,
+Dscho
