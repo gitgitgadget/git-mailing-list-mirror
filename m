@@ -1,65 +1,68 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: git clone broken in next
-Date: Wed, 14 May 2008 23:54:39 -0400
-Message-ID: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 15 05:55:34 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 14 May 2008 21:30:18 -0700
+Message-ID: <7vfxski3z9.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vwso85qkf.fsf@gitster.siamese.dyndns.org>
+ <7vwso5r87q.fsf@gitster.siamese.dyndns.org>
+ <7v8x0992hy.fsf@gitster.siamese.dyndns.org>
+ <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
+ <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+ <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+ <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+ <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+ <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+ <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0805141844500.19665@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu May 15 06:31:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwUZ3-00084N-GR
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 05:55:33 +0200
+	id 1JwV7v-0000Lx-P5
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 06:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753898AbYEODym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 23:54:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYEODym
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 23:54:42 -0400
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:40421
-	"EHLO randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751512AbYEODym (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 23:54:42 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.ma.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 429B1EEF9A
-	for <git@vger.kernel.org>; Wed, 14 May 2008 20:54:41 -0700 (PDT)
-X-Mailer: Apple Mail (2.919.2)
+	id S1751047AbYEOEad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 00:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbYEOEad
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 00:30:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52127 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042AbYEOEac (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 00:30:32 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B330224FA;
+	Thu, 15 May 2008 00:30:30 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id C7CF624F9; Thu, 15 May 2008 00:30:25 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0805141844500.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 14 May 2008 18:55:11 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A6C14C9A-2237-11DD-81D4-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82173>
 
-Something's horribly wrong in next. I just installed the latest from  
-next and then ran
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-   git clone git://github.com/kballard/github-gem.git
+> Last time, you said you were going to review this again; did you review it 
+> and find nothing to comment on, decide to just make sure it gets a 
+> beating, or are you still planning to review it more? (Just wondering so I 
+> can try to arrange to have time to respond to comments if there's going to 
+> be a bunch)
 
-The resulting repo had absolutely nothing in the workdir. `git status`  
-claims every single file is deleted but not updated. `git checkout -f  
-HEAD` fixed the workdir.
+I did not have any further nitpicks on either design nor code in particular.
 
-This is 100% repeatable with different repositories.
-
-$ git --version
-git version 1.5.5.1.373.gce4aa
-
-(this is the tip of next plus a single documentation patch).
-
-Oddly, all of the tests with "clone" in their name seem to be passing  
-just fine.
-
-Ok, after running a git-bisect, I narrowed it down to  
-8434c2f1afedb936e0ea8c07ce25733013c2f743 (Build in clone).
-
-My system is Mac OS X 10.5.2.
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+But keep in mind that I won't be the single source of review comments ;-).
+.
