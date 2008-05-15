@@ -1,104 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] builtin-clone: fix initial checkout
-Date: Thu, 15 May 2008 10:48:25 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805151042570.30431@racer>
-References: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org> <20080515044402.GA3517@sigill.intra.peff.net> <20080515045026.GA26161@sigill.intra.peff.net>
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: Re: [PATCH] Export GIT_DIR after setting it
+Date: Thu, 15 May 2008 11:15:23 +0100
+Message-ID: <20080515101523.GA31719@lapse.madduck.net>
+References: <1210807401-11201-1-git-send-email-madduck@madduck.net> <7vod78i9r7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 15 11:49:49 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Kj7319i9nmIyA2yE"
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 15 12:17:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwa5M-0004os-FP
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 11:49:16 +0200
+	id 1JwaVl-0005tp-FN
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 12:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775AbYEOJs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 05:48:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753622AbYEOJs0
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 05:48:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41315 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753475AbYEOJsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 05:48:25 -0400
-Received: (qmail invoked by alias); 15 May 2008 09:48:23 -0000
-Received: from R33f0.r.pppool.de (EHLO racer.local) [89.54.51.240]
-  by mail.gmx.net (mp043) with SMTP; 15 May 2008 11:48:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19/ipNE52l/Ys8kzi1o4UQbagDCiidInAHxGSVlsJ
-	rCMYVWGoBQnMm2
-X-X-Sender: gene099@racer
-In-Reply-To: <20080515045026.GA26161@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753555AbYEOKPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 06:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753843AbYEOKPl
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 06:15:41 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:40476 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753555AbYEOKPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 06:15:40 -0400
+Received: from lapse.madduck.net (ruou.ifi.unizh.ch [130.60.75.75])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id B2413A8287
+	for <git@vger.kernel.org>; Thu, 15 May 2008 12:15:23 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 715013FA4E; Thu, 15 May 2008 11:15:23 +0100 (IST)
+Content-Disposition: inline
+In-Reply-To: <7vod78i9r7.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: ClamAV 0.92.1/7126/Thu May 15 11:40:39 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82196>
 
 
-Somewhere in the process of finishing up builtin-clone, the update of
-the working tree was lost.  This was due to not using the option "merge"
-for unpack_trees().
+--Kj7319i9nmIyA2yE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Breakage noticed by Kevin Ballard.
+Thank you, Junio, for taking the time to reply to this!
 
-Test by Jeff King.
+also sprach Junio C Hamano <gitster@pobox.com> [2008.05.15.0325 +0100]:
+> trying to solve like this patch does, but this change needs very
+> careful vetting to make sure that you did not break other scripts
+> with this change.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Absolutely agreed. It occured to me as I lied down to sleep that
+this fix could quite possibly have repercussions. And it's been in
+my head all the walk to my work this morning. I ended up thinking
+about it in this way:
 
-	> On Thu, May 15, 2008 at 12:44:02AM -0400, Jeff King wrote:
-	> 
-	> > Hmm, builtin-clone does seem to be completely broken. It looks 
-	> > like unpack_trees is not doing its job for some reason, but I
-	> > haven't looked further. But it surprised me that we aren't 
-	> > testing anything as simple as "clone works". The test below
-	> > currently fails (though I am getting other test failures which 
-	> > are presumably related).
+If GIT_DIR is exported by git-sh-setup and we can assure that
+git-sh-setup gets it right, then it's effectively the same as if the
+user had set it explicitly, before calling the shell script: all
+external commands called by the shell script will have GIT_DIR set
+appropriately in all cases then.
 
-	I did not notice the breakage earlier, because I ran with a 
-	"twoway_merge" version of builtin-clone in my personal tree.
+The only problem I see now is when an external command (or the shell
+script) can't properly deal with GIT_DIR being set, but then that's
+a whole different bug.
 
- builtin-clone.c  |    3 +++
- t/t5601-clone.sh |    7 +++++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+I understand you're worried about this, but I can't really see
+specifics, now having thought about this for a bit.
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index a7c075d..8713128 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -525,7 +525,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 		memset(&opts, 0, sizeof opts);
- 		opts.update = 1;
-+		opts.merge = 1;
-+		opts.fn = oneway_merge;
- 		opts.verbose_update = !option_quiet;
-+		opts.src_index = &the_index;
- 		opts.dst_index = &the_index;
- 
- 		tree = parse_tree_indirect(remote_head->old_sha1);
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index dc9d63d..593d1a3 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -23,4 +23,11 @@ test_expect_success 'clone with excess parameters' '
- 
- '
- 
-+test_expect_success 'clone checks out files' '
-+
-+	git clone src dst &&
-+	test -f dst/file
-+
-+'
-+
- test_done
--- 
-1.5.5.1.424.g3256b
+> This arrangement predates separate work-tree by many months.  It
+> could be that what needs fixing is the separate work-tree code.
+
+Oh yeah, and I've been meaning to look into that for a long time.
+Sigh.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"she was rather too intelligent and competent-looking to be
+ considered entirely beautiful, but all the more attractive because
+ of it."
+                           -- george spencer-brown, "a lion's teeth"
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Kj7319i9nmIyA2yE
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFILA07IgvIgzMMSnURAuM9AKDhG3OGUfeiDlE5tMTefRFZeNHDygCfZwnH
+wmsdhDEockbUIsrNHB6Dr/k=
+=/w/L
+-----END PGP SIGNATURE-----
+
+--Kj7319i9nmIyA2yE--
