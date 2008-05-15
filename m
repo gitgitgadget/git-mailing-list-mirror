@@ -1,490 +1,562 @@
 From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH 1/3] git-cvsserver: add mechanism for managing working tree and current directory
-Date: Wed, 14 May 2008 22:35:46 -0600
-Message-ID: <1210826148-8708-2-git-send-email-mmogilvi_git@miniinfo.net>
+Subject: [PATCH 3/3] git-cvsserver: add ability to guess -kb from contents
+Date: Wed, 14 May 2008 22:35:48 -0600
+Message-ID: <1210826148-8708-4-git-send-email-mmogilvi_git@miniinfo.net>
 References: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net>
+ <1210826148-8708-2-git-send-email-mmogilvi_git@miniinfo.net>
+ <1210826148-8708-3-git-send-email-mmogilvi_git@miniinfo.net>
 Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 06:36:49 2008
+X-From: git-owner@vger.kernel.org Thu May 15 06:36:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwVCz-0001W0-3I
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 06:36:49 +0200
+	id 1JwVCx-0001W0-T2
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 06:36:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbYEOEf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 00:35:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751514AbYEOEf5
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 00:35:57 -0400
-Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:46710
+	id S1751512AbYEOEf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 00:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbYEOEfz
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 00:35:55 -0400
+Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:49950
 	"EHLO QMTA06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751418AbYEOEfy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 May 2008 00:35:54 -0400
-Received: from OMTA11.westchester.pa.mail.comcast.net ([76.96.62.36])
+	by vger.kernel.org with ESMTP id S1751409AbYEOEfx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 May 2008 00:35:53 -0400
+Received: from OMTA05.westchester.pa.mail.comcast.net ([76.96.62.43])
 	by QMTA06.westchester.pa.mail.comcast.net with comcast
-	id RfY01Z0080mv7h05605700; Thu, 15 May 2008 04:35:53 +0000
+	id RgW41Z00A0vyq2s5600F00; Thu, 15 May 2008 04:35:52 +0000
 Received: from fast.fake.domain.org ([75.70.160.185])
-	by OMTA11.westchester.pa.mail.comcast.net with comcast
-	id Rgbt1Z00240J0Bv3X00000; Thu, 15 May 2008 04:35:53 +0000
-X-Authority-Analysis: v=1.0 c=1 a=q77xlIqc6cIA:10 a=XCi9RSTs5d4A:10
- a=hnmYV7qboChJw2SijvcA:9 a=aSKkNXWl5pjRyL3EyvEA:7
- a=QdAorSVeKLNjRBNTWnEOigoak0sA:4 a=3cjVDzgxsZYA:10 a=XF7b4UCPwd8A:10
+	by OMTA05.westchester.pa.mail.comcast.net with comcast
+	id Rgbq1Z00A40J0Bv3R00000; Thu, 15 May 2008 04:35:52 +0000
+X-Authority-Analysis: v=1.0 c=1 a=SYIO-6-9SWkA:10 a=ghjZNOx5_soA:10
+ a=UOw8lT3EqpaAlmvKE-0A:9 a=DFr2-9tpnKzTpsXHO6MA:7
+ a=RieDrKLIODzpIVK5bwRQmfY6oF4A:4 a=3cjVDzgxsZYA:10 a=f3vTY2RCmVgA:10
 Received: from localhost.localdomain(really [192.168.30.96]) by fast.fake.domain.org
 	via sendmail with esmtp
-	id <m1JwVC2-000twQC@fast.fake.domain.org>
-	for <mmogilvi_git@miniinfo.net>; Wed, 14 May 2008 22:35:50 -0600 (MDT)
+	id <m1JwVC3-000twSC@fast.fake.domain.org>
+	for <mmogilvi_git@miniinfo.net>; Wed, 14 May 2008 22:35:51 -0600 (MDT)
 	(Smail-3.2 1996-Jul-4 #13 built 1998-Aug-8)
 X-Mailer: git-send-email 1.5.4.3.340.g97b97
-In-Reply-To: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net>
+In-Reply-To: <1210826148-8708-3-git-send-email-mmogilvi_git@miniinfo.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82176>
 
-There are various reasons git-cvsserver needs to manipulate the current
-directory, and this patch attempts to clarify and validate such changes:
-
-1. Temporary empty working directory (with index) for certain operations
-   that require an index file to work.
-2. Use a temporary directory with temporary file names for doing
-   merges of user's dirty sandbox state with latest changes in
-   repository.
-3. Coming up soon: Set up an index and either a valid or empty
-   working directory when calling git-check-attr to decide
-   if a file should be marked binary (-kb).
+If "gitcvs.allbinary" is set to "guess", then any file that has
+not been explicitly marked as binary or text using the "crlf" attribute
+and the "gitcvs.usecrlfattr" config will guess binary based on the contents
+of the file.
 
 Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
 ---
+ Documentation/config.txt        |   13 ++-
+ Documentation/git-cvsserver.txt |   14 ++-
+ git-cvsserver.perl              |  193 +++++++++++++++++++++++++++++++++++---
+ t/t9401-git-cvsserver-crlf.sh   |  159 ++++++++++++++++++++++++++++++++
+ 4 files changed, 354 insertions(+), 25 deletions(-)
 
-I'm not sure about this.  I get the vague sense it might be better to
-just always set up a (usually empty except for the index file and
-user's changed files) working directory early in processing, and
-minimize chdir calls after that.  It might also make it
-possible to have a new .gitattributes file take effect immediately.
-But that would be a much more invasive change.
-
- git-cvsserver.perl |  252 ++++++++++++++++++++++++++++++++++++++++++++--------
- 1 files changed, 213 insertions(+), 39 deletions(-)
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 820795f..2c867d3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -655,11 +655,14 @@ gitcvs.usecrlfattr
+ 	then 'gitcvs.allbinary' is used. See linkgit:gitattribute[5].
+ 
+ gitcvs.allbinary::
+-	If true, all files not otherwise specified using
+-	'gitcvs.usecrlfattr' and an explicitly set or unset `crlf`
+-	attribute are sent to the client in mode '-kb'. This
+-	causes the client to treat them as binary files which
+-	suppresses any newline munging it otherwise might do.
++	This is used if 'gitcvs.usecrlfattr' does not resolve
++	the correct '-kb' mode to use. If true, all
++	unresolved files are sent to the client in
++	mode '-kb'. This causes the client to treat them
++	as binary files, which suppresses any newline munging it
++	otherwise might do. Alternatively, if it is set to "guess",
++	then the contents of the file are examined to decide if
++	it is binary, similar to 'core.autocrlf'.
+ 
+ gitcvs.dbname::
+ 	Database used by git-cvsserver to cache revision information
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 8393028..7611c5b 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -311,17 +311,23 @@ to crnl conversion on some platforms.
+ You can make the server use `crnl` attributes to set the '-k' modes
+ for files by setting the `gitcvs.usecrlfattr` config variable.
+ In this case, if `crlf` is explicitly unset ('-crnl'), then the
+-will set '-kb' mode, for binary files.  If it `crlf` is set,
++server will set '-kb' mode for binary files. If `crlf` is set,
+ then the '-k' mode will explicitly be left blank.  See
+ also linkgit:gitattributes[5] for more information about the `crlf`
+ attribute.
+ 
+ Alternatively, if `gitcvs.usecrlfattr` config is not enabled
+ or if the `crlf` attribute is unspecified for a filename, then
+-the server uses the `gitcvs.allbinary` for the default setting.
+-If `gitcvs.allbinary` is set, then the files not otherwise
++the server uses the `gitcvs.allbinary` config for the default setting.
++If `gitcvs.allbinary` is set, then file not otherwise
+ specified will default to '-kb' mode. Otherwise the '-k' mode
+-is left blank.
++is left blank. But if `gitcvs.allbinary` is set to "guess", then
++the correct '-k' mode will be guessed based on the contents of
++the file.
++
++For best consistency with cvs, it is probably best to override the
++defaults by setting `gitcvs.usecrlfattr` to true,
++and `gitcvs.allbinary` to "guess".
+ 
+ Dependencies
+ ------------
 diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 29dbfc9..674892b 100755
+index 58206ae..920bbe1 100755
 --- a/git-cvsserver.perl
 +++ b/git-cvsserver.perl
-@@ -21,6 +21,7 @@ use bytes;
+@@ -502,7 +502,7 @@ sub req_add
+                 print $state->{CVSROOT} . "/$state->{module}/$filename\n";
  
- use Fcntl;
- use File::Temp qw/tempdir tempfile/;
-+use File::Path qw/rmtree/;
- use File::Basename;
- use Getopt::Long qw(:config require_order no_ignore_case);
+                 # this is an "entries" line
+-                my $kopts = kopts_from_path($filename);
++                my $kopts = kopts_from_path($filename,"sha1",$meta->{filehash});
+                 $log->debug("/$filepart/1.$meta->{revision}//$kopts/");
+                 print "/$filepart/1.$meta->{revision}//$kopts/\n";
+                 # permissions
+@@ -533,7 +533,8 @@ sub req_add
  
-@@ -86,6 +87,17 @@ my $methods = {
- # $state holds all the bits of information the clients sends us that could
- # potentially be useful when it comes to actually _doing_ something.
- my $state = { prependdir => '' };
-+
-+# Work is for managing temporary working directory
-+my $work =
-+    {
-+        state => undef,  # undef, 1 (empty), 2 (with stuff)
-+        workDir => undef,
-+        index => undef,
-+        emptyDir => undef,
-+        tmpDir => undef
-+    };
-+
- $log->info("--------------- STARTING -----------------");
+         print "Checked-in $dirpart\n";
+         print "$filename\n";
+-        my $kopts = kopts_from_path($filename);
++        my $kopts = kopts_from_path($filename,"file",
++                        $state->{entries}{$filename}{modified_filename});
+         print "/$filepart/0//$kopts/\n";
  
- my $usage =
-@@ -189,6 +201,9 @@ while (<STDIN>)
- $log->debug("Processing time : user=" . (times)[0] . " system=" . (times)[1]);
- $log->info("--------------- FINISH -----------------");
+         my $requestedKopts = $state->{opt}{k};
+@@ -631,7 +632,7 @@ sub req_remove
  
-+chdir '/';
-+exit 0;
-+
- # Magic catchall method.
- #    This is the method that will handle all commands we haven't yet
- #    implemented. It simply sends a warning to the log file indicating a
-@@ -1101,10 +1116,10 @@ sub req_update
-             $log->info("Updating '$filename'");
-             my ( $filepart, $dirpart ) = filenamesplit($meta->{name},1);
+         print "Checked-in $dirpart\n";
+         print "$filename\n";
+-        my $kopts = kopts_from_path($filename);
++        my $kopts = kopts_from_path($filename,"sha1",$meta->{filehash});
+         print "/$filepart/-1.$wrev//$kopts/\n";
  
--            my $dir = tempdir( DIR => $TEMP_DIR, CLEANUP => 1 ) . "/";
-+            my $mergeDir = setupTmpDir();
+         $rmcount++;
+@@ -910,7 +911,7 @@ sub req_co
+        print $state->{CVSROOT} . "/$module/" . ( defined ( $git->{dir} ) and $git->{dir} ne "./" ? $git->{dir} . "/" : "" ) . "$git->{name}\n";
  
--            chdir $dir;
-             my $file_local = $filepart . ".mine";
-+            my $mergedFile = "$mergeDir/$file_local";
-             system("ln","-s",$state->{entries}{$filename}{modified_filename}, $file_local);
-             my $file_old = $filepart . "." . $oldmeta->{revision};
-             transmitfile($oldmeta->{filehash}, { targetfile => $file_old });
-@@ -1115,11 +1130,13 @@ sub req_update
-             $log->info("Merging $file_local, $file_old, $file_new");
-             print "M Merging differences between 1.$oldmeta->{revision} and 1.$meta->{revision} into $filename\n";
+         # this is an "entries" line
+-        my $kopts = kopts_from_path($fullName);
++        my $kopts = kopts_from_path($fullName,"sha1",$git->{filehash});
+         print "/$git->{name}/1.$git->{revision}//$kopts/\n";
+         # permissions
+         print "u=$git->{mode},g=$git->{mode},o=$git->{mode}\n";
+@@ -1119,7 +1120,7 @@ sub req_update
+ 		print $state->{CVSROOT} . "/$state->{module}/$filename\n";
  
--            $log->debug("Temporary directory for merge is $dir");
-+            $log->debug("Temporary directory for merge is $mergeDir");
+ 		# this is an "entries" line
+-		my $kopts = kopts_from_path($filename);
++		my $kopts = kopts_from_path($filename,"sha1",$meta->{filehash});
+ 		$log->debug("/$filepart/1.$meta->{revision}//$kopts/");
+ 		print "/$filepart/1.$meta->{revision}//$kopts/\n";
  
-             my $return = system("git", "merge-file", $file_local, $file_old, $file_new);
-             $return >>= 8;
- 
-+            cleanupTmpDir();
-+
-             if ( $return == 0 )
-             {
-                 $log->info("Merged successfully");
-@@ -1168,13 +1185,11 @@ sub req_update
-                 # transmit file, format is single integer on a line by itself (file
-                 # size) followed by the file contents
-                 # TODO : we should copy files in blocks
--                my $data = `cat $file_local`;
-+                my $data = `cat $mergedFile`;
-                 $log->debug("File size : " . length($data));
-                 print length($data) . "\n";
-                 print $data;
+@@ -1167,7 +1168,8 @@ sub req_update
+                     print "Merged $dirpart\n";
+                     $log->debug($state->{CVSROOT} . "/$state->{module}/$filename");
+                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
+-                    my $kopts = kopts_from_path("$dirpart/$filepart");
++                    my $kopts = kopts_from_path("$dirpart/$filepart",
++                                                "file",$mergedFile);
+                     $log->debug("/$filepart/1.$meta->{revision}//$kopts/");
+                     print "/$filepart/1.$meta->{revision}//$kopts/\n";
+                 }
+@@ -1183,7 +1185,8 @@ sub req_update
+                 {
+                     print "Merged $dirpart\n";
+                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
+-                    my $kopts = kopts_from_path("$dirpart/$filepart");
++                    my $kopts = kopts_from_path("$dirpart/$filepart",
++                                                "file",$mergedFile);
+                     print "/$filepart/1.$meta->{revision}/+/$kopts/\n";
+                 }
              }
--
--            chdir "/";
+@@ -1434,7 +1437,7 @@ sub req_ci
+             }
+             print "Checked-in $dirpart\n";
+             print "$filename\n";
+-            my $kopts = kopts_from_path($filename);
++            my $kopts = kopts_from_path($filename,"sha1",$meta->{filehash});
+             print "/$filepart/1.$meta->{revision}//$kopts/\n";
          }
- 
      }
-@@ -1195,6 +1210,7 @@ sub req_ci
-     if ( $state->{method} eq 'pserver')
+@@ -2312,7 +2315,7 @@ sub cleanupTmpDir
+ # file should get -kb.
+ sub kopts_from_path
+ {
+-	my ($path) = @_;
++    my ($path, $srcType, $name) = @_;
+ 
+     if ( defined ( $cfg->{gitcvs}{usecrlfattr} ) and
+          $cfg->{gitcvs}{usecrlfattr} =~ /\s*(1|true|yes)\s*$/i )
+@@ -2332,15 +2335,55 @@ sub kopts_from_path
+         }
+     }
+ 
+-    unless ( defined ( $cfg->{gitcvs}{allbinary} ) and $cfg->{gitcvs}{allbinary} =~ /^\s*(1|true|yes)\s*$/i )
++    if ( defined ( $cfg->{gitcvs}{allbinary} ) )
      {
-         print "error 1 pserver access cannot commit\n";
-+        cleanupWorkTree();
-         exit;
-     }
- 
-@@ -1202,6 +1218,7 @@ sub req_ci
-     {
-         $log->warn("file 'index' already exists in the git repository");
-         print "error 1 Index already exists in git repo\n";
-+        cleanupWorkTree();
-         exit;
-     }
- 
-@@ -1209,31 +1226,20 @@ sub req_ci
-     my $updater = GITCVS::updater->new($state->{CVSROOT}, $state->{module}, $log);
-     $updater->update();
- 
--    my $tmpdir = tempdir ( DIR => $TEMP_DIR );
--    my ( undef, $file_index ) = tempfile ( DIR => $TEMP_DIR, OPEN => 0 );
--    $log->info("Lockless commit start, basing commit on '$tmpdir', index file is '$file_index'");
--
--    $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
--    $ENV{GIT_WORK_TREE} = ".";
--    $ENV{GIT_INDEX_FILE} = $file_index;
--
-     # Remember where the head was at the beginning.
-     my $parenthash = `git show-ref -s refs/heads/$state->{module}`;
-     chomp $parenthash;
-     if ($parenthash !~ /^[0-9a-f]{40}$/) {
- 	    print "error 1 pserver cannot find the current HEAD of module";
-+	    cleanupWorkTree();
- 	    exit;
-     }
- 
--    chdir $tmpdir;
-+    setupWorkTree($parenthash);
- 
--    # populate the temporary index
--    system("git-read-tree", $parenthash);
--    unless ($? == 0)
--    {
--	die "Error running git-read-tree $state->{module} $file_index $!";
--    }
--    $log->info("Created index '$file_index' for head $state->{module} - exit status $?");
-+    $log->info("Lockless commit start, basing commit on '$work->{workDir}', index file is '$work->{index}'");
+-		# Return "" to give no special treatment to any path
+-		return "";
+-    } else {
+-		# Alternatively, to have all files treated as if they are binary (which
+-		# is more like git itself), always return the "-kb" option
+-		return "-kb";
++        if( ($cfg->{gitcvs}{allbinary} =~ /^\s*(1|true|yes)\s*$/i) )
++        {
++            return "-kb";
++        }
++        elsif( ($cfg->{gitcvs}{allbinary} =~ /^\s*guess\s*$/i) )
++        {
++            if( $srcType eq "sha1Or-k" &&
++                !defined($name) )
++            {
++                my ($ret)=$state->{entries}{$path}{options};
++                if( !defined($ret) )
++                {
++                    $ret=$state->{opt}{k};
++                    if(defined($ret))
++                    {
++                        $ret="-k$ret";
++                    }
++                    else
++                    {
++                        $ret="";
++                    }
++                }
++                if( ! ($ret=~/^(|-kb|-kkv|-kkvl|-kk|-ko|-kv)$/) )
++                {
++                    print "E Bad -k option\n";
++                    $log->warn("Bad -k option: $ret");
++                    die "Error: Bad -k option: $ret\n";
++                }
 +
-+    $log->info("Created index '$work->{index}' for head $state->{module} - exit status $?");
- 
-     my @committedfiles = ();
-     my %oldmeta;
-@@ -1271,7 +1277,7 @@ sub req_ci
-         {
-             # fail everything if an up to date check fails
-             print "error 1 Up to date check failed for $filename\n";
--            chdir "/";
-+            cleanupWorkTree();
-             exit;
-         }
- 
-@@ -1313,7 +1319,7 @@ sub req_ci
-     {
-         print "E No files to commit\n";
-         print "ok\n";
--        chdir "/";
-+        cleanupWorkTree();
-         return;
++                return $ret;
++            }
++            else
++            {
++                if( is_binary($srcType,$name) )
++                {
++                    $log->debug("... as binary");
++                    return "-kb";
++                }
++                else
++                {
++                    $log->debug("... as text");
++                }
++            }
++        }
      }
- 
-@@ -1336,7 +1342,7 @@ sub req_ci
-     {
-         $log->warn("Commit failed (Invalid commit hash)");
-         print "error 1 Commit failed (unknown reason)\n";
--        chdir "/";
-+        cleanupWorkTree();
-         exit;
-     }
- 
-@@ -1348,7 +1354,7 @@ sub req_ci
- 		{
- 			$log->warn("Commit failed (update hook declined to update ref)");
- 			print "error 1 Commit failed (update hook declined)\n";
--			chdir "/";
-+			cleanupWorkTree();
- 			exit;
- 		}
- 	}
-@@ -1358,6 +1364,7 @@ sub req_ci
- 			"refs/heads/$state->{module}", $commithash, $parenthash)) {
- 		$log->warn("update-ref for $state->{module} failed.");
- 		print "error 1 Cannot commit -- update first\n";
-+		cleanupWorkTree();
- 		exit;
- 	}
- 
-@@ -1414,7 +1421,7 @@ sub req_ci
-         }
-     }
- 
--    chdir "/";
-+    cleanupWorkTree();
-     print "ok\n";
++    # Return "" to give no special treatment to any path
++    return "";
  }
  
-@@ -1757,15 +1764,9 @@ sub req_annotate
-     argsfromdir($updater);
- 
-     # we'll need a temporary checkout dir
--    my $tmpdir = tempdir ( DIR => $TEMP_DIR );
--    my ( undef, $file_index ) = tempfile ( DIR => $TEMP_DIR, OPEN => 0 );
--    $log->info("Temp checkoutdir creation successful, basing annotate session work on '$tmpdir', index file is '$file_index'");
--
--    $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
--    $ENV{GIT_WORK_TREE} = ".";
--    $ENV{GIT_INDEX_FILE} = $file_index;
-+    setupWorkTree();
- 
--    chdir $tmpdir;
-+    $log->info("Temp checkoutdir creation successful, basing annotate session work on '$work->{workDir}', index file is '$ENV{GIT_INDEX_FILE}'");
- 
-     # foreach file specified on the command line ...
-     foreach my $filename ( @{$state->{args}} )
-@@ -1789,10 +1790,10 @@ sub req_annotate
- 	system("git-read-tree", $lastseenin);
- 	unless ($? == 0)
- 	{
--	    print "E error running git-read-tree $lastseenin $file_index $!\n";
-+	    print "E error running git-read-tree $lastseenin $ENV{GIT_INDEX_FILE} $!\n";
- 	    return;
- 	}
--	$log->info("Created index '$file_index' with commit $lastseenin - exit status $?");
-+	$log->info("Created index '$ENV{GIT_INDEX_FILE}' with commit $lastseenin - exit status $?");
- 
-         # do a checkout of the file
-         system('git-checkout-index', '-f', '-u', $filename);
-@@ -1808,7 +1809,7 @@ sub req_annotate
-         # git-jsannotate telling us about commits we are hiding
-         # from the client.
- 
--        my $a_hints = "$tmpdir/.annotate_hints";
-+        my $a_hints = "$work->{workDir}/.annotate_hints";
-         if (!open(ANNOTATEHINTS, '>', $a_hints)) {
-             print "E failed to open '$a_hints' for writing: $!\n";
-             return;
-@@ -1862,7 +1863,7 @@ sub req_annotate
+ sub check_attr
+@@ -2360,6 +2403,124 @@ sub check_attr
      }
- 
-     # done; get out of the tempdir
--    chdir "/";
-+    cleanupWorkDir();
- 
-     print "ok\n";
- 
-@@ -2115,6 +2116,179 @@ sub filecleanup
-     return $filename;
  }
  
-+sub validateGitDir
++# This should have the same heuristics as convert.c:is_binary() and related.
++# Note that the bare CR test is done by callers in convert.c.
++sub is_binary
 +{
-+    if( !defined($state->{CVSROOT}) )
-+    {
-+        print "error 1 CVSROOT not specified\n";
-+        cleanupWorkTree();
-+        exit;
-+    }
-+    if( $ENV{GIT_DIR} ne ($state->{CVSROOT} . '/') )
-+    {
-+        print "error 1 Internally inconsistent CVSROOT\n";
-+        cleanupWorkTree();
-+        exit;
-+    }
-+}
++    my ($srcType,$name) = @_;
++    $log->debug("is_binary($srcType,$name)");
 +
-+# Setup working directory in a work tree with the requested version
-+# loaded in the index.
-+sub setupWorkTree
-+{
-+    my ($ver) = @_;
-+
-+    validateGitDir();
-+
-+    if( ( defined($work->{state}) && $work->{state} != 1 ) ||
-+        defined($work->{tmpDir}) )
++    # Minimize amount of interpreted code run in the inner per-character
++    # loop for large files, by totalling each character value and
++    # then analyzing the totals.
++    my @counts;
++    my $i;
++    for($i=0;$i<256;$i++)
 +    {
-+        $log->warn("Bad work tree state management");
-+        print "error 1 Internal setup multiple work trees without cleanup\n";
-+        cleanupWorkTree();
-+        exit;
++        $counts[$i]=0;
 +    }
 +
-+    $work->{workDir} = tempdir ( DIR => $TEMP_DIR );
-+
-+    if( !defined($work->{index}) )
++    my $fh = open_blob_or_die($srcType,$name);
++    my $line;
++    while( defined($line=<$fh>) )
 +    {
-+        (undef, $work->{index}) = tempfile ( DIR => $TEMP_DIR, OPEN => 0 );
-+    }
-+
-+    chdir $work->{workDir} or
-+        die "Unable to chdir to $work->{workDir}\n";
-+
-+    $log->info("Setting up GIT_WORK_TREE as '.' in '$work->{workDir}', index file is '$work->{index}'");
-+
-+    $ENV{GIT_WORK_TREE} = ".";
-+    $ENV{GIT_INDEX_FILE} = $work->{index};
-+    $work->{state} = 2;
-+
-+    if($ver)
-+    {
-+        system("git","read-tree",$ver);
-+        unless ($? == 0)
++        # Any '\0' and bare CR are considered binary.
++        if( $line =~ /\0|(\r[^\n])/ )
 +        {
-+            $log->warn("Error running git-read-tree");
-+            die "Error running git-read-tree $ver in $work->{workDir} $!\n";
++            close($fh);
++            return 1;
++        }
++
++        # Count up each character in the line:
++        my $len=length($line);
++        for($i=0;$i<$len;$i++)
++        {
++            $counts[ord(substr($line,$i,1))]++;
 +        }
 +    }
-+    # else # req_annotate reads tree for each file
-+}
++    close $fh;
 +
-+# Ensure current directory is in some kind of working directory,
-+# with a recent version loaded in the index.
-+sub ensureWorkTree
-+{
-+    if( defined($work->{tmpDir}) )
++    # Don't count CR and LF as either printable/nonprintable
++    $counts[ord("\n")]=0;
++    $counts[ord("\r")]=0;
++
++    # Categorize individual character count into printable and nonprintable:
++    my $printable=0;
++    my $nonprintable=0;
++    for($i=0;$i<256;$i++)
 +    {
-+        $log->warn("Bad work tree state management [ensureWorkTree()]");
-+        print "error 1 Internal setup multiple dirs without cleanup\n";
-+        cleanupWorkTree();
-+        exit;
-+    }
-+    if( $work->{state} )
-+    {
-+        return;
-+    }
-+
-+    validateGitDir();
-+
-+    if( !defined($work->{emptyDir}) )
-+    {
-+        $work->{emptyDir} = tempdir ( DIR => $TEMP_DIR, OPEN => 0);
-+    }
-+    chdir $work->{emptyDir} or
-+        die "Unable to chdir to $work->{emptyDir}\n";
-+
-+    my $ver = `git show-ref -s refs/heads/$state->{module}`;
-+    chomp $ver;
-+    if ($ver !~ /^[0-9a-f]{40}$/)
-+    {
-+        $log->warn("Error from git show-ref -s refs/head$state->{module}");
-+        print "error 1 cannot find the current HEAD of module";
-+        cleanupWorkTree();
-+        exit;
-+    }
-+
-+    if( !defined($work->{index}) )
-+    {
-+        (undef, $work->{index}) = tempfile ( DIR => $TEMP_DIR, OPEN => 0 );
-+    }
-+
-+    $ENV{GIT_WORK_TREE} = ".";
-+    $ENV{GIT_INDEX_FILE} = $work->{index};
-+    $work->{state} = 1;
-+
-+    system("git","read-tree",$ver);
-+    unless ($? == 0)
-+    {
-+        die "Error running git-read-tree $ver $!\n";
-+    }
-+}
-+
-+# Cleanup working directory that is not needed any longer.
-+sub cleanupWorkTree
-+{
-+    if( ! $work->{state} )
-+    {
-+        return;
-+    }
-+
-+    chdir "/" or die "Unable to chdir '/'\n";
-+
-+    if( defined($work->{workDir}) )
-+    {
-+        rmtree( $work->{workDir} );
-+        undef $work->{workDir};
-+    }
-+    undef $work->{state};
-+}
-+
-+# Setup a temporary directory (not a working tree), typically for
-+# merging dirty state as in req_update.
-+sub setupTmpDir
-+{
-+    $work->{tmpDir} = tempdir ( DIR => $TEMP_DIR );
-+    chdir $work->{tmpDir} or die "Unable to chdir $work->{tmpDir}\n";
-+
-+    return $work->{tmpDir};
-+}
-+
-+# Clean up a previously setupTmpDir.  Restore previous work tree if
-+# appropriate.
-+sub cleanupTmpDir
-+{
-+    if ( !defined($work->{tmpDir}) )
-+    {
-+        $log->warn("cleanup tmpdir that has not been setup");
-+        die "Cleanup tmpDir that has not been setup\n";
-+    }
-+    if( defined($work->{state}) )
-+    {
-+        if( $work->{state} == 1 )
++        if( $i < 32 &&
++            $i != ord("\b") &&
++            $i != ord("\t") &&
++            $i != 033 &&       # ESC
++            $i != 014 )        # FF
 +        {
-+            chdir $work->{emptyDir} or
-+                die "Unable to chdir to $work->{emptyDir}\n";
++            $nonprintable+=$counts[$i];
 +        }
-+        elsif( $work->{state} == 2 )
++        elsif( $i==127 )  # DEL
 +        {
-+            chdir $work->{workDir} or
-+                die "Unable to chdir to $work->{emptyDir}\n";
++            $nonprintable+=$counts[$i];
 +        }
 +        else
 +        {
-+            $log->warn("Inconsistent work dir state");
-+            die "Inconsistent work dir state\n";
++            $printable+=$counts[$i];
++        }
++    }
++
++    return ($printable >> 7) < $nonprintable;
++}
++
++# Returns open file handle.  Possible invocations:
++#  - open_blob_or_die("file",$filename);
++#  - open_blob_or_die("sha1",$filehash);
++sub open_blob_or_die
++{
++    my ($srcType,$name) = @_;
++    my ($fh);
++    if( $srcType eq "file" )
++    {
++        if( !open $fh,"<",$name )
++        {
++            $log->warn("Unable to open file $name: $!");
++            die "Unable to open file $name: $!\n";
++        }
++    }
++    elsif( $srcType eq "sha1" || $srcType eq "sha1Or-k" )
++    {
++        unless ( defined ( $name ) and $name =~ /^[a-zA-Z0-9]{40}$/ )
++        {
++            $log->warn("Need filehash");
++            die "Need filehash\n";
++        }
++
++        my $type = `git cat-file -t $name`;
++        chomp $type;
++
++        unless ( defined ( $type ) and $type eq "blob" )
++        {
++            $log->warn("Invalid type '$type' for '$name'");
++            die ( "Invalid type '$type' (expected 'blob')" )
++        }
++
++        my $size = `git cat-file -s $name`;
++        chomp $size;
++
++        $log->debug("open_blob_or_die($name) size=$size, type=$type");
++
++        unless( open $fh, '-|', "git", "cat-file", "blob", $name )
++        {
++            $log->warn("Unable to open sha1 $name");
++            die "Unable to open sha1 $name\n";
 +        }
 +    }
 +    else
 +    {
-+        chdir "/" or die "Unable to chdir '/'\n";
++        $log->warn("Unknown type of blob source: $srcType");
++        die "Unknown type of blob source: $srcType\n";
 +    }
++    return $fh;
 +}
 +
- # Given a path, this function returns a string containing the kopts
- # that should go into that path's Entries line.  For example, a binary
- # file should get -kb.
+ # Generate a CVS author name from Git author information, by taking
+ # the first eight characters of the user part of the email address.
+ sub cvs_author
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index b7a779b..e27a1c5 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -175,4 +175,163 @@ test_expect_success 'updating' '
+     cmp cvswork/binfile.bin tmpExpect1
+ '
+ 
++rm -rf cvswork
++test_expect_success 'cvs co (use attributes/guess)' '
++    GIT_DIR="$SERVERDIR" git config gitcvs.allbinary guess &&
++    GIT_CONFIG="$git_config" cvs -Q co -d cvswork master >cvs.log 2>&1 &&
++    marked_as cvswork textfile.c "" &&
++    marked_as cvswork binfile.bin -kb &&
++    marked_as cvswork .gitattributes "" &&
++    marked_as cvswork mixedUp.c "" &&
++    marked_as cvswork/subdir withCr.bin -kb &&
++    marked_as cvswork/subdir file.h "" &&
++    marked_as cvswork/subdir unspecified.other "" &&
++    marked_as cvswork/subdir newfile.bin -kb &&
++    marked_as cvswork/subdir newfile.c ""
++'
++
++test_expect_success 'setup multi-line files' '
++    ( echo "line 1" &&
++      echo "line 2" &&
++      echo "line 3" &&
++      echo "line 4 with NUL: Q <-" ) | q_to_nul > multiline.c &&
++    git add multiline.c &&
++    ( echo "line 1" &&
++      echo "line 2" &&
++      echo "line 3" &&
++      echo "line 4" ) | q_to_nul > multilineTxt.c &&
++    git add multilineTxt.c &&
++    git commit -q -m "multiline files" &&
++    git push gitcvs.git >/dev/null
++'
++
++rm -rf cvswork
++test_expect_success 'cvs co (guess)' '
++    GIT_DIR="$SERVERDIR" git config --bool gitcvs.usecrlfattr false &&
++    GIT_CONFIG="$git_config" cvs -Q co -d cvswork master >cvs.log 2>&1 &&
++    marked_as cvswork textfile.c "" &&
++    marked_as cvswork binfile.bin -kb &&
++    marked_as cvswork .gitattributes "" &&
++    marked_as cvswork mixedUp.c -kb &&
++    marked_as cvswork multiline.c -kb &&
++    marked_as cvswork multilineTxt.c "" &&
++    marked_as cvswork/subdir withCr.bin -kb &&
++    marked_as cvswork/subdir file.h "" &&
++    marked_as cvswork/subdir unspecified.other "" &&
++    marked_as cvswork/subdir newfile.bin "" &&
++    marked_as cvswork/subdir newfile.c ""
++'
++
++test_expect_success 'cvs co another copy (guess)' '
++    GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
++    marked_as cvswork2 textfile.c "" &&
++    marked_as cvswork2 binfile.bin -kb &&
++    marked_as cvswork2 .gitattributes "" &&
++    marked_as cvswork2 mixedUp.c -kb &&
++    marked_as cvswork2 multiline.c -kb &&
++    marked_as cvswork2 multilineTxt.c "" &&
++    marked_as cvswork2/subdir withCr.bin -kb &&
++    marked_as cvswork2/subdir file.h "" &&
++    marked_as cvswork2/subdir unspecified.other "" &&
++    marked_as cvswork2/subdir newfile.bin "" &&
++    marked_as cvswork2/subdir newfile.c ""
++'
++
++test_expect_success 'add text (guess)' '
++    cd cvswork &&
++    echo "simpleText" > simpleText.c &&
++    GIT_CONFIG="$git_config" cvs -Q add simpleText.c &&
++    cd .. &&
++    marked_as cvswork simpleText.c ""
++'
++
++test_expect_success 'add bin (guess)' '
++    cd cvswork &&
++    echo "simpleBin: NUL: Q <- there" | q_to_nul > simpleBin.bin &&
++    GIT_CONFIG="$git_config" cvs -Q add simpleBin.bin &&
++    cd .. &&
++    marked_as cvswork simpleBin.bin -kb
++'
++
++test_expect_success 'remove files (guess)' '
++    cd cvswork &&
++    GIT_CONFIG="$git_config" cvs -Q rm -f subdir/file.h &&
++    cd subdir &&
++    GIT_CONFIG="$git_config" cvs -Q rm -f withCr.bin &&
++    cd ../.. &&
++    marked_as cvswork/subdir withCr.bin -kb &&
++    marked_as cvswork/subdir file.h ""
++'
++
++test_expect_success 'cvs ci (guess)' '
++    cd cvswork &&
++    GIT_CONFIG="$git_config" cvs -Q ci -m "add/rm files" >cvs.log 2>&1 &&
++    cd .. &&
++    marked_as cvswork textfile.c "" &&
++    marked_as cvswork binfile.bin -kb &&
++    marked_as cvswork .gitattributes "" &&
++    marked_as cvswork mixedUp.c -kb &&
++    marked_as cvswork multiline.c -kb &&
++    marked_as cvswork multilineTxt.c "" &&
++    not_present cvswork/subdir withCr.bin &&
++    not_present cvswork/subdir file.h &&
++    marked_as cvswork/subdir unspecified.other "" &&
++    marked_as cvswork/subdir newfile.bin "" &&
++    marked_as cvswork/subdir newfile.c "" &&
++    marked_as cvswork simpleBin.bin -kb &&
++    marked_as cvswork simpleText.c ""
++'
++
++test_expect_success 'update subdir of other copy (guess)' '
++    cd cvswork2/subdir &&
++    GIT_CONFIG="$git_config" cvs -Q update &&
++    cd ../.. &&
++    marked_as cvswork2 textfile.c "" &&
++    marked_as cvswork2 binfile.bin -kb &&
++    marked_as cvswork2 .gitattributes "" &&
++    marked_as cvswork2 mixedUp.c -kb &&
++    marked_as cvswork2 multiline.c -kb &&
++    marked_as cvswork2 multilineTxt.c "" &&
++    not_present cvswork2/subdir withCr.bin &&
++    not_present cvswork2/subdir file.h &&
++    marked_as cvswork2/subdir unspecified.other "" &&
++    marked_as cvswork2/subdir newfile.bin "" &&
++    marked_as cvswork2/subdir newfile.c "" &&
++    not_present cvswork2 simpleBin.bin &&
++    not_present cvswork2 simpleText.c
++'
++
++echo "starting update/merge" >> "${WORKDIR}/marked.log"
++test_expect_success 'update/merge full other copy (guess)' '
++    git pull gitcvs.git master &&
++    sed "s/3/replaced_3/" < multilineTxt.c > ml.temp &&
++    mv ml.temp multilineTxt.c &&
++    git add multilineTxt.c &&
++    git commit -q -m "modify multiline file" >> "${WORKDIR}/marked.log" &&
++    git push gitcvs.git >/dev/null &&
++    cd cvswork2 &&
++    sed "s/1/replaced_1/" < multilineTxt.c > ml.temp &&
++    mv ml.temp multilineTxt.c &&
++    GIT_CONFIG="$git_config" cvs update > cvs.log 2>&1 &&
++    cd .. &&
++    marked_as cvswork2 textfile.c "" &&
++    marked_as cvswork2 binfile.bin -kb &&
++    marked_as cvswork2 .gitattributes "" &&
++    marked_as cvswork2 mixedUp.c -kb &&
++    marked_as cvswork2 multiline.c -kb &&
++    marked_as cvswork2 multilineTxt.c "" &&
++    not_present cvswork2/subdir withCr.bin &&
++    not_present cvswork2/subdir file.h &&
++    marked_as cvswork2/subdir unspecified.other "" &&
++    marked_as cvswork2/subdir newfile.bin "" &&
++    marked_as cvswork2/subdir newfile.c "" &&
++    marked_as cvswork2 simpleBin.bin -kb &&
++    marked_as cvswork2 simpleText.c "" &&
++    echo "line replaced_1" > tmpExpect2 &&
++    echo "line 2" >> tmpExpect2 &&
++    echo "line replaced_3" >> tmpExpect2 &&
++    echo "line 4" | q_to_nul >> tmpExpect2 &&
++    cmp cvswork2/multilineTxt.c tmpExpect2
++'
++
+ test_done
 -- 
 1.5.4.3.340.g97b97
