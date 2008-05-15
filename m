@@ -1,116 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] builtin-clone: fix initial checkout
-Date: Thu, 15 May 2008 11:17:34 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805151050240.19665@iabervon.org>
-References: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org> <20080515044402.GA3517@sigill.intra.peff.net> <20080515045026.GA26161@sigill.intra.peff.net> <alpine.DEB.1.00.0805151042570.30431@racer>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [BUG] git add -u ignores --dry-run flag
+Date: Thu, 15 May 2008 18:08:24 +0200
+Message-ID: <482C5FF8.1060200@isy.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 15 17:25:17 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 15 18:15:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwfDz-0005RQ-CK
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 17:18:31 +0200
+	id 1Jwg1Q-00054I-1Z
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 18:09:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755527AbYEOPRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 11:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754679AbYEOPRk
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 11:17:40 -0400
-Received: from iabervon.org ([66.92.72.58]:46556 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915AbYEOPRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 11:17:39 -0400
-Received: (qmail 11279 invoked by uid 1000); 15 May 2008 15:17:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 May 2008 15:17:34 -0000
-In-Reply-To: <alpine.DEB.1.00.0805151042570.30431@racer>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1759112AbYEOQI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 12:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760154AbYEOQI2
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 12:08:28 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:33847 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759000AbYEOQI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 12:08:27 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id D8C5525A3D
+	for <git@vger.kernel.org>; Thu, 15 May 2008 18:08:25 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 15438-09 for <git@vger.kernel.org>;
+ Thu,  8 May 2008 07:37:09 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 47CFB25A3B
+	for <git@vger.kernel.org>; Thu, 15 May 2008 18:08:25 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82208>
 
-On Thu, 15 May 2008, Johannes Schindelin wrote:
+Hi!
 
-> Somewhere in the process of finishing up builtin-clone, the update of
-> the working tree was lost.  This was due to not using the option "merge"
-> for unpack_trees().
+I think this is a bug in the built in implementation of git add -u
 
-I was sure I'd added support for update without merge, but now I can't see 
-what became of it. I was pretty sure I'd actually needed it for something, 
-too, but I guess that got resolved some other way. I'll have to check 
-tonight on my laptop for something of the sort in my reflogs.
+$ git --version
+git version 1.5.5.1.373.ga3200
+$ git init
+Initialized empty Git repository in /home/hendeby/bar/.git/
+$ echo foo > foo
+$ git add foo && git commit -m "Test"
+Created initial commit 7477e8b: Test
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 foo
+$ echo foo >> foo
+$ git add -u --dry-run
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   foo
+#
 
-I'm pretty sure that just including merge and the necessary other options 
-here will work fine (since there's no index to merge into) and I don't 
-have a simple fix off the top of my head for that flag combination, so:
+I was expecting to get foo listed, and not actually added to the index.
 
-Acked-by: Daniel Barkalow <barkalow@iabervon.org>
+I've had a quick look in builtin-add.c, and the -u option is tested for 
+before the --dry-run option, and in the process of handling the -u 
+option the code makes a jump that bypasses the --dry-run handling. 
+Unfortunately, I'm not familiar enough with the code to see how to best 
+fix it.
 
-> Breakage noticed by Kevin Ballard.
-> 
-> Test by Jeff King.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> 
-> 	> On Thu, May 15, 2008 at 12:44:02AM -0400, Jeff King wrote:
-> 	> 
-> 	> > Hmm, builtin-clone does seem to be completely broken. It looks 
-> 	> > like unpack_trees is not doing its job for some reason, but I
-> 	> > haven't looked further. But it surprised me that we aren't 
-> 	> > testing anything as simple as "clone works". The test below
-> 	> > currently fails (though I am getting other test failures which 
-> 	> > are presumably related).
-> 
-> 	I did not notice the breakage earlier, because I ran with a 
-> 	"twoway_merge" version of builtin-clone in my personal tree.
-> 
->  builtin-clone.c  |    3 +++
->  t/t5601-clone.sh |    7 +++++++
->  2 files changed, 10 insertions(+), 0 deletions(-)
-> 
-> diff --git a/builtin-clone.c b/builtin-clone.c
-> index a7c075d..8713128 100644
-> --- a/builtin-clone.c
-> +++ b/builtin-clone.c
-> @@ -525,7 +525,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  
->  		memset(&opts, 0, sizeof opts);
->  		opts.update = 1;
-> +		opts.merge = 1;
-> +		opts.fn = oneway_merge;
->  		opts.verbose_update = !option_quiet;
-> +		opts.src_index = &the_index;
->  		opts.dst_index = &the_index;
->  
->  		tree = parse_tree_indirect(remote_head->old_sha1);
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index dc9d63d..593d1a3 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -23,4 +23,11 @@ test_expect_success 'clone with excess parameters' '
->  
->  '
->  
-> +test_expect_success 'clone checks out files' '
-> +
-> +	git clone src dst &&
-> +	test -f dst/file
-> +
-> +'
-> +
->  test_done
-> -- 
-> 1.5.5.1.424.g3256b
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+/Gustaf
