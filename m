@@ -1,61 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
-	whitespace.
-Date: Thu, 15 May 2008 07:23:19 -0400
-Message-ID: <20080515112319.GA13038@sigill.intra.peff.net>
-References: <20080427151610.GB57955@Hermes.local> <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness> <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com> <20080428094119.GA20499@sigill.intra.peff.net> <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com> <20080513091143.GA26248@sigill.intra.peff.net> <e2b179460805131110k3cf582fdn9b8bd31046b90ca7@mail.gmail.com> <e2b179460805150316n77513037y5409042b01170d4e@mail.gmail.com> <20080515112030.GA12781@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 15 13:24:17 2008
+From: Marcel Koeppen <git-dev@marzelpan.de>
+Subject: Re: [PATCH] Fix sed syntax in t7502-commit for OSX
+Date: Thu, 15 May 2008 13:06:07 +0200
+Message-ID: <22590A7D-0409-4940-BC2E-776B2189BFEC@marzelpan.de>
+References: <1210817948-72280-1-git-send-email-git-dev@marzelpan.de> <7vwslwgdyi.fsf@gitster.siamese.dyndns.org> <200805151058.34774.hs4233@mail.mn-solutions.de>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, sbejar@gmail.com,
+	Holger Schurig <hs4233@mail.mn-solutions.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 15 13:30:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwbZG-0002pu-LN
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 13:24:15 +0200
+	id 1JwbfM-0004ur-QR
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 13:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061AbYEOLXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 07:23:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbYEOLXW
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 07:23:22 -0400
-Received: from peff.net ([208.65.91.99]:3407 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752974AbYEOLXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 07:23:21 -0400
-Received: (qmail 24953 invoked by uid 111); 15 May 2008 11:23:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 15 May 2008 07:23:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2008 07:23:19 -0400
-Content-Disposition: inline
-In-Reply-To: <20080515112030.GA12781@sigill.intra.peff.net>
+	id S1753933AbYEOL3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 07:29:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754070AbYEOL3m
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 07:29:42 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:43518 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752981AbYEOL3m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 07:29:42 -0400
+X-Greylist: delayed 1409 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 May 2008 07:29:42 EDT
+Received: from [85.22.31.24] (helo=[139.26.58.81])
+	by smtprelay08.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <git-dev@marzelpan.de>)
+	id 1JwbHm-0001K1-1p; Thu, 15 May 2008 13:06:10 +0200
+In-Reply-To: <200805151058.34774.hs4233@mail.mn-solutions.de>
+X-Mailer: Apple Mail (2.919.2)
+X-Df-Sender: 012269
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82201>
 
-On Thu, May 15, 2008 at 07:20:30AM -0400, Jeff King wrote:
 
-> I have started tagging my auto-builds as you suggest. It should be easy
-> enough to push to a repo.or.cz repository. Although I'm not sure of the
-> utility of auto-publishing this information. Who is going to look at it?
+Am 15.05.2008 um 10:58 schrieb Holger Schurig:
 
-Also, if there is interest in an automated "this is now broken on
-platform X", I think the interesting thing is not "what was the last
-passing state" but rather "what is the output of 'make test' for the
-failing state." So:
+>>> -sed -i '$d' expect
+>>> +sed -i -e '$d' expect
+>
+> perl -pi -e 's/foo/bar/' ???
 
-> I had assumed a workflow more like "it passes 99% of the time; in the
-> remaining 1%, the cron job kicks off a message to the owning user, who
-> then investigates and/or writes a bug report to the list."
+This does not work with '$d', so we could use sed with a temp instead  
+of the -i extension. Alternatively we could specify the full test  
+fixture instead of editing an old one. This would make the expected  
+results more obvious and the tests would work without assumptions  
+about running order.
 
-In that case, I think the interesting automation is making a problem
-report from a failed case.
-
--Peff
+Marcel
