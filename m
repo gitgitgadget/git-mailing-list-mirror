@@ -1,62 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2 v2] cvsexportcommit: chomp only removes trailing
- whitespace
-Date: Thu, 15 May 2008 04:21:09 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805150421000.30431@racer>
-References: <alpine.DEB.1.00.0805141526160.30431@racer> <7vskwkojhy.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805141936410.30431@racer> <alpine.DEB.1.00.0805142327520.30431@racer> <7vk5hwi9o4.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 15 05:22:01 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: git clone broken in next
+Date: Wed, 14 May 2008 23:54:39 -0400
+Message-ID: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 15 05:55:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwU2a-0008UB-4Q
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 05:22:00 +0200
+	id 1JwUZ3-00084N-GR
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 05:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbYEODVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 23:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbYEODVJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 23:21:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59142 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752059AbYEODVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 23:21:08 -0400
-Received: (qmail invoked by alias); 15 May 2008 03:21:06 -0000
-Received: from R2b68.r.pppool.de (EHLO racer.local) [89.54.43.104]
-  by mail.gmx.net (mp008) with SMTP; 15 May 2008 05:21:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nWGNV6dPnzDdSQ1pvRQD6uSz1eVQzhctqv+5U0n
-	ptgmxCZrQGaNUT
-X-X-Sender: gene099@racer
-In-Reply-To: <7vk5hwi9o4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753898AbYEODym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 23:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYEODym
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 23:54:42 -0400
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:40421
+	"EHLO randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751512AbYEODym (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 May 2008 23:54:42 -0400
+Received: from [192.168.0.203] (c-24-91-11-245.hsd1.ma.comcast.net [24.91.11.245])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 429B1EEF9A
+	for <git@vger.kernel.org>; Wed, 14 May 2008 20:54:41 -0700 (PDT)
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82172>
 
-Hi,
+Something's horribly wrong in next. I just installed the latest from  
+next and then ran
 
-On Wed, 14 May 2008, Junio C Hamano wrote:
+   git clone git://github.com/kballard/github-gem.git
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > @@ -210,7 +210,7 @@ if (@canstatusfiles) {
-> >  	my $basename = basename($name);
-> >  
-> >  	$basename = "no file " . $basename if (exists($added{$basename}));
-> > -	chomp($basename);
-> > +	$basename =~ s/^\s+(.*?)\s*$/$1/;
-> 
-> Isn't this no-op for a basename that does not begin with a whitespace?
-> Don't you want to still strip trailing whitespaces in such a case?
+The resulting repo had absolutely nothing in the workdir. `git status`  
+claims every single file is deleted but not updated. `git checkout -f  
+HEAD` fixed the workdir.
 
-D'oh.  Time for bed.
+This is 100% repeatable with different repositories.
 
-Ciao,
-Dscho
+$ git --version
+git version 1.5.5.1.373.gce4aa
+
+(this is the tip of next plus a single documentation patch).
+
+Oddly, all of the tests with "clone" in their name seem to be passing  
+just fine.
+
+Ok, after running a git-bisect, I narrowed it down to  
+8434c2f1afedb936e0ea8c07ce25733013c2f743 (Build in clone).
+
+My system is Mac OS X 10.5.2.
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
