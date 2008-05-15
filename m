@@ -1,62 +1,70 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] builtin-clone: fix initial checkout
-Date: Thu, 15 May 2008 15:53:45 -0400
-Message-ID: <B29804AB-7A06-4988-9C5F-27A5499601B5@sb.org>
-References: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org> <20080515044402.GA3517@sigill.intra.peff.net> <20080515045026.GA26161@sigill.intra.peff.net> <alpine.DEB.1.00.0805151042570.30431@racer>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: How can I tell if a SHA1 is a submodule reference?
+Date: Thu, 15 May 2008 16:12:10 -0400
+Message-ID: <32541b130805151312p7a08a0b7id7c12bc8a04e2aca@mail.gmail.com>
+References: <7F242E8F-13CF-4BE5-B3E6-85F285391658@ohloh.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 15 21:55:56 2008
+Cc: git@vger.kernel.org
+To: "Robin Luckey" <robin@ohloh.net>
+X-From: git-owner@vger.kernel.org Thu May 15 22:13:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwjY8-0005Kg-SC
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 21:55:37 +0200
+	id 1Jwjp9-0004VT-25
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 22:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764294AbYEOTxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 15:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759525AbYEOTxu
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 15:53:50 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:49002 "EHLO
-	randymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1762513AbYEOTxt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 May 2008 15:53:49 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a4.g.dreamhost.com (Postfix) with ESMTP id EC47519597D;
-	Thu, 15 May 2008 12:53:47 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0805151042570.30431@racer>
-X-Mailer: Apple Mail (2.919.2)
+	id S1754940AbYEOUMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 16:12:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbYEOUMP
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 16:12:15 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:51465 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752130AbYEOUMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 16:12:12 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so453282fgg.17
+        for <git@vger.kernel.org>; Thu, 15 May 2008 13:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Zx9XQRl53P96MO348hILjIV4R9EotZvkwWUluOLU4J8=;
+        b=TDO+EUtbkGL5XcyorOEVgMteee7dniasWhiSILXEOUh16SV6JX2vABDUlhZ+rcOhwWW0ipF3/CCYOIFuyZhquohAF0sJAj6sMvfYZWwySs+O2cnYhRSmItVLk3fjfxiNphLvIsl3WMRQ01I+NzrKY7OGWS82d1UehIAr20Mm9TE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=T/r/gOThbKnaFR32HbadNevd0ACMQgXzeXzLTizmHsVdnfeu6v1SCjPQOUTc+Mc20eW4Ac3kflLiF9t4L/ZfG7EIRb5daiQ8WIWgx26le65/zTgBj1OEm+DMmMwxgmQgyDpvZKYPTqd/7j2G9ED6whbFf1xVjJ+/W545wg+DBZ0=
+Received: by 10.82.107.3 with SMTP id f3mr385866buc.87.1210882330649;
+        Thu, 15 May 2008 13:12:10 -0700 (PDT)
+Received: by 10.82.100.5 with HTTP; Thu, 15 May 2008 13:12:10 -0700 (PDT)
+In-Reply-To: <7F242E8F-13CF-4BE5-B3E6-85F285391658@ohloh.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82227>
 
-On May 15, 2008, at 5:48 AM, Johannes Schindelin wrote:
+On 5/15/08, Robin Luckey <robin@ohloh.net> wrote:
+>  However, is there a simple and reliable way for me to know which SHA1
+> hashes refer to such submodule objects? I'd like to simply ignore them.
 
-> Somewhere in the process of finishing up builtin-clone, the update of
-> the working tree was lost.  This was due to not using the option  
-> "merge"
-> for unpack_trees().
->
-> Breakage noticed by Kevin Ballard.
->
-> Test by Jeff King.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+I don't think there's a straightforward way to do this given *just*
+the SHA1, in the same way that you can't know the path corresponding
+to a blob given just its SHA1.
 
-This patch fixes the issue for me. Thanks!
+However, if you're looking at a tree that refers to a SHA1, the tree
+will reference a submodule object as a "commit" instead of a "tree" or
+"blob".  git-ls-tree output looks something like this:
 
--Kevin Ballard
+160000 commit ba75ff608fabafeaafeb48d55b125440b5a665bc	my_subdir
 
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+I think it's reasonable to say that if it's type commit, then it's a
+submodule.  (Note that simply being a submodule doesn't *necessarily*
+imply that it'll be unavailable; some people like to store all the
+submodule objects in the local repository.)
+
+Have fun,
+
+Avery
