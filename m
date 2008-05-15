@@ -1,78 +1,77 @@
-From: David Reiss <dreiss@facebook.com>
-Subject: Re: [PATCH v2] Add support for GIT_CEILING_DIRS
-Date: Thu, 15 May 2008 09:26:55 -0700
-Message-ID: <482C644F.9090903@facebook.com>
-References: <482B935D.20105@facebook.com> <482BE0EB.6040306@viscovery.net> <482BE238.5020309@facebook.com> <482BF69C.6020604@viscovery.net> <alpine.DEB.1.00.0805151004400.30431@racer>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Fix t3404 assumption that `wc -l` does not use
+ whitespace.
+Date: Thu, 15 May 2008 10:18:52 -0700
+Message-ID: <7vr6c3h4eb.fsf@gitster.siamese.dyndns.org>
+References: <20080427151610.GB57955@Hermes.local>
+ <alpine.DEB.1.00.0804271620440.16320@eeepc-johanness>
+ <B287EA35-6C5D-4A5A-BEF1-C55A70D913ED@silverinsanity.com>
+ <20080428094119.GA20499@sigill.intra.peff.net>
+ <e2b179460804280256g4ff903bu39c9460086df7157@mail.gmail.com>
+ <20080513091143.GA26248@sigill.intra.peff.net>
+ <e2b179460805131110k3cf582fdn9b8bd31046b90ca7@mail.gmail.com>
+ <e2b179460805150316n77513037y5409042b01170d4e@mail.gmail.com>
+ <20080515112030.GA12781@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 15 18:28:57 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 15 19:20:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwgJ8-0005dF-0x
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 18:27:54 +0200
+	id 1Jwh7b-0003cZ-6f
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 19:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707AbYEOQ1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 12:27:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754715AbYEOQ1B
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 12:27:01 -0400
-Received: from fw-sf2p.facebook.com ([204.15.23.140]:36533 "EHLO
-	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756584AbYEOQ1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 12:27:00 -0400
-Received: from sf2pmxf02.TheFacebook.com (sf2pmxf02.thefacebook.com [192.168.16.13])
-	by pp01.sf2p.tfbnw.net (8.14.1/8.14.1) with ESMTP id m4FGQutl022809;
-	Thu, 15 May 2008 09:26:56 -0700
-Received: from [192.168.98.131] ([10.8.254.247]) by sf2pmxf02.TheFacebook.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 15 May 2008 09:24:05 -0700
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <alpine.DEB.1.00.0805151004400.30431@racer>
-X-OriginalArrivalTime: 15 May 2008 16:24:05.0861 (UTC) FILETIME=[184E6150:01C8B6A8]
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7160:2.4.4,1.2.40,4.0.166 definitions=2008-05-15_04:2008-05-14,2008-05-15,2008-05-15 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0805090000 definitions=main-0805150124
+	id S1751082AbYEORTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 13:19:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbYEORTN
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 13:19:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60558 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830AbYEORTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 13:19:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1AE945869;
+	Thu, 15 May 2008 13:19:08 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 22ED55862; Thu, 15 May 2008 13:19:00 -0400 (EDT)
+In-Reply-To: <20080515112030.GA12781@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 15 May 2008 07:20:30 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 06DA7028-22A3-11DD-86DD-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82212>
 
-The problem with this implementation is that it does not distinguish
-between GIT_CEILING_DIRS being unset and GIT_CEILING_DIRS="/".  For
-example...
+Jeff King <peff@peff.net> writes:
 
-cd /
-sudo git init
-cd /home
-git rev-parse --show-prefix
+> On Thu, May 15, 2008 at 11:16:27AM +0100, Mike Ralphson wrote:
+>
+>> Which branch(es) would it be most useful on which to have this
+>> automated build/test cycle?
+>
+> I would think maint, master, and next, but with next as the least
+> important. I think Junio generally tests maint and master before
+> publishing, but presumably not always next (as there was test breakage
+> in next earlier today).
 
-That series of commands works with either version of my patch, but fails
-with "fatal: Not a git repository" if I apply this change.  I am
-certainly open to changing this code, but I think we will always
-need two separate values of ceil_offset to represent "unset" and "/".
-It's just a question of whether they should be -1 and 0 or 0 and 1.
+I'd prefer heterogeneous automated test coverage to be on 'next' and
+'master'.  If the coverage extends to 'maint' that would be nicer, but on
+the other hand, I rarely apply anything remotely questionable directly on
+top of maint (instead, I'd fork from maint and merge the result first to
+next or master), so if we can catch master and next, we should be Ok.
 
---David
-
-
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 15 May 2008, Johannes Sixt wrote:
-> 
->> +             do { } while (offset > ceil_offset && cwd[--offset] != '/');
-> 
-> You probably meant to remove the "do { }", and have an own line
-> 
->                         ; /* do nothing */
-> 
-> but for the rest, I agree that it is easier on the eye (particularly the
-> off-by-one issue, which is always a problem for this developer to get
-> right; avoiding it is therefore the better option).
-> 
-> Ciao,
-> Dscho
-> 
+Before any push-out, I ran tests on all four integration branches on
+Debian (etch) and FC (I think it is FC5), both x86-64.  But sometimes 'pu'
+is shipped with known breakage in tests.  I can not push out with broken
+tests in 'maint', 'master' or 'next' (automated procedure on my end
+prevents me from doing so).
