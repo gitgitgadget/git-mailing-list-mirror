@@ -1,59 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Export GIT_DIR after setting it
-Date: Thu, 15 May 2008 10:23:57 -0700
-Message-ID: <7vlk2bh45u.fsf@gitster.siamese.dyndns.org>
-References: <1210807401-11201-1-git-send-email-madduck@madduck.net>
- <7vod78i9r7.fsf@gitster.siamese.dyndns.org>
- <20080515101523.GA31719@lapse.madduck.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Add support for GIT_CEILING_DIRS
+Date: Thu, 15 May 2008 18:45:44 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805151841040.30431@racer>
+References: <482B935D.20105@facebook.com> <482BE0EB.6040306@viscovery.net> <482BE238.5020309@facebook.com> <482BF69C.6020604@viscovery.net> <alpine.DEB.1.00.0805151004400.30431@racer> <482C644F.9090903@facebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "martin f. krafft" <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu May 15 19:26:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: David Reiss <dreiss@facebook.com>
+X-From: git-owner@vger.kernel.org Thu May 15 19:46:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwhCS-0006Yr-Pe
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 19:25:05 +0200
+	id 1JwhXH-0008F8-Bm
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 19:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbYEORYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 13:24:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbYEORYO
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 13:24:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61907 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439AbYEORYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 13:24:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0C02F5A50;
-	Thu, 15 May 2008 13:24:11 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 6AB615A4F; Thu, 15 May 2008 13:24:07 -0400 (EDT)
-In-Reply-To: <20080515101523.GA31719@lapse.madduck.net> (martin f. krafft's
- message of "Thu, 15 May 2008 11:15:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BB6B2708-22A3-11DD-868F-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1754728AbYEORpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 13:45:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbYEORpn
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 13:45:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36688 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751569AbYEORpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 13:45:42 -0400
+Received: (qmail invoked by alias); 15 May 2008 17:45:40 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp034) with SMTP; 15 May 2008 19:45:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19gS2ZrcxBgU4yWnWZRJCCSdbm5gOGvPE8TY1Ka4r
+	m8IeF5mp7UOdLB
+X-X-Sender: gene099@racer
+In-Reply-To: <482C644F.9090903@facebook.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82214>
 
-"martin f. krafft" <madduck@madduck.net> writes:
+Hi,
 
-> The only problem I see now is when an external command (or the shell
-> script) can't properly deal with GIT_DIR being set, but then that's
-> a whole different bug.
+On Thu, 15 May 2008, David Reiss wrote:
 
-One thing that we did not have to worry about when git-sh-setup was
-invented is GIT_WORK_TREE and its cousin core.worktree.  When the user
-uses GIT_DIR _but_ wants to work from a subdirectory of the checked out
-work tree, the user _must_ tell git where the top of the work tree is; in
-other words, setting and exporting only GIT_DIR is a misconfiguration.
+> The problem with this implementation is that it does not distinguish 
+> between GIT_CEILING_DIRS being unset and GIT_CEILING_DIRS="/".  For 
+> example...
+> 
+> cd /
+> sudo git init
+> cd /home
+> git rev-parse --show-prefix
+> 
+> That series of commands works with either version of my patch, but fails 
+> with "fatal: Not a git repository" if I apply this change.  I am 
+> certainly open to changing this code, but I think we will always need 
+> two separate values of ceil_offset to represent "unset" and "/". It's 
+> just a question of whether they should be -1 and 0 or 0 and 1.
 
-I have a suspicion that "the whole different bug" is what bit you --
-perhaps some places need to also set and export GIT_WORK_TREE as well when
-the do GIT_DIR.
+You are much more familiar with the code, but I suspect that a simple 
+change would fix that:
+
+> >> +             do { } while (offset > ceil_offset && cwd[--offset] != '/');
+
+Just use "--offset >= 0 && cwd[--offset] != '/'" here.  And maybe 
+ceil_offset = -1 again.
+
+I cannot quickly test, since I am short on time, and it would be too 
+cumbersome to find which patches to apply first.
+
+But I strongly believe that it is not beyond your capabilities to adjust 
+Hannes' patch for your command series, keeping the elegance.
+
+Ciao,
+Dscho
