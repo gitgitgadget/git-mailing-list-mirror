@@ -1,286 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-fast-import: rename cmd_*() functions to parse_*()
-Date: Thu, 15 May 2008 18:59:18 -0400
-Message-ID: <20080515225918.GP29038@spearce.org>
-References: <1210890956-24068-1-git-send-email-vmiklos@frugalware.org>
+From: "Alf Mikula" <amikula@gmail.com>
+Subject: Migrating a git repository to subversion
+Date: Thu, 15 May 2008 16:08:52 -0700
+Message-ID: <42dc968d0805151608q2ed89fc8madcd8d341a4ed1df@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri May 16 01:00:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 16 01:10:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwmQy-0004FG-T3
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 01:00:25 +0200
+	id 1JwmaE-0007bH-Ri
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 01:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757420AbYEOW70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 18:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756207AbYEOW7Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 18:59:25 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34208 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756015AbYEOW7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 18:59:24 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JwmPm-0007YV-Hc; Thu, 15 May 2008 18:59:10 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7F9E520FBAE; Thu, 15 May 2008 18:59:18 -0400 (EDT)
+	id S1752157AbYEOXIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 19:08:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbYEOXIz
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 19:08:55 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:38569 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbYEOXIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 19:08:54 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so538651fkq.5
+        for <git@vger.kernel.org>; Thu, 15 May 2008 16:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=/se4ZPD27EzaFeBCBuluWgBLR5Gm1nb1GBkG+GFqH4E=;
+        b=lWEyVmE/TBDS3FPYlGpehIAwaQMiKfyM3NhKOgklCWTM5FptYl84H0aM10B8E5f3TRggEZZg4JcipF84LRXVDHWNXYLGpJIjrp3dXDCtiqcQ5FCy5q8/aCut/ihoa6T3C7BlknZu1xTQQKj3kMXbCEuGatp9QPxXVi2CB6k4Eak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DE8rovLbPhBxIOarjd8frERnfRj4GgC7lgiqdqFB+6qdYV9Aj4Bhc6+rbmGsNjdE2bU+dqEwNe93P7lsdwQhD3wRfGablfHmGoCPMfmmHfD8Q2c8XVcxbSRzWsIJlnvnTlxClwWvePvlO3FZFHXA6tQWGrchXbxjiGcQqbpF9dY=
+Received: by 10.125.137.10 with SMTP id p10mr1873038mkn.6.1210892933182;
+        Thu, 15 May 2008 16:08:53 -0700 (PDT)
+Received: by 10.86.81.19 with HTTP; Thu, 15 May 2008 16:08:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1210890956-24068-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82240>
 
-Miklos Vajna <vmiklos@frugalware.org> wrote:
-> There is a cmd_merge() function in fast-import that will conflict with
-> builtin-merge's cmd_merge() function. To keep it consistent, rename all
-> cmd_*() function to parse_*()
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+I'm a relatively new (2 weeks) user of Git, and so far I really love
+it, and I want to educate my co-workers about it.
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Having said that, I want to demonstrate git's git<--->svn
+capabilities, and currently everybody here has and understands
+Subversion.  So, I want to initialize a Subversion repository with my
+git history from my local git repository.  Here's what I tried:
 
-> ---
-> 
-> I originally just wanted to rename cmd_merge() but Shawn suggested that
-> then renaming all functions and keeping consistency is a better
-> approach, so here it is.
-> 
->  fast-import.c |   62 ++++++++++++++++++++++++++++----------------------------
->  1 files changed, 31 insertions(+), 31 deletions(-)
-> 
-> diff --git a/fast-import.c b/fast-import.c
-> index 73e5439..caea684 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1690,7 +1690,7 @@ static void skip_optional_lf(void)
->  		ungetc(term_char, stdin);
->  }
->  
-> -static void cmd_mark(void)
-> +static void parse_mark(void)
->  {
->  	if (!prefixcmp(command_buf.buf, "mark :")) {
->  		next_mark = strtoumax(command_buf.buf + 6, NULL, 10);
-> @@ -1700,7 +1700,7 @@ static void cmd_mark(void)
->  		next_mark = 0;
->  }
->  
-> -static void cmd_data(struct strbuf *sb)
-> +static void parse_data(struct strbuf *sb)
->  {
->  	strbuf_reset(sb);
->  
-> @@ -1798,13 +1798,13 @@ static char *parse_ident(const char *buf)
->  	return ident;
->  }
->  
-> -static void cmd_new_blob(void)
-> +static void parse_new_blob(void)
->  {
->  	static struct strbuf buf = STRBUF_INIT;
->  
->  	read_next_command();
-> -	cmd_mark();
-> -	cmd_data(&buf);
-> +	parse_mark();
-> +	parse_data(&buf);
->  	store_object(OBJ_BLOB, &buf, &last_blob, NULL, next_mark);
->  }
->  
-> @@ -1908,7 +1908,7 @@ static void file_change_m(struct branch *b)
->  			p = uq.buf;
->  		}
->  		read_next_command();
-> -		cmd_data(&buf);
-> +		parse_data(&buf);
->  		store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0);
->  	} else if (oe) {
->  		if (oe->type != OBJ_BLOB)
-> @@ -1995,7 +1995,7 @@ static void file_change_deleteall(struct branch *b)
->  	load_tree(&b->branch_tree);
->  }
->  
-> -static void cmd_from_commit(struct branch *b, char *buf, unsigned long size)
-> +static void parse_from_commit(struct branch *b, char *buf, unsigned long size)
->  {
->  	if (!buf || size < 46)
->  		die("Not a valid commit: %s", sha1_to_hex(b->sha1));
-> @@ -2006,7 +2006,7 @@ static void cmd_from_commit(struct branch *b, char *buf, unsigned long size)
->  		b->branch_tree.versions[1].sha1);
->  }
->  
-> -static void cmd_from_existing(struct branch *b)
-> +static void parse_from_existing(struct branch *b)
->  {
->  	if (is_null_sha1(b->sha1)) {
->  		hashclr(b->branch_tree.versions[0].sha1);
-> @@ -2017,12 +2017,12 @@ static void cmd_from_existing(struct branch *b)
->  
->  		buf = read_object_with_reference(b->sha1,
->  			commit_type, &size, b->sha1);
-> -		cmd_from_commit(b, buf, size);
-> +		parse_from_commit(b, buf, size);
->  		free(buf);
->  	}
->  }
->  
-> -static int cmd_from(struct branch *b)
-> +static int parse_from(struct branch *b)
->  {
->  	const char *from;
->  	struct branch *s;
-> @@ -2053,12 +2053,12 @@ static int cmd_from(struct branch *b)
->  		if (oe->pack_id != MAX_PACK_ID) {
->  			unsigned long size;
->  			char *buf = gfi_unpack_entry(oe, &size);
-> -			cmd_from_commit(b, buf, size);
-> +			parse_from_commit(b, buf, size);
->  			free(buf);
->  		} else
-> -			cmd_from_existing(b);
-> +			parse_from_existing(b);
->  	} else if (!get_sha1(from, b->sha1))
-> -		cmd_from_existing(b);
-> +		parse_from_existing(b);
->  	else
->  		die("Invalid ref name or SHA1 expression: %s", from);
->  
-> @@ -2066,7 +2066,7 @@ static int cmd_from(struct branch *b)
->  	return 1;
->  }
->  
-> -static struct hash_list *cmd_merge(unsigned int *count)
-> +static struct hash_list *parse_merge(unsigned int *count)
->  {
->  	struct hash_list *list = NULL, *n, *e = e;
->  	const char *from;
-> @@ -2107,7 +2107,7 @@ static struct hash_list *cmd_merge(unsigned int *count)
->  	return list;
->  }
->  
-> -static void cmd_new_commit(void)
-> +static void parse_new_commit(void)
->  {
->  	static struct strbuf msg = STRBUF_INIT;
->  	struct branch *b;
-> @@ -2124,7 +2124,7 @@ static void cmd_new_commit(void)
->  		b = new_branch(sp);
->  
->  	read_next_command();
-> -	cmd_mark();
-> +	parse_mark();
->  	if (!prefixcmp(command_buf.buf, "author ")) {
->  		author = parse_ident(command_buf.buf + 7);
->  		read_next_command();
-> @@ -2135,10 +2135,10 @@ static void cmd_new_commit(void)
->  	}
->  	if (!committer)
->  		die("Expected committer but didn't get one");
-> -	cmd_data(&msg);
-> +	parse_data(&msg);
->  	read_next_command();
-> -	cmd_from(b);
-> -	merge_list = cmd_merge(&merge_count);
-> +	parse_from(b);
-> +	merge_list = parse_merge(&merge_count);
->  
->  	/* ensure the branch is active/loaded */
->  	if (!b->branch_tree.tree || !max_active_branches) {
-> @@ -2196,7 +2196,7 @@ static void cmd_new_commit(void)
->  	b->last_commit = object_count_by_type[OBJ_COMMIT];
->  }
->  
-> -static void cmd_new_tag(void)
-> +static void parse_new_tag(void)
->  {
->  	static struct strbuf msg = STRBUF_INIT;
->  	char *sp;
-> @@ -2253,7 +2253,7 @@ static void cmd_new_tag(void)
->  
->  	/* tag payload/message */
->  	read_next_command();
-> -	cmd_data(&msg);
-> +	parse_data(&msg);
->  
->  	/* build the tag object */
->  	strbuf_reset(&new_data);
-> @@ -2273,7 +2273,7 @@ static void cmd_new_tag(void)
->  		t->pack_id = pack_id;
->  }
->  
-> -static void cmd_reset_branch(void)
-> +static void parse_reset_branch(void)
->  {
->  	struct branch *b;
->  	char *sp;
-> @@ -2293,12 +2293,12 @@ static void cmd_reset_branch(void)
->  	else
->  		b = new_branch(sp);
->  	read_next_command();
-> -	cmd_from(b);
-> +	parse_from(b);
->  	if (command_buf.len > 0)
->  		unread_command_buf = 1;
->  }
->  
-> -static void cmd_checkpoint(void)
-> +static void parse_checkpoint(void)
->  {
->  	if (object_count) {
->  		cycle_packfile();
-> @@ -2309,7 +2309,7 @@ static void cmd_checkpoint(void)
->  	skip_optional_lf();
->  }
->  
-> -static void cmd_progress(void)
-> +static void parse_progress(void)
->  {
->  	fwrite(command_buf.buf, 1, command_buf.len, stdout);
->  	fputc('\n', stdout);
-> @@ -2449,17 +2449,17 @@ int main(int argc, const char **argv)
->  	set_die_routine(die_nicely);
->  	while (read_next_command() != EOF) {
->  		if (!strcmp("blob", command_buf.buf))
-> -			cmd_new_blob();
-> +			parse_new_blob();
->  		else if (!prefixcmp(command_buf.buf, "commit "))
-> -			cmd_new_commit();
-> +			parse_new_commit();
->  		else if (!prefixcmp(command_buf.buf, "tag "))
-> -			cmd_new_tag();
-> +			parse_new_tag();
->  		else if (!prefixcmp(command_buf.buf, "reset "))
-> -			cmd_reset_branch();
-> +			parse_reset_branch();
->  		else if (!strcmp("checkpoint", command_buf.buf))
-> -			cmd_checkpoint();
-> +			parse_checkpoint();
->  		else if (!prefixcmp(command_buf.buf, "progress "))
-> -			cmd_progress();
-> +			parse_progress();
->  		else
->  			die("Unsupported command: %s", command_buf.buf);
->  	}
-> -- 
-> 1.5.5.1.211.g65ea3.dirty
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1. Create a new, empty subversion project with trunk/tags/branches subdirs.
+2. git svn clone http://myhost.com/path/to/project --stdlayout
+3. git pull ../git_project
+4. git svn dcommit
 
--- 
-Shawn.
+
+This put all my files into Subversion, but under a single commit.  Is
+there a step I'm missing that would allow git to commit all my
+individual git commits to the Subversion repository?  I've done a
+bunch of searches, but all the docs seem to focus on cloning an
+existing svn repository, as opposed to exporting git repositories to
+Subversion.
+
+Thanks in advance,
+
+-Alf
