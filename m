@@ -1,88 +1,58 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 15 May 2008 07:51:59 +0200 (CEST)
-Message-ID: <alpine.OSX.1.10.0805150748590.2650@cougar>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
- <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
- <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+From: Holger Schurig <hs4233@mail.mn-solutions.de>
+Subject: Re: [PATCH] commit: resurrect "gc --auto" at the end
+Date: Thu, 15 May 2008 08:44:40 +0200
+Message-ID: <200805150844.40451.hs4233@mail.mn-solutions.de>
+References: <20080330231408.GR11666@genesis> <alpine.DEB.1.00.0805141607210.30431@racer> <7vlk2coist.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 15 07:52:32 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 15 08:49:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwWOE-0003fG-Uq
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 07:52:31 +0200
+	id 1JwXHO-0002rV-LL
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 08:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751841AbYEOFvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 01:51:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbYEOFvl
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 01:51:41 -0400
-Received: from mailer.zib.de ([130.73.108.11]:65480 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751614AbYEOFvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 01:51:40 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m4F5pIMF026821;
-	Thu, 15 May 2008 07:51:24 +0200 (CEST)
-Received: from cougar (brln-4db91ab5.pool.einsundeins.de [77.185.26.181])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m4F5pHrM000536
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 15 May 2008 07:51:18 +0200 (MEST)
-In-Reply-To: <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (OSX 962 2008-03-14)
+	id S1752340AbYEOGsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 02:48:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbYEOGsP
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 02:48:15 -0400
+Received: from s131.mittwaldmedien.de ([62.216.178.31]:22376 "EHLO
+	s131.mittwaldmedien.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752157AbYEOGsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 02:48:14 -0400
+Received: from lin01.mn-solutions.de (pD95FA579.dip0.t-ipconnect.de [217.95.165.121])
+	by s131.mittwaldmedien.de (Postfix) with ESMTP id 7A8E75E401C;
+	Thu, 15 May 2008 08:48:12 +0200 (CEST)
+Received: by lin01.mn-solutions.de (Postfix, from userid 116)
+	id 08ACA1E004D; Thu, 15 May 2008 08:45:20 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	lin01.mn-logistik.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from mnz66.mn-solutions.de (mnz66.mn-logistik.de [192.168.233.66])
+	by lin01.mn-solutions.de (Postfix) with ESMTP id 4C3641E0004;
+	Thu, 15 May 2008 08:45:17 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vlk2coist.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82183>
 
-On Wed, 14 May 2008, Junio C Hamano wrote:
+> With this patch, we would again have a command that runs "gc
+> --auto" once per every commit, wouldn't we?
 
-> 
-> For 1.5.6.
-> 
-> * sp/ignorecase (Sun May 11 18:16:42 2008 +0200) 4 commits
->  - t0050: Add test for case insensitive add
->  - t0050: Set core.ignorecase case to activate case insensitivity
->  - t0050: Test autodetect core.ignorecase
->  - git-init: autodetect core.ignorecase
-> 
-> This unfortunately seems to break on natively case sensitive filesystems.
-
-
->From 92ec8c8a12cdc45a69f6612af340a8ce50976ab1 Mon Sep 17 00:00:00 2001
-From: Steffen Prohaska <prohaska@zib.de>
-Date: Thu, 15 May 2008 07:19:54 +0200
-Subject: [PATCH] t0050: Fix merge test on case sensitive file systems
-
-On a case sensitive filesystem, "git reset --hard" might refuse to
-overwrite a file whose name differs only by case, even if
-core.ignorecase is set.  It is not clear which circumstances cause this
-behavior.  This commit simply works around the problem by removing
-the case changing file before running "git reset --hard".
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- t/t0050-filesystem.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 0e33c4b..c5360e2 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -72,6 +72,8 @@ $test_case 'rename (case change)' '
- 
- $test_case 'merge (case change)' '
- 
-+	rm -f CamelCase &&
-+	rm -f camelcase &&
- 	git reset --hard initial &&
- 	git merge topic
- 
--- 
-1.5.5.1.349.g99d0
+Not sure if we have timing information. E.g. look at the 
+timestamp of some file that "git gc" touched and only do this if 
+it's old enought. Or look at the previous commit and only 
+run "gc --auto" if this is far enought away, e.g. a couple of 
+hours.
