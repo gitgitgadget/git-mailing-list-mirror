@@ -1,72 +1,88 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Problems cloning on Mac OS
-Date: Thu, 15 May 2008 01:39:25 -0400
-Message-ID: <D5F3E168-4A47-4FFA-8EC5-20D5202E009E@sb.org>
-References: <Pine.LNX.4.64.0805150618570.23917@ds9.cixit.se>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu May 15 07:40:27 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 15 May 2008 07:51:59 +0200 (CEST)
+Message-ID: <alpine.OSX.1.10.0805150748590.2650@cougar>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 15 07:52:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwWCQ-0008Bo-Vv
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 07:40:19 +0200
+	id 1JwWOE-0003fG-Uq
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 07:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbYEOFj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 01:39:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbYEOFj3
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 01:39:29 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:36222 "EHLO
-	randymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751514AbYEOFj2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 May 2008 01:39:28 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.ma.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a4.g.dreamhost.com (Postfix) with ESMTP id CC9E1195A42;
-	Wed, 14 May 2008 22:39:26 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0805150618570.23917@ds9.cixit.se>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751841AbYEOFvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 01:51:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbYEOFvl
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 01:51:41 -0400
+Received: from mailer.zib.de ([130.73.108.11]:65480 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751614AbYEOFvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 01:51:40 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m4F5pIMF026821;
+	Thu, 15 May 2008 07:51:24 +0200 (CEST)
+Received: from cougar (brln-4db91ab5.pool.einsundeins.de [77.185.26.181])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m4F5pHrM000536
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 15 May 2008 07:51:18 +0200 (MEST)
+In-Reply-To: <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (OSX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82182>
 
-On May 15, 2008, at 1:22 AM, Peter Karlsson wrote:
+On Wed, 14 May 2008, Junio C Hamano wrote:
 
-> Hi!
->
-> I am having problems cloning with git running on Mac OS X (installed
-> from macports). I am cloning from a Linux box:
->
-> $ git clone ssh://peter@server/path localpath
-> Initialized empty Git repository in /Users/peter/tmp/localpath/.git/
-> percent_expand: NULL replacement
-> fatal: The remote end hung up unexpectedly
-> fetch-pack from 'ssh://server/path' failed.
->
-> $ git --version
-> git version 1.5.5.1
->
->
-> Any ideas what is wrong? I successfully cloned from that repository to
-> a Windows (msysgit) install yesterday, over ssh.
->
-> Git on the Linux box I'm cloning from:
-> $ git --version
-> git version 1.5.4.2
->
-> (installed from Debian package version 1:1.5.4.2-1~bpo40+2)
+> 
+> For 1.5.6.
+> 
+> * sp/ignorecase (Sun May 11 18:16:42 2008 +0200) 4 commits
+>  - t0050: Add test for case insensitive add
+>  - t0050: Set core.ignorecase case to activate case insensitivity
+>  - t0050: Test autodetect core.ignorecase
+>  - git-init: autodetect core.ignorecase
+> 
+> This unfortunately seems to break on natively case sensitive filesystems.
 
-Read http://github.com/guides/percent_expand-null-replacement-bug
 
+>From 92ec8c8a12cdc45a69f6612af340a8ce50976ab1 Mon Sep 17 00:00:00 2001
+From: Steffen Prohaska <prohaska@zib.de>
+Date: Thu, 15 May 2008 07:19:54 +0200
+Subject: [PATCH] t0050: Fix merge test on case sensitive file systems
+
+On a case sensitive filesystem, "git reset --hard" might refuse to
+overwrite a file whose name differs only by case, even if
+core.ignorecase is set.  It is not clear which circumstances cause this
+behavior.  This commit simply works around the problem by removing
+the case changing file before running "git reset --hard".
+
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ t/t0050-filesystem.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 0e33c4b..c5360e2 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -72,6 +72,8 @@ $test_case 'rename (case change)' '
+ 
+ $test_case 'merge (case change)' '
+ 
++	rm -f CamelCase &&
++	rm -f camelcase &&
+ 	git reset --hard initial &&
+ 	git merge topic
+ 
 -- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+1.5.5.1.349.g99d0
