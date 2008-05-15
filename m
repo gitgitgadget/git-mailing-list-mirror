@@ -1,107 +1,431 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: [PATCH] Make git add -u honor --dry-run
-Date: Thu, 15 May 2008 20:46:45 +0200
-Message-ID: <482C8515.6020303@isy.liu.se>
-References: <1210868459-9511-1-git-send-email-vmiklos@frugalware.org>
+From: David Reiss <dreiss@facebook.com>
+Subject: [PATCH v3] Add support for GIT_CEILING_DIRS
+Date: Thu, 15 May 2008 11:49:44 -0700
+Message-ID: <482C85C8.90804@facebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu May 15 20:47:56 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 15 20:50:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwiUT-0000wo-Hq
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 20:47:45 +0200
+	id 1JwiXX-0002En-Uw
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 20:50:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752996AbYEOSqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 14:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbYEOSqu
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 14:46:50 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:63392 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbYEOSqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 14:46:49 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 4C7EC25A41;
-	Thu, 15 May 2008 20:46:48 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 16558-05; Thu,  8 May 2008 07:37:09 +0200 (MEST)
-Received: from [192.168.13.13] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 5332025A3B;
-	Thu, 15 May 2008 20:46:47 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <1210868459-9511-1-git-send-email-vmiklos@frugalware.org>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1753348AbYEOSt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 14:49:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754808AbYEOSt4
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 14:49:56 -0400
+Received: from fw-sf2p.facebook.com ([204.15.23.140]:39903 "EHLO
+	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753348AbYEOSty (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 14:49:54 -0400
+Received: from SF2PMXF01.TheFacebook.com (sf2pmxf01.thefacebook.com [192.168.16.11])
+	by pp01.sf2p.tfbnw.net (8.14.1/8.14.1) with ESMTP id m4FInrGB010402
+	for <git@vger.kernel.org>; Thu, 15 May 2008 11:49:53 -0700
+Received: from [192.168.98.131] ([10.8.254.247]) by SF2PMXF01.TheFacebook.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 15 May 2008 11:47:01 -0700
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+X-OriginalArrivalTime: 15 May 2008 18:47:01.0812 (UTC) FILETIME=[0FF8A740:01C8B6BC]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7160:2.4.4,1.2.40,4.0.166 definitions=2008-05-15_04:2008-05-14,2008-05-15,2008-05-15 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0805090000 definitions=main-0805150158
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82220>
 
-On 2008-05-15 18:20, Miklos Vajna wrote:
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
-> 
-> On Thu, May 15, 2008 at 06:08:24PM +0200, Gustaf Hendeby <hendeby@isy.liu.se> wrote:
->> I'm not familiar enough with the code to see how to best fix it.
-> 
-> Something like this?
+Make git recognize a new environment variable that prevents it from
+chdir'ing up into specified directories when looking for a GIT_DIR.
+Useful for avoiding slow network directories.
 
-This fixes part of the problem.  Nothing gets written to the index now, 
-however, I get no list of what files would have been added.  That is 
-what I would have suspected.  Am I reading the docs incorrectly?
+For example, I use git in an environment where homedirs are automounted
+and "ls /home/nonexistent" takes about 9 seconds.  Setting
+GIT_CEILING_DIRS="/home" allows "git help -a" (for bash completion) and
+"git symbolic-ref" (for my shell prompt) to run in a reasonable time.
 
-> 
->  builtin-add.c         |    3 ++-
->  t/t2200-add-update.sh |    7 +++++++
->  2 files changed, 9 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-add.c b/builtin-add.c
-> index 4a91e3e..222497d 100644
-> --- a/builtin-add.c
-> +++ b/builtin-add.c
-> @@ -212,7 +212,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  		if (read_cache() < 0)
->  			die("index file corrupt");
->  		pathspec = get_pathspec(prefix, argv);
-> -		add_files_to_cache(verbose, prefix, pathspec);
-> +		if(!show_only)
-> +			add_files_to_cache(verbose, prefix, pathspec);
->  		goto finish;
->  	}
-Since the other code path for show_only, does not end up in finish but 
-returns 0 directly, I'm assuming the same could be done here (after 
-printing the changed files) to save some cycles.
+This also moves the chdir call to after computing the new cwd.
+This should be a no-op because the cwd is not read in the interim
+and any nonlocal exits either chdir to an absolute path or die.
 
->  
-> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-> index b664341..13ad975 100755
-> --- a/t/t2200-add-update.sh
-> +++ b/t/t2200-add-update.sh
-> @@ -88,6 +88,13 @@ test_expect_success 'replace a file with a symlink' '
->  
->  '
->  
-> +test_expect_success 'add everything changed with --dry-run' '
-> +
-> +	git add -u --dry-run &&
-> +	test -n "$(git diff-files)"
-Don't you need to validate the output from git add -u --dry-run too?
+Signed-off-by: David Reiss <dreiss@facebook.com>
+---
+ Documentation/git.txt   |    8 +++
+ cache.h                 |    1 +
+ setup.c                 |  127 ++++++++++++++++++++++++++++++++++----
+ t/t1504-ceiling-dirs.sh |  156 +++++++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh           |    1 +
+ 5 files changed, 281 insertions(+), 12 deletions(-)
+ create mode 100755 t/t1504-ceiling-dirs.sh
 
-/Gustaf
-
-> +
-> +'
-> +
->  test_expect_success 'add everything changed' '
->  
->  	git add -u &&
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 6f445b1..8aea331 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -415,6 +415,14 @@ git so take care if using Cogito etc.
+ 	This can also be controlled by the '--work-tree' command line
+ 	option and the core.worktree configuration variable.
+ 
++'GIT_CEILING_DIRS'::
++	This should be a colon-separated list of absolute paths.
++	If set, it is a list of directories that git should not chdir
++	up into while looking for a repository directory.
++	It will not exclude the current working directory or
++	a GIT_DIR set on the command line or in the environment.
++	(Useful for excluding slow-loading network directories.)
++
+ git Commits
+ ~~~~~~~~~~~
+ 'GIT_AUTHOR_NAME'::
+diff --git a/cache.h b/cache.h
+index 9cee9a5..8300acc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -300,6 +300,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define CONFIG_ENVIRONMENT "GIT_CONFIG"
+ #define CONFIG_LOCAL_ENVIRONMENT "GIT_CONFIG_LOCAL"
+ #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
++#define CEILING_DIRS_ENVIRONMENT "GIT_CEILING_DIRS"
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+ #define ATTRIBUTE_MACRO_PREFIX "[attr]"
+diff --git a/setup.c b/setup.c
+index b8fd476..fdcfae1 100644
+--- a/setup.c
++++ b/setup.c
+@@ -353,16 +353,118 @@ const char *read_gitfile_gently(const char *path)
+ }
+ 
+ /*
++ * path = Canonical absolute path
++ * prefix_list = Colon-separated list of canonical absolute paths
++ *
++ * Determines, for each path in parent_list, whether the "prefix" really
++ * is an ancestor directory of path.  Returns the length of the longest
++ * ancestor directory, excluding any trailing slashes, or -1 if no prefix
++ * is an ancestry.  (Note that this means 0 is returned if prefix_list
++ * contains "/".)  "/foo" is not considered an ancestor of "/foobar".
++ * Directories are not considered to be their own ancestors.  Paths must
++ * be in a canonical form: empty components, or "." or ".." components
++ * are not allowed.  prefix_list may be null, which is like "".
++ */
++static int longest_ancestor_length(const char *path, const char *prefix_list)
++{
++	const char *ceil, *colon;
++	int max_len = -1;
++
++	if (prefix_list == NULL)
++		return -1;
++	/* "/" is a tricky edge case.  It should always return -1, though. */
++	if (!strcmp(path, "/"))
++		return -1;
++
++	ceil = prefix_list;
++	for (;;) {
++		int len;
++
++		/* Add strchrnul to compat? */
++		colon = strchr(ceil, ':');
++		if (colon)
++			len = colon - ceil;
++		else
++			len = strlen(ceil);
++
++		/* "" would otherwise be treated like "/". */
++		if (len) {
++			/* Trim trailing slashes. */
++			while (len && ceil[len-1] == '/')
++				len--;
++
++			if (!strncmp(path, ceil, len) &&
++					path[len] == '/' &&
++					len > max_len) {
++				max_len = len;
++			}
++		}
++
++		if (!colon)
++			break;
++		ceil = colon + 1;
++	}
++
++	return max_len;
++}
++
++#if 0
++static void test_longest_ancestor_length()
++{
++	assert(longest_ancestor_length("/", NULL           ) == -1);
++	assert(longest_ancestor_length("/", ""             ) == -1);
++	assert(longest_ancestor_length("/", "/"            ) == -1);
++
++	assert(longest_ancestor_length("/foo", NULL           ) == -1);
++	assert(longest_ancestor_length("/foo", ""             ) == -1);
++	assert(longest_ancestor_length("/foo", ":"            ) == -1);
++	assert(longest_ancestor_length("/foo", "/"            ) ==  0);
++	assert(longest_ancestor_length("/foo", "/fo"          ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo"         ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo/"        ) == -1);
++	assert(longest_ancestor_length("/foo", "/bar"         ) == -1);
++	assert(longest_ancestor_length("/foo", "/bar/"        ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo/bar"     ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo:/bar/"   ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo/:/bar/"  ) == -1);
++	assert(longest_ancestor_length("/foo", "/foo::/bar/"  ) == -1);
++	assert(longest_ancestor_length("/foo", "/:/foo:/bar/" ) ==  0);
++	assert(longest_ancestor_length("/foo", "/foo:/:/bar/" ) ==  0);
++	assert(longest_ancestor_length("/foo", "/:/bar/:/foo" ) ==  0);
++
++	assert(longest_ancestor_length("/foo/bar", NULL           ) == -1);
++	assert(longest_ancestor_length("/foo/bar", ""             ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/"            ) ==  0);
++	assert(longest_ancestor_length("/foo/bar", "/fo"          ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/foo"         ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/foo/"        ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/foo/ba"      ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/:/fo"        ) ==  0);
++	assert(longest_ancestor_length("/foo/bar", "/foo:/foo/ba" ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/bar"         ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/bar/"        ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/fo:"         ) == -1);
++	assert(longest_ancestor_length("/foo/bar", ":/fo"         ) == -1);
++	assert(longest_ancestor_length("/foo/bar", "/foo:/bar/"   ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/:/foo:/bar/" ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/foo:/:/bar/" ) ==  4);
++	assert(longest_ancestor_length("/foo/bar", "/:/bar/:/fo"  ) ==  0);
++	assert(longest_ancestor_length("/foo/bar", "/:/bar/"      ) ==  0);
++}
++#endif
++
++/*
+  * We cannot decide in this function whether we are in the work tree or
+  * not, since the config can only be read _after_ this function was called.
+  */
+ const char *setup_git_directory_gently(int *nongit_ok)
+ {
+ 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
++	const char *env_ceiling_dirs = getenv(CEILING_DIRS_ENVIRONMENT);
+ 	static char cwd[PATH_MAX+1];
+ 	const char *gitdirenv;
+ 	const char *gitfile_dir;
+-	int len, offset;
++	int len, offset, ceil_offset;
+ 
+ 	/*
+ 	 * Let's assume that we are in a git repository.
+@@ -414,6 +516,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	if (!getcwd(cwd, sizeof(cwd)-1))
+ 		die("Unable to read current working directory");
+ 
++	ceil_offset = longest_ancestor_length(cwd, env_ceiling_dirs);
++
+ 	/*
+ 	 * Test in the following order (relative to the cwd):
+ 	 * - .git (file containing "gitdir: <path>")
+@@ -443,18 +547,17 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			check_repository_format_gently(nongit_ok);
+ 			return NULL;
+ 		}
+-		chdir("..");
+-		do {
+-			if (!offset) {
+-				if (nongit_ok) {
+-					if (chdir(cwd))
+-						die("Cannot come back to cwd");
+-					*nongit_ok = 1;
+-					return NULL;
+-				}
+-				die("Not a git repository");
++		while (--offset > ceil_offset && cwd[offset] != '/') /* EMPTY */;
++		if (offset <= ceil_offset) {
++			if (nongit_ok) {
++				if (chdir(cwd))
++					die("Cannot come back to cwd");
++				*nongit_ok = 1;
++				return NULL;
+ 			}
+-		} while (cwd[--offset] != '/');
++			die("Not a git repository");
++		}
++		chdir("..");
+ 	}
+ 
+ 	inside_git_dir = 0;
+diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
+new file mode 100755
+index 0000000..091baad
+--- /dev/null
++++ b/t/t1504-ceiling-dirs.sh
+@@ -0,0 +1,156 @@
++#!/bin/sh
++
++test_description='test GIT_CEILING_DIRS'
++. ./test-lib.sh
++
++test_prefix() {
++	test_expect_success "$1" \
++	"test '$2' = \"\$(git rev-parse --show-prefix)\""
++}
++
++test_fail() {
++	test_expect_code 128 "$1: prefix" \
++	"git rev-parse --show-prefix"
++}
++
++TRASH_ROOT="$(pwd)"
++ROOT_PARENT=$(dirname "$TRASH_ROOT")
++
++
++unset GIT_CEILING_DIRS
++test_prefix no_ceil ""
++
++export GIT_CEILING_DIRS=""
++test_prefix ceil_empty ""
++
++export GIT_CEILING_DIRS="$ROOT_PARENT"
++test_prefix ceil_at_parent ""
++
++export GIT_CEILING_DIRS="$ROOT_PARENT/"
++test_prefix ceil_at_parent_slash ""
++
++export GIT_CEILING_DIRS="$TRASH_ROOT"
++test_prefix ceil_at_trash ""
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/"
++test_prefix ceil_at_trash_slash ""
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub"
++test_prefix ceil_at_sub ""
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/"
++test_prefix ceil_at_sub_slash ""
++
++
++mkdir -p sub/dir || exit 1
++cd sub/dir || exit 1
++
++unset GIT_CEILING_DIRS
++test_prefix subdir_no_ceil "sub/dir/"
++
++export GIT_CEILING_DIRS=""
++test_prefix subdir_ceil_empty "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT"
++test_fail subdir_ceil_at_trash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/"
++test_fail subdir_ceil_at_trash_slash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub"
++test_fail subdir_ceil_at_sub
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/"
++test_fail subdir_ceil_at_sub_slash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/dir"
++test_prefix subdir_ceil_at_subdir "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/dir/"
++test_prefix subdir_ceil_at_subdir_slash "sub/dir/"
++
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/su"
++test_prefix subdir_ceil_at_su "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/su/"
++test_prefix subdir_ceil_at_su_slash "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/di"
++test_prefix subdir_ceil_at_sub_di "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub/di"
++test_prefix subdir_ceil_at_sub_di_slash "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/subdi"
++test_prefix subdir_ceil_at_subdi "sub/dir/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/subdi"
++test_prefix subdir_ceil_at_subdi_slash "sub/dir/"
++
++
++export GIT_CEILING_DIRS="foo:$TRASH_ROOT/sub"
++test_fail second_of_two
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub:bar"
++test_fail first_of_two
++
++export GIT_CEILING_DIRS="foo:$TRASH_ROOT/sub:bar"
++test_fail second_of_three
++
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sub"
++export GIT_DIR=../../.git
++test_prefix git_dir_specified ""
++unset GIT_DIR
++
++
++cd ../.. || exit 1
++mkdir -p s/d || exit 1
++cd s/d || exit 1
++
++unset GIT_CEILING_DIRS
++test_prefix sd_no_ceil "s/d/"
++
++export GIT_CEILING_DIRS=""
++test_prefix sd_ceil_empty "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT"
++test_fail sd_ceil_at_trash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/"
++test_fail sd_ceil_at_trash_slash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s"
++test_fail sd_ceil_at_s
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s/"
++test_fail sd_ceil_at_s_slash
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s/d"
++test_prefix sd_ceil_at_sd "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s/d/"
++test_prefix sd_ceil_at_sd_slash "s/d/"
++
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/su"
++test_prefix sd_ceil_at_su "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/su/"
++test_prefix sd_ceil_at_su_slash "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s/di"
++test_prefix sd_ceil_at_s_di "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/s/di"
++test_prefix sd_ceil_at_s_di_slash "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sdi"
++test_prefix sd_ceil_at_sdi "s/d/"
++
++export GIT_CEILING_DIRS="$TRASH_ROOT/sdi"
++test_prefix sd_ceil_at_sdi_slash "s/d/"
++
++
++test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 7c2a8ba..22899c1 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -35,6 +35,7 @@ unset GIT_WORK_TREE
+ unset GIT_EXTERNAL_DIFF
+ unset GIT_INDEX_FILE
+ unset GIT_OBJECT_DIRECTORY
++unset GIT_CEILING_DIRS
+ unset SHA1_FILE_DIRECTORIES
+ unset SHA1_FILE_DIRECTORY
+ GIT_MERGE_VERBOSITY=5
+-- 
+1.5.4
