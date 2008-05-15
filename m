@@ -1,65 +1,254 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How can I tell if a SHA1 is a submodule reference?
-Date: Thu, 15 May 2008 13:21:11 -0700
-Message-ID: <7vabirgvyg.fsf@gitster.siamese.dyndns.org>
-References: <7F242E8F-13CF-4BE5-B3E6-85F285391658@ohloh.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add support for GIT_CEILING_DIRECTORIES
+Date: Thu, 15 May 2008 21:27:54 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805152055280.30431@racer>
+References: <482C85C8.90804@facebook.com> <alpine.DEB.1.00.0805151958180.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Robin Luckey <robin@ohloh.net>
-X-From: git-owner@vger.kernel.org Thu May 15 22:23:08 2008
+To: David Reiss <dreiss@facebook.com>
+X-From: git-owner@vger.kernel.org Thu May 15 22:29:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwjxy-0000I5-At
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 22:22:18 +0200
+	id 1Jwk4R-0003VT-2H
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 22:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581AbYEOUV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 16:21:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757945AbYEOUV2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 16:21:28 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35851 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761673AbYEOUVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 16:21:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7364937D9;
-	Thu, 15 May 2008 16:21:22 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id C629137D3; Thu, 15 May 2008 16:21:19 -0400 (EDT)
-In-Reply-To: <7F242E8F-13CF-4BE5-B3E6-85F285391658@ohloh.net> (Robin Luckey's
- message of "Thu, 15 May 2008 12:39:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7C3D9E9E-22BC-11DD-8058-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1755232AbYEOU1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 16:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755130AbYEOU1x
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 16:27:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38490 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751228AbYEOU1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 16:27:51 -0400
+Received: (qmail invoked by alias); 15 May 2008 20:27:49 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp058) with SMTP; 15 May 2008 22:27:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ggQwCKKvgfcj6+D8vqupS9a2KskkXbRczWGfk+/
+	cUM8nfyK7muqR7
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0805151958180.30431@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82230>
 
-Robin Luckey <robin@ohloh.net> writes:
 
-> I am parsing the output of git-diff-tree to create some code analysis
-> reports.
->
-> When a user adds a submodule to a repository, git-diff-tree reports
-> the SHA1 of the commit from the submodule.
->
-> However, if I subsequently try to pass this SHA1 to git-cat-file, or
-> indeed any other git command I have tried, I receive an error:
->
-> error: unable to find b0f8c354b142e27333abd0f175544b71a0cc444e
-> fatal: Not a valid object name b0f8c354b142e27333abd0f175544b71a0cc444e
->
-> This makes sense to me, since these objects are not stored locally;
-> they are stored in the submodule repository.
->
-> However, is there a simple and reliable way for me to know which SHA1
-> hashes refer to such submodule objects? I'd like to simply ignore them.
+In certain setups, trying to access a non-existing .git/ can take quite
+some time, for example when the directory is an automount directory.
 
-I presume you are reading "diff-tree --raw" format output.  The mode bits
-for submodules (aka gitlinks) are 160000, as opposed to either 100644 or
-100755 for regular files and 120000 for symbolic links.
+Allow the user to specify directories where Git should stop looking for
+a .git/ directory: GIT_CEILING_DIRECTORIES, if set, is expected to be
+a colon delimited list of such barrier directories.
+
+Note: if GIT_CEILING_DIRECTORIES=/a/b and your current working directory 
+is /a, Git will _not_ stop looking.
+
+Note2: you must not specify the directories with trailing slashes.
+
+Initial implementation by David Reiss.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	Show me the bugs!
+
+	I just checked: the "/" issue you were referring to is most likely
+	the fact that "git rev-parse --git-dir" would return "//.git"
+	instead of "/.git" (if that is the appropriate GIT_DIR).
+
+	This is the original behavior (without this patch), and IMO a 
+	separate issue, which might not even need fixing.
+
+ Documentation/git.txt          |    6 +++++
+ cache.h                        |    2 +
+ path.c                         |   19 ++++++++++++++++
+ setup.c                        |   11 +++++++-
+ t/t1504-ceiling-directories.sh |   46 ++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh                  |    1 +
+ 6 files changed, 83 insertions(+), 2 deletions(-)
+ create mode 100644 t/t1504-ceiling-directories.sh
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index adcd3e0..a12d1f8 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -415,6 +415,12 @@ git so take care if using Cogito etc.
+ 	This can also be controlled by the '--work-tree' command line
+ 	option and the core.worktree configuration variable.
+ 
++'GIT_CEILING_DIRS'::
++	If set (to a colon delimited list of absolute directories), Git
++	will refuse to look for the .git/ directory further when hitting
++	one of those directories (otherwise it would traverse the parent
++	directories until hitting the root directory).
++
+ git Commits
+ ~~~~~~~~~~~
+ 'GIT_AUTHOR_NAME'::
+diff --git a/cache.h b/cache.h
+index a8638b1..c31b4c7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -300,6 +300,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define CONFIG_ENVIRONMENT "GIT_CONFIG"
+ #define CONFIG_LOCAL_ENVIRONMENT "GIT_CONFIG_LOCAL"
+ #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
++#define CEILING_DIRECTORIES_ENVIRONMENT "GIT_CEILING_DIRECTORIES"
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+ #define ATTRIBUTE_MACRO_PREFIX "[attr]"
+@@ -522,6 +523,7 @@ static inline int is_absolute_path(const char *path)
+ 	return path[0] == '/';
+ }
+ const char *make_absolute_path(const char *path);
++int longest_prefix(const char *path, const char *prefix_list);
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+diff --git a/path.c b/path.c
+index b7c24a2..c0d7364 100644
+--- a/path.c
++++ b/path.c
+@@ -357,3 +357,22 @@ const char *make_absolute_path(const char *path)
+ 
+ 	return buf;
+ }
++
++int longest_prefix(const char *path, const char *prefix_list)
++{
++	int max_length = 0, length = 0, i;
++
++	for (i = 0; prefix_list[i]; i++)
++		if (prefix_list[i] == ':') {
++			if (length > max_length)
++				max_length = length;
++			length = 0;
++		}
++		else if (length >= 0) {
++			if (prefix_list[i] == path[length])
++				length++;
++			else
++				length = -1;
++		}
++	return max_length > length ? max_length : length;
++}
+diff --git a/setup.c b/setup.c
+index 9e9a2b1..cece3e4 100644
+--- a/setup.c
++++ b/setup.c
+@@ -365,10 +365,13 @@ const char *read_gitfile_gently(const char *path)
+ const char *setup_git_directory_gently(int *nongit_ok)
+ {
+ 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
++	const char *ceiling_directories =
++		getenv(CEILING_DIRECTORIES_ENVIRONMENT);
+ 	static char cwd[PATH_MAX+1];
+ 	const char *gitdirenv;
+ 	const char *gitfile_dir;
+ 	int len, offset;
++	int min_offset = 0;
+ 
+ 	/*
+ 	 * Let's assume that we are in a git repository.
+@@ -422,6 +425,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	if (!getcwd(cwd, sizeof(cwd)-1))
+ 		die("Unable to read current working directory");
+ 
++	if (ceiling_directories)
++		min_offset = longest_prefix(cwd, ceiling_directories);
++
+ 	/*
+ 	 * Test in the following order (relative to the cwd):
+ 	 * - .git (file containing "gitdir: <path>")
+@@ -453,7 +459,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		}
+ 		chdir("..");
+ 		do {
+-			if (!offset) {
++			if (offset <= min_offset) {
+ 				if (nongit_ok) {
+ 					if (chdir(cwd))
+ 						die("Cannot come back to cwd");
+@@ -462,7 +468,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 				}
+ 				die("Not a git repository");
+ 			}
+-		} while (cwd[--offset] != '/');
++		} while (offset > min_offset &&
++				--offset >=0 && cwd[offset] != '/');
+ 	}
+ 
+ 	inside_git_dir = 0;
+diff --git a/t/t1504-ceiling-directories.sh b/t/t1504-ceiling-directories.sh
+new file mode 100644
+index 0000000..1d8ef0b
+--- /dev/null
++++ b/t/t1504-ceiling-directories.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Johannes E. Schindelin
++#
++
++test_description='test limiting with GIT_CEILING_DIRECTORIES'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	CWD="$(pwd -P)" &&
++	mkdir subdir
++
++'
++
++test_expect_success 'without GIT_CEILING_DIRECTORIES' '
++
++	test .git = "$(git rev-parse --git-dir)" &&
++	(cd subdir && git rev-parse --git-dir) &&
++	echo "$CWD" &&
++	test "$CWD/.git" = "$(cd subdir && git rev-parse --git-dir)"
++
++'
++
++test_expect_success 'with non-matching ceiling directory' '
++
++	test "$(GIT_CEILING_DIRECTORIES="$CWD/X" \
++		git rev-parse --git-dir)" = .git
++
++'
++
++test_expect_success 'with matching ceiling directories' '
++
++	GIT_CEILING_DIRECTORIES="$CWD/X:$CWD/subdir" &&
++	export GIT_CEILING_DIRECTORIES &&
++	(cd subdir && test_must_fail git rev-parse --git-dir) &&
++	git rev-parse --git-dir &&
++	GIT_CEILING_DIRECTORIES="$CWD/subdir:$CWD/X" &&
++	export GIT_CEILING_DIRECTORIES &&
++	(cd subdir && test_must_fail git rev-parse --git-dir) &&
++	git rev-parse --git-dir
++
++'
++
++test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 5002fb0..c3a3167 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -35,6 +35,7 @@ unset GIT_WORK_TREE
+ unset GIT_EXTERNAL_DIFF
+ unset GIT_INDEX_FILE
+ unset GIT_OBJECT_DIRECTORY
++unset GIT_CEILING_DIRECTORIES
+ unset SHA1_FILE_DIRECTORIES
+ unset SHA1_FILE_DIRECTORY
+ GIT_MERGE_VERBOSITY=5
+-- 
+1.5.5.1.425.g5f464
