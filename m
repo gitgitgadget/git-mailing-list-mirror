@@ -1,79 +1,139 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] diff options: Introduce --ignore-submodules
-Date: Thu, 15 May 2008 02:09:22 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805150204440.30431@racer>
-References: <alpine.DEB.1.00.0805141802480.30431@racer> <alpine.DEB.1.00.0805141803240.30431@racer> <7vbq38oi3j.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805141940460.30431@racer> <7vy76cn1aq.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805142308400.30431@racer>
- <7vod78k022.fsf@gitster.siamese.dyndns.org>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: mergetool feature request - select remote or local
+Date: Wed, 14 May 2008 21:25:33 -0400
+Message-ID: <200805142125.40027.xenoterracide@gmail.com>
+References: <200805140721.13719.xenoterracide@gmail.com> <7vzlqsok0y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed;
+  boundary="nextPart28163371.CNcP1y2R7V";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>,
+	Daniel Barkalow <barkalow@iabervon.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 15 03:10:14 2008
+X-From: git-owner@vger.kernel.org Thu May 15 03:35:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwRz2-0002tn-78
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 03:10:12 +0200
+	id 1JwSNu-0000L6-0n
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 03:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039AbYEOBJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2008 21:09:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbYEOBJW
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 21:09:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49922 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751478AbYEOBJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2008 21:09:22 -0400
-Received: (qmail invoked by alias); 15 May 2008 01:09:20 -0000
-Received: from R2b68.r.pppool.de (EHLO racer.local) [89.54.43.104]
-  by mail.gmx.net (mp025) with SMTP; 15 May 2008 03:09:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/KxUxxHwbKoTWHBvPRibhgZC+YODUaMmreIvvEIX
-	4u3NLoI7DISAFr
-X-X-Sender: gene099@racer
-In-Reply-To: <7vod78k022.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751399AbYEOBeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2008 21:34:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbYEOBeo
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 May 2008 21:34:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:16358 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750758AbYEOBen (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2008 21:34:43 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so104695ywe.1
+        for <git@vger.kernel.org>; Wed, 14 May 2008 18:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:message-id;
+        bh=2yBcbuSz2OE7q4+1FjSyStdoMJMp5brv87g9IiIhWnw=;
+        b=uq/auv2qmIuNRTDBOd3M69hLqVJ3Ms7q6lAfJkev0aTjvubG2TxYykqXtvcu/TcBdWdJNpXEvk4jFzMW/fmp5FAlbqfJYb8kdYdeFkjkclSQlidoabECG3cR/YSAimWVet+FEo9o4UrZcOM9/u6haRSHO5ClyN+b8yMAd4gF53k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:message-id;
+        b=sW5GWWzRXepbPc0sOimzY7TK3EgbR7PmMSG/Bqd9s6UDp34sF67EooP1FnU+kIdV3F8pDGcZULfvdNfOL87+Fq6X/GoRL4Y4c12RmiSsLWPWSvs8d55STqbsR8BeiwGYzMx+109AEU0yiYkA5ZkdWt7s/VN6CRfhajn8TYYLfvE=
+Received: by 10.150.217.14 with SMTP id p14mr1762927ybg.53.1210815277287;
+        Wed, 14 May 2008 18:34:37 -0700 (PDT)
+Received: from ?192.168.0.101? ( [75.128.154.7])
+        by mx.google.com with ESMTPS id 30sm1093754yxk.4.2008.05.14.18.34.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 May 2008 18:34:34 -0700 (PDT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vzlqsok0y.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82164>
 
-Hi,
+--nextPart28163371.CNcP1y2R7V
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Wed, 14 May 2008, Junio C Hamano wrote:
+On Wednesday 14 May 2008 01:47:09 pm you wrote:
+> I never understood why people are using git and not ftp when they say the
+> other side is always right, but I see this comes up every once in a while,
+> so it would probably be a good thing to support.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 14 May 2008, Junio C Hamano wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >> 
-> >> > The point is: for the sake of a script (which wants to ignore 
-> >> > submodules) asking if there is a diff, I think it makes sense to 
-> >> > not ignore those changes.  IOW I think my patch is enough for the 
-> >> > purpose of getting stash/rebase to behave.
-> >> 
-> >> But the patch is not about stash/rebase but affects all diff users, 
-> >> doesn't it?
-> >
-> > Does it?  I thought I hid all that special handling behind the 
-> > --ignore-submodules options.
-> 
-> That's exactly the point.  The option reads "ignore submodules", not 
-> "special option for use only by stash and rebase".
+well in my case I'm not particularly sure why fast forward didn't just merg=
+e=20
+them. Seems like I had resolved these changes in master previously. this=20
+problem is most annoying when I am resolving the same issues across multipl=
+e=20
+branches.
 
-But it also does not read "ignore submodules and those blobs/trees that 
-happen to replace (or be replaced by) submodules".
+> The above "(l)local" and "(m)anual" look inconsistent, and the wording
+> should be more like "local, remote or merge".
 
-I think it is not a bad thing to call it "ignore submodules", but show the 
-submodules when something else than a submodule is involved, too.
+local,remote, merge is fine and I used the (m) for example because of how i=
+t=20
+asked me to handle a file existing locally (with mods?) but had been delete=
+d=20
+in MERGE_HEAD?
 
-I see where you are heading with the "split diff into removal of submodule 
-/ addition of a blob", but I think that would be overly clever, and not 
-helpful.  I know that I would want to have that marked as a problem when 
-rebasing.
+> > also in the event of having 20 files with this issue it would be nice to
+> > have an option after first starting mergetool for remote all or local
+> > all.
+>
+> This makes me wonder if you are better off not using mergetool in such a
+> situation. =A0Instead, perhaps
+>
+> =A0=A0=A0=A0=A0=A0=A0=A0$ git ls-files -u --no-stage | xargs git checkout=
+ MERGE_HEAD
 
-Ciao,
-Dscho
+perhaps... I'm not this familiar with git yet.
+
+> might be a better option? =A0The attached is a completely untested
+> weather-baloon patch.
+>
+> If this turns out to be a better approach, perhaps we would further want
+> to tweak things to make:
+>
+> =A0=A0=A0=A0=A0=A0=A0=A0$ git checkout --unmerged MERGE_HEAD [--] [<paths=
+pec>...]
+>
+> to work (if you want "local", you would use "HEAD" instead of
+> "MERGE_HEAD").
+
+> Looks easy enough.  Caleb, does this approach fit the situation you
+> described better?
+
+um.. is that just a resolution for an merge all (local or remote).
+
+I'm gonna be honest when I say I'm an amateur developer (although I've=20
+considered myself a pretty good admin for a few years) and relatively new t=
+o=20
+git. So I'm getting a bit lost, but it sounds reasonable. It wouldn't affec=
+t=20
+any files that had been successfully fast forwarded right?
+
+unfortunately I'm not sure how easy testing will be, as this problem doesn'=
+t=20
+arise with every merge, but has arisen often enough to be a pita.
+=2D-=20
+Caleb Cushing
+
+my blog http://xenoterracide.blogspot.com
+
+--nextPart28163371.CNcP1y2R7V
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkgrkRMACgkQQ201sGJR45I3fQCfUsq2gH8VI3CkBYzF4Fn62+tU
+uacAoIVu+EPofv+wxQA+MzqaGhZc0XWW
+=Erla
+-----END PGP SIGNATURE-----
+
+--nextPart28163371.CNcP1y2R7V--
