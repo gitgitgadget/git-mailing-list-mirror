@@ -1,65 +1,107 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Export GIT_DIR after setting it
-Date: Thu, 15 May 2008 20:44:23 +0200
-Message-ID: <20080515184423.GA13535@atjola.homenet>
-References: <1210807401-11201-1-git-send-email-madduck@madduck.net> <7vod78i9r7.fsf@gitster.siamese.dyndns.org> <20080515101523.GA31719@lapse.madduck.net> <7vlk2bh45u.fsf@gitster.siamese.dyndns.org> <20080515175555.GA13003@atjola.homenet> <20080515182806.GA14799@lapse.madduck.net>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: [PATCH] Make git add -u honor --dry-run
+Date: Thu, 15 May 2008 20:46:45 +0200
+Message-ID: <482C8515.6020303@isy.liu.se>
+References: <1210868459-9511-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "martin f. krafft" <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu May 15 20:45:32 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu May 15 20:47:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwiSI-0008U9-5r
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 20:45:30 +0200
+	id 1JwiUT-0000wo-Hq
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 20:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbYEOSo2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2008 14:44:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756450AbYEOSo2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 14:44:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51191 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755272AbYEOSo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 14:44:27 -0400
-Received: (qmail invoked by alias); 15 May 2008 18:44:25 -0000
-Received: from i577AEBEF.versanet.de (EHLO atjola.local) [87.122.235.239]
-  by mail.gmx.net (mp031) with SMTP; 15 May 2008 20:44:25 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+3KspkvHi3lgW21d64/lZr3FU9Hf+fCwbUdf3rE+
-	Ztr+pNBfixVc7b
-Content-Disposition: inline
-In-Reply-To: <20080515182806.GA14799@lapse.madduck.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+	id S1752996AbYEOSqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 14:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbYEOSqu
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 14:46:50 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:63392 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871AbYEOSqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 14:46:49 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 4C7EC25A41;
+	Thu, 15 May 2008 20:46:48 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 16558-05; Thu,  8 May 2008 07:37:09 +0200 (MEST)
+Received: from [192.168.13.13] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 5332025A3B;
+	Thu, 15 May 2008 20:46:47 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <1210868459-9511-1-git-send-email-vmiklos@frugalware.org>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82219>
 
-On 2008.05.15 19:28:06 +0100, martin f. krafft wrote:
-> also sprach Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> [2008.05.15.1855=
- +0100]:
-> > It kind of feels like a bug that git-pull does not export GIT_DIR t=
-here,
-> > but you could probably also argue that it is wrong not to have GIT_=
-DIR
-> > set in the environment when using a non-standard name for the git d=
-ir.
-> > Hm?
->=20
-> Ah, but it is a standard name: .
->=20
-> If git does not find .git, it *does* seem to look into the current
-> directory too; that's why commands work inside bare repos...
+On 2008-05-15 18:20, Miklos Vajna wrote:
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+> 
+> On Thu, May 15, 2008 at 06:08:24PM +0200, Gustaf Hendeby <hendeby@isy.liu.se> wrote:
+>> I'm not familiar enough with the code to see how to best fix it.
+> 
+> Something like this?
 
-Yeah, but this is not a bare repo. As far as I understood Junio, it is
-at least an error to use GIT_DIR without GIT_WORK_TREE (or
-core.worktree), so I'm just thinking that it may also be an error to us=
-e
-GIT_WORK_TREE (or core.worktree) without GIT_DIR.
+This fixes part of the problem.  Nothing gets written to the index now, 
+however, I get no list of what files would have been added.  That is 
+what I would have suspected.  Am I reading the docs incorrectly?
 
-Bj=F6rn
+> 
+>  builtin-add.c         |    3 ++-
+>  t/t2200-add-update.sh |    7 +++++++
+>  2 files changed, 9 insertions(+), 1 deletions(-)
+> 
+> diff --git a/builtin-add.c b/builtin-add.c
+> index 4a91e3e..222497d 100644
+> --- a/builtin-add.c
+> +++ b/builtin-add.c
+> @@ -212,7 +212,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  		if (read_cache() < 0)
+>  			die("index file corrupt");
+>  		pathspec = get_pathspec(prefix, argv);
+> -		add_files_to_cache(verbose, prefix, pathspec);
+> +		if(!show_only)
+> +			add_files_to_cache(verbose, prefix, pathspec);
+>  		goto finish;
+>  	}
+Since the other code path for show_only, does not end up in finish but 
+returns 0 directly, I'm assuming the same could be done here (after 
+printing the changed files) to save some cycles.
+
+>  
+> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+> index b664341..13ad975 100755
+> --- a/t/t2200-add-update.sh
+> +++ b/t/t2200-add-update.sh
+> @@ -88,6 +88,13 @@ test_expect_success 'replace a file with a symlink' '
+>  
+>  '
+>  
+> +test_expect_success 'add everything changed with --dry-run' '
+> +
+> +	git add -u --dry-run &&
+> +	test -n "$(git diff-files)"
+Don't you need to validate the output from git add -u --dry-run too?
+
+/Gustaf
+
+> +
+> +'
+> +
+>  test_expect_success 'add everything changed' '
+>  
+>  	git add -u &&
