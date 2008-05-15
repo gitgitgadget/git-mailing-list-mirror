@@ -1,82 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] diff options: Introduce --ignore-submodules
-Date: Thu, 15 May 2008 14:58:14 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805151439190.30431@racer>
-References: <alpine.DEB.1.00.0805141802480.30431@racer> <alpine.DEB.1.00.0805141803240.30431@racer> <7vbq38oi3j.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805141940460.30431@racer> <7vy76cn1aq.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805142308400.30431@racer>
- <7vod78k022.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805150204440.30431@racer> <7v3aokjpxv.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] builtin-clone: fix initial checkout
+Date: Thu, 15 May 2008 11:17:34 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805151050240.19665@iabervon.org>
+References: <BB5BF79E-ECAE-4F63-AFF1-8C13F23D3D10@sb.org> <20080515044402.GA3517@sigill.intra.peff.net> <20080515045026.GA26161@sigill.intra.peff.net> <alpine.DEB.1.00.0805151042570.30431@racer>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 15 16:00:36 2008
+Cc: Jeff King <peff@peff.net>, Kevin Ballard <kevin@sb.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 15 17:25:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwdzE-0002Xm-CS
-	for gcvg-git-2@gmane.org; Thu, 15 May 2008 15:59:12 +0200
+	id 1JwfDz-0005RQ-CK
+	for gcvg-git-2@gmane.org; Thu, 15 May 2008 17:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564AbYEON6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 09:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753268AbYEON6Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 09:58:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56147 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754110AbYEON6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 09:58:15 -0400
-Received: (qmail invoked by alias); 15 May 2008 13:58:13 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp010) with SMTP; 15 May 2008 15:58:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+BtH1EmFuBpDsAuFKSKmqnK2cYMjU2gCuOyO/4u/
-	3Nlax+Oipxeomh
-X-X-Sender: gene099@racer
-In-Reply-To: <7v3aokjpxv.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755527AbYEOPRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 11:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754679AbYEOPRk
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 11:17:40 -0400
+Received: from iabervon.org ([66.92.72.58]:46556 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751915AbYEOPRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 11:17:39 -0400
+Received: (qmail 11279 invoked by uid 1000); 15 May 2008 15:17:34 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 May 2008 15:17:34 -0000
+In-Reply-To: <alpine.DEB.1.00.0805151042570.30431@racer>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82207>
 
-Hi,
+On Thu, 15 May 2008, Johannes Schindelin wrote:
 
-On Wed, 14 May 2008, Junio C Hamano wrote:
+> Somewhere in the process of finishing up builtin-clone, the update of
+> the working tree was lost.  This was due to not using the option "merge"
+> for unpack_trees().
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I was sure I'd added support for update without merge, but now I can't see 
+what became of it. I was pretty sure I'd actually needed it for something, 
+too, but I guess that got resolved some other way. I'll have to check 
+tonight on my laptop for something of the sort in my reflogs.
+
+I'm pretty sure that just including merge and the necessary other options 
+here will work fine (since there's no index to merge into) and I don't 
+have a simple fix off the top of my head for that flag combination, so:
+
+Acked-by: Daniel Barkalow <barkalow@iabervon.org>
+
+> Breakage noticed by Kevin Ballard.
 > 
-> >> That's exactly the point.  The option reads "ignore submodules", not 
-> >> "special option for use only by stash and rebase".
-> >
-> > But it also does not read "ignore submodules and those blobs/trees 
-> > that happen to replace (or be replaced by) submodules".
+> Test by Jeff King.
 > 
-> I think "ignore submodules" option, if exists, would mean "ignore 
-> changes that involve submodules", and I think everybody would agree with 
-> that.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 > 
-> Because we are talking about an option to "diff", changes involve two
-> sides (preimage and postimage).  Logically, you can define the class of
-> changes that involve submodules in two ways:
+> 	> On Thu, May 15, 2008 at 12:44:02AM -0400, Jeff King wrote:
+> 	> 
+> 	> > Hmm, builtin-clone does seem to be completely broken. It looks 
+> 	> > like unpack_trees is not doing its job for some reason, but I
+> 	> > haven't looked further. But it surprised me that we aren't 
+> 	> > testing anything as simple as "clone works". The test below
+> 	> > currently fails (though I am getting other test failures which 
+> 	> > are presumably related).
 > 
->  * both sides of the change must be a submodule; otherwise the change does
->    not involve a submodule.
+> 	I did not notice the breakage earlier, because I ran with a 
+> 	"twoway_merge" version of builtin-clone in my personal tree.
 > 
->  * either side of the change is a submodule; such a change involve a
->    submodule.
+>  builtin-clone.c  |    3 +++
+>  t/t5601-clone.sh |    7 +++++++
+>  2 files changed, 10 insertions(+), 0 deletions(-)
 > 
-> I am saying that the latter makes much more sense (worse yet, what you 
-> did for creation and deletion is inconsistent --- they are void vs 
-> submodule and you treat them as "change that involve submodule").
-
-Okay, maybe the introduction, and the intuitive understanding of "ignore 
-submodules" is the latter.
-
-But I maintain that there is no sensible operation you would need it 
-for.
-
-So, how about --only-non-submodules?
-
-Ciao,
-Dscho
+> diff --git a/builtin-clone.c b/builtin-clone.c
+> index a7c075d..8713128 100644
+> --- a/builtin-clone.c
+> +++ b/builtin-clone.c
+> @@ -525,7 +525,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  
+>  		memset(&opts, 0, sizeof opts);
+>  		opts.update = 1;
+> +		opts.merge = 1;
+> +		opts.fn = oneway_merge;
+>  		opts.verbose_update = !option_quiet;
+> +		opts.src_index = &the_index;
+>  		opts.dst_index = &the_index;
+>  
+>  		tree = parse_tree_indirect(remote_head->old_sha1);
+> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> index dc9d63d..593d1a3 100755
+> --- a/t/t5601-clone.sh
+> +++ b/t/t5601-clone.sh
+> @@ -23,4 +23,11 @@ test_expect_success 'clone with excess parameters' '
+>  
+>  '
+>  
+> +test_expect_success 'clone checks out files' '
+> +
+> +	git clone src dst &&
+> +	test -f dst/file
+> +
+> +'
+> +
+>  test_done
+> -- 
+> 1.5.5.1.424.g3256b
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
