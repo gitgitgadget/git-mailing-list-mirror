@@ -1,97 +1,122 @@
-From: Paul Gardiner <paul@laser-point.co.uk>
-Subject: Re: What am I doing wrong?
-Date: Fri, 16 May 2008 15:56:46 +0100
-Message-ID: <482DA0AE.1030301@laser-point.co.uk>
-References: <482D6F41.2060809@laser-point.co.uk> <g0js1p$l22$1@ger.gmane.org> <482D7EE1.9020503@laser-point.co.uk> <g0jvig$1dn$1@ger.gmane.org> <482D8BEB.6070706@laser-point.co.uk> <alpine.DEB.1.00.0805161439100.30431@racer>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL characters
+Date: Fri, 16 May 2008 10:56:35 -0400
+Message-ID: <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com>
+References: <482BE5F7.2050108@thorn.ws>
+	 <alpine.DEB.1.00.0805161139530.30431@racer>
+	 <alpine.DEB.1.00.0805161148010.30431@racer>
+	 <alpine.DEB.1.00.0805161403130.30431@racer>
+	 <32541b130805160703r27a55b91xbad03eb1d107a176@mail.gmail.com>
+	 <alpine.DEB.1.00.0805161529390.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org, lists@glidos.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 16 17:00:34 2008
+Cc: "Tommy Thorn" <tommy-git@thorn.ws>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 16 17:00:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx1Pq-00039z-8E
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 17:00:14 +0200
+	id 1Jx1Po-00039z-PW
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 17:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763426AbYEPO5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 10:57:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763419AbYEPO47
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 10:56:59 -0400
-Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:38746
-	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763406AbYEPO46 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 10:56:58 -0400
-X-Trace: 81678873/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$ACCEPTED/pipex-customers/81.86.57.226
-X-SBRS: None
-X-RemoteIP: 81.86.57.226
-X-IP-MAIL-FROM: paul@laser-point.co.uk
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlABAF49LUhRVjni/2dsb2JhbAAIrgM
-X-IronPort-AV: E=Sophos;i="4.27,497,1204502400"; 
-   d="scan'208";a="81678873"
-X-IP-Direction: IN
-Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 16 May 2008 15:56:48 +0100
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <alpine.DEB.1.00.0805161439100.30431@racer>
+	id S1760361AbYEPO4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 10:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759212AbYEPO4l
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 10:56:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:59899 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756331AbYEPO4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 10:56:38 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so736075fgg.17
+        for <git@vger.kernel.org>; Fri, 16 May 2008 07:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=xovktEA8etuB2dFknf0bqm0nuZC6sXM0XljH87p4Wms=;
+        b=pQCkntqQP/lAYwXv5DMfOwtZx5/CWFE52LsWGZVBp5IKlEuQbYodMGicA1musgRjY5tXP2lzz0Y1ywbYu+WHfPCCioSwQ9rvZP3PV1YUUMqnZlQfo9UY1qF7lB0nGtIELgLlv5o5YImte3rQhGHbZsAMZlUFXg+9iYDKN93/6a8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jLRSrtYzJ3POgvJMb5cRjWurCncdxhUOWOV6tMW9hBrdiLAypL+BRfw1mdxSpkzbTU9vB2KokL0wdo0sQZap4a4Y4Va1Da2XsJpNAkKwYLfsWfvWOzw5DvshnWBVKOBsXyHERu/hZJkj1ttIXNKigq1R6Hv4INHIpyT24bwQFQk=
+Received: by 10.82.175.7 with SMTP id x7mr526466bue.35.1210949795972;
+        Fri, 16 May 2008 07:56:35 -0700 (PDT)
+Received: by 10.82.100.5 with HTTP; Fri, 16 May 2008 07:56:35 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805161529390.30431@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82303>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Fri, 16 May 2008, Paul Gardiner wrote:
-> 
->> Michael J Gruber wrote:
->>> Paul Gardiner venit, vidit, dixit 16.05.2008 14:32:
->>>> Michael J Gruber wrote:
->>>>> Paul Gardiner venit, vidit, dixit 16.05.2008 13:25:
->>>>>> I create the initial repository with
->>>>>>
->>>>>>      git-clone /<full-path>/<name>.git/ <folder>
->>>>>>
->>>>>> That works fine, but then I can't fetch. git-fetch gives the error
->>>>>> "fatal: 'origin': unable to chdir or not a git archive"
->>>>>> "fatal: The remote end hung up unexpectedly"
->>>>>>
->>>>>> P.
->>>>> Are you trying to clone a bare repository?
->>>>> Or is your repo maybe at /<full-path>/<name> with a .git subdir?
->>>> Yes, a bare repository.
->>> Then, maybe the full list of command lines (including cd and git-fetch)
->>> would be helpful in order to track this down.
->> Ok, sorry, thought it was probable something really obvious. Here's the
->> sequence (using git version 1.5.4).
->>
->> $ git-clone /big/git/paul.git/ epage
->> Initialized empty Git repository in /home/paul/epage/.git/
->> 719749 bolcks
-> 
-> Something tells me that this is not a copy/paste ;-)
+On 5/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hmpf.  I hoped to get more definitive information here.  Especially given
+>  that fgetc() is nothing more than a glorified fread() into a buffer, and
+>  then access the buffer.
+>
+>  Well, at least you kind of pointed me to the _unlocked() function family.
 
-The "big" bit you mean? :-) It just happened to be the name
-chosen for the mount of a large disc when added to the
-server.
+Point taken.
 
->> $ cd epage
->> $ git-fetch
->> fatal: 'origin': unable to chdir or not a git archive
->> fatal: The remote end hung up unexpectedly
-> 
-> Is there a "[remote "origin"]" section in .git/config?  What Git version 
-> is this, anyway?
+/tmp $ for d in test1 test2 test3 test3u; do echo -n "$d: ";
+/usr/bin/time ./$d </dev/zero; done
+test1: 0.09user 0.05system 0:00.14elapsed 94%CPU
+test2: 2.50user 0.05system 0:02.54elapsed 100%CPU
+test3: 2.48user 0.06system 0:02.53elapsed 100%CPU
+test3u: 1.05user 0.05system 0:01.10elapsed 99%CPU
 
-No, not in /home/paul/epage/.git/config. There's just a [core] section. 
-I guess that's the problem. I thought git-clone set that up automatically.
+fread is about 18x faster than fgetc().  getc() is the same speed as
+fgetc().  getc_unlocked() is definitely faster than getc, but still at
+least 7x slower than fread().
 
-It's v1.5.4
+And if you think *that* sucks, you should try "c << cin" in C++ :)
 
-P.
+Source code below.
+
+Have fun,
+
+Avery
+
+
+=== test1.c ===
+#include <stdio.h>
+
+int main()
+{
+    char buf[1024];
+    int i;
+    for (i = 0; i < 102400; i++)
+        fread(buf, 1, sizeof(buf), stdin);
+}
+
+=== test2.c ===
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    for (i = 0; i < 1024*102400; i++)
+        fgetc(stdin);
+}
+
+=== test3.c ===
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    for (i = 0; i < 1024*102400; i++)
+        getc(stdin);
+}
+
+=== test3u.c ===
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    for (i = 0; i < 1024*102400; i++)
+        getc_unlocked(stdin);
+}
