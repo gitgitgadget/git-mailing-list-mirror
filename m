@@ -1,72 +1,73 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: git-svn, merging et al.
-Date: Fri, 16 May 2008 16:50:07 +0100
-Message-ID: <320075ff0805160850r473582d9qc33f71ba7f56dd51@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 16 17:51:05 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
+Date: Fri, 16 May 2008 13:12:39 -0400
+Message-ID: <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
+References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>  <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com> <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com> <alpine.DEB.1.00.0805161125320.30431@racer>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 16 19:13:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx2D3-0001vh-1f
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 17:51:05 +0200
+	id 1Jx3V9-0004bY-K9
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756951AbYEPPuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 11:50:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756332AbYEPPuL
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 11:50:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:30093 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756777AbYEPPuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 11:50:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so750234fgg.17
-        for <git@vger.kernel.org>; Fri, 16 May 2008 08:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=GQiBPPMEpD2Cw3XN+siUyLXIRwQDTr7MnBuMYI5KJjo=;
-        b=meRPN3NmwHcw3XSao98hKkXZzGnp0doWUqYaPUIQc37FgwfznE8wtXQkWlp1ZQVXtYqnQzQ6Vuxbzv91Uy/TnNcfb7A/qEhPio5x0yjeN2m6ajZLB/WiC5jEQK83ukqFMWDVYxABGWMSSRpHMyRFeIWETD9uf5IpJicf2GMDyZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=L3J5+jsias0afaKJvGOdwtt2xq6FIwYF/y2zLGBsWu7NqAzu/XpW+x/8Vt3bcactq7Qh9qIWVVD33NlE5FcKVEreTVBCWOsXTvn9OAgJGuhFyJOgF8a11Rk/cnuthhrjgRR1hYAjhqbYX397BY8UJ0t5xvUaJ/Jgv+1o6g3bbtY=
-Received: by 10.82.182.18 with SMTP id e18mr529471buf.50.1210953007309;
-        Fri, 16 May 2008 08:50:07 -0700 (PDT)
-Received: by 10.82.168.20 with HTTP; Fri, 16 May 2008 08:50:07 -0700 (PDT)
-Content-Disposition: inline
+	id S1755519AbYEPRMo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2008 13:12:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755205AbYEPRMo
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:12:44 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:46278 "EHLO
+	randymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754996AbYEPRMn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 13:12:43 -0400
+Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id AACAEEF3C9;
+	Fri, 16 May 2008 10:12:41 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805161125320.30431@racer>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82306>
 
-Ok - it's Friday and I've got to interact with svn again..
+On May 16, 2008, at 6:25 AM, Johannes Schindelin wrote:
 
-I'm using git-svn, and I've not followed the guidance. Development has
-gone on in git branches and merges - but now I need to commit the
-changes back into svn, and dcommit is, understandably, not very happy.
+> On Thu, 15 May 2008, Andr=E9 Goddard Rosa wrote:
+>
+>>>> This patch will make git a little more human friendly, reporting =20
+>>>> "file.txt: has local changes".
+>>>
+>>> Documentation/git-checkout.txt should also change in this case,
+>>> otherwise users will see different output to that described and
+>>> possibly get confused if following along with the examples.
+>>>
+>>
+>> I like the idea too.
+>
+> No comment on the concern that it might break people's scripts?  None=
+?
 
-I'm intending to instead do something like a
-  git format-patch svn-branch..git-branch
-  git checkout svn-branch
-... apply all the patches ...
-  git commit
-  git svn dcommit
-  # back to the git work
-  git checkout git-branch
-  # this shouldn't have to do merging - but it will have the parents
-to make it clear where the last merge happened from ?
-  git merge svn-branch
 
+How about an ugly hack? Look to see if stdout is a tty, if so spit out =
+=20
+the more human-readable version, otherwise spit out the old version >:-=
+)
 
-I'm happy that I'm bludgeoning changes in one big blob into SVN, as I
-can reasonably say 'if you want the real details, go look at gitweb)
+-Kevin
 
-I've tried doing this with
- git checkout svn-branch
- git merge --squash git-branch
-
-But I don't get the result I'm expecting - what have I missed?
+--=20
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
