@@ -1,48 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Replace in-place sed in t7502-commit
-Date: Fri, 16 May 2008 05:56:07 -0400
-Message-ID: <20080516095606.GA25045@sigill.intra.peff.net>
-References: <7vwslwgdyi.fsf@gitster.siamese.dyndns.org> <1210897303-80828-1-git-send-email-git-dev@marzelpan.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Why do git submodules require manual checkouts and commits?
+Date: Fri, 16 May 2008 11:17:14 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805161055540.30431@racer>
+References: <2729632a0805152116o3c998324xb401674207dd2e1e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org, sbejar@gmail.com
-To: Marcel Koeppen <git-dev@marzelpan.de>
-X-From: git-owner@vger.kernel.org Fri May 16 11:57:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Fri May 16 12:18:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JwwgP-0001XW-BN
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 11:57:01 +0200
+	id 1Jwx0l-0008OW-O0
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 12:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbYEPJ4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 05:56:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbYEPJ4J
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 05:56:09 -0400
-Received: from peff.net ([208.65.91.99]:4448 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003AbYEPJ4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 05:56:08 -0400
-Received: (qmail 13090 invoked by uid 111); 16 May 2008 09:56:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 16 May 2008 05:56:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 May 2008 05:56:07 -0400
-Content-Disposition: inline
-In-Reply-To: <1210897303-80828-1-git-send-email-git-dev@marzelpan.de>
+	id S1752457AbYEPKRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 06:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYEPKRN
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 06:17:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52553 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752407AbYEPKRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 06:17:12 -0400
+Received: (qmail invoked by alias); 16 May 2008 10:17:09 -0000
+Received: from R4f5c.r.pppool.de (EHLO racer.local) [89.54.79.92]
+  by mail.gmx.net (mp041) with SMTP; 16 May 2008 12:17:09 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18IesQeCJkI9s6hC50xMvCziswW+tbVhlFf90nhTR
+	DZ+3Ngdt1bhaZg
+X-X-Sender: gene099@racer
+In-Reply-To: <2729632a0805152116o3c998324xb401674207dd2e1e@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82263>
 
-On Fri, May 16, 2008 at 02:21:43AM +0200, Marcel Koeppen wrote:
+Hi,
 
-> The in-place mode of sed used in t7502-commit is a non-POSIX extension.
-> That call of sed is replaced by a more portable version using a
-> temporary file.
+On Thu, 15 May 2008, skillzero@gmail.com wrote:
 
-Thanks, this fixes a similar issue on FreeBSD (which is probably the
-same sed).
+> Why do git submodules require manually committing the submodule itself
+> to each super repository after something in the submodule repository
+> changes?
 
--Peff
+Submodules are special.
+
+You cannot recreate the exact state from a commit in the superproject, for 
+one, and often not even from the commit itself, since the submodule can 
+contain more than just the tracked files.
+
+Also, no submodule _has_ to be checked out.  If you are working inside a 
+superproject, chances are that you are uninterested in most of the 
+submodules.
+
+So no, there is nothing to change here, please move along.
+
+Ciao,
+Dscho
