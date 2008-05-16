@@ -1,57 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Paul Gardiner <paul@laser-point.co.uk>
 Subject: Re: What am I doing wrong?
-Date: Fri, 16 May 2008 13:23:42 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805161323240.30431@racer>
-References: <482D6F41.2060809@laser-point.co.uk>
+Date: Fri, 16 May 2008 13:34:07 +0100
+Message-ID: <482D7F3F.4030209@laser-point.co.uk>
+References: <482D6F41.2060809@laser-point.co.uk> <alpine.DEB.1.00.0805161323240.30431@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, lists@glidos.net
-To: Paul Gardiner <paul@laser-point.co.uk>
-X-From: git-owner@vger.kernel.org Fri May 16 14:24:40 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 16 14:36:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwyz7-000427-5g
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 14:24:29 +0200
+	id 1JwzAs-0000dT-4A
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 14:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754929AbYEPMXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 08:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754877AbYEPMXi
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 08:23:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754486AbYEPMXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 08:23:38 -0400
-Received: (qmail invoked by alias); 16 May 2008 12:23:36 -0000
-Received: from R4f5c.r.pppool.de (EHLO racer.local) [89.54.79.92]
-  by mail.gmx.net (mp029) with SMTP; 16 May 2008 14:23:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194kDghR0F4BKq2ZAcJLKOG+J+PO7VIh9Z8/gBQc1
-	Nv3ISs4RtiU4Yc
-X-X-Sender: gene099@racer
-In-Reply-To: <482D6F41.2060809@laser-point.co.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753895AbYEPMfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 08:35:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbYEPMfp
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 08:35:45 -0400
+Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:20643
+	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753582AbYEPMfo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 08:35:44 -0400
+X-Trace: 116964084/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$ACCEPTED/pipex-customers/81.86.57.226
+X-SBRS: None
+X-RemoteIP: 81.86.57.226
+X-IP-MAIL-FROM: paul@laser-point.co.uk
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlABAHMaLUhRVjni/2dsb2JhbAAIrh4
+X-IronPort-AV: E=Sophos;i="4.27,497,1204502400"; 
+   d="scan'208";a="116964084"
+X-IP-Direction: IN
+Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 16 May 2008 13:34:08 +0100
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <alpine.DEB.1.00.0805161323240.30431@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82280>
 
-Hi,
-
-On Fri, 16 May 2008, Paul Gardiner wrote:
-
-> I create the initial repository with
+Johannes Schindelin wrote:
+> Hi,
 > 
->     git-clone /<full-path>/<name>.git/ <folder>
+> On Fri, 16 May 2008, Paul Gardiner wrote:
 > 
-> That works fine, but then I can't fetch. git-fetch gives the error
-> "fatal: 'origin': unable to chdir or not a git archive"
-> "fatal: The remote end hung up unexpectedly"
+>> I create the initial repository with
+>>
+>>     git-clone /<full-path>/<name>.git/ <folder>
+>>
+>> That works fine, but then I can't fetch. git-fetch gives the error
+>> "fatal: 'origin': unable to chdir or not a git archive"
+>> "fatal: The remote end hung up unexpectedly"
+> 
+> Did you chdir into <folder> before trying to fetch?
 
-Did you chdir into <folder> before trying to fetch?
+Yes, it wasn't that... well to be fair I forgot to chdir
+the first time, but it warned me about that.
 
-Ciao,
-Dscho
+P.
