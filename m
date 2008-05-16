@@ -1,71 +1,65 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: git-svn goes into infinite loop rebuilding rev_map
-Date: Fri, 16 May 2008 13:15:56 -0400
-Message-ID: <4aca3dc20805161015l28d1e4a2u318c1bc23bb5b925@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: What am I doing wrong?
+Date: Fri, 16 May 2008 13:17:02 -0400
+Message-ID: <A1C7509B-20DC-430F-9DB4-A55FC796429E@sb.org>
+References: <482D6F41.2060809@laser-point.co.uk> <g0js1p$l22$1@ger.gmane.org> <482D7EE1.9020503@laser-point.co.uk> <g0jvig$1dn$1@ger.gmane.org> <482D8BEB.6070706@laser-point.co.uk> <alpine.DEB.1.00.0805161439100.30431@racer> <482DA0AE.1030301@laser-point.co.uk>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 16 19:16:51 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
+	git@vger.kernel.org, lists@glidos.net
+To: Paul Gardiner <paul@laser-point.co.uk>
+X-From: git-owner@vger.kernel.org Fri May 16 19:18:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx3Y2-0005e1-7M
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:16:50 +0200
+	id 1Jx3ZC-00066N-7F
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873AbYEPRP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 13:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYEPRP7
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:15:59 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:19030 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbYEPRP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 13:15:58 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so754950wxd.4
-        for <git@vger.kernel.org>; Fri, 16 May 2008 10:15:57 -0700 (PDT)
-Received: by 10.90.91.9 with SMTP id o9mr5274881agb.95.1210958156964;
-        Fri, 16 May 2008 10:15:56 -0700 (PDT)
-Received: by 10.90.49.12 with HTTP; Fri, 16 May 2008 10:15:56 -0700 (PDT)
-Content-Disposition: inline
+	id S1758279AbYEPRRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 13:17:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758165AbYEPRRG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:17:06 -0400
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:43154 "EHLO
+	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757836AbYEPRRF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 13:17:05 -0400
+Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 780A7EEF9A;
+	Fri, 16 May 2008 10:17:03 -0700 (PDT)
+In-Reply-To: <482DA0AE.1030301@laser-point.co.uk>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82308>
 
-Starting last night, for no particularly obvious reason, git-svn fetch
-(or git-svn rebase or any command that does naything interesting) on
-gcc.gnu.org's repo causes git-svn to do the following:
+On May 16, 2008, at 10:56 AM, Paul Gardiner wrote:
 
--bash-3.00$ git-svn fetch
-Rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4 ...
-Done rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4
-Rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4 ...
-<repeat forever>
+>>> Ok, sorry, thought it was probable something really obvious.  
+>>> Here's the
+>>> sequence (using git version 1.5.4).
+>>>
+>>> $ git-clone /big/git/paul.git/ epage
+>>> Initialized empty Git repository in /home/paul/epage/.git/
+>>> 719749 bolcks
+>> Something tells me that this is not a copy/paste ;-)
+>
+> The "big" bit you mean? :-) It just happened to be the name
+> chosen for the mount of a large disc when added to the
+> server.
 
+No, I think it's the "bolcks" :P
 
-I checked the obvious things. There is no permissions problem, strace
-doesn't show the writes failing, etc.
-git-fsck shows nothing as being obviously wrong.
+-Kevin Ballard
 
-
-This just suddenly started happening with no obvious reason (we fire
-off git-svn fetch and rebase on the repo when cvs commits happen).
-
-git-log shows the last processed rev was:
-
-commit e66b310fb9a3ddc7ed5143db3c468711c8a36d08
-Author: uros <uros@138bc75d-0d04-0410-961f-82ee72b054a4>
-Date:   Thu May 15 14:38:23 2008 +0000
-
-        * config/i386/sse.md (*vec_concatv2sf_sse4_1): Add "m" constraint
-        to alternative 4 of operand 2.
-
-
-    git-svn-id: svn+ssh://gcc.gnu.org/svn/gcc/trunk@135364
-138bc75d-0d04-0410-961f-82ee72b054a4
-
-
-I'm happy to provide anything i can to get the problem fixed, but not
-being a git expert, i have no idea what is up here.
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
