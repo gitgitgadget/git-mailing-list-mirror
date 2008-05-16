@@ -1,69 +1,76 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Makefile: update the default build options for AIX
-Date: Fri, 16 May 2008 11:19:06 +0100
-Message-ID: <e2b179460805160319n420c309eg9b9bbb1e3adb299@mail.gmail.com>
-References: <1210149355875-git-send-email-mike@abacus.co.uk>
-	 <4821992F.4060201@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [SQUASHED PATCH] Add support for GIT_CEILING_DIRECTORIES
+Date: Fri, 16 May 2008 11:20:09 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805161118160.30431@racer>
+References: <482C85C8.90804@facebook.com> <alpine.DEB.1.00.0805151958180.30431@racer> <alpine.DEB.1.00.0805152055280.30431@racer> <482CA693.3060602@facebook.com> <alpine.DEB.1.00.0805152327440.30431@racer> <482CBCF2.6030202@facebook.com>
+ <alpine.DEB.1.00.0805160012310.30431@racer> <482D2F9D.4080809@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri May 16 12:20:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, David Reiss <dreiss@facebook.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 16 12:21:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwx2f-0000XL-5n
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 12:20:01 +0200
+	id 1Jwx3Y-0000mH-3E
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 12:20:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753253AbYEPKTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 06:19:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753238AbYEPKTJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 06:19:09 -0400
-Received: from rv-out-0506.google.com ([209.85.198.228]:31370 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbYEPKTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 06:19:08 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so106791rvb.1
-        for <git@vger.kernel.org>; Fri, 16 May 2008 03:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=m4NVI5K95A+YluWLMcnmremc5mQhG4TM6q67vzeaHeA=;
-        b=ZMjRgkNYXPIF2hNh2avT3zyMyAkDcdlWsIoEziqQJ+swYxcwrO36bpIxTq5tfL6EYJLKbIEvuvCrESqOfkHbGsJA8te2dCHACX+cXgs3wrPlDrWRI9JyBjSm9wZeOzsIRMu9cLt7uuNiwRW9qAv5+9Vl3QTIkU/RHwULO0t8hPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SAe0/cRnbpaRUjMxWe7tPK73ez3XPzvktJ11HSqr3c/UuS7crUg9Ltyyj/pg5avI7u038D1kMmKjZzRGpd6WVOpT62OgeJ+iMoIn/HftrNoWtlvOl8IkQMUnal0C2Rz1u84/d5mXla7vj/6Fawpo+jOEq64sEaJWvlfaLujhVfE=
-Received: by 10.140.140.3 with SMTP id n3mr1673009rvd.299.1210933146342;
-        Fri, 16 May 2008 03:19:06 -0700 (PDT)
-Received: by 10.141.19.11 with HTTP; Fri, 16 May 2008 03:19:06 -0700 (PDT)
-In-Reply-To: <4821992F.4060201@viscovery.net>
-Content-Disposition: inline
+	id S1755880AbYEPKUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 06:20:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755063AbYEPKUH
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 06:20:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46074 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754553AbYEPKUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 06:20:06 -0400
+Received: (qmail invoked by alias); 16 May 2008 10:20:04 -0000
+Received: from R4f5c.r.pppool.de (EHLO racer.local) [89.54.79.92]
+  by mail.gmx.net (mp016) with SMTP; 16 May 2008 12:20:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/8F8kHw5j8yy/ugXhEAoFpzvAfr1u7KHhu3MPnvE
+	xvLybnpCsi1tdu
+X-X-Sender: gene099@racer
+In-Reply-To: <482D2F9D.4080809@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82265>
 
-2008/5/7 Johannes Sixt <j.sixt@viscovery.net>:
-> Mike Ralphson schrieb:
->> NO_MKDTEMP is required to build, FREAD_READS_DIRECTORIES and the definition
->> of _LARGE_FILES fix test suite failures and INTERNAL_QSORT is required for
->> adequate performance.
->
-> I'm trying this patch on AIX 4.3.3 (sigh!) with gcc3...
+Hi,
 
-Now the interaction between FREAD_READS_DIRECTORIES and _LARGE_FILES
-has been sorted out, and the
-wt-status.h warning fix is also in, did you manage to finish testing
-this? The INTERNAL_QSORT gave me a 2 orders of magnitude speed up on
-git status / commit etc.
+On Fri, 16 May 2008, Johannes Sixt wrote:
 
-I should have mentioned that I build with SHELL_PATH = /bin/bash and
-ensure that /usr/linux/bin (or /opt/freeware/bin) from the AIX toolbox
-is prepended to the PATH to run the test-suite. I didn't want to fold
-these into the patch as the paths are somewhat environment specific.
+> Johannes Schindelin schrieb:
+> > +'GIT_CEILING_DIRECTORIES'::
+> > +	If set (to a colon delimited list of absolute directories), Git
+> > +	will refuse to look for the .git/ directory further when hitting
+> > +	one of those directories (otherwise it would traverse the parent
+> > +	directories until hitting the root directory).
+> 
+> Hmm.
+> 
+> Looking at the current implementation, this should be written as:
+> 
+> 	If set to a colon delimited list of absolute directories,
+> 	and the current directory is in or below one of them, then
+> 	these are the top-most directories in which Git will look for
+> 	a .git/ directory (otherwise it would traverse the parent
+> 	directories until hitting the root directory).
 
-Mike
+According to the test case
+
+        GIT_CEILING_DIRECTORIES="$CWD/X:$CWD/subdir" &&
+        export GIT_CEILING_DIRECTORIES &&
+        (cd subdir && test_must_fail git rev-parse --git-dir)
+
+this is not the case.  If you have something like /bla/subdir and you are 
+in /bla/subdir, it will not look for .git/.
+
+Ciao,
+Dscho "who leaves it as an exercise to the reader to see why the code 
+does what it does"
