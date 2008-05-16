@@ -1,86 +1,86 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: Re: [PATCH] Export GIT_DIR after setting it
-Date: Fri, 16 May 2008 22:50:25 +0100
-Message-ID: <20080516215025.GA8250@lapse.madduck.net>
-References: <1210807401-11201-1-git-send-email-madduck@madduck.net> <7vod78i9r7.fsf@gitster.siamese.dyndns.org> <20080515101523.GA31719@lapse.madduck.net> <7vlk2bh45u.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WIyZ46R2i8wDzkSu"
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 17 00:14:13 2008
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: [BUG] make test fails on osx (t7502-commit.sh)
+Date: Fri, 16 May 2008 19:59:11 -0400
+Message-ID: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 02:00:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx8Be-0006fK-Lv
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 00:14:03 +0200
+	id 1Jx9qJ-0002tw-Q4
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 02:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754213AbYEPWNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 18:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbYEPWNK
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 18:13:10 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:49159 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbYEPWNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 18:13:09 -0400
-X-Greylist: delayed 1317 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 May 2008 18:13:09 EDT
-Received: from lapse.madduck.net (ruou.ifi.unizh.ch [130.60.75.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTP id D7D6340A2FA;
-	Fri, 16 May 2008 23:50:58 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id E55974FD5B; Fri, 16 May 2008 22:50:25 +0100 (IST)
-Content-Disposition: inline
-In-Reply-To: <7vlk2bh45u.fsf@gitster.siamese.dyndns.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Virus-Scanned: ClamAV 0.92.1/7138/Fri May 16 22:02:17 2008 on seamus.madduck.net
-X-Virus-Status: Clean
+	id S1752514AbYEPX7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 19:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752818AbYEPX7R
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 19:59:17 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:30208 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752218AbYEPX7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 19:59:16 -0400
+Received: by an-out-0708.google.com with SMTP id d40so257742and.103
+        for <git@vger.kernel.org>; Fri, 16 May 2008 16:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=JOqe9rDqLakOaP5MbdqQUaiu8ZDY4+TsKegvZV5itw8=;
+        b=NKSFagBlCIIwbmYesEkcfltoOCM6N0qQoS+3ffVa6AfjMwepgR2n6Upsj7LGBczHFPjap56EaPfvrv6eC9Qm+kJB4l3q38p2k7XhOTVkwniBDT7R+MvGNUCWbxsaxnt9CHjLYQVHUMDsYCsLVc1MpQkFV55p/ZyM3w/rnFSiKVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=HUv9BL1DTcAHq3bxP+Oj63QtislQO+N2dJ3ZeIzz2mSN/nqdee1aMLqgLVIEpoSRiyg5w7ygBz4akYAtwPgEitHJJUE0phWrT9bz6jobpTm1SiY0lk3DNmp1z7xiLPCyZ/tVvsdPFAXwuO0diEaAFXnPcShAwsnpCNgo9ag2vgs=
+Received: by 10.100.93.19 with SMTP id q19mr4832070anb.139.1210982354530;
+        Fri, 16 May 2008 16:59:14 -0700 (PDT)
+Received: from ?192.168.1.101? ( [65.96.170.12])
+        by mx.google.com with ESMTPS id c37sm9622335ana.11.2008.05.16.16.59.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 May 2008 16:59:13 -0700 (PDT)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82319>
+
+just checked out the main branch  
+1fbb58b4153e90eda08c2b022ee32d90729582e6
+The offending message from make test follows.
+
+-Kate
+P.S. My apologies if this is a dupe. I didn't see it when i searched  
+the archives.
 
 
---WIyZ46R2i8wDzkSu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-also sprach Junio C Hamano <gitster@pobox.com> [2008.05.15.1823 +0100]:
-> I have a suspicion that "the whole different bug" is what bit you
-> -- perhaps some places need to also set and export GIT_WORK_TREE
-> as well when the do GIT_DIR.
-
-Probably also true, worktree support is still riddled with a lot of
-small little bugs... but I don't see how this would actually solve
-the problem that caused me to write this patch...
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-whatever you do will be insignificant,
-but it is very important that you do it.
-                                                     -- mahatma gandhi
-=20
-spamtraps: madduck.bogus@madduck.net
-
---WIyZ46R2i8wDzkSu
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFILgGhIgvIgzMMSnURApIQAKCwhsv0jlUeyMeB1OI9BKIB1J8AmgCePNvz
-J+k8/wADtCl7P/wAbgwgNfQ=
-=2Typ
------END PGP SIGNATURE-----
-
---WIyZ46R2i8wDzkSu--
+*** t7502-commit.sh ***
+*   ok 1: the basics
+*   ok 2: partial
+*   ok 3: partial modification in a subdirecotry
+*   ok 4: partial removal
+*   ok 5: sign off
+*   ok 6: multiple -m
+*   ok 7: verbose
+*   ok 8: cleanup commit messages (verbatim,-t)
+*   ok 9: cleanup commit messages (verbatim,-F)
+*   ok 10: cleanup commit messages (verbatim,-m)
+*   ok 11: cleanup commit messages (whitespace,-F)
+*   ok 12: cleanup commit messages (strip,-F)
+*   ok 13: cleanup commit messages (strip,-F,-e)
+*   ok 14: author different from committer
+sed: 1: "expect": invalid command code e
+* FAIL 15: committer is automatic
+	
+	
+		echo >>negative &&
+		git commit -e -m "sample"
+		head -n 8 .git/COMMIT_EDITMSG |	\
+		sed "s/^# Committer: .*/# Committer:/" >actual &&
+		test_cmp expect actual
+	
+*   ok 16: do not fire editor in the presence of conflicts
+* failed 1 among 16 test(s)
+make[1]: *** [t7502-commit.sh] Error 1
+make: *** [test] Error 2
