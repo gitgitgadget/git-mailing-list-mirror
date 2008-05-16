@@ -1,89 +1,64 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: git-svn, merging et al.
-Date: Fri, 16 May 2008 13:40:28 -0400
-Message-ID: <05A51125-339A-45A2-B2CF-8035F2FAE741@sb.org>
-References: <320075ff0805160850r473582d9qc33f71ba7f56dd51@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 19:41:41 2008
+From: "Alf Mikula" <amikula@gmail.com>
+Subject: Re: Migrating a git repository to subversion
+Date: Fri, 16 May 2008 10:45:35 -0700
+Message-ID: <42dc968d0805161045g1b128360ha45e8bdf9ced6fe6@mail.gmail.com>
+References: <42dc968d0805151608q2ed89fc8madcd8d341a4ed1df@mail.gmail.com>
+	 <alpine.LFD.1.10.0805151952260.2941@woody.linux-foundation.org>
+	 <46a038f90805152053n43add2cbj8383c475772c3681@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 19:46:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx3vl-0007Ns-6n
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:41:21 +0200
+	id 1Jx40y-0001Pb-PP
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757977AbYEPRkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 13:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757979AbYEPRkc
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:40:32 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:48557 "EHLO
-	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757977AbYEPRkb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 13:40:31 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id 1348C109EB6;
-	Fri, 16 May 2008 10:40:29 -0700 (PDT)
-In-Reply-To: <320075ff0805160850r473582d9qc33f71ba7f56dd51@mail.gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1755426AbYEPRpj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2008 13:45:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755356AbYEPRpj
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:45:39 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:39509 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754928AbYEPRph convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 13:45:37 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so840548fkq.5
+        for <git@vger.kernel.org>; Fri, 16 May 2008 10:45:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=NPomxUrmZwIqL316u3j+dGwr9AN2VfAD3TkgE6XIpnY=;
+        b=ctqX450G+TYtN+v/t4KSpMaUrgv+gGkqN+j9hv3J8CiPDLy84e0+mj0cW/CUn9hEYYoMwGr1iYPqjMRJkNf+0xbw77/hBFEvEkRkzdWRjHds29/6mrIBiai/bEATWullj36ZwMizAZH5YanlRc5itRVbQ7rjyj6Mjjzl3o635m0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jUqjEsgsDBnk5D9AEPn50d6fNHnrJHXEUNPstStYpJc/fk4/J0qXd/vJv75SSwuvJYaCrCh4gcGoIWlpGQwGS8A+RJQIVdD8StdR8VGHEpI8HAU37xnvP/Ut4G2eHDqrxLmW0fS8LbQyzJAaHELh3qu70wMls+Q2DdmyGt6Tw+A=
+Received: by 10.125.115.18 with SMTP id s18mr2831781mkm.139.1210959935851;
+        Fri, 16 May 2008 10:45:35 -0700 (PDT)
+Received: by 10.86.81.19 with HTTP; Fri, 16 May 2008 10:45:35 -0700 (PDT)
+In-Reply-To: <46a038f90805152053n43add2cbj8383c475772c3681@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82310>
 
-On May 16, 2008, at 11:50 AM, Nigel Magnay wrote:
+> The git svn rebase trick described earlier does almost exactly what A=
+lf wants.
 
-> Ok - it's Friday and I've got to interact with svn again..
->
-> I'm using git-svn, and I've not followed the guidance. Development has
-> gone on in git branches and merges - but now I need to commit the
-> changes back into svn, and dcommit is, understandably, not very happy.
->
-> I'm intending to instead do something like a
->  git format-patch svn-branch..git-branch
->  git checkout svn-branch
-> ... apply all the patches ...
->  git commit
->  git svn dcommit
->  # back to the git work
->  git checkout git-branch
->  # this shouldn't have to do merging - but it will have the parents
-> to make it clear where the last merge happened from ?
->  git merge svn-branch
->
->
-> I'm happy that I'm bludgeoning changes in one big blob into SVN, as I
-> can reasonably say 'if you want the real details, go look at gitweb)
->
-> I've tried doing this with
-> git checkout svn-branch
-> git merge --squash git-branch
->
-> But I don't get the result I'm expecting - what have I missed?
+You're absolutely right.  With the rebase, I have my history (which so
+far is linear) in the SVN repository, and I can continue using git
+locally and pushing my commits back to Subversion.  I also want to try
+Bj=F6rn's suggestions about merging SVN branches.  While Subversion
+fixed the most annoying problems in CVS, I think it got a lot of
+branching, merging, and tagging wrong.  Maybe using git to handle
+merging will make a nice band-aid.
 
-That merge command will produce a single commit, which isn't what you  
-want. format-patch + am should work to linearize history, but you  
-could also use rebase.
+Anyway, thanks to all for the suggestions!
 
-I recommend trying something like
-
-   git checkout -b test svn-branch && git format-patch svn-branch..git- 
-branch | git am
-
-Then you can examine your test branch to make sure it's linear, make  
-sure it compiles and looks good, then if it's good merge that into svn- 
-branch (which will be a fast-forward).
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+-Alf
