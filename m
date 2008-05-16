@@ -1,105 +1,91 @@
-From: Paul Gardiner <paul@laser-point.co.uk>
-Subject: Re: What am I doing wrong?
-Date: Fri, 16 May 2008 22:16:42 +0100
-Message-ID: <482DF9BA.1080508@laser-point.co.uk>
-References: <482D6F41.2060809@laser-point.co.uk> <g0js1p$l22$1@ger.gmane.org> <482D7EE1.9020503@laser-point.co.uk> <g0jvig$1dn$1@ger.gmane.org> <482D8BEB.6070706@laser-point.co.uk> <alpine.DEB.1.00.0805161439100.30431@racer> <g0k6k7$t4k$1@ger.gmane.org>
+From: Nikolaus Schulz <microschulz@web.de>
+Subject: partial globbing in fetch refspecs broken in v1.5.5
+Date: Fri, 16 May 2008 23:28:34 +0200
+Message-ID: <20080516212833.GA5366@penelope.zusammrottung.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, lists@glidos.net
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Fri May 16 23:17:38 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 16 23:29:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx7J4-0005m8-52
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 23:17:38 +0200
+	id 1Jx7UY-00014l-5Z
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 23:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755260AbYEPVQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 17:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754965AbYEPVQr
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 17:16:47 -0400
-Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:30895
-	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754143AbYEPVQq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 17:16:46 -0400
-X-Trace: 117194259/mk-outboundfilter-1.mail.uk.tiscali.com/PIPEX/$ACCEPTED/pipex-customers/81.86.57.226
-X-SBRS: None
-X-RemoteIP: 81.86.57.226
-X-IP-MAIL-FROM: paul@laser-point.co.uk
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApQAAKuWLUhRVjni/2dsb2JhbAAIrgY
-X-IronPort-AV: E=Sophos;i="4.27,499,1204502400"; 
-   d="scan'208";a="117194259"
-X-IP-Direction: IN
-Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 16 May 2008 22:16:45 +0100
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <g0k6k7$t4k$1@ger.gmane.org>
+	id S1755348AbYEPV2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 17:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754947AbYEPV2j
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 17:28:39 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:44519 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752750AbYEPV2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 17:28:39 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id AD77DDB039D8
+	for <git@vger.kernel.org>; Fri, 16 May 2008 23:28:37 +0200 (CEST)
+Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1Jx7Th-0007Or-00
+	for git@vger.kernel.org; Fri, 16 May 2008 23:28:37 +0200
+Received: from penelope.zusammrottung.local ([192.168.178.202])
+	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1Jx7Tf-0001yF-SW
+	for git@vger.kernel.org; Fri, 16 May 2008 23:28:35 +0200
+Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1Jx7Te-0001Of-KR
+	for git@vger.kernel.org; Fri, 16 May 2008 23:28:34 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Sender: microschulz@web.de
+X-Provags-ID: V01U2FsdGVkX18SX5CD4foS/aGDz+mk/lkzo71Ugnt4KqSr+v/j
+	n/yaNTNntHKz9JTDbER6lLGPSJNhcsvMlgvYWUx34bfOCYc3tf
+	+0kg+03ho=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82317>
 
-Michael J Gruber wrote:
-> Johannes Schindelin venit, vidit, dixit 16.05.2008 15:40:
->> Hi,
->>
->> On Fri, 16 May 2008, Paul Gardiner wrote:
->>
->>> Michael J Gruber wrote:
->>>> Paul Gardiner venit, vidit, dixit 16.05.2008 14:32:
->>>>> Michael J Gruber wrote:
->>>>>> Paul Gardiner venit, vidit, dixit 16.05.2008 13:25:
->>>>>>> I create the initial repository with
->>>>>>>
->>>>>>>      git-clone /<full-path>/<name>.git/ <folder>
->>>>>>>
->>>>>>> That works fine, but then I can't fetch. git-fetch gives the error
->>>>>>> "fatal: 'origin': unable to chdir or not a git archive"
->>>>>>> "fatal: The remote end hung up unexpectedly"
->>>>>>>
->>>>>>> P.
->>>>>> Are you trying to clone a bare repository?
->>>>>> Or is your repo maybe at /<full-path>/<name> with a .git subdir?
->>>>> Yes, a bare repository.
->>>> Then, maybe the full list of command lines (including cd and git-fetch)
->>>> would be helpful in order to track this down.
->>> Ok, sorry, thought it was probable something really obvious. Here's the
->>> sequence (using git version 1.5.4).
->>>
->>> $ git-clone /big/git/paul.git/ epage
->>> Initialized empty Git repository in /home/paul/epage/.git/
->>> 719749 bolcks
->>
->> Something tells me that this is not a copy/paste ;-)
-> 
-> Let's just hope that's not units of boelkstoff ;)
-> 
->>> $ cd epage
->>> $ git-fetch
->>> fatal: 'origin': unable to chdir or not a git archive
->>> fatal: The remote end hung up unexpectedly
->>
->> Is there a "[remote "origin"]" section in .git/config?  What Git 
->> version is this, anyway?
-> 
-> 1.5.4
-> 
-> Could git trip over that trailing slash? git 1.5.5.1 certainly doesn't.
+Hi, 
 
-The documentation suggests having the trailing slash, and I think I
-tried without, but I'll try again just in case.
+the new refspec parser in v1.5.5 has also broken fetch uses like
 
-> BTW: The above shows something that confused me initially about cloning: 
-> git reports the creation of an empty repo, nothing else. But it does 
-> much more, of course, just without reporting.
+    git fetch <url> +refs/heads/<foo>*:refs/remotes/<bar>*. 
 
-Oh yeah, I realise the fetch is already done by the clone, and that
-git-fetch wouldn't bring anything new in right after the clone, but
-there are other pushers for that repo.
+Such a refspec works like a charm with git 1.5.4.  In case the usefulness of
+such a refspec isn't obvious, here's my use case.  I want to track several
+remotes, and in particular a selection of branches from one remote repository,
+which has the following branches[1]: 
 
-P.
+  HEAD
+  candidate
+  candidate+patches
+  debian-experimental
+  debian-sarge
+  debian-sid
+  maint
+  master
+  release
+  release+patches
+
+With git 1.5.4, I can add the following to .git/config
+
+[remote "debian"]
+        url = http://smarden.org/git/git.git
+        fetch = +refs/heads/debian-*:refs/remotes/debian/*
+
+...and it will work just like '%'-style pattern matching in Makefiles, e.g.
+the remote branch debian-sid becomes remotes/debian/sid.  I find that very
+natural; but git v1.5.5 rejects this refspec as invalid.  
+
+I am just a beginner with git, and I do not know if there is any problem with
+such a use of refspecs.  But if not, I would like to beg the maintainers to
+consider restoring this functionality.
+
+Nikolaus
