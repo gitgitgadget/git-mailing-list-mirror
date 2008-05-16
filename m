@@ -1,91 +1,86 @@
-From: Nikolaus Schulz <microschulz@web.de>
-Subject: partial globbing in fetch refspecs broken in v1.5.5
-Date: Fri, 16 May 2008 23:28:34 +0200
-Message-ID: <20080516212833.GA5366@penelope.zusammrottung.local>
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: Re: [PATCH] Export GIT_DIR after setting it
+Date: Fri, 16 May 2008 22:50:25 +0100
+Message-ID: <20080516215025.GA8250@lapse.madduck.net>
+References: <1210807401-11201-1-git-send-email-madduck@madduck.net> <7vod78i9r7.fsf@gitster.siamese.dyndns.org> <20080515101523.GA31719@lapse.madduck.net> <7vlk2bh45u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 23:29:30 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WIyZ46R2i8wDzkSu"
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 00:14:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx7UY-00014l-5Z
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 23:29:30 +0200
+	id 1Jx8Be-0006fK-Lv
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 00:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348AbYEPV2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 17:28:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754947AbYEPV2j
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 17:28:39 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:44519 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752750AbYEPV2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 17:28:39 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id AD77DDB039D8
-	for <git@vger.kernel.org>; Fri, 16 May 2008 23:28:37 +0200 (CEST)
-Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1Jx7Th-0007Or-00
-	for git@vger.kernel.org; Fri, 16 May 2008 23:28:37 +0200
-Received: from penelope.zusammrottung.local ([192.168.178.202])
-	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <nikolaus@penelope.zusammrottung.local>)
-	id 1Jx7Tf-0001yF-SW
-	for git@vger.kernel.org; Fri, 16 May 2008 23:28:35 +0200
-Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
-	(envelope-from <nikolaus@penelope.zusammrottung.local>)
-	id 1Jx7Te-0001Of-KR
-	for git@vger.kernel.org; Fri, 16 May 2008 23:28:34 +0200
-Mail-Followup-To: git@vger.kernel.org
+	id S1754213AbYEPWNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 18:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbYEPWNK
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 18:13:10 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:49159 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbYEPWNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 18:13:09 -0400
+X-Greylist: delayed 1317 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 May 2008 18:13:09 EDT
+Received: from lapse.madduck.net (ruou.ifi.unizh.ch [130.60.75.75])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTP id D7D6340A2FA;
+	Fri, 16 May 2008 23:50:58 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id E55974FD5B; Fri, 16 May 2008 22:50:25 +0100 (IST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Sender: microschulz@web.de
-X-Provags-ID: V01U2FsdGVkX18SX5CD4foS/aGDz+mk/lkzo71Ugnt4KqSr+v/j
-	n/yaNTNntHKz9JTDbER6lLGPSJNhcsvMlgvYWUx34bfOCYc3tf
-	+0kg+03ho=
+In-Reply-To: <7vlk2bh45u.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.24-1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Virus-Scanned: ClamAV 0.92.1/7138/Fri May 16 22:02:17 2008 on seamus.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82318>
 
-Hi, 
 
-the new refspec parser in v1.5.5 has also broken fetch uses like
+--WIyZ46R2i8wDzkSu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    git fetch <url> +refs/heads/<foo>*:refs/remotes/<bar>*. 
+also sprach Junio C Hamano <gitster@pobox.com> [2008.05.15.1823 +0100]:
+> I have a suspicion that "the whole different bug" is what bit you
+> -- perhaps some places need to also set and export GIT_WORK_TREE
+> as well when the do GIT_DIR.
 
-Such a refspec works like a charm with git 1.5.4.  In case the usefulness of
-such a refspec isn't obvious, here's my use case.  I want to track several
-remotes, and in particular a selection of branches from one remote repository,
-which has the following branches[1]: 
+Probably also true, worktree support is still riddled with a lot of
+small little bugs... but I don't see how this would actually solve
+the problem that caused me to write this patch...
 
-  HEAD
-  candidate
-  candidate+patches
-  debian-experimental
-  debian-sarge
-  debian-sid
-  maint
-  master
-  release
-  release+patches
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+whatever you do will be insignificant,
+but it is very important that you do it.
+                                                     -- mahatma gandhi
+=20
+spamtraps: madduck.bogus@madduck.net
 
-With git 1.5.4, I can add the following to .git/config
+--WIyZ46R2i8wDzkSu
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-[remote "debian"]
-        url = http://smarden.org/git/git.git
-        fetch = +refs/heads/debian-*:refs/remotes/debian/*
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-...and it will work just like '%'-style pattern matching in Makefiles, e.g.
-the remote branch debian-sid becomes remotes/debian/sid.  I find that very
-natural; but git v1.5.5 rejects this refspec as invalid.  
+iD8DBQFILgGhIgvIgzMMSnURApIQAKCwhsv0jlUeyMeB1OI9BKIB1J8AmgCePNvz
+J+k8/wADtCl7P/wAbgwgNfQ=
+=2Typ
+-----END PGP SIGNATURE-----
 
-I am just a beginner with git, and I do not know if there is any problem with
-such a use of refspecs.  But if not, I would like to beg the maintainers to
-consider restoring this functionality.
-
-Nikolaus
+--WIyZ46R2i8wDzkSu--
