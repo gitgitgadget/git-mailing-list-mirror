@@ -1,86 +1,110 @@
-From: "Rhodes, Kate" <masukomi@gmail.com>
-Subject: [BUG] make test fails on osx (t7502-commit.sh)
-Date: Fri, 16 May 2008 19:59:11 -0400
-Message-ID: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 17 02:00:09 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL
+ characters
+Date: Sat, 17 May 2008 00:59:15 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805170058160.30431@racer>
+References: <482BE5F7.2050108@thorn.ws>  <alpine.DEB.1.00.0805161139530.30431@racer>  <alpine.DEB.1.00.0805161148010.30431@racer>  <alpine.DEB.1.00.0805161403130.30431@racer>  <32541b130805160703r27a55b91xbad03eb1d107a176@mail.gmail.com> 
+ <alpine.DEB.1.00.0805161529390.30431@racer> <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tommy Thorn <tommy-git@thorn.ws>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 17 02:00:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx9qJ-0002tw-Q4
+	id 1Jx9qK-0002tw-E4
 	for gcvg-git-2@gmane.org; Sat, 17 May 2008 02:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752514AbYEPX7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752871AbYEPX7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 19:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbYEPX7T
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 19:59:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48819 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752587AbYEPX7R (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 16 May 2008 19:59:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752818AbYEPX7R
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 19:59:17 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:30208 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752218AbYEPX7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 19:59:16 -0400
-Received: by an-out-0708.google.com with SMTP id d40so257742and.103
-        for <git@vger.kernel.org>; Fri, 16 May 2008 16:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        bh=JOqe9rDqLakOaP5MbdqQUaiu8ZDY4+TsKegvZV5itw8=;
-        b=NKSFagBlCIIwbmYesEkcfltoOCM6N0qQoS+3ffVa6AfjMwepgR2n6Upsj7LGBczHFPjap56EaPfvrv6eC9Qm+kJB4l3q38p2k7XhOTVkwniBDT7R+MvGNUCWbxsaxnt9CHjLYQVHUMDsYCsLVc1MpQkFV55p/ZyM3w/rnFSiKVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        b=HUv9BL1DTcAHq3bxP+Oj63QtislQO+N2dJ3ZeIzz2mSN/nqdee1aMLqgLVIEpoSRiyg5w7ygBz4akYAtwPgEitHJJUE0phWrT9bz6jobpTm1SiY0lk3DNmp1z7xiLPCyZ/tVvsdPFAXwuO0diEaAFXnPcShAwsnpCNgo9ag2vgs=
-Received: by 10.100.93.19 with SMTP id q19mr4832070anb.139.1210982354530;
-        Fri, 16 May 2008 16:59:14 -0700 (PDT)
-Received: from ?192.168.1.101? ( [65.96.170.12])
-        by mx.google.com with ESMTPS id c37sm9622335ana.11.2008.05.16.16.59.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 16 May 2008 16:59:13 -0700 (PDT)
-X-Mailer: Apple Mail (2.915)
+Received: (qmail invoked by alias); 16 May 2008 23:59:13 -0000
+Received: from R2eb4.r.pppool.de (EHLO racer.local) [89.54.46.180]
+  by mail.gmx.net (mp050) with SMTP; 17 May 2008 01:59:13 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18LsLhfpCILmDcsFFOf+XeGMlbP2jwAbO/Rp6RMzV
+	bwX0dLy22h9qAE
+X-X-Sender: gene099@racer
+In-Reply-To: <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82320>
 
-just checked out the main branch  
-1fbb58b4153e90eda08c2b022ee32d90729582e6
-The offending message from make test follows.
+Hi,
 
--Kate
-P.S. My apologies if this is a dupe. I didn't see it when i searched  
-the archives.
+On Fri, 16 May 2008, Avery Pennarun wrote:
 
+> On 5/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hmpf.  I hoped to get more definitive information here.  Especially given
+> >  that fgetc() is nothing more than a glorified fread() into a buffer, and
+> >  then access the buffer.
+> >
+> >  Well, at least you kind of pointed me to the _unlocked() function family.
+> 
+> Point taken.
+> 
+> /tmp $ for d in test1 test2 test3 test3u; do echo -n "$d: ";
+> /usr/bin/time ./$d </dev/zero; done
+> test1: 0.09user 0.05system 0:00.14elapsed 94%CPU
+> test2: 2.50user 0.05system 0:02.54elapsed 100%CPU
+> test3: 2.48user 0.06system 0:02.53elapsed 100%CPU
+> test3u: 1.05user 0.05system 0:01.10elapsed 99%CPU
+> 
+> fread is about 18x faster than fgetc().  getc() is the same speed as
+> fgetc().  getc_unlocked() is definitely faster than getc, but still at
+> least 7x slower than fread().
 
-*** t7502-commit.sh ***
-*   ok 1: the basics
-*   ok 2: partial
-*   ok 3: partial modification in a subdirecotry
-*   ok 4: partial removal
-*   ok 5: sign off
-*   ok 6: multiple -m
-*   ok 7: verbose
-*   ok 8: cleanup commit messages (verbatim,-t)
-*   ok 9: cleanup commit messages (verbatim,-F)
-*   ok 10: cleanup commit messages (verbatim,-m)
-*   ok 11: cleanup commit messages (whitespace,-F)
-*   ok 12: cleanup commit messages (strip,-F)
-*   ok 13: cleanup commit messages (strip,-F,-e)
-*   ok 14: author different from committer
-sed: 1: "expect": invalid command code e
-* FAIL 15: committer is automatic
-	
-	
-		echo >>negative &&
-		git commit -e -m "sample"
-		head -n 8 .git/COMMIT_EDITMSG |	\
-		sed "s/^# Committer: .*/# Committer:/" >actual &&
-		test_cmp expect actual
-	
-*   ok 16: do not fire editor in the presence of conflicts
-* failed 1 among 16 test(s)
-make[1]: *** [t7502-commit.sh] Error 1
-make: *** [test] Error 2
+Well, my question was more about fgetc() vs fgets().
+
+If you feel like it, you might benchmark this patch:
+
+-- snipsnap --
+diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+index 021dc16..5d8defd 100644
+--- a/builtin-mailsplit.c
++++ b/builtin-mailsplit.c
+@@ -45,13 +45,32 @@ static int is_from_line(const char *line, int len)
+ /* Could be as small as 64, enough to hold a Unix "From " line. */
+ static char buf[4096];
+ 
++/*
++ *  This is an ugly hack to avoid fgetc(), which is slow, as it is locking.
++ *  The argument "in" must be the same for all calls to this function!
++ */
++static int fast_fgetc(FILE *in)
++{
++	static char buf[4096];
++	static int offset = 0, len = 0;
++
++	if (offset >= len) {
++		len = fread(buf, 1, sizeof(buf), in);
++		offset = 0;
++		if (!len && feof(in))
++			return EOF;
++	}
++
++	return buf[offset++];
++}
++
+ /* We cannot use fgets() because our lines can contain NULs */
+ int read_line_with_nul(char *buf, int size, FILE *in)
+ {
+ 	int len = 0, c;
+ 
+ 	for (;;) {
+-		c = fgetc(in);
++		c = fast_fgetc(in);
+ 		buf[len++] = c;
+ 		if (c == EOF || c == '\n' || len + 1 >= size)
+ 			break;
