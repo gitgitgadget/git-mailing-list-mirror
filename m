@@ -1,73 +1,71 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
-Date: Fri, 16 May 2008 13:12:39 -0400
-Message-ID: <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
-References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>  <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com> <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com> <alpine.DEB.1.00.0805161125320.30431@racer>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>,
-	Mike Ralphson <mike.ralphson@gmail.com>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 16 19:13:59 2008
+From: "Daniel Berlin" <dberlin@dberlin.org>
+Subject: git-svn goes into infinite loop rebuilding rev_map
+Date: Fri, 16 May 2008 13:15:56 -0400
+Message-ID: <4aca3dc20805161015l28d1e4a2u318c1bc23bb5b925@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 16 19:16:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx3V9-0004bY-K9
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:13:52 +0200
+	id 1Jx3Y2-0005e1-7M
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 19:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbYEPRMo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2008 13:12:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755205AbYEPRMo
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:12:44 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:46278 "EHLO
-	randymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754996AbYEPRMn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 13:12:43 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id AACAEEF3C9;
-	Fri, 16 May 2008 10:12:41 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0805161125320.30431@racer>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751873AbYEPRP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 13:15:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYEPRP7
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 13:15:59 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:19030 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbYEPRP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 13:15:58 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so754950wxd.4
+        for <git@vger.kernel.org>; Fri, 16 May 2008 10:15:57 -0700 (PDT)
+Received: by 10.90.91.9 with SMTP id o9mr5274881agb.95.1210958156964;
+        Fri, 16 May 2008 10:15:56 -0700 (PDT)
+Received: by 10.90.49.12 with HTTP; Fri, 16 May 2008 10:15:56 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82307>
 
-On May 16, 2008, at 6:25 AM, Johannes Schindelin wrote:
+Starting last night, for no particularly obvious reason, git-svn fetch
+(or git-svn rebase or any command that does naything interesting) on
+gcc.gnu.org's repo causes git-svn to do the following:
 
-> On Thu, 15 May 2008, Andr=E9 Goddard Rosa wrote:
->
->>>> This patch will make git a little more human friendly, reporting =20
->>>> "file.txt: has local changes".
->>>
->>> Documentation/git-checkout.txt should also change in this case,
->>> otherwise users will see different output to that described and
->>> possibly get confused if following along with the examples.
->>>
->>
->> I like the idea too.
->
-> No comment on the concern that it might break people's scripts?  None=
-?
+-bash-3.00$ git-svn fetch
+Rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4 ...
+Done rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4
+Rebuilding .git/svn/trunk/.rev_map.138bc75d-0d04-0410-961f-82ee72b054a4 ...
+<repeat forever>
 
 
-How about an ugly hack? Look to see if stdout is a tty, if so spit out =
-=20
-the more human-readable version, otherwise spit out the old version >:-=
-)
+I checked the obvious things. There is no permissions problem, strace
+doesn't show the writes failing, etc.
+git-fsck shows nothing as being obviously wrong.
 
--Kevin
 
---=20
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+This just suddenly started happening with no obvious reason (we fire
+off git-svn fetch and rebase on the repo when cvs commits happen).
+
+git-log shows the last processed rev was:
+
+commit e66b310fb9a3ddc7ed5143db3c468711c8a36d08
+Author: uros <uros@138bc75d-0d04-0410-961f-82ee72b054a4>
+Date:   Thu May 15 14:38:23 2008 +0000
+
+        * config/i386/sse.md (*vec_concatv2sf_sse4_1): Add "m" constraint
+        to alternative 4 of operand 2.
+
+
+    git-svn-id: svn+ssh://gcc.gnu.org/svn/gcc/trunk@135364
+138bc75d-0d04-0410-961f-82ee72b054a4
+
+
+I'm happy to provide anything i can to get the problem fixed, but not
+being a git expert, i have no idea what is up here.
