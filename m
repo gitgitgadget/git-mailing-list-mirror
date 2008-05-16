@@ -1,82 +1,62 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Documentation: mention how to define multiple
-	strategies
-Date: Fri, 16 May 2008 02:18:02 +0200
-Message-ID: <20080516001802.GS27724@genesis.frugalware.org>
-References: <1210889417-21370-1-git-send-email-vmiklos@frugalware.org> <7vfxsjf7zy.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gzJEy4voKlV4eANz"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 16 02:19:08 2008
+From: Marcel Koeppen <git-dev@marzelpan.de>
+Subject: [PATCH] Replace in-place sed in t7502-commit
+Date: Fri, 16 May 2008 02:21:43 +0200
+Message-ID: <1210897303-80828-1-git-send-email-git-dev@marzelpan.de>
+References: <7vwslwgdyi.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, sbejar@gmail.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri May 16 02:22:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jwnex-0001NE-Po
-	for gcvg-git-2@gmane.org; Fri, 16 May 2008 02:18:56 +0200
+	id 1JwniX-0002Rj-Mp
+	for gcvg-git-2@gmane.org; Fri, 16 May 2008 02:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663AbYEPASH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2008 20:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbYEPASG
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 20:18:06 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:35911 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753663AbYEPASE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2008 20:18:04 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E455F1B254F;
-	Fri, 16 May 2008 02:18:02 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id F41314465E;
-	Fri, 16 May 2008 02:08:31 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8C13E1770014; Fri, 16 May 2008 02:18:02 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vfxsjf7zy.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753684AbYEPAVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2008 20:21:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbYEPAVs
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 May 2008 20:21:48 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:39415 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751599AbYEPAVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2008 20:21:47 -0400
+Received: from [80.145.222.138] (helo=localhost.localdomain)
+	by smtprelay08.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <git-dev@marzelpan.de>)
+	id 1Jwnhg-0006Ed-CV; Fri, 16 May 2008 02:21:44 +0200
+X-Mailer: git-send-email 1.5.5.1.215.g64c0d
+In-Reply-To: <7vwslwgdyi.fsf@gitster.siamese.dyndns.org>
+X-Df-Sender: 893553
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82249>
 
+The in-place mode of sed used in t7502-commit is a non-POSIX extension.
+That call of sed is replaced by a more portable version using a temporary file.
 
---gzJEy4voKlV4eANz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Marcel Koeppen <git-dev@marzelpan.de>
+---
+ t/t7502-commit.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-On Thu, May 15, 2008 at 04:44:01PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> It indeed is supported to give multiple strategies and let "git merge" try
-> each of them.
->=20
-> However, I have a very strong doubt if it is really worth keeping the
-> support, let alone advertising it.
->=20
-> Really.  It was a fun experiment while it was being invented, but I never
-> saw any practical usefulness with it.
-
-As a general rule, I try to change nothing while working on
-builtin-merge. Should I drop support for it (making an exception here),
-or will you accept tests for this, just you would like to exclude it
-=66rom documentation?
-
-Thanks.
-
---gzJEy4voKlV4eANz
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkgs0roACgkQe81tAgORUJbjggCfRIBwdGHoVDE15/mbfwZW/3v6
-a4wAnREoNoV4e717XEqWRvcOsP36mN8g
-=CuDb
------END PGP SIGNATURE-----
-
---gzJEy4voKlV4eANz--
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 018060c..3531a99 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -166,7 +166,9 @@ test_expect_success 'author different from committer' '
+ 	test_cmp expect actual
+ '
+ 
+-sed -i '$d' expect
++mv expect expect.tmp
++sed '$d' < expect.tmp > expect
++rm -f expect.tmp
+ echo "# Committer:
+ #" >> expect
+ unset GIT_COMMITTER_EMAIL
+-- 
+1.5.5.1.215.g64c0d
