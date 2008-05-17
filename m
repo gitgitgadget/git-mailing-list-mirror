@@ -1,75 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Add a -z option to 'git status' to safely feed shell programs with path names
-Date: Fri, 16 May 2008 22:51:33 -0400
-Message-ID: <20080517025133.GQ29038@spearce.org>
-References: <20080517023340.GG10006@kali.thurne.chezwam.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [BUG] make test fails on osx (t7502-commit.sh)
+Date: Fri, 16 May 2008 22:58:36 -0400
+Message-ID: <46A56F20-DFB7-451E-9E81-71FA51FE1E27@sb.org>
+References: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Sebastien Gross <seb-git@chezwam.org>
-X-From: git-owner@vger.kernel.org Sat May 17 04:52:54 2008
+To: "Rhodes, Kate" <masukomi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 17 04:59:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxCXW-00062d-4j
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 04:52:54 +0200
+	id 1JxCe6-0007CT-Lf
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 04:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbYEQCvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 22:51:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbYEQCvj
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 22:51:39 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55367 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404AbYEQCvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 22:51:38 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JxCW4-0007nL-DY; Fri, 16 May 2008 22:51:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4DFC720FBAE; Fri, 16 May 2008 22:51:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20080517023340.GG10006@kali.thurne.chezwam.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753561AbYEQC6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 22:58:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753539AbYEQC6w
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 22:58:52 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:35253 "EHLO
+	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753150AbYEQC6v (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 22:58:51 -0400
+Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 34B7918DB5B;
+	Fri, 16 May 2008 19:58:47 -0700 (PDT)
+In-Reply-To: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82332>
 
-Sebastien Gross <seb-git@chezwam.org> wrote:
-> Add a -z option to 'git status' to get a list of all files
-> but ignored, starting with modification type or 'untracked'
-> as prefix and ending with '\0'.
+Hi.
 
-Hmm.  Is the plumbing really that broken that you need to add -z
-support to porcelain rather than using the -z support already built
-into the plumbing?
- 
->  * Remove all untracked files:
-> 
->    git status -z | gawk 'BEGIN{RS="\0"; ORS="\0";}/^untracked/ \
-> 	{sub("^.+:", "");print}' | xargs -0 -r rm
+On May 16, 2008, at 7:59 PM, Rhodes, Kate wrote:
 
-That I take it is just the long handed way to write `git clean -f` ?
- 
->  * List all updated file regardless the modification:
-> 
->    git status -z | gawk 'BEGIN{RS="\0"; ORS="\0";}/^updated/ \
-> 	{sub("^.+:", "");print}' | xargs -0 -n 1
+> just checked out the main branch  
+> 1fbb58b4153e90eda08c2b022ee32d90729582e6
+> The offending message from make test follows.
+>
+> -Kate
+> P.S. My apologies if this is a dupe. I didn't see it when i searched  
+> the archives.
+>
+>
+> *** t7502-commit.sh ***
+> *   ok 1: the basics
+> *   ok 2: partial
+> *   ok 3: partial modification in a subdirecotry
+> *   ok 4: partial removal
+> *   ok 5: sign off
+> *   ok 6: multiple -m
+> *   ok 7: verbose
+> *   ok 8: cleanup commit messages (verbatim,-t)
+> *   ok 9: cleanup commit messages (verbatim,-F)
+> *   ok 10: cleanup commit messages (verbatim,-m)
+> *   ok 11: cleanup commit messages (whitespace,-F)
+> *   ok 12: cleanup commit messages (strip,-F)
+> *   ok 13: cleanup commit messages (strip,-F,-e)
+> *   ok 14: author different from committer
+> sed: 1: "expect": invalid command code e
+> * FAIL 15: committer is automatic
+> 	
+> 	
+> 		echo >>negative &&
+> 		git commit -e -m "sample"
+> 		head -n 8 .git/COMMIT_EDITMSG |	\
+> 		sed "s/^# Committer: .*/# Committer:/" >actual &&
+> 		test_cmp expect actual
+> 	
+> *   ok 16: do not fire editor in the presence of conflicts
+> * failed 1 among 16 test(s)
+> make[1]: *** [t7502-commit.sh] Error 1
+> make: *** [test] Error 2\
 
-And this is just the long handed way to write `git diff --name-only` ?
+See http://marc.info/?l=git&m=121089732118252&w=2. A patch was  
+submitted to fix this problem, but apparently hasn't been accepted yet.
 
-
-A very large and intrusive looking patch for what can already be
-obtained easier through existing, stable porcelain.  Not something
-I am in favor of seeing added at this time.
+-Kevin Ballard
 
 -- 
-Shawn.
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
