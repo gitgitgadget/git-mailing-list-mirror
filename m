@@ -1,73 +1,67 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
-Date: Sat, 17 May 2008 17:08:23 +0200
-Message-ID: <393B2C1A-49D3-48A7-BF7D-7938D212AF82@wincent.com>
-References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>  <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com>  <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com>  <alpine.DEB.1.00.0805161125320.30431@racer>  <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org> <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com> <alpine.DEB.1.00.0805171102480.30431@racer>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Mike Ralphson <mike.ralphson@gmail.com>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 17 17:09:30 2008
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Possible bug: hooks/post-update does not trigger
+Date: Sat, 17 May 2008 18:28:16 +0300
+Message-ID: <20080517152816.GA23308@mithlond.arda.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 17:29:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxO2F-0008IU-Tm
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 17:09:24 +0200
+	id 1JxOLO-0006Al-Gi
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 17:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755506AbYEQPId convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 May 2008 11:08:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbYEQPId
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 11:08:33 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:45607 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754521AbYEQPId convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 May 2008 11:08:33 -0400
-Received: from cuzco.lan (62.pool85-53-9.dynamic.orange.es [85.53.9.62])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m4HF8OZO002335
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 17 May 2008 11:08:26 -0400
-In-Reply-To: <alpine.DEB.1.00.0805171102480.30431@racer>
-X-Mailer: Apple Mail (2.919.2)
+	id S1753578AbYEQP2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 11:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbYEQP2T
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 11:28:19 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:55717 "EHLO
+	jenni1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752759AbYEQP2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 11:28:19 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.rokki.sonera.fi (8.5.014)
+        id 482C7E620014EA39 for git@vger.kernel.org; Sat, 17 May 2008 18:28:17 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1JxOKW-00083N-TP
+	for git@vger.kernel.org; Sat, 17 May 2008 18:28:16 +0300
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82351>
 
-El 17/5/2008, a las 12:04, Johannes Schindelin escribi=F3:
-> Hi,
->
-> On Sat, 17 May 2008, Andr=E9 Goddard Rosa wrote:
->
->> Is this user interface set on stone? I think we should reserve the =20
->> right
->> to improve always.
->
-> Umm.
->
-> As has been mentioned, this is not a "user interface".  The message =20
-> you
-> are seeing comes from a _plumbing_ program, i.e. something _not_ =20
-> meant for
-> human consumption.
+Sort of a problem is that hooks/post-update script is never triggered.
+I have the following setup:
 
-That would indicate a problem, if stuff not intended for human =20
-consumption is being dished up for exactly that: human consumption.
+I work on a local repository and publish my changes by pushing them into
+a bare repository which lies on the same filesystem. The actual
+publishing will then require "git update-server-info" and rsync'ing the
+bare repository to another host which in turn serves the repo via http.
+(No git installed on the remote side and probably never will.)
 
-> I still think that it might be better to add a command line option =20
-> with a
-> custom message, because that would _not_ break backwards-=20
-> compatibility.
+I want to make this process automatical and I have actually done it
+already with hooks/post-receive. It works fine. I'm just wondering why
+hooks/post-update doesn't work.
 
-Sounds like clutter to me. I'd instead favor just holding back this =20
-patch until 1.6, when (minor) "compatibility breaking" changes would =20
-be acceptable.
+The default hooks/post-update contains the line
 
-Wincent
+  exec git-update-server-info
+
+So the file is sort of advertised being the "official" way of running
+git-update-server-info. The problem is that on my bare repository side
+that file never gets executed (yes, execute bits are on). I tried to put
+"echo" and "touch stampfile" type commands there but nothing happens.
+
+Well, my problem was solved simply by using hooks/post-receive instead.
+I put the following lines there and it works great:
+
+  git update-server-info
+  rsync --recursive --delete . remotehost:public_html/repo.git
+
+Still I'd like to know if there is a bug in hooks/post-update triggering
+mechanism or did I do something wrong?
