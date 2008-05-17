@@ -1,110 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL
- characters
-Date: Sat, 17 May 2008 00:59:15 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805170058160.30431@racer>
-References: <482BE5F7.2050108@thorn.ws>  <alpine.DEB.1.00.0805161139530.30431@racer>  <alpine.DEB.1.00.0805161148010.30431@racer>  <alpine.DEB.1.00.0805161403130.30431@racer>  <32541b130805160703r27a55b91xbad03eb1d107a176@mail.gmail.com> 
- <alpine.DEB.1.00.0805161529390.30431@racer> <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Use cases for 'git statistics'
+Date: Fri, 16 May 2008 17:02:19 -0700
+Message-ID: <7vlk29er1w.fsf@gitster.siamese.dyndns.org>
+References: <bd6139dc0805080851y2065bedfsf0f388cfd6d85929@mail.gmail.com>
+ <200805121440.12836.jnareb@gmail.com>
+ <bd6139dc0805120604m349b1fbbr39c6dcb8d893e771@mail.gmail.com>
+ <200805131507.04912.jnareb@gmail.com>
+ <bd6139dc0805130637saf704e1v2ab67c99da3078c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tommy Thorn <tommy-git@thorn.ws>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 17 02:00:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Sverre Rabbelier" <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 17 02:03:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jx9qK-0002tw-E4
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 02:00:08 +0200
+	id 1Jx9tQ-0003Yj-N6
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 02:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752871AbYEPX7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 19:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbYEPX7T
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 19:59:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48819 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752587AbYEPX7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 19:59:17 -0400
-Received: (qmail invoked by alias); 16 May 2008 23:59:13 -0000
-Received: from R2eb4.r.pppool.de (EHLO racer.local) [89.54.46.180]
-  by mail.gmx.net (mp050) with SMTP; 17 May 2008 01:59:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LsLhfpCILmDcsFFOf+XeGMlbP2jwAbO/Rp6RMzV
-	bwX0dLy22h9qAE
-X-X-Sender: gene099@racer
-In-Reply-To: <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753207AbYEQACb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 20:02:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbYEQACb
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 20:02:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55782 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106AbYEQACa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 20:02:30 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E031B5662;
+	Fri, 16 May 2008 20:02:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 18C6D5660; Fri, 16 May 2008 20:02:21 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8979EA3E-23A4-11DD-BEDF-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82321>
 
-Hi,
+"Sverre Rabbelier" <srabbelier@gmail.com> writes:
 
-On Fri, 16 May 2008, Avery Pennarun wrote:
+>>  >>  Details I think need to be provided by maintainer...
+>>  >
+>>  > Do you mean Junio, or the user of the program?
+>>
+>>  I mean that all I can provide is speculation.  I'm not, and never was
+>>  a maintainer of OSS project, and I don't know what criteria one use
+>>  (perhaps unvoiced criteria) to decide whether given patch needs to be
+>>  examined more closely, or the cursory browsing should be enough.
+>
+> I reckon more input from actual maintainers would be needed then.
+> Junio: aside from the original list with suggestions you provided,
+> could you shine your light as git maintainer on this?
 
-> On 5/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hmpf.  I hoped to get more definitive information here.  Especially given
-> >  that fgetc() is nothing more than a glorified fread() into a buffer, and
-> >  then access the buffer.
-> >
-> >  Well, at least you kind of pointed me to the _unlocked() function family.
-> 
-> Point taken.
-> 
-> /tmp $ for d in test1 test2 test3 test3u; do echo -n "$d: ";
-> /usr/bin/time ./$d </dev/zero; done
-> test1: 0.09user 0.05system 0:00.14elapsed 94%CPU
-> test2: 2.50user 0.05system 0:02.54elapsed 100%CPU
-> test3: 2.48user 0.06system 0:02.53elapsed 100%CPU
-> test3u: 1.05user 0.05system 0:01.10elapsed 99%CPU
-> 
-> fread is about 18x faster than fgetc().  getc() is the same speed as
-> fgetc().  getc_unlocked() is definitely faster than getc, but still at
-> least 7x slower than fread().
+A cursory browsing is enough only when you trust the contributor well.
+For example, I read patches from Nico to code around the pack generation
+only once or at most twice before I apply them, and the same thing can be
+said about git-svn patches from or acked-by Eric.  These come mostly from
+the fact that (1) I know they know the area a lot better than myself do,
+and more importantly that (2) I know they care deeply about the subsystem
+they are modifying, and they have good taste.
 
-Well, my question was more about fgetc() vs fgets().
+Project maintainers and old timers become familiar with habits, strengths
+and weaknesses of known contributors over time, and that is the source of
+such trust.
 
-If you feel like it, you might benchmark this patch:
-
--- snipsnap --
-diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
-index 021dc16..5d8defd 100644
---- a/builtin-mailsplit.c
-+++ b/builtin-mailsplit.c
-@@ -45,13 +45,32 @@ static int is_from_line(const char *line, int len)
- /* Could be as small as 64, enough to hold a Unix "From " line. */
- static char buf[4096];
- 
-+/*
-+ *  This is an ugly hack to avoid fgetc(), which is slow, as it is locking.
-+ *  The argument "in" must be the same for all calls to this function!
-+ */
-+static int fast_fgetc(FILE *in)
-+{
-+	static char buf[4096];
-+	static int offset = 0, len = 0;
-+
-+	if (offset >= len) {
-+		len = fread(buf, 1, sizeof(buf), in);
-+		offset = 0;
-+		if (!len && feof(in))
-+			return EOF;
-+	}
-+
-+	return buf[offset++];
-+}
-+
- /* We cannot use fgets() because our lines can contain NULs */
- int read_line_with_nul(char *buf, int size, FILE *in)
- {
- 	int len = 0, c;
- 
- 	for (;;) {
--		c = fgetc(in);
-+		c = fast_fgetc(in);
- 		buf[len++] = c;
- 		if (c == EOF || c == '\n' || len + 1 >= size)
- 			break;
+A clever enough automated way may be able to identify links between the
+contributors and the areas they are familiar with, and using such a
+mechanism people might be able to decide that a patch falls into category
+(1) above.  I am not sure if any automated way could ever decide if a
+patch falls into category (2) above, though.
