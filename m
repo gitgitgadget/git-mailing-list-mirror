@@ -1,84 +1,126 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL
- characters
-Date: Sat, 17 May 2008 01:26:26 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805170120550.30431@racer>
-References: <482BE5F7.2050108@thorn.ws>  <alpine.DEB.1.00.0805161139530.30431@racer>  <alpine.DEB.1.00.0805161148010.30431@racer>  <alpine.DEB.1.00.0805161403130.30431@racer>  <32541b130805160703r27a55b91xbad03eb1d107a176@mail.gmail.com> 
- <alpine.DEB.1.00.0805161529390.30431@racer> <32541b130805160756h5a8fc4d7x313f9bfde4760568@mail.gmail.com> <alpine.DEB.1.00.0805170058160.30431@racer> <482E2175.8030904@thorn.ws>
+From: Chris Frey <cdfrey@foursquare.net>
+Subject: [PATCH] perl/Makefile.PL: teach makefiles about possible old Error.pm files
+Date: Fri, 16 May 2008 21:16:14 -0400
+Message-ID: <20080517011614.GA11029@foursquare.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Tommy Thorn <tommy-git@thorn.ws>
-X-From: git-owner@vger.kernel.org Sat May 17 02:27:55 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 03:17:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxAH3-0000hR-IQ
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 02:27:45 +0200
+	id 1JxB30-0003Vx-2b
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 03:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760656AbYEQA0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 20:26:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756809AbYEQA0X
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 20:26:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57067 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756516AbYEQA0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2008 20:26:22 -0400
-Received: (qmail invoked by alias); 17 May 2008 00:26:20 -0000
-Received: from R2eb4.r.pppool.de (EHLO racer.local) [89.54.46.180]
-  by mail.gmx.net (mp024) with SMTP; 17 May 2008 02:26:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18pY/ZU+3QpNz8mULyzzg0F9cP50cphb0Ltj6P81v
-	k+W4rGjdl78cw+
-X-X-Sender: gene099@racer
-In-Reply-To: <482E2175.8030904@thorn.ws>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751811AbYEQBQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2008 21:16:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbYEQBQ1
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 21:16:27 -0400
+Received: from nic.NetDirect.CA ([216.16.235.2]:54733 "EHLO
+	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbYEQBQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2008 21:16:26 -0400
+X-Originating-Ip: 216.16.235.2
+Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
+	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m4H1GE28013766
+	for <git@vger.kernel.org>; Fri, 16 May 2008 21:16:14 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
+X-Net-Direct-Inc-MailScanner: Found to be clean
+X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
+	SpamAssassin (not cached, score=-16.8, required 5,
+	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
+X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82328>
 
-Hi,
+If a previous version of git was installed on a system without a
+proper Error.pm, git will install its own.  But the next time
+git is compiled on that system, that Error.pm will prevent git from
+installing its own copy the second time.  This causes a broken
+git install on such systems.
 
-On Fri, 16 May 2008, Tommy Thorn wrote:
+This patch fixes this bug by tagging git's Error.pm with an
+INSTALLED_BY flag, and checking for it during the compile.
 
-> Johannes Schindelin wrote:
-> > +/*
-> > + *  This is an ugly hack to avoid fgetc(), which is slow, as it is locking.
-> > + *  The argument "in" must be the same for all calls to this function!
-> > + */
-> > +static int fast_fgetc(FILE *in)
-> > +{
-> >   
-> 
-> Looks great to me, but shouldn't you add an "inline" for this one? Also, 
-> maybe a double the buffer size.
+Signed-off-by: Chris Frey <cdfrey@foursquare.net>
+---
 
-No.  This is an ugly hack, and not meant for application.
+	I use 'stow' to handle multiple versions of git installations.
+	So when I uninstall a version of git, all those files are
+	truly gone.  Including Error.pm.
 
-If that is substantially faster than the fgetc() version (and I want this 
-be tested in a _real-world_ scenario, i.e. not the fgetc() alone, but a 
-real mailsplit and a real mailinfo on a huge patch, with all three 
-versions: fgets(), fgetc() and fast_fgetc())), then I would prefer having 
-something like
+	I think it is wise to mark our own copy of Error.pm in some way
+	anyhow, just so people can tell the difference between
+	versions on their systems.
 
-	struct line_reader {
-		FILE *in;
-		char buffer[4096];
-		int offset, int len;
-		char line[1024];
-		int linelen;
-	};
+	The drawback to this patch is that once git installs its own
+	copy, it will always install its own copy, unless the user
+	uninstalls the old git first.  Usually this is the desired
+	behaviour, but my perl-fu isn't strong enough to make this
+	check even smarter.  Ideally, if a newer version is on the
+	system already, git shouldn't have to install its own.
 
-and corresponding functions to read lines in that setting.  Maybe it would 
-even be better to have line be a strbuf, but I am not so sure on that.
+	And on the last hand, this whole automated, secondary Error.pm
+	installation method is rather suspect when it comes to creating
+	binary packages.  Hopefully distro maintainers never build git
+	packages on systems with a git-Error.pm, while also blindly trusting
+	git's make install.
 
-Let's see what the tests show.  Would you do them, please?  
-"git format-patch --stdout bla..blub | /usr/bin/time git mailsplit -o." 
-three times in succession should give you a good hint on the runtime.
+	I'd love to see this in the official git tree soon, so I don't
+	run into these issues myself. :-)  Tips on how to make this
+	smarter are welcome.
 
-Ciao,
-Dscho
+	- Chris
+
+
+ perl/Makefile.PL      |   14 ++++++++++++--
+ perl/private-Error.pm |    1 +
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 320253e..26f7a8c 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -11,9 +11,19 @@ MAKE_FRAG
+ my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
+ 
+ # We come with our own bundled Error.pm. It's not in the set of default
+-# Perl modules so install it if it's not available on the system yet.
++# Perl modules.  So, unless it was a copy we installed, install it
++# if it's not available on the system yet.
+ eval { require Error };
+-if ($@ || $Error::VERSION < 0.15009) {
++if ($@ || $Error::VERSION < 0.15009 || $Error::INSTALLED_BY eq 'git') {
++	if ($Error::INSTALLED_BY eq 'git') {
++		print "**************************************************\n";
++		print "WARNING: detected an Error.pm from a previous git\n";
++		print "         install, so assuming that you wish to\n";
++		print "         continue using git's version.  If this is\n";
++		print "         not the case, uninstall your old version\n";
++		print "         of git before compiling the new.\n";
++		print "**************************************************\n";
++	}
+ 	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
+ }
+ 
+diff --git a/perl/private-Error.pm b/perl/private-Error.pm
+index 11e9cd9..a399983 100644
+--- a/perl/private-Error.pm
++++ b/perl/private-Error.pm
+@@ -16,6 +16,7 @@ use vars qw($VERSION);
+ use 5.004;
+ 
+ $VERSION = "0.15009";
++$Error::INSTALLED_BY = "git";
+ 
+ use overload (
+ 	'""'	   =>	'stringify',
+-- 
+1.5.4.4
