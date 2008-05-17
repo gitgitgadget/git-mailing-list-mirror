@@ -1,80 +1,57 @@
-From: Evgeny <evgeny.zislis@gmail.com>
-Subject: git mergetool
-Date: Sat, 17 May 2008 20:21:03 +0300
-Message-ID: <b6840c770805171021g63df7d0dm4532655ed49209bc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add color.diff.{header,message} formats
+Date: Sat, 17 May 2008 11:17:03 -0700
+Message-ID: <7vej80dcdc.fsf@gitster.siamese.dyndns.org>
+References: <1209980316-7340-1-git-send-email-madcoder@debian.org>
+ <20080517130739.GA2326@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, tytso@mit.edu
-X-From: git-owner@vger.kernel.org Sat May 17 19:22:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sat May 17 20:18:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxQ6Y-000636-Hu
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 19:21:58 +0200
+	id 1JxQyx-0008Qr-EA
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 20:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888AbYEQRVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2008 13:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYEQRVG
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 13:21:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:11479 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752888AbYEQRVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2008 13:21:05 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so139678ugf.16
-        for <git@vger.kernel.org>; Sat, 17 May 2008 10:21:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=C+aXSINlGLbhsHuPASBvZaVdMbqytVIx5DR0LaiBiBo=;
-        b=RangtDjddN9KEirjKG4hULK1ULRvHpeBeGy91MW5kBcJUEDOp8IbM20uZBJ3vjAxQodAEDgEVUfaKlQdTcAx22BqrfZHKdwRan1Lf7FjWUhm0DA+kRiqF+JsRnR9tX8M9ttKspL7yJUldkWP5nedaeUUMy8qjyp2hdy06QnRbhw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hKMg1ZtJEAVNu1DAeTGOLaGJepcOD8VhVxwVMeRskTFmj3CzDHiDLRTHqF+Zxq7F4jZ5qUMMq77BapMEWfWl1gOilOLJaxxgB2UylpPhzi1BIX/yTJrNQljCDzdeqiVlS6LggCcd1CD2Gw5me9FUe8F/YWh5nXi533Ef3zGZ0IQ=
-Received: by 10.67.115.15 with SMTP id s15mr1208684ugm.63.1211044863448;
-        Sat, 17 May 2008 10:21:03 -0700 (PDT)
-Received: by 10.67.26.8 with HTTP; Sat, 17 May 2008 10:21:03 -0700 (PDT)
-Content-Disposition: inline
+	id S1754834AbYEQSRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 14:17:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754710AbYEQSRM
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 14:17:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37143 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754883AbYEQSRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 14:17:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 685A45A5E;
+	Sat, 17 May 2008 14:17:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id D9FF95A5C; Sat, 17 May 2008 14:17:05 -0400 (EDT)
+In-Reply-To: <20080517130739.GA2326@artemis.madism.org> (Pierre Habouzit's
+ message of "Sat, 17 May 2008 15:07:39 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 76B4CF06-243D-11DD-9440-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82355>
 
-Hello Git developers,
-and especially Theodore (whos email is in the footer of man git-mergetool)
+Pierre Habouzit <madcoder@debian.org> writes:
 
-Background:
-   I am trying to use a custom mergetool with git.
-   P4Merge from http://www.perforce.com/perforce/products/merge.html
+>   Hmmm it seems this patch has been somehow lost somewhere, is there
+> anything wrong with it ?
 
-   The documentation explains that environment variables $BASE,
-$LOCAL, $REMOTE, $MERGED
-   are set for the invocation of the mergetool command.
+It may not break anything, and I did not hear anybody on the list who said
+this breaks soemthing.  But I did not hear anybody on the list who wanted
+to have this except you, either.  At this stage of development, the
+question we should be asking is not if there is anything wrong with it,
+but if there is anything _good_ with it.
 
-Problem:
-   I wrote a wrapper for P4Merge, and I check for these environment
-variables - but they are not there.
-   After a closer inspection of git-mergetool I see that infact these
-variables are not being sent to the
-   external command at all, and are just in the context of the
-git-mergetool script.
-
-Solution:
-   There are two ways, that i know of, to make the executed command
-receive these variables :
-     1. use "export" on them
-     2. use "env LOCAL=$LOCAL env REMOTE=$REMOTE ....  $extcommand" to
-set an environment for just that command
-
-My System Information:
-   git 1.5.5.1  (from macports)
-   Mac OS X 10.5.2
-
-Hopefully this will get fixed in future versions, so I wont need to
-patch git-mergetool locally on my machine with every update.
-
-Regards,
-Evgeny
+It looks rather widespread compared to a perceived benefit.  Perhaps after
+a refactoring to make the parameter to pretty-print-commit a bit more
+easily extensible, the patch might start looking more promising.  I dunno.
