@@ -1,163 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] builtin-apply: do not declare patch is creation when we
- do not know it
-Date: Sat, 17 May 2008 02:19:13 -0700
-Message-ID: <7vmympcmpa.fsf_-_@gitster.siamese.dyndns.org>
-References: <1210257579-30975-1-git-send-email-imre.deak@gmail.com>
- <7vlk2h8t4d.fsf@gitster.siamese.dyndns.org>
- <500f3d130805131316m59898392l46e0dbf7cb352981@mail.gmail.com>
- <7vprrpswof.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0805131514300.3019@woody.linux-foundation.org>
- <7vlk2dsujm.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0805131552410.3019@woody.linux-foundation.org>
- <7vve1hrbct.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0805131811540.3019@woody.linux-foundation.org>
- <7vve1dcn0m.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
+Date: Sat, 17 May 2008 11:04:09 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805171102480.30431@racer>
+References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>  <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com>  <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com>  <alpine.DEB.1.00.0805161125320.30431@racer> 
+ <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org> <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Imre Deak <imre.deak@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 17 11:20:23 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-883175977-1211018651=:30431"
+Cc: Kevin Ballard <kevin@sb.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 17 12:05:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxIaQ-0001Y8-5m
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 11:20:18 +0200
+	id 1JxJI4-0005Tv-MO
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 12:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbYEQJT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2008 05:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752564AbYEQJT1
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 05:19:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46972 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752358AbYEQJT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2008 05:19:26 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 437314EC7;
-	Sat, 17 May 2008 05:19:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 45A104EC5; Sat, 17 May 2008 05:19:21 -0400 (EDT)
-In-Reply-To: <7vve1dcn0m.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 17 May 2008 02:12:25 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 57C6123A-23F2-11DD-85F4-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1752680AbYEQKEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 06:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbYEQKEH
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 06:04:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49393 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752634AbYEQKEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 06:04:06 -0400
+Received: (qmail invoked by alias); 17 May 2008 10:04:02 -0000
+Received: from R06ea.r.pppool.de (EHLO racer.local) [89.54.6.234]
+  by mail.gmx.net (mp014) with SMTP; 17 May 2008 12:04:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/GP+daGRjGt85tAc/QchLnet3MCT0P5aKDsN2R5S
+	oc5xY65FFhyWZO
+X-X-Sender: gene099@racer
+In-Reply-To: <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82339>
 
-When we see no context nor deleted line in the patch, we used to declare
-that the patch creates a new file.  But some people create an empty file
-and then apply a patch to it.  Similarly, a patch that delete everything
-is not a deletion patch either.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This commit corrects these two issues.  Together with the previous commit,
-it allows a diff between an empty file and a line-ful file to be treated
-as both creation patch and "add stuff to an existing empty file",
-depending on the context.  A new test t4126 demonstrates the fix.
+--8323329-883175977-1211018651=:30431
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-apply.c        |   15 ------------
- t/t4126-apply-empty.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 15 deletions(-)
- create mode 100755 t/t4126-apply-empty.sh
+Hi,
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 10b1f88..1540f28 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1143,21 +1143,6 @@ static int parse_single_patch(char *line, unsigned long size, struct patch *patc
- 	if (patch->is_delete < 0 &&
- 	    (newlines || (patch->fragments && patch->fragments->next)))
- 		patch->is_delete = 0;
--	if (!unidiff_zero || context) {
--		/* If the user says the patch is not generated with
--		 * --unified=0, or if we have seen context lines,
--		 * then not having oldlines means the patch is creation,
--		 * and not having newlines means the patch is deletion.
--		 */
--		if (patch->is_new < 0 && !oldlines) {
--			patch->is_new = 1;
--			patch->old_name = NULL;
--		}
--		if (patch->is_delete < 0 && !newlines) {
--			patch->is_delete = 1;
--			patch->new_name = NULL;
--		}
--	}
- 
- 	if (0 < patch->is_new && oldlines)
- 		die("new file %s depends on old contents", patch->new_name);
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-new file mode 100755
-index 0000000..6641571
---- /dev/null
-+++ b/t/t4126-apply-empty.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='apply empty'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	>empty &&
-+	git add empty &&
-+	test_tick &&
-+	git commit -m initial &&
-+	for i in a b c d e
-+	do
-+		echo $i
-+	done >empty &&
-+	cat empty >expect &&
-+	git diff |
-+	sed -e "/^diff --git/d" \
-+	    -e "/^index /d" \
-+	    -e "s|a/empty|empty.orig|" \
-+	    -e "s|b/empty|empty|" >patch0 &&
-+	sed -e "s|empty|missing|" patch0 >patch1 &&
-+	>empty &&
-+	git update-index --refresh
-+'
-+
-+test_expect_success 'apply empty' '
-+	git reset --hard &&
-+	>empty &&
-+	rm -f missing &&
-+	git apply patch0 &&
-+	test_cmp expect empty
-+'
-+
-+test_expect_success 'apply --index empty' '
-+	git reset --hard &&
-+	>empty &&
-+	rm -f missing &&
-+	git apply --index patch0 &&
-+	test_cmp expect empty &&
-+	git diff --exit-code
-+'
-+
-+test_expect_success 'apply create' '
-+	git reset --hard &&
-+	>empty &&
-+	rm -f missing &&
-+	git apply patch1 &&
-+	test_cmp expect missing
-+'
-+
-+test_expect_success 'apply --index create' '
-+	git reset --hard &&
-+	>empty &&
-+	rm -f missing &&
-+	git apply --index patch1 &&
-+	test_cmp expect missing &&
-+	git diff --exit-code
-+'
-+
--- 
-1.5.5.1.443.g123e3
+On Sat, 17 May 2008, André Goddard Rosa wrote:
+
+> On Fri, May 16, 2008 at 2:12 PM, Kevin Ballard <kevin@sb.org> wrote:
+> > On May 16, 2008, at 6:25 AM, Johannes Schindelin wrote:
+> >
+> >> On Thu, 15 May 2008, André Goddard Rosa wrote:
+> >>
+> >>>>> This patch will make git a little more human friendly, reporting
+> >>>>> "file.txt: has local changes".
+> >>>>
+> >>>> Documentation/git-checkout.txt should also change in this case,
+> >>>> otherwise users will see different output to that described and
+> >>>> possibly get confused if following along with the examples.
+> >>>>
+> >>>
+> >>> I like the idea too.
+> >>
+> >> No comment on the concern that it might break people's scripts?  None?
+> >
+> >
+> > How about an ugly hack? Look to see if stdout is a tty, if so spit out the
+> > more human-readable version, otherwise spit out the old version >:-)
+> 
+> Is this user interface set on stone? I think we should reserve the right 
+> to improve always.
+
+Umm.
+
+As has been mentioned, this is not a "user interface".  The message you 
+are seeing comes from a _plumbing_ program, i.e. something _not_ meant for 
+human consumption.
+
+I still think that it might be better to add a command line option with a 
+custom message, because that would _not_ break backwards-compatibility.
+
+Thankyouverymuch,
+Dscho
+
+--8323329-883175977-1211018651=:30431--
