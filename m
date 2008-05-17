@@ -1,101 +1,119 @@
 From: Evgeny <evgeny.zislis@gmail.com>
-Subject: Re: git mergetool
-Date: Sun, 18 May 2008 00:32:25 +0300
-Message-ID: <b6840c770805171432g7d1ea462y7ae09aff733eb6a9@mail.gmail.com>
-References: <b6840c770805171021g63df7d0dm4532655ed49209bc@mail.gmail.com>
-	 <m3tzgw4r7w.fsf@localhost.localdomain>
-	 <402731c90805171347g62197f5diab513e409d7cce25@mail.gmail.com>
+Subject: Re: [PATCH] mergetool: export variables for use by custom mergetools
+Date: Sun, 18 May 2008 02:55:10 +0300
+Message-ID: <b6840c770805171655y691fbd0vd2d65d0914757b63@mail.gmail.com>
+References: <8b4e944ac849029f31f403ab75198ed6fb4197c1.1211056369.git.davvid@gmail.com>
+	 <20080517233414.GA28196@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	tytso@mit.edu
-To: "David Aguilar" <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 17 23:33:29 2008
+Cc: "David Aguilar" <davvid@gmail.com>, tytso@mit.edu,
+	git@vger.kernel.org
+To: "Charles Bailey" <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Sun May 18 01:56:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxU1w-0007Jt-7f
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 23:33:28 +0200
+	id 1JxWGQ-00068B-J0
+	for gcvg-git-2@gmane.org; Sun, 18 May 2008 01:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759181AbYEQVc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2008 17:32:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759611AbYEQVc3
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 17:32:29 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:11207 "EHLO
+	id S1754429AbYEQXzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 19:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbYEQXzO
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 19:55:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:48986 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758983AbYEQVc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2008 17:32:28 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so175251ugf.16
-        for <git@vger.kernel.org>; Sat, 17 May 2008 14:32:26 -0700 (PDT)
+	with ESMTP id S1753845AbYEQXzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 19:55:13 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so190675ugf.16
+        for <git@vger.kernel.org>; Sat, 17 May 2008 16:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=N24oX5DlR2ST53oUnNJgc9yr5ROckRvQ3o4R4bqdp20=;
-        b=JlWoJhddTWMP7WHJPQkQcMFkPbQtWk3x+rxLTJMoQFc7C/aTLkE+7LF5ZOmAfP41dSG4Dr2qCykrOu+YV2QKzyeaPtwV6NaQPzvDNsLr4wqJQ7s6Bkzx2/vqeB39IMtkg6zMYIRBxMDJXreD1PaEc/6GnZd5j3bxBuCiTZYm6ZM=
+        bh=9+D2PadQsXHgdpRXetdgIiKfG864uB3O8R6oYw8F+Fw=;
+        b=sVN1m27+VlKIEnAAxQZXhgf5GcqnsFZOHWn3UP7IXRerEHwg9DsBazEMjQHTCBUXQEpqHRBBOLc02yDj0IVlpyPR1Mhof6UDrZmT+h5yLwLdBZz2YJV/ebeYi5MslqdtYxg/2M77L+5AV/N7a9pHwFN5qM5IaXojH+UMhxqRfqc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=wn2870iOwlEg9EhcGkfwPMfjBxtHNX+g0Xr8zrQsM2UJUbPv/PrS8ephYd+XHJEiu3Us4sJRgqlfZxvOHcUJIeuPrzKoSt1FE7Iq6vUom49nxOaYkOBtdk0nwRWa0Fs4azLHa7ZoxNvW/rODRpnbcELNVt9tVpluV66fG/K98Og=
-Received: by 10.67.97.1 with SMTP id z1mr1510011ugl.11.1211059946054;
-        Sat, 17 May 2008 14:32:26 -0700 (PDT)
-Received: by 10.67.26.8 with HTTP; Sat, 17 May 2008 14:32:25 -0700 (PDT)
-In-Reply-To: <402731c90805171347g62197f5diab513e409d7cce25@mail.gmail.com>
+        b=CY5S7f9NeuJYQCuGlLChQOSQu1eJaDkkBwaTeA9EN0JYFTM1kuUUXKh1XjXs04bIrYtsYw2z5Mbn74I06nKhGNRLMRSQw8rPTmQxSNUCymqSRIFvN5kMiie5XUFBWdVv4nZCd7DaNl++Q69Jo71cqgkPzzoYTSTcmVoPrJAYEyk=
+Received: by 10.67.19.13 with SMTP id w13mr1648199ugi.19.1211068510410;
+        Sat, 17 May 2008 16:55:10 -0700 (PDT)
+Received: by 10.67.26.8 with HTTP; Sat, 17 May 2008 16:55:10 -0700 (PDT)
+In-Reply-To: <20080517233414.GA28196@hashpling.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82368>
 
-I was in fact using mergetool.p4merge.cmd ... and the documentation explains
-regarding the non-working environment variables.
+Ohh, so the documentation is not clear then. Now that you say it this
+way, I finally understant that I should have in my ~/.gitconfig
+something like:
 
-Hopefully with the new patch it will work okay.
+[mergetool "p4merge"]
+	cmd = p4merge.sh "$PWD/$BASE" "$PWD/$REMOTE" "$PWD/$LOCAL" "$PWD/$MERGED"
+	keepBackup = false
 
-Thanks David!
+[merge]
+	tool = p4merge
 
---
+
+Thanks for the explanation!
+I believe that an example in the documentation could be a nice
+addition, to clear things up in the future.
+
+PS: The latest version of P4Merge did not work without the $PWD/
+(fullpath). strange, but an older version worked okay even without it.
+
+
+No patch is needed -- all is great, thank you great people! :)
+
+Thank you Charles!
+
+
+
+-
 Evgeny
 
-On Sat, May 17, 2008 at 11:47 PM, David Aguilar <davvid@gmail.com> wrote:
-> On Sat, May 17, 2008 at 1:21 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> Evgeny <evgeny.zislis@gmail.com> writes:
+
+On Sun, May 18, 2008 at 2:34 AM, Charles Bailey <charles@hashpling.org> wrote:
+> On Sat, May 17, 2008 at 01:39:26PM -0700, David Aguilar wrote:
+>> The MERGED, BACKUP, LOCAL, REMOTE and BASE variables were not being
+>> exported from the git-mergetool.sh script.  This prevented custom
+>> mergetools from being able to use them.
 >>
->>> Background:
->>>    I am trying to use a custom mergetool with git.
->>>    The documentation explains that environment variables
->>>    $BASE, $LOCAL, $REMOTE, $MERGED
->>>    are set for the invocation of the mergetool command.
->>>
->>> Problem:
->>>    I wrote a wrapper for P4Merge, and I check for these environment
->>>    variables - but they are not there.   After a closer inspection
->>>    of git-mergetool I see that infact these variables are not being
->>>    sent to the external command at all, and are just in the context
->>>    of the git-mergetool script.
+>> We now export them so that arbitrary mergetools can easily interact
+>> with git mergetool.
 >>
->> From what I know of git-mergetool, you can use one of the predefined
->> merge tools: kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
->> ecmerge, and opendiff (optionally providing path to the tool)
+>> This problem was Reported-By: Evgeny <evgeny.zislis@gmail.com>
 >>
->> To add support for P4Merge you would have either modify
->> git-mergetool.sh (and, optionally, send a patch to git mailing list),
->> or make use of `mergetool.<tool>.cmd` configuration option.
->> Unfortunately there is no example...
->>
->> --
->> Jakub Narebski
->> Poland
->> ShadeHawk on #git
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
 >
-> I just sent a patch that exports these variables.
+> I think there must be a misunderstanding here. The variables are not
+> designed to be exported. The point of the custom merge tool patch to
+> git mergetool was to support custom mergetools without the need for a
+> wrapper script, just a git config variable.
 >
-> Presumably we do not want to modify git-mergetool.sh every single time
-> someone needs to be able to use a new mergetool, hence the patch I
-> sent makes sense to me.  Let me know if you think otherwise.
-> Thanks,
+> I know that (with the right config) git mergetool supports p4merge as
+> it is one of a selection of tools that I tested it with. You should be
+> able to get p4 merge to work by setting the config variable:
+>
+> mergetool.p4merge.cmd
+>
+> to the value (IIRC, and I don't have the p4merge documentation to hand):
+>
+> p4merge "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+>
+> Getting the quoting correct on this depends on whether you set it via
+> commandline or via editing a git config file and can be a little
+> tricky.
+>
+> If you have a wrapper shell script then you can easily pass these as
+> positional parameters and re-export them as necessary.
+>
 > --
->  David
+> Charles Bailey
+> http://ccgi.hashpling.plus.com/blog/
 >
