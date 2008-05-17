@@ -1,108 +1,80 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
-Date: Sat, 17 May 2008 00:30:40 -0300
-Message-ID: <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com>
-References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>
-	 <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com>
-	 <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com>
-	 <alpine.DEB.1.00.0805161125320.30431@racer>
-	 <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: git-svn condenses history when dcommit is interrupted
+Date: Sat, 17 May 2008 10:35:06 +0600
+Message-ID: <7bfdc29a0805162135m2758171dva6a6594239733bd8@mail.gmail.com>
+References: <7bf6f1d20805150206j231eeea6pb7c608a713dd202c@mail.gmail.com>
+	 <7bfdc29a0805150224j30db42d5te1f386efee0ff7a0@mail.gmail.com>
+	 <7bf6f1d20805161402m4fa473f5w198bc8cb055eb95f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Mike Ralphson" <mike.ralphson@gmail.com>,
-	"Tim Harper" <timcharper@gmail.com>, git@vger.kernel.org
-To: "Kevin Ballard" <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat May 17 05:32:01 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Jo=E3o_Abecasis?=" <joao@abecasis.name>
+X-From: git-owner@vger.kernel.org Sat May 17 06:36:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxD9M-0004IC-Up
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 05:32:01 +0200
+	id 1JxE9I-0000Ch-KW
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 06:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbYEQDan convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2008 23:30:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbYEQDan
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 23:30:43 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:29550 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937AbYEQDam convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 23:30:42 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so918141fgg.17
-        for <git@vger.kernel.org>; Fri, 16 May 2008 20:30:40 -0700 (PDT)
+	id S1751277AbYEQEfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 00:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYEQEfJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 00:35:09 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:17652 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751208AbYEQEfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 00:35:08 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so695660ywe.1
+        for <git@vger.kernel.org>; Fri, 16 May 2008 21:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=f2A/pHN1C7aBmyI8uE3duG0N0xEpmIZoo+ixa/Q+OIQ=;
-        b=H5hbuW0+e7joEPHPQG7VM7iCrizUcNmG2vjnytT0pwGcUIPhGzRcFif/Us8dovyMtV/Q8JMiZvu7yRIUUVABuWYmNnshw/Fi4jMQFFdE0G0RG8RbR86JpUIKuZVzpGNlAQ9nNIqo98gFKTe5Ukz24Ka12kwo8z6B5An/gETgQnw=
+        bh=RkLWllaSH7IZ9Eckxe2aqTIo9Gc3/uKruBG4RYHiIjk=;
+        b=NJD4xkSXfrvtI6Y67oj1avrLpON+MdHPVx6qqwXZqMuXJ4S1a0FZsXnZS35XgWUkP7FAT7swifQCwtgdprjFwkCd9O7qIZ2i+yfhdb85bPsvyqQF2ucUSUwZQFeZAo3NdnTJvCZhc4yLKfo0cDY4HTHTcD7RjhrHZ1QglHBy6Rg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lhI+gt8p/WStcPvsXg4B8xssuyZY9uuIcDrWShivAXYd/EOf+XoKRet3ApFuLkw89be+mwM20PdzdWsRgqzU/Ox27MCA3/zRqBcVNibcuYlYQY8kqSAcLYjC0y5tsZwnmben8njuc5Rwk8tz4b9FxX5ZalJ+6nmSNqfXWvhwEHo=
-Received: by 10.78.124.7 with SMTP id w7mr1186618huc.60.1210995040295;
-        Fri, 16 May 2008 20:30:40 -0700 (PDT)
-Received: by 10.78.120.2 with HTTP; Fri, 16 May 2008 20:30:40 -0700 (PDT)
-In-Reply-To: <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
+        b=MGNw4BceigQH3BLWCM2ix4leORE0retxheKZjA4Y/QqX9uotO8XcfWtZLl4qXOmNPDRvGIrr99LBSWEmGQdaj/j83dkO4rOul3u87bX6rDmUEeXvbNeXDs4s9yCruGbc0UeRYj+uhLXuAxjLLoDhyZi4j12SmtYAc58YBmsh/Mg=
+Received: by 10.150.83.29 with SMTP id g29mr4299934ybb.136.1210998906840;
+        Fri, 16 May 2008 21:35:06 -0700 (PDT)
+Received: by 10.150.54.11 with HTTP; Fri, 16 May 2008 21:35:06 -0700 (PDT)
+In-Reply-To: <7bf6f1d20805161402m4fa473f5w198bc8cb055eb95f@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82334>
 
-On Fri, May 16, 2008 at 2:12 PM, Kevin Ballard <kevin@sb.org> wrote:
-> On May 16, 2008, at 6:25 AM, Johannes Schindelin wrote:
->
->> On Thu, 15 May 2008, Andr=E9 Goddard Rosa wrote:
->>
->>>>> This patch will make git a little more human friendly, reporting
->>>>> "file.txt: has local changes".
->>>>
->>>> Documentation/git-checkout.txt should also change in this case,
->>>> otherwise users will see different output to that described and
->>>> possibly get confused if following along with the examples.
->>>>
->>>
->>> I like the idea too.
->>
->> No comment on the concern that it might break people's scripts?  Non=
-e?
->
->
-> How about an ugly hack? Look to see if stdout is a tty, if so spit ou=
-t the
-> more human-readable version, otherwise spit out the old version >:-)
+>> Whenever my commit is not completed successfully I can thus easily
+>> reset, rebase and follow the command sequence again. This way I have
 
-Is this user interface set on stone? I think we should reserve the
-right to improve always.
+I forgot to mention 'git svn fetch' if the commit succeeds and the update fails
 
-I would deprecate the current message, but I think that most users
-cannot find so much of a sense in the former message,
-although the script developer can easily change his scripts to search
-for =B4cannot merge=B4 instead.
+> But that doesn't help with the problem I have faced, which is when
+> dcommit fails *after* some change has already been committed to the
+> subversion repository. At that point, the local copy of the subversion
 
-Do you have a better idea?
+Did you try 'git svn fetch' at this point
 
----
-[PATCH] "not uptodate" changed to "has local changes"
+> history is broken since git thinks it has got the fetched the
+> committed revision but it's not in the history.
+> ....
+> I think this is a bug with git-svn that should be fixed and I will
+> gladly help fix it in any way I can. Do you think I should be more
+> explicit and focus on the broken history instead of the "condensed
+> merges"?
 
-Use more straightforward message for regular user.
+It could be a bug but I am not sure, what I am sure of is that I faced
+a *similar* (not sure identical) problem and 'git reset' and 'git svn
+fetch' followed by rebase, merge and dcommit was successful in my
+case.
 
-Signed-off-by: Andre Goddard Rosa <andre.goddard@gmail.com>
+Best regards,
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index a644173..624dea6 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -168,7 +168,7 @@ the above checkout would fail like this:
- +
- ------------
- $ git checkout mytopic
--fatal: Entry 'frotz' not uptodate. Cannot merge.
-+fatal: Entry 'frotz' not uptodate, it has local changes. Cannot merge.
- ------------
- +
- You can give the `-m` flag to the command, which would try a
+-- 
+Imran M Yousuf
+Email: imran@smartitengineering.com
+Mobile: +880-1711402557
