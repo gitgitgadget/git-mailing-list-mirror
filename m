@@ -1,92 +1,108 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [BUG] make test fails on osx (t7502-commit.sh)
-Date: Fri, 16 May 2008 22:58:36 -0400
-Message-ID: <46A56F20-DFB7-451E-9E81-71FA51FE1E27@sb.org>
-References: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 17 04:59:45 2008
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Re: [PATCH] "not uptodate" changed to "has local changes"
+Date: Sat, 17 May 2008 00:30:40 -0300
+Message-ID: <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com>
+References: <1209833972-12256-1-git-send-email-timcharper@gmail.com>
+	 <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com>
+	 <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com>
+	 <alpine.DEB.1.00.0805161125320.30431@racer>
+	 <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Mike Ralphson" <mike.ralphson@gmail.com>,
+	"Tim Harper" <timcharper@gmail.com>, git@vger.kernel.org
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sat May 17 05:32:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxCe6-0007CT-Lf
-	for gcvg-git-2@gmane.org; Sat, 17 May 2008 04:59:43 +0200
+	id 1JxD9M-0004IC-Up
+	for gcvg-git-2@gmane.org; Sat, 17 May 2008 05:32:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561AbYEQC6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2008 22:58:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753539AbYEQC6w
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 22:58:52 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:35253 "EHLO
-	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753150AbYEQC6v (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 22:58:51 -0400
-Received: from [192.168.0.203] (c-24-91-11-245.hsd1.nh.comcast.net [24.91.11.245])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 34B7918DB5B;
-	Fri, 16 May 2008 19:58:47 -0700 (PDT)
-In-Reply-To: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com>
-X-Mailer: Apple Mail (2.919.2)
+	id S1750956AbYEQDan convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2008 23:30:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbYEQDan
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 May 2008 23:30:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:29550 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937AbYEQDam convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2008 23:30:42 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so918141fgg.17
+        for <git@vger.kernel.org>; Fri, 16 May 2008 20:30:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=f2A/pHN1C7aBmyI8uE3duG0N0xEpmIZoo+ixa/Q+OIQ=;
+        b=H5hbuW0+e7joEPHPQG7VM7iCrizUcNmG2vjnytT0pwGcUIPhGzRcFif/Us8dovyMtV/Q8JMiZvu7yRIUUVABuWYmNnshw/Fi4jMQFFdE0G0RG8RbR86JpUIKuZVzpGNlAQ9nNIqo98gFKTe5Ukz24Ka12kwo8z6B5An/gETgQnw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lhI+gt8p/WStcPvsXg4B8xssuyZY9uuIcDrWShivAXYd/EOf+XoKRet3ApFuLkw89be+mwM20PdzdWsRgqzU/Ox27MCA3/zRqBcVNibcuYlYQY8kqSAcLYjC0y5tsZwnmben8njuc5Rwk8tz4b9FxX5ZalJ+6nmSNqfXWvhwEHo=
+Received: by 10.78.124.7 with SMTP id w7mr1186618huc.60.1210995040295;
+        Fri, 16 May 2008 20:30:40 -0700 (PDT)
+Received: by 10.78.120.2 with HTTP; Fri, 16 May 2008 20:30:40 -0700 (PDT)
+In-Reply-To: <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82333>
 
-Hi.
-
-On May 16, 2008, at 7:59 PM, Rhodes, Kate wrote:
-
-> just checked out the main branch  
-> 1fbb58b4153e90eda08c2b022ee32d90729582e6
-> The offending message from make test follows.
+On Fri, May 16, 2008 at 2:12 PM, Kevin Ballard <kevin@sb.org> wrote:
+> On May 16, 2008, at 6:25 AM, Johannes Schindelin wrote:
 >
-> -Kate
-> P.S. My apologies if this is a dupe. I didn't see it when i searched  
-> the archives.
+>> On Thu, 15 May 2008, Andr=E9 Goddard Rosa wrote:
+>>
+>>>>> This patch will make git a little more human friendly, reporting
+>>>>> "file.txt: has local changes".
+>>>>
+>>>> Documentation/git-checkout.txt should also change in this case,
+>>>> otherwise users will see different output to that described and
+>>>> possibly get confused if following along with the examples.
+>>>>
+>>>
+>>> I like the idea too.
+>>
+>> No comment on the concern that it might break people's scripts?  Non=
+e?
 >
 >
-> *** t7502-commit.sh ***
-> *   ok 1: the basics
-> *   ok 2: partial
-> *   ok 3: partial modification in a subdirecotry
-> *   ok 4: partial removal
-> *   ok 5: sign off
-> *   ok 6: multiple -m
-> *   ok 7: verbose
-> *   ok 8: cleanup commit messages (verbatim,-t)
-> *   ok 9: cleanup commit messages (verbatim,-F)
-> *   ok 10: cleanup commit messages (verbatim,-m)
-> *   ok 11: cleanup commit messages (whitespace,-F)
-> *   ok 12: cleanup commit messages (strip,-F)
-> *   ok 13: cleanup commit messages (strip,-F,-e)
-> *   ok 14: author different from committer
-> sed: 1: "expect": invalid command code e
-> * FAIL 15: committer is automatic
-> 	
-> 	
-> 		echo >>negative &&
-> 		git commit -e -m "sample"
-> 		head -n 8 .git/COMMIT_EDITMSG |	\
-> 		sed "s/^# Committer: .*/# Committer:/" >actual &&
-> 		test_cmp expect actual
-> 	
-> *   ok 16: do not fire editor in the presence of conflicts
-> * failed 1 among 16 test(s)
-> make[1]: *** [t7502-commit.sh] Error 1
-> make: *** [test] Error 2\
+> How about an ugly hack? Look to see if stdout is a tty, if so spit ou=
+t the
+> more human-readable version, otherwise spit out the old version >:-)
 
-See http://marc.info/?l=git&m=121089732118252&w=2. A patch was  
-submitted to fix this problem, but apparently hasn't been accepted yet.
+Is this user interface set on stone? I think we should reserve the
+right to improve always.
 
--Kevin Ballard
+I would deprecate the current message, but I think that most users
+cannot find so much of a sense in the former message,
+although the script developer can easily change his scripts to search
+for =B4cannot merge=B4 instead.
 
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+Do you have a better idea?
+
+---
+[PATCH] "not uptodate" changed to "has local changes"
+
+Use more straightforward message for regular user.
+
+Signed-off-by: Andre Goddard Rosa <andre.goddard@gmail.com>
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index a644173..624dea6 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -168,7 +168,7 @@ the above checkout would fail like this:
+ +
+ ------------
+ $ git checkout mytopic
+-fatal: Entry 'frotz' not uptodate. Cannot merge.
++fatal: Entry 'frotz' not uptodate, it has local changes. Cannot merge.
+ ------------
+ +
+ You can give the `-m` flag to the command, which would try a
