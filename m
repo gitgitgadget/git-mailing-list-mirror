@@ -1,79 +1,70 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH 0/3] git-cvsserver: Add support for some binary files
-Date: Sun, 18 May 2008 16:10:54 -0600
-Message-ID: <20080518221053.GA880@comcast.net>
-References: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net> <7v7idteqzn.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>,
-	Frank Lichtenheld <djpig@debian.org>
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 19 00:11:50 2008
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: Re: [BUG] make test fails on osx (t7502-commit.sh)
+Date: Sun, 18 May 2008 18:13:10 -0400
+Message-ID: <1A30A982-33B4-45BD-8291-FE1F61AFD6F9@gmail.com>
+References: <75B80F22-AC86-4D3F-A7E6-7DE70AEE5114@gmail.com> <46A56F20-DFB7-451E-9E81-71FA51FE1E27@sb.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon May 19 00:14:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jxr6b-0004tN-7u
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 00:11:49 +0200
+	id 1Jxr96-0005aJ-6a
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 00:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821AbYERWK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2008 18:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbYERWK5
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 May 2008 18:10:57 -0400
-Received: from qmta05.emeryville.ca.mail.comcast.net ([76.96.30.48]:52041 "EHLO
-	QMTA05.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753392AbYERWK4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 May 2008 18:10:56 -0400
-Received: from OMTA07.emeryville.ca.mail.comcast.net ([76.96.30.59])
-	by QMTA05.emeryville.ca.mail.comcast.net with comcast
-	id T9By1Z00K1GXsucA503500; Sun, 18 May 2008 22:10:55 +0000
-Received: from mmogilvi.homeip.net ([75.70.160.185])
-	by OMTA07.emeryville.ca.mail.comcast.net with comcast
-	id TAAu1Z00740J0Bv8T00000; Sun, 18 May 2008 22:10:55 +0000
-X-Authority-Analysis: v=1.0 c=1 a=o8s9G-U7OAoA:10 a=DnQ2Ju4PVaQA:10
- a=00fO1AWQ8es1UjfIrlAA:9 a=SOZsy72UqSr-f_2RiIxavZxbgMQA:4 a=3cjVDzgxsZYA:10
- a=LY0hPdMaydYA:10
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id 3588389115; Sun, 18 May 2008 16:10:54 -0600 (MDT)
-Content-Disposition: inline
-In-Reply-To: <7v7idteqzn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.4i
+	id S1755881AbYERWNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2008 18:13:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbYERWNX
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 May 2008 18:13:23 -0400
+Received: from wx-out-0506.google.com ([66.249.82.224]:26572 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755209AbYERWNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2008 18:13:22 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so1340329wxd.4
+        for <git@vger.kernel.org>; Sun, 18 May 2008 15:13:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=otcbdwRpdWTbAp044Psou6o5+/G6/gn4QcuV4L4FvhI=;
+        b=s/fZfx9ydYtq8Zf/wDCV0mSx43ajPKPdDQvTjJZyp8r06pj2tXzUtba2kFkBXMgIVYPO7FOfNm+tiUQC1tLHNFG5GOj1o91GSIaFHkfrIISIrdG1aU9LbCF2bE2EpCWRRvcejtRCoM6Kkd20AkfrKnuuhafzqjp2Ybi4VFPyY/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=SW0Q8GwSmwNomcqRhLt1rdCnBy+ZbYH6saGBaL6rfl4o9teJ42hUJI7bta/JBlFssUH40DIw9QkQiIC5PkLSOvwSWCCSn8TdUiVwF/QDw76DgMo8LGyO6LEpDxCqYLdKkoTU46vGPw5ybjWua5kc9dIxqtvqEXj15NbBx365t4Y=
+Received: by 10.70.49.1 with SMTP id w1mr8321218wxw.19.1211148801170;
+        Sun, 18 May 2008 15:13:21 -0700 (PDT)
+Received: from ?192.168.1.101? ( [65.96.170.12])
+        by mx.google.com with ESMTPS id h13sm10299887wxd.36.2008.05.18.15.13.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 18 May 2008 15:13:20 -0700 (PDT)
+In-Reply-To: <46A56F20-DFB7-451E-9E81-71FA51FE1E27@sb.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82398>
 
-On Fri, May 16, 2008 at 05:03:40PM -0700, Junio C Hamano wrote:
-> Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
-> 
-> > This series of patches extends git-cvsserver to support telling the
-> > CVS client to set the -kb (binary) mode for files that git considers
-> > to be binary (and not for text files).  It includes updates to
-> > documentation and tests.
-> 
-> I am unfortunately not familiar with this part of the system and I'd need
-> to summon help from experts, but it looks rather nicely done.
-> 
-> I saw a few places that said "crnl" instead of "crlf" in the
-> documentation, which I munged locally before queuing.
+On May 16, 2008, at 10:58 PM, Kevin Ballard wrote:
+> On May 16, 2008, at 7:59 PM, Rhodes, Kate wrote:
+>
+>> just checked out the main branch  
+>> 1fbb58b4153e90eda08c2b022ee32d90729582e6
+>> The offending message from make test follows.
 
-Sounds good.
+[snip]
 
-> 
-> I noticed kopts_from_path in patch 3/3 takes $srcType of "sha1Or-k" but I
-> could not spot which caller gives such token to the function.
+>
+> See http://marc.info/?l=git&m=121089732118252&w=2. A patch was  
+> submitted to fix this problem, but apparently hasn't been accepted  
+> yet.
 
-Oops.  The "sha1Or-k" cases can and probably should be removed
-completely.
+[snip]
 
-I can generate another patch if you would like.
+Thanks. I can confirm that that patch fixed it for me.
 
-It's a remnant of an approach I had been working on earlier,
-when I thought there might be cases when I needed to fall back on
-the -k option the user specified on the command line because I didn't
-have the file contents.  But careful study revealed what I needed
-elsewhere in the data structures.
-
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+-Kate
