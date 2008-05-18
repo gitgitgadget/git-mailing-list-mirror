@@ -1,102 +1,91 @@
-From: "Sverre Rabbelier" <srabbelier@gmail.com>
-Subject: Re: [RFC] Use cases for 'git statistics'
-Date: Sun, 18 May 2008 03:01:53 +0200
-Message-ID: <bd6139dc0805171801q1c07f902p1882f65a77345d71@mail.gmail.com>
-References: <bd6139dc0805080851y2065bedfsf0f388cfd6d85929@mail.gmail.com>
-	 <200805121440.12836.jnareb@gmail.com>
-	 <bd6139dc0805120604m349b1fbbr39c6dcb8d893e771@mail.gmail.com>
-	 <200805131507.04912.jnareb@gmail.com>
-	 <bd6139dc0805130637saf704e1v2ab67c99da3078c3@mail.gmail.com>
-	 <7vlk29er1w.fsf@gitster.siamese.dyndns.org>
+From: drafnel@gmail.com
+Subject: [PATCH] t7701-repack-unpack-unreachable.sh: check timestamp of unpacked objects
+Date: Sat, 17 May 2008 23:00:00 -0500
+Message-ID: <16342222.1211083116270.JavaMail.teamon@b306.teamon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 18 03:02:46 2008
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun May 18 05:59:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JxXIT-0003DZ-It
-	for gcvg-git-2@gmane.org; Sun, 18 May 2008 03:02:45 +0200
+	id 1Jxa3W-000162-T0
+	for gcvg-git-2@gmane.org; Sun, 18 May 2008 05:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756441AbYERBBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2008 21:01:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757240AbYERBBz
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 21:01:55 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:37843 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755600AbYERBBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2008 21:01:54 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so781639wfd.4
-        for <git@vger.kernel.org>; Sat, 17 May 2008 18:01:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=4FEwFL83v7yWERKIZSh+IBzBi+tCStprJdJxOmT0HXg=;
-        b=iJg2auTPx9G6Lg2YaZUVTO+2zWXbZhS6nuQYd4D+E7f6VVhu27yFk6dQwreQrZL8WUb/8Lw83rRf/AJM0bB0FriciIvhZUg3g4gFgW+RQel5YN0tdMLlPIkhPgHQF8iHERrKHxX8xvFMHAnLWO8BXP9yntSi6CoO8V/LcbF/WUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=il9d4Jday2OifUb9+Ft6Ehc+vdc6y85XXuyhVjZH5yuBoJ4F/BNHbWyxct+MPPm16ITzgwAX1JAFUtcD6Hh13wFwwQJExQjERK5cq1n0dTdf8P+VKPA7ltfokYMcNG0qNF44k2SPGe+iYDc7qam4wEFYOmbNuPhYmGFIzaRIn0Y=
-Received: by 10.142.177.7 with SMTP id z7mr2200631wfe.238.1211072513558;
-        Sat, 17 May 2008 18:01:53 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Sat, 17 May 2008 18:01:53 -0700 (PDT)
-In-Reply-To: <7vlk29er1w.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: e417f1f2823efd9d
+	id S1751951AbYERD6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2008 23:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYERD6j
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 May 2008 23:58:39 -0400
+Received: from mailproxy06.teamon.com ([64.14.130.37]:23767 "EHLO
+	b306.teamon.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751499AbYERD6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2008 23:58:38 -0400
+Received: from b306.teamon.com (localhost [127.0.0.1])
+	by b306.teamon.com (8.11.7 DSN_MOD/8.11.7) with ESMTP id m4I3wad30244;
+	Sun, 18 May 2008 03:58:36 GMT
+X-Mailer: git-send-email 1.5.5.1.447.geb0a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82373>
 
-[And once more with 'reply to all' instead. Wouldn't it be nice if
-gmail had an 'auto-reply-to-all' feature...]
+From: Brandon Casey <drafnel@gmail.com>
 
-On Sat, May 17, 2008 at 2:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> A cursory browsing is enough only when you trust the contributor well.
-> For example, I read patches from Nico to code around the pack generation
-> only once or at most twice before I apply them, and the same thing can be
-> said about git-svn patches from or acked-by Eric.  These come mostly from
-> the fact that (1) I know they know the area a lot better than myself do,
-> and more importantly that (2) I know they care deeply about the subsystem
-> they are modifying, and they have good taste.
+Unpacked objects should receive the timestamp of the pack they were
+unpacked from. Check.
 
-This makes sense, patches only get a 'cursory browsing' when they come
-from a trusted author, which is defined mostly by how active and how
-'good' they are in the area they modify.
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+ t/t7701-repack-unpack-unreachable.sh |   28 ++++++++++++++++++++++++++++
+ 1 files changed, 28 insertions(+), 0 deletions(-)
 
-> Project maintainers and old timers become familiar with habits, strengths
-> and weaknesses of known contributors over time, and that is the source of
-> such trust.
-
-This could only partially be done by an algorithm, while git excels in
-the 'over time' part, the definition of 'habits, strengths and
-weaknesses' is harder to make.
-
-> A clever enough automated way may be able to identify links between the
-> contributors and the areas they are familiar with, and using such a
-> mechanism people might be able to decide that a patch falls into category
-> (1) above.  I am not sure if any automated way could ever decide if a
-> patch falls into category (2) above, though.
-
-Yes, your solution in determining patches from (1) is in the same
-direction of what I have been thinking on myself. I don't think it is
-possible to determine (2) without having access to the review system
-(in git's case, the mailing list). When the review system would become
-part of the analysis it could provide information on what improvements
-had to be made to a commit before it was accepted. If 'style
-improvements' would be marked in such a system then people with 'good
-taste' are people whose commits do not often need 'style
-improvements'. Alas, implementing something like that would be beyond
-the scope of 1 GSoC. Ah well, 't is a nice dream about to implement at
-a later time perhaps. (Although such would be more suited in a team
-collaboration suite than in a [D]VCS).
-
-
---
-Cheers,
-
-Sverre Rabbelier
+diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
+index 6a5211f..bdb00d4 100755
+--- a/t/t7701-repack-unpack-unreachable.sh
++++ b/t/t7701-repack-unpack-unreachable.sh
+@@ -4,6 +4,10 @@ test_description='git-repack works correctly'
+ 
+ . ./test-lib.sh
+ 
++fsha1=
++csha1=
++tsha1=
++
+ test_expect_success '-A option leaves unreachable objects unpacked' '
+ 	echo content > file1 &&
+ 	git add . &&
+@@ -44,4 +48,28 @@ test_expect_success '-A option leaves unreachable objects unpacked' '
+ 	git show $tsha1
+ '
+ 
++test_expect_success 'unpacked objects receive timestamp of pack file' '
++	fsha1path=$(echo "$fsha1" | sed -e "s/\(..\)\(.*\)/\1\/\2/") &&
++	fsha1path=".git/objects/$fsha1path" &&
++	csha1path=$(echo "$csha1" | sed -e "s/\(..\)\(.*\)/\1\/\2/") &&
++	csha1path=".git/objects/$csha1path" &&
++	tsha1path=$(echo "$tsha1" | sed -e "s/\(..\)\(.*\)/\1\/\2/") &&
++	tsha1path=".git/objects/$tsha1path" &&
++	git branch transient_branch $csha1 &&
++	git repack -a -d -l &&
++	test ! -f "$fsha1path" &&
++	test ! -f "$csha1path" &&
++	test ! -f "$tsha1path" &&
++	test 1 = $(ls -1 .git/objects/pack/pack-*.pack | wc -l) &&
++	packfile=$(ls .git/objects/pack/pack-*.pack) &&
++	git branch -D transient_branch &&
++	git repack -A -l &&
++	test -f "$fsha1path" -a ! "$fsha1path" -nt "$packfile" -a \
++				! "$fsha1path" -ot "$packfile" &&
++	test -f "$csha1path" -a ! "$csha1path" -nt "$packfile" -a \
++				! "$csha1path" -ot "$packfile" &&
++	test -f "$tsha1path" -a ! "$tsha1path" -nt "$packfile" -a \
++				! "$tsha1path" -ot "$packfile"
++'
++
+ test_done
+-- 
+1.5.5.1.447.geb0a7
