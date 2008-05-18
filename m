@@ -1,68 +1,79 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH v2 3/5] git-submodule.sh: Add Custom argument input support to git submodule recurse subcommand
-Date: Sun, 18 May 2008 15:36:10 +0200
-Message-ID: <bd6139dc0805180636o4c5141c5vee559290832a4f03@mail.gmail.com>
-References: <1209978582-5785-1-git-send-email-imyousuf@gmail.com>
-	 <1209978582-5785-2-git-send-email-imyousuf@gmail.com>
-	 <1209978582-5785-3-git-send-email-imyousuf@gmail.com>
-	 <7v7idzxhwp.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix t6031 on filesystems without working exec bit
+Date: Sun, 18 May 2008 16:57:27 +0200
+Message-ID: <20080518145727.GA3058@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: imyousuf@gmail.com, git@vger.kernel.org,
-	"Imran M Yousuf" <imyousuf@smartitengineering.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 18 15:37:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 18 16:58:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jxj4R-0007gW-PZ
-	for gcvg-git-2@gmane.org; Sun, 18 May 2008 15:37:04 +0200
+	id 1JxkLZ-0006CU-Fx
+	for gcvg-git-2@gmane.org; Sun, 18 May 2008 16:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbYERNgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2008 09:36:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYERNgO
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 May 2008 09:36:14 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:42114 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbYERNgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2008 09:36:13 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so954896rvb.1
-        for <git@vger.kernel.org>; Sun, 18 May 2008 06:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Dws+/+eEY4l95lnNgQjh6SI3I0AzIn+VC/OQB7G8KjI=;
-        b=msmJkqlDIwGr/+EwX8IuQ1/yIZp9emxMeyaONJcuPj42BL1g9esb5BlZt2ZJsLug9TTQRG9H0mN4o3pkTE5mJp1PcRWVrnwGccrx1giaKUE0u45TOiw0kf27922PjGTowV+8Iu8CfQZXwa3agbfoYSvC/yNTURalh5moQWtcjRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DY944ikExf0O6XPYxcAfamXvO+WI8yJ1GcoA4cOQ/5lRxfkf4hsc//gWx6kyMFPDG9R96Hi84WvWaJbYZJua61ip0TYOnnT1uMAJiBG27q2scdPN3hLvP50sb3oNkT8RwTHCh1yRtYlMVXsyDGwL9n63thtsgiH5Jpz1c1yoCDc=
-Received: by 10.143.161.11 with SMTP id n11mr2379157wfo.333.1211117770896;
-        Sun, 18 May 2008 06:36:10 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Sun, 18 May 2008 06:36:10 -0700 (PDT)
-In-Reply-To: <7v7idzxhwp.fsf@gitster.siamese.dyndns.org>
+	id S1751740AbYERO5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2008 10:57:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbYERO5b
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 May 2008 10:57:31 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:65149 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731AbYERO5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2008 10:57:31 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarAeHyXUdQ==
+Received: from tigra.home (Fac65.f.strato-dslnet.de [195.4.172.101])
+	by post.webmailer.de (mrclete mo33) (RZmta 16.34)
+	with ESMTP id c00d1dk4IC4l22 ; Sun, 18 May 2008 16:57:28 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1B321277BD;
+	Sun, 18 May 2008 16:57:28 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 0964856D28; Sun, 18 May 2008 16:57:28 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82386>
 
-On Tue, May 13, 2008 at 12:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> If we want a useful and flexible "recurse", perhaps the only thing we need
-> to do is a command that lists a submodule directory path, one path at a
-> time, in optionally different traversal order and depth cutoff, so that
-> the user can feed it to xargs and do whatever they want to run in there.
+The point of the test is not really to test the ability of the
+filesystem to keep the given x-bit, but to check is merge-recursive
+correctly handles it.
 
-How about Windows? Do we want to depend on something like
-http://gnuwin32.sourceforge.net/packages/findutils.htm or does msysgit
-ship with xargs? (Or do we not intend to build internal commands upon
-this system and leave using the output of "recurse" to the user?)
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ t/t6031-merge-recursive.sh |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
 
+diff --git a/t/t6031-merge-recursive.sh b/t/t6031-merge-recursive.sh
+index c8310ae..f1c91c8 100755
+--- a/t/t6031-merge-recursive.sh
++++ b/t/t6031-merge-recursive.sh
+@@ -12,8 +12,7 @@ test_expect_success 'mode change in one branch: keep changed version' '
+ 	git add dummy &&
+ 	git commit -m a &&
+ 	git checkout -b b1 master &&
+-	chmod +x file1 &&
+-	git add file1 &&
++	git update-index --chmod=+x file1 &&
+ 	git commit -m b1 &&
+ 	git checkout a1 &&
+ 	git merge-recursive master -- a1 b1 &&
+@@ -25,8 +24,7 @@ test_expect_success 'mode change in both branches: expect conflict' '
+ 	git checkout -b a2 master &&
+ 	: >file2 &&
+ 	H=$(git hash-object file2) &&
+-	chmod +x file2 &&
+-	git add file2 &&
++	git update-index --add --chmod=+x file2 &&
+ 	git commit -m a2 &&
+ 	git checkout -b b2 master &&
+ 	: >file2 &&
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.5.5.1.354.g902c
