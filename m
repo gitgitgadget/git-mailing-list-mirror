@@ -1,61 +1,60 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: t3701 fails if core.filemode disabled
-Date: Mon, 19 May 2008 22:23:42 +0200
-Message-ID: <20080519202342.GA9694@steel.home>
-References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t7701-repack-unpack-unreachable.sh: check timestamp of
+ unpacked objects
+Date: Mon, 19 May 2008 15:27:02 -0500
+Message-ID: <E8K6ZsektNV-bzzpBDDSjLUNAu6_Tgxq9EV2896g2zCI6VyLsESxXw@cipher.nrlssc.navy.mil>
+References: <16342222.1211083116270.JavaMail.teamon@b306.teamon.com> <7vd4niaozy.fsf@gitster.siamese.dyndns.org> <OleexvYZfiSxUgrxHbDqLpGl2g7TsoOO7pwZXC1fiyL2KxKVuWLtWw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 19 22:25:01 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 19 22:36:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyBuQ-0000PT-Af
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 22:24:38 +0200
+	id 1JyC3r-0004jZ-7f
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 22:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755441AbYESUXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 16:23:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754989AbYESUXr
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 16:23:47 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:10847 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757AbYESUXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 16:23:46 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarAeHyHI8Q==
-Received: from tigra.home (Fac8f.f.strato-dslnet.de [195.4.172.143])
-	by post.webmailer.de (mrclete mo5) (RZmta 16.34)
-	with ESMTP id Y017a8k4JJKQrB ; Mon, 19 May 2008 22:23:43 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id CE4DD277BD;
-	Mon, 19 May 2008 22:23:42 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id A3E3956D28; Mon, 19 May 2008 22:23:42 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080518200121.GA5789@steel.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758625AbYESUdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 16:33:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbYESUdc
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 16:33:32 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42188 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751625AbYESUdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 16:33:31 -0400
+Received: by mail.nrlssc.navy.mil id m4JKR27q010430; Mon, 19 May 2008 15:27:02 -0500
+In-Reply-To: <OleexvYZfiSxUgrxHbDqLpGl2g7TsoOO7pwZXC1fiyL2KxKVuWLtWw@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 19 May 2008 20:27:02.0583 (UTC) FILETIME=[B25CA470:01C8B9EE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82447>
 
-Alex Riesen, Sun, May 18, 2008 22:01:21 +0200:
-> Jeff King, Sun, May 18, 2008 21:08:39 +0200:
-> > I don't mind disabling these tests if they don't make sense on certain
-> > platforms, but regarding your specific proposal:
-> > 
-> >   - can you confirm that the test doesn't make sense, and not that it is
-> >     simply broken on cygwin? Does changing your ~/.gitconfig's
-> >     core.filemode make a difference? It shouldn't, but that could be
-> >     a bug in test-lib. What happens if you run the test manually? Does
-> >     git-add just not prompt for the mode change?
+Brandon Casey wrote:
+> Junio C Hamano wrote:
+>> drafnel@gmail.com writes:
+>>
+>>
+>>> +	test -f "$fsha1path" -a ! "$fsha1path" -nt "$packfile" -a \
+>>> +				! "$fsha1path" -ot "$packfile" &&
+>>> +	test -f "$csha1path" -a ! "$csha1path" -nt "$packfile" -a \
+>>> +				! "$csha1path" -ot "$packfile" &&
+>>> +	test -f "$tsha1path" -a ! "$tsha1path" -nt "$packfile" -a \
+>>> +				! "$tsha1path" -ot "$packfile"
+>>> +'
+>> "Test" primaries -nt/-ot are unfortunately excluded from POSIX.
 > 
-> I setting core.filemode _inside_ the test breaks it in exactly the
-> same way (on Linux, I'm at home). I'll retest tomorrow
+> hrmph, and it even worked on solaris ksh.
 
-It is "git init" which sets core.filemode false (of course!)
+FYI, also works with dash, and there is a use of '-nt' in git-mergetool.sh
+which is not exercised by the test suite.
+
+Maybe I'll think about a perl version.
+
+Also, do you have a url to your posix reference?
+
+-brandon
