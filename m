@@ -1,62 +1,62 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: "Git is a dangerous tool to use" ?
-Date: Mon, 19 May 2008 11:52:00 +0200
-Message-ID: <86od72tydb.fsf@lola.quinscape.zz>
-References: <46d6db660805190045k207146d1t6fc6d4c3b6b4f6d1@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Two minor tweaks on git-gui where textboxes weren't vertically
+ centered with their labels and buttons
+Date: Mon, 19 May 2008 11:28:48 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805191127200.30431@racer>
+References: <412a1d9a0805172218v7c0a920es8a48129014051a35@mail.gmail.com>  <20080519040746.GA29038@spearce.org> <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 19 11:53:16 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Twiinz <twiinz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 19 12:29:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jy23J-0008KO-Ht
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 11:53:09 +0200
+	id 1Jy2cX-0003Tm-Gp
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 12:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753754AbYESJwR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2008 05:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754405AbYESJwQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 05:52:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:49343 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754210AbYESJwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 05:52:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Jy22N-0004qC-Oz
-	for git@vger.kernel.org; Mon, 19 May 2008 09:52:11 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 May 2008 09:52:11 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 May 2008 09:52:11 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:v0aRXukzs7d1vrFWnYPKVi27K7k=
+	id S1755484AbYESK2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 06:28:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755434AbYESK2m
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 06:28:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49764 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754895AbYESK2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 06:28:41 -0400
+Received: (qmail invoked by alias); 19 May 2008 10:28:39 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp004) with SMTP; 19 May 2008 12:28:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/JWaw5YhfJlRoTS6J3uaGo9uMnekleUBV5clVeLV
+	vRsL9f8Kf8jjLi
+X-X-Sender: gene099@racer
+In-Reply-To: <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82423>
 
-"Christian MICHON" <christian.michon@gmail.com> writes:
+Hi,
 
-> You may have seen it or not:
->
-> http://programblings.com/2008/05/14/git-is-a-dangerous-tool-to-use/
->
-> The conclusion is fun: "Git =E2=80=94 the only SCM that beheads its u=
-sers."
->
-> ;-)
+On Mon, 19 May 2008, Twiinz wrote:
 
-As any ghost will tell you: the ability to detach one's head when
-necessary can be quite convenient.
+> No worries for Signed-off-by and "Twiinz <twiinz@gmail.com>" for the
+> attribution.
 
---=20
-David Kastrup
+Umm.
+
+The Signed-off-by is not so much for _you_ as for the people who _use_ 
+what you contributed, so that they can always say "but Twiinz signed off 
+on it, he said that he will not sue my $ss off later, like this Darl 
+b$stard".
+
+So yes, I do worry.
+
+Also, please do not top-post.
+
+Hth,
+Dscho
