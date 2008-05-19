@@ -1,104 +1,77 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Git GUI vs interactive post-commit hooks
-Date: Mon, 19 May 2008 16:11:12 +0200
-Message-ID: <20080519141112.GA12304@atjola.homenet>
-References: <c6c947f60805190348g3395f8degae81963b402856b6@mail.gmail.com> <20080519131942.GA5526@atjola.homenet> <c6c947f60805190642x7d44ef04h4090cbb687de69e@mail.gmail.com>
+From: Seth Falcon <seth@userprimary.net>
+Subject: Re: git and peer review
+Date: Mon, 19 May 2008 07:10:36 -0700
+Message-ID: <20080519141036.GV396@ziti.local>
+References: <46dff0320805021802i1a29becflcae901315035a77d@mail.gmail.com> <87k5i9u8f1.fsf@nav-akl-pcn-343.mitacad.com> <20080517213039.GR396@ziti.local> <20080519033736.GZ29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 19 16:12:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Toby Allsopp <Toby.Allsopp@navman.co.nz>,
+	Ping Yin <pkufranky@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 19 16:13:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jy65x-0006ek-9E
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 16:12:09 +0200
+	id 1Jy67H-0007BX-Tt
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 16:13:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757133AbYESOLQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2008 10:11:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755593AbYESOLQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 10:11:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41252 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754674AbYESOLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 10:11:15 -0400
-Received: (qmail invoked by alias); 19 May 2008 14:11:13 -0000
-Received: from i577B8E25.versanet.de (EHLO atjola.local) [87.123.142.37]
-  by mail.gmx.net (mp050) with SMTP; 19 May 2008 16:11:13 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1++hBRhFNG+NErImOyTdWWwdSdhMO6p0SNKm0KJsL
-	QIXkdJ7kFw6i5Z
+	id S1756512AbYESOMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 10:12:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756403AbYESOMl
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 10:12:41 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:57328 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755660AbYESOMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 10:12:40 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1354728wfd.4
+        for <git@vger.kernel.org>; Mon, 19 May 2008 07:12:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        bh=NlNTaMzTbju60Zc8P2ifbna9jNFzWDI24QJ1fClkgNA=;
+        b=HyRPTuu/+1aoFBkTR7UtxvhSsiZj6GB6Pr0syZB1MmAgiQOxmGdo6iv4dzqvRMPFoaVFz+V+aedHrias+QoszfI3J6/iD3ac9GWhC8+Vt8Xf1VVxFNfczrFlfoNwMWqqZ6/wKdxU892TG/Do5HoaK0LEXzft/R4S80LS1iFtHeY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=tvwU60FZ0eMrmLsLQrMf62JbWO1eyEVWrNzYSqu1r3Zw244mDyOJ9EHUXJ7qVdSYz4KDOBjQSBMe7aLt4PAQrfymHNYXOvAWu2jGfbYPMf55z6BQJNduTyIzKe5YY7vtCMgOSHhlVtx4zNm1/oFUuJjlpE0+QDgibzFZLXcnnsA=
+Received: by 10.142.89.13 with SMTP id m13mr2849361wfb.338.1211206359466;
+        Mon, 19 May 2008 07:12:39 -0700 (PDT)
+Received: from localhost ( [71.197.245.84])
+        by mx.google.com with ESMTPS id 20sm8831399wfi.11.2008.05.19.07.12.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 19 May 2008 07:12:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <c6c947f60805190642x7d44ef04h4090cbb687de69e@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20080519033736.GZ29038@spearce.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82430>
 
-On 2008.05.19 17:42:05 +0400, Alexander Gladysh wrote:
-> On Mon, May 19, 2008 at 5:19 PM, Bj=F6rn Steinbrink <B.Steinbrink@gmx=
-=2Ede> wrote:
-> > On 2008.05.19 14:48:14 +0400, Alexander Gladysh wrote:
-> >> Hi, list!
-> >>
-> >> $ git --version
-> >> git version 1.5.5.1
-> >>
-> >> I have a post-commit hook which does backups for me:
-> >>
-> >>   username=3Dagladysh
-> >>   for name in `git branch | cut -b3-`
-> >>   do
-> >>     remote=3D$username-$name
-> >>     echo pushing $name as $remote
-> >>     git push backup +$name:refs/heads/$remote
-> >>   done
-> >
-> > Isn't that what "git push --all" does? And that will only ask for a
-> > password once, not for every branch.
->=20
-> git push --all would not rename my branches... But, I guess, this can
-> be done as preparation step somehow.
+* On 2008-05-18 at 23:37 -0400 Shawn O. Pearce wrote:
+> Something like this, but its uh, ugly due to the use of a network
+> connection:
+> 
+> 	branch=$(git symbolic-ref HEAD)
+> 	branch=${branch##refs/heads/}
+> 
+> 	remote=$(git config branch.$branch.remote)
+> 	merge=$(git config branch.$branch.merge)
+> 
+> 	rb=$(git ls-remote $remote $merge | awk '{print $1}')
 
-Oh, oops, didn't notice the $remote stuff, sorry.
+Hrm.  My use case is with an upstream svn repository and git-svn.
+With my .git/config, remote and merge as above are empty (I guess that
+is what one would use with a pure git setup).
 
-> >> The backup repo is behind ssh. Recently I have put password on my =
-ssh
-> >> key and post-commit hook ask me for password once for each branch.
-> >> This makes unhappy commit process from Git GUI -- after I shut it
-> >> down, there are multiple ssh key password prompts in the shell fro=
-m
-> >> where I launched it, and it does not display any input I enter.
-> >>
-> >> Any advice? I do want to input password for my key each time I use=
- it.
-> >
-> > For a graphical tool, you might want to use something like
-> > gtk-led-askpass, which shows a window with a password prompt. SSH w=
-ill
-> > make use of it if SSH_ASKPASS contains its path _and_ ssh is not st=
-arted
-> > from a terminal. Unfortunately, the latter is probably not true for=
- git
-> > gui most of the time.
->=20
-> <Useful advice regarding how to solve SSH_ASKPASS issue skipped.>
->=20
-> Thanks, I would try that. I'm mostly working from X, so lack of X
-> should be not an issue... However I'd like to avoid patching my local
-> copy of git as much as possible. :-)
+For the git-svn case, I think what is needed is the ability to ask
+git-svn about the local upstream tracking branch associated with HEAD.
+Since this is information already available to git-svn rebase, I tried
+adding a --dry-run option that prints out what I want.  In the patch
+that follows I'm not sure if I've chosen the right terminology...
 
-Well, the "lack of X" issue only arises if you patch your post-commit
-hook. Adding setsid to the git push command was supposed to happen ther=
-e
-;-) You could probably even make that conditional, so that setsid is
-only used then DISPLAY is set, then it should even work when there's no
-X, but still be annoying when you commit from a terminal... (At least I
-would prefer to enter the password in the terminal then).
-
-Bj=F6rn
+-- 
+Seth Falcon | http://userprimary.net/user/
