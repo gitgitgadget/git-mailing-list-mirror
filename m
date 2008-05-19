@@ -1,106 +1,68 @@
-From: Seth Falcon <seth@userprimary.net>
-Subject: [PATCH] Add a --dry-run option to git-svn rebase
-Date: Mon, 19 May 2008 07:20:44 -0700
-Message-ID: <1211206844-29842-1-git-send-email-seth@userprimary.net>
-References: <3c20080519141036.GV396@ziti.local>
-Cc: Seth Falcon <seth@userprimary.net>
-To: git@vger.kernel.org, normalperson@yhbt.ne
-X-From: git-owner@vger.kernel.org Mon May 19 16:32:06 2008
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: submodules workflow aches
+Date: Mon, 19 May 2008 15:56:49 +0100
+Message-ID: <320075ff0805190756x3adf1684i3980aac15e2ddb88@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 19 17:00:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jy6Oe-0006YW-6W
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 16:31:28 +0200
+	id 1Jy6o5-0002T6-4O
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 16:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757925AbYESOai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 10:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757918AbYESOah
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 10:30:37 -0400
-Received: from dsl017-040-092.sea1.dsl.speakeasy.net ([69.17.40.92]:41497 "EHLO
-	zimbra.evri.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757880AbYESOah (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 10:30:37 -0400
-X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 May 2008 10:30:37 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.evri.com (Postfix) with ESMTP id 922F21A2C230;
-	Mon, 19 May 2008 07:20:40 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: 3.062
-X-Spam-Level: ***
-X-Spam-Status: No, score=3.062 tagged_above=-10 required=5 tests=[AWL=-0.162,
-	BAYES_00=-2.599, HELO_LOCALHOST=3.941, RCVD_IN_PBL=0.905,
-	RCVD_IN_SORBS_DUL=0.877, RDNS_DYNAMIC=0.1]
-Received: from zimbra.evri.com ([127.0.0.1])
-	by localhost (zimbra.evri.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id joUbe-aQUdoo; Mon, 19 May 2008 07:20:39 -0700 (PDT)
-Received: from localhost (c-71-197-245-84.hsd1.or.comcast.net [71.197.245.84])
-	by zimbra.evri.com (Postfix) with ESMTP id EB2551A2C22E;
-	Mon, 19 May 2008 07:20:38 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.1.316.g377d9.dirty
-In-Reply-To: <3c20080519141036.GV396@ziti.local>
+	id S1751690AbYESO4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 10:56:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbYESO4w
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 10:56:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:25313 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404AbYESO4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 10:56:52 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1674164fgg.17
+        for <git@vger.kernel.org>; Mon, 19 May 2008 07:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=8eR8uKBDLr7wlxecULM8lOya5iQbCTK4ptifXLI0GsI=;
+        b=g+7sMwjzLMxEd9WA2eUa6cwG5KHzLvUJjAcBa4OoqxQfbxnllsZa6SCDXyk0LuGH3wYZP7ee4XubjTKejY3tKJ4jjjg27EAAK5h2o5dh7/UDL+Blg9+BXzaYDXBTtScdD6mo89L1ySmZUQxh0Keoe5ccg3Avxko/eRS1MzZtrG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=bm5VBKFvELNF9ZrNt+OOM6JqDvj1h25opO+VeVPhpuEkfRCWdJlmlaRIGXgmweF1tXFKBTSD2g0tKaPkUfsK946aponkOwqz0MSENiZakjfHNODo0SRfp8XWG+Fe9FqVdKcPtP07NP3rd5jdzDHOAyEZVysLn984RbcQyHxAmVk=
+Received: by 10.82.178.3 with SMTP id a3mr931278buf.12.1211209010013;
+        Mon, 19 May 2008 07:56:50 -0700 (PDT)
+Received: by 10.82.168.20 with HTTP; Mon, 19 May 2008 07:56:49 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82433>
 
-When working with multiple branches in an svn repository, it can be
-useful to verify the svn repository and local tracking branch that will
-be used for the rebase operation.
+We've been using submodule support for a few months (and I've been
+checking out the list to see what other people are doing); it works
+well, but there's a couple of ache points (in the sense that if I'm to
+convince SVN users to migrate, they're liable to point and laugh).
 
-Signed-off-by: Seth Falcon <seth@userprimary.net>
----
- Documentation/git-svn.txt |    8 ++++++--
- git-svn.perl              |    6 ++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+The first nuisance is the 'get me up to date' stanza of 'git pull &&
+git submodule update' always leaving you on (no branch), even if you
+were on [master] before, and the head commit now is also equal to
+[master]. Having to remember to go into several submodules and do 'git
+checkout master' to get you back to ready-to-do-work mode isn't nice
+(and is worse if you're on autopilot, and someone has committed a
+submodule on a different branch
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index c6b56b4..5890028 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -342,11 +342,15 @@ Passed directly to git-rebase when using 'dcommit' if a
- -n::
- --dry-run::
- 
--This is only used with the 'dcommit' command.
-+This can be used with the 'dcommit' and 'rebase' commands.
- 
--Print out the series of git arguments that would show
-+For 'dcommit', print out the series of git arguments that would show
- which diffs would be committed to SVN.
- 
-+For 'rebase', display the local branch associated with the upstream svn
-+repository associated with the current branch and the URL of svn
-+repository that will be fetched from.
-+
- --
- 
- ADVANCED OPTIONS
-diff --git a/git-svn.perl b/git-svn.perl
-index 2c53f39..de52c12 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -176,6 +176,7 @@ my %cmd = (
- 			  'strategy|s=s' => \$_strategy,
- 			  'local|l' => \$_local,
- 			  'fetch-all|all' => \$_fetch_all,
-+                          'dryrun|n' => \$_dry_run,
- 			  %fc_opts } ],
- 	'commit-diff' => [ \&cmd_commit_diff,
- 	                   'Commit a diff between two trees',
-@@ -553,6 +554,11 @@ sub cmd_rebase {
- 		die "Unable to determine upstream SVN information from ",
- 		    "working tree history\n";
- 	}
-+        if ($_dry_run) {
-+                print "remote-branch: " . $gs->refname . "\n";
-+                print "svn-url: " . $url . "\n";
-+                return;
-+        }
- 	if (command(qw/diff-index HEAD --/)) {
- 		print STDERR "Cannot rebase with uncommited changes:\n";
- 		command_noisy('status');
--- 
-1.5.5.1.316.g377d9.dirty
+The second nuisance is around conflicts in submodules. If I make a
+(non-conflicting) change to a submodule, merge with the head and
+commit, then when I do a 'git pull' in the superproject readiness to
+do a push, I get a conflict. This is presumably because it doesn't
+know that the submodule change is a fast-forward. It'd be nice if it
+could figure that out, and not conflict?
+
+Are people writing their own wrapper scripts for this? I find I have a
+hard time explaining why it's all necessary to svn users who just (by
+and large) do 'svn up' and 'svn ci' on projects..
