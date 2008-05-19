@@ -1,75 +1,92 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Re* [PATCH] "not uptodate" changed to "has local changes"
-Date: Mon, 19 May 2008 15:32:14 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805191523060.19665@iabervon.org>
-References: <1209833972-12256-1-git-send-email-timcharper@gmail.com> <e2b179460805060631l506e2a6leaafc9c0acf3b05b@mail.gmail.com> <b8bf37780805151914j65ce5406xc5e6b3d29e3bfb9b@mail.gmail.com> <alpine.DEB.1.00.0805161125320.30431@racer>
- <1ED37CF1-EABD-4881-BA29-ED2CB1CE73FC@sb.org> <b8bf37780805162030m4c961505nabd72e8f5bd08404@mail.gmail.com> <alpine.DEB.1.00.0805171102480.30431@racer> <e06498070805170744l7ad213aeqb779b0c0381e1de4@mail.gmail.com> <bd6139dc0805170912w14b7894fxfebe15c14e4c44ef@mail.gmail.com>
- <7v63tcda7e.fsf_-_@gitster.siamese.dyndns.org> <D925ECD3-1EE2-48EB-B1E5-2604C10AD643@wincent.com> <7vzlqm89tj.fsf@gitster.siamese.dyndns.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: bare --init Vs --init bare
+Date: Mon, 19 May 2008 21:32:21 +0200
+Message-ID: <8aa486160805191232m76bbc7detdcd2d459c8e572cd@mail.gmail.com>
+References: <20080519175313.GA17305@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1329237433-1211225534=:19665"
-Cc: Wincent Colaiuta <win@wincent.com>, sverre@rabbelier.nl,
-	Steven Walter <stevenrwalter@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-15?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Mike Ralphson <mike.ralphson@gmail.com>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 19 21:33:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Luciano Rocha" <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Mon May 19 21:33:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyB6c-0003yG-En
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 21:33:10 +0200
+	id 1JyB6t-00045s-Jk
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 21:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757779AbYESTcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 15:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbYESTcT
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 15:32:19 -0400
-Received: from iabervon.org ([66.92.72.58]:36988 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755263AbYESTcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 15:32:18 -0400
-Received: (qmail 30223 invoked by uid 1000); 19 May 2008 19:32:14 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 May 2008 19:32:14 -0000
-In-Reply-To: <7vzlqm89tj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1758093AbYESTcf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2008 15:32:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757862AbYESTcf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 15:32:35 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:16022 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757533AbYESTce convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 May 2008 15:32:34 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1190201ywe.1
+        for <git@vger.kernel.org>; Mon, 19 May 2008 12:32:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QfH5ZaD1cJhcyIcFSrYQaX4Rsjkf9ENhC+ihlLAI4CM=;
+        b=TaRd1z9PKqk9UrZzAUJEpK22/eJHEtHKND8b20+KqfyLNZu3VzI+8vpQId5j9upt84ZCci0p3hMkuwOBRUHTS+PdJf/YdLTozuaZNf4Yu6in0vNN8t/tT9/QMbRhGwO3Go8TWnqeTsEk00v+ybY0govvBWFgGwwb4gfQnkzmJQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AxQhRpuKY1GzbKMMXzP3yeSfzp+Oo+asU77zTBX3fJAA1njeEZhp2NQehiN/FAW35t4FGuyRrXS3RbloCj52mwcdwccO3Mnp34/5PN8DE2Tmk81blggMqj7LPQvzRYfDtt53NvrSZqy94Pn0OgjHIlv3DBKB3p1wdfCjHEKC94g=
+Received: by 10.150.84.41 with SMTP id h41mr6732413ybb.220.1211225541881;
+        Mon, 19 May 2008 12:32:21 -0700 (PDT)
+Received: by 10.150.152.19 with HTTP; Mon, 19 May 2008 12:32:21 -0700 (PDT)
+In-Reply-To: <20080519175313.GA17305@bit.office.eurotux.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82442>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, May 19, 2008 at 7:53 PM, Luciano Rocha <luciano@eurotux.com> wr=
+ote:
+>
+> Hello,
+>
 
---1547844168-1329237433-1211225534=:19665
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> This is odd:
+> $ git init --bare
+> usage: git-init [-q | --quiet] [--template=3D<template-directory>] [-=
+-shared]
+> $ git --bare init
+> Initialized empty Git repository in /tmp/1/
 
-On Mon, 19 May 2008, Junio C Hamano wrote:
+The first is a flag to the init subcommand (man git-init), and the
+other is a flag to git (man git).
 
-> Wincent Colaiuta <win@wincent.com> writes:
-> 
-> > El 17/5/2008, a las 21:03, Junio C Hamano escribió:
-> >> +	/* not_uptodate_file */
-> >> +	"Entry '%s' not uptodate. Cannot merge.",
-> >
-> >
-> > Minor nit, "uptodate" is not a word. Should be either "up-to-date" or
-> > "up to date"; most dictionaries list both.
-> 
-> Why does *everybody* keep missing the whole point of this patch?
+See also:
 
-That section needs a comment stating that it's the scripting API, not just 
-an arbitrary set of messages. For that matter, maybe those shouldn't be 
-the default set, but an alternate set used (as a group) by plumbing 
-programs; I don't think it's too likely that there will be a whole lot of 
-new plumbing programs, and new porcelain programs that don't specify 
-anything probably ought to get something more generic.
+http://www.google.com/search?q=3D%22git+init+--bare%22+%22git+--bare+in=
+it%22
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1329237433-1211225534=:19665--
+or equivalent
+
+http://kerneltrap.org/mailarchive/git/2007/10/15/344050
+"should git command and git-command be equivalent?"
+
+Santi
+
+>
+> My git version:
+> $ git --version
+> git version 1.5.5.1.318.gc99b
+>
+> (Has two patches on top of origin's
+> 377d9c409ffe0f0d994b929aeb94716139207b9d, setting default prefix in
+> Makefile.)
+>
+> Regards,
+> Luciano Rocha
+>
+> --
+> Luciano Rocha <luciano@eurotux.com>
+> Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+>
