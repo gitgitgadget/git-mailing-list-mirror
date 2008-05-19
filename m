@@ -1,62 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] git-cvsserver: Add support for some binary files
-Date: Mon, 19 May 2008 10:34:47 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805191033080.30431@racer>
-References: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net> <7v7idteqzn.fsf@gitster.siamese.dyndns.org> <46a038f90805181538v56aee5b8y33d68b226a62494f@mail.gmail.com> <20080519073535.GA2885@comcast.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: "Git is a dangerous tool to use" ?
+Date: Mon, 19 May 2008 11:52:00 +0200
+Message-ID: <86od72tydb.fsf@lola.quinscape.zz>
+References: <46d6db660805190045k207146d1t6fc6d4c3b6b4f6d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Frank Lichtenheld <djpig@debian.org>
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Mon May 19 11:36:08 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 19 11:53:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jy1mh-0002uP-EM
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 11:35:59 +0200
+	id 1Jy23J-0008KO-Ht
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 11:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbYESJeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 05:34:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYESJeo
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 05:34:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42650 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751173AbYESJen (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 05:34:43 -0400
-Received: (qmail invoked by alias); 19 May 2008 09:34:40 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp006) with SMTP; 19 May 2008 11:34:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/qHg95T4Hq3v6fSHNfVjJ1JzAKmkjmdIwAlLUcCt
-	88dP3qmQSefmRN
-X-X-Sender: gene099@racer
-In-Reply-To: <20080519073535.GA2885@comcast.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753754AbYESJwR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2008 05:52:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754405AbYESJwQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 05:52:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:49343 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754210AbYESJwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 05:52:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Jy22N-0004qC-Oz
+	for git@vger.kernel.org; Mon, 19 May 2008 09:52:11 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 May 2008 09:52:11 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 May 2008 09:52:11 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:v0aRXukzs7d1vrFWnYPKVi27K7k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82422>
 
-Hi,
+"Christian MICHON" <christian.michon@gmail.com> writes:
 
-On Mon, 19 May 2008, Matthew Ogilvie wrote:
+> You may have seen it or not:
+>
+> http://programblings.com/2008/05/14/git-is-a-dangerous-tool-to-use/
+>
+> The conclusion is fun: "Git =E2=80=94 the only SCM that beheads its u=
+sers."
+>
+> ;-)
 
-> I perceive one remaining big issue for git-cvsserver to be a good 
-> replacement for real CVS: The ability to properly support "cvs update -r 
-> VERSION", where VERSION could be any branch, tag, CVS version number, or 
-> git commit hash. Git-cvsserver can partially support this by checking 
-> out a totally different sandbox as "cvs checkout VERSION" (notice no 
-> -r), but without the ability to switch versions in place, that is an 
-> awkward workaround at best.
+As any ghost will tell you: the ability to detach one's head when
+necessary can be quite convenient.
 
-I might be missing something obvious, but would it not be better to _not_ 
-check out anything, but serve every object straight from the object 
-database (possibly with CR/LF mangling)?
-
-Ciao,
-Dscho
+--=20
+David Kastrup
