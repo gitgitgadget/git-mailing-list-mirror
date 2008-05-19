@@ -1,70 +1,93 @@
-From: "Alexander Gladysh" <agladysh@gmail.com>
-Subject: Git GUI vs interactive post-commit hooks
-Date: Mon, 19 May 2008 14:48:14 +0400
-Message-ID: <c6c947f60805190348g3395f8degae81963b402856b6@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [SQUASHED PATCH] Add support for GIT_CEILING_DIRECTORIES
+Date: Mon, 19 May 2008 11:49:55 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805191138210.30431@racer>
+References: <482C85C8.90804@facebook.com> <alpine.DEB.1.00.0805151958180.30431@racer> <alpine.DEB.1.00.0805152055280.30431@racer> <482CA693.3060602@facebook.com> <alpine.DEB.1.00.0805152327440.30431@racer> <482CBCF2.6030202@facebook.com>
+ <alpine.DEB.1.00.0805160012310.30431@racer> <482D2F9D.4080809@viscovery.net> <alpine.DEB.1.00.0805161118160.30431@racer> <482D66DC.30602@viscovery.net> <482DC7B6.1080406@facebook.com> <alpine.DEB.1.00.0805170117000.30431@racer>
+ <48313258.5010208@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 19 12:49:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Reiss <dreiss@facebook.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon May 19 12:50:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jy2vT-00015o-2F
-	for gcvg-git-2@gmane.org; Mon, 19 May 2008 12:49:07 +0200
+	id 1Jy2wy-0001Vh-J5
+	for gcvg-git-2@gmane.org; Mon, 19 May 2008 12:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434AbYESKsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 06:48:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755518AbYESKsQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 06:48:16 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:2972 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755112AbYESKsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 06:48:15 -0400
-Received: by py-out-1112.google.com with SMTP id u52so1807527pyb.10
-        for <git@vger.kernel.org>; Mon, 19 May 2008 03:48:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=TnqrVQwc/vJsEW3DVMtM9ZTi0P9i/fASVUdDXzBz3C4=;
-        b=hQUT6pdvy4thUH9fScNUNIGIXgry1fEGNbRR0dzAepI4JKUOtEih/SpFmaNOeCAvnqMFLblOLU4xrghCqFr0fVuDKKLkhYVSHmnpmJ7GspNqlGfg1C1FWU3WWbg4RcmrdLAtlHQEQ+tpsFWKDebgYVLsqk5NvY3o+xBDJ2VTlpM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=MNXnq1XRSpug3OLKBIC9b487C+xDGqwYysUdqBzF04pDWaielBP0yCNqFICMTWJ7+ppbnLoXd43Yn6XlaoLOAP+KPm836nxLQRSE6WAlXyQqTz/5P/eQ5ANMVmGYeAOWomRmy4pK9TqiUIPH+H/eF24myeZ7pK4L022NlqHnTIs=
-Received: by 10.114.182.1 with SMTP id e1mr7309253waf.154.1211194094383;
-        Mon, 19 May 2008 03:48:14 -0700 (PDT)
-Received: by 10.115.111.4 with HTTP; Mon, 19 May 2008 03:48:14 -0700 (PDT)
-Content-Disposition: inline
+	id S1755647AbYESKtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 06:49:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755728AbYESKtt
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 06:49:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46070 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755574AbYESKts (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 06:49:48 -0400
+Received: (qmail invoked by alias); 19 May 2008 10:49:46 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
+  by mail.gmx.net (mp008) with SMTP; 19 May 2008 12:49:46 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18WZAdBMQsWhJ4NHfU7pZZnv7lSajvikAu4yZv9cV
+	Y1s/f4602B5jY6
+X-X-Sender: gene099@racer
+In-Reply-To: <48313258.5010208@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82425>
 
-Hi, list!
+Hi,
 
-$ git --version
-git version 1.5.5.1
+On Mon, 19 May 2008, Johannes Sixt wrote:
 
-I have a post-commit hook which does backups for me:
+> Johannes Schindelin schrieb:
+>
+> > diff --git a/setup.c b/setup.c
+> > index cece3e4..2f7a17a 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -441,6 +441,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> >  	 */
+> >  	offset = len = strlen(cwd);
+> >  	for (;;) {
+> > +		if (offset <= min_offset)
+> > +			goto non_git;
+> >  		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
+> >  		if (gitfile_dir) {
+> >  			if (set_git_dir(gitfile_dir))
+> > @@ -460,6 +462,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> >  		chdir("..");
+> >  		do {
+> >  			if (offset <= min_offset) {
+> > +non_git:
+> >  				if (nongit_ok) {
+> >  					if (chdir(cwd))
+> >  						die("Cannot come back to cwd");
+> 
+> Hmm... If the implementation needs a 'goto', then I have the strong
+> suspicion that there's already something wrong at the concept level.
 
-  username=agladysh
-  for name in `git branch | cut -b3-`
-  do
-    remote=$username-$name
-    echo pushing $name as $remote
-    git push backup +$name:refs/heads/$remote
-  done
+I do not share the notion that "goto" = BAD.
 
-The backup repo is behind ssh. Recently I have put password on my ssh
-key and post-commit hook ask me for password once for each branch.
-This makes unhappy commit process from Git GUI -- after I shut it
-down, there are multiple ssh key password prompts in the shell from
-where I launched it, and it does not display any input I enter.
+> [That said, I'm not in strong support of this feature in general - I'm 
+> just caring because *if* it goes in, it will have conflicts with the 
+> mingw branch.]
 
-Any advice? I do want to input password for my key each time I use it.
+I am not in support of this feature at all, since I do not need it.
 
-Thanks in advance,
-Alexander.
+However, I saw that David needs it, but I did not agree with the way he 
+implemented his patch.  So I tried to show how it is possible to do it in 
+a way that looks simpler to me.
+
+Now the ball is back in David's field: he can just take my patch, mangle 
+it until it does what he wants, and resubmit.  That said, if the result 
+offends my eye again, I will complain again.
+
+Ciao,
+Dscho
