@@ -1,96 +1,185 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Tue, 20 May 2008 14:34:03 -0700
-Message-ID: <7v3aoc8xtg.fsf@gitster.siamese.dyndns.org>
-References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org>
- <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org>
- <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com>
- <20080520201722.GF29038@spearce.org>
- <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com>
- <20080520203153.GH29038@spearce.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Try the built-in version string before git-describe
+Date: Tue, 20 May 2008 23:39:43 +0200
+Message-ID: <20080520213844.13410.32757.stgit@yoghurt>
+References: <20080520210249.GA19465@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sverre@rabbelier.nl,
-	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 20 23:35:16 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 23:41:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyZUF-0004y2-Ox
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 23:35:12 +0200
+	id 1JyZZb-0006sV-QM
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 23:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762355AbYETVeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 17:34:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760790AbYETVeS
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:34:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51678 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760028AbYETVeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 17:34:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 502766465;
-	Tue, 20 May 2008 17:34:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 1547A643E; Tue, 20 May 2008 17:34:07 -0400 (EDT)
-In-Reply-To: <20080520203153.GH29038@spearce.org> (Shawn O. Pearce's message
- of "Tue, 20 May 2008 16:31:53 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7D8A1CD6-26B4-11DD-8DD1-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1760939AbYETVjx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 May 2008 17:39:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760857AbYETVjw
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:39:52 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3726 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757492AbYETVjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 17:39:51 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1JyZYe-0005HR-00; Tue, 20 May 2008 22:39:44 +0100
+In-Reply-To: <20080520210249.GA19465@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.14.2.157.g9114
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82506>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Try to get the built-in version string first, and fall back to git
+describe if there is no built-in string, instead of the other way
+around. This makes computing the version string much cheaper in the
+common case (whenever StGit is not run directly from a git-controlled
+tree).
 
-> Sverre Rabbelier <alturin@gmail.com> wrote:
->> >
->> > That is probably difficult.  Some of the code internally is more
->> > about stringing the right sequence of plumbing together than it
->> > is about a particular user action.  I think it would take a bit of
->> > work to make it do this, and I just don't see a reason to do it.
->> 
->> The reason would be to make the switch from using git-gui only to
->> using the commandline too... the again, it'd be cutting your own hand
->> (or is it "throat" in English...) to make that transition easier.
->
-> I'm not worried about users leaving git-gui.  Hell, if git-gui
-> was just git on training wheels and all git users left git-gui
-> after a while for the command line that would be telling as it
-> says the graphical interface is not desired.  Or that git-gui's
-> interface is not well suited to the task.
->
-> Far from it.  Some users like git-gui for its ability to show
-> the modified files, and let you stage/unstage individual hunks.
-> Others like its ability to perform checkout+pull in one mouse
-> click.  Many like to point at things with a rodent than to use
-> the keyboard and enter (to them) isoteric commands.
->
-> Right now there are really only two git GUIs; git-gui and QGit.
-> Each has its strengths.  Maybe this time next year we will have
-> a 3rd; name yet to be determined but it would come out of the
-> egit/jgit project as a stand-alone SWT/Java based Git UI.
->  
->> > CVS clients that show CVS commands can easily do so, because they
->> > are directly executing the commands they show you.  This is likely
->> > also true of SVN commands.  But git-gui on Git, that's a whole
->> > different animal.
->> 
->> Ah, I didn't realise git-gui does stuff that you can't really do
->> through the regular porcelain. In that case it would indeed be
->> impossible to print the regular porcelain commands. I think the
->> '--trace' option should be advertised as 'debugging option' so that
->> the user can see what is going on in the case something goes wrong
->> perhaps?
->
-> Yes.  I'll send Junio a patch for Documentation/git-gui.txt and
-> describe it as a debugging option, and also mention that the commands
-> it displays aren't all meant to be invoked by mortals.
+In order for this to work when StGit _is_ run directly from a
+git-controlled tree, setup.py has to delete the builtin version file
+once the installation process is over. (Otherwise, the StGit version
+in a git-controlled tree would be frozen at whatever value it happened
+to have when setup.py was last run.)
 
-Probably --trace should be renamed to --debug then?
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
+---
+
+On 2008-05-20 23:02:49 +0200, Karl Hasselstr=C3=B6m wrote:
+
+> Nah, easier to just change the order of the checks (try r2 before r1)
+> as I outlined. I'll whip up a patch.
+
+
+ setup.py         |   45 +++++++++++++++++++++++++--------------------
+ stgit/.gitignore |    1 -
+ stgit/version.py |   15 ++++++++++++---
+ 3 files changed, 37 insertions(+), 24 deletions(-)
+
+
+diff --git a/setup.py b/setup.py
+index 40022a7..8d8f7a8 100755
+--- a/setup.py
++++ b/setup.py
+@@ -43,34 +43,39 @@ def __check_git_version():
+               % (version.git_min_ver, gitver)
+         sys.exit(1)
+=20
++def __run_setup():
++    setup(name =3D 'stgit',
++          version =3D version.version,
++          license =3D 'GPLv2',
++          author =3D 'Catalin Marinas',
++          author_email =3D 'catalin.marinas@gmail.com',
++          url =3D 'http://www.procode.org/stgit/',
++          description =3D 'Stacked GIT',
++          long_description =3D 'Push/pop utility on top of GIT',
++          scripts =3D ['stg'],
++          packages =3D ['stgit', 'stgit.commands', 'stgit.lib'],
++          data_files =3D [
++            ('share/stgit/templates', glob.glob('templates/*.tmpl')),
++            ('share/stgit/examples', glob.glob('examples/*.tmpl')),
++            ('share/stgit/examples', ['examples/gitconfig']),
++            ('share/stgit/contrib', ['contrib/diffcol.sh',
++                                     'contrib/stgbashprompt.sh',
++                                     'contrib/stgit-completion.bash'])=
+,
++            ('share/doc/stgit', glob.glob('doc/*.txt'))])
++
+ # Check the minimum versions required
+ if sys.argv[1] in ['install', 'build']:
+     __check_python_version()
+     __check_git_version()
+=20
+-version.write_builtin_version()
+-
+ # ensure readable template files
+ old_mask =3D os.umask(0022)
+=20
+-setup(name =3D 'stgit',
+-      version =3D version.version,
+-      license =3D 'GPLv2',
+-      author =3D 'Catalin Marinas',
+-      author_email =3D 'catalin.marinas@gmail.com',
+-      url =3D 'http://www.procode.org/stgit/',
+-      description =3D 'Stacked GIT',
+-      long_description =3D 'Push/pop utility on top of GIT',
+-      scripts =3D ['stg'],
+-      packages =3D ['stgit', 'stgit.commands', 'stgit.lib'],
+-      data_files =3D [('share/stgit/templates', glob.glob('templates/*=
+=2Etmpl')),
+-                    ('share/stgit/examples', glob.glob('examples/*.tmp=
+l')),
+-                    ('share/stgit/examples', ['examples/gitconfig']),
+-                    ('share/stgit/contrib', ['contrib/diffcol.sh',
+-                                             'contrib/stgbashprompt.sh=
+',
+-                                             'contrib/stgit-completion=
+=2Ebash']),
+-                    ('share/doc/stgit', glob.glob('doc/*.txt'))]
+-      )
++try:
++    version.write_builtin_version()
++    __run_setup()
++finally:
++    version.delete_builtin_version()
+=20
+ # restore the old mask
+ os.umask(old_mask)
+diff --git a/stgit/.gitignore b/stgit/.gitignore
+index 4f9c8f1..0d20b64 100644
+--- a/stgit/.gitignore
++++ b/stgit/.gitignore
+@@ -1,2 +1 @@
+ *.pyc
+-/builtin_version.py
+diff --git a/stgit/version.py b/stgit/version.py
+index 8ee5009..d57053d 100644
+--- a/stgit/version.py
++++ b/stgit/version.py
+@@ -1,6 +1,6 @@
+ from stgit.exception import StgException
+ from stgit import run, utils
+-import os.path, re, sys
++import os, os.path, re, sys
+=20
+ class VersionUnavailable(StgException):
+     pass
+@@ -31,17 +31,26 @@ def builtin_version():
+     else:
+         return bv.version
+=20
++def _builtin_version_file(ext =3D 'py'):
++    return os.path.join(sys.path[0], 'stgit', 'builtin_version.%s' % e=
+xt)
++
+ def write_builtin_version():
+     try:
+         v =3D git_describe_version()
+     except VersionUnavailable:
+         return
+-    f =3D file(os.path.join(sys.path[0], 'stgit', 'builtin_version.py'=
+), 'w')
++    f =3D file(_builtin_version_file(), 'w')
+     f.write('# This file was generated automatically. Do not edit by h=
+and.\n'
+             'version =3D %r\n' % v)
+=20
++def delete_builtin_version():
++    for ext in ['py', 'pyc', 'pyo']:
++        fn =3D _builtin_version_file(ext)
++        if os.path.exists(fn):
++            os.remove(fn)
++
+ def get_version():
+-    for v in [git_describe_version, builtin_version]:
++    for v in [builtin_version, git_describe_version]:
+         try:
+             return v()
+         except VersionUnavailable:
