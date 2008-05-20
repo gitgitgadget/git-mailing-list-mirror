@@ -1,80 +1,71 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: [PATCH] git-init: inform user of `git --bare init' option
-Date: Tue, 20 May 2008 20:48:50 +0100
-Message-ID: <20080520194850.GB19226@bit.office.eurotux.com>
-References: <20080519175313.GA17305@bit.office.eurotux.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: git gui: Possible to see which commands are executed?
+Date: Tue, 20 May 2008 22:05:20 +0200
+Message-ID: <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com>
+References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org>
+	 <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 21:50:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?Dirk_S=FCsserott?=" <newsletter@dirk.my1.cc>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 20 22:06:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyXqF-0004Li-N2
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 21:49:48 +0200
+	id 1JyY6A-0002x8-9d
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757769AbYETTs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 15:48:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757677AbYETTs4
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 15:48:56 -0400
-Received: from os.eurotux.com ([216.75.63.6]:60711 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756258AbYETTs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 15:48:56 -0400
-Received: (qmail 11684 invoked from network); 20 May 2008 19:48:54 -0000
-Received: from unknown (HELO bit.office.eurotux.com) (luciano@82.102.23.9)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 20 May 2008 19:48:54 -0000
+	id S1762014AbYETUFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 16:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761163AbYETUFX
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:05:23 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:33565 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762362AbYETUFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 16:05:21 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1898090wfd.4
+        for <git@vger.kernel.org>; Tue, 20 May 2008 13:05:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=bxxVXfhVyBJii/DYk+CrsX6LAx94uZQcxcipg2A06DE=;
+        b=cHq15hiPMyRb/FmPvmeJTMvymiV5MNbojm78qYY+DbYrShRzqznRL/cIOObWyyREDiHah+bks+8YZt1eUQIcH2W9Fq3CSpBSzkczuXwjvb5CkmIrYoMp1bW0qnuG2meu52pG0xjbTAdzCtc0ALageBCAVOf3jUz0B9RhAKfRo3g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ipzUK3c7Sc86JwWcmRfq5DyQxK6Uf5fePU4V7Zzo/62qKIMoTJ3+i0x2wQyNKUdhPUoBplXdC2OnspZCdBvlpJqzU/nY5JV4TXin80sN5hHUEMHrPTlDP25F7IesuNnb31mEB1+7sTVC5/8Y7m5HsjT/LgcrfTH+rVw9XjtaMTg=
+Received: by 10.142.141.21 with SMTP id o21mr3504658wfd.199.1211313920562;
+        Tue, 20 May 2008 13:05:20 -0700 (PDT)
+Received: by 10.143.33.6 with HTTP; Tue, 20 May 2008 13:05:20 -0700 (PDT)
+In-Reply-To: <20080520194403.GC29038@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20080519175313.GA17305@bit.office.eurotux.com>
-User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82493>
 
-Creation of a bare repository isn't consistent:
+On Tue, May 20, 2008 at 9:44 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Junio defers almost all git-gui things to me, as I am the current
+> maintainer of git-gui.  You are right, it doesn't really hurt to
+> include it, and now that it is written, the hard part is already
+> done.  I'll apply it to my main git-gui tree and ask Junio to
+> include it in a future version of Git.
 
-$ git init --bare
-usage: git-init [-q | --quiet] [--template=<template-directory>] [--shared]
-$ git --bare init
-Initialized empty Git repository in ...
+Hmmm, maybe you should include in big red letters that the output from
+--trace in no way or form represents commands that a user should use
+daily? I can hear the questions on #git already "I don't understand,
+I've used git-gui for months now, but the command it tells me to use
+make no sense!".
+Even better of course would be to not only print the plumbing commands
+but also the porcelain commands!
 
-Document the second option, and show an error informing of it if the
-user calls `git-init' with a `--bare' option.
-
-Signed-off-by: Luciano Rocha <strange@nsk.pt>
----
- Documentation/git-init.txt |    2 ++
- builtin-init-db.c          |    2 ++
- 2 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index b17ae84..bb87e58 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -84,6 +84,8 @@ Running `git-init` in an existing repository is safe. It will not overwrite
- things that are already there. The primary reason for rerunning `git-init`
- is to pick up newly added templates.
- 
-+For creating a bare repository, use the form `git --bare init`.
-+
- Note that `git-init` is the same as `git-init-db`.  The command
- was primarily meant to initialize the object database, but over
- time it has become responsible for setting up the other aspects
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index a76f5d3..65454b1 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -334,6 +334,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 			template_dir = arg+11;
- 		else if (!strcmp(arg, "--shared"))
- 			shared_repository = PERM_GROUP;
-+		else if (!strcmp(arg, "--bare"))
-+			die("Run `git --bare init' instead to create a bare repository");
- 		else if (!prefixcmp(arg, "--shared="))
- 			shared_repository = git_config_perm("arg", arg+9);
- 		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
 -- 
-1.5.5.1.317.ge7bcb.dirty
+Cheers,
+
+Sverre Rabbelier
