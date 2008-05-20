@@ -1,108 +1,96 @@
-From: Seth Falcon <seth@userprimary.net>
-Subject: [PATCH] Add a --dry-run option to git-svn rebase
-Date: Mon, 19 May 2008 20:29:17 -0700
-Message-ID: <1211254157-41316-1-git-send-email-seth@userprimary.net>
-References: <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com>
-Cc: Seth Falcon <seth@userprimary.net>
-To: git@vger.kernel.org, normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Tue May 20 05:31:28 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: Add missing git svn commands
+Date: Mon, 19 May 2008 22:21:36 -0700
+Message-ID: <7vej7x8s9r.fsf@gitster.siamese.dyndns.org>
+References: <48320380.6090200@isy.liu.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, normalperson@yhbt.net
+To: Gustaf Hendeby <hendeby@isy.liu.se>
+X-From: git-owner@vger.kernel.org Tue May 20 07:22:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyIZS-0004ck-BD
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:31:26 +0200
+	id 1JyKJ8-0002Va-2o
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 07:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757690AbYETDa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 23:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757616AbYETDa0
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:30:26 -0400
-Received: from dsl017-040-092.sea1.dsl.speakeasy.net ([69.17.40.92]:43060 "EHLO
-	zimbra.evri.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757564AbYETDaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 23:30:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.evri.com (Postfix) with ESMTP id 0127C1A2C230;
-	Mon, 19 May 2008 20:29:01 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: 3.08
-X-Spam-Level: ***
-X-Spam-Status: No, score=3.08 tagged_above=-10 required=5 tests=[AWL=-0.144,
-	BAYES_00=-2.599, HELO_LOCALHOST=3.941, RCVD_IN_PBL=0.905,
-	RCVD_IN_SORBS_DUL=0.877, RDNS_DYNAMIC=0.1]
-Received: from zimbra.evri.com ([127.0.0.1])
-	by localhost (zimbra.evri.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tXmMzLRmbXDD; Mon, 19 May 2008 20:29:00 -0700 (PDT)
-Received: from localhost (c-71-197-245-84.hsd1.or.comcast.net [71.197.245.84])
-	by zimbra.evri.com (Postfix) with ESMTP id 433461A2C22E;
-	Mon, 19 May 2008 20:29:00 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.1.316.g377d9.dirty
-In-Reply-To: <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com>
+	id S1753758AbYETFVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 01:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYETFVu
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 01:21:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60333 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753173AbYETFVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 01:21:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3718A3E88;
+	Tue, 20 May 2008 01:21:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 048813E87; Tue, 20 May 2008 01:21:40 -0400 (EDT)
+In-Reply-To: <48320380.6090200@isy.liu.se> (Gustaf Hendeby's message of "Tue,
+ 20 May 2008 00:47:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A525F4AA-262C-11DD-BB61-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82464>
 
-When working with multiple branches in an svn repository, it can be
-useful to verify the svn repository and local tracking branch that will
-be used for the rebase operation.
+Gustaf Hendeby <hendeby@isy.liu.se> writes:
 
-Signed-off-by: Seth Falcon <seth@userprimary.net>
----
+> Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+> ---
+>
+> I sent this one out about a week ago and haven't heard anything about 
+> it.  Did it just get lost in the noise, or is it just not 
+> interesting/incorrect in some way?
 
-Reworked to fix the spelling of dry-run and whitespace issues.
+It's severely whitespace damaged isn't it?
 
- Documentation/git-svn.txt |    8 ++++++--
- git-svn.perl              |    6 ++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index c6b56b4..5890028 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -342,11 +342,15 @@ Passed directly to git-rebase when using 'dcommit' if a
- -n::
- --dry-run::
- 
--This is only used with the 'dcommit' command.
-+This can be used with the 'dcommit' and 'rebase' commands.
- 
--Print out the series of git arguments that would show
-+For 'dcommit', print out the series of git arguments that would show
- which diffs would be committed to SVN.
- 
-+For 'rebase', display the local branch associated with the upstream svn
-+repository associated with the current branch and the URL of svn
-+repository that will be fetched from.
-+
- --
- 
- ADVANCED OPTIONS
-diff --git a/git-svn.perl b/git-svn.perl
-index 2c53f39..9c60ef4 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -176,6 +176,7 @@ my %cmd = (
- 			  'strategy|s=s' => \$_strategy,
- 			  'local|l' => \$_local,
- 			  'fetch-all|all' => \$_fetch_all,
-+			  'dry-run|n' => \$_dry_run,
- 			  %fc_opts } ],
- 	'commit-diff' => [ \&cmd_commit_diff,
- 	                   'Commit a diff between two trees',
-@@ -553,6 +554,11 @@ sub cmd_rebase {
- 		die "Unable to determine upstream SVN information from ",
- 		    "working tree history\n";
- 	}
-+	if ($_dry_run) {
-+		print "remote-branch: " . $gs->refname . "\n";
-+		print "svn-url: " . $url . "\n";
-+		return;
-+	}
- 	if (command(qw/diff-index HEAD --/)) {
- 		print STDERR "Cannot rebase with uncommited changes:\n";
- 		command_noisy('status');
--- 
-1.5.5.1.316.g377d9.dirty
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index f4ba105..c02f220 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -189,10 +189,10 @@ All arguments are passed directly to `git blame'.
+>   	independently of git-svn functions.
+>
+>   'create-ignore'::
+> -
+>   	Recursively finds the svn:ignore property on directories and
+>   	creates matching .gitignore files. The resulting files are staged to
+> -	be committed, but are not committed.
+> +	be committed, but are not committed. Use -r/--revision to refer to a
+> +	specfic revision.
+>
+>   'show-ignore'::
+>   	Recursively finds and lists the svn:ignore property on
+> @@ -216,6 +216,19 @@ All arguments are passed directly to `git blame'.
+>   	argument.  Use the --url option to output only the value of the
+>   	'URL:' field.
+>
+> +'proplist'::
+> +	Lists the properties stored in the Subversion repository about a
+> +	given file or directory.  Use -r/--revision to refer to a specific
+> +	Subversion revision.
+> +
+> +'propget'::
+> +	Gets the Subversion property given as the first argument, for a
+> +	file.  A specific revision can be specified with -r/--revision.
+> +
+> +'show-externals'::
+> +	Shows the Subversion externals.  Use -r/--revision to specify a
+> +	specific revision.
+> +
+>   --
+>
+>   OPTIONS
+> -- 
+> 1.5.5.1.328.g4377c
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
