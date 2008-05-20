@@ -1,69 +1,98 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: looking for "market share" analysis of SCMs.
-Date: Tue, 20 May 2008 12:10:40 +0200
-Message-ID: <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>
-References: <48329282.1040407@tikalk.com>
-	 <20080520093245.GA5037@mithlond.arda.local>
-Reply-To: sverre@rabbelier.nl
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: Re: git mergetool vs stash apply
+Date: Tue, 20 May 2008 15:16:47 +0400
+Message-ID: <c6c947f60805200416s61b0cc1eqd6d6c804abd15b4@mail.gmail.com>
+References: <c6c947f60805200102h3fd27742vfd9310912907cfa@mail.gmail.com>
+	 <20080520090258.GB31703@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Ittay Dror" <ittayd@tikalk.com>, git@vger.kernel.org
-To: "Teemu Likonen" <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue May 20 12:11:51 2008
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 20 13:17:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyOog-0008Fh-Uj
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 12:11:35 +0200
+	id 1JyPqh-0006ko-Me
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 13:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466AbYETKKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 06:10:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752757AbYETKKn
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 06:10:43 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:11117 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752466AbYETKKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 06:10:42 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1709249wfd.4
-        for <git@vger.kernel.org>; Tue, 20 May 2008 03:10:40 -0700 (PDT)
+	id S1757984AbYETLQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 07:16:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754525AbYETLQv
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 07:16:51 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:4988 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753283AbYETLQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 07:16:50 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2312341waf.23
+        for <git@vger.kernel.org>; Tue, 20 May 2008 04:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Utg8a5LR9zeP2Cl8PYh9ESOHCLM6KhodnNVOQQTrE3s=;
-        b=lT70Sy9tBzUMZRh1il3ev/FelGEUm4UY2Of0R45epNhqzlwdnDh7xdYKXcJhc7tOL1pS2usMgpI8jpnavvDCawW1ctBnDVDoJX5jblwjl2nL90+CVB3Vra6o0lRMRHfpAphhCMIdjqxTVGGfxlTWxn4OYA0Tk4we30CUa++lbnE=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=bQK9kRtTbM6vagQlM3hx/27k3mYp+Tdu7hp7eC1hSW0=;
+        b=qEQ8bgqsSjtHjtUAgLc83k37xyemt5a6yFxbHVhitp5aSnd+xf3QYeOGhO831Nx84ex3LOVuFa0RWuj4cjrtaz8h+hrHI6W4glwjHClvyO+dW38eQuKc7bZT/HPUSeoRynQelB9/SSGRm3Cme+xul63aAGkyzwTCy4bHOILbb1w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qzZDw8pOBT8MleH+/iLzLySFXuifbU+tzbAA+uwdTA0p2VbCXiQxDxs1ZlYElJz+MTtqYguMJXBFSOKErM7Obhrq2pDAKZ5Or/AP0DOrPH99OJZUAjGx4MpSfrH7f1vK2npkY+bDFot5blTVgWEH7bldNDKkbUD3Dkx4/mqCBMw=
-Received: by 10.142.135.9 with SMTP id i9mr3260762wfd.286.1211278240431;
-        Tue, 20 May 2008 03:10:40 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Tue, 20 May 2008 03:10:40 -0700 (PDT)
-In-Reply-To: <20080520093245.GA5037@mithlond.arda.local>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SXGU0NHcfdfQFD3zUsVq68oPYBBh71YjV4EDC234CVFSr0yc3WM+CWXKSbizQzj1/VpBfzVy938FzwS0pkf9RROM2Tw/6WLf8JFnC28jjxSGsNMGc84VkIh5ymn4NhSMEFYAkUwOOXmzQWgwW6ppoOh4oi7KG7GI/MGvE5kMxtU=
+Received: by 10.114.190.6 with SMTP id n6mr8724118waf.131.1211282207937;
+        Tue, 20 May 2008 04:16:47 -0700 (PDT)
+Received: by 10.115.111.4 with HTTP; Tue, 20 May 2008 04:16:47 -0700 (PDT)
+In-Reply-To: <20080520090258.GB31703@sigill.intra.peff.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82477>
 
-On Tue, May 20, 2008 at 11:32 AM, Teemu Likonen <tlikonen@iki.fi> wrote:
-> from it. I constructed a link which compares the number-of-installs of
-> some major SCM/VCS systems:
+On Tue, May 20, 2008 at 1:02 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, May 20, 2008 at 12:02:44PM +0400, Alexander Gladysh wrote:
 >
-> http://people.debian.org/~igloo/popcon-graphs/index.php?packages=darcs%2Cgit-core%2Cmercurial%2Cbzr%2Csubversion%2C+cvs&show_installed=on&want_legend=on&want_ticks=on&from_date=2003-10-01&to_date=&hlght_date=&date_fmt=%25Y-%25m&beenhere=1
+>> The git mergetool ignores conflicts by git stash apply:
+>>
+>> $ git stash apply
+>> Auto-merged path/file.ext
+>> CONFLICT (content): Merge conflict in path/file.ext
+>>
+>> $ git mergetool
+>> merge tool candidates: kdiff3 kdiff3 tkdiff xxdiff meld gvimdiff
+>> opendiff emerge vimdiff
+>> No files need merging
+>>
+>> While path/file.ext do contain merge conflict.
+>
+> I think there is something else going on, because it _does_ generally
+> work. This simple test case should confirm:
+>
+>  mkdir repo && cd repo && git init
+>  echo content >file && git add . && git commit -m one
+>  echo changes >>file && git commit -a -m two
+>  echo more >>file && git stash
+>  git checkout -b other HEAD^
+>  echo different changes >>file && git commit -a -m three
+>  git stash apply
+>  git mergetool
+>
+> I get:
+>  Normal merge conflict for 'file':
+>    {local}: modified
+>    {remote}: modified
+>  Hit return to start merge resolution tool (xxdiff):
 
-A more interesting one I think is http://tinyurl.com/3lf4mn as it
-shows the history better, that is, it better shows CVS and SVN
-decreasing in popularity (it also shows the point where SVN became
-more popular than CVS). From this graph you can also see that git is
-on it's way to become more popular than CVS!
+Yes, I get the that output on clean repo. And I get that output also
+if I use actual conflict data (that is, three snapshots of conflicted
+file) instead.
 
-http://tinyurl.com/3lf4mn
+> So there is perhaps something specific about your setup or your conflict
+> that is causing mergetool not to work as expected.
 
+Most likely so.
 
--- 
-Cheers,
+> Can you give us a test case that fails?
 
-Sverre Rabbelier
+No, unfortunately I can not. I was unable to produce a minimal test
+case, and I can not share the whole repo.
+
+Alexander.
