@@ -1,99 +1,65 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] Documentation: Add missing git svn commands
-Date: Tue, 20 May 2008 09:08:58 +0200
-Message-ID: <1211267338-19057-1-git-send-email-hendeby@isy.liu.se>
-References: <20080520020143.GB9904@hand.yhbt.net>
-Cc: git@vger.kernel.org, normalperson@yhbt.net,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue May 20 09:09:58 2008
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: git mergetool vs stash apply
+Date: Tue, 20 May 2008 12:02:44 +0400
+Message-ID: <c6c947f60805200102h3fd27742vfd9310912907cfa@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 10:03:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyLys-0005i4-Ve
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 09:09:55 +0200
+	id 1JyMov-00079v-46
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 10:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753588AbYETHJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 03:09:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755182AbYETHJD
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 03:09:03 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:52425 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044AbYETHJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 03:09:01 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id C16D2259B1;
-	Tue, 20 May 2008 09:08:59 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 22679-04; Thu,  8 May 2008 07:37:08 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id F40CD2594F;
-	Tue, 20 May 2008 09:08:58 +0200 (MEST)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id E45F4177A0; Tue, 20 May 2008 09:08:58 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.445.g65fa
-In-Reply-To: <20080520020143.GB9904@hand.yhbt.net>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1757018AbYETICr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 04:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbYETICr
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 04:02:47 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:30801 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753386AbYETICp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 04:02:45 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2243627waf.23
+        for <git@vger.kernel.org>; Tue, 20 May 2008 01:02:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=UNYWfmTG/uNZWw1sIlzzNdjLL6uOibc6b8jmCQxPUQ8=;
+        b=DIMyQNLss/TJXNre1aGJ1o4r6Dm6yiejR0VEt+CH4Dui250HjMOieKR709Uz+VumREOO6C6AFm0ge78gjGcIv11P9Hgmywref7ybybI281yyn+WU89HNuFw6/lG1oTYEoW3xxWGiZbC2htOHOVEEWmlQIrq/R5hTeQU+dZAVgLY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=s4XpjGwFOImosXyzCUiI1+rf2+PlUkjsQD+ySCEPE9CWqim1Atye8cCN7Oja31yL4jXlAlcEhX3L9S1o73cXn+waXcrm2dKi7mxV2Tbf+0h+A/y6KTHtpDnWCz2MUFwrvZ7fKxV2CH5cvYIhZe2Sz+hbnJEj884FkfbkbAsBkIo=
+Received: by 10.114.255.1 with SMTP id c1mr7665598wai.93.1211270564892;
+        Tue, 20 May 2008 01:02:44 -0700 (PDT)
+Received: by 10.115.111.4 with HTTP; Tue, 20 May 2008 01:02:44 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82471>
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
+Hi, list!
 
-I'm sorry Junio, when resending the patch I simply did a forward of
-the original post and it didn't cross my mind that it would mangle the
-whitespaces.  This one should apply cleanly on top of master.
+The git mergetool ignores conflicts by git stash apply:
 
-Thanks for the great job!
+$ git stash apply
+Auto-merged path/file.ext
+CONFLICT (content): Merge conflict in path/file.ext
 
-/Gustaf
+$ git mergetool
+merge tool candidates: kdiff3 kdiff3 tkdiff xxdiff meld gvimdiff
+opendiff emerge vimdiff
+No files need merging
 
- Documentation/git-svn.txt |   17 +++++++++++++++--
- 1 files changed, 15 insertions(+), 2 deletions(-)
+While path/file.ext do contain merge conflict.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index f4ba105..c02f220 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -189,10 +189,10 @@ All arguments are passed directly to `git blame'.
- 	independently of git-svn functions.
- 
- 'create-ignore'::
--
- 	Recursively finds the svn:ignore property on directories and
- 	creates matching .gitignore files. The resulting files are staged to
--	be committed, but are not committed.
-+	be committed, but are not committed. Use -r/--revision to refer to a
-+	specfic revision.
- 
- 'show-ignore'::
- 	Recursively finds and lists the svn:ignore property on
-@@ -216,6 +216,19 @@ All arguments are passed directly to `git blame'.
- 	argument.  Use the --url option to output only the value of the
- 	'URL:' field.
- 
-+'proplist'::
-+	Lists the properties stored in the Subversion repository about a
-+	given file or directory.  Use -r/--revision to refer to a specific
-+	Subversion revision.
-+
-+'propget'::
-+	Gets the Subversion property given as the first argument, for a
-+	file.  A specific revision can be specified with -r/--revision.
-+
-+'show-externals'::
-+	Shows the Subversion externals.  Use -r/--revision to specify a
-+	specific revision.
-+
- --
- 
- OPTIONS
--- 
-1.5.5.1.445.g65fa
+The git mergetool works for git merge and git rebase. Maybe it should
+work for git stash as well? I automatically type git mergetool when I
+see CONFLICT in Git output. %-)
+
+Alexander.
