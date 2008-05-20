@@ -1,90 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Fix t3701 if core.filemode disabled
-Date: Tue, 20 May 2008 23:59:32 +0200
-Message-ID: <20080520215932.GB10437@steel.home>
-References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home> <20080519202342.GA9694@steel.home> <20080519205550.GA24246@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: looking for "market share" analysis of SCMs.
+Date: Tue, 20 May 2008 18:07:18 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805201748020.19665@iabervon.org>
+References: <48329282.1040407@tikalk.com>  <20080520093245.GA5037@mithlond.arda.local> <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 21 00:00:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Teemu Likonen <tlikonen@iki.fi>, Ittay Dror <ittayd@tikalk.com>,
+	git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Wed May 21 00:10:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyZt0-0006RO-2S
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 00:00:46 +0200
+	id 1Jya0D-0000gn-EU
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 00:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763762AbYETV7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 17:59:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763689AbYETV7h
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:59:37 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:13584 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763682AbYETV7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 17:59:36 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarKZB1HUNA==
-Received: from tigra.home (Faa97.f.strato-dslnet.de [195.4.170.151])
-	by post.webmailer.de (fruni mo49) (RZmta 16.37)
-	with ESMTP id Y06ecak4KIwJid ; Tue, 20 May 2008 23:59:32 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 804EB277BD;
-	Tue, 20 May 2008 23:59:32 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 8611956D28; Tue, 20 May 2008 23:59:32 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080519205550.GA24246@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1761066AbYETWHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 18:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758970AbYETWHV
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 18:07:21 -0400
+Received: from iabervon.org ([66.92.72.58]:35110 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756134AbYETWHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 18:07:20 -0400
+Received: (qmail 7664 invoked by uid 1000); 20 May 2008 22:07:18 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 May 2008 22:07:18 -0000
+In-Reply-To: <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82509>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-Jeff King, Mon, May 19, 2008 22:55:50 +0200:
-> On Mon, May 19, 2008 at 10:23:42PM +0200, Alex Riesen wrote:
+On Tue, 20 May 2008, Sverre Rabbelier wrote:
+
+> On Tue, May 20, 2008 at 11:32 AM, Teemu Likonen <tlikonen@iki.fi> wrote:
+> > from it. I constructed a link which compares the number-of-installs of
+> > some major SCM/VCS systems:
+> >
+> > http://people.debian.org/~igloo/popcon-graphs/index.php?packages=darcs%2Cgit-core%2Cmercurial%2Cbzr%2Csubversion%2C+cvs&show_installed=on&want_legend=on&want_ticks=on&from_date=2003-10-01&to_date=&hlght_date=&date_fmt=%25Y-%25m&beenhere=1
 > 
-> > > I setting core.filemode _inside_ the test breaks it in exactly the
-> > > same way (on Linux, I'm at home). I'll retest tomorrow
-> > 
-> > It is "git init" which sets core.filemode false (of course!)
+> A more interesting one I think is http://tinyurl.com/3lf4mn as it
+> shows the history better, that is, it better shows CVS and SVN
+> decreasing in popularity (it also shows the point where SVN became
+> more popular than CVS). From this graph you can also see that git is
+> on it's way to become more popular than CVS!
 > 
-> Ah, of course. In that case, then your change makes sense; by definition,
-> if core.filemode isn't set, those tests are meaningless. Though I think
-> a final version should, as we discussed, omit those tests rather than
-> ending the test script.
-> 
+> http://tinyurl.com/3lf4mn
 
-Sure. I have explicitely test for core.filemode=false, because
-some older setups (where git init did not set it) don't have
-the setting and git config core.filemode reports nothing.
+Doing it as a percentage is kind of odd; it demonstrates that using 
+version control is decreasing in popularity as more and more people who 
+don't use version control submit votes. All of the version control systems 
+show an upward trend in number of users, but most of them are not growing 
+as much as the market is shrinking. Unfortunately, there doesn't seem to 
+be a way to get the people who use each of them as a percentage of people 
+who use any of them, which is what you want for "market share".
 
- t/t3701-add-interactive.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index f15be93..bd94ac6 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -65,6 +65,7 @@ test_expect_success 'revert works (commit)' '
- 	git add -i </dev/null >output &&
- 	grep "unchanged *+3/-0 file" output
- '
-+if test "$(git config core.filemode)" != false ; then
- 
- test_expect_success 'patch does not affect mode' '
- 	git reset --hard &&
-@@ -84,5 +85,6 @@ test_expect_success 'stage mode but not hunk' '
- 	git diff          file | grep "+content"
- '
- 
-+fi
- 
- test_done
--- 
-1.5.5.1.354.g902c
+	-Daniel
+*This .sig left intentionally blank*
