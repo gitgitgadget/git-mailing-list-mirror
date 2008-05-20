@@ -1,103 +1,98 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Documentation: Add missing git svn commands
-Date: Mon, 19 May 2008 19:01:43 -0700
-Message-ID: <20080520020143.GB9904@hand.yhbt.net>
-References: <48320380.6090200@isy.liu.se>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH 0/3] git-cvsserver: Add support for some binary files
+Date: Mon, 19 May 2008 21:05:58 -0600
+Message-ID: <20080520030557.GA1438@comcast.net>
+References: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net> <7v7idteqzn.fsf@gitster.siamese.dyndns.org> <46a038f90805181538v56aee5b8y33d68b226a62494f@mail.gmail.com> <20080519073535.GA2885@comcast.net> <alpine.DEB.1.00.0805191033080.30431@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Daniel Berlin <dberlin@dberlin.org>
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Tue May 20 04:02:44 2008
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Frank Lichtenheld <djpig@debian.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 20 05:07:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyHBV-0007mB-Cd
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 04:02:37 +0200
+	id 1JyICA-0006rE-77
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754973AbYETCBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 22:01:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736AbYETCBq
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 22:01:46 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37867 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750741AbYETCBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 22:01:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id A3FF62DC08B;
-	Mon, 19 May 2008 19:01:44 -0700 (PDT)
+	id S1756014AbYETDGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 23:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755676AbYETDGO
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:06:14 -0400
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:43146
+	"EHLO QMTA05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755057AbYETDGN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 May 2008 23:06:13 -0400
+Received: from OMTA14.westchester.pa.mail.comcast.net ([76.96.62.60])
+	by QMTA05.westchester.pa.mail.comcast.net with comcast
+	id TdAB1Z00Y1HzFnQ5504m00; Tue, 20 May 2008 03:06:12 +0000
+Received: from mmogilvi.homeip.net ([75.70.160.185])
+	by OMTA14.westchester.pa.mail.comcast.net with comcast
+	id Tf6A1Z00540J0Bv3a00000; Tue, 20 May 2008 03:06:12 +0000
+X-Authority-Analysis: v=1.0 c=1 a=o8s9G-U7OAoA:10 a=DnQ2Ju4PVaQA:10
+ a=T6aK4jdCrIremxx7HBgA:9 a=v9eLYKq0B1aw_p79pEkA:7
+ a=-wWtm2muuB0K7wpcehTEAkpPWkIA:4 a=LY0hPdMaydYA:10
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id A36F089115; Mon, 19 May 2008 21:05:59 -0600 (MDT)
 Content-Disposition: inline
-In-Reply-To: <48320380.6090200@isy.liu.se>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <alpine.DEB.1.00.0805191033080.30431@racer>
+User-Agent: Mutt/1.5.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82460>
 
-Gustaf Hendeby <hendeby@isy.liu.se> wrote:
-> Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+On Mon, May 19, 2008 at 10:34:47AM +0100, Johannes Schindelin wrote:
+> Hi,
+>
+> On Mon, 19 May 2008, Matthew Ogilvie wrote:
+>
+> > I perceive one remaining big issue for git-cvsserver to be a good
+> > replacement for real CVS: The ability to properly support "cvs update -r
+> > VERSION", where VERSION could be any branch, tag, CVS version number, or
+> > git commit hash. Git-cvsserver can partially support this by checking
+> > out a totally different sandbox as "cvs checkout VERSION" (notice no
+> > -r), but without the ability to switch versions in place, that is an
+> > awkward workaround at best.
+>
+> I might be missing something obvious, but would it not be better to _not_
+> check out anything, but serve every object straight from the object
+> database (possibly with CR/LF mangling)?
 
-Looks correct, thanks.
+Ah, an opportunity to explain a few things about how git-cvsserver
+works generally:
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+1. git-cvsserver serves most objects straight from the object database
+already (actually via git-cat-file), and will continue to do
+so.  The exception is when it merges user's changed files
+with new versions from the repository, for which git-cvsserver
+uses temporary files.
 
-> ---
-> 
-> I sent this one out about a week ago and haven't heard anything about 
-> it.  Did it just get lost in the noise, or is it just not 
-> interesting/incorrect in some way?
+2. git-cvsserver does need to use a temporary git index file for
+some things, though.  Usually it is using an empty working
+directory with such an index file.  User-modified files get
+temporary names that get tracked internally, but it might make
+sense for modified .gitattributes files (at least) to be put into the
+otherwise empty working directory with the right name so that the
+changes effect the current cvs command.
 
-Sorry I've been very busy lately and haven't been feeling well, either.
-I'll try to get around to the rest of the outstanding git-svn stuff as
-soon as I get better.
+3. CR/LF mangling needs to be done by the CVS client, not the server.
+A windows client would do such mangling, while a Linux client would not
+(both talking to the same server).  With my patch, the server just
+tells the client when a file is binary, so that it won't be
+mangled even on windows.
 
-> /Gustaf
-> 
->  Documentation/git-svn.txt |   17 +++++++++++++++--
->  1 files changed, 15 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index f4ba105..c02f220 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -189,10 +189,10 @@ All arguments are passed directly to `git blame'.
->  	independently of git-svn functions.
-> 
->  'create-ignore'::
-> -
->  	Recursively finds the svn:ignore property on directories and
->  	creates matching .gitignore files. The resulting files are staged to
-> -	be committed, but are not committed.
-> +	be committed, but are not committed. Use -r/--revision to refer to a
-> +	specfic revision.
-> 
->  'show-ignore'::
->  	Recursively finds and lists the svn:ignore property on
-> @@ -216,6 +216,19 @@ All arguments are passed directly to `git blame'.
->  	argument.  Use the --url option to output only the value of the
->  	'URL:' field.
-> 
-> +'proplist'::
-> +	Lists the properties stored in the Subversion repository about a
-> +	given file or directory.  Use -r/--revision to refer to a specific
-> +	Subversion revision.
-> +
-> +'propget'::
-> +	Gets the Subversion property given as the first argument, for a
-> +	file.  A specific revision can be specified with -r/--revision.
-> +
-> +'show-externals'::
-> +	Shows the Subversion externals.  Use -r/--revision to specify a
-> +	specific revision.
-> +
->  --
-> 
->  OPTIONS
-> -- 
--- 
-Eric Wong
+4. git-cvsserver currently does not support the "-r" argument to
+checkout or update (to get a particular a branch, a tag, or a
+version number).  Instead, as a kind of workaround, it has a hook to
+treat the CVS "module" argument (primarily intended to be a
+project name in a repository with multiple projects) as a branch
+or tag name instead.  But the "module" can't be switched on the fly;
+you have to checkout a completely new sandbox to get a different
+module (or with git-cvsserver, another branch).
+
+- Matthew Ogilvie
