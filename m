@@ -1,63 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: builtin-clone does not fallback to copy when link fails
-Date: Tue, 20 May 2008 22:48:30 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805202248000.30431@racer>
-References: <oguFi9b5ZAq84dsDzWpm0tpI_xzucMxL23YhxIjDS5NTdpslAnzo6w@cipher.nrlssc.navy.mil> <C6tFzFdDycYRRcjxtVG00CVX-Nsu7-UblPCaZmTxmWIUTFAsgReYbQ@cipher.nrlssc.navy.mil> <alpine.LNX.1.00.0805201311180.19665@iabervon.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix t3701 if core.filemode disabled
+Date: Tue, 20 May 2008 23:59:32 +0200
+Message-ID: <20080520215932.GB10437@steel.home>
+References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home> <20080519202342.GA9694@steel.home> <20080519205550.GA24246@sigill.intra.peff.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue May 20 23:50:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 21 00:00:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyZhs-0001qk-RD
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 23:49:17 +0200
+	id 1JyZt0-0006RO-2S
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 00:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757127AbYETVs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 17:48:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760811AbYETVs0
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:48:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42449 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757127AbYETVsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 17:48:25 -0400
-Received: (qmail invoked by alias); 20 May 2008 21:48:23 -0000
-Received: from R03d1.r.pppool.de (EHLO racer.local) [89.54.3.209]
-  by mail.gmx.net (mp049) with SMTP; 20 May 2008 23:48:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+RfdlKchqRmYX5sWW1E1/TlpAswBMKcmOESAfzRv
-	hvnjEOBjbrUl0+
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.LNX.1.00.0805201311180.19665@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1763762AbYETV7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 17:59:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763689AbYETV7h
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:59:37 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:13584 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763682AbYETV7g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 17:59:36 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarKZB1HUNA==
+Received: from tigra.home (Faa97.f.strato-dslnet.de [195.4.170.151])
+	by post.webmailer.de (fruni mo49) (RZmta 16.37)
+	with ESMTP id Y06ecak4KIwJid ; Tue, 20 May 2008 23:59:32 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 804EB277BD;
+	Tue, 20 May 2008 23:59:32 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 8611956D28; Tue, 20 May 2008 23:59:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080519205550.GA24246@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82508>
 
-Hi,
-
-On Tue, 20 May 2008, Daniel Barkalow wrote:
-
-> How about:
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+Jeff King, Mon, May 19, 2008 22:55:50 +0200:
+> On Mon, May 19, 2008 at 10:23:42PM +0200, Alex Riesen wrote:
 > 
-> -----
-> commit 83afef6a159365c1b9a7a1961cb4c95df24fbcac
-> Author: Daniel Barkalow <barkalow@iabervon.org>
-> Date:   Tue May 20 14:15:14 2008 -0400
+> > > I setting core.filemode _inside_ the test breaks it in exactly the
+> > > same way (on Linux, I'm at home). I'll retest tomorrow
+> > 
+> > It is "git init" which sets core.filemode false (of course!)
 > 
->     Fall back to copying if hardlinking fails
->     
->     Note that it stops trying hardlinks if any fail.
->     
->     Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> Ah, of course. In that case, then your change makes sense; by definition,
+> if core.filemode isn't set, those tests are meaningless. Though I think
+> a final version should, as we discussed, omit those tests rather than
+> ending the test script.
+> 
 
-I like it.
+Sure. I have explicitely test for core.filemode=false, because
+some older setups (where git init did not set it) don't have
+the setting and git config core.filemode reports nothing.
 
-Ciao,
-Dscho
+ t/t3701-add-interactive.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index f15be93..bd94ac6 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -65,6 +65,7 @@ test_expect_success 'revert works (commit)' '
+ 	git add -i </dev/null >output &&
+ 	grep "unchanged *+3/-0 file" output
+ '
++if test "$(git config core.filemode)" != false ; then
+ 
+ test_expect_success 'patch does not affect mode' '
+ 	git reset --hard &&
+@@ -84,5 +85,6 @@ test_expect_success 'stage mode but not hunk' '
+ 	git diff          file | grep "+content"
+ '
+ 
++fi
+ 
+ test_done
+-- 
+1.5.5.1.354.g902c
