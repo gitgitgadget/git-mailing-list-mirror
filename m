@@ -1,98 +1,77 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH 0/3] git-cvsserver: Add support for some binary files
-Date: Mon, 19 May 2008 21:05:58 -0600
-Message-ID: <20080520030557.GA1438@comcast.net>
-References: <1210826148-8708-1-git-send-email-mmogilvi_git@miniinfo.net> <7v7idteqzn.fsf@gitster.siamese.dyndns.org> <46a038f90805181538v56aee5b8y33d68b226a62494f@mail.gmail.com> <20080519073535.GA2885@comcast.net> <alpine.DEB.1.00.0805191033080.30431@racer>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: [PATCH] Use '-f' option to point to the .gitmodules file
+Date: Tue, 20 May 2008 09:12:02 +0600
+Message-ID: <7bfdc29a0805192012w5bf3a158y81f9623d57b71b10@mail.gmail.com>
+References: <1210837378-25668-1-git-send-email-imyousuf@gmail.com>
+	 <alpine.DEB.1.00.0805150956050.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Frank Lichtenheld <djpig@debian.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 20 05:07:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Imran M Yousuf" <imyousuf@smartitengineering.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue May 20 05:13:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyICA-0006rE-77
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:07:22 +0200
+	id 1JyIHY-0007yO-Le
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756014AbYETDGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 23:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755676AbYETDGO
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:06:14 -0400
-Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:43146
-	"EHLO QMTA05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755057AbYETDGN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 May 2008 23:06:13 -0400
-Received: from OMTA14.westchester.pa.mail.comcast.net ([76.96.62.60])
-	by QMTA05.westchester.pa.mail.comcast.net with comcast
-	id TdAB1Z00Y1HzFnQ5504m00; Tue, 20 May 2008 03:06:12 +0000
-Received: from mmogilvi.homeip.net ([75.70.160.185])
-	by OMTA14.westchester.pa.mail.comcast.net with comcast
-	id Tf6A1Z00540J0Bv3a00000; Tue, 20 May 2008 03:06:12 +0000
-X-Authority-Analysis: v=1.0 c=1 a=o8s9G-U7OAoA:10 a=DnQ2Ju4PVaQA:10
- a=T6aK4jdCrIremxx7HBgA:9 a=v9eLYKq0B1aw_p79pEkA:7
- a=-wWtm2muuB0K7wpcehTEAkpPWkIA:4 a=LY0hPdMaydYA:10
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id A36F089115; Mon, 19 May 2008 21:05:59 -0600 (MDT)
+	id S1755009AbYETDMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 23:12:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754968AbYETDMF
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:12:05 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:48794 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151AbYETDMC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 23:12:02 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1279801ywe.1
+        for <git@vger.kernel.org>; Mon, 19 May 2008 20:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=yENA5EJWxSw1JXAoYB8acHYtLX6HvOFJgz4iYRllJWI=;
+        b=b/h3HwzK52U+W+pJiHC+oOw+T7SV0aJIakhRhD+iZzkNBwVRY8OEfXxqqE6CY8zHfDyVgidFBxOj7Tjwg4Wu1+4iIZ7ILhAgJcuhxSbVI+WVqLKgxq63iQcJeBJS956PI7Fha3/keorcxbYNH+nLPgh7ekLLXe563OIfXrfKYMo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nqi9qfODsiqmuN7W/K1RbNlAOzqJRWUa0M8PDYUDTIepWNbQhdzvC8B009yYqRYgtYfxaQWbSfYUWgeDbCHMiYrDZCcUVNA/5vmhRtpk9zbX/P1N/oG5QhU8rrJutlIwkQUqVZVvrR9+iWlMXPo2fXjZxiKIxD26/WAREdRTCZI=
+Received: by 10.150.79.22 with SMTP id c22mr7088444ybb.160.1211253122077;
+        Mon, 19 May 2008 20:12:02 -0700 (PDT)
+Received: by 10.150.54.11 with HTTP; Mon, 19 May 2008 20:12:02 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805150956050.30431@racer>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805191033080.30431@racer>
-User-Agent: Mutt/1.5.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82461>
 
-On Mon, May 19, 2008 at 10:34:47AM +0100, Johannes Schindelin wrote:
+Thanks for accepting the patch :).
+
+Best regards,
+
+Imran
+On Thu, May 15, 2008 at 2:56 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 > Hi,
 >
-> On Mon, 19 May 2008, Matthew Ogilvie wrote:
+> On Thu, 15 May 2008, imyousuf@gmail.com wrote:
 >
-> > I perceive one remaining big issue for git-cvsserver to be a good
-> > replacement for real CVS: The ability to properly support "cvs update -r
-> > VERSION", where VERSION could be any branch, tag, CVS version number, or
-> > git commit hash. Git-cvsserver can partially support this by checking
-> > out a totally different sandbox as "cvs checkout VERSION" (notice no
-> > -r), but without the ability to switch versions in place, that is an
-> > awkward workaround at best.
+>> From: Imran M Yousuf <imyousuf@smartitengineering.com>
+>>
+>> 'git config' has a '-f' option that takes the file to parse.
+>> Using it rather than the environment variable seems more logical
+>> and simplified.
 >
-> I might be missing something obvious, but would it not be better to _not_
-> check out anything, but serve every object straight from the object
-> database (possibly with CR/LF mangling)?
+> Definitely looks more readable.
+>
+> Ciao,
+> Dscho
+>
 
-Ah, an opportunity to explain a few things about how git-cvsserver
-works generally:
 
-1. git-cvsserver serves most objects straight from the object database
-already (actually via git-cat-file), and will continue to do
-so.  The exception is when it merges user's changed files
-with new versions from the repository, for which git-cvsserver
-uses temporary files.
 
-2. git-cvsserver does need to use a temporary git index file for
-some things, though.  Usually it is using an empty working
-directory with such an index file.  User-modified files get
-temporary names that get tracked internally, but it might make
-sense for modified .gitattributes files (at least) to be put into the
-otherwise empty working directory with the right name so that the
-changes effect the current cvs command.
-
-3. CR/LF mangling needs to be done by the CVS client, not the server.
-A windows client would do such mangling, while a Linux client would not
-(both talking to the same server).  With my patch, the server just
-tells the client when a file is binary, so that it won't be
-mangled even on windows.
-
-4. git-cvsserver currently does not support the "-r" argument to
-checkout or update (to get a particular a branch, a tag, or a
-version number).  Instead, as a kind of workaround, it has a hook to
-treat the CVS "module" argument (primarily intended to be a
-project name in a repository with multiple projects) as a branch
-or tag name instead.  But the "module" can't be switched on the fly;
-you have to checkout a completely new sandbox to get a different
-module (or with git-cvsserver, another branch).
-
-- Matthew Ogilvie
+-- 
+Imran M Yousuf
