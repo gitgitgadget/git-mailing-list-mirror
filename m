@@ -1,65 +1,50 @@
-From: "Alexander Gladysh" <agladysh@gmail.com>
-Subject: git mergetool vs stash apply
-Date: Tue, 20 May 2008 12:02:44 +0400
-Message-ID: <c6c947f60805200102h3fd27742vfd9310912907cfa@mail.gmail.com>
+From: Ittay Dror <ittayd@tikalk.com>
+Subject: looking for "market share" analysis of SCMs.
+Date: Tue, 20 May 2008 11:57:38 +0300
+Message-ID: <48329282.1040407@tikalk.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 10:03:54 2008
+X-From: git-owner@vger.kernel.org Tue May 20 10:58:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyMov-00079v-46
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 10:03:41 +0200
+	id 1JyNg7-0001op-67
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 10:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757018AbYETICr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 04:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbYETICr
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 04:02:47 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:30801 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386AbYETICp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 04:02:45 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2243627waf.23
-        for <git@vger.kernel.org>; Tue, 20 May 2008 01:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=UNYWfmTG/uNZWw1sIlzzNdjLL6uOibc6b8jmCQxPUQ8=;
-        b=DIMyQNLss/TJXNre1aGJ1o4r6Dm6yiejR0VEt+CH4Dui250HjMOieKR709Uz+VumREOO6C6AFm0ge78gjGcIv11P9Hgmywref7ybybI281yyn+WU89HNuFw6/lG1oTYEoW3xxWGiZbC2htOHOVEEWmlQIrq/R5hTeQU+dZAVgLY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=s4XpjGwFOImosXyzCUiI1+rf2+PlUkjsQD+ySCEPE9CWqim1Atye8cCN7Oja31yL4jXlAlcEhX3L9S1o73cXn+waXcrm2dKi7mxV2Tbf+0h+A/y6KTHtpDnWCz2MUFwrvZ7fKxV2CH5cvYIhZe2Sz+hbnJEj884FkfbkbAsBkIo=
-Received: by 10.114.255.1 with SMTP id c1mr7665598wai.93.1211270564892;
-        Tue, 20 May 2008 01:02:44 -0700 (PDT)
-Received: by 10.115.111.4 with HTTP; Tue, 20 May 2008 01:02:44 -0700 (PDT)
-Content-Disposition: inline
+	id S1757070AbYETI5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 04:57:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYETI5s
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 04:57:48 -0400
+Received: from smtp101.biz.mail.re2.yahoo.com ([68.142.229.215]:30466 "HELO
+	smtp101.biz.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752466AbYETI5s (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 May 2008 04:57:48 -0400
+Received: (qmail 37983 invoked from network); 20 May 2008 08:57:46 -0000
+Received: from unknown (HELO ?10.10.2.7?) (ittayd@tikalk.com@212.143.191.180 with plain)
+  by smtp101.biz.mail.re2.yahoo.com with SMTP; 20 May 2008 08:57:46 -0000
+X-YMail-OSG: bcKVdmgVM1ksnRRkQoSx5ZgIaYMFopEFeL4oYNq2bCc9dBM9tGPunh.VYLcsOhDwuX_aW1xJ2qWwTLPEye4VtCnu_ninix8X787QJeDN5tCP.zqCPm2u9UQSQ1NgzSvoJf7tRHNOtOt1j59igy0mcnQC
+X-Yahoo-Newman-Property: ymail-3
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82472>
 
-Hi, list!
+Hi,
 
-The git mergetool ignores conflicts by git stash apply:
+I'm looking for a survey that analyses the market share of the major 
+SCMs (including git of course). If someone knows about something like 
+that, can you please point me to it? (optimally, such a survey will take 
+into account how large the projects are)
 
-$ git stash apply
-Auto-merged path/file.ext
-CONFLICT (content): Merge conflict in path/file.ext
+Thank you,
+Ittay
 
-$ git mergetool
-merge tool candidates: kdiff3 kdiff3 tkdiff xxdiff meld gvimdiff
-opendiff emerge vimdiff
-No files need merging
-
-While path/file.ext do contain merge conflict.
-
-The git mergetool works for git merge and git rebase. Maybe it should
-work for git stash as well? I automatically type git mergetool when I
-see CONFLICT in Git output. %-)
-
-Alexander.
+-- 
+Ittay Dror <ittayd@tikalk.com>
+Tikal <http://www.tikalk.com>
+Tikal Project <http://tikal.sourceforge.net>
