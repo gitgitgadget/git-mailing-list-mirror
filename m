@@ -1,97 +1,62 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] Documentation: Add missing git svn commands
-Date: Tue, 20 May 2008 00:47:28 +0200
-Message-ID: <48320380.6090200@isy.liu.se>
+From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
+Subject: Re: [PATCH] Add a --dry-run option to git-svn rebase
+Date: Tue, 20 May 2008 12:19:30 +1200
+Message-ID: <87tzgtygh9.fsf@nav-akl-pcn-343.mitacad.com>
+References: <3c20080519141036.GV396@ziti.local>
+	<1211206844-29842-1-git-send-email-seth@userprimary.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: junio@pobox.com, normalperson@yhbt.net
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 20 00:48:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, normalperson@yhbt.ne
+To: Seth Falcon <seth@userprimary.net>
+X-From: git-owner@vger.kernel.org Tue May 20 02:20:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyE9V-0007ng-Ii
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 00:48:21 +0200
+	id 1JyFah-0008Bx-M3
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 02:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756918AbYESWrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 18:47:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756438AbYESWrc
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 18:47:32 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:64552 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455AbYESWrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 18:47:31 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 038FE24F8F;
-	Tue, 20 May 2008 00:47:30 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 20666-02; Thu,  8 May 2008 07:37:08 +0200 (MEST)
-Received: from [192.168.13.13] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 46B4C24F8D;
-	Tue, 20 May 2008 00:47:29 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1756449AbYETATl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 20:19:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756202AbYETATk
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 20:19:40 -0400
+Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:1863 "EHLO
+	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753947AbYETATk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 20:19:40 -0400
+Received: from AKLEXVS01.mitacad.com ([10.112.5.36]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 20 May 2008 12:19:33 +1200
+Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.136]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 20 May 2008 12:19:32 +1200
+In-Reply-To: <1211206844-29842-1-git-send-email-seth@userprimary.net> (Seth
+	Falcon's message of "Mon, 19 May 2008 07:20:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-OriginalArrivalTime: 20 May 2008 00:19:32.0489 (UTC) FILETIME=[2D275F90:01C8BA0F]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1026-15920.001
+X-TM-AS-Result: No--6.249000-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82456>
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
+On Tue, May 20 2008, Seth Falcon wrote:
 
-I sent this one out about a week ago and haven't heard anything about 
-it.  Did it just get lost in the noise, or is it just not 
-interesting/incorrect in some way?
+[...]
 
-/Gustaf
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 2c53f39..de52c12 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -176,6 +176,7 @@ my %cmd = (
+>  			  'strategy|s=s' => \$_strategy,
+>  			  'local|l' => \$_local,
+>  			  'fetch-all|all' => \$_fetch_all,
+> +                          'dryrun|n' => \$_dry_run,
 
-  Documentation/git-svn.txt |   17 +++++++++++++++--
-  1 files changed, 15 insertions(+), 2 deletions(-)
+s/dryrun/dry-run/ perhaps?  Also, it looks like you've used spaces
+instead of tabs.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index f4ba105..c02f220 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -189,10 +189,10 @@ All arguments are passed directly to `git blame'.
-  	independently of git-svn functions.
-
-  'create-ignore'::
--
-  	Recursively finds the svn:ignore property on directories and
-  	creates matching .gitignore files. The resulting files are staged to
--	be committed, but are not committed.
-+	be committed, but are not committed. Use -r/--revision to refer to a
-+	specfic revision.
-
-  'show-ignore'::
-  	Recursively finds and lists the svn:ignore property on
-@@ -216,6 +216,19 @@ All arguments are passed directly to `git blame'.
-  	argument.  Use the --url option to output only the value of the
-  	'URL:' field.
-
-+'proplist'::
-+	Lists the properties stored in the Subversion repository about a
-+	given file or directory.  Use -r/--revision to refer to a specific
-+	Subversion revision.
-+
-+'propget'::
-+	Gets the Subversion property given as the first argument, for a
-+	file.  A specific revision can be specified with -r/--revision.
-+
-+'show-externals'::
-+	Shows the Subversion externals.  Use -r/--revision to specify a
-+	specific revision.
-+
-  --
-
-  OPTIONS
--- 
-1.5.5.1.328.g4377c
+Toby.
