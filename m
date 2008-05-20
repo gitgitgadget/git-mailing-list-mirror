@@ -1,93 +1,112 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Tue, 20 May 2008 16:31:53 -0400
-Message-ID: <20080520203153.GH29038@spearce.org>
-References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org> <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org> <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com> <20080520201722.GF29038@spearce.org> <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Tue May 20 22:33:04 2008
+From: Tim Harper <timcharper@gmail.com>
+Subject: Re: using rev-list to tell if a branch is behind or ahead
+Date: Tue, 20 May 2008 14:33:57 -0600
+Message-ID: <19466E30-0877-4AE9-BA1D-A8A32C8989C5@gmail.com>
+References: <F3CD27F7-D509-41A3-B3C8-0B9124537DDA@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 22:35:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyYW2-0006AO-GQ
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:32:58 +0200
+	id 1JyYXw-0006rl-BS
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:34:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759604AbYETUcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 16:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759569AbYETUcG
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:32:06 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45465 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759219AbYETUcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 16:32:04 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JyYUw-0002ey-4V; Tue, 20 May 2008 16:31:50 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 15B9A20FBAE; Tue, 20 May 2008 16:31:53 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1760133AbYETUeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 16:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758608AbYETUeF
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:34:05 -0400
+Received: from rn-out-0910.google.com ([64.233.170.188]:2660 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757624AbYETUeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 16:34:03 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so182512rnd.17
+        for <git@vger.kernel.org>; Tue, 20 May 2008 13:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        bh=QYzPiRtm8EY6xIrnC8kgkUBe68sovAA5yWi07XtNUPU=;
+        b=PN7SDn5jeyNgRSZFp7gDsx7qHUxwEjV9StCOegGJBezbqcQry2jSXzvdh2LDsJS3L4IvjMQnDvHi+DtQCVh1rg5vzTokTogmQHRcdOkXl6WEtgimF8upbPEG/gDKtf6VfiO7dK9+V2p7YATz6TSYTdConumaJI0RyeGSq+0DM7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:references:x-mailer;
+        b=RUWa2RrYZsgjvNY438haLjnJ7PXH/oeqlkT/vFG36ftbdOnDJwqObeScfH5KZgsnK8nnnmbZwcbDUx6bMHXyzfnmyf+EWOhjdYgsSrh6Y8TEAF7RBgOKwn5lRJ1z717Llcm3EcofTMHyCJZJQQXZ+XhqkM0Fs425vPQX6R95lv4=
+Received: by 10.142.128.6 with SMTP id a6mr3187957wfd.68.1211315641712;
+        Tue, 20 May 2008 13:34:01 -0700 (PDT)
+Received: from timcharper.SME ( [168.103.178.89])
+        by mx.google.com with ESMTPS id 20sm1026599wfi.11.2008.05.20.13.33.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 May 2008 13:34:00 -0700 (PDT)
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82501>
 
-Sverre Rabbelier <alturin@gmail.com> wrote:
-> >
-> > That is probably difficult.  Some of the code internally is more
-> > about stringing the right sequence of plumbing together than it
-> > is about a particular user action.  I think it would take a bit of
-> > work to make it do this, and I just don't see a reason to do it.
-> 
-> The reason would be to make the switch from using git-gui only to
-> using the commandline too... the again, it'd be cutting your own hand
-> (or is it "throat" in English...) to make that transition easier.
+On May 20, 2008, at 2:24 PM, Shawn O. Pearce wrote:
+> Tim Harper <timcharper@gmail.com> wrote:
+>> I'm implementing a ruby interface to git and am wanting to be able to
+>> ask if a branch is ahead or behind.
+>>
+>> I looked in the builtin-checkout.c file and see this code:
+>>
+>> /* Run "rev-list --left-right ours...theirs" internally... */
+> ...
+>> It looks like it's calling rev-parse.  But, when I call it with the
+>> same arguments (using branches or commit sha1's), it only will list
+>> commits that are in right and not in left.  I need it to show both
+>> ways: commits that are in the right and not in left, and commits that
+>> are in the left but not in right.
+>>
+>> Do I need to call rev-parse twice to achieve this?
+>
+> No.  You need to use the triple dot operator ("...") not the
+> double dot operator ("..").
+>
 
-I'm not worried about users leaving git-gui.  Hell, if git-gui
-was just git on training wheels and all git users left git-gui
-after a while for the command line that would be telling as it
-says the graphical interface is not desired.  Or that git-gui's
-interface is not well suited to the task.
+Ugh... figured it was something simple.  Funny thing is, when I was  
+looking at the c code:
+strcpy(symmetric, sha1_to_hex(ours->object.sha1));
+strcpy(symmetric + 40, "...");
+strcpy(symmetric + 43, sha1_to_hex(theirs->object.sha1));
 
-Far from it.  Some users like git-gui for its ability to show
-the modified files, and let you stage/unstage individual hunks.
-Others like its ability to perform checkout+pull in one mouse
-click.  Many like to point at things with a rodent than to use
-the keyboard and enter (to them) isoteric commands.
+I was like "I wonder why the 3rd line is +43, and not +42".
 
-Right now there are really only two git GUIs; git-gui and QGit.
-Each has its strengths.  Maybe this time next year we will have
-a 3rd; name yet to be determined but it would come out of the
-egit/jgit project as a stand-alone SWT/Java based Git UI.
- 
-> > CVS clients that show CVS commands can easily do so, because they
-> > are directly executing the commands they show you.  This is likely
-> > also true of SVN commands.  But git-gui on Git, that's a whole
-> > different animal.
-> 
-> Ah, I didn't realise git-gui does stuff that you can't really do
-> through the regular porcelain. In that case it would indeed be
-> impossible to print the regular porcelain commands. I think the
-> '--trace' option should be advertised as 'debugging option' so that
-> the user can see what is going on in the case something goes wrong
-> perhaps?
 
-Yes.  I'll send Junio a patch for Documentation/git-gui.txt and
-describe it as a debugging option, and also mention that the commands
-it displays aren't all meant to be invoked by mortals.
 
--- 
-Shawn.
+>> Here's a sample of what I'm trying currently:
+>> ~ $ mkdir test
+>> ~ $ cd test/
+>> ~/test $ git init
+>> Initialized empty Git repository in .git/
+>> ~/test $ git
+>> ~/test $ echo content > file.txt
+>> ~/test $ git add file.txt && git commit -m "Initial commit"
+>> Created initial commit f5e4160: Initial commit
+>> 1 files changed, 1 insertions(+), 0 deletions(-)
+>> create mode 100644 file.txt
+>> ~/test master$ git co -b task
+>> Switched to a new branch "task"
+>> ~/test task$ echo changes >> file.txt
+>> ~/test task$ git add file.txt && git commit -m "Some changes"
+>> Created commit 96492ee: Some changes
+>> 1 files changed, 1 insertions(+), 0 deletions(-)
+>> ~/test task$ git rev-list --left-right task..master --
+>
+> You need an extra "." between task and master, this should be:
+>
+> git rev-list --left-right task...master --
+>
+>> ~/test task$ git rev-list --left-right master..task --
+>>> 96492ee80143f43417b00699ff29330d0027df7f
+>
+> -- 
+> Shawn.
+
+That did it, thanks
+
+Tim
