@@ -1,86 +1,116 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Tue, 20 May 2008 22:12:11 +0200
-Message-ID: <4833309B.90706@dirk.my1.cc>
-References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org> <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Tim Harper <timcharper@gmail.com>
+Subject: using rev-list to tell if a branch is behind or ahead
+Date: Tue, 20 May 2008 14:14:46 -0600
+Message-ID: <3703BF54-3619-432F-8B65-09AF17299CAD@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 20 22:13:44 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 22:15:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyYCv-0006Vw-Lt
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:13:14 +0200
+	id 1JyYFO-0007jS-Gb
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759147AbYETUMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 16:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759421AbYETUMV
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:12:21 -0400
-Received: from smtprelay11.ispgateway.de ([80.67.29.28]:47575 "EHLO
-	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759024AbYETUMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 16:12:20 -0400
-Received: from [84.176.80.190] (helo=[192.168.2.100])
-	by smtprelay11.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1JyYBw-0003NH-Uj; Tue, 20 May 2008 22:12:13 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <20080520194403.GC29038@spearce.org>
-X-Df-Sender: 757646
+	id S1761236AbYETUOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 16:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760200AbYETUOx
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:14:53 -0400
+Received: from rn-out-0910.google.com ([64.233.170.186]:47466 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759262AbYETUOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 16:14:52 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so174940rnd.17
+        for <git@vger.kernel.org>; Tue, 20 May 2008 13:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=WeXzxSqqjFwg25V24s01nLY0tHLFdLY7OOqiTOoLkV4=;
+        b=sOayNsnxCvLKAp5WEJQsL43rbQUw5JgfVpghwI70IAKUPay++2qLYSS8SPF2TK3aY+Z5AG8g4niOrEu5VPRMLTaaSmqZLyaNvGKHQ1BMBsY0BmmbOHD0JxiB1tGC8El9t6O0bhJAVMwCdPsPTitWZVFL1HG8CYVY0WmuC+vPO9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=lL8Of00vGU0aF0bgdtsMZU0nVmtpztxj0hNUC0Rpq8TLvzmMBKe74Iq6RyO9igDvXj6zB4t9UoAo7sL5nHN6eBGxVkbOiUpaOS89nVlVM2+qzJv6BcRNc0feEporv7RE+tF+1w2g9jCDb3TDjFdhXF20vvp4h3r6tsJI6PdIw34=
+Received: by 10.142.213.9 with SMTP id l9mr3509511wfg.180.1211314490585;
+        Tue, 20 May 2008 13:14:50 -0700 (PDT)
+Received: from timcharper.SME ( [168.103.178.89])
+        by mx.google.com with ESMTPS id 27sm933057wff.7.2008.05.20.13.14.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 May 2008 13:14:49 -0700 (PDT)
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82496>
 
-Shawn O. Pearce schrieb:
-> Dirk Ssserott <newsletter@dirk.my1.cc> wrote:
->   
->> thanks for your patch. Actually I had problems applying it and
->> finally gave up. I'm using the msysGit package which seems quite
->> similar to the cygwin package but not in all cases, apparently.
->>     
->
-> Well, msysGit is perhaps on an older version of git-gui.  But
-> I had thought they were fairly current and that the section of
-> code the patch touches hasn't been modified in a while.  Maybe
-> there was an issue with CRLF?
->   
-Well, CRLF was one of the issues, but I fixed that with 'dos2unix'. At 
-least I tried.
-Don't bother. I had some problems with the filenames. git-gui.sh is in my
-git-repo (git clone ...), whereas git-gui and git-gui.tcl are in my /bin 
-directory.
-I didn't know which to patch, tried them all, and copied them around.
-As said, don't bother. It's just my stupidness.
->  
->   
->> However, you were right. The trace doesn't show the commands I
->> would use on a regular basis (I couldn't stop you :-)).
->> On the other hand it possibly helps to /understand/ (or at least
->> /see/) what's going on under the hood.
->>
->> For that reason I'd greatly appreciate seeing your patch in some
->> future version of Git. It doesn't do any harm, does it? People
->> that don't like it can simply omit the '--trace' switch.
->>
->> Junio? The list?
->>     
->
-> Junio defers almost all git-gui things to me, as I am the current
-> maintainer of git-gui.  You are right, it doesn't really hurt to
-> include it, and now that it is written, the hard part is already
-> done.  I'll apply it to my main git-gui tree and ask Junio to
-> include it in a future version of Git.
->   
-Great! Sorry, I didn't want to offend you. Wasn't aware that *you* are 
-the git-gui maintainer.
-Thanks. I'm looking forward to seeing this patch. :-)
+I'm implementing a ruby interface to git and am wanting to be able to  
+ask if a branch is ahead or behind.
 
-    Dirk
+I looked in the builtin-checkout.c file and see this code:
+
+	/* Run "rev-list --left-right ours...theirs" internally... */
+	rev_argc = 0;
+	rev_argv[rev_argc++] = NULL;
+	rev_argv[rev_argc++] = "--left-right";
+	rev_argv[rev_argc++] = symmetric;
+	rev_argv[rev_argc++] = "--";
+	rev_argv[rev_argc] = NULL;
+
+	strcpy(symmetric, sha1_to_hex(ours->object.sha1));
+	strcpy(symmetric + 40, "...");
+	strcpy(symmetric + 43, sha1_to_hex(theirs->object.sha1));
+
+	init_revisions(&revs, NULL);
+	setup_revisions(rev_argc, rev_argv, &revs, NULL);
+	prepare_revision_walk(&revs);
+
+	/* ... and count the commits on each side. */
+	num_ours = 0;
+	num_theirs = 0;
+	while (1) {
+		struct commit *c = get_revision(&revs);
+		if (!c)
+			break;
+		if (c->object.flags & SYMMETRIC_LEFT)
+			num_ours++;
+		else
+			num_theirs++;
+	}
+
+
+It looks like it's calling rev-parse.  But, when I call it with the  
+same arguments (using branches or commit sha1's), it only will list  
+commits that are in right and not in left.  I need it to show both  
+ways: commits that are in the right and not in left, and commits that  
+are in the left but not in right.
+
+Do I need to call rev-parse twice to achieve this?
+
+Here's a sample of what I'm trying currently:
+~ $ mkdir test
+~ $ cd test/
+~/test $ git init
+Initialized empty Git repository in .git/
+~/test $ git
+~/test $ echo content > file.txt
+~/test $ git add file.txt && git commit -m "Initial commit"
+Created initial commit f5e4160: Initial commit
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 file.txt
+~/test master$ git co -b task
+Switched to a new branch "task"
+~/test task$ echo changes >> file.txt
+~/test task$ git add file.txt && git commit -m "Some changes"
+Created commit 96492ee: Some changes
+  1 files changed, 1 insertions(+), 0 deletions(-)
+~/test task$ git rev-list --left-right task..master --
+~/test task$ git rev-list --left-right master..task --
+ >96492ee80143f43417b00699ff29330d0027df7f
+
+
+Thanks,
+
+Tim
