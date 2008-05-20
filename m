@@ -1,71 +1,95 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Tue, 20 May 2008 22:05:20 +0200
-Message-ID: <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com>
-References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org>
-	 <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org>
-Reply-To: sverre@rabbelier.nl
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Understanding git filter-branch --subdirectory-filter behaviour
+Date: Tue, 20 May 2008 21:11:55 +0100
+Message-ID: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Dirk_S=FCsserott?=" <newsletter@dirk.my1.cc>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 20 22:06:48 2008
+To: "gi mailing list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 20 22:13:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyY6A-0002x8-9d
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:06:14 +0200
+	id 1JyYCb-0006LS-1Q
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 22:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762014AbYETUFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 16:05:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761163AbYETUFX
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:05:23 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:33565 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762362AbYETUFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 16:05:21 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1898090wfd.4
-        for <git@vger.kernel.org>; Tue, 20 May 2008 13:05:20 -0700 (PDT)
+	id S1759425AbYETUMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 16:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759024AbYETUMA
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 16:12:00 -0400
+Received: from rn-out-0910.google.com ([64.233.170.188]:44559 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755931AbYETUL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 16:11:59 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so173625rnd.17
+        for <git@vger.kernel.org>; Tue, 20 May 2008 13:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bxxVXfhVyBJii/DYk+CrsX6LAx94uZQcxcipg2A06DE=;
-        b=cHq15hiPMyRb/FmPvmeJTMvymiV5MNbojm78qYY+DbYrShRzqznRL/cIOObWyyREDiHah+bks+8YZt1eUQIcH2W9Fq3CSpBSzkczuXwjvb5CkmIrYoMp1bW0qnuG2meu52pG0xjbTAdzCtc0ALageBCAVOf3jUz0B9RhAKfRo3g=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=igbRFK71wn+nAchH+wbvWR5x+I5EAC5CDYFlvuIj7Mo=;
+        b=Jl84Mg1EMfCViPR4tKX/cGwvpdaAebm552YbNhTTbYJF+MrJ9fMqutBLHLsf5Cf4um9I1nQDOs0OHMXi0ObzT38INGOJoGdzqWUR8UeIJUQ4nTKjYaPQN+UqnE8Tp3nB01BrrSTnoQxjAc/L09L0t8ZNezzF65xc9maf8D8x9G4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ipzUK3c7Sc86JwWcmRfq5DyQxK6Uf5fePU4V7Zzo/62qKIMoTJ3+i0x2wQyNKUdhPUoBplXdC2OnspZCdBvlpJqzU/nY5JV4TXin80sN5hHUEMHrPTlDP25F7IesuNnb31mEB1+7sTVC5/8Y7m5HsjT/LgcrfTH+rVw9XjtaMTg=
-Received: by 10.142.141.21 with SMTP id o21mr3504658wfd.199.1211313920562;
-        Tue, 20 May 2008 13:05:20 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Tue, 20 May 2008 13:05:20 -0700 (PDT)
-In-Reply-To: <20080520194403.GC29038@spearce.org>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=I9dFBe0tAXhHjKMB7ZLLQYmQvw1+5hOMZJK9nJmPXh4mKnAueQVbGlMc1we55vWEy7kaTkSuh19LQ85PGvgDOgSQzKQQhhVybn1g850/SrxaKiihS4AbC/zV0dp+xDP8SkQENUR5fBL1EsmFFUw89zlZAFICG6u2hBzcMjNsf7o=
+Received: by 10.150.95.16 with SMTP id s16mr8025443ybb.247.1211314315787;
+        Tue, 20 May 2008 13:11:55 -0700 (PDT)
+Received: by 10.150.225.18 with HTTP; Tue, 20 May 2008 13:11:55 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82494>
 
-On Tue, May 20, 2008 at 9:44 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Junio defers almost all git-gui things to me, as I am the current
-> maintainer of git-gui.  You are right, it doesn't really hurt to
-> include it, and now that it is written, the hard part is already
-> done.  I'll apply it to my main git-gui tree and ask Junio to
-> include it in a future version of Git.
+Hi, I'm experimenting with git filter-branch --subdirectory-filter
+(being specific since it appears to have several special code branches
+in the script) and getting results that I don't understand. Firstly,
+can I confirm what appears implied by the man-page but I can't find
+explicitly stated:
 
-Hmmm, maybe you should include in big red letters that the output from
---trace in no way or form represents commands that a user should use
-daily? I can hear the questions on #git already "I don't understand,
-I've used git-gui for months now, but the command it tells me to use
-make no sense!".
-Even better of course would be to not only print the plumbing commands
-but also the porcelain commands!
+git filter-branch <how to filter> HEAD
+
+is expected to do its filtering on the branch HEAD is on the entire
+DAG all the way back to the initial commit, even if this is a DAG with
+multiple branches splitting off and remerging?
+
+I'm trying this on a repo (copy) containing a directory WRITING,
+although not quite all the way back to the repo creation getting:
+
+$ git filter-branch --subdirectory-filter WRITING/ HEAD
+Rewrite 42f24be8d8198738134a19471697b39359199fa3 (351/351)
+Ref 'refs/heads/master' was rewritten
+
+$ git rev-list HEAD | wc
+     55      55    2255
+
+Looking at this with gitk and git log confirms 55 commits, and the
+first commit is the one immediately after the first merge encountered
+(the commit that occured just after the merge) when walking backwards
+in history. Is this something that would be expected?
+
+Digging a little into the shell-script I find the list of commits is
+generated with
+
+git rev-list --reverse --topo-order --default HEAD --parents HEAD
+--full-history -- WRITING
+
+and (adding --pretty so I can easily read it) running this manually
+gives 351 entries and looks to contain the expected commits. So I'm
+confused what's happening?
+
+If this is expected, is there an refspec I'm missing to get
+filter-branch to filter the entire repo?
+
+(FWIW, git version 1.5.5.1.316.g377d9 on x86-64 Linux.)
+
+Many thanks,
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
