@@ -1,95 +1,96 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit: kha/{safe,experimental} updated
-Date: Tue, 20 May 2008 23:02:49 +0200
-Message-ID: <20080520210249.GA19465@diana.vm.bytemark.co.uk>
-References: <20080514014309.GA17955@diana.vm.bytemark.co.uk> <b0943d9e0805191421n1ca676dai1b3ed7d6eb1df5f4@mail.gmail.com> <20080520070441.GB7324@diana.vm.bytemark.co.uk> <b0943d9e0805201019x10bf87ecr1c11c8ee474f6138@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git gui: Possible to see which commands are executed?
+Date: Tue, 20 May 2008 14:34:03 -0700
+Message-ID: <7v3aoc8xtg.fsf@gitster.siamese.dyndns.org>
+References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org>
+ <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org>
+ <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com>
+ <20080520201722.GF29038@spearce.org>
+ <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com>
+ <20080520203153.GH29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 23:03:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: sverre@rabbelier.nl,
+	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 20 23:35:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyYzt-0001KY-AP
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 23:03:49 +0200
+	id 1JyZUF-0004y2-Ox
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 23:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758460AbYETVC6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 May 2008 17:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760194AbYETVC6
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:02:58 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3395 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758277AbYETVC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 17:02:57 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JyYyv-00058M-00; Tue, 20 May 2008 22:02:49 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0805201019x10bf87ecr1c11c8ee474f6138@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1762355AbYETVeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 17:34:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760790AbYETVeS
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 17:34:18 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51678 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760028AbYETVeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 17:34:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 502766465;
+	Tue, 20 May 2008 17:34:13 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 1547A643E; Tue, 20 May 2008 17:34:07 -0400 (EDT)
+In-Reply-To: <20080520203153.GH29038@spearce.org> (Shawn O. Pearce's message
+ of "Tue, 20 May 2008 16:31:53 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7D8A1CD6-26B4-11DD-8DD1-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82505>
 
-On 2008-05-20 18:19:02 +0100, Catalin Marinas wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> 2008/5/20 Karl Hasselstr=F6m <kha@treskal.com>:
+> Sverre Rabbelier <alturin@gmail.com> wrote:
+>> >
+>> > That is probably difficult.  Some of the code internally is more
+>> > about stringing the right sequence of plumbing together than it
+>> > is about a particular user action.  I think it would take a bit of
+>> > work to make it do this, and I just don't see a reason to do it.
+>> 
+>> The reason would be to make the switch from using git-gui only to
+>> using the commandline too... the again, it'd be cutting your own hand
+>> (or is it "throat" in English...) to make that transition easier.
 >
-> > The system I built works like this at install time:
-> >
-> >  i1. Create stgit/builtin_version.py, populated with git-describe
-> >      output.
-> >
-> >  i2. Install as usual.
+> I'm not worried about users leaving git-gui.  Hell, if git-gui
+> was just git on training wheels and all git users left git-gui
+> after a while for the command line that would be telling as it
+> says the graphical interface is not desired.  Or that git-gui's
+> interface is not well suited to the task.
 >
-> Fine (with some notes for releases, see below).
+> Far from it.  Some users like git-gui for its ability to show
+> the modified files, and let you stage/unstage individual hunks.
+> Others like its ability to perform checkout+pull in one mouse
+> click.  Many like to point at things with a rodent than to use
+> the keyboard and enter (to them) isoteric commands.
 >
-> > And at runtime:
-> >
-> >  r1. If we have a .git directory, ask git what version we are.
-> >      (Actually, we just try to run git describe and see if it
-> >      succeeds.)
-> >
-> >  r2. Otherwise, go with the built-in version (only works if
-> >      stgit/builtin_version.py exists).
+> Right now there are really only two git GUIs; git-gui and QGit.
+> Each has its strengths.  Maybe this time next year we will have
+> a 3rd; name yet to be determined but it would come out of the
+> egit/jgit project as a stand-alone SWT/Java based Git UI.
+>  
+>> > CVS clients that show CVS commands can easily do so, because they
+>> > are directly executing the commands they show you.  This is likely
+>> > also true of SVN commands.  But git-gui on Git, that's a whole
+>> > different animal.
+>> 
+>> Ah, I didn't realise git-gui does stuff that you can't really do
+>> through the regular porcelain. In that case it would indeed be
+>> impossible to print the regular porcelain commands. I think the
+>> '--trace' option should be advertised as 'debugging option' so that
+>> the user can see what is going on in the case something goes wrong
+>> perhaps?
 >
-> OK.
->
-> > Now, as to released versions, you could simply plop a suitably
-> > prepared stgit/builtin_version.py in the tarball, and it'll all
-> > work. i1 should fail silently when run from an unpacked tarball,
-> > so i2 will pick up the builtin_version.py from the tarball. And at
-> > runtime, r1 will fail and we'll fall back to r2.
->
-> I build release tarball from the directory under Git control and I
-> always get a builtin_version.py generated. In my initial patch I had
-> a check in setup.py for a .release file. I could add a check in
-> write_builtin_version to ignore the extra .git stuff if I am making
-> a release (only keep the tag name).
+> Yes.  I'll send Junio a patch for Documentation/git-gui.txt and
+> describe it as a debugging option, and also mention that the commands
+> it displays aren't all meant to be invoked by mortals.
 
-Nah, easier to just change the order of the checks (try r2 before r1)
-as I outlined. I'll whip up a patch.
-
-> Another alternative is to check for the number of commits from the
-> latest tag and, if this is 0, simply ignore the Git id.
-
-If you're exactly on a tagged commit, git-describe will return just
-the name of that tag, so you don't need to do anything extra.
-
-> BTW, Git seems to use 6 characters for the current commit id and
-> StGIT 5. Should we change this for consistency?
-
-Both git and we call git-describe with --abbrev=3D4, which I think mean=
-s
-"describe the commit uniquely with as few digits as possible, but no
-less than four". So we'll get upgraded automatically when it becomes
-necessary.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Probably --trace should be renamed to --debug then?
