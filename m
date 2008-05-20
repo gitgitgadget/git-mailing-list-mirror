@@ -1,66 +1,108 @@
 From: Seth Falcon <seth@userprimary.net>
-Subject: Re: [PATCH] Add a --dry-run option to git-svn rebase
-Date: Mon, 19 May 2008 20:24:58 -0700
-Message-ID: <20080520032458.GF396@ziti.local>
-References: <1211206844-29842-1-git-send-email-seth@userprimary.net> <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, normalperson@yhbt.net
-To: "toby.allsopp (toby.allsopp - NAVMAN)" <toby.allsopp@navman.co.nz>
-X-From: git-owner@vger.kernel.org Tue May 20 05:26:03 2008
+Subject: [PATCH] Add a --dry-run option to git-svn rebase
+Date: Mon, 19 May 2008 20:29:17 -0700
+Message-ID: <1211254157-41316-1-git-send-email-seth@userprimary.net>
+References: <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com>
+Cc: Seth Falcon <seth@userprimary.net>
+To: git@vger.kernel.org, normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Tue May 20 05:31:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyIUD-0003Ik-KH
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:26:02 +0200
+	id 1JyIZS-0004ck-BD
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 05:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756879AbYETDZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2008 23:25:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756861AbYETDZK
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:25:10 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:45057 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754726AbYETDZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2008 23:25:09 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1594947wfd.4
-        for <git@vger.kernel.org>; Mon, 19 May 2008 20:25:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=dmN2i35VKKBtxv62zO622zQHzb8DvHYXmSbp2mTkFFo=;
-        b=Ya3R3oWwncaCdguKBPJ4cXUMEdL8854viTL7oWCzEvPgH+ew5hdVbKlsBkzBAod/Z9hUfE5n+ST9JgjUevlAmCltNvfW1Fv0MYG32nZ+s/i4DvpfahCpT/abqzlSbWr1xmJP2lffmRbsucp9ddlOJQ09h09hwIFaDA9NKLusDjQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=PxDb0YVaqTnSdUs6pqEAQjF596TkQqsDQgivJUt/9W9gNV8K3JIhCaggL8xK++GVp8ClLillx2RvZV0hVaRiKSF36mwuS9b++je0RwlQyF7+4haB6GVftJWZfuhiXmZDMOJsbPY0CZ0tD7MSyMw0mz7tuFbGShTWiPSrXlpfXmY=
-Received: by 10.142.158.3 with SMTP id g3mr3112838wfe.344.1211253908643;
-        Mon, 19 May 2008 20:25:08 -0700 (PDT)
-Received: from localhost ( [71.197.245.84])
-        by mx.google.com with ESMTPS id 30sm114206wff.8.2008.05.19.20.25.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 May 2008 20:25:08 -0700 (PDT)
-Content-Disposition: inline
+	id S1757690AbYETDa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2008 23:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757616AbYETDa0
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 May 2008 23:30:26 -0400
+Received: from dsl017-040-092.sea1.dsl.speakeasy.net ([69.17.40.92]:43060 "EHLO
+	zimbra.evri.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757564AbYETDaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2008 23:30:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.evri.com (Postfix) with ESMTP id 0127C1A2C230;
+	Mon, 19 May 2008 20:29:01 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: 3.08
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.08 tagged_above=-10 required=5 tests=[AWL=-0.144,
+	BAYES_00=-2.599, HELO_LOCALHOST=3.941, RCVD_IN_PBL=0.905,
+	RCVD_IN_SORBS_DUL=0.877, RDNS_DYNAMIC=0.1]
+Received: from zimbra.evri.com ([127.0.0.1])
+	by localhost (zimbra.evri.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tXmMzLRmbXDD; Mon, 19 May 2008 20:29:00 -0700 (PDT)
+Received: from localhost (c-71-197-245-84.hsd1.or.comcast.net [71.197.245.84])
+	by zimbra.evri.com (Postfix) with ESMTP id 433461A2C22E;
+	Mon, 19 May 2008 20:29:00 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.1.316.g377d9.dirty
 In-Reply-To: <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82463>
 
-* On 2008-05-20 at 12:19 +1200 toby.allsopp (toby.allsopp - NAVMAN) wrote:
+When working with multiple branches in an svn repository, it can be
+useful to verify the svn repository and local tracking branch that will
+be used for the rebase operation.
 
-> [resending to correct Eric's email address]
+Signed-off-by: Seth Falcon <seth@userprimary.net>
+---
 
-Sorry about that, typoed the address.
+Reworked to fix the spelling of dry-run and whitespace issues.
 
-> s/dryrun/dry-run/ perhaps?  Also, it looks like you've used spaces
-> instead of tabs.
+ Documentation/git-svn.txt |    8 ++++++--
+ git-svn.perl              |    6 ++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-I'll address both of those and resend, thanks.
-
-+ seth
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index c6b56b4..5890028 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -342,11 +342,15 @@ Passed directly to git-rebase when using 'dcommit' if a
+ -n::
+ --dry-run::
+ 
+-This is only used with the 'dcommit' command.
++This can be used with the 'dcommit' and 'rebase' commands.
+ 
+-Print out the series of git arguments that would show
++For 'dcommit', print out the series of git arguments that would show
+ which diffs would be committed to SVN.
+ 
++For 'rebase', display the local branch associated with the upstream svn
++repository associated with the current branch and the URL of svn
++repository that will be fetched from.
++
+ --
+ 
+ ADVANCED OPTIONS
+diff --git a/git-svn.perl b/git-svn.perl
+index 2c53f39..9c60ef4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -176,6 +176,7 @@ my %cmd = (
+ 			  'strategy|s=s' => \$_strategy,
+ 			  'local|l' => \$_local,
+ 			  'fetch-all|all' => \$_fetch_all,
++			  'dry-run|n' => \$_dry_run,
+ 			  %fc_opts } ],
+ 	'commit-diff' => [ \&cmd_commit_diff,
+ 	                   'Commit a diff between two trees',
+@@ -553,6 +554,11 @@ sub cmd_rebase {
+ 		die "Unable to determine upstream SVN information from ",
+ 		    "working tree history\n";
+ 	}
++	if ($_dry_run) {
++		print "remote-branch: " . $gs->refname . "\n";
++		print "svn-url: " . $url . "\n";
++		return;
++	}
+ 	if (command(qw/diff-index HEAD --/)) {
+ 		print STDERR "Cannot rebase with uncommited changes:\n";
+ 		command_noisy('status');
 -- 
-Seth Falcon | http://userprimary.net/user/
+1.5.5.1.316.g377d9.dirty
