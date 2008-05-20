@@ -1,57 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] Implement normalize_absolute_path
-Date: Tue, 20 May 2008 13:22:41 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805201321300.30431@racer>
-References: <48327456.1060202@facebook.com>
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: Re: git mergetool vs stash apply
+Date: Tue, 20 May 2008 16:32:49 +0400
+Message-ID: <c6c947f60805200532h53e7ec64jb846f1d8c1b7066c@mail.gmail.com>
+References: <c6c947f60805200102h3fd27742vfd9310912907cfa@mail.gmail.com>
+	 <20080520090258.GB31703@sigill.intra.peff.net>
+	 <c6c947f60805200416s61b0cc1eqd6d6c804abd15b4@mail.gmail.com>
+	 <m3prrh42hl.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: David Reiss <dreiss@facebook.com>
-X-From: git-owner@vger.kernel.org Tue May 20 14:23:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 14:33:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyQsG-0004Id-9s
-	for gcvg-git-2@gmane.org; Tue, 20 May 2008 14:23:24 +0200
+	id 1JyR2F-00086N-O0
+	for gcvg-git-2@gmane.org; Tue, 20 May 2008 14:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754103AbYETMWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 08:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbYETMWd
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 08:22:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46240 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751583AbYETMWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 08:22:32 -0400
-Received: (qmail invoked by alias); 20 May 2008 12:22:30 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO racer.local) [132.187.25.128]
-  by mail.gmx.net (mp040) with SMTP; 20 May 2008 14:22:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18w+VlonRgw9QcsRrLBVhvErYaPsRbPG5tCPTpmjv
-	0UEAI4r4I3uoIy
-X-X-Sender: gene099@racer
-In-Reply-To: <48327456.1060202@facebook.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754917AbYETMcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2008 08:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbYETMcu
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 08:32:50 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:42230 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754583AbYETMct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2008 08:32:49 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2341343waf.23
+        for <git@vger.kernel.org>; Tue, 20 May 2008 05:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=H50uEBSzXVlMn2PwQ+5jesTMeLotfkdVTZbFMvpZMbY=;
+        b=W008AhHazFzijbZgGexmLNU3i9MJtBcZXJib2PeugNTAiBMZl8SmZD14l8kBd7gw2CmvvVVVKuI4/dKSYizryYC6DWMjZfehLzbiyfQ3NY0JmrlqHMYe3FfF2a2fFzpgZl9gk+7hpp+uKC6Gp5d1T0zqEQFMCjChTAm6VLqSOXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=vCC9wvcqGhX/lh+imBwQdhHnCkIcaTqOsRDOSjzRNcTpDT67yRmfqSPVs5CffFcW1hmZRMLciXjIxhOhFxZyRszRbMhipluUWZ1Ew3xMW4UW9cBgdRdP6k1OUeUvFlsbNQ0JZiM2bN6xwP/+1ukqHuXMRStkIdce9BF0rT9su4s=
+Received: by 10.114.76.1 with SMTP id y1mr8810995waa.38.1211286769067;
+        Tue, 20 May 2008 05:32:49 -0700 (PDT)
+Received: by 10.115.111.4 with HTTP; Tue, 20 May 2008 05:32:49 -0700 (PDT)
+In-Reply-To: <m3prrh42hl.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82480>
 
-Hi,
+On Tue, May 20, 2008 at 3:52 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Alexander Gladysh" <agladysh@gmail.com> writes:
+>
+>> On Tue, May 20, 2008 at 1:02 PM, Jeff King <peff@peff.net> wrote:
+>>>
+>>> So there is perhaps something specific about your setup or your conflict
+>>> that is causing mergetool not to work as expected.
+>>
+>> Most likely so.
+>>
+>>> Can you give us a test case that fails?
+>>
+>> No, unfortunately I can not. I was unable to produce a minimal test
+>> case, and I can not share the whole repo.
+>
+> Can you use contents-scrambling tool by Jeff King from
+>  Message-ID: <20080510055332.GB11556@sigill.intra.peff.net>
+>  http://permalink.gmane.org/gmane.comp.version-control.git/81652
 
-On Mon, 19 May 2008, David Reiss wrote:
+I have some questions:
 
-> normalize_absolute_path removes several oddities form absolute paths, 
-> giving nice clean paths like "/dir/sub1/sub2".  Also add a test case for 
-> this utility, based on a new test program (in the style of test-sha1).
+1. My repo is 650+ MB, my working copy is 350+ KLOC. That size is hard
+to share. Would that tool reduce it enough? Is it possible to filter
+out irrelevant content somehow?
+2. Would that tool obfuscate binaries as well?
 
-I wonder why my advice to look at setup.c (I think I did not mention the 
-function name "sanitary_path_copy()" in particular, because I figured you 
-would spot it right away) went unheeded.
+Furthermore, I have tried to reproduce that bug once again (by
+checking out that problematic revision and trying to apply that git
+stash on it) and was unable to (but my repo has changed since that).
+Perhaps it was some "moonphase-related" fluctuation...
 
-So I think I will not even bother to look at your patches either.
-
-Ciao,
-Dscho
+Sorry for the noise.
+Alexander.
