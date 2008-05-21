@@ -1,67 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Tue, 20 May 2008 22:41:26 -0400
-Message-ID: <20080521024126.GI29038@spearce.org>
-References: <48301B17.30309@dirk.my1.cc> <20080519022125.GV29038@spearce.org> <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org> <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com> <20080520201722.GF29038@spearce.org> <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com> <20080520203153.GH29038@spearce.org> <7v3aoc8xtg.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: looking for "market share" analysis of SCMs.
+Date: Tue, 20 May 2008 21:06:50 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805202105430.3081@woody.linux-foundation.org>
+References: <48329282.1040407@tikalk.com>  <20080520093245.GA5037@mithlond.arda.local>  <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>  <alpine.LNX.1.00.0805201748020.19665@iabervon.org>
+ <bd6139dc0805201525r22ba7398g6f341f89ae699b57@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: sverre@rabbelier.nl,
-	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 21 04:42:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Ittay Dror <ittayd@tikalk.com>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Wed May 21 06:08:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyeHa-0003Ux-Jb
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 04:42:27 +0200
+	id 1Jyfcz-0005Gc-6m
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 06:08:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758128AbYEUClf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2008 22:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757537AbYEUClf
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 May 2008 22:41:35 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38011 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757297AbYEUCle (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2008 22:41:34 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JyeGT-0000Fc-3V; Tue, 20 May 2008 22:41:17 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DA8AF20FBAE; Tue, 20 May 2008 22:41:26 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v3aoc8xtg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750805AbYEUEHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 00:07:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbYEUEHq
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 00:07:46 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:37535 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750763AbYEUEHp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 00:07:45 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4L46q6i016119
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 20 May 2008 21:06:53 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4L46oxS027532;
+	Tue, 20 May 2008 21:06:51 -0700
+In-Reply-To: <bd6139dc0805201525r22ba7398g6f341f89ae699b57@mail.gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.421 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82520>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> > Sverre Rabbelier <alturin@gmail.com> wrote:
-> >> 
-> >> Ah, I didn't realise git-gui does stuff that you can't really do
-> >> through the regular porcelain. In that case it would indeed be
-> >> impossible to print the regular porcelain commands. I think the
-> >> '--trace' option should be advertised as 'debugging option' so that
-> >> the user can see what is going on in the case something goes wrong
-> >> perhaps?
-> 
-> Probably --trace should be renamed to --debug then?
 
-Well, we do have GIT_TRACE, and git-gui --trace is sort of the
-same idea.  :-)
 
-I was going to call it --debug, but went with --trace as it is
-closer to GIT_TRACE than it is to say git-describe --debug.
+On Wed, 21 May 2008, Sverre Rabbelier wrote:
+>
+> Even so, I think this is a better graph:
+>    http://tinyurl.com/4hu2cn
 
--- 
-Shawn.
+Woo-woo!
+
+Add RCS to the list (because real mean use the real thing(tm)), and see 
+how git passed RCS late last year.
+
+		Linus
