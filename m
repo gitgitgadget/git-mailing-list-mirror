@@ -1,73 +1,65 @@
-From: davetron5000 <davetron5000@gmail.com>
-Subject: Using git to perform merges between SVN branches
-Date: Wed, 21 May 2008 08:50:33 -0700 (PDT)
-Message-ID: <a5c338c9-7820-41bd-a3a3-36ba5aad4379@l64g2000hse.googlegroups.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 17:51:57 2008
+From: Marcel Koeppen <git-dev@marzelpan.de>
+Subject: [PATCH] Fix prepare-commit-msg hook and replace in-place sed
+Date: Wed, 21 May 2008 18:25:54 +0200
+Message-ID: <1211387154-8792-1-git-send-email-git-dev@marzelpan.de>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed May 21 18:26:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyqbF-0002es-GJ
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 17:51:33 +0200
+	id 1Jyr9O-000225-K3
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 18:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935524AbYEUPui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 11:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757048AbYEUPui
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 11:50:38 -0400
-Received: from wr-out-0708.google.com ([64.233.184.243]:44426 "EHLO
-	wr-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934519AbYEUPug (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 11:50:36 -0400
-Received: by wr-out-0708.google.com with SMTP id b35so5630285wra.4
-        for <git@vger.kernel.org>; Wed, 21 May 2008 08:50:34 -0700 (PDT)
-Received: by 10.100.174.2 with SMTP id w2mr15540ane.16.1211385033878; Wed, 21 
-	May 2008 08:50:33 -0700 (PDT)
-X-IP: 98.218.223.189
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; 
-	rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14,gzip(gfe),gzip(gfe)
+	id S1763152AbYEUQZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 12:25:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759930AbYEUQZ6
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 12:25:58 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.18.44]:34936 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759619AbYEUQZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 12:25:57 -0400
+Received: from [80.145.234.245] (helo=localhost.localdomain)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <git-dev@marzelpan.de>)
+	id 1Jyr8V-0008GI-Ba; Wed, 21 May 2008 18:25:55 +0200
+X-Mailer: git-send-email 1.5.5.1.316.g377d9
+X-Df-Sender: 893553
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82554>
 
-Working out of an SVN/subversion repository.  Initially cloned it so I
-could work with git via git-svn.  I was given a branch in svn to work
-on.  Created local branches connected to the main trunk and my branch
-via:
+The patterns to the case statement could never be matched, so the hook
+was a noop. This patch also replaces the non-portable use of in-place sed.
 
-git-checkout -b local-trunk trunk
-git branch local-foo FOO
+Signed-off-by: Marcel Koeppen <git-dev@marzelpan.de>
+---
+ templates/hooks--prepare-commit-msg |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-where svn_root/branches/FOO is where I'm to commit changes
-
-commits work fine, etc.
-
-What I'd like to do, for simplicity, and as a demonstration of git's
-superior merging, is to do the merge of my code to the main trunk
-using git.  My main concern is not getting into a situation where I
-cannot commit to svn (since it doesn't track merges)
-
-Would something like this work:
-
-git checkout local-trunk
-git-svn rebase
-git checkout -b merge-foo local-trunk
-git merge local-foo
-# Resolve conflicts, etc.  local-foo now has what should go onto SVN's
-trunk
-git checkout local-trunk
-git merge merge-foo
-# this should work without any conflicts, since I resolved them on
-merge-foo
-git-svn dcommit
-# Now I've merged my changes to the main trunk
-
-Thanks,
-
-Dave
+diff --git a/templates/hooks--prepare-commit-msg b/templates/hooks--prepare-commit-msg
+index ff0f42a..d3c1da3 100644
+--- a/templates/hooks--prepare-commit-msg
++++ b/templates/hooks--prepare-commit-msg
+@@ -20,11 +20,11 @@
+ # The third example adds a Signed-off-by line to the message, that can
+ # still be edited.  This is rarely a good idea.
+ 
+-case "$2 $3" in
+-  merge)
+-    sed -i '/^Conflicts:/,/#/!b;s/^/# &/;s/^# #/#/' "$1" ;;
++case "$2,$3" in
++  merge,)
++    perl -i -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
+ 
+-# ""|template)
++# ,|template,)
+ #   perl -i -pe '
+ #      print "\n" . `git diff --cached --name-status -r`
+ #	 if /^#/ && $first++ == 0' "$1" ;;
+-- 
+1.5.5.1.316.g377d9
