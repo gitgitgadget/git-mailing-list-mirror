@@ -1,74 +1,130 @@
-From: "Clifford Caoile" <piyo@users.sourceforge.net>
-Subject: Re: encoding bug in git.el
-Date: Thu, 22 May 2008 06:31:03 +0900
-Message-ID: <1f748ec60805211431o38cdab16j722178c2416c53f9@mail.gmail.com>
-References: <20080520220900.GA20570@diana.vm.bytemark.co.uk>
-	 <87mymkbo9x.fsf@lysator.liu.se>
-	 <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
-	 <20080521145434.GA31982@diana.vm.bytemark.co.uk>
-Reply-To: piyo@users.sourceforge.net
+From: Chris Frey <cdfrey@foursquare.net>
+Subject: [PATCH resend] perl/Makefile.PL: teach makefiles about possible old Error.pm files
+Date: Wed, 21 May 2008 18:21:50 -0400
+Message-ID: <20080521222150.GA29696@foursquare.net>
+References: <20080517011614.GA11029@foursquare.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed May 21 23:32:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 22 00:23:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyvvD-00019z-PN
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 23:32:32 +0200
+	id 1JywiT-0002yv-KZ
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 00:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759133AbYEUVbj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 17:31:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758554AbYEUVbj
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 17:31:39 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:33948 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758020AbYEUVbi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 17:31:38 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1775671ywe.1
-        for <git@vger.kernel.org>; Wed, 21 May 2008 14:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=8LS/8Fe3pYeMOd7bDgJgQIBhtIrAy3I56CgHWO1b06U=;
-        b=HTvK6G2ze4spQ+i8Ea3nZH0VZfJft50DwIDdFz+YTxiUQ8JxQwbTGdDmFKAg6zU41BW04H1gJP5+H42O5IosWMJbW+Jtd4F4BRuSQhezYW1Oe2bckKe7CflJe4KL/nGsUtz0tEvMebSMFvTPug4G7gQ++cOGKmiQBWQ4isHcbO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=CQ3/m6BycyBAkAYZb0HfGZnHeo3Uz1rYIi9r0rG1/dn3QVcBAN59o8IvrNYnhcSGt/fq90K5KLTqKqqNI63bAM9Qt8eueatsCrK2PzcsYD/ywUcpL9g1o5wlIYpSr5ONIi9CbESPajTH2m85MJEr/hVVoplUlOQNIhcIhSpJOj8=
-Received: by 10.142.212.19 with SMTP id k19mr415420wfg.13.1211405463665;
-        Wed, 21 May 2008 14:31:03 -0700 (PDT)
-Received: by 10.142.211.3 with HTTP; Wed, 21 May 2008 14:31:03 -0700 (PDT)
-In-Reply-To: <20080521145434.GA31982@diana.vm.bytemark.co.uk>
+	id S1756622AbYEUWWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 18:22:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbYEUWWe
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 18:22:34 -0400
+Received: from nic.NetDirect.CA ([216.16.235.2]:51161 "EHLO
+	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751280AbYEUWWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 18:22:34 -0400
+X-Originating-Ip: 216.16.235.2
+Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
+	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m4LMLo3w000822;
+	Wed, 21 May 2008 18:21:50 -0400
 Content-Disposition: inline
-X-Google-Sender-Auth: fe46be4a392344a3
+In-Reply-To: <20080517011614.GA11029@foursquare.net>
+User-Agent: Mutt/1.4.1i
+X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
+X-Net-Direct-Inc-MailScanner: Found to be clean
+X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
+	SpamAssassin (not cached, score=-15.527, required 5,
+	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00,
+	INFO_TLD 1.27)
+X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82584>
 
-On Wed, May 21, 2008 at 11:54 PM, Karl Hasselstr=F6m <kha@treskal.com> =
-wrote:
-> On 2008-05-21 23:08:09 +0900, Clifford Caoile wrote:
->
->> > > It's in master, but not yet in maint. (In fact, it's the _only_
->> > > change to contrib/emacs that's in master but not in maint.)
->>
->> Please forgive my ignorance, but what does this mean?
->
-> That the change was committed to the "master" branch, and not the
-> "maint" branch. So folks who run stable releases haven't seen the bug
-> yet.
+If a previous version of git was installed on a system without a
+proper Error.pm, git will install its own.  But the next time
+git is compiled on that system, that Error.pm will prevent git from
+installing its own copy the second time.  This causes a broken
+git install on such systems.
 
-Ok I understand.
+This patch fixes this bug by tagging git's Error.pm with an
+INSTALLED_BY flag, and checking for it during the compile.
 
-Did you test the proposed fix I sent? I would like to know your feedbac=
-k.
+Signed-off-by: Chris Frey <cdfrey@foursquare.net>
+---
 
-Best regards,
-Clifford Caoile
+	Resending patch from last week, as I saw no comments.
+	Please apply.  Thanks!
+
+
+	Thoughts on the patch:
+
+	I use 'stow' to handle multiple versions of git installations.
+	So when I uninstall a version of git, all those files are
+	truly gone.  Including Error.pm.  But if a new version was
+	compiled while the old was still there, the new stow
+	install will be missing Error.pm.
+
+	This bug was hit in April by "carbonated beverage":
+		http://marc.info/?l=git&m=120805594920430&w=2
+
+	I think it is wise to mark our own copy of Error.pm in some way,
+	just so people can tell the difference between versions on
+	their systems.
+
+	The drawback to this patch is that once git installs its own
+	copy, it will always install its own copy, unless the user
+	uninstalls the old git first.  Usually this is the desired
+	behaviour, but my perl-fu isn't strong enough to make this
+	check even smarter.  Ideally, if a newer version is on the
+	system already, git shouldn't have to install its own.
+
+	- Chris
+
+ perl/Makefile.PL      |   14 ++++++++++++--
+ perl/private-Error.pm |    1 +
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 320253e..26f7a8c 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -11,9 +11,19 @@ MAKE_FRAG
+ my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
+ 
+ # We come with our own bundled Error.pm. It's not in the set of default
+-# Perl modules so install it if it's not available on the system yet.
++# Perl modules.  So, unless it was a copy we installed, install it
++# if it's not available on the system yet.
+ eval { require Error };
+-if ($@ || $Error::VERSION < 0.15009) {
++if ($@ || $Error::VERSION < 0.15009 || $Error::INSTALLED_BY eq 'git') {
++	if ($Error::INSTALLED_BY eq 'git') {
++		print "**************************************************\n";
++		print "WARNING: detected an Error.pm from a previous git\n";
++		print "         install, so assuming that you wish to\n";
++		print "         continue using git's version.  If this is\n";
++		print "         not the case, uninstall your old version\n";
++		print "         of git before compiling the new.\n";
++		print "**************************************************\n";
++	}
+ 	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
+ }
+ 
+diff --git a/perl/private-Error.pm b/perl/private-Error.pm
+index 11e9cd9..a399983 100644
+--- a/perl/private-Error.pm
++++ b/perl/private-Error.pm
+@@ -16,6 +16,7 @@ use vars qw($VERSION);
+ use 5.004;
+ 
+ $VERSION = "0.15009";
++$Error::INSTALLED_BY = "git";
+ 
+ use overload (
+ 	'""'	   =>	'stringify',
+-- 
+1.5.4.4
