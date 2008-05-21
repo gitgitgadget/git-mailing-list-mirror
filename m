@@ -1,73 +1,143 @@
-From: "Ian Katz" <ifreecarve@gmail.com>
-Subject: git tutorial
-Date: Wed, 21 May 2008 12:42:33 -0400
-Message-ID: <dc5b80bf0805210942l388c4439g84b8a6b02346ebe8@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix t6031 on filesystems without working exec bit
+Date: Wed, 21 May 2008 10:14:43 -0700
+Message-ID: <7v8wy360l8.fsf@gitster.siamese.dyndns.org>
+References: <20080518145727.GA3058@steel.home>
+ <7v7idqaocb.fsf@gitster.siamese.dyndns.org>
+ <20080519060015.GA3179@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 18:43:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 19:16:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyrPR-00011z-UQ
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 18:43:26 +0200
+	id 1Jyruk-0007dA-Ij
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 19:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402AbYEUQmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 12:42:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754793AbYEUQmf
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 12:42:35 -0400
-Received: from hs-out-0708.google.com ([64.233.178.251]:54710 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296AbYEUQme (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 12:42:34 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so2424182hsl.5
-        for <git@vger.kernel.org>; Wed, 21 May 2008 09:42:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=v2Hf1UdZF5YRQuHFhUmB8Q+UbvMVJo5Ir1T8s2thXLI=;
-        b=qpiofvA4xjKBka1nJZmjWYMjpdQAxUOa+q+zhCASBwKX5qo31R/57x8BenrLmvIb7/Vs4EGSQjo0+FrgstJs+oVWnWEPEaftOX/QOi6h8iuAWVxsRhDro+xBsxQCcVl3RCc5ioHf3xuehqWuT93k/HKBY5A07sVRjEJ2KkNy08I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=sXERXGRNdTGBmbZ2rMPRxgoSq87VxWPiQL4TusmPJ4VgA7R3Nt/JCYpQudpWpJbRRfozGztPhM75+1YMjwsVyhcEuR7+jr1WtMj1AZUQPGg2X6u4ep8RZCz67Q+VMES1nVGZESs1AhjRT6HAdXE9IcY5E9rWzaJ9IFnjgSYNEWQ=
-Received: by 10.90.114.19 with SMTP id m19mr513907agc.91.1211388153473;
-        Wed, 21 May 2008 09:42:33 -0700 (PDT)
-Received: by 10.100.107.1 with HTTP; Wed, 21 May 2008 09:42:33 -0700 (PDT)
-Content-Disposition: inline
+	id S932606AbYEUROx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 13:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbYEUROw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 13:14:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37124 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765710AbYEUROv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 13:14:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C39367FC;
+	Wed, 21 May 2008 13:14:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 6F6CB67F8; Wed, 21 May 2008 13:14:45 -0400 (EDT)
+In-Reply-To: <20080519060015.GA3179@steel.home> (Alex Riesen's message of
+ "Mon, 19 May 2008 08:00:15 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6A98A57A-2759-11DD-84C5-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82557>
 
-Hi Guys-
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-I have a suggestion/request for the git documentation (tutorial),
-currently accessible from:
-http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
+> Junio C Hamano, Mon, May 19, 2008 06:51:16 +0200:
+> ...
+>> I have to wonder if this is enough on a filesystem with usable executable
+>> bit.  Has this been tested on both kinds of filesystems?
+>
+> Yes and yes.
 
-It would be much easier to understand the "Using git for
-collaboration" section if you put the username (bob or alice) as a
-prefix to each of the example command prompts, as is common in most
-linux distributions.  This would make it easier to see at a glance who
-is doing what.
+I am very much regretting for having extracted the above answer from you.
+After actually running the test myself on a machine with executable bit, I
+have to conclude that I now have to review any patch from you with much
+more suspicion than I have done before.  Unless the test I ran on my
+machine is lying to me, that is...
 
-In other words, it would change from this:
-$ git clone /home/alice/project myrepo
-$ git pull /home/bob/myrepo master
+>> You aren't setting +x on work tree file anymore, but only flipping the bit
+>> inside the index before committing.  Because of this change, after "b1"
+>> commit, work tree has a local modification relative to the commit (namely,
+>> reversion of chmod +x is in the work tree), which is different from the
+>> original test sequence.  Doesn't this local modification interact with
+>> switching to a1 branch and what merge-recursive does?
+>
+> I think no (I depend on this in my workflows on both systems).
 
-to this:
-bob$ git clone /home/alice/project myrepo
-alice$ git pull /home/bob/myrepo master
+Look at what the "switch to a1 branch after committing to b1" does again.
+You modify "file1" and commit to "b1" and you now have a local change in
+file1 (because you update only the index and not the work tree) that is
+effectively a revert of what you committed just now, and a1 and b1 differs
+at that path.  You get "Entry 'file1' not uptodate. Cannot merge."  when
+you try to switch to "a1".
 
-In the tutorial's current form, I spent so much time looking back into
-the paragraph text to find out who was typing each command that I
-eventually printed it out so I could scribble their names on each one.
+    $ sh t6031-merge-recursive.sh -i -v
+    * expecting success: 
+            : >file1 &&
+            git add file1 &&
+            git commit -m initial &&
+            git checkout -b a1 master &&
+            : >dummy &&
+            git add dummy &&
+            git commit -m a &&
+            git checkout -b b1 master &&
+            git update-index --chmod=+x file1 &&
+            git commit -m b1 &&
+            git checkout a1 &&
+            git merge-recursive master -- a1 b1 &&
+            test -x file1
 
-I hope this change isn't a big deal.
+    Created initial commit bae7a40: initial
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 file1
+    Switched to a new branch "a1"
+    Created commit 1f64f65: a
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 dummy
+    Switched to a new branch "b1"
+    Created commit 98a1cf4: b1
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     mode change 100644 => 100755 file1
+    error: Entry 'file1' not uptodate. Cannot merge.
+    * FAIL 1: mode change in one branch: keep changed version
 
-Thanks,
--Ian
+If we squash the following on top of your patch, I think we can help
+filesystems without executable bit without breaking filesystems with one.
+Can you see if it works on your executable-bit-less setup?
+
+-- >8 --
+ t/t6031-merge-recursive.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/t/t6031-merge-recursive.sh b/t/t6031-merge-recursive.sh
+index f1c91c8..8073e0c 100755
+--- a/t/t6031-merge-recursive.sh
++++ b/t/t6031-merge-recursive.sh
+@@ -3,6 +3,9 @@
+ test_description='merge-recursive: handle file mode'
+ . ./test-lib.sh
+ 
++# Note that we follow "chmod +x F" with "update-index --chmod=+x F" to
++# help filesystems that do not have the executable bit.
++
+ test_expect_success 'mode change in one branch: keep changed version' '
+ 	: >file1 &&
+ 	git add file1 &&
+@@ -12,6 +15,7 @@ test_expect_success 'mode change in one branch: keep changed version' '
+ 	git add dummy &&
+ 	git commit -m a &&
+ 	git checkout -b b1 master &&
++	chmod +x file1 &&
+ 	git update-index --chmod=+x file1 &&
+ 	git commit -m b1 &&
+ 	git checkout a1 &&
+@@ -24,6 +28,7 @@ test_expect_success 'mode change in both branches: expect conflict' '
+ 	git checkout -b a2 master &&
+ 	: >file2 &&
+ 	H=$(git hash-object file2) &&
++	chmod +x file2 &&
+ 	git update-index --add --chmod=+x file2 &&
+ 	git commit -m a2 &&
+ 	git checkout -b b2 master &&
