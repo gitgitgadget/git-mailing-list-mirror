@@ -1,52 +1,58 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Git-new-workdir
-Date: Wed, 21 May 2008 14:43:46 -0500
-Message-ID: <lXwYKtxzN4sNGyIsKSICbezjS7G4fF4oK6wrVgqs-vVP5A9o-fmLmg@cipher.nrlssc.navy.mil>
-References: <63BEA5E623E09F4D92233FB12A9F794301FC8B1D@emailmn.mqsoftware.com> <20080521184446.GA23924@bit.office.eurotux.com> <MnNeABMJjOQ8gdG6gY5zubSC3c5X2sDYBwcI1MotmXFvW3kUNXzB5A@cipher.nrlssc.navy.mil> <63BEA5E623E09F4D92233FB12A9F794301FC8B2B@emailmn.mqsoftware.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] send-email: rfc2047-quote subject lines with
+	non-ascii characters
+Date: Wed, 21 May 2008 15:47:34 -0400
+Message-ID: <20080521194734.GA17321@sigill.intra.peff.net>
+References: <20080328212700.GA9529@coredump.intra.peff.net> <20080328212900.GB9656@coredump.intra.peff.net> <7vve171m67.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Luciano Rocha <luciano@eurotux.com>, git@vger.kernel.org
-To: "Craig L. Ching" <cching@mqsoftware.com>
-X-From: git-owner@vger.kernel.org Wed May 21 21:45:05 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 21:48:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyuF5-0000lJ-9d
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:44:55 +0200
+	id 1JyuIX-0002Ib-FT
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762174AbYEUTny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 15:43:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760843AbYEUTny
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:43:54 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53557 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754143AbYEUTnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 15:43:53 -0400
-Received: by mail.nrlssc.navy.mil id m4LJhlDN013142; Wed, 21 May 2008 14:43:47 -0500
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794301FC8B2B@emailmn.mqsoftware.com>
-X-OriginalArrivalTime: 21 May 2008 19:43:47.0175 (UTC) FILETIME=[FC344F70:01C8BB7A]
+	id S937100AbYEUTri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 15:47:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937081AbYEUTrh
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:47:37 -0400
+Received: from peff.net ([208.65.91.99]:4192 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S937066AbYEUTrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 15:47:36 -0400
+Received: (qmail 23933 invoked by uid 111); 21 May 2008 19:47:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 May 2008 15:47:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2008 15:47:34 -0400
+Content-Disposition: inline
+In-Reply-To: <7vve171m67.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82574>
 
-Craig L. Ching wrote:
->  
+On Wed, May 21, 2008 at 12:39:44PM -0700, Junio C Hamano wrote:
+
+> Last night I was going through old mail-logs and found this and another
+> one that this is a follow-up to, which I think are still needed.  Does
+> anybody see anything wrong with them?
+>
+> Jeff King <peff@peff.net> writes:
 > 
->> From: Brandon Casey [mailto:casey@nrlssc.navy.mil] 
->> My take on it...
->>
->> If you want to have _multiple_different_ branches checked out 
->> from the _same_ repository, and do development in all of 
->> them, then git-new-workdir is the right choice.
->>
-> Yes, that's precisely what we want to do.  So according to your
-> experience, we're making the right choice then.
+> > We always use 'utf-8' as the encoding, since we currently
+> > have no way of getting the information from the user.
 
-Yes. I feel more confident after reading your reply to Robert where
-you described your use-case more thoroughly.
+Ah, thanks for bringing this up. I noticed a few weeks ago that it
+hadn't been applied and meant to bring it up, but somehow I failed to
+do so.
 
--brandon
+Obviously I'm in support of this one, but I also think Horst's patch
+looks correct.
+
+-Peff
