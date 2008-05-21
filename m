@@ -1,71 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Understanding git filter-branch --subdirectory-filter behaviour
-Date: Wed, 21 May 2008 08:26:03 +0200
-Message-ID: <4833C07B.3060004@viscovery.net>
-References: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Two minor tweaks on git-gui where textboxes weren't vertically
+ centered with their labels and buttons
+Date: Wed, 21 May 2008 00:01:51 -0700
+Message-ID: <7vej7w6syo.fsf@gitster.siamese.dyndns.org>
+References: <412a1d9a0805172218v7c0a920es8a48129014051a35@mail.gmail.com>
+ <20080519040746.GA29038@spearce.org>
+ <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com>
+ <alpine.DEB.1.00.0805191127200.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>
-To: David Tweed <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 08:27:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Twiinz <twiinz@gmail.com>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 21 09:03:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyhmv-0004pm-0h
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 08:27:01 +0200
+	id 1JyiLi-0006lj-A5
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 09:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759566AbYEUG0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 02:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759513AbYEUG0I
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 02:26:08 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:27516 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755187AbYEUG0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 02:26:07 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Jyhlz-0001qp-GI; Wed, 21 May 2008 08:26:03 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2D3F2546; Wed, 21 May 2008 08:26:03 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1757868AbYEUHCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 03:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757494AbYEUHCG
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 03:02:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37395 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756989AbYEUHCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 03:02:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 92EBDD76D;
+	Wed, 21 May 2008 03:02:02 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id DF4FBD76C; Wed, 21 May 2008 03:01:55 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D068A25C-2703-11DD-B903-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82530>
 
-David Tweed schrieb:
-> $ git filter-branch --subdirectory-filter WRITING/ HEAD
-> Rewrite 42f24be8d8198738134a19471697b39359199fa3 (351/351)
-> Ref 'refs/heads/master' was rewritten
-> 
-> $ git rev-list HEAD | wc
->      55      55    2255
-> 
-...
-> 
-> Digging a little into the shell-script I find the list of commits is
-> generated with
-> 
-> git rev-list --reverse --topo-order --default HEAD --parents HEAD
-> --full-history -- WRITING
-> 
-> and (adding --pretty so I can easily read it) running this manually
-> gives 351 entries and looks to contain the expected commits. So I'm
-> confused what's happening?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-That's difficult to tell without a peek at the repository.
+> The Signed-off-by is not so much for _you_ as for the people who _use_ 
+> what you contributed, so that they can always say "but Twiinz signed off 
+> on it, he said that he will not sue my $ss off later, like this Darl 
+> b$stard".
+>
+> So yes, I do worry.
 
-Did you compare 'gitk HEAD' to 'gitk HEAD -- WRITING'? I'd expect the
-latter to be a subset of the former. Note that with a path specified
-"history simplification" happens, which means that you won't see as many
-merges as when no path is specified.
+It is not about him suing us, but more about "He certified that he did not
+steal it from anywhere else", iow, other people suing us for what he did.
 
--- Hannes
+And we should worry.
