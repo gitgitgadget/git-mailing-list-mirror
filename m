@@ -1,89 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix t3701 if core.filemode disabled
-Date: Wed, 21 May 2008 10:36:07 -0400
-Message-ID: <20080521143607.GA3575@sigill.intra.peff.net>
-References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home> <20080519202342.GA9694@steel.home> <20080519205550.GA24246@sigill.intra.peff.net> <20080520215932.GB10437@steel.home>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Try the built-in version string before git-describe
+Date: Wed, 21 May 2008 15:38:18 +0100
+Message-ID: <b0943d9e0805210738v40b25d54j65e70b3ef2745987@mail.gmail.com>
+References: <20080520210249.GA19465@diana.vm.bytemark.co.uk>
+	 <20080520213844.13410.32757.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 16:45:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed May 21 16:48:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JypRC-0001iP-GS
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:37:06 +0200
+	id 1JypTJ-0002ir-Ou
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757125AbYEUOgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 10:36:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757366AbYEUOgO
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:36:14 -0400
-Received: from peff.net ([208.65.91.99]:4533 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755643AbYEUOgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 10:36:13 -0400
-Received: (qmail 4061 invoked by uid 111); 21 May 2008 14:36:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 May 2008 10:36:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2008 10:36:07 -0400
+	id S935773AbYEUOiZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 10:38:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935757AbYEUOiY
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:38:24 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:4846 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935739AbYEUOiX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 10:38:23 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so164328ugf.16
+        for <git@vger.kernel.org>; Wed, 21 May 2008 07:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gVLzkUaNB1+MX492Esc823hYpXUe/mBmeNEjC+FA6o4=;
+        b=bJdl6ufSVRoe7SdPVTjITdufUFtpzcNg2t3VJNkdkRoq16w/6Blk8oGy0lXszgX0/dAinNAnne8l2nRXIRTA0OSH5Iu8iJE5Ye5EhCPPYqpr9sHcCOdeLL1iQNnu+lx5nU9wD2e1FlH5njHJv9uvz0UrH/G1ncIxrHeZRUO40Y4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IhlYAClKHSXlcto9R319W2CCr7P2k2XCdzI+RZM/xzfJ0nNCKrXKofkqipE9G3nqwL+9nCmwxqvM1qZZDyBLniDDB2wYYcpZN5dyFSKjExX89Qz42PLkJlQzy/TmYOPDuFDhWexmYuVrPAQMeA55z+egeUEpCwVb0MKp9dXsWTI=
+Received: by 10.66.234.13 with SMTP id g13mr1164149ugh.5.1211380698156;
+        Wed, 21 May 2008 07:38:18 -0700 (PDT)
+Received: by 10.66.242.4 with HTTP; Wed, 21 May 2008 07:38:18 -0700 (PDT)
+In-Reply-To: <20080520213844.13410.32757.stgit@yoghurt>
 Content-Disposition: inline
-In-Reply-To: <20080520215932.GB10437@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82546>
 
-On Tue, May 20, 2008 at 11:59:32PM +0200, Alex Riesen wrote:
+On 20/05/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> Try to get the built-in version string first, and fall back to git
+>  describe if there is no built-in string, instead of the other way
+>  around. This makes computing the version string much cheaper in the
+>  common case (whenever StGit is not run directly from a git-controlle=
+d
+>  tree).
+>
+>  In order for this to work when StGit _is_ run directly from a
+>  git-controlled tree, setup.py has to delete the builtin version file
+>  once the installation process is over. (Otherwise, the StGit version
+>  in a git-controlled tree would be frozen at whatever value it happen=
+ed
+>  to have when setup.py was last run.)
 
-> Sure. I have explicitely test for core.filemode=false, because
-> some older setups (where git init did not set it) don't have
-> the setting and git config core.filemode reports nothing.
+OK, I thought it was only the ordering change. With this change to
+setup.py, I'm OK with the patch. I'll merge your tree tonight.
 
-I don't think that is relevant here; this is a test script, and as such
-is testing the results of the current version of git-init (from when we
-git-init the trash directory).
-
-That being said, I think the test you have is perfectly fine, and the
-patch is correct.
-
-And I am OK with the patch as-is, though I have a few style nits:
-
-> @@ -65,6 +65,7 @@ test_expect_success 'revert works (commit)' '
->  	git add -i </dev/null >output &&
->  	grep "unchanged *+3/-0 file" output
->  '
-> +if test "$(git config core.filemode)" != false ; then
->  
->  test_expect_success 'patch does not affect mode' '
->  	git reset --hard &&
-> @@ -84,5 +85,6 @@ test_expect_success 'stage mode but not hunk' '
->  	git diff          file | grep "+content"
->  '
->  
-> +fi
-
-1. It should be $(git config --bool core.filemode). As it happens,
-git-init always uses the word "false" so this works OK, but it is
-probably better to model good behavior and to be more robust.
-
-2. It's a little hard to see which tests are affected. I would have done
-   something more like:
-
-  if test "$(git config --bool core.filemode)" = true
-    test_filemode=
-  else
-    test_filemode=:
-  fi
-
-  $test_filemode test_expect_success ...
-
-  But maybe that is just overengineering.
-
-3. Usually when we skip tests we do something like
-
-  say 'skipping filemode tests (filesystem does not properly support modes')
-
--Peff
+--=20
+Catalin
