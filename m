@@ -1,115 +1,87 @@
-From: "Craig L. Ching" <cching@mqsoftware.com>
-Subject: RE: Git-new-workdir
-Date: Wed, 21 May 2008 14:07:34 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794301FC8B25@emailmn.mqsoftware.com>
-References: <63BEA5E623E09F4D92233FB12A9F794301FC8B1D@emailmn.mqsoftware.com> <9af502e50805211153ya79f73y60d4975d46ef8edd@mail.gmail.com>
+From: "Adam Mercer" <ramercer@gmail.com>
+Subject: git cvsimport error
+Date: Wed, 21 May 2008 14:14:39 -0500
+Message-ID: <799406d60805211214r6315268ard77678eb2ec5d732@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Robert Anderson" <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 21:09:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 21 21:18:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jytga-0001Tq-LX
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:09:17 +0200
+	id 1Jytn9-00056p-SZ
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936994AbYEUTHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 15:07:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936992AbYEUTHj
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:07:39 -0400
-Received: from mail.de.mqsoftware.com ([66.192.70.108]:11347 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936988AbYEUTHg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 15:07:36 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <9af502e50805211153ya79f73y60d4975d46ef8edd@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Git-new-workdir
-Thread-Index: Aci7c/ZK8tAYs3zyRYaaxOFv6Ym47AAAKRhw
+	id S1757864AbYEUTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 15:15:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbYEUTPM
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:15:12 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:56540 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756218AbYEUTPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 15:15:11 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1741545ywe.1
+        for <git@vger.kernel.org>; Wed, 21 May 2008 12:15:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=+WPAcNSFchGEeTdNv/lVV5W2H7itaZ1nHXbVd7xPs3Y=;
+        b=b7Gj0ZlHJtiDTBym1J04qy+LlU/RD3j7JDHqK1xBpWMTks+imss7Rc/z1nYeI92dFkd5JWadk2cVGRwqzk5hIwkal0pY0iCTdDuLE6D44CnOPrSBSuuhY3x4JENLI37TfGt7+tqcjPzK1cxGcGfQ+vPglx+v1yQ9BdyoCDtY5F8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=S/AHzC3p6Q4XRsvXbaqziDp9YBCZhwriRc8z69u59N9jEGTpdLWjg7L3szSvyI17q7jias7LyKBIZWktRrde1foUhAsY3tLjRo+PwOCT9q+X7y6hyvSvDRjHwq9bS1BRw0cuMZ43mkLlJV+3TaQEqtTxltew/Jkl1/6nT8zToMs=
+Received: by 10.151.102.8 with SMTP id e8mr741871ybm.61.1211397279989;
+        Wed, 21 May 2008 12:14:39 -0700 (PDT)
+Received: by 10.150.144.5 with HTTP; Wed, 21 May 2008 12:14:39 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82567>
 
-> From: Robert Anderson [mailto:rwa000@gmail.com] 
-> 
-> On Wed, May 21, 2008 at 11:21 AM, Craig L. Ching 
-> <cching@mqsoftware.com> wrote:
-> 
-> 
-> 	Hi all,
-> 	
-> 	I'm a bit of a newbie to Git, but I have started using 
-> it in earnest for
-> 	the past couple of months.  I had asked on IRC about a 
-> potential problem
-> 	I saw with git and how it fit into our workflow.  We 
-> currently use CVS
-> 	and have used it for the past ten years.  A lot of us have grown
-> 	accustomed to keeping multiple builds around for 
-> different things, e.g.
-> 	defects we're working on, new features, etc., we do a 
-> lot of task
-> 	switching and very rarely can we work on something 
-> start to finish
-> 	without being interrupted with something else.  The 
-> normal workflow of
-> 	git seems to cut across that need to keep many builds around.
-> 	Generally, building our software is not trivial and 
-> takes a fair amount
-> 	of time, so just "git checkout" out a new branch and 
-> rebuilding is not
-> 	really an option for us.  
-> 
-> 
-> You haven't explained your issue very well.  
-> 
-> What does "keeping multiple builds around" mean?  Taken at 
-> face value this is irrelevant to source control.  So you must 
-> mean something else, but you haven't explained what.  I keep 
-> multiple builds around by using separate build directories 
-> which are not source controlled.  Whether or not I keep 
-> multiple builds of a source tree just isn't relevant to my 
-> source control whether it be CVS or git or whatever.  Perhaps 
-> you mean "different variations of the same source tree" or 
-> something like that, in which case "git seems to cut across 
-> that need" seems like an absurd thing to say.
-> 
-> Can you give an actual scenario, and say how you use CVS in that case?
-> 
-Sure, what I mean is that you checkout a branch, the workspace reflects
-the state of that branch.  If you do a build in the workspace, the build
-artifacts match up with the source that's in the workspace.  If you then
-checkout a new branch, it's unlikely that the source reflects the build
-artifacts any more.
+Hi
 
-Here's how we did it in CVS.  Any feature or defect got it's own branch,
-no matter how trivial it was (yes, it was very painful with CVS, but the
-benefits outweighed the pain.  Moving to Git is very easy for us since
-we already have the "branch for everything" mindset ;-) ).  So, say you
-have two defects, A and B.  We'd create two separate branches named
-after the defects, so two branches named A and B.  Then we'd do:
+I'm trying to convert a CVS repository to GIT (1.5.5.1 on Intel Mac OS
+X 10.5.2) using the following:
 
-Cd ~/dev/
-Mkdir A && cd A && cvs co -r A && make
-Mkdir B && cd B && cvs co -r B && make
+[ram@mimir ~]$ git cvsimport -v -d :local:/Users/ram/test_cvs -C glue.git glue
+Initialized empty Git repository in /Users/ram/glue.git/.git/
+Running cvsps...
+cvs_direct initialized to CVSROOT /Users/ram/test_cvs
+cvs rlog: Logging glue
+cvs rlog: Logging glue/bin
+cvs rlog: Logging glue/debian
+cvs rlog: Logging glue/doc
+cvs rlog: Logging glue/etc
+cvs rlog: Logging glue/glue
+cvs rlog: Logging glue/glue/ligolw
+cvs rlog: Logging glue/glue/ligolw/utils
+cvs rlog: Logging glue/glue/segfindserver
+cvs rlog: Logging glue/glue/segfindserver/segments_1_7
+cvs rlog: Logging glue/man
+cvs rlog: Logging glue/man/man1
+cvs rlog: Logging glue/sbin
+cvs rlog: Logging glue/src
+cvs rlog: Logging glue/src/conf
+cvs rlog: Logging glue/src/conf/db2
+cvs rlog: Logging glue/src/conf/mysql
+cvs rlog: Logging glue/src/conf/q_replication
+cvs rlog: Logging glue/src/conf/q_replication/cit
+cvs rlog: Logging glue/src/conf/q_replication/lho
+cvs rlog: Logging glue/src/conf/q_replication/llo
+cvs rlog: Logging glue/src/segments
+cvs rlog: Logging glue/test
+Fetching glue/ldbd.py   v 1.1
+Unknown: error
+[ram@mimir ~]$
 
-That way we'd have two separate workspaces where the build artifacts
-match with the source.  Now, I suppose you could suggest we change our
-build procedure so that it puts the build artifacts outside of the VCS
-workspace, i.e. our makefiles could "git branch" and create a directory
-for those build artifacts outside of the source workspace?  That might
-work, I'd have to think about it a bit more, but I know for our java
-sources that might be a problem with a lot of java build tool
-conventions, e.g. maven puts the build artifacts in the same top-level
-directory that contains the sources.
+How can I get a more verbose error message to try and fix what's going
+wrong here?
 
-Cheers,
-Craig
+Cheers
+
+Adam
