@@ -1,66 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: looking for "market share" analysis of SCMs.
-Date: Wed, 21 May 2008 16:07:30 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805211556380.19665@iabervon.org>
-References: <48329282.1040407@tikalk.com> <46a038f90805202210v5d0f75cekbad51da89c46f47@mail.gmail.com> <bd6139dc0805202221v6fc476e8rcdb1822b17d8c13@mail.gmail.com> <200805212139.25909.robin.rosenberg.lists@dewire.com>
+From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+Subject: [PATCH] Stop creating the .git/branches direectory in new repositories.
+Date: Wed, 21 May 2008 16:09:30 -0400
+Message-ID: <1211400570-6926-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: sverre@rabbelier.nl, Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Teemu Likonen <tlikonen@iki.fi>,
-	Ittay Dror <ittayd@tikalk.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 21 22:08:40 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+To: "	Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 22:11:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyuc2-0002BB-Sn
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 22:08:39 +0200
+	id 1JyueM-00038L-MH
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 22:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757100AbYEUUHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 16:07:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759513AbYEUUHd
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 16:07:33 -0400
-Received: from iabervon.org ([66.92.72.58]:55067 "EHLO iabervon.org"
+	id S936286AbYEUUJz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 16:09:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936159AbYEUUJx
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 16:09:53 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:43076 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757100AbYEUUHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 16:07:32 -0400
-Received: (qmail 18132 invoked by uid 1000); 21 May 2008 20:07:30 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 May 2008 20:07:30 -0000
-In-Reply-To: <200805212139.25909.robin.rosenberg.lists@dewire.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S935203AbYEUUJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 16:09:52 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4LK9f7F030899;
+	Wed, 21 May 2008 16:09:41 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4LK9epj016652;
+	Wed, 21 May 2008 16:09:41 -0400
+Received: from localhost.localdomain (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m4LK9ekP026087;
+	Wed, 21 May 2008 16:09:40 -0400
+X-Mailer: git-send-email 1.5.4.5
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82579>
 
-On Wed, 21 May 2008, Robin Rosenberg wrote:
+The .git/brances directory is actually a piece of cogito infrastructure
+that git creates, and is only there to prevent cogito falling over.
 
-> onsdagen den 21 maj 2008 07.21.50 skrev Sverre Rabbelier:
-> > On Wed, May 21, 2008 at 7:10 AM, Martin Langhoff
-> > <martin.langhoff@gmail.com> wrote:
-> > > Actually, if we define the "market" to be DSCM, and the timeframe to
-> > > be existence of the git-core package, this graph of installs is quite
-> > > useful:
-> > > http://tinyurl.com/4uemg2
-> > 
-> > Hehe, that feels a bit like manually favoring the odds in our benefit,
-> > but it's fun to see how git is the most popular DSCM since 2007 ;).
-> 
-> Diff+tar+patch should be counted too. http://tinyurl.com/3frawy Seems
-> far more popilar than anything else added together, including cvs and
-> other subversive systems.
+Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+---
 
-I think tar and diff are necessary to install git-core or any other .deb, 
-so it's unsurprising that they've got a 100% market share by that metric. 
-Until Debian switches to a git-based package format, git's not going to 
-catch up to those...
+I think it's time to drop this confusing directory from the .git templa=
+te.
+If not for 1.5.x, let's at least schedule it for 1.6.0.
 
-On the other hand, the "vote" value for patch is a reasonable metric, and 
-it's been steadily close to but above the version control systems.
+cheers,
+Kristian
 
-	-Daniel
-*This .sig left intentionally blank*
+ templates/branches-- |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+ delete mode 100644 templates/branches--
+
+diff --git a/templates/branches-- b/templates/branches--
+deleted file mode 100644
+index fae8870..0000000
+--- a/templates/branches--
++++ /dev/null
+@@ -1 +0,0 @@
+-: this is just to ensure the directory exists.
+--=20
+1.5.4.5
