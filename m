@@ -1,87 +1,75 @@
-From: "Adam Mercer" <ramercer@gmail.com>
-Subject: git cvsimport error
-Date: Wed, 21 May 2008 14:14:39 -0500
-Message-ID: <799406d60805211214r6315268ard77678eb2ec5d732@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Git-new-workdir
+Date: Wed, 21 May 2008 14:25:37 -0500
+Message-ID: <MnNeABMJjOQ8gdG6gY5zubSC3c5X2sDYBwcI1MotmXFvW3kUNXzB5A@cipher.nrlssc.navy.mil>
+References: <63BEA5E623E09F4D92233FB12A9F794301FC8B1D@emailmn.mqsoftware.com> <20080521184446.GA23924@bit.office.eurotux.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 21:18:06 2008
+Cc: "Craig L. Ching" <cching@mqsoftware.com>, git@vger.kernel.org
+To: Luciano Rocha <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Wed May 21 21:26:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jytn9-00056p-SZ
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:16:04 +0200
+	id 1JytxR-0001as-5n
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:26:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757864AbYEUTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 15:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbYEUTPM
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:15:12 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:56540 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756218AbYEUTPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 15:15:11 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1741545ywe.1
-        for <git@vger.kernel.org>; Wed, 21 May 2008 12:15:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=+WPAcNSFchGEeTdNv/lVV5W2H7itaZ1nHXbVd7xPs3Y=;
-        b=b7Gj0ZlHJtiDTBym1J04qy+LlU/RD3j7JDHqK1xBpWMTks+imss7Rc/z1nYeI92dFkd5JWadk2cVGRwqzk5hIwkal0pY0iCTdDuLE6D44CnOPrSBSuuhY3x4JENLI37TfGt7+tqcjPzK1cxGcGfQ+vPglx+v1yQ9BdyoCDtY5F8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=S/AHzC3p6Q4XRsvXbaqziDp9YBCZhwriRc8z69u59N9jEGTpdLWjg7L3szSvyI17q7jias7LyKBIZWktRrde1foUhAsY3tLjRo+PwOCT9q+X7y6hyvSvDRjHwq9bS1BRw0cuMZ43mkLlJV+3TaQEqtTxltew/Jkl1/6nT8zToMs=
-Received: by 10.151.102.8 with SMTP id e8mr741871ybm.61.1211397279989;
-        Wed, 21 May 2008 12:14:39 -0700 (PDT)
-Received: by 10.150.144.5 with HTTP; Wed, 21 May 2008 12:14:39 -0700 (PDT)
-Content-Disposition: inline
+	id S1753793AbYEUTZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 15:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYEUTZu
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:25:50 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54496 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187AbYEUTZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 15:25:49 -0400
+Received: by mail.nrlssc.navy.mil id m4LJPbuD011861; Wed, 21 May 2008 14:25:37 -0500
+In-Reply-To: <20080521184446.GA23924@bit.office.eurotux.com>
+X-OriginalArrivalTime: 21 May 2008 19:25:37.0539 (UTC) FILETIME=[72BB0D30:01C8BB78]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82568>
 
-Hi
+Luciano Rocha wrote:
 
-I'm trying to convert a CVS repository to GIT (1.5.5.1 on Intel Mac OS
-X 10.5.2) using the following:
+> git clone server:/rep ~/master
+> git clone -s ~/master build/abc
+> git clone -s ~/master build/foo
+> ...
 
-[ram@mimir ~]$ git cvsimport -v -d :local:/Users/ram/test_cvs -C glue.git glue
-Initialized empty Git repository in /Users/ram/glue.git/.git/
-Running cvsps...
-cvs_direct initialized to CVSROOT /Users/ram/test_cvs
-cvs rlog: Logging glue
-cvs rlog: Logging glue/bin
-cvs rlog: Logging glue/debian
-cvs rlog: Logging glue/doc
-cvs rlog: Logging glue/etc
-cvs rlog: Logging glue/glue
-cvs rlog: Logging glue/glue/ligolw
-cvs rlog: Logging glue/glue/ligolw/utils
-cvs rlog: Logging glue/glue/segfindserver
-cvs rlog: Logging glue/glue/segfindserver/segments_1_7
-cvs rlog: Logging glue/man
-cvs rlog: Logging glue/man/man1
-cvs rlog: Logging glue/sbin
-cvs rlog: Logging glue/src
-cvs rlog: Logging glue/src/conf
-cvs rlog: Logging glue/src/conf/db2
-cvs rlog: Logging glue/src/conf/mysql
-cvs rlog: Logging glue/src/conf/q_replication
-cvs rlog: Logging glue/src/conf/q_replication/cit
-cvs rlog: Logging glue/src/conf/q_replication/lho
-cvs rlog: Logging glue/src/conf/q_replication/llo
-cvs rlog: Logging glue/src/segments
-cvs rlog: Logging glue/test
-Fetching glue/ldbd.py   v 1.1
-Unknown: error
-[ram@mimir ~]$
+Don't do that without first doing
 
-How can I get a more verbose error message to try and fix what's going
-wrong here?
+    git config gc.pruneExpire never
 
-Cheers
+to disable pruning loose objects if there is any chance that any will
+be created. Better to be safe, and prune manually using the example
+in the prune documentation.
 
-Adam
+> The -s option should reduce disk-usage considerably.
+
+It won't be any less than what git-new-workdir would produce. Actually,
+git-new-workdir could provide more space savings since there is only a
+single repository so new objects created by development in any of the
+new work directories would be available to all others. This is getting
+a little nit-picky, basically space usage for the two options is nil.
+
+My take on it...
+
+If you want to have _multiple_different_ branches checked out from the
+_same_ repository, and do development in all of them, then git-new-workdir
+is the right choice.
+
+If you want to have the _same_branch_ checked out in multiple work
+directories, then cloning with -s is what you want. In this case
+I assume development will be performed in the original repo, and
+the clones will do a pull to update.
+
+Personally, I have found the git-new-workdir script to satisfy any
+need which caused me to even think about cloning with -s. I am
+hoping the functionality of git-new-workdir will be folded into
+git porcelain at some point (ahem J Schindelin).
+
+-brandon
