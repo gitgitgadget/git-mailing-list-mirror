@@ -1,163 +1,82 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: StGit: kha/{safe,experimental} updated
-Date: Wed, 21 May 2008 07:19:45 +0200
-Message-ID: <20080521051945.GA25278@diana.vm.bytemark.co.uk>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: looking for "market share" analysis of SCMs.
+Date: Wed, 21 May 2008 07:21:50 +0200
+Message-ID: <bd6139dc0805202221v6fc476e8rcdb1822b17d8c13@mail.gmail.com>
+References: <48329282.1040407@tikalk.com>
+	 <20080520093245.GA5037@mithlond.arda.local>
+	 <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>
+	 <alpine.LNX.1.00.0805201748020.19665@iabervon.org>
+	 <bd6139dc0805201525r22ba7398g6f341f89ae699b57@mail.gmail.com>
+	 <alpine.LFD.1.10.0805202105430.3081@woody.linux-foundation.org>
+	 <46a038f90805202126s80262d3i2f4f940a38d9ea06@mail.gmail.com>
+	 <bd6139dc0805202144h2bb55fd1n9b26bc76c245f33b@mail.gmail.com>
+	 <46a038f90805202210v5d0f75cekbad51da89c46f47@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 07:21:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Teemu Likonen" <tlikonen@iki.fi>,
+	"Ittay Dror" <ittayd@tikalk.com>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 07:22:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jygko-00054j-9C
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 07:20:46 +0200
+	id 1Jygmg-0005i5-1t
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 07:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813AbYEUFT4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 01:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754316AbYEUFTz
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 01:19:55 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1167 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753261AbYEUFTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 01:19:53 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Jygjp-0006aV-00; Wed, 21 May 2008 06:19:45 +0100
+	id S1752957AbYEUFVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 01:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbYEUFVv
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 01:21:51 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:26053 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795AbYEUFVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 01:21:50 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2057280wfd.4
+        for <git@vger.kernel.org>; Tue, 20 May 2008 22:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=DlB6xmA4j/D0EmbMD4MgHJyWrrX5WEIunyr1xc2t2e8=;
+        b=sjcQoMzSqDmBV0PhBakiH39QwBTtOK84/kzpDqNP/HrhHTrE7Xx/HIOvpY7ZxXho5Hw9dd9QYjWbdx7EKNvIpz63afsuNfEVrMhc6LUBM/7Yu6+x/8irzmwyBiLUh3eRaCQubwfFNcHC+F1SPr1WB1ynn4pAh/9d1KAq0AU4Y8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mUIyAPkHrGpfl0Y2pIXrF9xWc1VrNrvdSe+pdL7QH/qbPy74HVlbmiAX+CdlzYqVc1vt68+c48cpLf/bXgV07iE3IktkU/GG5WTM1DtZNabo5uItEThkygTBSwFwml4bZ4LBKht0jpSdjAhCeLzPT5/4kllc44vNDbrJPCcUbZ8=
+Received: by 10.142.72.4 with SMTP id u4mr3688938wfa.269.1211347310193;
+        Tue, 20 May 2008 22:21:50 -0700 (PDT)
+Received: by 10.143.33.6 with HTTP; Tue, 20 May 2008 22:21:50 -0700 (PDT)
+In-Reply-To: <46a038f90805202210v5d0f75cekbad51da89c46f47@mail.gmail.com>
 Content-Disposition: inline
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82527>
 
-I've promoted a bunch of stuff from "experimental" to "safe", so that
-"experimental" currently only consists of the stack log stuff.
+On Wed, May 21, 2008 at 7:10 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> Actually, if we define the "market" to be DSCM, and the timeframe to
+> be existence of the git-core package, this graph of installs is quite
+> useful:
+> http://tinyurl.com/4uemg2
 
-The stack log stuff in experimental now sports a rewrite of "stg log",
-so that you can see what's in your log. This work is nearing
-completion, or at least nearing the point where I'll be considering
-moving it to "safe".
+Hehe, that feels a bit like manually favoring the odds in our benefit,
+but it's fun to see how git is the most popular DSCM since 2007 ;).
 
+> Maybe git-archimport has made a dent? ;-)
+> http://tinyurl.com/5okewp
 
-                                 -+-
+It would seem the contrary is true, the usage of tla was steadily
+declining, but since git-arch it has been picking up! (Well, that is
+what one could naively deduct from this graph, there's probably
+another explanation :P).
 
+-- 
+Cheers,
 
-The following changes since commit 9564af74822b276d435319fc271eda591e51=
-25a6:
-  Catalin Marinas (1):
-        Merge branch 'stable'
-
-are available in the git repository at:
-
-  git://repo.or.cz/stgit/kha.git safe
-
-Karl Hasselstr=F6m (10):
-      Try the built-in version string before git-describe
-      Disable patchlog test for "stg new"
-      Convert "stg new" to the new infrastructure
-      Refactor --author/--committer options
-      Let "stg new" support more message options
-      Emacs mode: use "stg new --file"
-      Convert "stg delete" to the new infrastructure
-      Emacs mode: delete patches
-      Prevent most commands from running when there are conflicts
-      Add property with a list of all patch names
-
- contrib/stgit.el           |   33 +++++++++++----
- setup.py                   |   45 +++++++++++---------
- stgit/.gitignore           |    1 -
- stgit/commands/clean.py    |    2 +-
- stgit/commands/coalesce.py |    6 +-
- stgit/commands/commit.py   |   13 ++++--
- stgit/commands/common.py   |   33 +++++----------
- stgit/commands/delete.py   |   76 +++++++++++++----------------------
- stgit/commands/edit.py     |   28 ++----------
- stgit/commands/new.py      |   97 ++++++++++++++++++++++++------------=
--------
- stgit/commands/uncommit.py |    5 +-
- stgit/lib/git.py           |    8 ++--
- stgit/lib/stack.py         |    1 +
- stgit/lib/transaction.py   |   27 ++++++++++--
- stgit/utils.py             |   50 ++++++++++++++++++++++
- stgit/version.py           |   15 +++++-
- t/t1400-patch-history.sh   |    2 -
- t/t1600-delete-one.sh      |    8 ++--
- 18 files changed, 255 insertions(+), 195 deletions(-)
-
-
-                                 -+-
-
-
-The following changes since commit a5920051ee4326489c4b43e85d93f71d4c4c=
-e34a:
-  Karl Hasselstr=F6m (1):
-        Add property with a list of all patch names
-
-are available in the git repository at:
-
-  git://repo.or.cz/stgit/kha.git experimental
-
-Karl Hasselstr=F6m (13):
-      Library functions for tree and blob manipulation
-      Write to a stack log when stack is modified
-      Add utility function for reordering patches
-      New command: stg reset
-      Log conflicts separately
-      Log conflicts separately for all commands
-      Add a --hard flag to stg reset
-      Don't write a log entry if there were no changes
-      Move stack reset function to a shared location
-      New command: stg undo
-      New command: stg redo
-      Log and undo external modifications
-      Make "stg log" show stack log instead of patch log
-
- stgit/commands/branch.py     |   19 ++-
- stgit/commands/common.py     |    9 +-
- stgit/commands/diff.py       |    2 +-
- stgit/commands/export.py     |    2 +-
- stgit/commands/files.py      |    2 +-
- stgit/commands/id.py         |    2 +-
- stgit/commands/log.py        |  164 +++++++----------------
- stgit/commands/mail.py       |    2 +-
- stgit/commands/patches.py    |    2 +-
- stgit/commands/redo.py       |   52 +++++++
- stgit/commands/reset.py      |   56 ++++++++
- stgit/commands/series.py     |    2 +-
- stgit/commands/show.py       |    2 +-
- stgit/commands/status.py     |    3 +-
- stgit/commands/top.py        |    2 +-
- stgit/commands/undo.py       |   49 +++++++
- stgit/lib/git.py             |  146 +++++++++++++++++---
- stgit/lib/log.py             |  304 ++++++++++++++++++++++++++++++++++=
-++++++++
- stgit/lib/stack.py           |   16 +++
- stgit/lib/transaction.py     |  115 +++++++++++-----
- stgit/main.py                |    8 +
- t/t1400-patch-history.sh     |  103 --------------
- t/t3100-reset.sh             |  151 +++++++++++++++++++++
- t/t3101-reset-hard.sh        |   56 ++++++++
- t/t3102-undo.sh              |   86 ++++++++++++
- t/t3103-undo-hard.sh         |   56 ++++++++
- t/t3104-redo.sh              |  122 +++++++++++++++++
- t/t3105-undo-external-mod.sh |   68 ++++++++++
- 28 files changed, 1310 insertions(+), 291 deletions(-)
- create mode 100644 stgit/commands/redo.py
- create mode 100644 stgit/commands/reset.py
- create mode 100644 stgit/commands/undo.py
- create mode 100644 stgit/lib/log.py
- delete mode 100755 t/t1400-patch-history.sh
- create mode 100755 t/t3100-reset.sh
- create mode 100755 t/t3101-reset-hard.sh
- create mode 100755 t/t3102-undo.sh
- create mode 100755 t/t3103-undo-hard.sh
- create mode 100755 t/t3104-redo.sh
- create mode 100755 t/t3105-undo-external-mod.sh
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Sverre Rabbelier
