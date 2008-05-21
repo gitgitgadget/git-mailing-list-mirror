@@ -1,91 +1,62 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH] Add format.date config variable
-Date: Wed, 21 May 2008 11:24:42 -0700
-Message-ID: <7vtzgr347p.fsf@gitster.siamese.dyndns.org>
-References: <20080518171306.GA12948@zakalwe.fi>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: Git-new-workdir
+Date: Wed, 21 May 2008 13:21:22 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794301FC8B1D@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Wed May 21 20:25:48 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 21 20:37:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyt0U-0007il-KZ
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 20:25:47 +0200
+	id 1JytBm-0004GA-U4
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 20:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757007AbYEUSYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 14:24:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754512AbYEUSYz
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 14:24:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51262 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004AbYEUSYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 14:24:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B86FE64A8;
-	Wed, 21 May 2008 14:24:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id CDC4664A6; Wed, 21 May 2008 14:24:49 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 348604A0-2763-11DD-AC7A-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1755116AbYEUSgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 14:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755059AbYEUSgh
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 14:36:37 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:9548 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424AbYEUSgg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 14:36:36 -0400
+X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2008 14:36:36 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Git-new-workdir
+Thread-Index: Aci7b3kH+1ISWiLNQ9+Hw5rmQFMEVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82562>
 
-Heikki Orsila <heikki.orsila@iki.fi> writes:
+Hi all,
 
-> format.date config variable sets the default date-time mode for the log
-> command. Setting format.date value is similar to using git log's --date
-> option.
->
-> Also, add missing "short" alternative to --date in rev-list-options.txt.
+I'm a bit of a newbie to Git, but I have started using it in earnest for
+the past couple of months.  I had asked on IRC about a potential problem
+I saw with git and how it fit into our workflow.  We currently use CVS
+and have used it for the past ten years.  A lot of us have grown
+accustomed to keeping multiple builds around for different things, e.g.
+defects we're working on, new features, etc., we do a lot of task
+switching and very rarely can we work on something start to finish
+without being interrupted with something else.  The normal workflow of
+git seems to cut across that need to keep many builds around.
+Generally, building our software is not trivial and takes a fair amount
+of time, so just "git checkout" out a new branch and rebuilding is not
+really an option for us.  I jumped on IRC while back and the contrib
+git-new-workdir was sugggested, but with the caveat that I should try
+and think outside the box before I adopted git-new-workdir.  So, I come
+here, after using Git for a couple of months and not seeing a way around
+this, asking if I'm missing something?  Should I be using
+git-new-workdir?  Or is there a better way that I have yet to see?  I'm
+sure the kernel developers must have this need as well, so it's quite
+possible I'm missing something.  I appreciate all feedback!
 
-Good change but is a separate issue.  Please make it a [PATCH 1/2].
-
-> ---
-
-Lacking Sign-off.
-
-> I wanted to read all the logs in ISO 8601 time format so I decided to 
-> implement this option.
-
-Good intention.
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 217980f..ddc68bd 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -573,6 +573,12 @@ fetch.unpackLimit::
->  	especially on slow filesystems.  If not set, the value of
->  	`transfer.unpackLimit` is used instead.
->  
-> +format.date::
-> +	Set default date-time mode for the log command. Setting format.date
-> +	value is similar to using git log's --date option. The value is one of
-> +	following alternatives: {relative,local,default,iso,rfc,short}.
-> +	See linkgit:git-log[1].
-> +
-
-Look at other "format.*" variables --- notice that most of them are about
-"format-patch" command?  And you absolutely do NOT want this "default date
-format for log family" to apply to "format-patch" command.
-
-> diff --git a/builtin-log.c b/builtin-log.c
-> index 9d046b2..d3ff8f6 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -18,6 +18,9 @@
-
-The patch itself is good, especially that you made sure that format-patch
-output is not affected.
-
-As to the configuration variable name, I'd suggest "log.date" instead.  We
-may have to deprecate format.pretty and move it to something else for
-consistency, though.  Just like we do not want "format.date" applied to
-format-patch, we never want "format.pretty" apply to it either.
+Cheers,
+Craig
