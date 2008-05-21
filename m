@@ -1,55 +1,71 @@
-From: "Peter Farmer" <pfarmer@gmail.com>
-Subject: Develop with git on a Google Code project
-Date: Wed, 21 May 2008 06:25:24 +0100
-Message-ID: <6944de040805202225r2d7d0a75y5179b60556cfa283@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Understanding git filter-branch --subdirectory-filter behaviour
+Date: Wed, 21 May 2008 08:26:03 +0200
+Message-ID: <4833C07B.3060004@viscovery.net>
+References: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 07:26:19 2008
+Cc: git mailing list <git@vger.kernel.org>
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 08:27:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JygqA-0006UC-Uz
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 07:26:19 +0200
+	id 1Jyhmv-0004pm-0h
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 08:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575AbYEUFZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 01:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbYEUFZ2
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 01:25:28 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:39320 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753347AbYEUFZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 01:25:27 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so65444ugf.16
-        for <git@vger.kernel.org>; Tue, 20 May 2008 22:25:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=/DOogADgtMmwyVNXaHcPFCplcm4EVrbkpKmGJHTjQ50=;
-        b=rSnUtUspoZeCcCgo/5vadR8qWnCEljaHtkMN5EbcSofqXupMd+z4hZ1LpY9CV+eDMlAUshEH2P5vEJHeXtep8B3nwp1itIe298Pg4i8Q9JwIIO7omxtO/K3nmNZvOn7RlWIdpCAZeq0WD5nfsGRI2R2BDy7XBiUxf0u1qju1Gug=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=khPe+MRaRkRyh9kac7q4wZS3CflPDA6pEdG2qOdAyHYdlCEaOZ63EZH0+Nl1Vt+KXtQNryi8xwJc4F7M6tUjz6h6A3BCQnhT2YaVkW9kM3ItbVYFe5AEk0G4kTS51CDxlYhpDre1whfvBw63SaDTgLpnqPk1Dmuje/BH36WAfDM=
-Received: by 10.66.250.1 with SMTP id x1mr547774ugh.57.1211347524979;
-        Tue, 20 May 2008 22:25:24 -0700 (PDT)
-Received: by 10.66.232.15 with HTTP; Tue, 20 May 2008 22:25:24 -0700 (PDT)
-Content-Disposition: inline
+	id S1759566AbYEUG0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 02:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759513AbYEUG0I
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 02:26:08 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:27516 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755187AbYEUG0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 02:26:07 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Jyhlz-0001qp-GI; Wed, 21 May 2008 08:26:03 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2D3F2546; Wed, 21 May 2008 08:26:03 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82529>
 
-Hi list,
+David Tweed schrieb:
+> $ git filter-branch --subdirectory-filter WRITING/ HEAD
+> Rewrite 42f24be8d8198738134a19471697b39359199fa3 (351/351)
+> Ref 'refs/heads/master' was rewritten
+> 
+> $ git rev-list HEAD | wc
+>      55      55    2255
+> 
+...
+> 
+> Digging a little into the shell-script I find the list of commits is
+> generated with
+> 
+> git rev-list --reverse --topo-order --default HEAD --parents HEAD
+> --full-history -- WRITING
+> 
+> and (adding --pretty so I can easily read it) running this manually
+> gives 351 entries and looks to contain the expected commits. So I'm
+> confused what's happening?
 
-Saw this this morning,
+That's difficult to tell without a peek at the repository.
 
-http://google-opensource.blogspot.com/2008/05/develop-with-git-on-google-code-project.html
+Did you compare 'gitk HEAD' to 'gitk HEAD -- WRITING'? I'd expect the
+latter to be a subset of the former. Note that with a path specified
+"history simplification" happens, which means that you won't see as many
+merges as when no path is specified.
 
-You can't beat a bit of exposure!
-
--- 
-Peter Farmer
+-- Hannes
