@@ -1,158 +1,89 @@
-From: "Clifford Caoile" <piyo@users.sourceforge.net>
-Subject: Re: encoding bug in git.el
-Date: Wed, 21 May 2008 23:08:09 +0900
-Message-ID: <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
-References: <20080520220900.GA20570@diana.vm.bytemark.co.uk>
-	 <87mymkbo9x.fsf@lysator.liu.se>
-Reply-To: piyo@users.sourceforge.net
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix t3701 if core.filemode disabled
+Date: Wed, 21 May 2008 10:36:07 -0400
+Message-ID: <20080521143607.GA3575@sigill.intra.peff.net>
+References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home> <20080519202342.GA9694@steel.home> <20080519205550.GA24246@sigill.intra.peff.net> <20080520215932.GB10437@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed May 21 16:12:04 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 16:45:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyp04-0004hv-Dv
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:09:04 +0200
+	id 1JypRC-0001iP-GS
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:37:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764976AbYEUOIO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 10:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764431AbYEUOIM
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:08:12 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:25419 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763949AbYEUOIL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 10:08:11 -0400
-Received: by an-out-0708.google.com with SMTP id d40so669002and.103
-        for <git@vger.kernel.org>; Wed, 21 May 2008 07:08:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=dAYjR23DFU8ivI5rGP0wqhy2V0hHiYN2xYt7dySzA4k=;
-        b=Qy8EK7adRDM5C2SfDTy20jb8Ar0oQc02Gb34Fi7H1VONh/vFirCuGwJmLFMqvNVxJnqvXMARxv/sfHuN39v7gNj2jS4sKXaPUp1DQ1GrwdXra+iprS2f3i9L/DBUFmTx8YDL7FmrV9provrzn19FdVYnYyelJCr8nESovD7WiDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=KYNUv4yE6XVWn7n6NlhK323Dx0cg3/1S6hqunRXSsRMMEtpkj0WZm3tOGTU9acOKpbDtY2Bh40XJx0lGLS5MwwGLWwnllzdLXKx23AZzvFK8v8ghvjBblpaEOjzmQchU0nAp6Vkiaj4G9JsxlZl8e5CbY1vIw2tADkT/S0O1xyM=
-Received: by 10.100.201.16 with SMTP id y16mr416574anf.26.1211378889957;
-        Wed, 21 May 2008 07:08:09 -0700 (PDT)
-Received: by 10.101.1.13 with HTTP; Wed, 21 May 2008 07:08:09 -0700 (PDT)
-In-Reply-To: <87mymkbo9x.fsf@lysator.liu.se>
+	id S1757125AbYEUOgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 10:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757366AbYEUOgO
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:36:14 -0400
+Received: from peff.net ([208.65.91.99]:4533 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755643AbYEUOgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 10:36:13 -0400
+Received: (qmail 4061 invoked by uid 111); 21 May 2008 14:36:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 May 2008 10:36:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2008 10:36:07 -0400
 Content-Disposition: inline
-X-Google-Sender-Auth: acb35c74ca7f88b3
+In-Reply-To: <20080520215932.GB10437@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82545>
 
-Hi:
+On Tue, May 20, 2008 at 11:59:32PM +0200, Alex Riesen wrote:
 
-On Wed, May 21, 2008 at 7:31 AM, David K=E5gedal <davidk@lysator.liu.se=
-> wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
->> Recently, some commits started misrecording the "=F6" in my name. (I=
-n
->> emacs, for example, it looks like this in a utf8 buffer:
->> Hasselstr\201\366m.) I'm guessing there's an extra latin1->utf8
->> conversion in there somewhere.
->
-> The \201 looks more like Emacs' internal mule encoding, where
-> everything that isn't ASCII is prefixed with \201 or something
-> similar.
+> Sure. I have explicitely test for core.filemode=false, because
+> some older setups (where git init did not set it) don't have
+> the setting and git config core.filemode reports nothing.
 
-Thanks for reporting this.
+I don't think that is relevant here; this is a test script, and as such
+is testing the results of the current version of git-init (from when we
+git-init the trash directory).
 
-I concur. This is not UTF-8 translation, but an emacs MULE encoding. I
-suspect the U+F6 character is read in to the *git-commit* buffer in
-latin-1 mode because git.el displays the Author line, then Emacs
-writes that out as 0x81F6, because that is the emacs buffer code of
-U+F6.
+That being said, I think the test you have is perfectly fine, and the
+patch is correct.
 
-This is because git.el, upon git-commit-tree, always redefines the
-environment variables like GIT_AUTHOR_NAME. However the difference is
-that prior to commit dbe482, "env" handle the encoding while commit
-dbe482 lets emacs process-environment handle it. Unfortunately the
-string is passed without the proper recoding in the latter case.
+And I am OK with the patch as-is, though I have a few style nits:
 
-Here is a proposed fix. I suggest that process-environment should be
-given these envvars already encoded as shown in this code sample:
+> @@ -65,6 +65,7 @@ test_expect_success 'revert works (commit)' '
+>  	git add -i </dev/null >output &&
+>  	grep "unchanged *+3/-0 file" output
+>  '
+> +if test "$(git config core.filemode)" != false ; then
+>  
+>  test_expect_success 'patch does not affect mode' '
+>  	git reset --hard &&
+> @@ -84,5 +85,6 @@ test_expect_success 'stage mode but not hunk' '
+>  	git diff          file | grep "+content"
+>  '
+>  
+> +fi
 
------------------- git.el ------------------
-[not a proper git-diff]
-@@ -216,6 +216,11 @@ and `git-diff-setup-hook'."
-   "Build a list of NAME=3DVALUE strings from a list of environment str=
-ings."
-   (mapcar (lambda (entry) (concat (car entry) "=3D" (cdr entry))) env)=
-)
+1. It should be $(git config --bool core.filemode). As it happens,
+git-init always uses the word "false" so this works OK, but it is
+probably better to model good behavior and to be more robust.
 
-+(defun git-get-env-strings-encoded (env encoding)
-+  "Build a list of NAME=3DVALUE strings from a list of environment str=
-ings,
-+converting from mule-encoding to ENCODING (e.g. mule-utf-8, latin-1, e=
-tc)."
-+  (mapcar (lambda (entry) (concat (car entry) "=3D"
-(encode-coding-string (cdr entry) encoding))) env))
-+
- (defun git-call-process-env (buffer env &rest args)
-   "Wrapper for call-process that sets environment strings."
-   (let ((process-environment (append (git-get-env-strings env)
-@@ -265,7 +270,7 @@ and returns the process output as a string, or nil
-if the git failed."
+2. It's a little hard to see which tests are affected. I would have done
+   something more like:
 
- (defun git-run-command-region (buffer start end env &rest args)
-   "Run a git command with specified buffer region as input."
--  (unless (eq 0 (let ((process-environment (append (git-get-env-string=
-s env)
-+  (unless (eq 0 (let ((process-environment (append
-(git-get-env-strings-encoded env coding-system-for-write)
-                                                    process-environment=
-)))
-                   (git-run-process-region
-                    buffer start end "git" args)))
+  if test "$(git config --bool core.filemode)" = true
+    test_filemode=
+  else
+    test_filemode=:
+  fi
 
-The buffer text is saved with the encoding coding-system-for-write,
-while the GIT_* envvars were not encoded, so when appending to
-process-environment variable, use the same encoding.
+  $test_filemode test_expect_success ...
 
-(Reminder: the *git-commit* buffer's encoding is based on the git
-config i18n.commitencoding, which in turn sets
-buffer-file-coding-system, which in turn sets coding-system-for-write)
+  But maybe that is just overengineering.
 
-I tested this with U+F6 in the GIT_AUTHOR_NAME, git config user.name,
-and the commit text, and it seems to work better (I think it's fixed).
-Please review it. Also, I am not sure if this fix needs to be
-propagated to the other areas where process-environment is redefined,
-so YMMV.
+3. Usually when we skip tests we do something like
 
-(Lastly, while testing this for Japanese, I'm having some encoding
-problem with meadow (Emacs on Windows), msysgit (git on Windows),
-set-language-mode Japanese, utf-8, and M-x git-commit-file but I don't
-think its related to this exact problem. Hopefully.)
+  say 'skipping filemode tests (filesystem does not properly support modes')
 
->> It turns out that the breakage occurs when I commit with the
->> git-status mode from git.el, and it was introduced by this commit:
->>
->>   commit dbe48256b41c1e94d81f2458d7e84b1fdcb47026
->>   Author: Clifford Caoile <piyo@users.sourceforge.net>
->>
->>       git.el: Set process-environment instead of invoking env
-
-:-)
-
-This must be the reason why process-environment wasn't used in all plac=
-es.
-
->> It's in master, but not yet in maint. (In fact, it's the _only_ chan=
-ge
->> to contrib/emacs that's in master but not in maint.)
-
-Please forgive my ignorance, but what does this mean?
-
-Best regards,
-Clifford Caoile
+-Peff
