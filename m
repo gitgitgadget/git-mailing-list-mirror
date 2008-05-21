@@ -1,52 +1,56 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: encoding bug in git.el
-Date: Wed, 21 May 2008 16:54:34 +0200
-Message-ID: <20080521145434.GA31982@diana.vm.bytemark.co.uk>
-References: <20080520220900.GA20570@diana.vm.bytemark.co.uk> <87mymkbo9x.fsf@lysator.liu.se> <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
+Subject: Re: [StGit PATCH] Try the built-in version string before git-describe
+Date: Wed, 21 May 2008 17:00:26 +0200
+Message-ID: <20080521150026.GC31982@diana.vm.bytemark.co.uk>
+References: <20080520210249.GA19465@diana.vm.bytemark.co.uk> <20080520213844.13410.32757.stgit@yoghurt> <b0943d9e0805210738v40b25d54j65e70b3ef2745987@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
-To: Clifford Caoile <piyo@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed May 21 17:01:32 2008
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 17:04:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jypji-0002dR-EG
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:56:14 +0200
+	id 1Jypoi-0005CJ-CH
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 17:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757474AbYEUOzU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 10:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756621AbYEUOzT
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:55:19 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1543 "EHLO
+	id S1757357AbYEUPAd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 11:00:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756808AbYEUPAd
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 11:00:33 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4789 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752795AbYEUOzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 10:55:18 -0400
+	with ESMTP id S1755363AbYEUPAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 11:00:33 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Jypi6-0008Nw-00; Wed, 21 May 2008 15:54:34 +0100
+	id 1Jypnm-0008Tz-00; Wed, 21 May 2008 16:00:26 +0100
 Content-Disposition: inline
-In-Reply-To: <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
+In-Reply-To: <b0943d9e0805210738v40b25d54j65e70b3ef2745987@mail.gmail.com>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82550>
 
-On 2008-05-21 23:08:09 +0900, Clifford Caoile wrote:
+On 2008-05-21 15:38:18 +0100, Catalin Marinas wrote:
 
-> > > It's in master, but not yet in maint. (In fact, it's the _only_
-> > > change to contrib/emacs that's in master but not in maint.)
+> On 20/05/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
 >
-> Please forgive my ignorance, but what does this mean?
+> > In order for this to work when StGit _is_ run directly from a
+> > git-controlled tree, setup.py has to delete the builtin version
+> > file once the installation process is over. (Otherwise, the StGit
+> > version in a git-controlled tree would be frozen at whatever value
+> > it happened to have when setup.py was last run.)
+>
+> OK, I thought it was only the ordering change. With this change to
+> setup.py, I'm OK with the patch. I'll merge your tree tonight.
 
-That the change was committed to the "master" branch, and not the
-"maint" branch. So folks who run stable releases haven't seen the bug
-yet.
+The change to setup.py is actually tiny. I just had to reindent a
+gazillion line, which makes the patch less than perfectly readable...
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
