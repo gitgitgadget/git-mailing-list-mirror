@@ -1,64 +1,73 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: [PATCH] pull --rebase: exit early when the working directory is dirty
-Date: Wed, 21 May 2008 11:11:20 -0400
-Message-ID: <626F2244-15CE-481C-A8F5-D6744F06D46F@adacore.com>
-References: <alpine.DEB.1.00.0805211230290.30431@racer>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: davetron5000 <davetron5000@gmail.com>
+Subject: Using git to perform merges between SVN branches
+Date: Wed, 21 May 2008 08:50:33 -0700 (PDT)
+Message-ID: <a5c338c9-7820-41bd-a3a3-36ba5aad4379@l64g2000hse.googlegroups.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 21 17:14:19 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 21 17:51:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JypzD-0001ul-CF
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 17:12:15 +0200
+	id 1JyqbF-0002es-GJ
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 17:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758301AbYEUPLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 11:11:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758954AbYEUPLX
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 11:11:23 -0400
-Received: from rock.gnat.com ([205.232.38.15]:43141 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758301AbYEUPLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 11:11:22 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 6F3F02A99A0;
-	Wed, 21 May 2008 11:11:21 -0400 (EDT)
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ZD2IHk584v44; Wed, 21 May 2008 11:11:21 -0400 (EDT)
-Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTP id 2E1EA2A9993;
-	Wed, 21 May 2008 11:11:21 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0805211230290.30431@racer>
-X-Mailer: Apple Mail (2.919.2)
+	id S935524AbYEUPui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 11:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757048AbYEUPui
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 11:50:38 -0400
+Received: from wr-out-0708.google.com ([64.233.184.243]:44426 "EHLO
+	wr-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934519AbYEUPug (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 11:50:36 -0400
+Received: by wr-out-0708.google.com with SMTP id b35so5630285wra.4
+        for <git@vger.kernel.org>; Wed, 21 May 2008 08:50:34 -0700 (PDT)
+Received: by 10.100.174.2 with SMTP id w2mr15540ane.16.1211385033878; Wed, 21 
+	May 2008 08:50:33 -0700 (PDT)
+X-IP: 98.218.223.189
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; 
+	rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82553>
 
+Working out of an SVN/subversion repository.  Initially cloned it so I
+could work with git via git-svn.  I was given a branch in svn to work
+on.  Created local branches connected to the main trunk and my branch
+via:
 
-On May 21, 2008, at 07:32, Johannes Schindelin wrote:
-> When rebasing fails during "pull --rebase", you cannot just clean up  
-> the
-> working directory and call "pull --rebase" again, since the remote  
-> branch
-> was already fetched.
->
-> Therefore, die early when the working directory is dirty.
-Much nicer indeed to die early on errors, as we also can
-generally give better error messages.
-> +	die "refusing to pull with rebase: your working tree is not up-to- 
-> date"
+git-checkout -b local-trunk trunk
+git branch local-foo FOO
 
-I thought we'd prefer saying:
-               "refusing to pull with rebase: your working tree has  
-local changes"
+where svn_root/branches/FOO is where I'm to commit changes
 
-   -Geert
+commits work fine, etc.
+
+What I'd like to do, for simplicity, and as a demonstration of git's
+superior merging, is to do the merge of my code to the main trunk
+using git.  My main concern is not getting into a situation where I
+cannot commit to svn (since it doesn't track merges)
+
+Would something like this work:
+
+git checkout local-trunk
+git-svn rebase
+git checkout -b merge-foo local-trunk
+git merge local-foo
+# Resolve conflicts, etc.  local-foo now has what should go onto SVN's
+trunk
+git checkout local-trunk
+git merge merge-foo
+# this should work without any conflicts, since I resolved them on
+merge-foo
+git-svn dcommit
+# Now I've merged my changes to the main trunk
+
+Thanks,
+
+Dave
