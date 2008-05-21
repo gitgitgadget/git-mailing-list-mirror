@@ -1,106 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cvsexportcommit: Create config option for CVS dir
-Date: Wed, 21 May 2008 12:51:38 -0700
-Message-ID: <7vprrf1lmd.fsf@gitster.siamese.dyndns.org>
-References: <1210282015-20872-1-git-send-email-tpiepho@freescale.com>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: RE: git cvsimport error
+Date: Wed, 21 May 2008 14:51:50 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794301FC8B2D@emailmn.mqsoftware.com>
+References: <799406d60805211214r6315268ard77678eb2ec5d732@mail.gmail.com> <799406d60805211239n42c39ea6iaa41a9ab379cafaa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Trent Piepho <tpiepho@freescale.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 21:53:07 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "Adam Mercer" <ramercer@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 21 21:53:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyuMg-00045N-1g
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:52:46 +0200
+	id 1JyuMf-00045N-Dd
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 21:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759015AbYEUTvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 15:51:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758974AbYEUTvx
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:51:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37626 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756600AbYEUTvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 15:51:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 63A486898;
-	Wed, 21 May 2008 15:51:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id A988A6893; Wed, 21 May 2008 15:51:42 -0400 (EDT)
-In-Reply-To: <1210282015-20872-1-git-send-email-tpiepho@freescale.com> (Trent
- Piepho's message of "Thu, 8 May 2008 14:26:55 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5A7CABE4-276F-11DD-943B-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1758738AbYEUTvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 15:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758226AbYEUTvw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 15:51:52 -0400
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:14279 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755566AbYEUTvv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 15:51:51 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <799406d60805211239n42c39ea6iaa41a9ab379cafaa@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git cvsimport error
+Thread-Index: Aci7erxKNM8wOa/vSbiARpNkIhDf2gAAREPQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82576>
 
-Last night I was going through old mail-logs and found this, which I think
-would be nice.  Does anybody see anything wrong with the patch?
 
-Trent Piepho <tpiepho@freescale.com> writes:
+> On Wed, May 21, 2008 at 2:14 PM, Adam Mercer 
+> <ramercer@gmail.com> wrote:
+> 
+> > Fetching glue/ldbd.py   v 1.1
+> > Unknown: error
+> > [ram@mimir ~]$
+> 
+> Done some digging with cvsps itself and it looks like the 
+> lbdb.py,v file has become corrupted from a very early version...
+> 
+> Is there a way that I can tell git to ignore the early revisions?
+> 
+Not a cvsps expert, but I'm at the same point as you in converting a
+repo ;-)  Would the -d option on cvsps do what you want?
 
-> For a given project the directory used with the -w option is almost always
-> the same each time.  Let it be specified with 'cvsexportcommit.cvsdir' so
-> it's not necessary to manually add it with -w each time.
->
-> Signed-off-by: Trent Piepho <tpiepho@freescale.com>
-> ---
->  Documentation/git-cvsexportcommit.txt |    8 +++++++-
->  git-cvsexportcommit.perl              |    5 +++++
->  2 files changed, 12 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-> index 9a47b4c..363c36d 100644
-> --- a/Documentation/git-cvsexportcommit.txt
-> +++ b/Documentation/git-cvsexportcommit.txt
-> @@ -65,11 +65,17 @@ OPTIONS
->  -w::
->  	Specify the location of the CVS checkout to use for the export. This
->  	option does not require GIT_DIR to be set before execution if the
-> -	current directory is within a git repository.
-> +	current directory is within a git repository.  The default is the
-> +	value of 'cvsexportcommit.cvsdir'.
->  
->  -v::
->  	Verbose.
->  
-> +CONFIGURATION
-> +-------------
-> +cvsexportcommit.cvsdir::
-> +	The default location of the CVS checkout to use for the export.
-> +
->  EXAMPLES
->  --------
->  
-> diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-> index b6036bd..c93bd9c 100755
-> --- a/git-cvsexportcommit.perl
-> +++ b/git-cvsexportcommit.perl
-> @@ -6,6 +6,7 @@ use File::Temp qw(tempdir);
->  use Data::Dumper;
->  use File::Basename qw(basename dirname);
->  use File::Spec;
-> +use Git;
->  
->  our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m, $opt_d, $opt_u, $opt_w);
->  
-> @@ -15,6 +16,10 @@ $opt_h && usage();
->  
->  die "Need at least one commit identifier!" unless @ARGV;
->  
-> +# Get git-config settings
-> +my $repo = Git->repository();
-> +$opt_w = $repo->config('cvsexportcommit.cvsdir') unless defined $opt_w;
-> +
->  if ($opt_w) {
->  	# Remember where GIT_DIR is before changing to CVS checkout
->  	unless ($ENV{GIT_DIR}) {
-> -- 
-> 1.5.4.1
+> Cheers
+> 
+> Adam
+> --
+> 
+Cheers,
+Craig
