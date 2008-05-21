@@ -1,62 +1,67 @@
-From: "Craig L. Ching" <cching@mqsoftware.com>
-Subject: Git-new-workdir
-Date: Wed, 21 May 2008 13:21:22 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794301FC8B1D@emailmn.mqsoftware.com>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Re: two git-cherry-pick enhancements
+Date: Wed, 21 May 2008 13:36:29 -0500
+Message-ID: <5d46db230805211136k7bf81bc0t9610fe2bb50a08b9@mail.gmail.com>
+References: <20080521163817.GA13124@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 21 20:37:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Nico -telmich- Schottelius" <nico-git-20080521@schottelius.org>
+X-From: git-owner@vger.kernel.org Wed May 21 20:37:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JytBm-0004GA-U4
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 20:37:27 +0200
+	id 1JytBm-0004GA-9x
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 20:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755116AbYEUSgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 14:36:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755059AbYEUSgh
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 14:36:37 -0400
-Received: from emailmn.mqsoftware.com ([66.192.70.108]:9548 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752424AbYEUSgg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 14:36:36 -0400
-X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2008 14:36:36 EDT
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Git-new-workdir
-Thread-Index: Aci7b3kH+1ISWiLNQ9+Hw5rmQFMEVA==
+	id S1754719AbYEUSgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 14:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752424AbYEUSgd
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 14:36:33 -0400
+Received: from ti-out-0910.google.com ([209.85.142.191]:25457 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752027AbYEUSgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 14:36:32 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so1576092tic.23
+        for <git@vger.kernel.org>; Wed, 21 May 2008 11:36:30 -0700 (PDT)
+Received: by 10.151.145.17 with SMTP id x17mr693413ybn.20.1211394989145;
+        Wed, 21 May 2008 11:36:29 -0700 (PDT)
+Received: by 10.150.181.17 with HTTP; Wed, 21 May 2008 11:36:29 -0700 (PDT)
+In-Reply-To: <20080521163817.GA13124@denkbrett.schottelius.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82563>
 
-Hi all,
+On Wed, May 21, 2008 at 11:38 AM, Nico -telmich- Schottelius
+<nico-git-20080521@schottelius.org> wrote:
+> Hello!
+>
+> When using git-cherry-pick there are two things missing for me and just
+> wondered how you see it (or maybe have a good solution):
+>
+> - Apply only parts of the patch which applies to <file ...>:
+>   I sometimes want to apply patches only to some, but not all
+>   files the patch introduces
+>
+> - Interactively selecting which parts to apply:
+>   I want only 7 out of 10 changes the patch introduces.
+>   It would help alot, if I could choose which parts I want
+>   to apply for every part of the patch.
+>
+> Anything planned like that or did I oversee the right way?
+>
+> Sincerly
+>
+> Nico
+>
+> P.S.: Please CC me on reply, I am not subscribed.
+>
 
-I'm a bit of a newbie to Git, but I have started using it in earnest for
-the past couple of months.  I had asked on IRC about a potential problem
-I saw with git and how it fit into our workflow.  We currently use CVS
-and have used it for the past ten years.  A lot of us have grown
-accustomed to keeping multiple builds around for different things, e.g.
-defects we're working on, new features, etc., we do a lot of task
-switching and very rarely can we work on something start to finish
-without being interrupted with something else.  The normal workflow of
-git seems to cut across that need to keep many builds around.
-Generally, building our software is not trivial and takes a fair amount
-of time, so just "git checkout" out a new branch and rebuilding is not
-really an option for us.  I jumped on IRC while back and the contrib
-git-new-workdir was sugggested, but with the caveat that I should try
-and think outside the box before I adopted git-new-workdir.  So, I come
-here, after using Git for a couple of months and not seeing a way around
-this, asking if I'm missing something?  Should I be using
-git-new-workdir?  Or is there a better way that I have yet to see?  I'm
-sure the kernel developers must have this need as well, so it's quite
-possible I'm missing something.  I appreciate all feedback!
+You could "git cherry-pick --no-commit <id>" and then "git add -p"
 
-Cheers,
-Craig
+-Govind
