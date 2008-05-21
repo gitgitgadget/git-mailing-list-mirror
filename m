@@ -1,68 +1,83 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: Re: [PATCH] pull --rebase: exit early when the working directory is
- dirty
-Date: Wed, 21 May 2008 15:31:10 +0200
-Message-ID: <20080521153110.059bc6a3@neuron>
-References: <alpine.DEB.1.00.0805211230290.30431@racer>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGit: kha/{safe,experimental} updated
+Date: Wed, 21 May 2008 15:07:44 +0100
+Message-ID: <b0943d9e0805210707s5af76462wc92a4cf55e5d4a9d@mail.gmail.com>
+References: <20080514014309.GA17955@diana.vm.bytemark.co.uk>
+	 <b0943d9e0805191421n1ca676dai1b3ed7d6eb1df5f4@mail.gmail.com>
+	 <20080520070441.GB7324@diana.vm.bytemark.co.uk>
+	 <b0943d9e0805201019x10bf87ecr1c11c8ee474f6138@mail.gmail.com>
+	 <20080520210249.GA19465@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 21 15:38:19 2008
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed May 21 16:11:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyoVq-0008H3-9L
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 15:37:50 +0200
+	id 1Jyozj-0004YQ-Qr
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 16:08:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934585AbYEUNg5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 09:36:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934532AbYEUNg4
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 09:36:56 -0400
-Received: from zoidberg.org ([213.133.99.5]:35572 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934189AbYEUNgz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 09:36:55 -0400
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2008 09:36:55 EDT
-Received: from neuron (xdsl-87-78-68-47.netcologne.de [::ffff:87.78.68.47])
-  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Wed, 21 May 2008 15:31:11 +0200
-  id 001622D4.48342423.00003DDE
-In-Reply-To: <alpine.DEB.1.00.0805211230290.30431@racer>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S934328AbYEUOHs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 10:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934112AbYEUOHs
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 10:07:48 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:23557 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765459AbYEUOHr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 10:07:47 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so157006ugf.16
+        for <git@vger.kernel.org>; Wed, 21 May 2008 07:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6aCCraWXwCoz7xcpvwYhjuGiKnEssk14rLYSRtmaKFU=;
+        b=Ybf/mgU3PceDXd6Stf7J3n3eSvfMpEMldr3p0bu05wYD7otMNuPq9ZTGDbpP9T0fInKqBCPQ1ch7+lbsKUBfe74ZjGAgYI2CwQDnBsEteq+JYJJSOU/qxWlRq0jznDhHGr1ig+AEXVEsEUlIg8yCdVoXNqhG8+FGxAmahmb7fMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FZtNu6axoX8JLonb5Ixkj59sP/04aZBoWdoh+Hv7YxAZfAQ6ciEOtXamMXZHFuySL+oUwgAYmSVGDhVAPrfF1N7yHQBRSeZcRw1OyGBFBN9C30hGnMuE7+lGRX1VVXneXGo2VlbL6pkyE1LMYR0Xrv9MsvuLHBcrsb1OObEGxis=
+Received: by 10.66.251.3 with SMTP id y3mr1066817ugh.88.1211378865061;
+        Wed, 21 May 2008 07:07:45 -0700 (PDT)
+Received: by 10.66.242.4 with HTTP; Wed, 21 May 2008 07:07:44 -0700 (PDT)
+In-Reply-To: <20080520210249.GA19465@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82543>
 
-Hi,
+2008/5/20 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-05-20 18:19:02 +0100, Catalin Marinas wrote:
+>> I build release tarball from the directory under Git control and I
+>> always get a builtin_version.py generated. In my initial patch I had
+>> a check in setup.py for a .release file. I could add a check in
+>> write_builtin_version to ignore the extra .git stuff if I am making
+>> a release (only keep the tag name).
+>
+> Nah, easier to just change the order of the checks (try r2 before r1)
+> as I outlined. I'll whip up a patch.
+[...]
+> If you're exactly on a tagged commit, git-describe will return just
+> the name of that tag, so you don't need to do anything extra.
 
-> When rebasing fails during "pull --rebase", you cannot just clean up
-> the working directory and call "pull --rebase" again, since the
-> remote branch was already fetched.
->=20
-> Therefore, die early when the working directory is dirty.
+Now that you mentioned this (I didn't know), is there a need to
+reverse steps r2 and r1? I always build the release from the current
+tag and the version should be clean.
 
-Good idea.
+>> BTW, Git seems to use 6 characters for the current commit id and
+>> StGIT 5. Should we change this for consistency?
+>
+> Both git and we call git-describe with --abbrev=3D4, which I think me=
+ans
+> "describe the commit uniquely with as few digits as possible, but no
+> less than four". So we'll get upgraded automatically when it becomes
+> necessary.
 
-> +	git update-index --refresh &&
-> +	git diff-files --quiet &&
-> +        git diff-index --cached --quiet HEAD -- ||
-> +	die "refusing to pull with rebase: your working tree is not
-> up-to-date"
-
-Perhaps the "up-to-date" should be changed to something else, following
-the recent discussion about the "up-to-date" message in checkout (but
-here we don't have to worry about breaking anything else). In that case=
-,
-I'd suggest:
-
-"Refusing to pull with rebase: your working tree has uncommitted
-changes"
+OK, I didn't know this either.
 
 --=20
-Best regards
-Jan Kr=C3=BCger <jk@jk.gs>
+Catalin
