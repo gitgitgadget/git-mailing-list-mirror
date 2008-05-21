@@ -1,90 +1,73 @@
-From: Nico -telmich- Schottelius <nico-git-20080521@schottelius.org>
-Subject: two git-cherry-pick enhancements
-Date: Wed, 21 May 2008 18:38:17 +0200
-Message-ID: <20080521163817.GA13124@denkbrett.schottelius.org>
+From: "Ian Katz" <ifreecarve@gmail.com>
+Subject: git tutorial
+Date: Wed, 21 May 2008 12:42:33 -0400
+Message-ID: <dc5b80bf0805210942l388c4439g84b8a6b02346ebe8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="zhXaljGHf11kAtnf"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 18:39:19 2008
+X-From: git-owner@vger.kernel.org Wed May 21 18:43:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyrLS-0007cA-58
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 18:39:18 +0200
+	id 1JyrPR-00011z-UQ
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 18:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763379AbYEUQiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 12:38:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759836AbYEUQiW
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 12:38:22 -0400
-Received: from mx2.schottelius.org ([62.65.138.77]:59207 "EHLO
-	mx2.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759519AbYEUQiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 12:38:21 -0400
-Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.schottelius.org (Postfix) with ESMTPSA id BA05D31742B
-	for <git@vger.kernel.org>; Wed, 21 May 2008 18:38:13 +0200 (CEST)
-Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
-	id 2DD38F00F; Wed, 21 May 2008 18:38:17 +0200 (CEST)
+	id S1753402AbYEUQmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 12:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754793AbYEUQmf
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 12:42:35 -0400
+Received: from hs-out-0708.google.com ([64.233.178.251]:54710 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752296AbYEUQme (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 12:42:34 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so2424182hsl.5
+        for <git@vger.kernel.org>; Wed, 21 May 2008 09:42:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=v2Hf1UdZF5YRQuHFhUmB8Q+UbvMVJo5Ir1T8s2thXLI=;
+        b=qpiofvA4xjKBka1nJZmjWYMjpdQAxUOa+q+zhCASBwKX5qo31R/57x8BenrLmvIb7/Vs4EGSQjo0+FrgstJs+oVWnWEPEaftOX/QOi6h8iuAWVxsRhDro+xBsxQCcVl3RCc5ioHf3xuehqWuT93k/HKBY5A07sVRjEJ2KkNy08I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=sXERXGRNdTGBmbZ2rMPRxgoSq87VxWPiQL4TusmPJ4VgA7R3Nt/JCYpQudpWpJbRRfozGztPhM75+1YMjwsVyhcEuR7+jr1WtMj1AZUQPGg2X6u4ep8RZCz67Q+VMES1nVGZESs1AhjRT6HAdXE9IcY5E9rWzaJ9IFnjgSYNEWQ=
+Received: by 10.90.114.19 with SMTP id m19mr513907agc.91.1211388153473;
+        Wed, 21 May 2008 09:42:33 -0700 (PDT)
+Received: by 10.100.107.1 with HTTP; Wed, 21 May 2008 09:42:33 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: denkbrett running Linux 2.6.25.3-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82556>
 
+Hi Guys-
 
---zhXaljGHf11kAtnf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have a suggestion/request for the git documentation (tutorial),
+currently accessible from:
+http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
 
-Hello!
+It would be much easier to understand the "Using git for
+collaboration" section if you put the username (bob or alice) as a
+prefix to each of the example command prompts, as is common in most
+linux distributions.  This would make it easier to see at a glance who
+is doing what.
 
-When using git-cherry-pick there are two things missing for me and just
-wondered how you see it (or maybe have a good solution):
+In other words, it would change from this:
+$ git clone /home/alice/project myrepo
+$ git pull /home/bob/myrepo master
 
-- Apply only parts of the patch which applies to <file ...>:
-   I sometimes want to apply patches only to some, but not all
-   files the patch introduces
+to this:
+bob$ git clone /home/alice/project myrepo
+alice$ git pull /home/bob/myrepo master
 
-- Interactively selecting which parts to apply:
-   I want only 7 out of 10 changes the patch introduces.
-   It would help alot, if I could choose which parts I want
-   to apply for every part of the patch.
+In the tutorial's current form, I spent so much time looking back into
+the paragraph text to find out who was typing each command that I
+eventually printed it out so I could scribble their names on each one.
 
-Anything planned like that or did I oversee the right way?
+I hope this change isn't a big deal.
 
-Sincerly
-
-Nico
-
-P.S.: Please CC me on reply, I am not subscribed.
-
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---zhXaljGHf11kAtnf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFINE/5uL75KpiFGIwRAoqLAKCHmskiXXdCIxBhAUi6Daj5CYIGQACeIoxF
-ZmlUQsUiMYJPEci53WSWguQ=
-=wMId
------END PGP SIGNATURE-----
-
---zhXaljGHf11kAtnf--
+Thanks,
+-Ian
