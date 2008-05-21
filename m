@@ -1,74 +1,68 @@
-From: Anders Waldenborg <anders@0x63.nu>
-Subject: [PATCH] gitweb: Convert string to internal form before chopping in
-	chop_str
-Date: Wed, 21 May 2008 13:44:43 +0200
-Message-ID: <20080521114443.GA1576@0x63.nu>
-References: <g0vdse$rj6$1@ger.gmane.org> <m3lk244o16.fsf@localhost.localdomain>
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: Re: [PATCH] pull --rebase: exit early when the working directory is
+ dirty
+Date: Wed, 21 May 2008 15:31:10 +0200
+Message-ID: <20080521153110.059bc6a3@neuron>
+References: <alpine.DEB.1.00.0805211230290.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 14:07:56 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 21 15:38:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyn6a-0001MJ-Iu
-	for gcvg-git-2@gmane.org; Wed, 21 May 2008 14:07:41 +0200
+	id 1JyoVq-0008H3-9L
+	for gcvg-git-2@gmane.org; Wed, 21 May 2008 15:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761504AbYEUMGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 08:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761625AbYEUMGt
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 08:06:49 -0400
-Received: from 0x63.nu ([193.26.17.18]:34107 "EHLO gagarin.0x63.nu"
+	id S934585AbYEUNg5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 May 2008 09:36:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934532AbYEUNg4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 09:36:56 -0400
+Received: from zoidberg.org ([213.133.99.5]:35572 "EHLO cthulhu.zoidberg.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756462AbYEUMGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 08:06:48 -0400
-X-Greylist: delayed 1320 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2008 08:06:48 EDT
-Received: from andersg by gagarin.0x63.nu with local (Exim 3.36 #1 (Debian))
-	id 1JymkN-0004vT-00; Wed, 21 May 2008 13:44:43 +0200
-Content-Disposition: inline
-In-Reply-To: <m3lk244o16.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S934189AbYEUNgz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 09:36:55 -0400
+X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2008 09:36:55 EDT
+Received: from neuron (xdsl-87-78-68-47.netcologne.de [::ffff:87.78.68.47])
+  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Wed, 21 May 2008 15:31:11 +0200
+  id 001622D4.48342423.00003DDE
+In-Reply-To: <alpine.DEB.1.00.0805211230290.30431@racer>
+X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82542>
 
-Fix chop_str not to cut in middle of utf8 multibyte chars. Without
-this fix at least author name in short log may cut in middle of a
-multibyte char. When the result comes to esc_html to_utf8 is called
-again, which doesn't find valid utf8 and decodes using
-$fallback_encoding making it even worse.
+Hi,
 
-This also have the nice side effect that it actually tries to show the
-first 10 _characters_, not the number of characters that happened to fit
-into 10 bytes.
+> When rebasing fails during "pull --rebase", you cannot just clean up
+> the working directory and call "pull --rebase" again, since the
+> remote branch was already fetched.
+>=20
+> Therefore, die early when the working directory is dirty.
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
----
+Good idea.
 
-Description updated as per your suggesion, and hopefully without the
-embarrassing whitespace corruption.
+> +	git update-index --refresh &&
+> +	git diff-files --quiet &&
+> +        git diff-index --cached --quiet HEAD -- ||
+> +	die "refusing to pull with rebase: your working tree is not
+> up-to-date"
 
-gitweb/gitweb.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Perhaps the "up-to-date" should be changed to something else, following
+the recent discussion about the "up-to-date" message in checkout (but
+here we don't have to worry about breaking anything else). In that case=
+,
+I'd suggest:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2facf2d..8308e22 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -866,6 +866,10 @@ sub chop_str {
- 	my $add_len = shift || 10;
- 	my $where = shift || 'right'; # 'left' | 'center' | 'right'
- 
-+	# Make sure perl knows it is utf8 encoded so we don't
-+	# cut in the middle of a utf8 multibyte char.
-+	$str = to_utf8($str);
-+
- 	# allow only $len chars, but don't cut a word if it would fit in $add_len
- 	# if it doesn't fit, cut it if it's still longer than the dots we would add
- 	# remove chopped character entities entirely
--- 
-1.5.5.1
+"Refusing to pull with rebase: your working tree has uncommitted
+changes"
+
+--=20
+Best regards
+Jan Kr=C3=BCger <jk@jk.gs>
