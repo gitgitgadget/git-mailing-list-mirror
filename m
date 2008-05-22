@@ -1,80 +1,98 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Restricting access to a branch
-Date: Wed, 21 May 2008 17:37:20 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805211732520.3081@woody.linux-foundation.org>
-References: <20080521163616.31fad56f@extreme> <7vhccrxkdm.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephen Hemminger <shemminger@vyatta.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 02:38:26 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/6] Documentation for joining more than two histories
+Date: Wed, 21 May 2008 18:16:44 -0700
+Message-ID: <1211419009-9741-2-git-send-email-gitster@pobox.com>
+References: <1211419009-9741-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 22 03:17:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jyyp7-000189-43
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 02:38:25 +0200
+	id 1JyzRK-0002Gi-9G
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 03:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764393AbYEVAh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 20:37:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764539AbYEVAh1
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 20:37:27 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53093 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763872AbYEVAhZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2008 20:37:25 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4M0bLJG026934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 21 May 2008 17:37:22 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4M0bKSC008818;
-	Wed, 21 May 2008 17:37:21 -0700
-In-Reply-To: <7vhccrxkdm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.416 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1762338AbYEVBRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 21:17:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762403AbYEVBRA
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 21:17:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38778 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761779AbYEVBQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 21:16:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75F596847
+	for <git@vger.kernel.org>; Wed, 21 May 2008 21:16:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 92BDE6846 for <git@vger.kernel.org>; Wed, 21 May 2008 21:16:56 -0400
+ (EDT)
+X-Mailer: git-send-email 1.5.5.1.499.g878b8
+In-Reply-To: <1211419009-9741-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: C59C008C-279C-11DD-8FBE-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82591>
 
+From: Sverre Hvammen Johansen <hvammen@gmail.com>
 
+Added some documentation for how git-merge currently
+works when more than two histories are joined.
 
-On Wed, 21 May 2008, Junio C Hamano wrote:
+Signed-off-by: Sverre Hvammen Johansen <hvammen@gmail.com>
+---
+ Documentation/git-merge.txt |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
 
-> Stephen Hemminger <shemminger@vyatta.com> writes:
-> 
-> > Is there some standard way to freeze a branch and not allow anymore changes to
-> > be pushed?
-> >
-> > Yes, I know it is possible by playing with hook files, but that doesn't seem
-> > very admin friendly.
-> 
-> If you do not want to use hooks, then the answer is no.  Sorry.
-
-Hmm. I don't think that's strictly true.
-
-What you *can* do is:
-
- - rename the branch to something that includes a slash (aka 
-   subdirectory). Let's call it "frozen/mybranch" as an example.
-
- - do a 'git gc' to make sure that branch is in the packed refs file.
-
- - make the subdirectory of that branch is unwritable (ie just do 
-   something like "chmod -w refs/heads/frozen")
-
-and now the filesystem permissions should mean that you can't actually 
-update that branch any more, even though you can read it.
-
-Of course, if the person has full shell access, then they can still just 
-undo those file permissions, but at least it should be protected from 
-accidentally being overwritten.
-
-This is all totally untested, of course.
-
-		Linus
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index ef1f055..5924c1a 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -151,6 +151,42 @@ After seeing a conflict, you can do two things:
+    should be, and run `git-commit` to commit the result.
+ 
+ 
++JOINING MORE THAN TWO HISTORIES
++-------------------------------
++
++More than one remote may be specified on the command line.  Those
++remotes are used for selecting the merge startegy and is also used in
++the merge commit message.  However, some of these remotes may not be
++independent.  Only remotes with independent heads (reduced parents)
++will be recorded in the merge commit object.
++
++The following shows master and two topic branches.  topicB is based
++on topicA, topicA is previously branched off from master:
++
++------------
++		    o---o---o  topicB
++		   /
++	  o---o---o  topicA
++	 /
++    o---o---o---o---o---o---o  master
++
++------------
++
++Merging topicA and topicB to the master branch will select the merge
++strategy based on all three branches (an Octopus).  master and topicB
++are the reduced parents and are therefore the only parents recorded in
++the merge commit object:
++
++------------
++
++		    o---o---o  topicB
++		   /         \
++	  o---o---o  topicA   o  master
++	 /                   /
++    o---o---o---o---o---o---o
++
++------------
++
+ SEE ALSO
+ --------
+ linkgit:git-fmt-merge-msg[1], linkgit:git-pull[1],
+-- 
+1.5.5.1.499.g878b8
