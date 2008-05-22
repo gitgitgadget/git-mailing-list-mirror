@@ -1,76 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Add a test for another combination of --reference
-Date: Fri, 23 May 2008 00:34:33 +0200
-Message-ID: <200805230034.33567.johan@herland.net>
-References: <alpine.LNX.1.00.0805221800090.19665@iabervon.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Two minor tweaks on git-gui where textboxes weren't vertically centered with their labels and buttons
+Date: Thu, 22 May 2008 18:57:30 -0400
+Message-ID: <20080522225730.GQ29038@spearce.org>
+References: <412a1d9a0805172218v7c0a920es8a48129014051a35@mail.gmail.com> <20080519040746.GA29038@spearce.org> <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com> <alpine.DEB.1.00.0805191127200.30431@racer> <7vej7w6syo.fsf@gitster.siamese.dyndns.org> <20080522121107.GK29038@spearce.org> <7v4p8qw7to.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri May 23 00:36:37 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Twiinz <twiinz@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 00:58:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzJOf-0007wX-R0
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:36:30 +0200
+	id 1JzJjw-0006HC-Qv
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757399AbYEVWfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 18:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758016AbYEVWfi
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:35:38 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:54051 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755063AbYEVWfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 18:35:37 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K1A00B2JK3CNH00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 23 May 2008 00:35:36 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K1A00114K1LFL70@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 23 May 2008 00:34:33 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K1A00C1QK1L2XT3@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 23 May 2008 00:34:33 +0200 (CEST)
-In-reply-to: <alpine.LNX.1.00.0805221800090.19665@iabervon.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1755585AbYEVW5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 18:57:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbYEVW5g
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:57:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53271 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754311AbYEVW5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 18:57:35 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JzJir-0003As-Ut; Thu, 22 May 2008 18:57:22 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 728C820FBAE; Thu, 22 May 2008 18:57:30 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7v4p8qw7to.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82667>
 
-On Friday 23 May 2008, Daniel Barkalow wrote:
-> From: Johan Herland <johan@herland.net>
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > In this case it is a very trivial patch.
 > 
-> In this case, the reference repository has some useful loose objects,
-> but not all useful objects, and we make sure that we can find the
-> objects we fetch from the repository we're cloning in the new
-> repository, instead of potentially being distracted by the reference
-> repository.
-> 
-> Doing the wrong thing in a builtin-clone implementation would lead to
-> this looking for an object in the wrong place, not finding it (because
-> it's only in the right place), and crashing.
-> 
-> Signed-off-by: Johan Herland <johan@herland.net>
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> Yeah, I realized that I should have added that after sending the message.
+> I'd rather not to see a patch without S-o-b than with a S-o-b with a
+> phoney name, though.
 
-Thanks again.
+Like this one?
 
-...Johan
+  commit 2b36b146fa892a0a326eb2e35a39c9daf58fbe5e
+  Author: A Large Angry SCM <gitzilla@gmail.com>
+  Date:   Sat May 10 16:52:51 2008 -0400
 
-PS: I'm holding off on submitting my builtin-clone-packs-refs series until
-1.5.6 is out. I think builtin-clone has seen enough action in this cycle. :)
+    git-repack: re-enable parsing of -n command line option
+    
+    In commit 5715d0b (Migrate git-repack.sh to use git-rev-parse --parseopt,
+    2007-11-04), parsing of the '-n' command line option was accidentally lost
+    when git-repack.sh was migrated to use git-rev-parse --parseopt. This adds
+    it back.
+    
+    Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+;-)
+
+Are we starting to make a submission policy that all contributions
+need to have a non-phony looking name for the author line and
+SBO?  We have not done so in the past, and we do not have the
+infrastructure like The Eclipse Foundation has to require all
+contributors to execute a (possibly enforceable) legal agreement
+stating their contribution can be distributed under the GPLv2.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Shawn.
