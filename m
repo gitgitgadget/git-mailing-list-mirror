@@ -1,373 +1,218 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/6] Introduce fast forward option only
-Date: Wed, 21 May 2008 18:16:49 -0700
-Message-ID: <1211419009-9741-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH 5/6] Head reduction before selecting merge strategy
+Date: Wed, 21 May 2008 18:16:48 -0700
+Message-ID: <1211419009-9741-6-git-send-email-gitster@pobox.com>
 References: <1211419009-9741-1-git-send-email-gitster@pobox.com>
  <1211419009-9741-2-git-send-email-gitster@pobox.com>
  <1211419009-9741-3-git-send-email-gitster@pobox.com>
  <1211419009-9741-4-git-send-email-gitster@pobox.com>
  <1211419009-9741-5-git-send-email-gitster@pobox.com>
- <1211419009-9741-6-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 22 03:18:30 2008
+X-From: git-owner@vger.kernel.org Thu May 22 03:18:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JyzRt-0002NR-MJ
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 03:18:30 +0200
+	id 1JyzRt-0002NR-2D
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 03:18:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762870AbYEVBRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2008 21:17:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762995AbYEVBRb
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 21:17:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38847 "EHLO
+	id S1762902AbYEVBRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2008 21:17:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762870AbYEVBR3
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 May 2008 21:17:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38844 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762716AbYEVBR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2008 21:17:29 -0400
+	with ESMTP id S1762644AbYEVBR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2008 21:17:28 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C94D46866
-	for <git@vger.kernel.org>; Wed, 21 May 2008 21:17:28 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7820A6865
+	for <git@vger.kernel.org>; Wed, 21 May 2008 21:17:27 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 4FBA46864 for <git@vger.kernel.org>; Wed, 21 May 2008 21:17:27 -0400
+ ESMTP id 4EFE46863 for <git@vger.kernel.org>; Wed, 21 May 2008 21:17:23 -0400
  (EDT)
 X-Mailer: git-send-email 1.5.5.1.499.g878b8
-In-Reply-To: <1211419009-9741-6-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D84A2790-279C-11DD-B7AA-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1211419009-9741-5-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: D77F2914-279C-11DD-A78E-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82596>
 
 From: Sverre Hvammen Johansen <hvammen@gmail.com>
 
-This commit introduces fast forward option 'only'.  With --ff=only
-merge succeeds only if it resolves to fast-forward merge.
+This commit uses the reduced parents instead of the actual
+parents specified for selecting the merge strategy when doing
+a merge.  The recorded parents and the commit message stays
+the same.
 
-This feature is useful for cases where a rebase is desired
-instead of a real merge.  This option can then be used to
-avoid an accidental merge.
+Some cases where we before needed an octopus strategy may now be
+done using a two head strategy.
 
 See the documentation for further details.
 
 Signed-off-by: Sverre Hvammen Johansen <hvammen@gmail.com>
 ---
- Documentation/fast-forward-options.txt |    9 ++
- git-merge.sh                           |   12 +-
- git-pull.sh                            |    2 +-
- t/t7601-merge-ff-options.sh            |  214 ++++++++++++++++++++++++++++++++
- 4 files changed, 231 insertions(+), 6 deletions(-)
+ Documentation/git-merge.txt |   20 +++++++++-------
+ git-merge.sh                |   50 ++++++++++++++++++++++++-------------------
+ 2 files changed, 39 insertions(+), 31 deletions(-)
 
-diff --git a/Documentation/fast-forward-options.txt b/Documentation/fast-forward-options.txt
-index 9374aa9..41580ea 100644
---- a/Documentation/fast-forward-options.txt
-+++ b/Documentation/fast-forward-options.txt
-@@ -12,6 +12,10 @@ never::
- 	Generate a merge commit even if the merge resolves as a
- 	fast-forward.  This option is equivalent of '--no-ff'.
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 9cf761d..845d0ed 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -36,7 +36,7 @@ include::merge-options.txt[]
+ <remote>::
+ 	Other branch head merged into our branch.  You need at
+ 	least one <remote>.  Specifying more than one <remote>
+-	obviously means you are trying an Octopus.
++	usually means you are trying an Octopus.
  
-+only::
-+	Only allow a fast-forward.  The merge will fail unless HEAD is
-+	up to date or the merge resolves as a fast-forward.
-+
- If your workflow is always to branch from the special branch
- ("master") when working on a topic and merge that back to "master", if
- you happen to have worked only on a single topic and the "master" was
-@@ -42,3 +46,8 @@ The first merge of topicA or the only merge of topicB would have
- resulted in a fast forward without '--ff=never'.  Topic A consist of
- those commits that can be reached from master^2 without passing
- through any of the first-parent ancestries of master.
-+
-+However, if the workflow require that the branch you are merging with
-+is based on the current HEAD you can use "only fast forward" policy to
-+enforce fast forward or a failure.  The last merge of topicA in
-+the example above would have failed with '--ff=only'.
+ 
+ include::fast-forward-options.txt[]
+@@ -158,11 +158,12 @@ After seeing a conflict, you can do two things:
+ JOINING MORE THAN TWO HISTORIES
+ -------------------------------
+ 
+-More than one remote may be specified on the command line.  Those
+-remotes are used for selecting the merge startegy and is also used in
+-the merge commit message.  However, some of these remotes may not be
+-independent.  Only remotes with independent heads (reduced parents)
+-will be recorded in the merge commit object.
++More than one remote may be specified on the command line.  Some of
++these remotes may not have independent heads.  Git will only use the
++remotes with independent heads (reduced parents) for selecting the
++merge startegy.  The reduced parents are the parents recorded in the
++merge commit object.  However, the commit message will reflect the
++remotes specified on the command line.
+ 
+ The following shows master and two topic branches.  topicB is based
+ on topicA, topicA is previously branched off from master:
+@@ -177,9 +178,10 @@ on topicA, topicA is previously branched off from master:
+ ------------
+ 
+ Merging topicA and topicB to the master branch will select the merge
+-strategy based on all three branches (an Octopus).  master and topicB
+-are the reduced parents and are therefore the only parents recorded in
+-the merge commit object:
++strategy based on the two independent branch heads, tip of the master
++branch and the tip of the topicB branch (a two head strategy).  The
++commits are also the reduced parents recorded in the merge commit
++object:
+ 
+ ------------
+ 
 diff --git a/git-merge.sh b/git-merge.sh
-index 775dae7..b87e125 100755
+index fc14c4b..775dae7 100755
 --- a/git-merge.sh
 +++ b/git-merge.sh
-@@ -168,21 +168,21 @@ parse_config () {
- 			no_commit=t ;;
- 		--ff)
- 			case "$2" in
--			allow|never)
-+			allow|never|only)
- 				fast_forward=$2; shift ;;
- 			-*)
- 				fast_forward=allow ;;
- 			*)
--				die "Available fast-forward options are: allow and newer" ;;
-+				die "Available fast-forward options are: allow, newer, and only" ;;
- 			esac
- 			;;
- 		--ff=*)
- 			fast_forward=${1#--ff=}
- 			case "$fast_forward" in
--			allow|never)
-+			allow|never|only)
- 				;;
- 			*)
--				die "Available fast-forward options are: allow and newer" ;;
-+				die "Available fast-forward options are: allow, newer, and only" ;;
- 			esac
- 			;;
- 		--no-ff)
-@@ -209,7 +209,7 @@ parse_config () {
- 		shift
- 	done
- 	test "$fast_forward" = allow -o "$squash" = "" ||
--		die "You cannot combine --squash with --ff=never"
-+		die "You cannot combine --squash with --ff=never or --ff=only."
- 	args_left=$#
- }
+@@ -344,11 +344,16 @@ set x $remoteheads ; shift
  
-@@ -347,6 +347,8 @@ find_reduced_parents "$@"
- # ff_head may be included here or later in actual parents
- if test -n "$reduced_parents"
- then
-+	test $fast_forward = only &&
-+		die "--ff=only can not handle more than one real parent"
- 	test $head = $ff_head ||
- 		reduced_parents="$ff_head$LF$reduced_parents"
+ find_reduced_parents "$@"
+ 
+-actual_parents=$(git rev-parse "$@")
++# ff_head may be included here or later in actual parents
++if test -n "$reduced_parents"
++then
++	test $head = $ff_head ||
++		reduced_parents="$ff_head$LF$reduced_parents"
++fi
+ 
+ case "$use_strategies" in
+ '')
+-	case "$actual_parents" in
++	case "$reduced_parents" in
+ 	?*"$LF"?*)
+ 		var="`git config --get pull.octopus`"
+ 		if test -n "$var"
+@@ -413,17 +418,23 @@ then
+ 		finish "$new_head" "$msg" || exit
+ 		dropsave
+ 		exit 0
++	else
++		reduced_parents="$ff_head"
++		ff_head=$head
+ 	fi
++else
++	test $head != $ff_head -a $fast_forward = never &&
++		reduced_parents="$ff_head$LF$reduced_parents"
  fi
-diff --git a/git-pull.sh b/git-pull.sh
-index 9e91e75..c5fa1ee 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -41,7 +41,7 @@ do
- 		no_ff=--ff ;;
- 	--no-ff)
- 		no_ff=--no-ff ;;
--	--ff=allow|--ff=never)
-+	--ff=allow|--ff=only|--ff=never)
- 		no_ff=$1 ;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
-diff --git a/t/t7601-merge-ff-options.sh b/t/t7601-merge-ff-options.sh
-index c7c6d14..56e8370 100755
---- a/t/t7601-merge-ff-options.sh
-+++ b/t/t7601-merge-ff-options.sh
-@@ -662,4 +662,218 @@ test_expect_success 'merge c1 with new repository (pull --ff=never)' '
  
- test_debug 'gitk --all'
+-case "$actual_parents" in
++case "$reduced_parents" in
+ ?*"$LF"?*)
+-	# We have more than one actual parent
+-	common=$(git show-branch --merge-base $head $actual_parents)
++	# We have more than one reduced parent
++	common=$(git show-branch --merge-base $head $reduced_parents)
+ 	;;
+ *)
+-	# We have exactly one actual parent
+-	test "$common" != not_queried || common=$(git merge-base --all $head $actual_parents)
++	# We have exactly one reduced parent
++	test "$common" != not_queried || common=$(git merge-base --all $head $reduced_parents)
+ 	case "$common" in
+ 	?*"$LF"?*)
+ 		# We are not doing octopus and not fast forward.  Need a
+@@ -436,13 +447,13 @@ case "$actual_parents" in
+ 			# See if it is really trivial.
+ 			git var GIT_COMMITTER_IDENT >/dev/null || exit
+ 			echo "Trying really trivial in-index merge..."
+-			if git read-tree --trivial -m -u -v $common $head $actual_parents &&
++			if git read-tree --trivial -m -u -v $common $head $reduced_parents &&
+ 				result_tree=$(git write-tree)
+ 			then
+ 				echo "Wonderful."
+ 				result_commit=$(
+ 					printf '%s\n' "$merge_msg" |
+-					git commit-tree $result_tree -p HEAD -p $actual_parents
++					git commit-tree $result_tree -p HEAD -p $reduced_parents
+ 				) || exit
+ 				finish "$result_commit" "In-index merge"
+ 				dropsave
+@@ -491,7 +502,7 @@ do
+     # Remember which strategy left the state in the working tree
+     wt_strategy=$strategy
  
-+test_expect_success 'merge c0 with c1 (--ff=only overrides --no-ff)' '
-+	git reset --hard c0 &&
-+	git config branch.master.mergeoptions "--no-ff" &&
-+	git merge --ff=only c1 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c0 with c1 (--ff=only in config)' '
-+	git reset --hard c0 &&
-+	git config branch.master.mergeoptions "--ff=only" &&
-+	git merge c1 &&
-+	test_tick &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c0 (--ff=only in config)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--ff=only" &&
-+	git merge c0 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c2 (--ff=only in config)' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git config branch.master.mergeoptions "--ff=only" &&
-+	test_must_fail git merge c2 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c0 with c1 (--ff=only)' '
-+	git reset --hard c0 &&
-+	test_tick &&
-+	git merge --ff=only c1 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c0 (--ff=only)' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git merge --ff=only c0 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c0 with c1 and c2 (--ff=only)' '
-+	git reset --hard c0 &&
-+	test_must_fail git merge --ff=only c1 c2 &&
-+	verify_merge file result.0 &&
-+	verify_head $c0
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c0 (--ff=only)' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git merge --ff=only c0 &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c2 (--ff=only overrides --no-ff)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--no-ff" &&
-+	test_tick &&
-+	test_must_fail git merge c2 --ff=only &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c0 with c1 (--no-ff overrides --ff=only)' '
-+	git reset --hard c0 &&
-+	git config branch.master.mergeoptions "--ff=only" &&
-+	test_tick &&
-+	git merge --no-ff c1 &&
-+	verify_merge file result.1 &&
-+	verify_parents $c0 $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c2 (--ff owerrides --ff=only)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--ff=only" &&
-+	test_tick &&
-+	git merge --ff c2 &&
-+	verify_merge file result.1-5 &&
-+	verify_parents $c1 $c2
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with x0 (--squash combined with --ff=only)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	test_must_fail git merge x0 --squash --ff=only &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+
-+test_expect_success 'merge x0 with c1 (--squash combined with --ff=only)' '
-+	git reset --hard x0 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	test_must_fail git merge c1 --squash --ff=only &&
-+	verify_merge file result.1-5 &&
-+	verify_head $x0
-+'
-+
-+test_debug 'gitk --all'
-+
-+
-+test_expect_success 'merge c1 with c2 (--squash combined with --ff=only)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	test_must_fail git merge c2 --squash --ff=only &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+
-+test_expect_success 'merge c1 with x0 (--no-commit combined with --ff=only)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	git merge x0 --no-commit --ff=only &&
-+	verify_merge file result.1-5 &&
-+	verify_head $x0
-+'
-+
-+test_debug 'gitk --all'
-+
-+
-+test_expect_success 'merge x0 with c1 (--no-commit combined with --ff=only)' '
-+	git reset --hard x0 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	git merge c1 --no-commit --ff=only &&
-+	verify_merge file result.1-5 &&
-+	verify_head $x0
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c2 (--no-commit combined with --ff=only)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "" &&
-+	test_tick &&
-+	test_must_fail git merge c2 --no-commit --ff=only &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with x1 (pull --ff=only)' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git pull --ff=only clone refs/heads/master &&
-+	verify_merge file result.1-13 &&
-+	verify_head $x1
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge x2 with x1 (pull --ff=only)' '
-+	git reset --hard x2 &&
-+	test_tick &&
-+	test_must_fail git pull --ff=only clone refs/heads/master &&
-+	verify_merge file result.5-13 &&
-+	verify_head $x2
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with new repository (pull --ff=only)' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	test_must_fail git pull --ff=only new refs/heads/master &&
-+	verify_merge file result.1 &&
-+	verify_head $c1
-+'
-+
-+test_debug 'gitk --all'
-+
- test_done
+-    git-merge-$strategy $common -- "$head_arg" $actual_parents
++    git-merge-$strategy $common -- "$head_arg" $reduced_parents
+     exit=$?
+     if test "$no_commit" = t && test "$exit" = 0
+     then
+@@ -527,17 +538,12 @@ done
+ # auto resolved the merge cleanly.
+ if test '' != "$result_tree"
+ then
+-    if test $fast_forward = allow
+-    then
+-        parents=$(git show-branch --independent "$head" "$@")
+-    else
+-        parents=$(git rev-parse "$head" "$@")
+-    fi
+-    parents=$(echo "$parents" | sed -e 's/^/-p /')
+-    result_commit=$(printf '%s\n' "$merge_msg" | git commit-tree $result_tree $parents) || exit
+-    finish "$result_commit" "Merge made by $wt_strategy."
+-    dropsave
+-    exit 0
++	test $head = $ff_head && reduced_parents="$head$LF$reduced_parents"
++	parents=$(echo "$reduced_parents" | sed -e 's/^/-p /')
++	result_commit=$(printf '%s\n' "$merge_msg" | git commit-tree $result_tree $parents) || exit
++	finish "$result_commit" "Merge made by $wt_strategy."
++	dropsave
++	exit 0
+ fi
+ 
+ # Pick the result from the best strategy and have the user fix it up.
+@@ -561,7 +567,7 @@ case "$best_strategy" in
+ 	echo "Rewinding the tree to pristine..."
+ 	restorestate
+ 	echo "Using the $best_strategy to prepare resolving by hand."
+-	git-merge-$best_strategy $common -- "$head_arg" $actual_parents
++	git-merge-$best_strategy $common -- "$head_arg" $reduced_parents
+ 	;;
+ esac
+ 
 -- 
 1.5.5.1.499.g878b8
