@@ -1,104 +1,74 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] Make git add -n and git -u -n output consistent
-Date: Thu, 22 May 2008 23:59:42 +0200
-Message-ID: <1211493582-13400-1-git-send-email-hendeby@isy.liu.se>
-References: <4835E1AE.6030201@isy.liu.se>
-Cc: vmiklos@frugalware.org, git@vger.kernel.org,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 23 00:32:22 2008
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Add test for cloning with "--reference" repo being a
+ subset of source repo
+Date: Fri, 23 May 2008 00:31:16 +0200
+Message-ID: <200805230031.16150.johan@herland.net>
+References: <alpine.LNX.1.00.0805221759430.19665@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri May 23 00:33:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzJKX-0006jH-JW
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:32:14 +0200
+	id 1JzJLL-0006x8-Ep
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:33:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760611AbYEVWbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 18:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934283AbYEVWbM
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:31:12 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:47789 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934261AbYEVWbK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 18:31:10 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 2E28125A37;
-	Fri, 23 May 2008 00:31:09 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 25079-08; Thu,  8 May 2008 07:37:08 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 6C99D24F8B;
-	Fri, 23 May 2008 00:31:08 +0200 (MEST)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id 67B01177A0; Thu, 22 May 2008 23:59:42 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.501.gefb4
-In-Reply-To: <4835E1AE.6030201@isy.liu.se>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1760250AbYEVWcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 18:32:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760437AbYEVWcH
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:32:07 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:56019 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759770AbYEVWcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 18:32:05 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K1A0062DJWUZ400@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 23 May 2008 00:31:42 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K1A00KOQJW4O540@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 23 May 2008 00:31:16 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K1A004FUJW49QE1@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 23 May 2008 00:31:16 +0200 (CEST)
+In-reply-to: <alpine.LNX.1.00.0805221759430.19665@iabervon.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82662>
 
+On Friday 23 May 2008, Daniel Barkalow wrote:
+> From: Johan Herland <johan@herland.net>
+> 
+> The first test in this series tests "git clone -l -s --reference B A C",
+> where repo B is a superset of repo A (A has one commit, B has the same
+> commit plus another). In this case, all objects to be cloned are already
+> present in B.
+> 
+> However, we should also test the case where the "--reference" repo is a
+> _subset_ of the source repo (e.g. "git clone -l -s --reference A B C"),
+> i.e. some objects are not available in the "--reference" repo, and will
+> have to be found in the source repo.
+> 
+> Signed-off-by: Johan Herland <johan@herland.net>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
+Thanks for the resend.
 
-This would be one way to go to get a more coherent behavior or the -n
-switch to git add.  It would also unify the implementation somewhat.
-I'd suggest amending this to your patch, or would the output be likely
-to be used by scrips?  In that case I'd vote for changing the output
-of git add -n -u,
+...Johan
 
-/Gustaf
-
-
- builtin-add.c |   19 ++++++-------------
- 1 files changed, 6 insertions(+), 13 deletions(-)
-
-diff --git a/builtin-add.c b/builtin-add.c
-index dd2ca4b..e8dce30 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -261,17 +261,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	fill_directory(&dir, pathspec, ignored_too);
- 
--	if (show_only) {
--		const char *sep = "", *eof = "";
--		for (i = 0; i < dir.nr; i++) {
--			printf("%s%s", sep, dir.entries[i]->name);
--			sep = " ";
--			eof = "\n";
--		}
--		fputs(eof, stdout);
--		return 0;
--	}
--
- 	if (read_cache() < 0)
- 		die("index file corrupt");
- 
-@@ -284,12 +273,16 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		die("no files added");
- 	}
- 
--	for (i = 0; i < dir.nr; i++)
--		if (add_file_to_cache(dir.entries[i]->name, verbose ? ADD_CACHE_VERBOSE : 0)) {
-+	for (i = 0; i < dir.nr; i++) {
-+		int flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
-+								 (show_only ? ADD_CACHE_PRETEND : 0) |
-+								 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0));
-+		if (add_file_to_cache(dir.entries[i]->name, flags)) {
- 			if (!ignore_add_errors)
- 				die("adding files failed");
- 			exit_status = 1;
- 		}
-+	}
- 
-  finish:
- 	if (active_cache_changed) {
 -- 
-1.5.5.1.501.gefb4
+Johan Herland, <johan@herland.net>
+www.herland.net
