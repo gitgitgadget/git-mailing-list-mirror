@@ -1,70 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix t3701 if core.filemode disabled
-Date: Thu, 22 May 2008 13:55:52 -0400
-Message-ID: <20080522175552.GA14391@sigill.intra.peff.net>
-References: <20080518152337.GB3058@steel.home> <20080518190839.GC15506@sigill.intra.peff.net> <20080518200121.GA5789@steel.home> <20080519202342.GA9694@steel.home> <20080519205550.GA24246@sigill.intra.peff.net> <20080520215932.GB10437@steel.home> <20080521143607.GA3575@sigill.intra.peff.net> <20080522132042.GF3206@steel.home> <7vzlqiut4a.fsf@gitster.siamese.dyndns.org>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: Understanding git filter-branch --subdirectory-filter behaviour
+Date: Thu, 22 May 2008 19:05:21 +0100
+Message-ID: <e1dab3980805221105k15908606s3397ba1a96ecf081@mail.gmail.com>
+References: <e1dab3980805201311m3cbde4f2id8c3493a25745238@mail.gmail.com>
+	 <4833C07B.3060004@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 19:59:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git mailing list" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu May 22 20:07:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzF28-0007ow-Iv
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 19:56:56 +0200
+	id 1JzFBC-0003q4-Eu
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 20:06:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755821AbYEVRz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 13:55:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755578AbYEVRz5
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 13:55:57 -0400
-Received: from peff.net ([208.65.91.99]:4911 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755423AbYEVRz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 13:55:56 -0400
-Received: (qmail 10603 invoked by uid 111); 22 May 2008 17:55:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 22 May 2008 13:55:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 May 2008 13:55:52 -0400
+	id S1755915AbYEVSF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 14:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755727AbYEVSF0
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 14:05:26 -0400
+Received: from ti-out-0910.google.com ([209.85.142.190]:33882 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755435AbYEVSFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 14:05:25 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so191921tic.23
+        for <git@vger.kernel.org>; Thu, 22 May 2008 11:05:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=eG6Pk2fvH4V2KFkz4caosDajnU7a9pAfIFLIwIzVwLg=;
+        b=IoUd01E36OFYwR+wSvu4OeshQrqQ7ORg2lVy7JiygHImzWBnkbwenfNYbJBV7s3Tv1U2R5WlaT5unlhOUBfoxdzCcXbpqdiWs/J/S5gghF/O74nDmLqfCzOAyzCNJP3lLH7lEnFkBPX2wjjU5l7oGI0Y5Yp5l67K6DxzO1mmKAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UZANqSC0vpqlPj8nN0L5IqQVy7YsxQdMTU0aE5f2ekAtm9HXVJ4B1rU+fzNcNnEHWfdvZd6AexhpYGtxsfxfZboLZQA5fNAe9FVgkkgygTpegLHdCWmEJvat2zsoYWrNJ6vxdzAS3aQO58KumsTRz7bTVjOPwZ3mcnRbDUt6UaU=
+Received: by 10.150.219.3 with SMTP id r3mr649661ybg.65.1211479521651;
+        Thu, 22 May 2008 11:05:21 -0700 (PDT)
+Received: by 10.150.225.18 with HTTP; Thu, 22 May 2008 11:05:21 -0700 (PDT)
+In-Reply-To: <4833C07B.3060004@viscovery.net>
 Content-Disposition: inline
-In-Reply-To: <7vzlqiut4a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82644>
 
-On Thu, May 22, 2008 at 10:49:09AM -0700, Junio C Hamano wrote:
+On Wed, May 21, 2008 at 7:26 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> David Tweed schrieb:
+> That's difficult to tell without a peek at the repository.
+>
+> Did you compare 'gitk HEAD' to 'gitk HEAD -- WRITING'? I'd expect the
+> latter to be a subset of the former. Note that with a path specified
+> "history simplification" happens, which means that you won't see as many
+> merges as when no path is specified.
 
-> > But a nice one. I like the idea but Junio already did your other
-> > suggestions in master, so I just keep it in mind for the next one
-> 
-> If you like that, I think you would like the way t0050 does even better
-> ;-).  It is Steffen Prohaska's invention, IIRC.
+Just did that in the before-filtering repository, and "gitk HEAD --
+WRITING" doesn't have any branches after the simplification but it
+does go back to the first commit in the repository creating WRITING
+(presumably simplifying out several branches that didn't affect
+WRITING), whereas the filtered repository starts on the commit
+immediately after the first merge you encounter walking backwards in
+time. I was prepared for the branch structure to possibly simplify
+whilst keeping all the commits that change that directory, but was a
+bit surprised it stopped before the first merge.
 
-Well, you can't test_expect_failure with it. :)
+<in original>
+$ git log HEAD -- WRITING | wc -l
+   2033
 
-Though I think it is actually nice to mention which tests are being
-skipped (something I asked for in point 3 of my other message, but which
-contradicts the example I gave in point 2 of the same message :) ).
+<in filtered repo>
+$ git log | wc -l
+329
 
-So something like:
+So it's definitely creating a smaller repo than git log filtering. If
+you would be interested in looking at the actual repo (about 17M) let
+me know and I'll send you tarball details via personal mail.
 
-have_foo=
-test_foo() {
-  case "$have_foo" in
-    t) test_expect_success "$@"
-    *) say "skipping test $1 (don't have foo)"
-  esac
-}
-
-test_expect_success 'see if we have foo' '
-  if magic_foo_test; then
-    have_foo=t
-  fi || true
-'
-test_foo 'use foo' '...'
-
--Peff
+Anyway, many thanks for the insight and assistance,
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
