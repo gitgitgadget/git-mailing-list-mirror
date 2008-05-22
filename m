@@ -1,79 +1,64 @@
-From: Twiinz <twiinz@gmail.com>
-Subject: Re: Two minor tweaks on git-gui where textboxes weren't vertically centered with their labels and buttons
-Date: Thu, 22 May 2008 19:45:27 +0700
-Message-ID: <412a1d9a0805220545veb9af51y833aed2234d258b@mail.gmail.com>
-References: <412a1d9a0805172218v7c0a920es8a48129014051a35@mail.gmail.com>
-	 <20080519040746.GA29038@spearce.org>
-	 <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com>
-	 <alpine.DEB.1.00.0805191127200.30431@racer>
-	 <7vej7w6syo.fsf@gitster.siamese.dyndns.org>
-	 <20080522121107.GK29038@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] log --graph: draw '>' and '<' with --left-right
+Date: Thu, 22 May 2008 13:47:23 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805221344360.30431@racer>
+References: <alpine.DEB.1.00.0805221235430.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 22 14:46:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Adam Simpkins <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Thu May 22 14:48:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzABg-0003p9-0U
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:46:28 +0200
+	id 1JzADH-0004RH-Br
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759773AbYEVMpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 08:45:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757650AbYEVMpg
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:45:36 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:30868 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756155AbYEVMpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 08:45:35 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so29646ywe.1
-        for <git@vger.kernel.org>; Thu, 22 May 2008 05:45:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=mWgziU9/bShZZAX/coXZxbsYdzwBCGHAhLii3m1xMv4=;
-        b=ZijPywhveIQ/PIqKpA4E0MAZB2KUpFxqXYVrx6LYT6dUgZSBScZSVfdMcyEEQrThlmBKQBuCTFW7mOGxG2Bn5NB6JMVelWkerTp1XeRqdLkjkv0dbhevoWpJUeZUit3LDkY7WyTFs6/USMo/iiGQXMtmhJZZoqTKQ8UUd4yEU3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=uN7lPKQwMsay84jk1kSkUQp3XzZ8MF8u1OBqPGxvh3e4H9z//pshjClckJ0pU8FVIY+G/u144PgNM2/xUbXdTaX2Td/IOA555/FyFXxZ0qWyl7Z0XnTQ7mrLAIAF8zt/HBJ77klvh35hpuPAnAxqwENwgbkoDqzZdosNoglpuJc=
-Received: by 10.142.222.21 with SMTP id u21mr4406043wfg.231.1211460327783;
-        Thu, 22 May 2008 05:45:27 -0700 (PDT)
-Received: by 10.142.194.3 with HTTP; Thu, 22 May 2008 05:45:27 -0700 (PDT)
-In-Reply-To: <20080522121107.GK29038@spearce.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 84112f09f0913a97
+	id S1761134AbYEVMrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 08:47:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761015AbYEVMrP
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:47:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46467 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760676AbYEVMrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 08:47:14 -0400
+Received: (qmail invoked by alias); 22 May 2008 12:47:11 -0000
+Received: from R5e98.r.pppool.de (EHLO racer.local) [89.54.94.152]
+  by mail.gmx.net (mp044) with SMTP; 22 May 2008 14:47:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18qQak4ugoq1RY6rn1n0BJ2Tt+pcRIyOU2TEUePoT
+	OB0bHX285ptYpR
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0805221235430.30431@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82619>
 
-On Thu, May 22, 2008 at 7:11 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> In this case it is a very trivial patch.  Anyone who tries to do
-> the same thing is likely to come up with the same result, or one
-> that is close enough that it looks identical anyway.
->
-> Still, it isn't in my main tree, because it is lacking a proper
-> Signed-off-by tag by the original author.
+Hi,
 
-Sorry for the late response,
+On Thu, 22 May 2008, Johannes Schindelin wrote:
 
-It's a very trivial patch, indeed.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I'm still a bit confused with those Signed-off-by things. Anyway I
-sign hereby that:
-- I coded those few lines myself
-- I didn't steal them from anyone
-- I'm not going to sue anybody over its utilization
+Sverre just notified me that the commit message is not brilliant.  How 
+about this:
 
-If there's more that need to be done to get this patch approved please
-point me to some online materials that detail the process.
+-- snip --
+When calling "git log --left-right <branch1>...<branch2>", a single "<" or 
+">" is shown in front of the commit line, to indicate which branch1 this 
+commit comes from, branch1 or branch2.
 
-I hope that helps,
-/twiinz
+However, it is easy to miss in the output of "git log --graph ...", since 
+the graph still has "*" for regular commits and "M" for merge commits.  So 
+imitate gitk, and show the "<" and ">" characters in the graph, too, 
+instead of "*" (or "M").
+-- snap --
+
+Thanks,
+Dscho
