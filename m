@@ -1,69 +1,65 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH resend] perl/Makefile.PL: teach makefiles about possible old Error.pm files
-Date: Thu, 22 May 2008 23:56:00 +0200
-Message-ID: <bd6139dc0805221456u5fc6d9ar5e69f8318b92924@mail.gmail.com>
-References: <20080517011614.GA11029@foursquare.net>
-	 <20080521222150.GA29696@foursquare.net>
-	 <7vzlqjz2wz.fsf@gitster.siamese.dyndns.org>
-	 <20080521235647.GA21340@foursquare.net>
-	 <alpine.DEB.1.00.0805221245240.30431@racer>
-	 <20080522164300.GA19765@foursquare.net>
-	 <7vd4new8qx.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 22 May 2008 18:02:55 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805221649240.19665@iabervon.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221212200.30431@racer> <7vlk22urtt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Chris Frey" <cdfrey@foursquare.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 23:57:32 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 00:03:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzImY-00041f-PE
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 23:57:07 +0200
+	id 1JzIt4-0006Sz-QD
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761568AbYEVV4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 17:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760379AbYEVV4F
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 17:56:05 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:5132 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760940AbYEVV4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 17:56:01 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so234939wfd.4
-        for <git@vger.kernel.org>; Thu, 22 May 2008 14:56:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=FXYv8w97nks8vxgTGbBrbTb3UI6+WFoEnfFsUWpsiTo=;
-        b=pbIKchVPZBm/WK7sMT4yh8xJHKd2mjApySg0RJXD+UwJjk6nxX5MiwJzpAsqTj+cWoKiyDWKtesTOT8GwDey2qPuLzveKb8zCgVpkU/ECwy/ZHCStAoJeEFR1Qd7FE6eo7O9YPmpysrWF5D1ydGrvf3nzB9BGKspfnUXWEqcWAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y36p9C2tg3NkzK+TpBZsqkgxZtbE5HUpS7tu9cZnQgI2fqz3EYce8Iv5+Qc5NYlAm1VGMDwZUKlRymFrgeeLKxqsC6K36v72HbOWoS2C2RIcO9reO9otZ61pqDjc0R5hnANO2Sm6aTJSZp14bi/f2rTvu+H7HFfeBuEd8/q8b3s=
-Received: by 10.142.214.5 with SMTP id m5mr246386wfg.342.1211493361013;
-        Thu, 22 May 2008 14:56:01 -0700 (PDT)
-Received: by 10.143.33.6 with HTTP; Thu, 22 May 2008 14:56:00 -0700 (PDT)
-In-Reply-To: <7vd4new8qx.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1759209AbYEVWC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 18:02:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758473AbYEVWC6
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:02:58 -0400
+Received: from iabervon.org ([66.92.72.58]:58043 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758179AbYEVWC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 18:02:57 -0400
+Received: (qmail 24985 invoked by uid 1000); 22 May 2008 22:02:55 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 May 2008 22:02:55 -0000
+In-Reply-To: <7vlk22urtt.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82657>
 
-On Thu, May 22, 2008 at 7:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> True, as we do not give "uninstall" target.  That's what distros are for.
+On Thu, 22 May 2008, Junio C Hamano wrote:
 
-Why is this though? I think there are a few distro's out there (call
-them the hardcore/diehard ones) that don't use packages, instead they
-rely on keeping the install dir around so that you can 'make
-uninstall' later.
+> >> * db/clone-in-c (Tue May 20 14:15:14 2008 -0400) 11 commits
+> >>  + clone: fall back to copying if hardlinking fails
+> >>  + builtin-clone.c: Need to closedir() in copy_or_link_directory()
+> >>  + builtin-clone: fix initial checkout
+> >>  + Build in clone
+> >>  + Provide API access to init_db()
+> >>  + Add a function to set a non-default work tree
+> >>  + Allow for having for_each_ref() list extra refs
+> >>  + Have a constant extern refspec for "--tags"
+> >>  + Add a library function to add an alternate to the alternates file
+> >>  + Add a lockfile function to append to a file
+> >>  + Mark the list of refs to fetch as const
+> >
+> > Fingers crossed.
+> 
+> Rather, uncross them and type a few more tests ;-)?
 
--- 
-Cheers,
+There are a few tests from Johan that didn't get in, which I'd had in my 
+tree but didn't send because I don't have a good process in place for 
+sending patches I'm not the author of. I'm pretty sure they pass, but I 
+haven't checked recently. I'll send them in a moment.
 
-Sverre Rabbelier
+	-Daniel
+*This .sig left intentionally blank*
