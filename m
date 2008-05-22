@@ -1,65 +1,70 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 22 May 2008 18:02:55 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805221649240.19665@iabervon.org>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
- <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
- <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221212200.30431@racer> <7vlk22urtt.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Test that --reference actually suppresses fetching referenced
+ objects
+Date: Thu, 22 May 2008 18:03:08 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805221801010.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 00:03:54 2008
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 23 00:04:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzIt4-0006Sz-QD
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:03:51 +0200
+	id 1JzItM-0006Yi-23
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759209AbYEVWC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 18:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758473AbYEVWC6
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:02:58 -0400
-Received: from iabervon.org ([66.92.72.58]:58043 "EHLO iabervon.org"
+	id S1765706AbYEVWDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 18:03:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765350AbYEVWDO
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:03:14 -0400
+Received: from iabervon.org ([66.92.72.58]:58049 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758179AbYEVWC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 18:02:57 -0400
-Received: (qmail 24985 invoked by uid 1000); 22 May 2008 22:02:55 -0000
+	id S1764344AbYEVWDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 18:03:12 -0400
+Received: (qmail 25008 invoked by uid 1000); 22 May 2008 22:03:08 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 May 2008 22:02:55 -0000
-In-Reply-To: <7vlk22urtt.fsf@gitster.siamese.dyndns.org>
+  by localhost with SMTP; 22 May 2008 22:03:08 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82658>
 
-On Thu, 22 May 2008, Junio C Hamano wrote:
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ t/t5700-clone-reference.sh |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-> >> * db/clone-in-c (Tue May 20 14:15:14 2008 -0400) 11 commits
-> >>  + clone: fall back to copying if hardlinking fails
-> >>  + builtin-clone.c: Need to closedir() in copy_or_link_directory()
-> >>  + builtin-clone: fix initial checkout
-> >>  + Build in clone
-> >>  + Provide API access to init_db()
-> >>  + Add a function to set a non-default work tree
-> >>  + Allow for having for_each_ref() list extra refs
-> >>  + Have a constant extern refspec for "--tags"
-> >>  + Add a library function to add an alternate to the alternates file
-> >>  + Add a lockfile function to append to a file
-> >>  + Mark the list of refs to fetch as const
-> >
-> > Fingers crossed.
-> 
-> Rather, uncross them and type a few more tests ;-)?
-
-There are a few tests from Johan that didn't get in, which I'd had in my 
-tree but didn't send because I don't have a good process in place for 
-sending patches I'm not the author of. I'm pretty sure they pass, but I 
-haven't checked recently. I'll send them in a moment.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 0c42d9f..aa2acb8 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -8,6 +8,8 @@ test_description='test clone --reference'
+ 
+ base_dir=`pwd`
+ 
++U=$base_dir/UPLOAD_LOG
++
+ test_expect_success 'preparing first repository' \
+ 'test_create_repo A && cd A &&
+ echo first > file1 &&
+@@ -50,8 +52,13 @@ diff expected current'
+ 
+ cd "$base_dir"
+ 
++rm -f $U
++
+ test_expect_success 'cloning with reference (no -l -s)' \
+-'git clone --reference B file://`pwd`/A D'
++'GIT_DEBUG_SEND_PACK=3 git clone --reference B file://`pwd`/A D 3>$U'
++
++test_expect_success 'fetched no objects' \
++'! grep "^want" $U'
+ 
+ cd "$base_dir"
+ 
+-- 
+1.5.3.7
