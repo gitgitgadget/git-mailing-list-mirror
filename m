@@ -1,315 +1,110 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: Re* [PATCH] Make git add -u honor --dry-run
-Date: Thu, 22 May 2008 21:34:38 +0200
-Message-ID: <4835CACE.1070006@isy.liu.se>
-References: <482C5FF8.1060200@isy.liu.se> <1210868459-9511-1-git-send-email-vmiklos@frugalware.org> <7vmymrf81x.fsf@gitster.siamese.dyndns.org> <4831FBD8.3050402@isy.liu.se> <7vskwauruo.fsf@gitster.siamese.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] http-push: remove remote locks on exit signals
+Date: Thu, 22 May 2008 21:55:46 +0200
+Message-ID: <20080522195546.GA29911@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 21:35:44 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 22 21:58:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzGZf-0007CQ-1v
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 21:35:39 +0200
+	id 1JzGuJ-0008Ii-4O
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 21:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174AbYEVTeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 15:34:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbYEVTeo
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 15:34:44 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:49345 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093AbYEVTen (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 15:34:43 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 615C62598F;
-	Thu, 22 May 2008 21:34:41 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 24065-07; Thu,  8 May 2008 07:37:08 +0200 (MEST)
-Received: from [192.168.13.13] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id BA00724F8F;
-	Thu, 22 May 2008 21:34:39 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <7vskwauruo.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1753023AbYEVTzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 15:55:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbYEVTzw
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 15:55:52 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:57919 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512AbYEVTzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 15:55:51 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so229219fkq.5
+        for <git@vger.kernel.org>; Thu, 22 May 2008 12:55:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
+        bh=FDnwRSgWbC5trWiw6tNC8ONe4dLtHXRHK/qLVBHVN0M=;
+        b=KV4BrsWOTv2YJ+vr/yPRAZaPwqEA0x14E55O1TtwGdCZVAtbRGmaURnhq4Fjoiiji6kH1YcpIe1FHFXivp2qfDzNw9clZANnk6vnxA0ErbW2VfkEbRrEyAWKyLuF64g7djKaWizSzIDOwxdv5vhqG/DRiHdlCcjcrdVmNqZOwNE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
+        b=W26Lj2tad7p/gljAHw1/2v6lK6h0lJrDZuX/H57DfWEiQhJGX86lalwBnFYUG93gLE5/HPMDzqOSg+3a26hiJ2U2PBUafI/BPb7q7uFdQvNOZv+ghgFnXd4GbywKAxTy+92M9DhyOOdlc3ijIw/KOtB6e8tJJTHMxntaq1lfVXw=
+Received: by 10.125.69.4 with SMTP id w4mr295650mkk.18.1211486149188;
+        Thu, 22 May 2008 12:55:49 -0700 (PDT)
+Received: from darc.dyndns.org ( [91.113.45.77])
+        by mx.google.com with ESMTPS id d4sm3988105fga.4.2008.05.22.12.55.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 May 2008 12:55:48 -0700 (PDT)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1JzGt8-00030X-Pf
+	for git@vger.kernel.org; Thu, 22 May 2008 21:55:46 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82649>
 
-On 2008-05-22 20:16, Junio C Hamano wrote:
-> Gustaf Hendeby <hendeby@isy.liu.se> writes:
-> 
->> On 2008-05-16 01:42, Junio C Hamano wrote:
->>> Miklos Vajna <vmiklos@frugalware.org> writes:
->>>> On Thu, May 15, 2008 at 06:08:24PM +0200, Gustaf Hendeby <hendeby@isy.liu.se> wrote:
->>>>> I'm not familiar enough with the code to see how to best fix it.
->>> That makes the whole thing noop, doesn't it?  We could do the surgery at a
->>> bit lower layer, I guess.
->> What is the status on this one?  I've been away for a while and when I
->> got back I didn't see any more than this suggestion.
-> 
-> We need a slightly different patch for 'master' (for 1.5.6) and 'maint'
-> (for 1.5.5.X), due to recent introduction of add_to_index() API.  This is
-> an updated one for 'master'; I rolled your one-liner fix into it as well.
+If locks are not cleaned up the repository is inaccessible for 10 minutes.
 
-I'm sorry, but I don't get this to apply cleanly at all.  Did I 
-misunderstand you, or is it actually meant for master (1af8bca)?  The 
-merge is too complicated for me to do anything sensible with.
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
-/Gustaf
+Hi,
 
-> 
-> -- >8 --
-> Subject: "git-add -n -u" should not add but just report
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin-add.c         |   22 +++++++++++++---------
->  builtin-checkout.c    |    2 +-
->  builtin-commit.c      |    2 +-
->  builtin-mv.c          |    2 +-
->  cache.h               |   12 +++++++-----
->  read-cache.c          |   23 +++++++++++++++++------
->  t/t2200-add-update.sh |   17 +++++++++++++++++
->  7 files changed, 57 insertions(+), 23 deletions(-)
-> 
-> diff --git a/builtin-add.c b/builtin-add.c
-> index 4a91e3e..05af57f 100644
-> --- a/builtin-add.c
-> +++ b/builtin-add.c
-> @@ -82,9 +82,9 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec,
->  static void update_callback(struct diff_queue_struct *q,
->  			    struct diff_options *opt, void *cbdata)
->  {
-> -	int i, verbose;
-> +	int i, flags;
->  
-> -	verbose = *((int *)cbdata);
-> +	flags = *((int *)cbdata);
->  	for (i = 0; i < q->nr; i++) {
->  		struct diff_filepair *p = q->queue[i];
->  		const char *path = p->one->path;
-> @@ -94,18 +94,19 @@ static void update_callback(struct diff_queue_struct *q,
->  		case DIFF_STATUS_UNMERGED:
->  		case DIFF_STATUS_MODIFIED:
->  		case DIFF_STATUS_TYPE_CHANGED:
-> -			add_file_to_cache(path, verbose);
-> +			add_file_to_cache(path, flags);
->  			break;
->  		case DIFF_STATUS_DELETED:
-> -			remove_file_from_cache(path);
-> -			if (verbose)
-> +			if (!(flags & ADD_CACHE_PRETEND))
-> +				remove_file_from_cache(path);
-> +			if (flags)
->  				printf("remove '%s'\n", path);
->  			break;
->  		}
->  	}
->  }
->  
-> -void add_files_to_cache(int verbose, const char *prefix, const char **pathspec)
-> +void add_files_to_cache(const char *prefix, const char **pathspec, int flags)
->  {
->  	struct rev_info rev;
->  	init_revisions(&rev, prefix);
-> @@ -113,7 +114,7 @@ void add_files_to_cache(int verbose, const char *prefix, const char **pathspec)
->  	rev.prune_data = pathspec;
->  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
->  	rev.diffopt.format_callback = update_callback;
-> -	rev.diffopt.format_callback_data = &verbose;
-> +	rev.diffopt.format_callback_data = &flags;
->  	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
->  }
->  
-> @@ -209,10 +210,13 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  
->  	if (take_worktree_changes) {
->  		const char **pathspec;
-> +		int flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
-> +			     (show_only ? ADD_CACHE_PRETEND : 0));
-> +
->  		if (read_cache() < 0)
->  			die("index file corrupt");
->  		pathspec = get_pathspec(prefix, argv);
-> -		add_files_to_cache(verbose, prefix, pathspec);
-> +		add_files_to_cache(prefix, pathspec, flags);
->  		goto finish;
->  	}
->  
-> @@ -254,7 +258,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	for (i = 0; i < dir.nr; i++)
-> -		add_file_to_cache(dir.entries[i]->name, verbose);
-> +		add_file_to_cache(dir.entries[i]->name, verbose ? ADD_CACHE_VERBOSE : 0);
->  
->   finish:
->  	if (active_cache_changed) {
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 10ec137..05c0642 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -282,7 +282,7 @@ static int merge_working_tree(struct checkout_opts *opts,
->  			 * entries in the index.
->  			 */
->  
-> -			add_files_to_cache(0, NULL, NULL);
-> +			add_files_to_cache(NULL, NULL, 0);
->  			work = write_tree_from_memory();
->  
->  			ret = reset_to_new(new->commit->tree, opts->quiet);
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index 0baec6d..924fca1 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -246,7 +246,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
->  	 */
->  	if (all || (also && pathspec && *pathspec)) {
->  		int fd = hold_locked_index(&index_lock, 1);
-> -		add_files_to_cache(0, also ? prefix : NULL, pathspec);
-> +		add_files_to_cache(also ? prefix : NULL, pathspec, 0);
->  		refresh_cache(REFRESH_QUIET);
->  		if (write_cache(fd, active_cache, active_nr) ||
->  		    close_lock_file(&index_lock))
-> diff --git a/builtin-mv.c b/builtin-mv.c
-> index 94f6dd2..df9ea97 100644
-> --- a/builtin-mv.c
-> +++ b/builtin-mv.c
-> @@ -256,7 +256,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->  
->  		for (i = 0; i < added.nr; i++) {
->  			const char *path = added.items[i].path;
-> -			add_file_to_cache(path, verbose);
-> +			add_file_to_cache(path, verbose ? ADD_CACHE_VERBOSE : 0);
->  		}
->  
->  		for (i = 0; i < deleted.nr; i++)
-> diff --git a/cache.h b/cache.h
-> index 093f04c..b1a8427 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -261,8 +261,8 @@ static inline void remove_name_hash(struct cache_entry *ce)
->  #define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
->  #define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
->  #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
-> -#define add_to_cache(path, st, verbose) add_to_index(&the_index, (path), (st), (verbose))
-> -#define add_file_to_cache(path, verbose) add_file_to_index(&the_index, (path), (verbose))
-> +#define add_to_cache(path, st, flags) add_to_index(&the_index, (path), (st), (flags))
-> +#define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
->  #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL)
->  #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
->  #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
-> @@ -366,8 +366,10 @@ extern int add_index_entry(struct index_state *, struct cache_entry *ce, int opt
->  extern struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int really);
->  extern int remove_index_entry_at(struct index_state *, int pos);
->  extern int remove_file_from_index(struct index_state *, const char *path);
-> -extern int add_to_index(struct index_state *, const char *path, struct stat *, int verbose);
-> -extern int add_file_to_index(struct index_state *, const char *path, int verbose);
-> +#define ADD_CACHE_VERBOSE 1
-> +#define ADD_CACHE_PRETEND 2
-> +extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
-> +extern int add_file_to_index(struct index_state *, const char *path, int flags);
->  extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, int refresh);
->  extern int ce_same_name(struct cache_entry *a, struct cache_entry *b);
->  
-> @@ -782,7 +784,7 @@ extern int convert_to_git(const char *path, const char *src, size_t len,
->  extern int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst);
->  
->  /* add */
-> -void add_files_to_cache(int verbose, const char *prefix, const char **pathspec);
-> +void add_files_to_cache(const char *prefix, const char **pathspec, int flags);
->  
->  /* diff.c */
->  extern int diff_auto_refresh_index;
-> diff --git a/read-cache.c b/read-cache.c
-> index 0382804..5d967e8 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -462,12 +462,14 @@ static struct cache_entry *create_alias_ce(struct cache_entry *ce, struct cache_
->  	return new;
->  }
->  
-> -int add_to_index(struct index_state *istate, const char *path, struct stat *st, int verbose)
-> +int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags)
->  {
-> -	int size, namelen;
-> +	int size, namelen, was_same;
->  	mode_t st_mode = st->st_mode;
->  	struct cache_entry *ce, *alias;
->  	unsigned ce_option = CE_MATCH_IGNORE_VALID|CE_MATCH_RACY_IS_DIRTY;
-> +	int verbose = flags & (ADD_CACHE_VERBOSE | ADD_CACHE_PRETEND);
-> +	int pretend = flags & ADD_CACHE_PRETEND;
->  
->  	if (!S_ISREG(st_mode) && !S_ISLNK(st_mode) && !S_ISDIR(st_mode))
->  		die("%s: can only add regular files, symbolic links or git-directories", path);
-> @@ -509,19 +511,28 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->  	if (ignore_case && alias && different_name(ce, alias))
->  		ce = create_alias_ce(ce, alias);
->  	ce->ce_flags |= CE_ADDED;
-> -	if (add_index_entry(istate, ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE))
-> +
-> +	/* It was suspected to be recily clean, but it turns out to be Ok */
-> +	was_same = (alias &&
-> +		    !ce_stage(alias) &&
-> +		    !hashcmp(alias->sha1, ce->sha1) &&
-> +		    ce->ce_mode == alias->ce_mode);
-> +
-> +	if (pretend)
-> +		;
-> +	else if (add_index_entry(istate, ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE))
->  		die("unable to add %s to index",path);
-> -	if (verbose)
-> +	if (verbose && !was_same)
->  		printf("add '%s'\n", path);
->  	return 0;
->  }
->  
-> -int add_file_to_index(struct index_state *istate, const char *path, int verbose)
-> +int add_file_to_index(struct index_state *istate, const char *path, int flags)
->  {
->  	struct stat st;
->  	if (lstat(path, &st))
->  		die("%s: unable to stat (%s)", path, strerror(errno));
-> -	return add_to_index(istate, path, &st, verbose);
-> +	return add_to_index(istate, path, &st, flags);
->  }
->  
->  struct cache_entry *make_cache_entry(unsigned int mode,
-> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-> index b664341..f57a6e0 100755
-> --- a/t/t2200-add-update.sh
-> +++ b/t/t2200-add-update.sh
-> @@ -111,4 +111,21 @@ test_expect_success 'touch and then add explicitly' '
->  
->  '
->  
-> +test_expect_success 'add -n -u should not add but just report' '
-> +
-> +	(
-> +		echo "add '\''check'\''" &&
-> +		echo "remove '\''top'\''"
-> +	) >expect &&
-> +	before=$(git ls-files -s check top) &&
-> +	echo changed >>check &&
-> +	rm -f top &&
-> +	git add -n -u >actual &&
-> +	after=$(git ls-files -s check top) &&
-> +
-> +	test "$before" = "$after" &&
-> +	test_cmp expect actual
-> +
-> +'
-> +
->  test_done
+To test this I created a large file, added it, commited, pushed, waited one
+second and pressed Ctrl+C. If this method is acceptable for the regression
+tests, or if you have a better idea, let me know. I will write up a script.
+
+Regards,
+Clemens
+
+---
+ http-push.c |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index 5b23038..b1f5302 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1349,6 +1349,24 @@ static int unlock_remote(struct remote_lock *lock)
+ 	return rc;
+ }
+ 
++static void remove_locks(void)
++{
++	struct remote_lock *lock = remote->locks;
++	
++	fprintf(stderr, "Removing remote locks...\n");
++	while (lock) {
++		unlock_remote(lock);
++		lock = lock->next;
++	}
++}
++
++static void remove_locks_on_signal(int signo)
++{
++	remove_locks();
++	signal(SIGINT, SIG_DFL);
++	raise(signo);
++}
++
+ static void remote_ls(const char *path, int flags,
+ 		      void (*userFunc)(struct remote_ls_ctx *ls),
+ 		      void *userData);
+@@ -2255,6 +2273,8 @@ int main(int argc, char **argv)
+ 		goto cleanup;
+ 	}
+ 
++	signal(SIGINT, remove_locks_on_signal);
++
+ 	/* Check whether the remote has server info files */
+ 	remote->can_update_info_refs = 0;
+ 	remote->has_info_refs = remote_exists("info/refs");
+-- 
+1.5.5.1.1.g95a6
