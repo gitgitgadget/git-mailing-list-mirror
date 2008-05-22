@@ -1,70 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/6] Restructure git-merge.sh
-Date: Thu, 22 May 2008 13:50:32 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805221348500.30431@racer>
-References: <1211419009-9741-1-git-send-email-gitster@pobox.com> <1211419009-9741-2-git-send-email-gitster@pobox.com> <1211419009-9741-3-git-send-email-gitster@pobox.com> <1211419009-9741-4-git-send-email-gitster@pobox.com> <1211419009-9741-5-git-send-email-gitster@pobox.com>
- <alpine.DEB.1.00.0805221147550.30431@racer>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git GUI vs interactive post-commit hooks
+Date: Thu, 22 May 2008 14:53:01 +0200
+Message-ID: <20080522125301.GD3206@steel.home>
+References: <c6c947f60805190348g3395f8degae81963b402856b6@mail.gmail.com> <20080519131942.GA5526@atjola.homenet> <20080520223158.GB13123@steel.home> <20080520230204.GA5383@atjola.homenet>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 14:51:23 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexander Gladysh <agladysh@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 22 14:54:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzAGL-0005mW-Uw
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:51:18 +0200
+	id 1JzAIx-0006ti-29
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762461AbYEVMuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 08:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760663AbYEVMuY
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:50:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38843 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762290AbYEVMuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 08:50:23 -0400
-Received: (qmail invoked by alias); 22 May 2008 12:50:21 -0000
-Received: from R5e98.r.pppool.de (EHLO racer.local) [89.54.94.152]
-  by mail.gmx.net (mp001) with SMTP; 22 May 2008 14:50:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX198/ptLEBl8Mlh3FI73NEyb896OX+a5T+k4YjGvl3
-	EIm015wUP3a++b
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0805221147550.30431@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1762356AbYEVMxI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 May 2008 08:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761700AbYEVMxG
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:53:06 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:60979 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762356AbYEVMxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 08:53:05 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMna1s/dNSK
+Received: from tigra.home (Fa855.f.strato-dslnet.de [195.4.168.85])
+	by post.webmailer.de (fruni mo62) (RZmta 16.38)
+	with ESMTP id v01daek4MC9Bf3 ; Thu, 22 May 2008 14:53:01 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id A8C5A277BD;
+	Thu, 22 May 2008 14:53:01 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id ECD7456D28; Thu, 22 May 2008 14:53:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080520230204.GA5383@atjola.homenet>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82624>
 
-Hi,
+Bj=C3=B6rn Steinbrink, Wed, May 21, 2008 01:02:04 +0200:
+> On 2008.05.21 00:31:58 +0200, Alex Riesen wrote:
+> > Bj?rn Steinbrink, Mon, May 19, 2008 15:19:42 +0200:
+> > > On 2008.05.19 14:48:14 +0400, Alexander Gladysh wrote:
+> > > >=20
+> > > > Any advice? I do want to input password for my key each time I =
+use it.
+> > >=20
+> > > For a graphical tool, you might want to use something like
+> > > gtk-led-askpass, which shows a window with a password prompt. SSH=
+ will
+> > > make use of it if SSH_ASKPASS contains its path _and_ ssh is not =
+started
+> > > from a terminal. Unfortunately, the latter is probably not true f=
+or git
+> > > gui most of the time.
+> >=20
+> > Redirect stdin from /dev/null
+>=20
+> Does that actually work for you? It didn't work for me, because ssh t=
+hen
+> simply goes and opens /dev/tty to ask for the password.
+>=20
+> $ ssh -V
+> OpenSSH_4.7p1 Debian-10, OpenSSL 0.9.8g 19 Oct 2007
+>=20
 
-On Thu, 22 May 2008, Johannes Schindelin wrote:
+No :( I took this information from sshs manpage:
 
-> On Wed, 21 May 2008, Junio C Hamano wrote:
-> 
-> > From: Sverre Hvammen Johansen <hvammen@gmail.com>
-> > 
-> > Restructure git-merge.sh for preparation of new feature:
-> > 
-> >        Head reduction before selecting merge strategy
-> > 
-> > Some aspects of this patch does not make much sense without
-> > the next patch in this series.
-> 
-> As my student is pretty busy rewriting git-merge into a C builtin, can I 
-> ask to hold this patch off?
-
-Just to keep you updated: Miklos has a version of builtin-merge which 
-passes all but three test scripts (in total, there are only 6 test cases 
-that do not pass).
-
-Given that the restructuring of git-merge.sh affects only the octopus case 
-(IIRC...), I think it is not asked too much to redo the change in the 
-builtin-merge, which should be easier, too.
-
-Ciao,
-Dscho
+     SSH_ASKPASS           If ssh needs a passphrase, it will read the
+                           passphrase from the current terminal if it w=
+as run
+                           from a terminal.  If ssh does not have a ter=
+minal
+                           associated with it but DISPLAY and SSH_ASKPA=
+SS are
+                           set, it will execute the program specified b=
+y
+                           SSH_ASKPASS and open an X11 window to read t=
+he
+                           passphrase.  This is particularly useful whe=
+n call=E2=80=90
+                           ing ssh from a .xsession or related script. =
+ (Note
+                           that on some machines it may be necessary to=
+ redi=E2=80=90
+                           rect the input from /dev/null to make this w=
+ork.)
