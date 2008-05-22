@@ -1,123 +1,145 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/3] bisect: fix left over "BISECT_START" file when starting
- with junk rev
-Date: Fri, 23 May 2008 00:38:59 +0200
-Message-ID: <20080523003859.bf137d31.chriscool@tuxfamily.org>
+Subject: [PATCH 3/3] bisect: trap critical errors in "bisect_start"
+Date: Fri, 23 May 2008 00:39:22 +0200
+Message-ID: <20080523003922.2cba6656.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 23 00:35:23 2008
+X-From: git-owner@vger.kernel.org Fri May 23 00:35:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzJNX-0007Yq-DJ
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:35:19 +0200
+	id 1JzJNs-0007fy-DC
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 00:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760093AbYEVWe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 18:34:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760074AbYEVWe0
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:34:26 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:53013 "EHLO smtp1-g19.free.fr"
+	id S1760240AbYEVWet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 18:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760213AbYEVWet
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 18:34:49 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:53114 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760009AbYEVWeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 18:34:25 -0400
+	id S1758137AbYEVWes (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 18:34:48 -0400
 Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 60B021AB2AE;
-	Fri, 23 May 2008 00:34:24 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 8586F1AB2AB;
+	Fri, 23 May 2008 00:34:47 +0200 (CEST)
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 1F7131AB2A8;
-	Fri, 23 May 2008 00:34:24 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with SMTP id 3E7F21AB2B2;
+	Fri, 23 May 2008 00:34:47 +0200 (CEST)
 X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82665>
 
-Before this patch, when using for example:
+Before this patch, when using "git bisect start" with mistaken revs
+or when the checkout of the branch we want to test failed, we exited
+after having written files like ".git/BISECT_START",
+".git/BISECT_NAMES" and after having written "refs/bisect/bad" and
+"refs/bisect/good-*" refs.
 
-$ git bisect start <stuff1> <stuff2>
+With this patch we trap all errors that can happen when writing the
+new state and when we are in "bisect_next". So that we can try to
+clean up everything in case of problems, using "bisect_clean_state".
 
-with <stuff1> or <stuff2> that cannot be parsed as a revision, we
-could leave a ".git/BISECT_START" file, from a previous
-"git bisect start", alone.
-
-This patch makes sure that it does not happen by removing the
-"BISECT_START" file in "bisect_clean_state" and then always writing
-it again at the end of "bisect_start".
+This patch also contains a "bisect_write" cleanup to make it exit
+on error and return 0 otherwise.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-bisect.sh               |   16 +++++++---------
- t/t6030-bisect-porcelain.sh |    2 +-
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ git-bisect.sh               |   30 ++++++++++++++++++++++++------
+ t/t6030-bisect-porcelain.sh |   10 ++++------
+ 2 files changed, 28 insertions(+), 12 deletions(-)
 
 diff --git a/git-bisect.sh b/git-bisect.sh
-index 164e8ed..0dcb526 100755
+index 0dcb526..57168b0 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -81,8 +81,8 @@ bisect_start() {
- 	start_head=''
- 	case "$head" in
- 	refs/heads/bisect)
--		branch=`cat "$GIT_DIR/BISECT_START"`
--		git checkout $branch || exit
-+		start_head=$(cat "$GIT_DIR/BISECT_START")
-+		git checkout "$start_head" || exit
- 		;;
- 	refs/heads/*|$_x40)
- 		# This error message should only be triggered by cogito usage,
-@@ -134,7 +134,7 @@ bisect_start() {
+@@ -133,11 +133,29 @@ bisect_start() {
+ 	    esac
  	done
  
- 	sq "$@" >"$GIT_DIR/BISECT_NAMES"
--	test -n "$start_head" && echo "$start_head" >"$GIT_DIR/BISECT_START"
-+	echo "$start_head" >"$GIT_DIR/BISECT_START"
- 	eval "$eval"
- 	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG"
+-	sq "$@" >"$GIT_DIR/BISECT_NAMES"
+-	echo "$start_head" >"$GIT_DIR/BISECT_START"
+-	eval "$eval"
+-	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG"
++	#
++	# Change state.
++	# In case of mistaken revs or checkout error, or signals received,
++	# "bisect_auto_next" below may exit or misbehave.
++	# We have to trap this to be able to clean up using
++	# "bisect_clean_state".
++	#
++	trap 'bisect_clean_state' 0
++	trap 'exit 255' 1 2 3 15
++
++	#
++	# Write new start state.
++	#
++	sq "$@" >"$GIT_DIR/BISECT_NAMES" &&
++	echo "$start_head" >"$GIT_DIR/BISECT_START" &&
++	eval "$eval" &&
++	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
++	#
++	# Check if we can proceed to the next bisect state.
++	#
  	bisect_auto_next
-@@ -392,12 +392,7 @@ bisect_reset() {
- 	*)
- 	    usage ;;
++
++	trap '-' 0
+ }
+ 
+ bisect_write() {
+@@ -149,9 +167,9 @@ bisect_write() {
+ 		good|skip)	tag="$state"-"$rev" ;;
+ 		*)		die "Bad bisect_write argument: $state" ;;
  	esac
--	if git checkout "$branch"; then
--		# Cleanup head-name if it got left by an old version of git-bisect
--		rm -f "$GIT_DIR/head-name"
--		rm -f "$GIT_DIR/BISECT_START"
--		bisect_clean_state
--	fi
-+	git checkout "$branch" && bisect_clean_state
+-	git update-ref "refs/bisect/$tag" "$rev"
++	git update-ref "refs/bisect/$tag" "$rev" || exit
+ 	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
+-	test -z "$nolog" && echo "git-bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
++	test -n "$nolog" || echo "git-bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
  }
  
- bisect_clean_state() {
-@@ -407,9 +402,12 @@ bisect_clean_state() {
- 	do
- 		git update-ref -d $ref $hash
- 	done
-+	rm -f "$GIT_DIR/BISECT_START"
- 	rm -f "$GIT_DIR/BISECT_LOG"
- 	rm -f "$GIT_DIR/BISECT_NAMES"
- 	rm -f "$GIT_DIR/BISECT_RUN"
-+	# Cleanup head-name if it got left by an old version of git-bisect
-+	rm -f "$GIT_DIR/head-name"
- }
- 
- bisect_replay () {
+ bisect_state() {
 diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 7557fa1..68b5440 100755
+index 68b5440..c4f074d 100755
 --- a/t/t6030-bisect-porcelain.sh
 +++ b/t/t6030-bisect-porcelain.sh
-@@ -138,7 +138,7 @@ test_expect_success 'bisect start: back in good branch' '
- 	grep "* other" branch.output > /dev/null
+@@ -147,7 +147,7 @@ test_expect_success 'bisect start: no ".git/BISECT_START" if junk rev' '
+ 	test_must_fail test -e .git/BISECT_START
  '
  
--test_expect_failure 'bisect start: no ".git/BISECT_START" if junk rev' '
-+test_expect_success 'bisect start: no ".git/BISECT_START" if junk rev' '
+-test_expect_failure 'bisect start: no ".git/BISECT_START" if mistaken rev' '
++test_expect_success 'bisect start: no ".git/BISECT_START" if mistaken rev' '
  	git bisect start $HASH4 $HASH1 -- &&
  	git bisect good &&
- 	test_must_fail git bisect start $HASH4 foo -- &&
+ 	test_must_fail git bisect start $HASH1 $HASH4 -- &&
+@@ -156,19 +156,17 @@ test_expect_failure 'bisect start: no ".git/BISECT_START" if mistaken rev' '
+ 	test_must_fail test -e .git/BISECT_START
+ '
+ 
+-test_expect_failure 'bisect start: no ".git/BISECT_START" if checkout error' '
++test_expect_success 'bisect start: no ".git/BISECT_START" if checkout error' '
+ 	echo "temp stuff" > hello &&
+ 	test_must_fail git bisect start $HASH4 $HASH1 -- &&
+ 	git branch &&
+ 	git branch > branch.output &&
+ 	grep "* other" branch.output > /dev/null &&
+ 	test_must_fail test -e .git/BISECT_START &&
+-	test -z "$(git for-each-ref "refs/bisect/*")"
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	git checkout HEAD hello
+ '
+ 
+-# This cleanup is needed whatever the result of the above test.
+-git checkout HEAD hello
+-
+ # $HASH1 is good, $HASH4 is bad, we skip $HASH3
+ # but $HASH2 is bad,
+ # so we should find $HASH2 as the first bad commit
 -- 
 1.5.5.1.501.g204d8.dirty
