@@ -1,62 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git gui: Possible to see which commands are executed?
-Date: Thu, 22 May 2008 08:12:11 -0400
-Message-ID: <20080522121211.GL29038@spearce.org>
-References: <20080519022125.GV29038@spearce.org> <4833206E.1080300@dirk.my1.cc> <20080520194403.GC29038@spearce.org> <bd6139dc0805201305k61807561k8026b4c6509e4041@mail.gmail.com> <20080520201722.GF29038@spearce.org> <bd6139dc0805201322r6c8dae8cy45d31af6c25fd25a@mail.gmail.com> <20080520203153.GH29038@spearce.org> <7v3aoc8xtg.fsf@gitster.siamese.dyndns.org> <20080521024126.GI29038@spearce.org> <alpine.DEB.1.00.0805210930150.30431@racer>
+From: Twiinz <twiinz@gmail.com>
+Subject: Re: Two minor tweaks on git-gui where textboxes weren't vertically centered with their labels and buttons
+Date: Thu, 22 May 2008 19:45:27 +0700
+Message-ID: <412a1d9a0805220545veb9af51y833aed2234d258b@mail.gmail.com>
+References: <412a1d9a0805172218v7c0a920es8a48129014051a35@mail.gmail.com>
+	 <20080519040746.GA29038@spearce.org>
+	 <412a1d9a0805182234i18e2da4ckf428b2c134e174d1@mail.gmail.com>
+	 <alpine.DEB.1.00.0805191127200.30431@racer>
+	 <7vej7w6syo.fsf@gitster.siamese.dyndns.org>
+	 <20080522121107.GK29038@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, sverre@rabbelier.nl,
-	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 22 14:13:21 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu May 22 14:46:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jz9fT-0006bw-2S
-	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:13:11 +0200
+	id 1JzABg-0003p9-0U
+	for gcvg-git-2@gmane.org; Thu, 22 May 2008 14:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761169AbYEVMMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2008 08:12:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761151AbYEVMMT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:12:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47797 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761069AbYEVMMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2008 08:12:18 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Jz9eT-0002YO-6A; Thu, 22 May 2008 08:12:09 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 055A620FBAE; Thu, 22 May 2008 08:12:12 -0400 (EDT)
+	id S1759773AbYEVMpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2008 08:45:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757650AbYEVMpg
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 May 2008 08:45:36 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:30868 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756155AbYEVMpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2008 08:45:35 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so29646ywe.1
+        for <git@vger.kernel.org>; Thu, 22 May 2008 05:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=mWgziU9/bShZZAX/coXZxbsYdzwBCGHAhLii3m1xMv4=;
+        b=ZijPywhveIQ/PIqKpA4E0MAZB2KUpFxqXYVrx6LYT6dUgZSBScZSVfdMcyEEQrThlmBKQBuCTFW7mOGxG2Bn5NB6JMVelWkerTp1XeRqdLkjkv0dbhevoWpJUeZUit3LDkY7WyTFs6/USMo/iiGQXMtmhJZZoqTKQ8UUd4yEU3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=uN7lPKQwMsay84jk1kSkUQp3XzZ8MF8u1OBqPGxvh3e4H9z//pshjClckJ0pU8FVIY+G/u144PgNM2/xUbXdTaX2Td/IOA555/FyFXxZ0qWyl7Z0XnTQ7mrLAIAF8zt/HBJ77klvh35hpuPAnAxqwENwgbkoDqzZdosNoglpuJc=
+Received: by 10.142.222.21 with SMTP id u21mr4406043wfg.231.1211460327783;
+        Thu, 22 May 2008 05:45:27 -0700 (PDT)
+Received: by 10.142.194.3 with HTTP; Thu, 22 May 2008 05:45:27 -0700 (PDT)
+In-Reply-To: <20080522121107.GK29038@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805210930150.30431@racer>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+X-Google-Sender-Auth: 84112f09f0913a97
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82618>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 20 May 2008, Shawn O. Pearce wrote:
-> > 
-> > Well, we do have GIT_TRACE, and git-gui --trace is sort of the
-> > same idea.  :-)
-> 
-> Which brings me to the suggestion to reuse GIT_TRACE instead of adding 
-> an option...
+On Thu, May 22, 2008 at 7:11 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> In this case it is a very trivial patch.  Anyone who tries to do
+> the same thing is likely to come up with the same result, or one
+> that is close enough that it looks identical anyway.
+>
+> Still, it isn't in my main tree, because it is lacking a proper
+> Signed-off-by tag by the original author.
 
-Well... you may not want to see what GIT_TRACE causes, but you
-do want to see what `git gui --trace` gives you.  So I didn't
-want to overload it.
+Sorry for the late response,
 
--- 
-Shawn.
+It's a very trivial patch, indeed.
+
+I'm still a bit confused with those Signed-off-by things. Anyway I
+sign hereby that:
+- I coded those few lines myself
+- I didn't steal them from anyone
+- I'm not going to sue anybody over its utilization
+
+If there's more that need to be done to get this patch approved please
+point me to some online materials that detail the process.
+
+I hope that helps,
+/twiinz
