@@ -1,70 +1,113 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PYRITE] Status update and call for information.
-Date: Fri, 23 May 2008 15:12:28 +0200
-Message-ID: <20080523131228.GA4292@diana.vm.bytemark.co.uk>
-References: <5d46db230805222318j25657c10t2955fbdf1aa5c003@mail.gmail.com> <20080523064541.GA31315@diana.vm.bytemark.co.uk> <5d46db230805230536r18ac606j93a210d0b2864719@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rev-parse --symbolic-full-name: don't print '^' if SHA1 is
+ not a ref
+Date: Fri, 23 May 2008 16:13:05 +0200
+Message-ID: <4836D0F1.4090007@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Govind Salinas <blix@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Fri May 23 15:13:53 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 16:14:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzX5M-0000z9-W2
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 15:13:29 +0200
+	id 1JzY23-0004Wa-Lw
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbYEWNMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2008 09:12:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282AbYEWNMh
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 09:12:37 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1190 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752782AbYEWNMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 09:12:36 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JzX4O-00019q-00; Fri, 23 May 2008 14:12:28 +0100
-Content-Disposition: inline
-In-Reply-To: <5d46db230805230536r18ac606j93a210d0b2864719@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751080AbYEWONL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 10:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbYEWONK
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:13:10 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:18598 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750712AbYEWONJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 10:13:09 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JzY13-0004pE-VB; Fri, 23 May 2008 16:13:06 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8163A6D9; Fri, 23 May 2008 16:13:05 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82700>
 
-On 2008-05-23 07:36:25 -0500, Govind Salinas wrote:
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-> On Fri, May 23, 2008 at 1:45 AM, Karl Hasselstr=F6m <kha@treskal.com>
-> wrote:
->
-> > You do realize that no matter how you define your sequential
-> > numbers, they can't be both globally consistent and unique? (That
-> > is, either different repositories will assign different numbers to
-> > the same commit, or the same number could be assigned to more than
-> > one commit.)
->
-> Of course, no one makes the claim that rev numbers are unique or
-> even that a commit has the same revision number between branches in
-> the same repository. Hg states that flat out and I believe bzr says
-> the same, although I am pretty sure they determine their numbers
-> some other way. I make no such claim. What I do claim is that for a
-> given branch, a commit should always have the same revision number.
-> Sure, If you merge a commit from another branch, it's revnum might
-> change, but that is ok. As long as, assuming you have not re-written
-> master, 10:master will always point to the same commit I think I am
-> providing something worth while. Also, AFAIK the order of parentage
-> is part of the hash that makes a commit ID, so if my master is a
-> clone of your master, it should share revision numbers.
+The intention of --symbolic-full-name is to not print anything if a
+revision is not an exact ref. But this command:
 
-Yes, with those restrictions it can be made to work. (What confused me
-was that you brought up performance as the only reason to prefer
-hashes to your rev numbers. But hashes also have the advantage that
-they're immutable, whereas your rev numbers are not.)
+    $ git-rev-parse --symbolic-full-name --not master~1
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+still emitted a sole '^' to stdout (provided that there's no other ref at
+master~1). This fixes it.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ builtin-rev-parse.c |   18 ++++++++++++------
+ 1 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 0e59707..afa4d6d 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -96,6 +96,14 @@ static void show(const char *arg)
+ 		puts(arg);
+ }
+
++/* Like show(), but with a negation prefix according to type */
++static void show_with_type(int type, const char *arg)
++{
++	if (type != show_type)
++		putchar('^');
++	show(arg);
++}
++
+ /* Output a revision, only if filter allows it */
+ static void show_rev(int type, const unsigned char *sha1, const char *name)
+ {
+@@ -104,8 +112,6 @@ static void show_rev(int type, const unsigned char *sha1, const char *name)
+ 	def = NULL;
+ 	revs_count++;
+
+-	if (type != show_type)
+-		putchar('^');
+ 	if (symbolic && name) {
+ 		if (symbolic == SHOW_SYMBOLIC_FULL) {
+ 			unsigned char discard[20];
+@@ -122,20 +128,20 @@ static void show_rev(int type, const unsigned char *sha1, const char *name)
+ 				 */
+ 				break;
+ 			case 1: /* happy */
+-				show(full);
++				show_with_type(type, full);
+ 				break;
+ 			default: /* ambiguous */
+ 				error("refname '%s' is ambiguous", name);
+ 				break;
+ 			}
+ 		} else {
+-			show(name);
++			show_with_type(type, name);
+ 		}
+ 	}
+ 	else if (abbrev)
+-		show(find_unique_abbrev(sha1, abbrev));
++		show_with_type(type, find_unique_abbrev(sha1, abbrev));
+ 	else
+-		show(sha1_to_hex(sha1));
++		show_with_type(type, sha1_to_hex(sha1));
+ }
+
+ /* Output a flag, only if filter allows it. */
+-- 
+1.5.5.1.125.gb9f88
