@@ -1,145 +1,101 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v3 15/23] Added class AddRulesFactory.
-Date: Fri, 23 May 2008 22:34:24 +0200
-Message-ID: <1211574872-23676-16-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v3 11/23] Added the class PathNotInProjectDirectoryException.
+Date: Fri, 23 May 2008 22:34:20 +0200
+Message-ID: <1211574872-23676-12-git-send-email-florianskarten@web.de>
 References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:36:44 2008
+X-From: git-owner@vger.kernel.org Fri May 23 22:36:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jze07-0006CA-Ug
+	id 1Jze08-0006CA-Ib
 	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759016AbYEWUfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 16:35:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759298AbYEWUfV
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:35:21 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:35513 "EHLO
+	id S1758927AbYEWUfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 16:35:25 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756799AbYEWUfY
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:35:24 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:35504 "EHLO
 	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758927AbYEWUet (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1758869AbYEWUet (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 23 May 2008 16:34:49 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id D7722E085D5A
-	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:40 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 2B29AE083D27
+	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:39 +0200 (CEST)
 Received: from [84.150.81.80] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzdyK-0005iq-01; Fri, 23 May 2008 22:34:40 +0200
+	id 1JzdyI-0005iq-01; Fri, 23 May 2008 22:34:38 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX18kH1Vq8Shp17tSzjNvBC2YNXl4PdR9hGqaSADv
-	9Jq7LDbtKREhd5i/9VHJ2HF7RZAJJ4z3V9Eu699suxp1pxPkAw
-	XPhq9bULF6gLtN6wHuIw==
+X-Provags-ID: V01U2FsdGVkX19J4SMlTw0TYJAz/MRKbfgU+ZuLQTFb1upK4CdS
+	skdJLK0gbM8KmQj4KWLEUSW7nevAchmTs32yeEzXpupVhLkzLh
+	x0/S04f8LRbXUulTVN+A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82744>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../jgit/treewalk/rules/AddRulesFactory.java       |   90 ++++++++++++++++++++
- 1 files changed, 90 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRulesFactory.java
+ .../errors/PathNotInProjectDirectoryException.java |   25 ++++++++++++=
+++++++++
+ 1 files changed, 25 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/PathNo=
+tInProjectDirectoryException.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRulesFactory.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRulesFactory.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/PathNotInProj=
+ectDirectoryException.java b/org.spearce.jgit/src/org/spearce/jgit/erro=
+rs/PathNotInProjectDirectoryException.java
 new file mode 100644
-index 0000000..3daa928
+index 0000000..a406aef
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRulesFactory.java
-@@ -0,0 +1,90 @@
-+package org.spearce.jgit.treewalk.rules;
-+
-+import java.io.File;
-+import java.io.FileNotFoundException;
-+import java.io.IOException;
-+import java.util.ArrayList;
-+import java.util.List;
-+
-+import org.spearce.jgit.errors.InvalidPatternException;
-+import org.spearce.jgit.errors.PathNotInProjectDirectoryException;
-+import static org.spearce.jgit.lib.Constants.REPOSITORY_DIRECTORY_NAME;
++++ b/org.spearce.jgit/src/org/spearce/jgit/errors/PathNotInProjectDire=
+ctoryException.java
+@@ -0,0 +1,25 @@
++/*
++ *  Copyright (C) 2008 Florian K=C3=B6berle
++ *
++ *  This library is free software; you can redistribute it and/or
++ *  modify it under the terms of the GNU General Public
++ *  License, version 2, as published by the Free Software Foundation.
++ *
++ *  This library is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ *  General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public
++ *  License along with this library; if not, write to the Free Softwar=
+e
++ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  021=
+10-1301
++ */
++package org.spearce.jgit.errors;
 +
 +/**
-+ * This class is designed to serve the needs of someone who want to implement a
-+ * git-add command and needs to determine the files to add.
-+ * 
++ * Thrown when a path wasn't in the project directory, but expected to=
+ be.
++ *=20
 + */
-+public class AddRulesFactory {
-+	private final RuleListToObjectConverter converter = new RuleListToObjectConverter();
-+
-+	private final IgnoreRuleListFactory ignoreRuleListFactory = new IgnoreRuleListFactory();
-+
-+	private final AddRuleListFactory addRuleListFactory = new AddRuleListFactory();
-+
-+	/**
-+	 * @param workTreeDirectory
-+	 *            The directory with the files of the project under version
-+	 *            control.
-+	 * @param workingDirectory
-+	 *            a directory within the workTreeDirectory.
-+	 * @param filePatternsOfAddCommand
-+	 *            the file patterns passed to the add command.
-+	 * @return a {@link Rules} containing the specified rules, the .gitignore
-+	 *         and the .git/info/exclude rules.
-+	 * @throws InvalidPatternException
-+	 *             if a pattern is invalid.
-+	 * @throws PathNotInProjectDirectoryException
-+	 *             if the directory workingDirectory is not in workTreeDirectory
-+	 * @throws IOException
-+	 *             for some reasons.
-+	 */
-+	public Rules createRules(File workTreeDirectory, File workingDirectory,
-+			List<String> filePatternsOfAddCommand)
-+			throws InvalidPatternException, PathNotInProjectDirectoryException,
-+			IOException {
-+		final Rule gitDirectoryIgnoreRule = createGitDirectoryIgnoreRule();
-+		final File gitDirectory = new File(workTreeDirectory,
-+				REPOSITORY_DIRECTORY_NAME);
-+		final List<Rule> ignoreRuleListFromFiles = createExcludeRules(
-+				workTreeDirectory, gitDirectory);
-+		final List<Rule> includeRules = addRuleListFactory.createRuleList(
-+				workTreeDirectory, workingDirectory, filePatternsOfAddCommand);
-+		final List<Rule> ruleList = new ArrayList<Rule>();
-+
-+		ruleList.add(gitDirectoryIgnoreRule);
-+		ruleList.addAll(ignoreRuleListFromFiles);
-+		ruleList.addAll(includeRules);
-+		ruleList.add(new Rule(true, FilePattern.MATCH_ALWAYS));
-+
-+		return converter.createIgnoreRules(ruleList.iterator());
-+	}
-+
-+	private List<Rule> createExcludeRules(File projectDirectory,
-+			File gitDirectory) throws InvalidPatternException {
-+		final List<File> possibleIgnoreFiles = new ArrayList<File>(2);
-+		possibleIgnoreFiles.add(new File(projectDirectory, ".gitignore"));
-+		possibleIgnoreFiles.add(new File(new File(gitDirectory, "info"),
-+				"exclude"));
-+
-+		final List<File> ignoreFiles = new ArrayList<File>();
-+		for (File possibleIgnoreFile : possibleIgnoreFiles) {
-+			if (possibleIgnoreFile.isFile()) {
-+				ignoreFiles.add(possibleIgnoreFile);
-+			}
-+		}
-+
-+		try {
-+			return ignoreRuleListFactory.createIgnoreRuleList(ignoreFiles);
-+		} catch (FileNotFoundException e) {
-+			throw new RuntimeException("unexpected removal of ignore files", e);
-+		}
-+	}
-+
-+	private Rule createGitDirectoryIgnoreRule() throws InvalidPatternException {
-+		final FilePattern gitDirectoryPattern = new FilePathPattern(
-+				REPOSITORY_DIRECTORY_NAME, true, true);
-+		final Rule gitDirectoryIgnoreRule = new Rule(true, gitDirectoryPattern);
-+		return gitDirectoryIgnoreRule;
-+	}
++public class PathNotInProjectDirectoryException extends
++		IllegalArgumentException {
 +}
--- 
+--=20
 1.5.4.3
