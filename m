@@ -1,71 +1,68 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] [ is explicitly disallowed by bad_ref_char
-Date: Fri, 23 May 2008 12:39:06 +0200
-Message-ID: <20080523103906.GO27724@genesis.frugalware.org>
-References: <a4cc77ec0805230142n7dda9f7ahe4bde3b80f369220@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL
+ characters
+Date: Fri, 23 May 2008 12:21:49 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805231221390.30431@racer>
+References: <482BE5F7.2050108@thorn.ws> <alpine.DEB.1.00.0805161139530.30431@racer> <alpine.DEB.1.00.0805161148010.30431@racer> <alpine.DEB.1.00.0805161403130.30431@racer> <7v8wy34jj3.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221136230.30431@racer>
+ <7v8wy2w7wg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VOnbToCuTSVGQGT3"
-Cc: git@vger.kernel.org
-To: Paul Oliver <puzza007@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 12:40:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tommy Thorn <tommy-git@thorn.ws>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 13:22:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzUgt-0001o9-Jx
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 12:40:04 +0200
+	id 1JzVM4-0000vv-SI
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 13:22:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbYEWKjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 06:39:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYEWKjM
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 06:39:12 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:34084 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751395AbYEWKjL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 06:39:11 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 1FCB61B250A;
-	Fri, 23 May 2008 12:39:07 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 910DC4465E;
-	Fri, 23 May 2008 12:25:27 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AB12E1778001; Fri, 23 May 2008 12:39:06 +0200 (CEST)
-Mail-Followup-To: Paul Oliver <puzza007@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <a4cc77ec0805230142n7dda9f7ahe4bde3b80f369220@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754471AbYEWLVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 07:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753658AbYEWLVp
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 07:21:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41881 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754674AbYEWLVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 07:21:43 -0400
+Received: (qmail invoked by alias); 23 May 2008 11:21:40 -0000
+Received: from R0685.r.pppool.de (EHLO racer.local) [89.54.6.133]
+  by mail.gmx.net (mp042) with SMTP; 23 May 2008 13:21:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19NVZ8kc2pNQQjpTq/BgBcQ8VhSxGCz02DQnLpy+A
+	vYZnAna9Mlaq3o
+X-X-Sender: gene099@racer
+In-Reply-To: <7v8wy2w7wg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82693>
 
+Hi,
 
---VOnbToCuTSVGQGT3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Thu, 22 May 2008, Junio C Hamano wrote:
 
-On Fri, May 23, 2008 at 09:42:04AM +0100, Paul Oliver <puzza007@gmail.com> wrote:
-> ---
->  git-cvsimport.perl |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Looking at what handle_body() does for TE_BASE64 and TE_QP cases, I have 
+> >> to wonder if this is enough.  The loop seems to stop at (*op == NUL) 
+> >> which follows an old assumption that each line is terminated with NUL, 
+> >> not the new assumption you introduced that each line's length is kept in 
+> >> local variable len.
+> >
+> > Of course!  But does BASE64 and QP contain NULs?
+> 
+> The loop in question iterates over bytes _after_ decoding these encoded
+> lines, and a typical reason you would encode the payload is because it
+> contains something not safe over e-mail transfer, e.g. NUL.
+> 
+> I think decode_transfer_encoding() also needs to become safe against NULs
+> in the payload.
 
-Could you please improve the commit message a bit? Just running git-log
-won't let to you know this patch touches git-cvsimport only, which is an
-important information here.
+Okay, I missed that.
 
---VOnbToCuTSVGQGT3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkg2nsoACgkQe81tAgORUJYlXwCeNKHT55FztNgh+5noxqJT2Eg3
-iZMAnjOn5dTz2PSqfJ2zvmJRbhMc54JW
-=N2Eu
------END PGP SIGNATURE-----
-
---VOnbToCuTSVGQGT3--
+Ciao,
+Dscho
