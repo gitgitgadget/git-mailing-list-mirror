@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v3 06/23] Added the class FileNamePattern.
-Date: Fri, 23 May 2008 22:34:15 +0200
-Message-ID: <1211574872-23676-7-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v3 12/23] Added the class AddRuleListFactory.
+Date: Fri, 23 May 2008 22:34:21 +0200
+Message-ID: <1211574872-23676-13-git-send-email-florianskarten@web.de>
 References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:36:51 2008
+X-From: git-owner@vger.kernel.org Fri May 23 22:36:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzdzz-0006CA-Cz
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:23 +0200
+	id 1Jze07-0006CA-AZ
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756730AbYEWUew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 16:34:52 -0400
+	id S1758818AbYEWUfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 16:35:21 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,47 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758806AbYEWUev
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:34:51 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:45447 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756730AbYEWUei (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 16:34:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759016AbYEWUfT
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:35:19 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:35507 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758818AbYEWUet (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 16:34:49 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 91D8EDC49FE9
-	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:36 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id A2741E08523E
+	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:39 +0200 (CEST)
 Received: from [84.150.81.80] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzdyG-0005iq-00; Fri, 23 May 2008 22:34:36 +0200
+	id 1JzdyJ-0005iq-00; Fri, 23 May 2008 22:34:39 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX19x80wOCSpyipQo9oLQTZ61jmN6ffyK33uOBDwi
-	DRaeLJ7uFXvLrjItC4NULDdJFLjrlwwgsmE0JRdIOeRuslijEw
-	r9R8ZqWeLx1gIQClxMoA==
+X-Provags-ID: V01U2FsdGVkX1+F4XStK06WBhmUiZPk8gU3ef2ei75+XP0XJYvl
+	PFKHa7bK/AJH1pivyDBGmj12UwpvWUAIZBJm7BU/NUeZgvlypO
+	zSL/49F4tiVKWkkWx9GA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82750>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../jgit/treewalk/rules/FileNamePattern.java       |   58 ++++++++++++=
+ .../jgit/treewalk/rules/AddRuleListFactory.java    |   75 ++++++++++++=
 ++++++++
- 1 files changed, 58 insertions(+), 0 deletions(-)
+ 1 files changed, 75 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/FileNamePattern.java
+s/AddRuleListFactory.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FileN=
-amePattern.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/=
-=46ileNamePattern.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRu=
+leListFactory.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rul=
+es/AddRuleListFactory.java
 new file mode 100644
-index 0000000..f14fdef
+index 0000000..5c385c1
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FileNamePatt=
-ern.java
-@@ -0,0 +1,58 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/AddRuleListF=
+actory.java
+@@ -0,0 +1,75 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -89,48 +89,64 @@ e
 + */
 +package org.spearce.jgit.treewalk.rules;
 +
++import java.io.File;
++import java.io.IOException;
++import java.util.ArrayList;
++import java.util.List;
++
 +import org.spearce.jgit.errors.InvalidPatternException;
-+import org.spearce.jgit.lib.FileNameMatcher;
++import org.spearce.jgit.errors.PathNotInProjectDirectoryException;
 +
-+/**
-+ * A {@link FileNamePattern} defines a pattern for all files in a tree=
-=2E A
-+ * typical example would be "*.txt", which would match at any file or =
-subtree
-+ * which ends with ".txt" like "a/b/c.txt" and "a.txt/a.c".
-+ *=20
-+ */
-+class FileNamePattern implements FilePattern {
-+	private final FileNameMatcher fileNameMatcher;
++class AddRuleListFactory {
 +
-+	private final boolean matchDirectoriesOnly;
-+
-+	FileNamePattern(String fnMatchPatternString, boolean matchDirectories=
-Only)
-+			throws InvalidPatternException {
-+		this.fileNameMatcher =3D new FileNameMatcher(fnMatchPatternString, n=
-ull);
-+		this.matchDirectoriesOnly =3D matchDirectoriesOnly;
-+	}
-+
-+	public FilePattern getPatternForSubDirectory(String directoryName) {
-+		if (match(directoryName, true)) {
-+			return MATCH_ALWAYS;
++	private static String getRelativeUnixPath(File projectDirectory, File=
+ file)
++			throws PathNotInProjectDirectoryException, IOException {
++		final StringBuilder resultBuilder =3D new StringBuilder();
++		File currentFile =3D file.getCanonicalFile();
++		while (!currentFile.equals(projectDirectory)) {
++			if (resultBuilder.length() > 0) {
++				resultBuilder.insert(0, '/');
++			}
++			resultBuilder.insert(0, currentFile.getName());
++			currentFile =3D currentFile.getParentFile();
++			if (currentFile =3D=3D null) {
++				throw new PathNotInProjectDirectoryException();
++			}
 +		}
-+		return this;
++		return resultBuilder.toString();
 +	}
 +
-+	public boolean match(String fileName, boolean fileIsDirectory) {
-+		if (matchDirectoriesOnly && !fileIsDirectory) {
-+			return false;
++	List<Rule> createRuleList(File projectDirectory, File workingDirector=
+y,
++			List<String> filePatternsOfAddCommand)
++			throws PathNotInProjectDirectoryException, IOException,
++			InvalidPatternException {
++
++		final String workingDirectoryPath =3D getRelativeUnixPath(
++				projectDirectory, workingDirectory);
++
++		final List<Rule> ruleList =3D new ArrayList<Rule>(
++				filePatternsOfAddCommand.size());
++		for (String pattern : filePatternsOfAddCommand) {
++			boolean matchDirectoriesOnly =3D false;
++			if (pattern.endsWith(File.separator)) {
++				pattern =3D pattern.substring(0, pattern.length() - 1);
++				matchDirectoriesOnly =3D true;
++			}
++			pattern =3D pattern.replace(File.separatorChar, '/');
++			if (!"".equals(workingDirectoryPath)) {
++				pattern =3D workingDirectoryPath + "/" + pattern;
++
++			}
++			final FilePattern filePattern =3D new FilePathPattern(pattern, true=
+,
++					matchDirectoriesOnly);
++			final Rule rule =3D new Rule(false, filePattern);
++			ruleList.add(rule);
++
 +		}
-+		fileNameMatcher.resetStringToMatch();
-+		fileNameMatcher.extendStringToMatch(fileName);
-+		return fileNameMatcher.isMatch();
-+	}
-+
-+	public boolean isSameForSubDirectories() {
-+		return false;
++		return ruleList;
 +	}
 +}
 --=20
