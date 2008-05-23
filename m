@@ -1,210 +1,177 @@
 From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 7/8] builtin-cat-file.c: use parse_options()
-Date: Fri, 23 May 2008 16:19:42 +0200
-Message-ID: <1211552384-29636-8-git-send-email-barra_cuda@katamail.com>
+Subject: [PATCH 2/8] Add more tests for git hash-object
+Date: Fri, 23 May 2008 16:19:37 +0200
+Message-ID: <1211552384-29636-3-git-send-email-barra_cuda@katamail.com>
 References: <1211552384-29636-1-git-send-email-barra_cuda@katamail.com>
 Cc: git@vger.kernel.org
 To: aroben@apple.com
-X-From: git-owner@vger.kernel.org Fri May 23 16:17:31 2008
+X-From: git-owner@vger.kernel.org Fri May 23 16:17:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzY58-00066y-P0
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:17:19 +0200
+	id 1JzY51-00066y-E8
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbYEWOQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 10:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbYEWOQ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:16:27 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:51831 "HELO
+	id S1751976AbYEWOQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 10:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYEWOQN
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:16:13 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:51162 "HELO
 	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751281AbYEWOQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 10:16:18 -0400
-Received: (qmail 581 invoked by uid 89); 23 May 2008 14:14:59 -0000
+	with SMTP id S1751746AbYEWOQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 10:16:11 -0400
+Received: (qmail 31695 invoked by uid 89); 23 May 2008 14:14:50 -0000
 X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
 X-Spam-Level: *
 X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
 	autolearn=no version=3.2.3
 Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.207)
-  by smtp1-pc with SMTP; 23 May 2008 14:14:57 -0000
+  by smtp1-pc with SMTP; 23 May 2008 14:14:49 -0000
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211552384-29636-1-git-send-email-barra_cuda@katamail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82707>
 
-This simplifies the option parsing.
+From: Adam Roben <aroben@apple.com>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+Signed-off-by: Adam Roben <aroben@apple.com>
 ---
- builtin-cat-file.c |  119 ++++++++++++++++++++--------------------------------
- 1 files changed, 46 insertions(+), 73 deletions(-)
+ t/t1007-hash-object.sh |  120 +++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 93 insertions(+), 27 deletions(-)
 
-diff --git a/builtin-cat-file.c b/builtin-cat-file.c
-index b4d0c25..5ef15a4 100644
---- a/builtin-cat-file.c
-+++ b/builtin-cat-file.c
-@@ -8,6 +8,10 @@
- #include "tag.h"
- #include "tree.h"
- #include "builtin.h"
-+#include "parse-options.h"
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index 543c078..2019ea7 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -4,32 +4,98 @@ test_description=git-hash-object
+ 
+ . ./test-lib.sh
+ 
+-test_expect_success \
+-    'git hash-object -w --stdin saves the object' \
+-    'obname=$(echo foo | git hash-object -w --stdin) &&
+-    obpath=$(echo $obname | sed -e "s/\(..\)/\1\//") &&
+-    test -r .git/objects/"$obpath" &&
+-    rm -f .git/objects/"$obpath"'
+-    
+-test_expect_success \
+-    'git hash-object --stdin -w saves the object' \
+-    'obname=$(echo foo | git hash-object --stdin -w) &&
+-    obpath=$(echo $obname | sed -e "s/\(..\)/\1\//") &&
+-    test -r .git/objects/"$obpath" &&
+-    rm -f .git/objects/"$obpath"'    
+-
+-test_expect_success \
+-    'git hash-object --stdin file1 <file0 first operates on file0, then file1' \
+-    'echo foo > file1 &&
+-    obname0=$(echo bar | git hash-object --stdin) &&
+-    obname1=$(git hash-object file1) &&
+-    obname0new=$(echo bar | git hash-object --stdin file1 | sed -n -e 1p) &&
+-    obname1new=$(echo bar | git hash-object --stdin file1 | sed -n -e 2p) &&
+-    test "$obname0" = "$obname0new" &&
+-    test "$obname1" = "$obname1new"'
+-
+-test_expect_success \
+-    'git hash-object refuses multiple --stdin arguments' \
+-    '! git hash-object --stdin --stdin < file1'
++echo_without_newline() {
++	printf '%s' "$*"
++}
 +
-+#define BATCH 1
-+#define BATCH_CHECK 2
++test_blob_does_not_exist() {
++	test_expect_success 'blob does not exist in database' "
++		test_must_fail git cat-file blob $1
++	"
++}
++
++test_blob_exists() {
++	test_expect_success 'blob exists in database' "
++		git cat-file blob $1
++	"
++}
++
++hello_content="Hello World"
++hello_sha1=5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
++
++example_content="This is an example"
++example_sha1=ddd3f836d3e3fbb7ae289aa9ae83536f76956399
++
++setup_repo() {
++	echo_without_newline "$hello_content" > hello
++	echo_without_newline "$example_content" > example
++}
++
++test_repo=test
++push_repo() {
++	test_create_repo $test_repo
++	cd $test_repo
++
++	setup_repo
++}
++
++pop_repo() {
++	cd ..
++	rm -rf $test_repo
++}
++
++setup_repo
++
++# Argument checking
++
++test_expect_success "multiple '--stdin's are rejected" '
++	test_must_fail git hash-object --stdin --stdin < example
++'
++
++# Behavior
++
++push_repo
++
++test_expect_success 'hash a file' '
++	test $hello_sha1 = $(git hash-object hello)
++'
++
++test_blob_does_not_exist $hello_sha1
++
++test_expect_success 'hash from stdin' '
++	test $example_sha1 = $(git hash-object --stdin < example)
++'
++
++test_blob_does_not_exist $example_sha1
++
++test_expect_success 'hash a file and write to database' '
++	test $hello_sha1 = $(git hash-object -w hello)
++'
++
++test_blob_exists $hello_sha1
++
++test_expect_success 'git hash-object --stdin file1 <file0 first operates on file0, then file1' '
++	echo foo > file1 &&
++	obname0=$(echo bar | git hash-object --stdin) &&
++	obname1=$(git hash-object file1) &&
++	obname0new=$(echo bar | git hash-object --stdin file1 | sed -n -e 1p) &&
++	obname1new=$(echo bar | git hash-object --stdin file1 | sed -n -e 2p) &&
++	test "$obname0" = "$obname0new" &&
++	test "$obname1" = "$obname1new"
++'
++
++pop_repo
++
++for args in "-w --stdin" "--stdin -w"; do
++	push_repo
++
++	test_expect_success "hash from stdin and write to database ($args)" '
++		test $example_sha1 = $(git hash-object $args < example)
++	'
++
++	test_blob_exists $example_sha1
++
++	pop_repo
++done
  
- static void pprint_tag(const unsigned char *sha1, const char *buf, unsigned long size)
- {
-@@ -158,7 +162,7 @@ static int batch_one_object(const char *obj_name, int print_contents)
- 		return 0;
- 	}
- 
--	if (print_contents)
-+	if (print_contents == BATCH)
- 		contents = read_sha1_file(sha1, &type, &size);
- 	else
- 		type = sha1_object_info(sha1, &size);
-@@ -169,7 +173,7 @@ static int batch_one_object(const char *obj_name, int print_contents)
- 	printf("%s %s %lu\n", sha1_to_hex(sha1), typename(type), size);
- 	fflush(stdout);
- 
--	if (print_contents) {
-+	if (print_contents == BATCH) {
- 		write_or_die(1, contents, size);
- 		printf("\n");
- 		fflush(stdout);
-@@ -192,89 +196,58 @@ static int batch_objects(int print_contents)
- 	return 0;
- }
- 
--static const char cat_file_usage[] = "git-cat-file [ [-t|-s|-e|-p|<type>] <sha1> | [--batch|--batch-check] < <list_of_sha1s> ]";
-+static const char * const cat_file_usage[] = {
-+	"git-cat-file [-t|-s|-e|-p|<type>] <sha1>",
-+	"git-cat-file [--batch|--batch-check] < <list_of_sha1s>",
-+	NULL
-+};
- 
- int cmd_cat_file(int argc, const char **argv, const char *prefix)
- {
--	int i, opt = 0, batch = 0, batch_check = 0;
-+	int opt = 0, batch = 0;
- 	const char *exp_type = NULL, *obj_name = NULL;
- 
--	git_config(git_default_config);
--
--	for (i = 1; i < argc; ++i) {
--		const char *arg = argv[i];
--		int is_batch = 0, is_batch_check = 0;
--
--		is_batch = !strcmp(arg, "--batch");
--		if (!is_batch)
--			is_batch_check = !strcmp(arg, "--batch-check");
--
--		if (is_batch || is_batch_check) {
--			if (opt) {
--				error("git-cat-file: Can't use %s with -%c", arg, opt);
--				usage(cat_file_usage);
--			} else if (exp_type) {
--				error("git-cat-file: Can't use %s when a type (\"%s\") is specified", arg, exp_type);
--				usage(cat_file_usage);
--			} else if (obj_name) {
--				error("git-cat-file: Can't use %s when an object (\"%s\") is specified", arg, obj_name);
--				usage(cat_file_usage);
--			}
--
--			if ((is_batch && batch_check) || (is_batch_check && batch)) {
--				error("git-cat-file: Can't use %s with %s", arg, is_batch ? "--batch-check" : "--batch");
--				usage(cat_file_usage);
--			}
--
--			if (is_batch)
--				batch = 1;
--			else
--				batch_check = 1;
-+	const struct option options[] = {
-+		OPT_GROUP("<type> can be one of: blob, tree, commit, tag"),
-+		OPT_SET_INT('t', NULL, &opt, "show object type", 't'),
-+		OPT_SET_INT('s', NULL, &opt, "show object size", 's'),
-+		OPT_SET_INT('e', NULL, &opt,
-+			    "exit with zero when there's no error", 'e'),
-+		OPT_SET_INT('p', NULL, &opt, "pretty-print object's content", 'p'),
-+		OPT_SET_INT(0, "batch", &batch,
-+			    "show info and content of objects feeded on stdin", BATCH),
-+		OPT_SET_INT(0, "batch-check", &batch,
-+			    "show info about objects feeded on stdin",
-+			    BATCH_CHECK),
-+		OPT_END()
-+	};
- 
--			continue;
--		}
--
--		if (!strcmp(arg, "-t") || !strcmp(arg, "-s") || !strcmp(arg, "-e") || !strcmp(arg, "-p")) {
--			if (batch || batch_check) {
--				error("git-cat-file: Can't use %s with %s", arg, batch ? "--batch" : "--batch-check");
--				usage(cat_file_usage);
--			}
--
--			exp_type = arg;
--			opt = exp_type[1];
--			continue;
--		}
--
--		if (arg[0] == '-')
--			usage(cat_file_usage);
--
--		if (!exp_type) {
--			if (batch || batch_check) {
--				error("git-cat-file: Can't specify a type (\"%s\") with %s", arg, batch ? "--batch" : "--batch-check");
--				usage(cat_file_usage);
--			}
--
--			exp_type = arg;
--			continue;
--		}
-+	git_config(git_default_config);
- 
--		if (obj_name)
--			usage(cat_file_usage);
-+	if (argc != 3 && argc != 2)
-+		usage_with_options(cat_file_usage, options);
- 
--		// We should have hit one of the earlier if (batch || batch_check) cases before
--		// getting here.
--		assert(!batch);
--		assert(!batch_check);
-+	argc = parse_options(argc, argv, options, cat_file_usage, 0);
- 
--		obj_name = arg;
--		break;
-+	if (opt) {
-+		if (argc == 1)
-+			obj_name = argv[0];
-+		else
-+			usage_with_options(cat_file_usage, options);
-+	}
-+	if (!opt && !batch) {
-+		if (argc == 2) {
-+			exp_type = argv[0];
-+			obj_name = argv[1];
-+		} else
-+			usage_with_options(cat_file_usage, options);
-+	}
-+	if (batch && (opt || argc)) {
-+		usage_with_options(cat_file_usage, options);
- 	}
- 
--	if (batch || batch_check)
-+	if (batch)
- 		return batch_objects(batch);
- 
--	if (!exp_type || !obj_name)
--		usage(cat_file_usage);
--
- 	return cat_one_file(opt, exp_type, obj_name);
- }
+ test_done
 -- 
 1.5.5.1
