@@ -1,62 +1,50 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/3] bisect: use a detached HEAD to bisect
-Date: Fri, 23 May 2008 09:08:24 +0200
-Message-ID: <200805230908.24988.chriscool@tuxfamily.org>
-References: <20080523012857.acce6457.chriscool@tuxfamily.org> <7v3ao9twfa.fsf@gitster.siamese.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: encoding bug in git.el
+Date: Fri, 23 May 2008 09:09:36 +0200
+Message-ID: <20080523070936.GB31315@diana.vm.bytemark.co.uk>
+References: <20080520220900.GA20570@diana.vm.bytemark.co.uk> <87mymkbo9x.fsf@lysator.liu.se> <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com> <20080521145434.GA31982@diana.vm.bytemark.co.uk> <1f748ec60805211431o38cdab16j722178c2416c53f9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 09:04:56 2008
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
+To: Clifford Caoile <piyo@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri May 23 09:11:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzRKe-0002P3-J8
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 09:04:53 +0200
+	id 1JzRQk-0004FR-6d
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 09:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773AbYEWHDy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2008 03:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758247AbYEWHDy
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 03:03:54 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:42064 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754470AbYEWHDx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 03:03:53 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 5DFC31AB2EF;
-	Fri, 23 May 2008 09:03:51 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 443B71AB2AB;
-	Fri, 23 May 2008 09:03:51 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v3ao9twfa.fsf@gitster.siamese.dyndns.org>
+	id S936052AbYEWHKJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2008 03:10:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934420AbYEWHKI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 03:10:08 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2720 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936031AbYEWHKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 03:10:06 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JzRPE-0008Mh-00; Fri, 23 May 2008 08:09:36 +0100
 Content-Disposition: inline
+In-Reply-To: <1f748ec60805211431o38cdab16j722178c2416c53f9@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82688>
 
-Le vendredi 23 mai 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > When "git bisect" was first written, it was not possible to
-> > checkout a detached HEAD. The detached feature appeared latter.
-> > ...
-> > This patch makes "git bisect" checkout revisions to be tested on
-> > a detached HEAD. This simplifies the code a bit.
->
-> Yay!!
->
-> One potential worry/downside is "bisect visualize".  Because <bisect>
-> branch was used for bisection, the _current_ commit has always been
-> indicated with a label.  HEAD would not get any special label in gitk=
-,
-> would it?
+On 2008-05-22 06:31:03 +0900, Clifford Caoile wrote:
 
-You are probably right. I will have a look at that.
+> Did you test the proposed fix I sent? I would like to know your
+> feedback.
 
-Thanks,
-Christian.
+No, sorry, I haven't taken the time to do so yet. Will try to do so
+this weekend.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
