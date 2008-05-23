@@ -1,7 +1,7 @@
 From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 6/8] git-svn: Speed up fetch
-Date: Fri, 23 May 2008 16:19:41 +0200
-Message-ID: <1211552384-29636-7-git-send-email-barra_cuda@katamail.com>
+Subject: [PATCH 5/8] Git.pm: Add hash_and_insert_object and cat_blob
+Date: Fri, 23 May 2008 16:19:40 +0200
+Message-ID: <1211552384-29636-6-git-send-email-barra_cuda@katamail.com>
 References: <1211552384-29636-1-git-send-email-barra_cuda@katamail.com>
 Cc: git@vger.kernel.org
 To: aroben@apple.com
@@ -10,146 +10,225 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzY57-00066y-UA
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:17:18 +0200
+	id 1JzY57-00066y-9z
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbYEWOQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 10:16:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754458AbYEWOQZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:16:25 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:51696 "HELO
+	id S1753338AbYEWOQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 10:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbYEWOQW
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:16:22 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:51554 "HELO
 	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751586AbYEWOQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 10:16:16 -0400
-Received: (qmail 332 invoked by uid 89); 23 May 2008 14:14:57 -0000
+	with SMTP id S1753539AbYEWOQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 10:16:14 -0400
+Received: (qmail 32513 invoked by uid 89); 23 May 2008 14:14:55 -0000
 X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
 X-Spam-Level: *
 X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
 	autolearn=no version=3.2.3
 Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.207)
-  by smtp1-pc with SMTP; 23 May 2008 14:14:56 -0000
+  by smtp1-pc with SMTP; 23 May 2008 14:14:54 -0000
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211552384-29636-1-git-send-email-barra_cuda@katamail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82702>
 
 From: Adam Roben <aroben@apple.com>
 
-We were spending a lot of time forking/execing git-cat-file and
-git-hash-object. We now maintain a global Git repository object in order to use
-Git.pm's more efficient hash_and_insert_object and cat_blob methods.
+These functions are more efficient ways of executing `git hash-object -w` and
+`git cat-file blob` when you are dealing with many files/objects.
 
 Signed-off-by: Adam Roben <aroben@apple.com>
 ---
- git-svn.perl |   42 ++++++++++++++++++++----------------------
- 1 files changed, 20 insertions(+), 22 deletions(-)
+ perl/Git.pm |  152 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 150 insertions(+), 2 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b70f8ef..33e9266 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4,7 +4,7 @@
- use warnings;
- use strict;
- use vars qw/	$AUTHOR $VERSION
--		$sha1 $sha1_short $_revision
-+		$sha1 $sha1_short $_revision $_repository
- 		$_q $_authors %users/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
- $VERSION = '@@GIT_VERSION@@';
-@@ -220,6 +220,7 @@ unless ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
- 		}
- 		$ENV{GIT_DIR} = $git_dir;
- 	}
-+	$_repository = Git->repository(Repository => $ENV{GIT_DIR});
+diff --git a/perl/Git.pm b/perl/Git.pm
+index d766974..6ba8ee5 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -39,6 +39,10 @@ $VERSION = '0.01';
+   my $lastrev = $repo->command_oneline( [ 'rev-list', '--all' ],
+                                         STDERR => 0 );
+ 
++  my $sha1 = $repo->hash_and_insert_object('file.txt');
++  my $tempfile = tempfile();
++  my $size = $repo->cat_blob($sha1, $tempfile);
++
+ =cut
+ 
+ 
+@@ -218,7 +222,6 @@ sub repository {
+ 	bless $self, $class;
  }
  
- my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
-@@ -301,6 +302,7 @@ sub do_git_init_db {
- 			}
- 		}
- 		command_noisy(@init_db);
-+		$_repository = Git->repository(Repository => ".git");
- 	}
- 	my $set;
- 	my $pfx = "svn-remote.$Git::SVN::default_repo_id";
-@@ -317,6 +319,7 @@ sub init_subdir {
- 	mkpath([$repo_path]) unless -d $repo_path;
- 	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
- 	$ENV{GIT_DIR} = '.git';
-+	$_repository = Git->repository(Repository => $ENV{GIT_DIR});
+-
+ =back
+ 
+ =head1 METHODS
+@@ -734,6 +737,147 @@ sub hash_object {
  }
  
- sub cmd_clone {
-@@ -3017,6 +3020,7 @@ use vars qw/@ISA/;
- use strict;
- use warnings;
- use Carp qw/croak/;
-+use File::Temp qw/tempfile/;
- use IO::File qw//;
  
- # file baton members: path, mode_a, mode_b, pool, fh, blob, base
-@@ -3172,14 +3176,9 @@ sub apply_textdelta {
- 	my $base = IO::File->new_tmpfile;
- 	$base->autoflush(1);
- 	if ($fb->{blob}) {
--		defined (my $pid = fork) or croak $!;
--		if (!$pid) {
--			open STDOUT, '>&', $base or croak $!;
--			print STDOUT 'link ' if ($fb->{mode_a} == 120000);
--			exec qw/git-cat-file blob/, $fb->{blob} or croak $!;
--		}
--		waitpid $pid, 0;
--		croak $? if $?;
-+		print $base 'link ' if ($fb->{mode_a} == 120000);
-+		my $size = $::_repository->cat_blob($fb->{blob}, $base);
-+		die "Failed to read object $fb->{blob}" unless $size;
++=item hash_and_insert_object ( FILENAME )
++
++Compute the SHA1 object id of the given C<FILENAME> and add the object to the
++object database.
++
++The function returns the SHA1 hash.
++
++=cut
++
++# TODO: Support for passing FILEHANDLE instead of FILENAME
++sub hash_and_insert_object {
++	my ($self, $filename) = @_;
++
++	carp "Bad filename \"$filename\"" if $filename =~ /[\r\n]/;
++
++	$self->_open_hash_and_insert_object_if_needed();
++	my ($in, $out) = ($self->{hash_object_in}, $self->{hash_object_out});
++
++	unless (print $out $filename, "\n") {
++		$self->_close_hash_and_insert_object();
++		throw Error::Simple("out pipe went bad");
++	}
++
++	chomp(my $hash = <$in>);
++	unless (defined($hash)) {
++		$self->_close_hash_and_insert_object();
++		throw Error::Simple("in pipe went bad");
++	}
++
++	return $hash;
++}
++
++sub _open_hash_and_insert_object_if_needed {
++	my ($self) = @_;
++
++	return if defined($self->{hash_object_pid});
++
++	($self->{hash_object_pid}, $self->{hash_object_in},
++	 $self->{hash_object_out}, $self->{hash_object_ctx}) =
++		command_bidi_pipe(qw(hash-object -w --stdin-paths));
++}
++
++sub _close_hash_and_insert_object {
++	my ($self) = @_;
++
++	return unless defined($self->{hash_object_pid});
++
++	my @vars = map { 'hash_object_' . $_ } qw(pid in out ctx);
++
++	command_close_bidi_pipe($self->{@vars});
++	delete $self->{@vars};
++}
++
++=item cat_blob ( SHA1, FILEHANDLE )
++
++Prints the contents of the blob identified by C<SHA1> to C<FILEHANDLE> and
++returns the number of bytes printed.
++
++=cut
++
++sub cat_blob {
++	my ($self, $sha1, $fh) = @_;
++
++	$self->_open_cat_blob_if_needed();
++	my ($in, $out) = ($self->{cat_blob_in}, $self->{cat_blob_out});
++
++	unless (print $out $sha1, "\n") {
++		$self->_close_cat_blob();
++		throw Error::Simple("out pipe went bad");
++	}
++
++	my $description = <$in>;
++	if ($description =~ / missing$/) {
++		carp "$sha1 doesn't exist in the repository";
++		return 0;
++	}
++
++	if ($description !~ /^[0-9a-fA-F]{40} \S+ (\d+)$/) {
++		carp "Unexpected result returned from git cat-file";
++		return 0;
++	}
++
++	my $size = $1;
++
++	my $blob;
++	my $bytesRead = 0;
++
++	while (1) {
++		my $bytesLeft = $size - $bytesRead;
++		last unless $bytesLeft;
++
++		my $bytesToRead = $bytesLeft < 1024 ? $bytesLeft : 1024;
++		my $read = read($in, $blob, $bytesToRead, $bytesRead);
++		unless (defined($read)) {
++			$self->_close_cat_blob();
++			throw Error::Simple("in pipe went bad");
++		}
++
++		$bytesRead += $read;
++	}
++
++	# Skip past the trailing newline.
++	my $newline;
++	my $read = read($in, $newline, 1);
++	unless (defined($read)) {
++		$self->_close_cat_blob();
++		throw Error::Simple("in pipe went bad");
++	}
++	unless ($read == 1 && $newline eq "\n") {
++		$self->_close_cat_blob();
++		throw Error::Simple("didn't find newline after blob");
++	}
++
++	unless (print $fh $blob) {
++		$self->_close_cat_blob();
++		throw Error::Simple("couldn't write to passed in filehandle");
++	}
++
++	return $size;
++}
++
++sub _open_cat_blob_if_needed {
++	my ($self) = @_;
++
++	return if defined($self->{cat_blob_pid});
++
++	($self->{cat_blob_pid}, $self->{cat_blob_in},
++	 $self->{cat_blob_out}, $self->{cat_blob_ctx}) =
++		command_bidi_pipe(qw(cat-file --batch));
++}
++
++sub _close_cat_blob {
++	my ($self) = @_;
++
++	return unless defined($self->{cat_blob_pid});
++
++	my @vars = map { 'cat_blob_' . $_ } qw(pid in out ctx);
++
++	command_close_bidi_pipe($self->{@vars});
++	delete $self->{@vars};
++}
  
- 		if (defined $exp) {
- 			seek $base, 0, 0 or croak $!;
-@@ -3220,14 +3219,18 @@ sub close_file {
- 				sysseek($fh, 0, 0) or croak $!;
- 			}
- 		}
--		defined(my $pid = open my $out,'-|') or die "Can't fork: $!\n";
--		if (!$pid) {
--			open STDIN, '<&', $fh or croak $!;
--			exec qw/git-hash-object -w --stdin/ or croak $!;
-+
-+		my ($tmp_fh, $tmp_filename) = File::Temp::tempfile(UNLINK => 1);
-+		my $result;
-+		while ($result = sysread($fh, my $string, 1024)) {
-+			syswrite($tmp_fh, $string, $result);
- 		}
--		chomp($hash = do { local $/; <$out> });
--		close $out or croak $!;
-+		defined $result or croak $!;
-+		close $tmp_fh or croak $!;
-+
- 		close $fh or croak $!;
-+
-+		$hash = $::_repository->hash_and_insert_object($tmp_filename);
- 		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
- 		close $fb->{base} or croak $!;
- 	} else {
-@@ -3553,13 +3556,8 @@ sub chg_file {
- 	} elsif ($m->{mode_a} =~ /^120/ && $m->{mode_b} !~ /^120/) {
- 		$self->change_file_prop($fbat,'svn:special',undef);
- 	}
--	defined(my $pid = fork) or croak $!;
--	if (!$pid) {
--		open STDOUT, '>&', $fh or croak $!;
--		exec qw/git-cat-file blob/, $m->{sha1_b} or croak $!;
--	}
--	waitpid $pid, 0;
--	croak $? if $?;
-+	my $size = $::_repository->cat_blob($m->{sha1_b}, $fh);
-+	croak "Failed to read object $m->{sha1_b}" unless $size;
- 	$fh->flush == 0 or croak $!;
- 	seek $fh, 0, 0 or croak $!;
+ =back
  
+@@ -951,7 +1095,11 @@ sub _cmd_close {
+ }
+ 
+ 
+-sub DESTROY { }
++sub DESTROY {
++	my ($self) = @_;
++	$self->_close_hash_and_insert_object();
++	$self->_close_cat_blob();
++}
+ 
+ 
+ # Pipe implementation for ActiveState Perl.
 -- 
 1.5.5.1
