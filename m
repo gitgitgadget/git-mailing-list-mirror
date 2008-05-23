@@ -1,93 +1,93 @@
-From: Junio C Hamano <junio@pobox.com>
+From: Clemens Buchacher <drizzd@aon.at>
 Subject: Re: [PATCH] http-push: remove remote locks on exit signals
-Date: Fri, 23 May 2008 14:40:41 -0700
-Message-ID: <7vod6wr95y.fsf@gitster.siamese.dyndns.org>
-References: <20080522195546.GA29911@localhost>
+Date: Sat, 24 May 2008 00:17:23 +0200
+Message-ID: <20080523221723.GA4366@localhost>
+References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri May 23 23:42:10 2008
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 24 00:24:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzf1a-0005Dl-Pt
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 23:42:07 +0200
+	id 1Jzffz-0001jU-Pj
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 00:23:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383AbYEWVky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 17:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbYEWVky
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 17:40:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60783 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751754AbYEWVkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 17:40:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 101FC6770;
-	Fri, 23 May 2008 17:40:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 28ED9676F; Fri, 23 May 2008 17:40:46 -0400 (EDT)
-In-Reply-To: <20080522195546.GA29911@localhost> (Clemens Buchacher's message
- of "Thu, 22 May 2008 21:55:46 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E8A837CE-2910-11DD-89A8-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1754920AbYEWWWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 18:22:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754971AbYEWWWh
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 18:22:37 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:63008 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753067AbYEWWWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 18:22:36 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so551973fgg.17
+        for <git@vger.kernel.org>; Fri, 23 May 2008 15:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        bh=+iPMxArGYQExRmZLOMhqaIvruw8lHfG3xaE0AwlI20g=;
+        b=nUsMLfQu85oxa/7xpcGJmW7aptEsJ2jBq4pFDpHxJe2tmwfvZ5Uhj/UbKCZTcga7crCqrUTGJ3XD2Aarfc3NSs7bP5fXOEo4ALhIKp2OFeRxuMD3MxknRBbG1qx4jNFHjjE0531tSgsXVl0eMXNZrSmYo5V+FNhNTm7ARW/gJbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=tdXMBb020zPsBUAl6Iz6Eeu1Fe4Xct99pxBzWHPKk7Dgbz1JqE/IeAscfK2kATERFnGYm+mhxETinDeTzaL2RuPPKe5OOqrpJeuwwvgSiYV89nHoFALhea7uRID0ojxwOfZ479wQkYi46uMirzTkWRWPkPyiBgernVlmgVe7oo0=
+Received: by 10.86.31.18 with SMTP id e18mr655707fge.41.1211581352500;
+        Fri, 23 May 2008 15:22:32 -0700 (PDT)
+Received: from darc.dyndns.org ( [88.117.101.65])
+        by mx.google.com with ESMTPS id d6sm7529530fga.2.2008.05.23.15.22.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 May 2008 15:22:30 -0700 (PDT)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1JzfZj-0001FI-Ja; Sat, 24 May 2008 00:17:23 +0200
+Content-Disposition: inline
+In-Reply-To: <7vod6wr95y.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82762>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Hi,
 
-> diff --git a/http-push.c b/http-push.c
-> index 5b23038..b1f5302 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -1349,6 +1349,24 @@ static int unlock_remote(struct remote_lock *lock)
->  	return rc;
->  }
->  
-> +static void remove_locks(void)
-> +{
-> +	struct remote_lock *lock = remote->locks;
-> +	
-> +	fprintf(stderr, "Removing remote locks...\n");
-> +	while (lock) {
-> +		unlock_remote(lock);
-> +		lock = lock->next;
-> +	}
-> +}
-> +
-> +static void remove_locks_on_signal(int signo)
-> +{
-> +	remove_locks();
-> +	signal(SIGINT, SIG_DFL);
-> +	raise(signo);
-> +}
-> +
+On Fri, May 23, 2008 at 02:40:41PM -0700, Junio C Hamano wrote:
+> Clemens Buchacher <drizzd@aon.at> writes:
+> > +static void remove_locks_on_signal(int signo)
+> > +{
+> > +	remove_locks();
+> > +	signal(SIGINT, SIG_DFL);
+> > +	raise(signo);
+> > +}
+> > +
+> 
+> If you caught signo, shouldn't you be resetting that signo not SIGINT?
 
-If you caught signo, shouldn't you be resetting that signo not SIGINT?
+True. I suppose we should fix that in remove_lock_file_on_signal() as well,
+then? It does exactly the same thing.
 
->  static void remote_ls(const char *path, int flags,
->  		      void (*userFunc)(struct remote_ls_ctx *ls),
->  		      void *userData);
-> @@ -2255,6 +2273,8 @@ int main(int argc, char **argv)
->  		goto cleanup;
->  	}
->  
-> +	signal(SIGINT, remove_locks_on_signal);
-> +
+> >  static void remote_ls(const char *path, int flags,
+> >  		      void (*userFunc)(struct remote_ls_ctx *ls),
+> >  		      void *userData);
+> > @@ -2255,6 +2273,8 @@ int main(int argc, char **argv)
+> >  		goto cleanup;
+> >  	}
+> >  
+> > +	signal(SIGINT, remove_locks_on_signal);
+> > +
+> 
+> and you may care more than just INT but perhaps HUP and others?
 
-and you may care more than just INT but perhaps HUP and others?
+SIGINT was bothering me the most, because I often kill http-push by pressing
+Ctrl+C. I also considered adding SIGQUIT, but decided against it because
+normally I press Ctrl+\ only if I want the program to quit _right now_ and
+Ctrl+C does not work. On the other hand, sending the signal twice will
+terminate http-push either way.
 
+I don't know in which situation SIGHUP would come into play.
 
->  	/* Check whether the remote has server info files */
->  	remote->can_update_info_refs = 0;
->  	remote->has_info_refs = remote_exists("info/refs");
-
-Having said that, I do not use http-push myself, so I'll wait for others
-who do use it to comment on this; success reports are welcomed, reports on
-bad side effects, if any, are even more appreciated.
+Regards,
+Clemens
