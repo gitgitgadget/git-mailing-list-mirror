@@ -1,93 +1,78 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] http-push: remove remote locks on exit signals
-Date: Sat, 24 May 2008 00:17:23 +0200
-Message-ID: <20080523221723.GA4366@localhost>
-References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] gitk - restore operation of git-reset on Cygwin
+Date: Fri, 23 May 2008 18:26:51 -0400
+Message-ID: <483744AB.8070509@gmail.com>
+References: <1211511636-3552-1-git-send-email-mlevedahl@gmail.com> <18486.15879.551874.408651@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 24 00:24:03 2008
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat May 24 00:27:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzffz-0001jU-Pj
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 00:23:52 +0200
+	id 1Jzfjs-0002uh-7Q
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 00:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920AbYEWWWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 18:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754971AbYEWWWh
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 18:22:37 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:63008 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753067AbYEWWWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 18:22:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so551973fgg.17
-        for <git@vger.kernel.org>; Fri, 23 May 2008 15:22:32 -0700 (PDT)
+	id S1755959AbYEWW1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 18:27:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756743AbYEWW1A
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 18:27:00 -0400
+Received: from gv-out-0910.google.com ([216.239.58.187]:17187 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755806AbYEWW07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 18:26:59 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so963037gvc.37
+        for <git@vger.kernel.org>; Fri, 23 May 2008 15:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=+iPMxArGYQExRmZLOMhqaIvruw8lHfG3xaE0AwlI20g=;
-        b=nUsMLfQu85oxa/7xpcGJmW7aptEsJ2jBq4pFDpHxJe2tmwfvZ5Uhj/UbKCZTcga7crCqrUTGJ3XD2Aarfc3NSs7bP5fXOEo4ALhIKp2OFeRxuMD3MxknRBbG1qx4jNFHjjE0531tSgsXVl0eMXNZrSmYo5V+FNhNTm7ARW/gJbE=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fO6aa8XUJMmncPUlqYywG6Hrfwb44vaYWNBRljKV7g4=;
+        b=FHuGT43Rc2fTlY9b3neP8y3IEzKCaGFLUssw2qQiEnpzgNmh6i2Emw30RT596zuvWP6Qpv2C82JDQcIpKiVuBF0HDw1f3NHEhuRj2OzFampIAXSxV4Dn2Y/7/9y8kdiBEYpBWLaNDxFJ3e7e8Q8fRxkIxZqAY6NfFsgxWWNBkIs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=tdXMBb020zPsBUAl6Iz6Eeu1Fe4Xct99pxBzWHPKk7Dgbz1JqE/IeAscfK2kATERFnGYm+mhxETinDeTzaL2RuPPKe5OOqrpJeuwwvgSiYV89nHoFALhea7uRID0ojxwOfZ479wQkYi46uMirzTkWRWPkPyiBgernVlmgVe7oo0=
-Received: by 10.86.31.18 with SMTP id e18mr655707fge.41.1211581352500;
-        Fri, 23 May 2008 15:22:32 -0700 (PDT)
-Received: from darc.dyndns.org ( [88.117.101.65])
-        by mx.google.com with ESMTPS id d6sm7529530fga.2.2008.05.23.15.22.29
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=BZJzQ7wtb+ZIZL8QKphxB/D+aMgxa5h+3gCwmcDWMAlRO9/dkA8KwJr7uIlU4ORzhvgbJb7Bik9+8X2jI+DhXmI2ordB8ousWnyw5+2YNpluw1FLxgBchBSgwrRn08txPnDJcn68N8G2Cl8ZBdSUgDeOHKZ+5zDR763YoBix7sM=
+Received: by 10.150.69.41 with SMTP id r41mr487398yba.128.1211581614443;
+        Fri, 23 May 2008 15:26:54 -0700 (PDT)
+Received: from ?192.168.1.117? ( [71.126.133.203])
+        by mx.google.com with ESMTPS id 9sm47319yxs.5.2008.05.23.15.26.52
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 23 May 2008 15:22:30 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1JzfZj-0001FI-Ja; Sat, 24 May 2008 00:17:23 +0200
-Content-Disposition: inline
-In-Reply-To: <7vod6wr95y.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+        Fri, 23 May 2008 15:26:53 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <18486.15879.551874.408651@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82763>
 
-Hi,
+Paul Mackerras wrote:
+> Mark Levedahl writes:
+>
+>   
+>> Commit 6df7403a98737 modified the call to git-reset to invoke git
+>> directly rather than using "sh -c", but is redirecting stderr to stdout.
+>> This does not work on Cygwin, probably because the Tcl/Tk package is
+>> a windows program rather than Cygwin. The result is always an error
+>> message proclaiming 'can not find channel named "1"'. This restores
+>> invocation through sh -c.
+>>     
+>
+> Are you using Tk 8.4 or 8.5?  The man pages for 8.5 imply that the
+> 2>@1 form should work for all platforms, but maybe that wasn't true in
+> 8.4.  If that's the case it's worth mentioning in the patch
+> description.
+>
+> Paul.
+>   
+Cygwin's Tcl/Tk is essentially frozen at 8.4.1. However, I really 
+believe the problem is that the Tcl/Tk is not a full Cygwin application: 
+it is mostly Windows, with only a few pieces converted to Posix through 
+the cygwin.dll, so many things don't quite work correctly. For instance, 
+the current gitk works fine under a pure Cygwin build of Tcl/Tk (8.4.13) 
+I have locally. So, I believe the commit message I wrote is correct.
 
-On Fri, May 23, 2008 at 02:40:41PM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> > +static void remove_locks_on_signal(int signo)
-> > +{
-> > +	remove_locks();
-> > +	signal(SIGINT, SIG_DFL);
-> > +	raise(signo);
-> > +}
-> > +
-> 
-> If you caught signo, shouldn't you be resetting that signo not SIGINT?
-
-True. I suppose we should fix that in remove_lock_file_on_signal() as well,
-then? It does exactly the same thing.
-
-> >  static void remote_ls(const char *path, int flags,
-> >  		      void (*userFunc)(struct remote_ls_ctx *ls),
-> >  		      void *userData);
-> > @@ -2255,6 +2273,8 @@ int main(int argc, char **argv)
-> >  		goto cleanup;
-> >  	}
-> >  
-> > +	signal(SIGINT, remove_locks_on_signal);
-> > +
-> 
-> and you may care more than just INT but perhaps HUP and others?
-
-SIGINT was bothering me the most, because I often kill http-push by pressing
-Ctrl+C. I also considered adding SIGQUIT, but decided against it because
-normally I press Ctrl+\ only if I want the program to quit _right now_ and
-Ctrl+C does not work. On the other hand, sending the signal twice will
-terminate http-push either way.
-
-I don't know in which situation SIGHUP would come into play.
-
-Regards,
-Clemens
+Mark
