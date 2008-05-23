@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v3 09/23] Added a Rules interface implementation and a factory for it.
-Date: Fri, 23 May 2008 22:34:18 +0200
-Message-ID: <1211574872-23676-10-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v3 08/23] Added the class IgnoreRuleListFactory.
+Date: Fri, 23 May 2008 22:34:17 +0200
+Message-ID: <1211574872-23676-9-git-send-email-florianskarten@web.de>
 References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:36:46 2008
+X-From: git-owner@vger.kernel.org Fri May 23 22:36:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jze0B-0006CA-2C
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:35 +0200
+	id 1Jze00-0006CA-Kv
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759119AbYEWUfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 16:35:37 -0400
+	id S1759123AbYEWUe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 16:34:57 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,50 +28,47 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759085AbYEWUfg
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:35:36 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:35496 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756509AbYEWUet (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 16:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758963AbYEWUez
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:34:55 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:45452 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757054AbYEWUej (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 16:34:39 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 14464E08338B
-	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:38 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 7AD9FDC4A1E4
+	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:37 +0200 (CEST)
 Received: from [84.150.81.80] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzdyH-0005iq-01; Fri, 23 May 2008 22:34:37 +0200
+	id 1JzdyH-0005iq-00; Fri, 23 May 2008 22:34:37 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX198w1gI/WFYU/esicZGa9qsCJGjlr8ZVQ+PAZxy
-	R8+lOLqTJZYrarFyAbc+1HCN2mUuAHdawoHTus7obCstD8hryl
-	TASpHdHzYPZORQEZBHWA==
+X-Provags-ID: V01U2FsdGVkX1+Mqycx24bsoxhJvSszCZHQTN1sgTm+uS7Swi7+
+	yTSi0GXy9t7178S6qeCtHcIiBh2moGiFDd7bS8UtRH/ImylhWu
+	fuIcqBUv+HMoJHlydI0g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82748>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../treewalk/rules/RuleListToObjectConverter.java  |  130 ++++++++++++=
+ .../jgit/treewalk/rules/IgnoreRuleListFactory.java |   94 ++++++++++++=
 ++++++++
- .../jgit/treewalk/rules/RulesImplementation.java   |   73 +++++++++++
- 2 files changed, 203 insertions(+), 0 deletions(-)
+ 1 files changed, 94 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/RuleListToObjectConverter.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/RulesImplementation.java
+s/IgnoreRuleListFactory.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RuleL=
-istToObjectConverter.java b/org.spearce.jgit/src/org/spearce/jgit/treew=
-alk/rules/RuleListToObjectConverter.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Ignor=
+eRuleListFactory.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/=
+rules/IgnoreRuleListFactory.java
 new file mode 100644
-index 0000000..b67beff
+index 0000000..98f1169
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RuleListToOb=
-jectConverter.java
-@@ -0,0 +1,130 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/IgnoreRuleLi=
+stFactory.java
+@@ -0,0 +1,94 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -92,219 +89,82 @@ e
 + */
 +package org.spearce.jgit.treewalk.rules;
 +
++import java.io.File;
++import java.io.FileNotFoundException;
 +import java.util.ArrayList;
-+import java.util.Iterator;
++import java.util.LinkedList;
 +import java.util.List;
++import java.util.Scanner;
++
++import org.spearce.jgit.errors.InvalidPatternException;
 +
 +/**
-+ * This class converts a list of {@link Rule} objects into a {@Rules} =
-object.
-+ * During the conversion some optimizations are done:
-+ * <ul>
-+ * <li>Rules which can never match are removed. e.g. There is no need =
-to check
-+ * the rule "/a" in the directory b.</li>
-+ * <li>The list is cut at the first rule which match always. *.txt\n/a=
- for
-+ * example would result in an internal list "ignore all, ignore *.txt"=
- which is
-+ * then reduced to "ignore all".</li>
-+ * <li>Ignore rules which are direcly before an "ignore all" all rule =
-are
-+ * removed. /a\n*.txt for example would result in an intern "ignore *.=
-txt,
-+ * ignore all" list which is then reduced to "ignore all",</li>
-+ * <li>"do not ignore" rules at the bottom of the intern list are remo=
-ved. This
-+ * optimization would remove !a from "!a\n/b" as it is in the inversed=
- list at
-+ * the bottom.</li>
-+ * </ul>
++ * This class can be used to create lists of {@link Rule} objects from=
+ lines of
++ * .gitignore like files.
++ *=20
 + */
-+class RuleListToObjectConverter {
-+	protected Rules createIgnoreRules(Iterator<Rule> ruleIterator) {
-+		final List<Rule> rules =3D getNessesaryRulesFromIterator(ruleIterato=
-r);
-+		removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(rules);
-+		removeUnnecessaryIgnoreRulesNearTheEndOfTheList(rules);
++class IgnoreRuleListFactory {
 +
-+		if (rules.size() =3D=3D 1) {
-+			final Rule rule =3D rules.get(0);
-+			if (rule.getPattern() =3D=3D FilePattern.MATCH_ALWAYS) {
-+				if (rule.isIgnoreAtMatch()) {
-+					return Rules.IGNORE_ALL;
-+				} else {
-+					return Rules.IGNORE_NOTHING;
-+				}
-+			}
-+		} else if (rules.isEmpty()) {
-+			return Rules.IGNORE_NOTHING;
-+		}
-+		return new RulesImplementation(rules, this);
-+	}
-+
-+	private List<Rule> getNessesaryRulesFromIterator(Iterator<Rule> ruleI=
-terator) {
-+		final List<Rule> rules =3D new ArrayList<Rule>();
-+		while (ruleIterator.hasNext()) {
-+			final Rule subRule =3D ruleIterator.next();
-+			if (subRule.getPattern() =3D=3D FilePattern.MATCH_NEVER) {
++	List<Rule> createIgnoreRuleList(final Iterable<String> lineIterable)
++			throws InvalidPatternException {
++		LinkedList<Rule> rules =3D new LinkedList<Rule>();
++		for (String line : lineIterable) {
++			final String trimmedLine =3D line.trim();
++			if (trimmedLine.startsWith("#")) {
 +				continue;
 +			}
-+			rules.add(subRule);
-+			// There is no need for rules after a rule witch match always,
-+			// as such a rule would never be the first rule which matches.
-+			if (subRule.getPattern() =3D=3D FilePattern.MATCH_ALWAYS) {
-+				break;
++			if (trimmedLine.length() =3D=3D 0) {
++				continue;
 +			}
++			rules.add(0, createRule(trimmedLine));
 +		}
 +		return rules;
 +	}
 +
-+	/**
-+	 * Expects that
-+	 * {@link #removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(List)} =
-has
-+	 * been executed first.
-+	 *=20
-+	 * @param rules
-+	 *            rule list to reduce.
-+	 */
-+	private void removeUnnecessaryIgnoreRulesNearTheEndOfTheList(
-+			final List<Rule> rules) {
-+		// Why the following optimization makes only sense for the end of th=
-e
-+		// list:
-+		// If there is a "ignore all"- rule,
-+		// then it is located at the end of the list
-+		// See how the list is filled to prove this statement.
-+		if (rules.size() >=3D 2) {
-+			final Rule lastRule =3D rules.get(rules.size() - 1);
-+			assert lastRule.isIgnoreAtMatch() : "Expected that no 'not ignore'-=
-rule is at the end of the list any more";
-+			final boolean ignoreAllAtEnd =3D lastRule.getPattern().equals(
-+					FilePattern.MATCH_ALWAYS);
-+			if (ignoreAllAtEnd) {
-+				while (rules.size() >=3D 2) {
-+					final int ruleBeforeLastIndex =3D rules.size() - 2;
-+					final Rule ruleBeforeLast =3D rules.get(ruleBeforeLastIndex);
-+					if (ruleBeforeLast.isIgnoreAtMatch()) {
-+						rules.remove(ruleBeforeLastIndex);
-+					} else {
-+						break;
-+					}
++	List<Rule> createIgnoreRuleList(final List<File> files)
++			throws FileNotFoundException, InvalidPatternException {
++		final List<String> lines =3D new ArrayList<String>();
++		for (File file : files) {
++			Scanner scanner =3D new Scanner(file);
++			try {
++				while (scanner.hasNextLine()) {
++					lines.add(scanner.nextLine());
 +				}
++			} finally {
++				scanner.close();
 +			}
++		}
++		return createIgnoreRuleList(lines);
++	}
++
++	private Rule createRule(String patternString)
++			throws InvalidPatternException {
++		final boolean inverse =3D patternString.startsWith("!");
++		if (inverse)
++			patternString =3D patternString.substring(1);
++
++		final FilePattern pattern =3D createFilePattern(patternString);
++		return new Rule(!inverse, pattern);
++	}
++
++	private FilePattern createFilePattern(String patternString)
++			throws InvalidPatternException {
++		final boolean matchDirectoriesOnly =3D patternString.endsWith("/");
++		if (matchDirectoriesOnly)
++			patternString =3D patternString.substring(0,
++					patternString.length() - 1);
++		if (patternString.contains("/")) {
++			if (patternString.startsWith("/"))
++				patternString =3D patternString.substring(1);
++
++			return new FilePathPattern(patternString, false,
++					matchDirectoriesOnly);
++		} else {
++			return new FileNamePattern(patternString, matchDirectoriesOnly);
 +		}
 +	}
 +
-+	private void removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(
-+			final List<Rule> rules) {
-+		// Why it is save to remove "don't ignore rules" at the end of the l=
-ist
-+		// if there is no "ignore rule" below a "don't ignore rule" then
-+		// the path which haven't match jet will never be ignored:
-+		// -> if another "don't ignore rule" match then the patch will not b=
-e
-+		// ignored
-+		// -> if no "don't ignore rule" match then the path will not be igno=
-red.
-+		while (!rules.isEmpty()) {
-+			final int indexOfLastRule =3D rules.size() - 1;
-+			final Rule lastRule =3D rules.get(indexOfLastRule);
-+			if (lastRule.isIgnoreAtMatch()) {
-+				break;
-+			} else {
-+				rules.remove(indexOfLastRule);
-+			}
-+		}
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules=
-Implementation.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/ru=
-les/RulesImplementation.java
-new file mode 100644
-index 0000000..458b327
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RulesImpleme=
-ntation.java
-@@ -0,0 +1,73 @@
-+/*
-+ *  Copyright (C) 2008 Florian K=C3=B6berle
-+ *
-+ *  This library is free software; you can redistribute it and/or
-+ *  modify it under the terms of the GNU General Public
-+ *  License, version 2, as published by the Free Software Foundation.
-+ *
-+ *  This library is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ *  General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public
-+ *  License along with this library; if not, write to the Free Softwar=
-e
-+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  021=
-10-1301
-+ */
-+package org.spearce.jgit.treewalk.rules;
-+
-+import java.util.Iterator;
-+import java.util.List;
-+
-+class RulesImplementation implements Rules {
-+	/**
-+	 * Complete list of rules. Note that order is: determining rule first=
-=2E
-+	 */
-+	private final List<Rule> rules;
-+
-+	/**
-+	 * Factory used to create {@link Rules} for sub directories.
-+	 */
-+	private RuleListToObjectConverter factory;
-+
-+	RulesImplementation(List<Rule> rules, RuleListToObjectConverter facto=
-ry) {
-+		this.rules =3D rules;
-+		this.factory =3D factory;
-+	}
-+
-+	/**
-+	 * @see Rules#toIgnore(java.lang.String, boolean)
-+	 */
-+	public boolean toIgnore(String fileName, boolean fileIsDirectory) {
-+		for (Rule rule : rules) {
-+			if (rule.getPattern().match(fileName, fileIsDirectory)) {
-+				return rule.isIgnoreAtMatch();
-+			}
-+		}
-+		return false;
-+	}
-+
-+	/**
-+	 * @see Rules#getRulesForSubDirectory(java.lang.String)
-+	 */
-+	public Rules getRulesForSubDirectory(final String directoryName) {
-+		final Iterator<Rule> subRuleIterator =3D new Iterator<Rule>() {
-+			final Iterator<Rule> ruleIterator =3D rules.iterator();
-+
-+			public boolean hasNext() {
-+				return ruleIterator.hasNext();
-+			}
-+
-+			public Rule next() {
-+				return ruleIterator.next()
-+						.getRuleForSubDirectory(directoryName);
-+			}
-+
-+			public void remove() {
-+				throw new UnsupportedOperationException();
-+			}
-+
-+		};
-+		return factory.createIgnoreRules(subRuleIterator);
-+	}
 +}
 --=20
 1.5.4.3
