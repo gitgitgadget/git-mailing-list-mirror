@@ -1,191 +1,151 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v3 03/23] Added the interface FilePattern.
-Date: Fri, 23 May 2008 22:34:12 +0200
-Message-ID: <1211574872-23676-4-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v3 22/23] Added findWorkTree method to Repository class.
+Date: Fri, 23 May 2008 22:34:31 +0200
+Message-ID: <1211574872-23676-23-git-send-email-florianskarten@web.de>
 References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:36:37 2008
+X-From: git-owner@vger.kernel.org Fri May 23 22:36:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzdzv-0006CA-Ic
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:19 +0200
+	id 1Jze05-0006CA-Rk
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757145AbYEWUek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 16:34:40 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756974AbYEWUej
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:34:39 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:45418 "EHLO
+	id S1754528AbYEWUfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 16:35:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759167AbYEWUfO
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:35:14 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:45516 "EHLO
 	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756438AbYEWUeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 16:34:36 -0400
+	with ESMTP id S1758296AbYEWUep (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 16:34:45 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 2EFF8DC4A33E
-	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:35 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 70801DC4A263
+	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:44 +0200 (CEST)
 Received: from [84.150.81.80] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzdyE-0005iq-00; Fri, 23 May 2008 22:34:34 +0200
+	id 1JzdyN-0005iq-01; Fri, 23 May 2008 22:34:44 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1+h3P/n9y/4sjiCSOC+RDNvrnr4WtqEzYkKPXJX
-	eMQvl+Tabq0EmeKUgDybbKLGEnGJyl1CiyWmpqQl88OVSWcSEf
-	ygBqtZJxIJJOqSyLlHvw==
+X-Provags-ID: V01U2FsdGVkX1+9FLd+3AIzRYtw370LgawbioeAH4uealkbbBN7
+	+FwJM4JI+BFf3RlTWy2hNURq/xr9x1180sOhs3hcpzke5Tdsnc
+	H4p4ivYDC+JapmMm8Ilw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82741>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../spearce/jgit/treewalk/rules/FilePattern.java   |  107 ++++++++++++=
-++++++++
- 1 files changed, 107 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/FilePattern.java
+ .../src/org/spearce/jgit/lib/Repository.java       |   80 ++++++++++++++++++++
+ 1 files changed, 80 insertions(+), 0 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FileP=
-attern.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/File=
-Pattern.java
-new file mode 100644
-index 0000000..75262c8
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FilePattern.=
-java
-@@ -0,0 +1,107 @@
-+/*
-+ *  Copyright (C) 2008 Florian K=C3=B6berle
-+ *
-+ *  This library is free software; you can redistribute it and/or
-+ *  modify it under the terms of the GNU General Public
-+ *  License, version 2, as published by the Free Software Foundation.
-+ *
-+ *  This library is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ *  General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public
-+ *  License along with this library; if not, write to the Free Softwar=
-e
-+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  021=
-10-1301
-+ */
-+package org.spearce.jgit.treewalk.rules;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index 06e686f..71e0e04 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -16,6 +16,11 @@
+  */
+ package org.spearce.jgit.lib;
+ 
++import static org.spearce.jgit.lib.Constants.HEAD;
++import static org.spearce.jgit.lib.Constants.OBJECTS_DIRECTORY_NAME;
++import static org.spearce.jgit.lib.Constants.REFS_DIRECTORY_NAME;
++import static org.spearce.jgit.lib.Constants.REPOSITORY_DIRECTORY_NAME;
 +
-+/**
-+ * A {@link FilePattern} can be used to check if files in a directory =
-matches a
-+ * pattern. It provides with the {@link #getPatternForSubDirectory(Str=
-ing)}
-+ * method {@link FilePattern}s for sub directories.
-+ *=20
-+ * Implementations of this interface should be immutable.
-+ *=20
-+ */
-+interface FilePattern {
+ import java.io.BufferedReader;
+ import java.io.File;
+ import java.io.FileNotFoundException;
+@@ -29,6 +34,7 @@ import java.util.Map;
+ import java.util.Set;
+ 
+ import org.spearce.jgit.errors.IncorrectObjectTypeException;
++import org.spearce.jgit.errors.NoGitRepositoryFoundException;
+ import org.spearce.jgit.errors.ObjectWritingException;
+ import org.spearce.jgit.errors.RevisionSyntaxException;
+ import org.spearce.jgit.stgit.StGitPatch;
+@@ -1253,4 +1259,78 @@ public class Repository {
+ 		}
+ 	}
+ 
 +	/**
-+	 * Contains the only instance of {@link FilePatternMatchAlways}.
++	 * Find the git repository for the current working directory.
++	 * 
++	 * @return a {@link Repository}.
++	 * @throws NoGitRepositoryFoundException
++	 *             if no git repository could be found for the current
++	 *             directory.
++	 * @throws IOException
++	 *             if not able to determine the absolute path of the current
++	 *             working directory.
 +	 */
-+	public static final FilePattern MATCH_ALWAYS =3D new FilePatternMatch=
-Always();
-+
-+	/**
-+	 * Contains the only instance of {@link FilePatternMatchNever}.
-+	 */
-+	public static final FilePattern MATCH_NEVER =3D new FilePatternMatchN=
-ever();
-+
-+	/**
-+	 * @param fileName
-+	 *            the name of the file or directory
-+	 * @param fileIsDirectory
-+	 *            determines if the file is a directory.
-+	 * @return true if the pattern matches.
-+	 */
-+	boolean match(String fileName, boolean fileIsDirectory);
-+
-+	/**
-+	 *=20
-+	 * @param directoryName
-+	 *            the name of a subdirectory.
-+	 * @return a pattern which can be used to match files in sub director=
-ies. A
-+	 *         user may check if the returned value is {@link #MATCH_NEVE=
-R} in
-+	 *         order to do some performance optimizations.
-+	 *=20
-+	 */
-+	FilePattern getPatternForSubDirectory(String directoryName);
-+
-+	/**
-+	 * @return true if {@link #getPatternForSubDirectory(String)} returns=
- true
-+	 *         for every value.
-+	 */
-+	boolean isSameForSubDirectories();
-+
-+	/**
-+	 * This implementation does always match.
-+	 */
-+	public static final class FilePatternMatchAlways implements FilePatte=
-rn {
-+
-+		private FilePatternMatchAlways() {
-+			// declared to make the constructor private
-+		}
-+
-+		public FilePattern getPatternForSubDirectory(String directoryName) {
-+			return MATCH_ALWAYS;
-+		}
-+
-+		public boolean match(String fileName, boolean fileIsDirectory) {
-+			return true;
-+		}
-+
-+		public boolean isSameForSubDirectories() {
-+			return true;
-+		}
++	public static WorkTree findWorkTree() throws NoGitRepositoryFoundException,
++			IOException {
++		return findWorkTree(new File("."));
 +	}
 +
 +	/**
-+	 * This implementation does never match.
++	 * Checks if a path is a valid git repository. Works similar like the method
++	 * is_git_directory from the original setup.c file.
++	 * 
++	 * @param directory
++	 *            the path which should be checked.
++	 * @return true if the path is a valid git repository.
 +	 */
-+	public static final class FilePatternMatchNever implements FilePatter=
-n {
-+		private FilePatternMatchNever() {
-+			// declared to make the constructor private
-+		}
-+
-+		public FilePattern getPatternForSubDirectory(String directoryName) {
-+			return MATCH_NEVER;
-+		}
-+
-+		public boolean match(String fileName, boolean fileIsDirectory) {
++	private static boolean isRepository(File directory) {
++		if (!directory.isDirectory()) {
 +			return false;
 +		}
 +
-+		public boolean isSameForSubDirectories() {
-+			return true;
++		final File objectDirectory = new File(directory, OBJECTS_DIRECTORY_NAME);
++		if (!objectDirectory.isDirectory()) {
++			return false;
 +		}
++
++		final File refsDirectory = new File(directory, REFS_DIRECTORY_NAME);
++		if (!refsDirectory.isDirectory()) {
++			return false;
++		}
++
++		final File head = new File(directory, HEAD);
++		if (!hasValidateHeadRef(head)) {
++			return false;
++		}
++
++		return true;
 +	}
 +
-+}
---=20
++	/**
++	 * Checks for example if a path is a valid HEAD file.
++	 * 
++	 * @param path
++	 *            is the path of the HEAD file.
++	 * @return true if it has a valid head reference.
++	 */
++	private static final boolean hasValidateHeadRef(File path) {
++		return true; // TODO implement this method
++	}
++
++	private static WorkTree findWorkTree(final File directory)
++			throws IOException, NoGitRepositoryFoundException {
++		File currentDirectory = directory.getAbsoluteFile();
++		while (currentDirectory != null) {
++			final File commonGitDirectory = new File(directory,
++					REPOSITORY_DIRECTORY_NAME);
++			if (isRepository(commonGitDirectory))
++				return new WorkTree(currentDirectory, new Repository(
++						commonGitDirectory));
++			if (isRepository(currentDirectory))
++				return new WorkTree(null, new Repository(currentDirectory));
++			currentDirectory = currentDirectory.getParentFile();
++		}
++		throw new NoGitRepositoryFoundException(directory);
++	}
++
+ }
+-- 
 1.5.4.3
