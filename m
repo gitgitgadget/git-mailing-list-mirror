@@ -1,68 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mailsplit and mailinfo: gracefully handle NUL
- characters
-Date: Fri, 23 May 2008 12:21:49 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805231221390.30431@racer>
-References: <482BE5F7.2050108@thorn.ws> <alpine.DEB.1.00.0805161139530.30431@racer> <alpine.DEB.1.00.0805161148010.30431@racer> <alpine.DEB.1.00.0805161403130.30431@racer> <7v8wy34jj3.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221136230.30431@racer>
- <7v8wy2w7wg.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: perforce import: git-p4 memory usage
+Date: Fri, 23 May 2008 13:25:44 +0200
+Message-ID: <4836A9B8.6070804@op5.se>
+References: <H1SlcXmh.1211537268.4996380.lgd@diamand.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tommy Thorn <tommy-git@thorn.ws>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 13:22:38 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Fri May 23 13:26:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzVM4-0000vv-SI
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 13:22:37 +0200
+	id 1JzVQ0-0002Nt-Bc
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 13:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471AbYEWLVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 07:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753658AbYEWLVp
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 07:21:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41881 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754674AbYEWLVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 07:21:43 -0400
-Received: (qmail invoked by alias); 23 May 2008 11:21:40 -0000
-Received: from R0685.r.pppool.de (EHLO racer.local) [89.54.6.133]
-  by mail.gmx.net (mp042) with SMTP; 23 May 2008 13:21:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19NVZ8kc2pNQQjpTq/BgBcQ8VhSxGCz02DQnLpy+A
-	vYZnAna9Mlaq3o
-X-X-Sender: gene099@racer
-In-Reply-To: <7v8wy2w7wg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752960AbYEWLZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 07:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYEWLZs
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 07:25:48 -0400
+Received: from mail.op5.se ([193.201.96.20]:46743 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752268AbYEWLZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 07:25:47 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D291E1B8004F;
+	Fri, 23 May 2008 13:23:25 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id C32A2GlBBp4C; Fri, 23 May 2008 13:23:25 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id D7A321B80005;
+	Fri, 23 May 2008 13:23:24 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <H1SlcXmh.1211537268.4996380.lgd@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82694>
 
-Hi,
-
-On Thu, 22 May 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Luke Diamand wrote:
+> Hi!
 > 
-> >> Looking at what handle_body() does for TE_BASE64 and TE_QP cases, I have 
-> >> to wonder if this is enough.  The loop seems to stop at (*op == NUL) 
-> >> which follows an old assumption that each line is terminated with NUL, 
-> >> not the new assumption you introduced that each line's length is kept in 
-> >> local variable len.
-> >
-> > Of course!  But does BASE64 and QP contain NULs?
+> I'm trying to import part of a perforce repo with git-p4.
 > 
-> The loop in question iterates over bytes _after_ decoding these encoded
-> lines, and a typical reason you would encode the payload is because it
-> contains something not safe over e-mail transfer, e.g. NUL.
+> However, git-p4 appears to try to read all the repo into memory (and
+> moreover seems to need about twice as much memory as repo).
 > 
-> I think decode_transfer_encoding() also needs to become safe against NULs
-> in the payload.
+> Once it runs out of swap, it dies (unsurprisingly).
+> 
+> I think it's failing in readP4Files(), where it appears to read the
+> entire repository in one go with "p4 -G -x - print".
+> 
+> Can I just rework this function to do stuff one file at a time? Or is
+> that dumb?
+> 
 
-Okay, I missed that.
+It's probably a lot slower, and since git works with changesets it
+probably won't work all that good unless you somehow construct some
+middle-stage which you can then feed to git-fastimport or some such.
 
-Ciao,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
