@@ -1,80 +1,89 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: git diff-files weirdness (bug?)
-Date: Fri, 23 May 2008 15:20:47 +0100
-Message-ID: <b0943d9e0805230720h61cbabbbw180908e1b28a34cc@mail.gmail.com>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: [PATCH] git-init: inform user of `git --bare init' option
+Date: Fri, 23 May 2008 15:24:32 +0100
+Message-ID: <20080523142432.GA8360@bit.office.eurotux.com>
+References: <20080519175313.GA17305@bit.office.eurotux.com> <20080520194850.GB19226@bit.office.eurotux.com> <7vy761sgks.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 23 16:22:36 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 16:25:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzY9f-0008LX-SC
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:22:00 +0200
+	id 1JzYDA-0001Ml-AJ
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 16:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbYEWOUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 10:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbYEWOUw
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:20:52 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:55046 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848AbYEWOUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 10:20:51 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so779754ugf.16
-        for <git@vger.kernel.org>; Fri, 23 May 2008 07:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=DylCcNN209aMe2wpEm31dffoqHKNNXbbNr7PpfufUYM=;
-        b=HQUdio8pY9IvNUk26MBtnej/imdo4ePjL4Fra/okenbX+cwbmyQBLZnxixW6rblxf2bi7qtUCH8emfgsVGRhqefCv1e69ZneoJGfFvewzJlmzE/XeGSDwj9MRs9Hb3Gli/ium/o/UdueoJFme9pwaekjdsEd1mJ+xRpWsNA6YJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=nn1P1AMvKhBJjoylWzGnSveGgotArs4F4X71KXflyxtNu7KRzQQqPYdd+jywkx+sHXZEj5m+WucW/BG6kFPYF8zNg9pTD1IRv4dFRDsl0Lr/qgE3v935M3fUmPj3EOUbD78raOu9Is/uC59vxp1+RqPeHKB+9uD8o/Ow9tPUYus=
-Received: by 10.66.251.6 with SMTP id y6mr880473ugh.30.1211552447440;
-        Fri, 23 May 2008 07:20:47 -0700 (PDT)
-Received: by 10.66.242.4 with HTTP; Fri, 23 May 2008 07:20:47 -0700 (PDT)
+	id S1751974AbYEWOYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 10:24:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbYEWOYk
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 10:24:40 -0400
+Received: from os.eurotux.com ([216.75.63.6]:37472 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384AbYEWOYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 10:24:39 -0400
+Received: (qmail 18282 invoked from network); 23 May 2008 14:24:38 -0000
+Received: from adsl.eurotux.com (HELO bit.office.eurotux.com) (luciano@213.205.93.24)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 23 May 2008 14:24:38 -0000
 Content-Disposition: inline
+In-Reply-To: <7vy761sgks.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82713>
 
-Hi,
 
-I was investigating a bug in "stg refresh" failing with moved files
-and noticed that it was caused by Git (HEAD pulled yesterday):
+--AqsLC8rIMeq19msA
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  git init
-  touch a
-  git add a
-  git commit -m "test"
-  git mv a b
+On Thu, May 22, 2008 at 11:02:59PM -0700, Junio C Hamano wrote:
+> Luciano Rocha <luciano@eurotux.com> writes:
+>=20
+> > Creation of a bare repository isn't consistent:
+> >
+> > $ git init --bare
+> > usage: git-init [-q | --quiet] [--template=3D<template-directory>] [--s=
+hared]
+> > $ git --bare init
+> > Initialized empty Git repository in ...
+>=20
+> The examples do not demonstrate that "it isn't consistent".  It just
+> demonstrates that it is easy for people to forget that --bare option is an
+> option to the "git" potty itself and not an option to "git init".
 
-These are OK:
+Well, "git --help init" works the same as "git init --help", so "--bare"
+not working depending on its position isn't very consistent...
 
-  git diff-files -- a
-  git diff-files -- b
+<patch snipped>
+> Given that you are adding a special case support for "git init --bare"
+> anyway, a better approach to help people out of this easy confusion (and
+> we have to admit that the confusion is very easy!) would be to make "git
+> init --bare" pretend/behave as if the user said "git --bare init", don't
+> you think?
 
-These fail:
+Yes, but this was easy for me to do. The proper way, however, will take
+me more time.
 
-  git diff-files -- a b
-  git diff-files -- a c
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
 
-These are OK:
+--AqsLC8rIMeq19msA
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-  git diff-files -- a b c
-  git diff-files -- a b c d e
-  git diff-files -- c d e
-  ...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-It looks like the two arguments command is a special case. Passing
-"-q" doesn't make any difference.
+iEYEARECAAYFAkg206AACgkQinSul6a7oB9YwQCdFqiqKTx1PJy//y8u2C6JXq+o
+poEAnjhMD/AWEDY/22Bu7btujcTZNUjo
+=8r6G
+-----END PGP SIGNATURE-----
 
-Thanks.
-
--- 
-Catalin
+--AqsLC8rIMeq19msA--
