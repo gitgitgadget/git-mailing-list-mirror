@@ -1,23 +1,23 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v3 04/23] Added the class Rule.
-Date: Fri, 23 May 2008 22:34:13 +0200
-Message-ID: <1211574872-23676-5-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v3 05/23] Added the iterface Rules.
+Date: Fri, 23 May 2008 22:34:14 +0200
+Message-ID: <1211574872-23676-6-git-send-email-florianskarten@web.de>
 References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:36:29 2008
+X-From: git-owner@vger.kernel.org Fri May 23 22:36:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzdzx-0006CA-2W
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:21 +0200
+	id 1Jzdzy-0006CA-P7
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 22:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758158AbYEWUeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 16:34:44 -0400
+	id S1758984AbYEWUev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 16:34:51 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,45 +28,46 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757290AbYEWUem
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:34:42 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:45421 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbYEWUes
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 16:34:48 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:45426 "EHLO
 	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756485AbYEWUeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 16:34:36 -0400
+	with ESMTP id S1756509AbYEWUeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 16:34:37 -0400
 Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id A0980DC4A297
-	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:35 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id 22F7EDC4A343
+	for <git@vger.kernel.org>; Fri, 23 May 2008 22:34:36 +0200 (CEST)
 Received: from [84.150.81.80] (helo=localhost.localdomain)
 	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzdyF-0005iq-00; Fri, 23 May 2008 22:34:35 +0200
+	id 1JzdyF-0005iq-01; Fri, 23 May 2008 22:34:35 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1/H/13ZRHGd3nZcJCFBuiY6QDfqS5L4d0r9j38F
-	tPykSlZ7q4WtJ/wJtfnnEGh24Er4SIe1rOgepngpK+2CisHSOz
-	NICuokR2AZFKbF3MfxLw==
+X-Provags-ID: V01U2FsdGVkX1/WIVQjO0MSYegKffQ7JwYTFW517tBQR3U0QmPW
+	SLsdsR+1JrVjdwV1qiLrinMvb8YQipCy53pfRYqCBbZYnrQja1
+	mZLlkuuZUzHCNqpdgvBA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82737>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../src/org/spearce/jgit/treewalk/rules/Rule.java  |   61 ++++++++++++=
+ .../src/org/spearce/jgit/treewalk/rules/Rules.java |   99 ++++++++++++=
 ++++++++
- 1 files changed, 61 insertions(+), 0 deletions(-)
+ 1 files changed, 99 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/Rule.java
+s/Rules.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rule.=
-java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rule.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules=
+=2Ejava b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules.ja=
+va
 new file mode 100644
-index 0000000..1cc74f5
+index 0000000..627d974
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rule.java
-@@ -0,0 +1,61 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules.java
+@@ -0,0 +1,99 @@
 +/*
 + *  Copyright (C) 2008 Florian K=C3=B6berle
 + *
@@ -88,45 +89,88 @@ e
 +package org.spearce.jgit.treewalk.rules;
 +
 +/**
-+ * A Rule defines what to do with a files which match a specified
-+ * {@link FilePattern}.
++ * A {@link Rules} instances defines ignore or do not ignore rules for=
+ files in
++ * a directory. It can't directly be used to match files in sub direct=
+ories, but
++ * provides a method {@link #getRulesForSubDirectory}.
++ *=20
 + */
-+public class Rule {
-+	private boolean ignoreAtMatch;
-+
-+	private FilePattern pattern;
++public interface Rules {
 +
 +	/**
-+	 *=20
-+	 * @param ignoreAtMatch
-+	 *            defines if the rules ignores or accepts at a match.
-+	 * @param pattern
-+	 *            the pattern used to test if a file matches.
++	 * Provides the instance of {@link IgnoreAllRules}.
 +	 */
-+	Rule(boolean ignoreAtMatch, FilePattern pattern) {
-+		this.ignoreAtMatch =3D ignoreAtMatch;
-+		this.pattern =3D pattern;
-+	}
++	public static final Rules IGNORE_ALL =3D new IgnoreAllRules();
 +
-+	FilePattern getPattern() {
-+		return pattern;
-+	}
++	/**
++	 * Provides the instance of {@link IgnoreNothingRules}.
++	 */
++	public static final Rules IGNORE_NOTHING =3D new IgnoreNothingRules()=
+;
 +
-+	boolean isIgnoreAtMatch() {
-+		return ignoreAtMatch;
-+	}
++	/**
++	 * @param fileName
++	 *            the name of the file or directory.
++	 * @param fileIsDirectory
++	 *            should be true if the file is a directory.
++	 * @return true if the file or directory should be ignored.
++	 */
++	public abstract boolean toIgnore(String fileName, boolean fileIsDirec=
+tory);
 +
-+	Rule getRuleForSubDirectory(String directoryName) {
-+		final FilePattern subPattern =3D pattern
-+				.getPatternForSubDirectory(directoryName);
-+		if (subPattern =3D=3D pattern) {
++	/**
++	 * @param directoryName
++	 *            the sub directory for which you want an {@link Rules}
++	 *            instance.
++	 * @return an {@link Rules} instance, which can be used to check file=
+s in
++	 *         the specified sub directory.
++	 */
++	public abstract Rules getRulesForSubDirectory(String directoryName);
++
++	/**
++	 * This implementation ignores everything.
++	 */
++	public static final class IgnoreAllRules implements Rules {
++		private IgnoreAllRules() {
++			// declared to make the constructor private
++		}
++
++		public Rules getRulesForSubDirectory(String directoryName) {
 +			return this;
 +		}
-+		return new Rule(ignoreAtMatch, subPattern);
++
++		public boolean toIgnore(String fileName, boolean fileIsDirectory) {
++			return true;
++		}
++
++		@Override
++		public String toString() {
++			return "ignore all rules";
++		}
 +	}
 +
-+	boolean isSameForSubDirectories() {
-+		return pattern.isSameForSubDirectories();
++	/**
++	 * This implementation ignores nothing.
++	 */
++	public static final class IgnoreNothingRules implements Rules {
++		private IgnoreNothingRules() {
++			// declared to make the constructor private
++		}
++
++		public Rules getRulesForSubDirectory(String directoryName) {
++			return this;
++		}
++
++		public boolean toIgnore(String fileName, boolean fileIsDirectory) {
++			return false;
++		}
++
++		@Override
++		public String toString() {
++			return "ignore nothing rules";
++		}
 +	}
 +
 +}
