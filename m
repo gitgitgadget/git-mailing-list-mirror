@@ -1,101 +1,159 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: gitignore: negating path patterns
-Date: Fri, 23 May 2008 15:44:02 -0700
-Message-ID: <ADCBC87D-27A7-4C3F-B11E-8AE217F8AF91@sb.org>
-References: <g11cvn$ndr$1@ger.gmane.org> <5BBB5607-DF95-4C06-BE6C-C3D7AF475FBF@sb.org> <g15t3j$eoa$1@ger.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Sat May 24 00:45:07 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] diff -- file1 file2: do not default to --no-index inside a
+ git repository
+Date: Fri, 23 May 2008 23:49:22 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805232309350.30431@racer>
+References: <b0943d9e0805230720h61cbabbbw180908e1b28a34cc@mail.gmail.com> <alpine.LFD.1.10.0805230906110.3081@woody.linux-foundation.org> <alpine.LFD.1.10.0805230942480.3081@woody.linux-foundation.org> <7vbq2wsxnk.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 24 00:50:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzg0V-0007ZR-GS
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 00:45:03 +0200
+	id 1Jzg5R-0000VZ-RJ
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 00:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbYEWWoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 18:44:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752967AbYEWWoF
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 18:44:05 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:51370 "EHLO
-	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753210AbYEWWoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 18:44:04 -0400
-Received: from [10.100.18.156] (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id D2DE518DB65;
-	Fri, 23 May 2008 15:44:02 -0700 (PDT)
-In-Reply-To: <g15t3j$eoa$1@ger.gmane.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1758067AbYEWWtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 18:49:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753510AbYEWWtR
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 18:49:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43513 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753356AbYEWWtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 18:49:16 -0400
+Received: (qmail invoked by alias); 23 May 2008 22:49:14 -0000
+Received: from R06fc.r.pppool.de (EHLO racer.local) [89.54.6.252]
+  by mail.gmx.net (mp010) with SMTP; 24 May 2008 00:49:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lU7xQUUKlZ/lZMJgvsUVmsNFi6L2EepRq1b9klQ
+	OvvXspCsKqXLrW
+X-X-Sender: gene099@racer
+In-Reply-To: <7vbq2wsxnk.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82767>
 
-On May 23, 2008, at 12:52 AM, Michael J Gruber wrote:
 
-> Kevin Ballard venit, vidit, dixit 23.05.2008 02:23:
->> On May 21, 2008, at 7:52 AM, Michael J Gruber wrote:
->>> Hi there
->>>
->>> It seems that negating path patterns in gitignore doesn't work, or I
->>> don't understand it (or both). With the attached script, git status
->>> (1.5.5.1) reports "dir/a" as new and "dir/b" as untracked. I would
->>> rather expect it to report "dir/c" as untracked also.
->>>
->>> It seems that "!b" matches to include "dir/b" (reverting the  
->>> exclusion
->>> "*" as expected), whereas "!dir/" does not match to include "dir/c".
->>>
->>> What's going on here?
->> "dir/" will not match anything, because paths are compared without   
->> trailing slashes. Try "!dir".
->
-> I am sorry, but this is plain wrong, at least if "man gitignore" is  
-> right (see below). "!dir" would match files whose name (pathname  
-> without leading directory name) matches "dir" (i.e.: is dir) and  
-> exclude those from exclusion (include them).
->
-> Also, replacing "!dir/" by "!dir" in my test script does not change  
-> the result. In fact, for "!dir" the result is as expected and  
-> documented, just for "!dir/" I would expect something else.
->
-> So, thanks for trying to help, although reading the manual or  
-> testing your advice before would be appreciated even more. ;)
->
-> Michael
->
-> From man gitignore:
->
-> If the pattern ends with a slash, it is removed for the purpose of  
-> the following description, but it would only find a match with a  
-> directory. In other words, foo/ will match a directory foo and paths  
-> underneath it, but will not match a regular file or a symbolic link  
-> foo (this is consistent with the way how pathspec works in general  
-> in git).
+When calling "git diff -- a b", as opposed to "git diff a b" without "--",
+do not default to --no-index inside a git repository.
 
-Ahh, the behavior changed in 1.5.5. Pre-1.5.5, if a path ended in a  
-slash, it would never match anything.
+For example,
 
-In any case, the problem is the * pattern. Here's what happens:
+	git mv a b && git diff -- a b
 
-At /, the * is evaluated and ignores everything. The !dir/ is  
-evaluated and unignores dir. The !b is evaluated and matches nothing.
-AT /dir, the * is evaluated and ignores everything. The !dir/ is  
-evaluated and matches nothing. The !b is evaluated and unignores b.
+used to have an unexpected result.
 
-So the problem is the * is recursively applying to the subdirectories.  
-To fix this, use /* as the pattern.
+Noticed by Catalin Marinas, diagnosed by Linus.
 
--Kevin Ballard
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
+	On Fri, 23 May 2008, Junio C Hamano wrote:
+
+	> Linus Torvalds <torvalds@linux-foundation.org> writes:
+	> 
+	> > ... So I would suggest that we make it *much* harder to 
+	> > trigger the "make it act like a traditional 'diff'" thing.
+	> >
+	> > I would suggest that we *not* invoce the traditional 'diff' 
+	> > behaviour when:
+	> >
+	> >  - we're called as "git-diff-files". That's clearly a git 
+	> >    thing. Don't try to make it act like an external non-git diff. 
+	> >    Only do the special case for plain "git diff" itself.
+
+	I am not so sure about that.
+
+	> >  - even for plain "git diff", make it much harder to trigger 
+	> >    non-git behaviour. Don't do it if the files don't exist.
+	> >    Don't do it if there is '--' there.
+	> >
+	> > In fact, maybe we should remove that thing entirely, or 
+	> > *require* a flag to enable it (at least if we're in a git
+	> > directory).  It's a cute hack, but when the cute hack actually 
+	> > makes it impossible to do certain real git operations, it's a 
+	> > cute hack that is detrimental.
+	> 
+	> Very well said.  I've always wanted to rip that hack out of the 
+	> normal "git diff with two pathspec parameters" codepath.
+
+	Yes, I see how that cute hack does the wrong thing here.
+
+	However, it is pretty convenient to be able to say "git diff a b" 
+	and have it fall back to --no-index if either a or b is not in the 
+	index.  Most of the time, I would actually expect it to be the 
+	right thing, too.
+
+	Hey, but if you disagree, just rip it out.  Actually, I did that 
+	already, and will reply with that alternative patch.
+
+ diff-lib.c            |    4 ++--
+ t/t4002-diff-basic.sh |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index fe2ccec..b1daad6 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -257,8 +257,8 @@ int setup_diff_no_index(struct rev_info *revs,
+ 		if (argv[i][0] != '-' || argv[i][1] == '\0')
+ 			break;
+ 		else if (!strcmp(argv[i], "--")) {
+-			i++;
+-			break;
++			revs->max_count = -2;
++			return -1;
+ 		} else if (i < argc - 3 && !strcmp(argv[i], "--no-index")) {
+ 			i = argc - 3;
+ 			DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index a4cfde6..678c4a5 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -244,4 +244,35 @@ test_expect_success \
+     git diff-tree -r -R $tree_A $tree_B >.test-b &&
+     cmp -s .test-a .test-b'
+ 
++cat > expect << EOF
++diff --git a/AA b/AA
++index ccba72a..6aa2b53 100644
++--- a/AA
+++++ b/AA
++@@ -1 +1 @@
++-This is added AA in the branch A.
+++This is added AA in the branch B.
++EOF
++
++test_expect_success '"diff -- AA DM" does not imply --no-index' '
++
++	git diff -- AA DM > output &&
++	cmp -s output expect
++
++'
++
++cat > expect << EOF
++diff --git a/AA b/DM
++index 6aa2b53..3c4d8de 100644
++--- a/AA
+++++ b/DM
++@@ -1 +1 @@
++-This is added AA in the branch B.
+++This is modified DM in the branch B.
++EOF
++
++test_expect_success '"diff AA DM" implies --no-index' '
++
++'
++
+ test_done
 -- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+1.5.5.1.553.ga1dd7.dirty
