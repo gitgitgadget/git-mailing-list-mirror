@@ -1,67 +1,74 @@
-From: Jon Loeliger <jdl@freescale.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 4/3] bisect: use a detached HEAD to bisect
-Date: Fri, 23 May 2008 10:14:49 -0500
-Message-ID: <4836DF69.4060609@freescale.com>
+Date: Fri, 23 May 2008 08:27:51 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805230823330.3081@woody.linux-foundation.org>
 References: <20080523012857.acce6457.chriscool@tuxfamily.org> <7v3ao9twfa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Christian Couder <chriscool@tuxfamily.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+	Git Mailing List <git@vger.kernel.org>,
+	Paul Mackerras <paulus@samba.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 17:16:54 2008
+X-From: git-owner@vger.kernel.org Fri May 23 17:30:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzZ0b-0000oU-KU
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 17:16:42 +0200
+	id 1JzZDM-0006o6-5p
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 17:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbYEWPPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 11:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755157AbYEWPPt
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 11:15:49 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:44170 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754727AbYEWPPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 11:15:48 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m4NFFPIt028522;
-	Fri, 23 May 2008 08:15:26 -0700 (MST)
-Received: from [10.214.73.219] (mvp-10-214-73-219.am.freescale.net [10.214.73.219])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m4NFFLDI004196;
-	Fri, 23 May 2008 10:15:22 -0500 (CDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+	id S1752490AbYEWP3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 11:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbYEWP3A
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 11:29:00 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:56113 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752414AbYEWP27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 11:28:59 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4NFRqH7010560
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 May 2008 08:27:53 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4NFRpuO028487;
+	Fri, 23 May 2008 08:27:51 -0700
 In-Reply-To: <7v3ao9twfa.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.91 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82716>
 
-Junio C Hamano wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> 
->> When "git bisect" was first written, it was not possible to
->> checkout a detached HEAD. The detached feature appeared latter.
->> ...
->> This patch makes "git bisect" checkout revisions to be tested on
->> a detached HEAD. This simplifies the code a bit.
-> 
-> Yay!!
+
+
+On Thu, 22 May 2008, Junio C Hamano wrote:
 > 
 > One potential worry/downside is "bisect visualize".  Because <bisect>
 > branch was used for bisection, the _current_ commit has always been
 > indicated with a label.  HEAD would not get any special label in gitk,
 > would it?
 
-Hrm.  This seems like a potential issue to me as I occasionally
-do want to view where it is and possibly adjust it up or down a
-few commits depending on context.
+This is a general problem in gitk. 
 
-Perhaps a "git bisect addfoo" sort of command is needed?  The goal
-would be to "add some form of {branch,label,tag}" so it could be named,
-seen and possibly moved.
+It's worse than not showing a label, btw. If it doesn't realize what the 
+HEAD is (and it won't), it also doesn't show the fake "uncommitted 
+changes" commit(s).
 
-jdl
+Test by doing something like
+
+	git checkout HEAD^
+	echo "Dummy change" >> Makefile
+	gitk
+
+and note the lack of both pointer to detached head and the lack of notice 
+about local uncommitted changes.
+
+Paul?
+
+		Linus
