@@ -1,63 +1,92 @@
-From: "Paul Oliver" <puzza007@gmail.com>
-Subject: [PATCH] Make git-cvsimport remove ['s from tags, as bad_ref_char doesn't allow them.
-Date: Fri, 23 May 2008 13:00:05 +0100
-Message-ID: <a4cc77ec0805230500r756ba085x2161ff8769bd4369@mail.gmail.com>
+From: "Govind Salinas" <blix@sophiasuchtig.com>
+Subject: Re: [PYRITE] Status update and call for information.
+Date: Fri, 23 May 2008 07:36:25 -0500
+Message-ID: <5d46db230805230536r18ac606j93a210d0b2864719@mail.gmail.com>
+References: <5d46db230805222318j25657c10t2955fbdf1aa5c003@mail.gmail.com>
+	 <20080523064541.GA31315@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 14:01:01 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri May 23 14:37:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzVxF-0005mv-6j
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 14:01:01 +0200
+	id 1JzWWY-000306-Kt
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 14:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449AbYEWMAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 08:00:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbYEWMAH
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 08:00:07 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:51252 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbYEWMAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 08:00:06 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so721672rvb.1
-        for <git@vger.kernel.org>; Fri, 23 May 2008 05:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=BZk315tzrVFHmGNlxLbLVDfKTzQSIBPm9YDnZrHlMwU=;
-        b=JzT2ZGG2615tul21BKRzkiLOklPs8Z3cnzFljXcKrH4Vpj6lmYJArcdpv+7U6EyT2DKzKpvlJaYETF3ZWhsekc8q/d+nEgfudyUw9UQuQeLZ2fbffBneljpZOiUsdjGSLwBjxetcDXR9/20G2B5nxuTjlUyUw/aJSUKu3ECmOL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dS2qZ0ZL0PfO/LvBt3YxhXY4QRCl5JNr6h5MyzB7Rof1xVowu2SdHOHWDTA0mIbO8DMlz6P10HMbQ8rzDqw7EAyIZV9/X5/7RZu5c8S/e6hrdFCs3sB+E6PtYiH10ifc+OHRiRjvCcDVGOfgCTpv5fCAqddCTZl6m6MwBtdUnHg=
-Received: by 10.140.132.8 with SMTP id f8mr609911rvd.206.1211544005295;
-        Fri, 23 May 2008 05:00:05 -0700 (PDT)
-Received: by 10.141.136.7 with HTTP; Fri, 23 May 2008 05:00:05 -0700 (PDT)
+	id S1751001AbYEWMgj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2008 08:36:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbYEWMgj
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 08:36:39 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:45249 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787AbYEWMgi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 08:36:38 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so365301ywe.1
+        for <git@vger.kernel.org>; Fri, 23 May 2008 05:36:25 -0700 (PDT)
+Received: by 10.151.84.12 with SMTP id m12mr1684747ybl.2.1211546185499;
+        Fri, 23 May 2008 05:36:25 -0700 (PDT)
+Received: by 10.150.181.17 with HTTP; Fri, 23 May 2008 05:36:25 -0700 (PDT)
+In-Reply-To: <20080523064541.GA31315@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
+X-Google-Sender-Auth: d2bd457a0a47ed58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82698>
 
----
- git-cvsimport.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+On Fri, May 23, 2008 at 1:45 AM, Karl Hasselstr=F6m <kha@treskal.com> w=
+rote:
+> On 2008-05-23 01:18:42 -0500, Govind Salinas wrote:
+>
+>> Some functionality isn't for everyone. I have just put into my next
+>> branch an addon that gives git revision numbers. Why, because other
+>> SCMs that are supposed to be more user friendly have them. Because
+>> people have been asking for them. Because they are easier to
+>> remember. The concept is this. A given commit encapsulates its
+>> parantage, so if I have commit XYZ, I can always say that XYZ is
+>> so-many commits away from the first commit. The question is how you
+>> determine that number and that you always do it the same. If we just
+>> define the revision number to be the place of the commit in the list
+>> of "git rev-list --topo-order --reverse SHA1" then we can get a
+>> consistant number semi-meaningful number, which is all people really
+>> want.
+>
+> You do realize that no matter how you define your sequential numbers,
+> they can't be both globally consistent and unique? (That is, either
+> different repositories will assign different numbers to the same
+> commit, or the same number could be assigned to more than one commit.=
+)
+>
+> For a simple reason: A numbering that's both globally consistent and
+> unique can only look at a commit's ancestry (and the commit itself)
+> when assigning a number to a commit. But in order to get _sequential_
+> numbers, you need to look at the commit's siblings as well, and the
+> set of siblings can be different from repository to repository.
+>
+> This has already been discussed to death elsewhere in this list at
+> least once (see the list archives), but your next paragraph suggests
+> you think it's only a performance issue, which is why I brought it up=
+:
+>
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index bdac5d5..5a02550 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -780,6 +780,7 @@ sub commit {
- 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
- 		$xtag =~ tr/_/\./ if ( $opt_u );
- 		$xtag =~ s/[\/]/$opt_s/g;
-+		$xtag =~ s/\[//g;
+Of course, no one makes the claim that rev numbers are unique or
+even that a commit has the same revision number between branches
+in the same repository.   Hg states that flat out and I believe bzr say=
+s
+the same, although I am pretty sure they determine their numbers some
+other way.  I make no such claim.  What I do claim is that for a given
+branch, a commit should always have the same revision number.  Sure,
+If you merge a commit from another branch, it's revnum might change,
+but that is ok.  As long as, assuming you have not re-written master,
+10:master will always point to the same commit I think I am providing
+something worth while.  Also, AFAIK the order of parentage is part of
+the hash that makes a commit ID, so if my master is a clone of your
+master, it should share revision numbers.
 
- 		system('git-tag', '-f', $xtag, $cid) == 0
- 			or die "Cannot create tag $xtag: $!\n";
--- 
-1.5.3.6
+Thanks,
+Govind.
