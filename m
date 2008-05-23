@@ -1,75 +1,106 @@
-From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: bug in "git log --graph" at the tail end?
-Date: Fri, 23 May 2008 22:02:10 +0100
-Message-ID: <3f4fd2640805231402n72aaed52l7a163168e9258f25@mail.gmail.com>
-References: <7vve14rbu7.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH v2 07/24] Added findWorkTree method to Repository class.
+Date: Fri, 23 May 2008 23:28:33 +0200
+Message-ID: <200805232328.33666.robin.rosenberg.lists@dewire.com>
+References: <1210623222-24908-1-git-send-email-florianskarten@web.de> <20080513002409.GC29038@spearce.org> <4837090F.4000307@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Adam Simpkins" <adam@adamsimpkins.net>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 23:03:12 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Florian =?iso-8859-1?q?K=F6berle?= <FloriansKarten@web.de>
+X-From: git-owner@vger.kernel.org Fri May 23 23:32:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzePp-0007tz-Rt
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 23:03:06 +0200
+	id 1JzerA-0000tG-UI
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 23:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756787AbYEWVCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 17:02:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756715AbYEWVCM
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 17:02:12 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:59047 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756695AbYEWVCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 17:02:11 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1026127rvb.1
-        for <git@vger.kernel.org>; Fri, 23 May 2008 14:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=yD7Kf9s2wr61nsh2MCXf6B/u6DQO3ZBxPnxLlU/cexg=;
-        b=uqJTBt5hXCsB0onAVYvpH+McaDZp/IoCo1hxWpPW/uTSGcryBeFDe1+xOLRQL+MBwgDZsf/lhGj9/YSRMVB+1jcKkz8wd4xil3DFo9Tm3mLz+dxIVEPD8dutmQBJSgF3gBb93xi9t1ziiA+KoCsR9en/3PGFjm+HXA7JG8htMT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L4xQLULpMc6hGvg4iHv9FcUQIm5fQNpQm+g//xF8bTb506yJgViUZS19Ik4nnxDd/nCxllrITEpj2u85/l5/zDgtGe1+PkEakqho0SwdOmqInZye5ssjF/X4ONnhvOUrf5sTEEsk8t6EVjf4Ltdnn7B/qBcmFd0n1KSQkw0nVkY=
-Received: by 10.141.170.10 with SMTP id x10mr870268rvo.92.1211576530936;
-        Fri, 23 May 2008 14:02:10 -0700 (PDT)
-Received: by 10.141.133.7 with HTTP; Fri, 23 May 2008 14:02:10 -0700 (PDT)
-In-Reply-To: <7vve14rbu7.fsf@gitster.siamese.dyndns.org>
+	id S1756420AbYEWVa1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2008 17:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755603AbYEWVa1
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 17:30:27 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:13238 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753264AbYEWVa0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 17:30:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 606231434D93;
+	Fri, 23 May 2008 23:30:24 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SPeg26GNd2hL; Fri, 23 May 2008 23:30:23 +0200 (CEST)
+Received: from [10.9.0.13] (unknown [10.9.0.13])
+	by dewire.com (Postfix) with ESMTP id CBF271434D8F;
+	Fri, 23 May 2008 23:30:23 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4837090F.4000307@web.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82760>
 
-2008/5/23 Junio C Hamano <gitster@pobox.com>:
-> It appears that "log --graph" output has a bug at its tail end.
->
->    $ git log --pretty=oneline --abbrev-commit --graph 9d88058^..1af8bca
->    M   1af8bca... Merge branch 'maint'
->    |\
->    | M   008442f... Merge branch 'maint-1.5.4' into maint
->    | |\
->    | * e77b0b5... git-am: fix typo in usage message
->    | * 74190d2... doc/git-daemon: s/uploadarchive/uploadarch/
+fredagen den 23 maj 2008 20.12.31 skrev Florian K=F6berle:
+> >> +	 *=20
+> >> +	 * @param directory
+> >> +	 *            the path which should be checked.
+> >> +	 * @return true if the path is a valid git repository.
+> >> +	 */
+> >> +	private static boolean isRepository(File directory) {
+> >> +		if (!directory.isDirectory()) {
+> >> +			return false;
+> >> +		}
+> >=20
+> > We usually omit { and } on simple conditions like this.  Its a codi=
+ng
+> > pattern we stole from C Git, which stole it from the Linux kernel.
+>=20
+> I used this style once too, but was convinced that it dangerous to do=
+ so.
+As Shawn said, usually. Sometimes we slip too.  But it is unnecessary a=
+nd
+anything unnecessary usually makes code harder to read. It is not a big
+deal to me.=20
 
-Shouldn't this be:
->    | M   008442f... Merge branch 'maint-1.5.4' into maint
->    | |\
->    | | * e77b0b5... git-am: fix typo in usage message
->    | | * 74190d2... doc/git-daemon: s/uploadarchive/uploadarch/
+> The following looks correct at the first look, but it's not:
+>=20
+> 	if (a)
+> 		if (b)
+> 			something;
+> 	else
+> 		something;
+>=20
+> this can't happen if you use { and }:
+> 	if (a) {
+> 		if (b) {
+> 			something0();
+> 		}
+> 	} else {
+> 		something1();
+> 	}
 
-as well?
+This isn't the same case, because here we have nested statements, I do =
+think braces should be used here. Java shouldn't even allow "ambigous" =
+syntax like this (first case).
 
-> This is purely cosmetic, but because --graph is only about the cosmetics,
-> we may want to do something about it.
->
-> Thoughts?
+> Also it is better extenable:
+>=20
+> if (a) {
+> 	something0();
+> }
+>=20
+> if (a) {
+> 	something0():
+> +	something1();
+> }
 
-It is also consistent and makes the output easier to scan, so +1.
+Which is why I think is not that big a deal.  The main reason I may lea=
+ve braces on a non-nested simple statement is becuase I had a debug sta=
+tement or something like that there, and I might well want to have one =
+again temporarily. Toggling braces on and off (even with eclipse where =
+it requires two-four keypresses) are annoying.
 
-- Reece
+-- robin
