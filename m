@@ -1,80 +1,62 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: looking for "market share" analysis of SCMs.
-Date: Fri, 23 May 2008 16:16:41 +1200
-Message-ID: <46a038f90805222116p64f53cc3l53c3f414f51b4b96@mail.gmail.com>
-References: <48329282.1040407@tikalk.com>
-	 <20080520093245.GA5037@mithlond.arda.local>
-	 <bd6139dc0805200310j13a9b74dy9f28fe855c59e01b@mail.gmail.com>
-	 <alpine.LNX.1.00.0805201748020.19665@iabervon.org>
-	 <bd6139dc0805201525r22ba7398g6f341f89ae699b57@mail.gmail.com>
-	 <alpine.LFD.1.10.0805202105430.3081@woody.linux-foundation.org>
-	 <46a038f90805202126s80262d3i2f4f940a38d9ea06@mail.gmail.com>
-	 <bd6139dc0805202144h2bb55fd1n9b26bc76c245f33b@mail.gmail.com>
-	 <46a038f90805202210v5d0f75cekbad51da89c46f47@mail.gmail.com>
+From: fREW <frioux@gmail.com>
+Subject: Deleted files can't be checked back out?
+Date: Thu, 22 May 2008 23:28:57 -0500
+Message-ID: <fb3648c60805222128v1a425c60kc8e44f3a2fb41d54@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Daniel Barkalow" <barkalow@iabervon.org>,
-	"Teemu Likonen" <tlikonen@iki.fi>,
-	"Ittay Dror" <ittayd@tikalk.com>, git@vger.kernel.org
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri May 23 06:17:40 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 23 06:30:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzOin-0000P2-AH
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 06:17:37 +0200
+	id 1JzOux-0004Ak-U7
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 06:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbYEWEQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 00:16:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYEWEQp
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 00:16:45 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:13538 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750859AbYEWEQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 00:16:44 -0400
-Received: by an-out-0708.google.com with SMTP id d40so88482and.103
-        for <git@vger.kernel.org>; Thu, 22 May 2008 21:16:41 -0700 (PDT)
+	id S1751443AbYEWE27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 00:28:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbYEWE26
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 00:28:58 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:22390 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751161AbYEWE26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 00:28:58 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so529035rvb.1
+        for <git@vger.kernel.org>; Thu, 22 May 2008 21:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PbM/Uz6SQcFm48fzn7yZtnPGIF+eKkXZIH7Lz4oNfhA=;
-        b=BcBAD1JE+/FwfPDTM0n/G+lecvZZzD402+qkI1fBsOuK/TxcrYFYpD5hoU2/nzhG9qZFskx+4qg02LpqRfwfm35qRIXbftF+bcwx+ohhUTDUoUxBDc98kNI3ciS0vteLNwsh62I/gyhZZFKNOiXHHUgo7QrU34a5uPaazpcZMxg=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=/diKIlXDgAyElCC5hM6hTRN1qSeyg+KqWIJATCsWJGM=;
+        b=OdFmuaTjBBm9cbpnC0qpY0B32f39jPdua6Y6Exr0ETW6C0mGsFaTcLcMOscSzT+M7BMZF2J1jtgz10JIG5465xHFzcZ42+7mWgtR+BJSX4MjvmiE0FahsMyqyaf1eTx1Km6TQSsAEiZJ4LDxRdce2GeBAxGGGS7i+A9KBjRzqBA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d7TstQGIPC9nqONXVXW5rufBtysMRvNxqUGkxRUZvtcAh/8itCHjNtj2wkloYe9RbTvUYEPd4f2dLzS+4yl9v76PZ4ynt1TZJlm4sSYJ0sBQaRdpcdMf6OHgYiXAOhCTMMsaU+9c3AzXfc55IagFe2CxxIubvuiyZTeLbphXdZg=
-Received: by 10.100.166.9 with SMTP id o9mr1231150ane.120.1211516201712;
-        Thu, 22 May 2008 21:16:41 -0700 (PDT)
-Received: by 10.100.250.4 with HTTP; Thu, 22 May 2008 21:16:41 -0700 (PDT)
-In-Reply-To: <46a038f90805202210v5d0f75cekbad51da89c46f47@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=YVDqPb6vZKEypHywD34XWf86J6LZOokLH9ZHvvNn3fGnJfSVydxBnZMn3M1U4A20+t01VUyeActhlNS4jEYfgoyj2QQfXq0I+IMm6KozeXMsgk/ZrYQQMxts9Yn32XpluXiRvuxdMJaIA+yMM7mfP/l9veCiMLWS/7C3TO6xMts=
+Received: by 10.140.171.18 with SMTP id t18mr450503rve.22.1211516937586;
+        Thu, 22 May 2008 21:28:57 -0700 (PDT)
+Received: by 10.141.48.1 with HTTP; Thu, 22 May 2008 21:28:57 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82678>
 
-And more popularity contests around Debian
+Hello all,
 
-The overall thread should appear in the archive around here - (not
-there yet at time of writing):
-http://lists.debian.org/debian-devel/2008/05/threads.html#00583
+I recently deleted a bunch of files and checked the change into git,
+and then changed my mind and wanted the files back.  I did a
+git-checkout <file> and got each file back individually.  Then I did
+some work and did a git-push to upload to github. Then I did more work
+and tried to do a git push and it gave me an error that apparently
+meant I had to pull before I pushed.  Anyway, I pulled, it redeleted
+the files and now when I do git-checkout <file> to get them back it
+says:
 
-This graph is of VCS usage by package maintainers to keep track of the
-local patches applied on top of upstream. It sure makes git look good:
-http://upsilon.cc/~zack/stuff/vcs-usage/
+error: pathspec 'foo' did not match any file(s) known to git.
 
-cheers,
+I'd really appreciate some help on this issue. I tried messing with
+qgit to look at it, but I didn't have much luck...
 
-
-
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+-fREW
