@@ -1,77 +1,56 @@
-From: =?UTF-8?B?RmxvcmlhbiBLw7ZiZXJsZQ==?= <FloriansKarten@web.de>
-Subject: Re: [JGIT PATCH v2 04/24] Added path related constats to Constats
- class.
-Date: Fri, 23 May 2008 17:46:42 +0200
-Message-ID: <4836E6E2.20406@web.de>
-References: <1210623222-24908-1-git-send-email-florianskarten@web.de> <1210623222-24908-5-git-send-email-florianskarten@web.de> <20080512235431.GY29038@spearce.org>
+From: "Robert Anderson" <rwa000@gmail.com>
+Subject: git-svn: commit all changes as one svn revision?
+Date: Fri, 23 May 2008 09:08:15 -0700
+Message-ID: <9af502e50805230908t76c9b26exd36cfb6d0f1a9bcf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri May 23 17:48:14 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 23 18:09:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzZUr-0006fy-BF
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 17:47:57 +0200
+	id 1JzZpN-00071L-AU
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 18:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755233AbYEWPrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 11:47:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754449AbYEWPrF
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 11:47:05 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:47462 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754602AbYEWPrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 11:47:03 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id E0815DE0E4DA;
-	Fri, 23 May 2008 17:47:00 +0200 (CEST)
-Received: from [84.150.81.80] (helo=[192.168.1.50])
-	by smtp08.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1JzZTw-0000Gc-00; Fri, 23 May 2008 17:47:00 +0200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
-In-Reply-To: <20080512235431.GY29038@spearce.org>
-X-Enigmail-Version: 0.95.6
-X-Sender: FloriansKarten@web.de
-X-Provags-ID: V01U2FsdGVkX196YD5NuR0HiFb8PqqdTfcK4DH6aKUjKwZ25mLD
-	YzkzhnaREFznUFXtq4lWRkk2BAyv3MH0q1KTH7SXk2aKKjGu7z
-	iegGKOgEmol0pNMcjnOw==
+	id S1754027AbYEWQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 12:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014AbYEWQIS
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 12:08:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:40012 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753994AbYEWQIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 12:08:17 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so430653fgg.17
+        for <git@vger.kernel.org>; Fri, 23 May 2008 09:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=xmwU4kRvQBozJoUfRyyKVnFiUTHwCM/SdXQjKRNEnEE=;
+        b=IKC1GXVj/oGSrbvYgEO97114eSF54Ke7/zHSNvvLpLZ7MohH1IjJ9E7/eWUWRU86dQCnPPpKqiKRyF19n0qY+6mLZ3M5RF/mht76Pwqf6m2Oozm91x6SDw9e9M+KJeytxcsCC+R2LKHAKcxykCxFnR1Mj4su4ZnBwM6mMbBgiKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=FaySiIu7q7i6mz2kOUPvZ70sowntHN9kKQemjJl56NqP3ChgNimy1hVCy5EEGl8No5wbrtVMSqqk5JTC5HSLULVsRefwnZhJIZn1XUgrgN5YRZKlKBFWAXlV+6MZvISaMz2CXAYFCj2DxqkQB+NlrCLp5Ezo7na9LVwB34HUT08=
+Received: by 10.86.59.18 with SMTP id h18mr35312fga.30.1211558895437;
+        Fri, 23 May 2008 09:08:15 -0700 (PDT)
+Received: by 10.86.4.6 with HTTP; Fri, 23 May 2008 09:08:15 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82718>
 
-Shawn O. Pearce wrote:
-> Florian Koeberle <florianskarten@web.de> wrote:
->> @@ -171,6 +171,26 @@ public final class Constants {
->>  	public static String REMOTES_PREFIX = "refs/remotes";
->>  
->>  	/**
->> +	 * The name of the repository directory in the project directory.
->> +	 */
->> +	public static final String REPOSITORY_DIRECTORY_NAME = ".git";
-> 
-> What is a project directory?
-I will add a sentence describing what I meant with project directory here.
+Use case:
 
+I make a bunch of git commits developing something that was checked
+out from a svn repo using git-svn.  I want to commit all the changes
+since my last dcommit as one revision, rather than having each git
+commit checked in separately, as dcommit behaves.
 
+Is there a way to do this?
 
->> +	/**
->> +	 * Contains the name of the HEAD file in the repository directory.
->> +	 */
->> +	public static final String HEAD_FILE_NAME = "HEAD";
-> 
-> Isn't this already declared as just HEAD?  Lets not duplicate
-> constants if we can avoid it, especially when they are in the
-> same class.
->
-current HEAD constant definition:
- > 	/** Special name for the "HEAD" symbolic-ref. */
- >	public static final String HEAD = "HEAD";
-I didn't expect that this constant is a file name.
-
-Looks like the constant is used in the same way I do, so It makes sense 
-to use the existing HEAD constant.
+Thanks,
+Bob Anderson
