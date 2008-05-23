@@ -1,61 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix t6031 on filesystems without working exec bit
-Date: Fri, 23 May 2008 21:12:09 +0200
-Message-ID: <20080523191209.GA3673@steel.home>
-References: <20080518145727.GA3058@steel.home> <7v7idqaocb.fsf@gitster.siamese.dyndns.org> <20080519060015.GA3179@steel.home> <7v8wy360l8.fsf@gitster.siamese.dyndns.org> <81b0412b0805220116h4e4ff279k2e433a8a9a1cd9fc@mail.gmail.com> <7vskwawvzq.fsf@gitster.siamese.dyndns.org> <20080522131258.GE3206@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Chris Frey <cdfrey@foursquare.net>
+Subject: [PATCH] INSTALL: explain Error.pm dependency
+Date: Fri, 23 May 2008 15:22:31 -0400
+Message-ID: <20080523192231.GA31416@foursquare.net>
+References: <20080517011614.GA11029@foursquare.net> <20080521222150.GA29696@foursquare.net> <7vzlqjz2wz.fsf@gitster.siamese.dyndns.org> <20080521235647.GA21340@foursquare.net> <alpine.DEB.1.00.0805221245240.30431@racer> <20080522164300.GA19765@foursquare.net> <7vd4new8qx.fsf@gitster.siamese.dyndns.org> <20080522181240.GA12725@foursquare.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 21:13:44 2008
+X-From: git-owner@vger.kernel.org Fri May 23 21:24:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzchi-0008QA-Bi
-	for gcvg-git-2@gmane.org; Fri, 23 May 2008 21:13:26 +0200
+	id 1JzcsN-0004hy-Ph
+	for gcvg-git-2@gmane.org; Fri, 23 May 2008 21:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758638AbYEWTMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 15:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758614AbYEWTMO
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 15:12:14 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:40527 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757279AbYEWTMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 15:12:12 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnareO+Vm0
-Received: from tigra.home (Faf51.f.strato-dslnet.de [195.4.175.81])
-	by post.webmailer.de (klopstock mo57) (RZmta 16.38)
-	with ESMTP id w030e6k4NI9Avf ; Fri, 23 May 2008 21:12:09 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 6AAF0277BD;
-	Fri, 23 May 2008 21:12:09 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 41AA056D28; Fri, 23 May 2008 21:12:09 +0200 (CEST)
+	id S1754022AbYEWTXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 15:23:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbYEWTXT
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 15:23:19 -0400
+Received: from nic.NetDirect.CA ([216.16.235.2]:50519 "EHLO
+	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112AbYEWTXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 15:23:19 -0400
+X-Originating-Ip: 216.16.235.2
+Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
+	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m4NJMVNQ031919;
+	Fri, 23 May 2008 15:22:31 -0400
 Content-Disposition: inline
-In-Reply-To: <20080522131258.GE3206@steel.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20080522181240.GA12725@foursquare.net>
+User-Agent: Mutt/1.4.1i
+X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
+X-Net-Direct-Inc-MailScanner: Found to be clean
+X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
+	SpamAssassin (not cached, score=-16.8, required 5,
+	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
+X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82728>
 
-Alex Riesen, Thu, May 22, 2008 15:12:58 +0200:
-> Junio C Hamano, Thu, May 22, 2008 11:04:09 +0200:
-> > If your repository is marked so that executable bit is untrustworthy
-> > there, the check done when switching to branch "a1" to compare if "file1"
-> > that is involved in the switch operation has local changes should ignore
-> > (apparent and false) executable-bit change, shouldn't it?
-> 
-> Will see next monday, when I get back to that wretched laptop.
-> 
+Signed-off-by: Chris Frey <cdfrey@foursquare.net>
+---
+ INSTALL |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-I managed to get my hands on it today and tried the test with your
-modification. The test succeeds always and it succeeds with or without
-the chmod. So it seems merge-recursive somehow ignores the x-bit from
-working tree, I just cannot not find how and where.
+diff --git a/INSTALL b/INSTALL
+index d9b425f..c5cafc4 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -86,6 +86,13 @@ Issues of note:
+ 	- "cpio" is used by git-clone when doing a local (possibly
+ 	  hardlinked) clone.
+ 
++	- "Error.pm" version >= 0.15009 is required by perl scripts.
++
++	  If you don't have a fresh enough Error.pm, git will install its
++	  own.  If you already have git installed, it will not install
++	  another Error.pm.  If this causes problems for you, uninstall
++	  git before compiling, or just install your distro's Error.pm.
++
+  - Some platform specific issues are dealt with Makefile rules,
+    but depending on your specific installation, you may not
+    have all the libraries/tools needed, or you may have
+-- 
+1.5.4.4
