@@ -1,170 +1,113 @@
 From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: [PATCH 2/2] get_revision(): honor the topo_order flag for boundary commits
-Date: Sat, 24 May 2008 16:02:05 -0700
-Message-ID: <1211670125-10215-3-git-send-email-adam@adamsimpkins.net>
-References: <1211670125-10215-1-git-send-email-adam@adamsimpkins.net>
- <1211670125-10215-2-git-send-email-adam@adamsimpkins.net>
+Subject: [PATCH 0/2] Fix output of "git log --graph --boundary"
+Date: Sat, 24 May 2008 16:02:03 -0700
+Message-ID: <1211670125-10215-1-git-send-email-adam@adamsimpkins.net>
 Cc: Adam Simpkins <adam@adamsimpkins.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 25 01:03:12 2008
+X-From: git-owner@vger.kernel.org Sun May 25 01:03:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K02lb-0006Ow-Me
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 01:03:12 +0200
+	id 1K02lb-0006Ow-2X
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 01:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbYEXXCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 19:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbYEXXCO
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 19:02:14 -0400
-Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:47922 "EHLO
+	id S1752457AbYEXXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 May 2008 19:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYEXXCM
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 19:02:12 -0400
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:47920 "EHLO
 	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbYEXXCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2008 19:02:09 -0400
+	with ESMTP id S1751414AbYEXXCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 19:02:08 -0400
 Received: from relay3.r3.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay3.r3.iad.emailsrvr.com (SMTP Server) with ESMTP id 1F58A44C118;
+	by relay3.r3.iad.emailsrvr.com (SMTP Server) with ESMTP id 22E5F44C089;
 	Sat, 24 May 2008 19:02:07 -0400 (EDT)
-Received: by relay3.r3.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id BA41C44C08E;
+Received: by relay3.r3.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id BD52D44C0A4;
 	Sat, 24 May 2008 19:02:06 -0400 (EDT)
 Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id C72CE14100C9; Sat, 24 May 2008 16:02:05 -0700 (PDT)
+	id AE6E814100C8; Sat, 24 May 2008 16:02:05 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.1.389.g35a9d
-In-Reply-To: <1211670125-10215-2-git-send-email-adam@adamsimpkins.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82839>
 
-Now get_revision() sorts the boundary commits when topo_order is set.
-Since sort_in_topological_order() takes a struct commit_list, it first
-places the boundary commits into revs->commits.
+These two patches fix the graph output when --boundary is used.  They
+apply on top of a merge of my recent fixes for handling uninteresting
+commits (since they use the new graph_is_interesting() function I
+added), and Dscho's "--graph --left-right" changes (since these changes
+also need the struct rev_info).
 
-Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
----
- graph.c    |    9 +------
- revision.c |   73 ++++++++++++++++++++++++++++++++++++++++++++++-------------
- 2 files changed, 58 insertions(+), 24 deletions(-)
+There were two small conflicts when merging Dscho's and my changes.
+I've including a merge diff below showing how I resolved them.
 
-diff --git a/graph.c b/graph.c
-index ce1abc0..412b5ec 100644
+
+Adam Simpkins (2):
+  Fix output of "git log --graph --boundary"
+  get_revision(): honor the topo_order flag for boundary commits
+
+ graph.c    |   87 ++++++++++++++++++++++++++++++++++++++++-------------------
+ revision.c |   75 ++++++++++++++++++++++++++++++++++++++++-----------
+ 2 files changed, 117 insertions(+), 45 deletions(-)
+
+
+8acd45e94a0d42a0ceb164e294049104e0c0f663
+diff --cc graph.c
+index ba9ede0,85a9ba0..479035d
 --- a/graph.c
 +++ b/graph.c
-@@ -197,16 +197,9 @@ static int graph_is_interesting(struct git_graph *graph, struct commit *commit)
- 	 * If revs->boundary is set, commits whose children have
- 	 * been shown are always interesting, even if they have the
- 	 * UNINTERESTING or TREESAME flags set.
--	 *
--	 * However, ignore the commit if SHOWN is set.  If SHOWN is set,
--	 * the commit is interesting, but it has already been printed.
--	 * This can happen because get_revision() doesn't return the
--	 * boundary commits in topological order, even when
--	 * revs->topo_order is set.
- 	 */
- 	if (graph->revs && graph->revs->boundary) {
--		if ((commit->object.flags & (SHOWN | CHILD_SHOWN)) ==
--		    CHILD_SHOWN)
-+		if (commit->object.flags & CHILD_SHOWN)
- 			return 1;
- 	}
- 
-diff --git a/revision.c b/revision.c
-index 181fb0b..fb9924e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1612,28 +1612,62 @@ static void gc_boundary(struct object_array *array)
- 	}
- }
- 
-+static void create_boundary_commit_list(struct rev_info *revs)
-+{
-+	unsigned i;
-+	struct commit *c;
-+	struct object_array *array = &revs->boundary_commits;
-+	struct object_array_entry *objects = array->objects;
-+
-+	/*
-+	 * If revs->commits is non-NULL at this point, an error occurred in
-+	 * get_revision_1().  Ignore the error and continue printing the
-+	 * boundary commits anyway.  (This is what the code has always
-+	 * done.)
-+	 */
-+	if (revs->commits) {
-+		free_commit_list(revs->commits);
-+		revs->commits = NULL;
-+	}
-+
-+	/*
-+	 * Put all of the actual boundary commits from revs->boundary_commits
-+	 * into revs->commits
-+	 */
-+	for (i = 0; i < array->nr; i++) {
-+		c = (struct commit *)(objects[i].item);
-+		if (!c)
-+			continue;
-+		if (!(c->object.flags & CHILD_SHOWN))
-+			continue;
-+		if (c->object.flags & (SHOWN | BOUNDARY))
-+			continue;
-+		c->object.flags |= BOUNDARY;
-+		commit_list_insert(c, &revs->commits);
-+	}
-+
-+	/*
-+	 * If revs->topo_order is set, sort the boundary commits
-+	 * in topological order
-+	 */
-+	sort_in_topological_order(&revs->commits, revs->lifo);
-+}
-+
- static struct commit *get_revision_internal(struct rev_info *revs)
- {
- 	struct commit *c = NULL;
- 	struct commit_list *l;
- 
- 	if (revs->boundary == 2) {
--		unsigned i;
--		struct object_array *array = &revs->boundary_commits;
--		struct object_array_entry *objects = array->objects;
--		for (i = 0; i < array->nr; i++) {
--			c = (struct commit *)(objects[i].item);
--			if (!c)
--				continue;
--			if (!(c->object.flags & CHILD_SHOWN))
--				continue;
--			if (!(c->object.flags & SHOWN))
--				break;
--		}
--		if (array->nr <= i)
--			return NULL;
--
--		c->object.flags |= SHOWN | BOUNDARY;
-+		/*
-+		 * All of the normal commits have already been returned,
-+		 * and we are now returning boundary commits.
-+		 * create_boundary_commit_list() has populated
-+		 * revs->commits with the remaining commits to return.
-+		 */
-+		c = pop_commit(&revs->commits);
-+		if (c)
-+			c->object.flags |= SHOWN;
- 		return c;
- 	}
- 
-@@ -1697,6 +1731,13 @@ static struct commit *get_revision_internal(struct rev_info *revs)
- 		 * switch to boundary commits output mode.
- 		 */
- 		revs->boundary = 2;
-+
-+		/*
-+		 * Update revs->commits to contain the list of
-+		 * boundary commits.
-+		 */
-+		create_boundary_commit_list(revs);
-+
- 		return get_revision_internal(revs);
- 	}
- 
--- 
-1.5.5.1.389.g35a9d
+@@@ -55,11 -55,13 +55,15 @@@ struct git_graph 
+  	 */
+  	struct commit *commit;
+  	/*
++ 	 * For the --left-right option.
++ 	 */
++ 	struct rev_info *revs;
++ 	/*
+ -	 * The number of parents this commit has.
+ -	 * (Stored so we don't have to walk over them each time we need
+ -	 * this number)
+ +	 * The number of interesting parents that this commit has.
+ +	 *
+ +	 * Note that this is not the same as the actual number of parents.
+ +	 * This count excludes parents that won't be printed in the graph
+ +	 * output, as determined by graph_is_interesting().
+  	 */
+  	int num_parents;
+  	/*
+@@@ -565,18 -545,14 +570,28 @@@ void graph_output_commit_line(struct gi
+  
+  		if (col_commit == graph->commit) {
+  			seen_this = 1;
+ +			/*
+- 			 * If the commit is a merge, print 'M'.  Otherwise,
+- 			 * print '*'.
+++			 * If revs->left_right is set, print the '<' or '>'
+++			 * depending on which side this commit came from.
+++			 *
+++			 * If revs->left_right is not set and the commit is
+++			 * a merge, print 'M'.  Otherwise, print '*'.
+ +			 *
+ +			 * Note that we don't check graph->num_parents to
+ +			 * determine if the commit is a merge, since that
+ +			 * only tracks the number of "interesting" parents.
+ +			 * We want to print 'M' for merge commits even if
+ +			 * they have less than 2 interesting parents.
+ +			 */
+- 			if (graph->commit->parents != NULL &&
+- 			    graph->commit->parents->next != NULL)
++ 			if (graph->revs && graph->revs->left_right) {
++ 				if (graph->commit->object.flags
++ 						& SYMMETRIC_LEFT)
++ 					strbuf_addch(sb, '<');
++ 				else
++ 					strbuf_addch(sb, '>');
++ 			}
+ -			else if (graph->num_parents > 1)
+++			else if (graph->commit->parents != NULL &&
+++				 graph->commit->parents->next != NULL)
+  				strbuf_addch(sb, 'M');
+  			else
+  				strbuf_addch(sb, '*');
