@@ -1,113 +1,74 @@
-From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: [PATCH 0/2] Fix output of "git log --graph --boundary"
-Date: Sat, 24 May 2008 16:02:03 -0700
-Message-ID: <1211670125-10215-1-git-send-email-adam@adamsimpkins.net>
-Cc: Adam Simpkins <adam@adamsimpkins.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 25 01:03:13 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: [PATCH] builtin-fast-export: Only output a single parent per line
+Date: Sun, 25 May 2008 01:21:53 +0200
+Message-ID: <1211671313-99006-1-git-send-email-pdebie@ai.rug.nl>
+Cc: Pieter de Bie <pdebie@ai.rug.nl>
+To: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Sun May 25 01:22:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K02lb-0006Ow-2X
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 01:03:11 +0200
+	id 1K034Z-0001o8-Es
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 01:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752457AbYEXXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 19:02:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYEXXCM
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 19:02:12 -0400
-Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:47920 "EHLO
-	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbYEXXCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2008 19:02:08 -0400
-Received: from relay3.r3.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay3.r3.iad.emailsrvr.com (SMTP Server) with ESMTP id 22E5F44C089;
-	Sat, 24 May 2008 19:02:07 -0400 (EDT)
-Received: by relay3.r3.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id BD52D44C0A4;
-	Sat, 24 May 2008 19:02:06 -0400 (EDT)
-Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id AE6E814100C8; Sat, 24 May 2008 16:02:05 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.1.389.g35a9d
+	id S1751729AbYEXXV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 May 2008 19:21:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbYEXXV4
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 19:21:56 -0400
+Received: from smtp2.versatel.nl ([62.58.50.89]:34504 "EHLO smtp2.versatel.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751633AbYEXXVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 19:21:55 -0400
+Received: (qmail 16553 invoked by uid 0); 24 May 2008 23:21:54 -0000
+Received: from ip63-33-210-87.adsl2.versatel.nl (HELO localhost.localdomain) ([87.210.33.63])
+          (envelope-sender <pdebie@ai.rug.nl>)
+          by smtp2.versatel.nl (qmail-ldap-1.03) with SMTP
+          for < >; 24 May 2008 23:21:54 -0000
+X-Mailer: git-send-email 1.5.5.1.541.g51dc4.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82840>
 
-These two patches fix the graph output when --boundary is used.  They
-apply on top of a merge of my recent fixes for handling uninteresting
-commits (since they use the new graph_is_interesting() function I
-added), and Dscho's "--graph --left-right" changes (since these changes
-also need the struct rev_info).
+According to the git-fast-import man-page, you can only put a single
+committish per merge: line, like this:
 
-There were two small conflicts when merging Dscho's and my changes.
-I've including a merge diff below showing how I resolved them.
+  merge :10
+  merge :11
 
+However, git-fast-export puts all parents on a single line, like this:
 
-Adam Simpkins (2):
-  Fix output of "git log --graph --boundary"
-  get_revision(): honor the topo_order flag for boundary commits
+  merge :10 :11
 
- graph.c    |   87 ++++++++++++++++++++++++++++++++++++++++-------------------
- revision.c |   75 ++++++++++++++++++++++++++++++++++++++++-----------
- 2 files changed, 117 insertions(+), 45 deletions(-)
+This may be fine with git-fast-import, but other importers based on it, like
+bzr-fast-import, can't handle this.
 
+This changes fast-export to also output a single parent per line.
 
-8acd45e94a0d42a0ceb164e294049104e0c0f663
-diff --cc graph.c
-index ba9ede0,85a9ba0..479035d
---- a/graph.c
-+++ b/graph.c
-@@@ -55,11 -55,13 +55,15 @@@ struct git_graph 
-  	 */
-  	struct commit *commit;
-  	/*
-+ 	 * For the --left-right option.
-+ 	 */
-+ 	struct rev_info *revs;
-+ 	/*
- -	 * The number of parents this commit has.
- -	 * (Stored so we don't have to walk over them each time we need
- -	 * this number)
- +	 * The number of interesting parents that this commit has.
- +	 *
- +	 * Note that this is not the same as the actual number of parents.
- +	 * This count excludes parents that won't be printed in the graph
- +	 * output, as determined by graph_is_interesting().
-  	 */
-  	int num_parents;
-  	/*
-@@@ -565,18 -545,14 +570,28 @@@ void graph_output_commit_line(struct gi
-  
-  		if (col_commit == graph->commit) {
-  			seen_this = 1;
- +			/*
-- 			 * If the commit is a merge, print 'M'.  Otherwise,
-- 			 * print '*'.
-++			 * If revs->left_right is set, print the '<' or '>'
-++			 * depending on which side this commit came from.
-++			 *
-++			 * If revs->left_right is not set and the commit is
-++			 * a merge, print 'M'.  Otherwise, print '*'.
- +			 *
- +			 * Note that we don't check graph->num_parents to
- +			 * determine if the commit is a merge, since that
- +			 * only tracks the number of "interesting" parents.
- +			 * We want to print 'M' for merge commits even if
- +			 * they have less than 2 interesting parents.
- +			 */
-- 			if (graph->commit->parents != NULL &&
-- 			    graph->commit->parents->next != NULL)
-+ 			if (graph->revs && graph->revs->left_right) {
-+ 				if (graph->commit->object.flags
-+ 						& SYMMETRIC_LEFT)
-+ 					strbuf_addch(sb, '<');
-+ 				else
-+ 					strbuf_addch(sb, '>');
-+ 			}
- -			else if (graph->num_parents > 1)
-++			else if (graph->commit->parents != NULL &&
-++				 graph->commit->parents->next != NULL)
-  				strbuf_addch(sb, 'M');
-  			else
-  				strbuf_addch(sb, '*');
+Signed-off-by: Pieter de Bie <pdebie@ai.rug.nl>
+---
+
+I'm not sure why this was done, but it messed up my import :)
+ builtin-fast-export.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index e1c5630..34acdf9 100755
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -204,10 +204,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 			continue;
+ 		if (i == 0)
+ 			printf("from :%d\n", mark);
+-		else if (i == 1)
+-			printf("merge :%d", mark);
+ 		else
+-			printf(" :%d", mark);
++			printf("merge :%d\n", mark);
+ 		i++;
+ 	}
+ 	if (i > 1)
+-- 
+1.5.5.1.541.g51dc4.dirty
