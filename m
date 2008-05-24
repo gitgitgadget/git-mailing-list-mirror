@@ -1,53 +1,53 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Which msysGit version corresponds to which official Git version?
-Date: Sat, 24 May 2008 14:45:57 +0200
-Message-ID: <48380E05.9020103@dirk.my1.cc>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: git-diff cr/nl files on linux
+Date: Sat, 24 May 2008 19:54:09 +0700
+Message-ID: <fcaeb9bf0805240554j71693d5eo2a425ee0efe2f364@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 24 14:47:23 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 24 14:55:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzt9d-0000ZB-Tr
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 14:47:22 +0200
+	id 1JztH6-0003XH-UE
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 14:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959AbYEXMqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 08:46:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYEXMqC
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 08:46:02 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.14]:56504 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbYEXMqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2008 08:46:00 -0400
-Received: from [84.176.123.174] (helo=[192.168.2.100])
-	by smtprelay02.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1Jzt8I-0003if-Tr
-	for git@vger.kernel.org; Sat, 24 May 2008 14:45:59 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-X-Df-Sender: 757646
+	id S1752442AbYEXMyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 May 2008 08:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYEXMyL
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 08:54:11 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:11351 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751790AbYEXMyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 08:54:10 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1066822fkq.5
+        for <git@vger.kernel.org>; Sat, 24 May 2008 05:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=uEvKM2NVO++QTLWfalUAg4iWnoVJwdGRwBz7yjTw5BU=;
+        b=s0itldsAeDfGtMyVMNncemFE3fB8jqbYadwyws7e9ahtPj5TNubqfkL8fKcxsnuGZDJfwUyRsR2gUmJT2E2kAimYHVLm2Rrzpi/+j5U6zMnX0NN7SQpzKY8PGksnPq6UvaPy9q06subNQYKdJOEGp9FiKp3axlQetHr7lDGMVO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cughQvFwEKy4MArTrx5RBiY6DVPAM3fqjOjSQHtSdEabQLAzLihvHqe+WvjngkuAHhO26Q3fFiMTvpELsdlZa+eLPA6BYc49jP9fxgqBYbQMr2pa+qgdAvrHHfdOO8+mV2UT09FsWgukzrMGLeGojWi9jSSSUyN1DsohmycwXLE=
+Received: by 10.86.98.18 with SMTP id v18mr910750fgb.31.1211633649092;
+        Sat, 24 May 2008 05:54:09 -0700 (PDT)
+Received: by 10.86.62.13 with HTTP; Sat, 24 May 2008 05:54:09 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82812>
 
-I'm using msysGit. Upon shell startup it says
-"Welcome to Git (version 1.5.5-preview20080413)".
-That's the latest msysGit version.
+Hi,
 
-git --version says "git version 1.5.5.1015.g9d258"
+Is there any way that can make git-diff show cr/nl ending files on
+linux without ^M at the end?
 
-I'd like to know which official Git version (as cloned
-from git://git.kernel.org/pub/scm/git/git.git) corresponds
-to my msysGit version.
-
-git checkout 9d258 didn't work.
-
-Any hints? Is there a Website or another mailing
-list for msysGit?
-
-    Dirk
+Thanks
+-- 
+Duy
