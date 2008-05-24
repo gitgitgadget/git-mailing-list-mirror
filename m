@@ -1,122 +1,235 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/3] bisect: use a detached HEAD to bisect
-Date: Sat, 24 May 2008 09:14:21 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805240842360.3081@woody.linux-foundation.org>
-References: <20080523012857.acce6457.chriscool@tuxfamily.org> <7v3ao9twfa.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0805230823330.3081@woody.linux-foundation.org> <18487.62245.59892.442935@cargo.ozlabs.ibm.com>
+From: "Govind Salinas" <blix@sophiasuchtig.com>
+Subject: Re: [PYRITE] Status update and call for information.
+Date: Sat, 24 May 2008 12:43:19 -0500
+Message-ID: <5d46db230805241043u7222be34w7dd8cfcb188ef005@mail.gmail.com>
+References: <5d46db230805222318j25657c10t2955fbdf1aa5c003@mail.gmail.com>
+	 <m34p8o4ijg.fsf@localhost.localdomain>
+	 <5d46db230805232216p7936e5dex3aa3ff0e1e0dce06@mail.gmail.com>
+	 <m3r6bs2ixn.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat May 24 18:15:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 24 19:44:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzwP7-0001pu-HN
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 18:15:33 +0200
+	id 1Jzxmx-0002pP-TX
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 19:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097AbYEXQOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 12:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756071AbYEXQOm
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 12:14:42 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57354 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756006AbYEXQOl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 May 2008 12:14:41 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4OGENuc027299
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 24 May 2008 09:14:24 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4OGELTM015142;
-	Sat, 24 May 2008 09:14:22 -0700
-In-Reply-To: <18487.62245.59892.442935@cargo.ozlabs.ibm.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.906 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758108AbYEXRnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 May 2008 13:43:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757770AbYEXRnX
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 13:43:23 -0400
+Received: from wx-out-0506.google.com ([66.249.82.232]:44215 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755324AbYEXRnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 13:43:22 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so949027wxd.4
+        for <git@vger.kernel.org>; Sat, 24 May 2008 10:43:21 -0700 (PDT)
+Received: by 10.70.73.12 with SMTP id v12mr976644wxa.57.1211651000410;
+        Sat, 24 May 2008 10:43:20 -0700 (PDT)
+Received: by 10.70.60.17 with HTTP; Sat, 24 May 2008 10:43:19 -0700 (PDT)
+In-Reply-To: <m3r6bs2ixn.fsf@localhost.localdomain>
+Content-Disposition: inline
+X-Google-Sender-Auth: 297fcd197129fee4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82820>
 
+On Sat, May 24, 2008 at 3:41 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Govind Salinas" <blix@sophiasuchtig.com> writes:
+>
+> What I forgot to ask: how would you compare Pyrite to similar tool,
+> namely to EasyGit?
+>
 
+I think the main difference is this, from the first bullet on the eg site
+http://www.gnome.org/~newren/eg/
 
-On Sat, 24 May 2008, Paul Mackerras wrote:
-> 
-> I could make it show "HEAD" in a green box for a detached head easily
-> enough.  That could be ambiguous if you had a branch called HEAD, I
-> suppose, but having a branch called HEAD would be deeply confusing
-> anyway. :)  Do you have any alternative suggestion for how to display
-> a detached head?
+"eg focuses on documentation and examples"
 
-Well, it would be really nice if the "active commit" was always visible 
-some way.
+EasyGit is more or less a thin wrapper over git that is fully compatible
+(AFAIK).  Elijah can correct me where I am wrong, but I see it as git
+training wheels for the command line.  That probably sounds
+pejorative but I don't mean it that way.  I am taking the opportunity
+to break compatibility in order to see if I can improve usability.  Also, I
+don't want to just focus on the command line, I want to affect all areas.
 
-Of course, _usually_ it's just the top commit, and it's obvious that way 
-which one is the checked-out one, but if you do "gitk --all" or just 
-generally have multiple branches, right now it's hard to see what commit 
-is the checked-out one, regardless of whether it's detached or not.
+>> On Fri, May 23, 2008 at 8:07 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>> "Govind Salinas" <blix@sophiasuchtig.com> writes:
+>>>
+>>>> One of the things that has been commented on by almost any review of
+>>>> git are the large numbers of commands that are present and the
+>>>> endless stream of flags, options, configuration variables and
+>>>> syntaxes that are present in git.  They certainly serve a purpose
+>>>> and I probably would not be able to do this without all those things
+>>>> but it can get in a normal users way some times.  Here are some of
+>>>> the steps I have and will be taking.
+>>>
+>>> Which is bogus, because most of those commands are plumbing, [almost]
+>>> never to be used by user directly.
+>>>
+>>> If I understand correctly in next major git release those commands are
+>>> to be hidden and not present in PATH anymore.
+>>
+>> That may be true but it is only part of the story.  I see plumbing commands
+>> being given to users all the time on the mailing list.  Usually in some
+>> combination.  To make it worse they usually get several sets of commands
+>> that do something similar but any one may or may not be exactly what
+>> they want because not everyone who responds fully understands what the
+>> commands are doing.
+>
+> The change to "git help" to show only porcelain commands unless
+> explicitely requested, and to git(7) manpage to have porcelain first
+> would help there.
+>
+> But I think using plumbing in examples are remainder of git early
+> days, where it was the only way to work with git.  Tools like Pyrite,
+> or EasyGit, wouldn't change it...
+>
 
-I think "HEAD" in a green box would solve that too, but on the other hand, 
-we have a *lot* of boxes already. For people who mainly just track another 
-repo, you already have one box saying "master", and another one saying 
-"remotes/origin/master", and adding yet *another* box saying HEAD that 
-just points to the same commit will work, but do we really want that?
+The idea is that there should be one fairly obvious way to do something.
+If you have that then there is less confusion, especially when someone
+asks for help.  Plus, if there is one fairly obvious way to do something,
+then people will need to ask for help less often.  That is what I hope to
+accomplish.
 
-I actually like the red circle for "Local uncommitted changes". Maybe we 
-can use a similar visual clue for "currently checked out". You already 
-picked green for the "added to the index" case, so we have the three 
-primary RGB colors already used, but we could make it just be a deep 
-yellow.
+>>>> 1) Reduce the number of commands.
+> [...]
+> I think you should start not with "minimal number of commands" as a
+> goal, but rather with set of distinct tasks ordinary (not scripting)
+> user might need, and how to map them into commands.
+>
+> To heavily overloaded commands are as much if not worse than having
+> too many commands to choose from.
+>
 
-Of course, maybe people hate lots of colos already, and something more 
-akin to the text background thing that we use for the selected commit 
-would be better.
+This is true.  This idea is fairly new and I am still deciding exactly
+how things
+would get broken up.  After thinking about it, "checkout" probably should
+not be combined with the fetch/pull/merge command because they are
+too different.  Here is how I am thinking of combining things, perhaps you
+and others can give some pointers on what is crazy and what might work.
 
-I dunno. There's so many options.
+The ones prefixed with * are the ones that would show up in the short
+help, the ones that would be the most typically used.
 
-Here's a "make it yellow" patch.
+  bisect = bisect
+  blame = blame
+* commit = commit + push + stash + init
+          push:  This is here because it fits the traditional notion of what a
+                    commit does, which is to send a commit to the central
+                    server.  I think of it as "I am committing my changes to
+                    the remote repository.
+          stash:  What is stash but a temporary commit (not on the branch)?
+          init: This can be done a couple of ways, either your initial
+                  commit is combined with the init or --init is a flag
+                  passed to commit to set up the NULL commit.  At least
+                  thats how I think of it conceptually.
+* checkout = checkout + clone + branch + remote
+* config = config
+  cherry = cherry + cherry-pick
+* diff = diff
+  gc = clean + gc + prune + repack
+         I plan to make full use of gc --auto to avoid having the
+         user run this command, but everyone knows there
+         are reasons to run these commands even with --auto.
+         "Clean" seems to me to be the working directory version
+         of gc.
+* gui = gui
+* help = help
+  import = apply + cvsimport + <scm>import + am
+         Here the import strategies would be provided by addons
+         and such with apply/am as standard.
+  mail = format-patch + send-mail
+  move = move
+* pull = pull, fetch, merge
+  rebase = rebase
+  remove = remove
+* resolve = mergetool
+  revert = reset + reflog
+          I was thinking of calling this command "recover" instead of
+          revert, which I still think might describe what I want to do
+          and might tell you why I think that reflog is something to
+          combine here.  "revert --what-can-i-revert-to" would show
+          the output of reflog.  That wouldn't be the actual name
+          of the flag, but it gives you the idea.
+* serve
+* show = show + ls + log + grep + rev-list + rev-parse + describe
+          Combining all this may raise a few eye-brows, but I think
+          it makes sense.  Really this command is git log + ls-files +
+          describe and the ability of showing files from other revisions
+          from git show, the rest can be reduced to functionality already
+          available in git log.
+* status = status
+  submodule
+  tag
+* track = add/addremove
+  verify = fsck
 
-		Linus
-----
- gitk-git/gitk |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+>> >> 2) Reduce complexity.
+> [...]
+>>>> 3) Addons.
+[snip problems with revision numbers]
+> [...]
+>> I responded to this in another mail.  The other DVCSs don't claim that
+>> revision numbers are all of those things.  It is only necessary that when
+>> two people say the same thing, it mean the same thing.
+>
+>> This doesn't stop them from using these numbers more than the sha1
+>> IDs because given a branch, the numbers are solid.  Doing things the
+>> way I propose has the same properties.
+>
+> I wonder how useful in practice those revision numbers are in larger
+> repositories, with nonlinear history, i.e. if -r 6453:master -R 6455:master
+> (or something like that) is truly easier to use than master~2..master
+>
+> I _think_ that sha-1 are largely theoretical scare, as for example I
+> don't use them much, and if I use them it is in copy'n'paste manner.
+>
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 9ab6dba..94ca826 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -4841,7 +4841,8 @@ proc drawcmittext {id row col} {
-     global cmitlisted commitinfo rowidlist parentlist
-     global rowtextx idpos idtags idheads idotherrefs
-     global linehtag linentag linedtag selectedline
--    global canvxmax boldrows boldnamerows fgcolor nullid nullid2
-+    global canvxmax boldrows boldnamerows fgcolor
-+    global HEAD nullid nullid2
- 
-     # listed is 0 for boundary, 1 for normal, 2 for negative, 3 for left, 4 for right
-     set listed $cmitlisted($curview,$id)
-@@ -4849,6 +4850,8 @@ proc drawcmittext {id row col} {
- 	set ofill red
-     } elseif {$id eq $nullid2} {
- 	set ofill green
-+    } elseif {$id eq $HEAD} {
-+	set ofill yellow
-     } else {
- 	set ofill [expr {$listed != 0 ? $listed == 2 ? "gray" : "blue" : "white"}]
-     }
-@@ -9886,6 +9889,8 @@ set viewperm(0) 0
- set viewargs(0) {}
- set viewargscmd(0) {}
- 
-+set HEAD [exec git rev-parse HEAD]
-+
- set numcommits 0
- set loginstance 0
- set cmdlineok 0
+They are useful for a different purpose.  If I say master~5 today it
+probably won't yield the same commit tomorrow.  while 6450:master would.
+Honestly, I have absolutely no problem with using sha1s myself, I just put
+this in because I have seen several people ask for it on the mailing list
+recently.  I thought to myself, that they COULD have it if they really wanted.
+Also keep in mind that 12345: is usually enough as an empty RHS would
+default to HEAD, which saves a bit of typing.
+
+>>>> 5) One stop shop.
+[snip windows + webserver headaches]
+>>> BTW. there always is git-instaweb.
+>>>
+>>
+>> Yeah, but I still need the webserver, thats what I want to get rid of.  If you
+>> want to do some ad-hoc sharing it is a huge problem and you may not
+>> have permissions/time to install software.
+>>
+>>> But having git-serve would be nice...
+>>>
+>>
+>> Indeed.
+>
+> And with Python AFAIK you can quite easily set up _simple_ web server
+> for HTTP access and browsing repository...
+>
+> BTW. there was at some time git web interface in Python (old wit), but
+> it lost to gitweb; nowadays Ruby, eRuby or Ruby on Rails seems to be
+> the rage (new Wit (from XMMS2), Gitarella, Gitorious, GitHub).
+>
+I was thinking of using Django so that I could reuse the stuff that the
+review-board folks are doing.  I like their side-by-side diffs etc.  But here
+is the kicker, I want to use this to do what the hg people have done.
+They built their remote push-pull functionality into their built-in webserver.
+If we do this then the pyrite http protocol can be a smart transport.  I
+believe that bzr has a similar feature in theirs.
+
+Thanks for taking a look and giving me your opinion, I like getting
+feedback about this.
+
+-Govind
