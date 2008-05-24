@@ -1,148 +1,237 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/5] Move reset_index_file() to a new reset.c
-Date: Sat, 24 May 2008 00:21:42 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805240016230.19665@iabervon.org>
-References: <cover.1211586801.git.vmiklos@frugalware.org> <40d6845554a032ef66a20289aea6c7b2f157fed3.1211586801.git.vmiklos@frugalware.org>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [PATCH] git-grep: add --color to highlight matches
+Date: Sat, 24 May 2008 11:31:19 +0700
+Message-ID: <20080524043118.GA23118@laptop>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat May 24 06:23:13 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 24 06:32:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzlHj-0001oh-5L
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 06:23:11 +0200
+	id 1JzlQX-0003FM-TV
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 06:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbYEXEVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 00:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbYEXEVy
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 00:21:54 -0400
-Received: from iabervon.org ([66.92.72.58]:41290 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750835AbYEXEVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2008 00:21:53 -0400
-Received: (qmail 30207 invoked by uid 1000); 24 May 2008 04:21:42 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 May 2008 04:21:42 -0000
-In-Reply-To: <40d6845554a032ef66a20289aea6c7b2f157fed3.1211586801.git.vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751444AbYEXEb0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 May 2008 00:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbYEXEb0
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 00:31:26 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:38269 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195AbYEXEbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 00:31:24 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so795313wfd.4
+        for <git@vger.kernel.org>; Fri, 23 May 2008 21:31:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=60Rrls9wZl5ycm+b/0CV+q4QifI/5xTgktggGaPoNQc=;
+        b=T7+dLb71Wxh7n7QR8ncYHZHKPwHrM5xU7m17fViUcyB/UoGviVy1sOT5Eh3dOp+HGdi//5MTdthNCGjaC9edMdvVNKZ9/eWilBkZBDnRJ/xYWRH8rM7jUrx8CnClgelRLoOqMTMIGZ4MNYQRt2sBbYmjQDDXEavZjmEQWVsfTfI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=AnKxIfC6IdV8KdbUIosHy51VStiuhpeICfSmU077X7RYBRSah501VT9Ii17G6joiGB/P+stDBAC0HM9HlG6XLuoImAznzaAMfWdsOWHw4+DYSdiDKpdk0pAwNYkfClIaDXrmNyjCNdt6ENIvqWMmOonkcgGl0g+jSEvHtFcirlc=
+Received: by 10.142.213.10 with SMTP id l10mr922589wfg.287.1211603484427;
+        Fri, 23 May 2008 21:31:24 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.1.117])
+        by mx.google.com with ESMTPS id 30sm11459565wfd.1.2008.05.23.21.31.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 May 2008 21:31:23 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 24 May 2008 11:31:19 +0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82794>
 
-On Sat, 24 May 2008, Miklos Vajna wrote:
 
-> This is needed as we want to use it later in builtin-merge.
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  Makefile        |    2 ++
->  builtin-reset.c |   17 +----------------
->  reset.c         |   28 ++++++++++++++++++++++++++++
->  reset.h         |    6 ++++++
->  4 files changed, 37 insertions(+), 16 deletions(-)
->  create mode 100644 reset.c
->  create mode 100644 reset.h
-> 
-> diff --git a/Makefile b/Makefile
-> index a2de075..91d938a 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -364,6 +364,7 @@ LIB_H += quote.h
->  LIB_H += reflog-walk.h
->  LIB_H += refs.h
->  LIB_H += remote.h
-> +LIB_H += reset.h
->  LIB_H += revision.h
->  LIB_H += run-command.h
->  LIB_H += sha1-lookup.h
-> @@ -443,6 +444,7 @@ LIB_OBJS += read-cache.o
->  LIB_OBJS += reflog-walk.o
->  LIB_OBJS += refs.o
->  LIB_OBJS += remote.o
-> +LIB_OBJS += reset.o
->  LIB_OBJS += revision.o
->  LIB_OBJS += run-command.o
->  LIB_OBJS += server-info.o
-> diff --git a/builtin-reset.c b/builtin-reset.c
-> index 79424bb..6e6e168 100644
-> --- a/builtin-reset.c
-> +++ b/builtin-reset.c
-> @@ -18,6 +18,7 @@
->  #include "tree.h"
->  #include "branch.h"
->  #include "parse-options.h"
-> +#include "reset.h"
->  
->  static const char * const git_reset_usage[] = {
->  	"git-reset [--mixed | --soft | --hard] [-q] [<commit>]",
-> @@ -49,22 +50,6 @@ static inline int is_merge(void)
->  	return !access(git_path("MERGE_HEAD"), F_OK);
->  }
->  
-> -static int reset_index_file(const unsigned char *sha1, int is_hard_reset)
-> -{
-> -	int i = 0;
-> -	const char *args[6];
-> -
-> -	args[i++] = "read-tree";
-> -	args[i++] = "-v";
-> -	args[i++] = "--reset";
-> -	if (is_hard_reset)
-> -		args[i++] = "-u";
-> -	args[i++] = sha1_to_hex(sha1);
-> -	args[i] = NULL;
-> -
-> -	return run_command_v_opt(args, RUN_GIT_CMD);
-> -}
-> -
->  static void print_new_head_line(struct commit *commit)
->  {
->  	const char *hex, *body;
-> diff --git a/reset.c b/reset.c
-> new file mode 100644
-> index 0000000..a75fec6
-> --- /dev/null
-> +++ b/reset.c
-> @@ -0,0 +1,28 @@
-> +/*
-> + * generic fucntion(s) from the "git reset" builtin command
-> + *
-> + * Copyright (c) 2007 Carlos Rica
-> + *
-> + * Based on git-reset.sh, which is
-> + *
-> + * Copyright (c) 2005, 2006 Linus Torvalds and Junio C Hamano
-> + */
-> +
-> +#include "cache.h"
-> +#include "run-command.h"
-> +
-> +int reset_index_file(const unsigned char *sha1, int is_hard_reset)
-> +{
-> +	int i = 0;
-> +	const char *args[6];
-> +
-> +	args[i++] = "read-tree";
-> +	args[i++] = "-v";
-> +	args[i++] = "--reset";
-> +	if (is_hard_reset)
-> +		args[i++] = "-u";
-> +	args[i++] = sha1_to_hex(sha1);
-> +	args[i] = NULL;
-> +
-> +	return run_command_v_opt(args, RUN_GIT_CMD);
-> +}
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-grep.txt |    4 +++
+ builtin-grep.c             |    6 +++-
+ grep.c                     |   62 ++++++++++++++++++++++++++++++++++++=
++++++---
+ grep.h                     |    1 +
+ 4 files changed, 68 insertions(+), 5 deletions(-)
 
-You might as well use unpack_trees() directly here, instead of running a 
-separate command. In fact, you might skip making a function here, and just 
-call unpack_trees() where you'd use it. (And maybe have a function to 
-initialize a struct unpack_tree_options to some common defaults to make it 
-easy to see what's being done.)
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index a97f055..20ef098 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -16,6 +16,7 @@ SYNOPSIS
+ 	   [-F | --fixed-strings] [-n]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [-c | --count] [--all-match]
++	   [--color]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...] [<tree>...]
+@@ -85,6 +86,9 @@ OPTIONS
+ 	Instead of showing every matched line, show the number of
+ 	lines that match.
+=20
++--color::
++	Show colored matches.
++
+ -[ABC] <context>::
+ 	Show `context` trailing (`A` -- after), or leading (`B`
+ 	-- before), or both (`C` -- context) lines, and place a
+diff --git a/builtin-grep.c b/builtin-grep.c
+index ef29910..118ec32 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -386,7 +386,7 @@ static int grep_cache(struct grep_opt *opt, const c=
+har **paths, int cached)
+ 	 * we grep through the checked-out files. It tends to
+ 	 * be a lot more optimized
+ 	 */
+-	if (!cached) {
++	if (!cached && !opt->color) {
+ 		hit =3D external_grep(opt, paths, cached);
+ 		if (hit >=3D 0)
+ 			return hit;
+@@ -708,6 +708,10 @@ int cmd_grep(int argc, const char **argv, const ch=
+ar *prefix)
+ 			opt.relative =3D 0;
+ 			continue;
+ 		}
++		if (!strcmp("--color", arg)) {
++			opt.color =3D 1;
++			continue;
++		}
+ 		if (!strcmp("--", arg)) {
+ 			/* later processing wants to have this at argv[1] */
+ 			argv--;
+diff --git a/grep.c b/grep.c
+index f67d671..7cc05b0 100644
+--- a/grep.c
++++ b/grep.c
+@@ -247,7 +247,10 @@ static int fixmatch(const char *pattern, char *lin=
+e, regmatch_t *match)
+ 	}
+ }
+=20
+-static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p,=
+ char *bol, char *eol, enum grep_context ctx)
++static int match_one_pattern_1(struct grep_opt *opt, struct grep_pat *=
+p,
++			       char *bol, char *eol,
++			       enum grep_context ctx, int eflags,
++			       int *rm_so, int *rm_eo)
+ {
+ 	int hit =3D 0;
+ 	int at_true_bol =3D 1;
+@@ -261,7 +264,7 @@ static int match_one_pattern(struct grep_opt *opt, =
+struct grep_pat *p, char *bol
+ 	if (!opt->fixed) {
+ 		regex_t *exp =3D &p->regexp;
+ 		hit =3D !regexec(exp, bol, ARRAY_SIZE(pmatch),
+-			       pmatch, 0);
++			       pmatch, eflags);
+ 	}
+ 	else {
+ 		hit =3D !fixmatch(p->pattern, bol, pmatch);
+@@ -298,9 +301,20 @@ static int match_one_pattern(struct grep_opt *opt,=
+ struct grep_pat *p, char *bol
+ 			goto again;
+ 		}
+ 	}
++	if (hit) {
++		if (rm_so)
++			*rm_so =3D pmatch[0].rm_so;
++		if (rm_eo)
++			*rm_eo =3D pmatch[0].rm_eo;
++	}
+ 	return hit;
+ }
+=20
++static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p,=
+ char *bol, char *eol, enum grep_context ctx)
++{
++	return match_one_pattern_1(opt, p, bol, eol, ctx, 0, NULL, NULL);
++}
++
+ static int match_expr_eval(struct grep_opt *o,
+ 			   struct grep_expr *x,
+ 			   char *bol, char *eol,
+@@ -365,6 +379,42 @@ static int match_line(struct grep_opt *opt, char *=
+bol, char *eol,
+ 	return 0;
+ }
+=20
++static void show_line_colored(struct grep_opt *opt, char *bol, char *e=
+ol,
++			      const char *name, unsigned lno, char sign)
++{
++	struct grep_pat *p;
++	int rm_so, rm_eo, eflags =3D 0;
++	int ch;
++
++	if (opt->pathname)
++		printf("%s%c", name, sign);
++	if (opt->linenum)
++		printf("%d%c", lno, sign);
++
++	ch =3D *eol;
++	*eol =3D 0;
++	while (bol < eol) {
++		for (p =3D opt->pattern_list; p; p =3D p->next) {
++			if (match_one_pattern_1(opt, p, bol, eol, GREP_CONTEXT_BODY, eflags=
+, &rm_so, &rm_eo))
++				break;
++		}
++
++		/* No match, break the loop */
++		if (!p ||
++		    (rm_so < 0) || (eol - bol) <=3D rm_so ||
++		    (rm_eo < 0) || (eol - bol) < rm_eo)
++			break;
++
++		printf("%.*s\033[31m\033[1m%.*s\033[m",
++		       rm_so, bol,
++		       rm_eo-rm_so, bol+rm_so);
++		bol +=3D rm_eo;
++		eflags =3D REG_NOTBOL;
++	}
++	printf("%s\n", bol);
++	*eol =3D ch;
++}
++
+ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 			 char *buf, unsigned long size, int collect_hits)
+ {
+@@ -466,8 +516,12 @@ static int grep_buffer_1(struct grep_opt *opt, con=
+st char *name,
+ 			}
+ 			if (last_shown && lno !=3D last_shown + 1)
+ 				printf(hunk_mark);
+-			if (!opt->count)
+-				show_line(opt, bol, eol, name, lno, ':');
++			if (!opt->count) {
++				if (opt->color)
++					show_line_colored(opt, bol, eol, name, lno, ':');
++				else
++					show_line(opt, bol, eol, name, lno, ':');
++			}
+ 			last_shown =3D last_hit =3D lno;
+ 		}
+ 		else if (last_hit &&
+diff --git a/grep.h b/grep.h
+index d252dd2..979f7d0 100644
+--- a/grep.h
++++ b/grep.h
+@@ -68,6 +68,7 @@ struct grep_opt {
+ 	unsigned extended:1;
+ 	unsigned relative:1;
+ 	unsigned pathname:1;
++	unsigned color:1;
+ 	int regflags;
+ 	unsigned pre_context;
+ 	unsigned post_context;
+--=20
+1.5.5.GIT
