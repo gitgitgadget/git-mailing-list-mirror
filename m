@@ -1,54 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse --symbolic-full-name: don't print '^' if SHA1
- is not a ref
-Date: Fri, 23 May 2008 17:02:00 -0700
-Message-ID: <7v3ao8r2mf.fsf@gitster.siamese.dyndns.org>
-References: <4836D0F1.4090007@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat May 24 02:03:32 2008
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Unhelpful git-rebase error when untracked files conflict with new head
+Date: Fri, 23 May 2008 17:07:04 -0700
+Message-ID: <3E16F335-153D-4E60-85D8-00CF9E5BD1F3@midwinter.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Users List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 24 02:08:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JzhEL-0001MO-Gw
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 02:03:25 +0200
+	id 1JzhIk-0002LP-0Q
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 02:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbYEXACP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 20:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbYEXACP
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 20:02:15 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56341 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750994AbYEXACN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 20:02:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 94BC23692;
-	Fri, 23 May 2008 20:02:11 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 0CA89368E; Fri, 23 May 2008 20:02:07 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A8A567A0-2924-11DD-8B17-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1753261AbYEXAHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 20:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753320AbYEXAHG
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 20:07:06 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:49959 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752900AbYEXAHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 20:07:05 -0400
+Received: (qmail 13711 invoked from network); 24 May 2008 00:07:04 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=L8a88uyjgrYD2cWMFBrgkGJIewyDoyo/i2g1hcTdmGuwUb0jjCs8VBBiUWujKAed  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 24 May 2008 00:07:04 -0000
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82782>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Just helped someone figure out what was going on with a rebase  
+failure. The error message from git-rebase is pretty confusing and  
+unhelpful when there's a conflicting untracked file in the working  
+copy. Example:
 
-> From: Johannes Sixt <johannes.sixt@telecom.at>
->
-> The intention of --symbolic-full-name is to not print anything if a
-> revision is not an exact ref. But this command:
->
->     $ git-rev-parse --symbolic-full-name --not master~1
->
-> still emitted a sole '^' to stdout (provided that there's no other ref at
-> master~1).
+[ create a repo with 1 commit and 1 file ]
+$ mkdir parent
+$ cd parent
+$ git init
+Initialized empty Git repository in .git/
+$ touch foo
+$ git add foo
+$ git commit -m 'initial commit'
+Created initial commit 97aef94: initial commit
+  0 files changed, 0 insertions(+), 0 deletions(-)
+  create mode 100644 foo
+$ cd ..
 
-Well spotted.  Thanks.
+[ clone it and create a second file in both parent and child,  
+committing it in parent ]
+$ git clone parent child
+Initialized empty Git repository in /home/koreth/test/child/.git/
+$ touch parent/bar child/bar
+$ cd parent
+$ git add bar
+$ git commit -m 'second commit'
+Created commit 40d4be0: second commit
+  0 files changed, 0 insertions(+), 0 deletions(-)
+  create mode 100644 bar
+
+[ try to rebase to the parent's second commit in the child ]
+$ cd ../child
+$ git fetch
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (2/2), done.
+ From /home/koreth/test/parent/
+    97aef94..40d4be0  master     -> origin/master
+$ git rebase origin/master
+First, rewinding head to replay your work on top of it...
+could not detach HEAD
+
+"could not detach HEAD" tells you basically nothing about what's going  
+on. I spent a fair while scratching my head over this, because I was  
+perfectly able to detach HEAD by hand (checking out old revisions,  
+etc.) It would be more accurate to say, "Could not check out the  
+revision you're rebasing onto."
+
+If you run git-rebase under strace, there actually *is* a meaningful,  
+helpful error message being generated by "git checkout":
+
+...
+[pid 11353] write(2, "error: Untracked working tree file \'bar\' would  
+be overwritten by merge.\n", 72) = 72
+...
+
+but it gets discarded rather than shown to the user.
+
+Are we suppressing output from git-checkout intentionally? Are there  
+specific error messages other than this one that we don't want to show?
+
+-Steve
