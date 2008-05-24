@@ -1,135 +1,85 @@
-From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: bug in "git log --graph" at the tail end?
-Date: Fri, 23 May 2008 18:05:56 -0700
-Message-ID: <20080524010555.GA5385@adamsimpkins.net>
-References: <7vve14rbu7.fsf@gitster.siamese.dyndns.org>
-Reply-To: Adam Simpkins <adam@adamsimpkins.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Multiple user questions
+Date: Fri, 23 May 2008 18:30:43 -0700 (PDT)
+Message-ID: <m3zlqg32w9.fsf@localhost.localdomain>
+References: <200805231327.41216.devurandom@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 24 03:31:35 2008
+To: Dennis Schridde <devurandom@gmx.net>
+X-From: git-owner@vger.kernel.org Sat May 24 03:31:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Jzibd-0003ms-0L
-	for gcvg-git-2@gmane.org; Sat, 24 May 2008 03:31:33 +0200
+	id 1Jzibo-0003pw-CP
+	for gcvg-git-2@gmane.org; Sat, 24 May 2008 03:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754523AbYEXBam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2008 21:30:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754632AbYEXBam
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 21:30:42 -0400
-Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:42285 "EHLO
-	smtp132.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754308AbYEXBal (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2008 21:30:41 -0400
-X-Greylist: delayed 1481 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 May 2008 21:30:41 EDT
-Received: from relay3.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay3.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 3E62B206FA6;
-	Fri, 23 May 2008 21:06:00 -0400 (EDT)
-Received: by relay3.relay.sat.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 04FA2206280;
-	Fri, 23 May 2008 21:06:00 -0400 (EDT)
-Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id A56E514100C8; Fri, 23 May 2008 18:05:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vve14rbu7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754959AbYEXBas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2008 21:30:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754932AbYEXBas
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 21:30:48 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:6967 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754632AbYEXBar (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2008 21:30:47 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so459724nfc.21
+        for <git@vger.kernel.org>; Fri, 23 May 2008 18:30:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=SuL3hi7UZlMyg6V/xA6FCU9bKfqKoTeOOi5CRFMMLQg=;
+        b=ZfoBSsbDzbSJTmNa7tLRx6cB3u42WkrDu/MY5WFpXxkmAXBb2Im7lxCzmRcS7ApHszbI9qYTyE+gZOFuxNDEuh8bY/ZApnlqI5VUGAysIk3kKlqT0pnoe25fGpMxH6LxUzb1WHHGfKagzstrDQ27ngCwYMK9Z8Dvrn8+0EkpW5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=A6cQ1Zggn1gUpdgXipPhq9ZdRodEU14qP/MumYl9H+/DV/7snDm6lS4CWAfcedPOq2g9aD5rHSPVmwX+kFKqg+V81MBetOLALsy7J05RGX31nWvHUTsIvFXe/vPG9a/zZ5OXHmI+L1aqCERwAp3EFNC0Rkex9U//kkh4o7gGmIg=
+Received: by 10.210.120.7 with SMTP id s7mr1696386ebc.76.1211592644753;
+        Fri, 23 May 2008 18:30:44 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.211.36])
+        by mx.google.com with ESMTPS id h1sm5774822nfh.19.2008.05.23.18.30.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 May 2008 18:30:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4O1UEhG032554;
+	Sat, 24 May 2008 03:30:24 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4O1TwDx032543;
+	Sat, 24 May 2008 03:29:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200805231327.41216.devurandom@gmx.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82787>
 
-On Fri, May 23, 2008 at 01:42:56PM -0700, Junio C Hamano wrote:
-> It appears that "log --graph" output has a bug at its tail end.
-> 
->     $ git log --pretty=oneline --abbrev-commit --graph 9d88058^..1af8bca
->     M   1af8bca... Merge branch 'maint'
->     |\  
->     | M   008442f... Merge branch 'maint-1.5.4' into maint
->     | |\  
->     | * e77b0b5... git-am: fix typo in usage message
->     | * 74190d2... doc/git-daemon: s/uploadarchive/uploadarch/
->     M   9d88058... Merge branch 'ar/add-unreadable'
->     |\  
->     * dad25e4... Add a config option to ignore errors for git-add
->     * 8959743... Add a test for git-add --ignore-errors
->     * 984b83e... Add --ignore-errors to git-add to allow it to sk...
->     * 7ae02a3... Extend interface of add_files_to_cache to allow ...
->     * 960b8ad... Make the exit code of add_file_to_index actually...
-> 
-> Ideally, I think the output should look like this:
-> 
->     M   1af8bca... Merge branch 'maint'
->     |\  
->     | M   008442f... Merge branch 'maint-1.5.4' into maint
->     | |\  
->     | * e77b0b5... git-am: fix typo in usage message
->     | * 74190d2... doc/git-daemon: s/uploadarchive/uploadarch/
->     M   9d88058... Merge branch 'ar/add-unreadable'
->     |\  
->     | * dad25e4... Add a config option to ignore errors for git-add
->     | * 8959743... Add a test for git-add --ignore-errors
->     | * 984b83e... Add --ignore-errors to git-add to allow it to sk...
->     | * 7ae02a3... Extend interface of add_files_to_cache to allow ...
->     | * 960b8ad... Make the exit code of add_file_to_index actually...
-> 
-> This is purely cosmetic, but because --graph is only about the cosmetics,
-> we may want to do something about it.
+Dennis Schridde <devurandom@gmx.net> writes:
 
-Yes, you're right.  There are a couple bugs in handling commits with
-parents flagged as UNINTERESTING.  There are two problems:
+> 1) Can I somehow make send-email just send one email with multiple patches 
+> attached?
 
-- The code that determines where each branch line should go in the next
-  commit completely ignores the uninteresting parent.  Instead, it
-  really should use two blank spaces in its computation, to account for
-  where the parent would have been.
+This way you cannot reply to each patch separately in an easy way.
+Thats what "[PATCH n/m]" and threading/chaining to cover letter is
+for.
 
-  This is more than just a cosmetic issue, since it results in branch
-  lines being mis-aligned.  This makes the graph show incorrect parent
-  child relationships.
+> 2) Can I make format-patch include the full commit message, date, author, 
+> stats in the patches? (To mimic what git-show would show me.)
+> Will this be sent via send-email, too?
 
-  For example, the code should draw this:
+Errr... git-format-patch output _does_ include full commit message,
+author, author date and diffstat.
 
-  | * | <- commit with uninteresting parent
-  |  /
-  * |
-  | *
+git-send-email can send fir-format-patch patches (and usually is used
+in such way).
 
-  But instead, it currently draws this:
+> 4) Can I make format-patch output one deletion and one insertion for a 
+> complete rewrite of a function, instead of multiple deletes/inserts?
 
-  | * | <- commit with uninteresting parent
-  * |
-  | *
-
-  This is a simple one-line fix.  I'll submit a patch for it.
-
-
-- Merge commits that have uninteresting parents print branch lines for
-  all of their parents, even the uninteresting ones.
-
-  This is just a cosmetic issue, but I agree it looks bad.  Perhaps the
-  best thing to do is not to display anything for the uninteresting
-  parents.  It might look a little confusing to some users though, since
-  you can have a merge commit that is printed as 'M', but it only has
-  one parent displayed in the graph.
-
-  This change would make the output from the command you mentioned
-  above look like:
-
-    M   1af8bca... Merge branch 'maint'
-    |\  
-    | M   008442f... Merge branch 'maint-1.5.4' into maint
-    | * e77b0b5... git-am: fix typo in usage message
-    | * 74190d2... doc/git-daemon: s/uploadarchive/uploadarch/
-    M   9d88058... Merge branch 'ar/add-unreadable'
-    * dad25e4... Add a config option to ignore errors for git-add
-    * 8959743... Add a test for git-add --ignore-errors
-    * 984b83e... Add --ignore-errors to git-add to allow it to sk...
-    * 7ae02a3... Extend interface of add_files_to_cache to allow ...
-    * 960b8ad... Make the exit code of add_file_to_index actually...
+Try git-format-patch with -B option, or -B<num>.
 
 -- 
-Adam Simpkins
-adam@adamsimpkins.net
+Jakub Narebski
+Poland
+ShadeHawk on #git
