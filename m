@@ -1,103 +1,79 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: Which msysGit version corresponds to which official Git version?
-Date: Sun, 25 May 2008 11:46:25 -0400
-Message-ID: <20080525154625.GV3216@inocybe.teonanacatl.org>
-References: <48380E05.9020103@dirk.my1.cc>
- <3F512BCF-1D2E-46B0-84E5-4807753A2618@zib.de> <4839839C.2040605@dirk.my1.cc>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH 1/3] Add some tests for git update-ref -d
+Date: Sun, 25 May 2008 18:14:29 +0200
+Message-ID: <20080525161429.25087.10930.stgit@yoghurt>
+References: <20080525161125.25087.18083.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="HKOZ/JADkehwFk9I"
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun May 25 17:47:32 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 25 18:15:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0IRS-0000Ve-6r
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 17:47:26 +0200
+	id 1K0Isz-0000ur-Cu
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 18:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755229AbYEYPqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 11:46:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbYEYPqf
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 11:46:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52929 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754885AbYEYPqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 11:46:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C2C9160C;
-	Sun, 25 May 2008 11:46:32 -0400 (EDT)
-Received: from inocybe.teonanacatl.org (c-68-39-203-93.hsd1.pa.comcast.net
- [68.39.203.93]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
- client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix)
- with ESMTP id F10E11608; Sun, 25 May 2008 11:46:27 -0400 (EDT)
-Mail-Followup-To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>,
- Steffen Prohaska <prohaska@zib.de>, Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4839839C.2040605@dirk.my1.cc>
-X-Listening-To: Nothing
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Pobox-Relay-ID: BF95F06C-2A71-11DD-A5D1-80001473D85F-09356542!a-sasl-fastnet.pobox.com
+	id S1755737AbYEYQPA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 12:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755155AbYEYQPA
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 12:15:00 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1635 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754904AbYEYQO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 12:14:59 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1K0Ird-0001DN-00; Sun, 25 May 2008 17:14:29 +0100
+In-Reply-To: <20080525161125.25087.18083.stgit@yoghurt>
+User-Agent: StGIT/0.14.2.156.gbabd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82866>
+
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
+---
+
+ t/t1400-update-ref.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
 
---HKOZ/JADkehwFk9I
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Dirk S=FCsserott wrote:
-> So what's the difference then between 9d8318051 and 1d2375d?
-> gitk doesn't know about 9d8318051 at all. Seems that there are
-> two ways to get to v1.5.5: via 9d... and via 1d.... Is that right
-> or did I misunderstand sth. here?
-
-9d8318051 is a tag object that creates the v1.5.5 tag:
-
-$ git cat-file -p 9d8318051
-object 1d2375ddfee18bd3effd2c1f98527cc2f8b1df0a
-type commit
-tag v1.5.5
-tagger Junio C Hamano <gitster@pobox.com> Mon Apr 7 21:57:56 2008 -0700
-
-GIT 1.5.5
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBH+vtXwMbZpPMRm5oRAlfBAJwPP5W9HvoAHzmD1AoWpRtcyQ/uoACfVkCc
-M7H1LhvSXz+h2+08bieh3uU=3D
-=3DuTP0
------END PGP SIGNATURE-----
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Until you have the courage to lose sight of the shore, you will not
-know the terror of being forever lost at sea.
-    -- Demotivators (www.despair.com)
-
-
---HKOZ/JADkehwFk9I
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBAgAtBQJIOYnEJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzj8xUH/ic973neFtWyeC5WVRGc3fF5w9lKqIE/TXZL
-HxoeLUp+e9bgrxI9QJCjElR08m4mPzO+wDTqnzeI91NCwA0QAoz2N8XV0ZS5RYNm
-kpwX4lC8UxiU03dTab3B0iK7H5muuwhNuko6L1I/jFrL2vk6KKpF+TYiZL1L6yRM
-cX7OcSDL2y/A9jBOF8tTxakTsUFMP6XoiYEKZZg21gCYuSQHssnTSf+8+OlDkCFj
-e5YjkP+epDtHPwh93BLokehoUJPVOie15Na5swopSoxxGpsZzB8HmiE2t40eoUxB
-5CQWvwfhNyUPagPlDNuFCo0epBWWf3uUxSch/hgq7Aqo9/V1k+Y=
-=w0x9
------END PGP SIGNATURE-----
-
---HKOZ/JADkehwFk9I--
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 78cd412..b88e767 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -32,6 +32,14 @@ test_expect_success \
+ 	"create $m" \
+ 	"git update-ref $m $B $A &&
+ 	 test $B"' =3D $(cat .git/'"$m"')'
++test_expect_success "fail to delete $m with stale ref" "
++	test_must_fail git update-ref -d $m $A &&
++	test $B =3D \$(cat .git/$m)
++"
++test_expect_success "delete $m" "
++	git update-ref -d $m $B &&
++	! test -f .git/$m
++"
+ rm -f .git/$m
+=20
+ test_expect_success \
+@@ -49,6 +57,14 @@ test_expect_success \
+ 	"create $m (by HEAD)" \
+ 	"git update-ref HEAD $B $A &&
+ 	 test $B"' =3D $(cat .git/'"$m"')'
++test_expect_success "fail to delete $m (by HEAD) with stale ref" "
++	test_must_fail git update-ref -d HEAD $A &&
++	test $B =3D \$(cat .git/$m)
++"
++test_expect_success "delete $m (by HEAD)" "
++	git update-ref -d HEAD $B &&
++	! test -f .git/$m
++"
+ rm -f .git/$m
+=20
+ test_expect_success '(not) create HEAD with old sha1' "
