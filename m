@@ -1,103 +1,126 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] http-push: remove remote locks on exit signals
-Date: Sun, 25 May 2008 20:27:44 +0200
-Message-ID: <20080525182744.GB17806@localhost>
-References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org> <20080523221723.GA4366@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] Clean up builtin-update-ref's option parsing
+Date: Sun, 25 May 2008 11:40:24 -0700
+Message-ID: <7vk5hii5wn.fsf@gitster.siamese.dyndns.org>
+References: <20080525161125.25087.18083.stgit@yoghurt>
+ <20080525161435.25087.82683.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 25 20:28:45 2008
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sun May 25 20:41:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0KxU-0004wX-Uy
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 20:28:41 +0200
+	id 1K0L9r-0000CQ-Qa
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 20:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755277AbYEYS1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 14:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756166AbYEYS1u
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 14:27:50 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:10106 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754651AbYEYS1t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 14:27:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1018692fgg.17
-        for <git@vger.kernel.org>; Sun, 25 May 2008 11:27:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=Sg/0/pVEY6V1lBGWHMbqOlmjrSFA4FrvliLOyJy2xmQ=;
-        b=l1X3Bk5B2VZMLfGBvvMNz3HK+jRYFq3jCkyXCv0HFNPDrWSYozLNjXgsuYO7VtJqHsrv6MIw8BMPELYVMrnqY90FoORbHYXaGo1seHCFb3UzbpzrGwtk+VHfZSG3qO5rBSL9HgpwjAFpJIjHnkYsr+Zou+jQpWbBu80yNfUn6YA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=dU1g9X3gQvZ3tXG9rSTpPe1rNeOc4jg6tIZi5u3wV0VeEdJQ0r2oc3jRrykC5P55TtvqPML7U9sXK22EzbuIixf5igipJLe2y266tbfdnp2qceUSoELwPjWfTbQPTuo3D9uvvGx674kEbe0kszcDOu1oeUlX9drqR4VXIw/uzBc=
-Received: by 10.86.52.6 with SMTP id z6mr533718fgz.18.1211740067801;
-        Sun, 25 May 2008 11:27:47 -0700 (PDT)
-Received: from darc.dyndns.org ( [84.154.74.129])
-        by mx.google.com with ESMTPS id f31sm17894885fkf.5.2008.05.25.11.27.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 May 2008 11:27:47 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1K0Kwa-0001Yh-3M; Sun, 25 May 2008 20:27:44 +0200
-Content-Disposition: inline
-In-Reply-To: <20080523221723.GA4366@localhost>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756496AbYEYSkf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 14:40:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755624AbYEYSkf
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 14:40:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43333 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754110AbYEYSke convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 May 2008 14:40:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B89F328F;
+	Sun, 25 May 2008 14:40:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 26F9E328E; Sun, 25 May 2008 14:40:28 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0EA22D5C-2A8A-11DD-950D-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82873>
 
-If locks are not cleaned up the repository is inaccessible for 10 minutes.
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- http-push.c |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
+> builtin-update-ref's option parsing was somewhat tricky to follow,
+> especially if the -d option was given. This patch cleans it upp a bit
+> (including fixing an out-of-bounds argv access), at the expense of
+> making it a bit longer.
+>
+> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-diff --git a/http-push.c b/http-push.c
-index 5b23038..b44768e 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1349,6 +1349,24 @@ static int unlock_remote(struct remote_lock *lock)
- 	return rc;
- }
- 
-+static void remove_locks(void)
-+{
-+	struct remote_lock *lock = remote->locks;
-+	
-+	fprintf(stderr, "Removing remote locks...\n");
-+	while (lock) {
-+		unlock_remote(lock);
-+		lock = lock->next;
-+	}
-+}
-+
-+static void remove_locks_on_signal(int signo)
-+{
-+	remove_locks();
-+	signal(signo, SIG_DFL);
-+	raise(signo);
-+}
-+
- static void remote_ls(const char *path, int flags,
- 		      void (*userFunc)(struct remote_ls_ctx *ls),
- 		      void *userData);
-@@ -2255,6 +2273,10 @@ int main(int argc, char **argv)
- 		goto cleanup;
- 	}
- 
-+	signal(SIGINT, remove_locks_on_signal);
-+	signal(SIGHUP, remove_locks_on_signal);
-+	signal(SIGQUIT, remove_locks_on_signal);
-+
- 	/* Check whether the remote has server info files */
- 	remote->can_update_info_refs = 0;
- 	remote->has_info_refs = remote_exists("info/refs");
--- 
-1.5.5.1
+Longer is fine but I am afraid that this patch is not much easier to
+follow than the original, does not fix anything, and introduces a new b=
+ug.
+
+> diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+> index e90737c..0d3eb8e 100644
+> --- a/builtin-update-ref.c
+> +++ b/builtin-update-ref.c
+> @@ -27,25 +27,29 @@ int cmd_update_ref(int argc, const char **argv, c=
+onst char *prefix)
+>  	if (msg && !*msg)
+>  		die("Refusing to perform update with empty message.");
+> =20
+> -	if (argc < 2 || argc > 3)
+> -		usage_with_options(git_update_ref_usage, options);
+> -	refname =3D argv[0];
+> -	value   =3D argv[1];
+> -	oldval  =3D argv[2];
+> -
+> -	if (get_sha1(value, sha1))
+> -		die("%s: not a valid SHA1", value);
+> -
+>  	if (delete) {
+> -		if (oldval)
+> +		if (argc !=3D 2)
+>  			usage_with_options(git_update_ref_usage, options);
+> -		return delete_ref(refname, sha1);
+> +		refname =3D argv[0];
+> +		value =3D NULL;
+> +		oldval =3D argv[1];
+> +	} else {
+> +		if (argc < 2 || argc > 3)
+> +			usage_with_options(git_update_ref_usage, options);
+> +		refname =3D argv[0];
+> +		value =3D argv[1];
+> +		oldval =3D argc > 2 ? argv[2] : NULL;
+
+When (argc =3D=3D 3), argv[2] has the old value string given on the com=
+mand
+line.  When (argc =3D=3D 2), argv[2] has the terminating NULL pointer. =
+ So
+either case you can safely use argv[2].  You do not allow other cases
+upfront, so I do not understand why you need this conditional expressio=
+n?
+
+IOW, I do not see "an out-of-bounds argv access" in the original, and y=
+ou
+are making this assignment harder to follow.
+
+>  	}
+> =20
+> +	if (value && *value && get_sha1(value, sha1))
+> +		die("%s: not a valid SHA1", value);
+
+Dropping *value in the sequence may fix it but I think this is wrong.
+
+We used to barf if you said "git update-ref refs/heads/master '' master=
+"
+because it would be nonsense to give an empty string as the new value o=
+f
+the ref, didn't we?  Doesn't this change break it?  Does your set of
+additional tests in [1/3] catch it?
+
+>  	hashclr(oldsha1);
+>  	if (oldval && *oldval && get_sha1(oldval, oldsha1))
+>  		die("%s: not a valid old SHA1", oldval);
+> =20
+> -	return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
+> -			  no_deref ? REF_NODEREF : 0, DIE_ON_ERR);
+> +	if (delete)
+> +		return delete_ref(refname, oldsha1);
+> +	else
+> +		return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
+> +				  no_deref ? REF_NODEREF : 0, DIE_ON_ERR);
+>  }
