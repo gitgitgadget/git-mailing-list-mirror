@@ -1,77 +1,353 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/3] bisect: use a detached HEAD to bisect
-Date: Sat, 24 May 2008 20:37:56 -0400
-Message-ID: <20080525003755.GA11019@sigill.intra.peff.net>
-References: <20080523012857.acce6457.chriscool@tuxfamily.org> <7v3ao9twfa.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0805230823330.3081@woody.linux-foundation.org> <18487.62245.59892.442935@cargo.ozlabs.ibm.com> <alpine.LFD.1.10.0805240842360.3081@woody.linux-foundation.org>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [PATCH v3] Documentation: convert tutorials to man pages
+Date: Sun, 25 May 2008 10:12:35 +0900
+Message-ID: <200805250113.m4P1DSCg028065@mi1.bluebottle.com>
+References: <20080524205644.f056db96.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 25 02:39:15 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Manoj Srivastava <srivasta@ieee.org>,
+	"Thomas Adam" <thomas.adam22@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun May 25 03:14:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K04GX-0007kS-Ej
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 02:39:13 +0200
+	id 1K04oY-0005TU-TE
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 03:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753829AbYEYAiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2008 20:38:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbYEYAh7
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 20:37:59 -0400
-Received: from peff.net ([208.65.91.99]:4505 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753829AbYEYAh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2008 20:37:59 -0400
-Received: (qmail 14114 invoked by uid 111); 25 May 2008 00:37:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 24 May 2008 20:37:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 May 2008 20:37:56 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0805240842360.3081@woody.linux-foundation.org>
+	id S1754823AbYEYBNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 May 2008 21:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754689AbYEYBNa
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 May 2008 21:13:30 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:52161 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754679AbYEYBN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2008 21:13:29 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4P1DSCg028065
+	for <git@vger.kernel.org>; Sat, 24 May 2008 18:13:28 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:subject:date:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=MWAx/kTCOdkouDp+EzWPEW1tnkRQkD76/4zrh4m2VVY/1YLkM5JbpKeKhnK6U6WtE
+	cql3/KOhLYakYX3pzSWNSSJI3m1NbxGtVZTjcGrFyJfG6qNGs/EeF7Yp13+87wX
+Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4P1D6oT019014
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 24 May 2008 18:13:10 -0700
+In-Reply-To: <20080524205644.f056db96.chriscool@tuxfamily.org>
+X-Trusted-Delivery: <8fc43c34cd826984a2439d9996fb669b>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82843>
 
-On Sat, May 24, 2008 at 09:14:21AM -0700, Linus Torvalds wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> I actually like the red circle for "Local uncommitted changes". Maybe we 
-> can use a similar visual clue for "currently checked out". You already 
-> picked green for the "added to the index" case, so we have the three 
-> primary RGB colors already used, but we could make it just be a deep 
-> yellow.
+> This patch renames the following documents and at the same time converts
+> them to the man page format:
 >
-> [...]
-> 
-> Here's a "make it yellow" patch.
+> cvs-migration.txt -> gitcvs-migration.txt
+> tutorial.txt      -> gittutorial.txt
+> tutorial-2.txt    -> gittutorial-2.txt
+>
+> These new man pages are put in section 1.
+>
+> Other documents that reference the above ones are change accordingly.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 
-I kind of expected this to color the _ref_, not the commit bubble. That
-is, I think it is useful not just to see that "this commit is pointed to
-by HEAD" but that "master is the currently checked out branch."
+There are too many unrelated line re-wrapping changes that are distracting for reviewing your changes.
 
-Of course in the case of detached HEAD, we would have only the commit to
-color. But in that case a green box probably makes sense, since you
-probably aren't going to have a bunch of other boxes pointing to it
-(at most, a tag name or remote tracking branch name).
+However, I think this is much improved, compared to the one around the beginning of the month.  Especially that documents like the user manual that do not fit well in "manual page" format are excluded.
 
-IOW,
+But if I read intro(1) and intro(7) correctly, nothing other than the user commands should go to section 1.  Here is my attempt, as a replacement patch, to clean it up.
 
-  1. If head points to a ref, color the background of that ref box
-     specially (yellow and green are taken. Red is probably a bit too
-     danger-implying.  Blue?)
-     ...
-     Hmm, actually it looks like we already bold the refname in that
-     case. I never noticed that until now. If I'm not the only one,
-     then maybe that is an argument for making the differentiation more
-     obvious.
+What do you think?
 
-  2. If head is detached, add a green 'HEAD' box.
+ Documentation/Makefile                             |    8 ++---
+ Documentation/core-tutorial.txt                    |    4 +-
+ Documentation/git.txt                              |    4 +-
+ .../{cvs-migration.txt => gitcvs-migration.txt}    |   29 +++++++++++++++--
+ .../{tutorial-2.txt => gittutorial-2.txt}          |   30 ++++++++++++++++--
+ Documentation/{tutorial.txt => gittutorial.txt}    |   32 ++++++++++++++++---
+ Documentation/user-manual.txt                      |    4 +-
+ 7 files changed, 87 insertions(+), 24 deletions(-)
 
--Peff
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 4144d1e..9750334 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -3,7 +3,8 @@ MAN1_TXT= \
+ 		$(wildcard git-*.txt)) \
+ 	gitk.txt
+ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt
+-MAN7_TXT=git.txt gitcli.txt
++MAN7_TXT=git.txt gitcli.txt gittutorial.txt gittutorial-2.txt \
++	gitcvs-migration.txt
+ 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+@@ -11,10 +12,7 @@ MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
+ 
+ DOC_HTML=$(MAN_HTML)
+ 
+-ARTICLES = tutorial
+-ARTICLES += tutorial-2
+-ARTICLES += core-tutorial
+-ARTICLES += cvs-migration
++ARTICLES = core-tutorial
+ ARTICLES += diffcore
+ ARTICLES += howto-index
+ ARTICLES += repository-layout
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 5a55312..b50b5dd 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -8,7 +8,7 @@ This tutorial explains how to use the "core" git programs to set up and
+ work with a git repository.
+ 
+ If you just need to use git as a revision control system you may prefer
+-to start with link:tutorial.html[a tutorial introduction to git] or
++to start with linkgit:gittutorial[7][a tutorial introduction to git] or
+ link:user-manual.html[the git user manual].
+ 
+ However, an understanding of these low-level tools can be helpful if
+@@ -1581,7 +1581,7 @@ suggested in the previous section may be new to you. You do not
+ have to worry. git supports "shared public repository" style of
+ cooperation you are probably more familiar with as well.
+ 
+-See link:cvs-migration.html[git for CVS users] for the details.
++See linkgit:gitcvs-migration[7][git for CVS users] for the details.
+ 
+ Bundling your work together
+ ---------------------------
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index adcd3e0..735f0d1 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -20,10 +20,10 @@ Git is a fast, scalable, distributed revision control system with an
+ unusually rich command set that provides both high-level operations
+ and full access to internals.
+ 
+-See this link:tutorial.html[tutorial] to get started, then see
++See this linkgit:gittutorial[7][tutorial] to get started, then see
+ link:everyday.html[Everyday Git] for a useful minimum set of commands, and
+ "man git-commandname" for documentation of each command.  CVS users may
+-also want to read link:cvs-migration.html[CVS migration].  See
++also want to read linkgit:gitcvs-migration[7][CVS migration].  See
+ link:user-manual.html[Git User's Manual] for a more in-depth
+ introduction.
+ 
+diff --git a/Documentation/cvs-migration.txt b/Documentation/gitcvs-migration.txt
+similarity index 93%
+rename from Documentation/cvs-migration.txt
+rename to Documentation/gitcvs-migration.txt
+index 374bc87..c410805 100644
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/gitcvs-migration.txt
+@@ -1,5 +1,16 @@
+-git for CVS users
+-=================
++gitcvs-migration(7)
++===================
++
++NAME
++----
++gitcvs-migration - git for CVS users
++
++SYNOPSIS
++--------
++git cvsimport *
++
++DESCRIPTION
++-----------
+ 
+ Git differs from CVS in that every working tree contains a repository with
+ a full copy of the project history, and no repository is inherently more
+@@ -8,7 +19,7 @@ designating a single shared repository which people can synchronize with;
+ this document explains how to do that.
+ 
+ Some basic familiarity with git is required.  This
+-link:tutorial.html[tutorial introduction to git] and the
++linkgit:gittutorial[7][tutorial introduction to git] and the
+ link:glossary.html[git glossary] should be sufficient.
+ 
+ Developing against a shared repository
+@@ -71,7 +82,7 @@ Setting Up a Shared Repository
+ 
+ We assume you have already created a git repository for your project,
+ possibly created from scratch or from a tarball (see the
+-link:tutorial.html[tutorial]), or imported from an already existing CVS
++linkgit:gittutorial[7][tutorial]), or imported from an already existing CVS
+ repository (see the next section).
+ 
+ Assume your existing repo is at /home/alice/myproject.  Create a new "bare"
+@@ -170,3 +181,13 @@ variants of this model.
+ 
+ With a small group, developers may just pull changes from each other's
+ repositories without the need for a central maintainer.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7], linkgit:gittutorial-2[7],
++link:everyday.html[Everyday Git],
++link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/tutorial-2.txt b/Documentation/gittutorial-2.txt
+similarity index 96%
+rename from Documentation/tutorial-2.txt
+rename to Documentation/gittutorial-2.txt
+index 7fac47d..5bbbf43 100644
+--- a/Documentation/tutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -1,7 +1,18 @@
+-A tutorial introduction to git: part two
+-========================================
++gittutorial-2(7)
++================
+ 
+-You should work through link:tutorial.html[A tutorial introduction to
++NAME
++----
++gittutorial-2 - A tutorial introduction to git: part two
++
++SYNOPSIS
++--------
++git *
++
++DESCRIPTION
++-----------
++
++You should work through linkgit:gittutorial[7][A tutorial introduction to
+ git] before reading this tutorial.
+ 
+ The goal of this tutorial is to introduce two fundamental pieces of
+@@ -394,7 +405,7 @@ link:glossary.html[Glossary].
+ The link:user-manual.html[Git User's Manual] provides a more
+ comprehensive introduction to git.
+ 
+-The link:cvs-migration.html[CVS migration] document explains how to
++The linkgit:gitcvs-migration[7][CVS migration] document explains how to
+ import a CVS repository into git, and shows how to use git in a
+ CVS-like way.
+ 
+@@ -404,3 +415,14 @@ link:howto-index.html[howtos].
+ For git developers, the link:core-tutorial.html[Core tutorial] goes
+ into detail on the lower-level git mechanisms involved in, for
+ example, creating a new commit.
++
++SEE ALSO
++--------
++linkgit:gittutorial[7],
++linkgit:gitcvs-migration[7],
++link:everyday.html[Everyday git],
++link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/tutorial.txt b/Documentation/gittutorial.txt
+similarity index 97%
+rename from Documentation/tutorial.txt
+rename to Documentation/gittutorial.txt
+index e2bbda5..898acdb 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -1,5 +1,16 @@
+-A tutorial introduction to git (for version 1.5.1 or newer)
+-===========================================================
++gittutorial(7)
++==============
++
++NAME
++----
++gittutorial - A tutorial introduction to git (for version 1.5.1 or newer)
++
++SYNOPSIS
++--------
++git *
++
++DESCRIPTION
++-----------
+ 
+ This tutorial explains how to import a new project into git, make
+ changes to it, and share changes with other developers.
+@@ -381,7 +392,7 @@ see linkgit:git-pull[1] for details.
+ 
+ Git can also be used in a CVS-like mode, with a central repository
+ that various users push changes to; see linkgit:git-push[1] and
+-link:cvs-migration.html[git for CVS users].
++linkgit:gitcvs-migration[7][git for CVS users].
+ 
+ Exploring history
+ -----------------
+@@ -560,7 +571,7 @@ is based:
+     used to create commits, check out working directories, and
+     hold the various trees involved in a merge.
+ 
+-link:tutorial-2.html[Part two of this tutorial] explains the object
++linkgit:gittutorial-2[7][Part two of this tutorial] explains the object
+ database, the index file, and a few other odds and ends that you'll
+ need to make the most of git.
+ 
+@@ -581,4 +592,15 @@ digressions that may be interesting at this point are:
+ 
+   * link:everyday.html[Everyday GIT with 20 Commands Or So]
+ 
+-  * link:cvs-migration.html[git for CVS users].
++  * linkgit:gitcvs-migration[7][git for CVS users].
++
++SEE ALSO
++--------
++linkgit:gittutorial-2[7],
++linkgit:gitcvs-migration[7],
++link:everyday.html[Everyday git],
++link:user-manual.html[The Git User's Manual]
++
++GIT
++---
++Part of the linkgit:git[7] suite.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index e2db850..fd8cdb6 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1993,7 +1993,7 @@ the right to push to the same repository.  In that case, the correct
+ solution is to retry the push after first updating your work by either a
+ pull or a fetch followed by a rebase; see the
+ <<setting-up-a-shared-repository,next section>> and
+-link:cvs-migration.html[git for CVS users] for more.
++linkgit:gitcvs-migration[7][git for CVS users] for more.
+ 
+ [[setting-up-a-shared-repository]]
+ Setting up a shared repository
+@@ -2002,7 +2002,7 @@ Setting up a shared repository
+ Another way to collaborate is by using a model similar to that
+ commonly used in CVS, where several developers with special rights
+ all push to and pull from a single shared repository.  See
+-link:cvs-migration.html[git for CVS users] for instructions on how to
++linkgit:gitcvs-migration[7][git for CVS users] for instructions on how to
+ set this up.
+ 
+ However, while there is nothing wrong with git's support for shared
+
+
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email address with REAL anti-spam protection.
+http://www.bluebottle.com/tag/1
