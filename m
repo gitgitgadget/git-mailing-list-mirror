@@ -1,55 +1,103 @@
-From: Jan Krueger <jk@jk.gs>
-Subject: Re: Which msysGit version corresponds to which official Git
- version?
-Date: Sun, 25 May 2008 17:38:59 +0200
-Message-ID: <20080525173859.6d55ccc3@neuron>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: Which msysGit version corresponds to which official Git version?
+Date: Sun, 25 May 2008 11:46:25 -0400
+Message-ID: <20080525154625.GV3216@inocybe.teonanacatl.org>
 References: <48380E05.9020103@dirk.my1.cc>
-	<3F512BCF-1D2E-46B0-84E5-4807753A2618@zib.de>
-	<4839839C.2040605@dirk.my1.cc>
+ <3F512BCF-1D2E-46B0-84E5-4807753A2618@zib.de> <4839839C.2040605@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="HKOZ/JADkehwFk9I"
 Cc: Steffen Prohaska <prohaska@zib.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Dirk =?UTF-8?B?U8O8c3Nlcm90dA==?=" <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun May 25 17:39:59 2008
+To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sun May 25 17:47:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0IKE-0006VF-MN
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 17:39:59 +0200
+	id 1K0IRS-0000Ve-6r
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 17:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910AbYEYPjG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 11:39:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYEYPjF
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 11:39:05 -0400
-Received: from zoidberg.org ([213.133.99.5]:59314 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881AbYEYPjE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 May 2008 11:39:04 -0400
-Received: from neuron (xdsl-87-78-135-158.netcologne.de [::ffff:87.78.135.158])
-  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sun, 25 May 2008 17:39:01 +0200
-  id 0015B434.48398815.00002532
+	id S1755229AbYEYPqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 11:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbYEYPqf
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 11:46:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52929 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754885AbYEYPqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 11:46:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C2C9160C;
+	Sun, 25 May 2008 11:46:32 -0400 (EDT)
+Received: from inocybe.teonanacatl.org (c-68-39-203-93.hsd1.pa.comcast.net
+ [68.39.203.93]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
+ client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix)
+ with ESMTP id F10E11608; Sun, 25 May 2008 11:46:27 -0400 (EDT)
+Mail-Followup-To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>,
+ Steffen Prohaska <prohaska@zib.de>, Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <4839839C.2040605@dirk.my1.cc>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+X-Listening-To: Nothing
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Pobox-Relay-ID: BF95F06C-2A71-11DD-A5D1-80001473D85F-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82865>
 
-Hi,
 
-> I'd expected that "HEAD is now at 9d8318051...". Wrong?
-> When I checkout "1d2375d" it says the very same:
->   > HEAD is now at 1d2375d... GIT 1.5.5
+--HKOZ/JADkehwFk9I
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-9d831 is the v1.5.5 tag object; 1d237 is the commit it points to. When
-you pass a tag reference to checkout, it gets dereferenced to the
-corresponding commit.
+Dirk S=FCsserott wrote:
+> So what's the difference then between 9d8318051 and 1d2375d?
+> gitk doesn't know about 9d8318051 at all. Seems that there are
+> two ways to get to v1.5.5: via 9d... and via 1d.... Is that right
+> or did I misunderstand sth. here?
+
+9d8318051 is a tag object that creates the v1.5.5 tag:
+
+$ git cat-file -p 9d8318051
+object 1d2375ddfee18bd3effd2c1f98527cc2f8b1df0a
+type commit
+tag v1.5.5
+tagger Junio C Hamano <gitster@pobox.com> Mon Apr 7 21:57:56 2008 -0700
+
+GIT 1.5.5
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBH+vtXwMbZpPMRm5oRAlfBAJwPP5W9HvoAHzmD1AoWpRtcyQ/uoACfVkCc
+M7H1LhvSXz+h2+08bieh3uU=3D
+=3DuTP0
+-----END PGP SIGNATURE-----
 
 --=20
-Best regards
-Jan Kr=C3=BCger <jk@jk.gs>
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Until you have the courage to lose sight of the shore, you will not
+know the terror of being forever lost at sea.
+    -- Demotivators (www.despair.com)
+
+
+--HKOZ/JADkehwFk9I
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBAgAtBQJIOYnEJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzj8xUH/ic973neFtWyeC5WVRGc3fF5w9lKqIE/TXZL
+HxoeLUp+e9bgrxI9QJCjElR08m4mPzO+wDTqnzeI91NCwA0QAoz2N8XV0ZS5RYNm
+kpwX4lC8UxiU03dTab3B0iK7H5muuwhNuko6L1I/jFrL2vk6KKpF+TYiZL1L6yRM
+cX7OcSDL2y/A9jBOF8tTxakTsUFMP6XoiYEKZZg21gCYuSQHssnTSf+8+OlDkCFj
+e5YjkP+epDtHPwh93BLokehoUJPVOie15Na5swopSoxxGpsZzB8HmiE2t40eoUxB
+5CQWvwfhNyUPagPlDNuFCo0epBWWf3uUxSch/hgq7Aqo9/V1k+Y=
+=w0x9
+-----END PGP SIGNATURE-----
+
+--HKOZ/JADkehwFk9I--
