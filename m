@@ -1,86 +1,92 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 25 May 2008 23:29:22 +0200
-Message-ID: <20080525212922.GA9564@leksak.fem-net>
-References: <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221212200.30431@racer>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: rev-list --parents --full-history + path: something's fishy
+Date: Sun, 25 May 2008 14:30:28 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805251424040.3081@woody.linux-foundation.org>
+References: <e1dab3980805230808s59798351r9ed702c7d0dedd2a@mail.gmail.com> <1211660214.483877b69a107@webmail.nextra.at> <alpine.LFD.1.10.0805241817500.3081@woody.linux-foundation.org> <200805252158.22514.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 25 23:30:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, David Tweed <david.tweed@gmail.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun May 25 23:31:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0NnE-0002ow-Kn
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 23:30:17 +0200
+	id 1K0NoN-00037t-GP
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 23:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751026AbYEYV30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 17:29:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbYEYV30
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 17:29:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54290 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751016AbYEYV3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 17:29:25 -0400
-Received: (qmail invoked by alias); 25 May 2008 21:29:23 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp033) with SMTP; 25 May 2008 23:29:23 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18Pf/x47uEPP1sfNwfaa2HVg2gn4QLQ7QGZR0qoYt
-	Zdan7B55SQRiyB
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K0NmM-0002dt-U5
-	for git@vger.kernel.org; Sun, 25 May 2008 23:29:22 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805221212200.30431@racer>
-X-Y-GMX-Trusted: 0
+	id S1751346AbYEYVag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 17:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbYEYVag
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 17:30:36 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59601 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751281AbYEYVag (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 May 2008 17:30:36 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4PLUTSi016454
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 25 May 2008 14:30:30 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4PLUSll009355;
+	Sun, 25 May 2008 14:30:28 -0700
+In-Reply-To: <200805252158.22514.johannes.sixt@telecom.at>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.408 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82881>
 
 
---ZPt4rx8FFjLCG7dd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Sun, 25 May 2008, Johannes Sixt wrote:
+> 
+> But why does this:
+> 
+> $ git rev-list --full-history HEAD -- a
+> B
+> A
+> 
+> not list M (note the lack of --parents)?
 
-> > * js/rebase-i-sequencer (Sun Apr 27 02:55:50 2008 -0400) 17 commits
-esp.
-> >  + Teach rebase interactive the merge command
-> >  + Teach rebase interactive the reset command
-> >  + Teach rebase interactive the mark command
-[...]
->
-> Yeah, I know.  My backlog is growing and growing.
+Because when we don't ask for --parents, the whole problem is *much* 
+simpler. The parent rewriting means that the history has to all "fit 
+together". But when you don't need parenthood, then suddenly that doesn't 
+matter at all - who cares if it fits together or not, when you can't *see* 
+that it doesn't fit together anyway?
 
-I think, this week we get the git-sequencer "spec" ready to be sent
-to the list.
-Then there's a new thread to discuss ;-)
+In this case, it's "simplify_commit()", and this piece of code in 
+particular (note how it's even commented!):
 
-Regards,
-  Stephan
+		...
+                /* Commit without changes? */
+                if (commit->object.flags & TREESAME) {
+                        /* drop merges unless we want parenthood */
+                        if (!revs->rewrite_parents)
+                                return commit_ignore;
+		...
 
---=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+ie if we're looking at a commit that doesn't actually introduce any 
+changes of its own (it took all the changes from at least _one_ of its 
+parents - ie it got TREESAME set because the tree was identical to one of 
+the parents), then if we don't have 'rewrite_parents' set, we just drop 
+that commit, because it is uninteresting.
 
---ZPt4rx8FFjLCG7dd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+IOW, we dropped 'M' because there was no point in showing it: we know 
+nobody refers to it (because no other commit will list it as a parent!), 
+and the commit itself didn't actually introduce any changes (because all 
+the changes came from 'B').
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+But we can *not* drop that merge commit when we do the parenthood 
+tracking, because if we did so, we'd just have an "empty spot" in history 
+(we have other commits that point to that emrge and list it as a parent).
 
-iD8DBQFIOdoybt3SB/zFBA8RApnOAJ9OBky+NItpCFrGR3xKYs9j6fztRgCdG5bN
-XquXfdXkVYmJHezWSaaO9gg=
-=GZm6
------END PGP SIGNATURE-----
+Of course, in your trivial example, that didn't actually happen (because 
+'M' was the top commit), but try it with something more complex.
 
---ZPt4rx8FFjLCG7dd--
+			Linus
