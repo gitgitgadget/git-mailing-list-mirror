@@ -1,101 +1,94 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: rev-list --parents --full-history + path: something's fishy
-Date: Sun, 25 May 2008 14:26:53 +0200
-Message-ID: <200805251426.54755.johannes.sixt@telecom.at>
-References: <e1dab3980805230808s59798351r9ed702c7d0dedd2a@mail.gmail.com> <1211660214.483877b69a107@webmail.nextra.at> <alpine.LFD.1.10.0805241817500.3081@woody.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: encoding bug in git.el
+Date: Sun, 25 May 2008 15:42:00 +0200
+Message-ID: <20080525134200.GA31990@diana.vm.bytemark.co.uk>
+References: <20080520220900.GA20570@diana.vm.bytemark.co.uk> <87mymkbo9x.fsf@lysator.liu.se> <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Tweed <david.tweed@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 25 14:27:53 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
+To: Clifford Caoile <piyo@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun May 25 15:43:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0FKK-0002ef-4m
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 14:27:52 +0200
+	id 1K0GVM-0005dm-0f
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 15:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757125AbYEYM1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 08:27:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756448AbYEYM1A
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 08:27:00 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:39157 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755229AbYEYM1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 08:27:00 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 3F0B833BF2;
-	Sun, 25 May 2008 14:26:57 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id D423B64872;
-	Sun, 25 May 2008 14:26:56 +0200 (CEST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.1.10.0805241817500.3081@woody.linux-foundation.org>
+	id S1753305AbYEYNma convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 09:42:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYEYNma
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 09:42:30 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2112 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbYEYNm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 09:42:29 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K0GU4-0000qU-00; Sun, 25 May 2008 14:42:00 +0100
 Content-Disposition: inline
+In-Reply-To: <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82862>
 
-On Sunday 25 May 2008 03:21, Linus Torvalds wrote:
-> On Sat, 24 May 2008, Johannes Sixt wrote:
-> > but this does not:
-> >
-> > $ git rev-list --full-history --parents HEAD -- a
-> > M A B
-> > B A
-> > A
+On 2008-05-21 23:08:09 +0900, Clifford Caoile wrote:
+
+> Here is a proposed fix. I suggest that process-environment should be
+> given these envvars already encoded as shown in this code sample:
 >
-> That is the "correct" output.
+> ------------------ git.el ------------------
+> [not a proper git-diff]
+> @@ -216,6 +216,11 @@ and `git-diff-setup-hook'."
+>    "Build a list of NAME=3DVALUE strings from a list of environment s=
+trings."
+>    (mapcar (lambda (entry) (concat (car entry) "=3D" (cdr entry))) en=
+v))
 >
-> That's what "--full-history" means: do not simplify merges away when all
-> the data comes from just one branch (in this case from "B").
+> +(defun git-get-env-strings-encoded (env encoding)
+> +  "Build a list of NAME=3DVALUE strings from a list of environment s=
+trings,
+> +converting from mule-encoding to ENCODING (e.g. mule-utf-8, latin-1,=
+ etc)."
+> +  (mapcar (lambda (entry) (concat (car entry) "=3D"
+> (encode-coding-string (cdr entry) encoding))) env))
+> +
+>  (defun git-call-process-env (buffer env &rest args)
+>    "Wrapper for call-process that sets environment strings."
+>    (let ((process-environment (append (git-get-env-strings env)
+> @@ -265,7 +270,7 @@ and returns the process output as a string, or ni=
+l
+> if the git failed."
 >
-> So it shows you commit 'M' because you asked for full-history.
+>  (defun git-run-command-region (buffer start end env &rest args)
+>    "Run a git command with specified buffer region as input."
+> -  (unless (eq 0 (let ((process-environment (append (git-get-env-stri=
+ngs env)
+> +  (unless (eq 0 (let ((process-environment (append
+> (git-get-env-strings-encoded env coding-system-for-write)
+>                                                     process-environme=
+nt)))
+>                    (git-run-process-region
+>                     buffer start end "git" args)))
 >
-> Commit 'M' has parents 'C' and 'B', but since 'C' doesn't actually modify
-> the file at all, the regular commit simplification will simplify 'C' away,
-> so now that parent 'C' will become 'A'. So 'M' has the _simplified_
-> parent's 'A' and 'B'.
->
-> Then it shows 'B' (parent 'A') and 'A' (no parent).
+> The buffer text is saved with the encoding coding-system-for-write,
+> while the GIT_* envvars were not encoded, so when appending to
+> process-environment variable, use the same encoding.
 
-The history was this:
+I don't claim to understand any of the design issues around this, but
+your patch certainly fixes my problem (once I managed to apply it,
+which involved working around the lack of headers, non-matching
+offsets, and whitespace damage -- luckily it was just two hunks). So:
 
-   C--M
-  /  /
- A--B
+Tested-by: Karl Hasselstr=F6m <kha@treskal.com>
 
-Now assume that both B and C change a, but so that it is identical in both B 
-and C. I thought that --full-history makes a difference *only* for this case, 
-because without --full-history the revision walk would choose either B or C 
-(not quite at random, but in an unspecified manner), but not both; but 
-with --full-history the revision walk would go both paths.
+Thanks for taking the time.
 
-This makes a difference in git-filter-branch --subdirectory-filter: We do want 
-to simplify history to those commits that touch a path, but we don't want to 
-simplify away the case outlined in the previous paragraph.
-
-> > Of course, I'd expected to see this:
-> >
-> > $ git rev-list --full-history --parents HEAD -- a
-> > B A
-> > A
->
-> Why did you ask for --full-history, if you're not interested in merges
-> that are irrelevant? To get what you wanted, just do
->
-> 	git rev-list --parents HEAD -- a
->
-> and it should give you exactly that output.
-
-In the case at hand this would be sufficient, but in git-filter-branch we 
-don't want to prune branches whose modifications to a path make the path 
-identical.
-
-What shall we do in git-filter-branch --subdirectory-filter?
-
--- Hannes
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
