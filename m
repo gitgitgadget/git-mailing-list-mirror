@@ -1,75 +1,154 @@
 From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: [PATCH 0/1] graph API: always print 'M' for merge commits
-Date: Sat, 24 May 2008 23:49:51 -0700
-Message-ID: <20080525064951.GA16981@adamsimpkins.net>
-References: <20080524182530.GB2997@mithlond.arda.local> <1211662321-28846-1-git-send-email-adam@adamsimpkins.net> <7vabifkw9j.fsf@gitster.siamese.dyndns.org>
-Reply-To: Adam Simpkins <adam@adamsimpkins.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 25 08:51:27 2008
+Subject: [PATCH] log and rev-list: don't print extra prefixes already shown in the graph
+Date: Sun, 25 May 2008 00:07:21 -0700
+Message-ID: <1211699241-19201-1-git-send-email-adam@adamsimpkins.net>
+References: <20080525064324.GA16827@adamsimpkins.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 25 09:08:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0A4c-0005C5-A3
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 08:51:18 +0200
+	id 1K0AL3-0001DI-RR
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 09:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbYEYGty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 02:49:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbYEYGtx
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 02:49:53 -0400
-Received: from smtp152.sat.emailsrvr.com ([66.216.121.152]:49934 "EHLO
-	smtp152.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbYEYGtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 02:49:53 -0400
-Received: from relay5.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay5.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id E16A1224EF4;
-	Sun, 25 May 2008 02:49:52 -0400 (EDT)
-Received: by relay5.relay.sat.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id C074C224AC4;
-	Sun, 25 May 2008 02:49:52 -0400 (EDT)
+	id S1751078AbYEYHH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 03:07:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYEYHH0
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 03:07:26 -0400
+Received: from smtp122.iad.emailsrvr.com ([207.97.245.122]:48069 "EHLO
+	smtp122.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050AbYEYHHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 03:07:25 -0400
+Received: from relay2.r2.iad.emailsrvr.com (localhost [127.0.0.1])
+	by relay2.r2.iad.emailsrvr.com (SMTP Server) with ESMTP id BC52554BC79;
+	Sun, 25 May 2008 03:07:22 -0400 (EDT)
+Received: by relay2.r2.iad.emailsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 7383B54BC78;
+	Sun, 25 May 2008 03:07:22 -0400 (EDT)
 Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id DF3EC14100C8; Sat, 24 May 2008 23:49:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vabifkw9j.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id 7960F14100C8; Sun, 25 May 2008 00:07:21 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.1.390.gd86da
+In-Reply-To: <20080525064324.GA16827@adamsimpkins.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82856>
 
-On Sat, May 24, 2008 at 06:28:08PM -0700, Junio C Hamano wrote:
-> Adam Simpkins <adam@adamsimpkins.net> writes:
-> 
-> > On Sat, May 24, 2008 at 09:25:30PM +0300, Teemu Likonen wrote:
-> >> 
-> >> I'd rather show merge commits always with M. They are still conceptually
-> >> merges even if the current log view shows only one parent. This patch
-> >> changes symbols * and M to be visual symbols, not logical symbols which
-> >> I'd prefer.
-> >> 
-> >> For example user may be interested in finding certain merge but chooses
-> >> to limit the output with a commit range. It helps if user can always
-> >> trust the symbols * and M to have this conceptual difference.
-> >
-> > Okay.  Here's a simple patch to restore the behavior of always printing
-> > 'M' for merge commits, even if less than 2 parents are shown in the
-> > graph.
-> 
-> I have to wonder if that is really necessary.  A merge commit, unless you
-> amend it, always starts with "Merge ...", and I think it is enough clue of
-> what the particular commit did.  Besides, I think letter "M" in the
-> pictorial part of the graph simply looks rather ugly.
-> 
-> I would even suggest not to use 'M' at all, whether its parents are
-> interesting or not.
+With the --graph option, the graph already outputs 'o' instead of '*'
+for boundary commits, and '<' or '>' when --left-right is specified.
+The extra -/</> prefix in front of the commit itself isn't needed.
 
-Either way is fine with me; it's just a cosmetic issue.
-(We could even make it configurable, but that definitely seems like
-overkill.)
+(This change also disables the '^' prefix for UNINTERESTING commits.
+The graph code currently doesn't print anything special for these
+commits, since it assumes no UNINTERESTING, non-BOUNDARY commits are
+displayed.  This is potentially a bug if UNINTERESTING non-BOUNDARY
+commits can actually be displayed via some code path.)
 
+Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
+---
+
+Here's simple patch to remove the redundant </>/- prefix in the log
+message.  As the commit message mentions, I'm not sure if it's doing the
+right thing with respect to UNINTERESTING commits, though.
+
+ builtin-rev-list.c |   21 ++++++++++++---------
+ log-tree.c         |   41 +++++++++++++++++++++++------------------
+ 2 files changed, 35 insertions(+), 27 deletions(-)
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 54d55cc..b474527 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -65,15 +65,18 @@ static void show_commit(struct commit *commit)
+ 		printf("%lu ", commit->date);
+ 	if (header_prefix)
+ 		fputs(header_prefix, stdout);
+-	if (commit->object.flags & BOUNDARY)
+-		putchar('-');
+-	else if (commit->object.flags & UNINTERESTING)
+-		putchar('^');
+-	else if (revs.left_right) {
+-		if (commit->object.flags & SYMMETRIC_LEFT)
+-			putchar('<');
+-		else
+-			putchar('>');
++
++	if (!revs.graph) {
++		if (commit->object.flags & BOUNDARY)
++			putchar('-');
++		else if (commit->object.flags & UNINTERESTING)
++			putchar('^');
++		else if (revs.left_right) {
++			if (commit->object.flags & SYMMETRIC_LEFT)
++				putchar('<');
++			else
++				putchar('>');
++		}
+ 	}
+ 	if (revs.abbrev_commit && revs.abbrev)
+ 		fputs(find_unique_abbrev(commit->object.sha1, revs.abbrev),
+diff --git a/log-tree.c b/log-tree.c
+index 1474d1f..5505606 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -228,15 +228,17 @@ void show_log(struct rev_info *opt)
+ 	if (!opt->verbose_header) {
+ 		graph_show_commit(opt->graph);
+ 
+-		if (commit->object.flags & BOUNDARY)
+-			putchar('-');
+-		else if (commit->object.flags & UNINTERESTING)
+-			putchar('^');
+-		else if (opt->left_right) {
+-			if (commit->object.flags & SYMMETRIC_LEFT)
+-				putchar('<');
+-			else
+-				putchar('>');
++		if (!opt->graph) {
++			if (commit->object.flags & BOUNDARY)
++				putchar('-');
++			else if (commit->object.flags & UNINTERESTING)
++				putchar('^');
++			else if (opt->left_right) {
++				if (commit->object.flags & SYMMETRIC_LEFT)
++					putchar('<');
++				else
++					putchar('>');
++			}
+ 		}
+ 		fputs(diff_unique_abbrev(commit->object.sha1, abbrev_commit), stdout);
+ 		if (opt->print_parents)
+@@ -293,15 +295,18 @@ void show_log(struct rev_info *opt)
+ 		fputs(diff_get_color_opt(&opt->diffopt, DIFF_COMMIT), stdout);
+ 		if (opt->commit_format != CMIT_FMT_ONELINE)
+ 			fputs("commit ", stdout);
+-		if (commit->object.flags & BOUNDARY)
+-			putchar('-');
+-		else if (commit->object.flags & UNINTERESTING)
+-			putchar('^');
+-		else if (opt->left_right) {
+-			if (commit->object.flags & SYMMETRIC_LEFT)
+-				putchar('<');
+-			else
+-				putchar('>');
++
++		if (!opt->graph) {
++			if (commit->object.flags & BOUNDARY)
++				putchar('-');
++			else if (commit->object.flags & UNINTERESTING)
++				putchar('^');
++			else if (opt->left_right) {
++				if (commit->object.flags & SYMMETRIC_LEFT)
++					putchar('<');
++				else
++					putchar('>');
++			}
+ 		}
+ 		fputs(diff_unique_abbrev(commit->object.sha1, abbrev_commit),
+ 		      stdout);
 -- 
-Adam Simpkins
-adam@adamsimpkins.net
+1.5.5.1.383.g8c56f.dirty
