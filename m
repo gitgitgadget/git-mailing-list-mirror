@@ -1,104 +1,109 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] gitk: Update German translation
-Date: Sun, 25 May 2008 23:57:08 +0200
-Message-ID: <20080525215708.GB9564@leksak.fem-net>
-References: <200805012142.10151.stimming@tuhh.de> <200805072256.50520.stimming@tuhh.de> <20080515162052.GC12350@leksak.fem-net> <200805242248.23413.stimming@tuhh.de>
+From: fREW <frioux@gmail.com>
+Subject: Re: Deleted files can't be checked back out?
+Date: Sun, 25 May 2008 18:37:27 -0500
+Message-ID: <fb3648c60805251637p70bc76fdm1947da6b9bf34ca1@mail.gmail.com>
+References: <fb3648c60805222128v1a425c60kc8e44f3a2fb41d54@mail.gmail.com>
+	 <20080523062821.GA24411@foursquare.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uQr8t48UFsdbeI+V"
-Cc: git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Sun May 25 23:58:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Chris Frey" <cdfrey@foursquare.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 26 01:38:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0OEV-0000sK-7Q
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 23:58:27 +0200
+	id 1K0PnA-000591-Gt
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 01:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751195AbYEYV5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 17:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbYEYV5M
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 17:57:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50232 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751195AbYEYV5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 17:57:11 -0400
-Received: (qmail invoked by alias); 25 May 2008 21:57:09 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp014) with SMTP; 25 May 2008 23:57:09 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19VQaVB2PNVcSUO7jMLxrtP8EqwN4Tz345SZYgluK
-	+Q+cwpjoMtOzXL
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K0ODE-0002oF-Ow; Sun, 25 May 2008 23:57:08 +0200
-Mail-Followup-To: Christian Stimming <stimming@tuhh.de>,
-	git@vger.kernel.org
+	id S1751242AbYEYXh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 19:37:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbYEYXh2
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 19:37:28 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:41613 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834AbYEYXh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 19:37:28 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2038039rvb.1
+        for <git@vger.kernel.org>; Sun, 25 May 2008 16:37:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/0R9wUuHffHUlWC+SK+K4L90mT3BIfg1aofyQsCB3UI=;
+        b=SBzyeLDTjNARl8KtHR6q2bk9WSQxuxIrjNlU+J5Mb8nG9x+qF7K54MnVxX9zl0gLkRUE/lq3EBG7/bBxeaxFGqDIyx49/MqhkiI8d+DDWcbB98ARmfEVndHimGxKogb2Wex4dSxFxs8GAWtaXeGzAHecjvmzZleVM9Ouc5oL9Kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=k5dUbL0ffa/l0Uwywt9rXhyUr5jNCvCeKHHX+lWWNV0MksY4XkmyXHY9mntgMsP0QbVMBVr6kaRhTZebq8xBkzurLPRA3Mc1bwfzDBbPqrH5OrCcLxvvSBMB49JrcTtTv57CC0yG+4yvqUGjTh3JKODrzTKvSwsakP9UcHWMm6M=
+Received: by 10.140.193.15 with SMTP id q15mr1868491rvf.191.1211758647718;
+        Sun, 25 May 2008 16:37:27 -0700 (PDT)
+Received: by 10.141.48.1 with HTTP; Sun, 25 May 2008 16:37:27 -0700 (PDT)
+In-Reply-To: <20080523062821.GA24411@foursquare.net>
 Content-Disposition: inline
-In-Reply-To: <200805242248.23413.stimming@tuhh.de>
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82883>
 
+Just FYI, git revert was exactly what I needed.  If you want to undo
+any commit at all git revert is your friend.
 
---uQr8t48UFsdbeI+V
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks!
 
-Hi Christian,
+-fREW
 
-> > I want to repeat my suggestions from the last mail:
-> >   1. "Suche n=E4chste/vorige Version nach _Beschreibung:_ [insert]"
-> >   2. "Suche n=E4chste/vorige Version nach _Pfaden:_ [insert]"
-> >      (or maybe "nach _Dateien:_", if it's commonly accepted that
-> >       directories are files, too.)
-> >   3. "Suche n=E4chste/vorige Version nach _=C4nderungen:_ [insert]"
-> > which makes it much more clearer than the English original, imho.
->=20
-> Okay, I've inserted your suggestions in my translation update. I'm not to=
-o=20
-> sure about any translation of this part, but your proposal is maybe bette=
-r=20
-> than the existing one.
-
-You can make yourself sure by trying the features or by reading the
-source code. ;-)
-Since I've translated them in that way, I know what they do and I use them
-more often.  So I'm pretty sure.
-
-> > And I think a better translation for "pull" is=20
-> > something that stresses the fact that "pull" =3D "fetch" + "merge",
-> > something like "Holen und Zusammenf=FChren".
->=20
-> That's indeed an interesting suggestion. (Which bears the question why it=
- is=20
-> being called "pull" in English in the first place,
-
-Well, this seems not to be clear to some users, since there is often
-uncertainty about "pull" ;)
-
-Regards,
-  Stephan
-
---=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
-
---uQr8t48UFsdbeI+V
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIOeC0bt3SB/zFBA8RAm6tAKCpiJi4BS1dwERevsWlOLZWC9G++wCgrrv7
-DYilIhrvG7JY1WDIbHCRBDs=
-=ttRW
------END PGP SIGNATURE-----
-
---uQr8t48UFsdbeI+V--
+On 5/23/08, Chris Frey <cdfrey@foursquare.net> wrote:
+> On Thu, May 22, 2008 at 11:28:57PM -0500, fREW wrote:
+>> I recently deleted a bunch of files and checked the change into git,
+>> and then changed my mind and wanted the files back.  I did a
+>> git-checkout <file> and got each file back individually.  Then I did
+>
+> I believe you want to undo the change you made (deleting files), not
+> just view an old version of the file, which is what checkout does.
+>
+> You can either add it back yourself, or you can undo the last commit, using
+> git-reset.
+>
+> Here's an example of what you could have done before making further
+> changes that you wanted to push:
+>
+> 	git rm file
+> 	git commit
+> 	git log			# view your change
+> 	git reset --hard HEAD^	# go back to the HEAD before your change
+>
+> Think of the chain of commits as a long linked list of changes.  A branch
+> head is just a pointer to the top of that linked list.  git-reset allows
+> you to point that HEAD to anywhere in the list, even after going back
+> in history.  The commits are still there, even if HEAD doesn't explicitly
+> point to them.
+>
+> For example, say git log shows commit 1a2b3c4 as HEAD, with commit 7abc983
+> as its parent.  You can move the HEAD back and forth, like this:
+>
+> 	git reset --hard 7abc983
+> 	git log			# commit 1a2b3c4 is gone!
+> 	git reset --hard 1a2b3c4
+> 	git log			# now it's back!
+>
+> But in your case, you now have a list of commits that is missing files:
+>
+>         A -> B -> C
+>              |    |
+>              |    (made changes here)
+>              |
+>              (deleted files here)
+>
+> So in this case you likely want to revert commit B, while keeping commit C.
+>
+> 	git log			# get the commit SHA1, let's say it's 04bcb93
+> 	git revert 04bcb93
+>
+>
+> Take a look at "Git from the bottom up"
+> 	http://www.newartisans.com/blog_files/git.from.bottom.up.php
+>
+> - Chris
+>
+>
