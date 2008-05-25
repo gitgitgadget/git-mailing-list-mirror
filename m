@@ -1,94 +1,105 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: encoding bug in git.el
-Date: Sun, 25 May 2008 15:42:00 +0200
-Message-ID: <20080525134200.GA31990@diana.vm.bytemark.co.uk>
-References: <20080520220900.GA20570@diana.vm.bytemark.co.uk> <87mymkbo9x.fsf@lysator.liu.se> <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
+From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: Which msysGit version corresponds to which official Git version?
+Date: Sun, 25 May 2008 17:19:56 +0200
+Message-ID: <4839839C.2040605@dirk.my1.cc>
+References: <48380E05.9020103@dirk.my1.cc> <3F512BCF-1D2E-46B0-84E5-4807753A2618@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
-To: Clifford Caoile <piyo@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sun May 25 15:43:21 2008
+Cc: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun May 25 17:21:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0GVM-0005dm-0f
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 15:43:20 +0200
+	id 1K0I2C-0000zp-2d
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 17:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305AbYEYNma convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 09:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYEYNma
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 09:42:30 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2112 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbYEYNm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 09:42:29 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K0GU4-0000qU-00; Sun, 25 May 2008 14:42:00 +0100
-Content-Disposition: inline
-In-Reply-To: <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752998AbYEYPUB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 11:20:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbYEYPUB
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 11:20:01 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:48564 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751269AbYEYPUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 11:20:00 -0400
+Received: from [84.176.113.252] (helo=[192.168.2.100])
+	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1K0I0s-0000lA-Hh; Sun, 25 May 2008 17:19:58 +0200
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <3F512BCF-1D2E-46B0-84E5-4807753A2618@zib.de>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82863>
 
-On 2008-05-21 23:08:09 +0900, Clifford Caoile wrote:
-
-> Here is a proposed fix. I suggest that process-environment should be
-> given these envvars already encoded as shown in this code sample:
+Steffen Prohaska schrieb:
 >
-> ------------------ git.el ------------------
-> [not a proper git-diff]
-> @@ -216,6 +216,11 @@ and `git-diff-setup-hook'."
->    "Build a list of NAME=3DVALUE strings from a list of environment s=
-trings."
->    (mapcar (lambda (entry) (concat (car entry) "=3D" (cdr entry))) en=
-v))
+> On May 24, 2008, at 2:45 PM, Dirk S=FCsserott wrote:
+> [...]
+>> I'd like to know which official Git version (as cloned
+>> from git://git.kernel.org/pub/scm/git/git.git) corresponds
+>> to my msysGit version.
 >
-> +(defun git-get-env-strings-encoded (env encoding)
-> +  "Build a list of NAME=3DVALUE strings from a list of environment s=
-trings,
-> +converting from mule-encoding to ENCODING (e.g. mule-utf-8, latin-1,=
- etc)."
-> +  (mapcar (lambda (entry) (concat (car entry) "=3D"
-> (encode-coding-string (cdr entry) encoding))) env))
-> +
->  (defun git-call-process-env (buffer env &rest args)
->    "Wrapper for call-process that sets environment strings."
->    (let ((process-environment (append (git-get-env-strings env)
-> @@ -265,7 +270,7 @@ and returns the process output as a string, or ni=
-l
-> if the git failed."
+> It's not in official git.git.  msysgit is based on official
+> git 1.5.5, i.e. tag v1.5.5 (9d8318051).  msysGit adds, however,
+> a lot of commits that are (not yet) in official git.git.
 >
->  (defun git-run-command-region (buffer start end env &rest args)
->    "Run a git command with specified buffer region as input."
-> -  (unless (eq 0 (let ((process-environment (append (git-get-env-stri=
-ngs env)
-> +  (unless (eq 0 (let ((process-environment (append
-> (git-get-env-strings-encoded env coding-system-for-write)
->                                                     process-environme=
-nt)))
->                    (git-run-process-region
->                     buffer start end "git" args)))
+>> git checkout 9d258 didn't work.
+>>
+>> Any hints? Is there a Website or another mailing
+>> list for msysGit?
 >
-> The buffer text is saved with the encoding coding-system-for-write,
-> while the GIT_* envvars were not encoded, so when appending to
-> process-environment variable, use the same encoding.
+> http://code.google.com/p/msysgit/
+>
+>     Steffen
+Thanks a lot, that's exactly what I was looking for. :-)
 
-I don't claim to understand any of the design issues around this, but
-your patch certainly fixes my problem (once I managed to apply it,
-which involved working around the lack of headers, non-matching
-offsets, and whitespace damage -- luckily it was just two hunks). So:
+BTW, I couldn't checkout the commit '9d8318051' you mentioned from git.=
+git.
+No such something, it said. When I checked out 'v1.5.5' it said my HEAD=
+ is
+now '1d2375d'. Probably I messed up my clone, but I thought the commit =
+id
+was unique for all time.
 
-Tested-by: Karl Hasselstr=F6m <kha@treskal.com>
+Whoa, stop. I re-cloned git.git to a different directory and succesfull=
+y=20
+checked
+out 9d8318051. Look:
 
-Thanks for taking the time.
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+  > Initialized empty Git repository in [...]/test/git/.git/
+  > remote: Counting objects: 72806, done.?[K
+  > remote: Compressing objects: 100% (22377/22377), done.?[K
+  > remote: Total 72806 (delta 52252), reused 68863 (delta 49051)?[K
+  > Receiving objects: 100% (72806/72806), 15.67 MiB | 202 KiB/s, done.
+  > Resolving deltas: 100% (52252/52252), done.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+$ cd git
+
+$ git checkout 9d8318051
+  > Note: moving to "9d8318051" which isn't a local branch
+  > If you want to create a new branch from this checkout, you may do s=
+o
+  > (now or later) by using -b with the checkout command again. Example=
+:
+  >   git checkout -b <new_branch_name>
+  > HEAD is now at 1d2375d... GIT 1.5.5
+
+I'd expected that "HEAD is now at 9d8318051...". Wrong?
+When I checkout "1d2375d" it says the very same:
+  > HEAD is now at 1d2375d... GIT 1.5.5
+
+So what's the difference then between 9d8318051 and 1d2375d?
+gitk doesn't know about 9d8318051 at all. Seems that there are
+two ways to get to v1.5.5: via 9d... and via 1d.... Is that right
+or did I misunderstand sth. here?
+
+    Dirk
