@@ -1,201 +1,248 @@
-From: Jan Krueger <jk@jk.gs>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PYRITE] Status update and call for information.
-Date: Sun, 25 May 2008 11:23:32 +0200
-Message-ID: <20080525112332.52de8270@perceptron>
-References: <5d46db230805222318j25657c10t2955fbdf1aa5c003@mail.gmail.com>
-	<m34p8o4ijg.fsf@localhost.localdomain>
-	<5d46db230805232216p7936e5dex3aa3ff0e1e0dce06@mail.gmail.com>
-	<m3r6bs2ixn.fsf@localhost.localdomain>
-	<5d46db230805241043u7222be34w7dd8cfcb188ef005@mail.gmail.com>
+Date: Sun, 25 May 2008 13:35:35 +0200
+Message-ID: <200805251335.36530.jnareb@gmail.com>
+References: <5d46db230805222318j25657c10t2955fbdf1aa5c003@mail.gmail.com> <200805242247.07565.jnareb@gmail.com> <5d46db230805241450w71b0c587o4767becc0058ee0a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Dmitry Potapov" <dpotapov@gmail.com>,
 	"Git Mailing List" <git@vger.kernel.org>
 To: "Govind Salinas" <blix@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Sun May 25 11:25:22 2008
+X-From: git-owner@vger.kernel.org Sun May 25 13:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0CTf-0007Cu-4M
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 11:25:19 +0200
+	id 1K0EWo-0005qW-6G
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 13:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbYEYJYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 05:24:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbYEYJYK
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 05:24:10 -0400
-Received: from zoidberg.org ([213.133.99.5]:43808 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754513AbYEYJYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 05:24:08 -0400
-Received: from perceptron (p54BB8755.dip0.t-ipconnect.de [::ffff:84.187.135.85])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sun, 25 May 2008 11:24:04 +0200
-  id 0015B434.48393034.00000D0D
-In-Reply-To: <5d46db230805241043u7222be34w7dd8cfcb188ef005@mail.gmail.com>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1754808AbYEYLft convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 May 2008 07:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754715AbYEYLft
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 07:35:49 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:59109 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752512AbYEYLfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 07:35:48 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so698272nfc.21
+        for <git@vger.kernel.org>; Sun, 25 May 2008 04:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=xriDqKYj92lRFQ427ufbi6SOkZ4K9ByxrPnIb3v7zlY=;
+        b=L295yBEk3JG+8QZS0mDI+moRP8vlzpDl9fSCva3KMOckXQydqklRcl1Ou5sME+QEA5/rAObFmwed3mCKCwAuFo0CGg2GImg6PbglFF+Y/xShWGnSK/FndLBxq9wPN6eWZyUUIMrRZos1KCcVWhrAAq4PVweh5SJY6FJY/AF3lmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=LSCn6JaekaeFfcY6jBmY+1X2FTOg807oBp7ipXsB+6mADtPhNSyM7tsmizpm99RZNessRGOiXd/vOTGbWleSpgfa8LC7W5UxOuxUNLiG7703qN1ddR7rkofcWpJIbibtPdL+Vn+VGSJJSLNoBjoW5fI5zJ3bK7c6GGP2ho3KfBo=
+Received: by 10.210.13.17 with SMTP id 17mr2926869ebm.1.1211715346478;
+        Sun, 25 May 2008 04:35:46 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.235.25])
+        by mx.google.com with ESMTPS id c5sm52985663nfi.6.2008.05.25.04.35.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 May 2008 04:35:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <5d46db230805241450w71b0c587o4767becc0058ee0a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82860>
 
-Hi,
+Dnia sobota 24. maja 2008 23:50, Govind Salinas napisa=B3:
+> On Sat, May 24, 2008 at 3:47 PM, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+>> On Sat, 24 May 2008, Dmitry Potapov wrote:
+>>> On Sat, May 24, 2008 at 12:16:17AM -0500, Govind Salinas wrote:
+>>>> On Fri, May 23, 2008 at 8:07 PM, Jakub Narebski <jnareb@gmail.com>=
+ wrote:
+>>>>> "Govind Salinas" <blix@sophiasuchtig.com> writes:
+>>>>>
+>>>>>> 1) Reduce the number of commands.
+[...]
+>>>>
+>>>> Sure, removing commands is not about removing features, its about
+>>>> reducing the learning curve and reducing confusion.
 
-allow me to play the devil's advocate here.
+IMHO pushing too much into single commands do not reduce confusion
+but increases it.
 
-Your approach is to combine different concepts that are similar and can
-be used to do the same thing but in completely different ways. Wouldn't
-this actually create more confusion than keeping these concepts
-separate? Examples follow.
+[Searching for a good example...] For example 'mv' could be modified
+to include functionality of 'rm' in the form of 'mv file-to-delete',
+but nobody sane would think of doing it.  Another example: you can
+use 'less' to view contents of directory, but you usually use 'ls'
+to do that; and nobody sane would think of extending 'less' to accept
+all 'ls' switches, to have all 'ls' functionality.
 
-> The idea is that there should be one fairly obvious way to do
-> something. If you have that then there is less confusion, especially
-> when someone asks for help.  Plus, if there is one fairly obvious way
-> to do something, then people will need to ask for help less often.
 
-If people didn't ask things like "how do I delete a file", I'd be more
-inclined to believe that. ;)
 
-Now, on to the fun part.
+I also think that having 30+ commands does not steep learning curve
+make.  For example GNU coreutils only consist of 90 commands, but base
+CLI is not that hard to use.
 
-> * commit = commit + push + stash + init
->           push:  This is here because it fits the traditional notion
-> of what a commit does, which is to send a commit to the central
->                     server.  I think of it as "I am committing my
-> changes to the remote repository.
+>>> I don't see how hiding creating branch functionality behind some ot=
+her
+>>> command will help with learning curve or reduce confusion. If I sta=
+rted
+>>> to use any new SCM and had to create a new branch, I would look for=
+ the
+>>> "branch" command. If there is something wrong with the git-branch t=
+hen
+>>> it is that this command does not checkout the newly created branch =
+by
+>>> default. So, I usually create branches using git-checkout, which is
+>>> counterintuitive.
+>=20
+> If you will allow me to respond to both items in this mail...
+>=20
+> In bzr both clone and branch are in the 'branch' command because ever=
+y
+> branch is its own clone.  Hg defaults to a similar way of doing thing=
+s and
+> You clone into a new directory to get a new branch.
+>=20
+> From the bzr user reference:
+>=20
+> Branch:
+> ...
+>=20
+>   Aliases:
+>      get, clone
+> ...
 
-The problem I see there is that it will be difficult to include the
-part of push that sends several commits at once. It is a very common
-workflow to create a series of local commits, test them, possibly
-rewrite them in several ways, and finally push the entire set. To have
-your combined command do that, you'd need something like "pyt commit
---to-remote --use-new-local-commits". Is that better than "pyt
-push" (and does describing this as "committing" actually make sense)? I
-think not. It's sacrificing convenience and sense for reducing the
-visible number of commands.
+Do not cater to least common denominator, please.=20
 
->           stash:  What is stash but a temporary commit (not on the
-> branch)?
+> In truth, the git notion of a branch is pretty unique among SMCs.  In=
+ old
+> systems a branch was just a copy of a set of files at a certain point=
+=2E  In
+> other DSCMs it is more likely to be a new copy of the repo.
 
-This is correct, but only technically. In fact, a commit is something
-that you'll typically share with others, whereas a stash is not. This
-makes me doubt it's helpful to combine both.
+I think git notion of branch is clean, and clearly superior to the crap
+othe SCMs use ;-P.  I'd like to remind you that multiple branches in
+single repository were something added at user request, at least
+according to Junio's FLOSS weekly #19 follow-up in his blog
+  http://gitster.livejournal.com/9970.html
 
-> * checkout = checkout + clone + branch + remote
+> To answer your question a little better, I am looking at it like this=
+:
+> The predominant action is, as you say, going to be "I want to create =
+a
+> branch so that I can start working on something."  While I respect th=
+at
+> you might want to create a branch and not start doing something
+> *right away*, I think this is less likely.  So...
+>=20
+> pyt co
+>   this lists stuff you can checkout by which we mean local branches.
 
-Checkout already has a doubtful duality: it can either switch branches
-or check out a specific version of a single file. I don't think
-capitalizing on the 'switch branches' concept while keeping the other
-function is a good idea. At the very least, consider splitting "fetch
-other version of this file" into a separate command.
+Note that "git checkout" defaults to HEAD.
 
-I can see another source of confusion here: with this, checkout can
-either create a new repo or a new branch in the same repo. In other
-words, what it does depends on the context you call it in. This is a
-no-no in interface design.
+> pyt co -r
+>   this lists remote stuff you can check out, such as remote tracking
+>   branches and the remotes themselves.
+>=20
+> pyt co -a
+>   lists both of the above, maybe tags too.
 
-Finally, "remote" could just as well go with pull or push (which is
-what it's actually used for in practice). The act of defining or
-removing a remote is misplaced here since it has nothing to do with
-checking anything out.
+These three are all about listing metadata, refs to be more exact.
+'checkout' is IMHO all about getting given state recorded in repository
+(or, in git case, also from index) into working area, i.e. in a way
+opposite to 'commit' or 'checkin', at least as far as it is possible.
+So I think this is in the same league as using 'less' to view contents
+(listing) of a directory.  This IMHO does not reduce confusion, but
+adds to it.
 
->   gc = clean + gc + prune + repack
+Also note that git-branch is used to create and list branches
+(unfortunately it uses -l for --enable-reflog and not for --list as
+other commands like git-tag do), but can be also used to delete and
+rename branches.  Do you want to stuff this functionality in "pyt co"?
 
-See Jakub's comment about that. I strongly agree with him.
+> pyt co <branch>
+>   checkout the branch, looking at refs
 
-> * pull = pull, fetch, merge
+It is the default.
 
-Unlike what Jakub says, I can imagine this working well in the
-distributed case. It could be a command that does both fetch and merge
-by default and you can switch off either. It would make little sense
-when merging a number of local branches, however.
+> pyr co <uri> <remote-name> <branch>
+>    the user wants to checkout something that isn't local.  So we do
+>    a git remote add -t <branch> -f <remote-name> <uri> followed by
+>    checkout <remote-name>/<branch>
+>    There would probably be variations/flags to get different function=
+ality.
 
->   revert = reset + reflog
+Please note that result of this is very, very different from ordinary
+checkout.  Either it doesn't touch working area if it is equivalent
+of git-fetch, or can result in conflicts and not a clean state if
+it is equivalent of git-pull.
 
-Keep in mind that you need to stick git-revert somewhere, too.
+> pyt co -n mynewbranch [start=3DHEAD]
+>   creates and checks out a new branch.
 
-> (still revert)
->           I was thinking of calling this command "recover" instead of
->           revert, which I still think might describe what I want to do
->           and might tell you why I think that reflog is something to
->           combine here.  "revert --what-can-i-revert-to" would show
->           the output of reflog.
+Simply different name for option, I think.
 
-Another source of confusion, since I almost never use the reflog for
-git-reset. I almost always use a commit ID or something like HEAD^, or
-no argument at all (mostly for reset --hard).
+> pyt co [something=3DHEAD] [--] <files>...
+>   should be obvious
 
-> * track = add/addremove
+But it isn't obvious. =20
 
-That would only make sense if you hide the index completely. I think
-that's a bad idea, because the index is a really powerful thing. At the
-very least, add -i gets impossible if there's no way of influencing the
-index directly.
+Let me explain.  Because in git commits are always whole-tree
+snapshots, and usually (read: almost always) it makes sense to have
+whole-tree commits in an SCM, this cannot switch branches.  So for
+example there is a question if it is a separate mode (yet another
+oveloading of 'pyt co' operator) of checkout changing working area
+without changing current branch (something like svn-revert,
+or hg-undo), or would it make HEAD detached and result in something
+like not yet implemented "git cherry-pick <rev> -- <files>".
 
-It would be a lot better to keep commit -a (and perhaps hint at it if
-commit is called with an unchanged index) and define something like the
-following:
+> The following are a little less intuitive, because they don't actuall=
+y
+> result in new stuff being put in the working directory.  These things=
+ are
+> not really a checkout activity, I will stipulate that.  However, I do=
+n't think
+> we need one interface to do stuff with branches and remotes, one to
+> manage branches and one to mange remotes.  And I think that users
+> will be able to grasp this pretty quickly.
+>=20
+> pyt co --create-only mynewbranch
+>   just creates without switching, it is a long option because this is=
+ not
+>   a normal function and the user needs to understand what they are
+>   doing.
 
-* stage (or record, take, use) -- same as git-add.
-* remove (rm) -- same as git-rm. Probably good to rename --cached.
-* unstage (or unrecord) -- revert index to version in last commit.
+This is not 'checkout', mind you.
 
-> They are useful for a different purpose.  If I say master~5 today it
-> probably won't yield the same commit tomorrow.  while 6450:master
-> would.
+> pyt co -d [-f] <branch-name> | <uri> | <remote>
+>   delete a branch or stop tracking a remote.
 
-That's right, but keep in mind that revision numbers will probably make
-people think revision numbers are global, e.g. "hey Bill, check out
-revision 3488 I committed today" (and Bill gets it as 3754). The
-background of either CVS or SVN would encourage this.
+Oh, so you do plan to stuff at least deleting branches and remotes
+in 'pyt co'?
 
-Also, 6450:master, as a syntax, doesn't cut it. What if in the past of
-master, a merge commit with seven parents happened? It's impossible to
-figure out which parent to follow. You'd have to write something like
-45;1:357,4:774 (go back 45 commits, take parent 1, go back 357 commits,
-etc.). Just numbering all commits in master's past according to
-depth-first search, on the other hand, will just make revision numbers
-very confusing.
+What was the UNIX motto: do one thing, and do it well?
 
-Something else to consider is that revision numbers are hardly better
-to remember than (abbreviated) commit IDs. Consider KDE's SVN repository
-with (currently) 812270 revisions...
 
-> I just put this in because I have seen several people ask for it on
-> the mailing list recently.  I thought to myself, that they COULD have
-> it if they really wanted.
+>>> I don't think any commonly used SCM unites 'clone', 'branch', and
+>>> 'checkout' functionality under the same name. This approach seems
+>>> to be more confusing than helpful.
+[...]
+> See above, they in fact do.  It struck me as odd too, because I had
+> started with git.  After thinking about it for a while, I saw advanta=
+ges
+> to it.
 
-But with a number of important disadvantages. Sometimes it really is
-better not to have everything you want.
+And it looks like you gone to far in the reducing number of commands
+direction and do not see disadvantages of heavily overloaded, DWIM-ming=
+,
+doing multiple different things depending on options commands.  If you
+don't like large number of commands (is 30+ large number?), use GUI!
 
-In conclusion, your goal is a good one, but it's something that
-requires a lot of very careful consideration. To name just one thing,
-you need to make it consistent, clean, and still powerful enough to not
-stand in the way of moderately (un)common tasks.
 
-I believe there is a bit of a tendency in your approach to emulate
-commands of other VCS, and that's not the right way to go if you ask me.
-If I did something like pyt (and I won't lie, I have put some thought
-into it, including writing down a couple of ideas), I would start with a
-clean slate and design something that really makes sense (which neither
-the current git nor any other existing interface stacked on top of it
-can really deliver). David Roundy did this well for darcs, I think: a
-great number of commands have different names than in the classic VCS,
-but they all make a lot of sense. Still, again, darcs's commands
-wouldn't work that well for git; both systems are just too different.
+What you need is to have some _users_ to tell you if you do with
+Pyrite in good direction.  Or at least analysis of common git workflows
+and how they could be improved...
 
-Something else that's worth considering is that an interface to git is
-not just about reshuffling commands; it's also about behaviour. For
-example, submodules as they currently are are a bit hard to use
-correctly (from what I've read on IRC; I haven't used them myself yet),
-and refspecs are rather non-intuitive to use (especially push :foo).
-
-It'll be interesting to see how the various existing alternative
-interfaces to git will address all these problems.
-
--- 
-Best regards
-Jan Krueger
-Aachen, Germany
+--=20
+Jakub Narebski
+Poland
