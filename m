@@ -1,140 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: rev-list --parents --full-history + path: something's fishy
-Date: Sun, 25 May 2008 14:23:48 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0805251359290.3081@woody.linux-foundation.org>
-References: <e1dab3980805230808s59798351r9ed702c7d0dedd2a@mail.gmail.com> <1211660214.483877b69a107@webmail.nextra.at> <alpine.LFD.1.10.0805241817500.3081@woody.linux-foundation.org> <200805251426.54755.johannes.sixt@telecom.at>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 25 May 2008 23:29:22 +0200
+Message-ID: <20080525212922.GA9564@leksak.fem-net>
+References: <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0805221212200.30431@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, David Tweed <david.tweed@gmail.com>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun May 25 23:25:35 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 25 23:30:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0Nig-0001aQ-7N
-	for gcvg-git-2@gmane.org; Sun, 25 May 2008 23:25:34 +0200
+	id 1K0NnE-0002ow-Kn
+	for gcvg-git-2@gmane.org; Sun, 25 May 2008 23:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612AbYEYVY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 17:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751569AbYEYVY2
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 17:24:28 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54555 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751036AbYEYVY1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 May 2008 17:24:27 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4PLNnwI016182
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 25 May 2008 14:23:50 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4PLNm0W009110;
-	Sun, 25 May 2008 14:23:48 -0700
-In-Reply-To: <200805251426.54755.johannes.sixt@telecom.at>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.408 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751026AbYEYV30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 17:29:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbYEYV30
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 17:29:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54290 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751016AbYEYV3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 17:29:25 -0400
+Received: (qmail invoked by alias); 25 May 2008 21:29:23 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp033) with SMTP; 25 May 2008 23:29:23 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18Pf/x47uEPP1sfNwfaa2HVg2gn4QLQ7QGZR0qoYt
+	Zdan7B55SQRiyB
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K0NmM-0002dt-U5
+	for git@vger.kernel.org; Sun, 25 May 2008 23:29:22 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805221212200.30431@racer>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82880>
 
 
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 25 May 2008, Johannes Sixt wrote:
-> 
-> The history was this:
-> 
->    C--M
->   /  /
->  A--B
-> 
-> Now assume that both B and C change a, but so that it is identical in both B 
-> and C. I thought that --full-history makes a difference *only* for this case, 
-> because without --full-history the revision walk would choose either B or C 
-> (not quite at random, but in an unspecified manner), but not both; but 
-> with --full-history the revision walk would go both paths.
+Hi,
 
-You mis-understood what --full history does.
+> > * js/rebase-i-sequencer (Sun Apr 27 02:55:50 2008 -0400) 17 commits
+esp.
+> >  + Teach rebase interactive the merge command
+> >  + Teach rebase interactive the reset command
+> >  + Teach rebase interactive the mark command
+[...]
+>
+> Yeah, I know.  My backlog is growing and growing.
 
-It literally just means "walk all paths". The fact that *also* means that 
-it often cannot simplify away merges at all is unfortunate, but there you 
-have it.
+I think, this week we get the git-sequencer "spec" ready to be sent
+to the list.
+Then there's a new thread to discuss ;-)
 
-In other words, it will now leave the merge alone, even if it can see that 
-everything we care about (file 'a') came from just one side.
+Regards,
+  Stephan
 
-> This makes a difference in git-filter-branch --subdirectory-filter: We do want 
-> to simplify history to those commits that touch a path, but we don't want to 
-> simplify away the case outlined in the previous paragraph.
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
 
-If so, you need to expand on the history simplification a *lot*. 
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-It currently does two things:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
- - simplify away merges when it can see that one parent is identical in 
-   content to the end result - it then removes the merge entirely, and 
-   replaces it with the identical parent.
+iD8DBQFIOdoybt3SB/zFBA8RApnOAJ9OBky+NItpCFrGR3xKYs9j6fztRgCdG5bN
+XquXfdXkVYmJHezWSaaO9gg=
+=GZm6
+-----END PGP SIGNATURE-----
 
-   This is the thing that would normally take the merge 'M', and just 
-   replace it with 'B', because it sees that the contents all come from B. 
-   But if 'C' _also_ changed the file, and 'M' was actually a data merge, 
-   then it will be left alone (because the merge 'M' really is meaningful 
-   as far as the data is concerned)
-
-   This is what "--full-history" disables.
-
-   So when you say "--full-history", all merges are left alone.
-
- - The *other* simplification is the non-merge case, where it simplifies 
-   away commits that don't change the files. This is the one that then 
-   removes 'C' in your original example.
-
-   You can disable this simplification with "--sparse". Not that anybody 
-   ever wants to.
-
-What you seem to want in a *third* level of simplification, which is to 
-remove merges that turn out to be pointless, because all parents end up 
-being directly related. We don't do that simplification, and we never 
-have.
-
-I'd love to do it, but it's somewhat costly and very much more complicated 
-than the simplifications we do do.
-
-> What shall we do in git-filter-branch --subdirectory-filter?
-
-See above. I can tell you _where_ you'd need to add the logic. See the 
-file revision.c: remove_duplicate_parents(). You'd could "just" extend 
-that to remove not just 100% duplicates, but also remove parents that are 
-direct ancestors of each other. I say "just" in quotes, because that's not 
-trivial to do efficiently.
-
-But it gets worse. If that removal of parents then turns the commit into a 
-regular one, *and* it didn't actually change the files you are interested 
-in, you'd need to remove it entirely, which in turn means that you'd also 
-need to rewrite the parent information of the children. Which means that 
-simplify_commit() is actually too late, because that one happens when you 
-print things out, and the children have already been returned (with what 
-now is stale parenthood!).
-
-So the _obvious_ place to do that simplification is actually too late. 
-
-But doing it earlier is also hard, because that "simplify_commit()" is 
-what removes the trivial linear ones.
-
-So you'd actually need to add a whole new phase that removes the trivial 
-linear cases *before* we are in the whole get_revision() phase, and then 
-does the commit simplification. It's nasty and quite complicated. Which is 
-why we don't do it.
-
-The "revision.c" commit history simplification is already arguably some of 
-the most complicated and subtle code in all of git. The code needs to be 
-able to handle the "normal" case (which is to stream the commits without 
-pre-computing the whole DAG) efficiently, but then there are those 
-complicated cases that need the whole DAG. And they have to live 
-side-by-side.
-
-			Linus
+--ZPt4rx8FFjLCG7dd--
