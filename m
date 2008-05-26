@@ -1,66 +1,144 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Mon, 26 May 2008 12:32:44 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805261230490.30431@racer>
-References: <20080526044640.GB30245@spearce.org>  <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com>  <alpine.DEB.1.00.0805261106470.30431@racer> <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com>
+From: Mark Lawrence <nomad@null.net>
+Subject: [cogito-0.18.2] Documentation/Code Mismatch: cg-switch -l
+Date: Mon, 26 May 2008 13:18:37 +0200
+Message-ID: <20080526111837.GA17429@lifebook.rekudos.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Dave Watson <dwatson@mimvista.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
-	laforge@gnumonks.org
-To: Vegard Nossum <vegard.nossum@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 26 13:33:37 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 26 14:08:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0axI-0003Xe-F7
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 13:33:32 +0200
+	id 1K0bVR-0004Sq-04
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 14:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754146AbYEZLck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 07:32:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754204AbYEZLck
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 07:32:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39950 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754175AbYEZLcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 07:32:39 -0400
-Received: (qmail invoked by alias); 26 May 2008 11:32:38 -0000
-Received: from R4980.r.pppool.de (EHLO racer.local) [89.54.73.128]
-  by mail.gmx.net (mp050) with SMTP; 26 May 2008 13:32:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19W6dUyLVJW0U23oh9auBjr7VecpUfTDU8BZzIFfO
-	CjyeYNB5drFtB4
-X-X-Sender: gene099@racer
-In-Reply-To: <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754678AbYEZMH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 08:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbYEZMH5
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 08:07:57 -0400
+Received: from lawrence.nine.ch ([217.150.250.121]:49522 "EHLO
+	lawrence.nine.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754103AbYEZMH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 08:07:56 -0400
+X-Greylist: delayed 2949 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 May 2008 08:07:55 EDT
+Received: from 217-162-110-104.dclient.hispeed.ch ([217.162.110.104] helo=lifebook.rekudos.net)
+	by lawrence.nine.ch with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nomad@null.net>)
+	id 1K0aiv-0001n7-MZ
+	for git@vger.kernel.org; Mon, 26 May 2008 13:18:43 +0200
+Received: from mlawren by lifebook.rekudos.net with local (Exim 4.63)
+	(envelope-from <nomad@null.net>)
+	id 1K0air-0004b4-UM
+	for git@vger.kernel.org; Mon, 26 May 2008 13:18:37 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: 217.162.110.104
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: nomad@null.net
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	lawrence.nine.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=1.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on lawrence.nine.ch)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82925>
 
 Hi,
 
-On Mon, 26 May 2008, Vegard Nossum wrote:
+I don't know if this is a bug or just my understanding, but I'm having
+trouble matching the behaviour of "cg-switch -l" with the documentation.
 
-> "As of the bleeding edge (40c5c6cb11b8cc6caf3ea6a681caf0a6b8d66f36
-> [*4*]) the ownership of all currently surviving lines of code is
-> broken down as follows:"
-> 
-> This seems to suggest that only authors of the "bleeding edge" are
-> considered, while my point was that the "bleeding edge" may be a
-> derivative of earlier versions which had other authors as well.
+According to the docs, -l means that:
+                                                ... local changes will
+  be "kept" with your previous branch, you will get a pristine tree of
+  the new branch and when you switch back to the original branch you
+  will also get back the local changes.
 
-AFAICT this was done with "git blame", so it might be "derived" by a 
-particularly SCO-esque interpretation of the word, but it is really the 
-work of those people Shawn mentioned.
+However if I run "cg-switch -l -c testing" on a dirty (ie with local
+changes) repository I do not get a pristine tree. In fact, it appears 
+the local changes are carried over.
 
-Besides, I do not think that there were any other authors anyway.
+Initial state:
 
-In any case, this discussion is already boring me mightily, so I will tune 
-out,
-Dscho
+    mlawren@lifebook:/tmp/x$ cg-status
+    Heads:
+        >master     6a8a774cd1fb84f48f906a9ce3322a5ac94deb00
+       R origin     cdc9a7857b93b00f515b010c9aeadda4e649b92a
+
+    ? Changes
+    ? META.yml
+    ? Makefile
+    ? blib/
+    ? inc/
+    ? pm_to_blib
+    ? t/benchmark.pl
+    ? t/cache.t
+    ? t/hyphens.t
+    ? t/synopsis.t
+    ? x
+    M MANIFEST
+    M Makefile.PL
+    M debian/changelog
+    M debian/control
+    M lib/XML/API.pm
+    A lib/XML/API/Cache.pm
+    M lib/XML/API/RSS.pm
+    M lib/XML/API/XHTML.pm
+    M t/02-langs.t
+    M t/03-XML-API.t
+    A t/04-parse.t
+
+Create a new local branch and check status:
+
+    mlawren@lifebook:/tmp/x$ cg-switch -l -c testing
+    Creating new branch testing: 6a8a774cd1fb84f48f906a9ce3322a5ac94deb00
+    Switching to branch testing...
+
+    mlawren@lifebook:/tmp/x$ cg-status
+    Heads:
+        master     6a8a774cd1fb84f48f906a9ce3322a5ac94deb00
+      R origin     cdc9a7857b93b00f515b010c9aeadda4e649b92a
+        >testing    6a8a774cd1fb84f48f906a9ce3322a5ac94deb00
+
+    ? Changes
+    ? META.yml
+    ? Makefile
+    ? blib/
+    ? inc/
+    ? pm_to_blib
+    ? t/benchmark.pl
+    ? t/cache.t
+    ? t/hyphens.t
+    ? t/synopsis.t
+    ? x
+    M MANIFEST
+    M Makefile.PL
+    M debian/changelog
+    M debian/control
+    M lib/XML/API.pm
+    A lib/XML/API/Cache.pm
+    M lib/XML/API/RSS.pm
+    M lib/XML/API/XHTML.pm
+    M t/02-langs.t
+    M t/03-XML-API.t
+    A t/04-parse.t
+
+Why do I still have all these modified and additional files? I fully
+expected to still see the '?' file not under git/cogito control. However
+the uncommitted changes are still all present.
+
+I am also confused by the existence of the '-p' option, which by my
+reading implies pretty much the same condition as if you *don't* specify
+-l.
+
+Regards,
+Mark.
+-- 
+Mark Lawrence
