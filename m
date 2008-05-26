@@ -1,82 +1,77 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 3/3] Make old sha1 optional with git update-ref -d
-Date: Mon, 26 May 2008 16:09:31 +0200
-Message-ID: <20080526140931.GA18440@diana.vm.bytemark.co.uk>
-References: <20080525161125.25087.18083.stgit@yoghurt> <20080525161440.25087.83011.stgit@yoghurt> <alpine.DEB.1.00.0805261149310.30431@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now
+ incompatible with Cygwin (and probably Windows)
+Date: Mon, 26 May 2008 15:25:58 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805261521130.30431@racer>
+References: <483AC2CE.7090801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 26 16:11:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 26 16:26:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0dPi-0001Pz-M1
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 16:11:03 +0200
+	id 1K0dev-0007dN-Rh
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 16:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754635AbYEZOKK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 May 2008 10:10:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752419AbYEZOKK
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 10:10:10 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1817 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751795AbYEZOKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 10:10:09 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K0dOF-0004vn-00; Mon, 26 May 2008 15:09:31 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805261149310.30431@racer>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755092AbYEZOZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 10:25:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755323AbYEZOZy
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 10:25:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36803 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754987AbYEZOZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 10:25:53 -0400
+Received: (qmail invoked by alias); 26 May 2008 14:25:51 -0000
+Received: from R4980.r.pppool.de (EHLO racer.local) [89.54.73.128]
+  by mail.gmx.net (mp038) with SMTP; 26 May 2008 16:25:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4JTNvWmL4QVrR1D7zISO22c5NzHRuIIRkIyplj2
+	gM5g/4HHNDTqce
+X-X-Sender: gene099@racer
+In-Reply-To: <483AC2CE.7090801@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82936>
 
-On 2008-05-26 11:51:12 +0100, Johannes Schindelin wrote:
+Hi,
 
-> On Sun, 25 May 2008, Karl Hasselstr=F6m wrote:
->
-> > Giving the old sha1 is already optional when changing a ref, and
-> > it's quite handy when running update-ref manually. So make it
-> > optional for deleting a ref too.
->
-> Isn't this a bit dangerous, especially given that there is
-> potentially _no_ reflog as a safeguard?
->
-> So no, it is not the same as when changing a ref.
->
-> I am mildly negative on this (having lost some remote branches,
-> because they were deleted _together with the reflogs_ by "git push
-> bla :x"),
+On Mon, 26 May 2008, Mark Levedahl wrote:
 
-Deleting the wrong thing is never a fun experience. The thing is, this
-patch doesn't really make it any easier to delete the wrong thing.
-Before, you'd
+> Beginning with the referenced commit, the git project cannot be checked 
+> out on Cygwin (and I assume cannot be checked out on Windows using 
+> msysgit, though I have not verified this) as this commit introduces the 
+> file "t/5100/nul." On Windows, the file name "nul" is reserved, 
+> regardless of path, and cannot be created or deleted. It serves 
+> essentially the same function as /dev/null.
 
-  git update-ref -d <ref> <some-other-way-to-point-to-the-same-commit>
+Even when referencing the full (or a relative) path?  That's bad!
 
-if you wanted to play it safe, and
+> As a for instance of the troubles:
+> 
+> git>git checkout -f origin/master
+> Previous HEAD position was a2f5be5... Merge branch
+> 'jk/maint-send-email-compose' into maint
+> error: git-checkout-index: unable to create file t/t5100/nul (File exists)
+> 
+> As this commit is part of the published master branch, I am not sure the 
+> correct resolution: leaving this commit in place means that any commit 
+> between it and a commit fixing this will always cause an error on Cygwin 
+> / Windows. Of course, it *is* on the published master branch.
 
-  git update-ref -d <ref> <ref>
+That's the case for all regressions: we do not rewrite history for them.
 
-if you thought you knew what you were doing. All this patch does is
-make the second usage mode easier to type.
+As for the resolution, could you quickly try the 'my-next' branch of 
+git://repo.or.cz/git/dscho.git?
 
-(One might argue that a user who doesn't know what she's doing will
-have an easier time shooting herself in the foot when the oldvalue is
-optional, but I was under the impression that ease of use without
-consulting the man page shouldn't be a factor when designing the
-plumbing UI.)
+If that works, I'll send a proper patch to Junio.
 
-I do agree with you that branch deletion is one of the more
-"dangerous" operations in git. But I don't think making update-ref
-hard to use is the answer there; what we'd really need is for old
-reflogs to stay around for a while before being deleted.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
