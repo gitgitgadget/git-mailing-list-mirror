@@ -1,92 +1,43 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: rev-parse doesn't take pwd into consideration
-Date: Mon, 26 May 2008 20:58:12 +0100
-Message-ID: <20080526195812.GA23396@bit.office.eurotux.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: rev-parse doesn't take pwd into consideration
+Date: Mon, 26 May 2008 13:15:44 -0700
+Message-ID: <7vhcckddov.fsf@gitster.siamese.dyndns.org>
+References: <20080526195812.GA23396@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 21:59:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Luciano Rocha <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Mon May 26 22:17:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0iqd-0005DS-LW
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 21:59:12 +0200
+	id 1K0j8B-0002X3-D3
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 22:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754174AbYEZT6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 15:58:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754452AbYEZT6T
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 15:58:19 -0400
-Received: from os.eurotux.com ([216.75.63.6]:44798 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753714AbYEZT6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 15:58:19 -0400
-Received: (qmail 24462 invoked from network); 26 May 2008 19:58:17 -0000
-Received: from adsl.eurotux.com (HELO bit.office.eurotux.com) (luciano@213.205.93.24)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 26 May 2008 19:58:17 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1755012AbYEZUP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 16:15:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755024AbYEZUP6
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 16:15:58 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53388 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754944AbYEZUP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 16:15:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 69B224128;
+	Mon, 26 May 2008 16:15:56 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E36314127; Mon, 26 May 2008 16:15:51 -0400 (EDT)
+In-Reply-To: <20080526195812.GA23396@bit.office.eurotux.com> (Luciano Rocha's
+ message of "Mon, 26 May 2008 20:58:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8C732A20-2B60-11DD-9CE9-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82951>
 
-
---C7zPtVaVf+AK4Oqc
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-
-Hello,
-
-I was frustrated for some minutes trying to get the HEAD version of a
-file, as is in the documentation. Using git's source as an example:
-git/Documentation$ git show HEAD:docbook.xsl
-fatal: ambiguous argument 'HEAD:docbook.xsl': unknown revision or path
-not in the working tree.
-Use '--' to separate paths from revisions
-
-<hmmm>
-
-$ git show HEAD -- docbook.xsl
-<nil>
-$
-
-Seeing in the documentation that the parsing was made by git-rev-parse,
-I tried running git-rev-parse directly, ending with the same error.
-
-I tried with the full path, just in case, but it didn't work also
-($PWD/docbook.xsl).
-
-Until finally I tried the absolute path as git is concerned, and it
-worked.
-
-It works anywhere:
-git$ git show HEAD:Documentation/docbook.xsl
-<contents>
-git/Documentation$ git show HEAD:Documentation/docbook.xsl
-<contents>
-=2E..
-
-Is it difficult to make rev-parse accept relative path specifications?
-
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
-
---C7zPtVaVf+AK4Oqc
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkg7FlQACgkQinSul6a7oB8ZAQCffh3Bz1grKhlko87BsRIYis9O
-mjoAoJT8Wi3skXNMYTKavPDAr8lTU3MV
-=P/8c
------END PGP SIGNATURE-----
-
---C7zPtVaVf+AK4Oqc--
+This was discussed to death.  Check the list archive.
