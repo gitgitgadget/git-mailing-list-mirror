@@ -1,54 +1,64 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Fix git-show-branch --current when not on a branch
-Date: Mon, 26 May 2008 14:09:24 +0200
-Message-ID: <20080526120924.GB5474@leksak.fem-net>
-References: <alpine.DEB.1.10.0805240049400.3980@euler.pkqs.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [cogito-0.18.2] Documentation/Code Mismatch: cg-switch -l
+Date: Mon, 26 May 2008 14:19:04 +0200
+Message-ID: <483AAAB8.1090705@op5.se>
+References: <20080526111837.GA17429@lifebook.rekudos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 14:10:23 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Mark Lawrence <nomad@null.net>
+X-From: git-owner@vger.kernel.org Mon May 26 14:20:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0bWt-0004tO-Eu
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 14:10:19 +0200
+	id 1K0bgH-0007s5-EV
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 14:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584AbYEZMJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 08:09:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbYEZMJ2
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 08:09:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55951 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754494AbYEZMJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 08:09:28 -0400
-Received: (qmail invoked by alias); 26 May 2008 12:09:25 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp009) with SMTP; 26 May 2008 14:09:25 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19ULbV8mC5UjS3PfHtjHSCnzEbKS63mcDeyyX2kRz
-	6p5owUHtkHmv1/
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K0bW0-0003XC-Ua
-	for git@vger.kernel.org; Mon, 26 May 2008 14:09:24 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.0805240049400.3980@euler.pkqs.net>
-X-Y-GMX-Trusted: 0
+	id S1754867AbYEZMTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 08:19:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754843AbYEZMTI
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 08:19:08 -0400
+Received: from mail.op5.se ([193.201.96.20]:35378 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754650AbYEZMTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 08:19:07 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8971424B12B1;
+	Mon, 26 May 2008 14:17:05 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id g+VrJEHkx7ru; Mon, 26 May 2008 14:17:04 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id 896D61B80005;
+	Mon, 26 May 2008 14:17:04 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080526111837.GA17429@lifebook.rekudos.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82927>
 
-Nobody?
-Description too bad? Patch not working? Spam-filtered?[1]
+Mark Lawrence wrote:
+> Hi,
+> 
+> I don't know if this is a bug or just my understanding, but I'm having
+> trouble matching the behaviour of "cg-switch -l" with the documentation.
+> 
 
-Regards,
-  Stephan
-
-1. http://article.gmane.org/gmane.comp.version-control.git/82769
+Cogito became officially unmaintained a very long time ago (late 2006?)
+and will almost certainly not work properly with any half-recent version
+of git. Don't use it.
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
