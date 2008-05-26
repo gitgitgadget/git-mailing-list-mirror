@@ -1,127 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] hg-to-git: add --verbose option
-Date: Mon, 26 May 2008 14:20:54 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805261419440.30431@racer>
-References: <alpine.DEB.1.00.0805261344420.30431@racer> <200805261509.49841.johan@herland.net>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [PATCH] hg-to-git: add --verbose option
+Date: Mon, 26 May 2008 15:28:54 +0200
+Message-ID: <bd6139dc0805260628l1b073f52i1f33bd0c707a4329@mail.gmail.com>
+References: <alpine.DEB.1.00.0805261344420.30431@racer>
+	 <200805261509.49841.johan@herland.net>
+	 <alpine.DEB.1.00.0805261414140.30431@racer>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Stelian Pop <stelian@popies.net>,
-	gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 26 15:21:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Stelian Pop" <stelian@popies.net>, gitster@pobox.com
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 26 15:30:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0cdx-0001oq-6Y
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 15:21:41 +0200
+	id 1K0cmW-0004Yc-Mq
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 15:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881AbYEZNUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 09:20:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbYEZNUu
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 09:20:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42569 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751770AbYEZNUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 09:20:49 -0400
-Received: (qmail invoked by alias); 26 May 2008 13:20:47 -0000
-Received: from R4980.r.pppool.de (EHLO racer.local) [89.54.73.128]
-  by mail.gmx.net (mp027) with SMTP; 26 May 2008 15:20:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX196WHRsGpp6xDTbt29ktCCYy8jnpHY/qJ43WxGRUi
-	uylS8WU8jKBJ5A
-X-X-Sender: gene099@racer
-In-Reply-To: <200805261509.49841.johan@herland.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754853AbYEZN3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 09:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbYEZN3H
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 09:29:07 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:19108 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755531AbYEZN24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 09:28:56 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so843076rnd.17
+        for <git@vger.kernel.org>; Mon, 26 May 2008 06:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=8Y9k9mTV6ABftXOQIb8bG891YdB/tuW/d1zDb3+3atE=;
+        b=UB59YbB8RQylr2zfQzvbpgkdJU1s0gI+F0XY/LuM3cb2Bq1+Una9XyrWbsxODWstv1rIihpyJipzBZ3AGq+1PlSZTv6rOav42JI8hecyUs6DRofPr6dI67GOB4P2gIbqYx2ryGEhZSi6dQ7jbbHZCWnUW9Hb1neE8mWWywt4ewA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JALjf1E6Vf2B5ZZnE0Z6IDYJD6R7auWWOh73o90AcfaAs+VK0lQ9k5tDElexMLwMNkVaPIgqROXmjPc6l0mYttnWu9jEidXdDJX2ifi5fIcDp30SCEysCARQIy53j/qFi5KdM/mx4aLQFwj7iXcNVQcCcwOlT3Q1wCNeNukZCwI=
+Received: by 10.143.159.11 with SMTP id l11mr8632wfo.186.1211808534640;
+        Mon, 26 May 2008 06:28:54 -0700 (PDT)
+Received: by 10.143.10.16 with HTTP; Mon, 26 May 2008 06:28:54 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805261414140.30431@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82933>
 
+On Mon, May 26, 2008 at 3:14 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Now, that is not even funny, as that was my initial version, and Python
+> complained about not knowing "false".
 
-This patch adds an option to make hg-to-git quiet by default.  Note:
-it only suppresses those messages that would be printed when everything
-was up-to-date.
+That is because in python the keyword is "False" (note the capital 'F').
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Mon, 26 May 2008, Johan Herland wrote:
-
-	> 	verbose = false
-
-	Pieter on IRC just pointed out that it should be capitalized.
-
- contrib/hg-to-git/hg-to-git.py |   18 +++++++++++++-----
- 1 files changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
-index d72ffbb..f68ef72 100755
---- a/contrib/hg-to-git/hg-to-git.py
-+++ b/contrib/hg-to-git/hg-to-git.py
-@@ -46,6 +46,7 @@ options:
-                          for incrementals
-     -n, --nrepack=INT:   number of changesets that will trigger
-                          a repack (default=0, -1 to deactivate)
-+    -v, --verbose:       be verbose
- 
- required:
-     hgprj:  name of the HG project to import (directory)
-@@ -75,15 +76,18 @@ def getgitenv(user, date):
- 
- state = ''
- opt_nrepack = 0
-+verbose = False
- 
- try:
--    opts, args = getopt.getopt(sys.argv[1:], 's:t:n:', ['gitstate=', 'tempdir=', 'nrepack='])
-+    opts, args = getopt.getopt(sys.argv[1:], 's:t:n:v', ['gitstate=', 'tempdir=', 'nrepack=', 'verbose'])
-     for o, a in opts:
-         if o in ('-s', '--gitstate'):
-             state = a
-             state = os.path.abspath(state)
-         if o in ('-n', '--nrepack'):
-             opt_nrepack = int(a)
-+        if o in ('-v', '--verbose'):
-+            verbose = True
-     if len(args) != 1:
-         raise('params')
- except:
-@@ -95,17 +99,20 @@ os.chdir(hgprj)
- 
- if state:
-     if os.path.exists(state):
--        print 'State does exist, reading'
-+        if verbose:
-+            print 'State does exist, reading'
-         f = open(state, 'r')
-         hgvers = pickle.load(f)
-     else:
-         print 'State does not exist, first run'
- 
- tip = os.popen('hg tip --template "{rev}"').read()
--print 'tip is', tip
-+if verbose:
-+    print 'tip is', tip
- 
- # Calculate the branches
--print 'analysing the branches...'
-+if verbose:
-+    print 'analysing the branches...'
- hgchildren["0"] = ()
- hgparents["0"] = (None, None)
- hgbranch["0"] = "master"
-@@ -232,7 +239,8 @@ if hgnewcsets >= opt_nrepack and opt_nrepack != -1:
- 
- # write the state for incrementals
- if state:
--    print 'Writing state'
-+    if verbose:
-+        print 'Writing state'
-     f = open(state, 'w')
-     pickle.dump(hgvers, f)
- 
 -- 
-1.5.5.GIT
+Cheers,
+
+Sverre Rabbelier
