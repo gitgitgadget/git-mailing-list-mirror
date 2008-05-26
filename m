@@ -1,82 +1,127 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] Documentation: fix graph in git-rev-parse.txt
-Date: Mon, 26 May 2008 15:24:02 +0200
-Message-ID: <200805261524.02355.barra_cuda@katamail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2] hg-to-git: add --verbose option
+Date: Mon, 26 May 2008 14:20:54 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805261419440.30431@racer>
+References: <alpine.DEB.1.00.0805261344420.30431@racer> <200805261509.49841.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 15:21:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Stelian Pop <stelian@popies.net>,
+	gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon May 26 15:21:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0cdO-0001fh-LJ
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 15:21:07 +0200
+	id 1K0cdx-0001oq-6Y
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 15:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845AbYEZNUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 09:20:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbYEZNUO
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 09:20:14 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:34783 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751620AbYEZNUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 09:20:13 -0400
-Received: (qmail 12861 invoked by uid 89); 26 May 2008 13:18:22 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_60,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO ?80.104.56.173?) (barra?cuda@katamail.com@80.104.56.173)
-  by smtp1-pc with SMTP; 26 May 2008 13:18:21 -0000
-User-Agent: KMail/1.9.7
-Content-Disposition: inline
+	id S1751881AbYEZNUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 09:20:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbYEZNUu
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 09:20:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42569 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751770AbYEZNUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 09:20:49 -0400
+Received: (qmail invoked by alias); 26 May 2008 13:20:47 -0000
+Received: from R4980.r.pppool.de (EHLO racer.local) [89.54.73.128]
+  by mail.gmx.net (mp027) with SMTP; 26 May 2008 15:20:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX196WHRsGpp6xDTbt29ktCCYy8jnpHY/qJ43WxGRUi
+	uylS8WU8jKBJ5A
+X-X-Sender: gene099@racer
+In-Reply-To: <200805261509.49841.johan@herland.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82932>
 
-Preformatted html and man pages show a mangled graph, caused by a
-backslash.
 
-Commit f1ec6b22a8c1ab1cca0f1875f85aea5d2434e5a6 fixed this same issue,
-but it seems that new versions of the Asciidoc toolchain changed their
-behaviour.
+This patch adds an option to make hg-to-git quiet by default.  Note:
+it only suppresses those messages that would be printed when everything
+was up-to-date.
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-This should fix the problem, but I can't test it because I have an old
-Asciidoc installation (works either way here).
+	On Mon, 26 May 2008, Johan Herland wrote:
 
- Documentation/git-rev-parse.txt |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+	> 	verbose = false
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 69599ff..82dab73 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -243,16 +243,18 @@ Here is an illustration, by Jon Loeliger.  Both commit nodes B
- and C are parents of commit node A.  Parent commits are ordered
- left-to-right.
+	Pieter on IRC just pointed out that it should be capitalized.
+
+ contrib/hg-to-git/hg-to-git.py |   18 +++++++++++++-----
+ 1 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+index d72ffbb..f68ef72 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -46,6 +46,7 @@ options:
+                          for incrementals
+     -n, --nrepack=INT:   number of changesets that will trigger
+                          a repack (default=0, -1 to deactivate)
++    -v, --verbose:       be verbose
  
-+........................................
-     G   H   I   J
-      \ /     \ /
-       D   E   F
--       \  |  / \ 
-+       \  |  / \
-         \ | /   |
-          \|/    |
-           B     C
-            \   /
-             \ /
-              A
-+........................................
+ required:
+     hgprj:  name of the HG project to import (directory)
+@@ -75,15 +76,18 @@ def getgitenv(user, date):
  
-     A =      = A^0
-     B = A^   = A^1     = A~1
+ state = ''
+ opt_nrepack = 0
++verbose = False
+ 
+ try:
+-    opts, args = getopt.getopt(sys.argv[1:], 's:t:n:', ['gitstate=', 'tempdir=', 'nrepack='])
++    opts, args = getopt.getopt(sys.argv[1:], 's:t:n:v', ['gitstate=', 'tempdir=', 'nrepack=', 'verbose'])
+     for o, a in opts:
+         if o in ('-s', '--gitstate'):
+             state = a
+             state = os.path.abspath(state)
+         if o in ('-n', '--nrepack'):
+             opt_nrepack = int(a)
++        if o in ('-v', '--verbose'):
++            verbose = True
+     if len(args) != 1:
+         raise('params')
+ except:
+@@ -95,17 +99,20 @@ os.chdir(hgprj)
+ 
+ if state:
+     if os.path.exists(state):
+-        print 'State does exist, reading'
++        if verbose:
++            print 'State does exist, reading'
+         f = open(state, 'r')
+         hgvers = pickle.load(f)
+     else:
+         print 'State does not exist, first run'
+ 
+ tip = os.popen('hg tip --template "{rev}"').read()
+-print 'tip is', tip
++if verbose:
++    print 'tip is', tip
+ 
+ # Calculate the branches
+-print 'analysing the branches...'
++if verbose:
++    print 'analysing the branches...'
+ hgchildren["0"] = ()
+ hgparents["0"] = (None, None)
+ hgbranch["0"] = "master"
+@@ -232,7 +239,8 @@ if hgnewcsets >= opt_nrepack and opt_nrepack != -1:
+ 
+ # write the state for incrementals
+ if state:
+-    print 'Writing state'
++    if verbose:
++        print 'Writing state'
+     f = open(state, 'w')
+     pickle.dump(hgvers, f)
+ 
 -- 
-1.5.5.1
+1.5.5.GIT
