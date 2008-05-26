@@ -1,71 +1,57 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] lockfile: reset the correct signal
-Date: Mon, 26 May 2008 22:36:45 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805262234210.30431@racer>
-References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org> <20080523221723.GA4366@localhost> <20080525182650.GA17806@localhost> <alpine.DEB.1.00.0805261031480.30431@racer> <20080526193513.GA9978@localhost>
+Subject: Re: rev-parse doesn't take pwd into consideration
+Date: Mon, 26 May 2008 22:42:28 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805262239060.30431@racer>
+References: <20080526195812.GA23396@bit.office.eurotux.com> <7vhcckddov.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon May 26 23:37:37 2008
+Cc: Luciano Rocha <luciano@eurotux.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 26 23:43:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0kNn-0001Hg-7W
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:37:31 +0200
+	id 1K0kTK-0002zK-Cx
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:43:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754853AbYEZVgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 17:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbYEZVgj
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:36:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45295 "HELO mail.gmx.net"
+	id S1754969AbYEZVmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 17:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754932AbYEZVmX
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:42:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39171 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754672AbYEZVgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 17:36:39 -0400
-Received: (qmail invoked by alias); 26 May 2008 21:36:37 -0000
+	id S1754904AbYEZVmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 17:42:22 -0400
+Received: (qmail invoked by alias); 26 May 2008 21:42:20 -0000
 Received: from R105f.r.pppool.de (EHLO racer.local) [89.54.16.95]
-  by mail.gmx.net (mp003) with SMTP; 26 May 2008 23:36:37 +0200
+  by mail.gmx.net (mp040) with SMTP; 26 May 2008 23:42:20 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+CaFUiSGyC2B85WGbO/Y3MkvyR99DLt5Yv/Baw03
-	YReL64Abi12Pbv
+X-Provags-ID: V01U2FsdGVkX1/63IQty0L6APBcI/Dv0OA6zUzX8gnAFFw1OaVYDi
+	3XHiZGX12ELqKH
 X-X-Sender: gene099@racer
-In-Reply-To: <20080526193513.GA9978@localhost>
+In-Reply-To: <7vhcckddov.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82961>
 
 Hi,
 
-On Mon, 26 May 2008, Clemens Buchacher wrote:
+On Mon, 26 May 2008, Junio C Hamano wrote:
 
-> In the function remove_lock_file_on_signal(), the signal handler
-> for SIGINT was reset, ignoring the parameter signo.
-> 
-> This did not pose a problem yet, as remove_lock_file_on_signal()
-> was only registered as a SIGINT handler.
-> 
-> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
-> ---
-> 
-> On Mon, May 26, 2008 at 10:34:11AM +0100, Johannes Schindelin wrote:
-> > Only from the patch did I understand that you actually meant:
-> 
-> Thank you for fixing that.
+> This was discussed to death.  Check the list archive.
 
-Unfortunately, the original patch is already in git.git.
+FWIW I have a patch in my personal fork that allows "git show HEAD:./bla":
 
-> I also realized that using signals like that can cause races. Shouldn't 
-> we use sigaction() instead of signal()?
+http://repo.or.cz/w/git/dscho.git?a=commitdiff;h=3007b5c53d9b571f992f3e2d801248ff0bd15c76
 
-Dunno.  The man page suggests it, but we have plenty of cases where we use 
-signal().  And I think it might be less painful to implement a 
-compat-wrapper for the platforms which differ from Linux' interpretation 
-of signal().
+If you like the patch, you are free to push for inclusion; I do not need 
+it myself, and wasted enough time in writing it, so I will not waste any 
+more time with it.
 
 Ciao,
 Dscho
