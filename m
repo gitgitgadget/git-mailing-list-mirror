@@ -1,76 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git and appending merge commits
-Date: Mon, 26 May 2008 00:51:36 -0400
-Message-ID: <20080526045136.GC30245@spearce.org>
+Date: Sun, 25 May 2008 21:59:28 -0700
+Message-ID: <7vej7pek3z.fsf@gitster.siamese.dyndns.org>
 References: <483A300E.6090104@zombino.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Adam Majer <adamm@zombino.com>
-X-From: git-owner@vger.kernel.org Mon May 26 06:52:33 2008
+X-From: git-owner@vger.kernel.org Mon May 26 07:00:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0UhE-0002vd-6G
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 06:52:32 +0200
+	id 1K0Uou-0004Ai-Is
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 07:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751381AbYEZEvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 00:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbYEZEvk
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 00:51:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50666 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbYEZEvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 00:51:40 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1K0UgM-0001x6-DR; Mon, 26 May 2008 00:51:38 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BC24420FBAE; Mon, 26 May 2008 00:51:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <483A300E.6090104@zombino.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751012AbYEZE7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 00:59:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbYEZE7h
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 00:59:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51618 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbYEZE7g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 00:59:36 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5EA5F6E51;
+	Mon, 26 May 2008 00:59:35 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id AAE526E50; Mon, 26 May 2008 00:59:31 -0400 (EDT)
+In-Reply-To: <483A300E.6090104@zombino.com> (Adam Majer's message of "Sun, 25
+ May 2008 22:35:42 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8931786A-2AE0-11DD-A5EC-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82900>
 
-Adam Majer <adamm@zombino.com> wrote:
-...
->   5. append master merge changeset
-> 
-> #5 results in "messsed up" diffs
-> 
-> For an example of such a mess up please see,
-> 
-> http://git.debian.org/?p=collab-maint/mrtg.git;a=commitdiff;h=a8bc78ffd6d51ab09a791fa97e25f57b60eecd06
-> 
-> It appears that the tool generates a patch to a patch and displays that
-> instead of the appended merge diff which is what I would have expected..
-> 
+Adam Majer <adamm@zombino.com> writes:
+
 > Is current output by design?
 
-Yes, it is by design.  This is a feature of Git that very few
-(if any) other systems have.
+Yes, it is _very much_ by design and it not "messed up" at all.  Look at
+the output of URL you quoted and notice that you are asking for condensed
+combined diff ("diff --cc").
 
-What you are seeing here is a combined diff.  It is a diff of the
-final output of the merge against its two parents (the two branches
-that were merged together).  Places where both a "++" or "--" prefix
-a line indicate a place where the merge commit adds something that
-is not in either parent.  This is stuff that the merge author edited
-himself/herself during the merge.
+For a merge commit with N parents, you can define "a diff for the
+resulting merge commit" in various ways:
 
-If you had not amended the merge, you would have seen a less
-interesting diff here, as the combined diff output tries to
-avoid showing trivial changes.
+ * You could have a set of diffs between each parent to the merge result.
+   You can get this with "git diff-tree -p -m $commit".
 
--- 
-Shawn.
+ * You could say the first parent is special, and define it as the diff
+   between its first parent and the merge result.  You can get this by
+   asking "git diff $commit^1 $commit".
+
+ * You can say what non-trivial changes the merge itself did.  This is the
+   combined merge and what "git show $commit" (and "git log -p") gives.
+
+Depending on what you want, you can ask these various forms of diffs.
+
+When you are reviewing the changes series of commits introduced to the
+history (iow, "git log -p"), a single diff between parent and the merge
+result is not so interesting, primarily because each individual change
+from commits on each side branch is (or should be) much easier to read and
+understand, but if a merge needed to do something non-trivial to resolve
+conficts, you would want to know about it, and that is the reason why --cc
+format is the default.
+
+In a combined diff, unlike the single column to show "+/-/ " at the
+beginning for one-parent diff, each parent gets one column.  And in a
+condensed combined diff, a hunk whose result is inherited solely from one
+parent (iow, a trivial conflict resolution) is removed from the output, so
+that only a non-trivial conflict resolution that leaves result that is
+different from all parents are shown.
