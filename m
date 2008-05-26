@@ -1,109 +1,78 @@
-From: fREW <frioux@gmail.com>
-Subject: Re: Deleted files can't be checked back out?
-Date: Sun, 25 May 2008 18:37:27 -0500
-Message-ID: <fb3648c60805251637p70bc76fdm1947da6b9bf34ca1@mail.gmail.com>
-References: <fb3648c60805222128v1a425c60kc8e44f3a2fb41d54@mail.gmail.com>
-	 <20080523062821.GA24411@foursquare.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 4/3] bisect: use a detached HEAD to bisect
+Date: Mon, 26 May 2008 10:15:20 +1000
+Message-ID: <18490.280.325614.480038@cargo.ozlabs.ibm.com>
+References: <20080523012857.acce6457.chriscool@tuxfamily.org>
+	<7v3ao9twfa.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.10.0805230823330.3081@woody.linux-foundation.org>
+	<18487.62245.59892.442935@cargo.ozlabs.ibm.com>
+	<alpine.LFD.1.10.0805240842360.3081@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "Chris Frey" <cdfrey@foursquare.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 01:38:21 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon May 26 02:16:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0PnA-000591-Gt
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 01:38:20 +0200
+	id 1K0QOR-0004KM-TM
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 02:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242AbYEYXh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 19:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbYEYXh2
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 19:37:28 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:41613 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbYEYXh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 19:37:28 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so2038039rvb.1
-        for <git@vger.kernel.org>; Sun, 25 May 2008 16:37:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/0R9wUuHffHUlWC+SK+K4L90mT3BIfg1aofyQsCB3UI=;
-        b=SBzyeLDTjNARl8KtHR6q2bk9WSQxuxIrjNlU+J5Mb8nG9x+qF7K54MnVxX9zl0gLkRUE/lq3EBG7/bBxeaxFGqDIyx49/MqhkiI8d+DDWcbB98ARmfEVndHimGxKogb2Wex4dSxFxs8GAWtaXeGzAHecjvmzZleVM9Ouc5oL9Kc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k5dUbL0ffa/l0Uwywt9rXhyUr5jNCvCeKHHX+lWWNV0MksY4XkmyXHY9mntgMsP0QbVMBVr6kaRhTZebq8xBkzurLPRA3Mc1bwfzDBbPqrH5OrCcLxvvSBMB49JrcTtTv57CC0yG+4yvqUGjTh3JKODrzTKvSwsakP9UcHWMm6M=
-Received: by 10.140.193.15 with SMTP id q15mr1868491rvf.191.1211758647718;
-        Sun, 25 May 2008 16:37:27 -0700 (PDT)
-Received: by 10.141.48.1 with HTTP; Sun, 25 May 2008 16:37:27 -0700 (PDT)
-In-Reply-To: <20080523062821.GA24411@foursquare.net>
-Content-Disposition: inline
+	id S1751627AbYEZAPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2008 20:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbYEZAPc
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 20:15:32 -0400
+Received: from ozlabs.org ([203.10.76.45]:51390 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751415AbYEZAPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2008 20:15:31 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 1F86DDDF04; Mon, 26 May 2008 10:15:29 +1000 (EST)
+In-Reply-To: <alpine.LFD.1.10.0805240842360.3081@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 22.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82884>
 
-Just FYI, git revert was exactly what I needed.  If you want to undo
-any commit at all git revert is your friend.
+Linus Torvalds writes:
 
-Thanks!
+> Of course, _usually_ it's just the top commit, and it's obvious that way 
+> which one is the checked-out one, but if you do "gitk --all" or just 
+> generally have multiple branches, right now it's hard to see what commit 
+> is the checked-out one, regardless of whether it's detached or not.
 
--fREW
+If it's not detached, the branch name is in bold, but evidently that's
+either not intuitive or not sufficiently distinct...
 
-On 5/23/08, Chris Frey <cdfrey@foursquare.net> wrote:
-> On Thu, May 22, 2008 at 11:28:57PM -0500, fREW wrote:
->> I recently deleted a bunch of files and checked the change into git,
->> and then changed my mind and wanted the files back.  I did a
->> git-checkout <file> and got each file back individually.  Then I did
->
-> I believe you want to undo the change you made (deleting files), not
-> just view an old version of the file, which is what checkout does.
->
-> You can either add it back yourself, or you can undo the last commit, using
-> git-reset.
->
-> Here's an example of what you could have done before making further
-> changes that you wanted to push:
->
-> 	git rm file
-> 	git commit
-> 	git log			# view your change
-> 	git reset --hard HEAD^	# go back to the HEAD before your change
->
-> Think of the chain of commits as a long linked list of changes.  A branch
-> head is just a pointer to the top of that linked list.  git-reset allows
-> you to point that HEAD to anywhere in the list, even after going back
-> in history.  The commits are still there, even if HEAD doesn't explicitly
-> point to them.
->
-> For example, say git log shows commit 1a2b3c4 as HEAD, with commit 7abc983
-> as its parent.  You can move the HEAD back and forth, like this:
->
-> 	git reset --hard 7abc983
-> 	git log			# commit 1a2b3c4 is gone!
-> 	git reset --hard 1a2b3c4
-> 	git log			# now it's back!
->
-> But in your case, you now have a list of commits that is missing files:
->
->         A -> B -> C
->              |    |
->              |    (made changes here)
->              |
->              (deleted files here)
->
-> So in this case you likely want to revert commit B, while keeping commit C.
->
-> 	git log			# get the commit SHA1, let's say it's 04bcb93
-> 	git revert 04bcb93
->
->
-> Take a look at "Git from the bottom up"
-> 	http://www.newartisans.com/blog_files/git.from.bottom.up.php
->
-> - Chris
->
->
+> I think "HEAD" in a green box would solve that too, but on the other hand, 
+> we have a *lot* of boxes already. For people who mainly just track another 
+> repo, you already have one box saying "master", and another one saying 
+> "remotes/origin/master", and adding yet *another* box saying HEAD that 
+> just points to the same commit will work, but do we really want that?
+> 
+> I actually like the red circle for "Local uncommitted changes". Maybe we 
+> can use a similar visual clue for "currently checked out". You already 
+> picked green for the "added to the index" case, so we have the three 
+> primary RGB colors already used, but we could make it just be a deep 
+> yellow.
+> 
+> Of course, maybe people hate lots of colos already, and something more 
+> akin to the text background thing that we use for the selected commit 
+> would be better.
+> 
+> I dunno. There's so many options.
+> 
+> Here's a "make it yellow" patch.
+
+Thanks.  I have checked in something similar, that also handles the
+cases where you update the graph and the head has moved, and when you
+do a checkout or reset using the gitk menus.
+
+Paul.
