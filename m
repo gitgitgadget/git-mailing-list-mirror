@@ -1,74 +1,88 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] builtin-fast-export: Only output a single parent per line
-Date: Mon, 26 May 2008 01:30:21 -0400
-Message-ID: <20080526053020.GD30245@spearce.org>
-References: <1211671313-99006-1-git-send-email-pdebie@ai.rug.nl> <7vskw7jh7c.fsf@gitster.siamese.dyndns.org> <20080526014904.GZ29038@spearce.org> <7v7idhej6f.fsf@gitster.siamese.dyndns.org> <7vzlqdd4ef.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git-diff cr/nl files on linux
+Date: Mon, 26 May 2008 08:34:37 +0200
+Message-ID: <483A59FD.6020906@viscovery.net>
+References: <fcaeb9bf0805240554j71693d5eo2a425ee0efe2f364@mail.gmail.com>	 <483811BF.3090302@dirk.my1.cc> <fcaeb9bf0805252115q60f784aax6b1f267c476960b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 26 07:31:33 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 26 08:36:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0VIy-0000sC-JR
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 07:31:33 +0200
+	id 1K0WJd-00067g-Dj
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 08:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbYEZFa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 01:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbYEZFa1
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 01:30:27 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34358 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751074AbYEZFa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 01:30:26 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1K0VHq-00081u-Cj; Mon, 26 May 2008 01:30:22 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1552C20FBAE; Mon, 26 May 2008 01:30:21 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vzlqdd4ef.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754109AbYEZGer convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 May 2008 02:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbYEZGeq
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 02:34:46 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:17133 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754069AbYEZGek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 May 2008 02:34:40 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K0WI1-0001JF-Gj; Mon, 26 May 2008 08:34:37 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 1F387AFCC; Mon, 26 May 2008 08:34:37 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <fcaeb9bf0805252115q60f784aax6b1f267c476960b4@mail.gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82904>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> > Unfortunately, t9301 does not pass with the "fix".
-> 
-> Perhaps, this is needed on top?
-> 
->  builtin-fast-export.c |    2 --
->  1 files changed, 0 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-> index 4d28cf7..4bf5b58 100755
-> --- a/builtin-fast-export.c
-> +++ b/builtin-fast-export.c
-> @@ -209,8 +209,6 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
->  			printf("merge :%d\n", mark);
->  		i++;
->  	}
-> -	if (i > 1)
-> -		printf("\n");
->  
->  	log_tree_diff_flush(rev);
->  	rev->diffopt.output_format = saved_output_format;
+Nguyen Thai Ngoc Duy schrieb:
+> On Sat, May 24, 2008 at 8:01 PM, Dirk S=C3=BCsserott <newsletter@dirk=
+=2Emy1.cc> wrote:
+>> Nguyen Thai Ngoc Duy schrieb:
+>>> Hi,
+>>>
+>>> Is there any way that can make git-diff show cr/nl ending files on
+>>> linux without ^M at the end?
+>>>
+>>> Thanks
+>>>
+>> What about 'git diff -w'? It drops any whitespace changes, including=
+ ^M's.
+>> Not sure whether that is what you meant.
+>=20
+> That won't help. Here is a snippet of what I see:
+>=20
+> diff --git a/abc.c b/abc.c
+> index 064a769..647b9ae 100644
+> --- a/abc.c
+> +++ b/abc.c
+> @@ -859,7 +859,10 @@ int def
+>      )
+>      {
+>      FAST int asdsa;
+> -    FAST int dsdsad;
+> +    FAST int dsadadd;          /* ERROR also means AASAS */^M
+> +#ifndef JHASHJJH^M
+> +    struct sdddd dasdada;^M
+> +#endif^M
+>      union sddd asdsdad;
+>      FAST STATUS dsadadad;
+>      unsigned int sdadadad =3D 0;
+>=20
+> With color turning off, it does not show ^M so probably something to
+> do with the coloring. less is at version 394.
 
+less does not show \r if it comes right before \n. But with diff-colori=
+ng
+turned on, the 'reset color' sequence is inserted between \r and \n; no=
+w
+less shows ^M for the \r because it's not next to the \n anymore.
 
-Yea, that looks right.  The LF shouldn't follow the last merge
-command.
-
--- 
-Shawn.
+-- Hannes
