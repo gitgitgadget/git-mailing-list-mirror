@@ -1,73 +1,61 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] hg-to-git: add --verbose option
-Date: Tue, 27 May 2008 07:29:40 +1000
-Message-ID: <ee77f5c20805261429h14b1ce66tf9585132279c4f8e@mail.gmail.com>
-References: <alpine.DEB.1.00.0805261344420.30431@racer>
-	 <200805261509.49841.johan@herland.net>
-	 <alpine.DEB.1.00.0805261414140.30431@racer>
-	 <bd6139dc0805260628l1b073f52i1f33bd0c707a4329@mail.gmail.com>
-	 <7vlk1xc7aa.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: msysGit: "git filter-branch --subdirectory-filter" doesn't work
+ at all
+Date: Mon, 26 May 2008 22:33:58 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805262233190.30431@racer>
+References: <483B0FF8.6070700@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: sverre@rabbelier.nl,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Stelian Pop" <stelian@popies.net>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 26 23:30:54 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1676884333-1211837640=:30431"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Mon May 26 23:35:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0kH6-0006dD-8S
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:30:36 +0200
+	id 1K0kL6-0000B8-Fk
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754454AbYEZV3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 17:29:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754394AbYEZV3p
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:29:45 -0400
-Received: from ik-out-1112.google.com ([66.249.90.179]:16775 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754283AbYEZV3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 17:29:44 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so1039887ika.5
-        for <git@vger.kernel.org>; Mon, 26 May 2008 14:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Wr9lVBQB/25JUolSJ6bGKJ6Y/gnhGN+WWiOxcuOuhZM=;
-        b=pJ6w+uTgYXe78y4kQG3xYhDFI+yH+0ryP/cgeBcUzQr5SVz2+tJ6m8nf/e/kG0nbldNHbRg3510+5+S1JOyFMu9gKIF0OhhX8iDpwtY4MiuEVbJoCOBEFVBgjPdNKN3Bg+qCvI+QfGQ49n5G2hX9LWjBanDKScIM2fvpBcprXUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fICt7e2jEf9vByVZzyAdbKDB1qVHB3NthQvzDA0++beZiaguFZYM2V+Yv21Lwmy/0C+/QdWT/pp4K3Ay75o7hV9H6mMUuPjFcBe9nbCzi3LUshspcyq/HvHqPQjdMAnZNTw2d68kFdC8UPJjEB30jz88nn3hZgYPgWiMO9n2QQE=
-Received: by 10.86.51.2 with SMTP id y2mr5538788fgy.34.1211837380411;
-        Mon, 26 May 2008 14:29:40 -0700 (PDT)
-Received: by 10.86.36.17 with HTTP; Mon, 26 May 2008 14:29:40 -0700 (PDT)
-In-Reply-To: <7vlk1xc7aa.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754625AbYEZVdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 17:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbYEZVdx
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:33:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41209 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753989AbYEZVdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 17:33:52 -0400
+Received: (qmail invoked by alias); 26 May 2008 21:33:51 -0000
+Received: from R105f.r.pppool.de (EHLO racer.local) [89.54.16.95]
+  by mail.gmx.net (mp001) with SMTP; 26 May 2008 23:33:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/6qu846g76hgU4E01IDivln3DdzqUE/IWLMT1up5
+	1fNbj+XoHzAkJs
+X-X-Sender: gene099@racer
+In-Reply-To: <483B0FF8.6070700@dirk.my1.cc>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82958>
 
-On Tue, May 27, 2008 at 3:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> I think I spotted a bug in Python documentation, by the way ;-)
->
-> http://docs.python.org/ref/ref.html does not even list "True" and "False"
-> in its section 2.4 (Literals) yet, and that document is for version 2.5.2.
+--8323329-1676884333-1211837640=:30431
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-That's because they aren't literals. They are, in fact, objects, and
-redefinable objects at that.
+Hi,
 
-Try:
+On Mon, 26 May 2008, Dirk Süsserott wrote:
 
-True=False
-print True
+> $ git filter-branch --subdirectory-filter perl
 
+And what branch, exactly, do you want to rewrite?  You did not specify 
+_any_ branch here.
 
-
-Dave.
+Ciao,
+Dscho
+--8323329-1676884333-1211837640=:30431--
