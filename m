@@ -1,87 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] log --pretty: do not accept bogus "--prettyshort"
-Date: Sun, 25 May 2008 20:19:30 -0700
-Message-ID: <7vy75xeoql.fsf@gitster.siamese.dyndns.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: git-diff cr/nl files on linux
+Date: Mon, 26 May 2008 11:15:10 +0700
+Message-ID: <fcaeb9bf0805252115q60f784aax6b1f267c476960b4@mail.gmail.com>
+References: <fcaeb9bf0805240554j71693d5eo2a425ee0efe2f364@mail.gmail.com>
+	 <483811BF.3090302@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon May 26 05:20:41 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?UTF-8?Q?Dirk_S=C3=BCsserott?=" <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Mon May 26 06:16:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0TGE-0004pj-IC
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 05:20:34 +0200
+	id 1K0U8C-0005gJ-R6
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 06:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184AbYEZDTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2008 23:19:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbYEZDTj
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 May 2008 23:19:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752068AbYEZDTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2008 23:19:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4FAA45F2C;
-	Sun, 25 May 2008 23:19:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 842BE5F2B; Sun, 25 May 2008 23:19:34 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 92115DD2-2AD2-11DD-8293-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1750872AbYEZEPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 00:15:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbYEZEPN
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 00:15:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:44222 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbYEZEPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 00:15:12 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1120815fgg.17
+        for <git@vger.kernel.org>; Sun, 25 May 2008 21:15:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=07/2y81LyjeZhI9RmLrYJVPM5dw5xrmjS5SsXcgcV/c=;
+        b=YVekcf7ymv3dFRmf/1LlzbcmT58R0rIwrAED0xO6w2NPKV9rS7PCOZBAyT/ItQALt+jkD8nVvM/won30gdFNuujCRtbwZ0+11XgyBmn9YnE+rteV8zLz1XAITL2cN9c+qnb778egQT27oIQXN2HzJtcjSyn/QojdDk0CCmbawnM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Yb3P1++N9A3BXfHp7os+f0sKv/aPdQKgrVzlRmWEqlopSMKxunPgtnUFXgH3IAJCwqXHixT1GxL6Zcv8wi18B6PpkA9TsCDS9KQCzioiTBfKhVU07DCIUOMlra5OiQARLasPET5GnnmImAFa9Vjwa3Em+lnmU7exX9GW9lPGmCg=
+Received: by 10.86.51.2 with SMTP id y2mr4010832fgy.52.1211775310903;
+        Sun, 25 May 2008 21:15:10 -0700 (PDT)
+Received: by 10.86.62.13 with HTTP; Sun, 25 May 2008 21:15:10 -0700 (PDT)
+In-Reply-To: <483811BF.3090302@dirk.my1.cc>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82895>
 
-... nor bogus "format.pretty = '=short'".  Both are syntax errors.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * This lazy parsing was introduced by 6cdfd17 (commit: allow --pretty=
-   args to be abbreviated, 2006-05-14), more than a year ago...
-
- pretty.c   |    2 --
- revision.c |    7 ++++++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index 6872932..8eb39e9 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -28,8 +28,6 @@ void get_commit_format(const char *arg, struct rev_info *rev)
- 		rev->commit_format = CMIT_FMT_DEFAULT;
- 		return;
- 	}
--	if (*arg == '=')
--		arg++;
- 	if (!prefixcmp(arg, "format:") || !prefixcmp(arg, "tformat:")) {
- 		const char *cp = strchr(arg, ':') + 1;
- 		free(user_format);
-diff --git a/revision.c b/revision.c
-index ac057e1..fc66755 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1197,11 +1197,16 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				revs->verbose_header = 1;
- 				continue;
- 			}
--			if (!prefixcmp(arg, "--pretty")) {
-+			if (!strcmp(arg, "--pretty")) {
- 				revs->verbose_header = 1;
- 				get_commit_format(arg+8, revs);
- 				continue;
- 			}
-+			if (!prefixcmp(arg, "--pretty=")) {
-+				revs->verbose_header = 1;
-+				get_commit_format(arg+9, revs);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--graph")) {
- 				revs->topo_order = 1;
- 				revs->rewrite_parents = 1;
--- 
-1.5.5.1.467.g9bd81
+T24gU2F0LCBNYXkgMjQsIDIwMDggYXQgODowMSBQTSwgRGlyayBTw7xzc2Vyb3R0IDxuZXdzbGV0
+dGVyQGRpcmsubXkxLmNjPiB3cm90ZToKPiBOZ3V5ZW4gVGhhaSBOZ29jIER1eSBzY2hyaWViOgo+
+Pgo+PiBIaSwKPj4KPj4gSXMgdGhlcmUgYW55IHdheSB0aGF0IGNhbiBtYWtlIGdpdC1kaWZmIHNo
+b3cgY3IvbmwgZW5kaW5nIGZpbGVzIG9uCj4+IGxpbnV4IHdpdGhvdXQgXk0gYXQgdGhlIGVuZD8K
+Pj4KPj4gVGhhbmtzCj4+Cj4KPiBXaGF0IGFib3V0ICdnaXQgZGlmZiAtdyc/IEl0IGRyb3BzIGFu
+eSB3aGl0ZXNwYWNlIGNoYW5nZXMsIGluY2x1ZGluZyBeTSdzLgo+IE5vdCBzdXJlIHdoZXRoZXIg
+dGhhdCBpcyB3aGF0IHlvdSBtZWFudC4KClRoYXQgd29uJ3QgaGVscC4gSGVyZSBpcyBhIHNuaXBw
+ZXQgb2Ygd2hhdCBJIHNlZToKCmRpZmYgLS1naXQgYS9hYmMuYyBiL2FiYy5jCmluZGV4IDA2NGE3
+NjkuLjY0N2I5YWUgMTAwNjQ0Ci0tLSBhL2FiYy5jCisrKyBiL2FiYy5jCkBAIC04NTksNyArODU5
+LDEwIEBAIGludCBkZWYKICAgICApCiAgICAgewogICAgIEZBU1QgaW50IGFzZHNhOwotICAgIEZB
+U1QgaW50IGRzZHNhZDsKKyAgICBGQVNUIGludCBkc2FkYWRkOyAgICAgICAgICAvKiBFUlJPUiBh
+bHNvIG1lYW5zIEFBU0FTICovXk0KKyNpZm5kZWYgSkhBU0hKSkheTQorICAgIHN0cnVjdCBzZGRk
+ZCBkYXNkYWRhO15NCisjZW5kaWZeTQogICAgIHVuaW9uIHNkZGQgYXNkc2RhZDsKICAgICBGQVNU
+IFNUQVRVUyBkc2FkYWRhZDsKICAgICB1bnNpZ25lZCBpbnQgc2RhZGFkYWQgPSAwOwoKV2l0aCBj
+b2xvciB0dXJuaW5nIG9mZiwgaXQgZG9lcyBub3Qgc2hvdyBeTSBzbyBwcm9iYWJseSBzb21ldGhp
+bmcgdG8KZG8gd2l0aCB0aGUgY29sb3JpbmcuIGxlc3MgaXMgYXQgdmVyc2lvbiAzOTQuCi0tIApE
+dXkK
