@@ -1,78 +1,93 @@
-From: Joshua Haberman <joshua@reverberate.org>
-Subject: visualizing Git's Git repo
-Date: Mon, 26 May 2008 13:47:33 -0700
-Message-ID: <CA563F5A-5E12-42F7-BDFD-04FE3A882028@reverberate.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 22:48:35 2008
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: rev-parse doesn't take pwd into consideration
+Date: Mon, 26 May 2008 21:52:48 +0100
+Message-ID: <20080526205248.GB23396@bit.office.eurotux.com>
+References: <20080526195812.GA23396@bit.office.eurotux.com> <20080526201842.GA8194@mithlond.arda.local>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4bRzO86E/ozDv8r1"
+Cc: git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon May 26 22:54:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0jcO-0003LF-8Z
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 22:48:32 +0200
+	id 1K0jht-0004h7-0O
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 22:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbYEZUrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 16:47:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbYEZUrh
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 16:47:37 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:42649 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382AbYEZUrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 16:47:36 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2283520waf.23
-        for <git@vger.kernel.org>; Mon, 26 May 2008 13:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer:sender;
-        bh=C3IYuj2YZqkIVrB/3Dnmglf1gO+6hqDdSbk/jGJmoos=;
-        b=hoSzHhxvhC3GEJSslApFACwsUERUnLZjWwbrSpanbq803LLtS1rbdeo9bH0RQzmHaMlKKld0hfTZX3320R8P1ZxIQQOaaMnCM6Ln0t+tIh4coXMLSzIUX6gUMQv38AFtA1i5lBBzZ4Kcu+ITDnTQkjx2RYSV35wWBq/r+u4R5qQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer:sender;
-        b=eb3pogJ4f3TvaOaGV44nwNfsepkNrnnUs7frWqmWFjxL5saXW5fMiu8jmi0y0OmFoJmkQkEyrjV36kK4stuJ97W25VHdpWRGM75COfoTkAelnOMP51ingBdgeI7Nd+fHiuTSi87RVnJYUrCQZ63jXwcBWd4qLQHxZhfbdSi3Idk=
-Received: by 10.114.109.1 with SMTP id h1mr487740wac.35.1211834856173;
-        Mon, 26 May 2008 13:47:36 -0700 (PDT)
-Received: from ?192.168.1.102? ( [24.19.134.23])
-        by mx.google.com with ESMTPS id q18sm14232420pog.2.2008.05.26.13.47.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 May 2008 13:47:35 -0700 (PDT)
-X-Mailer: Apple Mail (2.919.2)
+	id S1753120AbYEZUwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 16:52:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbYEZUwz
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 16:52:55 -0400
+Received: from os.eurotux.com ([216.75.63.6]:36109 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753095AbYEZUwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 16:52:54 -0400
+Received: (qmail 1527 invoked from network); 26 May 2008 20:52:52 -0000
+Received: from adsl.eurotux.com (HELO bit.office.eurotux.com) (luciano@213.205.93.24)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 26 May 2008 20:52:52 -0000
+Content-Disposition: inline
+In-Reply-To: <20080526201842.GA8194@mithlond.arda.local>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82954>
 
-I'm a casual Git user.  One thing that's been troubling me about Git  
-is that when I look at Git's own Git repository, the revision history  
-is not at all easy to understand.  I like to view my own Git  
-repositories with:
 
-$ gitk --all --date-order
+--4bRzO86E/ozDv8r1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When I run this command, what I'm really asking is "give me a visual  
-summary of what's up with my project lately."  But with Git's  
-repository, there are far too many branches and merges for this view  
-to make any kind of visual sense.
+On Mon, May 26, 2008 at 11:18:42PM +0300, Teemu Likonen wrote:
+> Luciano Rocha wrote (2008-05-26 20:58 +0100):
+>=20
+> > Is it difficult to make rev-parse accept relative path specifications?
+>=20
+> I don't know but let's consider this: The revision user is asking for
+> with "git show <commit>:<path>" may not even contain the directory user
+> is currently in. Also, there may not be any working directory at all, or
+> user may be completely outside the repository and using "git
+> --git-dir=3D/somewhere/else". I guess the system is much simpler as the
+> "<commit>:" always refers to repository's root.
 
-So my questions are:
+If <commit>:<path> is valid assuming the repository's root, then use it.
+If it isn't, try <commit>:<path_to_git_root>/<path>.
 
-1. what do you all do to get a high-level view of what's going on with  
-Git development?  do you use gitk?  if so, what options?
+> If you are using Git's bash completions it's easy to complete paths with
+> "git show <commit>:". For example, try
 
-2. as a project, why don't you rebase when merging long-running  
-branches into master?  For example, take commit 7e83003029 from May 25  
-which merged a branch that was based at 4b172de81 from May 14.  Why  
-not rebase this to May 25 as part of the merge?  When you don't do  
-this (ie. in the status quo) 'gitk --date-order' for the Git  
-repository has >10 parallel branches most of the time, which makes it  
-impossible to follow visually.
+I find bash-completion more an hassle than useful, thanks anyway.
 
-I'm sure you have reasons for doing things the way you do, I just want  
-to hear what they are.  And sorry if this is a FAQ -- feel free to  
-point me at any documentation that explains this.
+>   $ git show HEAD~10:Docum<tab>
+>=20
+> and the path is completed.
 
-Josh
+But a user usually thinks relative to the current directory, not to the
+project's root.
+
+But I should check the archives before any further discussion, as Junio
+C Hamano observed.
+
+Thanks for your input.
+
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--4bRzO86E/ozDv8r1
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkg7IyAACgkQinSul6a7oB93uQCfWPnu0JqpnBjwxvHJr7X6uWPP
+ErgAoJz25k/vJVYAtM2/SdZlCJp1yBBH
+=180d
+-----END PGP SIGNATURE-----
+
+--4bRzO86E/ozDv8r1--
