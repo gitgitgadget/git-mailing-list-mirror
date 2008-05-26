@@ -1,63 +1,71 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: rev-parse doesn't take pwd into consideration
-Date: Tue, 27 May 2008 06:35:10 +0900
-Message-ID: <200805262135.m4QLZtpq023003@mi0.bluebottle.com>
-References: <7vhcckddov.fsf@gitster.siamese.dyndns.org> <20080526195812.GA23396@bit.office.eurotux.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] lockfile: reset the correct signal
+Date: Mon, 26 May 2008 22:36:45 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805262234210.30431@racer>
+References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org> <20080523221723.GA4366@localhost> <20080525182650.GA17806@localhost> <alpine.DEB.1.00.0805261031480.30431@racer> <20080526193513.GA9978@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Luciano Rocha <luciano@eurotux.com>, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon May 26 23:36:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon May 26 23:37:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0kN5-00011Q-SP
-	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:36:48 +0200
+	id 1K0kNn-0001Hg-7W
+	for gcvg-git-2@gmane.org; Mon, 26 May 2008 23:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754806AbYEZVf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2008 17:35:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754672AbYEZVf4
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:35:56 -0400
-Received: from mi0.bluebottle.com ([206.188.25.15]:47454 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753846AbYEZVfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2008 17:35:55 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4QLZtpq023003
-	for <git@vger.kernel.org>; Mon, 26 May 2008 14:35:55 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:in-reply-to:references:
-	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
-	b=skjHSgthQskO6N1oboNIfuN5BiJ94Cl42aIwofEEugC25mhZDP5v5PWzBL33KrviR
-	Y2MSf1EEIcvICMbzwoZtox5M7oQ87xXHjrALOpaUd1kc/V7BIWmzk5c/lnns73M
-Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m4QLZfbE026925
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 26 May 2008 14:35:48 -0700
-In-Reply-To: <7vhcckddov.fsf@gitster.siamese.dyndns.org>
-X-Trusted-Delivery: <afb363aba259b89680704e94a4e144d7>
+	id S1754853AbYEZVgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2008 17:36:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbYEZVgj
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 May 2008 17:36:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45295 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754672AbYEZVgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2008 17:36:39 -0400
+Received: (qmail invoked by alias); 26 May 2008 21:36:37 -0000
+Received: from R105f.r.pppool.de (EHLO racer.local) [89.54.16.95]
+  by mail.gmx.net (mp003) with SMTP; 26 May 2008 23:36:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+CaFUiSGyC2B85WGbO/Y3MkvyR99DLt5Yv/Baw03
+	YReL64Abi12Pbv
+X-X-Sender: gene099@racer
+In-Reply-To: <20080526193513.GA9978@localhost>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82960>
 
-Quoting Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> This was discussed to death.  Check the list archive.
+On Mon, 26 May 2008, Clemens Buchacher wrote:
 
-Junio, sometimes I think you are being very mean.  I am reasonably sure you meant this one, but why didn't you give a pointer for him?
+> In the function remove_lock_file_on_signal(), the signal handler
+> for SIGINT was reset, ignoring the parameter signo.
+> 
+> This did not pose a problem yet, as remove_lock_file_on_signal()
+> was only registered as a SIGINT handler.
+> 
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+> ---
+> 
+> On Mon, May 26, 2008 at 10:34:11AM +0100, Johannes Schindelin wrote:
+> > Only from the patch did I understand that you actually meant:
+> 
+> Thank you for fixing that.
 
-http://thread.gmane.org/gmane.comp.version-control.git/68786/focus=68852
+Unfortunately, the original patch is already in git.git.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+> I also realized that using signals like that can cause races. Shouldn't 
+> we use sigaction() instead of signal()?
 
-----------------------------------------------------------------------
-Get a free email address with REAL anti-spam protection.
-http://www.bluebottle.com/tag/1
+Dunno.  The man page suggests it, but we have plenty of cases where we use 
+signal().  And I think it might be less painful to implement a 
+compat-wrapper for the platforms which differ from Linux' interpretation 
+of signal().
+
+Ciao,
+Dscho
