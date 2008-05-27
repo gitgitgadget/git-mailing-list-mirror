@@ -1,66 +1,82 @@
-From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
-Subject: Re: setup_git_directory_gently contract question?
-Date: Tue, 27 May 2008 17:35:49 +0300
-Message-ID: <8e04b5820805270735m24ae4966x932ae610606d6e64@mail.gmail.com>
-References: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 3/5] Make verbosity configurable in reset_index_file()
+Date: Tue, 27 May 2008 16:49:19 +0200
+Message-ID: <20080527144919.GJ27724@genesis.frugalware.org>
+References: <cover.1211586801.git.vmiklos@frugalware.org> <40d6845554a032ef66a20289aea6c7b2f157fed3.1211586801.git.vmiklos@frugalware.org> <28874c24faf45e6e4499c9692cc1de1e93cd4dcf.1211586801.git.vmiklos@frugalware.org> <dace39a3a72957bec9a7f4b8528b08fc7fbe3341.1211586801.git.vmiklos@frugalware.org> <1211897281.13838.1.camel@gaara.bos.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 27 16:36:56 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UZbF713KgFe4yePC"
+Cc: git@vger.kernel.org
+To: Kristian H?gsberg <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue May 27 16:50:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K10ID-00084U-NK
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 16:36:50 +0200
+	id 1K10VC-00052R-ET
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 16:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755988AbYE0Ofu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 10:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755934AbYE0Ofu
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 10:35:50 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:41630 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755295AbYE0Oft (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 10:35:49 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so2968519rvb.1
-        for <git@vger.kernel.org>; Tue, 27 May 2008 07:35:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=tk5TyzbN7z8angRkHGdwTju46q0Lh5yX2xKDffb0CmA=;
-        b=kz7GU6R48da3XjlT1oE0wJ12+l3AYOpnUyxqdq7JjwRd6LjT4eLmCmElJSJmrvz+D8AhuSO4ywBsOaGkd7k+MFWZnXfTrNp+nyCG1pYkccZjWnkmvoATgOUskVE1eGScSAMPp0HJ2WtwjeyQq3oSp8EpVoZ+K4a0b98Iwg3pirA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PSxh4izik+Y4JxaRupuV4SSECzs/SsuICTdLidpRrm1TKHh/Io+XPhV8k5LaPPmLaZFXDWxlyZnRy+R5Tqb48uAI/AkNqY5cLvrlBX/UC2q8E/+EEPflQgvA5uddIv0Dy5fwf7Xs8kpmd7SPBxwsIosZAoC/z3HmE6UjcgbOPFI=
-Received: by 10.140.132.8 with SMTP id f8mr577467rvd.122.1211898949225;
-        Tue, 27 May 2008 07:35:49 -0700 (PDT)
-Received: by 10.141.37.3 with HTTP; Tue, 27 May 2008 07:35:49 -0700 (PDT)
-In-Reply-To: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
+	id S1755958AbYE0OtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 10:49:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755935AbYE0OtW
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 10:49:22 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:47011 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755848AbYE0OtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 10:49:21 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 333961B255B;
+	Tue, 27 May 2008 16:49:20 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 87E1E4465E;
+	Tue, 27 May 2008 16:33:27 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C195A1190498; Tue, 27 May 2008 16:49:19 +0200 (CEST)
+Mail-Followup-To: Kristian H?gsberg <krh@redhat.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <1211897281.13838.1.camel@gaara.bos.redhat.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83021>
-
-    Or another question: how can I obtain the git directory (.git)
-(absolute) path without updating the current working directory?
-
-    Thanks,
-    Ciprian Craciun.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83022>
 
 
-On Tue, May 27, 2008 at 5:10 PM, Ciprian Dorin Craciun
-<ciprian.craciun@gmail.com> wrote:
->    Is the function setup_git_directory_gently supposed to change the
-> current working directory, or should it keep the initial one?
->    What is the meaning of nongit_ok?
->
->    Because if I use nongit_ok != NULL, but *nongit_ok == 1, this
-> function changes the current working directory to the top of the
-> worktree directory.
->
->    Thanks,
->    Ciprian Craciun.
+--UZbF713KgFe4yePC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, May 27, 2008 at 10:08:01AM -0400, Kristian H?gsberg <krh@redhat.com=
+> wrote:
+> > -int reset_index_file(const unsigned char *sha1, int is_hard_reset)
+> > +int reset_index_file(const unsigned char *sha1, int is_hard_reset, int=
+ verbose)
+>=20
+> I would suggest using flags here instead of a bunch of boolean args.
+> Consider the readability of
+>=20
+>     reset_index_file(sha1, 1, 1);
+>=20
+> vs
+>=20
+>     reset_index_file(sha1, RESET_HARD | RESET_VERBOSE);
+
+Thanks for the suggestion, but - as Daniel already pointed out - the
+same functionality can be achieved by using the unpack_trees() API
+directly, so the patch is useless.
+
+--UZbF713KgFe4yePC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkg8H28ACgkQe81tAgORUJa0tgCfe1FV3rvcCX2mdHGP3P9sOpgm
+ER8AoIFBacIX/1Em/9dRvEPYh2ZszYjk
+=pTt5
+-----END PGP SIGNATURE-----
+
+--UZbF713KgFe4yePC--
