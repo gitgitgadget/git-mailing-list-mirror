@@ -1,63 +1,61 @@
-From: Joshua Haberman <joshua@reverberate.org>
-Subject: Re: visualizing Git's Git repo
-Date: Tue, 27 May 2008 20:36:16 +0000 (UTC)
-Message-ID: <loom.20080527T202009-498@post.gmane.org>
-References: <CA563F5A-5E12-42F7-BDFD-04FE3A882028@reverberate.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: git log --grep missing entries?
+Date: Tue, 27 May 2008 22:36:51 +0200
+Message-ID: <483C70E3.3060607@gmail.com>
+References: <20080527202842.GA32252@foursquare.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 27 22:37:41 2008
+Cc: git@vger.kernel.org
+To: Chris Frey <cdfrey@foursquare.net>
+X-From: git-owner@vger.kernel.org Tue May 27 22:38:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K15v6-00081I-Lq
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 22:37:21 +0200
+	id 1K15vV-0008AU-9S
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 22:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758108AbYE0Ug0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 16:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758105AbYE0Ug0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 16:36:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:43221 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757972AbYE0Ug0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 16:36:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1K15uC-0000e9-L4
-	for git@vger.kernel.org; Tue, 27 May 2008 20:36:24 +0000
-Received: from 206-169-226-162.static.twtelecom.net ([206.169.226.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 May 2008 20:36:24 +0000
-Received: from joshua by 206-169-226-162.static.twtelecom.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 May 2008 20:36:24 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 206.169.226.162 (Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9) Gecko/2008051202 Firefox/3.0)
+	id S1758126AbYE0Ugx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 16:36:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758116AbYE0Ugx
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 16:36:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:16317 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758105AbYE0Ugx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 16:36:53 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1605650fgg.17
+        for <git@vger.kernel.org>; Tue, 27 May 2008 13:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=juzKY3XNcAUttok4g0YUgYVaSbFA+SZDW9V07uZiRD0=;
+        b=lcsmtoegDnEr6REMJuLmdYQ3yeGrNeaH7rJmPPhnc5nVg8T27roTcVedyHY2ik4DnAjWKMDrGKLPVvYVJdEkRrgcFydxRPcCiQVDllRTEO30xIYW1hiBugLeircBSFje0bJzIKJ+cUGRtNror73YKoF+AbKBo7hJQoXkiw6C4p4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=M3FpU6ajzqVl1pRT6ntpiKSk1I8p90xuq922Weu2YJei2Iui1hREkbl0qQR2TI/tU2EaJWZZwBj06UT/f3ByTUGDgslKPymgG1Wn9NSeL1osbXYrFIwbmB0QKaoxu9gpTCepirj9aP6ZEdlqjFDMtRuH7yud/KmTTXx7nywwLz0=
+Received: by 10.86.90.2 with SMTP id n2mr2400139fgb.51.1211920611365;
+        Tue, 27 May 2008 13:36:51 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.209.73])
+        by mx.google.com with ESMTPS id e20sm15877205fga.7.2008.05.27.13.36.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 May 2008 13:36:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <20080527202842.GA32252@foursquare.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83045>
 
-Joshua Haberman <joshua <at> reverberate.org> writes:
-> 1. what do you all do to get a high-level view of what's going on with  
-> Git development?  do you use gitk?  if so, what options?
+Chris Frey wrote:
+> 	# nothing appears for these commands
+> 	git log --grep="thadh@thad.corp.google.com"
+> 	# this works
+> 	git log --author="thadh@thad.corp.google.com"
 
-I get the impression from this thread that core Git developers don't make
-visualizing the repository a regular part of their development workflow.  Is
-that accurate?  What do you all do to keep tabs on Git development?
+According to the man page of git-log, --grep only greps the log message, 
+not the author.  Does that help?
 
-> 2. as a project, why don't you rebase when merging long-running  
-> branches into master?
-
-Is there really no rationale that anyone can offer for why you do things this
-way?  I look to Git's own Git repo for best practices, and given Git's emphasis
-on "history hygiene" I'm certain that there are reasons for why you do things
-the way you do.
-
-Josh
+-- Lea
