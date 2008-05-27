@@ -1,82 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: setup_git_directory_gently contract question?
-Date: Tue, 27 May 2008 15:46:48 -0700
-Message-ID: <7vmymbz7on.fsf@gitster.siamese.dyndns.org>
-References: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
+From: Nikolaus Schulz <microschulz@web.de>
+Subject: Re: [PATCH] git-svn fails in prop_walk if $self->{path} is not empty
+Date: Wed, 28 May 2008 00:54:02 +0200
+Message-ID: <20080527225402.GA25550@penelope.zusammrottung.local>
+References: <20080527162002.GA21855@penelope.zusammrottung.local> <20080527084655.20379.qmail@5bba46d46c095e.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 00:48:03 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 28 00:55:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K17xY-0007qk-0P
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:48:00 +0200
+	id 1K184W-0001B6-N5
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757493AbYE0WrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 18:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757327AbYE0WrH
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:47:07 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49648 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756749AbYE0WrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 18:47:06 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 27D435CBF;
-	Tue, 27 May 2008 18:47:03 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id 479845CBD; Tue, 27 May 2008 18:46:59 -0400 (EDT)
-In-Reply-To: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
- (Ciprian Dorin Craciun's message of "Tue, 27 May 2008 17:10:42 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D30E620E-2C3E-11DD-AA37-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1758880AbYE0WyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 18:54:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758732AbYE0WyN
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:54:13 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:54840 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758349AbYE0WyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 18:54:12 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id C3DE1E132FA9
+	for <git@vger.kernel.org>; Wed, 28 May 2008 00:54:05 +0200 (CEST)
+Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1K183R-0007Aw-00
+	for git@vger.kernel.org; Wed, 28 May 2008 00:54:05 +0200
+Received: from penelope.zusammrottung.local ([192.168.178.202])
+	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K183Q-00087C-0P
+	for git@vger.kernel.org; Wed, 28 May 2008 00:54:04 +0200
+Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K183O-0006eJ-R4
+	for git@vger.kernel.org; Wed, 28 May 2008 00:54:02 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20080527084655.20379.qmail@5bba46d46c095e.315fe32.mid.smarden.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Sender: microschulz@web.de
+X-Provags-ID: V01U2FsdGVkX1/KgiEJQq4rEcCNwp0oOkr2j3WvIq9jDj4r4WMt
+	x9HRDI0hbNRUnhStn8tRZP8WQyecdupf+V33J2gMnmipYwKn4C
+	2cDNvBoyc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83057>
 
-"Ciprian Dorin Craciun" <ciprian.craciun@gmail.com> writes:
+Happy coincidence!
 
->     Is the function setup_git_directory_gently supposed to change the
-> current working directory, or should it keep the initial one?
->     What is the meaning of nongit_ok?
+This patch happens to fix my problem posted in "git-svn
+{show,create}-ignore chokes upon subdirs" today. 
 
-Most commands that work from subdirectory use setup_git_directory()
-interface, because major parts of the guts of the git internal want you to
-be at the top of the work tree (e.g. so that you grab a path out of the
-index, and be able to open(2) or lstat(2) that path).  A normal sequence
-for a command is: (1) use setup_git_directory() to learn "prefix", (2) use
-get_pathspec() and/or prefix_path() to add "prefix" to the paths given
-from the command to make it a path relative to the work tree, (3) do its
-thing.  setup_git_directory() chdir's up to the top of the work tree for
-this reason.
+Nikolaus
 
-Some commands can optionally work from even outside a git repository, but
-they would want to operate the same way as other comands, when they are
-started within a git repository.  In such a case, you use "gently"
-variant, and give a pointer to int to store an additional return value to
-signal you if you are inside a git repository or outside.
-
- * When NULL is given as nongit_ok to gently(), it does not behave gentle
-   at all.  Outside a git repository it dies loudly.
-
- * If you are inside a git repository, it behaves pretty much the same as
-   setup_git_directory().  "*nongit_ok" is set to zero to signal that you
-   are inside a git repository.
-
- * If you are outside a git repository, *nongit_ok is set to non-zero so
-   that the caller can tell that it is not in any git repository's work
-   tree.  There is no need to chdir (nor a sensible place to chdir to) in
-   this case, so it doesn't.
-
-The caller thinks of the parameter as "are we operating in non-git mode?"
-boolean, and the callee (i.e. setup_git_directory_gently()) thinks of it
-as "is it ok to be called outside a git repository?" (if it is NULL, the
-caller expects to be inside a repository and wants it to barf otherwise).
-That is why caller's variable are often called "int nongit", and the
-callee's parameter is called "int *nongit_ok".
+On Tue, May 27, 2008 at 08:46:55AM +0000, Gerrit Pape wrote:
+> From: Christian Engwer <christi@uni-hd.de>
+> 
+> The problem now is that prop_walk strips trunk from the path and then
+> calls itself recursively. But now trunk is missing in the path and
+> get_dir fails, because it is called for a non existing path.
+> 
+> The attached patch fixed the problem, by adding the priviously stipped
+> $self->{path} in the recursive call. 
+> git-svn repository for the commands show-ignore and show-external.
+> 
+> Patch was submitted through
+>  http://bugs.debian.org/477393
+> 
+> Signed-off-by: Gerrit Pape <pape@smarden.org>
+> ---
+> 
+> I'm not that much a git-svn user, and didn't test this thoroughly.  I'd
+> be happy if anyone could crossread/test this, and maybe add a Acked-By.
+> 
+> Thanks, Gerrit.
+> 
+> 
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 37976f2..72fef16 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1918,7 +1918,7 @@ sub prop_walk {
+>  
+>  	foreach (sort keys %$dirent) {
+>  		next if $dirent->{$_}->{kind} != $SVN::Node::dir;
+> -		$self->prop_walk($p . $_, $rev, $sub);
+> +		$self->prop_walk($self->{path} . $p . $_, $rev, $sub);
+>  	}
+>  }
