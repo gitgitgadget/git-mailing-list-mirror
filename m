@@ -1,90 +1,64 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: git grep and word boundaries
-Date: Tue, 27 May 2008 09:56:12 +0100
-Message-ID: <20080527085612.GA31765@bit.office.eurotux.com>
-References: <483BC7E2.6090804@gmx.net>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] commit --interactive: properly update the index before
+	commiting
+Date: Tue, 27 May 2008 08:59:16 +0000
+Message-ID: <20080527085916.23645.qmail@8ea7804c723d58.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
-Cc: git@vger.kernel.org
-To: Thomas Volpini <tvolpini@gmx.net>
-X-From: git-owner@vger.kernel.org Tue May 27 10:58:18 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 27 11:03:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0uzY-0000UO-BQ
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 10:57:12 +0200
+	id 1K0v2P-0001g7-NH
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 11:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862AbYE0I4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 04:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756853AbYE0I4U
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 04:56:20 -0400
-Received: from os.eurotux.com ([216.75.63.6]:56748 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756806AbYE0I4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 04:56:19 -0400
-Received: (qmail 23361 invoked from network); 27 May 2008 08:56:16 -0000
-Received: from unknown (HELO bit.office.eurotux.com) (luciano@82.102.23.9)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 27 May 2008 08:56:16 -0000
+	id S1756665AbYE0I7S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 04:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756677AbYE0I7S
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 04:59:18 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:43907 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756405AbYE0I7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 04:59:18 -0400
+Received: (qmail 23646 invoked by uid 1000); 27 May 2008 08:59:16 -0000
 Content-Disposition: inline
-In-Reply-To: <483BC7E2.6090804@gmx.net>
-User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82996>
 
+When adding files through git commit --interactive, and 'quit'
+afterwards, the message in the editor of the commit message indicates
+that many (maybe all) files are deleted from the tree.  Dismissing that
+and running git commit afterwards does the right thing.  This commit
+fixes git commit --interactive to properly update the index before
+commiting.
 
---ReaqsoxgOBHFXBhH
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reported by Ji=C5=99=C3=AD Pale=C4=8Dek through
+ http://bugs.debian.org/480429
 
-On Tue, May 27, 2008 at 10:35:46AM +0200, Thomas Volpini wrote:
->  Hello,
->=20
->  it seems that git grep doesn't do word boundaries as described:
->=20
->  $ cat bar
->  foo bar baz
->  $ grep "\<bar\>" *
->  foo bar baz
->  $ git grep "\<bar\>" *
->  $ git grep -w "\<bar\>" *
->  $ git grep -w "bar" *
->  bar:foo bar baz
->  $ git grep -E "\<bar\>" *
->  $ git grep -E "\bbar\b" *
->  $
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ builtin-commit.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-It works here. Did you add the file?
-$ grep "\<bar\>" *
-foo bar baz
-$ git grep "\<bar\>"
-bar:foo bar baz
-$ git grep "\<bar\>" *
-bar:foo bar baz
-$ git grep \\bbar\\b
-bar:foo bar baz
-$ git grep \\bbar\\b *
-bar:foo bar baz
-
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 07872c8..b294c1f 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -223,6 +223,8 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix)
+=20
+ 	if (interactive) {
+ 		interactive_add(argc, argv, prefix);
++		if (read_cache() < 0)
++			die("index file corrupt");
+ 		commit_style =3D COMMIT_AS_IS;
+ 		return get_index_file();
+ 	}
 --=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
-
---ReaqsoxgOBHFXBhH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkg7zKwACgkQinSul6a7oB95tACglesE/IhafihUJxZHOWxpdJF5
-5cwAn0Ao0aUUexvl3h0+vafH+F1t7QtP
-=Vcsq
------END PGP SIGNATURE-----
-
---ReaqsoxgOBHFXBhH--
+1.5.5.1
