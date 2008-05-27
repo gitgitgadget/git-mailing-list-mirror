@@ -1,63 +1,93 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC/PATCH] git-what: explain what to do next
-Date: Tue, 27 May 2008 15:52:59 +0200
-Message-ID: <20080527135259.GA12551@cuci.nl>
-References: <1211877299-27255-1-git-send-email-sbejar@gmail.com> <alpine.DEB.1.00.0805271151430.30431@racer> <8aa486160805270558v40e7faabh7d4426731693f917@mail.gmail.com> <alpine.DEB.1.00.0805271411520.30431@racer> <8aa486160805270637m3fc640bfr9fa51eb917460e5c@mail.gmail.com>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH 3/5] Make verbosity configurable in reset_index_file()
+Date: Tue, 27 May 2008 10:08:01 -0400
+Message-ID: <1211897281.13838.1.camel@gaara.bos.redhat.com>
+References: <cover.1211586801.git.vmiklos@frugalware.org>
+	 <40d6845554a032ef66a20289aea6c7b2f157fed3.1211586801.git.vmiklos@frugalware.org>
+	 <28874c24faf45e6e4499c9692cc1de1e93cd4dcf.1211586801.git.vmiklos@frugalware.org>
+	 <dace39a3a72957bec9a7f4b8528b08fc7fbe3341.1211586801.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Santi B?jar <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 15:54:30 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue May 27 16:09:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0zct-0000D2-F7
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 15:54:07 +0200
+	id 1K0zrW-0005h2-NH
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 16:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757494AbYE0NxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 09:53:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757474AbYE0NxD
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 09:53:03 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:56057 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757386AbYE0NxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 09:53:00 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 305E45461; Tue, 27 May 2008 15:52:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <8aa486160805270637m3fc640bfr9fa51eb917460e5c@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757129AbYE0OIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 10:08:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbYE0OIX
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 10:08:23 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:50154 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755996AbYE0OIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 10:08:22 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4RE8AkH005746;
+	Tue, 27 May 2008 10:08:10 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4RE89id012802;
+	Tue, 27 May 2008 10:08:09 -0400
+Received: from [10.16.3.198] (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4RE897W016240;
+	Tue, 27 May 2008 10:08:09 -0400
+In-Reply-To: <dace39a3a72957bec9a7f4b8528b08fc7fbe3341.1211586801.git.vmiklos@frugalware.org>
+X-Mailer: Evolution 2.22.0 (2.22.0-4.fc9) 
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83017>
 
-Santi B?jar wrote:
->On Tue, May 27, 2008 at 3:12 PM, Johannes Schindelin
-><Johannes.Schindelin@gmx.de> wrote:
->> Sure it is.  But cluttering up the commands for something that is not
->> really proven to be wanted by many is IMO inferior.
+On Sat, 2008-05-24 at 02:01 +0200, Miklos Vajna wrote:
+> Till now reset_index_file() was always verbose. Add a new argument to be
+> able to disable this behaviour.
+> 
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>  builtin-reset.c |    2 +-
+>  reset.c         |    5 +++--
+>  reset.h         |    2 +-
+>  3 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin-reset.c b/builtin-reset.c
+> index 6e6e168..179c59c 100644
+> --- a/builtin-reset.c
+> +++ b/builtin-reset.c
+> @@ -216,7 +216,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>  		if (is_merge() || read_cache() < 0 || unmerged_cache())
+>  			die("Cannot do a soft reset in the middle of a merge.");
+>  	}
+> -	else if (reset_index_file(sha1, (reset_type == HARD)))
+> +	else if (reset_index_file(sha1, (reset_type == HARD), 1))
+>  		die("Could not reset index file to revision '%s'.", rev);
+>  
+>  	/* Any resets update HEAD to the head being switched to,
+> diff --git a/reset.c b/reset.c
+> index a75fec6..baae947 100644
+> --- a/reset.c
+> +++ b/reset.c
+> @@ -11,13 +11,14 @@
+>  #include "cache.h"
+>  #include "run-command.h"
+>  
+> -int reset_index_file(const unsigned char *sha1, int is_hard_reset)
+> +int reset_index_file(const unsigned char *sha1, int is_hard_reset, int verbose)
 
->This is an argument against git-whatzzup.sh in general. Point taken.
+I would suggest using flags here instead of a bunch of boolean args.
+Consider the readability of
 
-Not really.  It's an argument against cluttering up the existing core
-with this stuff.
+    reset_index_file(sha1, 1, 1);
 
->Moreover, this could be integrated in "git status".
+vs
 
-I personally have no need for such a thing, but in effect it is the git
-commandline equivalent of MS-Office "Clippy", which provides a hands-on
-tutorial in git while you are trying to use it (with the subtle yet
-important difference that it only provides advice when called).
+    reset_index_file(sha1, RESET_HARD | RESET_VERBOSE);
 
-So if you'd keep it confined to a shell script externally from the core
-commands, I could imagine a lot of new (or occasional) users of git being
-rather happy with an "interactive manual/hands-on tutorial" like this.
--- 
-Sincerely,                                                          srb@cuci.nl
-           Stephen R. van den Berg.
-
-Skiing beyond this point may result in death and/or loss of skiing privileges.
+cheers,
+Kristian
