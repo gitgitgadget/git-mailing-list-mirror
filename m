@@ -1,65 +1,84 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] gitweb: only display "next" links in logs if there is
- a next page
-Date: Wed, 28 May 2008 01:30:42 +0200
-Message-ID: <483C99A2.90909@gmail.com>
-References: <483C97E7.2020504@gmail.com> <1211930742-24978-1-git-send-email-LeWiemann@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: visualizing Git's Git repo
+Date: Tue, 27 May 2008 19:49:48 -0400
+Message-ID: <20080527234948.GA17424@sigill.intra.peff.net>
+References: <CA563F5A-5E12-42F7-BDFD-04FE3A882028@reverberate.org> <loom.20080527T202009-498@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 01:31:42 2008
+To: Joshua Haberman <joshua@reverberate.org>
+X-From: git-owner@vger.kernel.org Wed May 28 01:50:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K18dk-0001nE-4u
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 01:31:36 +0200
+	id 1K18wH-0005uc-Pz
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 01:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbYE0Xao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 19:30:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbYE0Xao
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 19:30:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:47268 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044AbYE0Xan (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 19:30:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1635680fgg.17
-        for <git@vger.kernel.org>; Tue, 27 May 2008 16:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=VfdOZVAdNXg+WWN/65CFawCJDav+M62fre4MNMQEIvU=;
-        b=guMlhh0zhNjoM5eVk28SnLfbJ5vBavis8no2CG79bH0d55NwL3t2m/mJ8smtx0tEfZihPUM9bDL1TIqte5b+eEMQ58+JG35ZjrVYP4tL7K3nKnt2y+10Jd1PBYfXVmk2hPZQeY+HSErTNSxJw754xIrr6dUw/Fpmu6uCy8iEA/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=HnKjp5WjI0YJggAMUfUvAYgM5zy5hxB4F5HQK3Cu2KJkHB4LdShAjdIaduqbu9gM7kzhAM49pIEeGAXZZ86WxqX8OwgosA0QuGGVOcfH1JeIfVtHJuiBrE0jTiwQ9M024JGceS/6MURkYhPjrEiFcQebRtDClaFo1C3RVY3pSeE=
-Received: by 10.86.95.20 with SMTP id s20mr6058259fgb.70.1211931042557;
-        Tue, 27 May 2008 16:30:42 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.209.73])
-        by mx.google.com with ESMTPS id d6sm16022865fga.2.2008.05.27.16.30.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 May 2008 16:30:42 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <1211930742-24978-1-git-send-email-LeWiemann@gmail.com>
+	id S1756044AbYE0Xtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 19:49:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756105AbYE0Xtw
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 19:49:52 -0400
+Received: from peff.net ([208.65.91.99]:3366 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755666AbYE0Xtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 19:49:51 -0400
+Received: (qmail 7037 invoked by uid 111); 27 May 2008 23:49:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 27 May 2008 19:49:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 May 2008 19:49:48 -0400
+Content-Disposition: inline
+In-Reply-To: <loom.20080527T202009-498@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83064>
 
-Lea Wiemann wrote:
-> There was a bug in the implementation of the "next" links in
-> format_paging_nav (for log and shortlog), which caused the next links
-> to always be displayed, even if there is no next page.  This fixes it.
+On Tue, May 27, 2008 at 08:36:16PM +0000, Joshua Haberman wrote:
 
-Oh, one more thing I forgot to mention: I've tested this with a small 
-(single-page) log page and a long log page.  In both cases the "next" 
-links get formatted correctly, and they stop linking to the next page on 
-the correct (= last) page.  The only thing I haven't tested for is 
-off-by-one errors, but I'm reasonably sure that $#commitlist >= 100 is 
-right.
+> > 1. what do you all do to get a high-level view of what's going on with  
+> > Git development?  do you use gitk?  if so, what options?
+> 
+> I get the impression from this thread that core Git developers don't make
+> visualizing the repository a regular part of their development workflow.  Is
+> that accurate?  What do you all do to keep tabs on Git development?
 
--- Lea
+I don't know if I count as a core Git developer, but I do use gitk daily
+to track what goes into Junio's repo. My refs are organized something
+like:
+
+  remotes/origin/* - tracking branches of Junio's git.git
+  heads/jk/* - long running topics branched from master
+  heads/next - Junio's next branch with short or temporary patches on top
+
+My git day generally starts like this:
+
+  git fetch ;# grab newly merged stuff
+  gitk origin/next...next ;# see what's new
+  git rebase origin/next ;# and bring ourselves up to date
+
+You don't necessarily get to see all of the topic branches labeled
+individually, but generally you see each merged topic preceded by the
+'Merge ...' commit.
+
+For long running branches, I leave them alone until I'm ready to work on
+them. And then it's:
+
+  git checkout jk/whatever
+  gitk origin/master.. ;# what was I doing again?
+  git rebase origin/master ;# should be clean if nobody else
+                            # is touching the same area
+
+And if the rebase isn't clean, then I investigate individual areas with:
+
+  gitk --no-merges jk/whatever...origin/master problematic_file.c
+
+So maybe that is a bit of a boring workflow description, but I do
+visualize with gitk all the time. I tend to do a lot of bug-hunting,
+too, for which I don't end up doing visualization. Instead, I almost
+always rely on asking more specific questions about content: blame
+(especially "tig blame"), bisect, and pickaxe ("git log -S").
+
+-Peff
