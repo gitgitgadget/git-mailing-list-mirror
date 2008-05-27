@@ -1,55 +1,52 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Reverting to old commit
-Date: Tue, 27 May 2008 15:43:52 -0500
-Message-ID: <6IRlPIxadiyIIPsto-MFx6wInl0VvCRxVSaI3-OglmCjLt5obfbiww@cipher.nrlssc.navy.mil>
-References: <8345bd80805271050q7412917bt292a276fbbe6aed3@mail.gmail.com> <m3bq2r39gh.fsf@localhost.localdomain>
+From: Chris Frey <cdfrey@foursquare.net>
+Subject: Re: git log --grep missing entries?
+Date: Tue, 27 May 2008 16:48:48 -0400
+Message-ID: <20080527204848.GA13929@foursquare.net>
+References: <20080527202842.GA32252@foursquare.net> <483C70E3.3060607@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marcus <prima@wordit.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 22:45:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 27 22:50:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K162J-000272-HZ
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 22:44:47 +0200
+	id 1K167s-0004Cu-SO
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 22:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758241AbYE0Un4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 16:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758215AbYE0Un4
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 16:43:56 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51689 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757505AbYE0Unz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 16:43:55 -0400
-Received: by mail.nrlssc.navy.mil id m4RKhrBx009313; Tue, 27 May 2008 15:43:53 -0500
-In-Reply-To: <m3bq2r39gh.fsf@localhost.localdomain>
-X-OriginalArrivalTime: 27 May 2008 20:43:53.0639 (UTC) FILETIME=[604D8B70:01C8C03A]
+	id S1759116AbYE0UtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 16:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757958AbYE0UtM
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 16:49:12 -0400
+Received: from nic.NetDirect.CA ([216.16.235.2]:34671 "EHLO
+	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759288AbYE0UtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 16:49:05 -0400
+X-Originating-Ip: 216.16.235.2
+Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
+	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m4RKmm6P014531;
+	Tue, 27 May 2008 16:48:49 -0400
+Content-Disposition: inline
+In-Reply-To: <483C70E3.3060607@gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
+X-Net-Direct-Inc-MailScanner: Found to be clean
+X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
+	SpamAssassin (not cached, score=-16.8, required 5,
+	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
+X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83048>
 
-Jakub Narebski wrote:
-> Marcus <prima@wordit.com> writes:
-> 
->> Newbie question: What's the simplest way to find an old commit and revert?
->>
->> Say you have a version from yesterday which worked and today's
->> experiments failed, so you want to go back to that working version.
->> Unfortunately, it's not tagged. Instead you need to actually view the
->> code to identify the version you want. I thought maybe gitk might
->> help, but I can't find my way with gitk. I hoped you could browse
->> revisions easier in a GUI and tell gitk or git-gui to revert?
-> 
-> Errr... isn't it what git-bisect is for?
-> 
-> If it is not, viewing git-log, or git-reflog output should help...
+On Tue, May 27, 2008 at 10:36:51PM +0200, Lea Wiemann wrote:
+> According to the man page of git-log, --grep only greps the log message, 
+> not the author.  Does that help?
 
-Shouldn't we be encouraging the use of 'git log -g' rather than 'git reflog'?
-git-reflog seems more like plumbing than porcelain to me.
+Doh.  That would certainly explain it.  Thanks!
 
--brandon
+- Chris
