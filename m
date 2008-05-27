@@ -1,68 +1,112 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Reverting to old commit
-Date: Wed, 28 May 2008 01:00:11 +0200
-Message-ID: <bd6139dc0805271600k6968b6c7j9075bb8aeffe9863@mail.gmail.com>
-References: <8345bd80805271050q7412917bt292a276fbbe6aed3@mail.gmail.com>
-	 <m3bq2r39gh.fsf@localhost.localdomain>
-	 <6IRlPIxadiyIIPsto-MFx6wInl0VvCRxVSaI3-OglmCjLt5obfbiww@cipher.nrlssc.navy.mil>
-Reply-To: sverre@rabbelier.nl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: only display "next" links in logs if there is a
+ next page
+Date: Tue, 27 May 2008 16:08:04 -0700
+Message-ID: <7viqwzz6p7.fsf@gitster.siamese.dyndns.org>
+References: <1211927470-21170-1-git-send-email-LeWiemann@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, Marcus <prima@wordit.com>,
-	git@vger.kernel.org
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed May 28 01:01:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 01:09:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K18AE-0002Xu-T4
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 01:01:07 +0200
+	id 1K18Hx-0004SX-AU
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 01:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758761AbYE0XAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 19:00:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758709AbYE0XAN
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 19:00:13 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:58609 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758514AbYE0XAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 19:00:12 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2304597wfd.4
-        for <git@vger.kernel.org>; Tue, 27 May 2008 16:00:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=APj2/soBUyj6Bzv4QzXGYwxCallMAQvTbb9pHspQp/8=;
-        b=bZpIOA45VswGoZPVb7Nen7WVYxKQR3z2deKw4Fre6LCf05va4x+1q/rSGgfvKD5dZ9o5rHnbE4od0FVvTXJjgekkzCUgy6ztdSgH/LoAYFHEwA1wlQz4TUxtNItTcVX007TpGWQyf8TbE3TWkoA7CnNteh5PCAY7AdLzcYJYpnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cdt3RJxOxcMbtAEu7bDPGqgxJ+n1A5Yn6MX6nOrHGNl+le5IOllm432/8SzN02HyGX/eMJlyDOnk6/0N9kEZe6exkWZhQrLSuLibSgmYE6el9EoSGp56P6Dz4tFZleK4zF9YJmzW2DBwTwBpVdxH19sPM5ToTCp3iHZ8ZeUNvhk=
-Received: by 10.142.125.4 with SMTP id x4mr725354wfc.324.1211929211564;
-        Tue, 27 May 2008 16:00:11 -0700 (PDT)
-Received: by 10.143.10.16 with HTTP; Tue, 27 May 2008 16:00:11 -0700 (PDT)
-In-Reply-To: <6IRlPIxadiyIIPsto-MFx6wInl0VvCRxVSaI3-OglmCjLt5obfbiww@cipher.nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1751203AbYE0XIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 19:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbYE0XIO
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 19:08:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52316 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170AbYE0XIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 19:08:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BBE2B5F3A;
+	Tue, 27 May 2008 19:08:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id E78A65F39; Tue, 27 May 2008 19:08:07 -0400 (EDT)
+In-Reply-To: <1211927470-21170-1-git-send-email-LeWiemann@gmail.com> (Lea
+ Wiemann's message of "Wed, 28 May 2008 00:31:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C733D54C-2C41-11DD-80DB-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83060>
 
-On Tue, May 27, 2008 at 10:43 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+Lea Wiemann <lewiemann@gmail.com> writes:
 
-> Shouldn't we be encouraging the use of 'git log -g' rather than 'git reflog'?
-> git-reflog seems more like plumbing than porcelain to me.
+> There was a bug in the implementation of the "next" links in
+> format_paging_nav (for log and shortlog), which caused the next links
+> to always be displayed, even if there is no next page.  This fixes it.
+>
+> Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+> ---
+>  gitweb/gitweb.perl |    8 ++++----
+>  1 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 308fde2..874f53a 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2752,7 +2752,7 @@ sub git_print_page_nav {
+>  }
+>  
+>  sub format_paging_nav {
+> -	my ($action, $hash, $head, $page, $has_more_pages) = @_;
+> +	my ($action, $hash, $head, $page, $has_next_link) = @_;
+>  	my $paging_nav;
+>  
+>  
+> @@ -2770,7 +2770,7 @@ sub format_paging_nav {
+>  		$paging_nav .= " &sdot; prev";
+>  	}
+>  
+> -	if ($has_more_pages) {
+> +	if ($has_next_link) {
+>  		$paging_nav .= " &sdot; " .
+>  			$cgi->a({-href => href(-replay=>1, page=>$page+1),
+>  			         -accesskey => "n", -title => "Alt-n"}, "next");
 
-I had no idea, but then again, the man pages don't mention whether
-something is plumbing or porcelain anywhere... But I guess 'git log
--g' is easier to use (since it supplies the user with most of git
-log's features) than git reflog. I was introduced to reflog by someone
-advising me to use it, so I was merely "passing on" that advice,
-unknowing of 'git log -g' :).
+This looks like a no-op hunk, unless format_paging_nav sub has other uses
+of $has_more_pages variable.  But the copies of gitweb I have do not begin
+with these lines, but they begin like this:
 
--- 
-Cheers,
+        sub format_paging_nav {
+                my ($action, $hash, $head, $page, $nrevs) = @_;
+                my $paging_nav;
 
-Sverre Rabbelier
+On what version is your patch based on?  I checked warthog9's copy and
+that also seems to be different.
+
+> @@ -4661,7 +4661,7 @@ sub git_log {
+>  
+>  	my @commitlist = parse_commits($hash, 101, (100 * $page));
+>  
+> -	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist > 99);
+> +	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist >= 100);
+>  
+>  	git_header_html();
+>  	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
+> @@ -5581,7 +5581,7 @@ sub git_shortlog {
+>  
+>  	my @commitlist = parse_commits($hash, 101, (100 * $page));
+>  
+> -	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, $#commitlist > 99);
+> +	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, $#commitlist >= 100);
+>  	my $next_link = '';
+>  	if ($#commitlist >= 100) {
+>  		$next_link =
+
+I am not very good at counting, but the change looks no-op to me.  Either
+the last index of the list variable is strictly larger than 99, or it is
+100 or greater --- aren't they the same thing?
+
+A bit confused I am...
