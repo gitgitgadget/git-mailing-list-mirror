@@ -1,98 +1,99 @@
-From: "John J. Franey" <jjfraney@gmail.com>
-Subject: Re: cvsimport in cron
-Date: Tue, 27 May 2008 09:33:27 -0400
-Message-ID: <1211895207.7877.4.camel@isidore.myhome.westell.com>
-References: <17476529.post@talk.nabble.com>
-	 <46a038f90805261613v4ad72ddcxe6ee78fa0b54f89e@mail.gmail.com>
-	 <ce7555260805270345x353cfc76ja3f7ec83a0ab5c61@mail.gmail.com>
-	 <g1gq3u$jb$1@ger.gmane.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [RFC/PATCH] git-what: explain what to do next
+Date: Tue, 27 May 2008 15:37:49 +0200
+Message-ID: <8aa486160805270637m3fc640bfr9fa51eb917460e5c@mail.gmail.com>
+References: <1211877299-27255-1-git-send-email-sbejar@gmail.com>
+	 <alpine.DEB.1.00.0805271151430.30431@racer>
+	 <8aa486160805270558v40e7faabh7d4426731693f917@mail.gmail.com>
+	 <alpine.DEB.1.00.0805271411520.30431@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	Barra Mac =?ISO-8859-1?Q?Math=FAna?= <barrymac@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 15:35:00 2008
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 27 15:38:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0zJr-0000jg-W8
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 15:34:28 +0200
+	id 1K0zO4-0002Tg-JS
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 15:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757416AbYE0Ndg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 09:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbYE0Ndg
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 09:33:36 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:14950 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753470AbYE0Ndf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 09:33:35 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so1938880wxd.4
-        for <git@vger.kernel.org>; Tue, 27 May 2008 06:33:35 -0700 (PDT)
+	id S1757627AbYE0Nhy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 09:37:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757622AbYE0Nhy
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 09:37:54 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:22984 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757627AbYE0Nhx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 May 2008 09:37:53 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1526890fgg.17
+        for <git@vger.kernel.org>; Tue, 27 May 2008 06:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=WRwxHeOyDwv90TkuzuGn1p6Ox/MjxYyxEl1ZTqxygiY=;
-        b=G7WbkaIE5PPl5VwbBn/QhF6XtTVDSbJx84ZGLMawEVikf8yi8VjICoeqyqj4dag2+NMzDFX64C1VhKrFJg+Cy4QjUTcm5C6sfyeKDsmBFRXYxEe2OFL0/W3Y56N3KLfYXcDiSqGaQPyS0la5gQZ2msQDE5/W6HxKFbcCtS1eZFo=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nGlyWY39ZjuB1FIopcmTO8Rabg5B4IRaLCluuAzIcJU=;
+        b=DxX1QfeokVd8L+PzsxcN/xanZqA4weQAJjZGV0uix+fkh3XFFobWWSpgb1ARUIm55egYRl3aM692jW0bflzgfWXIpK4rTreN7CfiKSKheHuhQhqlePA1CBuTe/wD/A2yTi2SfRG8eLD7uE8WoX4qopr4sD50fykCopqsMQgzmiw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=e5PgXUFTvN5gY/4WkilPYj2gDTnXqkVfB5NkKtDyjvGYUAOCQ2Byw3AsvXkfdPqyhE33MJdbxagcQTAvExYdmOMHr3MMUChcMdBGXmDylYBCLXd9RACdyaesvmBBV/mG9xkdp3nCC4ayEFd9mUNBdzztcdSa/PsRZmfGNJfT7To=
-Received: by 10.70.20.10 with SMTP id 10mr1662390wxt.36.1211895214896;
-        Tue, 27 May 2008 06:33:34 -0700 (PDT)
-Received: from ?192.168.2.102? ( [70.21.168.140])
-        by mx.google.com with ESMTPS id i20sm24591034wxd.32.2008.05.27.06.33.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 May 2008 06:33:28 -0700 (PDT)
-In-Reply-To: <g1gq3u$jb$1@ger.gmane.org>
-X-Mailer: Evolution 2.22.1 
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ow7jqdaH3HJqjAR7Hsls1P2QXJge4UPUejUsNdy+Eh6lkdOi6+Zh/lO+SPjvdMAA7+2gTUrt2lyOBwNWfNPVcIJH1lo6Xn0VkjB4wzuBEa3OU3eCEIS14BelTKgZ3CFG0JW6nLLKhfTglgPCzVR2vzMBmk3zg2D/1OIwRiTwgy8=
+Received: by 10.86.89.1 with SMTP id m1mr3131958fgb.45.1211895469447;
+        Tue, 27 May 2008 06:37:49 -0700 (PDT)
+Received: by 10.86.27.11 with HTTP; Tue, 27 May 2008 06:37:49 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0805271411520.30431@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83014>
 
-On Tue, 2008-05-27 at 13:08 +0200, Michael J Gruber wrote:
-> Barra Mac Math=C3=BAna venit, vidit, dixit 27.05.2008 12:45:
-> > Thanks Martin,
-> >=20
-> > Nice to know how to log the progress! Good tip to try normal cvs ov=
-er
-> > ssh, which works fine.
-> >=20
-> > I wish it was possible to get more verbose output from the git
-> > cvsimport command. The connection refused error seems to me to be
-> > misleading. I would expect at least some output from cvsps but it
-> > doesn't even get to the first step.
-> >=20
-> > So if everything works at the command line, what significant things
-> > can be different in a cron job?
->=20
-> The environment! Put "env" in your cron job and compare the output to=
-=20
-> "env" on the command line. cvs or cvsps may be in $PATH on the comman=
-d=20
-> line but not in cron, or $PERL5LIB might be different.
->=20
-> Cheers,
-> Michael
->=20
+On Tue, May 27, 2008 at 3:12 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 27 May 2008, Santi B=E9jar wrote:
+>
+>> On Tue, May 27, 2008 at 12:53 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>> > On Tue, 27 May 2008, Santi B=E9jar wrote:
+>> >
+>> >> In case you don't know the next step, if it is "git commit", "git
+>> >> commit --amend", "git rebase --continue" or something else.
+>> >
+>> > We had a patch similar to this already, but I think that the right
+>> > approach is _not_ to teach the single commands to explain their st=
+ate,
+>> > but to make a new script guessing the current state.
+>>
+>> I think it belongs to each command to know the state, but I have no
+>> problem with the single command approach.
+>>
+>> >  AFAIR we have something like that in the completions already, as =
+an
+>> > (optional) prompt.
+>>
+>> Thanks. And they do it a bit different, I'll use it if it is better =
+than
+>> mine.
+>>
+>> >
+>> > However, I think it would make sense to push for that
+>> > .dotest,.git/.dotest-merge -> .git/rebase change _before_ having
+>> > anything like git-whazzup.sh.
+>>
+>> That's a problem of the single command approach.
+>
+> Sure it is.  But cluttering up the commands for something that is not
+> really proven to be wanted by many is IMO inferior.
 
-Great suggestion!
+This is an argument against git-whatzzup.sh in general. Point taken.
 
-I am also having this problem.  To debug, I inserted env as you
-suggested.  (Doh, why didn't this occur to me weeks ago?).  I compared
-the output of cron and login-shell runs.
+Maybe you are right, but I remember that this is something some people
+has asked in this list a number of times.
 
-So what is the critical env diff between cron run and login run?
+Moreover, this could be integrated in "git status".
 
-The answer is:  CVS_RSH=3Dssh
-
-Be sure to export.
-
-Thanks.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Santi
