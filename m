@@ -1,93 +1,55 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 3/5] Make verbosity configurable in reset_index_file()
-Date: Tue, 27 May 2008 10:08:01 -0400
-Message-ID: <1211897281.13838.1.camel@gaara.bos.redhat.com>
-References: <cover.1211586801.git.vmiklos@frugalware.org>
-	 <40d6845554a032ef66a20289aea6c7b2f157fed3.1211586801.git.vmiklos@frugalware.org>
-	 <28874c24faf45e6e4499c9692cc1de1e93cd4dcf.1211586801.git.vmiklos@frugalware.org>
-	 <dace39a3a72957bec9a7f4b8528b08fc7fbe3341.1211586801.git.vmiklos@frugalware.org>
+From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+Subject: setup_git_directory_gently contract question?
+Date: Tue, 27 May 2008 17:10:42 +0300
+Message-ID: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue May 27 16:09:52 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 27 16:12:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0zrW-0005h2-NH
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 16:09:15 +0200
+	id 1K0ztp-0006bB-Mf
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 16:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757129AbYE0OIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 10:08:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbYE0OIX
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 10:08:23 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:50154 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755996AbYE0OIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 10:08:22 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4RE8AkH005746;
-	Tue, 27 May 2008 10:08:10 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4RE89id012802;
-	Tue, 27 May 2008 10:08:09 -0400
-Received: from [10.16.3.198] (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4RE897W016240;
-	Tue, 27 May 2008 10:08:09 -0400
-In-Reply-To: <dace39a3a72957bec9a7f4b8528b08fc7fbe3341.1211586801.git.vmiklos@frugalware.org>
-X-Mailer: Evolution 2.22.0 (2.22.0-4.fc9) 
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1757307AbYE0OKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 10:10:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbYE0OKq
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 10:10:46 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:28181 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756535AbYE0OKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 10:10:45 -0400
+Received: by py-out-1112.google.com with SMTP id p76so2113600pyb.10
+        for <git@vger.kernel.org>; Tue, 27 May 2008 07:10:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=DVxghVc5WzH+bCMDn/NqoDS5/xm6cann64DISoN7KpA=;
+        b=reqWl0WMkPVncc7Gt7Mg4jp/ZbN5L9a+PfWf5RwZQ38jqRHApN7Ur4IsEQr3cZjMuJ1jcChKoMhmxcJAL91sVEFdMYuDEciVgOSuWvcwYkXpsLKO7orJFAjg6k7QVduEkn9tLY1yWF7yyKz74zR5Cw1oht8mPSTiiE9S87d0mmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=irZGWFo+u+lZnotDhHFXM/qp93Qvs+8Ur5qQROLVK4AxlLt9Q4MjQWRUdmj02wjFibcjxGfFVHgmsfgkeRJhhMVgXbyTgfNLpLUijec+V4+V6cBmfw2Kne2M5flJF+8fdJvHTg4PirwccNFTXlz9jpnKD1kGTe4sdxcvpe0fs6Q=
+Received: by 10.140.174.18 with SMTP id w18mr558520rve.227.1211897442204;
+        Tue, 27 May 2008 07:10:42 -0700 (PDT)
+Received: by 10.141.37.3 with HTTP; Tue, 27 May 2008 07:10:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83018>
 
-On Sat, 2008-05-24 at 02:01 +0200, Miklos Vajna wrote:
-> Till now reset_index_file() was always verbose. Add a new argument to be
-> able to disable this behaviour.
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  builtin-reset.c |    2 +-
->  reset.c         |    5 +++--
->  reset.h         |    2 +-
->  3 files changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/builtin-reset.c b/builtin-reset.c
-> index 6e6e168..179c59c 100644
-> --- a/builtin-reset.c
-> +++ b/builtin-reset.c
-> @@ -216,7 +216,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->  		if (is_merge() || read_cache() < 0 || unmerged_cache())
->  			die("Cannot do a soft reset in the middle of a merge.");
->  	}
-> -	else if (reset_index_file(sha1, (reset_type == HARD)))
-> +	else if (reset_index_file(sha1, (reset_type == HARD), 1))
->  		die("Could not reset index file to revision '%s'.", rev);
->  
->  	/* Any resets update HEAD to the head being switched to,
-> diff --git a/reset.c b/reset.c
-> index a75fec6..baae947 100644
-> --- a/reset.c
-> +++ b/reset.c
-> @@ -11,13 +11,14 @@
->  #include "cache.h"
->  #include "run-command.h"
->  
-> -int reset_index_file(const unsigned char *sha1, int is_hard_reset)
-> +int reset_index_file(const unsigned char *sha1, int is_hard_reset, int verbose)
+    Is the function setup_git_directory_gently supposed to change the
+current working directory, or should it keep the initial one?
+    What is the meaning of nongit_ok?
 
-I would suggest using flags here instead of a bunch of boolean args.
-Consider the readability of
+    Because if I use nongit_ok != NULL, but *nongit_ok == 1, this
+function changes the current working directory to the top of the
+worktree directory.
 
-    reset_index_file(sha1, 1, 1);
-
-vs
-
-    reset_index_file(sha1, RESET_HARD | RESET_VERBOSE);
-
-cheers,
-Kristian
+    Thanks,
+    Ciprian Craciun.
