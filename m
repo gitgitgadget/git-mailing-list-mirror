@@ -1,69 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Invalid path on new Git installation
-Date: Tue, 27 May 2008 17:51:58 +0200
-Message-ID: <483C2E1E.3040302@viscovery.net>
-References: <8345bd80805270758j1315234bwf3b16607c95c9620@mail.gmail.com>	 <20080527151406.GA16378@bit.office.eurotux.com> <8345bd80805270842y5e495109x350ef378795ada27@mail.gmail.com>
+From: Nikolaus Schulz <microschulz@web.de>
+Subject: git-svn {show,create}-ignore chokes upon subdirs
+Date: Tue, 27 May 2008 18:20:04 +0200
+Message-ID: <20080527162002.GA21855@penelope.zusammrottung.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marcus <prima@wordit.com>
-X-From: git-owner@vger.kernel.org Tue May 27 17:53:17 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 27 18:21:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K11Tt-000495-5N
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 17:52:57 +0200
+	id 1K11v8-0007Ap-VJ
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 18:21:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757314AbYE0PwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 11:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757076AbYE0PwD
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 11:52:03 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:8840 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756888AbYE0PwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 11:52:03 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K11Sw-0002so-44; Tue, 27 May 2008 17:52:00 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id DBD1B546; Tue, 27 May 2008 17:51:57 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <8345bd80805270842y5e495109x350ef378795ada27@mail.gmail.com>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1756312AbYE0QUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 12:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755762AbYE0QUJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 12:20:09 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:33226 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755607AbYE0QUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 12:20:08 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 380CCE128F21
+	for <git@vger.kernel.org>; Tue, 27 May 2008 18:20:07 +0200 (CEST)
+Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1K11uA-00083S-00
+	for git@vger.kernel.org; Tue, 27 May 2008 18:20:07 +0200
+Received: from penelope.zusammrottung.local ([192.168.178.202])
+	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K11u9-0006OK-88
+	for git@vger.kernel.org; Tue, 27 May 2008 18:20:05 +0200
+Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K11u8-0005iZ-2N
+	for git@vger.kernel.org; Tue, 27 May 2008 18:20:04 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Sender: microschulz@web.de
+X-Provags-ID: V01U2FsdGVkX19DYiX8oRrIBmJWYk5TVTTRgJOKB/k75Uuky9GT
+	GFtEPVitLKn0ExOUFoPBri1FLwxY4wrJDiAClRKnb799Hr567l
+	lBVp8bJBw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83029>
 
-Marcus schrieb:
-> On Tue, May 27, 2008 at 4:14 PM, Luciano Rocha <luciano@eurotux.com> wrote:
->> What is the correct path on the remote?
-> 
-> The full path to the Git repo is:
-> /home/admin/mydomain.com/git/projectname.git
-> 
-> I tried:
-> git clone ssh://admin@mydomain.com/~/git/projectname.git
-> 
-> It gives the same error.
+Hi, 
 
-Try
+when importing subversion repositories into git, git-svn show-ignore and
+create-ignore choke when scanning project subdirectories.  For example,
+with the sequence
 
-git clone admin@mydomain.com:/home/admin/mydomain.com/git/projectname.git
+ git-svn init -s http://svn.red-bean.com/repos/producingoss producingoss-git-svn
+ cd producingoss-git-svn
+ git-svn fetch
+ git-svn create-ignore 
 
-or (assuming /home/admin is your home directory)
+the last command prints this: 
 
-git clone admin@mydomain.com:mydomain.com/git/projectname.git
+ HTTP Path Not Found: PROPFIND request failed on '/repos/producingoss/!svn/bc/1465/ca': '/repos/producingoss/!svn/bc/1465/ca' path not found at /home/nikolaus/nfs/nsbp/git/git/git-svn line 1897
 
-or (if you can't live without the ssh: protocol specifier)
+Revision 1465 is the latest subversion revision of the project.  git-svn
+create-ignore stages a correct .gitignore in the top level directory, then
+aborts with the same error.  I have tested this with two svn projects, the
+result is identical.  Bisecting suggested that this is broken since commit
+01bdab84e31763a98206c31cf99b9dc3cb221356.
 
-git clone \
-  ssh://admin@mydomain.com/home/admin/mydomain.com/git/projectname.git
-
--- Hannes
+Nikolaus
