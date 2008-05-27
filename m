@@ -1,66 +1,82 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Tue, 27 May 2008 19:27:24 -0300
-Message-ID: <483C8ACB.5050505@intelinet.com.br>
-References: <20080526044640.GB30245@spearce.org>	 <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com>	 <alpine.DEB.1.00.0805261106470.30431@racer>	 <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com>	 <20080526181259.GA17449@foursquare.net>	 <20080526234445.GF30245@spearce.org> <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: setup_git_directory_gently contract question?
+Date: Tue, 27 May 2008 15:46:48 -0700
+Message-ID: <7vmymbz7on.fsf@gitster.siamese.dyndns.org>
+References: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Chris Frey <cdfrey@foursquare.net>,
-	Vegard Nossum <vegard.nossum@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Dave Watson <dwatson@mimvista.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
-	laforge@gnumonks.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 00:39:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 00:48:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K17p6-0005uz-3H
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:39:16 +0200
+	id 1K17xY-0007qk-0P
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756916AbYE0WiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 18:38:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756912AbYE0WiP
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:38:15 -0400
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1209 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756538AbYE0WiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 18:38:14 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 May 2008 18:38:13 EDT
-Received: (qmail 27656 invoked by uid 0); 27 May 2008 19:35:51 -0300
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4998.  Clear:RC:1:. 
- Processed in 1.166921 secs); 27 May 2008 22:35:51 -0000
-Received: from unknown (HELO roger.intelinet.com.br) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 27 May 2008 22:35:50 -0000
-User-Agent: Thunderbird 2.0.0.14 (X11/20080515)
-In-Reply-To: <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com>
+	id S1757493AbYE0WrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 18:47:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757327AbYE0WrH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:47:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49648 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756749AbYE0WrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 18:47:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 27D435CBF;
+	Tue, 27 May 2008 18:47:03 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 479845CBD; Tue, 27 May 2008 18:46:59 -0400 (EDT)
+In-Reply-To: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
+ (Ciprian Dorin Craciun's message of "Tue, 27 May 2008 17:10:42 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D30E620E-2C3E-11DD-AA37-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83056>
 
-Martin Langhoff escreveu:
-> On Tue, May 27, 2008 at 11:44 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
->   
->> So in all time these users have added a total of 14 lines between
->> them.  Out of 122,576 total added lines.  It amounts to only 0.011%
->> of the total contribution.  In the US a change this small may not
->> even be copyrightable.
->>     
->
-> It'd be nice to hear from them, but I looks fair to me to say that
-> those contributors - while very valuable - cannot hold the project
-> back.
->   
+"Ciprian Dorin Craciun" <ciprian.craciun@gmail.com> writes:
 
-Well, FWIW I'm ok with the license change.
+>     Is the function setup_git_directory_gently supposed to change the
+> current working directory, or should it keep the initial one?
+>     What is the meaning of nongit_ok?
 
-[]s,
-Roger.
+Most commands that work from subdirectory use setup_git_directory()
+interface, because major parts of the guts of the git internal want you to
+be at the top of the work tree (e.g. so that you grab a path out of the
+index, and be able to open(2) or lstat(2) that path).  A normal sequence
+for a command is: (1) use setup_git_directory() to learn "prefix", (2) use
+get_pathspec() and/or prefix_path() to add "prefix" to the paths given
+from the command to make it a path relative to the work tree, (3) do its
+thing.  setup_git_directory() chdir's up to the top of the work tree for
+this reason.
+
+Some commands can optionally work from even outside a git repository, but
+they would want to operate the same way as other comands, when they are
+started within a git repository.  In such a case, you use "gently"
+variant, and give a pointer to int to store an additional return value to
+signal you if you are inside a git repository or outside.
+
+ * When NULL is given as nongit_ok to gently(), it does not behave gentle
+   at all.  Outside a git repository it dies loudly.
+
+ * If you are inside a git repository, it behaves pretty much the same as
+   setup_git_directory().  "*nongit_ok" is set to zero to signal that you
+   are inside a git repository.
+
+ * If you are outside a git repository, *nongit_ok is set to non-zero so
+   that the caller can tell that it is not in any git repository's work
+   tree.  There is no need to chdir (nor a sensible place to chdir to) in
+   this case, so it doesn't.
+
+The caller thinks of the parameter as "are we operating in non-git mode?"
+boolean, and the callee (i.e. setup_git_directory_gently()) thinks of it
+as "is it ok to be called outside a git repository?" (if it is NULL, the
+caller expects to be inside a repository and wants it to barf otherwise).
+That is why caller's variable are often called "int nongit", and the
+callee's parameter is called "int *nongit_ok".
