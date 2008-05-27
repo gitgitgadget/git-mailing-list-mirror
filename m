@@ -1,73 +1,79 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: msysGit: "git filter-branch --subdirectory-filter" doesn't work
- at all
-Date: Tue, 27 May 2008 22:57:17 +0200
-Message-ID: <483C75AD.5080206@dirk.my1.cc>
-References: <483B0FF8.6070700@dirk.my1.cc> <alpine.DEB.1.00.0805262233190.30431@racer>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: [PATCH] builtin-fetch.c (store_updated_refs): Honor update_local_ref() return value
+Date: Wed, 28 May 2008 00:53:49 +0400
+Message-ID: <20080527205348.GC32722@wo.int.altlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 27 22:58:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 27 23:04:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K16FV-0006sy-VZ
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 22:58:26 +0200
+	id 1K16LV-00009W-8o
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 23:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756569AbYE0U5V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 16:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756474AbYE0U5V
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 16:57:21 -0400
-Received: from smtprelay10.ispgateway.de ([80.67.29.24]:44153 "EHLO
-	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756442AbYE0U5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 16:57:20 -0400
-Received: from [84.176.66.110] (helo=[192.168.2.100])
-	by smtprelay10.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1K16EQ-000413-Mt; Tue, 27 May 2008 22:57:18 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <alpine.DEB.1.00.0805262233190.30431@racer>
-X-Df-Sender: 757646
+	id S1756567AbYE0VDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 17:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756474AbYE0VDp
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 17:03:45 -0400
+Received: from vint.altlinux.org ([194.107.17.35]:42695 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755845AbYE0VDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 17:03:45 -0400
+X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 May 2008 17:03:45 EDT
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 4D90CB489C3;
+	Wed, 28 May 2008 00:53:49 +0400 (MSD)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 3E58BB44BCF; Wed, 28 May 2008 00:53:49 +0400 (MSD)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83051>
 
-Johannes Schindelin schrieb:
-> Hi,
->
-> On Mon, 26 May 2008, Dirk S=FCsserott wrote:
->
->  =20
->> $ git filter-branch --subdirectory-filter perl
->>    =20
->
-> And what branch, exactly, do you want to rewrite?  You did not specif=
-y=20
-> _any_ branch here.
->
-> Ciao,
-> Dscho
-Hi,
+Sync with builtin-fetch--tool.c where append_fetch_head()
+honors update_local_ref() return value.
 
-thanks, that helped a lot. As said, I've no
-actual use case for git-filter-branch but was just curious
-about the usage. So this wasn't an issue with msysGit or
-Windows, even though I thought that at first glance.
+This fixes git-fetch exit status,
+http://bugzilla.altlinux.org/show_bug.cgi?id=15037
+---
+ builtin-fetch.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-As I noticed from one of your replies to the
-'Commit cce8d6fdb introduces...' thread, you seem to be
-somewhat annoyed by people asking for Windows compatibility.
-That was not the case here, I just wanted to state that. ;-)
-
-To my opinion the --subdirectory-filter switch isn't documented
-very well. When I find out and have an example, I'll post it.
-
-    Dirk
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 167f948..db60966 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -292,7 +292,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ {
+ 	FILE *fp;
+ 	struct commit *commit;
+-	int url_len, i, note_len, shown_url = 0;
++	int rc = 0, url_len, i, note_len, shown_url = 0;
+ 	char note[1024];
+ 	const char *what, *kind;
+ 	struct ref *rm;
+@@ -359,7 +359,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ 			note);
+ 
+ 		if (ref)
+-			update_local_ref(ref, what, verbose, note);
++			rc |= update_local_ref(ref, what, verbose, note);
+ 		else if (verbose)
+ 			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
+ 				SUMMARY_WIDTH, *kind ? kind : "branch",
+@@ -376,7 +376,7 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
+ 		}
+ 	}
+ 	fclose(fp);
+-	return 0;
++	return rc;
+ }
+ 
+ /*
+-- 
+ldv
