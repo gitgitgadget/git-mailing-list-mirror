@@ -1,71 +1,93 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] t5700-clone-reference: Quote $U
-Date: Tue, 27 May 2008 09:36:22 +0200
-Message-ID: <1211873782-28487-1-git-send-email-johannes.sixt@telecom.at>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 27 09:37:27 2008
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] lockfile: reset the correct signal
+Date: Tue, 27 May 2008 09:49:03 +0200
+Message-ID: <20080527074903.GA2403@localhost>
+References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org> <20080523221723.GA4366@localhost> <20080525182650.GA17806@localhost> <alpine.DEB.1.00.0805261031480.30431@racer> <20080526193513.GA9978@localhost> <alpine.DEB.1.00.0805262234210.30431@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 27 09:50:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0tkJ-00024X-Dm
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 09:37:23 +0200
+	id 1K0twd-0005ek-La
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 09:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756592AbYE0Hgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 03:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756523AbYE0Hgb
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 03:36:31 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:34592 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756543AbYE0Hga (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 03:36:30 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1K0tjL-0006bG-CU; Tue, 27 May 2008 09:36:26 +0200
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 06C83546; Tue, 27 May 2008 09:36:22 +0200 (CEST)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id D2F79FA46; Tue, 27 May 2008 09:36:22 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.125.gb9f88
-X-Spam-Score: -0.8 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
+	id S1754563AbYE0HtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 03:49:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbYE0HtQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 03:49:16 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:8513 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754174AbYE0HtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 03:49:15 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1527039ywe.1
+        for <git@vger.kernel.org>; Tue, 27 May 2008 00:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        bh=6mvxrHj4p/wrbV9g6A0WxWjOuY2Z3/hdmfptN5fsq8o=;
+        b=S6eS9TfyImCZt8gqMHRJ4PMZt/bqXJQ08XwB7kYSef46tkSBlpKJmkiu7t0z1HdQpIpnnYG+1DwdF169VRF7QxuBPHaS8h+HhLOQL/KO55fmas7hunEzjlrsspFKJ483QHl+zdZP2yWu0+pG6rQWtGzArHKrQRdOopJkIVna8+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=nZUAYrKWDVNnbCaKbhX5/YF04rlkFvK6DisdbkfvdJvmmL/ZGVgVru13CDslirop64kVv9MB5j8bBUNqfco1uZDopwbr+1c60Z9kMkD8lIywuUOtSwu8PqV9zXWyxhYGLj7HOCTc4WVOBe/rnjBPYzRwkaADEK9qJhjAhV9qLwQ=
+Received: by 10.103.227.13 with SMTP id e13mr969581mur.49.1211874548705;
+        Tue, 27 May 2008 00:49:08 -0700 (PDT)
+Received: from darc.dyndns.org ( [84.154.95.54])
+        by mx.google.com with ESMTPS id b9sm9442034mug.13.2008.05.27.00.49.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 May 2008 00:49:01 -0700 (PDT)
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1K0tvb-0001GX-GL; Tue, 27 May 2008 09:49:03 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0805262234210.30431@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82985>
 
-The new "trash directory" bites again.
+Hi,
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- t/t5700-clone-reference.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+On Mon, May 26, 2008 at 10:36:45PM +0100, Johannes Schindelin wrote:
+> > On Mon, May 26, 2008 at 10:34:11AM +0100, Johannes Schindelin wrote:
+> > > Only from the patch did I understand that you actually meant:
+> > 
+> > Thank you for fixing that.
+> 
+> Unfortunately, the original patch is already in git.git.
 
-diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
-index e1ca730..1c10916 100755
---- a/t/t5700-clone-reference.sh
-+++ b/t/t5700-clone-reference.sh
-@@ -52,13 +52,13 @@ diff expected current'
- 
- cd "$base_dir"
- 
--rm -f $U
-+rm -f "$U"
- 
- test_expect_success 'cloning with reference (no -l -s)' \
--'GIT_DEBUG_SEND_PACK=3 git clone --reference B "file://$(pwd)/A" D 3>$U'
-+'GIT_DEBUG_SEND_PACK=3 git clone --reference B "file://$(pwd)/A" D 3>"$U"'
- 
- test_expect_success 'fetched no objects' \
--'! grep "^want" $U'
-+'! grep "^want" "$U"'
- 
- cd "$base_dir"
- 
--- 
-1.5.5.1.125.gb9f88
+I will be more careful with my commit messages in the future.
+
+> > I also realized that using signals like that can cause races. Shouldn't 
+> > we use sigaction() instead of signal()?
+> 
+> Dunno.  The man page suggests it, but we have plenty of cases where we use 
+> signal().  And I think it might be less painful to implement a 
+> compat-wrapper for the platforms which differ from Linux' interpretation 
+> of signal().
+
+On the other hand, sigaction is used already in two places. What do you
+think about replacing all those calls to signal/sigaction with something
+like this?
+
+void set_signal(int signo, void (*handler)(int), int sa_flags)
+{
+	struct sigaction sa;
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = handler;
+	sa.sa_flags = sa_flags;
+	sigemptyset(&sa.sa_mask);
+	sigaction(signo, &sa, NULL);
+}
+
+The behavior won't change, except that handlers cannot be interrupted by
+their own signal.
+
+Clemens
