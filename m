@@ -1,93 +1,83 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] lockfile: reset the correct signal
-Date: Tue, 27 May 2008 09:49:03 +0200
-Message-ID: <20080527074903.GA2403@localhost>
-References: <20080522195546.GA29911@localhost> <7vod6wr95y.fsf@gitster.siamese.dyndns.org> <20080523221723.GA4366@localhost> <20080525182650.GA17806@localhost> <alpine.DEB.1.00.0805261031480.30431@racer> <20080526193513.GA9978@localhost> <alpine.DEB.1.00.0805262234210.30431@racer>
+From: Mark Lawrence <nomad@null.net>
+Subject: Re: [cogito-0.18.2] Documentation/Code Mismatch: cg-switch -l
+Date: Tue, 27 May 2008 10:04:17 +0200
+Message-ID: <20080527080417.GA32209@lifebook.rekudos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 27 09:50:40 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 27 10:05:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0twd-0005ek-La
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 09:50:08 +0200
+	id 1K0uBp-0001kL-HA
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 10:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbYE0HtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 03:49:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbYE0HtQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 03:49:16 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:8513 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754174AbYE0HtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 03:49:15 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1527039ywe.1
-        for <git@vger.kernel.org>; Tue, 27 May 2008 00:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=6mvxrHj4p/wrbV9g6A0WxWjOuY2Z3/hdmfptN5fsq8o=;
-        b=S6eS9TfyImCZt8gqMHRJ4PMZt/bqXJQ08XwB7kYSef46tkSBlpKJmkiu7t0z1HdQpIpnnYG+1DwdF169VRF7QxuBPHaS8h+HhLOQL/KO55fmas7hunEzjlrsspFKJ483QHl+zdZP2yWu0+pG6rQWtGzArHKrQRdOopJkIVna8+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=nZUAYrKWDVNnbCaKbhX5/YF04rlkFvK6DisdbkfvdJvmmL/ZGVgVru13CDslirop64kVv9MB5j8bBUNqfco1uZDopwbr+1c60Z9kMkD8lIywuUOtSwu8PqV9zXWyxhYGLj7HOCTc4WVOBe/rnjBPYzRwkaADEK9qJhjAhV9qLwQ=
-Received: by 10.103.227.13 with SMTP id e13mr969581mur.49.1211874548705;
-        Tue, 27 May 2008 00:49:08 -0700 (PDT)
-Received: from darc.dyndns.org ( [84.154.95.54])
-        by mx.google.com with ESMTPS id b9sm9442034mug.13.2008.05.27.00.49.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 May 2008 00:49:01 -0700 (PDT)
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1K0tvb-0001GX-GL; Tue, 27 May 2008 09:49:03 +0200
+	id S1755789AbYE0IEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 04:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbYE0IEe
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 04:04:34 -0400
+Received: from lawrence.nine.ch ([217.150.250.121]:37123 "EHLO
+	lawrence.nine.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757243AbYE0IE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 04:04:27 -0400
+Received: from 217-162-110-104.dclient.hispeed.ch ([217.162.110.104] helo=lifebook.rekudos.net)
+	by lawrence.nine.ch with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nomad@null.net>)
+	id 1K0uAR-0007bx-JP
+	for git@vger.kernel.org; Tue, 27 May 2008 10:04:24 +0200
+Received: from mlawren by lifebook.rekudos.net with local (Exim 4.63)
+	(envelope-from <nomad@null.net>)
+	id 1K0uAL-0000EH-Ps
+	for git@vger.kernel.org; Tue, 27 May 2008 10:04:17 +0200
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0805262234210.30431@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: 217.162.110.104
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: nomad@null.net
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	lawrence.nine.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=1.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on lawrence.nine.ch)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82986>
 
-Hi,
-
-On Mon, May 26, 2008 at 10:36:45PM +0100, Johannes Schindelin wrote:
-> > On Mon, May 26, 2008 at 10:34:11AM +0100, Johannes Schindelin wrote:
-> > > Only from the patch did I understand that you actually meant:
+> On Mon May 26, 2008 at 02:19:04PM +0200, Andreas Ericsson wrote:
+> > Mark Lawrence wrote:
+> > >Hi,
+> > >
+> > >I don't know if this is a bug or just my understanding, but I'm having
+> > >trouble matching the behaviour of "cg-switch -l" with the documentation.
+> > >
 > > 
-> > Thank you for fixing that.
+> > Cogito became officially unmaintained a very long time ago (late 2006?)
+> > and will almost certainly not work properly with any half-recent version
+> > of git. Don't use it.
 > 
-> Unfortunately, the original patch is already in git.git.
-
-I will be more careful with my commit messages in the future.
-
-> > I also realized that using signals like that can cause races. Shouldn't 
-> > we use sigaction() instead of signal()?
+> Oh. That's only <sarcasm>slightly annoying</sarcasm> to learn now, given
+> that I've spent the past two years learning and converting my projects
+> over to cogito :/ Could somebody *please* update the cogito web page at
+> http://git.or.cz/cogito/ and put a big (maybe even blinking) notice
+> informing people of this?
 > 
-> Dunno.  The man page suggests it, but we have plenty of cases where we use 
-> signal().  And I think it might be less painful to implement a 
-> compat-wrapper for the platforms which differ from Linux' interpretation 
-> of signal().
+> Bit of a shame that it's died though, because I appreciated the simpler
+> interface (and some of the output I find nicer).
+> 
+> On a more practical note, am I likely to suffer any issues using pure
+> git on repos created with cogito?
 
-On the other hand, sigaction is used already in two places. What do you
-think about replacing all those calls to signal/sigaction with something
-like this?
+And a related question: is there any kind of cogito replacement that
+provides a simplified interface? As far as versioning tools go, git is
+quite low-level...
 
-void set_signal(int signo, void (*handler)(int), int sa_flags)
-{
-	struct sigaction sa;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = handler;
-	sa.sa_flags = sa_flags;
-	sigemptyset(&sa.sa_mask);
-	sigaction(signo, &sa, NULL);
-}
-
-The behavior won't change, except that handlers cannot be interrupted by
-their own signal.
-
-Clemens
+Thanks,
+Mark.
+-- 
+Mark Lawrence
