@@ -1,101 +1,92 @@
-From: Nikolaus Schulz <microschulz@web.de>
-Subject: Re: [PATCH] git-svn fails in prop_walk if $self->{path} is not empty
-Date: Wed, 28 May 2008 00:54:02 +0200
-Message-ID: <20080527225402.GA25550@penelope.zusammrottung.local>
-References: <20080527162002.GA21855@penelope.zusammrottung.local> <20080527084655.20379.qmail@5bba46d46c095e.315fe32.mid.smarden.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: Gitweb caching: Google Summer of Code project
+Date: Wed, 28 May 2008 00:54:39 +0200
+Message-ID: <483C912F.6010802@gmail.com>
+References: <483C4CFF.2070101@gmail.com> <200805272353.34319.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 28 00:55:15 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>, Lars Hjemli <hjemli@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 00:55:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K184W-0001B6-N5
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:55:13 +0200
+	id 1K1854-0001I0-BP
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 00:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758880AbYE0WyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 18:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758732AbYE0WyN
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:54:13 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:54840 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758349AbYE0WyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 18:54:12 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C3DE1E132FA9
-	for <git@vger.kernel.org>; Wed, 28 May 2008 00:54:05 +0200 (CEST)
-Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1K183R-0007Aw-00
-	for git@vger.kernel.org; Wed, 28 May 2008 00:54:05 +0200
-Received: from penelope.zusammrottung.local ([192.168.178.202])
-	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <nikolaus@penelope.zusammrottung.local>)
-	id 1K183Q-00087C-0P
-	for git@vger.kernel.org; Wed, 28 May 2008 00:54:04 +0200
-Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
-	(envelope-from <nikolaus@penelope.zusammrottung.local>)
-	id 1K183O-0006eJ-R4
-	for git@vger.kernel.org; Wed, 28 May 2008 00:54:02 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20080527084655.20379.qmail@5bba46d46c095e.315fe32.mid.smarden.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Sender: microschulz@web.de
-X-Provags-ID: V01U2FsdGVkX1/KgiEJQq4rEcCNwp0oOkr2j3WvIq9jDj4r4WMt
-	x9HRDI0hbNRUnhStn8tRZP8WQyecdupf+V33J2gMnmipYwKn4C
-	2cDNvBoyc=
+	id S1758272AbYE0Wym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 18:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758130AbYE0Wym
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 18:54:42 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:53145 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757570AbYE0Wyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 18:54:41 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1630029fgg.17
+        for <git@vger.kernel.org>; Tue, 27 May 2008 15:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=nRpWaDN2WYIMhXfIFOFguw/hiyNeCDYB2G0PUcUo9G0=;
+        b=C9TwWkjOg1NiORWBlXTHbjVnogkq1zaBjYDoetKHxKjkacUh7/mr/dUWP7u2AbR5lMIL6barGmVa12r9n8ya1fjn7T80mz0rOs3Ap2M3Aokt2+4BLg3FiHrHMHrEl8+dW/UaAx0Basd8CHuQ2N0O8uwZf/oPl+Rui5fPlTo8Sco=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=ieJ848b6a1kxHhahqc5fjo9f9Q+6jE6NU5r5i6Xe2xKsFBS35TX+/4VBXq0b0w3gKetQ7lxz1BpSbU+Ejcj7Bh5FCpcLISO//dtIIcT6yKU5zh6+9pprrLJsOnltpA7Hqydt54Zu47Gm2334fsrhjNY4GDOsRaMnkjm+OfWrVCA=
+Received: by 10.86.77.5 with SMTP id z5mr224814fga.42.1211928879778;
+        Tue, 27 May 2008 15:54:39 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.209.73])
+        by mx.google.com with ESMTPS id 28sm25386990fkx.8.2008.05.27.15.54.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 May 2008 15:54:39 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <200805272353.34319.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83058>
 
-Happy coincidence!
+Jakub Narebski wrote:
+> Lately he posted a patch
+> implementing projects list caching, in a bit different way from how it
+> is done on kernel.org, namely by caching data and not final output:
 
-This patch happens to fix my problem posted in "git-svn
-{show,create}-ignore chokes upon subdirs" today. 
+Thanks for this and all the other pointers.
 
-Nikolaus
+Caching data and not final output is actually what I'm about to try 
+next.  If I'm not mistaken, the HTML output is significantly larger than 
+the source (repository) data; however, kernel.org still seems to benefit 
+from caching the HTML, rather than letting Linux' page cache cache the 
+source data.  That leads me to think that the page cache somehow fails 
+to cache the source data properly -- I'm not sure why (wild speculation: 
+perhaps because of the pack format).  Anyway, I'd hope that I can 
+encapsulate the 30-40 git_cmd calls in gitweb.perl and somehow cache 
+their results (or, to save memory, the parts of their results that are 
+actually used) and cache them using memcached.  If that works well, we 
+can stop bothering about frontend (HTML) caching, unless CPU becomes an 
+issue, since all HTML pages are generated from cacheable source data.
 
-On Tue, May 27, 2008 at 08:46:55AM +0000, Gerrit Pape wrote:
-> From: Christian Engwer <christi@uni-hd.de>
-> 
-> The problem now is that prop_walk strips trunk from the path and then
-> calls itself recursively. But now trunk is missing in the path and
-> get_dir fails, because it is called for a non existing path.
-> 
-> The attached patch fixed the problem, by adding the priviously stipped
-> $self->{path} in the recursive call. 
-> git-svn repository for the commands show-ignore and show-external.
-> 
-> Patch was submitted through
->  http://bugs.debian.org/477393
-> 
-> Signed-off-by: Gerrit Pape <pape@smarden.org>
-> ---
-> 
-> I'm not that much a git-svn user, and didn't test this thoroughly.  I'd
-> be happy if anyone could crossread/test this, and maybe add a Acked-By.
-> 
-> Thanks, Gerrit.
-> 
-> 
->  git-svn.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 37976f2..72fef16 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1918,7 +1918,7 @@ sub prop_walk {
->  
->  	foreach (sort keys %$dirent) {
->  		next if $dirent->{$_}->{kind} != $SVN::Node::dir;
-> -		$self->prop_walk($p . $_, $rev, $sub);
-> +		$self->prop_walk($self->{path} . $p . $_, $rev, $sub);
->  	}
->  }
+I'm *kindof* hoping that in the end there will be only few issues with 
+cache expiry, since most calls are uniquely identified through hashes. 
+(And the ones that are not, like getting the hash of the most recent 
+commit, can perhaps be cached with some fairly low expiry time.)
+
+So that's what I'll try next.  If you have any comments or warnings off 
+the top of your heads, feel free to send email of course. :)
+
+> the main culprit of [the fork] was splitting gitweb into many, many
+> files.  While it helped John in understanding gitweb, it made it
+> difficult to merge changes back to mainline.
+
+Interesting point, thanks for letting me know.  (I might have gone ahead 
+and tried to split the mainline gitweb myself... ^^)  I think it would 
+be nice if gitweb.perl could be split at some point, but I assume there 
+are too many patches out there for that to be worth the merge problems, 
+right?
+
+-- Lea
