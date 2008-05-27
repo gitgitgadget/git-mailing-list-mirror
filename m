@@ -1,87 +1,193 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [cogito-0.18.2] Documentation/Code Mismatch: cg-switch -l
-Date: Tue, 27 May 2008 10:11:27 +0200
-Message-ID: <998860CC-E94E-4C61-964A-0CB9F44074C1@wincent.com>
-References: <20080527080417.GA32209@lifebook.rekudos.net>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Multiple user questions
+Date: Tue, 27 May 2008 10:24:08 +0200
+Message-ID: <200805271024.09235.jnareb@gmail.com>
+References: <200805231327.41216.devurandom@gmx.net> <200805241433.42954.jnareb@gmail.com> <200805251049.59418.devurandom@gmx.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mark Lawrence <nomad@null.net>
-X-From: git-owner@vger.kernel.org Tue May 27 10:13:30 2008
+Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Dennis Schridde <devurandom@gmx.net>
+X-From: git-owner@vger.kernel.org Tue May 27 10:22:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K0uJE-0003qA-F9
-	for gcvg-git-2@gmane.org; Tue, 27 May 2008 10:13:28 +0200
+	id 1K0uSA-0006bI-4F
+	for gcvg-git-2@gmane.org; Tue, 27 May 2008 10:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461AbYE0IMW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 04:12:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbYE0IMU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 04:12:20 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:54073 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755346AbYE0IMT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 May 2008 04:12:19 -0400
-Received: from cuzco.lan (156.pool85-53-26.dynamic.orange.es [85.53.26.156])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m4R8BRM4013625
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 27 May 2008 04:11:29 -0400
-In-Reply-To: <20080527080417.GA32209@lifebook.rekudos.net>
-X-Mailer: Apple Mail (2.919.2)
+	id S1755952AbYE0IVl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 04:21:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756055AbYE0IVl
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 04:21:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:22603 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755247AbYE0IVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 04:21:38 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1101078nfc.21
+        for <git@vger.kernel.org>; Tue, 27 May 2008 01:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=Vwuz4mOr2W1PtjZzIwOR9INWEJ0CP9A/gPa0hAnnCKg=;
+        b=TTcjuns67BKeuk6xSp8fMWmshK6QmGcE3clHKi4h7oCejhiHjR7WpPh/y7jzd67SpmQeeQMBOuElH4thyrT+un3urnykE8vuMXsnIZTzvXiQRfamyrem9hN2OucQcZHaTrZnKNEaw5vkDrktECorXh/8APWHCTzqjTHGP5TH/1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Mthr4Vh1Nh/zCnBSv+anWyor8z3+JY5oq8+GeVJSKRnut0A005QGfHpm5gWWMFUNOyECjP0+YyPDS/AQDxUXJwyeXzQOMg4Hll6BfdDgDp/63y8k5V0N0QgKn5gnhL5SKOWZ1uiTGAklMdzQN/g4EXipZPFgLs+VdgI7BA9B9bk=
+Received: by 10.86.4.2 with SMTP id 2mr7535273fgd.62.1211876494570;
+        Tue, 27 May 2008 01:21:34 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.251.174])
+        by mx.google.com with ESMTPS id 3sm14983074fge.3.2008.05.27.01.21.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 May 2008 01:21:32 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200805251049.59418.devurandom@gmx.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/82988>
 
-El 27/5/2008, a las 10:04, Mark Lawrence escribi=F3:
->> On Mon May 26, 2008 at 02:19:04PM +0200, Andreas Ericsson wrote:
->>> Mark Lawrence wrote:
->>>> Hi,
+Dnia niedziela 25. maja 2008 10:49, Dennis Schridde napisa=B3:
+> Am Samstag, 24. Mai 2008 14:33:42 schrieb Jakub Narebski:
+>> Dnia sobota 24. maja 2008 11:13, Dennis Schridde napisa=B3:
+>>> Am Samstag, 24. Mai 2008 03:30:43 schrieb Jakub Narebski:
+>>>> Dennis Schridde <devurandom@gmx.net> writes:
+>>>>>
+>>>>> 2) Can I make format-patch include the full commit message, date,
+>>>>> author, stats in the patches? (To mimic what git-show would show =
+me.)
+>>>>> Will this be sent via send-email, too?
 >>>>
->>>> I don't know if this is a bug or just my understanding, but I'm =20
->>>> having
->>>> trouble matching the behaviour of "cg-switch -l" with the =20
->>>> documentation.
->>>>
+>>>> Errr... git-format-patch output _does_ include full commit message=
+,
+>>>> author, author date and diffstat.
 >>>
->>> Cogito became officially unmaintained a very long time ago (late =20
->>> 2006?)
->>> and will almost certainly not work properly with any half-recent =20
->>> version
->>> of git. Don't use it.
+>>> For me only the first line of the commit message is printed in the
+>>> subject, all other lines are missing.
 >>
->> Oh. That's only <sarcasm>slightly annoying</sarcasm> to learn now, =20
->> given
->> that I've spent the past two years learning and converting my =20
->> projects
->> over to cogito :/ Could somebody *please* update the cogito web =20
->> page at
->> http://git.or.cz/cogito/ and put a big (maybe even blinking) notice
->> informing people of this?
->>
->> Bit of a shame that it's died though, because I appreciated the =20
->> simpler
->> interface (and some of the output I find nicer).
->>
->> On a more practical note, am I likely to suffer any issues using pur=
-e
->> git on repos created with cogito?
->
-> And a related question: is there any kind of cogito replacement that
-> provides a simplified interface? As far as versioning tools go, git i=
-s
-> quite low-level...
+>> What version of git do you use? If I remember correctly this area
+>> was worked on some time ago, so git-format-patch takes now whole fir=
+st
+>> paragraph as a subject of email, folding it using appropriate RFC
+>> style.
 
-The reason why cogito fell out of maintenance is that git itself has =20
-evolved from the hard-core, close-to-the-metal tool that it was in the =
+It does, and does not help, see below for details.
+
+> Then that multiline subject must have been lost somewhere along the w=
+ay. Maybe=20
+> some mailserver in between striped it down to one line...
+
+Actually, after some testing it looks like while git-format-patch
+generates correct patches for commit messages which do not follow
+git convention of single line summary followed (optionally) by longer
+description and (optionally) signoff, git-am doesn't correctly apply
+them.
+
+It is easy to understand why it is this way: git-format-patch uses
+RFC 2822 (I think) folding of mail headers, so the subject looks like
+below:
+
+   Subject: <prefix> <first line of commit message> LF
+   SP <second line of commit message> ...
+
+where <prefix> is for example "[PATCH]" or "[PATCH m/n]".  Now git-am
+doesn't know if the patch was generated by git-format-patch, or does
+it have subject line wrapped by MUA / MTA as to, for example, do not
+cross line length limit for email headers.
+
+
+Now git-rebase, which by default in non-interactive mode uses
+git-format-patch | git-am pipeline, _doesn't_ munge commit messages,
+even if they do not follow git commit message convention.
+
+It does it by using undocumented (at least not mentioned in git-am(1)
+manpage, even if it is shown in "git am -h" output (long usage)) option
+to git-am, namely '--rebasing'.  Unfortunately, at least if you want
+to apply patches send by email, it imples '--keep', so
+"git am --rebasing" won't strip "[PATCH]" or "[PATCH m/n]" prefix.
+
+>>> If I want a message to appear in the body at all, I need a special =
+way to
+>>> format my commit messages: 1 line summary, 1 empty line, descriptio=
+n.
+>>> Only the description is then shown in the email.
+>>> This seems inconvenient, especially for smaller changes.
+>>
+>> What do you think this commit message convention git uses is from?
+>> It stems from exchanging patches by email, where you had to put shor=
+t,
+>> single line description in the email subject, and describe change in
+>> more detail in message (email) body.  If you don't follow this
+>> commit message convention many git tools (tig, gitk, git-shortlog, e=
+tc.)
+>> will not work as expected.
+>>
+> I guess this is then a feature request?
+> To use first line for subject, and repeat the whole commit-message in=
+ the=20
+> body?
+
+IIRC you can always repeat "Subject:" in the body of email, and it
+would be used as first line (first paragraph with '--rebasing', see
+above) of commit message instead of _email_ subject.
+
+>>> Further, attachments do not at all contain any information like tha=
+t.
+>>> See the attached example.
+>>
+>> Errr... I just tried "git format-patch --attach"[1] and it creates b=
+y
+>> default multi-part attachement, first part is commit message, second
+>> is patch itself.  The commit message contains diffstat.
+>>
+> I wanted to know whether I could make that 2nd part ("patch itself") =
+also=20
+> contain the whole commit message, date, author (so it looks like what=
 =20
-early days to be usable by mere mortals. What specific features/=20
-workflows of cogito are you missing? It's likely that modern git =20
-already has an equivalent that is just as easy to use.
+> git-show gives me).
 
-Wincent
+I don't see why not.  You can easy distinguish old format (with first
+line / first paragraph given by subject of email) from new format (with
+whole commit message as first MIME-attachement part) by the fact that
+old format part begins with an empty line... well, beside the fact that
+you would have be careful and use old format for commit messages which
+begins with empty line (git-commit wouldn't create such messages, so
+they have to come for example from misconversion from other SCM).
+
+I have CC-ed Dscho and Mike McCormack, authors of --attach option to
+git-format-patch.
+
+>>>>> 4) Can I make format-patch output one deletion and one insertion =
+for a
+>>>>> complete rewrite of a function, instead of multiple deletes/inser=
+ts?
+>>>>
+>>>> Try git-format-patch with -B option, or -B<num>.
+>>>
+>>> I tried that already.  Whether I specified -B or not, it always gav=
+e
+>>> the exact same output (says diff).
+>>
+>> Ah, I'm sorry.  The -B is to recognize total rewrite, i.e. such a ch=
+ange
+>> that is best represent as delete old contents and create new one.
+>>
+> Total rewrite of a file? So not appropriate for the total rewrite of =
+just a=20
+> function?
+
+It is not.
+
+But if I remember correctly some time ago either Linus or Junio
+modified diff output to concatenate chunks if they are separated by
+less than 2*context+2 lines, or something like that.  Unfortunately
+I cannot find either thread on git mailing list, or commit adding this
+feature...
+
+--=20
+Jakub Narebski
+Poland
