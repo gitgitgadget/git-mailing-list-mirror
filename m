@@ -1,145 +1,144 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] bisect: use "$GIT_DIR/BISECT_START" to check if we are
- bisecting
-Date: Wed, 28 May 2008 18:57:02 +0200
-Message-ID: <20080528185702.4dcd2955.chriscool@tuxfamily.org>
+From: "Alex Bennee" <kernel-hacker@bennee.com>
+Subject: Re: parsecvs losing files
+Date: Wed, 28 May 2008 17:53:30 +0100
+Message-ID: <b2cdc9f30805280953l40ce9e37m1fb558e541ef89c3@mail.gmail.com>
+References: <b2cdc9f30805280750v3b92d115yf76f382e5c2fa418@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 28 18:53:44 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 28 18:54:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1Ou3-0000rE-3t
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 18:53:31 +0200
+	id 1K1Oux-0001Cv-Lq
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 18:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbYE1Qwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 12:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbYE1Qwh
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 12:52:37 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:55413 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751303AbYE1Qwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 12:52:36 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 14E0B1AB5A9;
-	Wed, 28 May 2008 18:52:34 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id CC3BC1AB2AD;
-	Wed, 28 May 2008 18:52:33 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1751829AbYE1Qxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 12:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751762AbYE1Qxc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 12:53:32 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:5653 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725AbYE1Qxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 12:53:31 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so3612278rvb.1
+        for <git@vger.kernel.org>; Wed, 28 May 2008 09:53:30 -0700 (PDT)
+Received: by 10.141.171.6 with SMTP id y6mr1399004rvo.85.1211993610147;
+        Wed, 28 May 2008 09:53:30 -0700 (PDT)
+Received: by 10.140.134.12 with HTTP; Wed, 28 May 2008 09:53:30 -0700 (PDT)
+In-Reply-To: <b2cdc9f30805280750v3b92d115yf76f382e5c2fa418@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 0c2ec64ff5b23604
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83110>
 
-It seems simpler and safer to use the BISECT_START file everywhere
-to decide if we are bisecting or not, instead of using it in some
-places and BISECT_NAMES in other places.
+On Wed, May 28, 2008 at 3:50 PM, Alex Bennee <kernel-hacker@bennee.com> wrote:
+> Hi,
+> <snip>
+> Anyway today I noticed it had failed to import a sub-directory of the
+> project (not a bit I usually build). However looking at the import log
+> from parsecvs I see that the file was read by parsecvs. It looks as
+> though it should have made it into the git repo. The only thing that
+> seems different from the other modules is that the files where
+> imported once and don't seem to have been touched since. This may of
+> caused parsecvs to get confused?
 
-In commit 6459c7c6786aa9bda0c7a095c9db66c36da0e5f0 (Nov 18 2007,
-Bisect: use "$GIT_DIR/BISECT_NAMES" to check if we are bisecting.),
-we decided to use BISECT_NAMES but code changed a lot and we now
-have to check BISECT_START first in the "bisect_start" function
-anyway.
+Well in answer to myself parsecvs does get confused. In an example
+failed to import file:
 
-This patch also makes things a little bit safer by creating
-the BISECT_START file first and deleting it last, and also by
-adding checks in "bisect_clean_state".
+Load:                          third-party/libxml/runtest.c,v   8207 of 79070
+/export/git/master.cvs/third-party/libxml/runtest.c,v spliced:
+	 1.1.1.1
+	 1.1
+Sorted heads for /export/git/master.cvs/third-party/libxml/runtest.c,v
+	master 1.1
+	master > BRANCH-3-5-branch 1.1.1.1.0.2
+	master > BRANCH-3-5-16-branch 1.1.1.1.0.4
+building branches for /export/git/master.cvs/third-party/libxml/runtest.c,v
+file sha1: b694d565caf10fedbc7566f2bf15b893c57d5a19
+file sha1: b694d565caf10fedbc7566f2bf15b893c57d5a19
+file has 2 revisions
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh |   29 +++++++++++++----------------
- 1 files changed, 13 insertions(+), 16 deletions(-)
+An lo, looking at the branches mentioned these missing files are
+there. Trouble is the files should be in a number of branches, looking
+at the ,v file in question:
 
-	This is a cleanup to add on top of the detached HEAD series.
-	Thanks.
+head	1.1;
+branch	1.1.1;
+access;
+symbols
+	BRANCH-3-5-26-1:1.1.1.1
+	BRANCH-3-5-25-1:1.1.1.1
+	BRANCH-3-5-24-1:1.1.1.1
+	BRANCH-3-5-22-3:1.1.1.1
+	BRANCH-3-5-22-1:1.1.1.1
+	BRANCH-3-5-21-1:1.1.1.1
+	BRANCH-3-5-20-1:1.1.1.1
+	BRANCH-3-5-16-7:1.1.1.1
+	BRANCH-3-5-19-1:1.1.1.1
+	BRANCH-3-5-16-6:1.1.1.1
+	BRANCH-3-5-16-5:1.1.1.1
+	BRANCH-3-5-18-1:1.1.1.1
+	BRANCH-3-5-16-4:1.1.1.1
+	BRANCH-3-5-16-branch:1.1.1.1.0.4
+	BRANCH-3-5-17-1:1.1.1.1
+	BRANCH-3-5-16-3:1.1.1.1
+	BRANCH-3-5-16-2:1.1.1.1
+	BRANCH-3-5-16-1:1.1.1.1
+	post-merge-of-ajz-post-3-5-branch:1.1.1.1
+	pre-merge-of-ajz-post-3-5-branch:1.1.1.1
+	BRANCH-3-5-15-1:1.1.1.1
+	BRANCH-3-5-14-1:1.1.1.1
+	BRANCH-3-5-branch:1.1.1.1.0.2
+	BRANCH-3-5-13-1:1.1.1.1
+	BRANCH-3-5-12-1:1.1.1.1
+	BRANCH-3-5-11-1:1.1.1.1
+	BRANCH-3-5-10-1:1.1.1.1
+	BRANCH-3-5-9-2:1.1.1.1
+	BRANCH-3-3-20-red-e1-opt-branch:1.1.1.1
+	GNOME_LIBXML2_2_6_29:1.1.1.1
+	GNOME:1.1.1;
+locks; strict;
+comment	@ * @;
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 4bcbace..991b2ef 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -44,7 +44,7 @@ sq() {
- }
- 
- bisect_autostart() {
--	test -f "$GIT_DIR/BISECT_NAMES" || {
-+	test -s "$GIT_DIR/BISECT_START" || {
- 		echo >&2 'You need to start by "git bisect start"'
- 		if test -t 0
- 		then
-@@ -98,7 +98,7 @@ bisect_start() {
- 	#
- 	# Get rid of any old bisect state.
- 	#
--	bisect_clean_state
-+	bisect_clean_state || exit
- 
- 	#
- 	# Check for one bad and then some good revisions.
-@@ -146,8 +146,8 @@ bisect_start() {
- 	#
- 	# Write new start state.
- 	#
--	sq "$@" >"$GIT_DIR/BISECT_NAMES" &&
- 	echo "$start_head" >"$GIT_DIR/BISECT_START" &&
-+	sq "$@" >"$GIT_DIR/BISECT_NAMES" &&
- 	eval "$eval" &&
- 	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
- 	#
-@@ -226,7 +226,7 @@ bisect_next_check() {
- 		;;
- 	*)
- 		THEN=''
--		test -f "$GIT_DIR/BISECT_NAMES" || {
-+		test -s "$GIT_DIR/BISECT_START" || {
- 			echo >&2 'You need to start by "git bisect start".'
- 			THEN='then '
- 		}
-@@ -392,16 +392,12 @@ bisect_visualize() {
- }
- 
- bisect_reset() {
--	test -f "$GIT_DIR/BISECT_NAMES" || {
-+	test -s "$GIT_DIR/BISECT_START" || {
- 		echo "We are not bisecting."
- 		return
- 	}
- 	case "$#" in
--	0) if [ -s "$GIT_DIR/BISECT_START" ]; then
--	       branch=`cat "$GIT_DIR/BISECT_START"`
--	   else
--	       branch=master
--	   fi ;;
-+	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
- 	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
- 	       die "$1 does not seem to be a valid branch"
- 	   branch="$1" ;;
-@@ -416,14 +412,15 @@ bisect_clean_state() {
- 	git for-each-ref --format='%(refname) %(objectname)' refs/bisect/\* |
- 	while read ref hash
- 	do
--		git update-ref -d $ref $hash
-+		git update-ref -d $ref $hash || exit
- 	done
--	rm -f "$GIT_DIR/BISECT_START"
--	rm -f "$GIT_DIR/BISECT_LOG"
--	rm -f "$GIT_DIR/BISECT_NAMES"
--	rm -f "$GIT_DIR/BISECT_RUN"
-+	rm -f "$GIT_DIR/BISECT_LOG" &&
-+	rm -f "$GIT_DIR/BISECT_NAMES" &&
-+	rm -f "$GIT_DIR/BISECT_RUN" &&
- 	# Cleanup head-name if it got left by an old version of git-bisect
--	rm -f "$GIT_DIR/head-name"
-+	rm -f "$GIT_DIR/head-name" &&
-+
-+	rm -f "$GIT_DIR/BISECT_START"
- }
- 
- bisect_replay () {
+
+1.1
+date	2007.08.16.15.59.35;	author jbpn;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2007.08.16.15.59.35;	author jbpn;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+<snip rest of file>
+
+I'm not sure why parsecvs got this wrong, I'm digging through it but
+I'm a little fuzzy where lex/bison/whatever is involved. I notice
+looking at the log for some of the files that did make it that the CVS
+revisions for all the branches have a .0.[something] suffix which the
+missing branches in this case don't have. However CVS is very sure the
+file exists in these other branches.
+
+Could this be something to do with explicit branches and sticky branch
+tags? Or just a straight bug in parsecvs?
+
+
 -- 
-1.5.5.1.580.g40a12.dirty
+Alex, homepage: http://www.bennee.com/~alex/
