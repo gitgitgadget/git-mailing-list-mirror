@@ -1,85 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Completion: Hint whether amend is the right thing to do.
-Date: Wed, 28 May 2008 08:53:40 -0700
-Message-ID: <7v63sywhkr.fsf@gitster.siamese.dyndns.org>
-References: <200805281608.02000.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now incompatible with Cygwin (and probably Windows)
+Date: Wed, 28 May 2008 17:58:52 +0200
+Message-ID: <CB1B699D-8DC6-4FF5-96E1-072FA91F70CF@wincent.com>
+References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org> <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com> <483D7FE9.5000207@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 28 17:55:12 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 18:01:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1NzD-0001f6-7I
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 17:54:47 +0200
+	id 1K1O4r-0004GQ-1c
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 18:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436AbYE1Pxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 11:53:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYE1Pxz
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:53:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39118 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbYE1Pxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 11:53:55 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D908324B;
-	Wed, 28 May 2008 11:53:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTP id AE9263246; Wed, 28 May 2008 11:53:48 -0400 (EDT)
-In-Reply-To: <200805281608.02000.robin.rosenberg.lists@dewire.com> (Robin
- Rosenberg's message of "Wed, 28 May 2008 16:08:01 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4517386E-2CCE-11DD-BD5C-80001473D85F-77302942!a-sasl-fastnet.pobox.com
+	id S1751569AbYE1P7k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 11:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbYE1P7k
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:59:40 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:47947 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbYE1P7k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2008 11:59:40 -0400
+Received: from cuzco.lan (156.pool85-53-26.dynamic.orange.es [85.53.26.156])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m4SFwr2g005539
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 28 May 2008 11:59:01 -0400
+In-Reply-To: <483D7FE9.5000207@gmail.com>
+X-Mailer: Apple Mail (2.919.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83104>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+El 28/5/2008, a las 17:53, Lea Wiemann escribi=F3:
+> Wincent Colaiuta wrote:
+>> El 28/5/2008, a las 8:12, Junio C Hamano escribi=F3:
+>>> Perhaps we should remove the infamous gitweb/test/M=E4rchen file
+>> [...] I'd much rather see this kind of thing  tested from within =20
+>> the test suite rather than every time I do "git  status" or "git =20
+>> checkout".
+>
+> I don't believe the M=E4rchen file is actually used in any test code,=
+ =20
+> so removing it should be fine.  If/when we actually write test code =20
+> for gitweb, it seems to me that we might as well generate such test =20
+> files on the fly from within the test suite, rather than having them =
+=20
+> in the file system permanently.
 
-> When you get a conflict during interactive rebase the next
-> thing to do is not to amend, but to continue the rebase.
-> With this change you get a reminder in the prompt.
->
-> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> ---
->  contrib/completion/git-completion.bash |    7 ++++++-
->  1 files changed, 6 insertions(+), 1 deletions(-)
->
-> I got a couple of broken rebases. Hence this fix.
->
-> -- robin
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 1698463..a606328 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -82,7 +82,12 @@ __git_ps1 ()
->  			b="$(git symbolic-ref HEAD 2>/dev/null)"
->  		elif [ -f "$g/.dotest-merge/interactive" ]
->  		then
-> -			r="|REBASE-i"
-> +			if [ -f "$g/.dotest-merge/amend" ]
-> +			then
-> +				r="|REBASE-i-amend"
-> +			else
-> +				r="|REBASE-i-continue"
-> +			fi
->  			b="$(cat "$g/.dotest-merge/head-name")"
->  		elif [ -d "$g/.dotest-merge" ]
->  		then
-> -- 
-> 1.5.5.1.178.g1f811
+Yes, that's exactly what I intended my comment to imply. Test at test =20
+time, not every time I do "git status" and "git checkout" etc.
 
-Hmm.  The "|REBASE-blah" prefix is already too long for my liking and this
-makes it even longer X-<
-
-Does this mean that it would help reduce mistakes if "git commit --amend"
-noticed the presense of .dotest-merge but absense of .dotest-merge/amend
-and refused to operate, I have to wonder?
+Cheers,
+Wincent
