@@ -1,76 +1,85 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now
- incompatible with Cygwin (and probably Windows)
-Date: Wed, 28 May 2008 17:53:13 +0200
-Message-ID: <483D7FE9.5000207@gmail.com>
-References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org> <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Completion: Hint whether amend is the right thing to do.
+Date: Wed, 28 May 2008 08:53:40 -0700
+Message-ID: <7v63sywhkr.fsf@gitster.siamese.dyndns.org>
+References: <200805281608.02000.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed May 28 17:54:34 2008
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed May 28 17:55:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1Nyd-0001QU-4h
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 17:54:11 +0200
+	id 1K1NzD-0001f6-7I
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 17:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbYE1PxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 11:53:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbYE1PxT
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:53:19 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:29755 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169AbYE1PxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 11:53:19 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1366680nfc.21
-        for <git@vger.kernel.org>; Wed, 28 May 2008 08:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=yHuNn+tviUcnMyDxsUFZOJIXY14PkJAiXQJjp8YxuN0=;
-        b=B6xGtj+x7rtCVsOHIilBAKrHiBIkdix2sMNkswj63yxA4RMu4UstRSKDneJGPHc+akU1smTBBFR+8JkfH1P4IJnPEH/OM/YlOwmR35YjLYXZwrX35Tzzo+XyLtWkRjOZYNknM1B6lO9QDB4GOxgOxKqVtknz2aWqb66Xdf4CGxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=d+hkHIqWEWOEENFuxRp4MXFGjzCTRT1KsKyMxLIet96jJwTFA4kpwCHEW3TUheMNHB6DYbD5JzG+0TPB+k52+cCN37SlzXIqh5NaHYG35jZqqY4CZRLRmSDSDhpTZE/g4FadC6nvO7SMu6xD20P4MYdV7AAEW5xHvnHWURiSJWU=
-Received: by 10.86.27.19 with SMTP id a19mr3450377fga.56.1211989996104;
-        Wed, 28 May 2008 08:53:16 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.212.111])
-        by mx.google.com with ESMTPS id 4sm14593862fgg.6.2008.05.28.08.53.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 28 May 2008 08:53:15 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com>
+	id S1751436AbYE1Pxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 11:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYE1Pxz
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:53:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39118 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751428AbYE1Pxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 11:53:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D908324B;
+	Wed, 28 May 2008 11:53:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id AE9263246; Wed, 28 May 2008 11:53:48 -0400 (EDT)
+In-Reply-To: <200805281608.02000.robin.rosenberg.lists@dewire.com> (Robin
+ Rosenberg's message of "Wed, 28 May 2008 16:08:01 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4517386E-2CCE-11DD-BD5C-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83103>
 
-Wincent Colaiuta wrote:
-> El 28/5/2008, a las 8:12, Junio C Hamano escribi=C3=B3:
->> Perhaps we should remove the infamous gitweb/test/M=C3=A4rchen file
->=20
-> [...] I'd much rather see this kind of thing =20
-> tested from within the test suite rather than every time I do "git =20
-> status" or "git checkout".
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-I don't believe the M=C3=A4rchen file is actually used in any test code=
-, so=20
-removing it should be fine.  If/when we actually write test code for=20
-gitweb, it seems to me that we might as well generate such test files o=
-n=20
-the fly from within the test suite, rather than having them in the file=
-=20
-system permanently.
+> When you get a conflict during interactive rebase the next
+> thing to do is not to amend, but to continue the rebase.
+> With this change you get a reminder in the prompt.
+>
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+> ---
+>  contrib/completion/git-completion.bash |    7 ++++++-
+>  1 files changed, 6 insertions(+), 1 deletions(-)
+>
+> I got a couple of broken rebases. Hence this fix.
+>
+> -- robin
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 1698463..a606328 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -82,7 +82,12 @@ __git_ps1 ()
+>  			b="$(git symbolic-ref HEAD 2>/dev/null)"
+>  		elif [ -f "$g/.dotest-merge/interactive" ]
+>  		then
+> -			r="|REBASE-i"
+> +			if [ -f "$g/.dotest-merge/amend" ]
+> +			then
+> +				r="|REBASE-i-amend"
+> +			else
+> +				r="|REBASE-i-continue"
+> +			fi
+>  			b="$(cat "$g/.dotest-merge/head-name")"
+>  		elif [ -d "$g/.dotest-merge" ]
+>  		then
+> -- 
+> 1.5.5.1.178.g1f811
 
-Best,
+Hmm.  The "|REBASE-blah" prefix is already too long for my liking and this
+makes it even longer X-<
 
-     Lea
+Does this mean that it would help reduce mistakes if "git commit --amend"
+noticed the presense of .dotest-merge but absense of .dotest-merge/amend
+and refused to operate, I have to wonder?
