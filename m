@@ -1,84 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: visualizing Git's Git repo
-Date: Tue, 27 May 2008 19:49:48 -0400
-Message-ID: <20080527234948.GA17424@sigill.intra.peff.net>
-References: <CA563F5A-5E12-42F7-BDFD-04FE3A882028@reverberate.org> <loom.20080527T202009-498@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: only display "next" links in logs if there is a
+ next page
+Date: Tue, 27 May 2008 17:04:20 -0700
+Message-ID: <7v1w3nz43f.fsf@gitster.siamese.dyndns.org>
+References: <483C97E7.2020504@gmail.com>
+ <1211930742-24978-1-git-send-email-LeWiemann@gmail.com>
+ <483C99A2.90909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Joshua Haberman <joshua@reverberate.org>
-X-From: git-owner@vger.kernel.org Wed May 28 01:50:46 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 02:05:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K18wH-0005uc-Pz
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 01:50:46 +0200
+	id 1K19As-0000vD-Cl
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 02:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756044AbYE0Xtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 19:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756105AbYE0Xtw
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 19:49:52 -0400
-Received: from peff.net ([208.65.91.99]:3366 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755666AbYE0Xtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 19:49:51 -0400
-Received: (qmail 7037 invoked by uid 111); 27 May 2008 23:49:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 27 May 2008 19:49:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 May 2008 19:49:48 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20080527T202009-498@post.gmane.org>
+	id S1758696AbYE1AEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2008 20:04:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757963AbYE1AEj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 20:04:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756533AbYE1AEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 20:04:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 34CF0519F;
+	Tue, 27 May 2008 20:04:35 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 5E8E4519E; Tue, 27 May 2008 20:04:30 -0400 (EDT)
+In-Reply-To: <483C99A2.90909@gmail.com> (Lea Wiemann's message of "Wed, 28
+ May 2008 01:30:42 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A7E548E4-2C49-11DD-9DA8-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83065>
 
-On Tue, May 27, 2008 at 08:36:16PM +0000, Joshua Haberman wrote:
+Lea Wiemann <lewiemann@gmail.com> writes:
 
-> > 1. what do you all do to get a high-level view of what's going on with  
-> > Git development?  do you use gitk?  if so, what options?
-> 
-> I get the impression from this thread that core Git developers don't make
-> visualizing the repository a regular part of their development workflow.  Is
-> that accurate?  What do you all do to keep tabs on Git development?
+> Lea Wiemann wrote:
+>> There was a bug in the implementation of the "next" links in
+>> format_paging_nav (for log and shortlog), which caused the next links
+>> to always be displayed, even if there is no next page.  This fixes it.
+>
+> Oh, one more thing I forgot to mention: I've tested this with a small
+> (single-page) log page and a long log page.  In both cases the "next"
+> links get formatted correctly, and they stop linking to the next page
+> on the correct (= last) page.  The only thing I haven't tested for is
+> off-by-one errors, but I'm reasonably sure that $#commitlist >= 100 is
+> right.
 
-I don't know if I count as a core Git developer, but I do use gitk daily
-to track what goes into Junio's repo. My refs are organized something
-like:
+I do not trust people who rely on "tests" to catch counting errors
+(although I am pretty bad at counting myself and often testsuite helps me
+catch my own bugs).  Instead, let's follow the code to see if it is Ok.
 
-  remotes/origin/* - tracking branches of Junio's git.git
-  heads/jk/* - long running topics branched from master
-  heads/next - Junio's next branch with short or temporary patches on top
+You call format_paging_nav() from two places, both after calling
+parse_commits() with $maxcount = 101.  So @commitlist could have 101
+elements (in which case you would need to have next page because you will
+show only 100 among them), or smaller than that (in which case you will
+fully show them).  In other words, you would want to say 'next' iff
 
-My git day generally starts like this:
+	(@commitlist > 100)
 
-  git fetch ;# grab newly merged stuff
-  gitk origin/next...next ;# see what's new
-  git rebase origin/next ;# and bring ourselves up to date
+is true.  On the other hand, $#commitlist is the last index of @commitlist
+array, which is one smaller than the number of elements in that array.
+IOW, when it has 101 elements, it has $commitlist[0] thru $commitlist[100]
+and $#commitlist == 100.  So the above condition is the same as
 
-You don't necessarily get to see all of the topic branches labeled
-individually, but generally you see each merged topic preceded by the
-'Merge ...' commit.
+	($#commitlist >= 100)
 
-For long running branches, I leave them alone until I'm ready to work on
-them. And then it's:
+So your counting looks correct to me.
 
-  git checkout jk/whatever
-  gitk origin/master.. ;# what was I doing again?
-  git rebase origin/master ;# should be clean if nobody else
-                            # is touching the same area
-
-And if the rebase isn't clean, then I investigate individual areas with:
-
-  gitk --no-merges jk/whatever...origin/master problematic_file.c
-
-So maybe that is a bit of a boring workflow description, but I do
-visualize with gitk all the time. I tend to do a lot of bug-hunting,
-too, for which I don't end up doing visualization. Instead, I almost
-always rely on asking more specific questions about content: blame
-(especially "tig blame"), bisect, and pickaxe ("git log -S").
-
--Peff
+I wonder if it is easier to read to use the more modern @array notation
+than historic $#array notation (it looks very Perl 4 to me), but that is a
+separate issue.  gitweb is littered with such anachronism ;-)
