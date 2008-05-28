@@ -1,137 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: only display "next" links in logs if there is a next page
-Date: Wed, 28 May 2008 02:01:53 -0700 (PDT)
-Message-ID: <m33ao23iqv.fsf@localhost.localdomain>
-References: <483C97E7.2020504@gmail.com>
-	<1211930742-24978-1-git-send-email-LeWiemann@gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [RFC/PATCH] git-what: explain what to do next
+Date: Wed, 28 May 2008 11:12:30 +0200
+Message-ID: <8aa486160805280212u742a311gef61676870af147@mail.gmail.com>
+References: <1211877299-27255-1-git-send-email-sbejar@gmail.com>
+	 <alpine.DEB.1.00.0805271151430.30431@racer>
+	 <8aa486160805270558v40e7faabh7d4426731693f917@mail.gmail.com>
+	 <alpine.DEB.1.00.0805271411520.30431@racer>
+	 <7vwslfzd0i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lea Wiemann <LeWiemann@gmail.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 11:03:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 28 11:14:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1HYs-0004zH-Uu
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 11:03:11 +0200
+	id 1K1Hj0-0008UW-0R
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 11:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751698AbYE1JCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 05:02:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbYE1JCD
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 05:02:03 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:52223 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753957AbYE1JB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 05:01:58 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so76369ugf.16
-        for <git@vger.kernel.org>; Wed, 28 May 2008 02:01:56 -0700 (PDT)
+	id S1751150AbYE1JMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 05:12:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbYE1JMq
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 05:12:46 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:62013 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750854AbYE1JMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 05:12:45 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1896403ywe.1
+        for <git@vger.kernel.org>; Wed, 28 May 2008 02:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=CmaAup+dN7xJFtLTXkhBeZ6HUBMF4/zP4V9I2cIG9l4=;
-        b=if3DYiyDgR0sSN6n5D22kI8dTO+J7bHFK4Ype0VrJ5ssYIGemdW5wtDn2AE+HFjC21b9U6MkJhNZfRMUeqjXgki2VopzoV83KrJUiDhINNt6YEh5AEperBh8fVgPQT+v7Fem896uQvdiKg+Y3Ji1wZ788QUi6X4JcdzQgQRyo0E=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=imk6V8ZLrtpU4wM7uHLXDm3B6a4FJUdDYI3SDxkR8W4=;
+        b=XPtAGRHjkOdao85eTsRkrKMmAk8AiklqKZDUADzt6rSfJ3mYe2m93JN9UK8/sYlWHssaZluRgLzyvxaZZHSa81vQlj0b5hFkqKogX8/bYZGXQyHBxCdfQu+Js9ec4LHNBVs/NcVGGzia16fIZiFaTa76nTsfYKAhrZ3iy7wANxY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=XxRFIvXzSw0vW7UnQhic05gAwBC5KEZ1oIRcNNnghRir11tCWqTO3MtGsd41kxFw+BLZ4r6nHpDMII3MUKkv7Rj7qTfzcGJz2TcTdTAb2y/+EBnoQtkZw4xXQJseaFoPxx6Nh5V78rk9oCVHu+GZ3NtE1Qle5VPE90KJLQC9QcA=
-Received: by 10.66.249.20 with SMTP id w20mr3376167ugh.67.1211965315972;
-        Wed, 28 May 2008 02:01:55 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.223.245])
-        by mx.google.com with ESMTPS id 34sm4043008ugh.8.2008.05.28.02.01.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 May 2008 02:01:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4S91N3g032674;
-	Wed, 28 May 2008 11:01:34 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4S91CV1032667;
-	Wed, 28 May 2008 11:01:12 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1211930742-24978-1-git-send-email-LeWiemann@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eVwNDwuzlJmr6V7m53KfYkOnNpXqK8ctP4u+kg8TdTu4ucgOQqT0IKz+iyeUGYiQ9aGsCrBCRQPPNrtvnU6qlvxPiG25g2voZQ2zS4UQvSxUQsp1Ee2p/tM/6bbf6xRygzPOZOSD0EkJhfAn7PYfrks3zbn8YNu4CeauOvVK1I8=
+Received: by 10.150.212.12 with SMTP id k12mr5863181ybg.228.1211965951056;
+        Wed, 28 May 2008 02:12:31 -0700 (PDT)
+Received: by 10.150.152.19 with HTTP; Wed, 28 May 2008 02:12:30 -0700 (PDT)
+In-Reply-To: <7vwslfzd0i.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83081>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+On Tue, May 27, 2008 at 10:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> But a problem I see with the patch as an implementation of "git-what" is
+> that some commands use other commands as their internal implementation
+> details.  For example, when you are in the middle of a "git rebase"
+> session, which might be using "git am" as its internal implementation
+> detail, if you ask the "are you in the middle of doing something, and if
+> so how can I continue?" question (which is what the "git-cmd --what" is
+> all about) to "git am", before you ask the same question to "git rebase",
+> "am" could say "Yeah, I have applied a few patches successfully but gave
+> control back to the user to resolve conflicts while applying this patch",
+> which may be a truthful statement from "git am"'s point of view, but is
+> not a useful information from the end user's point of view, as all s/he
+> typed was "git rebase".  In addition, if Porcelain X uses Porcelain Y as
+> its internal implementation, the series of commands that need to be
+> followed to continue from a particular sequence point might be different
+> between the case where the toplevel request was Y and the case where it
+> was X.  Not just X needs to know that it uses Y, Y also needs to know that
+> the toplevel command the end user gave could be X which called it and
+> behave differently.  So a nice "each command knows what its doing"
+> separation cannot really solve everything in practice.
 
-> There was a bug in the implementation of the "next" links in
-> format_paging_nav (for log and shortlog), which caused the next links
-> to always be displayed, even if there is no next page.  This fixes it.
+This is the job of the git-what, so it first call "git rebase --what"
+and then "git am --what", and the individual "git cmd --what" can be
+declared internal.
 
-Thanks for correcting this.
+>
+> In other words, "git-X --what" could give a guidance to the "I've done X,
+> now what can I do?" situation, but it by itself cannot be used as a basis
+> of "git-what" to answer "I'm totally lost and I do not know what I was
+> doing.  Where was I and what should I do next?"  question.
 
->  sub format_paging_nav {
-> -	my ($action, $hash, $head, $page, $nrevs) = @_;
-> +	my ($action, $hash, $head, $page, $has_next_link) = @_;
->  	my $paging_nav;
->  
->  
-> @@ -2774,7 +2774,7 @@ sub format_paging_nav {
->  		$paging_nav .= " &sdot; prev";
->  	}
->  
-> -	if ($nrevs >= (100 * ($page+1)-1)) {
-> +	if ($has_next_link) {
->  		$paging_nav .= " &sdot; " .
->  			$cgi->a({-href => href(-replay=>1, page=>$page+1),
->  			         -accesskey => "n", -title => "Alt-n"}, "next");
+I think it does, it is exactly what my patch does, IMHO.
 
-This makes logic much simpler.  Nice change.
-
-> @@ -4665,7 +4665,7 @@ sub git_log {
->  
->  	my @commitlist = parse_commits($hash, 101, (100 * $page));
-
-Here I have realized the source of this bug.  Some time ago
-git-rev-list acquired '--skip=<number>' option to have _git_ skip
-commits and not _gitweb_, which improves performance a bit.  It was
-required to implement huge performance improvement, namely getting
-details for all commits from a single command, otherwise the
-performance improvement of calling one git command instead of
-$page_size git commands would be much reduced by generating large
-amount of data which would be skipped (wound't be used by gitweb).
-
-Unfortunately this change wasn't reviewed carefully enough; old logic
-to decide whether to add 'next' link compared (tried to compare)
-number of commits receivied with number of commits requested (via
-'--max-count=<number>' option).  I guess that having format_paging_nav
-decide whether to add "next" link was a bad idea...
-
-> -	my $paging_nav = format_paging_nav('log', $hash, $head, $page, (100 * ($page+1)));
-> +	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist >= 100);
-> 
-
-I would agree with Junio here that @commitlist > 100 would be more
-readable.
-
-Logic goes as the following: we request ($page_size+1) revisions to
-know if there are additional revisions, skipping ($page_size * $page)
-revisions; gitweb adds 'next' link if it got more than $page_size
-revisions.
- 
->  	git_header_html();
->  	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
-> @@ -5585,7 +5585,7 @@ sub git_shortlog {
->  
->  	my @commitlist = parse_commits($hash, 101, (100 * $page));
->  
-> -	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, (100 * ($page+1)));
-> +	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, $#commitlist >= 100);
->  	my $next_link = '';
->  	if ($#commitlist >= 100) {
->  		$next_link =
-
-What about git_history()... oh, I see, it generates paging itself, and
-soes not use format_paging_nav() subroutine.  But I think it does not
-exhibit mentioned (and corrected) error.  BTW. I *guess* that with
-href(-replay=>1, ...) gitweb could use format_paging_nav() also for
-other pages...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Santi
