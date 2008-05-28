@@ -1,84 +1,49 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui clone differs from command line
-Date: Wed, 28 May 2008 19:23:24 -0400
-Message-ID: <20080528232324.GM30245@spearce.org>
-References: <483D7884.2050407@robertsr.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rename git-rm --cached to --index
+Date: Wed, 28 May 2008 16:25:50 -0700
+Message-ID: <7vprr6roxt.fsf@gitster.siamese.dyndns.org>
+References: <20080528231405.GA25416@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Barry Roberts <blr@robertsr.us>
-X-From: git-owner@vger.kernel.org Thu May 29 01:25:07 2008
+To: Nico -telmich- Schottelius <nico-git-20080529@schottelius.org>
+X-From: git-owner@vger.kernel.org Thu May 29 01:26:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1V0s-00013b-8A
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 01:24:58 +0200
+	id 1K1V2m-0001TL-Jl
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 01:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755428AbYE1XXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 19:23:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754972AbYE1XXn
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 19:23:43 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38355 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755385AbYE1XX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 19:23:27 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1K1UzD-0000vZ-SV; Wed, 28 May 2008 19:23:15 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2C5EF20FBAE; Wed, 28 May 2008 19:23:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <483D7884.2050407@robertsr.us>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754507AbYE1X0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 19:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754433AbYE1X0D
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 19:26:03 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44844 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754491AbYE1X0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 19:26:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC870302A;
+	Wed, 28 May 2008 19:25:56 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 604E23029; Wed, 28 May 2008 19:25:54 -0400 (EDT)
+In-Reply-To: <20080528231405.GA25416@denkbrett.schottelius.org>
+ (nico-git-20080529@schottelius.org's message of "Thu, 29 May 2008 01:14:05
+ +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6C866264-2D0D-11DD-A7A4-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83146>
 
-Barry Roberts <blr@robertsr.us> wrote:
-> After much mis-directed research, I finally figured out that cloning a 
-> repo (ssh://) with git-gui doesn't work exactly like 'git clone' from 
-> the command line.  The main difference is that 'git pull' doesn't work 
-> on master.  I get the error below.  Is that intentional, or are we doing 
-> something wrong?
+Please don't make naming inconsistent.  --index means "do things that
+usually affect only work tree also to the index as well", while --cached
+means "act only on the index" (study "git apply" for another example).
 
-Bug in git-gui.
-
-git-gui's clone feature isn't implemented in terms of git-clone.
-Its implemented in terms of more primitive actions:
-
-	git init
-	git remote add origin
-	git fetch
-	git fetch --tags
-	git update-ref refs/heads/master origin/master
-	git checkout
-
-however it forgets to setup the branch configuration:
- 
-> If you often merge with the same branch, you may want to
-> configure the following variables in your configuration
-> file:
-> 
->    branch.master.remote = <nickname>
->    branch.master.merge = <remote-ref>
->    remote.<nickname>.url = <url>
->    remote.<nickname>.fetch = <refspec>
-> 
-> See git-config(1) for details.
-
-Yea.  That author of git-gui should really check git-config(1)
-for detais.  *ducks and hides*
-
-I'll try to fix it tonight or tomorrow.
-
--- 
-Shawn.
+"git rm" that does not touch work tree but removes only the index entry
+should be named --cached.
