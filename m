@@ -1,86 +1,83 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: Gitweb caching: Google Summer of Code project
-Date: Wed, 28 May 2008 20:33:56 +0200
-Message-ID: <483DA594.5040803@gmail.com>
-References: <483C4CFF.2070101@gmail.com> <200805272353.34319.jnareb@gmail.com> <483C912F.6010802@gmail.com> <200805281414.36141.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now
+ incompatible with Cygwin (and probably Windows)
+Date: Wed, 28 May 2008 11:37:57 -0700
+Message-ID: <7vskw2tgu2.fsf@gitster.siamese.dyndns.org>
+References: <483AC2CE.7090801@gmail.com>
+ <7vy75vvtxo.fsf@gitster.siamese.dyndns.org>
+ <32541b130805280933r573d59d0mf9cdc09f5e5a6a17@mail.gmail.com>
+ <7vfxs2uytm.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0805281326520.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>, Lars Hjemli <hjemli@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 20:34:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed May 28 20:39:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1QUB-00056g-Gb
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 20:34:55 +0200
+	id 1K1QYI-0006Zg-Qv
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 20:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752241AbYE1SeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 14:34:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752195AbYE1SeC
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 14:34:02 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:41091 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752161AbYE1SeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 14:34:00 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1838861fgg.17
-        for <git@vger.kernel.org>; Wed, 28 May 2008 11:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=SDLFRRe7aFjMr/xoPWKBEQaRtQHDKr6c5rWQQ7Zawto=;
-        b=dVszkI+NfUn/9XDc4XvQ6JoDYuJ3LwoAMzfTvF85wc+0ppoYZBG/j/TYA0L6hgaZwyImI2/3jOpmzkB6wFLFrdK4gO1QjOp0/KFpULkzgfuz9wH1iNUQfAH03Az0hHW0EKeyYDrf9UA7IZKXE00D2hqflytSusVdqDu4TgvqBC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=fLRMQDfmYN/KsqX17HczrgoAbkelWIavfcdJN63mdbfi+3txSWMgIJYZxeTezjQaMGmJS9C2JZ81zcIFSDtbsYCxbieNaQtsY7Jr7Kg+TaG86d6H9icNy6JtsW8b7TGYVEBnPi2YPQdzbMQCEYbukflo1N4JY0iPsYDZ/rApyb8=
-Received: by 10.86.100.19 with SMTP id x19mr9146438fgb.61.1211999637888;
-        Wed, 28 May 2008 11:33:57 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.212.111])
-        by mx.google.com with ESMTPS id e11sm14699559fga.1.2008.05.28.11.33.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 28 May 2008 11:33:57 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <200805281414.36141.jnareb@gmail.com>
+	id S1752481AbYE1SiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 14:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752429AbYE1SiJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 14:38:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36206 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbYE1SiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 14:38:07 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2C3595661;
+	Wed, 28 May 2008 14:38:06 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 4050D5660; Wed, 28 May 2008 14:38:00 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0805281326520.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 28 May 2008 14:19:17 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 36556334-2CE5-11DD-B95E-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83125>
 
-Jakub Narebski wrote:
-> 1. Caching data
->  * disadvantages:
->    - more CPU
->    - need to serialize and deserialize (parse) data
->    - more complicated
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-CPU: John told me that so far CPU has *never* been an issue on k.org. 
-Unless someone tells me they've had CPU problems, I'll assume that CPU 
-is a non-issue until I actually run into it (and then I can optimize the 
-particular pieces where CPU is actually an issue).
+> Report a non-fatal error, mark in the index that that entry is not 
+> reflected in the working directory, and allow the user to manipulate it 
+> with commands that don't really need the working directory content.
+>
+> $ git checkout origin/master
+> Warning: couldn't create 't/t5100/nul' in your working directory; ignoring 
+> working directory for this filename.
+> $ git mv t/t5100/nul t/t5100/nul-plain
+> $ ls t/t5100/nul-plain
+> t/t5100/nul-plain
+>
+> The working directory doesn't really have to be absolutely vital to git's 
+> functioning (of course, the project you've checked out is going to have 
+> problems unless you fix things). In particular, it should be possible, on 
+> a machine with a broken filesystem, to modify a project that triggers the 
+> filesystem breakage to not trigger it,...
 
-Serialization: I was planning to use Storable (memcached's Perl API uses 
-it transparently I think).  I'm hoping that this'll just solve it.
+Now that is somebody who thinks before types.
 
-It's true that it's more complicated.  It'll require quite a bit of 
-refactoring, and maybe I'll just back off if I find that it's too hard.
+Marking that the filesystem does not match what's in index is already
+done, so you could argue that an alternative would be not to stop in the
+middle of checkout_entry() loop and instead check out as much as we could,
+write out the index perhaps, and signal error, _AFTER_ updating everything
+else, including the HEAD.  We try to be atomic when able (e.g. on a broken
+patch, "apply" does not apply early half the patch and fail but rejects
+the whole thing), but checkout_entry() loop is not something you can
+sanely make atomic (it needs to first remove existing files and even
+directories before writing new files), so that alternative approach might
+be easier to work with.
 
-> I'm afraid that implementing kernel.org caching in mainline in
-> a generic way would be enough work for a whole GSoC 2008.
-
-I probably won't reimplement the current caching mechanism.  Do you 
-think that a solution using memcached is generic enough?  I'll still 
-need to add some abstraction layer in the code, but when I'm finished 
-the user will either get the normal uncached gitweb, or activate 
-memcached caching with some configuration setting.
-
-By the way, I'll be posting about gitweb on this mailing list 
-occasionally.  If any of you would like to receive CC's on such 
-messages, please let me know, otherwise I'll assume you get them through 
-the mailing list.
-
--- Lea
+Care to follow it up with a patch?
