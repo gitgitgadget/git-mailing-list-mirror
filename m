@@ -1,72 +1,101 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 6/5] NUL hack to create_file()
-Date: Thu, 29 May 2008 13:19:23 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805291157330.19665@iabervon.org>
-References: <1212020246-26480-1-git-send-email-gitster@pobox.com> <1212020246-26480-2-git-send-email-gitster@pobox.com> <1212020246-26480-3-git-send-email-gitster@pobox.com> <1212020246-26480-4-git-send-email-gitster@pobox.com> <1212020246-26480-5-git-send-email-gitster@pobox.com>
- <1212020246-26480-6-git-send-email-gitster@pobox.com> <1212020246-26480-7-git-send-email-gitster@pobox.com> <483E4E3C.90805@viscovery.net> <483E55C1.1000900@trolltech.com>
+From: Nikolaus Schulz <microschulz@web.de>
+Subject: Re: git-svn {show,create}-ignore chokes upon subdirs
+Date: Wed, 28 May 2008 11:16:33 +0200
+Message-ID: <20080528091633.GA3919@penelope.zusammrottung.local>
+References: <20080527162002.GA21855@penelope.zusammrottung.local> <483D190F.4030101@vilain.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Thu May 29 19:20:30 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 29 19:25:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1lnV-0005h2-EK
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 19:20:17 +0200
+	id 1K1lsi-00080o-P7
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 19:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773AbYE2RT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 13:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbYE2RTZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 13:19:25 -0400
-Received: from iabervon.org ([66.92.72.58]:39117 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751773AbYE2RTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 13:19:25 -0400
-Received: (qmail 1298 invoked by uid 1000); 29 May 2008 17:19:23 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 May 2008 17:19:23 -0000
-In-Reply-To: <483E55C1.1000900@trolltech.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753209AbYE2RYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 13:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbYE2RYq
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 13:24:46 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:35916 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752861AbYE2RYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 13:24:45 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 14264E17CD9A
+	for <git@vger.kernel.org>; Thu, 29 May 2008 19:22:55 +0200 (CEST)
+Received: from [83.125.40.75] (helo=tunichtgut.zusammrottung.local)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1K1lq2-0004WJ-00
+	for git@vger.kernel.org; Thu, 29 May 2008 19:22:54 +0200
+Received: from penelope.zusammrottung.local ([192.168.178.202])
+	by tunichtgut.zusammrottung.local with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K1lq0-0002uS-RG
+	for git@vger.kernel.org; Thu, 29 May 2008 19:22:52 +0200
+Received: from nikolaus by penelope.zusammrottung.local with local (Exim 4.63)
+	(envelope-from <nikolaus@penelope.zusammrottung.local>)
+	id 1K1Hlq-00017A-1B
+	for git@vger.kernel.org; Wed, 28 May 2008 11:16:34 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <483D190F.4030101@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Sender: microschulz@web.de
+X-Provags-ID: V01U2FsdGVkX18IVAOGuLDCPv+3SsZ9LAjCV8R2WMkdsEPuHak4
+	E6pgiXGQxTYCUmSGRVZJrQsx1BIi+BPrymFLGd9EEkqbvN2VrU
+	4b+/Pl6Fw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83222>
 
-On Thu, 29 May 2008, Marius Storm-Olsen wrote:
+On Wed, May 28, 2008 at 08:34:23PM +1200, Sam Vilain wrote:
+> >  git-svn init -s http://svn.red-bean.com/repos/producingoss producingoss-git-svn
+> >  cd producingoss-git-svn
+> >  git-svn fetch
+> >  git-svn create-ignore 
+> > 
+> > the last command prints this: 
+> > 
+> >  HTTP Path Not Found: PROPFIND request failed on '/repos/producingoss/!svn/bc/1465/ca': '/repos/producingoss/!svn/bc/1465/ca' path not found at /home/nikolaus/nfs/nsbp/git/git/git-svn line 1897
 
-> Johannes Sixt said the following on 29.05.2008 08:33:
-> > Junio C Hamano schrieb:
-> > > This is not meant for application to the mainline.  It allows your git to
-> > > refuse to create a blob whose name is "nul".
-> > 
-> > It's not just about "nul"; these won't work either: "aux", "prn", "con",
-> > "com\d+", "lpt\d+", neither do "$one_of_these.$some_extension". And all of
-> > that regardless of the case!
-> > 
-> > See http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-> > 
-> > Definitely, we don't ever want to have such special-casing somewhere in git.
+[...]
+
+> It helps to include the breaking change's details in the message in
+> reports like this.  Here it is:
 > 
-> They _can_ be used by using the UNC notation:
->     \\?\<drive letter>:\<path>\nul
-> Do you think we should special-case that, or simply fail?
+> From: Benoit Sigoure <tsuna@lrde.epita.fr>
+> Subject: git-svn: add a generic tree traversal to fetch SVN properties
+> 
+>     * git-svn.perl (&traverse_ignore): Remove.
+>     (&prop_walk): New.
+>     (&cmd_show_ignore): Use prop_walk.
+> 
+> [ew: This will ease the implementation of the `create-ignore',
+>      `propget', and `proplist' commands]
+> 
+> Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
+> Acked-by: Eric Wong <normalperson@yhbt.net>
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-Perhaps we should see if we can get an open() that always uses that 
-notation for the actual system call? I doubt we want to support the 
-DOS-ish meanings even if the user provides them as input sources. If it's 
-not actually a problem with the underlying storage mechanism, but rather a 
-flaw in the POSIX implementation for Windows, we should fix that (or do 
-something in compat to work around it) instead of failing in any way to 
-support it in git. Of course, people on Windows using projects with these 
-filenames will probably run into problems with other tools, but at least 
-git will behave properly.
+Thanks, I thought it could be considered chatter. :-)
 
-On the other hand, I bet there are going to be real issues with filenames 
-with backslashes in them.
+It looks like the patch from Christian Engwer posted here yesterday[1] is a fix
+for the described problem. 
 
-	-Daniel
-*This .sig left intentionally blank*
+> As a side note, "svn:mergeinfo" is rapidly becoming an 'interesting'
+> property and should probably be added to the list.  
+
+That's interesting, I wasn't aware they're finally tackling merge
+tracking. 
+
+Nikolaus
+
+[1] see Gerrit Pape's message "[PATCH] git-svn fails in prop_walk if
+    $self->{path} is not empty"
+                                                                                   
