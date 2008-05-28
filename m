@@ -1,78 +1,70 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now incompatible with Cygwin (and probably Windows)
-Date: Wed, 28 May 2008 11:46:24 +0200
-Message-ID: <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com>
-References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 28 11:49:05 2008
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: log --graph: extra space with --pretty=oneline
+Date: Wed, 28 May 2008 14:24:05 +0300
+Message-ID: <20080528112405.GA12065@mithlond.arda.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Adam Simpkins <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Wed May 28 13:25:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1IGt-0004XH-Ex
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 11:48:39 +0200
+	id 1K1JmQ-0002gY-Nz
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 13:25:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbYE1Jrr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 05:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbYE1Jrr
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 05:47:47 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:54537 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751759AbYE1Jrq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2008 05:47:46 -0400
-Received: from cuzco.lan (156.pool85-53-26.dynamic.orange.es [85.53.26.156])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m4S9kPTf028998
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 28 May 2008 05:46:27 -0400
-In-Reply-To: <7vy75vvtxo.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1752107AbYE1LYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 07:24:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYE1LYJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 07:24:09 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:46867 "EHLO
+	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751595AbYE1LYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 07:24:09 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.rokki.sonera.fi (8.5.014)
+        id 483BB47A0011C05C; Wed, 28 May 2008 14:24:06 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1K1JlF-0003B7-IE; Wed, 28 May 2008 14:24:05 +0300
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83086>
 
-El 28/5/2008, a las 8:12, Junio C Hamano escribi=F3:
-> Mark Levedahl <mlevedahl@gmail.com> writes:
->
->> As this commit is part of the published master branch, I am not sure
->> the correct resolution: leaving this commit in place means that any
->> commit between it and a commit fixing this will always cause an erro=
-r
->> on Cygwin / Windows. Of course, it *is* on the published master =20
->> branch.
->
-> Some broken filesystems may not be capable of checking out and using
-> project files.  Too bad.
->
-> It's not a big deal.  It is not limited to this project.  We just =20
-> fix them
-> or work them around and move on.
->
-> Perhaps we should remove the infamous gitweb/test/M=E4rchen file whil=
-e =20
-> we
-> are at it?  I do not think the file is ever used.
+Sometimes "log --graph --pretty=oneline" prints a sort of broken graph
+line. In the git repository try this:
 
-I for one would love to see it go, seeing as I live in the ghetto that =
-=20
-is HFS+ and am constantly annoyed by it cluttering up my status output =
-=20
-with spurious content.
+$ git log --graph --pretty=oneline --abbrev-commit -4 8366b7b
 
-I understand that the reason it lives in the tree is precisely to =20
-discover problems with such filesystems, but the problem is well and =20
-truly discovered by now and I'd much rather see this kind of thing =20
-tested from within the test suite rather than every time I do "git =20
-status" or "git checkout".
 
-Cheers,
-Wincent
+M   8366b7b... Merge branch 'maint'
+|\  
+| M   a2f5be5... Merge branch 'jk/maint-send-email-compose' into maint
+| |\  
+| M  \  93c7b9c... Merge branch 'hb/maint-send-email-quote-recipients' into maint
+| |\  | 
+| M  \ \  6abf189... Merge branch 'maint-1.5.4' into maint
+| |\  | |
+    ^
+
+Extra spaces there. I don't mind that myself but to some users it may
+look like a bug. Maybe one would expect output like this:
+
+
+M   8366b7b... Merge branch 'maint'
+|\  
+| M   a2f5be5... Merge branch 'jk/maint-send-email-compose' into maint
+| |\  
+| | \
+| M  \  93c7b9c... Merge branch 'hb/maint-send-email-quote-recipients' into maint
+| |\  \ 
+| | \  \
+| M  \  |  6abf189... Merge branch 'maint-1.5.4' into maint
+| |\  | |
+
+
+It requires more lines though.
