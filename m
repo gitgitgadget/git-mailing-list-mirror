@@ -1,142 +1,67 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: [PATCH] git-init: treat option `--bare'
-Date: Wed, 28 May 2008 19:53:57 +0100
-Message-ID: <20080528185357.GB4431@bit.office.eurotux.com>
-References: <20080519175313.GA17305@bit.office.eurotux.com> <20080520194850.GB19226@bit.office.eurotux.com> <7vy761sgks.fsf@gitster.siamese.dyndns.org> <20080528185103.GA4431@bit.office.eurotux.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: gitweb: Smoke test
+Date: Wed, 28 May 2008 20:56:33 +0200
+Message-ID: <483DAAE1.4000107@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Fba/0zbH8Xs+Fj9o"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 28 20:55:11 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 28 20:57:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1QnZ-0004LI-Dn
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 20:54:57 +0200
+	id 1K1QqF-0005VG-Iz
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 20:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752487AbYE1SyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 14:54:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752484AbYE1SyF
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 14:54:05 -0400
-Received: from os.eurotux.com ([216.75.63.6]:42497 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752457AbYE1SyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 14:54:04 -0400
-Received: (qmail 9591 invoked from network); 28 May 2008 18:54:01 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 28 May 2008 18:54:01 -0000
-Content-Disposition: inline
-In-Reply-To: <20080528185103.GA4431@bit.office.eurotux.com>
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1752381AbYE1S4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 14:56:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752505AbYE1S4j
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 14:56:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:12393 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752230AbYE1S4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 14:56:38 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1842909fgg.17
+        for <git@vger.kernel.org>; Wed, 28 May 2008 11:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
+        bh=NyubkQu4Cd3eZ5MMYgVaAXP7Txtj/WIN3LlGEgqWOME=;
+        b=iAbeeRMAMwtEr/+f8SJNsyFbNeeZRxLATHpohUP2J5OoU2OLwWnXbFOCak+dqyVL/LGFgnDNWFAboDMnn1lTpP9q0dA+lObO6C0kiespPbIVi17+kSTaPm5cdz6ipJfr27RRadWd42s7ZuSZjd08Id+XkR9E9iezqYE/lDh8upo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
+        b=Q2vFS8hba+tdDevKzUiOw5KBQrHSJcYhU439BM9zqtv4iHgedNLc7R9Kr4TTOiMxUt0GxJmkh2Aa9oPLNh8Wxilp2GvZCqAFjkk3BBhWEzeE6osh4IO3y3GtEmcF2wcEesIRLAAMgHx1hhtgvO0Xgoh1eqTxoIqLCladCuR1vAI=
+Received: by 10.86.89.4 with SMTP id m4mr4325608fgb.16.1212000996860;
+        Wed, 28 May 2008 11:56:36 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.212.111])
+        by mx.google.com with ESMTPS id l12sm14798912fgb.8.2008.05.28.11.56.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 28 May 2008 11:56:35 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83129>
 
+FYI and in case you're interested, I've implemented a smoke test for 
+gitweb in a branch, here: 
+http://repo.or.cz/w/git/gitweb-caching.git?a=tree;f=gitweb/test;h=cccee14b2571200861ffc05fbfae12c6d17e919d;hb=HEAD
 
---Fba/0zbH8Xs+Fj9o
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It spiders your local gitweb site (which preferably only contains a 
+really small test repository) with wget, and reports any problems, i.e. 
+broken links or crashes of the CGI script.
 
-Currently, passing the `--bare' option to git-init proper doesn't work, and
-gives no indication that `git --bare init' would work instead:
+The same mechanism might also be usable to view recursive diffs between 
+old and new output, to see if anything has changed.  I'll probably 
+implement that later when I start doing refactorings on gitweb.  Perhaps 
+we should also have a real test suite at some point, though I'm not 
+entirely sure yet how to approach that -- I'll have to dig into the code 
+first. :)
 
-$ git init --bare
-usage: git-init [-q | --quiet] [--template=3D<template-directory>] [--share=
-d]
+(If there's any desire to copy the script to mainline, let me know -- 
+I'll be happy with leaving it on the branch for now, though.)
 
-Treat the `--bare' option internally in builtin-init-db.
-
-Also, fix the usage string, synchronising it with the synopsis in the
-documentation.
-
-Signed-off-by: Luciano Rocha <strange@nsk.pt>
----
- Documentation/git-init.txt |    7 ++++++-
- builtin-init-db.c          |    9 +++++++--
- 2 files changed, 13 insertions(+), 3 deletions(-)
-
-Parsing the --bare option correctly (AFAICS) was easier than I expected.
-
-Sorry, forgot the Signed-off-by line.
-
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index b17ae84..b48c312 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -8,7 +8,7 @@ git-init - Create an empty git repository or reinitialize a=
-n existing one
-=20
- SYNOPSIS
- --------
--'git-init' [-q | --quiet] [--template=3D<template_directory>] [--shared[=
-=3D<permissions>]]
-+'git-init' [-q | --quiet] [--bare] [--template=3D<template_directory>] [--=
-shared[=3D<permissions>]]
-=20
-=20
- OPTIONS
-@@ -20,6 +20,11 @@ OPTIONS
-=20
- Only print error and warning messages, all other output will be suppressed.
-=20
-+--bare::
-+
-+Create a bare repository. If GIT_DIR environment is not set, it is set to =
-the
-+current working directory.
-+
- --template=3D<template_directory>::
-=20
- Provide the directory from which templates will be used.  The default temp=
-late
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index d8bdf92..e23b843 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -364,7 +364,7 @@ static int guess_repository_type(const char *git_dir)
- }
-=20
- static const char init_db_usage[] =3D
--"git-init [-q | --quiet] [--template=3D<template-directory>] [--shared]";
-+"git-init [-q | --quiet] [--bare] [--template=3D<template-directory>] [--s=
-hared[=3D<permissions>]]";
-=20
- /*
-  * If you want to, you can share the DB area with any number of branches.
-@@ -383,7 +383,12 @@ int cmd_init_db(int argc, const char **argv, const cha=
-r *prefix)
- 		const char *arg =3D argv[1];
- 		if (!prefixcmp(arg, "--template=3D"))
- 			template_dir =3D arg+11;
--		else if (!strcmp(arg, "--shared"))
-+		else if (!strcmp(arg, "--bare")) {
-+			static char git_dir[PATH_MAX+1];
-+			is_bare_repository_cfg =3D 1;
-+			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
-+						sizeof(git_dir)), 0);
-+		} else if (!strcmp(arg, "--shared"))
- 			shared_repository =3D PERM_GROUP;
- 		else if (!prefixcmp(arg, "--shared=3D"))
- 			shared_repository =3D git_config_perm("arg", arg+9);
---=20
-1.5.6.rc0.41.gabae7.dirty
-
-
---Fba/0zbH8Xs+Fj9o
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkg9qkUACgkQinSul6a7oB98jgCfeOBC+c1WIcmZcKvMOQ0CrztP
-lSsAn0HzcbqNOPjiJcuQGx0C4ldeAYFC
-=cqIN
------END PGP SIGNATURE-----
-
---Fba/0zbH8Xs+Fj9o--
+-- Lea
