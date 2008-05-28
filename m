@@ -1,103 +1,115 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now
  incompatible with Cygwin (and probably Windows)
-Date: Wed, 28 May 2008 16:06:40 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0805281455100.19665@iabervon.org>
-References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org> <32541b130805280933r573d59d0mf9cdc09f5e5a6a17@mail.gmail.com> <7vfxs2uytm.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0805281326520.19665@iabervon.org>
+Date: Wed, 28 May 2008 13:43:06 -0700
+Message-ID: <7v7idetb1h.fsf@gitster.siamese.dyndns.org>
+References: <483AC2CE.7090801@gmail.com>
+ <7vy75vvtxo.fsf@gitster.siamese.dyndns.org>
+ <32541b130805280933r573d59d0mf9cdc09f5e5a6a17@mail.gmail.com>
+ <7vfxs2uytm.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0805281326520.19665@iabervon.org>
  <7vskw2tgu2.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0805281455100.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Avery Pennarun <apenwarr@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 28 22:07:48 2008
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed May 28 22:44:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1Rvx-0006eL-Gw
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 22:07:41 +0200
+	id 1K1SVI-0002PP-MX
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 22:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752975AbYE1UGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 16:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYE1UGs
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 16:06:48 -0400
-Received: from iabervon.org ([66.92.72.58]:43291 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752669AbYE1UGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 16:06:48 -0400
-Received: (qmail 8485 invoked by uid 1000); 28 May 2008 20:06:40 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 May 2008 20:06:40 -0000
-In-Reply-To: <7vskw2tgu2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752403AbYE1UnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 16:43:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752241AbYE1UnV
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 16:43:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54634 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752403AbYE1UnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 16:43:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 375B269B9;
+	Wed, 28 May 2008 16:43:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id 2A35669B4; Wed, 28 May 2008 16:43:10 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0805281455100.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 28 May 2008 16:06:40 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B2AB8BC8-2CF6-11DD-A83E-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83133>
 
-On Wed, 28 May 2008, Junio C Hamano wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > Report a non-fatal error, mark in the index that that entry is not 
-> > reflected in the working directory, and allow the user to manipulate it 
-> > with commands that don't really need the working directory content.
-> >
-> > $ git checkout origin/master
-> > Warning: couldn't create 't/t5100/nul' in your working directory; ignoring 
-> > working directory for this filename.
-> > $ git mv t/t5100/nul t/t5100/nul-plain
-> > $ ls t/t5100/nul-plain
-> > t/t5100/nul-plain
-> >
-> > The working directory doesn't really have to be absolutely vital to git's 
-> > functioning (of course, the project you've checked out is going to have 
-> > problems unless you fix things). In particular, it should be possible, on 
-> > a machine with a broken filesystem, to modify a project that triggers the 
-> > filesystem breakage to not trigger it,...
-> 
-> Now that is somebody who thinks before types.
+> Ah, yes, CE_VALID. But it doesn't quite work as well as I'd like, because 
 
-Well, and I've got the background to know what's possible and how git can 
-keep things straight.
+No, I do not think we should involve CE_VALID here.  It means something
+completely different.  What I meant was that through "git status" the user
+can tell there is an unexpected breakage in the work tree, _if_ we make
+checkout to finish with "best effort" (and still report an error).
 
-> Marking that the filesystem does not match what's in index is already
-> done, so you could argue that an alternative would be not to stop in the
-> middle of checkout_entry() loop and instead check out as much as we could,
-> write out the index perhaps, and signal error, _AFTER_ updating everything
-> else, including the HEAD.  We try to be atomic when able (e.g. on a broken
-> patch, "apply" does not apply early half the patch and fail but rejects
-> the whole thing), but checkout_entry() loop is not something you can
-> sanely make atomic (it needs to first remove existing files and even
-> directories before writing new files), so that alternative approach might
-> be easier to work with.
+> I think the right test for this is if create_file() returns EEXIST, but 
+> readdir doesn't show anything.
 
-Ah, yes, CE_VALID. But it doesn't quite work as well as I'd like, because 
-it doesn't ignore fstat/readdir not finding anything on the filesystem, so 
-it comes out looking deleted, at least if you're actually on Linux (with a 
-hack in create_file to refuse to create certain filenames for testing).
+I think relying on EEXIST is too specific for this particular breakage,
+even though such a test may catch it.  A checkout may fail in the middle
+if a filesystem refuses to create a pathname that has certain characters
+in it (e.g. dosen't NTFS refuse a path with :|<"?*> in it, or is it just
+the Explorer UI layer rejecting them?), or perhaps one leading directory
+may be unwritable.  We would want to catch and cope with such a brokage
+the same way.
 
-Also "git mv CE_VALID-source dest" doesn't ignore the filesystem like it 
-should (for this use, anyway). Perhaps we need an additional flag for "the 
-filesystem is irrelevant for this entry".
+The checkout "unpack-trees" codepath does:
 
-> Care to follow it up with a patch?
+ - Make sure things can be checked out safely with the internal data
+   before doing anything to the filesystem, i.e. no lost local changes, no
+   lost untracked files, etc.
 
-Unfortunately, I don't think I'll have a chance for a while to actually 
-work on git code. But if someone else (Avery?) wants to try it, I think 
-giving a big warning, setting CE_VALID, and returning 0 in entry.c before 
-the "unable to create file" message is the right thing to start with. And 
-someone with Windows access should figure out what happens next.
+ - For each path:
 
-I think the right test for this is if create_file() returns EEXIST, but 
-readdir doesn't show anything. For that matter, it might be useful to have 
-logic that notes the situation where you seem to have file A instead of 
-file B, but fstat("B") returns A's inode, and marks the index to say that 
-entry B is listed in the filesystem as A instead.
+   - make room for it, removing directory at the place as necessary where
+     a blob must sit and removing an existing blob as needed;
 
-	-Daniel
-*This .sig left intentionally blank*
+   - create a new file or symlink;
+
+And currently I think we stop on any failure.  The thing is, stopping on a
+failure during the internal checking is fine --- no external damage has
+been made yet.  But once we started updating the work tree, we _are_
+committed and not aborting in the middle for a single failure would be the
+saner thing to do.  In addition, even after such a failure after we are
+committed, we probably should update the HEAD and the index.
+
+"status" would then show the difference between what should have been
+checked out and what is.  It might be enough to improve the issue of "git
+bisect hitting a checkout failure --- the work tree is half checked-out
+state, and the index, the HEAD, and the work tree are in a very
+inconsistent state".
+
+We would probably signal such an error from git-checkout differently from
+an early refusal that does not do anything, to tell the callers, such as
+"git-bisect", that the checkout _has been_ already done, even though there
+may be breakages in the work tree.
+
+> ... that notes the situation where you seem to have file A instead of 
+> file B, but fstat("B") returns A's inode, and marks the index to say that 
+> entry B is listed in the filesystem as A instead.
+
+I personally do not think such auto-substution is a way to go --- what
+makes you trust inode information from such an untrustworthy filesystem
+that does not do what it was told to do?  I suspect that stopping at the
+error site and not automatically making the damage yet larger by doing
+such magic would keep the recovery procedure simpler.
+
+But I wouldn't keep people from experimenting.  Perhaps the end result
+could be even readable and mergeable, although I am quite pessimistic.
