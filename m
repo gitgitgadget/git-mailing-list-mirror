@@ -1,68 +1,71 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] gitweb: only display "next" links in logs if there is
- a next page
-Date: Wed, 28 May 2008 02:10:47 +0200
-Message-ID: <483CA307.8040900@gmail.com>
-References: <483C97E7.2020504@gmail.com> <1211930742-24978-1-git-send-email-LeWiemann@gmail.com> <483C99A2.90909@gmail.com> <7v1w3nz43f.fsf@gitster.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [BISECTED] git-svn: "Failed to read object ..." during clone
+Date: Wed, 28 May 2008 05:01:28 +0200
+Message-ID: <20080528030128.GA28904@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 28 02:12:00 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Wed May 28 05:02:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K19Go-0002lW-9n
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 02:11:58 +0200
+	id 1K1Bw0-0007EF-30
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 05:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757470AbYE1AKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2008 20:10:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757261AbYE1AKu
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 20:10:50 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:49394 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751868AbYE1AKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2008 20:10:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1641895fgg.17
-        for <git@vger.kernel.org>; Tue, 27 May 2008 17:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=VHItRhZtSzVlu7FQpyfP5IC3bbVrtf2qEqamyOZsTY8=;
-        b=QD1zNJ2N49vhYIgga17N2WqdHxRGG+rGzx5TYsCA58mrXh8+bTkUSunV+eKndqA4vG+BAzvSJroigglqpow1i4FGa6aDVeXV2X36LL+ZwDadvAaArgdP+tf8C2w9fjm5TTz8s2w7tBIVjyFijeSXD+2eRU5ZjVFB3Su/SoJFbKA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=odLrHBHpXws4ViTELcvEJ8E+/U4hXgPeYmc2T55fpPNIeY8nNWsMaJnya4l6ko920IbZX9ivIP9M+FfhCgwYTXFUW3TzYpIBYHSQ2edGpIQRFy6w/NXBHX1894XoN6eXaJvBe9YhZozR1tMgevN5saq6R3x7a1ynYTXEtbKiKNM=
-Received: by 10.86.61.13 with SMTP id j13mr4626426fga.76.1211933447719;
-        Tue, 27 May 2008 17:10:47 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.209.73])
-        by mx.google.com with ESMTPS id e11sm13763907fga.1.2008.05.27.17.10.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 May 2008 17:10:47 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <7v1w3nz43f.fsf@gitster.siamese.dyndns.org>
+	id S1752801AbYE1DBd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2008 23:01:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbYE1DBd
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 May 2008 23:01:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50193 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751303AbYE1DBc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2008 23:01:32 -0400
+Received: (qmail invoked by alias); 28 May 2008 03:01:30 -0000
+Received: from i577BAB6E.versanet.de (EHLO atjola.local) [87.123.171.110]
+  by mail.gmx.net (mp033) with SMTP; 28 May 2008 05:01:30 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/9Dr038Q39gimnMcPDEM0S0WDFcFwXJm1QHb2HtF
+	aeSNdoj2aUB0DE
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83067>
 
-Junio C Hamano wrote:
-> I do not trust people who rely on "tests" to catch counting errors
+Hi Adam,
 
-Oh, I wasn't trying to say that I didn't "brain-check" my code for 
-correctness -- I just think it's a good idea to actually test it in 
-addition to that. :)
+when cloning the SVN repository at svn://svn.debian.org/estron/ git-svn=
+ bails
+out with:
+=46ailed to read object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 at
+/usr/local/bin/git-svn line 3195, <GEN36> line 645.
 
-Anyways, thanks for reviewing and confirming it!
+Bisection led to:
+ffe256f9bac8a40ff751a9341a5869d98f72c285 is first bad commit
+commit ffe256f9bac8a40ff751a9341a5869d98f72c285
+Author: Adam Roben <aroben@apple.com>
+Date:   Fri May 23 16:19:41 2008 +0200
 
-> I wonder if it is easier to read to use the more modern @array notation
-> than historic $#array notation (it looks very Perl 4 to me), but that is a
-> separate issue.  gitweb is littered with such anachronism ;-)
+    git-svn: Speed up fetch
+   =20
+    We were spending a lot of time forking/execing git-cat-file and
+    git-hash-object. We now maintain a global Git repository object in =
+order to use
+    Git.pm's more efficient hash_and_insert_object and cat_blob methods=
+=2E
 
-Yup, I was trying to be consistent there.
+I can reliable reproduce the problem using this command:
+git svn clone -r215:230 svn://svn.debian.org/estron/trunk
 
--- Lea
+$ git --version
+git version 1.5.6.rc0.13.g2d392
+$ git svn --version
+git-svn version 1.5.6.rc0.13.g2d392 (svn 1.4.6)
+
+Bj=F6rn
