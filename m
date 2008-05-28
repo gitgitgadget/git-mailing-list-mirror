@@ -1,71 +1,76 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Problem fetching the git homepage
-Date: Wed, 28 May 2008 17:45:43 +0200
-Message-ID: <483D7E27.7030809@isy.liu.se>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now
+ incompatible with Cygwin (and probably Windows)
+Date: Wed, 28 May 2008 17:53:13 +0200
+Message-ID: <483D7FE9.5000207@gmail.com>
+References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org> <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 28 17:47:15 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed May 28 17:54:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1Nri-0006xw-BO
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 17:47:02 +0200
+	id 1K1Nyd-0001QU-4h
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 17:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbYE1Ppr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 11:45:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbYE1Ppr
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:45:47 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:54276 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353AbYE1Ppq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 11:45:46 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 98C8C25A43
-	for <git@vger.kernel.org>; Wed, 28 May 2008 17:45:44 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 15859-02 for <git@vger.kernel.org>;
- Mon, 26 May 2008 19:01:50 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 1209F25A41
-	for <git@vger.kernel.org>; Wed, 28 May 2008 17:45:44 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1751379AbYE1PxT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 11:53:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbYE1PxT
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 11:53:19 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:29755 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbYE1PxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 11:53:19 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1366680nfc.21
+        for <git@vger.kernel.org>; Wed, 28 May 2008 08:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=yHuNn+tviUcnMyDxsUFZOJIXY14PkJAiXQJjp8YxuN0=;
+        b=B6xGtj+x7rtCVsOHIilBAKrHiBIkdix2sMNkswj63yxA4RMu4UstRSKDneJGPHc+akU1smTBBFR+8JkfH1P4IJnPEH/OM/YlOwmR35YjLYXZwrX35Tzzo+XyLtWkRjOZYNknM1B6lO9QDB4GOxgOxKqVtknz2aWqb66Xdf4CGxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=d+hkHIqWEWOEENFuxRp4MXFGjzCTRT1KsKyMxLIet96jJwTFA4kpwCHEW3TUheMNHB6DYbD5JzG+0TPB+k52+cCN37SlzXIqh5NaHYG35jZqqY4CZRLRmSDSDhpTZE/g4FadC6nvO7SMu6xD20P4MYdV7AAEW5xHvnHWURiSJWU=
+Received: by 10.86.27.19 with SMTP id a19mr3450377fga.56.1211989996104;
+        Wed, 28 May 2008 08:53:16 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.212.111])
+        by mx.google.com with ESMTPS id 4sm14593862fgg.6.2008.05.28.08.53.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 28 May 2008 08:53:15 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83102>
 
-I'm trying to fetch the repo of the git homepage but get this error:
+Wincent Colaiuta wrote:
+> El 28/5/2008, a las 8:12, Junio C Hamano escribi=C3=B3:
+>> Perhaps we should remove the infamous gitweb/test/M=C3=A4rchen file
+>=20
+> [...] I'd much rather see this kind of thing =20
+> tested from within the test suite rather than every time I do "git =20
+> status" or "git checkout".
 
-$ git version
-git version 1.5.6.rc0.140.ga9675
-$ git fetch origin
-Getting alternates list for http://repo.or.cz/r/git-homepage.git
-Getting pack list for http://repo.or.cz/r/git-homepage.git
-Getting index for pack d4404a860edd30b154e8cd5b8c66ec35cf682dae
-Getting pack d4404a860edd30b154e8cd5b8c66ec35cf682dae
-  which contains 50819d376acb03429ab2628ef3d07893c7f0e22c
-error: packfile 
-.git/objects/pack/pack-d4404a860edd30b154e8cd5b8c66ec35cf682dae.pack 
-size changed
-fatal: packfile 
-.git/objects/pack/pack-d4404a860edd30b154e8cd5b8c66ec35cf682dae.pack 
-cannot be accessed
+I don't believe the M=C3=A4rchen file is actually used in any test code=
+, so=20
+removing it should be fine.  If/when we actually write test code for=20
+gitweb, it seems to me that we might as well generate such test files o=
+n=20
+the fly from within the test suite, rather than having them in the file=
+=20
+system permanently.
 
-The last commit I have is "Automated update: [2008-04-20] v1.5.5 -> 
-v1.5.5.1" (2b7e2d6a).
+Best,
 
-Is this due to something I've done?  (Not even sure from the error 
-message if it is a local error, or a remote error.) Or a sign of 
-something more serious?
-
-/Gustaf
+     Lea
