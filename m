@@ -1,99 +1,63 @@
-From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
-Subject: Re: setup_git_directory_gently contract question?
-Date: Wed, 28 May 2008 10:14:15 +0300
-Message-ID: <8e04b5820805280014m6fc635tf91ae20d9b9a5c91@mail.gmail.com>
-References: <8e04b5820805270710v3a06e5c2if2dcf3b94ef40c1f@mail.gmail.com>
-	 <7vmymbz7on.fsf@gitster.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [BISECTED] git-svn: "Failed to read object ..." during clone
+Date: Wed, 28 May 2008 19:28:13 +1200
+Message-ID: <483D098D.5010302@vilain.net>
+References: <20080528030128.GA28904@atjola.homenet> <7vskw3vsys.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 28 09:15:11 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 28 09:58:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1FsM-0003BT-OL
-	for gcvg-git-2@gmane.org; Wed, 28 May 2008 09:15:11 +0200
+	id 1K1GXn-00084T-VX
+	for gcvg-git-2@gmane.org; Wed, 28 May 2008 09:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750943AbYE1HOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2008 03:14:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbYE1HOS
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 03:14:18 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:48430 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750852AbYE1HOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2008 03:14:18 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so3376963rvb.1
-        for <git@vger.kernel.org>; Wed, 28 May 2008 00:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kStytpJ9MSrhiRZ31qVfLeH6Y/hrF6gZK3Xwra66XkQ=;
-        b=ofsNfqt1iwf/blECi+IZka3KXoWPDFw8X+E3HrjcXZUb8nEn8FSgjbnNEJXWQIESOCVAEdhmpLto1tM9FsTRgyPvkFF8lpsphYFv8/X+qkGN9vdyNz4EaNJKcxvvyDsfweQnnro6MaoqHKVa2fn4GLy0fcIf3KUEQL9rCkL1KPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=W21xoiHwode54F3N5dL7yFrPiyXgmCsWZtc0jST/uxqSv1+c1nosbSnLwl5t2ro1HFa/cZYtvXOeSVSV2i2IaVjxUkEejq76jgnp2wcSbTGglFfQ1tU8REx/Y+3fVXVbe1Mt3FP3e2LDUyThyCiNfECXajnk5nKzk29NWWbmdBY=
-Received: by 10.140.139.3 with SMTP id m3mr970196rvd.244.1211958855667;
-        Wed, 28 May 2008 00:14:15 -0700 (PDT)
-Received: by 10.141.37.3 with HTTP; Wed, 28 May 2008 00:14:15 -0700 (PDT)
-In-Reply-To: <7vmymbz7on.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751109AbYE1H4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 03:56:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750854AbYE1H4t
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 03:56:49 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:51390 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831AbYE1H4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 03:56:48 -0400
+X-Greylist: delayed 1976 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 May 2008 03:56:48 EDT
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 2FBC221C7B5; Wed, 28 May 2008 19:23:51 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,RDNS_DYNAMIC
+	autolearn=no version=3.2.3
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 3C0D521C6E3;
+	Wed, 28 May 2008 19:23:43 +1200 (NZST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <7vskw3vsys.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83075>
 
-On Wed, May 28, 2008 at 1:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com> writes:
->
->>     Is the function setup_git_directory_gently supposed to change the
->> current working directory, or should it keep the initial one?
->>     What is the meaning of nongit_ok?
->
-> Most commands that work from subdirectory use setup_git_directory()
-> interface, because major parts of the guts of the git internal want you to
-> be at the top of the work tree (e.g. so that you grab a path out of the
-> index, and be able to open(2) or lstat(2) that path).  A normal sequence
-> for a command is: (1) use setup_git_directory() to learn "prefix", (2) use
-> get_pathspec() and/or prefix_path() to add "prefix" to the paths given
-> from the command to make it a path relative to the work tree, (3) do its
-> thing.  setup_git_directory() chdir's up to the top of the work tree for
-> this reason.
->
-> Some commands can optionally work from even outside a git repository, but
-> they would want to operate the same way as other comands, when they are
-> started within a git repository.  In such a case, you use "gently"
-> variant, and give a pointer to int to store an additional return value to
-> signal you if you are inside a git repository or outside.
->
->  * When NULL is given as nongit_ok to gently(), it does not behave gentle
->   at all.  Outside a git repository it dies loudly.
->
->  * If you are inside a git repository, it behaves pretty much the same as
->   setup_git_directory().  "*nongit_ok" is set to zero to signal that you
->   are inside a git repository.
->
->  * If you are outside a git repository, *nongit_ok is set to non-zero so
->   that the caller can tell that it is not in any git repository's work
->   tree.  There is no need to chdir (nor a sensible place to chdir to) in
->   this case, so it doesn't.
->
-> The caller thinks of the parameter as "are we operating in non-git mode?"
-> boolean, and the callee (i.e. setup_git_directory_gently()) thinks of it
-> as "is it ok to be called outside a git repository?" (if it is NULL, the
-> caller expects to be inside a repository and wants it to barf otherwise).
-> That is why caller's variable are often called "int nongit", and the
-> callee's parameter is called "int *nongit_ok".
+Junio C Hamano wrote:
+> Heh, I should have been more careful.  The series introduces Git::cat_blob
+> that returns the size of a blob but the interface is broken and signals
+> error by returning zero.  e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 is a
+> zero sized blob.
+> 
+> Would this be enough?
+>  		my $size = $::_repository->cat_blob($fb->{blob}, $base);
+> -		die "Failed to read object $fb->{blob}" unless $size;
+> +		die "Failed to read object $fb->{blob}" if ($size < 0);
 
-    Thank you for your complete answer.
+Heh.  This sort of thing is why perl has "undef"; you could make that
+"unless defined $size" and "return undef" in the functions.
 
-    I would propose that these comments to be added to the
-Documentation/technical/... directory, (or in the setup.c file), so
-that further developers will have this information.
-
-    Thanks again,
-    Ciprian.
+Sam
