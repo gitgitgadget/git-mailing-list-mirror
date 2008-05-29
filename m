@@ -1,99 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: use "$GIT_DIR/BISECT_START" to check if we are bisecting
-Date: Thu, 29 May 2008 06:01:18 +0200
-Message-ID: <200805290601.19067.chriscool@tuxfamily.org>
-References: <20080528185702.4dcd2955.chriscool@tuxfamily.org> <7vmymauzqg.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
+Date: Thu, 29 May 2008 00:19:01 -0400
+Message-ID: <20080529041901.GA12896@spearce.org>
+References: <20080526044640.GB30245@spearce.org> <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com> <alpine.DEB.1.00.0805261106470.30431@racer> <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com> <20080526181259.GA17449@foursquare.net> <20080526234445.GF30245@spearce.org> <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com> <483C8ACB.5050505@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 29 05:58:13 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Chris Frey <cdfrey@foursquare.net>,
+	Vegard Nossum <vegard.nossum@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Dave Watson <dwatson@mimvista.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
+	laforge@gnumonks.org
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Thu May 29 06:20:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1ZHG-0003kP-Fc
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 05:58:10 +0200
+	id 1K1Zcf-0000Av-05
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 06:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211AbYE2D4x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 23:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbYE2D4x
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 23:56:53 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:47599 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752049AbYE2D4w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2008 23:56:52 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 13EC51AB2BB;
-	Thu, 29 May 2008 05:56:51 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id E579E1AB2BA;
-	Thu, 29 May 2008 05:56:50 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vmymauzqg.fsf@gitster.siamese.dyndns.org>
+	id S1754171AbYE2ETQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 00:19:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754162AbYE2ETQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 00:19:16 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:32919 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753744AbYE2ETO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 00:19:14 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1K1ZbT-0002T8-G2; Thu, 29 May 2008 00:19:03 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9F96D20FBAE; Thu, 29 May 2008 00:19:01 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <483C8ACB.5050505@intelinet.com.br>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83170>
 
-Le mercredi 28 mai 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > It seems simpler and safer to use the BISECT_START file everywhere
-> > to decide if we are bisecting or not, instead of using it in some
-> > places and BISECT_NAMES in other places.
+"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
+> Martin Langhoff escreveu:
+> >On Tue, May 27, 2008 at 11:44 AM, Shawn O. Pearce <spearce@spearce.org> 
+> >wrote:
+> >  
+> >>So in all time these users have added a total of 14 lines between
+> >>them.  Out of 122,576 total added lines.  It amounts to only 0.011%
+> >>of the total contribution.  In the US a change this small may not
+> >>even be copyrightable.
+> >>    
 > >
-> > In commit 6459c7c6786aa9bda0c7a095c9db66c36da0e5f0 (Nov 18 2007,
-> > Bisect: use "$GIT_DIR/BISECT_NAMES" to check if we are bisecting.),
-> > we decided to use BISECT_NAMES but code changed a lot and we now
-> > have to check BISECT_START first in the "bisect_start" function
-> > anyway.
-> >
-> > This patch also makes things a little bit safer by creating
-> > the BISECT_START file first and deleting it last, and also by
-> > adding checks in "bisect_clean_state".
-> >
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> What's the breakage scenario that this patch fixes?
+> >It'd be nice to hear from them, but I looks fair to me to say that
+> >those contributors - while very valuable - cannot hold the project
+> >back.
+> 
+> Well, FWIW I'm ok with the license change.
 
-Before this patch, in "bisect_clean_state" we removed the BISECT_START =
-file=20
-before the other files, so for example if the process is killed after=20
-having removed this file but not the others, then we are in an inconsis=
-tent=20
-state.
+Heh, thanks for chiming in Roger.  We're likely to start talking
+about moving egit to 100% EPL soon too.  I think your contribution
+there is quite non-trivial, so we'll certainly need your blessing
+for that.  :-)
 
-In this inconsistent state, if "git bisect reset" is called (perhaps ag=
-ain),=20
-then it would checkout the "master" branch (because the BISECT_START fi=
-le=20
-does not exists, but the BISECT_NAMES file still exists).
-
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index 4bcbace..991b2ef 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -44,7 +44,7 @@ sq() {
-> >  }
-> >
-> >  bisect_autostart() {
-> > -	test -f "$GIT_DIR/BISECT_NAMES" || {
-> > +	test -s "$GIT_DIR/BISECT_START" || {
->
-> The reason you ignore an existing but empty BISECT_START file is...?
-
-=2E.. that it should not happen, because this file is only written=20
-in "bisect_start" and there its content comes either from the current H=
-EAD=20
-or from a previous not empty BISECT_START file.
-
-We might add a check for an empty BISECT_START file and warn in this ca=
-se=20
-that the file may have been corrupted, but that may be for another patc=
-h.
-
-Thanks,
-Christian.
+-- 
+Shawn.
