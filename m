@@ -1,179 +1,136 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] make verify-pack a bit more useful with bad packs
-Date: Thu, 29 May 2008 17:34:50 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0805291716470.23581@xanadu.home>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Revision walking documentation: document most important functions
+Date: Thu, 29 May 2008 23:56:25 +0200
+Message-ID: <1212098185-8437-1-git-send-email-vmiklos@frugalware.org>
+References: <7vzlq9nel7.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 29 23:36:08 2008
+X-From: git-owner@vger.kernel.org Thu May 29 23:57:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1pn0-0007iA-Ll
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 23:36:03 +0200
+	id 1K1q7X-0005uC-El
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 23:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756489AbYE2VfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 17:35:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbYE2VfJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 17:35:09 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:13851 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756087AbYE2VfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 17:35:08 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K1N00IV5FY2G540@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 May 2008 17:34:51 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1753220AbYE2V4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 17:56:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbYE2V4V
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 17:56:21 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:41948 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbYE2V4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 17:56:20 -0400
+Received: from vmobile.example.net (dsl5401C08C.pool.t-online.hu [84.1.192.140])
+	by yugo.frugalware.org (Postfix) with ESMTP id D45461DDC5B;
+	Thu, 29 May 2008 23:56:17 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id BCD6718E2A7; Thu, 29 May 2008 23:56:25 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc0.dirty
+In-Reply-To: <7vzlq9nel7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83246>
 
-When a pack gets corrupted, its SHA1 checksum will fail.  However, this
-is more useful to let the test go on in order to find the actual 
-problem location than only complain about the SHA1 mismatch and
-bail out.
+Unfortunately the list is not complete, but includes the essential ones.
 
-Also, it is more useful to compare the stored pack SHA1 with the one in 
-the index file instead of the computed SHA1 since the computed SHA1
-from a corrupted pack won't match the one stored in the index either.
-
-Finally a few code and message cleanups were thrown in as a bonus.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
 
-Yes, I just had my first real usage Git repository corruption...
-Still investigating.
+On Thu, May 29, 2008 at 11:35:16AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> I do not want to apply a patch _from you_ to that file unless it
+> actually
+> adds meat to the description --- I know you know git better than doing
+> just a typofix to a placeholder.
 
-diff --git a/pack-check.c b/pack-check.c
-index 0f8ad2c..c03525e 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -25,10 +25,10 @@ static int verify_packfile(struct packed_git *p,
- 	off_t index_size = p->index_size;
- 	const unsigned char *index_base = p->index_data;
- 	SHA_CTX ctx;
--	unsigned char sha1[20];
--	off_t offset = 0, pack_sig = p->pack_size - 20;
-+	unsigned char sha1[20], *pack_sig;
-+	off_t offset = 0, pack_sig_ofs = p->pack_size - 20;
- 	uint32_t nr_objects, i;
--	int err;
-+	int err = 0;
- 	struct idx_entry *entries;
+Here is a start. To be honest I never used the functions I did not
+document, so I don't have too much idea what they do (not counting
+reading the source ;-) ), so I thought it's better if I leave them
+excluded from the list.
+
+> Also why did I have to fix my To: header when I tried to respond to
+> your
+> message?
+
+Hm, I sent the patch using git-send-email, adding the Cc line manually
+and having your address in sendemail.to, so I don't know exactly what
+can be special in this setup.
+
+ Documentation/technical/api-revision-walking.txt |   57 +++++++++++++++++++++-
+ 1 files changed, 56 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
+index 01a2455..f073ee3 100644
+--- a/Documentation/technical/api-revision-walking.txt
++++ b/Documentation/technical/api-revision-walking.txt
+@@ -1,9 +1,64 @@
+ revision walking API
+ ====================
  
- 	/* Note that the pack header checks are actually performed by
-@@ -38,21 +38,22 @@ static int verify_packfile(struct packed_git *p,
- 	 */
++The revision walking API offers functions to build a list of revisions
++and then iterate over that list.
++
++The walking API has a given calling sequence: first you need to
++initialize a rev_info structure, then add revisions to control what kind
++of revision list do you want to get, finally you can iterate over the
++revision list.
++
++Functions
++---------
++
++`init_revisions`::
++
++	Initialize a rev_info structure with default values. The second
++	parameter may be NULL or can be prefix path, and then the `.prefix`
++	variable will be set to it. This is typically the first function you
++	want to call when you want to deal with a revision list. After calling
++	this function, you are free to customize options, like set
++	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
++	`revision.h` for a complete list of available options.
++
++`add_pending_object`::
++
++	This function can be used if you want to add commit objects as revision
++	information. You can use the `UNINTERESTING` object flag to indicate if
++	you want to include or exclude the given commit (and commits reachable
++	from the given commit) from the revision list.
+++
++NOTE: If you have the commits as a string list then you probably want to
++use setup_revisions(), instead of parsing each string and using this
++function.
++
++`setup_revisions`::
++
++	Parse revision information, filling in the `rev_info` structure, and
++	removing the used arguments from the argument list. Returns the number
++	of arguments left that weren't recognized, which are also moved to the
++	head of the argument list. The last parameter is used in case no
++	parameter given by the first two arguments.
++
++`prepare_revision_walk`::
++
++	Prepares the rev_info structure for a walk. You should check if it
++	returns any error (positive return code) and if it does not, you can
++	start using get_revision() to do the iteration.
++
++`get_revision`::
++
++	Takes a pointer to a `rev_info` structure and iterates over it,
++	returning a `struct commit *` each time you call it. The end of the
++	revision list is indicated by returning a NULL pointer.
++
++Data structures
++---------------
++
+ Talk about <revision.h>, things like:
  
- 	SHA1_Init(&ctx);
--	while (offset < pack_sig) {
-+	while (offset < pack_sig_ofs) {
- 		unsigned int remaining;
- 		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
- 		offset += remaining;
--		if (offset > pack_sig)
--			remaining -= (unsigned int)(offset - pack_sig);
-+		if (offset > pack_sig_ofs)
-+			remaining -= (unsigned int)(offset - pack_sig_ofs);
- 		SHA1_Update(&ctx, in, remaining);
- 	}
- 	SHA1_Final(sha1, &ctx);
--	if (hashcmp(sha1, use_pack(p, w_curs, pack_sig, NULL)))
--		return error("Packfile %s SHA1 mismatch with itself",
--			     p->pack_name);
--	if (hashcmp(sha1, index_base + index_size - 40))
--		return error("Packfile %s SHA1 mismatch with idx",
--			     p->pack_name);
-+	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
-+	if (hashcmp(sha1, pack_sig))
-+		err = error("%s SHA1 checksum mismatch",
-+			    p->pack_name);
-+	if (hashcmp(index_base + index_size - 40, pack_sig))
-+		err = error("%s SHA1 does not match its inddex",
-+			    p->pack_name);
- 	unuse_pack(w_curs);
+ * two diff_options, one for path limiting, another for output;
+-* calling sequence: init_revisions(), setup_revsions(), get_revision();
++* remaining functions;
  
- 	/* Make sure everything reachable from idx is valid.  Since we
-@@ -72,22 +73,23 @@ static int verify_packfile(struct packed_git *p,
- 	}
- 	qsort(entries, nr_objects, sizeof(*entries), compare_entries);
- 
--	for (i = 0, err = 0; i < nr_objects; i++) {
-+	for (i = 0; i < nr_objects; i++) {
- 		void *data;
- 		enum object_type type;
- 		unsigned long size;
- 
- 		data = unpack_entry(p, entries[i].offset, &type, &size);
- 		if (!data) {
--			err = error("cannot unpack %s from %s",
--				    sha1_to_hex(entries[i].sha1), p->pack_name);
--			continue;
-+			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
-+				    sha1_to_hex(entries[i].sha1), p->pack_name,
-+				    (uintmax_t)entries[i].offset);
-+			break;
- 		}
- 		if (check_sha1_signature(entries[i].sha1, data, size, typename(type))) {
- 			err = error("packed %s from %s is corrupt",
- 				    sha1_to_hex(entries[i].sha1), p->pack_name);
- 			free(data);
--			continue;
-+			break;
- 		}
- 		free(data);
- 	}
-@@ -158,31 +160,28 @@ int verify_pack(struct packed_git *p, int verbose)
- 	const unsigned char *index_base;
- 	SHA_CTX ctx;
- 	unsigned char sha1[20];
--	int ret;
-+	int err = 0;
-+	struct pack_window *w_curs = NULL;
- 
- 	if (open_pack_index(p))
- 		return error("packfile %s index not opened", p->pack_name);
- 	index_size = p->index_size;
- 	index_base = p->index_data;
- 
--	ret = 0;
- 	/* Verify SHA1 sum of the index file */
- 	SHA1_Init(&ctx);
- 	SHA1_Update(&ctx, index_base, (unsigned int)(index_size - 20));
- 	SHA1_Final(sha1, &ctx);
- 	if (hashcmp(sha1, index_base + index_size - 20))
--		ret = error("Packfile index for %s SHA1 mismatch",
-+		err = error("Packfile index for %s SHA1 mismatch",
- 			    p->pack_name);
- 
--	if (!ret) {
--		/* Verify pack file */
--		struct pack_window *w_curs = NULL;
--		ret = verify_packfile(p, &w_curs);
--		unuse_pack(&w_curs);
--	}
-+	/* Verify pack file */
-+	err = verify_packfile(p, &w_curs);
-+	unuse_pack(&w_curs);
- 
- 	if (verbose) {
--		if (ret)
-+		if (err)
- 			printf("%s: bad\n", p->pack_name);
- 		else {
- 			show_pack_info(p);
-@@ -190,5 +189,5 @@ int verify_pack(struct packed_git *p, int verbose)
- 		}
- 	}
- 
--	return ret;
-+	return err;
- }
+ (Linus, JC, Dscho)
+-- 
+1.5.6.rc0.dirty
