@@ -1,105 +1,91 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v2] rollback lock files on more signals than just SIGINT
-Date: Thu, 29 May 2008 16:55:53 +0200
-Message-ID: <E1K1jnV-0007HC-Om@fencepost.gnu.org>
-References: <E1K1eXC-0005xW-Jd@fencepost.gnu.org> <alpine.DEB.1.00.0805291341290.13507@racer.site.net> <483EAD69.9090001@gnu.org> <alpine.DEB.1.00.0805291456030.13507@racer.site.net> <483EBF1F.9000809@gnu.org> <alpine.DEB.1.00.0805291541430.13507@racer.site.net>
-Cc: Git mailing list <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 29 17:18:55 2008
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: How to merge branches except for one commit
+Date: Thu, 29 May 2008 17:13:17 +0200
+Message-ID: <483EC80D.309@op5.se>
+References: <216e54900805281932v1397fd30sad91f767175ba95e@mail.gmail.com>	 <32541b130805281942g2550cad9k7ba530c59e050aa4@mail.gmail.com> <216e54900805282001x299055c3r6cfffcebc61fa955@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Andrew Arnott <andrewarnott@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 29 17:20:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1jq5-0004br-4f
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 17:14:49 +0200
+	id 1K1jpb-0004L5-OG
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 17:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753584AbYE2PN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 11:13:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753418AbYE2PN4
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 11:13:56 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:47213 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472AbYE2PN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 11:13:56 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1K1jnV-0007HC-Om; Thu, 29 May 2008 11:12:09 -0400
-In-Reply-To: <alpine.DEB.1.00.0805291541430.13507@racer.site.net>
+	id S1753000AbYE2PNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 11:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbYE2PNW
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 11:13:22 -0400
+Received: from mail.op5.se ([193.201.96.20]:44820 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823AbYE2PNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 11:13:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7A8711B800AE;
+	Thu, 29 May 2008 17:08:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.33
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.33 tagged_above=-10 required=6.6
+	tests=[AWL=-0.831, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HfMkK3nEUHmf; Thu, 29 May 2008 17:08:19 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id A6A991B80079;
+	Thu, 29 May 2008 17:08:19 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <216e54900805282001x299055c3r6cfffcebc61fa955@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83210>
 
-Other signals are also common, for example SIGTERM and SIGHUP.
-This patch modifies the lock file mechanism to catch more signals.
-It also modifies http-push.c which was missing SIGTERM.
+Andrew Arnott wrote:
+> Interesting.  I think working in the maintenance branch and merging
+> back into master should work... except when I'm in master when I find
+> the bug and just fix it there without thinking.
+> 
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- http-push.c       |    1 +
- lockfile.c        |    3 +++
- t/t7502-commit.sh |   14 ++++++++++++++
- 2 files changed, 18 insertions(+), 0 deletions(-)
+That's when you cherry-pick and reset. While having your maintenance
+branch checked out (after having committed on master), do
 
-	>> It would be curious at least to set the commit_style to COMMIT_NORMAL
-	>> after creating the index_lock, and upgrade it to COMMIT_PARTIAL later
-	>> on.  I contemplated that, and my patch is the simplest code that's 
-	>> needed and works.
-	> 
-	> As I said, I think it is a regression, because you change code.  Your 
-	> argument as to why leaves me desiring another solution.
-	
-	Ok, here it is.  But it's not what you were expecting. :-P
+	git cherry-pick master
+	git checkout master
+	git reset --hard HEAD^
 
-diff --git a/http-push.c b/http-push.c
-index f173dcd..c93e781 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -2277,6 +2277,7 @@ int main(int argc, char **argv)
- 	signal(SIGINT, remove_locks_on_signal);
- 	signal(SIGHUP, remove_locks_on_signal);
- 	signal(SIGQUIT, remove_locks_on_signal);
-+	signal(SIGTERM, remove_locks_on_signal);
- 
- 	/* Check whether the remote has server info files */
- 	remote->can_update_info_refs = 0;
-diff --git a/lockfile.c b/lockfile.c
-index cfc7335..4023797 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -135,6 +135,9 @@ static int lock_file(struct lock_file *lk, const char *path)
- 	if (0 <= lk->fd) {
- 		if (!lock_file_list) {
- 			signal(SIGINT, remove_lock_file_on_signal);
-+			signal(SIGHUP, remove_lock_file_on_signal);
-+			signal(SIGTERM, remove_lock_file_on_signal);
-+			signal(SIGQUIT, remove_lock_file_on_signal);
- 			atexit(remove_lock_file);
- 		}
- 		lk->owner = getpid();
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 3531a99..46ec1ce 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -212,4 +212,18 @@ test_expect_success 'do not fire editor in the presence of conflicts' '
- 	test "`cat .git/result`" = "editor not started"
- '
- 
-+pwd=`pwd`
-+cat > .git/FAKE_EDITOR << EOF
-+#! /bin/sh
-+# kill -TERM command added below.
-+EOF
-+
-+test_expect_success 'a SIGTERM should break locks' '
-+	echo >>negative &&
-+	sh -c '\''
-+	  echo kill -TERM $$ >> .git/FAKE_EDITOR
-+	  GIT_EDITOR=.git/FAKE_EDITOR exec git commit -a'\'' && exit 1  # should fail
-+	! test -f .git/index.lock
-+'
-+
- test_done
+Later, when you merge in the maintenance branch again, you get the
+bugfix you cherry-picked onto maint.
+
+On the subject of your workflow though, I think you could definitely
+benefit from using topic branches (short-lived branches with a few
+commits to implement one particular feature/bugfix/whatever) so that
+when you later decide to use a release-branch, you simply merge the
+topics you want. For preference, bugfix topics should go into your
+maintenance branch (branch v1.0 in your case), and then the entire
+maintenance branch should be merged into master, so that master gets
+all the true and tested bugfixes without you having to verify them
+twice (assuming clean merges, ofcourse).
+
+> The merge and revert idea is interesting.  I may try that out in this
+> case since I'm already stuck with lots of commits in master.
+> 
+> Regarding why I am porting more than just *some* commits to the
+> maintenance branches, well, these are also stabilization branches
+> before an initial vX.0 release, so in the month or so of stabilization
+> there could be potentially be a great deal of work in master that I
+> decide is worth releasing sooner rather than later.
+
+Why though? Don't you go into feature-freeze when you cut the branch?
+If you don't, then where do you?
+
 -- 
-1.5.5
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
