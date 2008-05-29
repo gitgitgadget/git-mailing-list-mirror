@@ -1,76 +1,116 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Thu, 29 May 2008 00:19:01 -0400
-Message-ID: <20080529041901.GA12896@spearce.org>
-References: <20080526044640.GB30245@spearce.org> <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com> <alpine.DEB.1.00.0805261106470.30431@racer> <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com> <20080526181259.GA17449@foursquare.net> <20080526234445.GF30245@spearce.org> <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com> <483C8ACB.5050505@intelinet.com.br>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to merge branches except for one commit
+Date: Wed, 28 May 2008 21:24:28 -0700
+Message-ID: <7vhcchrb43.fsf@gitster.siamese.dyndns.org>
+References: <216e54900805281932v1397fd30sad91f767175ba95e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Chris Frey <cdfrey@foursquare.net>,
-	Vegard Nossum <vegard.nossum@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Dave Watson <dwatson@mimvista.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
-	laforge@gnumonks.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Thu May 29 06:20:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Andrew Arnott" <andrewarnott@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 29 06:25:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1Zcf-0000Av-05
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 06:20:17 +0200
+	id 1K1Zhj-0001CS-FY
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 06:25:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754171AbYE2ETQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 00:19:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754162AbYE2ETQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 00:19:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:32919 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753744AbYE2ETO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 00:19:14 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K1ZbT-0002T8-G2; Thu, 29 May 2008 00:19:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9F96D20FBAE; Thu, 29 May 2008 00:19:01 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <483C8ACB.5050505@intelinet.com.br>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750853AbYE2EYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 00:24:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbYE2EYj
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 00:24:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50146 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709AbYE2EYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 00:24:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 581F45E6D;
+	Thu, 29 May 2008 00:24:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id F2F095E6C; Thu, 29 May 2008 00:24:32 -0400 (EDT)
+In-Reply-To: <216e54900805281932v1397fd30sad91f767175ba95e@mail.gmail.com>
+ (Andrew Arnott's message of "Wed, 28 May 2008 19:32:36 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 25E96214-2D37-11DD-AF5E-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83171>
 
-"Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
-> Martin Langhoff escreveu:
-> >On Tue, May 27, 2008 at 11:44 AM, Shawn O. Pearce <spearce@spearce.org> 
-> >wrote:
-> >  
-> >>So in all time these users have added a total of 14 lines between
-> >>them.  Out of 122,576 total added lines.  It amounts to only 0.011%
-> >>of the total contribution.  In the US a change this small may not
-> >>even be copyrightable.
-> >>    
-> >
-> >It'd be nice to hear from them, but I looks fair to me to say that
-> >those contributors - while very valuable - cannot hold the project
-> >back.
-> 
-> Well, FWIW I'm ok with the license change.
+"Andrew Arnott" <andrewarnott@gmail.com> writes:
 
-Heh, thanks for chiming in Roger.  We're likely to start talking
-about moving egit to 100% EPL soon too.  I think your contribution
-there is quite non-trivial, so we'll certainly need your blessing
-for that.  :-)
+> Am I doing something wrong, un-knowledgeable of how to properly do
+> merges/cherry-picks, or is this just life as we know it?
 
--- 
-Shawn.
+In any project, there typically is the 'master' branch that progresses the
+(b)leeding edge, and there may be one or more 'maintenance' branches that
+forked immediately after you tagged a commit on the 'master' branch.
+
+You however do not necessarily want to _develop_ on these branches.  Their
+primary purpose is to give "integration area" for people (the developers
+and the customer end users).  If you can plan ahead and carefully decide
+where you would first place each of your change, you can use merges more
+effectively.
+
+Suppose that you have (for the sake of simplicity of the discussion) two
+primary integration branches.  You do not want to add any new features to
+the 'maint' branch, and you want to include all the fixes there.  Also you
+would want to have all the fixes you give to 'maint' to your 'master'
+branch.
+
+When you found a bug, the first thing to think about might be fixing the
+bug (obviously), but before making that commit, you need to analyze where
+the breakage comes from.  If the root cause of breakage is shared between
+'maint' and 'master', then you are better off doing the fix on 'maint' and
+then merge the whole 'maint' back to 'master'.
+
+You might not be very confident with your "fix", however, and it is very
+valid to be hesitant to make that fix directly on 'maint' branch.  In such
+a case, you can fork a topic branch for that single fix off of 'maint',
+test it out, and perhaps you may choose to first merge it to 'master' to
+see if the fix works for other people and also if it is free of unexpected
+side effects for a while, before deciding that the change is safe and is
+Ok to merge it to 'maint' [*1*].
+
+In either case (the former gives the fix to 'maint' first and then to
+'master'; the latter gives the fix to 'master' first and then to 'maint'
+after validating it), the general idea for keep this possible is to do the
+fix on a topic branch by forking _the oldest integration branch_ that the
+fix could possibly apply to.
+
+Often you would find that there still are breakages in your fix. In such a
+case, you can check out the topic branch you worked on the fix, fix the
+breakage there, and merge that again to appropriate branches.  As long as
+the topic forked off of the right branch, merging it again to 'maint' will
+not contaminate 'maint' with unrelated things from 'master'.
+
+You need certain discipline to effectively use merges.  In the "merge"
+approach, you have the topics branches keep track of which integration
+branches their commits should eventually go.
+
+Once you make a commit on top of something else that you do not want to
+pull in, you cannot merge that anymore and you need decide which
+individual commits need to be backported after the fact, and this is often
+cumbersome.  It is not the end of the world --- it is called "backporting"
+and happens often in the real life.  But you can reduce the need for it by
+bit of planning.
+
+You can never plan ahead perfectly, so do not be too hard on yourself if
+you occasionally screw up.  Cherry-picking from time to time is Ok.  With
+practice, you will get used to it.  I juggle 5 integration branches to
+maintain git.git itself and it took some practice for me to get
+comfortable with the workflow.
+
+
+[Footnote]
+
+*1* The kernel folks have a policy that their maintenance track 2.6.X.Y
+will never have any fix that is not in the mainline.  With such a policy,
+you _could_ use this "fork a topic from 'maint' first, merge it into
+'master' and after proving it is Ok merge the topic to 'maint'" workflow.
+In practice, because different people maintain the mainline and the
+maintenance track in that project, this is not done and they do the
+equivalent of cherry-pick instead.
