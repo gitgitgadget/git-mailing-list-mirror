@@ -1,70 +1,55 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: whomto.pl -- finding out whom to send patches to
-Date: Thu, 29 May 2008 11:20:33 -0700
-Message-ID: <1212085233.27103.54.camel@localhost>
-References: <20080529210018.GA5508@damson.getinternet.no>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: fmt, was Re: [cogito-0.18.2] Documentation/Code Mismatch: cg-switch
+ -l
+Date: Thu, 29 May 2008 23:17:15 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805292315490.13507@racer.site.net>
+References: <20080527080417.GA32209@lifebook.rekudos.net> <m3mymc2kv6.fsf@localhost.localdomain> <20080529172817.GA18781@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Sverre Rabbelier <alturin@gmail.com>, git@vger.kernel.org
-To: Vegard Nossum <vegard.nossum@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 00:12:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Andreas Ericsson <ae@op5.se>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri May 30 00:19:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1qMG-0002Ur-F9
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 00:12:28 +0200
+	id 1K1qSt-0004V0-70
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 00:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223AbYE2WLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 18:11:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbYE2WLf
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 18:11:35 -0400
-Received: from 136-022.dsl.labridge.com ([206.117.136.22]:2580 "EHLO
-	mail.perches.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753918AbYE2WLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 18:11:35 -0400
-Received: from [192.168.1.128] (192-168-1-128.labridge.com [192.168.1.128] (may be forged))
-	by mail.perches.com (8.9.3/8.9.3) with ESMTP id OAA28039;
-	Thu, 29 May 2008 14:56:02 -0700
-In-Reply-To: <20080529210018.GA5508@damson.getinternet.no>
-X-Mailer: Evolution 2.12.3-1.2mdv2008.0 
+	id S1756064AbYE2WS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 18:18:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbYE2WS0
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 18:18:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40309 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755425AbYE2WSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 18:18:25 -0400
+Received: (qmail invoked by alias); 29 May 2008 22:18:23 -0000
+Received: from R1bad.r.pppool.de (EHLO none.local) [89.54.27.173]
+  by mail.gmx.net (mp046) with SMTP; 30 May 2008 00:18:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX181KPMomo419L/dl1mjTmLuLJ0kuzBaWkRTtLFTSz
+	bWQQcnYTm/PyWm
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <20080529172817.GA18781@machine.or.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83248>
 
-> I've written this perl script that takes a patch as input and prints the
-> authors/committers of the affected lines, using git-blame as the back end.
+Hi,
 
-Nice enough script.
-It's unfortunate that it can't output the appropriate mailing lists.
+On Thu, 29 May 2008, Petr Baudis wrote:
 
-I think the shell script that Linus gave awhile ago:
-http://lkml.org/lkml/2007/8/14/276
+> I still did not have time to add support for |fmt'ing git commit's -m 
+> arguments.
 
-        #!/bin/sh
-               git log --since=6.months.ago -- "$@" |
-                       grep -i '^    [-a-z]*by:.*@' |
-                       sort | uniq -c |
-                       sort -r -n | head
-        
-         (Maybe you want to add a
-               grep -v '\(Linus Torvalds\)\|\(Andrew Morton\)'
-        
-might work just as well.
+Note that I have a git-fmt in my personal fork that might have the 
+building blocks to provide a --fmt option to git-commit one day.
 
-I still prefer the file pattern match in MAINTAINERS, or
-another external file, and/or data stored directly into GIT
-via gitattributes approaches.
-
-This script can give maintainer, mailing lists, and git
-contact information for patches or files.
-http://lkml.org/lkml/2007/8/20/352
-The script works with git-send-email to cc the appropriate parties.
-
-This script and git repository is very old and probably doesn't apply...
-git pull git://repo.or.cz/linux-2.6/trivial-mods.git get_maintainer
+Ciao,
+Dscho
