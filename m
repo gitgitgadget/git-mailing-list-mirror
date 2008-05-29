@@ -1,76 +1,69 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
-Subject: Re: [PATCH] make commit --interactive lock index
-Date: Thu, 29 May 2008 15:12:56 +0200
-Message-ID: <483EABD8.3050600@gnu.org>
-References: <E1K1eXH-00063c-Bt@fencepost.gnu.org> <alpine.DEB.1.00.0805291343120.13507@racer.site.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: msysGit: "git filter-branch --subdirectory-filter" doesn't work
+ at all
+Date: Thu, 29 May 2008 14:15:40 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805291414160.13507@racer.site.net>
+References: <483B0FF8.6070700@dirk.my1.cc> <alpine.DEB.1.00.0805262233190.30431@racer> <483C75AD.5080206@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 29 15:14:01 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1304140824-1601002274-1212066941=:13507"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Thu May 29 15:19:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1hxA-0000AH-UL
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 15:14:01 +0200
+	id 1K1i0n-0001ps-PD
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 15:17:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbYE2NNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 09:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752001AbYE2NNH
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 09:13:07 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:50607 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751781AbYE2NNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 09:13:06 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so2631104mue.1
-        for <git@vger.kernel.org>; Thu, 29 May 2008 06:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:from;
-        bh=5z1JlI8u5hP6VvlczQ1IBVcR8pNRpzB5QMp7sdET87w=;
-        b=tglewvoYfoHn4KoiyiZi3J5+mBDYXC22949mnusp8J9Xtkzap6WTmJvMMqx6gCUWw6SDVXG3Q8tY+2ZV4ZFy0EheLSakY0MkyYXVLUPIOnUxoAYEY8BjEkt0UPuDq6/2JAVjQAMXDlHeEBj8Kkn1eQL+H0JuSpaDG89rO249y0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:from;
-        b=WPujUri6gnHF48h0N5LRh/gLJdiJrxEdWOt8JRU8lQgY7NVKauMR8oSJeLjVIN5+5oln6GO+Gi515VWake+jtPQ9nWe4x/0DA0sIpAET1jjb9szz0bbT34vRiwocGCJ//RD7k8GxTsmpC3luzRZCAEHqKc3CWWV0mGy0Fa0nmck=
-Received: by 10.103.227.10 with SMTP id e10mr2685832mur.38.1212066782346;
-        Thu, 29 May 2008 06:13:02 -0700 (PDT)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id n10sm1042100mue.14.2008.05.29.06.12.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 May 2008 06:13:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <alpine.DEB.1.00.0805291343120.13507@racer.site.net>
-X-Enigmail-Version: 0.95.6
+	id S1751730AbYE2NQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 09:16:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbYE2NQv
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 09:16:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53069 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751751AbYE2NQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 09:16:50 -0400
+Received: (qmail invoked by alias); 29 May 2008 13:16:48 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO none.local) [132.187.25.128]
+  by mail.gmx.net (mp052) with SMTP; 29 May 2008 15:16:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/x8yt9n0vxGzaZ+raqxJyRFIOzKF4KXRAKhWWXD7
+	ZcYtZmo/zfpk+m
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <483C75AD.5080206@dirk.my1.cc>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83197>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 29 May 2008, Paolo Bonzini wrote:
-> 
->> @@ -233,6 +228,8 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
->>  	if (*argv)
->>  		pathspec = get_pathspec(prefix, argv);
->>  
->> +	assert (!(interactive && pathspec && *pathspec));
-> 
-> As pathspec is specified indirectly by the user, I think an assert() here 
-> is actively wrong.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-But the program may still guarantee a condition by checking it 
-elsewhere.  I don't need to teach you about that, do I?  In particular, 
-the assert checks that this:
+---1304140824-1601002274-1212066941=:13507
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-if (interactive && argc > 0)
-         die("Paths with --interactive does not make sense.");
+Hi,
 
-... is equivalent to !pathspec || !*pathspec.
+On Tue, 27 May 2008, Dirk Süsserott wrote:
 
-Paolo
+> As I noticed from one of your replies to the 'Commit cce8d6fdb 
+> introduces...' thread, you seem to be somewhat annoyed by people asking 
+> for Windows compatibility. That was not the case here, I just wanted to 
+> state that. ;-)
+
+Heh.  I am not annoyed because of the Windows compatibility.  I am annoyed 
+by people not itching their scratch; Git's source code is clean enough 
+that just about any coder can fix their pet bug.
+
+> To my opinion the --subdirectory-filter switch isn't documented very 
+> well. When I find out and have an example, I'll post it.
+
+Thanks,
+Dscho
+
+---1304140824-1601002274-1212066941=:13507--
