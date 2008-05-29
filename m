@@ -1,88 +1,95 @@
-From: "Jesper Juhl" <jesper.juhl@gmail.com>
-Subject: Re: whomto.pl -- finding out whom to send patches to
-Date: Fri, 30 May 2008 00:19:23 +0200
-Message-ID: <9a8748490805291519l18a88d1bj6d5ffa2b88c19b1d@mail.gmail.com>
-References: <20080529210018.GA5508@damson.getinternet.no>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: caching commit patch-ids for fast git-cherry
+Date: Thu, 29 May 2008 23:19:56 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0805292318040.13507@racer.site.net>
+References: <7f9d599f0805291001mdbb4b42q6f3a1b79bc9bc4e9@mail.gmail.com>  <alpine.DEB.1.00.0805291809340.13507@racer.site.net> <7f9d599f0805291034l6c655ccbk219dd74964c65737@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org,
-	"Jan Engelhardt" <jengelh@computergmbh.de>,
-	"Sverre Rabbelier" <alturin@gmail.com>,
-	"Joe Perches" <joe@perches.com>, git@vger.kernel.org
-To: "Vegard Nossum" <vegard.nossum@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 00:20:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Fri May 30 00:22:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1qTp-0004mt-U7
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 00:20:18 +0200
+	id 1K1qVV-0005Zl-GR
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 00:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755892AbYE2WT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 18:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756087AbYE2WT0
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 18:19:26 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:18993 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755577AbYE2WTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 18:19:25 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so415369yxl.1
-        for <git@vger.kernel.org>; Thu, 29 May 2008 15:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=zw4qrHPF9NPNT5P0EeHARWvrs5LQ12r3r5nW6hjbjIk=;
-        b=dH2BY8vowWNPGqqL3PDJmJ0d20cQrOPsJRiVtnzLBKbh6ZrMA9MBAEb8bnZatbuDCPFXXqlrO3hrXKOg5Pt7sqaMe2mrgCoUk+FrXbZOY8XD1nVu/HizIOSidR/WC9Hoa8ZINaX4sJPEVW1TBBFnh7Ik0CLWtXX09wGr5+zU9lw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SUMWzbVRFouHw0ihnbsEvBqUVXMr6Jphh/6AmPtMCVemYsz+oaNqpY4YmJ4MnqyPKiNJKOlGCEmTeZk+WDl/42g+zwxTMGPSyLe1KZCAPEAqJ02Pp7mmUbT4Ns277LRrG8KJfixSCPHZi7n5Vs1i534dQKhBfkdifYPaymtdjxE=
-Received: by 10.150.86.10 with SMTP id j10mr8155217ybb.210.1212099563378;
-        Thu, 29 May 2008 15:19:23 -0700 (PDT)
-Received: by 10.150.197.4 with HTTP; Thu, 29 May 2008 15:19:23 -0700 (PDT)
-In-Reply-To: <20080529210018.GA5508@damson.getinternet.no>
-Content-Disposition: inline
+	id S1755327AbYE2WVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 18:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755634AbYE2WVJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 18:21:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37226 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754323AbYE2WVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 18:21:06 -0400
+Received: (qmail invoked by alias); 29 May 2008 22:21:04 -0000
+Received: from R1bad.r.pppool.de (EHLO none.local) [89.54.27.173]
+  by mail.gmx.net (mp009) with SMTP; 30 May 2008 00:21:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19JN2QEbzxJwzocW/HNjmOYzVtgFZvUbJFnWQvbw2
+	2HPmgWZHCRARjn
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <7f9d599f0805291034l6c655ccbk219dd74964c65737@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83250>
 
-2008/5/29 Vegard Nossum <vegard.nossum@gmail.com>:
-> Hi,
->
-> I've written this perl script that takes a patch as input and prints the
-> authors/committers of the affected lines, using git-blame as the back end.
->
-> (The purpose of this is of course to find out whom to send patches to.)
->
-<snip>
+Hi,
 
-The script is nice, but I'd wish it looked at a few other things as well.
+On Thu, 29 May 2008, Geoffrey Irving wrote:
 
-When I personally need to determine who to send patches to I do use
-'git blame' for some of the addresses, but in addition to that I also
-check;
+> On Thu, May 29, 2008 at 10:13 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Thu, 29 May 2008, Geoffrey Irving wrote:
+> >
+> >> I'm planning to use cherry picking to manage long term syncing 
+> >> between cvs/perforce and git repositories.  This means I'll have 
+> >> scripts running git-cherry between branches with hundreds of uncommon 
+> >> commits, and I want git-cherry to be much, much, faster.
+> >>
+> >> It looks like I can do this by caching commit->patch-id pairs from 
+> >> commit_patch_id() in patch-ids.c to a file, say 
+> >> $GIT_DIR/commit-patch-id-cache.  The file would be binary and append 
+> >> only, and could be blown away if .  Any suggestions / concerns before 
+> >> I write this?  Is there any reusable efficient map code for storing 
+> >> the commit->patch-id map, or should I just mirror the blocked storage
+> >> + binary search used for struct patch_ids?
+> >
+> > I would store the stuff sorted, so that the lookup is fast, generation 
+> > less so.
+> 
+> The motivation for append-only was robustness, not speed, but I don't 
+> think either concern is very significant.
 
-- The comments at the top of the file.  Sometimes there are email
-addresses there for relevant people (sometimes just names, but
-addresses can then usually be found for those people in CREDITS or
-MAINTAINERS).
+I think that robustness comes from "write new file and rename if all 
+succeeded", not from append-only.  Think of the case where you run out of 
+disk space; with append-only, it is more complicated to get back to a 
+known good state.
+ 
+> > For inspiration, you might want to look at the "notes" branch in my 
+> > personal fork:
+> >
+> > http://repo.or.cz/w/git/dscho.git?a=shortlog;h=refs/heads/notes
+> 
+> Cool.  I'd rather copy just that code entirely rather than use it for 
+> inspiration, since it does exactly what I need.  It would be silly to 
+> have two blocks of code implementing "persistent map from 20 byte hash 
+> to 20 byte hash".
 
-- Entries in MAINTAINERS that are relevant to the subsystem and/or
-file I'm modifying.
+Hehe.  That's what I meant by "inspiration" ;-)
 
-- Entries in CREDITS that look relevant to the subsystem and/or file
-I'm modifying.
+> I'll start by just copying the entire nodes-index implementation (with a 
+> few name substitutions), and we (or I) can refactor it later if both end 
+> up in the same respository.
 
-- Names/email addresses in files in Documentation/ that are relevant
-to the subsystem/file I'm modifying.
+Very nice!
 
-If the script could be made to check all (or just some) of those
-sources as well it would be really great.
-
--- 
-Jesper Juhl <jesper.juhl@gmail.com>
-Don't top-post http://www.catb.org/~esr/jargon/html/T/top-post.html
-Plain text mails only, please http://www.expita.com/nomime.html
+Thanks,
+Dscho
