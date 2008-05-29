@@ -1,71 +1,97 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC] Rename git-rm --cached to --index
-Date: Thu, 29 May 2008 01:57:44 +0200
-Message-ID: <58CD1F67-D406-44BF-A3E2-DB57FD1742EC@wincent.com>
-References: <20080528231405.GA25416@denkbrett.schottelius.org> <7vprr6roxt.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v919.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nico -telmich- Schottelius <nico-git-20080529@schottelius.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 29 01:59:07 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Documentation: git-cherry uses git-patch-id
+Date: Wed, 28 May 2008 17:04:53 -0700
+Message-ID: <7v7idern4q.fsf_-_@gitster.siamese.dyndns.org>
+References: <7f9d599f0805281106w746a0469u6c483d64cf75b823@mail.gmail.com>
+ <7v1w3muw8j.fsf@gitster.siamese.dyndns.org>
+ <190C4133-35C9-4CE0-816B-603B8F661A56@gmail.com>
+ <7vod6qtgfs.fsf@gitster.siamese.dyndns.org>
+ <7f9d599f0805281242w5769a100s1153c2101992ff55@mail.gmail.com>
+ <7v3ao2tawd.fsf@gitster.siamese.dyndns.org>
+ <7f9d599f0805281414x6b97070ag7a1cc36f5d3c5a36@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Geoffrey Irving" <irving@naml.us>
+X-From: git-owner@vger.kernel.org Thu May 29 02:06:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1VXt-0008ED-Hn
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 01:59:05 +0200
+	id 1K1VeU-0001BT-48
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 02:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbYE1X56 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2008 19:57:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbYE1X56
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 19:57:58 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:56657 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342AbYE1X55 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2008 19:57:57 -0400
-Received: from cuzco.lan (156.pool85-53-26.dynamic.orange.es [85.53.26.156])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m4SNvn8B016464
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 28 May 2008 19:57:51 -0400
-In-Reply-To: <7vprr6roxt.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.919.2)
+	id S1751624AbYE2AFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2008 20:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbYE2AFE
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 May 2008 20:05:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50571 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435AbYE2AFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2008 20:05:02 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9A7A73BE9;
+	Wed, 28 May 2008 20:05:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTP id B777B3BE8; Wed, 28 May 2008 20:04:56 -0400 (EDT)
+In-Reply-To: <7f9d599f0805281414x6b97070ag7a1cc36f5d3c5a36@mail.gmail.com>
+ (Geoffrey Irving's message of "Wed, 28 May 2008 14:14:59 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E20DA3C6-2D12-11DD-AA92-80001473D85F-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83153>
 
-El 29/5/2008, a las 1:25, Junio C Hamano escribi=F3:
-> Please don't make naming inconsistent.  --index means "do things that
-> usually affect only work tree also to the index as well", while --=20
-> cached
-> means "act only on the index" (study "git apply" for another example)=
-=2E
+"Geoffrey Irving" <irving@naml.us> writes:
+
+> On Wed, May 28, 2008 at 1:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> "git rm" that does not touch work tree but removes only the index =20
-> entry
-> should be named --cached.
+>> Thanks.
+>>
+>> In manual pages, "SEE ALSO" section is a more appropriate place to do this
+>> kind of thing.
+>
+> Here's an improved patch.
 
-I think this is a bit of an arcane distinction. I wonder if a more =20
-intuitive scheme might be:
+Thanks, I'll do this instead...
 
-   "--index" as it is now (for "do things that usually affect only =20
-work tree also to the index as well")
+-- >8 --
+Geoffrey Irving noticed that git-cherry talks about comparing commits without
+hinting how they are compared.
 
-And:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-cherry.txt |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-   "--index-only" for "act only on the index"
-
-Although the latter is more characters to type than "--cached", it is =20
-a hell of a lot less surprising. For the typing-phobic there's always =20
-completion.
-
-Let the arguments about bikeshed color and breaking people's scripts =20
-ensue!
-
-Cheers,
-Wincent
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index b0468aa..d8e0a5b 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -13,6 +13,8 @@ DESCRIPTION
+ -----------
+ The changeset (or "diff") of each commit between the fork-point and <head>
+ is compared against each commit between the fork-point and <upstream>.
++The commits are compared with their 'patch id', obtained from linkgit:git-patch-id[1]
++program.
+ 
+ Every commit that doesn't exist in the <upstream> branch
+ has its id (sha1) reported, prefixed by a symbol.  The ones that have
+@@ -56,6 +58,10 @@ OPTIONS
+ <limit>::
+ 	Do not report commits up to (and including) limit.
+ 
++SEE ALSO
++--------
++linkgit:git-patch-id[1]
++
+ Author
+ ------
+ Written by Junio C Hamano <junkio@cox.net>
+-- 
+1.5.6.rc0.43.g823ea
