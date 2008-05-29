@@ -1,65 +1,65 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] make commit --interactive lock index
-Date: Thu, 29 May 2008 20:00:55 +0200
-Message-ID: <483EEF57.6060304@gnu.org>
-References: <E1K1eXH-00063c-Bt@fencepost.gnu.org> <alpine.DEB.1.00.0805291343120.13507@racer.site.net> <483EABD8.3050600@gnu.org> <alpine.DEB.1.00.0805291454270.13507@racer.site.net> <483EC079.1050008@gnu.org> <20080529175157.GB5596@steel.home>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] gitweb: fix "next" link on bottom of commit log page
+Date: Thu, 29 May 2008 18:10:03 +0000
+Message-ID: <20080529181003.1249.qmail@b35f4f9e60eb05.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 29 20:02:18 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 29 20:10:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1mRg-0005a9-HN
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 20:01:48 +0200
+	id 1K1maY-0000ya-AL
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 20:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbYE2SA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 14:00:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbYE2SA4
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 14:00:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:46756 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183AbYE2SA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 14:00:56 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2096832fgg.17
-        for <git@vger.kernel.org>; Thu, 29 May 2008 11:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=bXo4x0lyldYzHxHy5sesAVxkx+CShL9Nr2v1deOmoJA=;
-        b=toY90qFE/pnoUjBNdSKsLaEnem21Oyef2hjWZjNd4flAGNvj/CXWZJuvtTCblg9uuCLTYvobO5ouMoAllSRzXsfwxq7xdFHYywjMA1tgAoFrrG61KJP12LIn3ZO/UyeCyycYvSstB7laJjdHU48m86WUbMW4jIR9/kAFsP9UIfY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=f+teJwReYynvFwZcchleL4dOlcUmuM1HiSels0oFP3i9vPqqVPsQakds0SkT3lf8f6AWq2yZjNsTy3KAXnQDH+N/aBpPNDqbX3p6z1YTHNJBkW5VeUyDjvt0k1BIRTSY9TaDP1f4wXRCSQVrUt3W11iE120DlNKobHW8m7o/ZpY=
-Received: by 10.86.77.5 with SMTP id z5mr7482523fga.35.1212084054666;
-        Thu, 29 May 2008 11:00:54 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id l12sm873797fgb.8.2008.05.29.11.00.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 May 2008 11:00:53 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <20080529175157.GB5596@steel.home>
-X-Enigmail-Version: 0.95.6
+	id S1752886AbYE2SKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 14:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbYE2SKG
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 14:10:06 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:42488 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752839AbYE2SKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 14:10:05 -0400
+Received: (qmail 1250 invoked by uid 1000); 29 May 2008 18:10:03 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83229>
 
+When viewing a gitweb repository commit log, the "next" link at the top
+of the page works as expected, the "next" link on the bottom of the page
+has a=search instead of a=log and thus fails to get you to the next
+page.  This commit replaces the bottom "next" link with the same links
+as shown at the top of the page.
 
->> The "if() die ()" thingie is already in builtin-commit.c, so we won't  
->> ever get a pathspec in the "add --interactive" case.  If we do,  
->> something else has already been done incorrectly before -- not by the  
->> user but by the programmer.
-> 
-> What could that be?
+The bad link was reported by Kai Blin through
+ http://bugs.debian.org/481902
 
-Nothing, but it documents to whoever reads the code what is the path 
-that will be taken.  Anyway if it happened it would be very bad.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ gitweb/gitweb.perl |    7 +------
+ 1 files changed, 1 insertions(+), 6 deletions(-)
 
-Paolo
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 57a1905..f7b9ac2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4703,12 +4703,7 @@ sub git_log {
+ 		git_print_log($co{'comment'}, -final_empty_line=> 1);
+ 		print "</div>\n";
+ 	}
+-	if ($#commitlist >= 100) {
+-		print "<div class=\"page_nav\">\n";
+-		print $cgi->a({-href => href(-replay=>1, page=>$page+1),
+-			       -accesskey => "n", -title => "Alt-n"}, "next");
+-		print "</div>\n";
+-	}
++	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
+ 	git_footer_html();
+ }
+ 
+-- 
+1.5.5.2
