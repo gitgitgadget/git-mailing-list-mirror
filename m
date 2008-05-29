@@ -1,55 +1,81 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
-Date: Thu, 29 May 2008 17:37:51 +0200
-Message-ID: <200805291737.53291.trast@student.ethz.ch>
-References: <200805232221.45406.trast@student.ethz.ch>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 6/5] NUL hack to create_file()
+Date: Thu, 29 May 2008 11:55:56 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0805291145230.19665@iabervon.org>
+References: <1212020246-26480-1-git-send-email-gitster@pobox.com> <1212020246-26480-2-git-send-email-gitster@pobox.com> <1212020246-26480-3-git-send-email-gitster@pobox.com> <1212020246-26480-4-git-send-email-gitster@pobox.com> <1212020246-26480-5-git-send-email-gitster@pobox.com>
+ <1212020246-26480-6-git-send-email-gitster@pobox.com> <1212020246-26480-7-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 29 17:39:41 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 29 17:57:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1kCy-00016F-AM
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 17:38:28 +0200
+	id 1K1kUo-0002Yn-KJ
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 17:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbYE2Phg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 11:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbYE2Phg
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 11:37:36 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:53780 "EHLO XSMTP0.ethz.ch"
+	id S1753112AbYE2P4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 11:56:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753006AbYE2P4B
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 11:56:01 -0400
+Received: from iabervon.org ([66.92.72.58]:36087 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751352AbYE2Phf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 11:37:35 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 29 May 2008 17:37:33 +0200
-Received: from vpn-global-dhcp3-183.ethz.ch ([129.132.210.183]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 29 May 2008 17:37:33 +0200
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <200805232221.45406.trast@student.ethz.ch>
-Content-Disposition: inline
-X-OriginalArrivalTime: 29 May 2008 15:37:33.0458 (UTC) FILETIME=[E9AFFF20:01C8C1A1]
+	id S1752961AbYE2P4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 11:56:00 -0400
+Received: (qmail 28128 invoked by uid 1000); 29 May 2008 15:55:56 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 May 2008 15:55:56 -0000
+In-Reply-To: <1212020246-26480-7-git-send-email-gitster@pobox.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83212>
 
-You wrote:
-> Adds a new option 'e' to the 'add -p' command loop that lets you
-> discard or keep one hunk line at a time.  This is useful if there are
-> no unchanged lines in the middle of the hunk, so 's' will not work,
-> but you would still like to split it.
+On Wed, 28 May 2008, Junio C Hamano wrote:
 
-Any news on this?  I would greatly appreciate criticism if something
-is wrong or inadequate :-)
+> This is not meant for application to the mainline.  It allows your git to
+> refuse to create a blob whose name is "nul".
 
-Thanks,
-Thomas
+I assume this is so you can test git's response to a defective filesystem 
+without actually having a defective filesystem?
 
--- 
-Thomas Rast
-trast@student.ethz.ch
+> ---
+>  entry.c |    8 ++++++++
+>  1 files changed, 8 insertions(+), 0 deletions(-)
+> 
+> diff --git a/entry.c b/entry.c
+> index 222aaa3..d24b803 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -81,6 +81,14 @@ static void remove_subtree(const char *path)
+>  
+>  static int create_file(const char *path, unsigned int mode)
+>  {
+> +	if (1) {
+> +		size_t len = strlen(path);
+> +		if (3 <= len && !strcmp(path + len - 3, "nul") &&
+> +		    (3 == len || path[len - 4] == '/')) {
+> +			errno = EPERM;
+
+Shouldn't this be EEXIST? I think the issue is that the first exists for 
+the purpose of open() but not for anything else we've done up to this 
+point.
+
+> +			return -1;
+> +		}
+> +	}
+>  	mode = (mode & 0100) ? 0777 : 0666;
+>  	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
+>  }
+> -- 
+> 1.5.6.rc0.43.g823ea
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
