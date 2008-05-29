@@ -1,65 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rollback index if git-commit is interrupted by a
- signal
-Date: Thu, 29 May 2008 15:42:36 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0805291541430.13507@racer.site.net>
-References: <E1K1eXC-0005xW-Jd@fencepost.gnu.org> <alpine.DEB.1.00.0805291341290.13507@racer.site.net> <483EAD69.9090001@gnu.org> <alpine.DEB.1.00.0805291456030.13507@racer.site.net> <483EBF1F.9000809@gnu.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [RFC/PATCH] git-what: explain what to do next
+Date: Thu, 29 May 2008 09:56:05 -0500
+Message-ID: <483EC405.6090400@freescale.com>
+References: <1211877299-27255-1-git-send-email-sbejar@gmail.com> <200805290639.38134.chriscool@tuxfamily.org> <7vlk1tpug5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git mailing list <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Thu May 29 16:49:42 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	=?ISO-8859-1?Q?Santi_B=E9?= =?ISO-8859-1?Q?jar?= 
+	<sbejar@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 29 17:06:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1jMr-0005R2-M8
-	for gcvg-git-2@gmane.org; Thu, 29 May 2008 16:44:38 +0200
+	id 1K1jZy-0004J7-AW
+	for gcvg-git-2@gmane.org; Thu, 29 May 2008 16:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbYE2Onq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 10:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752724AbYE2Onq
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 10:43:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37842 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752507AbYE2Onp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 10:43:45 -0400
-Received: (qmail invoked by alias); 29 May 2008 14:43:43 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO none.local) [132.187.25.128]
-  by mail.gmx.net (mp022) with SMTP; 29 May 2008 16:43:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19YjZVoynZYnUZcl95oinbwl3yO/JeSO006v62Cp9
-	kU+ztDYpiu7L9G
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <483EBF1F.9000809@gnu.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752882AbYE2O5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 10:57:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbYE2O5Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 10:57:16 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:33962 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbYE2O5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 10:57:16 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m4TEujLT022844;
+	Thu, 29 May 2008 07:56:45 -0700 (MST)
+Received: from [10.214.73.8] (mvp-10-214-73-8.am.freescale.net [10.214.73.8])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m4TEuih7029390;
+	Thu, 29 May 2008 09:56:44 -0500 (CDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vlk1tpug5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83207>
 
-Hi,
-
-On Thu, 29 May 2008, Paolo Bonzini wrote:
-
-> > IMO it would make much more sense to _guarantee_ that the 
-> > commity_style variable is set before the index is locked.  It is 
-> > feasible, and there is no good reason not to do that.
+Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
 > 
-> No, it's not possible because the COMMIT_PARTIAL case first creates the 
-> index_lock and then the false_lock.
+>> It seems not very friendly to just "return 1" when not bisecting.
+>> And before my last patch to use BISECT_START to check if we are bisecting, 
+>> it would perhaps have been better to use 'test -f "$GIT_DIR/BISECT_NAMES"'.
+> 
+> The reason for this silence is because Santi wants to call potential
+> culprits in turn and stop when one responds "Yeah, I am the guilty one who
+> threw a monkey wrench into the user's workflow".  For that to work, "No,
+> the user is not in the middle of any interaction with me" response needs
+> to be silent.
 
-So why don't you fix _that_?
+Hrm.  Do both?  Have the normal interactive user command
+be more verbose, but let the pseudo-scripted version supply
+an additional --status-only flag as it sequences through
+the status checks?
 
-> It would be curious at least to set the commit_style to COMMIT_NORMAL 
-> after creating the index_lock, and upgrade it to COMMIT_PARTIAL later 
-> on.  I contemplated that, and my patch is the simplest code that's 
-> needed and works.
-
-As I said, I think it is a regression, because you change code.  Your 
-argument as to why leaves me desiring another solution.
-
-Nuff said,
-Dscho
+jdl
