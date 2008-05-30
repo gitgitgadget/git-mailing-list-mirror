@@ -1,61 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-fast-export: Remove double spaces in author line
-Date: Fri, 30 May 2008 13:27:37 -0700
-Message-ID: <7vtzgfk05i.fsf@gitster.siamese.dyndns.org>
-References: <1212143475-48255-1-git-send-email-pdebie@ai.rug.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Fri May 30 22:28:43 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [PATCH] perl/Git.pm: add parse_rev method
+Date: Fri, 30 May 2008 22:27:50 +0200
+Message-ID: <1212179270-26170-1-git-send-email-LeWiemann@gmail.com>
+References: <20080530095047.GD18781@machine.or.cz>
+Cc: Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 30 22:29:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2BDK-0002Cx-Fx
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:28:38 +0200
+	id 1K2BDL-0002Cx-3x
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921AbYE3U1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 16:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbYE3U1q
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:27:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52423 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752855AbYE3U1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 16:27:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0AC7E238F;
-	Fri, 30 May 2008 16:27:43 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5B171238E; Fri, 30 May 2008 16:27:39 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DB46A892-2E86-11DD-92EF-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753012AbYE3U1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 16:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbYE3U1t
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:27:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:1319 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752653AbYE3U1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 16:27:48 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so190300fgg.17
+        for <git@vger.kernel.org>; Fri, 30 May 2008 13:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        bh=5JEe1BtG0wrv8X3LPNZR1V8HXo7i2EEgC1dTMpWRmN4=;
+        b=tPFKe1CD5a3UuBee9ruAmjIPjMAXq8wSmLus4VqmQADcLCZUURCg6SpqL8k+ukGox4RFI4nhNTil6lZax9LZzG1hMh6BHo7vaPTXYXaONYrMIscQzszWdyDZPJp4CYAO6TBMHDAorL/bYfMHXUtPmbqdLPeM9sSC2U6snFJV8AM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        b=maB/ionfGIoKcGVEW0w8D/oZ/p/MILtbj/tnt5xCkCWcIRBTgpd27JqvOR3wVAHTeuNCNJfYVZI6yzi6CBKWtmz+9D3/YNCtioBeY+xd5h8uYA9Fl0m1xyt0OUqDey9arEGLRIgh91aaYRD8Ild+1mEXr8NzC7iL6BHV6/0zDxE=
+Received: by 10.86.28.2 with SMTP id b2mr2064477fgb.78.1212179264623;
+        Fri, 30 May 2008 13:27:44 -0700 (PDT)
+Received: from fly ( [91.33.213.54])
+        by mx.google.com with ESMTPS id 4sm1130614fge.5.2008.05.30.13.27.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 May 2008 13:27:44 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K2BCY-0006p7-LL; Fri, 30 May 2008 22:27:50 +0200
+X-Mailer: git-send-email 1.5.5.GIT
+In-Reply-To: <20080530095047.GD18781@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83326>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+The parse_rev method takes a revision name and returns a SHA1 hash,
+like the git-rev-parse command.
 
-> It produces 
->
-> 	"author Samba Release Account <samba-bugs@samba.org>  831196245 +0000"
->
-> The git-fast-import syntax says there can only be a single space after the >
-> sign. This Samba commit breaks bzr-fast-import, for example.
->
-> I'm not sure how to properly fix the problem, as I'm not very deep into Git's
-> code. I included this patch in case anyone else has the same problem and wants
-> a quick fix. I'm also not sure if it's a fast-export problem, or if the Samba
-> repository is just invalid :)
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+Hi Petr,
 
-You can call that repository broken if you want, but we can try to be
-liberal when receiving and be strict when generating.  IOW, fast-import
-could accept such a minor deviation and generate a commit after fixing it.
-The same thing can be said about fast-export --- read, fix and generate.
+This patch incorporates all your suggestions.  Thanks for your help on
+IRC!
 
-By the way, your quick hack would however squash multiple SPs anywhere on
-the line, wouldn't it, not just the one between '>' and the timestamp?
+ perl/Git.pm |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index d05b633..4bc3604 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -716,6 +716,44 @@ sub ident_person {
+ 	return "$ident[0] <$ident[1]>";
+ }
+ 
++=item parse_rev ( REVISION_NAME )
++
++Look up the specified revision name and return the SHA1 hash, or
++return undef if the lookup failed.  See git rev-parse --help, section
++"Specifying Revisions".
++
++=cut
++
++sub parse_rev {
++    # We could allow for a list of revisions here.
++    my ($self, $rev_name) = @_;
++
++    my $hash;
++    try {
++        # The --quiet --verify options cause git-rev-parse to fail
++        # with exit status 1 (instead of 128) if the given revision
++        # name is not found, which enables us to distinguish not-found
++        # from serious errors.  The --default option works around
++        # git-rev-parse's lack of support for getopt style "--"
++        # separators (it would fail for tags named "--foo" without
++        # it).
++        $hash = $self->command_oneline("rev-parse", "--verify", "--quiet",
++                                       "--default", $rev_name);
++    } catch Git::Error::Command with {
++        my $E = shift;
++        if ($E->value() == 1) {
++            # Revision name not found.
++            $hash = undef;
++        } else {
++            throw $E;
++        }
++    };
++    # Guard against unexpected output.
++    throw Error::Simple(
++        "parse_rev: unexpected output for \"$rev_name\": $hash")
++        if defined $hash and $hash !~ /^([0-9a-fA-F]{40})$/;
++    return $hash;
++}
+ 
+ =item hash_object ( TYPE, FILENAME )
+ 
+-- 
+1.5.5.GIT
