@@ -1,92 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Gitweb caching: Google Summer of Code project
-Date: Fri, 30 May 2008 13:28:04 -0700
-Message-ID: <7vd4n3k04r.fsf@gitster.siamese.dyndns.org>
-References: <483C4CFF.2070101@gmail.com>
- <200805300127.10454.jnareb@gmail.com> <483FABB4.1010309@gmail.com>
- <200805301202.25368.jnareb@gmail.com> <4840166C.3030903@gmail.com>
- <20080530150713.GG593@machine.or.cz> <48401CFF.4020702@gmail.com>
- <20080530153822.GH593@machine.or.cz>
- <b77c1dce0805300904o5b4363efkc4591fc820164bf7@mail.gmail.com>
- <1212173779.26045.77.camel@localhost.localdomain>
+Subject: What's in git.git (stable)
+Date: Fri, 30 May 2008 13:43:19 -0700
+Message-ID: <7vod6nikuw.fsf@gitster.siamese.dyndns.org>
+References: <7vtzibbjxn.fsf@gitster.siamese.dyndns.org>
+ <7vwsn75pmv.fsf@gitster.siamese.dyndns.org>
+ <7vy77gapkl.fsf@gitster.siamese.dyndns.org>
+ <7vmynqfeab.fsf@gitster.siamese.dyndns.org>
+ <7vwsmjj0js.fsf@gitster.siamese.dyndns.org>
+ <7vhcdchr80.fsf@gitster.siamese.dyndns.org>
+ <7vhcd0jyyp.fsf@gitster.siamese.dyndns.org>
+ <7vod6wpjvr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Lea Wiemann <lewiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Fri May 30 22:37:28 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 30 22:44:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2BLh-00060R-5u
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:37:17 +0200
+	id 1K2BSi-0000Ca-60
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbYE3UgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 16:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbYE3UgY
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:36:24 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37424 "EHLO
+	id S1752967AbYE3Unk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 May 2008 16:43:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753052AbYE3Unk
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:43:40 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55641 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbYE3UgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 16:36:24 -0400
-X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 May 2008 16:36:24 EDT
+	with ESMTP id S1754580AbYE3Und convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 May 2008 16:43:33 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D946E229D;
-	Fri, 30 May 2008 16:28:17 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52B6A37AF;
+	Fri, 30 May 2008 16:43:29 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7BA71229C; Fri, 30 May 2008 16:28:05 -0400 (EDT)
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7EB3237AE; Fri, 30 May 2008 16:43:27 -0400 (EDT)
+X-maint-at: 28bc30220f30850a10217d61f73e46d8a541e670
+X-master-at: d2b3691b61d516a0ad2bf700a2a5d9113ceff0b1
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F00AA42C-2E86-11DD-903A-CF5E14B48E85-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0F4FA664-2E89-11DD-9C5B-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83333>
 
-"J.H." <warthog19@eaglescrag.net> writes:
+[jc: I wrote this a few days ago but did not send it out]
 
-> On Fri, 2008-05-30 at 18:04 +0200, Rafael Garcia-Suarez wrote:
->> 2008/5/30 Petr Baudis <pasky@suse.cz>:
->> >
->> > Wow, and here I was wondering if requiring at least 5.6 was not too
->> > liberal. ;-) I believe 5.8 is the newest possible candidate though, it
->> > is still too widespread; e.g. Debian-wise, many servers run on Etch and
->> > are going to stay there even for quite some time after Lenny gets
->> > released. Heck, I still have accounts on plenty of Sarge machines. ;-)
->> > (Sarge seems to have Perl-5.8.4.)
->> 
->> I think 5.8.2 is a good _minimum_ perl to support. Before that one,
->> Unicode support is next to null (5.6 and below) or too buggy, and
->> gitweb needs that.
+* The 'master' branch has these since 1.5.6-rc0.
 
-> I would agree - lets try and shoot for 5.8 as a baseline minimum (there
-> are lots of people who are slow to upgrade, and it would be nice to be
-> able for them to make use of newer gitweb's on things like Centos / RHEL
-> 4
+Christian Couder (1):
+  bisect: use "$GIT_DIR/BISECT_START" to check if we are bisecting
 
-I do not think it is unreasonable to require recent Perl for a machine
-that runs gitweb, as it is not something you would run on your "customer
-site that needs to be ultra sta(b)le" nor on your "development machine
-that needs to run the same version as that ultra sta(b)le customer
-installation."  In other words, gitweb is primarily a developer tool, and
-you can assume that people can afford to have a dedicated machine they can
-update its Perl to recent version.
+Dmitry V. Levin (1):
+  builtin-fetch.c (store_updated_refs): Honor update_local_ref() return
+    value
 
-However, introducing dependency on 5.8 to any and all Git.pm users may
-have a much wider impact.  Right now, these "use Git":
+Gerrit Pape (2):
+  Documentation/git-bundle.txt: fix synopsis
+  commit --interactive: properly update the index before commiting
 
-    git-add--interactive.perl
-    git-cvsexportcommit.perl
-    git-send-email.perl
-    git-svn.perl
+Jeff King (1):
+  clone: make sure we support the transport type
 
-If you are doing development for some customer application whose end
-product needs to land on a machine with a pre-5.8 Perl, it is conceivable
-that you may pin the Perl running on that development machine to that old
-version, say 5.6.  Introducing 5.8 dependency to Git.pm in such a way that
-"use Git" from these fail might make these people somewhat unhappy.
+Johannes Schindelin (1):
+  hg-to-git: add --verbose option
+
+Johannes Sixt (2):
+  t5700-clone-reference: Quote $U
+  Revert "filter-branch: subdirectory filter needs --full-history"
+
+Junio C Hamano (19):
+  tests: do not use implicit "git diff --no-index"
+  diff-files: do not play --no-index games
+  "git diff": do not ignore index without --no-index
+  Update draft release notes for 1.5.6
+  log --graph: do not accept log --graphbogus
+  log --pretty: do not accept bogus "--prettyshort"
+  Release Notes for 1.5.5.2
+  Documentation/git.txt: link to 1.5.5.2 documentation.
+  Makefile: fix dependency on wt-status.h
+  show-branch --current: do not barf on detached HEAD
+  git-diff: allow  --no-index semantics a bit more
+  git diff --no-index: default to page like other diff frontends
+  GIT 1.5.5.3
+  t5100: Avoid filename "nul"
+  Git::cat_blob: allow using an empty blob to fix git-svn breakage
+  fix sha1_pack_index_name()
+  Manual subsection to refer to other pages is SEE ALSO
+  Documentation: git-cherry uses git-patch-id
+  "git checkout -- paths..." should error out when paths cannot be writ=
+ten
+
+Karl Hasselstr=C3=B6m (1):
+  Add some tests for git update-ref -d
+
+Lea Wiemann (1):
+  gitweb: only display "next" links in logs if there is a next page
+
+Michele Ballabio (1):
+  Documentation: fix graph in git-rev-parse.txt
+
+Pieter de Bie (1):
+  builtin-fast-export: Only output a single parent per line
+
+Shawn O. Pearce (5):
+  git-gui: Add a --trace command line option
+  git-gui: Handle workdir detection when CYGWIN=3Dnowinsymlinks
+  Don't diff empty tree on branch creation in paranoid update hook
+  Don't load missing ACL files in paranoid update hook
+  Ignore no-op changes in paranoid update hook
+
+Twiinz (1):
+  git-gui: Vertically align textboxes with labels
