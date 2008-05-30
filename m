@@ -1,64 +1,95 @@
-From: david@lang.hm
-Subject: Re: using git-push to backup repo...strange behavior
-Date: Fri, 30 May 2008 06:15:48 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0805300611230.4014@asgard.lang.hm>
-References: <3a6159d2-e1ff-4aa8-bfeb-806af2bc82c8@8g2000hse.googlegroups.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH 2/3] Introduce core.showUntrackedFiles to make it possible
+ to disable showing of untracked files.
+Date: Fri, 30 May 2008 15:16:11 +0200
+Message-ID: <483FFE1B.1020507@trolltech.com>
+References: <043361f81946d5657217e6be0f22f4df350fd13f.1212152269.git.marius@trolltech.com> <3088e5a9507aa55ee55f512fb3bd554f1658d2e3.1212152269.git.marius@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: davetron5000 <davetron5000@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 15:16:53 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF55861DB1719E6378A6D2119"
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Fri May 30 15:17:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K24TD-0002Ji-Qz
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 15:16:36 +0200
+	id 1K24Tg-0002XC-I9
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 15:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbYE3NPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 09:15:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751594AbYE3NPm
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 09:15:42 -0400
-Received: from mail.lang.hm ([64.81.33.126]:53062 "EHLO bifrost.lang.hm"
+	id S1751643AbYE3NQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 09:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbYE3NQN
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 09:16:13 -0400
+Received: from hoat.troll.no ([62.70.27.150]:46541 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751561AbYE3NPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 09:15:42 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m4UDFekA020974;
-	Fri, 30 May 2008 06:15:40 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <3a6159d2-e1ff-4aa8-bfeb-806af2bc82c8@8g2000hse.googlegroups.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751622AbYE3NQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 09:16:12 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id D9C1620C36;
+	Fri, 30 May 2008 15:16:10 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id CB1D420BFA;
+	Fri, 30 May 2008 15:16:10 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <3088e5a9507aa55ee55f512fb3bd554f1658d2e3.1212152269.git.marius@trolltech.com>
+X-Enigmail-Version: 0.95.6
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83300>
 
-On Fri, 30 May 2008, davetron5000 wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF55861DB1719E6378A6D2119
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-> 3. On the remote side, I can find no way to update the working dir
-> with the changes other than git reset --hard.  Do I even need to do
-> this?  I'd like to be able to for automated builds/tests someday.
-> 4. I made post-update executable, but it never runs (it echos a
-> message to a file)
+Simon Hausmann said the following on 30.05.2008 10:54:
+> Determining untracked files can be a very slow operation on large trees=
+=2E This commit introduces
+> a configuration variable that makes it possible to disable showing of u=
+ntracked files by default
+> as well as a -U commandline option to override this.
+>=20
+> Signed-off-by: Simon Hausmann <simon@lst.de>
+> Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
+> ---
 
-I just went though this.
+This gives me ~80% improvement on commit/status. Reasonable, since my=20
+work tree nearly doubles in size on a full build.
 
-in the remote repo I make .git/hooks/post-receive executable, then edited 
-it and made the script that it optionally calls excecutable, and 
-uncommented it.
+--=20
+=2Emarius [@trolltech.com]
+'if you know what you're doing, it's not research'
 
-I then added git checkout -f  and ran into a problem that was answered 
-this morning by Johan Herland so the final script is
 
-#!/bin/sh
-if [ "$GIT_DIR" = "." ]; then
-         GIT_DIR=`pwd`
-fi
+--------------enigF55861DB1719E6378A6D2119
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-/usr/share/doc/git-core/contrib/hooks/post-receive-email
-cd ..
-/usr/bin/git checkout -f
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-David Lang
+iD8DBQFIP/4bKzzXl/njVP8RAgVdAKCLrgbEtXvq/BJS6U9MUoIAlGhWAQCeLodl
+No/BaBAoCnMUzeD4AIV+AUU=
+=vnx4
+-----END PGP SIGNATURE-----
+
+--------------enigF55861DB1719E6378A6D2119--
