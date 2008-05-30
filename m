@@ -1,61 +1,71 @@
-From: David Dillow <dave@thedillows.org>
+From: "Frank Ch. Eigler" <fche@redhat.com>
 Subject: Re: reducing prune sync()s
-Date: Thu, 29 May 2008 21:51:35 -0400
-Message-ID: <1212112295.3094.3.camel@obelisk.thedillows.org>
-References: <20080529205743.GC17123@redhat.com>
-	 <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org>
+Date: Thu, 29 May 2008 21:50:43 -0400
+Message-ID: <20080530015043.GB4032@redhat.com>
+References: <20080529205743.GC17123@redhat.com> <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org> <alpine.LFD.1.10.0805291727490.3141@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Frank Ch. Eigler" <fche@redhat.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linuxfoundation.org>
-X-From: git-owner@vger.kernel.org Fri May 30 03:52:34 2008
+X-From: git-owner@vger.kernel.org Fri May 30 03:53:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1tnF-0003xl-Bv
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 03:52:33 +0200
+	id 1K1tnz-00048X-Sr
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 03:53:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbYE3Bvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2008 21:51:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752727AbYE3Bvl
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 21:51:41 -0400
-Received: from smtp.knology.net ([24.214.63.101]:34949 "EHLO smtp.knology.net"
+	id S1753247AbYE3Bw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2008 21:52:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753262AbYE3Bw3
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 May 2008 21:52:29 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:59013 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752333AbYE3Bvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2008 21:51:40 -0400
-Received: (qmail 1968 invoked by uid 0); 30 May 2008 01:51:37 -0000
-Received: from unknown (HELO shed.thedillows.org) (75.76.31.149)
-  by smtp7.knology.net with SMTP; 30 May 2008 01:51:37 -0000
-Received: from [192.168.1.10] (obelisk.gig.thedillows.org [192.168.1.10])
-	by shed.thedillows.org (8.13.8/8.13.8) with ESMTP id m4U1paxN002216;
-	Thu, 29 May 2008 21:51:36 -0400
-In-Reply-To: <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-4.fc8) 
+	id S1752994AbYE3Bw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2008 21:52:28 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4U1pskQ019148;
+	Thu, 29 May 2008 21:51:54 -0400
+Received: from pobox-3.corp.redhat.com (pobox-3.corp.redhat.com [10.11.255.67])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4U1psuA019708;
+	Thu, 29 May 2008 21:51:54 -0400
+Received: from touchme.toronto.redhat.com (IDENT:postfix@touchme.yyz.redhat.com [10.15.16.9])
+	by pobox-3.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4U1pLch019210;
+	Thu, 29 May 2008 21:51:53 -0400
+Received: from ton.toronto.redhat.com (ton.yyz.redhat.com [10.15.16.15])
+	by touchme.toronto.redhat.com (Postfix) with ESMTP
+	id 7BC118001FF; Thu, 29 May 2008 21:51:04 -0400 (EDT)
+Received: from ton.toronto.redhat.com (localhost.localdomain [127.0.0.1])
+	by ton.toronto.redhat.com (8.13.1/8.13.1) with ESMTP id m4U1omCs019022;
+	Thu, 29 May 2008 21:50:48 -0400
+Received: (from fche@localhost)
+	by ton.toronto.redhat.com (8.13.1/8.13.1/Submit) id m4U1ohbt019021;
+	Thu, 29 May 2008 21:50:43 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0805291727490.3141@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.1i
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83264>
 
+Hi --
 
-On Thu, 2008-05-29 at 17:27 -0700, Linus Torvalds wrote:
-> That would be much better. The code was ported from shell script, and 
-> there is no fsync() in shell, but the rule should basically be that you 
-> can remove all the objects that correspond to a pack-file after you have 
-> made sure that the pack-file (and it's index - we can re-generate the pack 
-> index, but realistically speaking it's *much* better to not have to) is 
-> stable on disk.
+On Thu, May 29, 2008 at 05:32:30PM -0700, Linus Torvalds wrote:
 
-Even if the data is stable on disk, don't we also need to ensure the
-pack's connectivity to the namespace is also stable? Without an fsync()
-of the directory that contains it, could it go away?
+> [...]  Side note: a lot of systems make "fsync()" pretty expensive
+> too. It's one of my main disagreements with most log-based
+> filesystems - fsync() can in theory be fast, but almost always
+> implies flushing the whole log, even if 99.9% of that log is totally
+> unrelated to the actual file you want to fsync(). [...]
 
-Of course, this is me recollecting a several-year-old exchange on LKML,
-so I don't know if it is still needed or not, or on systems other than
-Linux.
+The scenario where I ran into this was different: a usb-drive
+filesystem was busy running receiving backups, collecting, oh, several
+GB of dirty data, while git was working on a normal local disk on a
+separate filesystem.  The system-wide git sync unnecessarily blocked
+on the usb filesystem too.
 
-Dave
+- FChE
