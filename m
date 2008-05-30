@@ -1,72 +1,56 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] perl/Git.pm: add parse_rev method
-Date: Fri, 30 May 2008 23:59:35 +0200
-Message-ID: <484078C7.7020008@gmail.com>
-References: <20080530095047.GD18781@machine.or.cz>	<1212179270-26170-1-git-send-email-LeWiemann@gmail.com>	<20080530210531.GH18781@machine.or.cz>	<7vd4n3iivt.fsf@gitster.siamese.dyndns.org> <86r6bjmpqc.fsf@blue.stonehenge.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 30 May 2008 15:00:01 -0700
+Message-ID: <E718F523-70B9-4742-B291-CDBE4790A278@midwinter.com>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org> <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Sat May 31 00:00:18 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 31 00:00:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2Ce1-0006AV-Rz
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 00:00:18 +0200
+	id 1K2Ceh-0006KX-7Z
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 00:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbYE3V7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 17:59:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbYE3V7Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 17:59:25 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:49555 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752736AbYE3V7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 17:59:25 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so202567fgg.17
-        for <git@vger.kernel.org>; Fri, 30 May 2008 14:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=5M7Gsk7Q/Z5tO5GesD68XofBUpZzr+ZPKg6YmG64huI=;
-        b=UmWFWGZu+iQzXPEsgjb56rVTVNHKsJv2o4WNcRuNqPrj+qs4Z39CRQsJk0WL7tHarwfEPIs49asdFb6Zn47ZDM/4crTKWR6H+rXK/uXrGHj2rx/s0HBkYQmGTDclagk/x44bUbvSSu3R7FOehmk/YzK8sS4BrA6040itxGbinhY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=bcZ/OBI4FqTD+PaLyFMJ9Sos7GehMcKn4rPSPBnlk1orMWYsYe7Rx5dA5SsqCFvg492D9fJ0F1UQCfOVw2ZlPMa5EMq/JMCxFCQxh5g4jzRSKL/lc70ogF9F3DGB0O3DsvDEw5iOgkkfj6iaNPJPfb6kroluELqSSxyh5g7YuIM=
-Received: by 10.86.90.2 with SMTP id n2mr7239010fgb.51.1212184763159;
-        Fri, 30 May 2008 14:59:23 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.213.54])
-        by mx.google.com with ESMTPS id 3sm1278029fge.3.2008.05.30.14.59.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 May 2008 14:59:20 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <86r6bjmpqc.fsf@blue.stonehenge.com>
+	id S1753401AbYE3WAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 18:00:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753398AbYE3WAF
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 18:00:05 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58945 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753384AbYE3WAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 18:00:04 -0400
+Received: (qmail 22735 invoked from network); 30 May 2008 22:00:02 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=TR56wrMU1LzTAwHukbNupbhK+9K9vwofXEHIlwDS6T4lqzvr2w5y2tNduxEre+gP  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 30 May 2008 22:00:02 -0000
+In-Reply-To: <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83347>
 
-Randal L. Schwartz wrote:
-> [Move to eval/die.]  No leak there.
+On May 30, 2008, at 1:44 PM, Junio C Hamano wrote:
+> [Stalled]
+>
+> * dr/ceiling (Mon May 19 23:49:34 2008 -0700) 4 commits
+> - Eliminate an unnecessary chdir("..")
+> - Add support for GIT_CEILING_DIRECTORIES
+> - Fold test-absolute-path into test-path-utils
+> - Implement normalize_absolute_path
 
-I'm not an experienced Perl hacker, but I intuitively liked the 
-throw/catch method better than the eval/die method.
 
-If I read 
-http://www.nntp.perl.org/group/perl.perl5.porters/2006/03/msg110331.html 
-correctly, this has been fixed in recent 5.8 versions, so it would 
-really only affect 5.6.  But perhaps we don't care about 5.6. ;-) 
-People who run into serious memory issues with 5.6 will have to upgrade, 
-and the existing functionality that programs like git-send-email or 
-git-svn rely on seems to work fine with the memory leaks, so using 
-throw/catch further probably won't cause any regressions for them.
+The most recent version of this patch seemed to come and go without  
+any commentary one way or the other. What are people's objections to  
+it as it stands now?
 
-I'm honestly not too keen on sacrificing time (or code prettiness) on 
-5.6 compatibility, so if there are no reasons besides the memory leak to 
-move away from throw/catch, perhaps we can just keep using it?
-
--- Lea
+-Steve
