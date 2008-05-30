@@ -1,127 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merging strategy for extending Git.pm
-Date: Fri, 30 May 2008 16:20:31 -0700
-Message-ID: <7vabi7gz0g.fsf@gitster.siamese.dyndns.org>
-References: <1212122585-7350-1-git-send-email-LeWiemann@gmail.com>
- <483FA6B3.4070607@gmail.com> <20080530095938.GE18781@machine.or.cz>
- <48401A09.6060301@gmail.com>
+Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Fix description of
+ --commit-filter
+Date: Fri, 30 May 2008 16:41:57 -0700
+Message-ID: <7v63svgy0q.fsf@gitster.siamese.dyndns.org>
+References: <1212183820-40712-1-git-send-email-kevin@sb.org>
+ <7vlk1rh0av.fsf@gitster.siamese.dyndns.org>
+ <98EEBDF4-9964-4CA6-ABBD-DB72C4F6CAD3@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 31 01:21:37 2008
+Cc: git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sat May 31 01:43:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2Duf-0001eI-5W
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 01:21:33 +0200
+	id 1K2EFT-0006JS-Q4
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 01:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbYE3XUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 19:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbYE3XUk
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 19:20:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50141 "EHLO
+	id S1753089AbYE3XmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 19:42:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYE3XmL
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 19:42:11 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53683 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089AbYE3XUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 19:20:39 -0400
+	with ESMTP id S1753065AbYE3XmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 19:42:10 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7874F3957;
-	Fri, 30 May 2008 19:20:38 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B8EDA34D5;
+	Fri, 30 May 2008 19:42:08 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 75E173956; Fri, 30 May 2008 19:20:34 -0400 (EDT)
-In-Reply-To: <48401A09.6060301@gmail.com> (Lea Wiemann's message of "Fri, 30
- May 2008 17:15:21 +0200")
+ ESMTPSA id C056934D2; Fri, 30 May 2008 19:42:05 -0400 (EDT)
+In-Reply-To: <98EEBDF4-9964-4CA6-ABBD-DB72C4F6CAD3@sb.org> (Kevin Ballard's
+ message of "Fri, 30 May 2008 16:07:38 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0386912E-2E9F-11DD-897C-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 0495325C-2EA2-11DD-A19E-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83358>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+Kevin Ballard <kevin@sb.org> writes:
 
-> 1. I'm working full-time on this, so I might produce patches that
-> loosely depend on one another at a peak rate of 2-3 per day.  (I can
-> do other project-related stuff while my patches are waiting for
-> review, but only so much of course.)  Do you have any experience with
-> working with full-time developers on Git?  Do you see problems with my
-> potentially high patch frequency?
+>> But I am also confused by the new description:
+>>
+>>        In that history, we will make sure that rewritten D (original
+>>        commit being C) have A as parent.  IOW, we will have
+>>
+>>                --A'--C'  D'
+>>                         /
+>>                        A
+>>
+>> which is not what happens.  What it does is that the commits in the
+>> output
+>> from the filter (i.e. A) are first mapped to the corresponding
+>> commits in
+>> the rewritten history (i.e. A'), and they will be used as the
+>> parents of
+>> the rewritten commit, to form this history:
+>>
+>>                --A'--C'
+>>
+>> isn't it?
+>
+> So basically, you think it's missing the fact that the emitted id is
+> mapped to rewritten commits? From reading the git-filter-branch code,
+> I don't think that's correct. When each commit is created, its
+> original parents get mapped to new values, but the results of the
+> commit-filter are dumped straight into the map.
 
-As long as experienced people on the list review patches, I do not see a
-problem.
+Ah, I misread this part of the code:
 
-    There seems to be a misconception (not you particularly but some parts
-    of the list audience in general) that a review cycle of a patch sent
-    to the list is a dialog between the submitter and me.  It is _NOT_.
-    If it has rooms for improvements, other people would help you polish
-    it, which happens often.  However, if it is very well done, I'd also
-    like other people to say so after reviewing more often.
+	parentstr=
+	for parent in $parents; do
+		for reparent in $(map "$parent"); do
+			parentstr="$parentstr -p $reparent"
+		done
+	done
+	if [ "$filter_parent" ]; then
+		parentstr="$(echo "$parentstr" | eval "$filter_parent")" ||
+				die "parent filter failed: $filter_parent"
+	fi
 
-> 2. I'll be changing my own API.  In other words, the API is really
-> unstable while I work on this (with the only user of the API being
-> Gitweb, which I'll update as I go).  Is that OK for the pu branch?
+You get the commit object names from the new history, and you are supposed
+to give back names from the new history from the filter.
 
-It does not _have_ to even land on 'pu'.  Sending the patches to the list,
-asking interesting parties to look at them, _and_ having people actually
-review them is more valuable part.
+So "the rewritten commit will have the output from parent-filter as its
+parents" is what happens, right?
 
-If your series will become big, I do not mind (re)merging it from time to
-time in 'pu' to give it a wider exposure.  If you want to go this route,
-you would have a publicly fetchable repository of your own to house your
-changes (repo.or.cz?).
+IOW, in the history in the previous message, when rewriting C (to create
+C'), the filter will get A' and B' (i.e. from the new history), and can
+choose to return A', and that is recorded when creating C'.  "the
+rewritten children of the commit" in your:
 
-I do not even mind merging the branch to 'next' if the series is 'next'
-worthy, but that places heavier responsibility on your part to keep the
-history of that branch clean.
+    +commit ids; in that case, the rewritten children of the original
+    +commit will have all of them as parents.
 
-> 3. I try to be careful with my commits, but it might still cause more
-> work for whoever reviews my patches, compared to reviewing larger
-> chunks.  (That's because some of the stuff I write might end up being
-> deleted or rewritten later.)
+sounded as if you are talking about D' not C', and that was what I was
+confused about.
 
-One thing you could do, when sending out [PATCH v$n] for the value of $n
-greater than 1, is to mention what the improvements are since the previous
-round in the message (typically after the three-dash separator).  This
-helps reviewers who have already seen your previous iteration.  The full
-rationale of the change needs to be kept in the proposed commit log
-message.
+> To give an example, let's examine your tree. A will be processed
+> first, and A' gets put into the map for A. B gets processed next (or
+> maybe before A, but that's irrelevant) and B' gets put into the map
+> for B. C gets processed, and it emits A, so A goes into the map for C.
 
-For example, your first patch may look like this:
+Hmm?  I meant C is rewritten to become C' but when it does so filter can
+remove B from its parent set (iow, the filter is told that unless it
+intervenes C' will have A' and B' as its parents, but the filter can
+choose to return only A').  So I do not quite get "it emits A" part.  Do
+you mean "the filter outputs A'"?  Also do you mean by "map" the mapping
+from <A, B, C> to <A', B', C'> commit namespace?  If so, even when the
+filter "emits A'", I do not think it "goes into the map for C".  When the
+filter "emits A'", it is used as _the_ single parent to create C', and it
+is C' that "goes into the map for C".  Am I still confused?
 
-	Subject: [PATCH] Git.pm: Add rev_parse() sub
-
-	This adds a rev_parse() sub to return the 40-byte object name
-        from given "extended SHA-1" expression.
-
-	Signed-off-by: A U Thor <au.thor@example.com>
-	---
-         <<diffstat and patch>>
-
-
-Then after Pasky and others suggest improvements, your second message will
-appear on the list:
-
-	Subject: [PATCH v2] Git.pm: Add parse_rev()
-
-	This adds 'parse_rev()' sub to return the 40-byte object name from
-        given "extended SHA-1" expression.  It returns undef if the given
-        string is malformed.
-
-	Signed-off-by: A U Thor <au.thor@example.com>
-	---
-
-         Changes relative to v1 are:
-         
-         * Fixed indentation;
-         * Use -q to squelch non-fatal errors so that they do not leak
-           to the STDERR;
-         * Improved in-code documentation.
-
-	 <<diffstat and patch>>
-
-Some people also sends an interdiff between v$n-1 and v$n as a separate
-message, and it helps reviewing when the change is big.
+Now, I admit that I did not look at the implementation of the "map" in the
+code quoted above.  Perhaps that thing is busted, I dunno.
