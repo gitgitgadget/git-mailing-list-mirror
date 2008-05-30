@@ -1,77 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
-Date: Fri, 30 May 2008 03:46:26 -0700 (PDT)
-Message-ID: <m3prr4135z.fsf@localhost.localdomain>
-References: <200805232221.45406.trast@student.ethz.ch>
-	<200805291737.53291.trast@student.ethz.ch>
-	<20080529185808.GA2140@sigill.intra.peff.net>
-	<alpine.DEB.1.00.0805301049000.13507@racer.site.net>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
+Date: Fri, 30 May 2008 09:07:13 -0300
+Message-ID: <483FEDF1.7010308@intelinet.com.br>
+References: <20080526044640.GB30245@spearce.org> <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com> <alpine.DEB.1.00.0805261106470.30431@racer> <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com> <20080526181259.GA17449@foursquare.net> <20080526234445.GF30245@spearce.org> <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com> <483C8ACB.5050505@intelinet.com.br> <20080529041901.GA12896@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 30 12:47:37 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Chris Frey <cdfrey@foursquare.net>,
+	Vegard Nossum <vegard.nossum@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Dave Watson <dwatson@mimvista.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
+	laforge@gnumonks.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 30 14:09:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K228p-0006v1-0r
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 12:47:23 +0200
+	id 1K23QQ-00021h-Ck
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 14:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbYE3Kqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 06:46:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271AbYE3Kqa
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 06:46:30 -0400
-Received: from ik-out-1112.google.com ([66.249.90.180]:6169 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753156AbYE3Kqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 06:46:30 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so1896284ika.5
-        for <git@vger.kernel.org>; Fri, 30 May 2008 03:46:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=IoN9gHdG+iL4GS3dEwAGZ+5wa3ye4zTWzGhQ2+EIrds=;
-        b=FHkjJWZgqC+4+00yS0uciHZF9nzE/joVf8U6TtL+Iduv4xcrbPO8vOqKC8TZv7vJflcPrJVr7XEyM9aZQQO5qMjARZu3H8nPg7sMhobRrbYlZz3R32GZbblSa9BXWIBeNR+5RtJJ2M0t2p5L7PkEcyc+O09kFGs8P8BWexvPClQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=V13Erbgg3pGEaY5d9cI+sEMe52Ksl8GHpjIcFY2f3T6o3XLIWCMtbWhX4zDFxue5N+6vog4OZmODEXMFeZs+VYEDs+N3ErNu+upaCCv11WN4+e2qpdUzh1/uq2/xyKViB/OXuZ3hSJ9o0QK74QEDrs15QqIt5v770hKojB5Nb/Y=
-Received: by 10.78.154.14 with SMTP id b14mr118209hue.104.1212144387234;
-        Fri, 30 May 2008 03:46:27 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.197.146])
-        by mx.google.com with ESMTPS id 33sm287181hue.28.2008.05.30.03.46.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 30 May 2008 03:46:26 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4UAjd1r023141;
-	Fri, 30 May 2008 12:45:50 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4UAjCTD023133;
-	Fri, 30 May 2008 12:45:12 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0805301049000.13507@racer.site.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751023AbYE3MIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 08:08:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbYE3MIp
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 08:08:45 -0400
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1971 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750913AbYE3MIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 08:08:44 -0400
+Received: (qmail 81004 invoked by uid 0); 30 May 2008 09:13:30 -0300
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4998.  Clear:RC:1:. 
+ Processed in 0.011206 secs); 30 May 2008 12:13:30 -0000
+Received: from unknown (HELO roger.intelinet.com.br) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 30 May 2008 12:13:30 -0000
+User-Agent: Thunderbird 2.0.0.14 (X11/20080515)
+In-Reply-To: <20080529041901.GA12896@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83289>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> -- snipsnap --
-> [PATCH] WIP: allow git-apply to fix up the line counts
-> 
-> Sometimes, the easiest way to fix up a patch is to edit it directly, even
-> adding or deleting lines.  Now, many people are not as divine as certain
-> benevolent dictators as to update the hunk headers correctly at the first
-> try.
+Shawn O. Pearce escreveu:
+> "Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
+>   
+>> Martin Langhoff escreveu:
+>>     
+>>> On Tue, May 27, 2008 at 11:44 AM, Shawn O. Pearce <spearce@spearce.org> 
+>>> wrote:
+>>>  
+>>>       
+>>>> So in all time these users have added a total of 14 lines between
+>>>> them.  Out of 122,576 total added lines.  It amounts to only 0.011%
+>>>> of the total contribution.  In the US a change this small may not
+>>>> even be copyrightable.
+>>>>    
+>>>>         
+>>> It'd be nice to hear from them, but I looks fair to me to say that
+>>> those contributors - while very valuable - cannot hold the project
+>>> back.
+>>>       
+>> Well, FWIW I'm ok with the license change.
+>>     
+>
+> Heh, thanks for chiming in Roger.  We're likely to start talking
+> about moving egit to 100% EPL soon too.  I think your contribution
+> there is quite non-trivial, so we'll certainly need your blessing
+> for that.  :-)
+>   
+Hi Shawn, Robin told me about it and asked for permission some time ago, 
+so my permission is given already. Anyway, I can confirm this later if 
+necessary. :)
 
-Or do not use editor with diff editing mode, such as unidiff mode for
-GNU Emacs (and derivatives)... :-)
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+[]s,
+Roger.
