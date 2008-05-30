@@ -1,64 +1,91 @@
-From: david@lang.hm
-Subject: Re: post-receive hook
-Date: Fri, 30 May 2008 02:43:04 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0805300242460.4014@asgard.lang.hm>
-References: <alpine.DEB.1.10.0805300108140.4014@asgard.lang.hm> <200805301106.33992.johan@herland.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] perl/Git.pm: add rev_parse method
+Date: Fri, 30 May 2008 11:50:47 +0200
+Message-ID: <20080530095047.GD18781@machine.or.cz>
+References: <1212122585-7350-1-git-send-email-LeWiemann@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri May 30 11:44:13 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 30 11:51:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K219U-0007mh-Ub
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 11:44:01 +0200
+	id 1K21Gy-00026L-MO
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 11:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbYE3JnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 05:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbYE3JnI
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 05:43:08 -0400
-Received: from mail.lang.hm ([64.81.33.126]:44525 "EHLO bifrost.lang.hm"
+	id S1752813AbYE3Juv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 05:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbYE3Juv
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 05:50:51 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52418 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750764AbYE3JnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 05:43:07 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m4U9gurP020299;
-	Fri, 30 May 2008 02:42:56 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <200805301106.33992.johan@herland.net>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752491AbYE3Juu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 05:50:50 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id EC08A1E4C02F; Fri, 30 May 2008 11:50:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1212122585-7350-1-git-send-email-LeWiemann@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83281>
 
-On Fri, 30 May 2008, Johan Herland wrote:
+Hi,
 
-> On Friday 30 May 2008, david@lang.hm wrote:
->> I'm trying to setup a post-receive hook to do a checkout -f when I push to
->> a public repo (it's a web based tool and I want the executables to be
->> updated with a push)
->>
->> unfortunantly if I just add git checkout -f to the post-receive hooks it
->> checks the files out in the .git directory.
->>
->> if I do a cd .. ; git checkout -f I get an error message complaining that
->> it's not in a git repository, but if I manually cd to that directory and
->> do a checkout it works.
->>
->> what am I missing here?
->
-> I'm guessing that the post-receive hook is invoked with "GIT_DIR=.", which goes bad the moment you chdir anywhere. I have this in my own update hook script:
->
-> if [ "$GIT_DIR" = "." ]; then
-> 	GIT_DIR=`pwd`
-> fi
->
-> If you do this before the "cd .. ; git checkout -f", you might have better luck.
+On Fri, May 30, 2008 at 06:43:05AM +0200, Lea Wiemann wrote:
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index d05b633..9ef8cb0 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -716,6 +716,28 @@ sub ident_person {
+>  	return "$ident[0] <$ident[1]>";
+>  }
+>  
+> +=item rev_parse ( REVISION_NAME )
 
-thanks, that solved the problem.
+I believe it would be more consistent to call it parse_rev() and in fact
+also less confusing since this is not full-fledged rev-parse frontend
+(and probably should not be; rev-parse is terribly overloaded with much
+more stuff).
 
-David Lang
+> +
+> +Look up the specified revision name and return the SHA1 hash, or
+> +return undef if the lookup failed.  See the git-rev-parse command.
+> +
+> +=cut
+> +
+> +sub rev_parse {
+> +    # We could allow for a list of revisions here.
+> +    my ($self, $rev_name) = @_;
+> +
+> +    my $hash;
+> +    try {
+> +        # The --default option works around rev-parse's lack of
+> +        # support for getopt style "--" separators (it would fail for
+> +        # tags named "--foo" without it).
+> +        $hash = $self->command_oneline("rev-parse", "--verify", "--default",
+> +                                       $rev_name);
+> +    } catch Git::Error::Command with { };
+
+I think it is better style to use the regular pattern of checking
+$E->value() and either return undef right away or pass the exception
+(e.g. in case rev-parse cannot be executed for some reason).
+
+> +    return undef unless defined $hash and $hash =~ /^([0-9a-fA-F]{40})$/;
+
+When can this trigger?
+
+> +    $hash;
+> +}
+>  
+>  =item hash_object ( TYPE, FILENAME )
+>  
+
+-- 
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
