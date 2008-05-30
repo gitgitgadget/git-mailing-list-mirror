@@ -1,60 +1,78 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: reducing prune sync()s
-Date: Fri, 30 May 2008 22:07:18 +0200
-Message-ID: <87iqwvo8sp.fsf@mid.deneb.enyo.de>
-References: <20080529205743.GC17123@redhat.com>
-	<alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org>
-	<alpine.LFD.1.10.0805291727490.3141@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-log vs git-rev-list
+Date: Fri, 30 May 2008 13:20:13 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0805301316580.3141@woody.linux-foundation.org>
+References: <20080530165641.GG18781@machine.or.cz> <alpine.LFD.1.10.0805301021310.3141@woody.linux-foundation.org> <20080530194635.GI593@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 30 22:09:06 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri May 30 22:21:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2Atp-0000sw-9S
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:08:29 +0200
+	id 1K2B68-00072Y-So
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755691AbYE3UHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 16:07:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756355AbYE3UHX
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:07:23 -0400
-Received: from mail.enyo.de ([212.9.189.167]:36373 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756333AbYE3UHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 16:07:20 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1K2Asg-0004s4-Rh
-	for git@vger.kernel.org; Fri, 30 May 2008 22:07:18 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1K2Asg-00027a-EN
-	for git@vger.kernel.org; Fri, 30 May 2008 22:07:18 +0200
-In-Reply-To: <alpine.LFD.1.10.0805291727490.3141@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 29 May 2008 17:32:30 -0700 (PDT)")
+	id S1753038AbYE3UUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 16:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751591AbYE3UUT
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:20:19 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:37062 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752906AbYE3UUS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 May 2008 16:20:18 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4UKKEBM018211
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 30 May 2008 13:20:15 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m4UKKDFT009663;
+	Fri, 30 May 2008 13:20:13 -0700
+In-Reply-To: <20080530194635.GI593@machine.or.cz>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.395 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83322>
 
-* Linus Torvalds:
 
-> Side note: a lot of systems make "fsync()" pretty expensive too. It's one 
-> of my main disagreements with most log-based filesystems - fsync() can in 
-> theory be fast, but almost always implies flushing the whole log, even if 
-> 99.9% of that log is totally unrelated to the actual file you want to 
-> fsync().
 
-And flushing the whole log might be less expensive than several partial
-flushes with ordering constraints.  If Linux ever gets support for
-partial log flushes, I suppose you could restore the previous
-performance by using sync_file_range() with approriate flags (to get the
-data in flight to disk), followed by a second round of calls to to
-fsync() (to actually wait for I/O completion).
+On Fri, 30 May 2008, Petr Baudis wrote:
+> > 
+> > Why would you want to use "git-rev-list" at all?
+> 
+> Because it was the natural command to access history from a script to me
+> and nothing in the documentation hinted me that I shouldn't use it.
 
-> So fsync() isn't always all that much better than sync().
+So use it. Or not.
 
-sync() is potentially a no-op, particularly if some of the targeted
-files are still open.
+Just don't think it's the same as "git log".
+
+> Step back a bit: it's git-_REV_-list. Technically, --all --objects is
+> nonsensical operation to do on revision list either.
+
+Who cares?
+
+Why are you arguing against *facts*?
+
+The *fact* is, git rev-list can traverse the whole object chain.
+
+The *fact* is that git rev-list can do other operations that have nothing 
+to do with logs (bisection, for example).
+
+The *fact* is that both git rev-list and git log can traverse a set of 
+revisions, but that doesn't make them the same command.
+
+I totally don't see your arguments. They are pointless. git rev-list and 
+git log already share all the relevant internal machinery for the things 
+where they overlap in capabilities. And the fact that they output 
+different things is because they are different.
+
+			Linus
