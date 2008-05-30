@@ -1,95 +1,108 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH 2/3] Introduce core.showUntrackedFiles to make it possible
- to disable showing of untracked files.
-Date: Fri, 30 May 2008 15:16:11 +0200
-Message-ID: <483FFE1B.1020507@trolltech.com>
-References: <043361f81946d5657217e6be0f22f4df350fd13f.1212152269.git.marius@trolltech.com> <3088e5a9507aa55ee55f512fb3bd554f1658d2e3.1212152269.git.marius@trolltech.com>
+From: "Chris Ortman" <chrisortman@gmail.com>
+Subject: Re: Confused about recovering from a merge conflict
+Date: Fri, 30 May 2008 08:42:57 -0500
+Message-ID: <c0f2d4110805300642re4e66dx7b62de3fd5afd78d@mail.gmail.com>
+References: <482B0C52.4030206@et.gatech.edu>
+	 <c0f2d4110805290949m18822c3x15675bed83c7fa5@mail.gmail.com>
+	 <483F0895.6040104@et.gatech.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigF55861DB1719E6378A6D2119"
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Fri May 30 15:17:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: stuart.freeman@et.gatech.edu, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 30 15:44:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K24Tg-0002XC-I9
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 15:17:04 +0200
+	id 1K24tc-0004TB-R2
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 15:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbYE3NQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 09:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbYE3NQN
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 09:16:13 -0400
-Received: from hoat.troll.no ([62.70.27.150]:46541 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751622AbYE3NQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 09:16:12 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id D9C1620C36;
-	Fri, 30 May 2008 15:16:10 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id CB1D420BFA;
-	Fri, 30 May 2008 15:16:10 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <3088e5a9507aa55ee55f512fb3bd554f1658d2e3.1212152269.git.marius@trolltech.com>
-X-Enigmail-Version: 0.95.6
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1751908AbYE3NnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 09:43:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbYE3NnA
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 09:43:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:54091 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622AbYE3Nm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 09:42:59 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so317552ugf.16
+        for <git@vger.kernel.org>; Fri, 30 May 2008 06:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/IrjnMVbhXXl4TJk3tKQdpCk4JzSgneedQovBXfZVQU=;
+        b=CA0cWAtlBHG2EYBuTy1T+qlITtXBKtEQ9WA8TE5LtagHynJGcfG5IjowYlmOwK4F7n3KNhAAsmyUy8qLoHW1nAabM+jOLLiabeYEaS3zXnDw4XPzn3r92gFwwujai+CdmUxX46Ihil4YE6O8iJHtdI1JbdWYm8W7LVHzmqRBMmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sP4eWlRrbtDasjylQo+efvrAsnY5F0pzfT4449ytbz/0kc4wKkYQp2hl2tVUk/dGWzZxFy8XaLqwOST8Vqf8ruLFFrVvo1FCUgIOH1vqGbXjT+RlOY2bGEfxddxqwavf6jeU3PERPl9kJQV5Nx3NH9vI3VJbx2cerE/++S9hTJQ=
+Received: by 10.86.63.19 with SMTP id l19mr206021fga.77.1212154977615;
+        Fri, 30 May 2008 06:42:57 -0700 (PDT)
+Received: by 10.86.50.10 with HTTP; Fri, 30 May 2008 06:42:57 -0700 (PDT)
+In-Reply-To: <483F0895.6040104@et.gatech.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83301>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigF55861DB1719E6378A6D2119
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+I wonder if it has to do with windows just sucking at disk access?
+I am getting some other weirdness like dirty index even though nothing
+shows up with git status and after doing a git reset --hard HEAD
 
-Simon Hausmann said the following on 30.05.2008 10:54:
-> Determining untracked files can be a very slow operation on large trees=
-=2E This commit introduces
-> a configuration variable that makes it possible to disable showing of u=
-ntracked files by default
-> as well as a -U commandline option to override this.
->=20
-> Signed-off-by: Simon Hausmann <simon@lst.de>
-> Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
-> ---
-
-This gives me ~80% improvement on commit/status. Reasonable, since my=20
-work tree nearly doubles in size on a full build.
-
---=20
-=2Emarius [@trolltech.com]
-'if you know what you're doing, it's not research'
-
-
---------------enigF55861DB1719E6378A6D2119
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFIP/4bKzzXl/njVP8RAgVdAKCLrgbEtXvq/BJS6U9MUoIAlGhWAQCeLodl
-No/BaBAoCnMUzeD4AIV+AUU=
-=vnx4
------END PGP SIGNATURE-----
-
---------------enigF55861DB1719E6378A6D2119--
+On Thu, May 29, 2008 at 2:48 PM, D. Stuart Freeman
+<stuart.freeman@et.gatech.edu> wrote:
+> It was actually my boss that ran into this, he's using msysgit on XP.
+> I'm not sure what service pack.
+>
+> Chris Ortman wrote:
+>> I am also running into this problem.
+>> Are you running windows+cygwin or git on linux?
+>> I am on XPSP2 and cygwin
+>>
+>> On Wed, May 14, 2008 at 10:59 AM, D. Stuart Freeman
+>> <stuart.freeman@et.gatech.edu> wrote:
+>>> I've made some local modifications and want to 'git svn dcommit' them so
+>>> I 'git svn rebase' first:
+>>>
+>>>  $ git svn rebase
+>>>  First, rewinding head to replay your work on top of it...
+>>>  HEAD is now at cdef7ac Cleanup of new assignment screens
+>>>  Applying Cleanup new assignment screens
+>>>  error: tool/src/webapp/content/css/thickbox.css: does not match index
+>>>  error: patch failed:
+>>> tool/src/webapp/content/templates/newassignment1.html:6
+>>>  error: tool/src/webapp/content/templates/newassignment1.html: patch
+>>> does not apply
+>>>  Using index info to reconstruct a base tree...
+>>>  Falling back to patching base and 3-way merge...
+>>>  error: Entry 'tool/src/webapp/content/css/thickbox.css' not uptodate.
+>>> Cannot merge.
+>>>  fatal: merging of trees aa2dad90c89e9063f2a8002e4b5a11f6b1583955 and
+>>> 6535ebaaebf
+>>>  fdaadd44a93bc1fc4a66a5ec4dcf4 failed
+>>>  Failed to merge in the changes.
+>>>  Patch failed at 0001.
+>>>
+>>>  When you have resolved this problem run "git rebase --continue".
+>>>  If you would prefer to skip this patch, instead run "git rebase --skip".
+>>>  To restore the original branch and stop rebasing run "git rebase --abort".
+>>>
+>>>  rebase refs/remotes/iteration_5: command returned error: 1
+>>>
+>>> Uh-oh, now I appear to be on 'no branch' and the contents of
+>>> thickbox.css aren't marked up with the conflict markers, it appears to
+>>> just be the old file without my revisions.  Did I do something wrong?
+>>> How do I recover from this state?
+>>>
+>>> --
+>>> D. Stuart Freeman
+>>> Georgia Institute of Technology
+>>>
+>
+>
+> --
+> D. Stuart Freeman
+> Georgia Institute of Technology
+>
