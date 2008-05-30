@@ -1,65 +1,64 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
-Date: Fri, 30 May 2008 14:21:44 +0200
-Message-ID: <200805301421.46162.trast@student.ethz.ch>
-References: <200805232221.45406.trast@student.ethz.ch> <200805291737.53291.trast@student.ethz.ch> <20080529185808.GA2140@sigill.intra.peff.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: encoding bug in git.el
+Date: Fri, 30 May 2008 14:28:26 +0200
+Message-ID: <20080530122826.GA4937@diana.vm.bytemark.co.uk>
+References: <20080520220900.GA20570@diana.vm.bytemark.co.uk> <87mymkbo9x.fsf@lysator.liu.se> <1f748ec60805210708q34a26bebh915037713caa9a87@mail.gmail.com> <20080525134200.GA31990@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 30 14:22:22 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
+To: Clifford Caoile <piyo@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri May 30 14:29:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K23cj-0006zg-2l
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 14:22:21 +0200
+	id 1K23jp-0001Mk-TM
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 14:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046AbYE3MV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 08:21:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbYE3MV2
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 08:21:28 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:6027 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750913AbYE3MV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 08:21:28 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 30 May 2008 14:21:26 +0200
-Received: from vpn-global-dhcp3-055.ethz.ch ([129.132.210.55]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 30 May 2008 14:21:26 +0200
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <20080529185808.GA2140@sigill.intra.peff.net>
+	id S1751169AbYE3M2u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 May 2008 08:28:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbYE3M2t
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 08:28:49 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3521 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446AbYE3M2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 08:28:49 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K23ic-00022U-00; Fri, 30 May 2008 13:28:26 +0100
 Content-Disposition: inline
-X-OriginalArrivalTime: 30 May 2008 12:21:26.0547 (UTC) FILETIME=[AE799E30:01C8C24F]
+In-Reply-To: <20080525134200.GA31990@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83291>
 
-Jeff King wrote:
-> But I find the interface a bit clunky. I would much rather get dumped in
-> my favorite editor, which happens to be quite fast at removing a subset
-> of lines. After editing, any lines remaining would be staged.
-> 
-> We would have to figure out what happens if lines are added or edited,
-> of course. It may be right to signal an error, or maybe there is some
-> other useful functionality that can come of that. I think other systems
-> have some diff-editing functionality (IIRC, cogito did). It is probably
-> worth looking at that for ideas.
+On 2008-05-25 15:42:00 +0200, Karl Hasselstr=F6m wrote:
 
-We could just see if the hunk applies to the unchanged index (still
-assuming we're inside 'add -p'), and if not, reject the edit.
+> On 2008-05-21 23:08:09 +0900, Clifford Caoile wrote:
+>
+> > Here is a proposed fix.
+>
+> I don't claim to understand any of the design issues around this,
+> but your patch certainly fixes my problem (once I managed to apply
+> it, which involved working around the lack of headers, non-matching
+> offsets, and whitespace damage -- luckily it was just two hunks).
+> So:
+>
+> Tested-by: Karl Hasselstr=F6m <kha@treskal.com>
+>
+> Thanks for taking the time.
 
-Unfortunately git-apply does not seem to have a --dry-run option.
-(Even stranger, when given the option --dry-run it tries to open a
-patch of that name.)  What is the recommended way to do such things?
-Make a backup copy of the index and apply --cached anyway?
+How are things going with this fix? Junio, I expect you're waiting for
+a properly cleaned-up patch, possibly with acks from relevant people?
 
-- Thomas
+I think it would be a mistake to release 1.5.6 with this bug still in
+it; if not this bugfix, then a revert of the offending commit.
 
--- 
-Thomas Rast
-trast@student.ethz.ch
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
