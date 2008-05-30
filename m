@@ -1,63 +1,148 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] gitweb: use Git.pm, and use its parse_rev method for
- git_get_head_hash
-Date: Sat, 31 May 2008 01:03:03 +0200
-Message-ID: <484087A7.2030107@gmail.com>
-References: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Fix description of --commit-filter
+Date: Fri, 30 May 2008 16:07:38 -0700
+Message-ID: <98EEBDF4-9964-4CA6-ABBD-DB72C4F6CAD3@sb.org>
+References: <1212183820-40712-1-git-send-email-kevin@sb.org> <7vlk1rh0av.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 31 01:03:48 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 31 01:08:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2DdT-0005sZ-ME
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 01:03:48 +0200
+	id 1K2Di6-00074m-FS
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 01:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755548AbYE3XCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 19:02:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754886AbYE3XCt
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 19:02:49 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:46305 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754073AbYE3XCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 19:02:45 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so210146fgg.17
-        for <git@vger.kernel.org>; Fri, 30 May 2008 16:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=K566indzbLmHBWhCnueG0pPCcobhQEg5Eb1WGZ6LjgU=;
-        b=mcOWmJJeCyxuL99SqXLem1O2Zz++Nz6Yw6X+JpbcbN6m3i1FI8+Dbi6f2k3edXm2W5SHo9pdq+K3rqzN1V0MIhyahlPQ4dHHVM9ALxsjFEQm/B8Xte81nAOIjQUyVuFOPDOTajOf8UQfR9ifZT5wVi0uwsxxwB47CL2qIWIJdd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=qI6j1vhgj890RZ69idqou4QQiayw7B6igZn53jo/IsKrzsHAuztDkTnRJzyyoDW9h1epCHk5dI8+ZUQqDDKuHFTz3ThEG31PCuxZNStDo1HcJjYd+LxqRFh6+p1ED/6CQgOXE3GagGXi5ZCP6G1wmA0TI9VphUJgUCNtb9X3Xww=
-Received: by 10.86.100.19 with SMTP id x19mr1586412fgb.34.1212188564190;
-        Fri, 30 May 2008 16:02:44 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.213.54])
-        by mx.google.com with ESMTPS id c28sm2774448fka.4.2008.05.30.16.02.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 May 2008 16:02:43 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com>
+	id S1753240AbYE3XHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 19:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbYE3XHm
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 19:07:42 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:56311 "EHLO
+	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752488AbYE3XHl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 May 2008 19:07:41 -0400
+Received: from [10.100.18.156] (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id CA9BD109EB5;
+	Fri, 30 May 2008 16:07:39 -0700 (PDT)
+In-Reply-To: <7vlk1rh0av.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83355>
 
-Lea Wiemann wrote:
-> Subject: [PATCH] gitweb: use Git.pm, and use its parse_rev method for git_get_head_hash
+On May 30, 2008, at 3:52 PM, Junio C Hamano wrote:
 
-For clarification, this is my first patch for refactoring Gitweb to use 
-Git.pm's API.
+> Kevin Ballard <kevin@sb.org> writes:
+>
+>> The old description was misleading and logically impossible. It  
+>> claimed that
+>> the ancestors of the original commit would be re-written to have  
+>> the multiple
+>> emitted ids as parents. Not only would this modify existing  
+>> objects, but it
+>> would create a cycle. What this actually does is pass the multiple  
+>> emitted ids
+>> to the newly-created children to use as parents.
+>>
+>> Signed-off-by: Kevin Ballard <kevin@sb.org>
+>> ---
+>> Documentation/git-filter-branch.txt |    4 ++--
+>> 1 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/git-filter-branch.txt b/Documentation/ 
+>> git-filter-branch.txt
+>> index 506c37a..541bf23 100644
+>> --- a/Documentation/git-filter-branch.txt
+>> +++ b/Documentation/git-filter-branch.txt
+>> @@ -113,8 +113,8 @@ OPTIONS
+>> 	stdin.  The commit id is expected on stdout.
+>> +
+>> As a special extension, the commit filter may emit multiple
+>> -commit ids; in that case, ancestors of the original commit will
+>> -have all of them as parents.
+>> +commit ids; in that case, the rewritten children of the original  
+>> commit will
+>> +have all of them as parents. You probably don't want to do this.
+>> +
+>
+> Now I am _very_ confused.
+>
+> The original description sounds as if:
+>
+>        In this history, when rewriting commit C, if we emit A from the
+>        filter:
+>
+>                     B
+>                      \
+>                ---A---C---D
+>
+>        We will somehow make 'A' and 'B' have A as their parents.
+>
+> which is wrong as you pointed out.
+>
+> But I am also confused by the new description:
+>
+>        In that history, we will make sure that rewritten D (original
+>        commit being C) have A as parent.  IOW, we will have
+>
+>                --A'--C'  D'
+>                         /
+>                        A
+>
+> which is not what happens.  What it does is that the commits in the  
+> output
+> from the filter (i.e. A) are first mapped to the corresponding  
+> commits in
+> the rewritten history (i.e. A'), and they will be used as the  
+> parents of
+> the rewritten commit, to form this history:
+>
+>                --A'--C'
+>
+> isn't it?
 
-In the end, I'm hoping that all (or at least most) of Gitweb's accesses 
-to the repositories will go through this API, which allows us to add 
-caching to the Git.pm API (rather than Gitweb) pretty easily and cleanly.
+So basically, you think it's missing the fact that the emitted id is  
+mapped to rewritten commits? From reading the git-filter-branch code,  
+I don't think that's correct. When each commit is created, its  
+original parents get mapped to new values, but the results of the  
+commit-filter are dumped straight into the map.
 
--- Lea
+To give an example, let's examine your tree. A will be processed  
+first, and A' gets put into the map for A. B gets processed next (or  
+maybe before A, but that's irrelevant) and B' gets put into the map  
+for B. C gets processed, and it emits A, so A goes into the map for C.  
+Then D is processed, and its original parent C is looked up in the map  
+and A is returned. So, as near as I can tell, that "broken" history is  
+exactly what you'll get if the commit-filter returns A for C. This  
+means that when you're writing a commit-filter for this, you probably  
+want to emit $(map A), not A.
+
+Perhaps the description should be significantly expanded to include  
+the diagrams and explanations?
+
+> Also you did not defend why you added "You probably don't want to do  
+> this"
+> to the description.
+
+
+Because when the commit-filter emits multiple ids, it's converting the  
+child commits into merges without even knowing what the child commits  
+will be. I was just trying to warn people away from using this feature  
+unless they know exactly what they're doing. Usually you want to use a  
+parent-filter if you're converting commits into merges, because that  
+way you know exactly what commits you're modifying.
+
+-Kevin
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
