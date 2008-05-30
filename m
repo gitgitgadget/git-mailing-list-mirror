@@ -1,60 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Gitweb caching: Google Summer of Code project
-Date: Fri, 30 May 2008 17:38:22 +0200
-Message-ID: <20080530153822.GH593@machine.or.cz>
-References: <483C4CFF.2070101@gmail.com> <200805300127.10454.jnareb@gmail.com> <483FABB4.1010309@gmail.com> <200805301202.25368.jnareb@gmail.com> <4840166C.3030903@gmail.com> <20080530150713.GG593@machine.or.cz> <48401CFF.4020702@gmail.com>
+From: "Alf Clement" <alf.clement@gmail.com>
+Subject: gitk / diffcore-rename error message
+Date: Fri, 30 May 2008 17:54:42 +0200
+Message-ID: <556d90580805300854k27e0ea9ev3aabcfb28f131228@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 17:39:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 30 17:56:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K26hJ-0005YR-Km
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 17:39:18 +0200
+	id 1K26x9-0004TJ-Hj
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 17:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbYE3PiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 11:38:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYE3PiZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 11:38:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56820 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752412AbYE3PiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 11:38:24 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id C991D1E4C036; Fri, 30 May 2008 17:38:22 +0200 (CEST)
+	id S1752612AbYE3Pyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 11:54:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYE3Pyr
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 11:54:47 -0400
+Received: from ik-out-1112.google.com ([66.249.90.181]:5125 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752060AbYE3Pyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 11:54:47 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so73999ika.5
+        for <git@vger.kernel.org>; Fri, 30 May 2008 08:54:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=jnNYUIFpJAkzyWzUboLc6VHCrVZiVb6UmZIZpILS/X0=;
+        b=NhCJ90kN+bt1CvxkYFXD/XQD9tjWvyJs43jDyFfcDl8X2dt2+tCSLdiLfZaAqM1ogOIf0PORjMFnlNwZeUN9OO7cL5whLWDQllzyz02XPLbEJVBog0bRz0BWLTYYaNKYHPV+d49ChnpOH+p0bNTQ4x4B1i2GY76HoRAo8EWV398=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=neC0PyzR8AnWpD/OvAid3Mr5E1L7JEFe2iIG1pd+DH1vCSGLg/Ddq8igunGO70MFL8/6NABfQwYC8GKYLW/nsNWOnHLNujz12Hh3xjmn88jM1exwIT4zfhp3i31DB5MWwSA5bJ9bbUSV+cPFomrlc5PjdfLzFqBUx51C4ZrkQys=
+Received: by 10.78.199.8 with SMTP id w8mr578231huf.30.1212162882896;
+        Fri, 30 May 2008 08:54:42 -0700 (PDT)
+Received: by 10.78.144.18 with HTTP; Fri, 30 May 2008 08:54:42 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <48401CFF.4020702@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83311>
 
-On Fri, May 30, 2008 at 05:27:59PM +0200, Lea Wiemann wrote:
-> Petr Baudis wrote:
->> I wonder what oldest Perl versions do we aim to support?
->
-> I'm thinking about 5.8 or 5.10.  Looking at Debian, Perl 5.10 is not in 
-> stable (etch), but it's in lenny, which is planned to become stable in 
-> Sept. 08.  So by the time the updated Gitweb/Git.pm has stabilized (and 
-> shows up as a package in Debian), Perl 5.10 will definitely be available 
-> widely enough.
+Hi all,
 
-Wow, and here I was wondering if requiring at least 5.6 was not too
-liberal. ;-) I believe 5.8 is the newest possible candidate though, it
-is still too widespread; e.g. Debian-wise, many servers run on Etch and
-are going to stay there even for quite some time after Lenny gets
-released. Heck, I still have accounts on plenty of Sarge machines. ;-)
-(Sarge seems to have Perl-5.8.4.)
+I was trying to create a git repository in the following way (while
+importing different releases from clearcase tree)
 
--- 
-				Petr "Pasky" Baudis
-Whatever you can do, or dream you can, begin it.
-Boldness has genius, power, and magic in it.	-- J. W. von Goethe
+git init .
+tar xzf version1..
+git add .
+git commit -a -m"Version1"
+rm -rf tree
+tar xzf version2
+git add .
+git commit -a -m"Version2"
+... and so on for next next verison.
+
+Now I get the following error while using gitk:
+warning: too many files, skipping inexact rename detection
+warning: too many files, skipping inexact rename detection
+    while executing
+"close $bdf"
+    (procedure "getblobdiffline" line
+...
+
+which seems to come out of diffcore-rename.c
+
+Can I ignore it? Is it harmful?
+
+Thanks,
+Alf
