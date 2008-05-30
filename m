@@ -1,105 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Fix description of
- --commit-filter
-Date: Fri, 30 May 2008 15:52:40 -0700
-Message-ID: <7vlk1rh0av.fsf@gitster.siamese.dyndns.org>
-References: <1212183820-40712-1-git-send-email-kevin@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat May 31 00:54:06 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [PATCH] gitweb: use Git.pm, and use its parse_rev method for git_get_head_hash
+Date: Sat, 31 May 2008 01:00:12 +0200
+Message-ID: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com>
+Cc: Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 31 01:00:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2DU5-0003Zj-5P
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 00:54:05 +0200
+	id 1K2Dab-00054d-M4
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 01:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756133AbYE3Ww7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 18:52:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756206AbYE3Ww6
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 18:52:58 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46032 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756429AbYE3Ww5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 18:52:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 787DB1CBB;
-	Fri, 30 May 2008 18:52:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 96BFF1CBA; Fri, 30 May 2008 18:52:49 -0400 (EDT)
-In-Reply-To: <1212183820-40712-1-git-send-email-kevin@sb.org> (Kevin
- Ballard's message of "Fri, 30 May 2008 14:43:40 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 231AD954-2E9B-11DD-B70A-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1752938AbYE3W75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 18:59:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646AbYE3W74
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 18:59:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:40335 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751958AbYE3W7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 18:59:55 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so209742fgg.17
+        for <git@vger.kernel.org>; Fri, 30 May 2008 15:59:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=6RTnM4nVdylasgmW014l2oHTM5isIJx3c92KhDjHr4c=;
+        b=hNTPhxk3ZHMKeNi1/dfOiJ2oUqDpyb1+alHuJ7JY+Pm1kFYMghEaYom5bXbS2ts/j8vkuqm7bko19uC/iYgL9QVe093iPUDyJBWgbxwS6Yx/Lwe1JoBIHD1lMPHcxcCGuO7l3f6f3Zoe5L8bV1B4su6U4a8qYvDzitz4QJlekfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:from;
+        b=M1ZQRomjemPsIUyc3v33g3PEvwnmybkg1pQF+xZpAHQgyxC1aIS2d/VC4NoEx8Lofyl7s03XpMPTgpsODZRjlWwM/DEa16wGOUYPcHKUEi5uhgS4PkRbeOXa6f8tvZ1L71sYxrElAul1Iv0+Nkb5rVyA2gwRJHWjS/obhPmu5w8=
+Received: by 10.86.71.1 with SMTP id t1mr1310114fga.36.1212188393787;
+        Fri, 30 May 2008 15:59:53 -0700 (PDT)
+Received: from fly ( [91.33.213.54])
+        by mx.google.com with ESMTPS id 12sm1327191fgg.0.2008.05.30.15.59.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 May 2008 15:59:53 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K2Da1-0005Kf-0q; Sat, 31 May 2008 01:00:13 +0200
+X-Mailer: git-send-email 1.5.5.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83353>
 
-Kevin Ballard <kevin@sb.org> writes:
+This simplifies git_get_head_hash a lot; the method might eventually
+even go away.
 
-> The old description was misleading and logically impossible. It claimed that
-> the ancestors of the original commit would be re-written to have the multiple
-> emitted ids as parents. Not only would this modify existing objects, but it
-> would create a cycle. What this actually does is pass the multiple emitted ids
-> to the newly-created children to use as parents.
->
-> Signed-off-by: Kevin Ballard <kevin@sb.org>
-> ---
->  Documentation/git-filter-branch.txt |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-> index 506c37a..541bf23 100644
-> --- a/Documentation/git-filter-branch.txt
-> +++ b/Documentation/git-filter-branch.txt
-> @@ -113,8 +113,8 @@ OPTIONS
->  	stdin.  The commit id is expected on stdout.
->  +
->  As a special extension, the commit filter may emit multiple
-> -commit ids; in that case, ancestors of the original commit will
-> -have all of them as parents.
-> +commit ids; in that case, the rewritten children of the original commit will
-> +have all of them as parents. You probably don't want to do this.
->  +
+I haven't checked whether this causes an IO performance regression by
+instantiating a new Git repository instance, but in the end
+Git->repository will be as fast as possible and do no eager disk
+accesses.  No benchmarking yet at this stage.
 
-Now I am _very_ confused.
+Minor change: Moved the parameter shift in git_blob_plain to the top
+for readability.
 
-The original description sounds as if:
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
 
-        In this history, when rewriting commit C, if we emit A from the
-        filter:
+I have tested this by running the smoke-test.pl script on my small
+test repository -- this covers calls to git_get_head_hash -- and then
+recursively diffing the two resulting wget output directories before
+and after the change.  The trees were essentially identical (save a
+few timestamps inside the snapshot files).
 
-                     B
-                      \
-                ---A---C---D
-               
-        We will somehow make 'A' and 'B' have A as their parents.
+For brevity, I'll refer to this test procedure as something like
+"smoke-test.pl showed no differences" in future patches. ;-)
 
-which is wrong as you pointed out.
+ gitweb/gitweb.perl |   24 ++++++++----------------
+ 1 files changed, 8 insertions(+), 16 deletions(-)
 
-But I am also confused by the new description:
-
-        In that history, we will make sure that rewritten D (original
-        commit being C) have A as parent.  IOW, we will have
-
-                --A'--C'  D'
-                         /
-                        A
-
-which is not what happens.  What it does is that the commits in the output
-from the filter (i.e. A) are first mapped to the corresponding commits in
-the rewritten history (i.e. A'), and they will be used as the parents of
-the rewritten commit, to form this history:
-
-                --A'--C'
-
-isn't it?
-
-Also you did not defend why you added "You probably don't want to do this"
-to the description.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 57a1905..0efd2f7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -16,6 +16,7 @@ use Encode;
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
++use Git;
+ binmode STDOUT, ':utf8';
+ 
+ BEGIN {
+@@ -1508,20 +1509,11 @@ sub git_cmd_str {
+ # get HEAD ref of given project as hash
+ sub git_get_head_hash {
+ 	my $project = shift;
+-	my $o_git_dir = $git_dir;
+-	my $retval = undef;
+-	$git_dir = "$projectroot/$project";
+-	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
+-		my $head = <$fd>;
+-		close $fd;
+-		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
+-			$retval = $1;
+-		}
+-	}
+-	if (defined $o_git_dir) {
+-		$git_dir = $o_git_dir;
+-	}
+-	return $retval;
++	my $directory = "$projectroot/$project";
++	# Legacy side effect on $git_dir.  This will eventually go
++	# away as the global $git_dir is eliminated.
++	$git_dir = $directory if (!defined $git_dir);
++	Git->repository(Directory => $directory)->parse_rev("HEAD");
+ }
+ 
+ # get type of given object
+@@ -4377,8 +4369,9 @@ sub git_heads {
+ }
+ 
+ sub git_blob_plain {
+-	my $expires;
++	my $type = shift;
+ 
++	my $expires;
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+ 			my $base = $hash_base || git_get_head_hash($project);
+@@ -4392,7 +4385,6 @@ sub git_blob_plain {
+ 		$expires = "+1d";
+ 	}
+ 
+-	my $type = shift;
+ 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+ 		or die_error(undef, "Couldn't cat $file_name, $hash");
+ 
+-- 
+1.5.5.GIT
