@@ -1,74 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/2] Make pack creation always fsync() the result
-Date: Fri, 30 May 2008 16:27:01 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0805301620040.23581@xanadu.home>
-References: <20080529205743.GC17123@redhat.com>
- <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org>
- <20080530152527.GF4032@redhat.com>
- <alpine.LFD.1.10.0805300844310.3141@woody.linux-foundation.org>
- <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-fast-export: Remove double spaces in author line
+Date: Fri, 30 May 2008 13:27:37 -0700
+Message-ID: <7vtzgfk05i.fsf@gitster.siamese.dyndns.org>
+References: <1212143475-48255-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Frank Ch. Eigler" <fche@redhat.com>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 30 22:28:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Fri May 30 22:28:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2BCe-0001tL-Ea
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:27:56 +0200
+	id 1K2BDK-0002Cx-Fx
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 22:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787AbYE3U1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 16:27:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbYE3U1E
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:27:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9308 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752727AbYE3U1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 16:27:03 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K1P003WR7H1HJ20@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 30 May 2008 16:27:02 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752921AbYE3U1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 16:27:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbYE3U1q
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 16:27:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52423 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752855AbYE3U1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 16:27:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0AC7E238F;
+	Fri, 30 May 2008 16:27:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5B171238E; Fri, 30 May 2008 16:27:39 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DB46A892-2E86-11DD-92EF-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83325>
 
-On Fri, 30 May 2008, Linus Torvalds wrote:
+Pieter de Bie <pdebie@ai.rug.nl> writes:
 
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 70d2f5d..4c2e0cd 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -515,10 +515,12 @@ static void write_pack_file(void)
->  		 * If so, rewrite it like in fast-import
->  		 */
->  		if (pack_to_stdout || nr_written == nr_remaining) {
-> -			sha1close(f, sha1, 1);
-> +			unsigned flags = pack_to_stdout ? CSUM_CLOSE : CSUM_FSYNC;
-> +			sha1close(f, sha1, flags);
->  		} else {
+> It produces 
+>
+> 	"author Samba Release Account <samba-bugs@samba.org>  831196245 +0000"
+>
+> The git-fast-import syntax says there can only be a single space after the >
+> sign. This Samba commit breaks bzr-fast-import, for example.
+>
+> I'm not sure how to properly fix the problem, as I'm not very deep into Git's
+> code. I included this patch in case anyone else has the same problem and wants
+> a quick fix. I'm also not sure if it's a fast-export problem, or if the Samba
+> repository is just invalid :)
 
-Micro nit:  wouldn't it look more obvious if it was written as:
+You can call that repository broken if you want, but we can try to be
+liberal when receiving and be strict when generating.  IOW, fast-import
+could accept such a minor deviation and generate a commit after fixing it.
+The same thing can be said about fast-export --- read, fix and generate.
 
-	if (pack_to_stdout) {
-		sha1close(f, sha1, CSUM_CLOSE);
-	} else if (nr_written == nr_remaining) {
-		sha1close(f, sha1, CSUM_FSYNC);
-	} else {
-		...
-
-Otherwise looks sane to me.
-
-
-Nicolas
+By the way, your quick hack would however squash multiple SPs anywhere on
+the line, wouldn't it, not just the one between '>' and the timestamp?
