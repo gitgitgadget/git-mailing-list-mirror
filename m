@@ -1,106 +1,77 @@
-From: Andrea Righi <righi.andrea@gmail.com>
-Subject: Re: whomto.pl -- finding out whom to send patches to
-Date: Fri, 30 May 2008 09:58:19 +0200 (MEST)
-Message-ID: <483FB39A.4070104@gmail.com>
-References: <20080529210018.GA5508@damson.getinternet.no>
-Reply-To: righi.andrea@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: fix "next" link on bottom of commit log page
+Date: Fri, 30 May 2008 01:12:49 -0700 (PDT)
+Message-ID: <m3y75s1a9v.fsf@localhost.localdomain>
+References: <20080529181003.1249.qmail@b35f4f9e60eb05.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Joe Perches <joe@perches.com>, git@vger.kernel.org
-To: Vegard Nossum <vegard.nossum@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 10:12:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Fri May 30 10:13:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K1ziO-00013J-Fz
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 10:11:56 +0200
+	id 1K1zkG-0001lG-87
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 10:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbYE3ILE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 04:11:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbYE3ILE
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 04:11:04 -0400
-Received: from as4.cineca.com ([130.186.84.251]:47434 "EHLO as4.cineca.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751324AbYE3IK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 04:10:59 -0400
-X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 May 2008 04:10:59 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by as4.cineca.com (Postfix) with ESMTP id DFE1A42F;
-	Fri, 30 May 2008 10:02:13 +0200 (CEST)
-Received: from cineca.mm.cineca.it (cineca.mm.cineca.it [130.186.10.200])
-	by as4.cineca.com (Postfix) with ESMTP id 35065442;
-	Fri, 30 May 2008 10:02:04 +0200 (CEST)
-Received: from [192.168.64.177] (pdl-19-81.nat.cineca.it [130.186.19.81])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	as user a.righi@cineca.it by cineca.mm.cineca.it (Postfix) with ESMTP
-	id 14D00B80D1A; Fri, 30 May 2008 09:58:19 +0200 (MEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <20080529210018.GA5508@damson.getinternet.no>
-X-Virus-Scanned: Cineca AppOs 0.99 at as4.cineca.com
+	id S1751896AbYE3INA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 04:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbYE3IM7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 04:12:59 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:4130 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751730AbYE3IM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 04:12:57 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so67793fgg.17
+        for <git@vger.kernel.org>; Fri, 30 May 2008 01:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        bh=fYvaNvRjvoFZy4pJrf7en5TJmR08NC0bEr9mFvk+s0o=;
+        b=EMRMdP1OzIbB0PyJFrUvU7ZNTuxa/YLmAwS1XxJTzwBPUUIwDEwkWN+YWFadcNSmCWaD9J1jLfLI/Bfi5MRZJkQ+kq+51isrXCz7fPmodK8eIb0z5+FaPg3HytufU9or51CQ//qeQIWy0AtQ/j0rkXiAEmmw5lhBGQSuPJHsT0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
+        b=CfzfzVNcNSuJSOkiFL2guGVf0jQiAJZPznFjn2UWZQMXtzcX14P/wNcVyeVs/47540KiERn+t9GRs2RDMY207ysqc5Jl/vffm5+mYn3MhHVQbFqxQVLZcLalpeJf7mChNVrYBu7HFL3QmsU++Ni2agEE5Pf+Wulh6TeWuTvVz24=
+Received: by 10.86.29.19 with SMTP id c19mr467149fgc.28.1212135175866;
+        Fri, 30 May 2008 01:12:55 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.197.146])
+        by mx.google.com with ESMTPS id d4sm253513fga.4.2008.05.30.01.12.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 May 2008 01:12:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4U8C3G7022222;
+	Fri, 30 May 2008 10:12:13 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m4U8BfnC022218;
+	Fri, 30 May 2008 10:11:41 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080529181003.1249.qmail@b35f4f9e60eb05.315fe32.mid.smarden.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83276>
 
-Vegard Nossum wrote:
-> Hi,
-> 
-> I've written this perl script that takes a patch as input and prints the
-> authors/committers of the affected lines, using git-blame as the back end.
-> 
-> (The purpose of this is of course to find out whom to send patches to.)
-> 
-> There are some caveats:
-> 
-> - If I've understood correctly, git-blame incremental output doesn't split
->   commits when a newer one is found, so we currently possibly take into
->   account more than just the last patch to touch a line. This might not be
->   a disadvantage, however...
-> 
-> - The patch must apply to the current working tree. I suppose there is
->   some way to use the index information in the patch to determine what to
->   run git-blame against, but this is currently beyond my git knowledge.
-> 
-> - It's a bit slow, particularly for large files. But doing the same thing
->   by hand would be slower, so I suppose it's an overall improvement.
-> 
-> Running this on a random -mm patch, for example
-> http://www.kernel.org/pub/linux/kernel/people/akpm/patches/2.6/2.6.26-rc2/2.6.26-rc2-mm1/broken-out/acpi-fix-fadt-parsing.patch
-> gives the following output:
-> 
->   $ perl whomto2.pl acpi-fix-fadt-parsing.patch
->   Running git-blame on drivers/acpi/tables/tbfadt.c...
-> 
->   To: (Committers)
->       48 Len Brown <len.brown@intel.com>
->   Cc: (Authors)
->       44 Bob Moore <robert.moore@intel.com>
->        2 Alexey Starikovskiy <alexey.y.starikovskiy@linux.intel.com>
->        2 Len Brown <len.brown@intel.com>
-> 
-> Maybe this tool can be useful? :-)
-> 
-> (Improvements are of course also welcome.)
+Gerrit Pape <pape@smarden.org> writes:
 
-Minor fix: do not git-blame /dev/null in patches that add new files.
+> When viewing a gitweb repository commit log, the "next" link at the top
+> of the page works as expected, the "next" link on the bottom of the page
+> has a=search instead of a=log and thus fails to get you to the next
+> page.  This commit replaces the bottom "next" link with the same links
+> as shown at the top of the page.
 
--Andrea
+> -		print $cgi->a({-href => href(-replay=>1, page=>$page+1),
+> -			       -accesskey => "n", -title => "Alt-n"}, "next");
 
-diff -urpN linux/whomto.orig.pl linux/whomto.pl
---- linux/whomto.orig.pl	2008-05-30 09:43:08.000000000 +0200
-+++ linux/whomto.pl	2008-05-30 09:49:26.000000000 +0200
-@@ -101,6 +101,7 @@ sub parse_patch {
- 
- 	for (@p) {
- 		if (m/^--- .*?\/([^\s~]*)/) {
-+			next if ($1 eq 'dev/null');
- 			$file = $files{$1} = {
- 				chunks => [],
- 			};
+Should not happen: href(-replay=>1, ...) should have the same value
+of 'a' parameter as the page it is in, so it should be 'log' not 'search'.
+
+Will investigate.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
