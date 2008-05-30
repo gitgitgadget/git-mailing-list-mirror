@@ -1,81 +1,65 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Fri, 30 May 2008 09:07:13 -0300
-Message-ID: <483FEDF1.7010308@intelinet.com.br>
-References: <20080526044640.GB30245@spearce.org> <19f34abd0805260113w1341a26bg140d1dbb7438bf46@mail.gmail.com> <alpine.DEB.1.00.0805261106470.30431@racer> <19f34abd0805260422m6d8c414dy746623ed609440eb@mail.gmail.com> <20080526181259.GA17449@foursquare.net> <20080526234445.GF30245@spearce.org> <46a038f90805261713y12bfa900j1ee2d99330f97bf9@mail.gmail.com> <483C8ACB.5050505@intelinet.com.br> <20080529041901.GA12896@spearce.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
+Date: Fri, 30 May 2008 14:21:44 +0200
+Message-ID: <200805301421.46162.trast@student.ethz.ch>
+References: <200805232221.45406.trast@student.ethz.ch> <200805291737.53291.trast@student.ethz.ch> <20080529185808.GA2140@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Chris Frey <cdfrey@foursquare.net>,
-	Vegard Nossum <vegard.nossum@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Dave Watson <dwatson@mimvista.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
-	laforge@gnumonks.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri May 30 14:09:47 2008
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 30 14:22:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K23QQ-00021h-Ck
-	for gcvg-git-2@gmane.org; Fri, 30 May 2008 14:09:38 +0200
+	id 1K23cj-0006zg-2l
+	for gcvg-git-2@gmane.org; Fri, 30 May 2008 14:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbYE3MIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2008 08:08:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbYE3MIp
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 08:08:45 -0400
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1971 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750913AbYE3MIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2008 08:08:44 -0400
-Received: (qmail 81004 invoked by uid 0); 30 May 2008 09:13:30 -0300
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4998.  Clear:RC:1:. 
- Processed in 0.011206 secs); 30 May 2008 12:13:30 -0000
-Received: from unknown (HELO roger.intelinet.com.br) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 30 May 2008 12:13:30 -0000
-User-Agent: Thunderbird 2.0.0.14 (X11/20080515)
-In-Reply-To: <20080529041901.GA12896@spearce.org>
+	id S1751046AbYE3MV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2008 08:21:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbYE3MV2
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 May 2008 08:21:28 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:6027 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750913AbYE3MV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2008 08:21:28 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 30 May 2008 14:21:26 +0200
+Received: from vpn-global-dhcp3-055.ethz.ch ([129.132.210.55]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 30 May 2008 14:21:26 +0200
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <20080529185808.GA2140@sigill.intra.peff.net>
+Content-Disposition: inline
+X-OriginalArrivalTime: 30 May 2008 12:21:26.0547 (UTC) FILETIME=[AE799E30:01C8C24F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83290>
 
+Jeff King wrote:
+> But I find the interface a bit clunky. I would much rather get dumped in
+> my favorite editor, which happens to be quite fast at removing a subset
+> of lines. After editing, any lines remaining would be staged.
+> 
+> We would have to figure out what happens if lines are added or edited,
+> of course. It may be right to signal an error, or maybe there is some
+> other useful functionality that can come of that. I think other systems
+> have some diff-editing functionality (IIRC, cogito did). It is probably
+> worth looking at that for ideas.
 
-Shawn O. Pearce escreveu:
-> "Roger C. Soares" <rogersoares@intelinet.com.br> wrote:
->   
->> Martin Langhoff escreveu:
->>     
->>> On Tue, May 27, 2008 at 11:44 AM, Shawn O. Pearce <spearce@spearce.org> 
->>> wrote:
->>>  
->>>       
->>>> So in all time these users have added a total of 14 lines between
->>>> them.  Out of 122,576 total added lines.  It amounts to only 0.011%
->>>> of the total contribution.  In the US a change this small may not
->>>> even be copyrightable.
->>>>    
->>>>         
->>> It'd be nice to hear from them, but I looks fair to me to say that
->>> those contributors - while very valuable - cannot hold the project
->>> back.
->>>       
->> Well, FWIW I'm ok with the license change.
->>     
->
-> Heh, thanks for chiming in Roger.  We're likely to start talking
-> about moving egit to 100% EPL soon too.  I think your contribution
-> there is quite non-trivial, so we'll certainly need your blessing
-> for that.  :-)
->   
-Hi Shawn, Robin told me about it and asked for permission some time ago, 
-so my permission is given already. Anyway, I can confirm this later if 
-necessary. :)
+We could just see if the hunk applies to the unchanged index (still
+assuming we're inside 'add -p'), and if not, reject the edit.
 
-[]s,
-Roger.
+Unfortunately git-apply does not seem to have a --dry-run option.
+(Even stranger, when given the option --dry-run it tries to open a
+patch of that name.)  What is the recommended way to do such things?
+Make a backup copy of the index and apply --cached anyway?
+
+- Thomas
+
+-- 
+Thomas Rast
+trast@student.ethz.ch
