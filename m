@@ -1,107 +1,103 @@
-From: david@lang.hm
+From: =?ISO-8859-2?Q?Adam_Pi=B1tyszek?= <ediap@users.sourceforge.net>
 Subject: Re: unable to push
-Date: Sat, 31 May 2008 09:10:26 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0805310855000.15294@asgard.lang.hm>
+Date: Sat, 31 May 2008 18:52:18 +0200
+Message-ID: <48418242.1050606@users.sourceforge.net>
 References: <alpine.DEB.1.10.0805310759540.15294@asgard.lang.hm> <20080531155036.GA27397@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-2;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: david@lang.hm, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 31 18:11:49 2008
+X-From: git-owner@vger.kernel.org Sat May 31 18:53:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2TgI-00013B-6U
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 18:11:46 +0200
+	id 1K2UKe-0004WG-LD
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 18:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754310AbYEaQK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 12:10:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754295AbYEaQK4
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 12:10:56 -0400
-Received: from mail.lang.hm ([64.81.33.126]:49890 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754289AbYEaQKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 12:10:24 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m4VGAEKm026893;
-	Sat, 31 May 2008 09:10:14 -0700
-X-X-Sender: dlang@asgard.lang.hm
+	id S1753066AbYEaQwg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2008 12:52:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbYEaQwg
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 12:52:36 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:63891 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753066AbYEaQwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 12:52:35 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so182784nfc.21
+        for <git@vger.kernel.org>; Sat, 31 May 2008 09:52:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=6MvXXxWz3KRgbGamLLkA+fmh21iBCv1hACYIwwZ6c6I=;
+        b=WCCHwkMUsumVqQKqNeBubdzX5MvK1IUzAOGph48F96EsWY6OBeL5eZt8Qh+2C9vmD7sajP0auFmfnThl6YjW33Ts0CjbhtBAs6pjj0Z0jrnGvUVELfaXz/eftEJ1a4BMNXRL0h1xmFDAAd+VmSQXjxVyJOhvbVUYdCwY72iIwlk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
+        b=sznm+jwBwwA/dwjVCx1BzAjSbv9lLYgY6s38yUTf7DDMS6RYa0j0N2avTQ6I4cVbWy4OQgAFBR9Xs6TQnqkbv4HYluuvBRn1QLalv3sjs1xS+o9kwYy1lIhHAdT98ptkESqgHVmU/mbyO6b5ojCxa5g07yIKJri4hoxna2nRWpM=
+Received: by 10.210.37.11 with SMTP id k11mr4231203ebk.70.1212252753066;
+        Sat, 31 May 2008 09:52:33 -0700 (PDT)
+Received: from ?192.168.1.4? ( [79.184.75.156])
+        by mx.google.com with ESMTPS id z40sm1862794ikz.7.2008.05.31.09.52.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 31 May 2008 09:52:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080516)
 In-Reply-To: <20080531155036.GA27397@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83395>
 
-On Sat, 31 May 2008, Jeff King wrote:
-
+* Jeff King [31 V 2008 17:50]:
 > On Sat, May 31, 2008 at 08:03:47AM -0700, david@lang.hm wrote:
->
->> for some reason when I try to push to my public repo I get a message that
->> everything is up to date, but if I switch to that repo and do a pull it
+>=20
+>> for some reason when I try to push to my public repo I get a message=
+ that =20
+>> everything is up to date, but if I switch to that repo and do a pull=
+ it =20
 >> updates properly
->
-> If you "git push" without a refspec, it pushes "matching branches". See
+>=20
+> If you "git push" without a refspec, it pushes "matching branches". S=
+ee
 > git-push(1) for more details.
->
+>=20
 >> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote public
 >> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        HEAD
->> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        refs/heads/localmaster
->
+>> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        refs/heads/localmast=
+er
+>=20
 > So you have only one branch, "localmaster".
->
+>=20
 >> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote .
 >> 71ab4eea48eb3407a2ff4eef2befe9251897d676        HEAD
 >> 71ab4eea48eb3407a2ff4eef2befe9251897d676        refs/heads/master
->
+>=20
 > But the remote has only one branch, "master".
->
+>=20
 > If you want to push your localmaster to his master, you can do:
->
->  git push origin localmaster:master
->
-> You can also set it up permanently by adding a "remote.origin.push" line
-> to your config file.
->
-> But I do wonder why you don't just name your local branch "master" in
-> the first place (it won't conflict in your local repo with the remote's
-> master, which can be named as "origin/master").
+>=20
+>   git push origin localmaster:master
+[...]
 
-I created localmaster in an attempt to get things working again. I'll try 
-creating a new master branch... that does make it work again, thanks.
+I guess Peef described it the opposite way. In my opinion "localmaster"=
+=20
+is the only branch on the remote "public" repository and the local=20
+repository has only one "master" branch.
 
-what I'm not understanding completely is how I broke things in the first 
-place.
+So to push local "master" to the remote "localmaster" branch you should=
+ use:
 
-going back through .git/logs/HEAD it looks like I did a checkout HEAD^^^ 
-and never properly recovered. should I have done a checkout master to get 
-things back on track? I had thought that I could do a checkout of an old 
-version, modify it, do a commit, and the commit would go on top of the old 
-HEAD and I could just keep going (the reason for doing this instead of a 
-reset is that I had already published the intermediate commits to the 
-public repo, so I didn't want to roll back the history, just get the old 
-version of one of the files)
+   git push public master:localmaster
 
->> root@asgard:/var/www/git/xml2pdf.git# git pull
->> remote: Counting objects: 8, done.
->> remote: Compressing objects: 100% (6/6), done.
->> remote: Total 6 (delta 4), reused 0 (delta 0)
->> Unpacking objects: 100% (6/6), done.
->> From /movies/www/adastra/xml2pdf/current/
->>    d3f3d84..71ab4ee  master     -> origin/master
->>  * [new tag]         1.8.5      -> 1.8.5
->> Updating d3f3d84..71ab4ee
->> Fast forward
->>  xml2pdf.pl |   22 +++++++++++-----------
->>  1 files changed, 11 insertions(+), 11 deletions(-)
->
-> And this pulls from master -> localmaster, presumably because you have a
-> branch.localmaster.merge config option (which is generally set up by
-> default these days).
+BR,
+/Adam
 
-I manually setup the localmaster when I was having trouble getting things 
-to work in either direction.
 
-David Lang
+--=20
+=2E:.  Adam Pi=B1tyszek (ediap)  .:....................................=
+=2E:.
+=2E:.  ediap@users.sourceforge.net  .:................................:=
+=2E
