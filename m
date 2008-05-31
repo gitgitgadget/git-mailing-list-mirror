@@ -1,103 +1,95 @@
-From: =?ISO-8859-2?Q?Adam_Pi=B1tyszek?= <ediap@users.sourceforge.net>
-Subject: Re: unable to push
-Date: Sat, 31 May 2008 18:52:18 +0200
-Message-ID: <48418242.1050606@users.sourceforge.net>
-References: <alpine.DEB.1.10.0805310759540.15294@asgard.lang.hm> <20080531155036.GA27397@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2;
-	format=flowed
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Commit cce8d6fdb introduces file t/t5100/nul, git tree is now incompatible with Cygwin (and probably Windows)
+Date: Sat, 31 May 2008 19:37:48 +0200
+Message-ID: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de>
+References: <483AC2CE.7090801@gmail.com> <7vy75vvtxo.fsf@gitster.siamese.dyndns.org> <100A0CFD-EB6F-48F1-B917-811310CCFB6E@wincent.com> <alpine.DEB.1.00.0805291422210.13507@racer.site.net> <29FDE86E-5B83-4736-8CC6-9C5697B91B2C@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: david@lang.hm, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 31 18:53:37 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat May 31 19:38:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2UKe-0004WG-LD
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 18:53:29 +0200
+	id 1K2V2N-0001dD-Sd
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 19:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066AbYEaQwg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2008 12:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbYEaQwg
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 12:52:36 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:63891 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753066AbYEaQwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 12:52:35 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so182784nfc.21
-        for <git@vger.kernel.org>; Sat, 31 May 2008 09:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=6MvXXxWz3KRgbGamLLkA+fmh21iBCv1hACYIwwZ6c6I=;
-        b=WCCHwkMUsumVqQKqNeBubdzX5MvK1IUzAOGph48F96EsWY6OBeL5eZt8Qh+2C9vmD7sajP0auFmfnThl6YjW33Ts0CjbhtBAs6pjj0Z0jrnGvUVELfaXz/eftEJ1a4BMNXRL0h1xmFDAAd+VmSQXjxVyJOhvbVUYdCwY72iIwlk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:sender;
-        b=sznm+jwBwwA/dwjVCx1BzAjSbv9lLYgY6s38yUTf7DDMS6RYa0j0N2avTQ6I4cVbWy4OQgAFBR9Xs6TQnqkbv4HYluuvBRn1QLalv3sjs1xS+o9kwYy1lIhHAdT98ptkESqgHVmU/mbyO6b5ojCxa5g07yIKJri4hoxna2nRWpM=
-Received: by 10.210.37.11 with SMTP id k11mr4231203ebk.70.1212252753066;
-        Sat, 31 May 2008 09:52:33 -0700 (PDT)
-Received: from ?192.168.1.4? ( [79.184.75.156])
-        by mx.google.com with ESMTPS id z40sm1862794ikz.7.2008.05.31.09.52.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 May 2008 09:52:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080516)
-In-Reply-To: <20080531155036.GA27397@sigill.intra.peff.net>
-X-Enigmail-Version: 0.95.6
+	id S1752904AbYEaRhq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2008 13:37:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbYEaRhq
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 13:37:46 -0400
+Received: from mailer.zib.de ([130.73.108.11]:58364 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751623AbYEaRhp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 May 2008 13:37:45 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m4VHbJEa016970;
+	Sat, 31 May 2008 19:37:24 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db83e93.pool.einsundeins.de [77.184.62.147])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m4VHbEtM007909
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 31 May 2008 19:37:18 +0200 (MEST)
+In-Reply-To: <29FDE86E-5B83-4736-8CC6-9C5697B91B2C@wincent.com>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83396>
 
-* Jeff King [31 V 2008 17:50]:
-> On Sat, May 31, 2008 at 08:03:47AM -0700, david@lang.hm wrote:
->=20
->> for some reason when I try to push to my public repo I get a message=
- that =20
->> everything is up to date, but if I switch to that repo and do a pull=
- it =20
->> updates properly
->=20
-> If you "git push" without a refspec, it pushes "matching branches". S=
-ee
-> git-push(1) for more details.
->=20
->> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote public
->> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        HEAD
->> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        refs/heads/localmast=
-er
->=20
-> So you have only one branch, "localmaster".
->=20
->> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote .
->> 71ab4eea48eb3407a2ff4eef2befe9251897d676        HEAD
->> 71ab4eea48eb3407a2ff4eef2befe9251897d676        refs/heads/master
->=20
-> But the remote has only one branch, "master".
->=20
-> If you want to push your localmaster to his master, you can do:
->=20
->   git push origin localmaster:master
+
+On May 29, 2008, at 4:58 PM, Wincent Colaiuta wrote:
+
+> El 29/5/2008, a las 15:22, Johannes Schindelin escribi=F3:
+>>
+>>
+>> On Wed, 28 May 2008, Wincent Colaiuta wrote:
+>>
+>>> El 28/5/2008, a las 8:12, Junio C Hamano escribi=F3:
+>>>
+>>>> Perhaps we should remove the infamous gitweb/test/M=E4rchen file =20
+>>>> while we
+>>>> are at it?  I do not think the file is ever used.
+>>>
+>>> I for one would love to see it go, seeing as I live in the ghetto =20
+>>> that
+>>> is HFS+ and am constantly annoyed by it cluttering up my status =20
+>>> output
+>>> with spurious content.
+>>>
+>>> I understand that the reason it lives in the tree is precisely to
+>>> discover problems with such filesystems, but the problem is well an=
+d
+>>> truly discovered by now and I'd much rather see this kind of thing
+>>> tested from within the test suite rather than every time I do "git
+>>> status" or "git checkout".
+>>
+>> Probably you are not enoyed enough to just go and fix it.
+>
+
 [...]
 
-I guess Peef described it the opposite way. In my opinion "localmaster"=
-=20
-is the only branch on the remote "public" repository and the local=20
-repository has only one "master" branch.
-
-So to push local "master" to the remote "localmaster" branch you should=
- use:
-
-   git push public master:localmaster
-
-BR,
-/Adam
+>
+> If the powers that be will accept a change that removes M=E4rchen I'l=
+l =20
+> be more than happy to whip up a patch.
 
 
---=20
-=2E:.  Adam Pi=B1tyszek (ediap)  .:....................................=
-=2E:.
-=2E:.  ediap@users.sourceforge.net  .:................................:=
-=2E
+Unicode normalization is tested in t/t0050-filesystem.sh, which
+reports on HFS+:
+
+*   still broken 8: rename (silent unicode normalization)
+*   still broken 9: merge (silent unicode normalization)
+
+I believe there is no value in keeping gitweb/test/M=E4rchen for the
+reason of testing HFS+, so I vote for removing it, unless there
+is another good reason for keeping it.
+
+	Steffen
