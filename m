@@ -1,104 +1,94 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH] t/test-lib.sh: resolve symlinks in working directory, for pathname comparisons
-Date: Sat, 31 May 2008 23:11:21 +0200
-Message-ID: <1212268281-16797-1-git-send-email-LeWiemann@gmail.com>
-Cc: Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 31 23:12:39 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [Nikolaus Schulz] Re: [PATCH] git-svn fails in prop_walk if
+ $self->{path} is not empty
+Date: Sat, 31 May 2008 14:24:27 -0700
+Message-ID: <7v3anyf9pw.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Sat May 31 23:26:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2YNG-0004Tx-PZ
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 23:12:27 +0200
+	id 1K2Yaa-0001x1-VV
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 23:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbYEaVLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 17:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752049AbYEaVLH
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 17:11:07 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:21781 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820AbYEaVLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 17:11:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so377430fgg.17
-        for <git@vger.kernel.org>; Sat, 31 May 2008 14:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
-        bh=TkY8Z/OeZNzpiCL5YNrBe+i1TsSYf39cJ06Rojhc6yc=;
-        b=w0QTMuBU2x8xKRdr8VD86s3A16srDTN/mRS0KFXL3jUxfNm0OwwpwHBCGIKFpI9DnHLaL+Tbuk1AMI2AFHqy2gjxLOlwuWY31ZaTbeLYonKTo+f180nqfzBsqdw9+4QcPOhBlKmcLsOvE7/v1rO3rH/n6P/GjPCCx3OuzfaKwlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:from;
-        b=tQqLtXcIqUs8joJIv9a8+zGJlfZElIPYbGDLcyP70+fuqrI/1iqLVAsOHoxgJn9l1zIhi1v++xP8fdsmopVnfywvKwCNBNgqGEC/PPK7T+v0wSxzCUu9XihZO7P7PBZi4Pvs8nx/kV5LUuRSVnipxYHhii5Abo1vCPJxtx2qGRw=
-Received: by 10.86.4.2 with SMTP id 2mr4064994fgd.16.1212268263227;
-        Sat, 31 May 2008 14:11:03 -0700 (PDT)
-Received: from fly ( [91.33.240.119])
-        by mx.google.com with ESMTPS id e11sm1630776fga.4.2008.05.31.14.11.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 May 2008 14:11:03 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K2YMD-0004NL-HP; Sat, 31 May 2008 23:11:21 +0200
-X-Mailer: git-send-email 1.5.5.GIT
+	id S1753912AbYEaVYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2008 17:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbYEaVYs
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 17:24:48 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59548 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753867AbYEaVYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 17:24:48 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 728D238C9;
+	Sat, 31 May 2008 17:24:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 84ABF38C4; Sat, 31 May 2008 17:24:35 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FBD31182-2F57-11DD-9D0B-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83405>
 
-Without this, some tests will fail because they compare command output
-of subprocesses (such as git) with $PWD -- but subprocesses have the
-physical path as their working directory, whereas $PWD contains the
-symlinked path.  This fixes it.
+Ping?
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-Here is how to reproduce it:
+Date:	Wed, 28 May 2008 00:54:02 +0200
+To:	git@vger.kernel.org
+Subject: Re: [PATCH] git-svn fails in prop_walk if $self->{path} is not empty
+Message-ID: <20080527225402.GA25550@penelope.zusammrottung.local>
+From:	Nikolaus Schulz <microschulz@web.de>
 
-$ ln -s /path/to/git git-symlink
-$ cd git-symlink/t
-$ ./t0001-init.sh 
-*   ok 1: plain
-*   ok 2: plain with GIT_WORK_TREE
-*   ok 3: plain bare
-*   ok 4: plain bare with GIT_WORK_TREE
-*   ok 5: GIT_DIR bare
-*   ok 6: GIT_DIR non-bare
-* FAIL 7: GIT_DIR & GIT_WORK_TREE (1)
-	
-	
-		(
-			unset GIT_CONFIG
-			mkdir git-dir-wt-1.git &&
-			GIT_WORK_TREE=$(pwd) GIT_DIR=git-dir-wt-1.git git init
-		) &&
-		check_config git-dir-wt-1.git false "$(pwd)"
-	
-*   ok 8: GIT_DIR & GIT_WORK_TREE (2)
-*   ok 9: reinit
-* failed 1 among 9 test(s)
+Happy coincidence!
 
-With this patch applied, all tests work fine in symlinked working
-directories.
+This patch happens to fix my problem posted in "git-svn
+{show,create}-ignore chokes upon subdirs" today. 
 
- t/test-lib.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Nikolaus
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3bf570b..7a8bd27 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -419,7 +419,9 @@ rm -fr "$test" || {
- }
- 
- test_create_repo "$test"
--cd "$test" || exit 1
-+# Use -P to resolve symlinks in our working directory so that the cwd
-+# in subprocesses like git equals our $PWD (for pathname comparisons).
-+cd -P "$test" || exit 1
- 
- this_test=$(expr "./$0" : '.*/\(t[0-9]*\)-[^/]*$')
- for skp in $GIT_SKIP_TESTS
--- 
-1.5.5.GIT
+On Tue, May 27, 2008 at 08:46:55AM +0000, Gerrit Pape wrote:
+> From: Christian Engwer <christi@uni-hd.de>
+> 
+> The problem now is that prop_walk strips trunk from the path and then
+> calls itself recursively. But now trunk is missing in the path and
+> get_dir fails, because it is called for a non existing path.
+> 
+> The attached patch fixed the problem, by adding the priviously stipped
+> $self->{path} in the recursive call. 
+> git-svn repository for the commands show-ignore and show-external.
+> 
+> Patch was submitted through
+>  http://bugs.debian.org/477393
+> 
+> Signed-off-by: Gerrit Pape <pape@smarden.org>
+> ---
+> 
+> I'm not that much a git-svn user, and didn't test this thoroughly.  I'd
+> be happy if anyone could crossread/test this, and maybe add a Acked-By.
+> 
+> Thanks, Gerrit.
+> 
+> 
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 37976f2..72fef16 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1918,7 +1918,7 @@ sub prop_walk {
+>  
+>  	foreach (sort keys %$dirent) {
+>  		next if $dirent->{$_}->{kind} != $SVN::Node::dir;
+> -		$self->prop_walk($p . $_, $rev, $sub);
+> +		$self->prop_walk($self->{path} . $p . $_, $rev, $sub);
+>  	}
+>  }
