@@ -1,123 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Add charset info to "raw" blob output
-Date: Sat, 31 May 2008 11:22:00 -0700
-Message-ID: <7vprr2fi5z.fsf@gitster.siamese.dyndns.org>
-References: <m3tzgg1a06.fsf@localhost.localdomain>
- <20080531112513.30913.44393.stgit@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Remove gitweb/test/ directory
+Date: Sat, 31 May 2008 20:28:18 +0200
+Message-ID: <20080531182555.1646.47950.stgit@localhost.localdomain>
+References: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@medozas.de>,
-	Lea Wiemann <lewiemann@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 31 20:23:12 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 31 20:29:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2VjS-0006Ep-3O
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 20:23:10 +0200
+	id 1K2VpP-00005I-91
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 20:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753412AbYEaSWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 14:22:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbYEaSWR
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 14:22:17 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36206 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753338AbYEaSWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 14:22:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E6A5394A;
-	Sat, 31 May 2008 14:22:15 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1F5C83947; Sat, 31 May 2008 14:22:07 -0400 (EDT)
-In-Reply-To: <20080531112513.30913.44393.stgit@localhost.localdomain> (Jakub
- Narebski's message of "Sat, 31 May 2008 13:27:01 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7EBCE77C-2F3E-11DD-9E6A-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753368AbYEaS21 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2008 14:28:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbYEaS21
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 14:28:27 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:25383 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753249AbYEaS20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 14:28:26 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so190400nfc.21
+        for <git@vger.kernel.org>; Sat, 31 May 2008 11:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc:date:message-id:in-reply-to:references:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=yGT9GteNmNBywGqOJgU43O1fvJUdXxtfYNJZKT1LRQo=;
+        b=ojDOhBAIDF1o/vkC9F6traAO4vY5G2INEC1B0rgIvhFuzHyPvz3Qm+9avCULvIk1RNdExuHtybTqrCZWYlYcXx1cNyju10YcmYM7l0gpHZQwm94NqrPEqAiwob9Wz1cMF//o8V8qkHepC+CvkyjJkWOFHypK958mA5bMz/e5NDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:in-reply-to:references:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=j8Ogd/i9dGytkEk6L8+lrY+L0lavGF+4IPI0uYwyR++nVImW4YBhjLMrf55rSBkGeWXPJ1X/MdXL3OYXSVN4iwk4cK1oT5+4CcrrqLLr8AgtK8pB5FhpcbmLn1exqamS645lTFAb4l5Uylm8hBYk3EJYjoau2/NiXT+L9N4Fef8=
+Received: by 10.210.68.17 with SMTP id q17mr2187236eba.31.1212258504672;
+        Sat, 31 May 2008 11:28:24 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.204.14])
+        by mx.google.com with ESMTPS id 31sm13354642nfu.9.2008.05.31.11.28.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 31 May 2008 11:28:23 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m4VISJlJ001691;
+	Sat, 31 May 2008 20:28:19 +0200
+In-Reply-To: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83399>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Testing if gitweb handles filenames with spaces, filenames with plus
+sign ('+') which encodes spaces in CGI parameters (in URLs), and
+filenames with Unicode characters should be handled by gitweb tests.
 
-> Always add charset info from $default_text_plain_charset (if it is
-> defined) to "raw" (a=blob_plain) output for 'text/plain' blobs.
-> Adding charset info in a special case was removed from blob_mimetype().
+Those files are remainder of the time when gitweb was project on its
+own, not a part of git (with its testsuite).
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+On Sat, 31 May 2008 19:37:48 +0200, Steffen Prohaska wrote:
+> On May 29, 2008, at 4:58 PM, Wincent Colaiuta wrote:
 >
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
+[...]
+>> If the powers that be will accept a change that removes M=E4rchen I'=
+ll =20
+>> be more than happy to whip up a patch.
+>=20
+> Unicode normalization is tested in t/t0050-filesystem.sh, which
+> reports on HFS+:
+>=20
+> *   still broken 8: rename (silent unicode normalization)
+> *   still broken 9: merge (silent unicode normalization)
+>=20
+> I believe there is no value in keeping gitweb/test/M=E4rchen for the
+> reason of testing HFS+, so I vote for removing it, unless there
+> is another good reason for keeping it.
 
-Looks Ok but it took a bit of digging on the list for me to figure out
-that something like this was missing from the beginning of your commit log
-message:
+So here it is, the patch to remove offending file; well: the whole
+gitweb/test/ directory.=20
 
-	Earlier "blob_plain" view sent "charset=utf-8" only when gitweb
-	guessed the content type to be text by reading from it, and not
-	when the MIME type was obtained from /etc/mime.types.
+ "gitweb/test/M\303\244rchen" |    2 --
+ gitweb/test/file with spaces |    4 ----
+ gitweb/test/file+plus+sign   |    6 ------
+ 3 files changed, 0 insertions(+), 12 deletions(-)
+ delete mode 100644 gitweb/test/M=C3=A4rchen
+ delete mode 100644 gitweb/test/file with spaces
+ delete mode 100644 gitweb/test/file+plus+sign
 
-	This fixes the bug by always adding....
-
-But I wonder if moving of this to the calling site is the right thing to
-do.  Wouldn't it become much more contained and robust if you did it this
-way?
-
- gitweb/gitweb.perl |   34 +++++++++++++++++++---------------
- 1 files changed, 19 insertions(+), 15 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 57a1905..f5338e1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2471,29 +2471,33 @@ sub mimetype_guess {
- sub blob_mimetype {
- 	my $fd = shift;
- 	my $filename = shift;
-+	my $mime;
- 
- 	if ($filename) {
--		my $mime = mimetype_guess($filename);
--		$mime and return $mime;
--	}
--
--	# just in case
--	return $default_blob_plain_mimetype unless $fd;
--
--	if (-T $fd) {
--		return 'text/plain' .
--		       ($default_text_plain_charset ? '; charset='.$default_text_plain_charset : '');
-+		$mime = mimetype_guess($filename);
-+	} else if (!defined $fd) {
-+		$mime = $default_blob_plain_mimetype;
-+	} else if (-T $fd) {
-+		$mime = 'text/plain';
- 	} elsif (! $filename) {
--		return 'application/octet-stream';
-+		$mime = 'application/octet-stream';
- 	} elsif ($filename =~ m/\.png$/i) {
--		return 'image/png';
-+		$mime = 'image/png';
- 	} elsif ($filename =~ m/\.gif$/i) {
--		return 'image/gif';
-+		$mime = 'image/gif';
- 	} elsif ($filename =~ m/\.jpe?g$/i) {
--		return 'image/jpeg';
-+		$mime = 'image/jpeg';
- 	} else {
--		return 'application/octet-stream';
-+		$mime = 'application/octet-stream';
- 	}
-+
-+	# Type specific postprocessing can be added as needed...
-+	if ($mime =~ /^text\//i &&
-+	    $mime !~ /charset=/i && $default_text_plain_charset) {
-+		$mime .=  '; charset='.$default_text_plain_charset;
-+	}
-+
-+	return $mime;
- }
- 
- ## ======================================================================
+diff --git "a/gitweb/test/M\303\244rchen" "b/gitweb/test/M\303\244rchen=
+"
+deleted file mode 100644
+index 8f7a1d3..0000000
+--- "a/gitweb/test/M\303\244rchen"
++++ /dev/null
+@@ -1,2 +0,0 @@
+-M=C3=A4rchen
+-M=E4rchen
+diff --git a/gitweb/test/file with spaces b/gitweb/test/file with space=
+s
+deleted file mode 100644
+index f108543..0000000
+--- a/gitweb/test/file with spaces=09
++++ /dev/null
+@@ -1,4 +0,0 @@
+-This
+-filename
+-contains
+-spaces.
+diff --git a/gitweb/test/file+plus+sign b/gitweb/test/file+plus+sign
+deleted file mode 100644
+index fd05278..0000000
+--- a/gitweb/test/file+plus+sign
++++ /dev/null
+@@ -1,6 +0,0 @@
+-This
+-filename
+-contains
+-+
+-plus
+-chars.
