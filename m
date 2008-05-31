@@ -1,69 +1,73 @@
-From: "Frank Ch. Eigler" <fche@redhat.com>
-Subject: Re: [PATCH 1/2] Make pack creation always fsync() the result
-Date: Sat, 31 May 2008 10:19:27 -0400
-Message-ID: <20080531141927.GC32168@redhat.com>
-References: <20080529205743.GC17123@redhat.com> <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org> <20080530152527.GF4032@redhat.com> <alpine.LFD.1.10.0805300844310.3141@woody.linux-foundation.org> <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Why does "git log --reverse -1" print the HEAD commit?
+Date: Sat, 31 May 2008 16:24:08 +0200
+Message-ID: <20080531142408.GL29404@genesis.frugalware.org>
+References: <20080531141102.GA3035@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 31 16:21:44 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="HTLCc13+3hfAZ6SL"
+Cc: git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Sat May 31 16:25:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2Rxn-0007uF-Gg
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 16:21:43 +0200
+	id 1K2S12-0000XY-LD
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 16:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbYEaOUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 10:20:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbYEaOUp
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 10:20:45 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:56030 "EHLO mx1.redhat.com"
+	id S1753375AbYEaOYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2008 10:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbYEaOYL
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 10:24:11 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:34304 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752575AbYEaOUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 10:20:44 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4VEKcDX016399;
-	Sat, 31 May 2008 10:20:38 -0400
-Received: from pobox-3.corp.redhat.com (pobox-3.corp.redhat.com [10.11.255.67])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEKbv6017306;
-	Sat, 31 May 2008 10:20:37 -0400
-Received: from touchme.toronto.redhat.com (IDENT:postfix@touchme.yyz.redhat.com [10.15.16.9])
-	by pobox-3.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEK5qG012853;
-	Sat, 31 May 2008 10:20:37 -0400
-Received: from ton.toronto.redhat.com (ton.yyz.redhat.com [10.15.16.15])
-	by touchme.toronto.redhat.com (Postfix) with ESMTP
-	id 9B9D38001FF; Sat, 31 May 2008 10:19:48 -0400 (EDT)
-Received: from ton.toronto.redhat.com (localhost.localdomain [127.0.0.1])
-	by ton.toronto.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEJWUK009829;
-	Sat, 31 May 2008 10:19:32 -0400
-Received: (from fche@localhost)
-	by ton.toronto.redhat.com (8.13.1/8.13.1/Submit) id m4VEJRda009828;
-	Sat, 31 May 2008 10:19:27 -0400
+	id S1753245AbYEaOYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 10:24:10 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 55F831B2511;
+	Sat, 31 May 2008 16:24:09 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A89C344697;
+	Sat, 31 May 2008 16:07:21 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C3D44177001C; Sat, 31 May 2008 16:24:08 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
-User-Agent: Mutt/1.4.1i
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+In-Reply-To: <20080531141102.GA3035@mithlond.arda.local>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83388>
 
-Hi -
 
-On Fri, May 30, 2008 at 09:08:11AM -0700, Linus Torvalds wrote:
+--HTLCc13+3hfAZ6SL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> [fsync on pack creation]
-> This means that we can depend on packs always being stable on disk,
-> simplifying a lot of the object serialization worries.  And unlike loose
-> objects, serializing pack creation IO isn't going to be a performance
-> killer. [...]
+On Sat, May 31, 2008 at 05:11:02PM +0300, Teemu Likonen <tlikonen@iki.fi> w=
+rote:
+> It feels wrong that "git log -1" and "git log --reverse -1" both print
+> the same commit: HEAD. Why is that?
+>=20
+> Since "git log --reverse" starts from the bottom I'd have expected "-1"
+> to print one commit from the bottom.
 
-If you stabilize the outputs of the pack procedure rather than its
-inputs, this makes me wonder if ordinary unpacked git objects would
-also need some sort of fsync treatment.
+-1 limits the commit list to one element and then it prints that range
+in reverse order, which is the same for a single commit.
 
-- FChE
+--HTLCc13+3hfAZ6SL
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhBX4gACgkQe81tAgORUJbXUwCdHAfn83hG9sArIE7pi4SOM4nE
+LKsAoKD5cU8TXZVcrgOKwiPIFJOFMofO
+=1xHg
+-----END PGP SIGNATURE-----
+
+--HTLCc13+3hfAZ6SL--
