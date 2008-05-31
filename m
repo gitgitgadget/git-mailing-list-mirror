@@ -1,60 +1,150 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] t/test-lib.sh: add test_external and test_external_without_stderr
-Date: Sun, 01 Jun 2008 01:40:59 +0200
-Message-ID: <4841E20B.1040109@gmail.com>
-References: <1212276975-27428-1-git-send-email-LeWiemann@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Fix description of --commit-filter
+Date: Sat, 31 May 2008 16:50:00 -0700
+Message-ID: <CEA5A26A-9109-4D22-9D3F-8FFF8305DBEE@sb.org>
+References: <1212183820-40712-1-git-send-email-kevin@sb.org> <7vlk1rh0av.fsf@gitster.siamese.dyndns.org> <98EEBDF4-9964-4CA6-ABBD-DB72C4F6CAD3@sb.org> <7v63svgy0q.fsf@gitster.siamese.dyndns.org> <AF9CB160-FFC9-4372-BE86-5FAC6B59A050@sb.org> <7v1w3jgs51.fsf@gitster.siamese.dyndns.org> <7vskvydrys.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 01 01:41:54 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 01 01:50:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2ahr-0006si-TX
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 01:41:52 +0200
+	id 1K2aqe-0008Rt-RW
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 01:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754925AbYEaXkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 19:40:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754902AbYEaXkl
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 19:40:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:54310 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754890AbYEaXkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 19:40:41 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so397754fgg.17
-        for <git@vger.kernel.org>; Sat, 31 May 2008 16:40:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=cmBFHqJqDp1z07DPQrmZCMhtPzckcXoDbM8AhzNpjm0=;
-        b=EVR8z5wJDUJE7ae8k7fVaCbZILZFakZWaQes2xpWIyL+BSZmH3AFUGB/vwOCxG4XYs1nxQsimzz6MPPg+4MgZdp2Irp0+D6bzdjQ5ASvffJdlvv4Dx0oWlrpbZuKVDF/ycdSvfY7Q0h8us4fRGVBugk7Qvi2LVAwE6HnqiVugM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=ZbgXRYp/NwQBeWcAkZ8BVWONH+pW4Qko5Pj48e+2mrN18b1STCcGuk+zZ44U/W1q8nsNCo8kUIUiYOA30VhFsQl0YTDwitiv7cZLHAP/tjmHWcNRWDcCAnaZTlyeUmWRVTsITGofuVjmRWIoGpP8jtVFlwjA9f6pefqXfKTNWMg=
-Received: by 10.86.70.8 with SMTP id s8mr367038fga.79.1212277239506;
-        Sat, 31 May 2008 16:40:39 -0700 (PDT)
-Received: from ?192.168.23.50? ( [91.33.240.119])
-        by mx.google.com with ESMTPS id o11sm5819275fkf.16.2008.05.31.16.40.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 31 May 2008 16:40:38 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <1212276975-27428-1-git-send-email-LeWiemann@gmail.com>
+	id S1753618AbYEaXuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2008 19:50:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYEaXuE
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 19:50:04 -0400
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:51518 "EHLO
+	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751593AbYEaXuC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 May 2008 19:50:02 -0400
+Received: from [192.168.1.112] (c-76-103-51-229.hsd1.ca.comcast.net [76.103.51.229])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 5CF30EEFB1;
+	Sat, 31 May 2008 16:50:01 -0700 (PDT)
+In-Reply-To: <7vskvydrys.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83417>
 
-Lea Wiemann wrote:
-> Subject: [PATCH] t/test-lib.sh: add test_external and test_external_without_stderr
+On May 31, 2008, at 3:33 PM, Junio C Hamano wrote:
 
-Yikes, hit send-email too early again. :(  Anyways, I just wanted to say 
-that I've tested both functions for both the success and failure case 
-(with my first version of a Git.pm test suite, written with Test::More, 
-which I'll post later when it's finished).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Kevin Ballard <kevin@sb.org> writes:
+>>
+>>> You're still talking about the parent-filter here. I think you're
+>>> quite confused.
+>>
+>> Blush.  I should go to bed.
+>
+> Now after following the codepath, your original
+>
+>    diff --git a/Documentation/git-filter-branch.txt b/Documentation/ 
+> git-filter-branch.txt
+>    index 506c37a..541bf23 100644
+>    --- a/Documentation/git-filter-branch.txt
+>    +++ b/Documentation/git-filter-branch.txt
+>    @@ -113,8 +113,8 @@ OPTIONS
+>            stdin.  The commit id is expected on stdout.
+>     +
+>     As a special extension, the commit filter may emit multiple
+>    -commit ids; in that case, ancestors of the original commit will
+>    -have all of them as parents.
+>    +commit ids; in that case, the rewritten children of the original  
+> commit will
+>    +have all of them as parents. You probably don't want to do this.
+>     +
+>     You can use the 'map' convenience function in this filter, and  
+> other
+>     convenience functions, too.  For example, calling 'skip_commit  
+> "$@"'
+>
+> does make sense to me.  Except for "You probably don't want to do  
+> this."
+> part.  It is just "the utility of this feature is unknown to us" ;-)
+>
+> I dug the code with "git blame" and the basic logic has been the same
+> since its introduction to git with 6f6826c (Add git-filter-branch,
+> 2007-06-03).  The commit-filter itself appeared first in Cogito as  
+> d690516
+> (cg-admin-rewritehist --commit-filter for omitting commits,  
+> 2006-03-26),
+> and the commit log message claims that it was primarily meant to  
+> _omit_
+> unwanted commits from the history, but at the same time it  
+> advertises the
+> multiple commits case as a "feature" without telling why somebody  
+> wants to
+> do so.
+>
+> Except for this gem, which may have been lost in our copy:
+>
+>    # ... Note that this handles merges properly! In case Darl
+>    # committed a merge between P1 and P2, it will be propagated  
+> properly
+>    # and all children of the merge will become merge commits with  
+> P1,P2
+>    # as their parents instead of the merge commit.
+>
+> IOW, to rewrite this history:
+>
+>        ---A---C---D---E
+>              /
+>             B
+>
+> to pretend C never happened, you would give A' and B' back when you
+> rewrite C, to end up with this history:
+>
+>        ---A'--D'--E'
+>              /
+>             B'
+>
+> I'd agree with "You probably don't want to do this", but perhaps it  
+> needs
+> a bit of clarification as to _why_ you would not:
+>
+> - If the history is being rewritten for the whole tree, this will
+>   make D' an evil merge that contains difference between C to D.
+>
+> - If the filtering of the history is done to ignore parts of the tree
+>   that is touched between C and D (iow, history simplification would
+>   leave trees C and D the same), you would want to simplify away D'  
+> not
+>   C'.  IOW, you would want the resulting history to look like:
+>
+>        ---A'--C'--E'
+>              /
+>             B'
+>
+>   and for that you do not need to use this "feature".
 
--- Lea
+Yeah, this utility of omitting commits occurred to me last night after  
+I went to bed. It does seem pretty limited in use, but I guess someone  
+might want to do it. For example, if C resolved merge conflicts  
+incorrectly and D fixed it, and then later somebody said "why do I  
+have two commits when I should just have one?" and wanted to omit C  
+and leave D behind as the merge.
+
+I'll submit a new patch later that has better wording and perhaps a  
+diagram or two.
+
+-Kevin Ballard
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
