@@ -1,109 +1,69 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH v2] gitweb: use Git.pm, and use its parse_rev method for git_get_head_hash
-Date: Sat, 31 May 2008 16:19:24 +0200
-Message-ID: <1212243564-30109-1-git-send-email-LeWiemann@gmail.com>
-References: <20080531130450.GI18781@machine.or.cz>
-Cc: Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 31 16:20:35 2008
+From: "Frank Ch. Eigler" <fche@redhat.com>
+Subject: Re: [PATCH 1/2] Make pack creation always fsync() the result
+Date: Sat, 31 May 2008 10:19:27 -0400
+Message-ID: <20080531141927.GC32168@redhat.com>
+References: <20080529205743.GC17123@redhat.com> <alpine.LFD.1.10.0805291656260.3141@woody.linux-foundation.org> <20080530152527.GF4032@redhat.com> <alpine.LFD.1.10.0805300844310.3141@woody.linux-foundation.org> <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat May 31 16:21:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2Rwg-0007Tb-6t
-	for gcvg-git-2@gmane.org; Sat, 31 May 2008 16:20:34 +0200
+	id 1K2Rxn-0007uF-Gg
+	for gcvg-git-2@gmane.org; Sat, 31 May 2008 16:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbYEaOTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 10:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552AbYEaOTV
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 10:19:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:33052 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513AbYEaOTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 10:19:21 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so323480fgg.17
-        for <git@vger.kernel.org>; Sat, 31 May 2008 07:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        bh=c7OZQ6KjSwvWdsU9uHusBlGhxBq3p4rSGJ2RGWFP19E=;
-        b=lHHyjOrSK+IyNUCA4KM4ZTirJiI+r5mDxFYVJjv+QEKF1GGNjv0qdiyP5KnJu0HioIuhGQOXYOF2CpB9R3Bo8K1jSpUYhGqikQsxH9fQCSBBZQVNq5/XvzAGxZ8l9D1nhMLquZY+wZ3KmyI8s6qygr169GRsqi0FZ8gRrGWsHK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=tPYzIh72KBMJhJX2jOppt+6YZQ2WeFUESQUKKt3OfEdTNcOestd1AbsduWHCN+D4+Ea4cqd98/t+XSDyFfOOLoBsOSq220YzNLaIxuKGORYMgVFlfiFOFTxHs3+2AL4PliihQQUO2ryvIfo3KnraHTroHue2/OxVr8JV07rh3zg=
-Received: by 10.86.70.8 with SMTP id s8mr2405277fga.31.1212243557815;
-        Sat, 31 May 2008 07:19:17 -0700 (PDT)
-Received: from fly ( [91.33.213.54])
-        by mx.google.com with ESMTPS id 4sm1182888fgg.9.2008.05.31.07.19.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 May 2008 07:19:17 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K2RvY-0007q3-7j; Sat, 31 May 2008 16:19:24 +0200
-X-Mailer: git-send-email 1.5.5.GIT
-In-Reply-To: <20080531130450.GI18781@machine.or.cz>
+	id S1752639AbYEaOUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2008 10:20:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbYEaOUp
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 10:20:45 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:56030 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752575AbYEaOUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 10:20:44 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m4VEKcDX016399;
+	Sat, 31 May 2008 10:20:38 -0400
+Received: from pobox-3.corp.redhat.com (pobox-3.corp.redhat.com [10.11.255.67])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEKbv6017306;
+	Sat, 31 May 2008 10:20:37 -0400
+Received: from touchme.toronto.redhat.com (IDENT:postfix@touchme.yyz.redhat.com [10.15.16.9])
+	by pobox-3.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEK5qG012853;
+	Sat, 31 May 2008 10:20:37 -0400
+Received: from ton.toronto.redhat.com (ton.yyz.redhat.com [10.15.16.15])
+	by touchme.toronto.redhat.com (Postfix) with ESMTP
+	id 9B9D38001FF; Sat, 31 May 2008 10:19:48 -0400 (EDT)
+Received: from ton.toronto.redhat.com (localhost.localdomain [127.0.0.1])
+	by ton.toronto.redhat.com (8.13.1/8.13.1) with ESMTP id m4VEJWUK009829;
+	Sat, 31 May 2008 10:19:32 -0400
+Received: (from fche@localhost)
+	by ton.toronto.redhat.com (8.13.1/8.13.1/Submit) id m4VEJRda009828;
+	Sat, 31 May 2008 10:19:27 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0805300905080.3141@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.1i
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83387>
 
-This simplifies git_get_head_hash a lot; the method might eventually
-even go away.
+Hi -
 
-I haven't checked whether this causes an IO performance regression by
-instantiating a new Git repository instance, but in the end
-Git->repository will be as fast as possible and do no eager disk
-accesses.  No benchmarking yet at this stage.
+On Fri, May 30, 2008 at 09:08:11AM -0700, Linus Torvalds wrote:
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
+> [fsync on pack creation]
+> This means that we can depend on packs always being stable on disk,
+> simplifying a lot of the object serialization worries.  And unlike loose
+> objects, serializing pack creation IO isn't going to be a performance
+> killer. [...]
 
-Per your request without the cleanup.  I won't submit the cleanup
-patch separately, but I assume it will get cleaned up eventually when
-someone touches that function.
+If you stabilize the outputs of the pack procedure rather than its
+inputs, this makes me wonder if ordinary unpacked git objects would
+also need some sort of fsync treatment.
 
- gitweb/gitweb.perl |   20 ++++++--------------
- 1 files changed, 6 insertions(+), 14 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 57a1905..0ed3d6e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -16,6 +16,7 @@ use Encode;
- use Fcntl ':mode';
- use File::Find qw();
- use File::Basename qw(basename);
-+use Git;
- binmode STDOUT, ':utf8';
- 
- BEGIN {
-@@ -1508,20 +1509,11 @@ sub git_cmd_str {
- # get HEAD ref of given project as hash
- sub git_get_head_hash {
- 	my $project = shift;
--	my $o_git_dir = $git_dir;
--	my $retval = undef;
--	$git_dir = "$projectroot/$project";
--	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
--		my $head = <$fd>;
--		close $fd;
--		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
--			$retval = $1;
--		}
--	}
--	if (defined $o_git_dir) {
--		$git_dir = $o_git_dir;
--	}
--	return $retval;
-+	my $directory = "$projectroot/$project";
-+	# Legacy side effect on $git_dir.  This will eventually go
-+	# away as the global $git_dir is eliminated.
-+	$git_dir = $directory if (!defined $git_dir);
-+	Git->repository(Directory => $directory)->parse_rev("HEAD");
- }
- 
- # get type of given object
--- 
-1.5.5.GIT
+- FChE
