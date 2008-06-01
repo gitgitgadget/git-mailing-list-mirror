@@ -1,150 +1,87 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Fix description of --commit-filter
-Date: Sat, 31 May 2008 16:50:00 -0700
-Message-ID: <CEA5A26A-9109-4D22-9D3F-8FFF8305DBEE@sb.org>
-References: <1212183820-40712-1-git-send-email-kevin@sb.org> <7vlk1rh0av.fsf@gitster.siamese.dyndns.org> <98EEBDF4-9964-4CA6-ABBD-DB72C4F6CAD3@sb.org> <7v63svgy0q.fsf@gitster.siamese.dyndns.org> <AF9CB160-FFC9-4372-BE86-5FAC6B59A050@sb.org> <7v1w3jgs51.fsf@gitster.siamese.dyndns.org> <7vskvydrys.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 01 01:50:57 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Remove gitweb/test/ directory
+Date: Sun, 1 Jun 2008 02:19:15 +0200
+Message-ID: <200806010219.16773.jnareb@gmail.com>
+References: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de> <5DBABAFE-C447-4E5D-A7E8-0C16B4D1D960@wincent.com> <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
+	Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Kay Sievers <kay.sievers@suse.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 01 02:20:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2aqe-0008Rt-RW
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 01:50:57 +0200
+	id 1K2bJK-00057y-9K
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 02:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618AbYEaXuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 19:50:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYEaXuE
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 19:50:04 -0400
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:51518 "EHLO
-	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751593AbYEaXuC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 May 2008 19:50:02 -0400
-Received: from [192.168.1.112] (c-76-103-51-229.hsd1.ca.comcast.net [76.103.51.229])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 5CF30EEFB1;
-	Sat, 31 May 2008 16:50:01 -0700 (PDT)
-In-Reply-To: <7vskvydrys.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1754951AbYFAAT1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2008 20:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754926AbYFAAT1
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 20:19:27 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:3089 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754716AbYFAAT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 20:19:26 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so220791nfc.21
+        for <git@vger.kernel.org>; Sat, 31 May 2008 17:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=b03yWqR6sJBzCuaZCdg/rpqoMxgzQu+9rTA2pM7KEfE=;
+        b=T8Ct5z/VL85XnDfY4xhFepJ+XHR5wHI0rC6+495cTZ+wLx3OOPLR6nkXaR3bEkGujf6Ue3NmVCw54h1afgFOXV8gxm6cTpOb6NKgkV3YbZtrkJ1BoczKYdtu6NrLHuOM+JslUYv+Za7Tgn0Z2JHNTpJWvAMYAZGIPpRBusIFmng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=C+fYeHnLjHUKM/ziJcD1gvtnQHJPsTIoi7XZM/H4cuypE+4oX0V/0fNVlJI6UqGUiYLKGBC3chfM4mte1orAUHbjsxPy8rhPQTEMF24NrayJwVFHuFt/29mGT25Sm0f64qsvtuMv9D58As+RlI8cQ1Am1b/DIjHrbLfYHIKP6RA=
+Received: by 10.210.26.10 with SMTP id 10mr1964105ebz.15.1212279564753;
+        Sat, 31 May 2008 17:19:24 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.204.14])
+        by mx.google.com with ESMTPS id z34sm2279413ikz.9.2008.05.31.17.19.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 31 May 2008 17:19:23 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83418>
 
-On May 31, 2008, at 3:33 PM, Junio C Hamano wrote:
+On Sun, 1 Jan 2008, Johannes Schindelin wrote:
+> On Sat, 31 May 2008, Wincent Colaiuta wrote:
+>> El 31/5/2008, a las 20:28, Jakub Narebski escribi=F3:
+>>=20
+>>> Testing if gitweb handles filenames with spaces, filenames with plu=
+s=20
+>>> sign ('+') which encodes spaces in CGI parameters (in URLs), and=20
+>>> filenames with Unicode characters should be handled by gitweb tests=
+=2E
+>>>
+>>> Those files are remainder of the time when gitweb was project on it=
+s=20
+>>> own, not a part of git (with its testsuite).
+>>>
+>>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>>=20
+>> Ack.
+>=20
+> And I thought "Ack" was reserved for the people who are considered th=
+e=20
+> primary authors of the patched code...
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Kevin Ballard <kevin@sb.org> writes:
->>
->>> You're still talking about the parent-filter here. I think you're
->>> quite confused.
->>
->> Blush.  I should go to bed.
->
-> Now after following the codepath, your original
->
->    diff --git a/Documentation/git-filter-branch.txt b/Documentation/ 
-> git-filter-branch.txt
->    index 506c37a..541bf23 100644
->    --- a/Documentation/git-filter-branch.txt
->    +++ b/Documentation/git-filter-branch.txt
->    @@ -113,8 +113,8 @@ OPTIONS
->            stdin.  The commit id is expected on stdout.
->     +
->     As a special extension, the commit filter may emit multiple
->    -commit ids; in that case, ancestors of the original commit will
->    -have all of them as parents.
->    +commit ids; in that case, the rewritten children of the original  
-> commit will
->    +have all of them as parents. You probably don't want to do this.
->     +
->     You can use the 'map' convenience function in this filter, and  
-> other
->     convenience functions, too.  For example, calling 'skip_commit  
-> "$@"'
->
-> does make sense to me.  Except for "You probably don't want to do  
-> this."
-> part.  It is just "the utility of this feature is unknown to us" ;-)
->
-> I dug the code with "git blame" and the basic logic has been the same
-> since its introduction to git with 6f6826c (Add git-filter-branch,
-> 2007-06-03).  The commit-filter itself appeared first in Cogito as  
-> d690516
-> (cg-admin-rewritehist --commit-filter for omitting commits,  
-> 2006-03-26),
-> and the commit log message claims that it was primarily meant to  
-> _omit_
-> unwanted commits from the history, but at the same time it  
-> advertises the
-> multiple commits case as a "feature" without telling why somebody  
-> wants to
-> do so.
->
-> Except for this gem, which may have been lost in our copy:
->
->    # ... Note that this handles merges properly! In case Darl
->    # committed a merge between P1 and P2, it will be propagated  
-> properly
->    # and all children of the merge will become merge commits with  
-> P1,P2
->    # as their parents instead of the merge commit.
->
-> IOW, to rewrite this history:
->
->        ---A---C---D---E
->              /
->             B
->
-> to pretend C never happened, you would give A' and B' back when you
-> rewrite C, to end up with this history:
->
->        ---A'--D'--E'
->              /
->             B'
->
-> I'd agree with "You probably don't want to do this", but perhaps it  
-> needs
-> a bit of clarification as to _why_ you would not:
->
-> - If the history is being rewritten for the whole tree, this will
->   make D' an evil merge that contains difference between C to D.
->
-> - If the filtering of the history is done to ignore parts of the tree
->   that is touched between C and D (iow, history simplification would
->   leave trees C and D the same), you would want to simplify away D'  
-> not
->   C'.  IOW, you would want the resulting history to look like:
->
->        ---A'--C'--E'
->              /
->             B'
->
->   and for that you do not need to use this "feature".
+Unfortunately, as far as I know, primary and only author of those
+lines of code, maintainer of gitweb when it was separate project,
+Kay Sievers, is no longer active in git development.
 
-Yeah, this utility of omitting commits occurred to me last night after  
-I went to bed. It does seem pretty limited in use, but I guess someone  
-might want to do it. For example, if C resolved merge conflicts  
-incorrectly and D fixed it, and then later somebody said "why do I  
-have two commits when I should just have one?" and wanted to omit C  
-and leave D behind as the merge.
-
-I'll submit a new patch later that has better wording and perhaps a  
-diagram or two.
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+--=20
+Jakub Narebski
+Poland
