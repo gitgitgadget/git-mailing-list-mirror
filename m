@@ -1,91 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH review] Build: make PERL_PATH = /usr/bin/env perl
-Date: Sun, 01 Jun 2008 10:22:01 +0200
-Message-ID: <vpqabi5o992.fsf@bauges.imag.fr>
-References: <1212258886-87484-1-git-send-email-mfwitten@mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] gitweb: use Git.pm, and use its parse_rev method for
+ git_get_head_hash
+Date: Sun, 01 Jun 2008 01:23:13 -0700
+Message-ID: <7vzlq5bm32.fsf@gitster.siamese.dyndns.org>
+References: <20080531130450.GI18781@machine.or.cz>
+ <1212243564-30109-1-git-send-email-LeWiemann@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Sun Jun 01 10:24:33 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 01 10:24:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2ird-0007Ji-RS
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 10:24:30 +0200
+	id 1K2ird-0007Ji-7J
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 10:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbYFAIXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 04:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbYFAIXi
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 04:23:38 -0400
-Received: from imag.imag.fr ([129.88.30.1]:37591 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751602AbYFAIXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 04:23:36 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m518M5QO006860
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 1 Jun 2008 10:22:05 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1K2ipF-0000Zj-Vn; Sun, 01 Jun 2008 10:22:01 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1K2ipF-0007bV-Sp; Sun, 01 Jun 2008 10:22:01 +0200
-In-Reply-To: <1212258886-87484-1-git-send-email-mfwitten@mit.edu> (Michael Witten's message of "Sat\, 31 May 2008 14\:34\:46 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 01 Jun 2008 10:22:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751530AbYFAIXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 04:23:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbYFAIXf
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 04:23:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44241 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401AbYFAIXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 04:23:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DB5C73D87;
+	Sun,  1 Jun 2008 04:23:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 036E23D86; Sun,  1 Jun 2008 04:23:27 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 05CC1E5C-2FB4-11DD-AF5D-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83437>
 
-Michael Witten <mfwitten@MIT.EDU> writes:
+Lea Wiemann <lewiemann@gmail.com> writes:
 
-> [problem with different versions of perl]
-
-There's also the case where perl simply isn't available in /usr/bin,
-but is somewhere else.
-
-> It would seem to me that something like '/usr/bin/env perl' is slightly
-> more vanilla in the sense that it can handle more cases.
+> This simplifies git_get_head_hash a lot; the method might eventually
+> even go away.
 >
-> Perhaps the Makefile can be smarter about guessing the right path?
+> I haven't checked whether this causes an IO performance regression by
+> instantiating a new Git repository instance, but in the end
+> Git->repository will be as fast as possible and do no eager disk
+> accesses.  No benchmarking yet at this stage.
+>
+> Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
 
-Perhaps something like this?
+With this on top of your parse_rev patch (I used v2 but I do not think v3
+changes the situation in any way), you seem to have broken t9500.
 
-diff --git a/Makefile b/Makefile
-index 865e2bf..5828745 100644
---- a/Makefile
-+++ b/Makefile
-@@ -323,7 +323,7 @@ ifndef SHELL_PATH
- 	SHELL_PATH = /bin/sh
- endif
- ifndef PERL_PATH
--	PERL_PATH = /usr/bin/perl
-+	PERL_PATH = $(shell which perl)
- endif
+gitweb.log left in the trash directory says that it cannot find Git.pm in
+@INC.  I suspect that you are not using your own Git in the build tree in
+your test, but an already installed one.
+
+Please make sure that you are testing with Git.pm that you are shipping.
+A good way to do so would be to add a deliberate error in perl/Git.pm to
+cause loading of the module to fail, and make sure test barfs upon "use
+Git".
+
+Something like this is needed on top of your patch, I think.
+
+---
+
+ t/t9500-gitweb-standalone-no-errors.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index ae7082b..a62231f 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -47,8 +47,9 @@ gitweb_run () {
+ 	PATH_INFO=""$2""
+ 	export GATEWAY_INTERFACE HTTP_ACCEPT REQUEST_METHOD QUERY_STRING PATH_INFO
  
- export PERL_PATH
-
-(untested)
-
-This would generate the same files in the common case, but detect
-another installation at compile time.
-
-Note that this is indeed different from the original proposal in the
-case of a multi-user system: here, the perl installation is chosen
-once and for all by the guy who installs git, but can't be overridden
-later (e.g by a user having his own custom perl installation in his
-$HOME). I don't know which is better.
-
-
--- 
-Matthieu
++	PERL5LIB=$(pwd)/../../perl/blib/lib
+ 	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
+-	export GITWEB_CONFIG
++	export GITWEB_CONFIG PERL5LIB
+ 
+ 	# some of git commands write to STDERR on error, but this is not
+ 	# written to web server logs, so we are not interested in that:
