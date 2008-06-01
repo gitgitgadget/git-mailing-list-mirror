@@ -1,75 +1,79 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: unable to push
-Date: Sun, 1 Jun 2008 14:22:05 -0400
-Message-ID: <20080601182205.GA742@sigill.intra.peff.net>
-References: <alpine.DEB.1.10.0805310759540.15294@asgard.lang.hm> <20080531155036.GA27397@sigill.intra.peff.net> <alpine.DEB.1.10.0805310855000.15294@asgard.lang.hm>
+Date: Sun, 1 Jun 2008 14:24:17 -0400
+Message-ID: <20080601182417.GB742@sigill.intra.peff.net>
+References: <alpine.DEB.1.10.0805310759540.15294@asgard.lang.hm> <20080531155036.GA27397@sigill.intra.peff.net> <48418242.1050606@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun Jun 01 20:23:06 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: david@lang.hm, git@vger.kernel.org
+To: Adam =?utf-8?Q?Pi=C4=85tyszek?= <ediap@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Jun 01 20:25:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2sCt-0003W3-J5
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 20:23:03 +0200
+	id 1K2sEy-00042E-A0
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 20:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491AbYFASWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 14:22:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbYFASWJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 14:22:09 -0400
-Received: from peff.net ([208.65.91.99]:1787 "EHLO peff.net"
+	id S1751550AbYFASYU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2008 14:24:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbYFASYU
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 14:24:20 -0400
+Received: from peff.net ([208.65.91.99]:2984 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751303AbYFASWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 14:22:08 -0400
-Received: (qmail 32460 invoked by uid 111); 1 Jun 2008 18:22:06 -0000
+	id S1751346AbYFASYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 14:24:19 -0400
+Received: (qmail 32613 invoked by uid 111); 1 Jun 2008 18:24:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 01 Jun 2008 14:22:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 01 Jun 2008 14:22:05 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 01 Jun 2008 14:24:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 01 Jun 2008 14:24:17 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.0805310855000.15294@asgard.lang.hm>
+In-Reply-To: <48418242.1050606@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83457>
 
-On Sat, May 31, 2008 at 09:10:26AM -0700, david@lang.hm wrote:
+On Sat, May 31, 2008 at 06:52:18PM +0200, Adam Pi=C4=85tyszek wrote:
 
-> I created localmaster in an attempt to get things working again. I'll try  
-> creating a new master branch... that does make it work again, thanks.
+>>> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote public
+>>> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        HEAD
+>>> d3f3d8474db1c006a53be8b5f5c1a0d866d7e357        refs/heads/localmas=
+ter
+>>
+>> So you have only one branch, "localmaster".
+>>
+>>> root@asgard:/var/www/adastra/xml2pdf/current# git ls-remote .
+>>> 71ab4eea48eb3407a2ff4eef2befe9251897d676        HEAD
+>>> 71ab4eea48eb3407a2ff4eef2befe9251897d676        refs/heads/master
+>>
+>> But the remote has only one branch, "master".
+>>
+>> If you want to push your localmaster to his master, you can do:
+>>
+>>   git push origin localmaster:master
+> [...]
 >
-> what I'm not understanding completely is how I broke things in the first  
-> place.
+> I guess Peef described it the opposite way. In my opinion "localmaste=
+r" =20
+> is the only branch on the remote "public" repository and the local =20
+> repository has only one "master" branch.
 
-I'm not understanding that, either. You not only created localmaster,
-but you deleted master. Did you maybe do a "git branch -m"?
+Oh, sorry, I did totally read that backwards. So yes, there is a local
+"master" branch but not a remote master branch (instead it has
+"localmaster"). So the problem is the same (push without a refspec
+pushes matching refs, and you don't have any matches) but the fix is, a=
+s
+Adam pointed out:
 
-> going back through .git/logs/HEAD it looks like I did a checkout HEAD^^^  
-> and never properly recovered. should I have done a checkout master to get  
-> things back on track? I had thought that I could do a checkout of an old  
-> version, modify it, do a commit, and the commit would go on top of the old 
-> HEAD and I could just keep going (the reason for doing this instead of a  
-> reset is that I had already published the intermediate commits to the  
-> public repo, so I didn't want to roll back the history, just get the old  
-> version of one of the files)
+> So to push local "master" to the remote "localmaster" branch you shou=
+ld use:
+>
+>   git push public master:localmaster
 
-I think you did eventually "recover" which is to say you ended up on the
-localmaster branch. When you did a checkout of HEAD^^^, your HEAD became
-"detached", meaning that you were no longer on any branch, but at a
-specific commit (and there should have been a warning message mentioning
-that).
-
-When you make commits on a detached HEAD, your HEAD remains detached,
-meaning that those commits are not on any branch. So when you did a
-checkout back to some actual branch, those commits were "lost" (meaning
-that no branch contains them, but they are still available by peeking
-through the reflog).
-
-But that shouldn't have had anything to do with the state of the master
-branch; once you detached, you were purely operating on the detached
-HEAD.
+Sorry for the confusion.
 
 -Peff
