@@ -1,98 +1,93 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Fix path duplication in git svn commit-diff
-Date: Sun, 1 Jun 2008 02:48:40 -0700
-Message-ID: <20080601094840.GB16064@hand.yhbt.net>
-References: <20080517150330.31899.12398.stgit@yoghurt>
+Subject: Re: [PATCH] Add a --dry-run option to git-svn rebase
+Date: Sun, 1 Jun 2008 03:13:04 -0700
+Message-ID: <20080601101304.GC16064@hand.yhbt.net>
+References: <87hcctygah.fsf@nav-akl-pcn-343.mitacad.com> <1211254157-41316-1-git-send-email-seth@userprimary.net> <20080530171831.GB76080@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Jun 01 11:49:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Seth Falcon <seth@userprimary.net>
+X-From: git-owner@vger.kernel.org Sun Jun 01 12:14:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2kBy-0005Ch-Na
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 11:49:35 +0200
+	id 1K2kZu-0002ZD-Nz
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 12:14:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbYFAJsl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2008 05:48:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbYFAJsl
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 05:48:41 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:56215 "EHLO hand.yhbt.net"
+	id S1751624AbYFAKNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 06:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbYFAKNI
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 06:13:08 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:56252 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751339AbYFAJsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 05:48:41 -0400
+	id S1751452AbYFAKNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 06:13:07 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id BD30D7DC026;
-	Sun,  1 Jun 2008 02:48:40 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id 7E91B2DC08B;
+	Sun,  1 Jun 2008 03:13:05 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080517150330.31899.12398.stgit@yoghurt>
+In-Reply-To: <20080530171831.GB76080@ziti.local>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83444>
 
-Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> Given an SVN repo file:///tmp/svntest/repo, trying to commit changes
-> to a file proj/trunk/foo.txt in that repo with this command line
->=20
->   git svn commit-diff -r2 HEAD^ HEAD file:///tmp/svntest/repo/proj/tr=
-unk
->=20
-> gave the error message
->=20
->   Filesystem has no item: File not found: transaction '2-6', path
->   '/proj/trunk/proj/trunk/foo.txt'
->=20
-> This fixes the duplication.
->=20
-> Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+Seth Falcon <seth@userprimary.net> wrote:
+> Hi Eric,
+> 
+> I think this may have slipped by without your notice as I gather
+> things have been busy for you.
+> 
+> Could you take a look at this patch and let me know if you like
+> it/hate it/have a suggestion?
+> 
+> My motivation was wanting to automate some commit rewritting and
+> wanting a script to be able to determine what the local upstream
+> branch is...
 
-Thanks Karl,
-
+This patch looks reasonable to me.
 Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> ---
->=20
-> I really don't have a clue as to why this was broken, but the patch
-> fixes the problem for me, and doesn't break the tests. I got the idea
-> from dcommit, which is setting svn_path to '' unconditionally.
+> * On 2008-05-19 at 20:29 -0700 Seth Falcon wrote:
+> > @@ -553,6 +554,11 @@ sub cmd_rebase {
+> >  		die "Unable to determine upstream SVN information from ",
+> >  		    "working tree history\n";
+> >  	}
+> > +	if ($_dry_run) {
+> > +		print "remote-branch: " . $gs->refname . "\n";
+> > +		print "svn-url: " . $url . "\n";
+> > +		return;
+> > +	}
+> >  	if (command(qw/diff-index HEAD --/)) {
+> >  		print STDERR "Cannot rebase with uncommited changes:\n";
+> >  		command_noisy('status');
 
-Hardly anybody uses commit-diff directly :)
+One minor nit is 'url' not being capitalized in the output.  Perhaps:
 
-It was a low-level plumbing command that I used to implement the
-original version of dcommit in.
+	Remote Branch: foo
+	SVN URL: http://asdf/foo/trunk
 
->  git-svn.perl |    3 +--
->  1 files changed, 1 insertions(+), 2 deletions(-)
->=20
->=20
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 2c53f39..1c2a10a 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -741,7 +741,7 @@ sub cmd_commit_diff {
->  	my $usage =3D "Usage: $0 commit-diff -r<revision> ".
->  	            "<tree-ish> <tree-ish> [<URL>]";
->  	fatal($usage) if (!defined $ta || !defined $tb);
-> -	my $svn_path;
-> +	my $svn_path =3D '';
->  	if (!defined $url) {
->  		my $gs =3D eval { Git::SVN->new };
->  		if (!$gs) {
-> @@ -765,7 +765,6 @@ sub cmd_commit_diff {
->  		$_message ||=3D get_commit_entry($tb)->{log};
->  	}
->  	my $ra ||=3D Git::SVN::Ra->new($url);
-> -	$svn_path ||=3D $ra->{svn_path};
->  	my $r =3D $_revision;
->  	if ($r eq 'HEAD') {
->  		$r =3D $ra->get_latest_revnum;
->=20
 
---=20
+Which would make it consistent with 'git svn info' using spaces:
+
+RFC822-style headers would be alright, too.
+
+	Remote-Branch: foo
+	SVN-URL: http://asdf/foo/trunk
+
+I do however harbor a deep dislike of camel-case
+(used by 'git log --pretty=fuller' and .git/config).
+
+	RemoteBranch: foo
+	SvnUrl: http://asdf/foo/trunk
+
+
+Hmm, I don't think I've even _noticed_ a real bike shed in decades.
+Perhaps they should be painted purple with yellow polkadots and have the
+words "BIKE SHED" on a flashing neon sign.
+
+-- 
 Eric Wong
