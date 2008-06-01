@@ -1,211 +1,87 @@
-From: "Rob Shearman" <robertshearman@gmail.com>
-Subject: [PATCH] git-imap-send: Add support for SSL.
-Date: Sun, 1 Jun 2008 16:29:58 +0100
-Message-ID: <1096648c0806010829n71de92dcmc19ddb87da19931d@mail.gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH v2] gitweb: use Git.pm, and use its parse_rev method for
+ git_get_head_hash
+Date: Sun, 01 Jun 2008 17:44:49 +0200
+Message-ID: <4842C3F1.5000001@gmail.com>
+References: <20080531130450.GI18781@machine.or.cz> <1212243564-30109-1-git-send-email-LeWiemann@gmail.com> <7vzlq5bm32.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_31504_17407983.1212334198086"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 01 17:31:18 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 01 17:46:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2pWd-0008UZ-Qp
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 17:31:16 +0200
+	id 1K2plG-0004fP-RX
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 17:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbYFAPaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 11:30:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755050AbYFAPaB
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 11:30:01 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:47729 "EHLO
+	id S1751927AbYFAPo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 11:44:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbYFAPo4
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 11:44:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:11490 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754898AbYFAPaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 11:30:00 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so529835fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Jun 2008 08:29:58 -0700 (PDT)
+	with ESMTP id S1751687AbYFAPo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 11:44:56 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so532019fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Jun 2008 08:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type;
-        bh=NowFaNbSqWygscIcqyfeEUS9QL1pC6TeV177BorjXXs=;
-        b=DHRuKNTbTwoiF62cZpdIKO8VGhbgXlznOvayJlvKIeYu73qOGo1SYgfN2GtYsvV0Wbm0kEbqJhcPio+lGYZzR1Sr3jEAUCnn3zh8oF0UVhx1I7HEQEPEtEaBasvLMIKTog1DnQDWShXyQOu7doxs1oo6ss9ITyqLdJ/8rDZPq1c=
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=A3g6Qc+/z3c+iZMgIJ2PIKN4oLLJsWa6dCN3jlV4NqA=;
+        b=UmxTaqFtSKE2SeuUhbjxRTd4SoUNH1kpWaJA7a3VoJPECXj3pwTFdn3EnxrpvRrq2z5A2mVWLC90DTtXRXK8ToayYB1JRZPpthIkdrU9s1nx4AdFejYc3SpokAjroCJ/IaCj434sBvYAn5UBm6s//54iMuf/xZhP0c8a4d3b1/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type;
-        b=taiA7Azhn2YKOkvdp5vxXb2HvgDX8GY1GYiRBR4fjtbDcaY9K6t8aU28ZLPbRYwT3NhMT085ZEkO6UvbKr4WQp+TGfH4k95cYV3tJgS2eQZtMIaVzhGtGRAMW7Md7bdvK/RZAwXe6KCpNFYHN5tUsjqPKYuyQjNnTxkRw/6mjyU=
-Received: by 10.82.165.13 with SMTP id n13mr38132bue.64.1212334198111;
-        Sun, 01 Jun 2008 08:29:58 -0700 (PDT)
-Received: by 10.82.159.3 with HTTP; Sun, 1 Jun 2008 08:29:58 -0700 (PDT)
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=n5b1re6Axl/Gx2gISikXtOBF0wy3KMzFJg3APC7Ii+BvUXMo/XL5PvrDNUbYJhXp+6/hfj1M9+0yffgIqHNFbbxq1jLcTAkFxQlvj2/VOu5715cRB0XpY/nEAqI/xI+poPQPQ/0v0gryU/EdUN+wncKCnhtzzmU8AVnIV2xivkU=
+Received: by 10.86.98.14 with SMTP id v14mr4126516fgb.74.1212335094484;
+        Sun, 01 Jun 2008 08:44:54 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.205.25])
+        by mx.google.com with ESMTPS id d4sm2435834fga.8.2008.06.01.08.44.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 01 Jun 2008 08:44:53 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <7vzlq5bm32.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83452>
 
-------=_Part_31504_17407983.1212334198086
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Junio C Hamano wrote:
+> With this on top of your parse_rev patch (I used v2 but I do not think v3
+> changes the situation in any way), you seem to have broken t9500.
+> 
+> [...] I suspect that you are not using your own Git in the build tree in
+> your test, but an already installed one.
 
-Allow SSL to be used when a new config setting, imap.ssl, is set to true.
+That was indeed the case, thanks for pointing it out!
 
-Also, automatically use TLS when imap.ssl is not set by using the IMAP
-STARTTLS command, if the server supports it.
+However, after applying my two patches and your patch on a pristine 
+current git.git clone, I still don't get an error, even though the 
+Gitweb test uses the new Git.pm (which I tested it does).  Care to send 
+me your error message so I can track it down, or even upload your 
+complete tree somewhere?  Feel free to reply off-list or ping me on IRC.
 
-Tested with Courier and Gimap IMAP servers.
+> +++ b/t/t9500-gitweb-standalone-no-errors.sh
+>  
+> +	PERL5LIB=$(pwd)/../../perl/blib/lib
 
-Signed-off-by: Robert Shearman <robertshearman@gmail.com>
----
- Documentation/git-imap-send.txt |    1 +
- Makefile                        |    4 +-
- imap-send.c                     |  165 +++++++++++++++++++++++++++++++++++----
- 3 files changed, 153 insertions(+), 17 deletions(-)
+How about putting this into test-lib.sh?  There are more tests (like my 
+new Git.pm test suite) that will need it, so setting it up in a central 
+place would probably more convenient and prevent future problems of this 
+sort.
 
-------=_Part_31504_17407983.1212334198086
-Content-Type: text/x-patch;
- name=2b61990fac685caf27b906cb0b7ed66463b1c11b.diff
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 0.1
-Content-Disposition: attachment;
- filename=2b61990fac685caf27b906cb0b7ed66463b1c11b.diff
+If PERL5LIB already contains paths, can we just discard them, or should 
+we preserve them?
 
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWltYXAtc2VuZC50eHQgYi9Eb2N1bWVudGF0
-aW9uL2dpdC1pbWFwLXNlbmQudHh0DQppbmRleCA1MjJiNzNjLi4xYzkzMzM5IDEwMDY0NA0KLS0t
-IGEvRG9jdW1lbnRhdGlvbi9naXQtaW1hcC1zZW5kLnR4dA0KKysrIGIvRG9jdW1lbnRhdGlvbi9n
-aXQtaW1hcC1zZW5kLnR4dA0KQEAgLTQxLDYgKzQxLDcgQEAgY29uZmlndXJhdGlvbiBmaWxlIChz
-aG93biB3aXRoIGV4YW1wbGVzKToNCiAgICAgVXNlciA9IGJvYg0KICAgICBQYXNzID0gcHdkDQog
-ICAgIFBvcnQgPSAxNDMNCisgICAgU3NsICA9IGZhbHNlDQogLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4NCiANCiANCmRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlDQppbmRleCBjY2U1
-YTZlLi5lMzk1MGFjIDEwMDY0NA0KLS0tIGEvTWFrZWZpbGUNCisrKyBiL01ha2VmaWxlDQpAQCAt
-MTExOCw3ICsxMTE4LDkgQEAgZW5kaWYNCiBnaXQtJSRYOiAlLm8gJChHSVRMSUJTKQ0KIAkkKFFV
-SUVUX0xJTkspJChDQykgJChBTExfQ0ZMQUdTKSAtbyAkQCAkKEFMTF9MREZMQUdTKSAkKGZpbHRl
-ciAlLm8sJF4pICQoTElCUykNCiANCi1naXQtaW1hcC1zZW5kJFg6IGltYXAtc2VuZC5vICQoTElC
-X0ZJTEUpDQorZ2l0LWltYXAtc2VuZCRYOiBpbWFwLXNlbmQubyAkKEdJVExJQlMpDQorCSQoUVVJ
-RVRfTElOSykkKENDKSAkKEFMTF9DRkxBR1MpIC1vICRAICQoQUxMX0xERkxBR1MpICQoZmlsdGVy
-ICUubywkXikgXA0KKwkJJChMSUJTKSAkKE9QRU5TU0xfTElOSykgJChPUEVOU1NMX0xJQlNTTCkN
-CiANCiBodHRwLm8gaHR0cC13YWxrZXIubyBodHRwLXB1c2gubyB0cmFuc3BvcnQubzogaHR0cC5o
-DQogDQpkaWZmIC0tZ2l0IGEvaW1hcC1zZW5kLmMgYi9pbWFwLXNlbmQuYw0KaW5kZXggODlhMTUz
-Mi4uZjNkYjBjMSAxMDA2NDQNCi0tLSBhL2ltYXAtc2VuZC5jDQorKysgYi9pbWFwLXNlbmQuYw0K
-QEAgLTIzLDYgKzIzLDEwIEBADQogICovDQogDQogI2luY2x1ZGUgImNhY2hlLmgiDQorI2lmbmRl
-ZiBOT19PUEVOU1NMDQorIyBpbmNsdWRlIDxvcGVuc3NsL3NzbC5oPg0KKyMgaW5jbHVkZSA8b3Bl
-bnNzbC9lcnIuaD4NCisjZW5kaWYNCiANCiB0eXBlZGVmIHN0cnVjdCBzdG9yZV9jb25mIHsNCiAJ
-Y2hhciAqbmFtZTsNCkBAIC0xMjksNiArMTMzLDcgQEAgdHlwZWRlZiBzdHJ1Y3QgaW1hcF9zZXJ2
-ZXJfY29uZiB7DQogCWludCBwb3J0Ow0KIAljaGFyICp1c2VyOw0KIAljaGFyICpwYXNzOw0KKwlp
-bnQgdXNlX3NzbDsNCiB9IGltYXBfc2VydmVyX2NvbmZfdDsNCiANCiB0eXBlZGVmIHN0cnVjdCBp
-bWFwX3N0b3JlX2NvbmYgew0KQEAgLTE0OCw2ICsxNTMsOSBAQCB0eXBlZGVmIHN0cnVjdCBfbGlz
-dCB7DQogDQogdHlwZWRlZiBzdHJ1Y3Qgew0KIAlpbnQgZmQ7DQorI2lmbmRlZiBOT19PUEVOU1NM
-DQorCVNTTCAqc3NsOw0KKyNlbmRpZg0KIH0gU29ja2V0X3Q7DQogDQogdHlwZWRlZiBzdHJ1Y3Qg
-ew0KQEAgLTIwMSw2ICsyMDksNyBAQCBlbnVtIENBUEFCSUxJVFkgew0KIAlVSURQTFVTLA0KIAlM
-SVRFUkFMUExVUywNCiAJTkFNRVNQQUNFLA0KKwlTVEFSVFRMUywNCiB9Ow0KIA0KIHN0YXRpYyBj
-b25zdCBjaGFyICpjYXBfbGlzdFtdID0gew0KQEAgLTIwOCw2ICsyMTcsNyBAQCBzdGF0aWMgY29u
-c3QgY2hhciAqY2FwX2xpc3RbXSA9IHsNCiAJIlVJRFBMVVMiLA0KIAkiTElURVJBTCsiLA0KIAki
-TkFNRVNQQUNFIiwNCisJIlNUQVJUVExTIiwNCiB9Ow0KIA0KICNkZWZpbmUgUkVTUF9PSyAgICAw
-DQpAQCAtMjI1LDE5ICsyMzUsMTA0IEBAIHN0YXRpYyBjb25zdCBjaGFyICpGbGFnc1tdID0gew0K
-IAkiRGVsZXRlZCIsDQogfTsNCiANCisjaWZuZGVmIE5PX09QRU5TU0wNCitzdGF0aWMgdm9pZA0K
-K3NzbF9zb2NrZXRfcGVycm9yKCBjb25zdCBjaGFyICpmdW5jICkNCit7DQorCWZwcmludGYoIHN0
-ZGVyciwgIiVzOiAlc1xuIiwgZnVuYywgRVJSX2Vycm9yX3N0cmluZyhFUlJfZ2V0X2Vycm9yKCks
-IDApKTsNCit9DQorI2VuZGlmDQorDQogc3RhdGljIHZvaWQNCiBzb2NrZXRfcGVycm9yKCBjb25z
-dCBjaGFyICpmdW5jLCBTb2NrZXRfdCAqc29jaywgaW50IHJldCApDQogew0KLQlpZiAocmV0IDwg
-MCkNCi0JCXBlcnJvciggZnVuYyApOw0KKyNpZm5kZWYgTk9fT1BFTlNTTA0KKwlpZiAoc29jay0+
-c3NsKSB7DQorCQlpbnQgc3NsZXJyID0gU1NMX2dldF9lcnJvciggc29jay0+c3NsLCByZXQgKTsN
-CisJCXN3aXRjaCAoc3NsZXJyKSB7DQorCQkJY2FzZSBTU0xfRVJST1JfTk9ORToNCisJCQkJYnJl
-YWs7DQorCQkJY2FzZSBTU0xfRVJST1JfU1lTQ0FMTDoNCisJCQkJcGVycm9yKCAiU1NMX2Nvbm5l
-Y3QiICk7DQorCQkJCWJyZWFrOw0KKwkJCWRlZmF1bHQ6DQorCQkJCXNzbF9zb2NrZXRfcGVycm9y
-KCAiU1NMX2Nvbm5lY3QiICk7DQorCQkJCWJyZWFrOw0KKwkJfQ0KKwl9IGVsc2UNCisjZW5kaWYN
-CisJew0KKwkJaWYgKHJldCA8IDApDQorCQkJcGVycm9yKCBmdW5jICk7DQorCQllbHNlDQorCQkJ
-ZnByaW50Ziggc3RkZXJyLCAiJXM6IHVuZXhwZWN0ZWQgRU9GXG4iLCBmdW5jICk7DQorCX0NCit9
-DQorDQorc3RhdGljIGludA0KK3NzbF9zb2NrZXRfY29ubmVjdCggU29ja2V0X3QgKnNvY2ssIGlu
-dCB1c2VfdGxzX29ubHkgKQ0KK3sNCisjaWZkZWYgTk9fT1BFTlNTTA0KKwlmcHJpbnRmKCBzdGRl
-cnIsICJTU0wgcmVxdWVzdGVkIGJ1dCBTU0wgc3VwcG9ydCBub3QgY29tcGlsZWQgaW5cbiIgKTsN
-CisJcmV0dXJuIDE7DQorI2Vsc2UNCisJU1NMX01FVEhPRCAqbWV0aDsNCisJU1NMX0NUWCAqY3R4
-Ow0KKwlpbnQgcmV0Ow0KKw0KKwlTU0xfbGlicmFyeV9pbml0KCk7DQorCVNTTF9sb2FkX2Vycm9y
-X3N0cmluZ3MoKTsNCisNCisJaWYgKHVzZV90bHNfb25seSkNCisJCW1ldGggPSBUTFN2MV9tZXRo
-b2QoKTsNCiAJZWxzZQ0KLQkJZnByaW50Ziggc3RkZXJyLCAiJXM6IHVuZXhwZWN0ZWQgRU9GXG4i
-LCBmdW5jICk7DQorCQltZXRoID0gU1NMdjIzX21ldGhvZCgpOw0KKw0KKwlpZiAoIW1ldGgpIHsN
-CisJCXNzbF9zb2NrZXRfcGVycm9yKCAiU1NMdjIzX21ldGhvZCIgKTsNCisJCXJldHVybiAxOw0K
-Kwl9DQorDQorCWN0eCA9IFNTTF9DVFhfbmV3KCBtZXRoICk7DQorDQorCS8qIEZJWE1FISBBZGQg
-YSBjb25maWcgb3B0aW9uIGZvciB0aGlzICovDQorCWlmICgwKQ0KKwkJU1NMX0NUWF9zZXRfdmVy
-aWZ5KCBjdHgsIFNTTF9WRVJJRllfUEVFUiwgTlVMTCApOw0KKw0KKwlpZiAoIVNTTF9DVFhfc2V0
-X2RlZmF1bHRfdmVyaWZ5X3BhdGhzKCBjdHggKSkgew0KKwkJc3NsX3NvY2tldF9wZXJyb3IoICJT
-U0xfQ1RYX3NldF9kZWZhdWx0X3ZlcmlmeV9wYXRocyIgKTsNCisJCXJldHVybiAxOw0KKwl9DQor
-CXNvY2stPnNzbCA9IFNTTF9uZXcoIGN0eCApOw0KKwlpZiAoIXNvY2stPnNzbCkgew0KKwkJc3Ns
-X3NvY2tldF9wZXJyb3IoICJTU0xfbmV3IiApOw0KKwkJcmV0dXJuIDE7DQorCX0NCisJaWYgKCFT
-U0xfc2V0X2ZkKCBzb2NrLT5zc2wsIHNvY2stPmZkICkpIHsNCisJCXNzbF9zb2NrZXRfcGVycm9y
-KCAiU1NMX3NldF9mZCIgKTsNCisJCXJldHVybiAxOw0KKwl9DQorDQorCXJldCA9IFNTTF9jb25u
-ZWN0KCBzb2NrLT5zc2wgKTsNCisJaWYgKHJldCA8PSAwKSB7DQorCQlzb2NrZXRfcGVycm9yKCAi
-U1NMX2Nvbm5lY3QiLCBzb2NrLCByZXQgKTsNCisJCXJldHVybiAxOw0KKwl9DQorDQorCXJldHVy
-biAwOw0KKyNlbmRpZg0KIH0NCiANCiBzdGF0aWMgaW50DQogc29ja2V0X3JlYWQoIFNvY2tldF90
-ICpzb2NrLCBjaGFyICpidWYsIGludCBsZW4gKQ0KIHsNCi0Jc3NpemVfdCBuID0geHJlYWQoIHNv
-Y2stPmZkLCBidWYsIGxlbiApOw0KKwlzc2l6ZV90IG47DQorI2lmbmRlZiBOT19PUEVOU1NMDQor
-CWlmIChzb2NrLT5zc2wpDQorCQluID0gU1NMX3JlYWQoIHNvY2stPnNzbCwgYnVmLCBsZW4gKTsN
-CisJZWxzZQ0KKyNlbmRpZg0KKwkJbiA9IHhyZWFkKCBzb2NrLT5mZCwgYnVmLCBsZW4gKTsNCiAJ
-aWYgKG4gPD0gMCkgew0KIAkJc29ja2V0X3BlcnJvciggInJlYWQiLCBzb2NrLCBuICk7DQogCQlj
-bG9zZSggc29jay0+ZmQgKTsNCkBAIC0yNDksNyArMzQ0LDEzIEBAIHNvY2tldF9yZWFkKCBTb2Nr
-ZXRfdCAqc29jaywgY2hhciAqYnVmLCBpbnQgbGVuICkNCiBzdGF0aWMgaW50DQogc29ja2V0X3dy
-aXRlKCBTb2NrZXRfdCAqc29jaywgY29uc3QgY2hhciAqYnVmLCBpbnQgbGVuICkNCiB7DQotCWlu
-dCBuID0gd3JpdGVfaW5fZnVsbCggc29jay0+ZmQsIGJ1ZiwgbGVuICk7DQorCWludCBuOw0KKyNp
-Zm5kZWYgTk9fT1BFTlNTTA0KKwlpZiAoc29jay0+c3NsKQ0KKwkJbiA9IFNTTF93cml0ZSggc29j
-ay0+c3NsLCBidWYsIGxlbiApOw0KKwllbHNlDQorI2VuZGlmDQorCQluID0gd3JpdGVfaW5fZnVs
-bCggc29jay0+ZmQsIGJ1ZiwgbGVuICk7DQogCWlmIChuICE9IGxlbikgew0KIAkJc29ja2V0X3Bl
-cnJvciggIndyaXRlIiwgc29jaywgbiApOw0KIAkJY2xvc2UoIHNvY2stPmZkICk7DQpAQCAtMjU4
-LDYgKzM1OSwxOCBAQCBzb2NrZXRfd3JpdGUoIFNvY2tldF90ICpzb2NrLCBjb25zdCBjaGFyICpi
-dWYsIGludCBsZW4gKQ0KIAlyZXR1cm4gbjsNCiB9DQogDQorc3RhdGljIHZvaWQNCitzb2NrZXRf
-c2h1dGRvd24oIFNvY2tldF90ICpzb2NrICkNCit7DQorI2lmbmRlZiBOT19PUEVOU1NMDQorCWlm
-IChzb2NrLT5zc2wpIHsNCisJCVNTTF9zaHV0ZG93biggc29jay0+c3NsICk7DQorCQlTU0xfZnJl
-ZSggc29jay0+c3NsICk7DQorCX0NCisjZW5kaWYNCisJY2xvc2UoIHNvY2stPmZkICk7DQorfQ0K
-Kw0KIC8qIHNpbXBsZSBsaW5lIGJ1ZmZlcmluZyAqLw0KIHN0YXRpYyBpbnQNCiBidWZmZXJfZ2V0
-cyggYnVmZmVyX3QgKiBiLCBjaGFyICoqcyApDQpAQCAtODc1LDcgKzk4OCw3IEBAIGltYXBfY2xv
-c2Vfc2VydmVyKCBpbWFwX3N0b3JlX3QgKmljdHggKQ0KIA0KIAlpZiAoaW1hcC0+YnVmLnNvY2su
-ZmQgIT0gLTEpIHsNCiAJCWltYXBfZXhlYyggaWN0eCwgTlVMTCwgIkxPR09VVCIgKTsNCi0JCWNs
-b3NlKCBpbWFwLT5idWYuc29jay5mZCApOw0KKwkJc29ja2V0X3NodXRkb3duKCAmaW1hcC0+YnVm
-LnNvY2sgKTsNCiAJfQ0KIAlmcmVlX2xpc3QoIGltYXAtPm5zX3BlcnNvbmFsICk7DQogCWZyZWVf
-bGlzdCggaW1hcC0+bnNfb3RoZXIgKTsNCkBAIC05NTgsMTAgKzEwNzEsMTUgQEAgaW1hcF9vcGVu
-X3N0b3JlKCBpbWFwX3NlcnZlcl9jb25mX3QgKnNydmMgKQ0KIAkJCXBlcnJvciggImNvbm5lY3Qi
-ICk7DQogCQkJZ290byBiYWlsOw0KIAkJfQ0KLQkJaW1hcF9pbmZvKCAib2tcbiIgKTsNCi0NCisJ
-CQ0KIAkJaW1hcC0+YnVmLnNvY2suZmQgPSBzOw0KIA0KKwkJaWYgKHNydmMtPnVzZV9zc2wgJiYg
-c3NsX3NvY2tldF9jb25uZWN0KCAmaW1hcC0+YnVmLnNvY2ssIDAgKSkgew0KKwkJCWNsb3NlKCBz
-ICk7DQorCQkJZ290byBiYWlsOw0KKwkJfQ0KKwkJaW1hcF9pbmZvKCAib2tcbiIgKTsNCisNCiAJ
-fQ0KIA0KIAkvKiByZWFkIHRoZSBncmVldGluZyBzdHJpbmcgKi8NCkBAIC05ODYsNyArMTEwNCwx
-NyBAQCBpbWFwX29wZW5fc3RvcmUoIGltYXBfc2VydmVyX2NvbmZfdCAqc3J2YyApDQogCQlnb3Rv
-IGJhaWw7DQogDQogCWlmICghcHJlYXV0aCkgew0KLQ0KKyNpZm5kZWYgTk9fT1BFTlNTTA0KKwkJ
-aWYgKCFzcnZjLT51c2Vfc3NsICYmIENBUChTVEFSVFRMUykpIHsNCisJCQlpZiAoaW1hcF9leGVj
-KCBjdHgsIDAsICJTVEFSVFRMUyIgKSAhPSBSRVNQX09LKQ0KKwkJCQlnb3RvIGJhaWw7DQorCQkJ
-aWYgKHNzbF9zb2NrZXRfY29ubmVjdCggJmltYXAtPmJ1Zi5zb2NrLCAxICkpDQorCQkJCWdvdG8g
-YmFpbDsNCisJCQkvKiBjYXBhYmlsaXRpZXMgbWF5IGhhdmUgY2hhbmdlZCwgc28gZ2V0IHRoZSBu
-ZXcgY2FwYWJpbGl0aWVzICovDQorCQkJaWYgKGltYXBfZXhlYyggY3R4LCAwLCAiQ0FQQUJJTElU
-WSIgKSAhPSBSRVNQX09LKQ0KKwkJCQlnb3RvIGJhaWw7DQorCQl9DQorI2VuZGlmDQogCQlpbWFw
-X2luZm8gKCJMb2dnaW5nIGluLi4uXG4iKTsNCiAJCWlmICghc3J2Yy0+dXNlcikgew0KIAkJCWZw
-cmludGYoIHN0ZGVyciwgIlNraXBwaW5nIHNlcnZlciAlcywgbm8gdXNlclxuIiwgc3J2Yy0+aG9z
-dCApOw0KQEAgLTEwMTQsNyArMTE0MiwxMCBAQCBpbWFwX29wZW5fc3RvcmUoIGltYXBfc2VydmVy
-X2NvbmZfdCAqc3J2YyApDQogCQkJZnByaW50Ziggc3RkZXJyLCAiU2tpcHBpbmcgYWNjb3VudCAl
-c0Alcywgc2VydmVyIGZvcmJpZHMgTE9HSU5cbiIsIHNydmMtPnVzZXIsIHNydmMtPmhvc3QgKTsN
-CiAJCQlnb3RvIGJhaWw7DQogCQl9DQotCQlpbWFwX3dhcm4oICIqKiogSU1BUCBXYXJuaW5nICoq
-KiBQYXNzd29yZCBpcyBiZWluZyBzZW50IGluIHRoZSBjbGVhclxuIiApOw0KKyNpZm5kZWYgTk9f
-T1BFTlNTTA0KKwkJaWYgKCFpbWFwLT5idWYuc29jay5zc2wpDQorI2VuZGlmDQorCQkJaW1hcF93
-YXJuKCAiKioqIElNQVAgV2FybmluZyAqKiogUGFzc3dvcmQgaXMgYmVpbmcgc2VudCBpbiB0aGUg
-Y2xlYXJcbiIgKTsNCiAJCWlmIChpbWFwX2V4ZWMoIGN0eCwgTlVMTCwgIkxPR0lOIFwiJXNcIiBc
-IiVzXCIiLCBzcnZjLT51c2VyLCBzcnZjLT5wYXNzICkgIT0gUkVTUF9PSykgew0KIAkJCWZwcmlu
-dGYoIHN0ZGVyciwgIklNQVAgZXJyb3I6IExPR0lOIGZhaWxlZFxuIiApOw0KIAkJCWdvdG8gYmFp
-bDsNCkBAIC0xMjQyLDYgKzEzNzMsNyBAQCBzdGF0aWMgaW1hcF9zZXJ2ZXJfY29uZl90IHNlcnZl
-ciA9DQogCTAsCS8qIHBvcnQgKi8NCiAJTlVMTCwJLyogdXNlciAqLw0KIAlOVUxMLAkvKiBwYXNz
-ICovDQorCTAsICAgCS8qIHVzZV9zc2wgKi8NCiB9Ow0KIA0KIHN0YXRpYyBjaGFyICppbWFwX2Zv
-bGRlcjsNCkBAIC0xMjYyLDEyICsxMzk0LDggQEAgZ2l0X2ltYXBfY29uZmlnKGNvbnN0IGNoYXIg
-KmtleSwgY29uc3QgY2hhciAqdmFsLCB2b2lkICpjYikNCiAJaWYgKCFzdHJjbXAoICJmb2xkZXIi
-LCBrZXkgKSkgew0KIAkJaW1hcF9mb2xkZXIgPSB4c3RyZHVwKCB2YWwgKTsNCiAJfSBlbHNlIGlm
-ICghc3RyY21wKCAiaG9zdCIsIGtleSApKSB7DQotCQl7DQotCQkJaWYgKCFwcmVmaXhjbXAodmFs
-LCAiaW1hcDoiKSkNCi0JCQkJdmFsICs9IDU7DQotCQkJaWYgKCFzZXJ2ZXIucG9ydCkNCi0JCQkJ
-c2VydmVyLnBvcnQgPSAxNDM7DQotCQl9DQorCQlpZiAoIXByZWZpeGNtcCh2YWwsICJpbWFwOiIp
-KQ0KKwkJCXZhbCArPSA1Ow0KIAkJaWYgKCFwcmVmaXhjbXAodmFsLCAiLy8iKSkNCiAJCQl2YWwg
-Kz0gMjsNCiAJCXNlcnZlci5ob3N0ID0geHN0cmR1cCggdmFsICk7DQpAQCAtMTI4MCw2ICsxNDA4
-LDggQEAgZ2l0X2ltYXBfY29uZmlnKGNvbnN0IGNoYXIgKmtleSwgY29uc3QgY2hhciAqdmFsLCB2
-b2lkICpjYikNCiAJCXNlcnZlci5wb3J0ID0gZ2l0X2NvbmZpZ19pbnQoIGtleSwgdmFsICk7DQog
-CWVsc2UgaWYgKCFzdHJjbXAoICJ0dW5uZWwiLCBrZXkgKSkNCiAJCXNlcnZlci50dW5uZWwgPSB4
-c3RyZHVwKCB2YWwgKTsNCisJZWxzZSBpZiAoIXN0cmNtcCggInNzbCIsIGtleSApKQ0KKwkJc2Vy
-dmVyLnVzZV9zc2wgPSBnaXRfY29uZmlnX2Jvb2woIGtleSwgdmFsICk7DQogCXJldHVybiAwOw0K
-IH0NCiANCkBAIC0xMjk5LDYgKzE0MjksOSBAQCBtYWluKGludCBhcmdjLCBjaGFyICoqYXJndikN
-CiAJc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHkoIE5VTEwgKTsNCiAJZ2l0X2NvbmZpZyhnaXRf
-aW1hcF9jb25maWcsIE5VTEwpOw0KIA0KKwlpZiAoIXNlcnZlci5wb3J0KQ0KKwkJc2VydmVyLnBv
-cnQgPSBzZXJ2ZXIudXNlX3NzbCA/IDk5MyA6IDE0MzsNCisNCiAJaWYgKCFpbWFwX2ZvbGRlcikg
-ew0KIAkJZnByaW50Ziggc3RkZXJyLCAibm8gaW1hcCBzdG9yZSBzcGVjaWZpZWRcbiIgKTsNCiAJ
-CXJldHVybiAxOw0K
-------=_Part_31504_17407983.1212334198086--
+Since perl/Makefile only copies Git.pm to blib/lib/Git.pm, we could also 
+set the path to ../../perl, which would prevent us from accidentally 
+running tests against an old version of Git.pm (because we haven't run 
+cd perl; make before).  And perhaps add a comment to perl/Makefile about 
+this, in case someone wants to change the build process in the future. 
+Or is there some reason why this would be a bad idea?
+
+-- Lea
