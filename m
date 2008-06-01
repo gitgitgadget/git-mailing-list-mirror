@@ -1,273 +1,63 @@
 From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [RFC/PATCH v2] test suite for Git.pm
-Date: Mon,  2 Jun 2008 00:41:56 +0200
-Message-ID: <1212360116-18727-1-git-send-email-LeWiemann@gmail.com>
-References: <1212292269-21534-1-git-send-email-LeWiemann@gmail.com>
-Cc: pasky@suse.cz, gitster@pobox.com, Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 02 00:43:11 2008
+Subject: Re: [PATCH v3] perl/Git.pm: add parse_rev method
+Date: Mon, 02 Jun 2008 00:51:39 +0200
+Message-ID: <484327FB.8080105@gmail.com>
+References: <1212241932-28605-1-git-send-email-LeWiemann@gmail.com> <1212290243-19393-1-git-send-email-LeWiemann@gmail.com> <1212290243-19393-2-git-send-email-LeWiemann@gmail.com> <4842DE78.7000006@gmail.com> <20080601215449.GC29404@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Jun 02 00:52:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2wGW-00068n-9f
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 00:43:04 +0200
+	id 1K2wPk-0008Sg-KU
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 00:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752456AbYFAWmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 18:42:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbYFAWmJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 18:42:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:38322 "EHLO
+	id S1752462AbYFAWvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 18:51:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYFAWvn
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 18:51:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:57188 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431AbYFAWmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 18:42:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so591333fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Jun 2008 15:42:04 -0700 (PDT)
+	with ESMTP id S1751908AbYFAWvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 18:51:42 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so592503fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Jun 2008 15:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        bh=OqRNm0TLYXvsgxRpmsnPGsSH2Hc9rGiBtyHfXWjMQJM=;
-        b=O0huyt6jrbbWVGaG/kAn7b1McKaVw7ZAarTny2Bx6D6vCGW2Ag/ptWOAnMqpDPyVfHnBHasqNhLvIeCKKWS3qgq5RLsr+bRoL7DobxFyF6ebvzZmQQBsjASIUUCU/yTFY0r7jBAuqFSmV/daQkAESLKUNRGeWuIix2NDIfZdP6s=
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=8i98UYUix96iOt78FVvPE0oYZCknVnPc8Rafpr4lqCk=;
+        b=xgXQ/tBmhV+fHCLfLC50W/J5wIcSmwi8beBFgCngYKNfsZihaFEzEjoAZwhiHUedxohGaqW8z9xcGIEMOZjPSqM/bhJPY0w2E//J6RD+5VGoFZf2yPpWRTq5aWIKmLjAk3h+8Tv+9zXyeypwsL53u3KjJGk6TF/Y3LSksWTQ820=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=IxhrgsoANoczPHXUa0IdxDKug9tDkwNI5RxmY9Unouo6I/3aIUeiuYromNLlwIut/LVPmA1X98PoOfo6zo08Tz0pCyq7yBaFfzbVnqXaVZXo4YpIjosazaDLndlKUHcYF8C7/paJq8HCaLuxYi6kVdAFS3SDdSMDdrH26LY6BIg=
-Received: by 10.86.87.5 with SMTP id k5mr867099fgb.59.1212360124455;
-        Sun, 01 Jun 2008 15:42:04 -0700 (PDT)
-Received: from fly ( [91.33.205.25])
-        by mx.google.com with ESMTPS id l19sm3348463fgb.7.2008.06.01.15.41.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 01 Jun 2008 15:41:59 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K2wFQ-0004sk-9L; Mon, 02 Jun 2008 00:41:56 +0200
-X-Mailer: git-send-email 1.5.5.GIT
-In-Reply-To: <1212292269-21534-1-git-send-email-LeWiemann@gmail.com>
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=pHoWTCb7NbfItYx8UD+4UqOQzEe+GrK50F9g/IuxhoUeBwUybLo9b5/aeLm3rt3P36//VRC2FzleXjz1K+QLJj5J8mK8dfxSkogA4iicsgkKGQTyQMqTWyTg2Kw6j744Q6q+DTfzCpYfgRebIrrpa4EqT+BZp1FxCMJWUITfA/Y=
+Received: by 10.86.49.3 with SMTP id w3mr819663fgw.64.1212360701496;
+        Sun, 01 Jun 2008 15:51:41 -0700 (PDT)
+Received: from ?192.168.23.50? ( [91.33.205.25])
+        by mx.google.com with ESMTPS id d4sm2834400fga.8.2008.06.01.15.51.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 01 Jun 2008 15:51:40 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <20080601215449.GC29404@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83476>
 
-Added a shell script (t/t9700-perl-git.sh) that sets up a git
-repository and a perl script (t/t9700/test.pl) that runs the actual
-tests.
+Miklos Vajna wrote:
+> Lea Wiemann <lewiemann@gmail.com> wrote:
+>> Is there *any* name for the identifiers you pass into git-rev-parse
+>> (like HEAD^2 or master:test/foo.txt)?
+> 
+> `man git-rev-parse` calls them "revisions". Yes, even the commit:path
+> ones.
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-Hi!
-
-Here's my second version of the test suite.  The most important
-additions since v1 are the following test sections: "config", "failure
-cases for config", and "objects and hashes".
-
-Everybody, if you have Unix (or Cygwin perhaps?) and 5 minutes to
-spare, would you mind cloning my branch from
-<http://repo.or.cz/w/git/gitweb-caching.git> [1], run
-"make && cd t && ./t9700-perl-git.sh -v", and email me your platform
-and whether the test succeeded or failed, plus error messages if any?
-
-The remaining untested methods are:
-
-repository: Should get more testing in the future.  (I'm planning to
-  refactor it, so at that point I will automatically have to add
-  tests.)
-
-command*, exec_path, version, get_colorbool: These interact with the
-  system, and I don't see how to easily test those right now.  At
-  least command* and exec_path get tested indirectly through other
-  methods.
-
-Also, there is an outstanding issue (might be a bug, but I'm not sure)
-in the .TODO section at the bottom.  It's an issue with Git.pm, so it
-shouldn't prevent this test suite from being merged.  (I probably
-won't have time to fix it since I don't understand the methods
-involved well enough, but perhaps Petr has an idea or can at least
-confirm whether this is a bug.)
+True -- it's quite cringeworthy indeed. ;)  As long as it only affects 
+the documentation for that particular method, I'll go with "revision".
 
 -- Lea
-
-Footnotes:
-
-[1] Again, note that I will be rebasing/resetting the master branch
-    and pushing new versions of my latest commits.  Hence, I believe
-    that you will have to use git-pull --rebase to keep your clone
-    up-to-date.
-
- t/t9700-perl-git.sh |   46 +++++++++++++++++++++
- t/t9700/test.pl     |  111 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 157 insertions(+), 0 deletions(-)
- create mode 100755 t/t9700-perl-git.sh
- create mode 100755 t/t9700/test.pl
-
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-new file mode 100755
-index 0000000..71c49bd
---- /dev/null
-+++ b/t/t9700-perl-git.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Lea Wiemann
-+#
-+
-+test_description='perl interface (Git.pm)'
-+. ./test-lib.sh
-+
-+# set up test repository
-+
-+test_expect_success \
-+    'set up test repository' \
-+    'echo "*.test" > .gitignore &&
-+
-+     echo "test file 1" > file1 &&
-+     echo "test file 2" > file2 &&
-+     mkdir directory1 &&
-+     echo "in directory1" >> directory1/file &&
-+     mkdir directory2 &&
-+     echo "in directory2" >> directory2/file &&
-+     git add . &&
-+     git commit -m "first commit" &&
-+     git rev-parse HEAD > revisions.test &&
-+
-+     git tag -- --silly-name &&
-+
-+     echo "changed file 1" > file1 &&
-+     git add . &&
-+     git commit -m "second commit" &&
-+     git rev-parse HEAD >> revisions.test &&
-+
-+     git-config --add color.test.slot1 green &&
-+     git-config --add test.string value &&
-+     git-config --add test.dupstring value1 &&
-+     git-config --add test.dupstring value2 &
-+     git-config --add test.booltrue true &&
-+     git-config --add test.boolfalse no &&
-+     git-config --add test.boolother other &&
-+     git-config --add test.int 2k
-+     '
-+
-+test_external_without_stderr \
-+    'Perl API' \
-+    perl ../t9700/test.pl
-+
-+test_done
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-new file mode 100755
-index 0000000..91dd8da
---- /dev/null
-+++ b/t/t9700/test.pl
-@@ -0,0 +1,111 @@
-+#!/usr/bin/perl
-+
-+use warnings;
-+use strict;
-+
-+use Test::More qw(no_plan);
-+
-+use Cwd;
-+use File::Basename;
-+use File::Temp;
-+use IO::String;
-+
-+BEGIN { use_ok('Git') }
-+require_ok('Git');
-+
-+# set up
-+our $repo_dir = "trash directory";
-+our $abs_repo_dir = Cwd->cwd;
-+die "this must be run by calling the t/t97* shell script(s)\n"
-+    if basename(Cwd->cwd) ne $repo_dir;
-+ok(our $r = Git->repository(Directory => "."), "open repository");
-+ok((open REVISIONS, 'revisions.test' and chomp(our @revisions = <REVISIONS>)),
-+   "(read revisions)");
-+
-+# config
-+is($r->config("test.string"), "value", "config scalar: string");
-+is_deeply([$r->config("test.dupstring")], ["value1", "value2"],
-+	  "config array: string");
-+is($r->config("test.nonexistent"), undef, "config scalar: nonexistent");
-+is_deeply([$r->config("test.nonexistent")], [], "config array: nonexistent");
-+is($r->config_int("test.int"), 2048, "config_int: integer");
-+is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
-+ok($r->config_bool("test.booltrue"), "config_bool: true");
-+ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
-+our $ansi_green = "\x1b[32m";
-+is($r->get_color("color.test.slot1", "red"), $ansi_green, "get_color");
-+# Cannot test $r->get_colorbool("color.foo")) because we do not
-+# control whether our STDOUT is a terminal.
-+
-+# Failure cases for config:
-+# Save and restore STDERR; we will probably extract this into a
-+# "dies_ok" method and possibly move the STDERR handling to Git.pm.
-+open our $tmpstderr, ">&", STDERR or die "cannot save STDERR"; close STDERR;
-+eval { $r->config("test.dupstring") };
-+ok($@, "config: duplicate entry in scalar context fails");
-+eval { $r->config_bool("test.boolother") };
-+ok($@, "config_bool: non-boolean values fail");
-+open STDERR, ">&", $tmpstderr or die "cannot restore STDERR";
-+
-+# ident
-+like($r->ident("aUthor"), qr/^A U Thor <author\@example.com> [0-9]+ \+0000$/,
-+     "ident scalar: author (type)");
-+like($r->ident("cOmmitter"), qr/^C O Mitter <committer\@example.com> [0-9]+ \+0000$/,
-+     "ident scalar: committer (type)");
-+is($r->ident("invalid"), "invalid", "ident scalar: invalid ident string (no parsing)");
-+my ($name, $email, $time_tz) = $r->ident('author');
-+is_deeply([$name, $email], ["A U Thor", "author\@example.com"],
-+	 "ident array: author");
-+like($time_tz, qr/[0-9]+ \+0000/, "ident array: author");
-+is_deeply([$r->ident("Name <email> 123 +0000")], ["Name", "email", "123 +0000"],
-+	  "ident array: ident string");
-+is_deeply([$r->ident("invalid")], [], "ident array: invalid ident string");
-+
-+# ident_person
-+is($r->ident_person("aUthor"), "A U Thor <author\@example.com>",
-+   "ident_person: author (type)");
-+is($r->ident_person("Name <email> 123 +0000"), "Name <email>",
-+   "ident_person: ident string");
-+is($r->ident_person("Name", "email", "123 +0000"), "Name <email>",
-+   "ident_person: array");
-+
-+# parse_rev
-+is($r->parse_rev("HEAD"), $revisions[-1], "parse_rev: 'HEAD'");
-+is($r->parse_rev("HEAD^"), $revisions[-2], "parse_rev: 'HEAD^'");
-+is($r->parse_rev($revisions[0]), $revisions[0], "parse_rev: SHA1");
-+is($r->parse_rev("--silly-name"), $revisions[0], "parse_rev: tag");
-+is($r->parse_rev("nonexistent"), undef, "parse_rev: nonexistent name");
-+is($r->parse_rev("0" x 40), "0" x 40, "parse_rev: nonexistent SHA1");
-+
-+# objects and hashes
-+ok(our $file1hash = $r->parse_rev("$revisions[1]:file1"), "(get file hash)");
-+our $iostring = IO::String->new;
-+is($r->cat_blob($file1hash, $iostring), 15, "cat_blob: size");
-+is(${$iostring->string_ref}, "changed file 1\n", "cat_blob: data");
-+our $tmpfile = File::Temp->new();
-+print $tmpfile ${$iostring->string_ref};
-+is(Git::hash_object("blob", $tmpfile), $file1hash, "hash_object: roundtrip");
-+$tmpfile = File::Temp->new();
-+print $tmpfile my $test_text = "test blob, to be inserted\n";
-+$tmpfile->close;
-+like(our $newhash = $r->hash_and_insert_object($tmpfile), qr/[0-9a-fA-F]{40}/,
-+     "hash_and_insert_object: returns hash");
-+$iostring = IO::String->new;
-+is($r->cat_blob($newhash, $iostring), length $test_text, "cat_blob: roundtrip size");
-+is(${$iostring->string_ref}, $test_text, "cat_blob: roundtrip data");
-+
-+# paths
-+is($r->repo_path, "./.git", "repo_path");
-+is($r->wc_path, $abs_repo_dir . "/", "wc_path");
-+is($r->wc_subdir, "", "wc_subdir initial");
-+$r->wc_chdir("directory1");
-+is($r->wc_subdir, "directory1", "wc_subdir after wc_chdir");
-+TODO: {
-+	local $TODO = "commands do not work after wc_chdir";
-+	# Failure output is active even in non-verbose mode and thus
-+	# annoying, and parse_rev even dies.  Hence we skip these
-+	# tests as long as they fail.
-+	todo_skip 'config and parse_rev after wc_chdir', 2;
-+	is($r->config("color.string"), "value", "config after wc_chdir");
-+	is($r->parse_rev("HEAD"), $revisions[-1], "parse_rev after wc_chdir");
-+}
--- 
-1.5.5.GIT
