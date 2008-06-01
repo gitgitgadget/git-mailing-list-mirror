@@ -1,74 +1,79 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] gitweb: Remove gitweb/test/ directory
-Date: Sun, 1 Jun 2008 21:07:44 +0200
-Message-ID: <97942300-E8AC-4AC6-AD4D-6EEA2198E5D9@wincent.com>
-References: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de> <20080531182555.1646.47950.stgit@localhost.localdomain> <5DBABAFE-C447-4E5D-A7E8-0C16B4D1D960@wincent.com> <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 01 21:09:03 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [PATCH] Git.pm: fix documentation of hash_object
+Date: Sun,  1 Jun 2008 22:26:25 +0200
+Message-ID: <1212351985-11682-1-git-send-email-LeWiemann@gmail.com>
+Cc: Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 01 22:27:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2svL-0007iY-Ij
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 21:08:59 +0200
+	id 1K2u9F-0002zm-V8
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 22:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbYFATIA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2008 15:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbYFATIA
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 15:08:00 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:54950 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbYFATH7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Jun 2008 15:07:59 -0400
-Received: from cuzco.lan (157.pool85-53-24.dynamic.orange.es [85.53.24.157])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m51J7jJA015770
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 1 Jun 2008 15:07:48 -0400
-In-Reply-To: <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
-X-Mailer: Apple Mail (2.924)
+	id S1751727AbYFAU0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 16:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751695AbYFAU0c
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 16:26:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:29195 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751494AbYFAU0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 16:26:31 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so572811fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Jun 2008 13:26:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=2+7XvHq37S8ZqpAa1RF5s9Im0/biX+l7eEINDCTJvhM=;
+        b=u1V1CAaIMEJtGrlidD9ULGTmOcTj2JfJDpWtG1E+LVVnOBJR0gG/vXKIM/An9E8S4am1EUA1oF4Vk+oQFp0IFQ3VJTbsu4AUGo5T1+hieWTdEdeEOacZ3esHUYuL1b21RDfL5m+I7rI8EysQuzf3d+LPaj45JOs3bCGE/ocrAdA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:from;
+        b=dfF1ifvFm9RTnKfDPtRRDmRYufADo1NX56sAIBITLAHJZ9JdCkC0+zUHkQYRH15U5TY9VHClUOZ3ur3VRc/RzFoOxQjp5cetW2ze/6/165KwP3vXUufUlmP+zhnsB+4c2Szjet6Sv/JPTe1xZnOY8tJ0i9K8eKC074QNTQnmCjc=
+Received: by 10.86.66.11 with SMTP id o11mr605069fga.43.1212351989892;
+        Sun, 01 Jun 2008 13:26:29 -0700 (PDT)
+Received: from fly ( [91.33.205.25])
+        by mx.google.com with ESMTPS id 4sm2694020fgg.9.2008.06.01.13.26.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 01 Jun 2008 13:26:28 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K2u8I-00032m-1K; Sun, 01 Jun 2008 22:26:26 +0200
+X-Mailer: git-send-email 1.5.5.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83464>
 
-El 1/6/2008, a las 1:19, Johannes Schindelin escribi=F3:
+The documentation of hash_object incorrectly states that it accepts a
+file handle -- in fact it doesn't, and there is even a TODO comment
+for this.  This fixes the documentation.
 
-> Hi,
->
-> On Sat, 31 May 2008, Wincent Colaiuta wrote:
->
->> El 31/5/2008, a las 20:28, Jakub Narebski escribi=F3:
->>
->>> Testing if gitweb handles filenames with spaces, filenames with plu=
-s
->>> sign ('+') which encodes spaces in CGI parameters (in URLs), and
->>> filenames with Unicode characters should be handled by gitweb tests=
-=2E
->>>
->>> Those files are remainder of the time when gitweb was project on it=
-s
->>> own, not a part of git (with its testsuite).
->>>
->>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->>
->> Ack.
->
-> And I thought "Ack" was reserved for the people who are considered th=
-e
-> primary authors of the patched code...
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+This should be implemented eventually, but in the meantime let's just
+correct the documentation.
 
-I had no idea. Thanks for letting me know.
+ perl/Git.pm |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
 
-Wincent
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 80f7669..07b92c7 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -760,9 +760,8 @@ sub parse_rev {
+ 
+ =item hash_object ( TYPE, FILENAME )
+ 
+-Compute the SHA1 object id of the given C<FILENAME> (or data waiting in
+-C<FILEHANDLE>) considering it is of the C<TYPE> object type (C<blob>,
+-C<commit>, C<tree>).
++Compute the SHA1 object id of the given C<FILENAME> considering it is
++of the C<TYPE> object type (C<blob>, C<commit>, C<tree>).
+ 
+ The method can be called without any instance or on a specified Git repository,
+ it makes zero difference.
+-- 
+1.5.5.GIT
