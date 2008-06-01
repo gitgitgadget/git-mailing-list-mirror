@@ -1,169 +1,273 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: use Git.pm, and use its parse_rev method for git_get_head_hash
-Date: Mon, 2 Jun 2008 00:19:23 +0200
-Message-ID: <200806020019.23858.jnareb@gmail.com>
-References: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com> <m3lk1q24nb.fsf@localhost.localdomain> <4841471E.2070302@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 00:20:30 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [RFC/PATCH v2] test suite for Git.pm
+Date: Mon,  2 Jun 2008 00:41:56 +0200
+Message-ID: <1212360116-18727-1-git-send-email-LeWiemann@gmail.com>
+References: <1212292269-21534-1-git-send-email-LeWiemann@gmail.com>
+Cc: pasky@suse.cz, gitster@pobox.com, Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 00:43:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2vue-0000dT-BJ
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 00:20:28 +0200
+	id 1K2wGW-00068n-9f
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 00:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967AbYFAWTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 18:19:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbYFAWTf
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 18:19:35 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:4002 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956AbYFAWTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 18:19:34 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so328582nfc.21
-        for <git@vger.kernel.org>; Sun, 01 Jun 2008 15:19:33 -0700 (PDT)
+	id S1752456AbYFAWmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 18:42:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbYFAWmJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 18:42:09 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:38322 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431AbYFAWmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 18:42:06 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so591333fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Jun 2008 15:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        bh=sWyIcMKUEOXECofKn+OuuLS+5cxtcTU+6E+mpQ0MWEM=;
-        b=iFVkbKqW+MyiAPkFGraI/qZ8qJ6x/2La+3DzFVwDWqE5TqtWnnvFnr5oe32U039+vC9sfNecmypD8M619ewu/gew+YpnjDsjqvq74qmkw8CjvflP43Z5LQS89OhjjHyrb/UAwzhZ21uQINz22lup0pTz5DgMczoSIU5Gc0QRFc8=
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        bh=OqRNm0TLYXvsgxRpmsnPGsSH2Hc9rGiBtyHfXWjMQJM=;
+        b=O0huyt6jrbbWVGaG/kAn7b1McKaVw7ZAarTny2Bx6D6vCGW2Ag/ptWOAnMqpDPyVfHnBHasqNhLvIeCKKWS3qgq5RLsr+bRoL7DobxFyF6ebvzZmQQBsjASIUUCU/yTFY0r7jBAuqFSmV/daQkAESLKUNRGeWuIix2NDIfZdP6s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=G3PzSEvA+VspGaXDaiGW1YgTjwaCJs0P1TkYNgfEqWXkdgmyJWwQPRBFoThZTF3o9miYq5NH6dgku90vWk6HYTqkjidIJt9HvTB3Tt7dQ/ps/TD0eLCwLfk7zpofQ93/EIKcP8i0Ebt0nvcfewSey4WqE9K1uR+r0YQrSD+dOTk=
-Received: by 10.210.90.10 with SMTP id n10mr230059ebb.179.1212358772479;
-        Sun, 01 Jun 2008 15:19:32 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.195.117])
-        by mx.google.com with ESMTPS id z33sm3362300ikz.0.2008.06.01.15.19.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 01 Jun 2008 15:19:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4841471E.2070302@gmail.com>
-Content-Disposition: inline
+        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        b=IxhrgsoANoczPHXUa0IdxDKug9tDkwNI5RxmY9Unouo6I/3aIUeiuYromNLlwIut/LVPmA1X98PoOfo6zo08Tz0pCyq7yBaFfzbVnqXaVZXo4YpIjosazaDLndlKUHcYF8C7/paJq8HCaLuxYi6kVdAFS3SDdSMDdrH26LY6BIg=
+Received: by 10.86.87.5 with SMTP id k5mr867099fgb.59.1212360124455;
+        Sun, 01 Jun 2008 15:42:04 -0700 (PDT)
+Received: from fly ( [91.33.205.25])
+        by mx.google.com with ESMTPS id l19sm3348463fgb.7.2008.06.01.15.41.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 01 Jun 2008 15:41:59 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K2wFQ-0004sk-9L; Mon, 02 Jun 2008 00:41:56 +0200
+X-Mailer: git-send-email 1.5.5.GIT
+In-Reply-To: <1212292269-21534-1-git-send-email-LeWiemann@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83475>
 
-On Sat, 31 May 2008, Lea Wiemann wrote:
-> Jakub Narebski wrote:
->>
->> But I'm not sure for example [that] parsing subroutines [that parse the
->> output of the git commands should be in Git.pm].
->> 
->> [...] IMVHO caching command output is bad idea.  I'd rather have gitweb
->> cache _parsed_ data (i.e. Perl structures).
-> 
-> Yes, I agree with you that parsed data should be cached, but for that 
-> reason I think that the subroutine that parse git's output should be in 
-> Git.pm, not in Gitweb:
+Added a shell script (t/t9700-perl-git.sh) that sets up a git
+repository and a perl script (t/t9700/test.pl) that runs the actual
+tests.
 
-This not necessarily follows.  First, I'm not sure if gitweb's parse_*
-subroutines are generic enough; please take into account that Git.pm 
-is used also by other git commands coded in Perl: git-cvsexportcommit
-(but not git-cvsserver?), git-send-email, git-svn and (internal)
-git-add--interactive.  Second, caching of _parsed_ data can be
-implemented in gitweb, or in Gitweb::Cache / Gitweb::Caching.
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+Hi!
 
-> If you want to cache parsed data, you need the caching layer in between 
-> the application (= Gitweb) and the repository access layer (= command 
-> output parsing), or you would have to insert cache code at every call to 
-> the repository access layer.  
+Here's my second version of the test suite.  The most important
+additions since v1 are the following test sections: "config", "failure
+cases for config", and "objects and hashes".
 
-Not every.  Please don't assume that we would want to cache _all_ the
-data; herein madness lies.
+Everybody, if you have Unix (or Cygwin perhaps?) and 5 minutes to
+spare, would you mind cloning my branch from
+<http://repo.or.cz/w/git/gitweb-caching.git> [1], run
+"make && cd t && ./t9700-perl-git.sh -v", and email me your platform
+and whether the test succeeded or failed, plus error messages if any?
 
-But there is another reason to have caching as a layer, namely having
-caching optional (i.e. enabled or disable), although this can be also
-achieved by choosing 'Null'/'None' caching engine.
+The remaining untested methods are:
 
-> So you end up with these layers: 
-> 
-> (Layer 0: Front-end [HTML] caching.)
-> Layer 1: Application (Gitweb)
-> Layer 2: Back-end caching
-> Layer 3: Repository access (command parsing)
-> Layer 4: Calls to the git binary
-> 
-> Layer 3 and 4 are application-independent (i.e. not Gitweb specific), 
-> and since they form a usable API, they might as well be written as a 
-> separate API rather than lumped together with Gitweb.  Git.pm is a start 
-> of such an API (it does layer 4 and a little bit of layer 3), so it 
-> seems natural for me to extend it.
+repository: Should get more testing in the future.  (I'm planning to
+  refactor it, so at that point I will automatically have to add
+  tests.)
 
-This assumes that command parsing used by gitweb are generic enough
-to put them in Git.pm.  But some IMVHO are very gitweb-specific, for
-example the part in parse_commit_text() beginning with 
-  # remove leading stuff of merges to make the interesting part visible
-and the 'age_string*' keys there, parse_difftree_raw_line() which
-currently does not support '-z' output, parse_from_to_diffinfo() which
-is _very_ gitweb specific, git_get_heads_list() which is not generic
-enough (it gets info which gitweb needs, but no more), etc.
+command*, exec_path, version, get_colorbool: These interact with the
+  system, and I don't see how to easily test those right now.  At
+  least command* and exec_path get tested indirectly through other
+  methods.
 
-> Layer 2 is application-independent as well, so it can become an extra 
-> class in Git.pm or a separate module.  (It should stay independent of 
-> layers 3 and 4).
+Also, there is an outstanding issue (might be a bug, but I'm not sure)
+in the .TODO section at the bottom.  It's an issue with Git.pm, so it
+shouldn't prevent this test suite from being merged.  (I probably
+won't have time to fix it since I don't understand the methods
+involved well enough, but perhaps Petr has an idea or can at least
+confirm whether this is a bug.)
 
-I think it would be better as separate module.  Would it be Git::Cache
-(or Git::Caching), Gitweb::Cache, or part of gitweb, that would have
-to be decided.  Besides, I'm not sure if it is really application-
--independent as you say: I think we would get better result if we
-collate data first, which is application dependent.  Also I think
-there is no sense to cache everything: what to cache is again
-application dependent.
+-- Lea
 
-> We may need to have an explicitly implemented layer 0 (front-end 
-> caching) in Gitweb for at least a subset of pages (like project pages), 
-> but we'll see if that's necessary.
+Footnotes:
 
-I think that front-end caching (HTML/RSS/Atom output caching) has sense
-for large web pages (large size and large number of items), such as
-projects list page if it is unpaginated (and perhaps even if it is
-divided into pages, although I'm sure not for project search page),
-commonly requested snapshots (if they are enabled), large trees like
-SPECS directory with all the package *.spec files for distribution
-repository, perhaps summary/feed for most popular projects.  If (when)
-syntax highlighting would got implemented, probably also caching
-blob view (as CPU can become issue).
+[1] Again, note that I will be rebasing/resetting the master branch
+    and pushing new versions of my latest commits.  Hence, I believe
+    that you will have to use git-pull --rebase to keep your clone
+    up-to-date.
 
-Front-end (HTML output) caching has the advantages of easy to calculate
-strong ETag, and web server support for If-Match: and If-None-Match:
-HTTP/1.1 headers.  You can easy support Range: request, needed for
-resuming download (e.g. for downloading snapshots, if this feature is
-enabled in gitweb).  You can even compress the output, and serve it to
-clients which support proper transparent compression (Content-Encoding).
+ t/t9700-perl-git.sh |   46 +++++++++++++++++++++
+ t/t9700/test.pl     |  111 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 157 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9700-perl-git.sh
+ create mode 100755 t/t9700/test.pl
 
-And of course it has the advantage of actually been written and tested
-in work, in the case of kernel.org gitweb.  Although caching parsed
-data was implemented in repo.or.cz gitweb, it was done only for
-projects list view, and it is quite new and not so thoroughly tested
-  http://article.gmane.org/gmane.comp.version-control.git/77469
-
-
-It would be nice for front-end caching to have an option to use absolute
-time for all time/dates, and to (optionally) not use adaptive
-Content-Type...
-
->> Caching git command output (something like IPC::Cmd::Cached?)
->> would only repeat bad I/O patterns of git commands.
-> 
-> I hope you're not assuming that the back-end cache will reside on disk 
-> -- the problem is IO throughput, so having a cache on disk can really 
-> only work for a front-end cache.  For the back-end cache, we *will* have 
-> to use a memory cache (or no cache at all).
-
-Don't assume, check (in this case: benchmark[1]).  
-
-But I reallu don't know enough about caching to say if it is one way
-or the other...
-
-[1] http://cpan.robm.fastmail.fm/cache_perf.html (a bit old)
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+new file mode 100755
+index 0000000..71c49bd
+--- /dev/null
++++ b/t/t9700-perl-git.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Lea Wiemann
++#
++
++test_description='perl interface (Git.pm)'
++. ./test-lib.sh
++
++# set up test repository
++
++test_expect_success \
++    'set up test repository' \
++    'echo "*.test" > .gitignore &&
++
++     echo "test file 1" > file1 &&
++     echo "test file 2" > file2 &&
++     mkdir directory1 &&
++     echo "in directory1" >> directory1/file &&
++     mkdir directory2 &&
++     echo "in directory2" >> directory2/file &&
++     git add . &&
++     git commit -m "first commit" &&
++     git rev-parse HEAD > revisions.test &&
++
++     git tag -- --silly-name &&
++
++     echo "changed file 1" > file1 &&
++     git add . &&
++     git commit -m "second commit" &&
++     git rev-parse HEAD >> revisions.test &&
++
++     git-config --add color.test.slot1 green &&
++     git-config --add test.string value &&
++     git-config --add test.dupstring value1 &&
++     git-config --add test.dupstring value2 &
++     git-config --add test.booltrue true &&
++     git-config --add test.boolfalse no &&
++     git-config --add test.boolother other &&
++     git-config --add test.int 2k
++     '
++
++test_external_without_stderr \
++    'Perl API' \
++    perl ../t9700/test.pl
++
++test_done
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+new file mode 100755
+index 0000000..91dd8da
+--- /dev/null
++++ b/t/t9700/test.pl
+@@ -0,0 +1,111 @@
++#!/usr/bin/perl
++
++use warnings;
++use strict;
++
++use Test::More qw(no_plan);
++
++use Cwd;
++use File::Basename;
++use File::Temp;
++use IO::String;
++
++BEGIN { use_ok('Git') }
++require_ok('Git');
++
++# set up
++our $repo_dir = "trash directory";
++our $abs_repo_dir = Cwd->cwd;
++die "this must be run by calling the t/t97* shell script(s)\n"
++    if basename(Cwd->cwd) ne $repo_dir;
++ok(our $r = Git->repository(Directory => "."), "open repository");
++ok((open REVISIONS, 'revisions.test' and chomp(our @revisions = <REVISIONS>)),
++   "(read revisions)");
++
++# config
++is($r->config("test.string"), "value", "config scalar: string");
++is_deeply([$r->config("test.dupstring")], ["value1", "value2"],
++	  "config array: string");
++is($r->config("test.nonexistent"), undef, "config scalar: nonexistent");
++is_deeply([$r->config("test.nonexistent")], [], "config array: nonexistent");
++is($r->config_int("test.int"), 2048, "config_int: integer");
++is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
++ok($r->config_bool("test.booltrue"), "config_bool: true");
++ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
++our $ansi_green = "\x1b[32m";
++is($r->get_color("color.test.slot1", "red"), $ansi_green, "get_color");
++# Cannot test $r->get_colorbool("color.foo")) because we do not
++# control whether our STDOUT is a terminal.
++
++# Failure cases for config:
++# Save and restore STDERR; we will probably extract this into a
++# "dies_ok" method and possibly move the STDERR handling to Git.pm.
++open our $tmpstderr, ">&", STDERR or die "cannot save STDERR"; close STDERR;
++eval { $r->config("test.dupstring") };
++ok($@, "config: duplicate entry in scalar context fails");
++eval { $r->config_bool("test.boolother") };
++ok($@, "config_bool: non-boolean values fail");
++open STDERR, ">&", $tmpstderr or die "cannot restore STDERR";
++
++# ident
++like($r->ident("aUthor"), qr/^A U Thor <author\@example.com> [0-9]+ \+0000$/,
++     "ident scalar: author (type)");
++like($r->ident("cOmmitter"), qr/^C O Mitter <committer\@example.com> [0-9]+ \+0000$/,
++     "ident scalar: committer (type)");
++is($r->ident("invalid"), "invalid", "ident scalar: invalid ident string (no parsing)");
++my ($name, $email, $time_tz) = $r->ident('author');
++is_deeply([$name, $email], ["A U Thor", "author\@example.com"],
++	 "ident array: author");
++like($time_tz, qr/[0-9]+ \+0000/, "ident array: author");
++is_deeply([$r->ident("Name <email> 123 +0000")], ["Name", "email", "123 +0000"],
++	  "ident array: ident string");
++is_deeply([$r->ident("invalid")], [], "ident array: invalid ident string");
++
++# ident_person
++is($r->ident_person("aUthor"), "A U Thor <author\@example.com>",
++   "ident_person: author (type)");
++is($r->ident_person("Name <email> 123 +0000"), "Name <email>",
++   "ident_person: ident string");
++is($r->ident_person("Name", "email", "123 +0000"), "Name <email>",
++   "ident_person: array");
++
++# parse_rev
++is($r->parse_rev("HEAD"), $revisions[-1], "parse_rev: 'HEAD'");
++is($r->parse_rev("HEAD^"), $revisions[-2], "parse_rev: 'HEAD^'");
++is($r->parse_rev($revisions[0]), $revisions[0], "parse_rev: SHA1");
++is($r->parse_rev("--silly-name"), $revisions[0], "parse_rev: tag");
++is($r->parse_rev("nonexistent"), undef, "parse_rev: nonexistent name");
++is($r->parse_rev("0" x 40), "0" x 40, "parse_rev: nonexistent SHA1");
++
++# objects and hashes
++ok(our $file1hash = $r->parse_rev("$revisions[1]:file1"), "(get file hash)");
++our $iostring = IO::String->new;
++is($r->cat_blob($file1hash, $iostring), 15, "cat_blob: size");
++is(${$iostring->string_ref}, "changed file 1\n", "cat_blob: data");
++our $tmpfile = File::Temp->new();
++print $tmpfile ${$iostring->string_ref};
++is(Git::hash_object("blob", $tmpfile), $file1hash, "hash_object: roundtrip");
++$tmpfile = File::Temp->new();
++print $tmpfile my $test_text = "test blob, to be inserted\n";
++$tmpfile->close;
++like(our $newhash = $r->hash_and_insert_object($tmpfile), qr/[0-9a-fA-F]{40}/,
++     "hash_and_insert_object: returns hash");
++$iostring = IO::String->new;
++is($r->cat_blob($newhash, $iostring), length $test_text, "cat_blob: roundtrip size");
++is(${$iostring->string_ref}, $test_text, "cat_blob: roundtrip data");
++
++# paths
++is($r->repo_path, "./.git", "repo_path");
++is($r->wc_path, $abs_repo_dir . "/", "wc_path");
++is($r->wc_subdir, "", "wc_subdir initial");
++$r->wc_chdir("directory1");
++is($r->wc_subdir, "directory1", "wc_subdir after wc_chdir");
++TODO: {
++	local $TODO = "commands do not work after wc_chdir";
++	# Failure output is active even in non-verbose mode and thus
++	# annoying, and parse_rev even dies.  Hence we skip these
++	# tests as long as they fail.
++	todo_skip 'config and parse_rev after wc_chdir', 2;
++	is($r->config("color.string"), "value", "config after wc_chdir");
++	is($r->parse_rev("HEAD"), $revisions[-1], "parse_rev after wc_chdir");
++}
 -- 
-Jakub Narebski
-Poland
+1.5.5.GIT
