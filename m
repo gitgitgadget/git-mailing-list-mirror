@@ -1,53 +1,54 @@
 From: Lea Wiemann <lewiemann@gmail.com>
 Subject: [PATCH v3] perl/Git.pm: add parse_rev method
-Date: Sun,  1 Jun 2008 05:17:22 +0200
-Message-ID: <1212290243-19393-1-git-send-email-LeWiemann@gmail.com>
+Date: Sun,  1 Jun 2008 05:17:23 +0200
+Message-ID: <1212290243-19393-2-git-send-email-LeWiemann@gmail.com>
 References: <1212241932-28605-1-git-send-email-LeWiemann@gmail.com>
+ <1212290243-19393-1-git-send-email-LeWiemann@gmail.com>
 Cc: Lea Wiemann <LeWiemann@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 01 05:18:03 2008
+X-From: git-owner@vger.kernel.org Sun Jun 01 05:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2e55-000593-BB
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 05:18:03 +0200
+	id 1K2e55-000593-VY
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 05:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754875AbYFADRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2008 23:17:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284AbYFADRJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 23:17:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:37296 "EHLO
+	id S1755250AbYFADRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2008 23:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755288AbYFADRL
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 May 2008 23:17:11 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:37360 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753658AbYFADRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2008 23:17:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so426589fgg.17
-        for <git@vger.kernel.org>; Sat, 31 May 2008 20:17:05 -0700 (PDT)
+	with ESMTP id S1754225AbYFADRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2008 23:17:09 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so426593fgg.17
+        for <git@vger.kernel.org>; Sat, 31 May 2008 20:17:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
         bh=PlDqEFxZ4zi1lcyARTqgNwrWaLi3PVIEVmZzveec8i4=;
-        b=fb07FwtGn2DWe6Dk6tlyqlsPKFPPx6bzeuJfEuBk3OzBdN1O/EyFHdsIBIWF7DGhPDPvUeJjoPONutBicwc4l2INebKsJKxzXK9RRlua9rKSUyx7Zi5SAJGuRhHgMkVt2BH3LsvRT3VuwMUb2j2ohZG6E6O6I+C9ashI71Hk03k=
+        b=dDMa1wO/fgDZjnDYG7zZvY6GIq4u3VJDWnwkl5pJj4w471IjyXhXD92uK000/fKF+D9yvoqih6DLfNNSrvZEkz4Ukam4VFORVwU1neqwuBROglETe1b8CRRJF32HgsYAqDpTa68iw4BNCHBLVFP033RzWvx67O7hXIiXyPXUdK0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=fpVBm63sk36CRxiMCzSttBlbq/kDiz5pNLByw4EbZ5xLVmWopEs5f8mcN/hw2TSgjt3s2KLjLEs2lnE39umWWbakxnlNLKRa1Ghi1XRGAr9IvE1wxYoD6U8kmXGPQVVSjrK3AapqtoLEmTB7K4NzsIyCQetr1lR8UrEV0h+/ES8=
-Received: by 10.86.77.5 with SMTP id z5mr388769fga.13.1212290224346;
+        b=mXqDdJ5AjGHhbH90Mw8SYmImKzcgg6xb9bwgo8SwEZvdRQWUvj6k5XPENQka2c/M90AWsq7rpWan7TQC31V0LxTy7pcfGmOE0iJzf1baWljVuldLKJPjWPPPTH0nj6My2pn1XfbZFMZMBdvkYyf6J3eTwgIZWGm+wTehsuSmTLM=
+Received: by 10.86.49.3 with SMTP id w3mr3299441fgw.4.1212290224335;
         Sat, 31 May 2008 20:17:04 -0700 (PDT)
 Received: from fly ( [91.33.240.119])
-        by mx.google.com with ESMTPS id d4sm1868770fga.8.2008.05.31.20.17.03
+        by mx.google.com with ESMTPS id d13sm6189216fka.10.2008.05.31.20.17.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
         Sat, 31 May 2008 20:17:03 -0700 (PDT)
 Received: from lea by fly with local (Exim 4.69)
 	(envelope-from <LeWiemann@gmail.com>)
-	id 1K2e4R-00054e-EV; Sun, 01 Jun 2008 05:17:23 +0200
+	id 1K2e4R-00054g-HJ; Sun, 01 Jun 2008 05:17:23 +0200
 X-Mailer: git-send-email 1.5.5.GIT
-In-Reply-To: <1212241932-28605-1-git-send-email-LeWiemann@gmail.com>
+In-Reply-To: <1212290243-19393-1-git-send-email-LeWiemann@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83424>
 
 The parse_rev method takes a revision name and returns a SHA1 hash,
 like the git-rev-parse command.
