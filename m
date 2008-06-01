@@ -1,53 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: unable to push
-Date: Sun, 1 Jun 2008 14:36:59 -0400
-Message-ID: <20080601183659.GA5818@sigill.intra.peff.net>
-References: <alpine.DEB.1.10.0805310759540.15294@asgard.lang.hm> <20080531155036.GA27397@sigill.intra.peff.net> <alpine.DEB.1.10.0805310855000.15294@asgard.lang.hm> <20080601182205.GA742@sigill.intra.peff.net> <alpine.DEB.1.10.0806011125340.15294@asgard.lang.hm> <20080601183134.GA2623@sigill.intra.peff.net> <alpine.DEB.1.10.0806011133050.15294@asgard.lang.hm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun Jun 01 20:38:04 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] gitweb: Remove gitweb/test/ directory
+Date: Sun, 1 Jun 2008 21:07:44 +0200
+Message-ID: <97942300-E8AC-4AC6-AD4D-6EEA2198E5D9@wincent.com>
+References: <28EDBE43-6E55-4EC9-97C6-8AC8D949E82D@zib.de> <20080531182555.1646.47950.stgit@localhost.localdomain> <5DBABAFE-C447-4E5D-A7E8-0C16B4D1D960@wincent.com> <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 01 21:09:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2sRI-0007jC-64
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 20:37:56 +0200
+	id 1K2svL-0007iY-Ij
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 21:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbYFAShE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 14:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbYFAShD
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 14:37:03 -0400
-Received: from peff.net ([208.65.91.99]:3893 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830AbYFAShB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 14:37:01 -0400
-Received: (qmail 1115 invoked by uid 111); 1 Jun 2008 18:37:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 01 Jun 2008 14:37:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 01 Jun 2008 14:36:59 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.0806011133050.15294@asgard.lang.hm>
+	id S1751294AbYFATIA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2008 15:08:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbYFATIA
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 15:08:00 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:54950 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751251AbYFATH7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Jun 2008 15:07:59 -0400
+Received: from cuzco.lan (157.pool85-53-24.dynamic.orange.es [85.53.24.157])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m51J7jJA015770
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 1 Jun 2008 15:07:48 -0400
+In-Reply-To: <alpine.DEB.1.00.0806010018300.13507@racer.site.net>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83463>
 
-On Sun, Jun 01, 2008 at 11:34:19AM -0700, david@lang.hm wrote:
+El 1/6/2008, a las 1:19, Johannes Schindelin escribi=F3:
 
->> Did you mean "init" here instead of clone? The clone should have created
->> at least one branch (generally master, but depending on the current
->> branch of the cloned repo).
+> Hi,
 >
-> no, it was definantly a clone, and it did not create a master branch (at  
-> least not one that showed up with git branch -a)
+> On Sat, 31 May 2008, Wincent Colaiuta wrote:
+>
+>> El 31/5/2008, a las 20:28, Jakub Narebski escribi=F3:
+>>
+>>> Testing if gitweb handles filenames with spaces, filenames with plu=
+s
+>>> sign ('+') which encodes spaces in CGI parameters (in URLs), and
+>>> filenames with Unicode characters should be handled by gitweb tests=
+=2E
+>>>
+>>> Those files are remainder of the time when gitweb was project on it=
+s
+>>> own, not a part of git (with its testsuite).
+>>>
+>>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>>
+>> Ack.
+>
+> And I thought "Ack" was reserved for the people who are considered th=
+e
+> primary authors of the patched code...
 
-Hmm. It's possible that you cloned a repo that didn't have its HEAD
-pointing at the master branch (for example, one with a detached HEAD).
-And that would explain how you got into that situation (and either way,
-the discussed ways out of the situation apply).
+I had no idea. Thanks for letting me know.
 
--Peff
+Wincent
