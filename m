@@ -1,85 +1,91 @@
-From: "Steven Walter" <stevenrwalter@gmail.com>
-Subject: Re: [PATCH review] Build: make PERL_PATH = /usr/bin/env perl
-Date: Sun, 1 Jun 2008 14:11:08 -0400
-Message-ID: <e06498070806011111w792399dfi9dad780ee00faa8a@mail.gmail.com>
-References: <1212258886-87484-1-git-send-email-mfwitten@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Michael Witten" <mfwitten@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 01 20:12:30 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [PATCH] glossary: improve a few links
+Date: Sun,  1 Jun 2008 20:15:33 +0200
+Message-ID: <1212344133-3311-1-git-send-email-LeWiemann@gmail.com>
+Cc: Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 01 20:16:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2s2d-00011z-W5
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 20:12:28 +0200
+	id 1K2s6Y-0001ty-UI
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 20:16:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751185AbYFASLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2008 14:11:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbYFASLM
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 14:11:12 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:26964 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbYFASLL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 14:11:11 -0400
-Received: by an-out-0708.google.com with SMTP id d40so215703and.103
-        for <git@vger.kernel.org>; Sun, 01 Jun 2008 11:11:08 -0700 (PDT)
+	id S1751303AbYFASPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 14:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbYFASPi
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 14:15:38 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:35797 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830AbYFASPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 14:15:37 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so554810fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Jun 2008 11:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wFok0fGI7eEefAA8YK9LDwf0bhotoxuzj4P9XjSt0IE=;
-        b=q8e1p4BbPr6dqbcgsyUq/Xu9NffqtvB7TjYewqkeOskGsJnqABhCaTenQPg8DrNaipy0//OsURTcqaTuafAEmSgPgwhFnPx7XYAGYLB6EVoPp2TkdohLWP0OchmesjPiVneEvn4CTk2J1VQmbHuzadYTDZXCLiz2T/eOM+rYoV4=
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=rycASVDgEk/5O0uHB9OPeBU4jEurdBck412+0+St6zc=;
+        b=cDbqMFSxcrC0gi/yhxfJlTooMOEIwhF/BDeVrnuf4sZYPcArek1zBPjkKgjnytvc6lqvrLLryFTBcIxJSSO7+PunejQqh64NMzvf/izx9FIjGmdZjN5jKB53N3x1gyGuh1RXo0DGklRhfk7a+xZ1WBcGh8HTmm+vLYf4c2UC7VE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QCNiEWsiZX4kvFhTdkeOk4NpP9Vvrk17TXKoVC6H0kwoyL9czinfGqJykwfegXg6tcd6jw+8bbDIYvL1N0a6s2YbgSScz4qH7b0kifHFHbmTtW+dKAxYuw+6USg15ESmxqmSGJwWvDmAWB+b4GqCB3aMuEuJhhdL3jtjlramERU=
-Received: by 10.100.251.18 with SMTP id y18mr13322378anh.36.1212343868261;
-        Sun, 01 Jun 2008 11:11:08 -0700 (PDT)
-Received: by 10.100.92.6 with HTTP; Sun, 1 Jun 2008 11:11:08 -0700 (PDT)
-In-Reply-To: <1212258886-87484-1-git-send-email-mfwitten@mit.edu>
-Content-Disposition: inline
+        h=to:cc:subject:date:message-id:x-mailer:from;
+        b=jqN9TW2OL0mRF52COq8NE3+6J4bjdX0EFWgF2qSOy9pf2bZXqenSmgioxUBbdlPmcCbcZLykYQH8iDgtF/oQACMCVWU1Z6pfdtuRIm/x91uDyko5/RTLP0GYW/5UHIhvcn/D87LCzKqqUdcTNFEpfKKffOEIUfjfoRzEBXkS8aA=
+Received: by 10.86.96.18 with SMTP id t18mr4878326fgb.17.1212344135902;
+        Sun, 01 Jun 2008 11:15:35 -0700 (PDT)
+Received: from fly ( [91.33.205.25])
+        by mx.google.com with ESMTPS id 13sm7912332fks.12.2008.06.01.11.15.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 01 Jun 2008 11:15:35 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K2s5d-0000rl-6Y; Sun, 01 Jun 2008 20:15:33 +0200
+X-Mailer: git-send-email 1.5.5.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83455>
 
-On Sat, May 31, 2008 at 2:34 PM, Michael Witten <mfwitten@mit.edu> wrote:
-> This should make PERL_PATH more robust, as some
-> systems may have multiple version of perl installed.
->
-> Signed-off-by: Michael Witten <mfwitten@mit.edu>
-> ---
->  Makefile |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 865e2bf..5828745 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -323,7 +323,7 @@ ifndef SHELL_PATH
->        SHELL_PATH = /bin/sh
->  endif
->  ifndef PERL_PATH
-> -       PERL_PATH = /usr/bin/perl
-> +       PERL_PATH = /usr/bin/env perl
->  endif
->
->  export PERL_PATH
-> --
-> 1.5.5.GIT
+They now point to more specific/appropriate targets.
 
-If you do this, you will have to modify the perl scripts to remove the
--w flag from their hash-bang line.  "/usr/bin/env perl -w" does not
-seem to do the expected thing.
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+ Documentation/glossary.txt |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
+index 51b6353..85178c3 100644
+--- a/Documentation/glossary.txt
++++ b/Documentation/glossary.txt
+@@ -90,11 +90,10 @@ to point at the new commit.
+ 	source code management tools.
+ 
+ [[def_DAG]]DAG::
+-	Directed acyclic graph. The <<def_commit,commit>> objects form a
++	Directed acyclic graph. The <<def_commit_object,commit objects>> form a
+ 	directed acyclic graph, because they have parents (directed), and the
+-	graph of commit objects is acyclic (there is no
+-	<<def_chain,chain>> which begins and ends with the same
+-	<<def_object,object>>).
++	graph of commit objects is acyclic (there is no <<def_chain,chain>>
++	which begins and ends with the same <<def_object,object>>).
+ 
+ [[def_dangling_object]]dangling object::
+ 	An <<def_unreachable_object,unreachable object>> which is not
+@@ -250,9 +249,10 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	the <<def_hash,hash>> of the object.
+ 
+ [[def_object_type]]object type::
+-	One of the identifiers
+-	"<<def_commit,commit>>","<<def_tree,tree>>","<<def_tag,tag>>" or "<<def_blob_object,blob>>"
+-	describing the type of an <<def_object,object>>.
++	One of the identifiers "<<def_commit_object,commit>>",
++	"<<def_tree_object,tree>>", "<<def_tag_object,tag>>" or
++	"<<def_blob_object,blob>>" describing the type of an
++	<<def_object,object>>.
+ 
+ [[def_octopus]]octopus::
+ 	To <<def_merge,merge>> more than two <<def_branch,branches>>. Also denotes an
 -- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
- -Robert Heinlein
+1.5.5.GIT
