@@ -1,100 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [StGIT BUG] StGIT errors out on rebasing patch deleting file with Unicode filename
-Date: Sun, 1 Jun 2008 10:46:50 +0200
-Message-ID: <200806011046.51872.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH review] Build: make PERL_PATH = /usr/bin/env perl
+Date: Sun, 01 Jun 2008 02:01:54 -0700
+Message-ID: <7vej7hbkal.fsf@gitster.siamese.dyndns.org>
+References: <1212258886-87484-1-git-send-email-mfwitten@mit.edu>
+ <vpqabi5o992.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 01 10:48:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Witten <mfwitten@MIT.EDU>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 01 11:03:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K2jEh-0004R5-DG
-	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 10:48:19 +0200
+	id 1K2jSx-0001Ju-Om
+	for gcvg-git-2@gmane.org; Sun, 01 Jun 2008 11:03:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469AbYFAIrB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2008 04:47:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbYFAIrB
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 04:47:01 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:28084 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401AbYFAIrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2008 04:47:00 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so245882nfc.21
-        for <git@vger.kernel.org>; Sun, 01 Jun 2008 01:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=nV2uRUa25oDO0doF1y3CsueiYdQKBo2u2Iyz/xAXrOQ=;
-        b=Srgoh/fZanSMhKMA2NBrK6NPtaJTCuepwx57H8ecJ7X9OpFiM1pUkfQ+/T3t5huWHaH4MDxOnpurtX5I79Wc5lCv7GL14gY3vwWjACdz2OQpCTx7C5nH+Zla4D2CtVTmzdARiZ2oEFM6wn6uN5KGsp62OKIpSPCR14KHnGgSDhI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kD4qYrZoRHYzx+P54O3/iqHVp6GJ6wAveZfqHT72xzSSMJ8S2lM7gZ4U22oXqlU0bq4V+uD7fGlNUnCwgGezubq7dcJvbNzKXWiZT6wFRUINo4NBawjml4yg4PFv56gsHPEc1CZ2WV2J3gMuwVJOAEoJlYEInp08sAwSGdWmbfE=
-Received: by 10.210.23.3 with SMTP id 3mr2135147ebw.21.1212310018310;
-        Sun, 01 Jun 2008 01:46:58 -0700 (PDT)
-Received: from ?192.168.1.15? ( [83.8.204.14])
-        by mx.google.com with ESMTPS id d2sm3541396nfc.31.2008.06.01.01.46.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 01 Jun 2008 01:46:56 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1755180AbYFAJCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2008 05:02:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbYFAJCK
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jun 2008 05:02:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48668 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751654AbYFAJCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2008 05:02:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF05E37E9;
+	Sun,  1 Jun 2008 05:02:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0617737E8; Sun,  1 Jun 2008 05:01:59 -0400 (EDT)
+In-Reply-To: <vpqabi5o992.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sun, 01 Jun 2008 10:22:01 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 67C9737A-2FB9-11DD-A052-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83440>
 
-StGIT errors out on rebasing patch which deletes file with Unicode
-characters in filename (with characters outside US-ASCII in filename).
-The patch in question is patch deleting gitweb/test/* in git directory,
-and is present already on the 'origin' branch (the branch we rebase
-onto), so stg-rebase should result in an empty patch (as first patch).
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
- "gitweb/test/M\303\244rchen" |    2 --
- gitweb/test/file with spaces |    4 ----
- gitweb/test/file+plus+sign   |    6 ------
- 3 files changed, 0 insertions(+), 12 deletions(-)
- delete mode 100644 gitweb/test/M=E4rchen
- delete mode 100644 gitweb/test/file with spaces
- delete mode 100644 gitweb/test/file+plus+sign
+> Note that this is indeed different from the original proposal in the
+> case of a multi-user system: here, the perl installation is chosen
+> once and for all by the guy who installs git, but can't be overridden
+> later (e.g by a user having his own custom perl installation in his
+> $HOME). I don't know which is better.
 
-I guess the error is caused by using unescaped (quoted) filename.
+"env" is Ok to make the same scripts you have privately in your $HOME/bin/
+(which is mounted across different platforms) work with perl or python or
+whatever from different places, but it is very unsuitable for scripts that
+are meant to be installed per machine, such as ours, for use by many
+people.
 
-Below is StGIT's error message:
+If you do not have (or want to use) common programs at usual place, you
+tell "make" where they are, and the resulting scripts will use the same
+program for everybody.  That way, you don't have to worry about confusing
+people by having scripts use different perl depending on who they are, and
+by failing for some people and working for others.
 
-1248:[gitweb/web@git]# stg rebase origin
-Checking for changes in the working directory ... done
-Popping all applied patches ... done
-Rebasing to "origin" ... Traceback (most recent call last):
-  File "/usr/bin/stg", line 43, in ?
-    main()
-  File "/usr/lib/python2.4/site-packages/stgit/main.py", line 281, in m=
-ain
-    command.func(parser, options, args)
-  File "/usr/lib/python2.4/site-packages/stgit/commands/rebase.py", lin=
-e 70, in func
-    rebase(crt_series, args[0])
-  File "/usr/lib/python2.4/site-packages/stgit/commands/common.py", lin=
-e 356, in rebase
-    git.rebase(tree_id =3D tree_id)
-  File "/usr/lib/python2.4/site-packages/stgit/git.py", line 927, in re=
-base
-    reset(tree_id =3D tree_id)
-  File "/usr/lib/python2.4/site-packages/stgit/git.py", line 872, in re=
-set
-    map(os.remove, rm_files)
-OSError: [Errno 2] No such file or directory: '"gitweb/test/M\\303\\244=
-rchen"'
-1249:[gitweb/web@git]# stg version
-Stacked GIT 0.14.2
-git version 1.5.5.3
-Python version 2.4.3 (#1, Jun 13 2006, 16:41:18)=20
-[GCC 4.0.2 20051125 (Red Hat 4.0.2-8)]
+You _can_ use "/usr/bin/env" for your own build and I won't stop you, but
+please don't tell me to ship such ugliness in the default Makefile.  We
+will not do SHELL_PATH = $(shell which sh) either, ever.
 
---=20
-Jakub Narebski
-Poland
+By the way, "which" is probably Ok when you know there _is_ an instance of
+the program somewhere on the $PATH, but be careful if you suspect there
+might not be any.  Depending on whose "which" it is, it may not exit with
+non-zero status nor be silent on the standard output.  If you are shooting
+for portability, don't use it in your scripts, ever.  Also "type" is not
+much better either ("type -p" is a bash-ism).
+
+Probably the closest to the most portable would be "command -v"; this is a
+POSIXly kosher way and seems to be Ok with /bin/ksh and OpenBSD /bin/sh as
+well, not just bash and dash.
