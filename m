@@ -1,86 +1,75 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH v2] test-lib.sh: set PERL5LIB instead of GITPERLLIB
-Date: Mon,  2 Jun 2008 16:13:16 +0200
-Message-ID: <1212415996-32130-1-git-send-email-LeWiemann@gmail.com>
-References: <4843FEE2.1070708@gmail.com>
-Cc: Lea Wiemann <lewiemann@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 02 16:15:05 2008
+From: "Geoffrey Irving" <irving@naml.us>
+Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up git-cherry
+Date: Mon, 2 Jun 2008 07:35:39 -0700
+Message-ID: <7f9d599f0806020735g30722893mb8efed41a6544ab5@mail.gmail.com>
+References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com>
+	 <alpine.DEB.1.00.0806020649110.13507@racer.site.net>
+	 <20080602064218.GA15144@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 02 16:37:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3And-0005hG-IO
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:14:13 +0200
+	id 1K3B9D-0005fs-PF
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760464AbYFBONQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 10:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbYFBONQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:13:16 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:10398 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756098AbYFBONP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 10:13:15 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so745921fgg.17
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:13:14 -0700 (PDT)
+	id S1753690AbYFBOfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 10:35:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbYFBOfl
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:35:41 -0400
+Received: from rv-out-0506.google.com ([209.85.198.233]:2600 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589AbYFBOfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 10:35:39 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so1065320rvb.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        bh=Q8g7IRCZOcwRG5kY7qpBZvKZw43Vllk3fACAdwvhs2k=;
-        b=Z5UCM9fUv6hDTIS8xJSiO8v7F7P5e2cwxr6bCD1mW6cB0SeAN5NY3YoLa4qJ5firXZMc8sYqJS8jj/ADxBw9LdnqErBRGsuFhidqxfpySFjzcnFF8pnP6bRhDMz7aVM0CStrJg4f+91c4XuibH19M/FxixtD+5Jg60eqT+1Q9gA=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=l0DbQQU9v2qV0z3DKf7B+MFrbfy2jMUZO/zY9x8OGUI=;
+        b=UURK/iV3j1nvjLFwratAoD6+taKY3+wHmLrFPzPgMPwBGW8+S0vjb/eafryRUL39nqfSPfifHyRzHbio4VjHzs/X1irMjDQx+LfBym4FtqTqyLdYvVJmdb6tD05XAfjMV0z3qFSR594k1A4MTb48KJMU9E9qbyqtXPgpUGbgTnc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=vXl4CYCeWvL4s9PqlbykaKxHHGegrnUmvUTqiuNjKp1+HKdt8LMYoc75ZNKoFQVakxZ1UZzH3GR4dBQR+2ptO6o0gFGedZSxgZvYGpmpLg6Nw/ZK11jpEkQ7+k4Ucny8CF9yWKuZRgyQvo1eazndw/WdiZf9+FXQ0hx5fADwaHc=
-Received: by 10.86.58.3 with SMTP id g3mr924826fga.21.1212415993950;
-        Mon, 02 Jun 2008 07:13:13 -0700 (PDT)
-Received: from fly ( [91.33.205.25])
-        by mx.google.com with ESMTPS id l19sm4333739fgb.7.2008.06.02.07.13.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Jun 2008 07:13:13 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K3Ami-0008Ma-Li; Mon, 02 Jun 2008 16:13:16 +0200
-X-Mailer: git-send-email 1.5.5.GIT
-In-Reply-To: <4843FEE2.1070708@gmail.com>
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=EvuNfkPTlgUS4TeaPvmCAJaQ2eoAX04nbsOL2l5vs9M5Who/SnsAJdQnlqS//vfOEqwX7o3Ztvue1eDUp3mEMGChhBCpvWaBWYq7FaHXrYG4fTZGEJ7n3jPjfthVAs6ybC2RkAAljxM5WrI2PXVIdnYHn6HJ4fbVA5o9LljxHYc=
+Received: by 10.141.195.5 with SMTP id x5mr4957345rvp.263.1212417339125;
+        Mon, 02 Jun 2008 07:35:39 -0700 (PDT)
+Received: by 10.140.178.16 with HTTP; Mon, 2 Jun 2008 07:35:39 -0700 (PDT)
+In-Reply-To: <20080602064218.GA15144@sigill.intra.peff.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: 84848ebb2543ed5b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83526>
 
-From: Lea Wiemann <lewiemann@gmail.com>
+On Sun, Jun 1, 2008 at 11:42 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 02, 2008 at 07:13:14AM +0100, Johannes Schindelin wrote:
+>
+>> I do not think that this "read-the-entire-table-into-memory" paradigm is a
+>> wise choice. mmap()ing, I would have understood, but reading a potentially
+>> pretty large table into memory?
+>
+> When I was just a git-youth, I wrote a fast mmap-based cache for storing
+> SHA1 pairs. It might give some direction. You should be able to find it
+> here:
+>
+>  http://mid.gmane.org/20060629035849.GA30749@coredump.intra.peff.net
+>
+> It mmaps and binary searches a sorted list. New entries are added to an
+> in-memory list, and then at the end of a run, the two sorted lists are
+> merged to create the new on-disk version.
 
-By setting PERL5LIB for the tests, we enable Perl test scripts to just
-say "use Git;" without adding the GITPERLLIB paths to @INC beforehand.
+I don't need sorting (and neither did you), so I think a hash table is
+better (O(1) instead of O(log n), and we don't even need to compute
+hash keys.  I'll leave it up to you and Dscho (or anyone else who
+cares to chime in) which one you think I should do.
 
-Also, unset GITPERLLIB so that user-set paths in GETPERLLIB don't
-cause the wrong module to be loaded.
-
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-Added since v1: Unset GITPERLLIB.
-
- t/test-lib.sh |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 99b63da..8ea0511 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -454,8 +454,10 @@ GIT_CONFIG_NOSYSTEM=1
- GIT_CONFIG_NOGLOBAL=1
- export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CONFIG_NOGLOBAL
- 
--GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
--export GITPERLLIB
-+unset GITPERLLIB
-+test -n "$PERL5LIB" && PERL5LIB=":$PERL5LIB"
-+PERL5LIB="$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git$PERL5LIB"
-+export PERL5LIB
- test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
--- 
-1.5.5.GIT
+Geoffrey
