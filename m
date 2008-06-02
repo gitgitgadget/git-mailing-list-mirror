@@ -1,107 +1,104 @@
-From: "Alf Clement" <alf.clement@gmail.com>
-Subject: Re: problem with branches
-Date: Mon, 2 Jun 2008 15:59:22 +0200
-Message-ID: <556d90580806020659i3cd6ef1dt86bbd4e332f92ca0@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rebase --interactive: Compute upstream SHA1 before switching
+ branches
+Date: Mon, 02 Jun 2008 16:01:40 +0200
+Message-ID: <4843FD44.90905@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 02 16:01:17 2008
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 02 16:03:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3Aay-0001Hh-HV
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:01:08 +0200
+	id 1K3AcX-0001qE-J5
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757655AbYFBN70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 09:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762254AbYFBN70
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 09:59:26 -0400
-Received: from ik-out-1112.google.com ([66.249.90.177]:11179 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754357AbYFBN7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 09:59:24 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so293298ika.5
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 06:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=bwDXbOE5SH5XEaA2w55u2xdaJFv37Q51loHMMOxo7hY=;
-        b=Y8j81kaguf3QlJEVXKLa2MUGXh+Xf3uxls42fWFZHLS4wbi/ybxUL+KjaVN+HczoIZxbuIE0ho8EnCiU8t1DGeFBa2Piw7pszmQCFEZmv6faCdvEbOhzC6hrTkIEoZjGVlMRsJhzIK58s6yfHcQPorBmwd/Tr+xrAwEx4jsWd/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=oNw2py8Ev9F+J6l5NU0nN7OvRlg14X25YL75C/6IKuAHOoLo0+RTaMSqjLHwmD71rRqMiiLv6SnRKYYhkAVv76WQ+s/kcBcJWIFCyUKNAOuMpPhF/xLB/jjrWBpYv6H4qO5S6XMMLXxm48FoeeBnljdm1IKEUnt5gny6PLZAAMw=
-Received: by 10.78.138.6 with SMTP id l6mr242760hud.41.1212415162879;
-        Mon, 02 Jun 2008 06:59:22 -0700 (PDT)
-Received: by 10.78.144.18 with HTTP; Mon, 2 Jun 2008 06:59:22 -0700 (PDT)
-Content-Disposition: inline
+	id S1757408AbYFBOBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 10:01:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660AbYFBOBs
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:01:48 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:5386 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092AbYFBOBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 10:01:47 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K3AbV-0006m4-8c; Mon, 02 Jun 2008 16:01:43 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F0233546; Mon,  2 Jun 2008 16:01:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83523>
 
-Hi all,
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-after debugging quite some while, I found out that the problems comes from
-hooks/update script.
+If the upstream argument to rebase (the first argument) was relative to
+HEAD and the name of the branch to rebase (the second argument) was given,
+the upstream would have been interpreted relative to the second argument.
+In particular, this command
 
-It checks for the project description - which I didn't set, default
-was present -
-and complains. The script  gets the correct paths but the description is empty,
-even if I change the description file.
+    git rebase -i HEAD topic
 
-I am working on some 1.5.5.1 version of git.
+would always finish with "Nothing to do". (a1bf91e fixed the same issue
+for non-interactive rebase.)
 
-Would be nice to transport the messages from server to the client to
-get better hints what goes wrong...
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
 
-CU,
-Alf
+I made this with -U5 so that you can see the checkout in the context.
 
-I created 4 branches with a remote repository on a server.
-I've changed some files locally, committed and now try to push... but
-it fails with hook declined.
-Now the status:
-$ git pull -v
-From git://XXXX/YY
- = [up to date]      TEST       -> origin/TEST
- = [up to date]      master     -> origin/master
- = [up to date]      v1.03      -> origin/v1.03
- = [up to date]      v2.07      -> origin/v2.07
- = [up to date]      v3.11      -> origin/v3.11
-Already up-to-date.
+BTW, methinks, this checkout is unnecessary, since before the rebase
+begins, there is a 'git checkout $ONTO', and the branch switching is
+certainly not needed to compute the todo list...
 
-$ git push -v
-Pushing to git://XXXX/YY
-GIT TRANPORT
-Looking up XXXX ... done.
-Counting objects: 31, done.
-Compressing objects: 100% (14/14), done.
-Writing objects: 100% (21/21), 2.02 KiB, done.
-Total 21 (delta 8), reused 0 (delta 0)
-To git://XXXX/YY
- = [up to date]      TEST -> TEST
- ! [remote rejected] master -> master (hook declined)
- ! [remote rejected] v3.11 -> v3.11 (hook declined)
-error: failed to push some refs to 'git://XXXX/YY'
+-- Hannes
 
-I also get a warning when moving between branches:
-$ git checkout v3.11
-Switched to branch "v3.11"
-Your branch is ahead of the tracked remote branch 'origin/v3.11' by 1 commit.
+ git-rebase--interactive.sh |    7 +++----
+ 1 files changed, 3 insertions(+), 4 deletions(-)
 
-$ git checkout master
-Switched to branch "master"
-Your branch is ahead of the tracked remote branch 'origin/master' by 2 commits.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 8ee08ff..0ca986f 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -473,25 +473,24 @@ do
+ 			;;
+ 		esac
 
-Any ideas how to recover from here?
-The git-daemon seems to run fine, as I can commit and push from
-another test project.
-It would be nice if there were more clean failure messages from the
-daemon...(Enhancement)
+ 		require_clean_work_tree
 
-Thanks,
-Alf
++		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
++		test -z "$ONTO" && ONTO=$UPSTREAM
++
+ 		if test ! -z "$2"
+ 		then
+ 			output git show-ref --verify --quiet "refs/heads/$2" ||
+ 				die "Invalid branchname: $2"
+ 			output git checkout "$2" ||
+ 				die "Could not checkout $2"
+ 		fi
+
+ 		HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
+-		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
+-
+ 		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
+
+-		test -z "$ONTO" && ONTO=$UPSTREAM
+-
+ 		: > "$DOTEST"/interactive || die "Could not mark as interactive"
+ 		git symbolic-ref HEAD > "$DOTEST"/head-name 2> /dev/null ||
+ 			echo "detached HEAD" > "$DOTEST"/head-name
+
+ 		echo $HEAD > "$DOTEST"/head
+-- 
+1.5.6.rc0.885.gdf17.dirty
