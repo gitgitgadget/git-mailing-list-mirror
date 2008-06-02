@@ -1,104 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] rebase --interactive: Compute upstream SHA1 before switching
- branches
-Date: Mon, 02 Jun 2008 16:01:40 +0200
-Message-ID: <4843FD44.90905@viscovery.net>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] test-lib.sh: set PERL5LIB instead of GITPERLLIB
+Date: Mon, 02 Jun 2008 16:08:34 +0200
+Message-ID: <4843FEE2.1070708@gmail.com>
+References: <7vy75oalh7.fsf@gitster.siamese.dyndns.org> <1212358587-15948-1-git-send-email-LeWiemann@gmail.com> <7vfxrwa008.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 16:03:10 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 16:09:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3AcX-0001qE-J5
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:02:45 +0200
+	id 1K3Aj5-0003zd-AZ
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757408AbYFBOBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 10:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660AbYFBOBs
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:01:48 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:5386 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754092AbYFBOBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 10:01:47 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K3AbV-0006m4-8c; Mon, 02 Jun 2008 16:01:43 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id F0233546; Mon,  2 Jun 2008 16:01:40 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754125AbYFBOIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 10:08:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbYFBOIf
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:08:35 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:1029 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753749AbYFBOIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 10:08:34 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so744882fgg.17
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:08:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=A92Ik9+QnhobXHLvsT8Q1dgslLEXkVCwZwJaQ2HpLuc=;
+        b=Y1Xn+qjBIBsyC1C+0utgYNOaMaJWi1Q5/bNbvmgqXub87+kqY6dnMS7cP+O3HD18ykckkSorfNb/qojPXxmgOe5p0m4gSHQWtQlNuHTyp3YzVhI66uCyIhH1qgyT1bE/19JAoK3+TQnNQjmQm08mPnolZ51CgXX1Flj1lrguRPs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=Wjk+YvHospH3Vg93g4Cp41V2Nse4dEwRf7pSxRdOxWH5Elc7c4g0/RgDE2SZgiv+/1MGe5Dfxo+q4idB0+Xhko4gYqQeVQQJoNoLrgjCdYDukNmSMIyjqGCAYbVLLUn3uHLS5xRbiZAZ5sssUCM2i5sbkM0v8oRvm5wJq3Ltr2c=
+Received: by 10.86.23.17 with SMTP id 17mr3597813fgw.32.1212415712896;
+        Mon, 02 Jun 2008 07:08:32 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.205.25])
+        by mx.google.com with ESMTPS id g28sm10332816fkg.1.2008.06.02.07.08.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 07:08:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <7vfxrwa008.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83524>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+Junio C Hamano wrote:
+> the primary Makefile has this rule to munge our perl scripts:
+> 
+>                     -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
+> 
+> The real fix to the issue [is] to fix the build procedure of
+> gitweb/gitweb.perl so that the above script rewriting is also applied to it.
 
-If the upstream argument to rebase (the first argument) was relative to
-HEAD and the name of the branch to rebase (the second argument) was given,
-the upstream would have been interpreted relative to the second argument.
-In particular, this command
+I see -- in that case, gitweb.perl should indeed be fixed.
 
-    git rebase -i HEAD topic
+Still however, for the Perl tests (t/t9700/test.pl in my branch) we 
+don't have a Makefile, so the only way for them to pick up the right 
+Git.pm module is modifying PERL5LIB in test-lib.sh. [1]  I just realized 
+that we not only don't need to set GITPERLLIB in this case, but we 
+should actually unset it so that user-set paths don't cause a wrong 
+version of Git.pm to be loaded.  I'll send a new patch.
 
-would always finish with "Nothing to do". (a1bf91e fixed the same issue
-for non-interactive rebase.)
+-- Lea
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
-
-I made this with -U5 so that you can see the checkout in the context.
-
-BTW, methinks, this checkout is unnecessary, since before the rebase
-begins, there is a 'git checkout $ONTO', and the branch switching is
-certainly not needed to compute the todo list...
-
--- Hannes
-
- git-rebase--interactive.sh |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 8ee08ff..0ca986f 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -473,25 +473,24 @@ do
- 			;;
- 		esac
-
- 		require_clean_work_tree
-
-+		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
-+		test -z "$ONTO" && ONTO=$UPSTREAM
-+
- 		if test ! -z "$2"
- 		then
- 			output git show-ref --verify --quiet "refs/heads/$2" ||
- 				die "Invalid branchname: $2"
- 			output git checkout "$2" ||
- 				die "Could not checkout $2"
- 		fi
-
- 		HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
--		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
--
- 		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
-
--		test -z "$ONTO" && ONTO=$UPSTREAM
--
- 		: > "$DOTEST"/interactive || die "Could not mark as interactive"
- 		git symbolic-ref HEAD > "$DOTEST"/head-name 2> /dev/null ||
- 			echo "detached HEAD" > "$DOTEST"/head-name
-
- 		echo $HEAD > "$DOTEST"/head
--- 
-1.5.6.rc0.885.gdf17.dirty
+[1] Or alternatively adding some (lengthy and cwd-dependent) "use lib 
+..." statement at the top of every Perl test file, but that doesn't seem 
+preferable given that we can solve this centrally in test-lib.sh.
