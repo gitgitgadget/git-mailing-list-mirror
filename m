@@ -1,89 +1,97 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH] Add rebase test for when upstream has deleted a non-ASCII file
-Date: Mon, 02 Jun 2008 22:23:21 +0200
-Message-ID: <20080602202148.24899.55294.stgit@yoghurt>
-References: <200806011046.51872.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 22:25:19 2008
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: [JGIT PATCH 01/12] Format PackFile class
+Date: Mon,  2 Jun 2008 23:24:32 +0200
+Message-ID: <1212441883-12990-2-git-send-email-marek.zawirski@gmail.com>
+References: <1212441883-12990-1-git-send-email-marek.zawirski@gmail.com>
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
+To: robin.rosenberg@dewire.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 23:25:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3GaU-000356-5u
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 22:25:02 +0200
+	id 1K3HXF-0006RV-PW
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 23:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756548AbYFBUXg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jun 2008 16:23:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756517AbYFBUXf
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 16:23:35 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3895 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287AbYFBUXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 16:23:33 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1K3GYx-0000uG-00; Mon, 02 Jun 2008 21:23:27 +0100
-In-Reply-To: <200806011046.51872.jnareb@gmail.com>
-User-Agent: StGIT/0.14.2.156.gbabd
+	id S1751516AbYFBVYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 17:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbYFBVYw
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 17:24:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:38434 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297AbYFBVYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 17:24:50 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so844322fgg.17
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 14:24:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=EFcXwWJm2ZPVBYMOlIXhIq4T8//J6f7upvN3aSsduDw=;
+        b=H0SRQplMacoKBM6DNDBSXV5Hp5k5LDbw+sGlWbgf8YI5cQHSlY7iXYqdccB+mPw4EuHZNRinkLnnq+VDf0npVTNYKgurY/AgxPgTu9MFFi1t9+WAOyz6c/zkTZi2SxBItt1s/oY/N/myZFAYqkQFJcp6m4N+kTEJ6wAWjdyyYbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Y++OOkOaLumQefK/Fk2hexyd1gUrvHDgKzljWfqbel0IRYAVLL+A5gl4mAPGDRO6cmrbXhbTboKOceSB6dGkcil8vpZO4uOzrDDmP6BHHcLtkAjvEt2BLkJ2oQqftZ5di47JzkYlKXTluLYoHZDgl1LDX5hGI2BBnLit7WszCsU=
+Received: by 10.86.79.19 with SMTP id c19mr6283970fgb.52.1212441888701;
+        Mon, 02 Jun 2008 14:24:48 -0700 (PDT)
+Received: from localhost ( [62.21.19.93])
+        by mx.google.com with ESMTPS id 12sm5513329fgg.0.2008.06.02.14.24.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 14:24:48 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.1
+In-Reply-To: <1212441883-12990-1-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83564>
 
-Test that stg rebase can handle upstream deleting a file with a
-non-ASCII name. It currently can't.
-
-Bug spotted by Jakub Narebski <jnareb@gmail.com>.
-
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
-
+Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
+ .../src/org/spearce/jgit/lib/PackFile.java         |   14 ++++++--------
+ 1 files changed, 6 insertions(+), 8 deletions(-)
 
-Here's a little something for the test suite. Note that it's enough
-that upstream deletes the file -- no patch in the StGit stack needs to
-touch it.
-
- t/t2201-rebase-nonascii.sh |   27 +++++++++++++++++++++++++++
- 1 files changed, 27 insertions(+), 0 deletions(-)
- create mode 100755 t/t2201-rebase-nonascii.sh
-
-
-diff --git a/t/t2201-rebase-nonascii.sh b/t/t2201-rebase-nonascii.sh
-new file mode 100755
-index 0000000..42c062f
---- /dev/null
-+++ b/t/t2201-rebase-nonascii.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+test_description=3D'Rebase onto changed non-ASCII file'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'Setup' '
-+    echo "Fj=C3=A4derholmarna" > sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-+    git add sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-+    git commit -m "Create island" &&
-+    stg init &&
-+    echo foo > unrelated.txt &&
-+    git add unrelated.txt &&
-+    stg new -m "Unrelated file" &&
-+    stg refresh &&
-+    stg pop &&
-+    rm sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-+    git commit -a -m "Remove island" &&
-+    git tag upstream &&
-+    git reset --hard HEAD^ &&
-+    stg push
-+'
-+
-+test_expect_failure 'Rebase onto changed non-ASCII file' '
-+    stg rebase upstream
-+'
-+
-+test_done
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+index 23a175c..ccff47d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+@@ -45,9 +45,9 @@ import java.util.zip.DataFormatException;
+ import org.spearce.jgit.util.NB;
+ 
+ /**
+- * A Git version 2 pack file representation. A pack file contains
+- * Git objects in delta packed format yielding high compression of
+- * lots of object where some objects are similar.
++ * A Git version 2 pack file representation. A pack file contains Git objects in
++ * delta packed format yielding high compression of lots of object where some
++ * objects are similar.
+  */
+ public class PackFile {
+ 	private static final byte[] SIGNATURE = { 'P', 'A', 'C', 'K' };
+@@ -58,7 +58,7 @@ public class PackFile {
+ 
+ 	/**
+ 	 * Construct a reader for an existing, pre-indexed packfile.
+-	 *
++	 * 
+ 	 * @param parentRepo
+ 	 *            Git repository holding this pack file
+ 	 * @param idxFile
+@@ -188,13 +188,11 @@ public class PackFile {
+ 		if (idx.getObjectCount() != objectCnt)
+ 			throw new IOException("Pack index"
+ 					+ " object count mismatch; expected " + objectCnt
+-					+ " found " + idx.getObjectCount() + ": "
+-					+ pack.getName());
++					+ " found " + idx.getObjectCount() + ": " + pack.getName());
+ 	}
+ 
+ 	private PackedObjectLoader reader(final WindowCursor curs,
+-			final long objOffset)
+-			throws IOException {
++			final long objOffset) throws IOException {
+ 		long pos = objOffset;
+ 		int p = 0;
+ 		final byte[] ib = curs.tempId;
+-- 
+1.5.5.1
