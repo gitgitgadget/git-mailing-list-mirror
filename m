@@ -1,173 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up
- git-cherry
-Date: Mon, 2 Jun 2008 16:52:32 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806021639150.13507@racer.site.net>
-References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com>  <alpine.DEB.1.00.0806020649110.13507@racer.site.net> <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up git-cherry
+Date: Mon, 2 Jun 2008 11:56:44 -0400
+Message-ID: <20080602155644.GL12896@spearce.org>
+References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com> <alpine.DEB.1.00.0806020649110.13507@racer.site.net> <20080602064218.GA15144@sigill.intra.peff.net> <7f9d599f0806020735g30722893mb8efed41a6544ab5@mail.gmail.com> <alpine.DEB.1.00.0806021635220.13507@racer.site.net> <7f9d599f0806020849g567461b2kecd65dbd35d3dc3b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Geoffrey Irving <irving@naml.us>
-X-From: git-owner@vger.kernel.org Mon Jun 02 17:54:43 2008
+X-From: git-owner@vger.kernel.org Mon Jun 02 17:58:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3CMs-0000iQ-FO
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:54:42 +0200
+	id 1K3CPz-0001tX-AV
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298AbYFBPxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 11:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYFBPxs
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:53:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45025 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752483AbYFBPxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 11:53:47 -0400
-Received: (qmail invoked by alias); 02 Jun 2008 15:53:45 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 02 Jun 2008 17:53:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19WkvIRvGdWvoD1eAmVqpoIfwSwlwO+f60/l+qh4k
-	pG/hzBTeF7LLCV
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753045AbYFBP47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 11:56:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbYFBP46
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:56:58 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46322 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbYFBP46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 11:56:58 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1K3COm-0005lo-CM; Mon, 02 Jun 2008 11:56:40 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A770620FBAE; Mon,  2 Jun 2008 11:56:44 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7f9d599f0806020849g567461b2kecd65dbd35d3dc3b@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83538>
 
-Hi,
-
-On Mon, 2 Jun 2008, Geoffrey Irving wrote:
-
-> On Sun, Jun 1, 2008 at 11:13 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Sun, 1 Jun 2008, Geoffrey Irving wrote:
-> >
-> >> See commit d56dbe8cb56ce9b4697d1f1c2425e2e133a932a5 for the original 
-> >> code.
-> >
-> > This is not in any official git.git repository.  And my branches are 
-> > prone to be rebased.  So this is not a good reference.  The mailing 
-> > list, however, would be one.
->
-> That was added only because I knew it wouldn't be the final patch, and 
-> that it'd be useful to you.
-
-Ah, then you might want to say "[PATCH/RFC]" in the subject.  I thought 
-you meant this for inclusion.
-
-> >> diff --git a/Makefile b/Makefile
-> >> index cce5a6e..3a5396d 100644
-> >> --- a/Makefile
-> >> +++ b/Makefile
-> >> @@ -435,6 +435,7 @@ LIB_OBJS += pager.o
-> >>  LIB_OBJS += parse-options.o
-> >>  LIB_OBJS += patch-delta.o
-> >>  LIB_OBJS += patch-ids.o
-> >> +LIB_OBJS += patch-id-cache.o
-> >
-> > If all you do is a hashmap from SHA-1 to SHA-1, then I think
-> > "patch-id-cache" is a misnomer for that file and structure.
-> >
-> > Let's not repeat the same naming mistakes as we have for path_list and
-> > decoration.
+Geoffrey Irving <irving@naml.us> wrote:
+> On Mon, Jun 2, 2008 at 8:37 AM, Johannes Schindelin
+> > Another issue that just hit me: this cache is append-only, so if it grows
+> > too large, you have no other option than to scratch and recreate it.
+> > Maybe this needs porcelain support, too?  (git gc?)
 > 
-> Is persistent_sha1_map a good name?
+> If so, the correct operation is to go through the hash and remove
+> entries that refer to commits that no longer exist.  I can add this if
+> you want.  Hopefully somewhere along the way git-gc constructs an easy
+> to traverse list of extant commits, and this will be straightforward.
 
-I'd prefer cached_sha1_map, but I do not really care.
+git-gc doesn't make such a list.  Down deep with git-pack-objects
+(which is called by git-repack, which is called by git-gc) yes,
+we do make the list of commits that we can find as reachable, and
+thus should stay in the repository.  But that is really low-level
+plumbing.  Wedging a SHA1->SHA1 hashmap gc task down into that is
+not a good idea.
 
-> >> +void write_patch_id_cache()
-> >> +{
-> >> +     if (!cache || cache->count == written_count)
-> >> +             return;
-> >
-> > Does that mean that the patch_id_cache is not updated when the number 
-> > of commits stays the same after committing, branch -d and gc?
-> 
-> The patch_id_cache is only updated when it changes.  Since entries are 
-> immutable and are never deleted, all changes increase the count.
+Instead you'll need to implement something that does `git rev-list
+--all -g` (or the internal equivilant) and then remove any entries
+in your hashmap that aren't in that result set.  That's not going
+to be very cheap.
 
-Right, I only realized that with my previous post to this thread.  
-However, in that case I would prefer a flag "int dirty:1" to the cache 
-structure, which is set whenever it needs writing.  Certainly not a global 
-variable (which the cache already is).
- 
-> >> +     hashcpy(entry.commit_sha1, commit_sha1);
-> >> +     hashcpy(entry.patch_id_sha1, patch_id_sha1);
-> >
-> > It would be more elegant to copy the SHA-1s _after_ finding where to 
-> > write them.
-> 
-> Alas, that would break the elegance of my loop, since the loop swaps in 
-> new entries to keep the table sorted.  I can remove the sorting if you 
-> want: I only left it in there to be more similar to your code.
+Given how small entries are (what, 40 bytes?) I'd only want to bother
+with that collection process if the estimated potential wasted space
+was over 1M (26,000 entries) or some reasonable threshold like that.
 
-I think that my code tried to do too much here; it was before I benched 
-hashmap vs binary-search.
+E.g. we could just set the GC for this to be once every 26,000
+additions, and only during git-gc.  Yea, you might waste about 1M
+worth of space before we clean up.  Big deal, I'll bet you have
+more than that in loose unreachable objects laying around from
+git-rebase -i usage.  ;-)
 
-So I think that can just go and simplify the elegance of the loop even 
-more ;-)
-
-> > Declar... ah, well, suffice to say that you should read the 
-> > CodingGuidelines, and try to fix up all the offending sites in your 
-> > code.
-> 
-> I'd be happy to do that, but I don't see mention of either C++
-> comments or declarations after statements in the CodingGuidelines.
-
->From the Coding Guidelines:
-
-	As for more concrete guidelines, just imitate the existing code
-	(this is a good guideline, no matter which project you are
-	contributing to).
-
-> 
-> >> +             if (!cmp) {
-> >> +                     if (hashcmp(entry.patch_id_sha1, cache->entries[i].patch_id_sha1))
-> >> +                             die("found mismatched entry in patch-id-cache");
-> >
-> > I wonder if that potentially expensive operation should not rather be 
-> > wrapped in an assert() call (since I recently learnt that Git's source 
-> > code has more than one instance of assert()).
-> 
-> A 20 byte comparison doesn't seem potentially expensive to me.
-
-It's all a question of repetition, isn't it?
-
-In any case, I am not a fan of wasting cycles unnecessarily.  The check 
-would indicate a programming error, not a user error, and should therefore 
-punish the programmer, not the user.
-
-> >>  static uint32_t take2(const unsigned char *id)
-> >> @@ -136,6 +150,8 @@ int free_patch_ids(struct patch_ids *ids)
-> >>               next = patches->next;
-> >>               free(patches);
-> >>       }
-> >> +
-> >> +     write_patch_id_cache();
-> >>       return 0;
-> >
-> > That's cute.
-> 
-> Thanks (assuming cute means good).
-
-Yes, it does!
-
-> I'll wait to actually make any of these changes until you and Jeff 
-> decide whether I should stick to hashes or use binary search.  It seems 
-> sad not to use hashes for a map when we get the best hash keys in the 
-> world for free, so I'd prefer not switching.
-
-Me, too.
-
-BTW I think that you did some awesome work here, and I am glad that you 
-could use my code as starting point.
-
-Thanks,
-Dscho
+-- 
+Shawn.
