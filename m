@@ -1,82 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up git-cherry
-Date: Mon, 2 Jun 2008 11:56:44 -0400
-Message-ID: <20080602155644.GL12896@spearce.org>
-References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com> <alpine.DEB.1.00.0806020649110.13507@racer.site.net> <20080602064218.GA15144@sigill.intra.peff.net> <7f9d599f0806020735g30722893mb8efed41a6544ab5@mail.gmail.com> <alpine.DEB.1.00.0806021635220.13507@racer.site.net> <7f9d599f0806020849g567461b2kecd65dbd35d3dc3b@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT BUG] StGIT errors out on rebasing patch deleting file with Unicode filename
+Date: Mon, 2 Jun 2008 17:11:59 +0100
+Message-ID: <b0943d9e0806020911l63f5c5e5t39bb3b513d7aaccd@mail.gmail.com>
+References: <200806011046.51872.jnareb@gmail.com>
+	 <200806020939.05902.jnareb@gmail.com>
+	 <b0943d9e0806020626s3a1009d6q2a4cdb2526be9c8d@mail.gmail.com>
+	 <200806021747.35243.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Geoffrey Irving <irving@naml.us>
-X-From: git-owner@vger.kernel.org Mon Jun 02 17:58:18 2008
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 18:13:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3CPz-0001tX-AV
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:57:55 +0200
+	id 1K3Cej-0007O5-Ie
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 18:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753045AbYFBP47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 11:56:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbYFBP46
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:56:58 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46322 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752988AbYFBP46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 11:56:58 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K3COm-0005lo-CM; Mon, 02 Jun 2008 11:56:40 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A770620FBAE; Mon,  2 Jun 2008 11:56:44 -0400 (EDT)
+	id S1754480AbYFBQMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 12:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754233AbYFBQMO
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 12:12:14 -0400
+Received: from rn-out-0910.google.com ([64.233.170.186]:22396 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753979AbYFBQMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 12:12:12 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so219742rnd.17
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 09:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Q3JrFX5nP4kVy/d/2kcX6yynfVQB2zbFypBjKENK0bk=;
+        b=AskoyhdCdvyfTbrUMmIT2qs/ZzATCM/WaTQQRrpbKc6q32MU8BsQfTSmNWsw5CRXAv4BfVRc/4E8cApzLC+Qw2GDpRMEIEffnN3iXkVX+o0Kku6SRr9KWnzVC/UMg9mfgNF8sDVpbfhJ95YmorJnZhNgjXyXqEGKmzMZUNskNUs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SZNL/faTVGFafo7jPltvIk44z5wkd7CRL41UDuxKxPfRe/Qn9tpirOzDDk6Lgv/39zqskXbT8N8weLzZhrQlCVM0xXRUQK6jQkXSRW6FefeQBCYe7JLddHtT7IIZLOlxkIv9JtJcv8ojk+UtTxn1FlbvDgorAnjqosPJtu6O2dw=
+Received: by 10.114.127.1 with SMTP id z1mr3312898wac.94.1212423119287;
+        Mon, 02 Jun 2008 09:11:59 -0700 (PDT)
+Received: by 10.114.171.16 with HTTP; Mon, 2 Jun 2008 09:11:59 -0700 (PDT)
+In-Reply-To: <200806021747.35243.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7f9d599f0806020849g567461b2kecd65dbd35d3dc3b@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83539>
 
-Geoffrey Irving <irving@naml.us> wrote:
-> On Mon, Jun 2, 2008 at 8:37 AM, Johannes Schindelin
-> > Another issue that just hit me: this cache is append-only, so if it grows
-> > too large, you have no other option than to scratch and recreate it.
-> > Maybe this needs porcelain support, too?  (git gc?)
-> 
-> If so, the correct operation is to go through the hash and remove
-> entries that refer to commits that no longer exist.  I can add this if
-> you want.  Hopefully somewhere along the way git-gc constructs an easy
-> to traverse list of extant commits, and this will be straightforward.
-
-git-gc doesn't make such a list.  Down deep with git-pack-objects
-(which is called by git-repack, which is called by git-gc) yes,
-we do make the list of commits that we can find as reachable, and
-thus should stay in the repository.  But that is really low-level
-plumbing.  Wedging a SHA1->SHA1 hashmap gc task down into that is
-not a good idea.
-
-Instead you'll need to implement something that does `git rev-list
---all -g` (or the internal equivilant) and then remove any entries
-in your hashmap that aren't in that result set.  That's not going
-to be very cheap.
-
-Given how small entries are (what, 40 bytes?) I'd only want to bother
-with that collection process if the estimated potential wasted space
-was over 1M (26,000 entries) or some reasonable threshold like that.
-
-E.g. we could just set the GC for this to be once every 26,000
-additions, and only during git-gc.  Yea, you might waste about 1M
-worth of space before we clean up.  Big deal, I'll bet you have
-more than that in loose unreachable objects laying around from
-git-rebase -i usage.  ;-)
-
--- 
-Shawn.
+MjAwOC82LzIgSmFrdWIgTmFyZWJza2kgPGpuYXJlYkBnbWFpbC5jb20+Ogo+IERuaWEgcG9uaWVk
+emlhs2VrIDIuIGN6ZXJ3Y2EgMjAwOCAxNToyNiwgQ2F0YWxpbiBNYXJpbmFzIG5hcGlzYbM6Cj4+
+IDIwMDgvNi8yIEpha3ViIE5hcmVic2tpIDxqbmFyZWJAZ21haWwuY29tPjoKPj4+IE9uIFN1biwg
+MSBKdW5lIDIwMDgsIEpha3ViIE5hcmVic2tpIHdyb3RlOgo+Pj4KPj4+PiBTdEdJVCBlcnJvcnMg
+b3V0IG9uIHJlYmFzaW5nIHBhdGNoIHdoaWNoIGRlbGV0ZXMgZmlsZSB3aXRoIFVuaWNvZGUKPj4+
+PiBjaGFyYWN0ZXJzIGluIGZpbGVuYW1lICh3aXRoIGNoYXJhY3RlcnMgb3V0c2lkZSBVUy1BU0NJ
+SSBpbiBmaWxlbmFtZSkuCj4+Pj4gVGhlIHBhdGNoIGluIHF1ZXN0aW9uIGlzIHBhdGNoIGRlbGV0
+aW5nIGdpdHdlYi90ZXN0LyogaW4gZ2l0IGRpcmVjdG9yeSwKPj4+PiBhbmQgaXMgcHJlc2VudCBh
+bHJlYWR5IG9uIHRoZSAnb3JpZ2luJyBicmFuY2ggKHRoZSBicmFuY2ggd2UgcmViYXNlCj4+Pj4g
+b250byksIHNvIHN0Zy1yZWJhc2Ugc2hvdWxkIHJlc3VsdCBpbiBhbiBlbXB0eSBwYXRjaCAoYXMg
+Zmlyc3QgcGF0Y2gpLgo+Pj4+Cj4+Pj4gICJnaXR3ZWIvdGVzdC9NXDMwM1wyNDRyY2hlbiIgfCAg
+ICAyIC0tCj4+Pj4gIGdpdHdlYi90ZXN0L2ZpbGUgd2l0aCBzcGFjZXMgfCAgICA0IC0tLS0KPj4+
+PiAgZ2l0d2ViL3Rlc3QvZmlsZStwbHVzK3NpZ24gICB8ICAgIDYgLS0tLS0tCj4+Pj4gIDMgZmls
+ZXMgY2hhbmdlZCwgMCBpbnNlcnRpb25zKCspLCAxMiBkZWxldGlvbnMoLSkKPj4+PiAgZGVsZXRl
+IG1vZGUgMTAwNjQ0IGdpdHdlYi90ZXN0L03kcmNoZW4KPj4+PiAgZGVsZXRlIG1vZGUgMTAwNjQ0
+IGdpdHdlYi90ZXN0L2ZpbGUgd2l0aCBzcGFjZXMKPj4+PiAgZGVsZXRlIG1vZGUgMTAwNjQ0IGdp
+dHdlYi90ZXN0L2ZpbGUrcGx1cytzaWduCj4+Pj4KPj4+PiBJIGd1ZXNzIHRoZSBlcnJvciBpcyBj
+YXVzZWQgYnkgdXNpbmcgdW5lc2NhcGVkIChxdW90ZWQpIGZpbGVuYW1lLgo+Pj4KPj4+IFlvdSBj
+YW4gV09SS0FST1VORCB0aGlzIGJ1ZyBieSBzZXR0aW5nIGNvcmUucXVvdGVwYXRoIHRvIGZhbHNl
+LiAgVGhpcwo+Pj4gYWxsb3dlZCBtZSB0byBtYWtlIHN0Zy1yZWJhc2UuCj4+Cj4+IEkgY2FuIGFk
+ZCBhIHdvcmthcm91bmQgaW4gU3RHSVQgdG8gYWN0dWFsbHkgaWdub3JlIHRoZSBleGNlcHRpb24K
+Pj4gcmFpc2VkIGJ5IG9zLnJlbW92ZSgpIGJ1dCBJIGRvbid0IGtub3cgaG93IHRvIGNvbnZlcnQg
+dGhlIHF1b3RlZCBmaWxlCj4+IG5hbWUgYmFjayB0byBpdHMgdW5pY29kZSB2YWx1ZSBpbiBQeXRo
+b24uCj4KPiBJbiBQZXJsIGl0IGlzIGFzIHNpbXBsZSBhcyAoc2VlIHVucXVvdGUoKSBpbiBnaXR3
+ZWIvZ2l0d2ViLnBlcmwpCgpBY3R1YWxseSwgUHl0aG9uIHNlZW1zIE9LIGF0IGhhbmRsaW5nIHF1
+b3RlZCBjaGFyYWN0ZXJzLCB0aGUgb25seQpjb25mdXNpb24gaXMgdGhhdCBpdCBkb3VibGVzIHRo
+ZSBiYWNrc2xhc2ggaW4gdGhlIHN0cmluZyBzaW5jZSBpdApkb2Vzbid0IGtub3cgdGhhdCB0aGUg
+dGV4dCByZWNlaXZlZCBmcm9tIEdpdCBpcyBxdW90ZWQgb3Igbm90LiBJIHdvdWxkCnByb2JhYmx5
+IGhhdmUgdG8gY2hlY2sgZm9yIHRoZSAiY29yZS5xdW90ZXBhdGgiIHZhbHVlIGFuZCBhY3QKYWNj
+b3JkaW5nbHkuCgotLSAKQ2F0YWxpbgo=
