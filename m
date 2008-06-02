@@ -1,73 +1,86 @@
 From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] test-lib.sh: set PERL5LIB instead of GITPERLLIB
-Date: Mon, 02 Jun 2008 16:08:34 +0200
-Message-ID: <4843FEE2.1070708@gmail.com>
-References: <7vy75oalh7.fsf@gitster.siamese.dyndns.org> <1212358587-15948-1-git-send-email-LeWiemann@gmail.com> <7vfxrwa008.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 16:09:39 2008
+Subject: [PATCH v2] test-lib.sh: set PERL5LIB instead of GITPERLLIB
+Date: Mon,  2 Jun 2008 16:13:16 +0200
+Message-ID: <1212415996-32130-1-git-send-email-LeWiemann@gmail.com>
+References: <4843FEE2.1070708@gmail.com>
+Cc: Lea Wiemann <lewiemann@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 16:15:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3Aj5-0003zd-AZ
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:09:31 +0200
+	id 1K3And-0005hG-IO
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754125AbYFBOIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 10:08:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbYFBOIf
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:08:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:1029 "EHLO
+	id S1760464AbYFBONQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 10:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbYFBONQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:13:16 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:10398 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749AbYFBOIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 10:08:34 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so744882fgg.17
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:08:33 -0700 (PDT)
+	with ESMTP id S1756098AbYFBONP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 10:13:15 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so745921fgg.17
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=A92Ik9+QnhobXHLvsT8Q1dgslLEXkVCwZwJaQ2HpLuc=;
-        b=Y1Xn+qjBIBsyC1C+0utgYNOaMaJWi1Q5/bNbvmgqXub87+kqY6dnMS7cP+O3HD18ykckkSorfNb/qojPXxmgOe5p0m4gSHQWtQlNuHTyp3YzVhI66uCyIhH1qgyT1bE/19JAoK3+TQnNQjmQm08mPnolZ51CgXX1Flj1lrguRPs=
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        bh=Q8g7IRCZOcwRG5kY7qpBZvKZw43Vllk3fACAdwvhs2k=;
+        b=Z5UCM9fUv6hDTIS8xJSiO8v7F7P5e2cwxr6bCD1mW6cB0SeAN5NY3YoLa4qJ5firXZMc8sYqJS8jj/ADxBw9LdnqErBRGsuFhidqxfpySFjzcnFF8pnP6bRhDMz7aVM0CStrJg4f+91c4XuibH19M/FxixtD+5Jg60eqT+1Q9gA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=Wjk+YvHospH3Vg93g4Cp41V2Nse4dEwRf7pSxRdOxWH5Elc7c4g0/RgDE2SZgiv+/1MGe5Dfxo+q4idB0+Xhko4gYqQeVQQJoNoLrgjCdYDukNmSMIyjqGCAYbVLLUn3uHLS5xRbiZAZ5sssUCM2i5sbkM0v8oRvm5wJq3Ltr2c=
-Received: by 10.86.23.17 with SMTP id 17mr3597813fgw.32.1212415712896;
-        Mon, 02 Jun 2008 07:08:32 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.205.25])
-        by mx.google.com with ESMTPS id g28sm10332816fkg.1.2008.06.02.07.08.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Jun 2008 07:08:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <7vfxrwa008.fsf@gitster.siamese.dyndns.org>
+        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        b=vXl4CYCeWvL4s9PqlbykaKxHHGegrnUmvUTqiuNjKp1+HKdt8LMYoc75ZNKoFQVakxZ1UZzH3GR4dBQR+2ptO6o0gFGedZSxgZvYGpmpLg6Nw/ZK11jpEkQ7+k4Ucny8CF9yWKuZRgyQvo1eazndw/WdiZf9+FXQ0hx5fADwaHc=
+Received: by 10.86.58.3 with SMTP id g3mr924826fga.21.1212415993950;
+        Mon, 02 Jun 2008 07:13:13 -0700 (PDT)
+Received: from fly ( [91.33.205.25])
+        by mx.google.com with ESMTPS id l19sm4333739fgb.7.2008.06.02.07.13.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 07:13:13 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K3Ami-0008Ma-Li; Mon, 02 Jun 2008 16:13:16 +0200
+X-Mailer: git-send-email 1.5.5.GIT
+In-Reply-To: <4843FEE2.1070708@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83525>
 
-Junio C Hamano wrote:
-> the primary Makefile has this rule to munge our perl scripts:
-> 
->                     -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
-> 
-> The real fix to the issue [is] to fix the build procedure of
-> gitweb/gitweb.perl so that the above script rewriting is also applied to it.
+From: Lea Wiemann <lewiemann@gmail.com>
 
-I see -- in that case, gitweb.perl should indeed be fixed.
+By setting PERL5LIB for the tests, we enable Perl test scripts to just
+say "use Git;" without adding the GITPERLLIB paths to @INC beforehand.
 
-Still however, for the Perl tests (t/t9700/test.pl in my branch) we 
-don't have a Makefile, so the only way for them to pick up the right 
-Git.pm module is modifying PERL5LIB in test-lib.sh. [1]  I just realized 
-that we not only don't need to set GITPERLLIB in this case, but we 
-should actually unset it so that user-set paths don't cause a wrong 
-version of Git.pm to be loaded.  I'll send a new patch.
+Also, unset GITPERLLIB so that user-set paths in GETPERLLIB don't
+cause the wrong module to be loaded.
 
--- Lea
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+Added since v1: Unset GITPERLLIB.
 
-[1] Or alternatively adding some (lengthy and cwd-dependent) "use lib 
-..." statement at the top of every Perl test file, but that doesn't seem 
-preferable given that we can solve this centrally in test-lib.sh.
+ t/test-lib.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 99b63da..8ea0511 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -454,8 +454,10 @@ GIT_CONFIG_NOSYSTEM=1
+ GIT_CONFIG_NOGLOBAL=1
+ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CONFIG_NOGLOBAL
+ 
+-GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
+-export GITPERLLIB
++unset GITPERLLIB
++test -n "$PERL5LIB" && PERL5LIB=":$PERL5LIB"
++PERL5LIB="$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git$PERL5LIB"
++export PERL5LIB
+ test -d ../templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+-- 
+1.5.5.GIT
