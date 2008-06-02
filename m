@@ -1,99 +1,173 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Development strategy
-Date: Mon, 02 Jun 2008 17:51:49 +0200
-Message-ID: <48441715.4010507@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up
+ git-cherry
+Date: Mon, 2 Jun 2008 16:52:32 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806021639150.13507@racer.site.net>
+References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com>  <alpine.DEB.1.00.0806020649110.13507@racer.site.net> <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: John Hawley <warthog19@eaglescrag.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 17:52:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Mon Jun 02 17:54:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3CKs-0008WP-9l
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:52:38 +0200
+	id 1K3CMs-0000iQ-FO
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbYFBPvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 11:51:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYFBPvq
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:51:46 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:11923 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752334AbYFBPvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 11:51:44 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so766470fgg.17
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 08:51:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding:from;
-        bh=eViWxe7dxgkdGqkz75BiV8Sn/b5bTweu4tlOJ2JC3ug=;
-        b=KKslaDMs2nZ/rwuZ1f/nG5Xj3Tm3oSpuP6t7656AbVxaywEnXIKUN3+6mhRMu795fvxoSsZjTKlnrlBIGSdN5hLDJYg+GoKv7FkLIl347UflbeJgO6iaGbnRu3NVzFx3zSWFBT7t2l6adQYd9uCUSTxQgpqhkKXFQ4zTXNa2pAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding:from;
-        b=vvNxttuSI6DAH2EYz2Bjk1UOGIWbhqI1uQQ8tujBpnLc7IG9usXr4mU1UYd5RmeXk15PkDZ8g5hGw7HFPsYX5Xoiz8oTjHc+MtAHSKRPeI2ni8GSb2t+rnJgPtqQqTpaXU7UNVa/+hKDdxAz1ZFV91Q4ISafA29AWUayEkViBww=
-Received: by 10.86.23.17 with SMTP id 17mr3784927fgw.32.1212421901876;
-        Mon, 02 Jun 2008 08:51:41 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.231.153])
-        by mx.google.com with ESMTPS id l12sm3882051fgb.6.2008.06.02.08.51.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Jun 2008 08:51:41 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+	id S1753298AbYFBPxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 11:53:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYFBPxs
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:53:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45025 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752483AbYFBPxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 11:53:47 -0400
+Received: (qmail invoked by alias); 02 Jun 2008 15:53:45 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
+  by mail.gmx.net (mp052) with SMTP; 02 Jun 2008 17:53:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19WkvIRvGdWvoD1eAmVqpoIfwSwlwO+f60/l+qh4k
+	pG/hzBTeF7LLCV
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83537>
 
-Hi everyone,
+Hi,
 
-[For those uninitiated, this is about my GSoC project about adding 
-caching to Gitweb, on which I am currently working full-time; my branch 
-is here: http://repo.or.cz/w/git/gitweb-caching.git]
+On Mon, 2 Jun 2008, Geoffrey Irving wrote:
 
-I'm seeing a process-wise problem arising with my current work on Git.pm 
-and Gitweb, in that I'm producing patches at a higher frequency than the 
-developer community can handle.  Right now, I have a stack of 7 patches 
-that haven't been "approved" in any way (i.e. either they are under 
-discussion or nobody has reviewed them) and that my future work will 
-depend on.  Chronologically,
+> On Sun, Jun 1, 2008 at 11:13 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>
+> > On Sun, 1 Jun 2008, Geoffrey Irving wrote:
+> >
+> >> See commit d56dbe8cb56ce9b4697d1f1c2425e2e133a932a5 for the original 
+> >> code.
+> >
+> > This is not in any official git.git repository.  And my branches are 
+> > prone to be rebased.  So this is not a good reference.  The mailing 
+> > list, however, would be one.
+>
+> That was added only because I knew it wouldn't be the final patch, and 
+> that it'd be useful to you.
 
-! 2f15087248 perl/Git.pm: add get_hash method
-   abd799435c gitweb: use Git.pm, and use its get_hash method
-! 5e53e2e67e t/test-lib.sh: add test_external
-! c5c97f896c Git.pm: fix documentation of hash_object
-! 8db2d73809 test suite for Git.pm
-   261a54ff5b gitweb: removed unused parse_ref method [not posted yet]
-   e9166526a3 Git.pm: add get_type method [not posted yet]
+Ah, then you might want to say "[PATCH/RFC]" in the subject.  I thought 
+you meant this for inclusion.
 
-The patches marked "!" I cannot change without breaking at least one 
-subsequent patch, so every time I want to make a change to one of those, 
-I also need to change at least one subsequent commit, and worse, 
-resubmit it to the mailing list.  (E.g. the the recent rename from 
-parse_rev to get_hash necessitated two extra patches to accommodate the 
-change.)
+> >> diff --git a/Makefile b/Makefile
+> >> index cce5a6e..3a5396d 100644
+> >> --- a/Makefile
+> >> +++ b/Makefile
+> >> @@ -435,6 +435,7 @@ LIB_OBJS += pager.o
+> >>  LIB_OBJS += parse-options.o
+> >>  LIB_OBJS += patch-delta.o
+> >>  LIB_OBJS += patch-ids.o
+> >> +LIB_OBJS += patch-id-cache.o
+> >
+> > If all you do is a hashmap from SHA-1 to SHA-1, then I think
+> > "patch-id-cache" is a misnomer for that file and structure.
+> >
+> > Let's not repeat the same naming mistakes as we have for path_list and
+> > decoration.
+> 
+> Is persistent_sha1_map a good name?
 
-If I keep on committing revisions like I'm doing right now, I'll end up 
-with a long queue of interdependent patches of which only the newest few 
-are easily changeable.  Here are some ideas to prevent this:
+I'd prefer cached_sha1_map, but I do not really care.
 
-1) My current patch frequency is probably too high, in particular if 
-minor changes (like method renames or documentation changes) cause 
-re-posts of patches.  Hence, I suggest that I stay on my branch for now 
-and only post patches on which I actually want feedback, without 
-reposting corrected versions after getting feedback.  That is, no 
-patches just for "please someone approve this".
+> >> +void write_patch_id_cache()
+> >> +{
+> >> +     if (!cache || cache->count == written_count)
+> >> +             return;
+> >
+> > Does that mean that the patch_id_cache is not updated when the number 
+> > of commits stays the same after committing, branch -d and gc?
+> 
+> The patch_id_cache is only updated when it changes.  Since entries are 
+> immutable and are never deleted, all changes increase the count.
 
-2) I should probably also try to squash patches into larger ones.  This 
-will make it easier to make changes in older commits, since I don't have 
-to edit several commits, and it reduces the probability of merge 
-conflicts.  I'm not sure how much squashing is appropriate though: For 
-example, would it be okay to squash a fix like "Git.pm: fix 
-documentation of hash_object" into a larger "Git.pm: add and fix several 
-methods" commit, where I only mention the documentation-fix in the log 
-message?  It would certainly be helpful in that it reduces the number of 
-conflicts, but it will make the logs coarser.
+Right, I only realized that with my previous post to this thread.  
+However, in that case I would prefer a flag "int dirty:1" to the cache 
+structure, which is set whenever it needs writing.  Certainly not a global 
+variable (which the cache already is).
+ 
+> >> +     hashcpy(entry.commit_sha1, commit_sha1);
+> >> +     hashcpy(entry.patch_id_sha1, patch_id_sha1);
+> >
+> > It would be more elegant to copy the SHA-1s _after_ finding where to 
+> > write them.
+> 
+> Alas, that would break the elegance of my loop, since the loop swaps in 
+> new entries to keep the table sorted.  I can remove the sorting if you 
+> want: I only left it in there to be more similar to your code.
 
--- Lea
+I think that my code tried to do too much here; it was before I benched 
+hashmap vs binary-search.
+
+So I think that can just go and simplify the elegance of the loop even 
+more ;-)
+
+> > Declar... ah, well, suffice to say that you should read the 
+> > CodingGuidelines, and try to fix up all the offending sites in your 
+> > code.
+> 
+> I'd be happy to do that, but I don't see mention of either C++
+> comments or declarations after statements in the CodingGuidelines.
+
+>From the Coding Guidelines:
+
+	As for more concrete guidelines, just imitate the existing code
+	(this is a good guideline, no matter which project you are
+	contributing to).
+
+> 
+> >> +             if (!cmp) {
+> >> +                     if (hashcmp(entry.patch_id_sha1, cache->entries[i].patch_id_sha1))
+> >> +                             die("found mismatched entry in patch-id-cache");
+> >
+> > I wonder if that potentially expensive operation should not rather be 
+> > wrapped in an assert() call (since I recently learnt that Git's source 
+> > code has more than one instance of assert()).
+> 
+> A 20 byte comparison doesn't seem potentially expensive to me.
+
+It's all a question of repetition, isn't it?
+
+In any case, I am not a fan of wasting cycles unnecessarily.  The check 
+would indicate a programming error, not a user error, and should therefore 
+punish the programmer, not the user.
+
+> >>  static uint32_t take2(const unsigned char *id)
+> >> @@ -136,6 +150,8 @@ int free_patch_ids(struct patch_ids *ids)
+> >>               next = patches->next;
+> >>               free(patches);
+> >>       }
+> >> +
+> >> +     write_patch_id_cache();
+> >>       return 0;
+> >
+> > That's cute.
+> 
+> Thanks (assuming cute means good).
+
+Yes, it does!
+
+> I'll wait to actually make any of these changes until you and Jeff 
+> decide whether I should stick to hashes or use binary search.  It seems 
+> sad not to use hashes for a map when we get the best hash keys in the 
+> world for free, so I'd prefer not switching.
+
+Me, too.
+
+BTW I think that you did some awesome work here, and I am glad that you 
+could use my code as starting point.
+
+Thanks,
+Dscho
