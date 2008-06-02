@@ -1,85 +1,137 @@
-From: "Geoffrey Irving" <irving@naml.us>
-Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up git-cherry
-Date: Mon, 2 Jun 2008 10:23:55 -0700
-Message-ID: <7f9d599f0806021023r64affb36ne491792a962d455c@mail.gmail.com>
-References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com>
-	 <alpine.DEB.1.00.0806020649110.13507@racer.site.net>
-	 <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git-svn pulling down duplicate revisions
+Date: Mon, 2 Jun 2008 10:45:04 -0700
+Message-ID: <C520B70F-2E61-42E6-AF20-E24E15A33CDD@sb.org>
+References: <1AD7D1A1-EC3B-450D-A648-04ADB8180E46@sb.org> <20080602050050.GC9904@hand.yhbt.net> <5FB2F28F-4C9A-422E-BF7D-B271471154F9@sb.org> <20080602054034.GA8366@untitled> <0E759330-1A0A-489D-ADA3-B71A49951227@sb.org> <20080602104225.GA8401@untitled>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 02 19:24:51 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jun 02 19:46:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3Dm5-0001Vn-0B
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 19:24:49 +0200
+	id 1K3E6r-0008Kc-KX
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 19:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbYFBRX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 13:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753611AbYFBRX5
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 13:23:57 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:7081 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753511AbYFBRXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 13:23:55 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1137429rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 10:23:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=ALMObppKgnGjf3XfJjjJuHn0hub5OchccwrjHT7H6WA=;
-        b=RAMt9bIwxSBXv04LkQUZregX+7IMWlEJIXdZvTCRKa/eC90HB8asNMz8KRM3hv1tNPSNO+351o7VWLmby+Cyg2KWVPI+46mGqBkXOlOkmwpfoaCbFqcRDX0wQ/HvMftahuuFKjk2aXFHK8VzYWoB/AKASp9/0LMTM6u1e8FcgJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=fSE0A2gO6aXEJq6HdOWj8CskrTrhz/UmMgeXVH/Qyaj3kVkfZ6sbaEMRuIYrbDfVBkMAor3BASGsixIunl6o5OJbE4UxpwzTzLcH8WTeeylDDVsWBpjxyLGyhsEDQFnRJ0WDX+h0jK7tqQhvO5/Ks8rF4p8nmeKjiwp9+74bH0k=
-Received: by 10.141.23.7 with SMTP id a7mr5129747rvj.5.1212427435351;
-        Mon, 02 Jun 2008 10:23:55 -0700 (PDT)
-Received: by 10.140.178.16 with HTTP; Mon, 2 Jun 2008 10:23:55 -0700 (PDT)
-In-Reply-To: <7f9d599f0806020750g78e6816dl884d36bb903c707b@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 2e0ebd94aa7b7826
+	id S1751412AbYFBRpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 13:45:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752562AbYFBRpI
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 13:45:08 -0400
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:41669 "EHLO
+	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751412AbYFBRpH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jun 2008 13:45:07 -0400
+Received: from [10.100.18.156] (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id AD43518DB78;
+	Mon,  2 Jun 2008 10:45:05 -0700 (PDT)
+In-Reply-To: <20080602104225.GA8401@untitled>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83547>
 
-On Mon, Jun 2, 2008 at 7:50 AM, Geoffrey Irving <irving@naml.us> wrote:
-> On Sun, Jun 1, 2008 at 11:13 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
+On Jun 2, 2008, at 3:42 AM, Eric Wong wrote:
+
+> Kevin Ballard <kevin@sb.org> wrote:
+>> On Jun 1, 2008, at 10:40 PM, Eric Wong wrote:
 >>
->> On Sun, 1 Jun 2008, Geoffrey Irving wrote:
->>
->>> The dominant cost of git-cherry is the computation of patch-ids for each
->>> relevant commit.  Once computed, these pairs are now stored in a hash
->>> table in $GIT_DIR/patch-id-cache to speed up repeated invocations.
+>>> Kevin Ballard <kevin@sb.org> wrote:
+>>>> On Jun 1, 2008, at 10:00 PM, Eric Wong wrote:
+>>>>
+>>>>> Kevin Ballard <kevin@sb.org> wrote:
+>>>>>> I started a git-svn clone on a large svn repository, and I  
+>>>>>> noticed
+>>>>>> that for various branches, it kept pulling down the exact same
+>>>>>> revisions (starting at r1). In other words, if I had 4 branches
+>>>>>> that
+>>>>>> shared common history, their common history all got pulled down 4
+>>>>>> times. I double-checked, and the created commit objects were
+>>>>>> identical.
+>>>>>>
+>>>>>> Why was git-svn pulling down the same revisions over and over,  
+>>>>>> when
+>>>>>> it
+>>>>>> already knows it has a commit object for those revisions?
+>>>>>
+>>>>> Can you give me an example if a repository and command-line you  
+>>>>> used
+>>>>> that does this?   Did you use 'git svn clone -s' or did you  
+>>>>> manually
+>>>>> specify the branch locations in the repo?
+>>>>>
+>>>>> It could even be a lack of read permissions to the repository root
+>>>>> that would cause things like this.
+>>>>
+>>>> The repository is, unfortunately, a private repo so I can't share  
+>>>> it.
+>>>> I used `git svn clone -s` to clone it. I have the SVN perl bindings
+>>>> v1.4.4 (according to git svn --version).
+>>>>
+>>>> I definitely have read permissions to the repo root. If I specify  
+>>>> to
+>>>> only fetch -r 12000:HEAD (there's 14000-odd revisions), it doesn't
+>>>> pull down any duplicates, but when I let it start from the root, it
+>>>> pulls down hundreds of duplicates for multiple branches.
 >>>
->>> The basic structure of patch-id-cache.c was cannibalized from Johannes
->>> Schindelin's notes-index structure, though most of the code was
->>> rewritten. The hash table is still kept strictly sorted by commit, but
->>> the entire table is now read into memory.
+>>> Can you at least send me the 'svn log -v' output for that repo?
+>>> Feel free to leave out the actual log messages and munge the path
+>>> names if you can't expose that information.
 >>
->> I do not think that this "read-the-entire-table-into-memory" paradigm is a
->> wise choice. mmap()ing, I would have understood, but reading a potentially
->> pretty large table into memory?
+>> I'll have to do it tomorrow when I'm at the office. How much log info
+>> do you need? I can let it run until I see duplicate revisions (it's
+>> pretty obvious, it starts over again from r1).
 >
-> I'll switch to mmapping.
+> I'll need the revisions where branches were created from
+> the common ancestor (presumably trunk) and some revisions
+> before it.
+>
+> For debugging problems with restricted repositories, it may be worth  
+> it
+> to create a repository skeleton cloning tool that just reads the  
+> output
+> of 'svn log --xml -v' and recreates a new SVN repository with:
+>
+>  * all log messages stripped
+>
+>  * all new files are created with just a random string in them (to
+>    throw off rename detection on the git side)
+>    (except symlinks, see below)
+>
+>  * all path components tokenized and each token replaced with
+>    a dictionary value.  Something like:
+>
+>    @tmp = map { $tok{$_} ||= ++$i; $tok{$_} } split(/\//, $old_path);
+>    $new_path = join('/', @tmp);
+>
+>    This way all copy history can be preserved
+>
+>  * all modified files will just get a random byte appended to them
+>
+>  * all committer names replaced with a dictionary value (similar to
+>    what is done to path components).
 
-The git_mmap function in compat/mmap.c dies if NO_MMAP is defined and
-the map isn't MAP_PRIVATE.  If I want to write an entry, will the
-memory be automatically updated if I write directly to the file
-descriptor (I haven't used mmap before)?
+Isn't there a script somewhere that's supposed to do this? Do you know  
+where it is?
 
-Also, do you think it's okay to write directly into the mmap'ed memory
-for every insertion, or should I try to be fancier?  Immediate writing
-would simplify the code a lot, and I don't think there's a significant
-performance issue since computing an entry is expensive.
+Incidentally, I just checked and when I start the git-svn clone, it  
+starts pulling down revisions for the branch 'css_refactor@1559' (odd  
+branch name, but it claimed to find multiple branch points for this  
+'css_refactor' branch). My guess is when it starts working on the next  
+branch, it doesn't view it as related to css_refactor and starts  
+pulling down the revisions again even though those revisions actually  
+belonged to trunk.
 
-Thanks,
-Geoffrey
+-Kevin
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
