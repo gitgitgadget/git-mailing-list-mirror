@@ -1,112 +1,143 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: use Git.pm, and use its parse_rev method for
-	git_get_head_hash
-Date: Mon, 2 Jun 2008 11:29:26 +0200
-Message-ID: <20080602092926.GJ18781@machine.or.cz>
-References: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com> <m3lk1q24nb.fsf@localhost.localdomain> <4841471E.2070302@gmail.com> <200806020019.23858.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix "next" link on bottom of page
+Date: Mon, 02 Jun 2008 11:54:41 +0200
+Message-ID: <20080602095348.16843.24351.stgit@localhost.localdomain>
+References: <m3y75s1a9v.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 11:30:28 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Gerrit Pape <pape@smarden.org>,
+	Kai Blin <kai.blin@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 11:55:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K36N1-0000Dk-35
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 11:30:27 +0200
+	id 1K36lW-0008Gn-0n
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 11:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076AbYFBJ3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 05:29:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbYFBJ3e
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 05:29:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56458 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750735AbYFBJ3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 05:29:33 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 1CD4A1E4C03F; Mon,  2 Jun 2008 11:29:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200806020019.23858.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752111AbYFBJyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 05:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbYFBJyw
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 05:54:52 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:54189 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542AbYFBJyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 05:54:51 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so396939nfc.21
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 02:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc:date:message-id:in-reply-to:references:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=cVYWchWaN0tFPDhJ8/gmc7N+meAzqBhezlN/DJTNgoA=;
+        b=so3hdDAQWt0Oa9vWghJZMk40r5h0FRm78qj13ps8Y5dRdjzvJQxTXCcK/zKRMJbZvO0wlP808Cwk7xKQiAwy5ZeR49Zgmzh+ymThVYOvp1SFe8FVhT3meOxGfzwtwqVvW0mlb4CfbmxGYo5qahjD6WJWxt0NVLcGB666zZloPzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:in-reply-to:references:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=BJoFEpSa/sMmPXHP2TWAe5dgEa7j+XaLa3njVMTjPzsBhr5HhYj3RF4w4EcjW2tOmcpTvClIe117c/WSzDHmk72t/H1wfZul+vFuVUxD+gsnWmwRv5ZcKwUZfhipxEAfF4Igt3j9skqkXQimGO4XhvT+mdxaxFmL8+hCqG4oKJE=
+Received: by 10.210.63.5 with SMTP id l5mr2446857eba.85.1212400487877;
+        Mon, 02 Jun 2008 02:54:47 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.195.117])
+        by mx.google.com with ESMTPS id c4sm27766158nfi.13.2008.06.02.02.54.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 02:54:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m529sfoF016880;
+	Mon, 2 Jun 2008 11:54:42 +0200
+In-Reply-To: <m3y75s1a9v.fsf@localhost.localdomain>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83505>
 
-On Mon, Jun 02, 2008 at 12:19:23AM +0200, Jakub Narebski wrote:
-> On Sat, 31 May 2008, Lea Wiemann wrote:
-> > Layer 2 is application-independent as well, so it can become an extra 
-> > class in Git.pm or a separate module.  (It should stay independent of 
-> > layers 3 and 4).
+Fix search form generation to not modify $cgi->param(...)'s.
+
+In git_header_html() we used to use $cgi->hidden(-name => "a") etc. to
+generate hidden fields; unfortunately to use this form it is required
+to modify $cgi->param("a") etc., which makes href(-replay,...) use
+wrong replay values.  This for example made the "next" link on the
+bottom of the page has a=search instead of a=$action, and thus fails to
+get you to the next page.
+
+Because in CGI the value of a hidden field is "sticky", there is no
+way to modify it short of modifying $cgi->param(...).  Therefore it
+got replaced by generating <input type="hidden" ...> element [semi]
+directly.
+
+Alternate solution would be for href(-replay,...) to use values saved
+in global variables, such as $action etc., instead of (re)reading them
+from $cgi->param($symbol).
+
+The bad link was reported by Kai Blin through
+  http://bugs.debian.org/481902
+
+Reported-by: Kai Blin <kai.blin@gmail.com>
+Noticed-by: Gerrit Pape <pape@smarden.org>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Gerrit Pape <pape@smarden.org> writes:
 > 
-> I think it would be better as separate module.  Would it be Git::Cache
-> (or Git::Caching), Gitweb::Cache, or part of gitweb, that would have
-> to be decided.  Besides, I'm not sure if it is really application-
-> -independent as you say: I think we would get better result if we
-> collate data first, which is application dependent.  Also I think
-> there is no sense to cache everything: what to cache is again
-> application dependent.
-
-I'm not very comfortable with putting caching directly to Git either.
-
-Even if you _would_ decide that you want to add caching directly to Git
-interface, it would be better to use extra module Git::Cached and
-auto-wrap all Git functions through AUTOLOAD. But that still has the
-problems Jakub desrcibed.
-
-> > We may need to have an explicitly implemented layer 0 (front-end 
-> > caching) in Gitweb for at least a subset of pages (like project pages), 
-> > but we'll see if that's necessary.
+>> When viewing a gitweb repository commit log, the "next" link at the top
+>> of the page works as expected, the "next" link on the bottom of the page
+>> has a=search instead of a=log and thus fails to get you to the next
+>> page.  This commit replaces the bottom "next" link with the same links
+>> as shown at the top of the page.
 > 
-> I think that front-end caching (HTML/RSS/Atom output caching) has sense
-> for large web pages (large size and large number of items), such as
-> projects list page if it is unpaginated (and perhaps even if it is
-> divided into pages, although I'm sure not for project search page),
-> commonly requested snapshots (if they are enabled), large trees like
-> SPECS directory with all the package *.spec files for distribution
-> repository, perhaps summary/feed for most popular projects. If (when)
-> syntax highlighting would got implemented, probably also caching
-> blob view (as CPU can become issue).
+>> -		print $cgi->a({-href => href(-replay=>1, page=>$page+1),
+>> -			       -accesskey => "n", -title => "Alt-n"}, "next");
 > 
-> Front-end (HTML output) caching has the advantages of easy to calculate
-> strong ETag, and web server support for If-Match: and If-None-Match:
-> HTTP/1.1 headers.  You can easy support Range: request, needed for
-> resuming download (e.g. for downloading snapshots, if this feature is
-> enabled in gitweb).
+> Should not happen: href(-replay=>1, ...) should have the same value
+> of 'a' parameter as the page it is in, so it should be 'log' not 'search'.
 
-Caching snapshots would definitely make sense, sure.
+This bug was caused by the fact that git_header_html() modified
+parameters in $cgi->param(...) when generating search form, and
+href(-replay, ...) uses paramemeters values from $cgi, not saved in
+variables (although it could).
 
-> You can even compress the output, and serve it to clients which
-> support proper transparent compression (Content-Encoding).
+This fixes mentioned bug, not only in the case of 'log' view, but in
+all cases (although it is possible that this bug doesn't occur for
+other pages).
 
-What does this have to do with caching?
+[I'm sorry if I have send this patch twice.]
 
-> And of course it has the advantage of actually been written and tested
-> in work, in the case of kernel.org gitweb.  Although caching parsed
-> data was implemented in repo.or.cz gitweb, it was done only for
-> projects list view, and it is quite new and not so thoroughly tested
->   http://article.gmane.org/gmane.comp.version-control.git/77469
+ gitweb/gitweb.perl |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
 
-This argument does have some value, but I don't think it matters too
-much, since as far as I understood, it is going to get largely
-reimplemented anyway.
-
-> It would be nice for front-end caching to have an option to use absolute
-> time for all time/dates, and to (optionally) not use adaptive
-> Content-Type...
-
-I'd hate to have to do unnecessary compromises in order to get sensible
-caching.
-
-Even in your excellent series on Gitweb caching series, I didn't spot
-any arguments that would put frontend caching in front of the
-intermediate data caching option; yes, it is the simplest solution
-implementation-wise, but also the least flexible one. My gut feeling is
-still to go with data caching instead of HTML caching.
-
--- 
-				Petr "Pasky" Baudis
-Whatever you can do, or dream you can, begin it.
-Boldness has genius, power, and magic in it.	-- J. W. von Goethe
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index dd0f0ac..50cde3b 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2622,7 +2622,7 @@ EOF
+ 	print "</div>\n";
+ 
+ 	my ($have_search) = gitweb_check_feature('search');
+-	if ((defined $project) && ($have_search)) {
++	if (defined $project && $have_search) {
+ 		if (!defined $searchtext) {
+ 			$searchtext = "";
+ 		}
+@@ -2638,16 +2638,13 @@ EOF
+ 		my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+ 		if ($use_pathinfo) {
+ 			$action .= "/".esc_url($project);
+-		} else {
+-			$cgi->param("p", $project);
+ 		}
+-		$cgi->param("a", "search");
+-		$cgi->param("h", $search_hash);
+ 		print $cgi->startform(-method => "get", -action => $action) .
+ 		      "<div class=\"search\">\n" .
+-		      (!$use_pathinfo && $cgi->hidden(-name => "p") . "\n") .
+-		      $cgi->hidden(-name => "a") . "\n" .
+-		      $cgi->hidden(-name => "h") . "\n" .
++		      (!$use_pathinfo &&
++		      $cgi->input({-name=>"p", -value=>$project, -type=>"hidden"}) . "\n") .
++		      $cgi->input({-name=>"a", -value=>"search", -type=>"hidden"}) . "\n" .
++		      $cgi->input({-name=>"h", -value=>$search_hash, -type=>"hidden"}) . "\n" .
+ 		      $cgi->popup_menu(-name => 'st', -default => 'commit',
+ 		                       -values => ['commit', 'grep', 'author', 'committer', 'pickaxe']) .
+ 		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
