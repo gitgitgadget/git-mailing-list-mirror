@@ -1,86 +1,69 @@
-From: "Stephen Sinclair" <radarsat1@gmail.com>
-Subject: Re: [Bug] vfat: Not a git archive
-Date: Mon, 2 Jun 2008 11:16:43 -0400
-Message-ID: <9b3e2dc20806020816r502de6bfjd704040d15858c82@mail.gmail.com>
-References: <873anwt9ya.fsf@debian.erik.com>
-	 <e1dab3980806020337x4d62dcablcf8d4385466b1b2f@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 2 Jun 2008 16:17:05 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806021545340.13507@racer.site.net>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwso85qkf.fsf@gitster.siamese.dyndns.org> <7vwso5r87q.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Thomas Christensen" <thomasc@thomaschristensen.org>,
-	git@vger.kernel.org
-To: "David Tweed" <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 17:18:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 17:19:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3BnE-0003WB-KK
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:17:53 +0200
+	id 1K3Boa-000429-R3
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbYFBPQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 11:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbYFBPQ7
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:16:59 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:38499 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752046AbYFBPQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 11:16:58 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1081858rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 08:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uy0heXFzwmZYWHIfX6sAIeDvkyLVQudpzu5ijQ+Gpak=;
-        b=hVDDY/Svl9wQTvY+L+raX6RS4Ow8WbnPcPtBuUyPJ5G7m+AgGKh9HNQ3pa6RW3F/dT/GBQCa1Pt+xzFHIMzLwLfd8gJt4659bJ+/YnY4KncNe95RxtOyOZ9W3oIrJrtnzdOz9F5Gtx2hnPRF5VKa60A+ksIGRep6rhF0CsJzCy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MFmul4biziTS13cWHlmQcfOevA8FONXRKUkUx62q+79qqPYIpyN8ZxgquQdGrYtX9xIpnx8WzrOadMPv1pGf4gZTJCn2YSdcZ2FA2fbeAi0VubrDZxXshXg8JfGg2f+Pg7OADM3NBufeycmrB2t9TA1Kxc+gArAKyp4ZemqKz5I=
-Received: by 10.141.193.1 with SMTP id v1mr5002808rvp.245.1212419817995;
-        Mon, 02 Jun 2008 08:16:57 -0700 (PDT)
-Received: by 10.141.66.3 with HTTP; Mon, 2 Jun 2008 08:16:43 -0700 (PDT)
-In-Reply-To: <e1dab3980806020337x4d62dcablcf8d4385466b1b2f@mail.gmail.com>
-Content-Disposition: inline
+	id S1752475AbYFBPSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 11:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbYFBPSY
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:18:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51935 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752432AbYFBPSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 11:18:23 -0400
+Received: (qmail invoked by alias); 02 Jun 2008 15:18:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
+  by mail.gmx.net (mp017) with SMTP; 02 Jun 2008 17:18:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+eomNgS/2eKh6MMjJsqSAZJToLoWMXqeYLbz3Qv4
+	gnyb8m1dkSeaEQ
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83530>
 
-On Mon, Jun 2, 2008 at 6:37 AM, David Tweed <david.tweed@gmail.com> wrote:
-> On Mon, Jun 2, 2008 at 11:20 AM, Thomas Christensen
-> <thomasc@thomaschristensen.org> wrote:
->> Hi,
->>
->> I am having this issue on Debian with kernel 2.6.25 (2.6.24 works fine)
->> and git 1.5.5.3.
->>
->>  $ git push /media/KINGSTON/foo.git
->>  fatal: '/media/KINGSTON/foo.git': unable to chdir or not a git archive
->>  fatal: The remote end hung up unexpectedly
->>
->> A notable difference between these 2 kernels is this line:
->>
->>  [   62.575939] FAT: utf8 is not a recommended IO charset for FAT
->>  filesystems, filesystem will be case sensitive!
->>
->> which appears in 2.6.25.
->
-> I don't remember if it gives this particular error message, but some
-> vfat mounting options cause the file 'HEAD' to appear to the
-> filesystem as 'head' which git doesn't like. (I don't think there any
-> other basic git files which have uppercase.)It's worth having a look
-> and see if that's happened.
+Hi,
 
-I recently had some issue where I got this "Not a git archive"
-message.  Turned out it was something stupid I had done during a
-failed filter-branch operation, related to deleting my refs.  But the
-message "Not a git archive" wasn't very helpful.  Finally I found that
-recreating my refs manually (using cat) did the trick.  But it would
-have been nice to have a more specific error message along with "Not a
-git archive", like "HEAD points to refs/heads/master, but file
-.git/refs/heads/master not found."
+On Mon, 2 Jun 2008, Junio C Hamano wrote:
 
+> * sp/remote (Sun Jun 1 00:28:04 2008 -0400) 3 commits
+>  + Make "git-remote rm" delete refs acccording to fetch specs
+>  + Make "git-remote prune" delete refs according to fetch specs
+>  + Remove unused remote_prefix member in builtin-remote
+> 
+> "git-remote" had an unwarranted assumption that everybody uses 
+> refs/remotes/$it namespace to track remote repository called $it.  This 
+> series is a reasonable fix to it.
 
-Steve
+AFAIR this limitation was already in the scripted version, and I tried to 
+wrap my head around lifting it.  However, I did not end up with the 
+brillian analysis of Shawn, and was almost sending a reply contradicting 
+his logic.  However, I agree with Shawn that it is the same issue as 
+contradicting fetches, so if it leads to problems, it is a pilot error.
+
+_However_, I still try to come up with some attic for deleted refs.  It is 
+not just a matter of moving the logs to a different namespace because of 
+D/F conflicts.
+
+Ciao,
+Dscho
