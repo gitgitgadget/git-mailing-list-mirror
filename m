@@ -1,93 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: fix "next" link on bottom of commit log page
-Date: Mon, 02 Jun 2008 01:52:31 -0700 (PDT)
-Message-ID: <m3d4n01anr.fsf@localhost.localdomain>
-References: <20080529181003.1249.qmail@b35f4f9e60eb05.315fe32.mid.smarden.org>
-	<m3y75s1a9v.fsf@localhost.localdomain>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: use Git.pm, and use its parse_rev method for
+	git_get_head_hash
+Date: Mon, 2 Jun 2008 11:29:26 +0200
+Message-ID: <20080602092926.GJ18781@machine.or.cz>
+References: <1212188412-20479-1-git-send-email-LeWiemann@gmail.com> <m3lk1q24nb.fsf@localhost.localdomain> <4841471E.2070302@gmail.com> <200806020019.23858.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 10:54:25 2008
+Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 11:30:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K35ng-00040W-2Y
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 10:53:56 +0200
+	id 1K36N1-0000Dk-35
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 11:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751774AbYFBIwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 04:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYFBIwg
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 04:52:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:3003 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751038AbYFBIwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 04:52:35 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so683736fgg.17
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 01:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=IW4dqiNGuD+cmaOHxxs1bumWNR2rZsoBREuF65385Fk=;
-        b=lVPbOyKsXEKKSY0rsUlROL5++x9CqR60S8A72hwuqsjTeloT90c+Is7zwz9pOciAmK5poslkxdKYQq18th3Qk6bf8MzYAY6R/XyFXlIiWGgmq6Ubhhh/sKDKT2QzM44gBO9fN1oyjk7me5m++zjeSGNwbNWwGypLOPNXJraf1bE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=T6EmniqnhXDnjwlNI6gH34XzRURYtMe8k3ti9orm8QSSyoM4V24iLYygKsEKMnigiGzKsrNvFnWab7Auk5roFF0F4qouHYhp0OD609SBHb7xaldayD3kacf4d8HM2xYzqCM3X88BEwps46fZsjFsaNLeMFW7YMWlvEvtbirqaQk=
-Received: by 10.86.28.2 with SMTP id b2mr2547848fgb.78.1212396753614;
-        Mon, 02 Jun 2008 01:52:33 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.195.117])
-        by mx.google.com with ESMTPS id e11sm3293192fga.4.2008.06.02.01.52.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Jun 2008 01:52:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m528qR01015583;
-	Mon, 2 Jun 2008 10:52:27 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m528qPoL015580;
-	Mon, 2 Jun 2008 10:52:25 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <m3y75s1a9v.fsf@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751076AbYFBJ3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 05:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbYFBJ3e
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 05:29:34 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56458 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750735AbYFBJ3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 05:29:33 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 1CD4A1E4C03F; Mon,  2 Jun 2008 11:29:26 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200806020019.23858.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83504>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> Gerrit Pape <pape@smarden.org> writes:
+On Mon, Jun 02, 2008 at 12:19:23AM +0200, Jakub Narebski wrote:
+> On Sat, 31 May 2008, Lea Wiemann wrote:
+> > Layer 2 is application-independent as well, so it can become an extra 
+> > class in Git.pm or a separate module.  (It should stay independent of 
+> > layers 3 and 4).
 > 
-> > When viewing a gitweb repository commit log, the "next" link at the top
-> > of the page works as expected, the "next" link on the bottom of the page
-> > has a=search instead of a=log and thus fails to get you to the next
-> > page.  This commit replaces the bottom "next" link with the same links
-> > as shown at the top of the page.
+> I think it would be better as separate module.  Would it be Git::Cache
+> (or Git::Caching), Gitweb::Cache, or part of gitweb, that would have
+> to be decided.  Besides, I'm not sure if it is really application-
+> -independent as you say: I think we would get better result if we
+> collate data first, which is application dependent.  Also I think
+> there is no sense to cache everything: what to cache is again
+> application dependent.
+
+I'm not very comfortable with putting caching directly to Git either.
+
+Even if you _would_ decide that you want to add caching directly to Git
+interface, it would be better to use extra module Git::Cached and
+auto-wrap all Git functions through AUTOLOAD. But that still has the
+problems Jakub desrcibed.
+
+> > We may need to have an explicitly implemented layer 0 (front-end 
+> > caching) in Gitweb for at least a subset of pages (like project pages), 
+> > but we'll see if that's necessary.
 > 
-> > -		print $cgi->a({-href => href(-replay=>1, page=>$page+1),
-> > -			       -accesskey => "n", -title => "Alt-n"}, "next");
+> I think that front-end caching (HTML/RSS/Atom output caching) has sense
+> for large web pages (large size and large number of items), such as
+> projects list page if it is unpaginated (and perhaps even if it is
+> divided into pages, although I'm sure not for project search page),
+> commonly requested snapshots (if they are enabled), large trees like
+> SPECS directory with all the package *.spec files for distribution
+> repository, perhaps summary/feed for most popular projects. If (when)
+> syntax highlighting would got implemented, probably also caching
+> blob view (as CPU can become issue).
 > 
-> Should not happen: href(-replay=>1, ...) should have the same value
-> of 'a' parameter as the page it is in, so it should be 'log' not 'search'.
-> 
-> Will investigate.
+> Front-end (HTML output) caching has the advantages of easy to calculate
+> strong ETag, and web server support for If-Match: and If-None-Match:
+> HTTP/1.1 headers.  You can easy support Range: request, needed for
+> resuming download (e.g. for downloading snapshots, if this feature is
+> enabled in gitweb).
 
-Now I know what is happening.  git_header_html() modifies parameters
-in $cgi, and href(-replay, ...) uses paramemeters values from $cgi,
-not saved in variables (although it could).
+Caching snapshots would definitely make sense, sure.
 
-So the correct solution would be to change the part which generates
-search form in git_header_html() to _not_ modify $cgi->params().
+> You can even compress the output, and serve it to clients which
+> support proper transparent compression (Content-Encoding).
 
-Patch will follow...
+What does this have to do with caching?
 
+> And of course it has the advantage of actually been written and tested
+> in work, in the case of kernel.org gitweb.  Although caching parsed
+> data was implemented in repo.or.cz gitweb, it was done only for
+> projects list view, and it is quite new and not so thoroughly tested
+>   http://article.gmane.org/gmane.comp.version-control.git/77469
 
-P.S. I wonder if using Test::WWW::Mechanize (from CPAN) to test
-gitweb's HTML output would be a good idea...
+This argument does have some value, but I don't think it matters too
+much, since as far as I understood, it is going to get largely
+reimplemented anyway.
+
+> It would be nice for front-end caching to have an option to use absolute
+> time for all time/dates, and to (optionally) not use adaptive
+> Content-Type...
+
+I'd hate to have to do unnecessary compromises in order to get sensible
+caching.
+
+Even in your excellent series on Gitweb caching series, I didn't spot
+any arguments that would put frontend caching in front of the
+intermediate data caching option; yes, it is the simplest solution
+implementation-wise, but also the least flexible one. My gut feeling is
+still to go with data caching instead of HTML caching.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Whatever you can do, or dream you can, begin it.
+Boldness has genius, power, and magic in it.	-- J. W. von Goethe
