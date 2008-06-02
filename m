@@ -1,58 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Fix path duplication in git svn commit-diff
-Date: Mon, 2 Jun 2008 13:53:03 +0200
-Message-ID: <20080602115303.GA27924@diana.vm.bytemark.co.uk>
-References: <20080517150330.31899.12398.stgit@yoghurt> <20080601094840.GB16064@hand.yhbt.net>
+From: Sebastian Bober <seb@tix64.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 2 Jun 2008 13:56:22 +0200
+Message-ID: <20080602115622.GC32553@post.servercare.de>
+References: <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 02 13:54:30 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 14:46:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K38cL-0001yt-Ln
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 13:54:26 +0200
+	id 1K39R5-0001iJ-MI
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 14:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759801AbYFBLxb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jun 2008 07:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760005AbYFBLxb
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 07:53:31 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4993 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756355AbYFBLxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 07:53:31 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K38b1-0007HJ-00; Mon, 02 Jun 2008 12:53:03 +0100
+	id S1757877AbYFBMps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 08:45:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758119AbYFBMps
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 08:45:48 -0400
+Received: from tix64.net ([81.169.172.224]:57287 "EHLO tix64.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756747AbYFBMpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 08:45:47 -0400
+X-Greylist: delayed 2962 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Jun 2008 08:45:47 EDT
+Received: from bob by tix64.net with local (Exim 4.69)
+	(envelope-from <bob@tix64.net>)
+	id 1K38eE-0005eU-7M; Mon, 02 Jun 2008 13:56:22 +0200
+Mail-Followup-To: Sebastian Bober <seb@tix64.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20080601094840.GB16064@hand.yhbt.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-bounce-key: tix64.net-1;bob@tix64.net;1212410747;7fd8ecd7;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83517>
 
-On 2008-06-01 02:48:40 -0700, Eric Wong wrote:
+On Mon, Jun 02, 2008 at 12:58:03AM -0700, Junio C Hamano wrote:
+> 
+> I've looked at the Git.pm testsuite that uses Test::More briefly but
+> hadn't really reviewed it.  Is Test::More commonly used, considered solid
+> and widely available?
 
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > I really don't have a clue as to why this was broken, but the
-> > patch fixes the problem for me, and doesn't break the tests. I got
-> > the idea from dcommit, which is setting svn_path to ''
-> > unconditionally.
->
-> Hardly anybody uses commit-diff directly :)
->
-> It was a low-level plumbing command that I used to implement the
-> original version of dcommit in.
+yes it is on all three points. It is the most commonly used test module
+for Perl, used by thousands of CPAN distributions. Test::More is
+delivered as core module since 5.8.0 or 5.6.2, so is widely deployed. It
+is actively maintained and is integrated in a test framework that allows
+the use and development of further "plug-in" test modules. With that
+it's conceivable to write a test module specifically for git and its
+usage scenarios.
 
-Yes. I was looking into how to call git-svn from StGit, and dcommit is
-a bit too smart to be easily scriptable.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Regards,
+  Sebastian
