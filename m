@@ -1,232 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Strbuf documentation: document most functions
-Date: Tue,  3 Jun 2008 00:59:51 +0200
-Message-ID: <1212447591-4870-1-git-send-email-vmiklos@frugalware.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 01:01:11 2008
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Development strategy
+Date: Tue, 3 Jun 2008 01:04:01 +0200
+Message-ID: <bd6139dc0806021604w1a066229idb788a9b918ee24b@mail.gmail.com>
+References: <48441715.4010507@gmail.com>
+	 <bd6139dc0806021130p2cc442a3qfe9c00681fdb05e3@mail.gmail.com>
+	 <484475FC.8020804@gmail.com>
+Reply-To: sverre@rabbelier.nl
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"John Hawley" <warthog19@eaglescrag.net>
+To: "Lea Wiemann" <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 01:05:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3J1B-0001uP-SH
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 01:00:46 +0200
+	id 1K3J67-0003DM-G7
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 01:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753585AbYFBW7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 18:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753546AbYFBW7t
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 18:59:49 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:56013 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753474AbYFBW7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 18:59:45 -0400
-Received: from vmobile.example.net (dsl5401C7C1.pool.t-online.hu [84.1.199.193])
-	by yugo.frugalware.org (Postfix) with ESMTP id E52E01DDC5B;
-	Tue,  3 Jun 2008 00:59:42 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 5ABCE18E2A7; Tue,  3 Jun 2008 00:59:51 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc0.dirty
+	id S1753075AbYFBXEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 19:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755426AbYFBXEF
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 19:04:05 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:31809 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752657AbYFBXEC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 19:04:02 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1017937wfd.4
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 16:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=jcFqrQOT/65hMGIdp7Sg0p9Zlpwr4mb9d1bZD+n8ql8=;
+        b=T41FKg/voQpIj12UgThARxkkfF5ue6/XSpkhd11OdrTcntZ92Kr7y/FTkJwmoVTZIp9IlYSLQ9DA9YM8geT0K3G9hRmPtvTZwGWDXWBM5jeYACEhZJ5DFHEHbCcjALW7rUwc9HMROJxfJCOcl/EeGnWTOHwyRHND5JAVvI1sT1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EJZSNtwk+NbBKuvV2IilyepM+RP+3tRzRDMgIr9sVJE1UkCa2XcZTGn6z6X5pgmIDJlM5+xdSt+N+eAfO05rOjIsCUQPnQS9V9aHKUQnznu5EHz1i4vOjyMcWAJBaFgtZnTvi5pU21dNQP7w6fsLuYwUsALF37lxcRncgk+b24Y=
+Received: by 10.142.48.14 with SMTP id v14mr243410wfv.14.1212447841602;
+        Mon, 02 Jun 2008 16:04:01 -0700 (PDT)
+Received: by 10.143.41.7 with HTTP; Mon, 2 Jun 2008 16:04:01 -0700 (PDT)
+In-Reply-To: <484475FC.8020804@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83591>
 
-All functions in strbuf.h are documented, except strbuf_expand() and
-launch_editor().
+On Tue, Jun 3, 2008 at 12:36 AM, Lea Wiemann <lewiemann@gmail.com> wrote:
+> Are you suggesting that the squashed patches get merged, or that the
+> squashed patches get reviewed but the finer-granulated patches get merged?
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+The latter is what I suggested :). I reckon you'll want ot keep the
+finger-granulated history for future reference / bisecting, but when
+reviewing that seems overkill.
 
-Actually this is a bit of request for help, I haven't figured out what
-strbuf_expand() does, and I don't know the second argument of
-launch_editor() is good for, but I *think* I'm familiar with the rest of
-the functions, so here is an attempt to document them.
+>  In the former case, I'd probably prefer to work with larger patches in the
+> first place (and not just squash them on the review branch), since they are
+> easier to handle -- e.g. I sometimes need to go back and change things in
+> earlier commits, and in those cases larger commits are easier.
 
- Documentation/technical/api-strbuf.txt |  173 +++++++++++++++++++++++++++++++-
- 1 files changed, 171 insertions(+), 2 deletions(-)
+If you don't think you're omitting information you will want later on
+(meaning the more specific commit history), by all means, go with the
+bigger patches. I find it nicer to create small commits, with the plus
+that it cuts down the size of the commit msg too ;).
 
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index a52e4f3..3879e0e 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -1,6 +1,175 @@
- strbuf API
- ==========
- 
--Talk about <strbuf.h>
-+strbuf's can be use in many ways: as a byte array, or to store arbitrary
-+long, overflow safe strings.
- 
--(Pierre, JC)
-+strbufs has some invariants that are very important to keep in mind:
-+
-+. The `->buf` member is always malloc-ed, hence strbuf's can be used to
-+  build complex strings/buffers whose final size isn't easily known.
-++
-+It is *not* legal to copy the `->buf` pointer away. `strbuf_detach()` is
-+the operation that detachs a buffer from its shell while keeping the
-+shell valid wrt its invariants.
-+
-+. The `->buf` member is a byte array that has at least `->len + 1` bytes
-+  allocated. The extra byte is used to store a `'\0'`, allowing the
-+  `->buf` member to be a valid C-string. Every strbuf function ensure this
-+  invariant is preserved.
-++
-+NOTE: It is OK to "play" with the buffer directly if you work it that
-+      way:
-++
-+----
-+strbuf_grow(sb, SOME_SIZE);
-+   ... Here, the memory array starting at sb->buf, and of length
-+   ... strbuf_avail(sb) is all yours, and you are sure that
-+   ... strbuf_avail(sb) is at least SOME_SIZE.
-+strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
-+----
-++
-+Of course, SOME_OTHER_SIZE must be smaller or equal to strbuf_avail(sb).
-++
-+Doing so is safe, though if it has to be done in many places, adding the
-+missing API to the strbuf module is the way to go.
-++
-+WARNING: Do _not_ assume that the area that is yours is of size `->alloc
-+- 1` even if it's true in the current implementation. Alloc is somehow a
-+"private" member that should not be messed with.
-+
-+Data structures
-+---------------
-+
-+* `struct strbuf`
-+
-+This is string buffer structure. The `->len` variable can be used to
-+determine the current length of the string, and `->buf` provides access
-+to the string itself.
-+
-+Functions
-+---------
-+
-+* Life cycle
-+
-+`strbuf_init`::
-+
-+	Initializes the structure. The second parameter can be zero or a bigger
-+	number to allocate memory, in case you want to prevent further reallocs.
-+
-+`strbuf_release`::
-+
-+	Releases a string buffer and the memory it used. You should not use the
-+	string buffer after using this function, unless you initialize it again.
-+
-+`strbuf_detach`::
-+
-+	Detaches the string from the string buffer. The function returns a
-+	pointer to the old string and empties the buffer.
-+
-+`strbuf_attach`::
-+
-+	Attaches a string to a buffer. You should specify the string to attach,
-+	the current length of the string and the amount of allocated memory.
-+
-+`strbuf_swap`::
-+
-+	Swaps the contents of two string buffers.
-+
-+* Related to the size of the buffer
-+
-+`strbuf_avail`::
-+
-+	Determines the amount of allocated but not used memory.
-+
-+`strbuf_grow`::
-+
-+	Allocated extra memory for the buffer.
-+
-+`strbuf_setlen`::
-+
-+	Sets the length of the buffer to a given value.
-+
-+`strbuf_reset`::
-+
-+	Empties the buffer by setting the size of it to zero.
-+
-+* Related to the contents of the buffer
-+
-+`strbuf_rtrim`::
-+
-+	Strip whitespace from the end of a string.
-+
-+`strbuf_cmp`::
-+
-+	Compares two buffers. Returns an integer less than, equal to, or greater
-+	than zero if the first buffer is found, respectively, to be less than,
-+	to match, or be greater than the second buffer.
-+
-+* Adding data to the buffer
-+
-+`strbuf_addch`::
-+
-+Adds a single character.
-+
-+`strbuf_insert`::
-+
-+	Insert data to the given position of the buffer. The remaining contents
-+	will be shifted, not overwritten.
-+
-+`strbuf_remove`::
-+
-+	Remove given amount of data from a given position of the buffer.
-+
-+`strbuf_splice`::
-+
-+	Splice pos..pos+len with given data.
-+
-+`strbuf_add`::
-+
-+	Add data of given length to the buffer.
-+
-+`strbuf_addstr`::
-+
-+	Add a NULL-terminated string to the buffer.
-+
-+`strbuf_addbuf`::
-+
-+	Add an other buffer to the current one.
-+
-+`strbuf_adddup`::
-+
-+	Copy part of the buffer from a given position till a given length to the
-+	end of the buffer.
-+
-+`strbuf_expand`::
-+
-+`strbuf_addf`::
-+
-+	Add a formatted string to the buffer.
-+
-+`strbuf_fread`::
-+
-+	Read a given size of data from a FILE* pointer to the buffer.
-+
-+`strbuf_read`::
-+
-+	Read the contents of a given file descriptor. The third argument can be
-+	used to give a hint about the file, to avoid reallocs.
-+
-+`strbuf_read_file`::
-+
-+	Read the contents of a file, specified by its path. The third argument
-+	can be used to give a hint about the file, to avoid reallocs.
-+
-+`strbuf_getline`::
-+
-+	Read a line from a FILE* pointer. The second argument specifies the line
-+	terminator character, like `'\n'`.
-+
-+`stripspace`::
-+
-+	Strips whitespace from a buffer. The second parameter controls if
-+	comments are considered contents to be removed or not.
-+
-+`launch_editor`::
 -- 
-1.5.6.rc0.dirty
+Cheers,
+
+Sverre Rabbelier
