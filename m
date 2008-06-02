@@ -1,76 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 02 Jun 2008 11:13:18 -0700
-Message-ID: <7vej7f7lj5.fsf@gitster.siamese.dyndns.org>
-References: <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
- <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
- <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
- <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
- <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
- <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
- <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
- <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
- <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806021545340.13507@racer.site.net>
- <20080602154320.GK12896@spearce.org>
- <alpine.DEB.1.00.0806021659480.13507@racer.site.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Adding a cache of commit to patch-id pairs to speed up
+ git-cherry
+Date: Mon, 2 Jun 2008 19:15:09 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806021913340.13507@racer.site.net>
+References: <7f9d599f0806012054y33b4fc10ha109aa4afbc7ca78@mail.gmail.com>  <alpine.DEB.1.00.0806020649110.13507@racer.site.net>  <20080602064218.GA15144@sigill.intra.peff.net>  <7f9d599f0806020735g30722893mb8efed41a6544ab5@mail.gmail.com> 
+ <alpine.DEB.1.00.0806021635220.13507@racer.site.net>  <7f9d599f0806020849g567461b2kecd65dbd35d3dc3b@mail.gmail.com>  <alpine.DEB.1.00.0806021717130.13507@racer.site.net> <7f9d599f0806020926j7ac9fb12jefa5a14fe5708226@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 02 20:14:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Mon Jun 02 20:17:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3EYJ-0000KZ-KI
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 20:14:40 +0200
+	id 1K3Eau-0001Ht-MB
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 20:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbYFBSNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 14:13:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751614AbYFBSNq
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 14:13:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34982 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862AbYFBSNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 14:13:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC01D3A50;
-	Mon,  2 Jun 2008 14:13:43 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3172C3A4F; Mon,  2 Jun 2008 14:13:37 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806021659480.13507@racer.site.net> (Johannes
- Schindelin's message of "Mon, 2 Jun 2008 17:14:18 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A2DA072E-30CF-11DD-BBD2-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751720AbYFBSQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 14:16:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbYFBSQ0
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 14:16:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60287 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751641AbYFBSQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 14:16:25 -0400
+Received: (qmail invoked by alias); 02 Jun 2008 18:16:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 02 Jun 2008 20:16:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+wqRFHgtKwKZCOnXhlRtWUeLy8lmBFs0bLpXzdZP
+	+w2ZsfZULMw56F
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <7f9d599f0806020926j7ac9fb12jefa5a14fe5708226@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83551>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> After sending the mail, I actually got an idea:
+On Mon, 2 Jun 2008, Geoffrey Irving wrote:
+
+> On Mon, Jun 2, 2008 at 9:18 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 >
-> 	.git/logs/attic/<timestamp>/<refname>
->
-> I think this should work without problems.  In that case, git-gc also 
-> handles the garbage collection.
+> > On Mon, 2 Jun 2008, Geoffrey Irving wrote:
+> >
+> >> On Mon, Jun 2, 2008 at 8:37 AM, Johannes Schindelin
+> >> <Johannes.Schindelin@gmx.de> wrote:
+> >>
+> >> > Another issue that just hit me: this cache is append-only, so if it 
+> >> > grows too large, you have no other option than to scratch and 
+> >> > recreate it. Maybe this needs porcelain support, too?  (git gc?)
+> >>
+> >> If so, the correct operation is to go through the hash and remove 
+> >> entries that refer to commits that no longer exist.  I can add this 
+> >> if you want.  Hopefully somewhere along the way git-gc constructs an 
+> >> easy to traverse list of extant commits, and this will be 
+> >> straightforward.
+> >
+> > I don't know... if you have created a cached patch-id for every commit 
+> > (by mistake, for example) and do not need it anymore, it might make 
+> > git-cherry substantially faster to just scrap the cache.
+> 
+> Well, ideally hash maps are O(1), but it could be a difference between a 
+> "compare 40 bytes" constant and a "read a 4k block into memory" 
+> constant, so in practice yes.  Scrapping it entirely will also make the 
+> implementation much simpler.
+> 
+> It seems a little sad to wipe all that effort each time, but 
+> regenerating the cache is likely to be less expensive than a git-gc, so 
+> it shouldn't change any amortized complexities.
 
-I do not like that particular color of the bikeshed, but I'd agree that it
-certainly is the easiest route from both the implementation and the design
-point of view.  All of the "hard stuff" Shawn mentions goes away, and you 
-are left with only one new "hard stuff", which is much easier to solve:
+Well, how about only scrapping the cache if it is older than, say, 2 
+weeks, and is larger than, say, 200kB?  That should help.
 
- - Should there be a way to really remove the archived reflog?
-
-And my answer is "yes, a new subcommand to 'git-reflog' to list and
-another subcommand to remove one".
-
-As to default behaviour, probably we would by default archive any local
-branches, and _not_ archive other things like remote trackers and tags.  A
-new configuration variable reflog.archive = {none,heads,all} would be
-honored and absense of it defaults to reflog.archive = heads.
+Ciao,
+Dscho
