@@ -1,104 +1,86 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Pushing an --amend-ed commit [and a git-merge-theirs strategy]
-Date: Mon, 02 Jun 2008 16:55:53 +0200
-Message-ID: <484409F9.5020807@gnu.org>
-References: <6B355924-0EA9-4AF8-B051-F17FC4530495@manchester.ac.uk>
+From: "Stephen Sinclair" <radarsat1@gmail.com>
+Subject: Re: [Bug] vfat: Not a git archive
+Date: Mon, 2 Jun 2008 11:16:43 -0400
+Message-ID: <9b3e2dc20806020816r502de6bfjd704040d15858c82@mail.gmail.com>
+References: <873anwt9ya.fsf@debian.erik.com>
+	 <e1dab3980806020337x4d62dcablcf8d4385466b1b2f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Robert Haines <rhaines@manchester.ac.uk>
-X-From: git-owner@vger.kernel.org Mon Jun 02 16:56:59 2008
+Cc: "Thomas Christensen" <thomasc@thomaschristensen.org>,
+	git@vger.kernel.org
+To: "David Tweed" <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 17:18:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3BSu-0004An-1h
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 16:56:52 +0200
+	id 1K3BnE-0003WB-KK
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 17:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753725AbYFBOz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 10:55:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbYFBOz6
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 10:55:58 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:32398 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752945AbYFBOz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 10:55:57 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so754747fgg.17
-        for <git@vger.kernel.org>; Mon, 02 Jun 2008 07:55:55 -0700 (PDT)
+	id S1752182AbYFBPQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 11:16:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbYFBPQ7
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 11:16:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:38499 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752046AbYFBPQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 11:16:58 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so1081858rvb.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 08:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=n8tlyyhvD9DGkdxQ17rXzvInazoZP9aiXqErerbfR6Y=;
-        b=t8qdFFp0DErTy4JTUQ0PGwhgSAtyACSAQyFkUMEUUvISH/NgoGVsqV3SIyiRNlkHgKGeLhyV9fKm1Jxcge1Ybte4g/k3WlM9uGAHzd2zVhyqRE1fpoUdnTHNGEJ/PTRXxI/uLqHDirGRtP0JbMlVcKYYDu3o60SfZD54b8iAR5Y=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=uy0heXFzwmZYWHIfX6sAIeDvkyLVQudpzu5ijQ+Gpak=;
+        b=hVDDY/Svl9wQTvY+L+raX6RS4Ow8WbnPcPtBuUyPJ5G7m+AgGKh9HNQ3pa6RW3F/dT/GBQCa1Pt+xzFHIMzLwLfd8gJt4659bJ+/YnY4KncNe95RxtOyOZ9W3oIrJrtnzdOz9F5Gtx2hnPRF5VKa60A+ksIGRep6rhF0CsJzCy0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=J/0nSb1n0Uj4tMQFRI9h7GEgTZztmyGwumARha+cPVs4Ib3yiQLnh9vZQuH37x3P7oUIihQog58WOo2C+JYSM9zLA7OFliQHpuyMxzliGWltVR+hx+w+YC7j3NuGCOXln3snRQfak1oaONW1R8bdu/6UXrjwY4P13xxkCoxbi2o=
-Received: by 10.86.79.19 with SMTP id c19mr5682221fgb.52.1212418555461;
-        Mon, 02 Jun 2008 07:55:55 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
-        by mx.google.com with ESMTPS id l19sm4419469fgb.7.2008.06.02.07.55.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Jun 2008 07:55:54 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <6B355924-0EA9-4AF8-B051-F17FC4530495@manchester.ac.uk>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MFmul4biziTS13cWHlmQcfOevA8FONXRKUkUx62q+79qqPYIpyN8ZxgquQdGrYtX9xIpnx8WzrOadMPv1pGf4gZTJCn2YSdcZ2FA2fbeAi0VubrDZxXshXg8JfGg2f+Pg7OADM3NBufeycmrB2t9TA1Kxc+gArAKyp4ZemqKz5I=
+Received: by 10.141.193.1 with SMTP id v1mr5002808rvp.245.1212419817995;
+        Mon, 02 Jun 2008 08:16:57 -0700 (PDT)
+Received: by 10.141.66.3 with HTTP; Mon, 2 Jun 2008 08:16:43 -0700 (PDT)
+In-Reply-To: <e1dab3980806020337x4d62dcablcf8d4385466b1b2f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83529>
+
+On Mon, Jun 2, 2008 at 6:37 AM, David Tweed <david.tweed@gmail.com> wrote:
+> On Mon, Jun 2, 2008 at 11:20 AM, Thomas Christensen
+> <thomasc@thomaschristensen.org> wrote:
+>> Hi,
+>>
+>> I am having this issue on Debian with kernel 2.6.25 (2.6.24 works fine)
+>> and git 1.5.5.3.
+>>
+>>  $ git push /media/KINGSTON/foo.git
+>>  fatal: '/media/KINGSTON/foo.git': unable to chdir or not a git archive
+>>  fatal: The remote end hung up unexpectedly
+>>
+>> A notable difference between these 2 kernels is this line:
+>>
+>>  [   62.575939] FAT: utf8 is not a recommended IO charset for FAT
+>>  filesystems, filesystem will be case sensitive!
+>>
+>> which appears in 2.6.25.
+>
+> I don't remember if it gives this particular error message, but some
+> vfat mounting options cause the file 'HEAD' to appear to the
+> filesystem as 'head' which git doesn't like. (I don't think there any
+> other basic git files which have uppercase.)It's worth having a look
+> and see if that's happened.
+
+I recently had some issue where I got this "Not a git archive"
+message.  Turned out it was something stupid I had done during a
+failed filter-branch operation, related to deleting my refs.  But the
+message "Not a git archive" wasn't very helpful.  Finally I found that
+recreating my refs manually (using cat) did the trick.  But it would
+have been nice to have a more specific error message along with "Not a
+git archive", like "HEAD points to refs/heads/master, but file
+.git/refs/heads/master not found."
 
 
-> 1) Right, changes all done and committed. Push to public repo.
-> 2) Bugger, missed out an obvious one-liner in a Makefile. Make change 
-> and --amend that last commit.
-> 3) Push to public repo again... Ah, "Not a strict subset" error, can't 
-> push...
-> 
-> It's obvious (I think) to me why I get this error - the commit now has a 
-> different hash so it looks like it would be the wrong thing to do to 
-> allow the push as far as git is concerned. Right?
-> 
-> So, is it safe to "use the --force" in this instance when pushing? This 
-> should just replace the old commit with the --amended commit with no 
-> side-effects, shouldn't it?
-
-Yes, but it would screw up other people that pulled from you.
-
-If that's an issue (it most likely is, unless you're just pushing just 
-to your own mirror repository), it is better if you do it the other way 
-round: adding your commits on top of origin^, starting from the one that 
-fixed a typo.  In other words, make the history look like you hadn't 
-used --amend.
-
-Do like this: first create git-merge-theirs somewhere in your path; it's 
-this three-line script, and it has to have that name.
-
-#! /bin/sh
-eval git reset \$$# -- .
-git-checkout-index -q -f -a
-
-Don't forget to make it executable. :-)
-
-And here's the magic incantation to be executed on branch master:
-
-git rebase -s theirs --onto origin/master origin/master^ HEAD
-
-Basically, it uses the script created above to place the commits _after_ 
-origin/master^ _above_ origin/master.  What the script does is resolve 
-conflicts by taking the version in your "master" branch.
-
-To do so, git-merge-theirs uses "git reset" to check out into the index 
-the last head passed to it (which we know is the next commit being added 
-to the rebase).  Then it extracts the index into the working tree to 
-avoid complaints from "git commit" about files not being up-to-date.
-
-There is no builtin git-merge-theirs strategy; if there was one, it 
-should make sure that it was only called with two heads, for example.
-
-Anyway, now you can push again.  I suggest however reviewing your commit 
-messages and, if necessary, using "git rebase -i origin/master" to edit 
-some of them.
-
-Paolo
+Steve
