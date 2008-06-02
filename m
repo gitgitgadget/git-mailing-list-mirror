@@ -1,59 +1,76 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git-svn pulling down duplicate revisions
-Date: Mon, 2 Jun 2008 19:59:53 +0200
-Message-ID: <20080602175953.GA31685@atjola.homenet>
-References: <1AD7D1A1-EC3B-450D-A648-04ADB8180E46@sb.org> <20080602050050.GC9904@hand.yhbt.net> <5FB2F28F-4C9A-422E-BF7D-B271471154F9@sb.org> <20080602054034.GA8366@untitled> <0E759330-1A0A-489D-ADA3-B71A49951227@sb.org> <20080602104225.GA8401@untitled> <C520B70F-2E61-42E6-AF20-E24E15A33CDD@sb.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 02 Jun 2008 11:13:18 -0700
+Message-ID: <7vej7f7lj5.fsf@gitster.siamese.dyndns.org>
+References: <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+ <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+ <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+ <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+ <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806021545340.13507@racer.site.net>
+ <20080602154320.GK12896@spearce.org>
+ <alpine.DEB.1.00.0806021659480.13507@racer.site.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 20:00:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 02 20:14:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3EKy-0004Sf-La
-	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 20:00:53 +0200
+	id 1K3EYJ-0000KZ-KI
+	for gcvg-git-2@gmane.org; Mon, 02 Jun 2008 20:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061AbYFBR76 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jun 2008 13:59:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbYFBR76
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 13:59:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42874 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751412AbYFBR75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 13:59:57 -0400
-Received: (qmail invoked by alias); 02 Jun 2008 17:59:55 -0000
-Received: from i577BA71F.versanet.de (EHLO atjola.local) [87.123.167.31]
-  by mail.gmx.net (mp043) with SMTP; 02 Jun 2008 19:59:55 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19seLMx9odsRJerGpQYIV8l86mIVBpwDYL4CjPfup
-	zDW/AioQDsMBQt
-Content-Disposition: inline
-In-Reply-To: <C520B70F-2E61-42E6-AF20-E24E15A33CDD@sb.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
+	id S1751650AbYFBSNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 14:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751614AbYFBSNq
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 14:13:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34982 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750862AbYFBSNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 14:13:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC01D3A50;
+	Mon,  2 Jun 2008 14:13:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3172C3A4F; Mon,  2 Jun 2008 14:13:37 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806021659480.13507@racer.site.net> (Johannes
+ Schindelin's message of "Mon, 2 Jun 2008 17:14:18 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A2DA072E-30CF-11DD-BBD2-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83550>
 
-On 2008.06.02 10:45:04 -0700, Kevin Ballard wrote:
-> Incidentally, I just checked and when I start the git-svn clone, it
-> starts pulling down revisions for the branch 'css_refactor@1559' (odd
-> branch name, but it claimed to find multiple branch points for this
-> 'css_refactor' branch). My guess is when it starts working on the nex=
-t
-> branch, it doesn't view it as related to css_refactor and starts
-> pulling down the revisions again even though those revisions actually
-> belonged to trunk.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Hm, you could probably test that theory at least for branches that
-started from trunk I guess. First, clone trunk only, and then add the
-branches/tags config entries and fetch the rest. If it holds, then the
-duplication should be gone I guess.
+> After sending the mail, I actually got an idea:
+>
+> 	.git/logs/attic/<timestamp>/<refname>
+>
+> I think this should work without problems.  In that case, git-gc also 
+> handles the garbage collection.
 
-Bj=F6rn
+I do not like that particular color of the bikeshed, but I'd agree that it
+certainly is the easiest route from both the implementation and the design
+point of view.  All of the "hard stuff" Shawn mentions goes away, and you 
+are left with only one new "hard stuff", which is much easier to solve:
+
+ - Should there be a way to really remove the archived reflog?
+
+And my answer is "yes, a new subcommand to 'git-reflog' to list and
+another subcommand to remove one".
+
+As to default behaviour, probably we would by default archive any local
+branches, and _not_ archive other things like remote trackers and tags.  A
+new configuration variable reflog.archive = {none,heads,all} would be
+honored and absense of it defaults to reflog.archive = heads.
