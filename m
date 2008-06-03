@@ -1,79 +1,58 @@
-From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-Date: Tue, 3 Jun 2008 15:36:26 +0200
-Message-ID: <b77c1dce0806030636i434e4716r8a52d6aeb93e9719@mail.gmail.com>
-References: <1212489977-26822-1-git-send-email-rgarciasuarez@gmail.com>
-	 <200806031445.23002.jnareb@gmail.com>
-	 <b77c1dce0806030600x520d35edxbe6e732ce6cc4ad6@mail.gmail.com>
-	 <200806031512.20729.jnareb@gmail.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: External diff viewer and stage/merge tool and git-gui?
+Date: Tue, 3 Jun 2008 14:40:32 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0806031439060.31572@ds9.cixit.se>
+References: <Pine.LNX.4.64.0806030819310.31572@ds9.cixit.se>
+ <402731c90806030356r1ea4317vef40b6449f4fca16@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Luben Tuikov" <ltuikov@yahoo.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 15:37:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 15:43:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3WhV-0006Za-BF
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 15:37:21 +0200
+	id 1K3Wlf-0008Ms-B2
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 15:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752646AbYFCNg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 09:36:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbYFCNg2
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 09:36:28 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:20033 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413AbYFCNg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 09:36:27 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1581514rvb.1
-        for <git@vger.kernel.org>; Tue, 03 Jun 2008 06:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=L1XD7IuJxPekvmFOViCVpBQdqFGwqQzfN2BLZFdp4u4=;
-        b=E6xPTqV1QXxvwV39+z6n0s6Mfpr5xZTgVgOKXXR/A3a5Lsh64lehSb1Dk17UB34kiSfbFOAvP2DTw1u2v1rWRPwiKrKu1j2kzQ/w9XwGi2XOIYAg39oNHFCexfWbwrPlZwWVpbGd08zZlWk7s7aZ43K0o10TkHncUwBntgDVyVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AkwiyaijPqO/bIrXB0gYudNgAUDu8PNJShXsUxPH0rhuaI7zbtLBJN9uMPMNkbBvMsk7hfE3k3jF3p2koLcgRDMV4cbPpq8jOpPFVqsr3BU38KGS8UyoJNorBzrU/UgGcxxP+46EYsthLcHX0R8nNbKylkZYT1AMrPf7fsHQe6A=
-Received: by 10.141.18.14 with SMTP id v14mr5727959rvi.125.1212500186816;
-        Tue, 03 Jun 2008 06:36:26 -0700 (PDT)
-Received: by 10.141.178.21 with HTTP; Tue, 3 Jun 2008 06:36:26 -0700 (PDT)
-In-Reply-To: <200806031512.20729.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752300AbYFCNkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 09:40:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752577AbYFCNkl
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 09:40:41 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:54376 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752219AbYFCNkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 09:40:40 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m53Dea5e020020
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Jun 2008 15:40:36 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m53DeWJS020009;
+	Tue, 3 Jun 2008 15:40:32 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <402731c90806030356r1ea4317vef40b6449f4fca16@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 03 Jun 2008 15:40:36 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83657>
 
-2008/6/3 Jakub Narebski <jnareb@gmail.com>:
->>
->> OK, I see. That would be nice. Also: currently taking "$full_rev^"
->> directs the user to the parent commit, but it would be more
->> user-friendly to point at the previous commit where the selected file
->> was modified instead.
->
-> That's what I meant by distinguishing between 'parents' and
-> 'original-parents' (or 'rewritten-parents' and 'parents'): first are
-> rewritten parents in history limited to specified file (with the
-> addition of code movements and copying across files/filenames),
-> second are original parents of a commit.
->
-> For gitweb we would use the first set (I wonder what to do in the case
-> of merge commit, i.e. more than one parent).
+David Aguilar:
 
-Currently that takes the left parent. Or something.
+> Have you taken a look at ugit?
 
-Shameless plug : the sources for perl 5 are currently being kept in a
-perforce repository. There is a rough web interface to it at
-http://public.activestate.com/cgi-bin/perlbrowse with excellent blame
-log navigation features (including navigation against p4
-integrations).
+Tried to now, but can't get it to quite work due to dependencies of
+dependencies[1]. And is it possible to install it on a Windows box without
+Cygwin?
 
-Since we're going to move the official perl 5 vcs to git (many many
-thanks to Sam Vilain for that, BTW), I'm more or less trying to
-duplicate this blame log navigation in gitweb. So it might result in a
-few patches here :)
+-- 
+\\// Peter - http://www.softwolves.pp.se/
+
+ [1] GitPython install failes with "ImportError: No module named ez_setup"
