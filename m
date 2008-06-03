@@ -1,71 +1,91 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Maintaining two branches.
-Date: Tue, 03 Jun 2008 20:41:45 +0200
-Message-ID: <48459069.7090404@dirk.my1.cc>
-References: <20080603163431.GA1244@old.davidb.org> <08056802-BBBC-4F1D-A1A6-2F8C381CDA2B@ai.rug.nl> <20080603181731.GB11735@old.davidb.org>
+Date: Tue, 03 Jun 2008 12:09:32 -0700
+Message-ID: <7vod6i2v4j.fsf@gitster.siamese.dyndns.org>
+References: <20080603163431.GA1244@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 03 20:42:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Tue Jun 03 21:10:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3bT1-00033I-KX
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 20:42:44 +0200
+	id 1K3bu6-0005Qy-Ia
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 21:10:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbYFCSlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 14:41:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754079AbYFCSlt
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 14:41:49 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.14]:52649 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289AbYFCSls (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 14:41:48 -0400
-Received: from [84.176.61.188] (helo=[192.168.2.100])
-	by smtprelay02.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1K3bS6-0007w7-W9; Tue, 03 Jun 2008 20:41:47 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <20080603181731.GB11735@old.davidb.org>
-X-Df-Sender: 757646
+	id S1753896AbYFCTJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 15:09:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbYFCTJs
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 15:09:48 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51118 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753369AbYFCTJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 15:09:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 91650407B;
+	Tue,  3 Jun 2008 15:09:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2614B4071; Tue,  3 Jun 2008 15:09:37 -0400 (EDT)
+In-Reply-To: <20080603163431.GA1244@old.davidb.org> (David Brown's message of
+ "Tue, 3 Jun 2008 09:34:31 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A05B0652-31A0-11DD-9F2F-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83690>
 
-David Brown schrieb:
-> On Tue, Jun 03, 2008 at 08:08:09PM +0200, Pieter de Bie wrote:
->
->> You might do the same workflow that Git has with stable / master / next
->>
->> If there is a new upstream release, merge it into external. If you 
->> have patches you want to show to the outside, apply those patches to 
->> external. Then you can merge external into local. The trick is to 
->> never merge local into external.
->>
->> By going only one way (upstream --> external --> local), you'll never 
->> have to worry about having to separate the different patches. Your 
->> history will be displayed much nicer too.
->
-> I guess I didn't explain our dilema very well.  We _have_ to separate the
-> different patches, for legal reasons.  Perhaps 'external' isn't a good 
-> name
-> for the branch, maybe it should be 'other'.  Basically, the 'upstream'
-> branch is the real upstream tree.  The 'external' or 'other' branch
-> contains patches from outside our company.  We are forbidden from
-> redistributing these changes, and will be having our customers get them
-> from the same source that we do.  Then our 'local' branch is where we do
-> our development.
-For my understanding: does your 'other' branch contain only a 3rd party
-library that you (or the 3rd party people) did patch for your purpose
-and you're not allowed to distribute that patched 3rd party lib? What
-about using a git submodule for the 3rd party thing. The submodule
-contains the patched library (for your development) and the customer
-is then told to supply the genuine library (from the internet) and then
-apply your patches to it. Would that help you? Probably I missed
-some legal issues here...
+David Brown <git@davidb.org> writes:
 
-     -- Dirk
+> Looking for some advice/ideas on a git workflow:
+>
+> We have three branches of the code:
+>
+>   - upstream - The upstream release versions, tracks outside git repo.
+>   - external - Other external patches not included in the main git repo.
+>   - local - Our local development.
+>
+> For release reasons, we need to keep our local branch separate, but normal
+> development needs to be done on a merge of 'external' and 'local' (the tree
+> needs the merge of both just to build).  Developers will generate patches,
+> and maintainers will apply these patches to 'local'.
+>
+> I've tried creating a 'next' branch where I merge each change from local
+> and/or external, and this seems to work, but the history gets very
+> cluttered with merge commits.  For some reason, history simplification
+> doesn't seem to eliminate any of these merges.
+>
+> We also have an automated build/test system that checks out versions of
+> 'next', and when the build and test moves 'master' forward to that version.
+> Because of this, it would be nice to keep 'next' fairly up-to-date, which
+> implies having a lot of merges.
+
+You do not have to, and very likely do not want to, merge 'next' directly
+into 'master'.
+
+Instead of having a single local integration branch 'local', it is wiser
+to keep separate topic branches to house your local development.  Each of
+them will start its life in an imperfect shape, and will need multiple
+rounds of fixups, which is normal, and you will merge them regularly into
+'next' to make sure everything will work together, and 'next' will have
+tons of merges for this exact reason.
+
+However, what you will merge to 'master' is not 'next' as a whole.
+Instead, you will merge each individual topic, only it is fully cooked and
+proved to be Ok while it has been in 'next', to 'master'.  That way, if a
+work to enhance an appliation area took four attempts to get it right over
+four 'next' cycles, 'next' branch may have four merges from that topic
+branch, you will see only one merge from that topic to 'master', that
+merges the enhancement in completed state.  At that point, 'next' will
+have other topics in an earlier stage of polishing, and these imperfect
+ones will not in 'master' yet.
+
+IOW, just like you keep separate things separate by having distinction
+between 'external' and 'local', by keeping separate development tracks
+among what you currently use single basket 'local' to hold, your history
+will become much more meaningful and understandable.
