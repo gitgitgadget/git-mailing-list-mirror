@@ -1,57 +1,71 @@
-From: Stephan Beyer <s-beyer@gmx.net>
+From: Pieter de Bie <pdebie@ai.rug.nl>
 Subject: Re: Maintaining two branches.
-Date: Tue, 3 Jun 2008 20:02:13 +0200
-Message-ID: <20080603180213.GA5541@leksak.fem-net>
+Date: Tue, 3 Jun 2008 20:08:09 +0200
+Message-ID: <08056802-BBBC-4F1D-A1A6-2F8C381CDA2B@ai.rug.nl>
 References: <20080603163431.GA1244@old.davidb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Tue Jun 03 20:03:13 2008
+X-From: git-owner@vger.kernel.org Tue Jun 03 20:09:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3aql-0005I9-CY
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 20:03:11 +0200
+	id 1K3awh-0007eM-Ds
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 20:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbYFCSCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 14:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753461AbYFCSCS
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 14:02:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55547 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752776AbYFCSCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 14:02:17 -0400
-Received: (qmail invoked by alias); 03 Jun 2008 18:02:15 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp046) with SMTP; 03 Jun 2008 20:02:15 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX194bSE/clp4TceFK8PGOJy6lBh4oYjev5zNEGi2gK
-	0Cc2p1iZhXAfUG
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K3app-0001T0-Qb; Tue, 03 Jun 2008 20:02:13 +0200
-Content-Disposition: inline
+	id S1754284AbYFCSIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 14:08:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbYFCSIU
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 14:08:20 -0400
+Received: from smtp-1.orange.nl ([193.252.22.241]:16140 "EHLO smtp-1.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753586AbYFCSIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 14:08:19 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6008.orange.nl (SMTP Server) with ESMTP id BC8DF70000A4;
+	Tue,  3 Jun 2008 20:08:17 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6008.orange.nl (SMTP Server) with ESMTP id 6A17C70000A0;
+	Tue,  3 Jun 2008 20:08:11 +0200 (CEST)
+X-ME-UUID: 20080603180815434.6A17C70000A0@mwinf6008.orange.nl
 In-Reply-To: <20080603163431.GA1244@old.davidb.org>
-X-Y-GMX-Trusted: 0
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83685>
 
-Hi,
 
-> I've tried creating a 'next' branch where I merge each change from local
-> and/or external, and this seems to work, but the history gets very
-> cluttered with merge commits.
+On 3 jun 2008, at 18:34, David Brown wrote:
 
-You could cherry-pick commits from local and/or external instead of
-merging. See git-cherry-pick(1).
+> We have three branches of the code:
+>
+>  - upstream - The upstream release versions, tracks outside git repo.
+>  - external - Other external patches not included in the main git  
+> repo.
+>  - local - Our local development.
+>
+> For release reasons, we need to keep our local branch separate, but  
+> normal
+> development needs to be done on a merge of 'external' and  
+> 'local' (the tree
+> needs the merge of both just to build).  Developers will generate  
+> patches,
+> and maintainers will apply these patches to 'local'.
 
-Regards,
-  Stephan
+You might do the same workflow that Git has with stable / master / next
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+If there is a new upstream release, merge it into external. If you  
+have patches you want to show to the outside, apply those patches to  
+external. Then you can merge external into local. The trick is to  
+never merge local into external.
+
+By going only one way (upstream --> external --> local), you'll never  
+have to worry about having to separate the different patches. Your  
+history will be displayed much nicer too.
+
+- Pieter
