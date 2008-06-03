@@ -1,74 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Octopus merge: unique (?) to git, but is it useful?
-Date: Tue, 03 Jun 2008 13:53:47 +0200
-Message-ID: <vpqlk1mu438.fsf@bauges.imag.fr>
-References: <200806030314.03252.jnareb@gmail.com>
-	<vpqabi2zvci.fsf@bauges.imag.fr> <200806031327.52175.jnareb@gmail.com>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
+Date: Tue, 3 Jun 2008 14:03:47 +0200
+Message-ID: <b77c1dce0806030503r55c95d73t5ff244821f76cf1@mail.gmail.com>
+References: <1212489977-26822-1-git-send-email-rgarciasuarez@gmail.com>
+	 <m34p8a2173.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 13:55:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Luben Tuikov" <ltuikov@yahoo.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 14:04:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3V79-000284-7y
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 13:55:43 +0200
+	id 1K3VFq-00056l-Kv
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 14:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125AbYFCLys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 07:54:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752995AbYFCLys
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 07:54:48 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:61966 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752780AbYFCLyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 07:54:47 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m53Brqjm020248;
-	Tue, 3 Jun 2008 13:53:52 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1K3V5H-0001Cm-8I; Tue, 03 Jun 2008 13:53:47 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1K3V5H-0002mB-60; Tue, 03 Jun 2008 13:53:47 +0200
-In-Reply-To: <200806031327.52175.jnareb@gmail.com> (Jakub Narebski's message of "Tue\, 3 Jun 2008 13\:27\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 03 Jun 2008 13:53:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755871AbYFCMDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 08:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755560AbYFCMDt
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 08:03:49 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:14696 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754623AbYFCMDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 08:03:48 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so1544485rvb.1
+        for <git@vger.kernel.org>; Tue, 03 Jun 2008 05:03:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=1H9k3QBBgsEBhZX//U5FmozMqLLmqM5Z+d99Ejky40g=;
+        b=N9yP0L5J/tRbaAnS+eXLUx6WvFcmNJxu6WQV2VuDnATYEvdjgqgLoBzpRp61461C6iqE4gYsFcZP3DfEX3M3EE+UZaEzvgGR+Oa7KX4UYTvuNvXQrgNI0bpX9ACePWnVFu/Ri8ma/1/mRpXNxxWOLRtabbrEJQOQPP0DuK2sVwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SMz3WNzDol8zs56EQlPyPV+ic3kz37ms1CHXb+1CWTkWNyHfRLHluypZljefBy8OSufMXQFiwQtKMP878YdxXbzsywezhISc2CQihAwNZv9f5o7kt2Z90zyJuslgkRsLZWQvADlqlSwyiv922cAvrZcswEKL3a7IzCnyW2Ixsdk=
+Received: by 10.141.33.21 with SMTP id l21mr5689581rvj.105.1212494627757;
+        Tue, 03 Jun 2008 05:03:47 -0700 (PDT)
+Received: by 10.141.178.21 with HTTP; Tue, 3 Jun 2008 05:03:47 -0700 (PDT)
+In-Reply-To: <m34p8a2173.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83645>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> On Tue, 3 June 2008, Matthieu Moy wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->>> I think that octopus merge (merge with more than two parents/legs) is 
->>> feature which is unique to git (isn't it?).  
->> 
->> bzr can do similar things:
->> 
->> bzr merge some-branch
->> bzr merge --force some-other-branch
->> bzr commit
->> 
->> Since bzr doesn't auto-commit after a merge, the above commands
->> actually creates only one revision with 3 parents (the --force is here
->> to let merge do it's job with uncommited changes in the tree).
+2008/6/3 Jakub Narebski <jnareb@gmail.com>:
+>> -             open (my $dd, "-|", git_cmd(), "rev-parse", "$full_rev^")
+>> +             open (my $dd, "-|", git_cmd(), "rev-parse", '--revs-only', "$full_rev^")
+>>                       or die_error(undef, "Open git-rev-parse failed");
+>> -             my $parent_commit = <$dd>;
+>> +             my $parent_commit = <$dd> || '';
+>>               close $dd;
+>>               chomp($parent_commit);
+>>               my $blamed = href(action => 'blame',
 >
-> But does it store octopus merge as octopus: commit with more than
-> two parents?
+> I'd rather remove this, correct it, or make it optional (this is very
+> fork-heavy).
 
-Yes, it's actually a single commit object with 3 parents.
-
--- 
-Matthieu
+Not sure how to do the same thing in pure perl.
+We could however cache the results of git-rev-parse, since the same
+rev is likely to appear many times in the list.
