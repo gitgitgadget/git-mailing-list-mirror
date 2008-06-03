@@ -1,73 +1,93 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH v2 2/2] Make old sha1 optional with git update-ref -d
-Date: Tue, 3 Jun 2008 08:49:57 +0200
-Message-ID: <20080603064957.GA6701@diana.vm.bytemark.co.uk>
-References: <20080602233244.26087.51827.stgit@yoghurt> <20080602233453.26087.52259.stgit@yoghurt> <7vk5h73w2i.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Octopus merge: unique (?) to git, but is it useful?
+Date: Tue, 03 Jun 2008 00:11:05 -0700
+Message-ID: <7v1w3f3sdy.fsf@gitster.siamese.dyndns.org>
+References: <200806030314.03252.jnareb@gmail.com>
+ <alpine.LFD.1.10.0806021845210.3473@woody.linux-foundation.org>
+ <7vy75n3zus.fsf@gitster.siamese.dyndns.org>
+ <200806030839.58214.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 08:51:23 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 09:12:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3QMc-000435-RA
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 08:51:23 +0200
+	id 1K3Qh5-0001LH-EE
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 09:12:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbYFCGua convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jun 2008 02:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750949AbYFCGua
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 02:50:30 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1617 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbYFCGu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 02:50:29 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K3QLF-0002tn-00; Tue, 03 Jun 2008 07:49:57 +0100
-Content-Disposition: inline
-In-Reply-To: <7vk5h73w2i.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752769AbYFCHLO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jun 2008 03:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbYFCHLO
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 03:11:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbYFCHLN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 03:11:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C8C653DC0;
+	Tue,  3 Jun 2008 03:11:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E18DE3D3D; Tue,  3 Jun 2008 03:11:07 -0400 (EDT)
+In-Reply-To: <200806030839.58214.jnareb@gmail.com> (Jakub Narebski's message
+ of "Tue, 3 Jun 2008 08:39:57 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3F23CB94-313C-11DD-B001-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83622>
 
-On 2008-06-02 22:51:33 -0700, Junio C Hamano wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
+> On Tue, 3 June 2008, Junio C Hamano wrote:
+>> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>>=20
+>>> Actually, it's trivial to convert to other SCM's, although I guess =
+the=20
+>>> conversion tools haven't really tried. You can always turn it into =
+a=20
+>>> series of multiple merges. Yes, you lose information, but it's not =
+like=20
+>>> you lose a huge amount.
+>>=20
+>> One thing to worry about is what tree object you would give to each =
+of
+>> these "artificially split" merge commits, though.
 >
-> > Giving the old sha1 is already optional when changing a ref, and
-> > it's quite handy when running update-ref manually. So make it
-> > optional for deleting a ref too.
->
-> "Handy" is not a very good reason when talking about plumbing
-> command like update-ref that takes an extra parameter for safety of
-> the last step in read, operate, verify-and-update sequence.
->
-> Although it is not a reason _bad enough_ to make your patch a bad
-> idea, perhaps you should rethink the problem at the same time?
-> Whatever you are trying to do cannot be done without manually
-> invoking update-ref directly by the end user, perhaps that needs to
-> be addressed?
+> There shouldn't be, I think, a problem if octopus merge was done usin=
+g
+> 'octopus' merge strategy,...
 
-I need this from time to time when experimenting with StGit -- or,
-more precisely, when cleaning up afterwards in case it didn't go so
-well. Packed refs means I can't safely just edit/delete files under
-=2Egit/refs anymore, so I use update-ref instead. And having to use the
-safety belt every time is just plain tedious. I'd say this is a
-perfect example of when using the plumbing by hand is really what you
-want.
+You are sort-of right.
 
-(In this kind of situation, branch -D often doesn't work since my ref
-isn't under refs/heads, and besides I really don't want any of it's
-smarts right then -- I want to delete a ref, nothing more.)
+An octopus capable history may say "This is a merge between commit A, B
+and C".  A trivial/na=C3=AFve conversion to a foreign history that can =
+only
+express two-parent merges must say "This X is a merge between commit A =
+and
+B", followed by "This is a merge between X and C".  X, cross between A =
+and
+B, _should_ be a merge that can be reliably and trivially recreated.  T=
+his
+actually is the reason why "my" octopus strategy implementation refuses=
+ to
+record anything nontrivial.
 
-Better suggestions welcome, of course.
+But that's not something you should assume, as you can commit anything
+with commit-tree.  Some people might even be using sg/merge-options ser=
+ies
+parked in 'pu' that makes what the recorded parenthood and what the use=
+d
+parents different even more.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+A cleverer Octopus reimplementation might even try different orders in
+which it performs its internal pairwise merges, and at that point the
+order of recorded parents won't have any resemblance to the order their
+trees were used in the internal pairwise merges.
