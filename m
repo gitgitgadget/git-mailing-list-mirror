@@ -1,117 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: spec file in tarball (was: Eliminate curl binary)
-Date: Tue, 03 Jun 2008 09:08:28 -0700 (PDT)
-Message-ID: <m3ve0qzekl.fsf@localhost.localdomain>
-References: <20080603105323.GA15825@camelia.ucw.cz>
-	<200806031314.52579.johan@herland.net>
-	<20080603121332.GA16570@camelia.ucw.cz>
-	<20080603135851.GB17302@camelia.ucw.cz>
-	<m3zlq2zjgz.fsf@localhost.localdomain>
-	<20080603152054.GA19027@camelia.ucw.cz>
+From: David Brown <git@davidb.org>
+Subject: Maintaining two branches.
+Date: Tue, 3 Jun 2008 09:34:31 -0700
+Message-ID: <20080603163431.GA1244@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Jun 03 18:09:26 2008
+Content-Type: text/plain; charset=us-ascii; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 03 18:35:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3Z4d-0003WT-Pz
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 18:09:24 +0200
+	id 1K3ZTs-0005Vn-1I
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 18:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887AbYFCQId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 12:08:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752873AbYFCQId
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 12:08:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:63007 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752887AbYFCQIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 12:08:32 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1064676fgg.17
-        for <git@vger.kernel.org>; Tue, 03 Jun 2008 09:08:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        bh=WBzLBWwH6i/nUFJiolZi2pJd9ZCG4VxLenjufTea7fc=;
-        b=DfLpMT8Q+s4dExDPbODLVOWg/f/0AePIEnk3Bn4AXS/22+/aGEtbo5V1hyrcBJIT+Vp2Sw4RhS5feIKJCC2L7ybQk4T2QrACjwsITBYWsrlwG9xro8MHAoSWBK3bkCD65AWVPxLVB0cwTBNDUHFdId3hNSdTwGocOELn5SS4Bk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to:message-id:lines:user-agent:mime-version:content-type:date;
-        b=Vvrn01E9JUCFMrsI0dWgzddhS8vq3VIsKqRN9XJ/6owhFhzIoPEE0XK/yFL18zcXLTKpnxvErgQ+13kPfvoiaZTRuMvLRd6BXxcAgvzFIuC0mEs+E72rvAUbVDwpUBaWpWbmFEpWOqd1UMc11jZoF95OxjQYT4Y3qfYO1NSwhdM=
-Received: by 10.86.25.17 with SMTP id 17mr5238191fgy.50.1212509309744;
-        Tue, 03 Jun 2008 09:08:29 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.251.199])
-        by mx.google.com with ESMTPS id d4sm204004fga.8.2008.06.03.09.08.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Jun 2008 09:08:28 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m53G8RFl028140;
-	Tue, 3 Jun 2008 18:08:27 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m53G8Qvs028137;
-	Tue, 3 Jun 2008 18:08:26 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080603152054.GA19027@camelia.ucw.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751991AbYFCQed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 12:34:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbYFCQed
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 12:34:33 -0400
+Received: from mail.davidb.org ([66.93.32.219]:54436 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751918AbYFCQec (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 12:34:32 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
+	id 1K3ZSx-0000dw-QM; Tue, 03 Jun 2008 09:34:31 -0700
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83679>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+Looking for some advice/ideas on a git workflow:
 
-> On Tue, Jun 03, 2008 at 07:23:21AM -0700, Jakub Narebski wrote:
-> > Stepan Kasal <kasal@ucw.cz> writes:
-> > >
-> > > [...], I do think that including Fedora-style spec files and
-> > > other distribution-specific files into the tarball is a mistake.
+We have three branches of the code:
 
-<whine>But I use it...</whine>
+   - upstream - The upstream release versions, tracks outside git repo.
+   - external - Other external patches not included in the main git repo.
+   - local - Our local development.
 
-> > Not only Fedora (and Fedora derivatives) use RPMs.
-> 
-> I always suspected this is just a wish, I had the impression that
-> the rpm-based distribution has diverged too much.
-> 
-> > Besides, git.spec generated by git Makefile from git.spec.in
-> > isn't distribution specific.
-> 
-> I often hear this, yet I see e.g. SuSE or Polish Linux creating spec
-> files very different from what is used in Fedora.
+For release reasons, we need to keep our local branch separate, but normal
+development needs to be done on a merge of 'external' and 'local' (the tree
+needs the merge of both just to build).  Developers will generate patches,
+and maintainers will apply these patches to 'local'.
 
-True, spec files for a given _distribution_ (SuSE, PLD, Mandriva)
-are often _distribution specific_, containing bits that make distro
-different (for example translations of summary and description).
+I've tried creating a 'next' branch where I merge each change from local
+and/or external, and this seems to work, but the history gets very
+cluttered with merge commits.  For some reason, history simplification
+doesn't seem to eliminate any of these merges.
 
-That doesn't change the fact, that git.spec file generated during
-build system and contained in the tarball (it is _single file_!),
-and RPM files in http://www.kernel.org/pub/software/scm/git/RPMS/
-are (I think) not distribution specific, and can be installed on
-[almost] any RPM-based distribution.
+We also have an automated build/test system that checks out versions of
+'next', and when the build and test moves 'master' forward to that version.
+Because of this, it would be nice to keep 'next' fairly up-to-date, which
+implies having a lot of merges.
 
-> > And it allows me to install git
-> > in a packaging system on and old machine with old Aurox 11.1
-> > (Polish distribution, no longer active, based on Fedora Core 4),
-> > with glibc-2.3.5-10.3 via "rpmbuild --rebuild" from .src.rpm.
-> 
-> (I suppose you meant "rpmbuild -ta", that's the feature which takes
-> the spec file from the tarball.)
+Does anyone have any better ideas on how to maintain this process?  The
+'next' and 'master' branches won't be exported too far, so could be
+replaced with simpler history occasionally, but there is a good number of
+developers who will be using them, so it would be best to not do this too
+often.
 
-No, I meant "rpmbuild --rebuild git-*.src.rpm", which I download
-from kernel.org. I could use "rpmbuild -ta git-*.tar.gz" instead,
-but I'm just used to this way of installing/upgrading git on my
-machine.
-
-> The value of this statement is limited by the fact that it's a fork
-> of Fedora.  What value does that spec file bring for Mandrake users,
-> for example?
-
-Besides I think that git.git git.spec.in file is a good basis for
-distribution specific spec files...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks,
+David Brown
