@@ -1,70 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Commit annotations (was:: Octopus merge: unique (?) to git, but
- is it useful?)
-Date: Tue, 3 Jun 2008 21:33:18 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806032131300.13507@racer.site.net>
-References: <200806030314.03252.jnareb@gmail.com> <200806030932.03051.jnareb@gmail.com> <alpine.LFD.1.10.0806031244290.3473@woody.linux-foundation.org> <200806032227.02951.jnareb@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
+Date: Tue, 3 Jun 2008 13:35:31 -0700 (PDT)
+Message-ID: <940824.46903.qm@web31808.mail.mud.yahoo.com>
+References: <b77c1dce0806030600x520d35edxbe6e732ce6cc4ad6@mail.gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 22:35:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>,
+	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:36:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3dEG-0003lA-Te
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:35:37 +0200
+	id 1K3dFA-000444-Cg
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752517AbYFCUeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 16:34:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbYFCUeo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:34:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751762AbYFCUen (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 16:34:43 -0400
-Received: (qmail invoked by alias); 03 Jun 2008 20:34:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 03 Jun 2008 22:34:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+tMqcBtsit1k7/q5bDffViQ3lU7rxp8p09gjrHHI
-	yp5b3BagOCp2U6
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <200806032227.02951.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752558AbYFCUfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:35:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbYFCUfj
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:35:39 -0400
+Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:33897 "HELO
+	web31808.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752443AbYFCUfi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 16:35:38 -0400
+Received: (qmail 47828 invoked by uid 60001); 3 Jun 2008 20:35:32 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
+  b=A4kGvtYThOr6Dj5IdThvttaHItEmECNuXPpD+IKo5yJg5mLuN/AlGjN+loVfjF4+iWK0LcA8zULEVk6ruwMadlB4S1Xt2V57WeWuLjZMevSL0LIliqq2JzVZEmSFcCANOkU6rjS1QiucTq5pw5GjPPZG4rxhiPg8X6bLahHcUEU=;
+Received: from [99.159.44.58] by web31808.mail.mud.yahoo.com via HTTP; Tue, 03 Jun 2008 13:35:31 PDT
+X-Mailer: YahooMailWebService/0.7.199
+In-Reply-To: <b77c1dce0806030600x520d35edxbe6e732ce6cc4ad6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83706>
 
-Hi,
-
-On Tue, 3 Jun 2008, Jakub Narebski wrote:
-
-> Linus Torvalds wrote:
+--- On Tue, 6/3/08, Rafael Garcia-Suarez <rgarciasuarez@gmail.com> wrote:
+> From: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
+> Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
+> To: "Jakub Narebski" <jnareb@gmail.com>
+> Cc: git@vger.kernel.org, "Luben Tuikov" <ltuikov@yahoo.com>
+> Date: Tuesday, June 3, 2008, 6:00 AM
+> 2008/6/3 Jakub Narebski <jnareb@gmail.com>:
+> >>> I'd rather remove this, correct it, or
+> make it optional (this is very
+> >>> fork-heavy).
+> >>
+> >> Not sure how to do the same thing in pure Perl.
+> >
+> > I was thinking about extending git-blame porcelain
+> format (and also
+> > incremental format, of course) by 'parents'
+> (and perhaps
+> > 'original-parents') header...
 > 
-> > One of the things I could imagine using git for is to have "annotation 
-> > branches" for things like code review etc. They'd be a real branch in 
-> > their own right and with their own history, but at the same time they 
-> > could well want to point back to the "code branch" that they annotate 
-> > by considering that another parent in a "non-data merge" (and yes, 
-> > you'd obviously have to use a special merge strategy for things like 
-> > that, but you'd likely integrate it in some "annotation tool chain" 
-> > rather than anything else).
+> OK, I see. That would be nice. Also: currently taking
+> "$full_rev^"
+> directs the user to the parent commit, but it would be more
+> user-friendly to point at the previous commit where the
+> selected file
+> was modified instead.
+
+The intention was that it shouldn't necessarily be the (strict) parent
+of the change (changed segment), since it may or may not have changed
+in the strict parent commit.  The intention was that it "starts"/"opens"
+the parent commit so that "git" would start from there and find the actual
+change/commit where that line/segment has changed.  And it has worked
+pretty fine for me when data-mining (something I do quite often) code
+evolution.
+
+My commit 244a70e608204a515c214a11c43f3ecf7642533a was really derived
+from a command line, which I had started to use quite often and had
+been "looking for" for quite some time.
+
+> >> We could however cache the results of
+> git-rev-parse, since the same
+> >> rev is likely to appear many times in the list.
+> >
+> > ...but starting with cache of git-rev-parse results,
+> or optionally
+> > allowing extended sha-1 syntax (including
+> <hash>^) in hash* CGI
+> > parameters in gitweb would be a good idea.
+> >
+> > But as I wrote, I'm fine with the patch as it is
+> now.
 > 
-> By the way, what is status of git-notes / commit annotations?  Did it got
-> abandoned, on hiatus, or what?
+> I've sent a new version (take 2) with caching. And
+> comments, as Lea suggested :)
 
-You probably meant to Cc: me, and Linus, right?
+Yes, hashing is good if it speeds up lookups without altering
+intended functionality.
 
-I all but abandoned it.  It works, but I do not need it, and kind of 
-waited for the guy who wanted them to chime in, so that I did not waste my 
-time in vain.
-
-IIRC it was Johan Herland, but I could be wrong.
-
-Ciao,
-Dscho
+Thanks everyone!
+    Luben
