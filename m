@@ -1,83 +1,93 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Octopus merge: unique (?) to git, but is it useful?
-Date: Tue, 3 Jun 2008 12:54:31 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806031244290.3473@woody.linux-foundation.org>
-References: <200806030314.03252.jnareb@gmail.com> <alpine.LFD.1.10.0806021845210.3473@woody.linux-foundation.org> <200806030932.03051.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add an optional <mode> argument to commit/status
+ -u|--untracked-files option
+Date: Tue, 03 Jun 2008 13:02:34 -0700
+Message-ID: <7vod6i1e3p.fsf@gitster.siamese.dyndns.org>
+References: <7viqwvk04y.fsf@gitster.siamese.dyndns.org>
+ <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 21:56:03 2008
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:03:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3cbk-0005iR-OR
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 21:55:49 +0200
+	id 1K3cjW-0000Jh-6T
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755004AbYFCTyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 15:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754870AbYFCTyg
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 15:54:36 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51568 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754396AbYFCTye (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 15:54:34 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m53JsWO6007908
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 Jun 2008 12:54:33 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m53JsVjR016806;
-	Tue, 3 Jun 2008 12:54:31 -0700
-In-Reply-To: <200806030932.03051.jnareb@gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.386 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753714AbYFCUC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYFCUC5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:02:57 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753645AbYFCUC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 16:02:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F1CAC4C38;
+	Tue,  3 Jun 2008 16:02:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3193A4C36; Tue,  3 Jun 2008 16:02:47 -0400 (EDT)
+In-Reply-To: <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com> (Marius Storm-Olsen's message of "Tue, 3 Jun 2008 15:09:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0D62044C-31A8-11DD-A163-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83696>
 
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
+> Determining untracked files can be a very slow operation on large trees.
+> This commit adds a <mode> argument, which allows you to avoid showing the
+> untracked files in a repository. Possible options are:
+>     none   - Show no untracked files
+>     normal - Show untracked files and directories
+>     all    - Show all untracked files
+>
+> If the optional argument is not specified, the option defaults to 'all'.
 
-On Tue, 3 Jun 2008, Jakub Narebski wrote:
-> On Tue, 3 June 2008, Linus Torvalds wrote:
-> > 
-> > Once you have 0, 1 or 2 parents, the logical progression is "many". 
-> 
-> Well, it of course depends on design.  For example Mercurial (from what
-> I have read in the documentation) has fixed width (two element) parents
-> array in revflog structure.
+You got me worried.  You are defaulting the parameter of "-u" to 'all',
+not making the command default (in the absense of -u anything) to "-u
+all", which was what I misunderstood on my first reading.  "the optional
+parameter defaults to 'all'" is what you meant...
 
-Sure. And git very much on purpose made all basic data structures be text. 
+enum {NONE,NORMAL,ALL}_UNTRACKED are named (1) too generic, in a sense
+that it is not clear _what_ is done to the class of untracked worktree
+entities, and/or (2) opposite from other enums where common prefix is
+followed by differing part.
 
-I'm a UNIX weenie, not some VMS hack. Fixed-sized records are evil.
+Perhaps renaming them to SHOW_{NONE,NORMAL,ALL}_UNTRACKED would make it
+easier to read.
 
-[ Yes, I made the hashes fixed-size binary blobs in the tree object. In 
-  retrospect, that was probably a mistake. Not a huge one, but it's one of 
-  the few things in the basic data structure that I'm sorry for. It 
-  seemed to make sense at the time. ]
+It would have been nicer if this patch was further split into two; the
+first one to introduce NORMAL and ALL without changing any behaviour, then
+the second one to add NONE to introduce a new behaviour, with tests so
+that other people will not break this new feature in their later changes.
 
-I do like how you can have arbitrary parenthood (well, arbitrary on a 
-data structure level - we do restrict it in practice). Maybe it's not a 
-hugely important thing, but it does allow more than just plain merges.
+> @@ -150,12 +150,15 @@ but can be used to amend a merge commit.
+>  	the last commit without committing changes that have
+>  	already been staged.
+>  
+> --u|--untracked-files::
+> -	Show all untracked files, also those in uninteresting
+> -	directories, in the "Untracked files:" section of commit
+> -	message template.  Without this option only its name and
+> -	a trailing slash are displayed for each untracked
+> -	directory.
+> +-u[<mode>]|--untracked-files[=<mode>]::
+> +	Show all untracked files.
+> +	The mode parameter is optional, and is used to specify
+> +	the handling of untracked files. The possible options are:
+> +		none   - Show no untracked files
+> +		normal - Shows untracked files and directories
+> +		all    - Also shows individual files in untracked directories.
+> +	If the mode parameter is not specified, the defaults is
+> +	'all'.
 
-IOW, I could well imagine having an extra parent pointer that is not a 
-"data merge" pointer, but a "concept merge" - you could have branches that 
-have commits that point back to not the data in the tree, but to 
-particular commits in another branch.
-
-One of the things I could imagine using git for is to have "annotation 
-branches" for things like code review etc. They'd be a real branch in 
-their own right and with their own history, but at the same time they 
-could well want to point back to the "code branch" that they annotate by 
-considering that another parent in a "non-data merge" (and yes, you'd 
-obviously have to use a special merge strategy for things like that, but 
-you'd likely integrate it in some "annotation tool chain" rather than 
-anything else).
-
-			Linus
+Does this mark-up actually work?
