@@ -1,63 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] Make old sha1 optional with git update-ref -d
-Date: Mon, 02 Jun 2008 22:51:33 -0700
-Message-ID: <7vk5h73w2i.fsf@gitster.siamese.dyndns.org>
-References: <20080602233244.26087.51827.stgit@yoghurt>
- <20080602233453.26087.52259.stgit@yoghurt>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Octopus merge: unique (?) to git, but is it useful?
+Date: Tue, 3 Jun 2008 08:39:57 +0200
+Message-ID: <200806030839.58214.jnareb@gmail.com>
+References: <200806030314.03252.jnareb@gmail.com> <alpine.LFD.1.10.0806021845210.3473@woody.linux-foundation.org> <7vy75n3zus.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 07:53:08 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 08:41:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3PSF-0006eG-Rd
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 07:53:08 +0200
+	id 1K3QD2-0001cI-1B
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 08:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239AbYFCFvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jun 2008 01:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbYFCFvs
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 01:51:48 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:32994 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbYFCFvr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 01:51:47 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6411B37EA;
-	Tue,  3 Jun 2008 01:51:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B0A2137E9; Tue,  3 Jun 2008 01:51:43 -0400 (EDT)
-In-Reply-To: <20080602233453.26087.52259.stgit@yoghurt> (Karl =?utf-8?Q?Ha?=
- =?utf-8?Q?sselstr=C3=B6m's?= message of "Tue, 03 Jun 2008 01:34:53 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 26BB4074-3131-11DD-A667-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1752231AbYFCGkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 02:40:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbYFCGkH
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 02:40:07 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:59299 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949AbYFCGkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 02:40:05 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so536638nfc.21
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 23:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=/Q70BLKMdRycVZrIbD+uOGD3JoKgE+ZntHUjFPlpZAA=;
+        b=qR9rrRVAGAkN45mqYV5vFzG6tdYboNy8BrlzoO8rmuF91l31oPxTPD6P8HeIf8vQFV0AkcUPr02LzPM5Zgio2t1pqarN9YStfxRZk6Go8j33xGr21tRSUWnd9CZxCcmPYITkZ0u+NHbZ5vIsAYb/w2UBtFe9PZquh/7VL6KZC24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=lzm3OTaksinDFoDNfLoSaj8gA3JqAJ3WLDsrvEKqyUIsnWojWg5HycXtePVUtI6f3O8LFOBVsda9DIXBpDzHR6uHq+Rkya/OHl+B/C4F60JRNXzxnWLsZVjHrmveMScR/3SW1OwE5cDr46m7SgVIuW82AYqP4It03f6TRj/ZWO0=
+Received: by 10.125.119.3 with SMTP id w3mr149278mkm.24.1212475204196;
+        Mon, 02 Jun 2008 23:40:04 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.244.52])
+        by mx.google.com with ESMTPS id 7sm36480690nfv.32.2008.06.02.23.40.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 23:40:02 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vy75n3zus.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83620>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+On Tue, 3 June 2008, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+>> Actually, it's trivial to convert to other SCM's, although I guess the 
+>> conversion tools haven't really tried. You can always turn it into a 
+>> series of multiple merges. Yes, you lose information, but it's not like 
+>> you lose a huge amount.
+> 
+> One thing to worry about is what tree object you would give to each of
+> these "artificially split" merge commits, though.
 
-> Giving the old sha1 is already optional when changing a ref, and it's
-> quite handy when running update-ref manually. So make it optional for
-> deleting a ref too.
->
-> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+There shouldn't be, I think, a problem if octopus merge was done using
+'octopus' merge strategy, which requires IIRC tree-level (trivial)
+merge.  But true, it is a complication, unless we fake history more,
+and always use result for octopus merge as a tree.
 
-"Handy" is not a very good reason when talking about plumbing command l=
-ike
-update-ref that takes an extra parameter for safety of the last step in
-read, operate, verify-and-update sequence.
-
-Although it is not a reason _bad enough_ to make your patch a bad idea,
-perhaps you should rethink the problem at the same time?  Whatever you =
-are
-trying to do cannot be done without manually invoking update-ref direct=
-ly
-by the end user, perhaps that needs to be addressed?
+-- 
+Jakub Narebski
+Poland
