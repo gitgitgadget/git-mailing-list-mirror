@@ -1,73 +1,62 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 0/4] Handle non-ASCII filenames
-Date: Tue, 3 Jun 2008 08:56:38 +0100
-Message-ID: <b0943d9e0806030056x588474dcha3e14dd8dca952ba@mail.gmail.com>
-References: <200806011046.51872.jnareb@gmail.com>
-	 <20080602214212.18768.63775.stgit@yoghurt>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Octopus merge: unique (?) to git, but is it useful?
+Date: Tue, 3 Jun 2008 09:31:41 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806030929540.13507@racer.site.net>
+References: <200806030314.03252.jnareb@gmail.com> <alpine.LFD.1.10.0806021845210.3473@woody.linux-foundation.org> <7v3anv5fy3.fsf@gitster.siamese.dyndns.org> <7vskvv3xmx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806030627440.13507@racer.site.net>
+ <7vod6j3whp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 09:58:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 10:33:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3ROf-0007xN-99
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 09:57:33 +0200
+	id 1K3Rxm-0003Ub-Vk
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 10:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbYFCH4k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jun 2008 03:56:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbYFCH4k
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 03:56:40 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:19578 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750990AbYFCH4j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 03:56:39 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1450237rvb.1
-        for <git@vger.kernel.org>; Tue, 03 Jun 2008 00:56:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kqr1L+GhIrdrZrXk2JPWT+itfugyKK3y9RC8zUBmKGE=;
-        b=j51A1srtyw2krCKcLrjyvYDhtslZMHk85O4DVsLdcQ30HsfxYjEUOvHfuDdgZvEazUmZkjHxZw6yd9Yja5CyOY0GS1Ast6R8X3/6Q9/TKDNiCi1Qv3bq6JjZwWaNRTBB1uFsIeVrLThT8px8OqNvCjbpJ9ORAuO92QWSzk48Yt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nOU3peL881v4sGOr2brVCrNebMYkHbRArDNmU5tezi3rbc7+urEUpQgQN3v8Xh6jxNVJetuJVYwTU+UVc0v/435p9iqAlQ/V9/MwK1UwcSIPeXpj/W+6KwBp4H0vxR9swgAvYPwq/HvuxCSYm22fh9V2WMV+prVAODYi11PZ6XI=
-Received: by 10.114.181.6 with SMTP id d6mr1950447waf.50.1212479798936;
-        Tue, 03 Jun 2008 00:56:38 -0700 (PDT)
-Received: by 10.114.171.16 with HTTP; Tue, 3 Jun 2008 00:56:38 -0700 (PDT)
-In-Reply-To: <20080602214212.18768.63775.stgit@yoghurt>
-Content-Disposition: inline
+	id S1751163AbYFCIc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 04:32:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbYFCIc5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 04:32:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58142 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750928AbYFCIc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 04:32:56 -0400
+Received: (qmail invoked by alias); 03 Jun 2008 08:32:55 -0000
+Received: from unknown (EHLO none.local) [128.177.17.254]
+  by mail.gmx.net (mp053) with SMTP; 03 Jun 2008 10:32:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19r/xtnQsJrw+Imkrrwjns5R5cg/3FxfwTbvGT1MF
+	0QXTqk08okLbk/
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <7vod6j3whp.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83627>
 
-On 02/06/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> I fixed the first problem, and while doing so noticed that a nearby
->  block of code had exactly the same bug. So I fixed that as well.
+Hi,
 
-That was fast :-). thanks.
+On Mon, 2 Jun 2008, Junio C Hamano wrote:
 
->  Catalin, this should go on the stable branch, I believe. It probably
->  warrants a new release too, since anyone rebasing patches past the
->  point where the "M=E4rchen" file was removed from git.git is going t=
-o
->  hit the same bug Jakub did.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Would it not be better (simpler, cleaner) to just use an object flag?
+> 
+> No.  Can you tell which flag is safe to use in this context without 
+> digging around too much?
 
-Yes, it will go in both stable and master. There are some more patches
-on stable already, I'll try to release 0.14.3 this weekend.
+Was this not in builtin-commit.c?  AFAIR we said that the revision 
+machinery must not use flags higher than 1<<12 or so, which would be left 
+for users.
 
-Is the new infrastructure affected? We haven't got to the point of
-converting "rebase" yet (doesn't have all the functionality it needs
-in the new infrastructure). BTW, I created a new lib.git.Branch class
-as the parent of lib.git.Stack and it takes care the extra things used
-when creating a new stack like setting parent and remote branches.
-I'll post the patches in the next few days.
+But I see that you already have the patch in 'master', so I guess you will 
+not change it.
 
---=20
-Catalin
+Ciao,
+Dscho
