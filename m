@@ -1,66 +1,63 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-Date: Tue, 03 Jun 2008 16:24:51 +0200
-Message-ID: <48455433.8080500@gmail.com>
-References: <1212489977-26822-1-git-send-email-rgarciasuarez@gmail.com> <m34p8a2173.fsf@localhost.localdomain> <b77c1dce0806030503r55c95d73t5ff244821f76cf1@mail.gmail.com> <200806031445.23002.jnareb@gmail.com>
+From: Victor Bogado da Silva Lins <victor@bogado.net>
+Subject: Re: git remote rename, why dosen't it exists?
+Date: Tue, 03 Jun 2008 11:34:01 -0300
+Message-ID: <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
+References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>
+	 <alpine.DEB.1.00.0806031449010.13507@racer.site.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 16:26:37 2008
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 03 16:35:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3XSY-0002F3-Qm
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 16:25:59 +0200
+	id 1K3XbI-0006GT-Kx
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 16:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbYFCOYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 10:24:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbYFCOYm
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 10:24:42 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:28169 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbYFCOYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 10:24:41 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so596032nfc.21
-        for <git@vger.kernel.org>; Tue, 03 Jun 2008 07:24:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=gXmigwujyLEx3NKufROX39yrlTgUt3YyUx68Amt1wgg=;
-        b=gFy2IYy60HgTxzdu46ozWZ7Rq7B9ntR4GulVBLfwy0mXkm7ugOo5W0RwzKNAD1Bj6gGugFbWRojFplTORevgLBLuqFylIU2xxoZiqKnXLVM4RCvHwusg/ZG8woFiXZouroF+eqMqSLPqWeCP8KQI5OSO8QiFXTC8f4ObzqwxomA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=a4XX+WynmffXM3qF7e669o4MCItOizmsuzptantLl27+WluRgo/QIq/lkjlQqLsbkffGHMtf5jO6NfYlrEgIMErJZRKS1OscHApm58nnxnXmkVRHGPl1TYMh++znCM4mXtr/B7HZXVCFKo5ky+KD1TfDuwvHZn8J4nzuQsNxrCs=
-Received: by 10.86.36.11 with SMTP id j11mr7425556fgj.7.1212503080418;
-        Tue, 03 Jun 2008 07:24:40 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.231.153])
-        by mx.google.com with ESMTPS id 4sm52595fgg.9.2008.06.03.07.24.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Jun 2008 07:24:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <200806031445.23002.jnareb@gmail.com>
+	id S1753405AbYFCOeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 10:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYFCOeH
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 10:34:07 -0400
+Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:56848 "EHLO
+	spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750866AbYFCOeH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 10:34:07 -0400
+Received: from [127.0.0.1] (unknown [139.82.86.2])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id C23927F9F;
+	Tue,  3 Jun 2008 07:34:03 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0806031449010.13507@racer.site.net>
+X-Mailer: Evolution 2.8.0 (2.8.0-40.el5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83666>
 
-Jakub Narebski wrote:
-> I was thinking about extending git-blame porcelain format (and also
-> incremental format, of course) by 'parents' (and perhaps
-> 'original-parents') header...
+I don't mind trying. :P Pointers would help me, I already found that the
+git-remote source is on the file builtin-remote.c, bu I have not yet
+found the main function of it.
 
-Regarding prettiness, I don't find parents in the porcelain output 
-particularly useful, but if other people think they need this, I won't 
-object. :)
-
-Regarding performance, it would be good to show that the solution I'm 
-suggesting in my separate is slower than extending git-blame before 
-implementing anything.  (I doubt it matters performance-wise.)
-
--- Lea
+On Tue, 2008-06-03 at 14:49 +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+> 
+> > Well, that's about it, I need to rename my remotes. Mainly to move the 
+> > origin to another repository and I miss the feature. Since many time 
+> > there is a reason for a missing feature, I fought that maybe I should 
+> > ask here, before nosing around the sources... :)
+> 
+> The reason is easy to find: nobody cared enough about this feature to 
+> implement it.
+> 
+> Just tell me if you want to do it, I'll provide you with the necessary 
+> details.
+> 
+> Ciao,
+> Dscho
+> 
