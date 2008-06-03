@@ -1,65 +1,64 @@
-From: David Brown <git@davidb.org>
-Subject: Maintaining two branches.
-Date: Tue, 3 Jun 2008 09:34:31 -0700
-Message-ID: <20080603163431.GA1244@old.davidb.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT RFC] Mavenized JGit
+Date: Tue, 3 Jun 2008 18:56:10 +0200
+Message-ID: <200806031856.11060.robin.rosenberg.lists@dewire.com>
+References: <7bfdc29a0806030742r77b79786n92a5ce6a0aba7726@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 03 18:35:40 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Imran M Yousuf" <imyousuf@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 18:59:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3ZTs-0005Vn-1I
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 18:35:28 +0200
+	id 1K3ZrN-0006QD-0c
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 18:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991AbYFCQed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 12:34:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbYFCQed
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 12:34:33 -0400
-Received: from mail.davidb.org ([66.93.32.219]:54436 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751918AbYFCQec (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 12:34:32 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
-	id 1K3ZSx-0000dw-QM; Tue, 03 Jun 2008 09:34:31 -0700
-Mail-Followup-To: git@vger.kernel.org
+	id S1755175AbYFCQ6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 12:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbYFCQ6v
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 12:58:51 -0400
+Received: from av9-1-sn3.vrr.skanova.net ([81.228.9.185]:48884 "EHLO
+	av9-1-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085AbYFCQ6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 12:58:50 -0400
+Received: by av9-1-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id F3A3037F11; Tue,  3 Jun 2008 18:58:48 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av9-1-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id D9AD437EDC; Tue,  3 Jun 2008 18:58:48 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 3E5C837E46;
+	Tue,  3 Jun 2008 18:58:48 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7bfdc29a0806030742r77b79786n92a5ce6a0aba7726@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83680>
 
-Looking for some advice/ideas on a git workflow:
+tisdagen den 3 juni 2008 16.42.33 skrev Imran M Yousuf:
+> Hi,
+> 
+> I have successfully Mavenized JGit (at least partially :)) to make it
+> independent of IDE to develop on. I will also add a code-file format
+> checker soon. Please have a look at it and let me know what you think
+> and how it can be improved. If its helpful I will surely send out a
+> patch in this regard. The one thing that I did not configure is the
+> external test (exttst), doing that and the code format checker is my
+> next step.
+> The 'jgit-mavenize' branch of my fork of egit contains it.
+> (http://repo.or.cz/w/egit/imyousuf.git?a=shortlog;h=refs/heads/jgit-mavenize).
 
-We have three branches of the code:
+An abvious problem is that JGit does not handle symbolic links and those do
+not work well (if at all) under git on windows either. Cygwin will not do here,
+unless you accompany it with a cygwin java build (if such a thing exists). Mingw
+also does not support them.
 
-   - upstream - The upstream release versions, tracks outside git repo.
-   - external - Other external patches not included in the main git repo.
-   - local - Our local development.
-
-For release reasons, we need to keep our local branch separate, but normal
-development needs to be done on a merge of 'external' and 'local' (the tree
-needs the merge of both just to build).  Developers will generate patches,
-and maintainers will apply these patches to 'local'.
-
-I've tried creating a 'next' branch where I merge each change from local
-and/or external, and this seems to work, but the history gets very
-cluttered with merge commits.  For some reason, history simplification
-doesn't seem to eliminate any of these merges.
-
-We also have an automated build/test system that checks out versions of
-'next', and when the build and test moves 'master' forward to that version.
-Because of this, it would be nice to keep 'next' fairly up-to-date, which
-implies having a lot of merges.
-
-Does anyone have any better ideas on how to maintain this process?  The
-'next' and 'master' branches won't be exported too far, so could be
-replaced with simpler history occasionally, but there is a good number of
-developers who will be using them, so it would be best to not do this too
-often.
-
-Thanks,
-David Brown
+-- robin
