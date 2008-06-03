@@ -1,115 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Strbuf documentation: document most functions
-Date: Tue, 3 Jun 2008 01:00:33 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806030048010.13507@racer.site.net>
-References: <1212447591-4870-1-git-send-email-vmiklos@frugalware.org>
+From: "Matt Pearson" <404emailnotfound@gmail.com>
+Subject: Re: Pushing an --amend-ed commit
+Date: Mon, 2 Jun 2008 20:08:48 -0400
+Message-ID: <706b4240806021708u4ade0f9ake53e26f53e34d97d@mail.gmail.com>
+References: <6B355924-0EA9-4AF8-B051-F17FC4530495@manchester.ac.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jun 03 02:02:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Robert Haines" <rhaines@manchester.ac.uk>
+X-From: git-owner@vger.kernel.org Tue Jun 03 02:10:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3Jz8-0000Gv-BO
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 02:02:42 +0200
+	id 1K3K6G-0001gY-V1
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 02:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733AbYFCABs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2008 20:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754707AbYFCABs
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 20:01:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41549 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753716AbYFCABr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 20:01:47 -0400
-Received: (qmail invoked by alias); 03 Jun 2008 00:01:45 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
-  by mail.gmx.net (mp025) with SMTP; 03 Jun 2008 02:01:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Fg5kmnMWF6xdhJSpOpJhUdH+gYxUli7UDxxlJVD
-	9u4M+gIKxsk7S7
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <1212447591-4870-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753501AbYFCAJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 20:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbYFCAI7
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 20:08:59 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:5310 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752696AbYFCAI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 20:08:59 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so649023ywe.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 17:08:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=s1Mq7SM6fPCvx5HHulkQ4aD5eTqJEjq+b8VL8Prtv1o=;
+        b=tAa3AegVOVCMfMTgDwcQKmc92ZzGfAJRToWK1At7XDdfRLlNGrKolSp+mwejGq8lxDZYquXr40eRK60BNwfIinUlX7scDsWaC3RQyIbCf4ZPuGIiYj6JyJBnpzdnuGrWScufKyYAOQBRbQZ0gApDwIMgwWts3KXwt6ZemoDm1qY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WhWydbxodqeoTlz16K2RQbpdmFNasmHs6nKFBApiDp04zjiiDd7RKveF26PowgDj/adr73Lk5X3ufd1ylipX0aW8Zjf7bFUfSatL2tfbMmqMyKjDCyvphrTbm++JWK7JeJI9d9qdJkB2Gcz6QUxoq8EqSDAe7uG/nW1yttqJgow=
+Received: by 10.151.108.4 with SMTP id k4mr4802855ybm.230.1212451728570;
+        Mon, 02 Jun 2008 17:08:48 -0700 (PDT)
+Received: by 10.150.52.8 with HTTP; Mon, 2 Jun 2008 17:08:48 -0700 (PDT)
+In-Reply-To: <6B355924-0EA9-4AF8-B051-F17FC4530495@manchester.ac.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83599>
 
-Hi,
+On Mon, Jun 2, 2008 at 5:51 AM, Robert Haines <rhaines@manchester.ac.uk> wrote:
+> So, is it safe to "use the --force" in this instance when pushing? This
+> should just replace the old commit with the --amended commit with no
+> side-effects, shouldn't it?
 
-I am no author of strbuf, but hey, I thought I'd just give you a few 
-comments...
+Safe from what perspective?  If you're sure nobody has pulled from
+you, then yes, it's fine.  If you know exactly who pulled and can
+contact them to do a reset and re-pull, then it should be fine. If you
+don't care about screwing up people who pulled from you, then I
+suppose that's still fine.  However, screwing with history is
+generally a bad idea, since now people who pull from you don't have
+your current HEAD as a parent commit in their tree.  Finding common
+ancestors is going to be messed up (and future merges with them,
+possibly).
 
-In general, I'd rather leave the "->" from the members, since you have 
-many instances where you access them with ".".
-
-On Tue, 3 Jun 2008, Miklos Vajna wrote:
-
-> diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-> index a52e4f3..3879e0e 100644
-> --- a/Documentation/technical/api-strbuf.txt
-> +++ b/Documentation/technical/api-strbuf.txt
-> @@ -1,6 +1,175 @@
->  strbuf API
->  ==========
->  
-> -Talk about <strbuf.h>
-> +strbuf's can be use in many ways: as a byte array, or to store arbitrary
-> +long, overflow safe strings.
-
-I think that you should not suggest using strbufs as byte array, even if 
-that is certainly possible.  Rather, you should say something like:
-
-	An strbuf is NUL terminated for convenience, but no function in 
-	the strbuf API actually relies on the string being free of NULs.
-
-> +strbufs has some invariants that are very important to keep in mind:
-> +
-> +. The `->buf` member is always malloc-ed, hence strbuf's can be used to
-> +  build complex strings/buffers whose final size isn't easily known.
-
-Is this true?  I thought the initial string is empty, but not alloc'ed.
-
-So I'd rather have something like
-
-	The "buf" member is never NULL, so you can safely strcmp() it.
-
-I'd like to see a comment that strbuf's _have_ to be initialized either by 
-strbuf_init() or by "= STRBUF_INIT" before the invariants, though.
-
-> +`strbuf_attach`::
-> +
-> +	Attaches a string to a buffer. You should specify the string to attach,
-> +	the current length of the string and the amount of allocated memory.
-
-... This string _must_ be malloc()ed, and after attaching, the pointer 
-cannot be relied upon anymore, and neither be free()d directly.
-
-> +`strbuf_read`::
-> +
-> +	Read the contents of a given file descriptor. The third argument can be
-> +	used to give a hint about the file, to avoid reallocs.
-
-s/about the file/& size/
-
-> +`strbuf_read_file`::
-> +
-> +	Read the contents of a file, specified by its path. The third argument
-> +	can be used to give a hint about the file, to avoid reallocs.
-
-Ditto.
-
-> +`strbuf_getline`::
-> +
-> +	Read a line from a FILE* pointer. The second argument specifies the line
-> +	terminator character, like `'\n'`.
-
-s/like/typically/
-
-Thanks,
-Dscho
+(also, first git mailing list post.  I hope none of the experienced
+people have to correct me)
