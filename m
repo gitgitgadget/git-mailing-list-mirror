@@ -1,77 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git remote rename, why dosen't it exists?
-Date: Tue, 3 Jun 2008 21:12:13 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
-References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>  <alpine.DEB.1.00.0806031449010.13507@racer.site.net> <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add an optional <mode> argument to commit/status
+	-u|--untracked-files option
+Date: Tue, 3 Jun 2008 16:14:22 -0400
+Message-ID: <20080603201421.GB17260@sigill.intra.peff.net>
+References: <7viqwvk04y.fsf@gitster.siamese.dyndns.org> <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Victor Bogado da Silva Lins <victor@bogado.net>
-X-From: git-owner@vger.kernel.org Tue Jun 03 22:14:22 2008
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:16:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3cth-00043C-S1
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:14:22 +0200
+	id 1K3cvE-0004WF-71
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871AbYFCUN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 16:13:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYFCUN0
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:13:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41250 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751094AbYFCUNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 16:13:25 -0400
-Received: (qmail invoked by alias); 03 Jun 2008 20:13:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 03 Jun 2008 22:13:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19u7exPqWhu5fYwNyuOWdfGOKFlJGiv6S3twMC4qQ
-	xxiDOUJ59efCnF
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1750998AbYFCUO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:14:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750944AbYFCUO0
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:14:26 -0400
+Received: from peff.net ([208.65.91.99]:2534 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756618AbYFCUOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 16:14:23 -0400
+Received: (qmail 25488 invoked by uid 111); 3 Jun 2008 20:14:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 03 Jun 2008 16:14:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jun 2008 16:14:22 -0400
+Content-Disposition: inline
+In-Reply-To: <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83698>
 
-Hi,
+On Tue, Jun 03, 2008 at 03:09:10PM +0200, Marius Storm-Olsen wrote:
 
-[please do not top-post: it makes it very hard to follow the flow, 
-especially on a high-volume mailing list like this.]
+> +-u[<mode>]|--untracked-files[=<mode>]::
+> +	Show all untracked files.
+> +	The mode parameter is optional, and is used to specify
+> +	the handling of untracked files. The possible options are:
+> +		none   - Show no untracked files
+> +		normal - Shows untracked files and directories
+> +		all    - Also shows individual files in untracked directories.
+> +	If the mode parameter is not specified, the defaults is
+> +	'all'.
 
-On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+Hmm. Doesn't this change bundling semantics of "git commit -us"? Do we
+care?
 
-> On Tue, 2008-06-03 at 14:49 +0100, Johannes Schindelin wrote:
-> 
-> > On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
-> > 
-> > > Well, that's about it, I need to rename my remotes. Mainly to move 
-> > > the origin to another repository and I miss the feature. Since many 
-> > > time there is a reason for a missing feature, I fought that maybe I 
-> > > should ask here, before nosing around the sources... :)
-> > 
-> > The reason is easy to find: nobody cared enough about this feature to 
-> > implement it.
-> > 
-> > Just tell me if you want to do it, I'll provide you with the necessary 
-> > details.
->
-> I don't mind trying. :P Pointers would help me, I already found that the
-> git-remote source is on the file builtin-remote.c, bu I have not yet
-> found the main function of it.
-
-There is no main function, since it is a builtin.  The "main" function is 
-called cmd_remote().
-
-You might find inspiration with the rm() function, or might even be able 
-to refactor the rm() function into an rm(), and an rm_or_rename() which
-does both rm() and rename() depending on a second parameter being NULL or 
-not.
-
-Hth,
-Dscho
+-Peff
