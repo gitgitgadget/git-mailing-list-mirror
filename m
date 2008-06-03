@@ -1,93 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add an optional <mode> argument to commit/status
- -u|--untracked-files option
-Date: Tue, 03 Jun 2008 13:02:34 -0700
-Message-ID: <7vod6i1e3p.fsf@gitster.siamese.dyndns.org>
-References: <7viqwvk04y.fsf@gitster.siamese.dyndns.org>
- <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git remote rename, why dosen't it exists?
+Date: Tue, 3 Jun 2008 21:12:13 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
+References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>  <alpine.DEB.1.00.0806031449010.13507@racer.site.net> <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 22:03:52 2008
+To: Victor Bogado da Silva Lins <victor@bogado.net>
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:14:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3cjW-0000Jh-6T
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:03:50 +0200
+	id 1K3cth-00043C-S1
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753714AbYFCUC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 16:02:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYFCUC5
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:02:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60297 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753645AbYFCUC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 16:02:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F1CAC4C38;
-	Tue,  3 Jun 2008 16:02:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3193A4C36; Tue,  3 Jun 2008 16:02:47 -0400 (EDT)
-In-Reply-To: <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com> (Marius Storm-Olsen's message of "Tue, 3 Jun 2008 15:09:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0D62044C-31A8-11DD-A163-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1754871AbYFCUN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:13:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYFCUN0
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:13:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41250 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751094AbYFCUNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 16:13:25 -0400
+Received: (qmail invoked by alias); 03 Jun 2008 20:13:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.2]) [141.5.10.38]
+  by mail.gmx.net (mp013) with SMTP; 03 Jun 2008 22:13:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19u7exPqWhu5fYwNyuOWdfGOKFlJGiv6S3twMC4qQ
+	xxiDOUJ59efCnF
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83697>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+Hi,
 
-> Determining untracked files can be a very slow operation on large trees.
-> This commit adds a <mode> argument, which allows you to avoid showing the
-> untracked files in a repository. Possible options are:
->     none   - Show no untracked files
->     normal - Show untracked files and directories
->     all    - Show all untracked files
+[please do not top-post: it makes it very hard to follow the flow, 
+especially on a high-volume mailing list like this.]
+
+On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+
+> On Tue, 2008-06-03 at 14:49 +0100, Johannes Schindelin wrote:
+> 
+> > On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+> > 
+> > > Well, that's about it, I need to rename my remotes. Mainly to move 
+> > > the origin to another repository and I miss the feature. Since many 
+> > > time there is a reason for a missing feature, I fought that maybe I 
+> > > should ask here, before nosing around the sources... :)
+> > 
+> > The reason is easy to find: nobody cared enough about this feature to 
+> > implement it.
+> > 
+> > Just tell me if you want to do it, I'll provide you with the necessary 
+> > details.
 >
-> If the optional argument is not specified, the option defaults to 'all'.
+> I don't mind trying. :P Pointers would help me, I already found that the
+> git-remote source is on the file builtin-remote.c, bu I have not yet
+> found the main function of it.
 
-You got me worried.  You are defaulting the parameter of "-u" to 'all',
-not making the command default (in the absense of -u anything) to "-u
-all", which was what I misunderstood on my first reading.  "the optional
-parameter defaults to 'all'" is what you meant...
+There is no main function, since it is a builtin.  The "main" function is 
+called cmd_remote().
 
-enum {NONE,NORMAL,ALL}_UNTRACKED are named (1) too generic, in a sense
-that it is not clear _what_ is done to the class of untracked worktree
-entities, and/or (2) opposite from other enums where common prefix is
-followed by differing part.
+You might find inspiration with the rm() function, or might even be able 
+to refactor the rm() function into an rm(), and an rm_or_rename() which
+does both rm() and rename() depending on a second parameter being NULL or 
+not.
 
-Perhaps renaming them to SHOW_{NONE,NORMAL,ALL}_UNTRACKED would make it
-easier to read.
-
-It would have been nicer if this patch was further split into two; the
-first one to introduce NORMAL and ALL without changing any behaviour, then
-the second one to add NONE to introduce a new behaviour, with tests so
-that other people will not break this new feature in their later changes.
-
-> @@ -150,12 +150,15 @@ but can be used to amend a merge commit.
->  	the last commit without committing changes that have
->  	already been staged.
->  
-> --u|--untracked-files::
-> -	Show all untracked files, also those in uninteresting
-> -	directories, in the "Untracked files:" section of commit
-> -	message template.  Without this option only its name and
-> -	a trailing slash are displayed for each untracked
-> -	directory.
-> +-u[<mode>]|--untracked-files[=<mode>]::
-> +	Show all untracked files.
-> +	The mode parameter is optional, and is used to specify
-> +	the handling of untracked files. The possible options are:
-> +		none   - Show no untracked files
-> +		normal - Shows untracked files and directories
-> +		all    - Also shows individual files in untracked directories.
-> +	If the mode parameter is not specified, the defaults is
-> +	'all'.
-
-Does this mark-up actually work?
+Hth,
+Dscho
