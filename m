@@ -1,112 +1,59 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH v2 3/4] Test for another filename quoting issue in
-	tree_status()
-Date: Tue, 03 Jun 2008 02:41:51 +0200
-Message-ID: <20080603004151.25028.99694.stgit@yoghurt>
-References: <20080603003846.25028.49353.stgit@yoghurt>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] t/test-lib.sh: add test_external and test_external_without_stderr
+Date: Tue, 03 Jun 2008 02:59:38 +0200
+Message-ID: <4844977A.60003@gmail.com>
+References: <1212276975-27428-1-git-send-email-LeWiemann@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 02:43:19 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 03:00:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3KcM-0000YO-O1
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 02:43:15 +0200
+	id 1K3KtP-0004oR-PB
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 03:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbYFCAmF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jun 2008 20:42:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbYFCAmE
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 20:42:04 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3963 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752659AbYFCAlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2008 20:41:55 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1K3Kb1-0001mf-00; Tue, 03 Jun 2008 01:41:51 +0100
-In-Reply-To: <20080603003846.25028.49353.stgit@yoghurt>
-User-Agent: StGIT/0.14.2.171.g5c0d
+	id S1752646AbYFCA7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2008 20:59:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYFCA7g
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jun 2008 20:59:36 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:22267 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465AbYFCA7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2008 20:59:35 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so890069fgg.17
+        for <git@vger.kernel.org>; Mon, 02 Jun 2008 17:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=YG5bhvVsUG+ePHgZx57U2RmiCOuqJ+8Q65LyiSZRVPc=;
+        b=K/pDmRAC1Nce914znl/hLaGunlYrBo0Zl2MWFXRtNkKLv8tX0pvUl52zViQSAV1jkThJ6B/Z2XA1K0lczfgPGqHCBltOF29QHMJijO7pb4t0R2Xa6gseIhPyV2J3pUmlj0ATfDHRhmZCcI6e2RLpn8apYl+r8F9vE8LhxcK8Bcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=d301lByaCVXGROJOZ64swlLQU9GGCPHN0SlNE4CsqFoCfDFAAzbkwEtXlCc7M4EAqQM6gZf2h5Bs5ugWUi4ZHxqTkuow7VVEd1d3Tyr4dCoB+Wyj/JV7x0zKChn7xyLnrNKjcYEwfj+TYXhZJOrDhtDLcfoEGFiFi0XGQakas/k=
+Received: by 10.86.87.13 with SMTP id k13mr728147fgb.1.1212454773850;
+        Mon, 02 Jun 2008 17:59:33 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.231.153])
+        by mx.google.com with ESMTPS id g28sm11913697fkg.1.2008.06.02.17.59.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Jun 2008 17:59:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <1212276975-27428-1-git-send-email-LeWiemann@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83607>
 
-stgit.git.tree_status() had another filename quoting issue, similar to
-the one just fixed. Test for that one too.
+Lea Wiemann wrote:
+> [PATCH] t/test-lib.sh: add test_external and test_external_without_stderr
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Please don't merge this patch or the "test suite for Git.pm" patch -- 
+I'll rather stay on my branch for now so I can easily rebase and change 
+things.  Comments are still welcome, of course.
 
----
-
- t/t3200-non-ascii-filenames.sh |   34 ++++++++++++++++++++++++++++++++=
-+-
- 1 files changed, 33 insertions(+), 1 deletions(-)
-
-
-diff --git a/t/t3200-non-ascii-filenames.sh b/t/t3200-non-ascii-filenam=
-es.sh
-index a04ead8..3146b8d 100755
---- a/t/t3200-non-ascii-filenames.sh
-+++ b/t/t3200-non-ascii-filenames.sh
-@@ -3,6 +3,12 @@ test_description=3D'Handle files with non-ASCII charac=
-ters in their names'
-=20
- . ./test-lib.sh
-=20
-+# Ignore our own output files.
-+cat > .git/info/exclude <<EOF
-+/expected.txt
-+/output.txt
-+EOF
-+
- test_expect_success 'Setup' '
-     echo "Fj=C3=A4derholmarna" > sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-     git add sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-@@ -10,7 +16,7 @@ test_expect_success 'Setup' '
-     stg init &&
-     echo foo > unrelated.txt &&
-     git add unrelated.txt &&
--    stg new -m "Unrelated file" &&
-+    stg new p0 -m "Unrelated file" &&
-     stg refresh &&
-     stg pop &&
-     rm sk=C3=A4rg=C3=A5rds=C3=B6.txt &&
-@@ -24,4 +30,30 @@ test_expect_success 'Rebase onto changed non-ASCII f=
-ile' '
-     stg rebase upstream
- '
-=20
-+test_expect_success 'Setup' '
-+    stg delete p0 &&
-+    git reset --hard HEAD^ &&
-+    echo "-- ett liv mitt ute i vattnet" >> sk=C3=A4rg=C3=A5rds=C3=B6.=
-txt &&
-+    stg new p1 -m "Describe island"
-+'
-+
-+cat > expected.txt <<EOF
-+M sk=C3=A4rg=C3=A5rds=C3=B6.txt
-+EOF
-+test_expect_failure 'Status of modified non-ASCII file' '
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+test_expect_success 'Refresh changes to non-ASCII file' '
-+    stg refresh
-+'
-+
-+cat > expected.txt <<EOF
-+EOF
-+test_expect_success 'Status after refresh' '
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
- test_done
+-- Lea
