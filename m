@@ -1,108 +1,69 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Octopus merge: unique (?) to git, but is it useful?
-Date: Tue, 3 Jun 2008 22:39:24 +0200
-Message-ID: <20080603203924.GA6588@neumann>
-References: <200806030314.03252.jnareb@gmail.com>
-	<alpine.LFD.1.10.0806021845210.3473@woody.linux-foundation.org>
-	<7v3anv5fy3.fsf@gitster.siamese.dyndns.org>
-	<7vskvv3xmx.fsf@gitster.siamese.dyndns.org>
-	<20080603104009.GA559@neumann>
-	<7vabi22u5h.fsf@gitster.siamese.dyndns.org>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: git-fetch vs ipv6 routing issues
+Date: Tue, 3 Jun 2008 22:50:16 +0200 (CEST)
+Message-ID: <alpine.LRH.1.10.0806032242050.10782@yvahk3.pbagnpgbe.fr>
+References: <m38wxq1hou.fsf@eagle.jhcloos.com> <alpine.LRH.1.10.0806010924340.27605@yvahk3.pbagnpgbe.fr> <m3wsl6guqg.fsf@lugabout.jhcloos.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 22:42:09 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: James Cloos <cloos@jhcloos.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:52:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3dKT-0006EE-AT
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:42:01 +0200
+	id 1K3dTb-0002DV-Jd
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759315AbYFCUkr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jun 2008 16:40:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759306AbYFCUkq
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:40:46 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:63247 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759298AbYFCUkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2008 16:40:42 -0400
-Received: from [127.0.1.1] (p5B133079.dip0.t-ipconnect.de [91.19.48.121])
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
-	id 0ML25U-1K3dHx32Du-0007Pg; Tue, 03 Jun 2008 22:39:29 +0200
-Content-Disposition: inline
-In-Reply-To: <7vabi22u5h.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX1/rUG93+rqzCjXQd3YzEXodYQ9rsPXKpGulrTN
- 3qdnHIY9bwhKATNQCL2l1CiGwULaqBs0dDuF3LRZ1eQ3Ufp/QQ
- 1yEydsuuTIkg1F7gq1v8A==
+	id S1757179AbYFCUuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:50:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752611AbYFCUuZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:50:25 -0400
+Received: from kluster1.contactor.se ([91.191.140.11]:60485 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756072AbYFCUuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 16:50:23 -0400
+Received: from linux3.contactor.se (linux3.contactor.se [91.191.140.23])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id m53KoGFV004852;
+	Tue, 3 Jun 2008 22:50:16 +0200
+X-X-Sender: dast@linux3.contactor.se
+In-Reply-To: <m3wsl6guqg.fsf@lugabout.jhcloos.org>
+User-Agent: Alpine 1.10 (LRH 962 2008-03-14)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83708>
 
-On Tue, Jun 03, 2008 at 12:30:34PM -0700, Junio C Hamano wrote:
-> > ...  It
-> > fails at the line 'EDITOR=3D: git commit -a'.
->=20
-> Sorry, because it works for me (and presumably for many others --- I
-> haven't seen anybody else reporting the breakage you have), you need =
-to
-> help others to diagnose it with a bit more details.
-With debug and verbose options it says following:
+On Tue, 3 Jun 2008, James Cloos wrote:
 
-* expecting success:=20
+> But git could be smarter about it.  libcurl has CURLOPT_IPRESOLVE which can 
+> be set to any of CURL_IPRESOLVE_WHATEVER, CURL_IPRESOLVE_V4 or 
+> CURL_IPRESOLVE_V6.  Git could at least allow setting that via a config 
+> option and/or an env var, just like it does for libcurl options like 
+> CURLOPT_LOW_SPEED_LIMIT.
 
-        git rev-parse second master >expect &&
-        test_must_fail git merge second master &&
-        git checkout master g &&
-        echo "here comes the breakage" &&
-        EDITOR=3D: git commit -a &&
-        echo "survived!" &&
-        git cat-file commit HEAD | sed -n -e "s/^parent //p" -e "/^$/q"=
- >actual &&
-        test_cmp expect actual
+Perhaps, but I thought the git protocol behavior was to dynamicly back off a 
+failed connect attempt to try the next? That wouldn't be solvable with any 
+preset option. It needs code added to/changed in libcurl.
 
+> Even better would be to set CURLOPT_CONNECT_ONLY and then try with 
+> CURL_IPRESOLVE_WHATEVER, CURL_IPRESOLVE_V6 and CURL_IPRESOLVE_V4 in turn 
+> until it gets a connection, and then use CURLINFO_LASTSOCKET and the full 
+> URL to do the GET.
 
+Eeek. I really disagree with this suggestion. CURLOPT_CONNECT_ONLY means you 
+only (TCP or over proxy) connect and nothing more. That would force git to 
+implement a lot of HTTP details that libcurl already provides.
 
-*** Please tell me who you are.
+If you really really insist on letting git do it and not bring this feature to 
+libcurl, then I'd suggest that you first resolve the host, verify it by any 
+means you see fit, and then pass the IP to libcurl like in the URL as 
+"HTTP://12.23.45.67/blabla" with the correct host name in a custom-provided 
+host: header. It'd let you do the resolving magic and let libcurl do the HTTP 
+magic. But I wouldn't recommend that either...
 
-Run
+-- 
 
-  git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
-
-to set your account's default identity.
-Omit --global to set the identity only in this repository.
-
-fatal: empty ident  <szeder@neumann.(none)> not allowed
-here comes the breakage
-fatal: no commit message?  aborting commit.
-* FAIL 18: Hand committing of a redundant merge removes dups
-       =20
-       =20
-                git rev-parse second master >expect &&
-                test_must_fail git merge second master &&
-                git checkout master g &&
-                echo "here comes the breakage" &&
-                EDITOR=3D: git commit -a &&
-                echo "survived!" &&
-                git cat-file commit HEAD | sed -n -e "s/^parent //p" -e=
- "/^$/q" >actual &&
-                test_cmp expect actual
-       =20
-       =20
-
-* failed 1 among 18 test(s)
-make: *** [t7502-commit.sh] Error 1
-
-
-My /bin/sh is dash, but it breaks with bash, too.
-
-What else could/should I provide?
-
-Regards,
-G=E1bor
+  / daniel.haxx.se - primary libcurl author
