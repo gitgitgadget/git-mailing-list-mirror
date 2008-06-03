@@ -1,123 +1,69 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-Date: Tue, 3 Jun 2008 13:18:49 -0700 (PDT)
-Message-ID: <839911.60903.qm@web31810.mail.mud.yahoo.com>
-References: <m34p8a2173.fsf@localhost.localdomain>
-Reply-To: ltuikov@yahoo.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Commit annotations (was:: Octopus merge: unique (?) to git, but is it useful?)
+Date: Tue, 3 Jun 2008 22:27:02 +0200
+Message-ID: <200806032227.02951.jnareb@gmail.com>
+References: <200806030314.03252.jnareb@gmail.com> <200806030932.03051.jnareb@gmail.com> <alpine.LFD.1.10.0806031244290.3473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 22:26:41 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 03 22:28:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3d5N-0000U3-Ee
-	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:26:25 +0200
+	id 1K3d6x-000128-60
+	for gcvg-git-2@gmane.org; Tue, 03 Jun 2008 22:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671AbYFCUZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2008 16:25:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbYFCUZb
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:25:31 -0400
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:45563 "HELO
-	web31810.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752706AbYFCUZ3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2008 16:25:29 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jun 2008 16:25:29 EDT
-Received: (qmail 61252 invoked by uid 60001); 3 Jun 2008 20:18:49 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
-  b=WPB4Ry5yAQAp36aetqYCt2sxcywzeDDzN54U8akDutB+IQ0DDaM1enjW4aDkN1rolDLJoeOYQhplRfwrq17FRsbvpbrd8pKGhw6LGUolbudS3tNGjv9LnOxX2lBiMYZLTeP9SynkNPhIoCcQ9nzHt89fLCaBAMzqqyJ6ZARTPHo=;
-Received: from [99.159.44.58] by web31810.mail.mud.yahoo.com via HTTP; Tue, 03 Jun 2008 13:18:49 PDT
-X-Mailer: YahooMailWebService/0.7.199
-In-Reply-To: <m34p8a2173.fsf@localhost.localdomain>
+	id S1752253AbYFCU1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2008 16:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbYFCU1J
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jun 2008 16:27:09 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:47451 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752079AbYFCU1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2008 16:27:07 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so667043nfc.21
+        for <git@vger.kernel.org>; Tue, 03 Jun 2008 13:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=EpT42bYfON3EvCylS+XOVbNHAOwMiUoaI1iLPUvtI6A=;
+        b=f1ImqzAwYowK6eU1w1OXeIN5avhU7RCaXTzYGB41jsyA1xyiFvZ0ci3lrn0gzA65erTyXi4qpeFyflALaO/htvlFkcvVzJ3Akenu5lDz6kJeB5HV2RCD+y8L3XZ78RJm7XN51ooXYPGsrgE2f9OeudUYynBUeTTSuCmuFAg8/cA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rfCf7PSXG+C5Y/PtMtHqihfxAyttzbmbfcRw7Bz1sBaT1hZyrlCxPXNIgB0eOOOq/kV40ly3m9RH9Cmwj5TPrFt5W+FztDq1K96J1qkVVSJlyadSgSwyQ8DXbcyS8F121x5aP4VXnXg5yraN/jV+HBieWESxCjpBxHOVErbofXk=
+Received: by 10.210.102.16 with SMTP id z16mr34142ebb.22.1212524823878;
+        Tue, 03 Jun 2008 13:27:03 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.251.199])
+        by mx.google.com with ESMTPS id c14sm518355nfi.16.2008.06.03.13.27.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 03 Jun 2008 13:27:02 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LFD.1.10.0806031244290.3473@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83703>
 
---- On Tue, 6/3/08, Jakub Narebski <jnareb@gmail.com> wrote:
-> From: Jakub Narebski <jnareb@gmail.com>
-> Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-> To: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-> Cc: git@vger.kernel.org, "Luben Tuikov" <ltuikov@yahoo.com>
-> Date: Tuesday, June 3, 2008, 4:43 AM
-> Cc-ed Luben Tuikov, author of this part.
+Linus Torvalds wrote:
 
-Thanks guys! :-)
+> One of the things I could imagine using git for is to have "annotation 
+> branches" for things like code review etc. They'd be a real branch in 
+> their own right and with their own history, but at the same time they 
+> could well want to point back to the "code branch" that they annotate by 
+> considering that another parent in a "non-data merge" (and yes, you'd 
+> obviously have to use a special merge strategy for things like that, but 
+> you'd likely integrate it in some "annotation tool chain" rather than 
+> anything else).
 
-> Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-> writes:
-> 
-> > git-rev-parse will abort with an error when passed a
-> non-existent
-> > revision spec, such as "deadbeef^" where
-> deadbeef has no parent.
+By the way, what is status of git-notes / commit annotations?  Did it got
+abandoned, on hiatus, or what?
 
-Yes, I've known about this ever since I coded this.
-The reasoning was that the value of parsing up the "tree" of
-parent changes was a lot more (valuable) than the value of detecting that
-"deadbeef^" had no parent -- which would've been logically apparent
-to the coder/reviewer/user of "blame2".
-
-> > Using the --revs-only parameter makes this error go
-> away, while
-> > retaining functionality, keeping the web server error
-> log nice
-> > and clean.
-
-Ok, that's fine, as long as indeed the functionality is preserved.
-I leave it up to Jakub and Junio to make sure that indeed the
-functionality is preserved. (I.e. saving us yet another patch
-from anyone of us.)
-
-> Thanks.  This error wasn't detected earlier probably
-> because
-> 'blame' view is rarely enabled; and repo.or.cz
-> gitweb which has
-> 'blame' enabled IIRC use gitweb which is modified
-> there, allowing
-> incremental blame using AJAX.
-
-I'm a heavy user of "blame2", often exploring the course of
-"evolution" of the code and/or code lines and segments.  I value this
-in gitweb (being easier/more visual to use as opposed to command
-line).
-
-> 
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index 55fb100..f3b4b24 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -4226,9 +4226,9 @@ git_blame2
-> >  			              esc_html($rev));
-> >  			print "</td>\n";
-> >  		}
-> > -		open (my $dd, "-|", git_cmd(),
-> "rev-parse", "$full_rev^")
-> > +		open (my $dd, "-|", git_cmd(),
-> "rev-parse", '--revs-only',
-> "$full_rev^")
-> >  			or die_error(undef, "Open git-rev-parse
-> failed");
-> > -		my $parent_commit = <$dd>;
-> > +		my $parent_commit = <$dd> || '';
-> >  		close $dd;
-> >  		chomp($parent_commit);
-> >  		my $blamed = href(action => 'blame',
-> 
-> I'd rather remove this, correct it, or make it optional
-> (this is very
-> fork-heavy).
-> 
-> But this patch is good as it is now...
-
-Yes, I agree it is good.  Just you guys make sure that it doesn't change
-the value of the functionality of the code.
-
-Thanks everyone!
-   Luben
+-- 
+Jakub Narebski
+Poland
