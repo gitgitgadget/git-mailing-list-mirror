@@ -1,67 +1,114 @@
-From: David <wizzardx@gmail.com>
-Subject: Re: User's mailing list? And multiple cherry pick
-Date: Wed, 4 Jun 2008 09:13:18 +0200
-Message-ID: <18c1e6480806040013l72da09aem30f91183e4fcbe41@mail.gmail.com>
-References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com>
-	 <7vmym1zny4.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: How do I control the automated commit message on a merge?
+Date: Wed, 4 Jun 2008 09:33:17 +0200
+Message-ID: <20080604073317.GA7752@leksak.fem-net>
+References: <bd2cb52a0806031455r151303achf0424b5320bf2f07@mail.gmail.com> <alpine.DEB.1.00.0806032350170.13507@racer.site.net> <bd2cb52a0806031705x7cc153bsc00e1a0198d6e7b5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/04w6evG8XlLl3ft"
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 09:14:16 2008
+To: Marvin Fraeman <marvin.fraeman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 09:34:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3nCJ-00085R-NG
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 09:14:16 +0200
+	id 1K3nVd-0005IT-Ao
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 09:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbYFDHNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 03:13:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbYFDHNW
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 03:13:22 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:1861 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549AbYFDHNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 03:13:21 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so2000263rvb.1
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 00:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=O075UdznHDcVjdOW7RKVkti4uIBsnLKXhFaZM6qK/Ek=;
-        b=V3LxBOWKHqCaLjmgE8nZuhvM9awB2cy4gsbnuGN3fqUYzvlysXuSbLLmjCIBn04G4H8OIRbXNuC+mRVdcJgkqI2MfB/D1Q3DsaoiFclgfldaZdE5hV3/yCi8kXoFSZUIGgfeNUr+uuGvfmHw0hCYn97NN92CQkp9bgtvxK78q54=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HUMAUMfhCR838sAnabbbPX4uMwTd+Jcn95EwE+G1drD9nR1sZD7QLJPY9tUCKmjrSNCjE8YqfM8azfc7XmqNkWu3tmF+QhUlbUhFWClXyC/WzoqFizxn+0YyXIQKOJPqPm/CJwJL7gQA2MqVzWf1suCV9znet6IMnfs21f4i+8Y=
-Received: by 10.141.69.1 with SMTP id w1mr6427734rvk.147.1212563598309;
-        Wed, 04 Jun 2008 00:13:18 -0700 (PDT)
-Received: by 10.140.194.15 with HTTP; Wed, 4 Jun 2008 00:13:18 -0700 (PDT)
-In-Reply-To: <7vmym1zny4.fsf@gitster.siamese.dyndns.org>
+	id S1752102AbYFDHdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 03:33:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYFDHdU
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 03:33:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33035 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751495AbYFDHdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 03:33:19 -0400
+Received: (qmail invoked by alias); 04 Jun 2008 07:33:18 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp035) with SMTP; 04 Jun 2008 09:33:18 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/SRo4vtaTSKkE6soFL2bwAiCtgKtC7OyWi1ZqL5d
+	EYW3DA4wK9dZ5U
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K3nUj-00033G-CM; Wed, 04 Jun 2008 09:33:17 +0200
 Content-Disposition: inline
+In-Reply-To: <bd2cb52a0806031705x7cc153bsc00e1a0198d6e7b5@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83753>
 
->>
->> for C in $(git log --reverse <commit1>..<commit2> --pretty=format:%H);
->> do git-cherry-pick $C; done
->>
->> Is there an easier syntax for doing this?
->
-> rebase --onto?
->
 
-Thanks, I checked the manuals further, and it looks like this will
-(mostly) do what I need.
+--/04w6evG8XlLl3ft
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What's still missing is multiple cherry pick ;-)
+Hi,
 
-In other words, is there a simple way to *copy* a large number of
-commits from one branch to another, without rebasing?
+> >> when Git does a merge (no conflicts), it auto-generates a commit messa=
+ge
+> >> like:
+> >>
+> >>         Merge branch 'master' of  /path/to/other/repo
+> >>
+> >> How can I change this so my required string gets written at the
+> >> beginning of the commit message.
+> >
+> > s/./?/
+>=20
+> Where do I do the substitution in this case?
 
-David.
+In the question that you sent to the list ;-)
+(But something like s/\./?/ makes more sense.)
+
+The real answer of Johannes to your question was only:
+> You might be happy with a post-merge hook amending the commit with a
+> completely different message.
+
+Meaning, you should put something like
+ #!/bin/sh
+ git commit -m "This is my new commit message." --amend
+or better:
+ #!/bin/sh
+ git commit --amend -m "$(git cat-file commit HEAD |
+ 	sed -e '1,/^$/d;s/^/YOUR SIMPLE STATIC STRING HERE\n\n/')"
+into .git/hooks/post-merge (and make it executable).
+YOUR SIMPLE STATIC STRING HERE is the new first line.
+Replace the \n\n by a space to get someting like
+"YOUR SIMPLE STATIC STRING HERE Merge foo into HEAD."
+
+> Also, having the prepare-commit-msg hook add text had the side-effect
+> that in my normal commits, the message was always accepted, even when
+> I wanted to abort (vi using :q!).
+
+Let the commit-msg hook add the text afterwards.
+
+Or remove the prepared commit message in vi and then press :x (or :wq),
+because commit aborts on an *empty* commit message and not on=20
+an unchanged commit message.
+
+Regards,
+  Stephan
+
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+
+--/04w6evG8XlLl3ft
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIRkU9bt3SB/zFBA8RArVlAKCSP455bkoqfh0PBox3CvZEKFJdcgCgqWgI
+TktH2K/64xXZqiSpSwHUWMU=
+=j0Lv
+-----END PGP SIGNATURE-----
+
+--/04w6evG8XlLl3ft--
