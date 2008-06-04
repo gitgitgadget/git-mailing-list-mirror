@@ -1,64 +1,85 @@
-From: "Gerb Stralko" <gerb.stralko@gmail.com>
-Subject: Re: list all the untrack files in a git respo
-Date: Wed, 4 Jun 2008 10:41:08 -0400
-Message-ID: <75b57c110806040741x17cabe91j9863a471ef1670c@mail.gmail.com>
-References: <75b57c110806040705mc324d9dx9ce099593ce967dd@mail.gmail.com>
-	 <200806041620.54890.johan@herland.net>
+From: Victor Bogado da Silva Lins <victor@bogado.net>
+Subject: Re: git remote rename, why dosen't it exists?
+Date: Wed, 04 Jun 2008 11:54:05 -0300
+Message-ID: <1212591245.30731.17.camel@omicron.ep.petrobras.com.br>
+References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>
+	 <alpine.DEB.1.00.0806031449010.13507@racer.site.net>
+	 <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
+	 <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Johan Herland" <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jun 04 16:42:06 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 04 16:55:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3uBh-0004Ur-R4
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 16:42:06 +0200
+	id 1K3uOH-0002LQ-B8
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 16:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbYFDOlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 10:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbYFDOlK
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 10:41:10 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:28989 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753446AbYFDOlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 10:41:08 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so144001rvb.1
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 07:41:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=UUS7+4Gn5XgKuaDFSifRi41OJ0LeLheKzA0JcB2cv8Y=;
-        b=crZTn7Nq4+j1dRamvuGOCR9D46FmqWX7T27X21vwa4CPzx+jiG5JHe7giDxsOWRWeG
-         04vJSfdtqYoz3OdJT+5ELw+pJTQxKqEgpLXUMuBoTUZyYcfnyNKMi0Dh93G5oTplXUCP
-         ZfPHAedYfQOzoDNbr/pdKoHhIjiStI5INDYQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=umfTzmUOoJdAcfWNwtKT6cCEfk3dNu/G4XRou8zRsNVUfHuLTbkJ6xgj47KttksN+k
-         dgWGLYgBgImLCBHMqZUg3+jGzgheCIw+SuSJw35oMtQVbLecexY+x5qv/ka3dUuj0/ko
-         pXVo2ITsLJB/eb51uoAFpWgwrytG0z4SnHKog=
-Received: by 10.141.69.1 with SMTP id w1mr6664962rvk.185.1212590468084;
-        Wed, 04 Jun 2008 07:41:08 -0700 (PDT)
-Received: by 10.141.50.6 with HTTP; Wed, 4 Jun 2008 07:41:08 -0700 (PDT)
-In-Reply-To: <200806041620.54890.johan@herland.net>
-Content-Disposition: inline
+	id S1753337AbYFDOyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 10:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbYFDOyL
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 10:54:11 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:57851 "EHLO
+	spunkymail-a16.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752112AbYFDOyK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 10:54:10 -0400
+Received: from [127.0.0.1] (unknown [139.82.86.2])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by spunkymail-a16.g.dreamhost.com (Postfix) with ESMTP id 47D5B7D2D8;
+	Wed,  4 Jun 2008 07:54:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
+X-Mailer: Evolution 2.8.0 (2.8.0-40.el5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83786>
 
->        git ls-files -o
->
-> ...Johan
+On Tue, 2008-06-03 at 21:12 +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> [please do not top-post: it makes it very hard to follow the flow, 
+> especially on a high-volume mailing list like this.]
+> 
+sorry about that. :-/ 
 
-This is exactly what i want.  Thanks Johan.
+> On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+> 
+> > On Tue, 2008-06-03 at 14:49 +0100, Johannes Schindelin wrote:
+> > 
+> > > On Tue, 3 Jun 2008, Victor Bogado da Silva Lins wrote:
+> > > 
+> > > > Well, that's about it, I need to rename my remotes. Mainly to move 
+> > > > the origin to another repository and I miss the feature. Since many 
+> > > > time there is a reason for a missing feature, I fought that maybe I 
+> > > > should ask here, before nosing around the sources... :)
+> > > 
+> > > The reason is easy to find: nobody cared enough about this feature to 
+> > > implement it.
+> > > 
+> > > Just tell me if you want to do it, I'll provide you with the necessary 
+> > > details.
+> >
+> > I don't mind trying. :P Pointers would help me, I already found that the
+> > git-remote source is on the file builtin-remote.c, bu I have not yet
+> > found the main function of it.
+> 
+> There is no main function, since it is a builtin.  The "main" function is 
+> called cmd_remote().
+> 
+> You might find inspiration with the rm() function, or might even be able 
+> to refactor the rm() function into an rm(), and an rm_or_rename() which
+> does both rm() and rename() depending on a second parameter being NULL or 
+> not.
 
-Jerry
+I trying to refactor rm into rm_or_rename, but I stumbled into a
+problem, how do I free a remote struct obtained with "remote_get"?
+Another possibility would be another way to check if a remote already
+exists without allocating it in case it does. The need comes from
+testing whether the destination name already exists, if it does exists I
+must free the remote_get and bail_out. 
