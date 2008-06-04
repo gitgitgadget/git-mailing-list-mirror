@@ -1,130 +1,102 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: User's mailing list? And multiple cherry pick
-Date: Wed, 4 Jun 2008 07:36:20 -0400
-Message-ID: <20080604113620.GB7094@mit.edu>
-References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com> <m3r6bdzm22.fsf@localhost.localdomain> <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH v2] rollback lock files on more signals than just SIGINT
+Date: Wed, 4 Jun 2008 12:40:37 +0100
+Message-ID: <e2b179460806040440m29f2326ek3757660646686623@mail.gmail.com>
+References: <E1K1eXC-0005xW-Jd@fencepost.gnu.org>
+	 <alpine.DEB.1.00.0805291341290.13507@racer.site.net>
+	 <483EAD69.9090001@gnu.org>
+	 <alpine.DEB.1.00.0805291456030.13507@racer.site.net>
+	 <483EBF1F.9000809@gnu.org>
+	 <alpine.DEB.1.00.0805291541430.13507@racer.site.net>
+	 <E1K1jnV-0007HC-Om@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: David <wizzardx@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 13:37:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git mailing list" <git@vger.kernel.org>
+To: "Paolo Bonzini" <bonzini@gnu.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 13:41:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3rJ7-00051q-7J
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 13:37:33 +0200
+	id 1K3rN6-0006TG-Hv
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 13:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100AbYFDLgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 07:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753192AbYFDLgk
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 07:36:40 -0400
-Received: from www.church-of-our-saviour.org ([69.25.196.31]:51549 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752895AbYFDLgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 07:36:39 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1K3rL2-0000d1-CL; Wed, 04 Jun 2008 07:39:32 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1K3rI1-0007NO-Ix; Wed, 04 Jun 2008 07:36:25 -0400
+	id S1752461AbYFDLkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 07:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751895AbYFDLkq
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 07:40:46 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:5257 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774AbYFDLkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 07:40:45 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so36214ywe.1
+        for <git@vger.kernel.org>; Wed, 04 Jun 2008 04:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=MvzyrM8VyVfJa+5uJ9cZZsAta3fiG5qVcX7rZ8ts8yI=;
+        b=XFkAghaYxghveizTMuwl6x5liMS1FdOtglktS0twyl3XDkmq4SFvtge7S51BKhPBL4
+         xnrscja18kz5DL0QbfRwxHiLgNpmGBg4iCsTnNJXj2KiqNI5DUAq5ZmM3fQicGbpZtsI
+         IGRnn9xfEL1PmV0qdyesoh1t0pYVAYz/QlYjE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=MYXh7PcROAMNtPWYbY6SxbRwpT3hB7v6SVxqkYy6L4ju0znUNvjzfVFAmTkhshPJoV
+         dyaykIoeEZq2GRUQlVOKUG9/HeD7XqJG+/jXTz0/xwBzMQ14zFz/w8ZMJGjq7pMcqTNM
+         CUS+93EvzZq/ElWcZagHQ8l004uMbhfxthVwY=
+Received: by 10.150.54.1 with SMTP id c1mr16659565yba.63.1212579638025;
+        Wed, 04 Jun 2008 04:40:38 -0700 (PDT)
+Received: by 10.70.110.16 with HTTP; Wed, 4 Jun 2008 04:40:37 -0700 (PDT)
+In-Reply-To: <E1K1jnV-0007HC-Om@fencepost.gnu.org>
 Content-Disposition: inline
-In-Reply-To: <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83776>
 
-On Wed, Jun 04, 2008 at 10:11:33AM +0200, David wrote:
-> Here is an example:
-> 
-> o--o--O master
->        \
->         o--o--X--X--X--X--o--o topic
-> 
-> I want to copy the "X" patches from the topic branch over to master.
-> The other patches aren't appropriate for master for whatever reason.
-> eg, temporary debugging hacks, but I fixed a few problems in master in
-> the X patches and now want to apply them on top of master, and keep
-> working on "topic"
-> 
-> I want to end up with a tree like this:
-> 
-> 
-> o--o--O--X'--X'--X'--X' master
->        \
->         o--o--X--X--X--X--o--o topic
+2008/5/29 Paolo Bonzini <bonzini@gnu.org>:
 >
-> After getting the branches like this, I would then (try to) rebase
-> topic like this:
-> 
-> o--o--O--X'--X'--X'--X' master
->                       \
->                        o'--o'--o'--o' topic
-> 
+> Other signals are also common, for example SIGTERM and SIGHUP.
+> This patch modifies the lock file mechanism to catch more signals.
+> It also modifies http-push.c which was missing SIGTERM.
+>
+> diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+> index 3531a99..46ec1ce 100755
+> --- a/t/t7502-commit.sh
+> +++ b/t/t7502-commit.sh
+> @@ -212,4 +212,18 @@ test_expect_success 'do not fire editor in the presence of conflicts' '
+>        test "`cat .git/result`" = "editor not started"
+>  '
+>
+> +pwd=`pwd`
+> +cat > .git/FAKE_EDITOR << EOF
+> +#! /bin/sh
+> +# kill -TERM command added below.
+> +EOF
+> +
+> +test_expect_success 'a SIGTERM should break locks' '
+> +       echo >>negative &&
+> +       sh -c '\''
+> +         echo kill -TERM $$ >> .git/FAKE_EDITOR
+> +         GIT_EDITOR=.git/FAKE_EDITOR exec git commit -a'\'' && exit 1  # should fail
+> +       ! test -f .git/index.lock
+> +'
+> +
+>  test_done
 
+This addition to the testsuite breaks it on AIX with the default sh
+(ksh). Replacing the explicit sh -c with $SHELL_PATH -c fixes it for
+me (as I have SHELL_PATH pointing to bash). If that's acceptable I can
+post a patch if necessary.
 
-OK, so assume the tree looks like this:
+Happy to test any other suggested fixes.
 
- o--o--O master
-        \
-         1--2--3--4--5--6--7--8 topic
-
-First do a "git checkout topic; git rebase --interactive master", and
-reorder the topic branch so it looks like this:
-
- o--o--O master
-        \
-         3--4--5--6--1--2--7--8 topic
-
-Now find the commit ID for commit #6 above, and assuming that it's
-f1dead2f, run the command "git checkout master; git merge f1dead2f".
-Now the graph looks like this:
-
- o--o--O--3--4--5--6 master
-                    \
-                     1--2--7--8 topic
-
-You could also use the command:
-
-	"git update-ref refs/heads/master f1dead2f"
-
-which keeps HEAD pointing at the topic branch, but the reason why I
-suggested the "git checkout master; git merge f1dead2f" is that the
-commands are generally more familiar to git newcomers, and I usually
-want to do a test build and run the regression tests on master to make
-sure things are clean.
-
-
-> I say try to, because rebase sometimes gets a lot of dumb (to me,
-> maybe I'm not using git correctly) conflicts in cases like this, so I
-> end up manually rebasing, by making a new topic branch off master,
-> cherry picking into it off the old topic branch, and then removing the
-> old branch. Another case where multiple cherry picks would be nice :-)
-
-Note that in the above set of commands, summarized as:
-
-1) "git checkout topic; git rebase --interactive master"
-   1a)  "make; make check" to build and run regression tests on the 
-   	reordered topic branch.
-2) "git checkout master; git merge f1dead2f" (this should be a fast forward)
-   2a)  "make; make check" to build and run regression tests on the 
-   	updated master branch.
-
-There may be indeed conflicts at the first "git rebase --interactive",
-but that's just git being conservative.  Usually it really isnt that
-hard to resolve the conflicts, git add the files which required
-fixups, and then doing a "git rebase --continue".  And you will have
-to do the manual fixup regardless of whether you use "git rebase" or
-"git cherry-pick"; the git rebase is just a more automated way of
-doing things.
-
-Regards,
-
-						- Ted
+Mike
