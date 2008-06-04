@@ -1,144 +1,72 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [StGIT PATCH 4/5] Add stack creation and initialisation support to
-	lib.Stack
-Date: Wed, 04 Jun 2008 22:13:43 +0100
-Message-ID: <20080604211343.32531.41429.stgit@localhost.localdomain>
-References: <20080604210655.32531.82580.stgit@localhost.localdomain>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
+Date: Wed, 4 Jun 2008 15:24:03 -0700 (PDT)
+Message-ID: <469507.93901.qm@web31804.mail.mud.yahoo.com>
+References: <7v3ant213k.fsf@gitster.siamese.dyndns.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: kha@treskal.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 04 23:30:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 00:25:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K40Yb-0007US-JU
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 23:30:09 +0200
+	id 1K41Ph-0000s7-4m
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 00:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579AbYFDV3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 17:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754277AbYFDV3P
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 17:29:15 -0400
-Received: from queueout01-winn.ispmail.ntl.com ([81.103.221.31]:8203 "EHLO
-	queueout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753343AbYFDV3O (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 17:29:14 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20080604211801.KJOC7070.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Wed, 4 Jun 2008 22:18:01 +0100
-Received: from localhost.localdomain ([86.7.22.36])
-          by aamtaout03-winn.ispmail.ntl.com with ESMTP
-          id <20080604212242.GIQI8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
-          Wed, 4 Jun 2008 22:22:42 +0100
-In-Reply-To: <20080604210655.32531.82580.stgit@localhost.localdomain>
-User-Agent: StGIT/0.14.2.152.g3f19
+	id S1755192AbYFDWYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 18:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753956AbYFDWYG
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 18:24:06 -0400
+Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:26258 "HELO
+	web31804.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753371AbYFDWYF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 18:24:05 -0400
+Received: (qmail 94453 invoked by uid 60001); 4 Jun 2008 22:24:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
+  b=AJXpnlXyR8uIMg4r/tr77oZ26BUCXRStrI1Zbu9eC4mWPAETGdmt4Lx38gEe/BX7MjOTZR/qW2ZaUukETCG95NGcNtD+iKOrg1F/KLKyNxzGslfky+sXJnnWx1wLh9A/p/42OcShf7/dGknNirFdKC15ul75GUpuQtdkZZ1y0c8=;
+Received: from [99.159.44.58] by web31804.mail.mud.yahoo.com via HTTP; Wed, 04 Jun 2008 15:24:03 PDT
+X-Mailer: YahooMailWebService/0.7.199
+In-Reply-To: <7v3ant213k.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83835>
 
-This patch adds the create and initialise Stack classmethods to handle
-the initialisation of StGIT patch series on a Git branch.
+--- On Tue, 6/3/08, Junio C Hamano <gitster@pobox.com> wrote:
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
+> Another breakage is even though $full_rev^ _may_ exist
+> (iow, $full_rev
+> might not be the root commit), the file being blamed may
+> not exist there
+> (iow $full_rev might have introduced the file).  Instead of
+> running
+> "rev-parse $full_rev^", you would at least need
+> to ask "rev-list -1
+> $full_rev^ -- $path" or something from the Porcelain
+> layer, but
+> unfortunately this is rather expensive.
 
- stgit/lib/stack.py |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 54 insertions(+), 1 deletions(-)
+Yes, I've seen this too, but saw no advantage to bring it up
+at the time.
 
-diff --git a/stgit/lib/stack.py b/stgit/lib/stack.py
-index aca7a36..7375d41 100644
---- a/stgit/lib/stack.py
-+++ b/stgit/lib/stack.py
-@@ -3,6 +3,10 @@
- import os.path
- from stgit import exception, utils
- from stgit.lib import git, stackupgrade
-+from stgit.config import config
-+
-+class StackException(exception.StgException):
-+    """Exception raised by stack objects."""
- 
- class Patch(object):
-     """Represents an StGit patch. This class is mainly concerned with
-@@ -105,6 +109,14 @@ class PatchOrder(object):
-     all = property(lambda self: self.applied + self.unapplied + self.hidden)
-     all_visible = property(lambda self: self.applied + self.unapplied)
- 
-+    @staticmethod
-+    def create(stackdir):
-+        """Create the PatchOrder specific files
-+        """
-+        utils.create_empty_file(os.path.join(stackdir, 'applied'))
-+        utils.create_empty_file(os.path.join(stackdir, 'unapplied'))
-+        utils.create_empty_file(os.path.join(stackdir, 'hidden'))
-+
- class Patches(object):
-     """Creates L{Patch} objects. Makes sure there is only one such object
-     per patch."""
-@@ -133,12 +145,14 @@ class Patches(object):
- class Stack(git.Branch):
-     """Represents an StGit stack (that is, a git branch with some extra
-     metadata)."""
-+    __repo_subdir = 'patches'
-+
-     def __init__(self, repository, name):
-         git.Branch.__init__(self, repository, name)
-         self.__patchorder = PatchOrder(self)
-         self.__patches = Patches(self)
-         if not stackupgrade.update_to_current_format_version(repository, name):
--            raise exception.StgException('%s: branch not initialized' % name)
-+            raise StackException('%s: branch not initialized' % name)
-     patchorder = property(lambda self: self.__patchorder)
-     patches = property(lambda self: self.__patches)
-     @property
-@@ -156,6 +170,45 @@ class Stack(git.Branch):
-             return True
-         return self.head == self.patches.get(self.patchorder.applied[-1]).commit
- 
-+    def set_parents(self, remote, localbranch):
-+        if not localbranch:
-+            return
-+        if remote:
-+            self.set_parent_remote(remote)
-+        self.set_parent_branch(localbranch)
-+        config.set('branch.%s.stgit.parentbranch' % self._name, localbranch)
-+
-+    @classmethod
-+    def initialise(cls, repository, name = None):
-+        """Initialise a Git branch to handle patch series."""
-+        if not name:
-+            name = repository.current_branch_name
-+        # make sure that the corresponding Git branch exists
-+        git.Branch(repository, name)
-+
-+        dir = os.path.join(repository.directory, cls.__repo_subdir, name)
-+        compat_dir = os.path.join(dir, 'patches')
-+        if os.path.exists(dir):
-+            raise StackException('%s: branch already initialized' % name)
-+
-+        # create the stack directory and files
-+        utils.create_dirs(dir)
-+        utils.create_dirs(compat_dir)
-+        PatchOrder.create(dir)
-+        config.set(stackupgrade.format_version_key(name),
-+                   str(stackupgrade.FORMAT_VERSION))
-+
-+        return repository.get_stack(name)
-+
-+    @classmethod
-+    def create(cls, repository, name,
-+               create_at = None, parent_remote = None, parent_branch = None):
-+        """Create and initialise a Git branch returning the L{Stack} object."""
-+        git.Branch.create(repository, name, create_at = create_at)
-+        stack = cls.initialise(repository, name)
-+        stack.set_parents(parent_remote, parent_branch)
-+        return stack
-+
- class Repository(git.Repository):
-     """A git L{Repository<git.Repository>} with some added StGit-specific
-     operations."""
+> Because blame already almost knows if the commit the final
+> blame lies on
+> has a parent, it would be reasonably cheap to add that
+> "parent or nothing"
+> information to its --porcelain (and its --incremental)
+> format if we wanted
+> to.
+
+Yes, I agree.  At the moment those "checks" are left to be
+deduced by the person data-mining with blame.  (Which isn't /that/
+bad.)
+
+   Luben
