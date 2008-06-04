@@ -1,87 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Keep committer and committer dates
-Date: Wed, 4 Jun 2008 16:43:39 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806041641150.13507@racer.site.net>
-References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806032115340.13507@racer.site.net> <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz> <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
- <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
+From: Greg KH <greg@kroah.com>
+Subject: Re: git clone stable-2.6.25.y fails over HTTP
+Date: Wed, 4 Jun 2008 08:45:23 -0700
+Message-ID: <20080604154523.GA25747@kroah.com>
+References: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	=?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: Jaroslav Kysela <perex@perex.cz>
-X-From: git-owner@vger.kernel.org Wed Jun 04 17:45:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andrew Klossner <andrew@cesa.opbu.xerox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 17:47:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3vB8-0007yw-OE
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 17:45:35 +0200
+	id 1K3vDP-0000Ss-F1
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 17:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755061AbYFDPoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 11:44:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755323AbYFDPon
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 11:44:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60471 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754983AbYFDPon (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 11:44:43 -0400
-Received: (qmail invoked by alias); 04 Jun 2008 15:44:41 -0000
-Received: from unknown (EHLO none.local) [128.177.17.254]
-  by mail.gmx.net (mp058) with SMTP; 04 Jun 2008 17:44:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+2+yBIHKa2OyP55Kw4/UALZWeuUqohyIcinDg2pK
-	jAJAMZvDqUTMRw
-X-X-Sender: gene099@racer.site.net
-In-Reply-To: <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755615AbYFDPrC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 11:47:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbYFDPrB
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 11:47:01 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:59681 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751283AbYFDPrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 11:47:00 -0400
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1K3vCH-0006TL-Q1; Wed, 04 Jun 2008 15:46:58 +0000
+Content-Disposition: inline
+In-Reply-To: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83790>
 
-Hi,
-
-On Wed, 4 Jun 2008, Jaroslav Kysela wrote:
-
-> On Wed, 4 Jun 2008, Jakub Narebski wrote:
+On Wed, Jun 04, 2008 at 08:11:24AM -0700, Andrew Klossner wrote:
+> Greg wrote:
 > 
-> > Karl Hasselstr?m <kha@treskal.com> writes:
-> > 
-> > > On 2008-06-04 11:16:46 +0200, Jaroslav Kysela wrote:
-> > > 
-> > > > On Tue, 3 Jun 2008, Johannes Schindelin wrote:
-> > > >
-> > > > > That feels really funny, given that the guy running git-am _is_
-> > > > > the committer, not whoever provided some extra headers to the
-> > > > > mailbox.
-> > > >
-> > > > Yes, the implementatation does not make sense for public patch
-> > > > handling, but if you do various things locally with git-rebase or
-> > > > git-am (pack picking from another repo), you may consider it useful.
-> > > 
-> > > But still, you're creating new commits, so they should have your name
-> > > on them.
-> > 
-> > Yes, if you are _creating_ *commits*, then you are *committer*, isn't it?
+> > I don't think I remembered to run 'git-update-server-info' on the
+> > repository.  I just did it, let me know if that works better or not.
 > 
-> I agree with that, but if you just manage patches and you want to keep 
-> commit history and change only hash numbers, it's an option. Nothing else. 
-> It's just tool extension and users have to cleverly decide if it's worth 
-> to use it or not.
+> I get the same error.
+> 
+>   -=- Andrew
+> 
+> % git clone http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2 .6.25.y.git
+> Initialized empty Git repository in /work/andrew/http-git/linux-2.6.25.y/.git/
+> Getting alternates list for http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
+> Also look at http://www.kernel.org/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> Getting pack list for http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
+> Getting index for pack 6506d57e29d10a0ed9cca269f97296606aeb0b5b
+> Getting index for pack 067caec25377d65e503d626a6c4f3f7e392406a3
+> Getting index for pack 5434817c4def8a894fe4d61f55e8e4117485cbe7
+> Getting pack 067caec25377d65e503d626a6c4f3f7e392406a3
+>  which contains a82a9bfebc74862798a3f6949fe6f6a959c1fd4e
+> walk a82a9bfebc74862798a3f6949fe6f6a959c1fd4e
+> walk 15c2419876173c417a119b5665ecc62520e50a6c
+> Getting pack list for http://www.kernel.org/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> error: Unable to find fdcce40226d7d4273a08cc4ef84bb25755a710a4 under http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
+> Cannot obtain needed blob fdcce40226d7d4273a08cc4ef84bb25755a710a4
+> while processing commit 15c2419876173c417a119b5665ecc62520e50a6c.
 
-I think that
 
-- what you want to do is better done with git fast-export; <edit>; git 
-  fast-import, than with git porcelain, and
+Hm, I really do not know, and I can duplicate this myself as well.
 
-- you hopefully do _not_ want to recommend your workflow (and bless it 
-  with porcelain support), because
+<adding the git mailing list>
 
-- as has been pointed out several times now, you _are_ the committer, and 
-  you seem to want to lie there.
+Does anyone know what's going on here?  The stable git trees are created
+by doing:
+	git clone -s --bare
+from Linus's main tree to the stable tree repo location.
 
-Ciao,
-Dscho
+It looks like git over http isn't following the link somehow to the main
+repo?
+
+Or is what is necessary to do is to clone Linus's tree and then pull
+from the stable tree in this kind of situation (where the user can only
+use git over http?)
+
+thanks,
+
+greg k-h
