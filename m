@@ -1,72 +1,55 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-Date: Wed, 4 Jun 2008 15:24:03 -0700 (PDT)
-Message-ID: <469507.93901.qm@web31804.mail.mud.yahoo.com>
-References: <7v3ant213k.fsf@gitster.siamese.dyndns.org>
-Reply-To: ltuikov@yahoo.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [tig] Feeding specific revisions to tig
+Date: Wed, 4 Jun 2008 19:08:58 -0400
+Message-ID: <20080604230858.GA27136@sigill.intra.peff.net>
+References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com> <20080604192916.GB17327@sigill.intra.peff.net> <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 00:25:03 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jean-Baptiste Quenot <jbq@caraldi.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 01:10:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K41Ph-0000s7-4m
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 00:25:01 +0200
+	id 1K427G-00057D-D5
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 01:10:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192AbYFDWYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 18:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753956AbYFDWYG
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 18:24:06 -0400
-Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:26258 "HELO
-	web31804.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753371AbYFDWYF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 18:24:05 -0400
-Received: (qmail 94453 invoked by uid 60001); 4 Jun 2008 22:24:03 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
-  b=AJXpnlXyR8uIMg4r/tr77oZ26BUCXRStrI1Zbu9eC4mWPAETGdmt4Lx38gEe/BX7MjOTZR/qW2ZaUukETCG95NGcNtD+iKOrg1F/KLKyNxzGslfky+sXJnnWx1wLh9A/p/42OcShf7/dGknNirFdKC15ul75GUpuQtdkZZ1y0c8=;
-Received: from [99.159.44.58] by web31804.mail.mud.yahoo.com via HTTP; Wed, 04 Jun 2008 15:24:03 PDT
-X-Mailer: YahooMailWebService/0.7.199
-In-Reply-To: <7v3ant213k.fsf@gitster.siamese.dyndns.org>
+	id S1756188AbYFDXJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 19:09:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbYFDXJE
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 19:09:04 -0400
+Received: from peff.net ([208.65.91.99]:3190 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754505AbYFDXJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 19:09:03 -0400
+Received: (qmail 6498 invoked by uid 111); 4 Jun 2008 23:09:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 04 Jun 2008 19:09:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jun 2008 19:08:58 -0400
+Content-Disposition: inline
+In-Reply-To: <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83836>
 
---- On Tue, 6/3/08, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Jun 04, 2008 at 10:04:45PM +0200, Jean-Baptiste Quenot wrote:
 
-> Another breakage is even though $full_rev^ _may_ exist
-> (iow, $full_rev
-> might not be the root commit), the file being blamed may
-> not exist there
-> (iow $full_rev might have introduced the file).  Instead of
-> running
-> "rev-parse $full_rev^", you would at least need
-> to ask "rev-list -1
-> $full_rev^ -- $path" or something from the Porcelain
-> layer, but
-> unfortunately this is rather expensive.
+> Thanks for the suggestion.  However, my list of commits is too long,
+> the shell errors out with "tig: command too long".  I'd like to feed
+> tig with a list of commits from stdin, or from a file.
+> 
+> Something like: ... | tig --no-walk -F -
+> 
+> Which means: take the list of revisions from specified file, or here -
+> for stdin, a la grep.
 
-Yes, I've seen this too, but saw no advantage to bring it up
-at the time.
+Ah. Adding "-F" probably wouldn't be that much work, but tig spawns "git
+log" internally, so you would probably end up with the same problem
+there. Converting tig to use "git rev-list --stdin" would fix that, but
+is probably a bit of major surgery.
 
-> Because blame already almost knows if the commit the final
-> blame lies on
-> has a parent, it would be reasonably cheap to add that
-> "parent or nothing"
-> information to its --porcelain (and its --incremental)
-> format if we wanted
-> to.
-
-Yes, I agree.  At the moment those "checks" are left to be
-deduced by the person data-mining with blame.  (Which isn't /that/
-bad.)
-
-   Luben
+-Peff
