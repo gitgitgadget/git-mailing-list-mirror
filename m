@@ -1,168 +1,105 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: [PATCH] builtin-fast-export: Add importing and exporting of revision marks
-Date: Wed,  4 Jun 2008 22:55:47 +0200
-Message-ID: <1212612947-34720-1-git-send-email-pdebie@ai.rug.nl>
-Cc: Pieter de Bie <pdebie@ai.rug.nl>
-To: Git Mailinglist <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 22:56:51 2008
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGIT PATCH 1/5] Allow stack.patchorder.all to return hidden patches
+Date: Wed, 04 Jun 2008 22:13:17 +0100
+Message-ID: <20080604211316.32531.84226.stgit@localhost.localdomain>
+References: <20080604210655.32531.82580.stgit@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: kha@treskal.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 04 23:14:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K402F-0004jx-EK
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 22:56:43 +0200
+	id 1K40JC-0002NH-EW
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 23:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563AbYFDUzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 16:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbYFDUzu
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 16:55:50 -0400
-Received: from smtp-2.orange.nl ([193.252.22.242]:20011 "EHLO smtp-2.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753483AbYFDUzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 16:55:49 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6109.orange.nl (SMTP Server) with ESMTP id 41E837000083;
-	Wed,  4 Jun 2008 22:55:48 +0200 (CEST)
-Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6109.orange.nl (SMTP Server) with ESMTP id 926B07000082;
-	Wed,  4 Jun 2008 22:55:47 +0200 (CEST)
-X-ME-UUID: 20080604205547599.926B07000082@mwinf6109.orange.nl
-X-Mailer: git-send-email 1.5.6.rc0.165.ge08d6b.dirty
+	id S1753255AbYFDVNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 17:13:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753231AbYFDVNV
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 17:13:21 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:36974 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752627AbYFDVNU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 17:13:20 -0400
+Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20080604211835.EFWK16629.mtaout03-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
+          Wed, 4 Jun 2008 22:18:35 +0100
+Received: from localhost.localdomain ([86.7.22.36])
+          by aamtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20080604211844.GGJI16854.aamtaout01-winn.ispmail.ntl.com@localhost.localdomain>;
+          Wed, 4 Jun 2008 22:18:44 +0100
+In-Reply-To: <20080604210655.32531.82580.stgit@localhost.localdomain>
+User-Agent: StGIT/0.14.2.152.g3f19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83828>
 
-This adds the --import-marks and --export-marks to fast-export. These import
-and export the marks used to for all revisions exported in a similar fashion
-to what fast-import does. The format is the same as fast-import, so you can
-create a bidirectional importer / exporter by using the same marks file on
-both sides.
+A new property, patchorder.all_visible, was added to return only the
+applied + unapplied patches. This is used in the "commit" command to
+avoid automatically committing the hidden patches.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 ---
 
-I used this to create a bidirectional import/export script between Git and
-Bazaar. As both sides can now both import and export marks, keeping two
-repositories in sync is just a matter of keeping the marks files up to date.
+ stgit/commands/commit.py  |    4 ++--
+ stgit/lib/stack.py        |    4 ++--
+ stgit/lib/stackupgrade.py |    7 +++++++
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-This is my first c code that's more than one line, so please don't be too
-harsh ;)
-
- builtin-fast-export.c |   71 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 71 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index 8218199..1d5c83d 100755
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -375,30 +375,98 @@ static void handle_tags_and_duplicates(struct path_list *extra_refs)
- 	}
- }
+diff --git a/stgit/commands/commit.py b/stgit/commands/commit.py
+index cc2f13a..1bdbeea 100644
+--- a/stgit/commands/commit.py
++++ b/stgit/commands/commit.py
+@@ -45,11 +45,11 @@ options = [make_option('-n', '--number', type = 'int',
+ def func(parser, options, args):
+     """Commit a number of patches."""
+     stack = directory.repository.current_stack
+-    args = common.parse_patches(args, list(stack.patchorder.all))
++    args = common.parse_patches(args, list(stack.patchorder.all_visible))
+     if len([x for x in [args, options.number != None, options.all] if x]) > 1:
+         parser.error('too many options')
+     if args:
+-        patches = [pn for pn in stack.patchorder.all if pn in args]
++        patches = [pn for pn in stack.patchorder.all_visible if pn in args]
+         bad = set(args) - set(patches)
+         if bad:
+             raise common.CmdException('Bad patch names: %s'
+diff --git a/stgit/lib/stack.py b/stgit/lib/stack.py
+index f9e750e..bdd21b1 100644
+--- a/stgit/lib/stack.py
++++ b/stgit/lib/stack.py
+@@ -102,8 +102,8 @@ class PatchOrder(object):
+                          lambda self, val: self.__set_list('unapplied', val))
+     hidden = property(lambda self: self.__get_list('hidden'),
+                       lambda self, val: self.__set_list('hidden', val))
+-    # don't return the hidden patches, these have to be returned explicitly
+-    all = property(lambda self: self.applied + self.unapplied)
++    all = property(lambda self: self.applied + self.unapplied + self.hidden)
++    all_visible = property(lambda self: self.applied + self.unapplied)
  
-+static void export_marks(char * file)
-+{
-+	unsigned int i;
-+	uintmax_t mark;
-+	struct object_decoration *deco = idnums.hash;
-+	FILE *f;
-+
-+	f = fopen(file, "w");
-+	if (!f)
-+		error("Unable to open marks file %s for writing", file);
-+
-+	for (i = 0; i < idnums.size; ++i) {
-+		deco++;
-+		if (deco && deco->base && deco->base->type == 1) {
-+			mark = (uint32_t *) deco-> decoration - (uint32_t *)NULL;
-+			fprintf(f, ":%" PRIuMAX " %s\n", mark, sha1_to_hex(deco->base->sha1));
-+		}
-+	}
-+	if (ferror(f) || fclose(f)) {
-+		error("Unable to write marks file %s.", file);
-+	}
-+}
-+
-+static void import_marks(char * input_file)
-+{
-+	char line[512];
-+	FILE *f = fopen(input_file, "r");
-+	if (!f)
-+		die("cannot read %s: %s", input_file, strerror(errno));
-+
-+	while (fgets(line, sizeof(line), f)) {
-+		uintmax_t mark;
-+		char *end;
-+		unsigned char sha1[20];
-+		struct object *object;
-+
-+		end = strchr(line, '\n');
-+		if (line[0] != ':' || !end)
-+			die("corrupt mark line: %s", line);
-+		*end = 0;
-+		mark = strtoumax(line + 1, &end, 10);
-+		if (!mark || end == line + 1
-+			|| *end != ' ' || get_sha1(end + 1, sha1))
-+			die("corrupt mark line: %s", line);
-+
-+		object = parse_object(sha1);
-+		if (!object)
-+			die ("Could not read blob %s", sha1_to_hex(sha1));
-+
-+		if (object->flags & SHOWN)
-+			error("Object %s was already has a mark", sha1);
-+
-+		add_decoration(&idnums, object, ((uint32_t *)NULL) + mark);
-+		if (last_idnum < mark)
-+			last_idnum = mark;
-+
-+		object->flags |= SHOWN;
-+	}
-+	fclose(f);
-+}
-+
- int cmd_fast_export(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
- 	struct object_array commits = { 0, 0, NULL };
- 	struct path_list extra_refs = { NULL, 0, 0, 0 };
- 	struct commit *commit;
-+	char *export_filename, *import_filename;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "progress", &progress,
- 			    "show progress after <n> objects"),
- 		OPT_CALLBACK(0, "signed-tags", &signed_tag_mode, "mode",
- 			     "select handling of signed tags",
- 			     parse_opt_signed_tag_mode),
-+		OPT_STRING(0, "export-marks", &export_filename, "FILE", "Dump marks to this file"),
-+		OPT_STRING(0, "import-marks", &import_filename, "FILE", "Import marks from this file"),
- 		OPT_END()
- 	};
+ class Patches(object):
+     """Creates L{Patch} objects. Makes sure there is only one such object
+diff --git a/stgit/lib/stackupgrade.py b/stgit/lib/stackupgrade.py
+index 96ccb79..4b437dc 100644
+--- a/stgit/lib/stackupgrade.py
++++ b/stgit/lib/stackupgrade.py
+@@ -90,6 +90,13 @@ def update_to_current_format_version(repository, branch):
+         rm_ref('refs/bases/%s' % branch)
+         set_format_version(2)
  
- 	/* we handle encodings */
- 	git_config(git_default_config, NULL);
- 
++    # compatibility with the new infrastructure. The changes here do not
++    # affect the compatibility with the old infrastructure (format version 2)
++    if get_format_version() == 2:
++        hidden_file = os.path.join(branch_dir, 'hidden')
++        if not os.path.isfile(hidden_file):
++            utils.create_empty_file(hidden_file)
 +
- 	init_revisions(&revs, prefix);
- 	argc = setup_revisions(argc, argv, &revs, NULL);
- 	argc = parse_options(argc, argv, options, fast_export_usage, 0);
- 	if (argc > 1)
- 		usage_with_options (fast_export_usage, options);
- 
-+	if (import_filename)
-+		import_marks(import_filename);
-+
- 	get_tags_and_duplicates(&revs.pending, &extra_refs);
- 
- 	if (prepare_revision_walk(&revs))
-@@ -421,5 +489,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 
- 	handle_tags_and_duplicates(&extra_refs);
- 
-+	if (export_filename)
-+		export_marks(export_filename);
-+
- 	return 0;
- }
--- 
-1.5.6.rc0.165.ge08d6b.dirty
+     # Make sure we're at the latest version.
+     fv = get_format_version()
+     if not fv in [None, FORMAT_VERSION]:
