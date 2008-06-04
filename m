@@ -1,104 +1,203 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: User's mailing list? And multiple cherry pick
-Date: Wed, 04 Jun 2008 00:39:07 -0700 (PDT)
-Message-ID: <m3r6bdzm22.fsf@localhost.localdomain>
-References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Strbuf documentation: document most functions
+Date: Wed, 04 Jun 2008 00:45:06 -0700
+Message-ID: <7vzlq1y77h.fsf@gitster.siamese.dyndns.org>
+References: <1212447591-4870-1-git-send-email-vmiklos@frugalware.org>
+ <1212542126-21514-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David <wizzardx@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 09:40:42 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>,
+	=?iso-2022-jp?B?UmVuGyRCRlwbKEJjaGFyZmU=?= 
+	<rene.scharfe@lsrfire.ath.cx>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jun 04 09:46:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3nbT-0007ci-8z
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 09:40:15 +0200
+	id 1K3nhf-0001s0-Tr
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 09:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157AbYFDHjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 03:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754015AbYFDHjO
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 03:39:14 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:8049 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753211AbYFDHjL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 03:39:11 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so230361ugf.16
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 00:39:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=ZZZK1t4z3Asqd287y39a5HU83307GUKV3ZBrUlXZXdc=;
-        b=A0MsCx/zmC0ctUyROZedu3UIdJtilG+oPhYDryf+SJBEChIPu+/bbcBRkzJnxyM5Yy
-         RMmx+jyGO6C1Fnz0ZE9Y7FJrhKojxPg5JD6O2GEDXfKBw6QdOeUqVQx7mcN7kSXvbTTq
-         2jvfB/gDZoxAZ6afeG45kg9MfhX+fXPGIS1M0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=LeCQnGf6hckIv6sVUCQYAVjtp95UftJ+NezLVd9vnTuVSyVLAlgwQ0l31EO/Fh64Cy
-         K2UULDjdz1uL1umi2kuKFLJMALqcTol07SsVtIowWHJoHvowVQXgUdAL5RmtI2nyTT1R
-         YXADQsMoj9ONWqWNnxEn+6PMT3ZPG87Mc0GJM=
-Received: by 10.66.234.13 with SMTP id g13mr175903ugh.5.1212565149304;
-        Wed, 04 Jun 2008 00:39:09 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.251.199])
-        by mx.google.com with ESMTPS id i39sm11716498ugd.28.2008.06.04.00.39.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Jun 2008 00:39:07 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m547d3Kb001861;
-	Wed, 4 Jun 2008 09:39:03 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m547d1Fh001857;
-	Wed, 4 Jun 2008 09:39:01 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753108AbYFDHpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 03:45:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbYFDHpn
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 03:45:43 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63787 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971AbYFDHpk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 03:45:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0C5433143;
+	Wed,  4 Jun 2008 03:45:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8D58F3142; Wed,  4 Jun 2008 03:45:20 -0400 (EDT)
+In-Reply-To: <1212542126-21514-1-git-send-email-vmiklos@frugalware.org>
+ (Miklos Vajna's message of "Wed, 4 Jun 2008 03:15:26 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 362406E8-320A-11DD-8E3F-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83755>
 
-David <wizzardx@gmail.com> writes:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-> I've tried Googling for these, and checked the FAQ.
-> 
-> 1) Is there a separate Git Users mailing list or FAQ?
-> 
-> So that git noobs like myself don't bother the developers directly :-)
-> Also so that non-git-developer users who want to help other users
-> don't get a lot of mails with patches & git internal development
-> discussions.
+> diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+> index a52e4f3..15f66b2 100644
+> --- a/Documentation/technical/api-strbuf.txt
+> +++ b/Documentation/technical/api-strbuf.txt
+> @@ -1,6 +1,236 @@
+>  strbuf API
+>  ==========
+>  
+> +An strbuf is NUL terminated for convenience, but no function in the
+> +strbuf API actually relies on the string being free of NULs.
+>  
+> +strbuf's are meant to be used with all the usual C string and memory
+> +APIs. Given that the length of the buffer is known, it's often better to
+> +use the mem* functions than a str* one (memchr vs. strchr e.g.).
+> +Though, one has to be careful about the fact that str* functions often
+> +stop on NULs and that strbufs may have embedded NULs.
 
-There is Git User's mailing list ("Git for human beings", heh)
-  git-users@googlegroups.com
-  http://groups.google.com/group/git-users
-  nntp://news.gmane.org/gmane.comp.version-control.git.user
- 
-There is GitFaq at Git Wiki:
-  http://git.or.cz/gitwiki/GitFaq
+I think these two paragraphs should be swapped.  The first two lines are
+only interesting after you establish what it is and what it is used for
+with the second paragraph.
 
-> 2) Is it possible to cherry pick multiple patches?
-> 
-> Sometimes git rebase isn't appropriate, and it's a pain to do multiple
-> 'git-cherry-pick' commands. Here is my current recipe:
-> 
-> for C in $(git log --reverse <commit1>..<commit2> --pretty=format:%H);
-> do git-cherry-pick $C; done
-> 
-> Is there an easier syntax for doing this?
+> +However, it is totally safe to touch anything in the buffer pointed by
+> +the `buf` member between the index `0` and `len` excluded.
 
- $ git rebase --onto
- $ git rebase --onto --interactive
+Somehow this "excluded" feels not quite right wording.
+Also "touch" is a fuzzy word.  I think.
 
-(if you want to copy, just create new branch using "git branch", or
-something).
+ - "sb->buf[i] = x" is Ok if and only if "0 <= i < sb->len";
+   col. "sb->buf[0] = 'x'" is a no-no if !sb->len.
 
-Why can't you simply use merge, BTW?
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ - "if (!sb->buf[0])" is Ok even if !sb->len.
+
+> +. The `buf` member is a byte array that has at least `len + 1` bytes
+> +  allocated. The extra byte is used to store a `'\0'`, allowing the
+> +  `buf` member to be a valid C-string. Every strbuf function ensure this
+> +  invariant is preserved.
+> ++
+> +NOTE: It is OK to "play" with the buffer directly if you work it that
+> +      way:
+
+If you are refering to the example you talk next, s/that way/this way/.
+
+> ++
+> +----
+> +strbuf_grow(sb, SOME_SIZE); <1>
+> +strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
+> +----
+> +<1> Here, the memory array starting at `buf`, and of length
+
+Here you should say `sb->buf` not just `buf`, as you are explaining this
+specific example that uses a concrete instance of strbuf `sb`.
+
+> +`strbuf_avail(sb)` is all yours, and you can be sure that
+> +`strbuf_avail(sb)` is at least `SOME_SIZE`.
+> ++
+> +Of course, `SOME_OTHER_SIZE` must be smaller or equal to `strbuf_avail(sb)`.
+
+It is not clear why this is "Of course" here in this document, because you
+haven't talked about what "setlen" is.  It is "Of course" only because
+setlen's sole purpose is to truncate and it cannot be used to extend the
+buffer (I won't discuss if that is a good API here).
+
+> +Doing so is safe, though if it has to be done in many places, adding the
+> +missing API to the strbuf module is the way to go.
+> ++
+> +WARNING: Do _not_ assume that the area that is yours is of size `alloc
+> +- 1` even if it's true in the current implementation. Alloc is somehow a
+> +"private" member that should not be messed with.
+
+Talking about "don't" is important, but without guiding the reader with
+"instead of that, do this", the document becomes a frustrating read.
+
+> +Data structures
+> +---------------
+> +
+> +* `struct strbuf`
+> +
+> +This is string buffer structure. The `len` variable can be used to
+> +determine the current length of the string, and `buf` provides access
+> +to the string itself.
+
+Call both consistently "member".  I.e. The `len` member can be ....
+
+> +Functions
+> +---------
+> +
+> +* Life cycle
+> +
+> +`strbuf_init`::
+> +
+> +	Initializes the structure. The second parameter can be zero or a bigger
+> +	number to allocate memory, in case you want to prevent further reallocs.
+
+When you start the sentence without a subject, use imperative mood, not
+third person singular, for consistency.  I.e. "Initialize the structure".
+This comment applies everywhere (you have mixed style).
+
+> +`strbuf_release`::
+> +
+> +	Releases a string buffer and the memory it used. You should not use the
+> +	string buffer after using this function, unless you initialize it again.
+> +
+> +`strbuf_detach`::
+> +
+> +	Detaches the string from the string buffer. The function returns a
+> +	pointer to the old string and releases a buffer, so that if you want to
+> +	use it again, you should initialize it before doing so.
+
+"Detaches the string from the strbuf and returns it; you now own the
+storage the string occupies and it is your responsibility from then on to
+release it with free(3) when you are done with it."
+
+The strbuf is reinitialized by detach, so there shouldn't be need for
+re-initializing it.
+
+> +`strbuf_avail`::
+> +
+> +	Determines the amount of allocated but not used memory.
+
+s/not used/unused/;
+
+> +`strbuf_grow`::
+> +
+> +	Ensure that at least this amount of available memory is available. This
+
+"available memory is available"?  "Ensure that at least this amount of
+unused memory is available after `len`", perhaps.
+
+> +	is used when you know a typical size for what you will do and want to
+
+s/you will do/you will add/;
+
+> +	avoid repetitive automatic resize of the underlying buffer. This is
+
+s/resize/resizing/;
+
+> +* Adding data to the buffer
+
+You need a blanket comment to say "All of these functions will grow the
+buffer as necessary".
+
+> +`strbuf_splice`::
+> +
+> +	Splice pos..pos+len with given data.
+
+Define "splice".  "Remove the bytes between pos..pos+len and replace it
+with the given data".
+
+> +`strbuf_addbuf`::
+> +
+> +	Add an other buffer to the current one.
+
+Makes the reader wonder what happens to that other buffer after this
+operation.  "Copy the contents of the second buffer at the end of the
+first buffer", perhaps?
