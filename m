@@ -1,71 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [tig] Feeding specific revisions to tig
-Date: Wed, 4 Jun 2008 15:29:16 -0400
-Message-ID: <20080604192916.GB17327@sigill.intra.peff.net>
-References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC] http clone does not checkout working tree
+Date: Wed, 4 Jun 2008 12:30:57 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806041222300.3473@woody.linux-foundation.org>
+References: <20080604183858.GA7095@sigill.intra.peff.net> <alpine.LFD.1.10.0806041145170.3473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jean-Baptiste Quenot <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 21:30:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 04 21:32:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3ygX-00055Q-2P
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 21:30:13 +0200
+	id 1K3yjA-0006Kk-Nf
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 21:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754641AbYFDT3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 15:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754221AbYFDT3T
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 15:29:19 -0400
-Received: from peff.net ([208.65.91.99]:4225 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753341AbYFDT3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 15:29:19 -0400
-Received: (qmail 21641 invoked by uid 111); 4 Jun 2008 19:29:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 04 Jun 2008 15:29:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jun 2008 15:29:16 -0400
-Content-Disposition: inline
-In-Reply-To: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
+	id S1760959AbYFDTbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 15:31:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758326AbYFDTbp
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 15:31:45 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50942 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756762AbYFDTbo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 15:31:44 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m54JUwWK016158
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 4 Jun 2008 12:30:59 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m54JUvqT005236;
+	Wed, 4 Jun 2008 12:30:58 -0700
+In-Reply-To: <alpine.LFD.1.10.0806041145170.3473@woody.linux-foundation.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.887 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83814>
 
-On Wed, Jun 04, 2008 at 08:52:14PM +0200, Jean-Baptiste Quenot wrote:
 
-> Ideally I'd like to feed this list of commits to tig, so that I can
-> watch the commit diff and summary easily and switch from one commit to
-> another.  But tig only behaves as a pager, and does not help for this.
 
-I think there are two issues here, but both are solvable:
+On Wed, 4 Jun 2008, Linus Torvalds wrote:
+> 
+> and quite frankly, it's rather possible that we should get rid of the 
+> "void *buffer" and "unsigned long size" in the tree *entirely*, because 
+> the above would likely be better written as
+..
 
-  1. You want to see _just_ these commits, but not the whole ancestry
-     chain. In that case, you want to use --no-walk. E.g.:
+Side note: the actual historical context here is that "parse_tree()" used 
+to create that "tree_entry_list" of all the entries in the tree. So we 
+used to do things like
 
-       tig --no-walk commit1 commit2 ...
+	struct tree_entry_list *list;
 
-     Though it seems there are a few display artifacts. If I do
+	if (parse_tree(tree))
+		die(..)
+	list = tree->entries;
+	while (list) {
+		...
 
-       tig --no-walk tig-0.1 tig-0.2
+so "parse_tree()" was something much bigger (and generated much slower and 
+less dense data structures).
 
-     I get the 2 commits I expect, but also two "extra" blank
-     commits at the bottom.
+These days, parse_tree() basically just reads the object buffer and 
+length. So it boils down to just caching the result of "read_sha1_file()", 
+but we have all those legacy uses that come from the old historical thing. 
+And to some degree it may have made sense to drop the buffer, but keep the 
+actual list of entries in that old model.
 
-  2. tig works like a pager when stdin is not a tty. You can work
-     around this by using xargs to give the commits to it on the
-     command line, and then redirect stdin from the tty.
+See commit 2d9c58c69d1bab601e67b036d0546e85abcee7eb.
 
-       ... | xargs sh -c 'tig --no-walk "$@" </dev/tty'
-
-     which is kind of a lot to type. It might be nice for "tig -T"
-     to open /dev/tty unconditionally instead of looking at stdin,
-     so you could just do:
-
-       ... | xargs tig -T --no-walk
-
--Peff
+		Linus
