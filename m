@@ -1,97 +1,130 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Keep committer and committer dates
-Date: Wed, 04 Jun 2008 04:12:41 -0700 (PDT)
-Message-ID: <m3ej7dzc7y.fsf@localhost.localdomain>
-References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
-	<alpine.DEB.1.00.0806032115340.13507@racer.site.net>
-	<Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
-	<20080604102906.GA2126@diana.vm.bytemark.co.uk>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: User's mailing list? And multiple cherry pick
+Date: Wed, 4 Jun 2008 07:36:20 -0400
+Message-ID: <20080604113620.GB7094@mit.edu>
+References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com> <m3r6bdzm22.fsf@localhost.localdomain> <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jaroslav Kysela <perex@perex.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: =?iso-8859-15?q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 13:13:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David <wizzardx@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 13:37:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3qvy-0005lQ-JK
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 13:13:38 +0200
+	id 1K3rJ7-00051q-7J
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 13:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753923AbYFDLMp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2008 07:12:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbYFDLMo
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 07:12:44 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:36759 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754550AbYFDLMo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 07:12:44 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so16751nfc.21
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 04:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=iiJWq9o9CJKJVpAoXltZZCS0NPIdWqno0tH6VIGckN4=;
-        b=BUCoByvc69ct5j8KzEmtFuQ3nrCG+KPIJjq1Im/HOTTpVUxZJ2m4Mcuzg428Y/CRN7
-         n4buInPX5zYytaJssNKPV5Khftm7daSk9QnMhViwNzjaPT+W5DVbugTOnZA+TnXucRFJ
-         +QeZgVgWv37si9KOpabTOp01z8oDIATzfdlzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=DcPb/W1xtXP5rSI8RYGYZmFtaRYa2PPkSAfot/BTMJKtOMvYKw9l9Cs1FUyCDuZy3T
-         2GeFcQxC70nESYSKrN2758ehkworIMwAS3c1bYUuh0we/yjuNy77LqMji1uCsGilY1Qi
-         SIk5bmrWeqwkDiTxAU4NFpdI3fbuR9CxramTg=
-Received: by 10.210.41.14 with SMTP id o14mr770481ebo.137.1212577962480;
-        Wed, 04 Jun 2008 04:12:42 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.210.131])
-        by mx.google.com with ESMTPS id i8sm1768277nfh.20.2008.06.04.04.12.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Jun 2008 04:12:41 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m54BBuUB003298;
-	Wed, 4 Jun 2008 13:12:07 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m54BBTTo003290;
-	Wed, 4 Jun 2008 13:11:29 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080604102906.GA2126@diana.vm.bytemark.co.uk>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753100AbYFDLgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 07:36:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753192AbYFDLgk
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 07:36:40 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:51549 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752895AbYFDLgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 07:36:39 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1K3rL2-0000d1-CL; Wed, 04 Jun 2008 07:39:32 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1K3rI1-0007NO-Ix; Wed, 04 Jun 2008 07:36:25 -0400
+Content-Disposition: inline
+In-Reply-To: <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83775>
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
+On Wed, Jun 04, 2008 at 10:11:33AM +0200, David wrote:
+> Here is an example:
+> 
+> o--o--O master
+>        \
+>         o--o--X--X--X--X--o--o topic
+> 
+> I want to copy the "X" patches from the topic branch over to master.
+> The other patches aren't appropriate for master for whatever reason.
+> eg, temporary debugging hacks, but I fixed a few problems in master in
+> the X patches and now want to apply them on top of master, and keep
+> working on "topic"
+> 
+> I want to end up with a tree like this:
+> 
+> 
+> o--o--O--X'--X'--X'--X' master
+>        \
+>         o--o--X--X--X--X--o--o topic
+>
+> After getting the branches like this, I would then (try to) rebase
+> topic like this:
+> 
+> o--o--O--X'--X'--X'--X' master
+>                       \
+>                        o'--o'--o'--o' topic
+> 
 
-> On 2008-06-04 11:16:46 +0200, Jaroslav Kysela wrote:
->=20
-> > On Tue, 3 Jun 2008, Johannes Schindelin wrote:
-> >
-> > > That feels really funny, given that the guy running git-am _is_
-> > > the committer, not whoever provided some extra headers to the
-> > > mailbox.
-> >
-> > Yes, the implementatation does not make sense for public patch
-> > handling, but if you do various things locally with git-rebase or
-> > git-am (pack picking from another repo), you may consider it useful=
-=2E
->=20
-> But still, you're creating new commits, so they should have your name
-> on them.
 
-Yes, if you are _creating_ *commits*, then you are *committer*, isn't i=
-t?
+OK, so assume the tree looks like this:
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ o--o--O master
+        \
+         1--2--3--4--5--6--7--8 topic
+
+First do a "git checkout topic; git rebase --interactive master", and
+reorder the topic branch so it looks like this:
+
+ o--o--O master
+        \
+         3--4--5--6--1--2--7--8 topic
+
+Now find the commit ID for commit #6 above, and assuming that it's
+f1dead2f, run the command "git checkout master; git merge f1dead2f".
+Now the graph looks like this:
+
+ o--o--O--3--4--5--6 master
+                    \
+                     1--2--7--8 topic
+
+You could also use the command:
+
+	"git update-ref refs/heads/master f1dead2f"
+
+which keeps HEAD pointing at the topic branch, but the reason why I
+suggested the "git checkout master; git merge f1dead2f" is that the
+commands are generally more familiar to git newcomers, and I usually
+want to do a test build and run the regression tests on master to make
+sure things are clean.
+
+
+> I say try to, because rebase sometimes gets a lot of dumb (to me,
+> maybe I'm not using git correctly) conflicts in cases like this, so I
+> end up manually rebasing, by making a new topic branch off master,
+> cherry picking into it off the old topic branch, and then removing the
+> old branch. Another case where multiple cherry picks would be nice :-)
+
+Note that in the above set of commands, summarized as:
+
+1) "git checkout topic; git rebase --interactive master"
+   1a)  "make; make check" to build and run regression tests on the 
+   	reordered topic branch.
+2) "git checkout master; git merge f1dead2f" (this should be a fast forward)
+   2a)  "make; make check" to build and run regression tests on the 
+   	updated master branch.
+
+There may be indeed conflicts at the first "git rebase --interactive",
+but that's just git being conservative.  Usually it really isnt that
+hard to resolve the conflicts, git add the files which required
+fixups, and then doing a "git rebase --continue".  And you will have
+to do the manual fixup regardless of whether you use "git rebase" or
+"git cherry-pick"; the git rebase is just a more automated way of
+doing things.
+
+Regards,
+
+						- Ted
