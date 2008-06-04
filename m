@@ -1,109 +1,112 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] http clone does not checkout working tree
-Date: Wed, 4 Jun 2008 16:10:08 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806041559390.19665@iabervon.org>
-References: <20080604183858.GA7095@sigill.intra.peff.net> <alpine.LFD.1.10.0806041145170.3473@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: move git repository out of a folder?
+Date: Wed, 04 Jun 2008 13:14:42 -0700 (PDT)
+Message-ID: <m31w3dyn2n.fsf@localhost.localdomain>
+References: <1086fb5f0806041303v7856404dxb95b5a450ac30ae1@mail.gmail.com>
+	<20080604200724.GV12896@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 04 22:11:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean Brown <seanmichaelbrown@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jun 04 22:15:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3zKA-0005C0-6F
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 22:11:10 +0200
+	id 1K3zOW-0006sx-37
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 22:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754109AbYFDUKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 16:10:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753900AbYFDUKL
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 16:10:11 -0400
-Received: from iabervon.org ([66.92.72.58]:33563 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756972AbYFDUKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 16:10:10 -0400
-Received: (qmail 5607 invoked by uid 1000); 4 Jun 2008 20:10:08 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Jun 2008 20:10:08 -0000
-In-Reply-To: <alpine.LFD.1.10.0806041145170.3473@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756348AbYFDUOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 16:14:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755557AbYFDUOq
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 16:14:46 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:31270 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754159AbYFDUOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 16:14:45 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so140882fgg.17
+        for <git@vger.kernel.org>; Wed, 04 Jun 2008 13:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=Hf3awHRvxLYlat2I36kU1o9lpwILB5bIYsQ99wq7pOE=;
+        b=au7AHNB+6bh6NSl+TSCJdWETsmYdfBkwcB1nWHhoxD5gIwuUtxEaYmY4vJWgiDpG74
+         ilAZp/lmfs/kRIXwds/6rlvwM5lzWWUCm9YdCGhttcVXaIqzbxRuLpUm5u/g0A49UVh3
+         eA7h3C4CUBOJ00QehrdrbZAO5RiHgovQwpjwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=q1aKwVc08Nl2nhDWiPz1PgWFY4XkCguuSuKD4FBQrA6JEEXu2rbQ6M/BwWjTScOR4e
+         fji7WxU3OlLBNekZLftWK5jeVDBNSjIbwlaXXJEwP0qplD9w5X8PLu0rI1AmOG8LIHoX
+         pbVuL1u5C3QrTFAI/UndxA78Pc3SSvz1eHyNA=
+Received: by 10.86.70.8 with SMTP id s8mr752557fga.31.1212610483581;
+        Wed, 04 Jun 2008 13:14:43 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.210.131])
+        by mx.google.com with ESMTPS id d6sm2267039fga.2.2008.06.04.13.14.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Jun 2008 13:14:42 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m54KEgDk013513;
+	Wed, 4 Jun 2008 22:14:42 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m54KEehg013510;
+	Wed, 4 Jun 2008 22:14:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080604200724.GV12896@spearce.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83824>
 
-On Wed, 4 Jun 2008, Linus Torvalds wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> On Wed, 4 Jun 2008, Jeff King wrote:
+> Sean Brown <seanmichaelbrown@gmail.com> wrote:
+> >
+> > Let's say I've got this directory structure of source files:
 > > 
-> > The following patch fixes it for me, but I really have no idea if there
-> > isn't something more subtle at work. Sending to Linus, since "git blame"
-> > points the surrounding code to you, and to Daniel, since the new clone
-> > and the commit walker are your areas.
+> > /folderA
+> > /folderA/sourcecode/
+> > /folderA/sourcecode/file1.txt
+> > /folderA/sourcecode/file2.txt
+> > etc...
+> > 
+> > When putting the project under git source control, I did this:
+> > 
+> > cd /folderA
+> > git init
+> > 
+> > So now when colleagues clone my repository, they get the source code
+> > in the "sourcecode" folder.  I'd like to just make the repository
+> > simply give them the source files, not in a directory.  In other
+> > words, as if I had originally been smart and done this:
+> > 
+> > cd /folderA/sourcecode
+> > git init
+> > 
+> > Can I make that happen without losing all of the history?
 > 
-> Ack. This is correct.
-> 
-> That said, a *lot* of code does this pattern (freeing the tree buffer 
-> after use, without marking the tree non-parsed), and I suspect the only 
-> reason I'm blamed is because this got copied from some other use of that 
-> same model. 
-> 
-> Normally it's fine, because the whole object use is temporary, but as you 
-> point out, doing things in the same process will re-use old object info. 
-> It's one of the subtler implications of doing built-ins without fork/exec.
-> 
-> It is possible that we should clean this up by adding some kind of
-> 
-> 	static void forget_tree(struct tree *tree)
-> 	{
-> 		free(tree->buffer);
-> 		tree->buffer = NULL;
-> 		tree->size = 0;
-> 		tree->parsed = 0;
-> 	}
-> 
-> to make this more robust and obvious. That said, a lot of the users are 
-> basically the type
-> 
-> 	if (parse_tree(tree) < 0)
-> 		die(..);
-> 	init_tree_desc(&desc, tree->buffer, tree->size);
-> 	while (tree_entry(&desc, &entry)) {
-> 		...
-> 	}
-> 	forget_tree();
-> 
-> and quite frankly, it's rather possible that we should get rid of the 
-> "void *buffer" and "unsigned long size" in the tree *entirely*, because 
-> the above would likely be better written as
-> 
-> 	buffer = read_tree_desc(&desc);
+> git mv sourcecode/* .
+> rmdir sourcecode
+> git commit
 
-read_tree_desc(&desc, tree), which would use the hash in the tree object, 
-which wouldn't need to be parse, I assume.
+What he said.  Git should automatically detect renames.  When pulling
+code from someone who hasn't made this change yet, you might need to
+use 'subtree' merge strategy, as currently git would put files added
+as sourcecode/filename in sourcecode/filename, not as top dir filename
+when pulling from side branch.
 
-> 	while (tree_entry(&desc, &entry)) {
-> 		...
-> 	}
-> 	free(buffer);
-> 
-> and make "struct tree" smaller, and not ever need parsing at all!
-> 
-> I think that realisitcially, all tree users are of that format, and nobody 
-> really wants to save the buffer (because buffer re-use is fairly unlikely, 
-> an re-generating it isn't all that expensive).
->
-> But that would be a much bigger patch. And maybe I'm wrong, and some uses 
-> really do want the longer-term caching because they end up re-using the 
-> tree a lot. So it would need more thinking about.
+If you want to _change history_, as if you made correct decision at
+the start (and convince everyone to reclone, or to do the same
+surgery; or if you for the time being are solo contributor to the
+project), you can use git-filter-branch (formerly cg-admin-rewrite-hist ;-).
 
-I think that your current unpack_trees() benefits from the fact that, if 
-some but not all of the trees are the same, you only uncompress the tree 
-objects once and store one copy of the resulting buffer. So, I don't think 
-long-term caching is worthwhile, but sharing between concurrent users 
-might be.
-
-	-Daniel
-*This .sig left intentionally blank*
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
