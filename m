@@ -1,84 +1,61 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: git clone stable-2.6.25.y fails over HTTP
-Date: Wed, 4 Jun 2008 08:45:23 -0700
-Message-ID: <20080604154523.GA25747@kroah.com>
-References: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git remote rename, why dosen't it exists?
+Date: Wed, 4 Jun 2008 16:51:04 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806041649270.13507@racer.site.net>
+References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>  <alpine.DEB.1.00.0806031449010.13507@racer.site.net>  <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>  <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
+ <1212591245.30731.17.camel@omicron.ep.petrobras.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Andrew Klossner <andrew@cesa.opbu.xerox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 17:47:57 2008
+To: Victor Bogado da Silva Lins <victor@bogado.net>
+X-From: git-owner@vger.kernel.org Wed Jun 04 17:53:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3vDP-0000Ss-F1
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 17:47:55 +0200
+	id 1K3vIM-0002QW-Sf
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 17:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755615AbYFDPrC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 11:47:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbYFDPrB
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 11:47:01 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:59681 "EHLO
-	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751283AbYFDPrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 11:47:00 -0400
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
-	by pentafluge.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
-	id 1K3vCH-0006TL-Q1; Wed, 04 Jun 2008 15:46:58 +0000
-Content-Disposition: inline
-In-Reply-To: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756940AbYFDPwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 11:52:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbYFDPwJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 11:52:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60875 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756572AbYFDPwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 11:52:08 -0400
+Received: (qmail invoked by alias); 04 Jun 2008 15:52:06 -0000
+Received: from unknown (EHLO none.local) [128.177.17.254]
+  by mail.gmx.net (mp045) with SMTP; 04 Jun 2008 17:52:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19HlpMjvaxHlncdcnhR5mW8i59qfY7/4TYuvLe0pm
+	oYC/HPvcPpZ5d9
+X-X-Sender: gene099@racer.site.net
+In-Reply-To: <1212591245.30731.17.camel@omicron.ep.petrobras.com.br>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83791>
 
-On Wed, Jun 04, 2008 at 08:11:24AM -0700, Andrew Klossner wrote:
-> Greg wrote:
-> 
-> > I don't think I remembered to run 'git-update-server-info' on the
-> > repository.  I just did it, let me know if that works better or not.
-> 
-> I get the same error.
-> 
->   -=- Andrew
-> 
-> % git clone http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2 .6.25.y.git
-> Initialized empty Git repository in /work/andrew/http-git/linux-2.6.25.y/.git/
-> Getting alternates list for http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
-> Also look at http://www.kernel.org/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-> Getting pack list for http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
-> Getting index for pack 6506d57e29d10a0ed9cca269f97296606aeb0b5b
-> Getting index for pack 067caec25377d65e503d626a6c4f3f7e392406a3
-> Getting index for pack 5434817c4def8a894fe4d61f55e8e4117485cbe7
-> Getting pack 067caec25377d65e503d626a6c4f3f7e392406a3
->  which contains a82a9bfebc74862798a3f6949fe6f6a959c1fd4e
-> walk a82a9bfebc74862798a3f6949fe6f6a959c1fd4e
-> walk 15c2419876173c417a119b5665ecc62520e50a6c
-> Getting pack list for http://www.kernel.org/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-> error: Unable to find fdcce40226d7d4273a08cc4ef84bb25755a710a4 under http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
-> Cannot obtain needed blob fdcce40226d7d4273a08cc4ef84bb25755a710a4
-> while processing commit 15c2419876173c417a119b5665ecc62520e50a6c.
+Hi,
 
+On Wed, 4 Jun 2008, Victor Bogado da Silva Lins wrote:
 
-Hm, I really do not know, and I can duplicate this myself as well.
+> I trying to refactor [in builtin-remote.c] rm into rm_or_rename, but I 
+> stumbled into a problem, how do I free a remote struct obtained with 
+> "remote_get"?
 
-<adding the git mailing list>
+At the moment, there is no way to do that.
 
-Does anyone know what's going on here?  The stable git trees are created
-by doing:
-	git clone -s --bare
-from Linus's main tree to the stable tree repo location.
+> Another possibility would be another way to check if a remote already 
+> exists without allocating it in case it does. The need comes from 
+> testing whether the destination name already exists, if it does exists I 
+> must free the remote_get and bail_out.
 
-It looks like git over http isn't following the link somehow to the main
-repo?
+I think in the first step, you can just _not_ free() it, just die().
 
-Or is what is necessary to do is to clone Linus's tree and then pull
-from the stable tree in this kind of situation (where the user can only
-use git over http?)
-
-thanks,
-
-greg k-h
+Ciao,
+Dscho
