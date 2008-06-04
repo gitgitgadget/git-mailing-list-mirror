@@ -1,106 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] http clone does not checkout working tree
-Date: Wed, 4 Jun 2008 11:59:10 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806041145170.3473@woody.linux-foundation.org>
+Date: Wed, 04 Jun 2008 12:02:26 -0700
+Message-ID: <7vwsl5vxa5.fsf@gitster.siamese.dyndns.org>
 References: <20080604183858.GA7095@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 04 21:00:32 2008
+X-From: git-owner@vger.kernel.org Wed Jun 04 21:03:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3yDe-0001ZW-7F
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 21:00:22 +0200
+	id 1K3yGe-0002j0-6P
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 21:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbYFDS73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 14:59:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbYFDS73
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 14:59:29 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52476 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751130AbYFDS72 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 14:59:28 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m54IxBsN013013
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 4 Jun 2008 11:59:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m54IxAnd003952;
-	Wed, 4 Jun 2008 11:59:11 -0700
-In-Reply-To: <20080604183858.GA7095@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.887 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756406AbYFDTCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 15:02:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759534AbYFDTCg
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 15:02:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37912 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172AbYFDTCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 15:02:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 452A73C95;
+	Wed,  4 Jun 2008 15:02:34 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3DF173C91; Wed,  4 Jun 2008 15:02:29 -0400 (EDT)
+In-Reply-To: <20080604183858.GA7095@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 4 Jun 2008 14:38:58 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CA48116C-3268-11DD-A695-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83809>
 
+Jeff King <peff@peff.net> writes:
 
-
-On Wed, 4 Jun 2008, Jeff King wrote:
-> 
 > The following patch fixes it for me, but I really have no idea if there
 > isn't something more subtle at work. Sending to Linus, since "git blame"
 > points the surrounding code to you, and to Daniel, since the new clone
 > and the commit walker are your areas.
+>
+> ---
+> diff --git a/walker.c b/walker.c
+> index 31de6c1..0e68ee6 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -59,6 +59,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
+>  	free(tree->buffer);
+>  	tree->buffer = NULL;
+>  	tree->size = 0;
+> +	tree->object.parsed = 0;
+>  	return 0;
+>  }
+>  
 
-Ack. This is correct.
+The patch looks good to me.
 
-That said, a *lot* of code does this pattern (freeing the tree buffer 
-after use, without marking the tree non-parsed), and I suspect the only 
-reason I'm blamed is because this got copied from some other use of that 
-same model. 
-
-Normally it's fine, because the whole object use is temporary, but as you 
-point out, doing things in the same process will re-use old object info. 
-It's one of the subtler implications of doing built-ins without fork/exec.
-
-It is possible that we should clean this up by adding some kind of
-
-	static void forget_tree(struct tree *tree)
-	{
-		free(tree->buffer);
-		tree->buffer = NULL;
-		tree->size = 0;
-		tree->parsed = 0;
-	}
-
-to make this more robust and obvious. That said, a lot of the users are 
-basically the type
-
-	if (parse_tree(tree) < 0)
-		die(..);
-	init_tree_desc(&desc, tree->buffer, tree->size);
-	while (tree_entry(&desc, &entry)) {
-		...
-	}
-	forget_tree();
-
-and quite frankly, it's rather possible that we should get rid of the 
-"void *buffer" and "unsigned long size" in the tree *entirely*, because 
-the above would likely be better written as
-
-	buffer = read_tree_desc(&desc);
-	while (tree_entry(&desc, &entry)) {
-		...
-	}
-	free(buffer);
-
-and make "struct tree" smaller, and not ever need parsing at all!
-
-I think that realisitcially, all tree users are of that format, and nobody 
-really wants to save the buffer (because buffer re-use is fairly unlikely, 
-an re-generating it isn't all that expensive).
-
-But that would be a much bigger patch. And maybe I'm wrong, and some uses 
-really do want the longer-term caching because they end up re-using the 
-tree a lot. So it would need more thinking about.
-
-		Linus
+And blaming Linus for this is slightly unfair, as the context the original
+"process_tree()" taken out of was that tree object was used once and then
+never used after this codepath is done with it, even though he _could_
+have a perfect foresight to anticipate that someday somebody might want to
+call the routine from elsewhere without understanding the implications.
