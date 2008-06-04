@@ -1,91 +1,133 @@
-From: David <wizzardx@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: User's mailing list? And multiple cherry pick
-Date: Wed, 4 Jun 2008 10:30:08 +0200
-Message-ID: <18c1e6480806040130k3851a89an3fcf986feb661226@mail.gmail.com>
-References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com>
-	 <7vmym1zny4.fsf@gitster.siamese.dyndns.org>
-	 <18c1e6480806040013l72da09aem30f91183e4fcbe41@mail.gmail.com>
-	 <m3mym1zkus.fsf@localhost.localdomain>
+Date: Wed, 4 Jun 2008 10:50:08 +0200
+Message-ID: <200806041050.09701.jnareb@gmail.com>
+References: <18c1e6480806032355q2002fe0ej1f37dbd7dbd4802b@mail.gmail.com> <m3r6bdzm22.fsf@localhost.localdomain> <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 10:31:13 2008
+Cc: git@vger.kernel.org
+To: David <wizzardx@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 10:51:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3oOj-0007zA-Qf
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 10:31:10 +0200
+	id 1K3oi7-00064J-VN
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 10:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbYFDIaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 04:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYFDIaQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 04:30:16 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:64623 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649AbYFDIaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 04:30:15 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so2033156rvb.1
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 01:30:14 -0700 (PDT)
+	id S1752776AbYFDIuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 04:50:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYFDIuT
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 04:50:19 -0400
+Received: from hu-out-0506.google.com ([72.14.214.232]:27494 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbYFDIuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 04:50:17 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so5668256hub.21
+        for <git@vger.kernel.org>; Wed, 04 Jun 2008 01:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bU0oyXpaaGmu3OxmXAorFJEHHGzRgdckUOZ23Oo19Lo=;
-        b=HKlw7VV997nFzQzlv3BD2cMW3oOe0q2Js+dmqs3+XwKPR/v+POYKd+OLOgVWuPl+YN6mBjqaU/Qk+xRmnS5sHKwLatuaYYbfNHQWSX7J0Wa/tKuz9dQVknYXtWJdQT5URM1SKPmVLs8+yn+IqJ5KveG9pIpnEbTOGGziMWmWq00=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=A/kC+TuLKh33w21H2tNlvDZI9lWcJeb1rcdEmCjn/NE=;
+        b=NoU+U8EDQzhZmCgozVblSiXZOY9kkVMC/Gm/poZFk/pM07TJU+XfuUqm7/VtQKVLM+T8oHM1uMrBUcy952CCAFL7N7rj43kkZtIz4hvWk8ftj8VXY+0X09f97+ihlV/13WZEplCPqGbcDJPIB9ZFTSEFM8Rf/j+jtnCkJrBgh4U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=yC8uSQ9yYM3G6FomKRRAt3l9M9NJWO+89r+gDkDo4QdBHa2saEtoBE5u+xEQ+JWHnGOA5n2Q373FhM71sPXM4BnTxZzOk6hVIyhsELHb86vfNhNIj4tW3EL+U6t19YraXLvgkR/a216qCN47IKCMrLw3Q71Gpt9loh86UBjS/w0=
-Received: by 10.141.162.5 with SMTP id p5mr6448025rvo.221.1212568214048;
-        Wed, 04 Jun 2008 01:30:14 -0700 (PDT)
-Received: by 10.140.194.15 with HTTP; Wed, 4 Jun 2008 01:30:08 -0700 (PDT)
-In-Reply-To: <m3mym1zkus.fsf@localhost.localdomain>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pKeSZnQ9HjH6D58NcfNyDP/661sNAKWcAGWJ6obF9wyih8DvFWfI4ddN0zyr+T+H+1QhkK+ZR28B/OXf9t/HTnjRTjIjqt/9wnyd3whKTwTS1pgFJjT7yQSAVcr+/75rCz07cXlaGoMyiMLBCuDIUUOKiE4KEK+ctlzVrJ191c0=
+Received: by 10.86.73.3 with SMTP id v3mr5316920fga.68.1212569415674;
+        Wed, 04 Jun 2008 01:50:15 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.251.199])
+        by mx.google.com with ESMTPS id 4sm1253558fgg.9.2008.06.04.01.50.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 04 Jun 2008 01:50:13 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <18c1e6480806040111s606701dfwc8a2ae5f742307b5@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83763>
 
-On Wed, Jun 4, 2008 at 10:05 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> David <wizzardx@gmail.com> writes:
->
-> [Please don't remove quote attributions]
->
+On Wed, 4 June 2008, David wrote:
+> 
+> Thanks, but this doesn't quite solve the problem. I'm on the verge of
+> figuring it out, and would appreciate any further tips :-)
+> 
+> Here is an example:
+> 
+> o--o--O master
+>        \
+>         o--o--X--X--X--X--o--o topic
+> 
+> I want to copy the "X" patches from the topic branch over to master.
+> The other patches aren't appropriate for master for whatever reason.
+> eg, temporary debugging hacks, but I fixed a few problems in master in
+> the X patches and now want to apply them on top of master, and keep
+> working on "topic"
+> 
+> I want to end up with a tree like this:
+> 
+> 
+> o--o--O--X'--X'--X'--X' master
+>        \
+>         o--o--X--X--X--X--o--o topic
 
-Thanks for the netiquette tip, I didn't know this was a bad thing. Are
-<snip>s also a good thing, or is it ok to just cut out the parts that
-don't need re-quoting?
+I think the simplest solution would be to mark old master, change it
+to topic (merge or branch -f), and use interactive rebase.
 
+  $ git checkout master
+  $ git branch TMP
+         
+  o--o--O *master, TMP
+         \
+          o--o--X--X--X--X--o--o topic
 
->
->  # make temporary branch to not move to-be-copied during rebase
->  $ git checkout -b tmp-rebase to-be-copied
->  # copy commits; results are in just created temporary branch
->  $ git rebase --onto branch copy-from tmp-rebase
->  # check if everything is all right and rename temporary branch
->  # to final name
->  $ git branch -M tmp-rebase branch
->
+where '*master' means that 'master' is current branch.
 
-Thanks :-) This still isn't what I had in mind (see my earlier post
-with examples), but I realise now, thanks to your post, that I can
-probably do it like this:
+Then to rewind 'master' to 'topic' you can use either
+  $ git merge topic 
+which should fast-forward to 'topic', or use git-reset
+  $ git reset --hard topic
 
-1) Make a temporary branch off the topic
+  o--o--O TMP
+         \
+          o--o--X--X--X--X--o--o topic, *master
 
-2) Rebase the temporary branch onto master interactively (maybe or
-maybe not with --onto), and in interactive mode take out, reorder,
-etc.
+Then there is simply a matter of rebasing master interactively, picking 
+commits marked X.
 
-3) Check & test the temporary branch
+  $ git rebase --interactive TMP
+  # pick commits marked X in above diagram, backup (save) both original
+  # list of commits, and final list of commits.
 
-4) Merge the temporary branch into master, and drop the temporary branch.
+It is now safe to delete 'TMP' branch
 
-5) Rebase the original topic branch onto the new master.
+  $ git branch -d TMP
 
-Thanks to all the posters for their tips.
+  o--o--O--X'--X'--X'--X' *master
+         \
+          o--o--X--X--X--X--o--o topic
 
-David.
+Now, if all goes well it would be simply a matter of rebasing 'topic' on 
+top of 'master'; git-rebase would skip commits that are already there.
+
+If it is not the case, use interactive rebase again, this time picking 
+commits marked 'o' (if you saved original series, and list of commits 
+rebased, this should be fairly easy to find/do).
+ 
+> After getting the branches like this, I would then (try to) rebase
+> topic like this:
+> 
+> o--o--O--X'--X'--X'--X' master
+>                       \
+>                        o'--o'--o'--o' topic
+
+And here you are.
+
+HTH
+-- 
+Jakub Narebski
+Poland
