@@ -1,367 +1,504 @@
 From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [WIP/RFC PATCH 1/2] Introduce GIT_INDEX_PREFIX
-Date: Wed, 4 Jun 2008 23:28:25 +0700
-Message-ID: <20080604162825.GB23975@laptop>
+Subject: [WIP/RFC PATCH 2/2] Add tests for index prefix
+Date: Wed, 4 Jun 2008 23:28:43 +0700
+Message-ID: <20080604162843.GC23975@laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 04 18:30:17 2008
+X-From: git-owner@vger.kernel.org Wed Jun 04 18:30:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3vra-0001gL-4X
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 18:29:26 +0200
+	id 1K3vrt-0001tQ-Ih
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 18:29:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbYFDQ2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 12:28:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYFDQ2d
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 12:28:33 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:6446 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129AbYFDQ2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 12:28:32 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so134198wfd.4
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 09:28:31 -0700 (PDT)
+	id S1753058AbYFDQ2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 12:28:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYFDQ2w
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 12:28:52 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:62691 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752987AbYFDQ2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2008 12:28:51 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so106616ywe.1
+        for <git@vger.kernel.org>; Wed, 04 Jun 2008 09:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:date:from:to:subject
          :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=dau0ATXHtE0hPaW38dRdsXg+OU7UC4LsA4wO42ZGpO8=;
-        b=PFfdKM/v8Db0NxUaqqETRkJXayyA50f/0iXmM8QuCgewa4+J6V32q1O4F6mwml6HhB
-         6K8iRa5d4HaHbyD6hmDTwO+widd3sBMT1j6Pk6TnQdCUdnYNKyN11oF4O2OJmEugFJ+y
-         N/KX3azX3fVajpGexyF2ZFKJvDTXXIAaANjfY=
+        bh=ThV+AcVM48ncn7xXCNTskLbMjyoJIpUyyfs92wcGru0=;
+        b=guU6EzAgzEu/iLM/kQlfXOGoiHpfbMlcDif9irkJkBiz9ntiwUeA1fNaggG9ZJGRmL
+         ydje236ScW1+Sb2cY0GB+1TmfXBCd13E6sZdR9I8FaWS1cyyu7dNOR3ezs6ERasCGsiH
+         h5qM8CRmqFvAIzk/td2P+j4GFUrR3tYB+QSaU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:subject:message-id:mime-version:content-type
          :content-disposition:user-agent;
-        b=BN6sRmGxS4N18TTgxPoWoxrEVCpPqbWyXQFFWm8a6U2rzjHdAAU2sAxQ0S9pKGjmy3
-         cBdEIgWdXfOx4MYwWkcrEaoHEXVTBtbaeIuIjmJMweyQtGI5C31BF6aHNfDFuNWP/T17
-         cA6CBR6OaWtt9u1WtUUVOkQflHz7Gfq0hVfXE=
-Received: by 10.142.164.10 with SMTP id m10mr49542wfe.117.1212596911667;
-        Wed, 04 Jun 2008 09:28:31 -0700 (PDT)
+        b=tT/6mjRhQpgHow5NYzw6TvptTeoA79+vvza5GYWLi7sMX5rBuZhfpEE3SZvZJPKCuq
+         Rb85kcN9KhsmYHTpZwY/uc+8QFD7rRGOyjJwLM2D9cdcbpfnKmIqWeLX4gm9aEN6T5Oo
+         W0X+7UhJG9i8fK0eoPIZ0dd+b1lG1+cGE6w18=
+Received: by 10.143.1.12 with SMTP id d12mr36364wfi.297.1212596929853;
+        Wed, 04 Jun 2008 09:28:49 -0700 (PDT)
 Received: from pclouds@gmail.com ( [117.5.6.88])
-        by mx.google.com with ESMTPS id 30sm3386799wfd.1.2008.06.04.09.28.28
+        by mx.google.com with ESMTPS id 29sm3227326wfg.0.2008.06.04.09.28.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Jun 2008 09:28:30 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed,  4 Jun 2008 23:28:25 +0700
+        Wed, 04 Jun 2008 09:28:48 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed,  4 Jun 2008 23:28:43 +0700
 Content-Disposition: inline
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83795>
 
-GIT_INDEX_PREFIX is used to limit write access to a specific directory.
-Only "important" information is protected by index prefix (those will
-be used to create tree objects)
-
-When GIT_INDEX_PREFIX is set, any attempt to modify the index (refresh
-it is okay though) will bail out. read-tree and merge, however, can
-write to full index. For merge, no conflict is allowed outside index
-prefix.
 ---
- builtin-merge-recursive.c |    4 ++-
- builtin-read-tree.c       |    5 +++
- builtin-rev-parse.c       |    5 +++
- builtin-update-index.c    |    3 ++
- cache.h                   |    2 +
- environment.c             |   12 ++++++
- read-cache.c              |   84 +++++++++++++++++++++++++++++++++++++++++++-
- unpack-trees.c            |    3 ++
- unpack-trees.h            |    3 +-
- 9 files changed, 117 insertions(+), 4 deletions(-)
+ t/t2300-index-prefix.sh                 |  207 +++++++++++++++++++++++++++++
+ t/t2301-index-prefix-merge-recursive.sh |  221 +++++++++++++++++++++++++++++++
+ 2 files changed, 428 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2300-index-prefix.sh
+ create mode 100755 t/t2301-index-prefix-merge-recursive.sh
 
-diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-index 362c290..94ca808 100644
---- a/builtin-merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -209,8 +209,10 @@ static int git_merge_trees(int index_only,
- 	memset(&opts, 0, sizeof(opts));
- 	if (index_only)
- 		opts.index_only = 1;
--	else
-+	else {
- 		opts.update = 1;
-+		opts.check_index_prefix = 1;
-+	}
- 	opts.merge = 1;
- 	opts.head_idx = 2;
- 	opts.fn = threeway_merge;
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 5a09e17..ea0a929 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -242,6 +242,11 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 			opts.head_idx = 1;
- 	}
- 
-+	if (get_index_prefix()) {
-+		read_cache();
-+		opts.check_index_prefix = 1;
-+	}
+diff --git a/t/t2300-index-prefix.sh b/t/t2300-index-prefix.sh
+new file mode 100755
+index 0000000..a7fa559
+--- /dev/null
++++ b/t/t2300-index-prefix.sh
+@@ -0,0 +1,207 @@
++#!/bin/sh
 +
- 	for (i = 0; i < nr_trees; i++) {
- 		struct tree *tree = trees[i];
- 		parse_tree(tree);
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index a7860ed..1888208 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -499,6 +499,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 					puts(prefix);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--show-index-prefix")) {
-+				if (get_index_prefix())
-+					puts(get_index_prefix());
-+				continue;
-+			}
- 			if (!strcmp(arg, "--show-cdup")) {
- 				const char *pfx = prefix;
- 				if (!is_inside_work_tree()) {
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 9e0d7ab..71c83ec 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -242,6 +242,9 @@ static void chmod_path(int flip, const char *path)
- 	struct cache_entry *ce;
- 	unsigned int mode;
- 
-+	if (get_index_prefix() && prefixcmp(path, get_index_prefix()))
-+		die("%s: cannot update index outside %s", path, get_index_prefix());
++test_description='index prefix test
 +
- 	pos = cache_name_pos(path, strlen(path));
- 	if (pos < 0)
- 		goto fail;
-diff --git a/cache.h b/cache.h
-index eab1a17..9f5a613 100644
---- a/cache.h
-+++ b/cache.h
-@@ -300,6 +300,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define CONFIG_ENVIRONMENT "GIT_CONFIG"
- #define CONFIG_LOCAL_ENVIRONMENT "GIT_CONFIG_LOCAL"
- #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
-+#define INDEX_PREFIX_ENVIRONMENT "GIT_INDEX_PREFIX"
- #define GITATTRIBUTES_FILE ".gitattributes"
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
-@@ -318,6 +319,7 @@ extern int set_git_dir(const char *path);
- extern const char *get_git_work_tree(void);
- extern const char *read_gitfile_gently(const char *path);
- extern void set_git_work_tree(const char *tree);
-+extern const char *get_index_prefix(void);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
-diff --git a/environment.c b/environment.c
-index 73feb2d..a8edaf5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -46,6 +46,8 @@ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- char *git_work_tree_cfg;
- static char *work_tree;
- 
-+static const char *index_prefix;
++This test makes sure all commands that touch index will not
++be able to write outside index prefix once set.
 +
- static const char *git_dir;
- static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graft_file;
- 
-@@ -71,6 +73,9 @@ static void setup_git_env(void)
- 	git_graft_file = getenv(GRAFT_ENVIRONMENT);
- 	if (!git_graft_file)
- 		git_graft_file = xstrdup(git_path("info/grafts"));
-+	index_prefix = getenv(INDEX_PREFIX_ENVIRONMENT);
-+	if (index_prefix && (!*index_prefix || index_prefix[strlen(index_prefix)-1] != '/'))
-+		die("GIT_INDEX_PREFIX must end with a slash");
- }
- 
- int is_bare_repository(void)
-@@ -122,6 +127,13 @@ const char *get_git_work_tree(void)
- 	return work_tree;
- }
- 
-+const char *get_index_prefix()
-+{
-+	if (!git_dir)
-+		setup_git_env();
-+	return index_prefix;
++It also make sure some full index operation like git-checkout
++or git-read-tree can function even with index prefix set.
++'
++. ./test-lib.sh
++#. ../lib-read-tree-m-3way.sh
++
++setup_repo() {
++	test "$#" = 1 ||
++	error 'bug in the test script: not 1 parameter to setup_repo'
++	unset GIT_INDEX_PREFIX &&
++	test_create_repo "$1" &&
++	(
++		cd "$1" &&
++		mkdir -p work/sub/dir &&
++		touch untracked tracked modified added &&
++		touch work/untracked work/tracked work/modified work/added &&
++		git add tracked work/tracked &&
++		git add modified work/modified &&
++		git commit -m initial &&
++		git add added work/added &&
++		echo modified > modified &&
++		echo work/modified > work/modified
++	)
 +}
 +
- char *get_object_directory(void)
- {
- 	if (!git_object_dir)
-diff --git a/read-cache.c b/read-cache.c
-index ac9a8e7..4f8d44b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -23,6 +23,11 @@
- 
- struct index_state the_index;
- 
-+static int outside_index_prefix(const struct index_state *istate, const char *ce_name)
-+{
-+	return istate == &the_index && get_index_prefix() && prefixcmp(ce_name, get_index_prefix());
-+}
 +
- static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
- {
- 	istate->cache[nr] = ce;
-@@ -380,6 +385,8 @@ int remove_index_entry_at(struct index_state *istate, int pos)
- {
- 	struct cache_entry *ce = istate->cache[pos];
- 
-+	if (outside_index_prefix(istate, ce->name))
-+		die("%s: cannot remove from index outside %s", ce->name, get_index_prefix());
- 	remove_name_hash(ce);
- 	istate->cache_changed = 1;
- 	istate->cache_nr--;
-@@ -394,6 +401,10 @@ int remove_index_entry_at(struct index_state *istate, int pos)
- int remove_file_from_index(struct index_state *istate, const char *path)
- {
- 	int pos = index_name_pos(istate, path, strlen(path));
++test_expect_success 'setup update-index' 'setup_repo update-index && cd update-index'
++export GIT_INDEX_PREFIX='work/'
 +
-+	if (outside_index_prefix(istate, path))
-+		die("%s: cannot remove from index from outside %s", path, get_index_prefix());
++test_expect_success 'rev-parse --show-index-prefix' 'test work/ = "$(git rev-parse --show-index-prefix)"'
++test_expect_success 'update-index --refresh with mtime outside index prefix' '
++	touch tracked &&
++	test -z "$(git update-index --refresh 2>&1 >/dev/null)"'
++test_expect_success 'inside:  update' 'git update-index work/modified'
++test_expect_success 'inside:  remove' 'git update-index --force-remove work/tracked'
++test_expect_success 'inside:  add' 'git update-index --add work/untracked'
++test_expect_success 'outside:  update' '! git update-index modified'
++test_expect_success 'outside:  remove' '! git update-index --force-remove modified'
++test_expect_success 'outside:  add' '! git update-index --add untracked'
 +
- 	if (pos < 0)
- 		pos = -pos-1;
- 	cache_tree_invalidate_path(istate->cache_tree, path);
-@@ -793,21 +804,35 @@ static int check_file_directory_conflict(struct index_state *istate,
- 	return retval + has_dir_name(istate, ce, pos, ok_to_replace);
- }
- 
-+static int ce_compare(const struct cache_entry *ce1, const struct cache_entry *ce2)
-+{
-+	return ce1->ce_mode == ce2->ce_mode &&
-+		((ce1->ce_flags ^ ce2->ce_flags) & ~(CE_HASHED | CE_UPDATE)) == 0 &&
-+		!memcmp(ce1->sha1, ce2->sha1, 20) &&
-+		!strcmp(ce1->name, ce2->name);
-+}
++test_expect_success 'setup add' 'cd .. && setup_repo add && cd add'
++export GIT_INDEX_PREFIX='work/'
 +
- static int add_index_entry_with_check(struct index_state *istate, struct cache_entry *ce, int option)
- {
- 	int pos;
- 	int ok_to_add = option & ADD_CACHE_OK_TO_ADD;
- 	int ok_to_replace = option & ADD_CACHE_OK_TO_REPLACE;
- 	int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
-+	int is_outside_index_prefix = outside_index_prefix(istate, ce->name);
- 
- 	cache_tree_invalidate_path(istate->cache_tree, ce->name);
- 	pos = index_name_pos(istate, ce->name, ce->ce_flags);
- 
- 	/* existing match? Just replace it. */
- 	if (pos >= 0) {
-+		if (is_outside_index_prefix && !ce_compare(istate->cache[pos], ce))
-+			die("%s: cannot add to index outside %s", ce->name, get_index_prefix());
- 		replace_index_entry(istate, pos, ce);
- 		return 0;
- 	}
++test_expect_success 'rev-parse --show-index-prefix' 'test work/ = "$(git rev-parse --show-index-prefix)"'
++test_expect_success 'inside:  add' 'git add work/modified'
++test_expect_success 'outside:  add' '! git add untracked'
 +
-+	if (is_outside_index_prefix)
-+		die("%s: cannot add to index outside %s", ce->name, get_index_prefix());
- 	pos = -pos-1;
- 
- 	/*
-@@ -842,9 +867,11 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
- {
- 	int pos;
- 
--	if (option & ADD_CACHE_JUST_APPEND)
-+	if (option & ADD_CACHE_JUST_APPEND) {
-+		if (outside_index_prefix(istate, ce->name))
-+			die("%s: cannot add to index outside %s", ce->name, get_index_prefix());
- 		pos = istate->cache_nr;
--	else {
-+	} else {
- 		int ret;
- 		ret = add_index_entry_with_check(istate, ce, option);
- 		if (ret <= 0)
-@@ -1385,3 +1412,56 @@ int write_index(const struct index_state *istate, int newfd)
- 	}
- 	return ce_flush(&c, newfd);
- }
++test_expect_success 'setup rm' 'cd .. && setup_repo rm && cd rm'
++export GIT_INDEX_PREFIX='work/'
 +
-+int check_index_prefix(const struct index_state *index, int is_merge)
-+{
-+	unsigned start,end1,end2,i;
-+	struct cache_entry **cache1, **cache2;
-+	const char *index_prefix = get_index_prefix();
++test_expect_success 'rev-parse --show-index-prefix' 'test work/ = "$(git rev-parse --show-index-prefix)"'
++test_expect_success 'inside:  rm' 'git rm work/tracked'
++test_expect_success 'outside:  rm' '! git rm tracked'
 +
-+	if (!index_prefix)
-+		return 0;
++test_expect_success 'setup apply' '
++	cd .. &&
++	unset GIT_INDEX_PREFIX &&
++	test_create_repo apply &&
++	cd apply &&
++	mkdir -p work/sub/dir &&
++	touch modified work/modified &&
++	git add modified work/modified'
++export GIT_INDEX_PREFIX='work/'
 +
-+	/* Check for unmerged entries first */
-+	for (i = 0; i < index->cache_nr; i++) {
-+		struct cache_entry *ce = index->cache[i];
-+		if (ce_stage(ce) && prefixcmp(ce->name, index_prefix))
-+			return 1;
-+	}
++cat <<EOF > outside.patch
++diff --git a/modified b/modified
++index e69de29..2e09960 100644
++--- a/modified
+++++ b/modified
++@@ -0,0 +1 @@
+++modified
++EOF
 +
-+	if (is_merge)
-+		return 0;
++cat <<EOF > inside.patch
++diff --git a/work/modified b/work/modified
++index e69de29..4bd2893 100644
++--- a/work/modified
+++++ b/work/modified
++@@ -0,0 +1 @@
+++work/modified
++EOF
 +
-+	/* not a merge, no change is allowed outside index prefix */
 +
-+	cache1 = the_index.cache;
-+	cache2 = index->cache;
-+	start = 0;
-+	end1 = the_index.cache_nr ? the_index.cache_nr - 1 : 0;
-+	end2 = index->cache_nr ? index->cache_nr - 1 : 0;
-+	while (start < end1 && start < end2 &&
-+		ce_compare(cache1[start], cache2[start]))
-+		start ++;
++test_expect_success 'rev-parse --show-index-prefix' 'test work/ = "$(git rev-parse --show-index-prefix)"'
++test_expect_success 'inside:  apply --cached' 'git apply --cached inside.patch'
++test_expect_success 'outside:  apply --cached' '! git apply --cached outside.patch'
 +
-+	while (end1 > start && end2 > start &&
-+		ce_compare(cache1[end1], cache2[end2])) {
-+		end1 --;
-+		end2 --;
-+	}
++cd ..
++cat >expected-log <<\EOF
++commit 69798ebb265c266292b4919f7a943bc30d72dfa3
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
 +
-+	/*
-+	 * everything in start..end1 and start..end2 must
-+	 * be prefixed by get_index_prefix()
-+	 */
-+	if (start < end1 &&
-+		(prefixcmp(cache1[start]->name, index_prefix) ||
-+		prefixcmp(cache1[end1]->name, index_prefix)))
-+		return 1;
++    work/sub/dir/two
 +
-+	if (start < end2 &&
-+		(prefixcmp(cache2[start]->name, index_prefix) ||
-+		prefixcmp(cache2[end2]->name, index_prefix)))
-+		return 1;
++:100644 100644 5626abf... 814f4a4... M	work/sub/dir/one
 +
-+	return 0;
-+}
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 0de5a31..2ef4827 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -403,6 +403,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	if (o->trivial_merges_only && o->nontrivial_merge)
- 		return unpack_failed(o, "Merge requires file-level merging");
- 
-+	if (o->check_index_prefix && check_index_prefix(&o->result, o->merge && !o->prefix))
-+		return unpack_failed(o, "Merge outside index prefix");
++commit 47b2996ef7d1dd7d5fd146c520ed90995e2d7e0d
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
 +
- 	o->src_index = NULL;
- 	if (check_updates(o))
- 		return -1;
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 94e5672..a1b46f9 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -26,7 +26,8 @@ struct unpack_trees_options {
- 		     verbose_update:1,
- 		     aggressive:1,
- 		     skip_unmerged:1,
--		     gently:1;
-+		     gently:1,
-+		     check_index_prefix:1;
- 	const char *prefix;
- 	int pos;
- 	struct dir_struct *dir;
++    work/sub/dir/one
++
++:100644 100644 814f4a4... 4cb29ea... M	work/one
++:000000 100644 0000000... 5626abf... A	work/sub/dir/one
++
++commit dd5fc8b46ac73c49bb046e16b0d9980a8142de51
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    work/sub/two
++
++:100644 100644 5626abf... 814f4a4... M	work/sub/one
++
++commit b64ae04f6be47b3d729f731de1ce804223f45113
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    work/sub/one
++
++:000000 100644 0000000... 5626abf... A	work/sub/one
++
++commit 69da5948890ae9caff70388451ba5ede78b77d08
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    work/two
++
++:100644 100644 5626abf... 814f4a4... M	work/one
++
++commit e63957619e33be2985dacdbb077f4c2ca7210319
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    work/one
++
++:000000 100644 0000000... 5626abf... A	work/one
++
++commit e6742a1800d08c749ebbc01d1f4ca03b66ff44e1
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    two
++
++:100644 100644 5626abf... 814f4a4... M	one
++
++commit 1c60dc5aa63dc2956ceb3ccc399d04245bc2cc1b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    one
++
++:000000 100644 0000000... 5626abf... A	one
++EOF
++READ_TREE_HEAD=69798ebb265c266292b4919f7a943bc30d72dfa3
++export READ_TREE_HEAD
++
++test_expect_success 'setup read-tree (clean worktree)' '
++	unset GIT_INDEX_PREFIX &&
++	test_create_repo read-tree &&
++	cd read-tree &&
++	test_tick &&
++	mkdir -p work/sub/dir &&
++	echo one > one && git add one && git commit -m one &&
++	echo two >> one && git add one && git commit -m two &&
++	echo one > work/one && git add work/one && git commit -m work/one &&
++	echo two >> work/one && git add work/one && git commit -m work/two &&
++	echo one > work/sub/one && git add work/sub/one && git commit -m work/sub/one &&
++	echo two >> work/sub/one && git add work/sub/one && git commit -m work/sub/two &&
++	echo one > work/sub/dir/one && echo three >> work/one &&
++		git add work/sub/dir/one work/one &&
++		git commit -m work/sub/dir/one &&
++	echo two >> work/sub/dir/one &&
++		git add work/sub/dir/one &&
++		git commit -m work/sub/dir/two &&
++	git log --raw > ../real-log &&
++	cmp ../expected-log ../real-log &&
++	test $READ_TREE_HEAD = $(git rev-parse HEAD)'
++export GIT_INDEX_PREFIX='work/sub/'
++
++test_expect_success 'read-tree inside index prefix' '
++	git read-tree 47b2996ef7d1dd7d5fd146c520ed90995e2d7e0d &&
++	test -z "$(git diff-index --cached 47b2996ef7d1dd7d5fd146c520ed90995e2d7e0d)"'
++
++test_expect_success 'read-tree outside index prefix' '
++	! git read-tree b64ae04f6be47b3d729f731de1ce804223f45113'
++
++test_expect_success 'read-tree with --prefix outside' '
++	! git read-tree --prefix=work/newsub/ b64ae04f6be47b3d729f731de1ce804223f45113'
++
++cat >newsub.diff <<\EOF
++:000000 100644 0000000000000000000000000000000000000000 814f4a422927b82f5f8a43f8fab6d3839e3983f2 A	work/sub/dir/newsub/one
++:000000 100644 0000000000000000000000000000000000000000 814f4a422927b82f5f8a43f8fab6d3839e3983f2 A	work/sub/dir/newsub/work/one
++:000000 100644 0000000000000000000000000000000000000000 5626abf0f72e58d7a153368ba57db4c673c0e171 A	work/sub/dir/newsub/work/sub/one
++EOF
++test_expect_success 'read-tree with --prefix inside' '
++	git read-tree --prefix=work/sub/dir/newsub/ b64ae04f6be47b3d729f731de1ce804223f45113 &&
++	git diff-index --cached 47b2996ef7d1dd7d5fd146c520ed90995e2d7e0d|cmp newsub.diff'
++
++test_done
+diff --git a/t/t2301-index-prefix-merge-recursive.sh b/t/t2301-index-prefix-merge-recursive.sh
+new file mode 100755
+index 0000000..4121878
+--- /dev/null
++++ b/t/t2301-index-prefix-merge-recursive.sh
+@@ -0,0 +1,221 @@
++#!/bin/sh
++
++test_description='merge-recursive backend test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup 1' '
++
++	echo hello >a &&
++	o0=$(git hash-object a) &&
++	cp a b &&
++	cp a c &&
++	mkdir d &&
++	cp a d/e &&
++
++	test_tick &&
++	git add a b c d/e &&
++	git commit -m initial &&
++	c0=$(git rev-parse --verify HEAD) &&
++	git branch noconflict &&
++	git branch conflict &&
++	git branch conflict-inside &&
++
++	echo hello >>a &&
++	cp a d/e &&
++	o1=$(git hash-object a) &&
++
++	git add a d/e &&
++
++	test_tick &&
++	git commit -m "master modifies a and d/e" &&
++	c1=$(git rev-parse --verify HEAD) &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o1	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o1	d/e"
++		echo "100644 $o1 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o1 0	d/e"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'setup 2' '
++
++	rm -rf [abcd] &&
++	git checkout conflict &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o0	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o0	d/e"
++		echo "100644 $o0 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o0 0	d/e"
++	) >expected &&
++	test_cmp expected actual &&
++
++	echo goodbye >>a &&
++	o2=$(git hash-object a) &&
++
++	git add a &&
++
++	test_tick &&
++	git commit -m "conflict modifies a" &&
++	c2=$(git rev-parse --verify HEAD) &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o2	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o0	d/e"
++		echo "100644 $o2 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o0 0	d/e"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'setup 3' '
++
++	rm -rf [abcd] &&
++	git checkout noconflict &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o0	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o0	d/e"
++		echo "100644 $o0 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o0 0	d/e"
++	) >expected &&
++	test_cmp expected actual &&
++
++	echo hello >>a &&
++	o3=$(git hash-object a) &&
++
++	git add a &&
++
++	test_tick &&
++	git commit -m "noconflict modifies a" &&
++	c3=$(git rev-parse --verify HEAD) &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o3	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o0	d/e"
++		echo "100644 $o3 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o0 0	d/e"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'setup 4' '
++
++	rm -rf [abcd] &&
++	git checkout conflict-inside &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o0	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o0	d/e"
++		echo "100644 $o0 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o0 0	d/e"
++	) >expected &&
++	test_cmp expected actual &&
++
++	mkdir d &&
++	echo goodbye >>d/e &&
++	o4=$(git hash-object d/e) &&
++
++	git add d/e &&
++
++	test_tick &&
++	git commit -m "conflict-inside modifies d/e" &&
++	c4=$(git rev-parse --verify HEAD) &&
++	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++	(
++		echo "100644 blob $o0	a"
++		echo "100644 blob $o0	b"
++		echo "100644 blob $o0	c"
++		echo "100644 blob $o4	d/e"
++		echo "100644 $o0 0	a"
++		echo "100644 $o0 0	b"
++		echo "100644 $o0 0	c"
++		echo "100644 $o4 0	d/e"
++	) >expected &&
++	test_cmp expected actual
++'
++
++export GIT_INDEX_PREFIX=d/
++
++test_expect_success 'merge-recursive conflict inside' '
++
++	rm -fr [abcd] &&
++	git checkout -f "$c4" &&
++
++	git-merge-recursive "$c0" -- "$c4" "$c1"
++	status=$?
++	case "$status" in
++	1)
++		: happy
++		;;
++	*)
++		echo >&2 "why status $status!!!"
++		false
++		;;
++	esac
++'
++
++test_expect_success 'merge-recursive no conflict outside' '
++
++	rm -fr [abcd] &&
++	git checkout -f "$c3" &&
++
++	git-merge-recursive "$c0" -- "$c3" "$c1"
++	status=$?
++	case "$status" in
++	0)
++		: happy
++		;;
++	*)
++		echo >&2 "why status $status!!!"
++		false
++		;;
++	esac
++'
++
++test_expect_success 'merge-recursive conflict outside' '
++
++	rm -fr [abcd] &&
++	git checkout -f "$c2" &&
++
++	git-merge-recursive "$c0" -- "$c2" "$c1"
++	status=$?
++	case "$status" in
++	128)
++		: happy
++		;;
++	*)
++		echo >&2 "why status $status!!!"
++		false
++		;;
++	esac
++'
++
++test_done
 -- 
 1.5.5.GIT
