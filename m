@@ -1,155 +1,123 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] Avoid errors from git-rev-parse in gitweb blame
-Date: Wed, 4 Jun 2008 14:31:06 +0200
-Message-ID: <200806041431.07494.jnareb@gmail.com>
-References: <1212489977-26822-1-git-send-email-rgarciasuarez@gmail.com> <200806040211.29430.jnareb@gmail.com> <4845E45E.9030504@gmail.com>
+Date: Wed, 4 Jun 2008 16:03:48 +0200
+Message-ID: <200806041603.49555.jnareb@gmail.com>
+References: <940824.46903.qm@web31808.mail.mud.yahoo.com> <200806032331.44514.jnareb@gmail.com> <7v3ant213k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 14:32:14 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Luben Tuikov <ltuikov@yahoo.com>,
+	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 16:05:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K3s9z-0000iA-TS
-	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 14:32:12 +0200
+	id 1K3tbe-0004J1-Ho
+	for gcvg-git-2@gmane.org; Wed, 04 Jun 2008 16:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754739AbYFDMbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 08:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754918AbYFDMbT
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 08:31:19 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:49452 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752226AbYFDMbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 08:31:18 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so26932nfc.21
-        for <git@vger.kernel.org>; Wed, 04 Jun 2008 05:31:16 -0700 (PDT)
+	id S1752769AbYFDOD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2008 10:03:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbYFDOD4
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 10:03:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:61052 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752577AbYFDODz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2008 10:03:55 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so59073fgg.17
+        for <git@vger.kernel.org>; Wed, 04 Jun 2008 07:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=Majvhy0+5eK7U1JReTRz1zw5Ao/o9ppkNPmW+eGqCSM=;
-        b=xnUfwff6jqdGBZWtKkxU/AT6FmVzvAkH5aS/2M8EZFWFVod3uf0YdLFanNFuHiasLE
-         XQQDImsnPv1KkvXwpPiAk/ANKWSjrvcCZKShQaFfCCEExwNyhA19euHCfhPD4ostdcjj
-         +PFktuMGCC1RksW3qoXszeVQYj7kw7ZSiSzFs=
+        bh=TaAwDLkpR5FfE1Ak/IH90HxGPf+IDAnK1Vw0De9223A=;
+        b=TgNdD5K9jnuldWZiw91GNsnFbSl+YJFS0LQjfeRneHYiA3bVgxndHyg+EfKEcDt2qc
+         3xJVCF/URyHjhXQq9Ps9pEJAlh/7EYeSD1/t61GbTUs/mmDVUami6JGYdt1XupdCgmFa
+         Q5vvdW3ARz9fGYSbm3MpIvFWFH6ZUq1p3ZlDI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=pONX51ACIRrX9kZg+Z0W9510KMFu2JnFkkAvXCnZBQYSVFJV84kgHPbk33Sd+7VAKu
-         hWX1DrcNAyAgB4uwHoiJcxc7OvHOJKsXFhg1Zm8BP3sBd5tztbhWR0FDDngde0+MROdl
-         ZeEQem/phR5uIrwuGEEUwEfhXItY2zOKhv6RE=
-Received: by 10.210.75.6 with SMTP id x6mr1297381eba.136.1212582676352;
-        Wed, 04 Jun 2008 05:31:16 -0700 (PDT)
+        b=Z5TVcY/IYi+/vYbBIG7B/qNHLkdJr1CxdZfsX4XDR9V/PK4zSiGwrBPNAiJoO8miPb
+         vnZpnxDBVW8t3oroxV1g3Vp6F6sNHThLH/Wm7gZ9pqhyFv/fJ6NvnoAeiWJnrRhkB1S1
+         2MqSEXn+x6RauuRlTn+oaP+YNSDXaVLtl36W8=
+Received: by 10.86.80.5 with SMTP id d5mr163268fgb.11.1212588233701;
+        Wed, 04 Jun 2008 07:03:53 -0700 (PDT)
 Received: from ?192.168.1.15? ( [83.8.210.131])
-        by mx.google.com with ESMTPS id f3sm1875866nfh.21.2008.06.04.05.31.13
+        by mx.google.com with ESMTPS id l19sm1764109fgb.7.2008.06.04.07.03.50
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 04 Jun 2008 05:31:14 -0700 (PDT)
+        Wed, 04 Jun 2008 07:03:51 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <4845E45E.9030504@gmail.com>
+In-Reply-To: <7v3ant213k.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83780>
 
-Lea Wiemann wrote:
-> Jakub Narebski wrote:
-> >
-> > And snapshots [and blob_plain].  We certainly want to stream snapshots, as
-> > they can be quite large.
+On Wed, 4 Jun 2008, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> On Tue, 3 Jan 2008, Luben Tuikov wrote:
+>>>
+>>> The intention was that it shouldn't necessarily be the (strict) parent
+>>> of the change (changed segment), since it may or may not have changed
+>>> in the strict parent commit.  The intention was that it
+>>> "starts"/"opens" the parent commit so that "git" would start from
+>>> there and find the actual change/commit where that line/segment has
+>>> changed.  And it has worked pretty fine for me when data-mining
+>>> (something I do quite often) code evolution.
 > 
-> Yup.  I suppose that those need to be cached on disk rather than in 
-> memory, so they need a separate cache.
+> Yes, but the current scheme breaks down in another way.  When $full_rev
+> added many lines to the file, and you are adding the link to for a line
+> near the end of the file and such a line may not exist.  This cannot be
+> cheaply done even inside blame itself.
 
-Or at least (in the first implementation) to avoid caching them in
-memory-based cache (and serve them uncached).
+I think the scheme could be fixed by proposed belo git-blame porcelain
+format output extension.  Can it be done cheaply?  I don't know,
+generating extended info as described below should be cheap if we
+have equivalent of textual (patch) diff between commit blamed for
+given line, and its parent; actually what we need is more of 'context'
+diff than of default 'unified' diff.
 
-Although I wonder how memory-based caches such as memcached or swifty,
-and perhaps also mmap based cache (BerkeleyDB based cache is supposedly
-fast because it fits into memory/caches in memory) deals with overly
-large cache entries...
+> Another breakage is even though $full_rev^ _may_ exist (iow, $full_rev
+> might not be the root commit), the file being blamed may not exist there
+> (iow $full_rev might have introduced the file).  Instead of running
+> "rev-parse $full_rev^", you would at least need to ask "rev-list -1
+> $full_rev^ -- $path" or something from the Porcelain layer, but
+> unfortunately this is rather expensive.
 
-> > [Parents in blame output:]
-> > It perhaps makes no difference performance wise (solution with
-> > "git rev-list --parents --no-walk" has one fork more), but it might
-> > make code unnecessarily more complicated.
-> 
-> A few lines.  *shrugs*  Probably actually easier than adding stuff to 
-> git-blame's output, but I won't argue against the latter if you want it.
+Doesn't blame know revision graph for history of a given file already?
 
-With modified (enhanced) git-blame output code would look like this
-(rough pseudocode):
+But even without it (i.e. ony 'parents' header showing true, not
+rewritten parents) what we need is some info about pre-image for blamed
+line.  We would need line number of the line in pre-image (or NUL
+if the page was added in blamed commit), and pre-image filename.
 
-  while (<$fd>) {
-    ...
-    <parse 'parent' header>
-    ...
-  }
+I don't know if it could be done cheaply, and if it could be done
+simply; currently git-diff doesn't have "context diff" format output,
+and what I though about by pre-image line number requires finding if
+a line was added in a commit, or was modified in a commit.  (If it
+was removed, it wouldn't be in final image and hence wouldn't be
+blamed; if it was moved, it wouldn't be blamed, as blame follows
+code movement).
 
-while using no-walk rev-list requires list of blamed parents upfront,
-so the code would have to look like this
+> Because blame already almost knows if the commit the final blame lies on
+> has a parent, it would be reasonably cheap to add that "parent or nothing"
+> information to its --porcelain (and its --incremental) format if we wanted
+> to.
 
-  @blame_data = <$fd>;
-  @commitlist = map { <get sha1> } grep { <header line> } @blame_list;
-  %commit_parents = get_parents(\@commitlist); # calls git-rev-list
-  foreach (@commitlist) {
-    ...
-    ...
-  }
+It would be easy to add 'parents' header, perhaps empty if we blame
+root commit, or a boundary commit (do we say 'boundary' then?) when
+doing revision limited blaming.
 
-Note that you read whole data into gitweb, inclreasing memory usage...
-which we want to avoid, especially when using memcached or similar
-caching backend (git-blame itself has to keep data in memory, but no
-need to duplicate the amount).
+>From what you write it wouldn't be easy to add "history of a given
+line begins here", or even "history of a given file begins there"...
 
-
-Besides git-blame output needs to be extended/enhanced anyway for the
-data mining / annotated file history navigation Luben wanted to be
-really robust.  See my response to Linus email in this thread (to be
-written).
-
-> > use AJAX together with "git blame --incremental" to reduce latency.
-> > It was done by having JavaScript check if browser is AJAX-capable,
-> 
-> Unfortunately there is no such check (and I doubt it's doable without 
-> cookie or redirect trickery) -- you'll find that the blames on 
-> repo.or.cz don't work without JavaScript.
-
-I have in my git repository original version (well, one of original
-versions) adding incremental blame output
-
-  Message-ID: <20070825222404.16967.9402.stgit@rover>
-  http://permalink.gmane.org/gmane.comp.version-control.git/56657
-
-by Petr Baudis, tweaked version of Fredrik Kuivinen patch, and in the
-commit message there is the floowing info:
-
-    Compared to the original patch, this one works with pathinfo-ish URLs as
-    well, and should play well with non-javascript browsers as well (the HTML
-    points to the blame action, while javascript code rewrites the links to use
-    the blame_incremental action; it is somewhat hackish but I couldn't think
-    of a better solution).
-
-Instead of rewriting links gitweb's JavaScript could use JavaScript
-redirect trickery, using JavaScript (by setting location.href for
-example) to redirect to blame_incremental action from blame action.
-
-
-As to checking if browser is AJAX capable: you can at least check
-if all methods needed are available.
-
-
-P.S. You would probably want to remove old git-annotate based git_blame
-(dead code, currently not used by any action), and rename git_blame2 to
-git_blame.  A bit less code to check for caching problems etc,...
 -- 
 Jakub Narebski
 Poland
