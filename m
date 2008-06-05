@@ -1,91 +1,95 @@
-From: Adam Simpkins <adam@adamsimpkins.net>
-Subject: Re: log --graph --first-parent weirdness
-Date: Thu, 5 Jun 2008 02:28:13 -0700
-Message-ID: <20080605092812.GA14116@adamsimpkins.net>
-References: <20080604150042.GA3038@mithlond.arda.local> <7vmym1xgy4.fsf@gitster.siamese.dyndns.org> <20080604173820.GA3038@mithlond.arda.local> <7v1w3dxeh9.fsf@gitster.siamese.dyndns.org>
-Reply-To: Adam Simpkins <adam@adamsimpkins.net>
+From: "Vincent Kergonna" <git@kergonna.fr>
+Subject: Re: git remote rename, why dosen't it exists?
+Date: Thu, 5 Jun 2008 10:55:07 +0200 (CEST)
+Message-ID: <1666.78.153.224.34.1212656107.squirrel@mail.kergonna.fr>
+References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>
+    <alpine.DEB.1.00.0806031449010.13507@racer.site.net>
+    <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
+    <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
+    <1212591245.30731.17.camel@omicron.ep.petrobras.com.br>
+    <alpine.DEB.1.00.0806041649270.13507@racer.site.net>
+    <1212634394.13109.10.camel@mithrandir.bogado.net>
+    <alpine.DEB.1.00.0806050529350.21190@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 11:30:03 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Victor Bogado da Silva Lins" <victor@bogado.net>,
+	git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 05 11:34:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4BmP-0007n6-96
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:29:09 +0200
+	id 1K4Bro-0001fQ-MZ
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755291AbYFEJ2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 05:28:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754981AbYFEJ2Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:28:16 -0400
-Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:55401 "EHLO
-	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754780AbYFEJ2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 05:28:14 -0400
-Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 47E451B4093;
-	Thu,  5 Jun 2008 05:28:14 -0400 (EDT)
-Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 21BF61B4036;
-	Thu,  5 Jun 2008 05:28:14 -0400 (EDT)
-Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
-	id 9439C14100CC; Thu,  5 Jun 2008 02:28:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v1w3dxeh9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753322AbYFEJdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 05:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYFEJdw
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:33:52 -0400
+Received: from tulipe.kergonna.fr ([91.121.105.123]:57396 "EHLO
+	tulipe.kergonna.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752432AbYFEJdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 05:33:51 -0400
+X-Greylist: delayed 2819 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jun 2008 05:33:51 EDT
+Received: from localhost ([127.0.0.1] helo=mail.kergonna.fr)
+	by tulipe.kergonna.fr with esmtp (Exim 4.63)
+	(envelope-from <git@kergonna.fr>)
+	id 1K4BFT-0005u8-2B; Thu, 05 Jun 2008 10:55:07 +0200
+Received: from 78.153.224.34
+        (SquirrelMail authenticated user git@kergonna.fr)
+        by mail.kergonna.fr with HTTP;
+        Thu, 5 Jun 2008 10:55:07 +0200 (CEST)
+In-Reply-To: <alpine.DEB.1.00.0806050529350.21190@racer>
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83889>
 
-On Wed, Jun 04, 2008 at 11:05:38AM -0700, Junio C Hamano wrote:
-> 
-> I'd really suggest changing the "M" and use "*" everywhere.
+> Hi,
+>
+> On Wed, 4 Jun 2008, Victor Bogado da Silva Lins wrote:
+>
+>> On Wed, 2008-06-04 at 16:51 +0100, Johannes Schindelin wrote:
+>>
+>> > On Wed, 4 Jun 2008, Victor Bogado da Silva Lins wrote:
+>> >
+>> > > I trying to refactor [in builtin-remote.c] rm into rm_or_rename, but
+>> > > I stumbled into a problem, how do I free a remote struct obtained
+>> > > with "remote_get"?
+>>
+>> It seems that git-remote thinks that remote_get will return NULL if
+>> there is no such remote, but in fact it does not do this, it always
+>> alloc a new remote struct and returns that newly allocated.
+>
+> From remote.c, remote_get(), line 601--602 in my checkout:
+>
+>         if (!ret->url)
+>                 return NULL;
+>
 
-That's fine with me.  Here's a simple patch to change the behavior.
+In fact, I think Victor is right. If you do a simple test (assuming you
+don't have a remote named foo):
+
+vincent:git$ git remote rm foo
+error: Could not remove config section 'remote.foo'
+
+You notice that it is trying to remove the configuration section for this
+remote. We have hit the line 372 of builtin-remote.c:
+
+if (git_config_rename_section(buf.buf, NULL) < 1)
+    return error("Could not remove config section '%s'", buf.buf);
+
+instead of exiting at line 364:
+
+if (!remote)
+    die("No such remote: %s", argv[1]);
 
 
--- >8 --
-"git log --graph": print '*' for all commits, including merges
-
-Previously, merge commits were printed with 'M' instead of '*'.  This
-had the potential to confuse users when not all parents of the merge
-commit were included in the log output.
-
-As Junio has pointed out, merge commits can almost always be easily
-identified from the log message, anyway.
-
-Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
----
- graph.c |   14 --------------
- 1 files changed, 0 insertions(+), 14 deletions(-)
-
-diff --git a/graph.c b/graph.c
-index edfab2d..c50adcd 100644
---- a/graph.c
-+++ b/graph.c
-@@ -638,20 +638,6 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
- 	}
- 
- 	/*
--	 * Print 'M' for merge commits
--	 *
--	 * Note that we don't check graph->num_parents to determine if the
--	 * commit is a merge, since that only tracks the number of
--	 * "interesting" parents.  We want to print 'M' for merge commits
--	 * even if they have less than 2 interesting parents.
--	 */
--	if (graph->commit->parents != NULL &&
--	    graph->commit->parents->next != NULL) {
--		strbuf_addch(sb, 'M');
--		return;
--	}
--
--	/*
- 	 * Print '*' in all other cases
- 	 */
- 	strbuf_addch(sb, '*');
 -- 
-1.5.6.rc1.13.g14be6
+Vincent
