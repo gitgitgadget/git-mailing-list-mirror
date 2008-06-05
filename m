@@ -1,313 +1,224 @@
-From: David =?utf-8?q?=E2=80=98Bombe=E2=80=99_Roden?= 
-	<bombe@pterodactylus.net>
-Subject: Re: [PATCH] handle http urls with query string ("?foo") correctly
-Date: Thu, 5 Jun 2008 08:48:39 +0200
-Message-ID: <200806050848.43462.bombe@pterodactylus.net>
-References: <200806050128.33467.bombe@pterodactylus.net> <alpine.DEB.1.00.0806050103520.21190@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [TOY PATCH] git wrapper: show similar command names for an unknown
+ command
+Date: Thu, 5 Jun 2008 07:48:40 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806050747000.21190@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1511518.2mjezhmkZD";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 08:49:52 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 05 08:51:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K49IC-0000Jo-3i
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 08:49:48 +0200
+	id 1K49JU-0000k5-Tl
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 08:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253AbYFEGsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 02:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbYFEGsz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 02:48:55 -0400
-Received: from wing.pterodactylus.net ([89.207.253.13]:34026 "HELO
-	pterodactylus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751868AbYFEGsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 02:48:54 -0400
-Received: (qmail 15360 invoked from network); 5 Jun 2008 06:48:52 -0000
-Received: from unknown (HELO ?192.168.178.19?) (10.98.86.10)
-  by 10.98.86.1 with SMTP; 5 Jun 2008 06:48:52 -0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0806050103520.21190@racer>
+	id S1753904AbYFEGuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 02:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbYFEGuI
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 02:50:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39210 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753838AbYFEGuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 02:50:04 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 06:50:02 -0000
+Received: from unknown (EHLO racer.local) [128.177.17.254]
+  by mail.gmx.net (mp005) with SMTP; 05 Jun 2008 08:50:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18N9JRGwagN9FQG+hsmGxYBwwvIS2yIRU1ltylgBf
+	tfuvo/yAm0D8a9
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83866>
-
---nextPart1511518.2mjezhmkZD
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Thursday 05 June 2008 02:12:21 Johannes Schindelin wrote:
-
-> I think that this paragraph should be rewritten into a less "I did" form,
-> and be the commit message.
-
-Okay.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83867>
 
 
-> This part of Git's source code predates the strbuf work, and therefore it
-> is understandable that strbufs are not used there.  However, I think that
-> your changes just cry for want of strbufs.
+This patch introduces a modified Damerau-Levenshtein algorithm into
+Git's code base, and uses it with the following penalties to show some
+similar commands when an unknown command was encountered:
 
-Sounds good. strbuf is indeed a tad more convenient than sprintf and strcat=
-=2E :)
+	swap = 0, insertion = 1, substitution = 2, deletion = 4
 
+A typical output would now look like this:
 
-> Maybe you want to rewrite your patch before I keep on repeating these two
-> comments? ;-)
+	$ git reabse
+	git: 'reabse' is not a git-command. See 'git --help'.
 
-I did. Find the revised version below. :)
+	Did you mean one of these?
+		rebase
+		merge-base
+		rev-parse
+		remote
+		rerere
 
-=2D--
-handle http urls with query string ("?foo") correctly
-git breaks when a repository is cloned from an http url that contains a
-query string. This patch fixes this behaviour be inserting the name of
-the requested object (like "/info/refs") before the query string.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
- http-walker.c |   31 ++++++++++++-------------------
- http.c        |   42 +++++++++++++++++++++++++++++++++---------
- http.h        |    2 ++
- transport.c   |    5 +++--
- 4 files changed, 50 insertions(+), 30 deletions(-)
+	This is just a toy, but might be useful to other people.
 
-diff --git a/http-walker.c b/http-walker.c
-index 99f397e..b14497a 100644
-=2D-- a/http-walker.c
-+++ b/http-walker.c
-@@ -100,7 +100,6 @@ static void start_object_request(struct walker *walker,
- 	char *hex =3D sha1_to_hex(obj_req->sha1);
- 	char prevfile[PATH_MAX];
- 	char *url;
-=2D	char *posn;
- 	int prevlocal;
- 	unsigned char prev_buf[PREV_BUF_SIZE];
- 	ssize_t prev_read =3D 0;
-@@ -109,6 +108,7 @@ static void start_object_request(struct walker *walker,
- 	struct curl_slist *range_header =3D NULL;
- 	struct active_request_slot *slot;
- 	struct walker_data *data =3D walker->data;
-+	struct strbuf suffix_buffer =3D STRBUF_INIT;
-=20
- 	snprintf(prevfile, sizeof(prevfile), "%s.prev", obj_req->filename);
- 	unlink(prevfile);
-@@ -146,16 +146,10 @@ static void start_object_request(struct walker *walke=
-r,
-=20
- 	SHA1_Init(&obj_req->c);
-=20
-=2D	url =3D xmalloc(strlen(obj_req->repo->base) + 51);
-+	strbuf_addstr(&suffix_buffer, "/objects/");
-+	strbuf_addf(&suffix_buffer, "%c%c/%s", hex[0], hex[1], hex + 2);
-+	url =3D transform_url(obj_req->repo->base, strbuf_detach(&suffix_buffer, =
-NULL));
- 	obj_req->url =3D xmalloc(strlen(obj_req->repo->base) + 51);
-=2D	strcpy(url, obj_req->repo->base);
-=2D	posn =3D url + strlen(obj_req->repo->base);
-=2D	strcpy(posn, "/objects/");
-=2D	posn +=3D 9;
-=2D	memcpy(posn, hex, 2);
-=2D	posn +=3D 2;
-=2D	*(posn++) =3D '/';
-=2D	strcpy(posn, hex + 2);
- 	strcpy(obj_req->url, url);
-=20
- 	/* If a previous temp file is present, process what was already
-@@ -373,6 +367,7 @@ static int fetch_index(struct walker *walker, struct al=
-t_base *repo, unsigned ch
- 	char range[RANGE_HEADER_SIZE];
- 	struct curl_slist *range_header =3D NULL;
- 	struct walker_data *data =3D walker->data;
-+	struct strbuf suffix_buffer =3D STRBUF_INIT;
-=20
- 	FILE *indexfile;
- 	struct active_request_slot *slot;
-@@ -384,8 +379,8 @@ static int fetch_index(struct walker *walker, struct al=
-t_base *repo, unsigned ch
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting index for pack %s\n", hex);
-=20
-=2D	url =3D xmalloc(strlen(repo->base) + 64);
-=2D	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-+	strbuf_addf(&suffix_buffer, "/objects/pack/pack-%s.idx", hex);
-+	url =3D transform_url(repo->base, strbuf_detach(&suffix_buffer, NULL));
-=20
- 	filename =3D sha1_pack_index_name(sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-@@ -608,8 +603,7 @@ static void fetch_alternates(struct walker *walker, con=
-st char *base)
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting alternates list for %s\n", base);
-=20
-=2D	url =3D xmalloc(strlen(base) + 31);
-=2D	sprintf(url, "%s/objects/info/http-alternates", base);
-+	url =3D transform_url(base, "/objects/info/http-alternates");
-=20
- 	/* Use a callback to process the result, since another request
- 	   may fail and need to have alternates loaded before continuing */
-@@ -655,8 +649,7 @@ static int fetch_indices(struct walker *walker, struct =
-alt_base *repo)
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting pack list for %s\n", repo->base);
-=20
-=2D	url =3D xmalloc(strlen(repo->base) + 21);
-=2D	sprintf(url, "%s/objects/info/packs", repo->base);
-+	url =3D transform_url(repo->base, "/objects/info/packs");
-=20
- 	slot =3D get_active_slot();
- 	slot->results =3D &results;
-@@ -722,6 +715,7 @@ static int fetch_pack(struct walker *walker, struct alt=
-_base *repo, unsigned cha
- 	char range[RANGE_HEADER_SIZE];
- 	struct curl_slist *range_header =3D NULL;
- 	struct walker_data *data =3D walker->data;
-+	struct strbuf suffix_buffer =3D STRBUF_INIT;
-=20
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-@@ -739,9 +733,8 @@ static int fetch_pack(struct walker *walker, struct alt=
-_base *repo, unsigned cha
- 			sha1_to_hex(sha1));
- 	}
-=20
-=2D	url =3D xmalloc(strlen(repo->base) + 65);
-=2D	sprintf(url, "%s/objects/pack/pack-%s.pack",
-=2D		repo->base, sha1_to_hex(target->sha1));
-+	strbuf_addf(&suffix_buffer, "/objects/pack/pack-%s.pack", sha1_to_hex(tar=
-get->sha1));
-+	url =3D transform_url(repo->base, strbuf_detach(&suffix_buffer, NULL));
-=20
- 	filename =3D sha1_pack_name(target->sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-diff --git a/http.c b/http.c
-index 2a21ccb..a60f9ea 100644
-=2D-- a/http.c
-+++ b/http.c
-@@ -590,15 +590,17 @@ static char *quote_ref_url(const char *base, const ch=
-ar *ref)
- 	qref =3D xmalloc(len);
- 	memcpy(qref, base, baselen);
- 	dp =3D qref + baselen;
-=2D	*(dp++) =3D '/';
-=2D	for (cp =3D ref; (ch =3D *cp) !=3D 0; cp++) {
-=2D		if (needs_quote(ch)) {
-=2D			*dp++ =3D '%';
-=2D			*dp++ =3D hex((ch >> 4) & 0xF);
-=2D			*dp++ =3D hex(ch & 0xF);
-+	if (*ref) {
-+		*(dp++) =3D '/';
-+		for (cp =3D ref; (ch =3D *cp) !=3D 0; cp++) {
-+			if (needs_quote(ch)) {
-+				*dp++ =3D '%';
-+				*dp++ =3D hex((ch >> 4) & 0xF);
-+				*dp++ =3D hex(ch & 0xF);
-+			}
-+			else
-+				*dp++ =3D ch;
- 		}
-=2D		else
-=2D			*dp++ =3D ch;
- 	}
- 	*dp =3D 0;
-=20
-@@ -611,9 +613,12 @@ int http_fetch_ref(const char *base, struct ref *ref)
- 	struct strbuf buffer =3D STRBUF_INIT;
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-+	struct strbuf suffix_buffer =3D STRBUF_INIT;
- 	int ret;
-=20
-=2D	url =3D quote_ref_url(base, ref->name);
-+	strbuf_addf(&suffix_buffer, "/%s", ref->name);
-+	url =3D transform_url(base, strbuf_detach(&suffix_buffer, NULL));
-+	url =3D quote_ref_url(url, "");
- 	slot =3D get_active_slot();
- 	slot->results =3D &results;
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
-@@ -643,3 +648,22 @@ int http_fetch_ref(const char *base, struct ref *ref)
- 	free(url);
- 	return ret;
+ Makefile      |    2 ++
+ help.c        |   43 +++++++++++++++++++++++++++++++++++++++++++
+ levenshtein.c |   47 +++++++++++++++++++++++++++++++++++++++++++++++
+ levenshtein.h |    8 ++++++++
+ 4 files changed, 100 insertions(+), 0 deletions(-)
+ create mode 100644 levenshtein.c
+ create mode 100644 levenshtein.h
+
+diff --git a/Makefile b/Makefile
+index cce5a6e..df48af2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -376,6 +376,7 @@ LIB_H += tree-walk.h
+ LIB_H += unpack-trees.h
+ LIB_H += utf8.h
+ LIB_H += wt-status.h
++LIB_H += levenshtein.h
+ 
+ LIB_OBJS += alias.o
+ LIB_OBJS += alloc.o
+@@ -471,6 +472,7 @@ LIB_OBJS += write_or_die.o
+ LIB_OBJS += ws.o
+ LIB_OBJS += wt-status.o
+ LIB_OBJS += xdiff-interface.o
++LIB_OBJS += levenshtein.o
+ 
+ BUILTIN_OBJS += builtin-add.o
+ BUILTIN_OBJS += builtin-annotate.o
+diff --git a/help.c b/help.c
+index d89d437..ac29225 100644
+--- a/help.c
++++ b/help.c
+@@ -9,6 +9,7 @@
+ #include "common-cmds.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "levenshtein.h"
+ 
+ static struct man_viewer_list {
+ 	struct man_viewer_list *next;
+@@ -623,9 +624,51 @@ static void show_html_page(const char *git_cmd)
+ 	execl_git_cmd("web--browse", "-c", "help.browser", page_path.buf, NULL);
  }
-+
-+char *transform_url(const char *url, const char *suffix)
-+{
-+	struct strbuf new_url =3D STRBUF_INIT;
-+	char *question_mark;
-+	ptrdiff_t offset;
-+
-+	if ((question_mark =3D strchr(url, '?'))) {
-+		offset =3D (ptrdiff_t) question_mark - (ptrdiff_t) url;
-+		strbuf_add(&new_url, url, offset);
-+		strbuf_addstr(&new_url, suffix);
-+		strbuf_addstr(&new_url, url + offset);
-+	} else {
-+		strbuf_addstr(&new_url, url);
-+		strbuf_addstr(&new_url, suffix);
-+	}
-+	return strbuf_detach(&new_url, NULL);
+ 
++static const char *levenshtein_cmd;
++static int similarity(const char *cmd) {
++	return levenshtein(levenshtein_cmd, cmd, 0, 2, 1, 4);
 +}
 +
-diff --git a/http.h b/http.h
-index a04fc6a..58730b8 100644
-=2D-- a/http.h
-+++ b/http.h
-@@ -107,4 +107,6 @@ static inline int missing__target(int code, int result)
-=20
- extern int http_fetch_ref(const char *base, struct ref *ref);
-=20
-+extern char *transform_url(const char *url, const char *suffix);
++static int levenshtein_compare(const void *p1, const void *p2)
++{
++	const struct cmdname *const *c1 = p1, *const *c2 = p2;
++	const char *s1 = (*c1)->name, *s2 = (*c2)->name;
++	int l1 = similarity(s1);
++	int l2 = similarity(s2);
++	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
++}
 +
- #endif /* HTTP_H */
-diff --git a/transport.c b/transport.c
-index 3ff8519..b1966d8 100644
-=2D-- a/transport.c
-+++ b/transport.c
-@@ -1,3 +1,4 @@
-+#include <stddef.h>
- #include "cache.h"
- #include "transport.h"
- #include "run-command.h"
-@@ -449,8 +450,7 @@ static struct ref *get_refs_via_curl(struct transport *=
-transport)
-=20
- 	walker =3D transport->data;
-=20
-=2D	refs_url =3D xmalloc(strlen(transport->url) + 11);
-=2D	sprintf(refs_url, "%s/info/refs", transport->url);
-+	refs_url =3D transform_url(transport->url, "/info/refs");
-=20
- 	slot =3D get_active_slot();
- 	slot->results =3D &results;
-@@ -833,3 +833,4 @@ int transport_disconnect(struct transport *transport)
- 	free(transport);
- 	return ret;
+ void help_unknown_cmd(const char *cmd)
+ {
++	int i, header_shown = 0;
++
+ 	fprintf(stderr, "git: '%s' is not a git-command. See 'git --help'.\n", cmd);
++
++	load_command_list();
++	ALLOC_GROW(main_cmds.names, main_cmds.cnt + other_cmds.cnt,
++			main_cmds.alloc);
++	memcpy(main_cmds.names + main_cmds.cnt, other_cmds.names,
++		other_cmds.cnt * sizeof(other_cmds.names[0]));
++	main_cmds.cnt += other_cmds.cnt;
++
++	levenshtein_cmd = cmd;
++	qsort(main_cmds.names, main_cmds.cnt,
++	      sizeof(*main_cmds.names), levenshtein_compare);
++
++	for (i = 0; i < main_cmds.cnt; i++) {
++		int s = similarity(main_cmds.names[i]->name);
++		if (s > 6)
++			break;
++		if (!i) {
++			fprintf(stderr, "\nDid you mean %s?\n",
++				main_cmds.cnt < 2 ||
++				similarity(main_cmds.names[1]->name) > 6 ?
++				"this" : "one of these");
++			header_shown = 1;
++		}
++		fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
++	}
++
+ 	exit(1);
  }
+ 
+diff --git a/levenshtein.c b/levenshtein.c
+new file mode 100644
+index 0000000..db52f2c
+--- /dev/null
++++ b/levenshtein.c
+@@ -0,0 +1,47 @@
++#include "cache.h"
++#include "levenshtein.h"
 +
-=2D-=20
-1.5.5.3
-
-
-Thanks,
-
-	David
-
---nextPart1511518.2mjezhmkZD
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkhHjEsACgkQsh8Hgp5TwkOMNwCfS0LVRhPvXOzJtFpFa0dT8YW6
-cykAn2k9nY0HK9n4gU/9Keg5Hv8Jp6Af
-=+GGA
------END PGP SIGNATURE-----
-
---nextPart1511518.2mjezhmkZD--
++int levenshtein(const char *string1, const char *string2,
++		int w, int s, int a, int d)
++{
++	int len1 = strlen(string1), len2 = strlen(string2);
++	int *row0 = xmalloc(sizeof(int) * (len2 + 1));
++	int *row1 = xmalloc(sizeof(int) * (len2 + 1));
++	int *row2 = xmalloc(sizeof(int) * (len2 + 1));
++	int i, j;
++
++	for (j = 0; j <= len2; j++)
++		row1[j] = j * a;
++	for (i = 0; i < len1; i++) {
++		int *dummy;
++
++		row2[0] = (i + 1) * d;
++		for (j = 0; j < len2; j++) {
++			/* substitution */
++			row2[j + 1] = row1[j] + s * (string1[i] != string2[j]);
++			/* swap */
++			if (i > 0 && j > 0 && string1[i - 1] == string2[j] &&
++					string1[i] == string2[j - 1] &&
++					row2[j + 1] > row0[j - 1] + w)
++				row2[j + 1] = row0[j - 1] + w;
++			/* deletion */
++			if (j + 1 < len2 && row2[j + 1] > row1[j + 1] + d)
++				row2[j + 1] = row1[j + 1] + d;
++			/* insertion */
++			if (row2[j + 1] > row2[j] + a)
++				row2[j + 1] = row2[j] + a;
++		}
++
++		dummy = row0;
++		row0 = row1;
++		row1 = row2;
++		row2 = dummy;
++	}
++
++	i = row1[len2];
++	free(row0);
++	free(row1);
++	free(row2);
++
++	return i;
++}
+diff --git a/levenshtein.h b/levenshtein.h
+new file mode 100644
+index 0000000..0173abe
+--- /dev/null
++++ b/levenshtein.h
+@@ -0,0 +1,8 @@
++#ifndef LEVENSHTEIN_H
++#define LEVENSHTEIN_H
++
++int levenshtein(const char *string1, const char *string2,
++	int swap_penalty, int substition_penalty,
++	int insertion_penalty, int deletion_penalty);
++
++#endif
+-- 
+1.5.6.rc1.167.gce972
