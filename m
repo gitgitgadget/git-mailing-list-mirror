@@ -1,62 +1,69 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH 2/5] Rename Repository.head to Repository.head_ref
-Date: Thu, 5 Jun 2008 14:46:20 +0200
-Message-ID: <20080605124620.GA28995@diana.vm.bytemark.co.uk>
-References: <20080604210655.32531.82580.stgit@localhost.localdomain> <20080604211325.32531.84968.stgit@localhost.localdomain> <20080605064633.GB23209@diana.vm.bytemark.co.uk> <b0943d9e0806050449s4b55d06cu1b7701a562c7a6ba@mail.gmail.com> <20080605115820.GA27430@diana.vm.bytemark.co.uk> <b0943d9e0806050506u25c0441cy86caaec708ba838f@mail.gmail.com>
+From: Victor Bogado da Silva Lins <victor@bogado.net>
+Subject: [PATCH] Fix remote_get so it will return NULL when no remote is
+	found.
+Date: Thu, 05 Jun 2008 09:48:11 -0300
+Message-ID: <1212670091.30293.3.camel@omicron.ep.petrobras.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 14:47:22 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 05 14:49:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4EsB-0005ND-H0
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:47:19 +0200
+	id 1K4Eu0-00064l-F3
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757072AbYFEMq0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 08:46:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbYFEMq0
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:46:26 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3200 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757072AbYFEMq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 08:46:26 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K4ErE-0007YL-00; Thu, 05 Jun 2008 13:46:20 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0806050506u25c0441cy86caaec708ba838f@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757104AbYFEMsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 08:48:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYFEMsT
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:48:19 -0400
+Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:58307 "EHLO
+	spunkymail-a6.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756968AbYFEMsS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2008 08:48:18 -0400
+Received: from [127.0.0.1] (unknown [139.82.86.2])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by spunkymail-a6.g.dreamhost.com (Postfix) with ESMTP id DF813109F2B
+	for <git@vger.kernel.org>; Thu,  5 Jun 2008 05:48:17 -0700 (PDT)
+X-Mailer: Evolution 2.8.0 (2.8.0-40.el5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83918>
 
-On 2008-06-05 13:06:39 +0100, Catalin Marinas wrote:
+>From 0cf45f264cf7f1b3aa3a8875109fbf4c03d56126 Mon Sep 17 00:00:00 2001
+From: Victor Bogado <victor@bogado.net>
+Date: Thu, 5 Jun 2008 09:36:41 -0300
+Subject: [PATCH] Fix remote_get so it will return NULL when no remote is
+found.
 
-> 2008/6/5 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > ( Did you run the test suite on your patches? I always do
-> >   something like this (untested -- I have this command in my bash
-> >   history on another computer)
-> >
-> >    $ stg pop -a
-> >    $ while make test; do stg push || break; done
-> >
-> >  before sending out patches. It takes a few minutes per patch, but
-> >  it's fully automatic. )
->
-> Not really. It would be good to have a Makefile target for this,
-> something like "test_patches". I'll add it.
+remote_get should return NULL when there is no remote with that name, at
+least this is what remote.c's rm() function seems to think. As this is a
+reasonable assumption, and it seems that the function remote_get is
+acutally trying to do this, I fixed the test so it will test if the URL
+is equal to the name of the remote.
+---
+ remote.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Good idea. But consider the case where the user doesn't want to test
-all the patches -- maybe you could give make FIRST_PATCH and/or
-LAST_PATCH parameters? (Defaulting to all patches, of course.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/remote.c b/remote.c
+index 91e3b11..62b3611 100644
+--- a/remote.c
++++ b/remote.c
+@@ -598,7 +598,7 @@ struct remote *remote_get(const char *name)
+ 	}
+ 	if (!ret->url)
+ 		add_url_alias(ret, name);
+-	if (!ret->url)
++	if (!strcmp(*ret->url,ret->name))
+ 		return NULL;
+ 	ret->fetch = parse_fetch_refspec(ret->fetch_refspec_nr,
+ret->fetch_refspec);
+ 	ret->push = parse_push_refspec(ret->push_refspec_nr,
+ret->push_refspec);
+-- 
+1.5.5
