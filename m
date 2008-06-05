@@ -1,95 +1,114 @@
-From: "Vincent Kergonna" <git@kergonna.fr>
-Subject: Re: git remote rename, why dosen't it exists?
-Date: Thu, 5 Jun 2008 10:55:07 +0200 (CEST)
-Message-ID: <1666.78.153.224.34.1212656107.squirrel@mail.kergonna.fr>
-References: <1212497390.30731.3.camel@omicron.ep.petrobras.com.br>
-    <alpine.DEB.1.00.0806031449010.13507@racer.site.net>
-    <1212503641.30731.11.camel@omicron.ep.petrobras.com.br>
-    <alpine.DEB.1.00.0806032102350.13507@racer.site.net>
-    <1212591245.30731.17.camel@omicron.ep.petrobras.com.br>
-    <alpine.DEB.1.00.0806041649270.13507@racer.site.net>
-    <1212634394.13109.10.camel@mithrandir.bogado.net>
-    <alpine.DEB.1.00.0806050529350.21190@racer>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
+Date: Thu, 5 Jun 2008 11:38:15 +0200
+Message-ID: <200806051138.28889.trast@student.ethz.ch>
+References: <200805232221.45406.trast@student.ethz.ch> <200806051105.02802.trast@student.ethz.ch> <20080605092016.GA16748@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Victor Bogado da Silva Lins" <victor@bogado.net>,
-	git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 11:34:47 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1542710.ezQrccXCoe";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 05 11:39:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Bro-0001fQ-MZ
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:34:45 +0200
+	id 1K4Bvo-00033Z-Sb
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:38:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322AbYFEJdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 05:33:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYFEJdw
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:33:52 -0400
-Received: from tulipe.kergonna.fr ([91.121.105.123]:57396 "EHLO
-	tulipe.kergonna.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752432AbYFEJdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 05:33:51 -0400
-X-Greylist: delayed 2819 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jun 2008 05:33:51 EDT
-Received: from localhost ([127.0.0.1] helo=mail.kergonna.fr)
-	by tulipe.kergonna.fr with esmtp (Exim 4.63)
-	(envelope-from <git@kergonna.fr>)
-	id 1K4BFT-0005u8-2B; Thu, 05 Jun 2008 10:55:07 +0200
-Received: from 78.153.224.34
-        (SquirrelMail authenticated user git@kergonna.fr)
-        by mail.kergonna.fr with HTTP;
-        Thu, 5 Jun 2008 10:55:07 +0200 (CEST)
-In-Reply-To: <alpine.DEB.1.00.0806050529350.21190@racer>
-User-Agent: SquirrelMail/1.4.9a
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1751757AbYFEJh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 05:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYFEJh7
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:37:59 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:19815 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751721AbYFEJh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 05:37:58 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 5 Jun 2008 11:37:57 +0200
+Received: from vpn-global-dhcp3-023.ethz.ch ([129.132.210.23]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 5 Jun 2008 11:37:57 +0200
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <20080605092016.GA16748@sigill.intra.peff.net>
+X-OriginalArrivalTime: 05 Jun 2008 09:37:57.0146 (UTC) FILETIME=[D6184FA0:01C8C6EF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83890>
 
-> Hi,
->
-> On Wed, 4 Jun 2008, Victor Bogado da Silva Lins wrote:
->
->> On Wed, 2008-06-04 at 16:51 +0100, Johannes Schindelin wrote:
->>
->> > On Wed, 4 Jun 2008, Victor Bogado da Silva Lins wrote:
->> >
->> > > I trying to refactor [in builtin-remote.c] rm into rm_or_rename, but
->> > > I stumbled into a problem, how do I free a remote struct obtained
->> > > with "remote_get"?
->>
->> It seems that git-remote thinks that remote_get will return NULL if
->> there is no such remote, but in fact it does not do this, it always
->> alloc a new remote struct and returns that newly allocated.
->
-> From remote.c, remote_get(), line 601--602 in my checkout:
->
->         if (!ret->url)
->                 return NULL;
->
+--nextPart1542710.ezQrccXCoe
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-In fact, I think Victor is right. If you do a simple test (assuming you
-don't have a remote named foo):
+Jeff King wrote:
+> > [Let's just forget about the original patch at the top of the thread;
+> > in retrospect, it _is_ clunky, and the UI didn't get any replies in
+> > favour.]
+>=20
+> It seems like Junio isn't all that keen on the raw patch-editing
+> interface. And even if we do like it, I think there is still room for a
+> less error-prone but more restrictive feature that mere mortals can use.
+> So maybe there is a better interface yet.
 
-vincent:git$ git remote rm foo
-error: Could not remove config section 'remote.foo'
+Maybe git gui could do a sort of "toggle the lines I click" interface.
+But I don't know anything about Tk, or Tcl, or git gui :-(
 
-You notice that it is trying to remove the configuration section for this
-remote. We have hit the line 372 of builtin-remote.c:
+> What about 'S' to do a "line split"; that is, take the current hunk, and
+> anywhere there are adjacent changed lines, split them into their own
+> hunks.
+[...]
+> and then we proceed as usual, staging or not each split hunk. It would
+> be clunky to separate one or two lines from a huge chunk (since you
+> would inadvertently split the huge chunk and have to stage each
+> individually). But in many cases you can split into smaller hunks first
+> with 's'.
 
-if (git_config_rename_section(buf.buf, NULL) < 1)
-    return error("Could not remove config section '%s'", buf.buf);
+Now I'm slightly confused.
 
-instead of exiting at line 364:
+Doing it that way would be almost like my original patch
 
-if (!remote)
-    die("No such remote: %s", argv[1]);
+  http://www.spinics.net/lists/git/msg66971.html
+
+minus the numeric prefixes -- meaning that you have to say y/n to
+_every_ line in the patch, at least until all remaining hunks are the
+same and you can answer the rest with a/d.
+
+Except that it wouldn't work anyway, because git-apply refuses hunks
+that have no context (even if just on one end).  Unless given
+=2D-unidiff-zero, but that apparently was one of the points of refusal
+in the thread Dscho linked earlier:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/67854/focus=3D68127
+
+Granted, we could insert extra context and/or make sure the mentioned
+data loss can never happen (it's probably prevented by 'add -p's own
+recounting before the final apply), but the first would make the UI
+even more confusing and the second is potentially dangerous.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
 
--- 
-Vincent
+
+--nextPart1542710.ezQrccXCoe
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQBIR7QUqUud07tmzP0RAgjVAKCEdwkxYqMF/HttOt/tRfh8os7pCgCfdLBF
+XcdTt0H1zYjIj4tOd5fxcl8=
+=Qzde
+-----END PGP SIGNATURE-----
+
+--nextPart1542710.ezQrccXCoe--
