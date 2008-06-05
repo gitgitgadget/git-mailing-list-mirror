@@ -1,62 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Patches for some OS's.
-Date: Thu, 5 Jun 2008 19:37:17 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806051935540.21190@racer>
-References: <Pine.LNX.4.64.0806051114260.18454@xenau.zenez.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Allow git-apply to fix up the line counts
+Date: Thu, 05 Jun 2008 11:39:05 -0700
+Message-ID: <7v4p873ewm.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0806051115570.21190@racer>
+ <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer>
+ <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 20:39:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 05 20:40:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4KNE-00077w-2r
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 20:39:44 +0200
+	id 1K4KNe-0007IX-G8
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 20:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755762AbYFESir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 14:38:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYFESir
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 14:38:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38200 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755436AbYFESiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 14:38:46 -0400
-Received: (qmail invoked by alias); 05 Jun 2008 18:38:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 05 Jun 2008 20:38:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+y+Cx6bnSyCN+eAdCbxxrQE5yIgxCmil9fe4edQi
-	RbPUTj63a08HMW
-X-X-Sender: gene099@racer
-In-Reply-To: <Pine.LNX.4.64.0806051114260.18454@xenau.zenez.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1759438AbYFESjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 14:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758507AbYFESjR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 14:39:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48915 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757726AbYFESjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 14:39:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E0FAE5471;
+	Thu,  5 Jun 2008 14:39:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 29629546F; Thu,  5 Jun 2008 14:39:08 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806051441560.21190@racer> (Johannes
+ Schindelin's message of "Thu, 5 Jun 2008 14:47:24 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B16B370C-332E-11DD-B209-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83953>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 5 Jun 2008, Boyd Lynn Gerber wrote:
+> As I said, the data is in the _hunks_, but I maybe should have added _not 
+> in the hunk headers_.
 
-> I have attached the patches necessary to use GIT on some Non Linux OS's.
+So you _are_ ignoring the line counts recorded in the hunk headers.  It is
+not even 'adjust' but 'count lines to guess'.
 
-One might think that you could now use Git to generate the patches, and 
-follow the conventions to submit them...
+If the incoming patch text does not have confusing contents at the end,
+the guessing is reasonably safe.  You need to watch out for blank lines,
+which means the same as /^ $/, and mail signature separators /^-- $/.
+They can confuse you into guessing wrongly and include more preimage lines
+than there actually are.
 
-For example, reviewing attached patches makes it unduly hard on the 
-reviewers.
+So it would be more like
 
-For example, you do not have any explanation AKA commit message.
+--ignore-line-counts::
+	Ignore number of lines recorded in the hunk headers; instead count
+        lines that look like hunk contents to determine how big each hunk
+	is.
 
-For example, you use context diffs.
-
-See Documentation/SubmittingPatches for more hints how to get your patches 
-integrated.
-
-Hth,
-Dscho
+I haven't started to nitpick the actual code yet but I know the original
+is a tricky pice of code, so we may find something interesting ;-)
