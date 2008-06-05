@@ -1,75 +1,190 @@
-From: "jenny w" <veganjenny@gmail.com>
-Subject: Problems reverting (includes reverting a merge)
-Date: Thu, 5 Jun 2008 10:45:55 -0700
-Message-ID: <b1d95faa0806051045t67ea0f46r55cdaeb794dc2f5c@mail.gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Patches for some OS's.
+Date: Thu, 5 Jun 2008 11:16:46 -0600
+Message-ID: <Pine.LNX.4.64.0806051114260.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: MULTIPART/MIXED; BOUNDARY="1185284670-1266133892-1212686206=:18454"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 19:46:57 2008
+X-From: git-owner@vger.kernel.org Thu Jun 05 19:48:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4JY1-00040k-P6
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 19:46:50 +0200
+	id 1K4JZN-0004UB-OL
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 19:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbYFERp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 13:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752907AbYFERp5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 13:45:57 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:36063 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752638AbYFERp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 13:45:57 -0400
-Received: by an-out-0708.google.com with SMTP id d40so170730and.103
-        for <git@vger.kernel.org>; Thu, 05 Jun 2008 10:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=UEUc4RMBjG4xasw5om4Ri9199yHnhCLWIf53+m2hbM8=;
-        b=KTIXTvuARc2wIiSW+4SY7XmCZZC8L8bA6M8xc8FK51W5S0mxcfbWItvYnU4TMSuuMm
-         zsLsC6wPnHIL0kUkXYQEICv/K6snsjAtp6OBNrBnJ5LRTw1wuhUFEp7sP04zG6jlHx1K
-         0ilZBgbRjF3Lq2NhiWtxyNuzhdXVRdc+J0cZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=aZth97YUASHB2I+0o59cwbFSlgh/PfHUc4xSAMTGqaOZS/ijcAcVnHXsuiaUErntTB
-         8wANNyVmJ50ktJOphHUndO7wfSI5QTKkulAuHOVyXkRCMYy0+eQIz+6xoPT8ufoHFwZX
-         0olzjL+BAxt01pz2k8XXS8zzKBgmOVfXw/Ehc=
-Received: by 10.100.190.15 with SMTP id n15mr2875047anf.113.1212687955908;
-        Thu, 05 Jun 2008 10:45:55 -0700 (PDT)
-Received: by 10.100.135.17 with HTTP; Thu, 5 Jun 2008 10:45:55 -0700 (PDT)
-Content-Disposition: inline
+	id S1753223AbYFERrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 13:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753038AbYFERrV
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 13:47:21 -0400
+Received: from zenez.com ([166.70.62.2]:2040 "EHLO xenau.zenez.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752751AbYFERrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 13:47:20 -0400
+X-Greylist: delayed 1832 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jun 2008 13:47:19 EDT
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 6C4E1E4711; Thu,  5 Jun 2008 11:16:46 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 5D19EE470B
+	for <git@vger.kernel.org>; Thu,  5 Jun 2008 11:16:46 -0600 (MDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83947>
 
-Someone made a few commits that I'm trying to revert. There are three
-commits in a row, the middle of which is a merge. There are presently
-no commits following the ones that we want to revert.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I tried git revert on the latest commit and that worked fine.
+--1185284670-1266133892-1212686206=:18454
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 
-The second latest commit was a merge, so I had to use the -m switch.
-I'm not exactly sure what the parent-number refers to, so I created a
-separate branch to try things out. Since it expects I a number, I
-started from 1. That was kind of a disaster, so I deleted my branch
-and made another off of master, and then tried doing the same command
-with -m 2. This worked fine.  However ...
+Hello,
 
-I then tried to revert the next commit. This said there's a conflict.
-Since there are no other commits after the ones I'm trying to revert,
-this makes me think I'm doing something wrong ... shouldn't it just be
-able to roll back?
+I have attached the patches necessary to use GIT on some Non Linux OS's.
 
-What I'd really like to do is just zap the last 3 commits ... is there
-another way to just make things the way they were before these patches
-were applied?
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+--1185284670-1266133892-1212686206=:18454
+Content-Type: TEXT/x-patch; charset=US-ASCII; name=git-compat-util.h.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.LNX.4.64.0806051116460.18454@xenau.zenez.com>
+Content-Description: git-compat-util.h.patch
+Content-Disposition: attachment; filename=git-compat-util.h.patch
 
-Any help with any of the above would be greatly appreciated!
+KioqIGdpdC1jb21wYXQtdXRpbC5oLm9yaWcgU3VuIE1heSAyNSAyMzo1OTow
+MSAyMDA4DQotLS0gZ2l0LWNvbXBhdC11dGlsLmggTW9uIE1heSAyNiAxMzow
+Mjo0MyAyMDA4DQoqKioqKioqKioqKioqKioNCioqKiAzOSw0NSAqKioqDQog
+IC8qIEFwcHJveGltYXRpb24gb2YgdGhlIGxlbmd0aCBvZiB0aGUgZGVjaW1h
+bCByZXByZXNlbnRhdGlvbiBvZiB0aGlzIHR5cGUuICovDQogICNkZWZpbmUg
+ZGVjaW1hbF9sZW5ndGgoeCkJKChpbnQpKHNpemVvZih4KSAqIDIuNTYgKyAw
+LjUpICsgMSkNCiAgDQohICNpZiAhZGVmaW5lZChfX0FQUExFX18pICYmICFk
+ZWZpbmVkKF9fRnJlZUJTRF9fKQ0KICAjZGVmaW5lIF9YT1BFTl9TT1VSQ0Ug
+NjAwIC8qIGdsaWJjMiBhbmQgQUlYIDUuM0wgbmVlZCA1MDAsIE9wZW5CU0Qg
+bmVlZHMgNjAwIGZvciBTX0lTTE5LKCkgKi8NCiAgI2RlZmluZSBfWE9QRU5f
+U09VUkNFX0VYVEVOREVEIDEgLyogQUlYIDUuM0wgbmVlZHMgdGhpcyAqLw0K
+ICAjZW5kaWYNCi0tLSAzOSw0NSAtLS0tDQogIC8qIEFwcHJveGltYXRpb24g
+b2YgdGhlIGxlbmd0aCBvZiB0aGUgZGVjaW1hbCByZXByZXNlbnRhdGlvbiBv
+ZiB0aGlzIHR5cGUuICovDQogICNkZWZpbmUgZGVjaW1hbF9sZW5ndGgoeCkJ
+KChpbnQpKHNpemVvZih4KSAqIDIuNTYgKyAwLjUpICsgMSkNCiAgDQohICNp
+ZiAhZGVmaW5lZChfX0FQUExFX18pICYmICFkZWZpbmVkKF9fRnJlZUJTRF9f
+ICkgJiYgIWRlZmluZWQoX19VU0xDX18pICYmICFkZWZpbmVkKF9NX1VOSVgp
+DQogICNkZWZpbmUgX1hPUEVOX1NPVVJDRSA2MDAgLyogZ2xpYmMyIGFuZCBB
+SVggNS4zTCBuZWVkIDUwMCwgT3BlbkJTRCBuZWVkcyA2MDAgZm9yIFNfSVNM
+TksoKSAqLw0KICAjZGVmaW5lIF9YT1BFTl9TT1VSQ0VfRVhURU5ERUQgMSAv
+KiBBSVggNS4zTCBuZWVkcyB0aGlzICovDQogICNlbmRpZg0KKioqKioqKioq
+KioqKioqDQoqKiogODksOTQgKioqKg0KICAjaW5jbHVkZSA8Z3JwLmg+DQog
+ICNkZWZpbmUgX0FMTF9TT1VSQ0UgMQ0KICAjZW5kaWYNCiAgDQogICNpZm5k
+ZWYgTk9fSUNPTlYNCiAgI2luY2x1ZGUgPGljb252Lmg+DQotLS0gODksOTgg
+LS0tLQ0KICAjaW5jbHVkZSA8Z3JwLmg+DQogICNkZWZpbmUgX0FMTF9TT1VS
+Q0UgMQ0KICAjZW5kaWYNCisgI2lmIGRlZmluZWQoX19VU0xDX18pDQorICN1
+bmRlZiBfWE9QRU5fU09VUkNFDQorICNpbmNsdWRlIDxncnAuaD4NCisgI2Vu
+ZGlmDQogIA0KICAjaWZuZGVmIE5PX0lDT05WDQogICNpbmNsdWRlIDxpY29u
+di5oPg0KKioqKioqKioqKioqKioqDQoqKiogMjA2LDIxMSAqKioqDQogICNl
+bmRpZg0KICANCiAgI2lmZGVmIEZSRUFEX1JFQURTX0RJUkVDVE9SSUVTDQog
+ICNkZWZpbmUgZm9wZW4oYSxiKSBnaXRfZm9wZW4oYSxiKQ0KICBleHRlcm4g
+RklMRSAqZ2l0X2ZvcGVuKGNvbnN0IGNoYXIqLCBjb25zdCBjaGFyKik7DQog
+ICNlbmRpZg0KLS0tIDIxMCwyMTYgLS0tLQ0KICAjZW5kaWYNCiAgDQogICNp
+ZmRlZiBGUkVBRF9SRUFEU19ESVJFQ1RPUklFUw0KKyAjaWYgIWRlZmluZWQg
+KF9fVVNMQ19fKQ0KICAjZGVmaW5lIGZvcGVuKGEsYikgZ2l0X2ZvcGVuKGEs
+YikNCiAgZXh0ZXJuIEZJTEUgKmdpdF9mb3Blbihjb25zdCBjaGFyKiwgY29u
+c3QgY2hhciopOw0KICAjZW5kaWYNCioqKioqKioqKioqKioqKg0KKioqIDIw
+OCwyMTMgKioqKg0KICAjaWZkZWYgRlJFQURfUkVBRFNfRElSRUNUT1JJRVMN
+CiAgI2RlZmluZSBmb3BlbihhLGIpIGdpdF9mb3BlbihhLGIpDQogIGV4dGVy
+biBGSUxFICpnaXRfZm9wZW4oY29uc3QgY2hhciosIGNvbnN0IGNoYXIqKTsN
+CiAgI2VuZGlmDQogIA0KICAjaWZkZWYgU05QUklOVEZfUkVUVVJOU19CT0dV
+Uw0KLS0tIDIxMywyMTkgLS0tLQ0KICAjaWYgIWRlZmluZWQgKF9fVVNMQ19f
+KQ0KICAjZGVmaW5lIGZvcGVuKGEsYikgZ2l0X2ZvcGVuKGEsYikNCiAgZXh0
+ZXJuIEZJTEUgKmdpdF9mb3Blbihjb25zdCBjaGFyKiwgY29uc3QgY2hhciop
+Ow0KKyAjZW5kaWYNCiAgI2VuZGlmDQogIA0KICAjaWZkZWYgU05QUklOVEZf
+UkVUVVJOU19CT0dVUw0K
+
+--1185284670-1266133892-1212686206=:18454
+Content-Type: TEXT/x-patch; charset=US-ASCII; name=Makefile.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.LNX.4.64.0806051116461.18454@xenau.zenez.com>
+Content-Description: Makefile.patch
+Content-Disposition: attachment; filename=Makefile.patch
+
+KioqIE1ha2VmaWxlLm9yaWcgU3VuIE1heSAyNSAyMzo1OTowMSAyMDA4DQot
+LS0gTWFrZWZpbGUgTW9uIE1heSAyNiAxMTozMzowNyAyMDA4DQoqKioqKioq
+KioqKioqKioNCioqKiAxNjUsMTcwICoqKioNCiAgIyBDRkxBR1MgYW5kIExE
+RkxBR1MgYXJlIGZvciB0aGUgdXNlcnMgdG8gb3ZlcnJpZGUgZnJvbSB0aGUg
+Y29tbWFuZCBsaW5lLg0KICANCiAgQ0ZMQUdTID0gLWcgLU8yIC1XYWxsDQog
+IExERkxBR1MgPQ0KICBBTExfQ0ZMQUdTID0gJChDRkxBR1MpDQogIEFMTF9M
+REZMQUdTID0gJChMREZMQUdTKQ0KLS0tIDE2NSwxODQgLS0tLQ0KICAjIENG
+TEFHUyBhbmQgTERGTEFHUyBhcmUgZm9yIHRoZSB1c2VycyB0byBvdmVycmlk
+ZSBmcm9tIHRoZSBjb21tYW5kIGxpbmUuDQogIA0KICBDRkxBR1MgPSAtZyAt
+TzIgLVdhbGwNCisgaWZlcSAoJCh1bmFtZV9TKSxTQ09fU1YpDQorICAgaWZl
+cSAoJCh1bmFtZV9SKSwzLjIpDQorICMgICAgQ0ZMQUdTID0gLWcgLU8yDQor
+ICAgICBDRkxBR1MgPSAtZw0KKyAgIGVuZGlmDQorICAgaWZlcSAoJCh1bmFt
+ZV9SKSw1KQ0KKyAgICAgQ0ZMQUdTID0gLWcgLU8yIC1XYWxsDQorICMgICAg
+Q0ZMQUdTID0gLWcgLU8yDQorICAgZW5kaWYNCisgZW5kaWYNCisgaWZlcSAo
+JCh1bmFtZV9TKSxVbml4V2FyZSkNCisgICAgIENGTEFHUyA9IC1nIC1PMiAt
+V2FsbA0KKyAjICAgIENGTEFHUyA9IC1nIC1PMg0KKyBlbmRpZg0KICBMREZM
+QUdTID0NCiAgQUxMX0NGTEFHUyA9ICQoQ0ZMQUdTKQ0KICBBTExfTERGTEFH
+UyA9ICQoTERGTEFHUykNCioqKioqKioqKioqKioqKg0KKioqIDIwNiwyMTIg
+KioqKg0KICANCiAgZXhwb3J0IHByZWZpeCBiaW5kaXIgZ2l0ZXhlY2RpciBz
+aGFyZWRpciB0ZW1wbGF0ZV9kaXIgaHRtbGRpciBzeXNjb25mZGlyDQogIA0K
+ISBDQyA9IGdjYw0KICBBUiA9IGFyDQogIFJNID0gcm0gLWYNCiAgVEFSID0g
+dGFyDQotLS0gMjIwLDIyNyAtLS0tDQogIA0KICBleHBvcnQgcHJlZml4IGJp
+bmRpciBnaXRleGVjZGlyIHNoYXJlZGlyIHRlbXBsYXRlX2RpciBodG1sZGly
+IHN5c2NvbmZkaXINCiAgDQohICNDQyA9IGdjYw0KISBDQyA9ICJjYyINCiAg
+QVIgPSBhcg0KICBSTSA9IHJtIC1mDQogIFRBUiA9IHRhcg0KKioqKioqKioq
+KioqKioqDQoqKiogNTU1LDU2MCAqKioqDQogIGVuZGlmDQogIGlmZXEgKCQo
+dW5hbWVfUyksR05VL2tGcmVlQlNEKQ0KICAJTk9fU1RSTENQWSA9IFllc1Bs
+ZWFzZQ0KICBlbmRpZg0KICBpZmVxICgkKHVuYW1lX1MpLERhcndpbikNCiAg
+CU5FRURTX1NTTF9XSVRIX0NSWVBUTyA9IFllc1BsZWFzZQ0KLS0tIDU3MCw2
+MTEgLS0tLQ0KICBlbmRpZg0KICBpZmVxICgkKHVuYW1lX1MpLEdOVS9rRnJl
+ZUJTRCkNCiAgCU5PX1NUUkxDUFkgPSBZZXNQbGVhc2UNCisgZW5kaWYNCisg
+aWZlcSAoJCh1bmFtZV9TKSxVbml4V2FyZSkNCisgCU5FRURTX1NPQ0tFVCA9
+IFllc1BsZWFzZQ0KKyAjCU5FRURTX05TTCA9IFllc1BsZWFzZQ0KKyAJTkVF
+RFNfU1NMX1dJVEhfQ1JZUFRPID0gWWVzUGxlYXNlDQorIAlORUVEU19MSUJJ
+Q09OViA9IFllc1BsZWFzZQ0KKyAJU0hFTExfUEFUSCA9IC91c3IvbG9jYWwv
+YmluL2Jhc2gNCisgCU5PX0lQVjYgPSBZZXNQbGVhc2UNCisgCU5PX0hTVFJF
+UlJPUiA9IFllc1BsZWFzZQ0KKyAjCUJBU0lDX0NGTEFHUyArPSAgLUUgLUgN
+CisgCUJBU0lDX0NGTEFHUyArPSAgLUthbGxvY2EgLUt0aHJlYWQNCisgCUJB
+U0lDX0NGTEFHUyArPSAtSS91c3IvbG9jYWwvaW5jbHVkZQ0KKyAJQkFTSUNf
+TERGTEFHUyArPSAtTC91c3IvbG9jYWwvbGliDQorIAlJTlNUQUxMID0gZ2lu
+c3RhbGwNCisgCVRBUiA9IGd0YXINCisgCU5PX1NUUkNBU0VTVFIgPSBZZXNQ
+bGVhc2UNCisgCU5PX01FTU1FTSA9IFllc1BsZWFzZQ0KKyBlbmRpZg0KKyBp
+ZmVxICgkKHVuYW1lX1MpLFNDT19TVikNCisgCU5FRURTX1NPQ0tFVCA9IFll
+c1BsZWFzZQ0KKyAjCU5FRURTX05TTCA9IFllc1BsZWFzZQ0KKyAJTkVFRFNf
+U1NMX1dJVEhfQ1JZUFRPID0gWWVzUGxlYXNlDQorIAlORUVEU19MSUJJQ09O
+ViA9IFllc1BsZWFzZQ0KKyAJU0hFTExfUEFUSCA9IC91c3IvYmluL2Jhc2gN
+CisgCU5PX0lQVjYgPSBZZXNQbGVhc2UNCisgIwlOT19IU1RSRVJST1IgPSBZ
+ZXNQbGVhc2UNCisgIwlCQVNJQ19DRkxBR1MgKz0gIC1FIC1IDQorICAgICAg
+IGlmZXEgKCQodW5hbWVfUiksNSkNCisgCUJBU0lDX0NGTEFHUyArPSAgLUth
+bGxvY2EgLUt0aHJlYWQNCisgICAgICAgZW5kaWYNCisgIwlCQVNJQ19DRkxB
+R1MgKz0gLUkvdXNyL2xvY2FsL2luY2x1ZGUNCisgIwlCQVNJQ19MREZMQUdT
+ICs9IC1ML3Vzci9sb2NhbC9saWINCisgCU5PX1NUUkNBU0VTVFIgPSBZZXNQ
+bGVhc2UNCisgCU5PX01FTU1FTSA9IFllc1BsZWFzZQ0KKyAJSU5TVEFMTCA9
+IGdpbnN0YWxsDQorIAlUQVIgPSBndGFyDQogIGVuZGlmDQogIGlmZXEgKCQo
+dW5hbWVfUyksRGFyd2luKQ0KICAJTkVFRFNfU1NMX1dJVEhfQ1JZUFRPID0g
+WWVzUGxlYXNlDQo=
+
+--1185284670-1266133892-1212686206=:18454
+Content-Type: TEXT/x-patch; charset=US-ASCII; name=progress.c.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.LNX.4.64.0806051116462.18454@xenau.zenez.com>
+Content-Description: progress.c.patch
+Content-Disposition: attachment; filename=progress.c.patch
+
+KioqIHByb2dyZXNzLmMub3JpZyBTdW4gTWF5IDI1IDIzOjU5OjAxIDIwMDgN
+Ci0tLSBwcm9ncmVzcy5jIFR1ZSBNYXkgMjcgMTY6NTQ6MTUgMjAwOA0KKioq
+KioqKioqKioqKioqDQoqKiogMjQxLDI0NyAqKioqDQogIAkqcF9wcm9ncmVz
+cyA9IE5VTEw7DQogIAlpZiAocHJvZ3Jlc3MtPmxhc3RfdmFsdWUgIT0gLTEp
+IHsNCiAgCQkvKiBGb3JjZSB0aGUgbGFzdCB1cGRhdGUgKi8NCiEgCQljaGFy
+IGJ1ZltzdHJsZW4obXNnKSArIDVdOw0KICAJCXN0cnVjdCB0aHJvdWdocHV0
+ICp0cCA9IHByb2dyZXNzLT50aHJvdWdocHV0Ow0KICAJCWlmICh0cCkgew0K
+ICAJCQl1bnNpZ25lZCBpbnQgcmF0ZSA9ICF0cC0+YXZnX21pc2VjcyA/IDAg
+Og0KLS0tIDI0MSwyNDggLS0tLQ0KICAJKnBfcHJvZ3Jlc3MgPSBOVUxMOw0K
+ICAJaWYgKHByb2dyZXNzLT5sYXN0X3ZhbHVlICE9IC0xKSB7DQogIAkJLyog
+Rm9yY2UgdGhlIGxhc3QgdXBkYXRlICovDQohIAkJLyogY2hhciBidWZbc3Ry
+bGVuKG1zZykgKyA1XTsgKi8NCiEgCQljaGFyICpidWYgPSBtYWxsb2MgKHN0
+cmxlbihtc2cpICsgNSApOw0KICAJCXN0cnVjdCB0aHJvdWdocHV0ICp0cCA9
+IHByb2dyZXNzLT50aHJvdWdocHV0Ow0KICAJCWlmICh0cCkgew0KICAJCQl1
+bnNpZ25lZCBpbnQgcmF0ZSA9ICF0cC0+YXZnX21pc2VjcyA/IDAgOg0K
+
+--1185284670-1266133892-1212686206=:18454--
