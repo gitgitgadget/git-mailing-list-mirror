@@ -1,84 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/10] Introduce commit_list_append() in commit.c
-Date: Thu, 05 Jun 2008 16:16:46 -0700
-Message-ID: <7v8wxjzd41.fsf@gitster.siamese.dyndns.org>
-References: <cover.1212698317.git.vmiklos@frugalware.org>
- <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org> <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org> <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org> <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org> <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org> <2e4b20178405cf993ce9e0f1ffe4ac402a96fd03.1212698317.git.vmiklos@frugalware.org> <cbafb7e632b176658fe84e1eb9926f0a8d3c96b4.1212698317.git.vmiklos@frugalware.org>
+Subject: Re: [PATCH v2 1/2] Allow git-apply to ignore the hunk headers
+Date: Thu, 05 Jun 2008 16:22:05 -0700
+Message-ID: <7v4p87zcv6.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0806051115570.21190@racer>
+ <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer>
+ <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer>
+ <4847F49F.8090004@viscovery.net> <alpine.DEB.1.00.0806051548140.21190@racer>
+ <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer>
+ <alpine.DEB.1.00.0806051720070.21190@racer>
+ <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806052304300.21190@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:17:56 2008
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 01:23:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4OiI-00020I-BM
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:17:46 +0200
+	id 1K4Ond-0003Gg-Eq
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbYFEXQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 19:16:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbYFEXQx
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:16:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40346 "EHLO
+	id S1753169AbYFEXWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 19:22:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753138AbYFEXWY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:22:24 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41323 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752868AbYFEXQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 19:16:52 -0400
+	with ESMTP id S1752519AbYFEXWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 19:22:24 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7BD093F35;
-	Thu,  5 Jun 2008 19:16:51 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E15023471;
+	Thu,  5 Jun 2008 19:22:22 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A86993F30; Thu,  5 Jun 2008 19:16:48 -0400 (EDT)
-In-Reply-To: <cbafb7e632b176658fe84e1eb9926f0a8d3c96b4.1212698317.git.vmiklos@frugalware.org> (Miklos Vajna's message of "Thu, 5 Jun 2008 22:44:34 +0200")
+ ESMTPSA id 2C446346E; Thu,  5 Jun 2008 19:22:17 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806052304300.21190@racer> (Johannes
+ Schindelin's message of "Thu, 5 Jun 2008 23:39:48 +0100 (BST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7AB5B6C0-3355-11DD-B795-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 403FBA62-3356-11DD-923D-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83999>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This is like commit_list_insert() but it appends the new commit to the
-> end of the list, rather than insert to the start of it.
+>> And the robustness issue I worry about the second point also applies to 
+>> a line that is "^-- $", especially if we were to make this available to 
+>> git-am.  Perhaps when the line begins with a '-', the logic could be 
+>> extra careful to detect the case where the line looks like the e-mail 
+>> signature separator and check one line beyond it to see if it does not 
+>> look anything like part of a diff (in which case you stop, without 
+>> considering the line you are currently looking at, "^-- $", a deletion 
+>> of "^- $", as part of the preimage context).
 >
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  commit.c |   19 +++++++++++++++++++
->  commit.h |    1 +
->  2 files changed, 20 insertions(+), 0 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index b45ec9b..6ba5acb 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -331,6 +331,25 @@ struct commit_list *commit_list_insert(struct commit *item, struct commit_list *
->  	return new_list;
->  }
->  
-> +struct commit_list *commit_list_append(struct commit *item,
-> +	struct commit_list **list_p)
-> +{
-> +	struct commit_list *i, *prev = NULL, *list = *list_p;
-> +	struct commit_list *new_list = xmalloc(sizeof(struct commit_list));
-> +
-> +	new_list->item = item;
-> +	new_list->next = NULL;
-> +
-> +	if (!list)
-> +		*list_p = new_list;
-> +	else {
-> +		for (i = list; i; i = i->next)
-> +			prev = i;
-> +		prev->next = new_list;
-> +	}
-> +	return list;
-> +}
+> Is this really an issue?  fixup_counts() is only called after a hunk 
+> header was read, and that should be well after any "^-- $".
 
-Do you have a caller of this function that keeps a pointer to commit_list
-that needs to be appended at the tail or inserted at the beginning
-depending on the phase of the moon, or does the caller always append to
-that list?
+Are you talking about "^-- $" or "^---$"?  Yes we are way past the
+three-dash separator at this point, but e-mail signature separator happens
+at the very end after the patch.
+
+You read a hunk header line "@@ -l,m +n,o @@", and start counting the diff
+text because you do not trust m and o.  When you read the last hunk in a
+patch e-mail, you may hit a e-mail signature separator, like what is given
+by format-patch output at the end.  Mistaking that as an extra preimage
+context to remove "^- $" is what I was worried about.
+
+-- 
+I worry, therefore I am...
