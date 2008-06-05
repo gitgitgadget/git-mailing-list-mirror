@@ -1,337 +1,238 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [WIP PATCH v2] git-add--interactive: manual hunk editing mode
-Date: Thu, 5 Jun 2008 14:38:06 +0200
-Message-ID: <200806051438.12758.trast@student.ethz.ch>
-References: <200805232221.45406.trast@student.ethz.ch> <200806010241.51464.trast@student.ethz.ch> <20080605014618.GA27381@sigill.intra.peff.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH 4/5] Add stack creation and initialisation support to lib.Stack
+Date: Thu, 5 Jun 2008 13:42:03 +0100
+Message-ID: <b0943d9e0806050542w663c64a8o93f81503eb811cf9@mail.gmail.com>
+References: <20080604210655.32531.82580.stgit@localhost.localdomain>
+	 <20080604211343.32531.41429.stgit@localhost.localdomain>
+	 <20080605072822.GD23209@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1302165.0IukMCzHmf";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 05 14:38:57 2008
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 14:43:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Ejl-0002Hx-TC
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:38:38 +0200
+	id 1K4EoT-00045v-HC
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756894AbYFEMhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 08:37:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756874AbYFEMhn
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:37:43 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:58420 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756661AbYFEMhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 08:37:42 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 5 Jun 2008 14:37:40 +0200
-Received: from vpn-global-dhcp3-023.ethz.ch ([129.132.210.23]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 5 Jun 2008 14:37:40 +0200
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <20080605014618.GA27381@sigill.intra.peff.net>
-X-OriginalArrivalTime: 05 Jun 2008 12:37:40.0655 (UTC) FILETIME=[F19133F0:01C8C708]
+	id S1758549AbYFEMmg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 08:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758541AbYFEMmg
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:42:36 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:3157 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758289AbYFEMmf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2008 08:42:35 -0400
+Received: by py-out-1112.google.com with SMTP id p76so462236pyb.10
+        for <git@vger.kernel.org>; Thu, 05 Jun 2008 05:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=m8lF04TtTMbyIOgyW2TM/ZXrsDrLPNxqUF+Fma/UYvM=;
+        b=WPcwJTURVuqcNiuC/lnvWvL2QiDgqY9gbfuvb5TmUkWGgPCrzxg4A29NYWgHxFIsfh
+         Q2QTRszGHLWTHj0+RtQYrqzCFgxWNTJBv+L7Oojekr+mYJLNEDguv4jffXQBC/bPgXGs
+         1ikpwsQp5xC3DF6ayA5qPl3bZA2mxLwHPIjQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Mi7PvsM93uQ2hEJv9D/QDkOym4Iq2VPD1B7ECwrmM9DYRmsUfiSPvljReM6NNEucSo
+         vvcHT/5LDXoO4lhAzf0J04ISDhqCiEbGRaItUx2rGnR9CVjAAI2rVr7GDo5C/qvlKrzG
+         AeySkI2wIFyNNFv41qR5o37VndOh5X7uaCXUc=
+Received: by 10.114.52.1 with SMTP id z1mr1414996waz.42.1212669723162;
+        Thu, 05 Jun 2008 05:42:03 -0700 (PDT)
+Received: by 10.114.171.16 with HTTP; Thu, 5 Jun 2008 05:42:03 -0700 (PDT)
+In-Reply-To: <20080605072822.GD23209@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83915>
 
---nextPart1302165.0IukMCzHmf
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+2008/6/5 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-06-04 22:13:43 +0100, Catalin Marinas wrote:
+>
+>> This patch adds the create and initialise Stack classmethods to
+>> handle the initialisation of StGIT patch series on a Git branch.
+>
+>> diff --git a/stgit/lib/stack.py b/stgit/lib/stack.py
+>> index aca7a36..7375d41 100644
+>> --- a/stgit/lib/stack.py
+>> +++ b/stgit/lib/stack.py
+>> @@ -3,6 +3,10 @@
+>>  import os.path
+>>  from stgit import exception, utils
+>>  from stgit.lib import git, stackupgrade
+>> +from stgit.config import config
+>> +
+>> +class StackException(exception.StgException):
+>> +    """Exception raised by stack objects."""
+>
+> s/stack/L{Stack}/, perhaps?
 
-Adds a new option 'e' to the 'add -p' command loop that lets you
-edit the current hunk in your favourite editor.
+I was more referring to objects in the lib.stack module, not only the
+Stack class. Can this be expressed in any way with the epydoc format?
 
-=2D--
+>> @@ -105,6 +109,14 @@ class PatchOrder(object):
+>>      all =3D property(lambda self: self.applied + self.unapplied + s=
+elf.hidden)
+>>      all_visible =3D property(lambda self: self.applied + self.unapp=
+lied)
+>>
+>> +    @staticmethod
+>> +    def create(stackdir):
+>> +        """Create the PatchOrder specific files
+>> +        """
+>> +        utils.create_empty_file(os.path.join(stackdir, 'applied'))
+>> +        utils.create_empty_file(os.path.join(stackdir, 'unapplied')=
+)
+>> +        utils.create_empty_file(os.path.join(stackdir, 'hidden'))
+>> +
+>>  class Patches(object):
+>>      """Creates L{Patch} objects. Makes sure there is only one such =
+object
+>>      per patch."""
+>
+> Wouldn't it be more consistent if the create function actually
+> returned a PatchOrder object, like other creation functions?
 
-Jeff King wrote:
-> Hmm. Repeating this chunk is a bit ugly. I wonder if the whole loop
-> might be a bit more readable in two sections: first parse into a list of
-> hunks, and then fixup each hunk.
-[...]
->  - Minor fixups and style comments. All of my style comments are "I
->    would have done it as..." and not "Oh God, this is horrible" so I
->    don't think any block acceptance.
+It is a bit more complicated. PatchOrder requires a Stack object in
+__init__ but the stack is not fully set up at this point.
 
-This is the squashed patch, changed according to your comments, and
-with the loop in question rewritten as you suggested.  (It's indeed
-far less obscure.)
+> (You
+> might even consider having these files auto-created whenever you
+> instantiate a PatchOrder object and they don't yet exist.)
 
-Not ready for commit yet because
+This is definitely a solution but at the moment we have to support the
+old infrastructure which fails if the files aren't present. Once we
+don't have any reference to the stgit.stack module, we can do this
+more dynamically.
 
->  - I'd really like to see a few testcases before that, though.
+> Also, the creation function might instead live in the Stack class,
+> since it owns the patch order.
 
-is still missing.
+See my reply to a previous patch with my view on ownership and
+separation of functionality.
 
-=2D Thomas
+>> @@ -133,12 +145,14 @@ class Patches(object):
+>>  class Stack(git.Branch):
+>>      """Represents an StGit stack (that is, a git branch with some e=
+xtra
+>>      metadata)."""
+>> +    __repo_subdir =3D 'patches'
+>> +
+>
+> This needs to be in the previous patch, I think, since you use it
+> there.
 
+Yes.
 
- git-add--interactive.perl |  164 ++++++++++++++++++++++++++++++++++++++++-=
-=2D---
- 1 files changed, 147 insertions(+), 17 deletions(-)
+>> +    def set_parents(self, remote, localbranch):
+>> +        if not localbranch:
+>> +            return
+>> +        if remote:
+>> +            self.set_parent_remote(remote)
+>> +        self.set_parent_branch(localbranch)
+>> +        config.set('branch.%s.stgit.parentbranch' % self._name, loc=
+albranch)
+>
+> Hmm, I don't quite follow. Why is this a no-op if you give a false
+> localbranch? And why is branch.<branchname>.stgit.parentbranch needed=
+,
+> when it's always the same as branch.<branchname>.merge? (Backwards
+> compatibility? Would you mind making a comment about that, in that
+> case?)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 903953e..5fb8402 100755
-=2D-- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -2,6 +2,7 @@
-=20
- use strict;
- use Git;
-+use File::Temp qw/tempfile/;
-=20
- my $repo =3D Git->repository();
-=20
-@@ -18,6 +19,18 @@ my ($fraginfo_color) =3D
- 	$diff_use_color ? (
- 		$repo->get_color('color.diff.frag', 'cyan'),
- 	) : ();
-+my ($diff_plain_color) =3D
-+	$diff_use_color ? (
-+		$repo->get_color('color.diff.plain', ''),
-+	) : ();
-+my ($diff_old_color) =3D
-+	$diff_use_color ? (
-+		$repo->get_color('color.diff.old', 'red'),
-+	) : ();
-+my ($diff_new_color) =3D
-+	$diff_use_color ? (
-+		$repo->get_color('color.diff.new', 'green'),
-+	) : ();
-=20
- my $normal_color =3D $repo->get_color("", "reset");
-=20
-@@ -581,6 +594,13 @@ sub parse_hunk_header {
- 	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
- }
-=20
-+sub format_hunk_header {
-+	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =3D @_;
-+	return ("@@ -$o_ofs" . (($o_cnt !=3D 1) ? ",$o_cnt" : '')
-+		. " +$n_ofs" . (($n_cnt !=3D 1) ? ",$n_cnt" : '')
-+		. " @@\n");
-+}
-+
- sub split_hunk {
- 	my ($text, $display) =3D @_;
- 	my @split =3D ();
-@@ -667,11 +687,7 @@ sub split_hunk {
- 		my $o_cnt =3D $hunk->{OCNT};
- 		my $n_cnt =3D $hunk->{NCNT};
-=20
-=2D		my $head =3D ("@@ -$o_ofs" .
-=2D			    (($o_cnt !=3D 1) ? ",$o_cnt" : '') .
-=2D			    " +$n_ofs" .
-=2D			    (($n_cnt !=3D 1) ? ",$n_cnt" : '') .
-=2D			    " @@\n");
-+		my $head =3D format_hunk_header($o_ofs, $o_cnt, $n_ofs, $n_cnt);
- 		my $display_head =3D $head;
- 		unshift @{$hunk->{TEXT}}, $head;
- 		if ($diff_use_color) {
-@@ -741,11 +757,7 @@ sub merge_hunk {
- 		}
- 		push @line, $line;
- 	}
-=2D	my $head =3D ("@@ -$o0_ofs" .
-=2D		    (($o_cnt !=3D 1) ? ",$o_cnt" : '') .
-=2D		    " +$n0_ofs" .
-=2D		    (($n_cnt !=3D 1) ? ",$n_cnt" : '') .
-=2D		    " @@\n");
-+	my $head =3D format_hunk_header($o0_ofs, $o_cnt, $n0_ofs, $n_cnt);
- 	@{$prev->{TEXT}} =3D ($head, @line);
- }
-=20
-@@ -770,6 +782,122 @@ sub coalesce_overlapping_hunks {
- 	return @out;
- }
-=20
-+sub edit_hunk_manually {
-+	my @oldtext =3D map { @{$_->{TEXT}} } @_;
-+
-+	my ($fh, $editpath) =3D tempfile($repo->repo_path() . "/git-hunk-edit.XXX=
-XXX",
-+				       SUFFIX =3D> ".diff", UNLINK =3D> 0);
-+	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
-+	print $fh @oldtext;
-+	print $fh <<EOF;
-+# ---
-+# To remove '-' lines, make them ' ' lines (context).
-+# To remove '+' lines, delete them.
-+# Empty lines and lines starting with # will be removed.
-+#
-+# Lines starting with @ start a new hunk. Line counts will be adjusted
-+# according to contents. If the line numbers are missing altogether,
-+# they will be inferred from the previous hunk.
-+#
-+# You can change the hunk to your heart's content, but it will be
-+# refused if the end result (the entire patch including your edited
-+# hunk) does not apply cleanly.
-+EOF
-+	close $fh;
-+
-+	my $editor =3D $ENV{GIT_EDITOR} || $repo->config("core.editor")
-+		|| $ENV{VISUAL} || $ENV{EDITOR} || "vi";
-+	system('sh', '-c', $editor.' "$@"', $editor, $editpath);
-+
-+	open $fh, '<', $editpath
-+		or die "failed to open hunk edit file for reading: " . $!;
-+	my @newtext =3D grep { !/^#/ } <$fh>;
-+	close $fh;
-+	unlink(glob($editpath . "*"));
-+	# Reinsert the first hunk header if the user accidentally deleted it
-+	if ($newtext[0] !~ /^@/) {
-+		splice @newtext, 0, 0, $oldtext[0];
-+	}
-+	# Split into hunks
-+	my @hunktexts =3D ();
-+	my $curhunk =3D [];
-+	for (@newtext) {
-+		if (/^@/ && @{$curhunk} > 0) {
-+			push @hunktexts, $curhunk;
-+			$curhunk =3D [];
-+		}
-+		push @{$curhunk}, $_;
-+	}
-+	push @hunktexts, $curhunk;
-+	# Fix the hunk headers
-+	my ($guess_o_ofs, undef, $guess_n_ofs, undef) =3D parse_hunk_header($oldt=
-ext[0]);
-+	for my $hunk (@hunktexts) {
-+		my ($o_ofs, undef, $n_ofs, undef) =3D parse_hunk_header($hunk->[0]);
-+		$o_ofs =3D $guess_o_ofs unless defined $o_ofs;
-+		$n_ofs =3D $guess_n_ofs unless defined $n_ofs;
-+		my $plus_cnt =3D grep /^\+/, @{$hunk};
-+		my $minus_cnt =3D grep /^-/, @{$hunk};
-+		my $context_cnt =3D grep { /^ / || /^$/ } @{$hunk};
-+		my $o_cnt =3D $context_cnt + $minus_cnt;
-+		my $n_cnt =3D $context_cnt + $plus_cnt;
-+		$hunk->[0] =3D format_hunk_header($o_ofs, $o_cnt, $n_ofs, $n_cnt);
-+		$guess_o_ofs =3D $o_ofs + $o_cnt;
-+		$guess_n_ofs =3D $n_ofs + $n_cnt;
-+	}
-+	# Recolor the hunks
-+	my (@hunks) =3D ();
-+	for my $hunk (@hunktexts) {
-+		my @hunkdisplay =3D map {
-+			colored((/^@/  ? $fraginfo_color :
-+				 /^\+/ ? $diff_new_color :
-+				 /^-/  ? $diff_old_color :
-+				 $diff_plain_color),
-+				$_);
-+		} @{$hunk};
-+		push @hunks, {TEXT =3D> $hunk, DISPLAY =3D> \@hunkdisplay};
-+	}
-+
-+	return @hunks;
-+}
-+
-+sub diff_applies {
-+	my $fh;
-+	open $fh, '| git apply --cached --check';
-+	for my $h (@_) {
-+		print $fh @{$h->{TEXT}};
-+	}
-+	return close $fh;
-+}
-+
-+sub edit_hunk_loop {
-+	my ($head, $hunks, $ix) =3D @_;
-+
-+	my @newhunks =3D ($hunks->[$ix]);
-+
-+      EDIT:
-+	while (1) {
-+		@newhunks =3D edit_hunk_manually(@newhunks);
-+		if (!diff_applies($head, @$hunks[0..$ix-1], @newhunks,
-+				  @$hunks[$ix+1..$#{$hunks}])) {
-+			while (1) {
-+				print colored $prompt_color, 'Your edited hunk does not apply. Edit ag=
-ain (saying "no" discards!) [y/n]? ';
-+				my $line =3D <STDIN>;
-+				if ($line =3D~ /^y/i) {
-+					redo EDIT;
-+				}
-+				elsif ($line =3D~ /^n/i) {
-+					return $hunks->[$ix];
-+				}
-+			}
-+		}
-+		if (1 < @newhunks) {
-+			print colored $header_color, "Manually edited into ",
-+			scalar(@newhunks), " hunks.\n";
-+		}
-+		return @newhunks;
-+	}
-+}
-+
- sub help_patch_cmd {
- 	print colored $help_color, <<\EOF ;
- y - stage this hunk
-@@ -781,6 +909,7 @@ J - leave this hunk undecided, see next hunk
- k - leave this hunk undecided, see previous undecided hunk
- K - leave this hunk undecided, see previous hunk
- s - split the current hunk into smaller hunks
-+e - manually edit the current hunk
- ? - print help
- EOF
- }
-@@ -885,6 +1014,7 @@ sub patch_update_file {
- 		if (hunk_splittable($hunk[$ix]{TEXT})) {
- 			$other .=3D '/s';
- 		}
-+		$other .=3D '/e';
- 		for (@{$hunk[$ix]{DISPLAY}}) {
- 			print;
- 		}
-@@ -949,6 +1079,11 @@ sub patch_update_file {
- 				$num =3D scalar @hunk;
- 				next;
- 			}
-+			elsif ($line =3D~ /^e/) {
-+				splice @hunk, $ix, 1, edit_hunk_loop($head, \@hunk, $ix);
-+				$num =3D scalar @hunk;
-+				next;
-+			}
- 			else {
- 				help_patch_cmd($other);
- 				next;
-@@ -985,13 +1120,8 @@ sub patch_update_file {
- 		else {
- 			if ($n_lofs) {
- 				$n_ofs +=3D $n_lofs;
-=2D				$text->[0] =3D ("@@ -$o_ofs" .
-=2D					      (($o_cnt !=3D 1)
-=2D					       ? ",$o_cnt" : '') .
-=2D					      " +$n_ofs" .
-=2D					      (($n_cnt !=3D 1)
-=2D					       ? ",$n_cnt" : '') .
-=2D					      " @@\n");
-+				$text->[0] =3D format_hunk_header($o_ofs, $o_cnt,
-+								$n_ofs, $n_cnt);
- 			}
- 			for (@$text) {
- 				push @result, $_;
-=2D-
-1.5.6.rc1.137.g537d1
+I don't fully follow it either :-). I just copied the code from
+stgit.stack.Series but I don't make any use of it yet. I think it was
+initially written by Yann Dirson for the "branch" command which I
+haven't translated yet. I think branch.<branchname>.stgit.parentbranch
+might be used by the current "pull" or "rebase" implementations. I'll
+comment it out (but still keep it for now) and put a FIXME so that I
+remember when converting the "branch" and "pull" commands.
 
+>> +    @classmethod
+>> +    def initialise(cls, repository, name =3D None):
+>> +        """Initialise a Git branch to handle patch series."""
+>> +        if not name:
+>> +            name =3D repository.current_branch_name
+>> +        # make sure that the corresponding Git branch exists
+>> +        git.Branch(repository, name)
+>> +
+>> +        dir =3D os.path.join(repository.directory, cls.__repo_subdi=
+r, name)
+>> +        compat_dir =3D os.path.join(dir, 'patches')
+>> +        if os.path.exists(dir):
+>> +            raise StackException('%s: branch already initialized' %=
+ name)
+>> +
+>> +        # create the stack directory and files
+>> +        utils.create_dirs(dir)
+>> +        utils.create_dirs(compat_dir)
+>> +        PatchOrder.create(dir)
+>> +        config.set(stackupgrade.format_version_key(name),
+>> +                   str(stackupgrade.FORMAT_VERSION))
+>> +
+>> +        return repository.get_stack(name)
+>
+> This is not quite like the other "create" functions, since it just
+> promotes a branch, without really creating it.
 
---nextPart1302165.0IukMCzHmf
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+That was the intention. For creation, there is Stack.create which
+handles the Git branch creation as well as the StGIT initialisation.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+> What I'd really like to see here, I think, is something like this:
+>
+>  1. You get a Stack object from some stack.Repository method.
+>
+>  2. The Stack object works without having to be initialized, but the
+>     operations that need initialization throw an exception.
+>
+>  3. The Stack object has an initialize() method -- just a normal
+>     method, not a class method.
 
-iD8DBQBIR940qUud07tmzP0RAnjjAKCgiZEwgz9wNVEx48kUJVo/tTeaJQCeMIW8
-gyuKDuv2siYpSJrhibYoBBQ=
-=rtsm
------END PGP SIGNATURE-----
+That was the original behaviour in stgit.stack.Series but if you
+happen to try to access a patch or patchorder, you get some exception
+on missing file form those objects rather than "stack not initialised"
+from Stack.
 
---nextPart1302165.0IukMCzHmf--
+> This will pave the way for automatic initialization -- just call
+> self.initialize() instead of throwing an exception in step (2).
+
+I'm not fully convinced with automatic initialisation. I have some
+branches where I don't use StGIT but I might type a "stg series" by
+mistake. The branch will be promoted to a stack but later Git doesn't
+know about extra files in .git/patches and they aren't handled
+(removed, renamed etc.). I'm more in favour of the explicit
+initialisation.
+
+>> +    @classmethod
+>> +    def create(cls, repository, name,
+>> +               create_at =3D None, parent_remote =3D None, parent_b=
+ranch =3D None):
+>> +        """Create and initialise a Git branch returning the L{Stack=
+} object."""
+>> +        git.Branch.create(repository, name, create_at =3D create_at=
+)
+>> +        stack =3D cls.initialise(repository, name)
+>> +        stack.set_parents(parent_remote, parent_branch)
+>> +        return stack
+>
+> Same point as with the other creation functions.
+>
+> And I'd appreciate some documentation on what the parameters mean --
+> either here, or in the methods you call from here.
+
+Yes, I'll add some description.
+
+Thanks for your comments.
+
+--=20
+Catalin
