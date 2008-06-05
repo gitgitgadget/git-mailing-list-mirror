@@ -1,8 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] git-blame: refactor code to emit "porcelain format"
- output
-Date: Wed, 04 Jun 2008 23:09:06 -0700
-Message-ID: <7v8wxk4dml.fsf_-_@gitster.siamese.dyndns.org>
+Subject: [PATCH 2/2] blame: show "previous" information in
+ --porcelain/--incremental format
+Date: Wed, 04 Jun 2008 23:09:46 -0700
+Message-ID: <7v4p884dlh.fsf_-_@gitster.siamese.dyndns.org>
 References: <940824.46903.qm@web31808.mail.mud.yahoo.com>
  <200806032331.44514.jnareb@gmail.com>
  <7v3ant213k.fsf@gitster.siamese.dyndns.org>
@@ -14,139 +14,134 @@ Cc: Luben Tuikov <ltuikov@yahoo.com>,
 	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
 	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 08:10:17 2008
+X-From: git-owner@vger.kernel.org Thu Jun 05 08:10:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K48fw-00078A-Pb
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 08:10:17 +0200
+	id 1K48gc-0007IV-21
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 08:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbYFEGJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 02:09:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYFEGJY
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 02:09:24 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55886 "EHLO
+	id S1752952AbYFEGKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 02:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYFEGKE
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 02:10:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55940 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955AbYFEGJY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 02:09:24 -0400
+	with ESMTP id S1752949AbYFEGKC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 02:10:02 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF55A3DE6;
-	Thu,  5 Jun 2008 02:09:22 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2496A3E2B;
+	Thu,  5 Jun 2008 02:10:00 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0EAAF3DE5; Thu,  5 Jun 2008 02:09:13 -0400 (EDT)
+ ESMTPSA id 9DD9A3DFA; Thu,  5 Jun 2008 02:09:53 -0400 (EDT)
 In-Reply-To: <7vd4mw4dpp.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
  message of "Wed, 04 Jun 2008 23:07:14 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F12B2244-32C5-11DD-9007-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 077A7996-32C6-11DD-8469-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83863>
 
-Both the --porcelain and --incremental format shared the same output
-format but implemented with two identical codepaths.  This merges them
-into one shared function.
+When the final blame is laid for a line to a <commit, path> pair, it also
+gives a "previous" information to --porcelain and --incremental output
+format.  It gives the parent commit of the blamed commit, _and_ a path in
+that parent commit that corresponds to the blamed path --- in short, it is
+the origin that would have been blamed (or passed blame through) for the
+line _if_ the blamed commit did not change that line.
+
+This unfortunately makes sanity checking of refcount quite complex, so I
+ripped it out for now.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- * This is just a preparatory clean-up patch (on jc/blame topic)
-
- builtin-blame.c |   65 ++++++++++++++++++++++++++----------------------------
- 1 files changed, 31 insertions(+), 34 deletions(-)
+ builtin-blame.c |   42 ++++++++++++------------------------------
+ 1 files changed, 12 insertions(+), 30 deletions(-)
 
 diff --git a/builtin-blame.c b/builtin-blame.c
-index 5c7546d..4b9c601 100644
+index 4b9c601..a46e402 100644
 --- a/builtin-blame.c
 +++ b/builtin-blame.c
-@@ -1479,6 +1479,34 @@ static void write_filename_info(const char *path)
+@@ -82,6 +82,7 @@ static unsigned blame_copy_score;
+  */
+ struct origin {
+ 	int refcnt;
++	struct origin *previous;
+ 	struct commit *commit;
+ 	mmfile_t file;
+ 	unsigned char blob_sha1[20];
+@@ -123,6 +124,8 @@ static inline struct origin *origin_incref(struct origin *o)
+ static void origin_decref(struct origin *o)
+ {
+ 	if (o && --o->refcnt <= 0) {
++		if (o->previous)
++			origin_decref(o->previous);
+ 		free(o->file.ptr);
+ 		free(o);
+ 	}
+@@ -1280,6 +1283,10 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 		struct origin *porigin = sg_origin[i];
+ 		if (!porigin)
+ 			continue;
++		if (!origin->previous) {
++			origin_incref(porigin);
++			origin->previous = porigin;
++		}
+ 		if (pass_blame_to_parent(sb, origin, porigin))
+ 			goto finish;
+ 	}
+@@ -1503,6 +1510,11 @@ static int emit_one_suspect_detail(struct origin *suspect)
+ 	printf("summary %s\n", ci.summary);
+ 	if (suspect->commit->object.flags & UNINTERESTING)
+ 		printf("boundary\n");
++	if (suspect->previous) {
++		struct origin *prev = suspect->previous;
++		printf("previous %s ", sha1_to_hex(prev->commit->object.sha1));
++		write_name_quoted(prev->path, stdout, '\n');
++	}
+ 	return 1;
  }
  
- /*
-+ * Porcelain/Incremental format wants to show a lot of details per
-+ * commit.  Instead of repeating this every line, emit it only once,
-+ * the first time each commit appears in the output.
-+ */
-+static int emit_one_suspect_detail(struct origin *suspect)
-+{
-+	struct commit_info ci;
-+
-+	if (suspect->commit->object.flags & METAINFO_SHOWN)
-+		return 0;
-+
-+	suspect->commit->object.flags |= METAINFO_SHOWN;
-+	get_commit_info(suspect->commit, &ci, 1);
-+	printf("author %s\n", ci.author);
-+	printf("author-mail %s\n", ci.author_mail);
-+	printf("author-time %lu\n", ci.author_time);
-+	printf("author-tz %s\n", ci.author_tz);
-+	printf("committer %s\n", ci.committer);
-+	printf("committer-mail %s\n", ci.committer_mail);
-+	printf("committer-time %lu\n", ci.committer_time);
-+	printf("committer-tz %s\n", ci.committer_tz);
-+	printf("summary %s\n", ci.summary);
-+	if (suspect->commit->object.flags & UNINTERESTING)
-+		printf("boundary\n");
-+	return 1;
-+}
-+
-+/*
-  * The blame_entry is found to be guilty for the range.  Mark it
-  * as such, and show it in incremental output.
-  */
-@@ -1493,22 +1521,7 @@ static void found_guilty_entry(struct blame_entry *ent)
- 		printf("%s %d %d %d\n",
- 		       sha1_to_hex(suspect->commit->object.sha1),
- 		       ent->s_lno + 1, ent->lno + 1, ent->num_lines);
--		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
--			struct commit_info ci;
--			suspect->commit->object.flags |= METAINFO_SHOWN;
--			get_commit_info(suspect->commit, &ci, 1);
--			printf("author %s\n", ci.author);
--			printf("author-mail %s\n", ci.author_mail);
--			printf("author-time %lu\n", ci.author_time);
--			printf("author-tz %s\n", ci.author_tz);
--			printf("committer %s\n", ci.committer);
--			printf("committer-mail %s\n", ci.committer_mail);
--			printf("committer-time %lu\n", ci.committer_time);
--			printf("committer-tz %s\n", ci.committer_tz);
--			printf("summary %s\n", ci.summary);
--			if (suspect->commit->object.flags & UNINTERESTING)
--				printf("boundary\n");
--		}
-+		emit_one_suspect_detail(suspect);
- 		write_filename_info(suspect->path);
- 		maybe_flush_or_die(stdout, "stdout");
+@@ -1866,36 +1878,6 @@ static void sanity_check_refcnt(struct scoreboard *sb)
+ 			baa = 1;
+ 		}
  	}
-@@ -1615,24 +1628,8 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent)
- 	       ent->s_lno + 1,
- 	       ent->lno + 1,
- 	       ent->num_lines);
--	if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
--		struct commit_info ci;
--		suspect->commit->object.flags |= METAINFO_SHOWN;
--		get_commit_info(suspect->commit, &ci, 1);
--		printf("author %s\n", ci.author);
--		printf("author-mail %s\n", ci.author_mail);
--		printf("author-time %lu\n", ci.author_time);
--		printf("author-tz %s\n", ci.author_tz);
--		printf("committer %s\n", ci.committer);
--		printf("committer-mail %s\n", ci.committer_mail);
--		printf("committer-time %lu\n", ci.committer_time);
--		printf("committer-tz %s\n", ci.committer_tz);
--		write_filename_info(suspect->path);
--		printf("summary %s\n", ci.summary);
--		if (suspect->commit->object.flags & UNINTERESTING)
--			printf("boundary\n");
+-	for (ent = sb->ent; ent; ent = ent->next) {
+-		/* Mark the ones that haven't been checked */
+-		if (0 < ent->suspect->refcnt)
+-			ent->suspect->refcnt = -ent->suspect->refcnt;
 -	}
--	else if (suspect->commit->object.flags & MORE_THAN_ONE_PATH)
-+	if (emit_one_suspect_detail(suspect) ||
-+	    (suspect->commit->object.flags & MORE_THAN_ONE_PATH))
- 		write_filename_info(suspect->path);
- 
- 	cp = nth_line(sb, ent->lno);
+-	for (ent = sb->ent; ent; ent = ent->next) {
+-		/*
+-		 * ... then pick each and see if they have the the
+-		 * correct refcnt.
+-		 */
+-		int found;
+-		struct blame_entry *e;
+-		struct origin *suspect = ent->suspect;
+-
+-		if (0 < suspect->refcnt)
+-			continue;
+-		suspect->refcnt = -suspect->refcnt; /* Unmark */
+-		for (found = 0, e = sb->ent; e; e = e->next) {
+-			if (e->suspect != suspect)
+-				continue;
+-			found++;
+-		}
+-		if (suspect->refcnt != found) {
+-			fprintf(stderr, "%s in %s has refcnt %d, not %d\n",
+-				ent->suspect->path,
+-				sha1_to_hex(ent->suspect->commit->object.sha1),
+-				ent->suspect->refcnt, found);
+-			baa = 2;
+-		}
+-	}
+ 	if (baa) {
+ 		int opt = 0160;
+ 		find_alignment(sb, &opt);
 -- 
 1.5.6.rc1.12.g7f718
