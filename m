@@ -1,78 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] Allow git-apply to fix up the line counts
-Date: Thu, 05 Jun 2008 15:36:03 +0200
-Message-ID: <4847EBC3.8060509@viscovery.net>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] builtin-fast-export: Add importing and exporting of
+ revision marks
+Date: Thu, 5 Jun 2008 14:35:11 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051433590.21190@racer>
+References: <BEF1F17D-6F0F-4F09-9CC4-B193B8907901@ai.rug.nl> <1212663163-43064-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 15:37:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Thu Jun 05 15:37:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4FeJ-0007SY-1c
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:37:03 +0200
+	id 1K4Feg-0007bu-OP
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961AbYFENgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 09:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbYFENgJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:36:09 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:13108 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753727AbYFENgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 09:36:08 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K4FdL-00033M-KY; Thu, 05 Jun 2008 15:36:03 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 66D496B7; Thu,  5 Jun 2008 15:36:03 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0806051403370.21190@racer>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754176AbYFENge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 09:36:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbYFENge
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:36:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34195 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754006AbYFENgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 09:36:33 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 13:36:31 -0000
+Received: from unknown (EHLO racer.local) [128.177.17.254]
+  by mail.gmx.net (mp008) with SMTP; 05 Jun 2008 15:36:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4dnlfirD4PjUS5spctW2g5RllZkl87yAvz50g68
+	gm145/HE4jVlby
+X-X-Sender: gene099@racer
+In-Reply-To: <1212663163-43064-1-git-send-email-pdebie@ai.rug.nl>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83930>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Thu, 5 Jun 2008, Johannes Sixt wrote:
-> 
->> Johannes Schindelin schrieb:
->>> +--fixup-line-counts::
->>> +	Fix up the line counts (e.g. after editing the patch without
->>> +	adjusting the hunk headers appropriately).
->> This sort of implies that there is some kind of output that tells the
->> correct line counts. But that isn't the case (if I read the patch
->> correctly). So I suggest to name the option --ignore-line-counts.
-> 
-> But there is some kind of output: the hunks themselves.
+Hi,
 
-Is there? I did this (it rewrites all line counts to 1):
+On Thu, 5 Jun 2008, Pieter de Bie wrote:
 
-$ git diff ..HEAD~1 |
-	sed -e '/^@@/s/,[0-9]+ /,1 /g' |
-	./git-apply --fixup-line-counts
+> This adds the --import-marks and --export-marks to fast-export. These 
+> import and export the marks used to for all revisions exported in a 
+> similar fashion to what fast-import does. The format is the same as 
+> fast-import, so you can create a bidirectional importer / exporter by 
+> using the same marks file on both sides.
 
-and there was no output. Instead, the patch was applied.
+Nicely done.  As I said, I would like the pointer magic to be wrapped in a 
+function so that this programmer does not get confused by it again, but 
+it's not that important.  IOW only do it if you agree strongly.
 
->  And the line 
-> counts are not ignored, but they are actively rewritten.
+Other than that, ACK.
 
-Of course, internally there is some sort of "output" from the fixup
-routine, and the line counts are rewritten and then are not ignored. But
-the user doesn't care about this internal procedure. From the user's
-perspective, the line counts of the input patch are ignored.
-
-Apart from this color of the bikeshed I like your patch.
-
--- Hannes
+Ciao,
+Dscho
