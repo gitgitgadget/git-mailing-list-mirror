@@ -1,103 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use natural ordering to display list of branches.
-Date: Thu, 05 Jun 2008 12:29:03 -0700
-Message-ID: <7vprqv1y0w.fsf@gitster.siamese.dyndns.org>
-References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com>
- <alpine.DEB.1.00.0806051946100.21190@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Patches for some OS's.
+Date: Thu, 5 Jun 2008 20:35:57 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806052034340.21190@racer>
+References: <Pine.LNX.4.64.0806051114260.18454@xenau.zenez.com> <alpine.DEB.1.00.0806051935540.21190@racer> <Pine.LNX.4.64.0806051240550.18454@xenau.zenez.com> <Pine.LNX.4.64.0806051301500.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Cedric Vivier <cedricv@neonux.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 21:30:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 21:38:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4LA3-00018f-Aq
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 21:30:11 +0200
+	id 1K4LIC-0004GT-VY
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 21:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762109AbYFET3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 15:29:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762069AbYFET3S
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 15:29:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60320 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761669AbYFET3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 15:29:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 750D65D6F;
-	Thu,  5 Jun 2008 15:29:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8D6DB5D6C; Thu,  5 Jun 2008 15:29:10 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806051946100.21190@racer> (Johannes
- Schindelin's message of "Thu, 5 Jun 2008 19:47:26 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AE7C9EDA-3335-11DD-BC73-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1752668AbYFETh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 15:37:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYFEThZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 15:37:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45217 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751274AbYFEThZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 15:37:25 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 19:37:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 05 Jun 2008 21:37:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18XnSFJeXAXSS0NKy52qIOBRu0rc1WF0fmwv1TGNa
+	6yAiDZGx0jeauE
+X-X-Sender: gene099@racer
+In-Reply-To: <Pine.LNX.4.64.0806051301500.18454@xenau.zenez.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83962>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Hi,
->
-> On Thu, 5 Jun 2008, Cedric Vivier wrote:
->
->> Hi everyone,
->> 
->> This small patch makes git display list of branches in natural order.
->> This way, when you name your branches against, for instance, a bug number from
->> some bug-tracking tool, the list will show up in a natural/human/logical order.
->> 
->> Current behavior for "git branch":
->> BUG-1040-doing-bar-is-too-slow
->> BUG-84-calling-Z-with-null-segfaults
->> BUG-900-program-freezes-when-user-click-on-button
->> experimental-feature-X
->> master
->> 
->> With the patch:
->> BUG-84-calling-Z-with-null-segfaults
->> BUG-900-program-freezes-when-user-click-on-button
->> BUG-1040-doing-bar-takes-too-much-time
->> experimental-feature-X
->> master
->> 
->> 
->> Signed-off-by: Cedric Vivier <cedricv@neonux.com>
->> ---
->
-> This is not a good commit message.
->
->> @@ -279,7 +280,7 @@ static int ref_cmp(const void *r1, const void *r2)
->> 
->>  	if (c1->kind != c2->kind)
->>  		return c1->kind - c2->kind;
->> -	return strcmp(c1->name, c2->name);
->> +	return strnatcmp(c1->name, c2->name);
->>  }
->> 
->>  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->
-> What about people preferring the status quo?  I think a command line 
-> option would be in order.
->
-> Also, you _might_ want to provide a test case, so that it does not get 
-> broken by accident.
->
-> Other than that: nice.
+On Thu, 5 Jun 2008, Boyd Lynn Gerber wrote:
 
-Perhaps, as long as we somehow mark clearly the new files added with this
-patch as "borrowed code" and not part of git proper, so that people do not
-imitate tons of style issues these files have (header inclusion, Emacs
-style -*- mode -*- line at the top, useless typedef of nat_char, macros
-whose sole purpose to cast arguments given toupper() to (unsigned char),
-"partial change history" in comments, short function definition header
-split across two lines, multi-line comments).
+> On Thu, 5 Jun 2008, Boyd Lynn Gerber wrote:
+>
+> But I also have to get things working on 20 different 
+> Linux/UNIX/Unix-Like variants.  So I have 20 different OS specific 
+> directories.  You would think you could be a little more tolerant of a 
+> person new to the list.  I submitted my patches to what I thought was a 
+> patch list, not a general email list.  So, I am sorry for my ignorance 
+> of the list/patching ediquit.
 
-What the big license notice comment at the top says sounded Ok to me as
-well.
+Hey, I did not mean to upset you!  I would not have responded if I did not 
+find your work valuable; However, I am too short on time to be overly 
+polite.  Sorry!
+
+> I will follow it from now on, but I may drop membership to the list.  
+> It takes a lot of time and git is just one tool of many, I have to use.  
+> I still have to use bitkeeper for the sources that use them.  So please 
+> allow me time to adjust to your methods.
+
+Heh, Git is a high volume list, so nobody can blame you for dropping out 
+because you are busy.
+
+Ciao,
+Dscho
