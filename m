@@ -1,101 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
-Date: Thu, 5 Jun 2008 05:20:16 -0400
-Message-ID: <20080605092016.GA16748@sigill.intra.peff.net>
-References: <200805232221.45406.trast@student.ethz.ch> <200806050954.13244.trast@student.ethz.ch> <20080605081126.GA16416@sigill.intra.peff.net> <200806051105.02802.trast@student.ethz.ch>
+From: Adam Simpkins <adam@adamsimpkins.net>
+Subject: Re: log --graph --first-parent weirdness
+Date: Thu, 5 Jun 2008 02:28:13 -0700
+Message-ID: <20080605092812.GA14116@adamsimpkins.net>
+References: <20080604150042.GA3038@mithlond.arda.local> <7vmym1xgy4.fsf@gitster.siamese.dyndns.org> <20080604173820.GA3038@mithlond.arda.local> <7v1w3dxeh9.fsf@gitster.siamese.dyndns.org>
+Reply-To: Adam Simpkins <adam@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 05 11:21:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 11:30:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Bek-00052z-AE
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:21:14 +0200
+	id 1K4BmP-0007n6-96
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 11:29:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753137AbYFEJUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 05:20:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYFEJUV
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:20:21 -0400
-Received: from peff.net ([208.65.91.99]:4729 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751255AbYFEJUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 05:20:20 -0400
-Received: (qmail 20351 invoked by uid 111); 5 Jun 2008 09:20:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 05 Jun 2008 05:20:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jun 2008 05:20:16 -0400
+	id S1755291AbYFEJ2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 05:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754981AbYFEJ2Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 05:28:16 -0400
+Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:55401 "EHLO
+	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754780AbYFEJ2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 05:28:14 -0400
+Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 47E451B4093;
+	Thu,  5 Jun 2008 05:28:14 -0400 (EDT)
+Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: simpkins-AT-adamsimpkins.net) with ESMTP id 21BF61B4036;
+	Thu,  5 Jun 2008 05:28:14 -0400 (EDT)
+Received: by sleipnir.adamsimpkins.net (Postfix, from userid 1000)
+	id 9439C14100CC; Thu,  5 Jun 2008 02:28:13 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200806051105.02802.trast@student.ethz.ch>
+In-Reply-To: <7v1w3dxeh9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83888>
 
-On Thu, Jun 05, 2008 at 11:04:58AM +0200, Thomas Rast wrote:
+On Wed, Jun 04, 2008 at 11:05:38AM -0700, Junio C Hamano wrote:
+> 
+> I'd really suggest changing the "M" and use "*" everywhere.
 
-> (Somehow it seems rather ironic that I'm trying to implement a feature
-> that provides plenty of live bullets, yet keep shooting myself with
-> the _MUA_.)
+That's fine with me.  Here's a simple patch to change the behavior.
 
-Heh.
 
-> I should have provided a definition, sorry.  By "your" scheme, I meant
-> the one where one is restricted to deleting existing lines, and thus
-> deletes '-' lines to disable them; by "my" scheme, where one is free
-> to edit and changes '-' lines to context to disable them.
+-- >8 --
+"git log --graph": print '*' for all commits, including merges
 
-OK, thanks for the clarification.
+Previously, merge commits were printed with 'M' instead of '*'.  This
+had the potential to confuse users when not all parents of the merge
+commit were included in the log output.
 
-> At least it's my current understanding that, under the above
-> definition, "your" scheme is what you actually proposed in
->   http://www.spinics.net/lists/git/msg67478.html
->   [why doesn't Google find gmane?]
-> but I misunderstood and implemented "my" scheme.
+As Junio has pointed out, merge commits can almost always be easily
+identified from the log message, anyway.
 
-For the record, "my" scheme was only half thought-through, and I think I
-actually like "your" scheme better. Once we give the user an editor,
-restricting them to a tiny subset of editor operations seems error-prone
-and annoying, since we have no way of enforcing those operations except
-to wait until after they edit and say "oops, you did something bad."
+Signed-off-by: Adam Simpkins <adam@adamsimpkins.net>
+---
+ graph.c |   14 --------------
+ 1 files changed, 0 insertions(+), 14 deletions(-)
 
-> [Let's just forget about the original patch at the top of the thread;
-> in retrospect, it _is_ clunky, and the UI didn't get any replies in
-> favour.]
-
-It seems like Junio isn't all that keen on the raw patch-editing
-interface. And even if we do like it, I think there is still room for a
-less error-prone but more restrictive feature that mere mortals can use.
-So maybe there is a better interface yet.
-
-What about 'S' to do a "line split"; that is, take the current hunk, and
-anywhere there are adjacent changed lines, split them into their own
-hunks. I.e. the hunk,
-
-   line 1
-  +line 2
-  -line 3
-   line 4
-  -line 5
-
-becomes three hunks:
-
-   line 1
-  +line 2
-
-  -line 3
-   line 4
-
-  -line 5
-
-and then we proceed as usual, staging or not each split hunk. It would
-be clunky to separate one or two lines from a huge chunk (since you
-would inadvertently split the huge chunk and have to stage each
-individually). But in many cases you can split into smaller hunks first
-with 's'.
-
--Peff
+diff --git a/graph.c b/graph.c
+index edfab2d..c50adcd 100644
+--- a/graph.c
++++ b/graph.c
+@@ -638,20 +638,6 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
+ 	}
+ 
+ 	/*
+-	 * Print 'M' for merge commits
+-	 *
+-	 * Note that we don't check graph->num_parents to determine if the
+-	 * commit is a merge, since that only tracks the number of
+-	 * "interesting" parents.  We want to print 'M' for merge commits
+-	 * even if they have less than 2 interesting parents.
+-	 */
+-	if (graph->commit->parents != NULL &&
+-	    graph->commit->parents->next != NULL) {
+-		strbuf_addch(sb, 'M');
+-		return;
+-	}
+-
+-	/*
+ 	 * Print '*' in all other cases
+ 	 */
+ 	strbuf_addch(sb, '*');
+-- 
+1.5.6.rc1.13.g14be6
