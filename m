@@ -1,133 +1,81 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 03/10] Move builtin-remote's skip_prefix() to git-compat-util.h
-Date: Thu,  5 Jun 2008 22:44:29 +0200
-Message-ID: <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org>
+Subject: [PATCH 05/10] parseopt: add a new PARSE_OPT_ARGV0_IS_AN_OPTION option
+Date: Thu,  5 Jun 2008 22:44:31 +0200
+Message-ID: <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org>
 References: <cover.1212698317.git.vmiklos@frugalware.org>
  <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org>
  <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org>
+ <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org>
+ <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 22:46:22 2008
+X-From: git-owner@vger.kernel.org Thu Jun 05 22:46:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4MLc-0006Hd-TA
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 22:46:13 +0200
+	id 1K4MLe-0006Hd-OK
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 22:46:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbYFEUoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 16:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYFEUoh
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:44:37 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60244 "EHLO
+	id S1753900AbYFEUop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 16:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbYFEUoo
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:44:44 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46515 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854AbYFEUoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 16:44:32 -0400
+	with ESMTP id S1752758AbYFEUod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 16:44:33 -0400
 Received: from vmobile.example.net (dsl5401CC68.pool.t-online.hu [84.1.204.104])
-	by yugo.frugalware.org (Postfix) with ESMTP id D72371DDC5F
+	by yugo.frugalware.org (Postfix) with ESMTP id D82861DDC60
 	for <git@vger.kernel.org>; Thu,  5 Jun 2008 22:44:29 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id BCDD618E2AB; Thu,  5 Jun 2008 22:44:37 +0200 (CEST)
+	id BE5C918E2AA; Thu,  5 Jun 2008 22:44:37 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.rc0.dirty
-In-Reply-To: <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org>
+In-Reply-To: <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1212698317.git.vmiklos@frugalware.org>
 References: <cover.1212698317.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83974>
 
-builtin-remote.c and parse-options.c both have a skip_prefix() function,
-for the same purpose. Move builtin-remote's one to git-compat-util.h and
-let parse-options use it as well.
+This new option tells parse-options not to ignore argv[0]. This is
+useful when argv cames from split_cmdline(), as in that case argv[0]
+contains a valuable option as well.
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- builtin-remote.c  |    6 ------
- git-compat-util.h |    6 ++++++
- parse-options.c   |   14 ++++----------
- 3 files changed, 10 insertions(+), 16 deletions(-)
+ parse-options.c |    5 +++++
+ parse-options.h |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index c49f00f..9c25018 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -29,12 +29,6 @@ static inline int postfixcmp(const char *string, const char *postfix)
- 	return strcmp(string + len1 - len2, postfix);
- }
- 
--static inline const char *skip_prefix(const char *name, const char *prefix)
--{
--	return !name ? "" :
--		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
--}
--
- static int opt_parse_track(const struct option *opt, const char *arg, int not)
- {
- 	struct path_list *list = opt->value;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 01c4045..af515d4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -127,6 +127,12 @@ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
- 
- extern int prefixcmp(const char *str, const char *prefix);
- 
-+static inline const char *skip_prefix(const char *name, const char *prefix)
-+{
-+	return !name ? "" :
-+		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
-+}
-+
- #ifdef NO_MMAP
- 
- #ifndef PROT_READ
 diff --git a/parse-options.c b/parse-options.c
-index acf3fe3..aa164d0 100644
+index aa164d0..4d4f302 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -22,12 +22,6 @@ static inline const char *get_arg(struct optparse_t *p)
- 	return *++p->argv;
- }
- 
--static inline const char *skip_prefix(const char *str, const char *prefix)
--{
--	size_t len = strlen(prefix);
--	return strncmp(str, prefix, len) ? NULL : str + len;
--}
--
- static int opterror(const struct option *opt, const char *reason, int flags)
+@@ -249,6 +249,11 @@ int parse_options(int argc, const char **argv, const struct option *options,
  {
- 	if (flags & OPT_SHORT)
-@@ -161,7 +155,7 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 	struct optparse_t args = { argv + 1, argv, argc - 1, 0, NULL };
  
- 		rest = skip_prefix(arg, options->long_name);
- 		if (options->type == OPTION_ARGUMENT) {
--			if (!rest)
-+			if (!strcmp(rest, arg))
- 				continue;
- 			if (*rest == '=')
- 				return opterror(options, "takes no value", flags);
-@@ -170,7 +164,7 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
- 			p->out[p->cpidx++] = arg - 2;
- 			return 0;
- 		}
--		if (!rest) {
-+		if (!strcmp(rest, arg)) {
- 			/* abbreviated? */
- 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
- is_abbreviated:
-@@ -201,9 +195,9 @@ is_abbreviated:
- 			flags |= OPT_UNSET;
- 			rest = skip_prefix(arg + 3, options->long_name);
- 			/* abbreviated and negated? */
--			if (!rest && !prefixcmp(options->long_name, arg + 3))
-+			if (!strcmp(rest, arg + 3) && !prefixcmp(options->long_name, arg + 3))
- 				goto is_abbreviated;
--			if (!rest)
-+			if (!strcmp(rest, arg + 3))
- 				continue;
- 		}
- 		if (*rest) {
++	if (flags & PARSE_OPT_ARGV0_IS_AN_OPTION) {
++		args.argv = argv;
++		args.argc = argc;
++	}
++
+ 	for (; args.argc; args.argc--, args.argv++) {
+ 		const char *arg = args.argv[0];
+ 
+diff --git a/parse-options.h b/parse-options.h
+index 4ee443d..3238401 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -20,6 +20,7 @@ enum parse_opt_type {
+ enum parse_opt_flags {
+ 	PARSE_OPT_KEEP_DASHDASH = 1,
+ 	PARSE_OPT_STOP_AT_NON_OPTION = 2,
++	PARSE_OPT_ARGV0_IS_AN_OPTION = 4,
+ };
+ 
+ enum parse_opt_option_flags {
 -- 
 1.5.6.rc0.dirty
