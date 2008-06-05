@@ -1,77 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Keep committer and committer dates
-Date: Wed, 04 Jun 2008 22:03:17 -0700
-Message-ID: <7vy75k4goa.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806032115340.13507@racer.site.net>
- <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
- <20080604102906.GA2126@diana.vm.bytemark.co.uk>
- <m3ej7dzc7y.fsf@localhost.localdomain>
- <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806041641150.13507@racer.site.net>
- <20080605010330.GB24466@leksak.fem-net>
- <alpine.DEB.1.00.0806050523120.21190@racer>
+From: Greg KH <greg@kroah.com>
+Subject: Re: git clone stable-2.6.25.y fails over HTTP
+Date: Wed, 4 Jun 2008 22:08:55 -0700
+Message-ID: <20080605050855.GA22825@kroah.com>
+References: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com> <20080604154523.GA25747@kroah.com> <7vr6bdxh3l.fsf@gitster.siamese.dyndns.org> <20080605040315.GA21798@kroah.com> <7vabi05xl1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stephan Beyer <s-beyer@gmx.net>, Jaroslav Kysela <perex@perex.cz>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 07:04:52 2008
+Cc: Andrew Klossner <andrew@cesa.opbu.xerox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 07:18:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K47eb-0000Mw-8C
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 07:04:49 +0200
+	id 1K47rV-0003hC-5C
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 07:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbYFEFDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 01:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbYFEFDm
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 01:03:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397AbYFEFDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 01:03:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 219B21C93;
-	Thu,  5 Jun 2008 01:03:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0EAE01C92; Thu,  5 Jun 2008 01:03:30 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806050523120.21190@racer> (Johannes
- Schindelin's message of "Thu, 5 Jun 2008 05:25:02 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C29C66A8-32BC-11DD-91B5-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751523AbYFEFRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 01:17:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbYFEFRB
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 01:17:01 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:54160 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751476AbYFEFRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 01:17:00 -0400
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1K47q5-0006sA-5d; Thu, 05 Jun 2008 05:16:49 +0000
+Content-Disposition: inline
+In-Reply-To: <7vabi05xl1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83860>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Jun 04, 2008 at 09:12:42PM -0700, Junio C Hamano wrote:
+> Greg KH <greg@kroah.com> writes:
+> 
+> > On Wed, Jun 04, 2008 at 10:09:02AM -0700, Junio C Hamano wrote:
+> >
+> >> A quick fix is obviously to remove the extra prefix but it makes me wonder
+> >> how these two "stable" repositories were prepared differently.  Could this
+> >> be a regression in "git clone"?  Or perhaps you "clone -s"'s Linus's
+> >> repository slightly differently between them?
+> >
+> > That's odd.
+> >
+> > Chris was the one that created the .24 tree and I created the .25 tree,
+> > so we must have done so differently, sorry.
+> 
+> No need to be sorry.  Thanks for raising the issue up.
+> 
+> I think I have one possible explanation.  When "git clone" was rewritten
+> in C some time ago, it started to dereference symlinks, and newer git
+> would dereference /pub -> /home/ftp/pub when you do:
+> 
+> 	git clone -s --bare /pub/scm/linux/kernel/git/torvalds/linux-2.6/ linux-2.6.2x.y
+> 
+> while the scripted version used to keep /pub/scm path.
+> 
+> A bit further digging is necessary to make sure if we can fix this easily,
+> but I suspect this is worth fixing.
 
-> Of course it is possible!  I even pointed to a method!
->
-> The _point_ was that we do not want to recommend it.  And giving prominent 
-> support for it, such as introducing a command line parameter, _would_ 
-> have the effect of recommending it.
+I can duplicate what I did, and it did it again:
+	on master.kernel.org:
+	$ cd /pub/scm/linux/kernel/git/stable/
+	$ git clone -s --bare ../torvalds/linux-2.6.git/ test
+	$ cat test/objects/info/alternates
+	/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects
 
-The world is no black and white, but here are some guidelines to think
-about this issue:
+I'm guessing this is because /pub/ is a symlink:
+	$ ls -l /pub
+	lrwxrwxrwx 1 root root 13 Feb  4  2006 /pub -> /home/ftp/pub
 
- - We need to be able to lie when we are importing from a foreign SCM.  We
-   want to get identical import if two different people imported from
-   exactly the same foreign history at two different times.  Obviously
-   recording the person as the committer who happened to run the import
-   does not work here.
+	$ git --version
+	git version 1.5.5.3
 
- - When we are mechanically filtering a history (e.g. filter-branch
-   --subdirectory-filter), the point of the rewrite is not about
-   reorganizing the commits but tidying up the history.  We would most
-   likely want to keep the committer here, too.
+thanks,
 
- - We encourage private history to be tidied up before publishing by
-   giving flexible ways to cherry-pick and rebase.  On the other hand, we
-   very strongly discourage rebasing other people's commits.  If you are
-   rebasing your own commits, there is no need to lie.
+greg k-h
