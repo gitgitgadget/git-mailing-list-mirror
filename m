@@ -1,103 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] handle http urls with query string ("?foo") correctly
-Date: Thu, 05 Jun 2008 00:57:39 -0700
-Message-ID: <7vtzg82u18.fsf@gitster.siamese.dyndns.org>
-References: <200806050128.33467.bombe@pterodactylus.net>
- <alpine.DEB.1.00.0806050103520.21190@racer>
- <200806050848.43462.bombe@pterodactylus.net>
- <alpine.DEB.1.00.0806050758210.21190@racer>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH v2] rollback lock files on more signals than just SIGINT
+Date: Thu, 5 Jun 2008 09:02:02 +0100
+Message-ID: <e2b179460806050102m1ca15b2fj61d32ca45e4770d4@mail.gmail.com>
+References: <E1K1eXC-0005xW-Jd@fencepost.gnu.org>
+	 <alpine.DEB.1.00.0805291341290.13507@racer.site.net>
+	 <483EAD69.9090001@gnu.org>
+	 <alpine.DEB.1.00.0805291456030.13507@racer.site.net>
+	 <483EBF1F.9000809@gnu.org>
+	 <alpine.DEB.1.00.0805291541430.13507@racer.site.net>
+	 <E1K1jnV-0007HC-Om@fencepost.gnu.org>
+	 <e2b179460806040440m29f2326ek3757660646686623@mail.gmail.com>
+	 <7vhcc9xg5j.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David =?utf-8?B?4oCYQm9tYmXigJk=?= Roden 
-	<bombe@pterodactylus.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 09:58:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Paolo Bonzini" <bonzini@gnu.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git mailing list" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 10:03:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4AMw-0004B1-WB
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 09:58:47 +0200
+	id 1K4AR1-0005OW-LJ
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555AbYFEH5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 03:57:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbYFEH5y
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 03:57:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39168 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752432AbYFEH5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 03:57:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E35DD2B76;
-	Thu,  5 Jun 2008 03:57:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id F05962B75; Thu,  5 Jun 2008 03:57:46 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806050758210.21190@racer> (Johannes
- Schindelin's message of "Thu, 5 Jun 2008 08:15:01 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 185D89EC-32D5-11DD-BA5C-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1752602AbYFEICH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 04:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbYFEICG
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:02:06 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:60791 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752391AbYFEICE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 04:02:04 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so335639wxd.4
+        for <git@vger.kernel.org>; Thu, 05 Jun 2008 01:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=CHKNegEZT5Wh2nYDgrPMkXZ8lIzdu8aGp2MYJUgGhcQ=;
+        b=T6PQgwjqhWTL43DzX+Uv/L4qWeUcYUwdkSAENyR4+bH+sbbpWKbK+tc9OU1y7xrSIA
+         4Vheob4eEOAihiODrzWicugRwBLdZulVXF7o5fYHUR0YenxXHYzMhKC5Mq4R5klyM19W
+         TXEntROWVD55dHdi6Vn36RAlyHMgbxcdsp4Hs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ZfDpDloDrWqiSC9Ntp+EKmA4JpSB6jTDRCuWCnsIW6fBNUTISXScNlV0XIo+lxN61Y
+         t6JveWIxuP7U9r0B40TKLJbMWwME/7LCUtwwjpNGZ7L+XmKBEV1dgHJBiFg3t/CKyruK
+         UhR71mVtAXP91X5y28nevkSLtQiGezzjSfLz0=
+Received: by 10.70.31.4 with SMTP id e4mr1177748wxe.12.1212652922189;
+        Thu, 05 Jun 2008 01:02:02 -0700 (PDT)
+Received: by 10.70.110.16 with HTTP; Thu, 5 Jun 2008 01:02:02 -0700 (PDT)
+In-Reply-To: <7vhcc9xg5j.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83876>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Usually, this comes before the "---", and your comments/answers after it.  
-> And the first line would be the subject:
+2008/6/4 Junio C Hamano <gitster@pobox.com>:
+> "Mike Ralphson" <mike.ralphson@gmail.com> writes:
 >
-> -- snip --
-> Handle http urls with query string ("?foo") correctly
+>> 2008/5/29 Paolo Bonzini <bonzini@gnu.org>:
+>> ...
+>> This addition to the testsuite breaks it on AIX with the default sh
+>> (ksh). Replacing the explicit sh -c with $SHELL_PATH -c fixes it for
+>> me (as I have SHELL_PATH pointing to bash). If that's acceptable I can
+>> post a patch if necessary.
 >
-> Git breaks when a repository is cloned from an http url that contains a
-> query string. This patch fixes this behaviour be inserting the name of
-> the requested object (like "/info/refs") before the query string.
-> -- snap --
->
-> And of course, you usually sign off your patches.
+> Like the attached one?
 
-Please wait a minute and step back.
+Yes, something like that 8-) Thanks for applying. Actually getting
+patches out from my work domain without the egregious disclaimer, and
+to get them to actually show up in the list is still a bit of a faff
+here.
 
-Before going into the presentation, I have a strong doubt about what this
-is trying to solve.
+> I noticed quite a many "sh" dependencies in other test scripts:
 
-Without reading the patch at all (and the lazyness is only half the reason
-for not reading the patch before thinking about the issue --- it is also a
-good lithmus test to make sure that the commit log explains what is done
-well), my understanding is that this peculiar http-hosted git repository
-takes:
+I'm happy to pick up a bit of janitor work on the tests after this
+release. I notice we have a few non-executable test scripts, and
+several 'duplicate' test numbers which might also want to be looked
+at?
 
-	http://foo.bar.xz/serve.cgi?repo=foo.git/
-
-as the base URL, and the patch author wants us to ask for (for example)
-"info/alternates" as
-
-	http://foo.bar.xz/serve.cgi/info/alternates?repo=foo.git/
-
-or something like that, not the usual:
-
-	http://foo.bar.xz/serve.cgi?repo=foo.git/info/alternates
-
-Two comments.
-
- (1) If that is not the problem being tackled, the commit log needs to
-     explain the issue much better.  "git breaks" is obviously not good
-     enough to convey the issue to me, and if the description was not
-     clear for me to understand what is being fixed, it has no hope to
-     explain the fix to other people.
-
- (2) If that is indeed the issue being tackled, sorry, it is not how "dumb
-     protocol" http server is expected to behave.  Your server needs
-     fixing.
-
-If the protocol being used is still the "dumb commit walker" protocol,
-then, given the base URL of the repository $URL, "info/refs" must exist at
-"$URL/info/refs", and a loose object deadbeef... must exist at
-"$URL/objects/de/adbeef...".  That's how the protocol is defined.
-
-If we want to have a CGI on the server side, the client _could_ even talk
-"git native" protocol or something similar to it.  But that is not what is
-attempted with this patch as far as I can tell.
+Cheers, Mike
