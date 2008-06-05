@@ -1,188 +1,133 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 01/10] Move split_cmdline() to alias.c
-Date: Thu,  5 Jun 2008 22:44:27 +0200
-Message-ID: <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org>
+Subject: [PATCH 03/10] Move builtin-remote's skip_prefix() to git-compat-util.h
+Date: Thu,  5 Jun 2008 22:44:29 +0200
+Message-ID: <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org>
 References: <cover.1212698317.git.vmiklos@frugalware.org>
+ <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org>
+ <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Jun 05 22:46:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4MLd-0006Hd-GN
+	id 1K4MLc-0006Hd-TA
 	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 22:46:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbYFEUol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 16:44:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYFEUoj
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:44:39 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60241 "EHLO
+	id S1753574AbYFEUoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 16:44:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYFEUoh
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:44:37 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60244 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752411AbYFEUoc (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751854AbYFEUoc (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 5 Jun 2008 16:44:32 -0400
 Received: from vmobile.example.net (dsl5401CC68.pool.t-online.hu [84.1.204.104])
-	by yugo.frugalware.org (Postfix) with ESMTP id 4E8591DDC5B
+	by yugo.frugalware.org (Postfix) with ESMTP id D72371DDC5F
 	for <git@vger.kernel.org>; Thu,  5 Jun 2008 22:44:29 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 804A418E2A9; Thu,  5 Jun 2008 22:44:37 +0200 (CEST)
+	id BCDD618E2AB; Thu,  5 Jun 2008 22:44:37 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.rc0.dirty
-In-Reply-To: <cover.1212698317.git.vmiklos@frugalware.org>
+In-Reply-To: <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1212698317.git.vmiklos@frugalware.org>
 References: <cover.1212698317.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83973>
 
-split_cmdline() is currently used for aliases only, but later it can be
-useful for other builtins as well. Move it to alias.c for now,
-indicating that originally it's for aliases, but we'll have it in libgit
-this way.
+builtin-remote.c and parse-options.c both have a skip_prefix() function,
+for the same purpose. Move builtin-remote's one to git-compat-util.h and
+let parse-options use it as well.
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- alias.c |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- cache.h |    1 +
- git.c   |   53 -----------------------------------------------------
- 3 files changed, 55 insertions(+), 53 deletions(-)
+ builtin-remote.c  |    6 ------
+ git-compat-util.h |    6 ++++++
+ parse-options.c   |   14 ++++----------
+ 3 files changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/alias.c b/alias.c
-index 995f3e6..ccb1108 100644
---- a/alias.c
-+++ b/alias.c
-@@ -21,3 +21,57 @@ char *alias_lookup(const char *alias)
- 	git_config(alias_lookup_cb, NULL);
- 	return alias_val;
- }
-+
-+int split_cmdline(char *cmdline, const char ***argv)
-+{
-+	int src, dst, count = 0, size = 16;
-+	char quoted = 0;
-+
-+	*argv = xmalloc(sizeof(char*) * size);
-+
-+	/* split alias_string */
-+	(*argv)[count++] = cmdline;
-+	for (src = dst = 0; cmdline[src];) {
-+		char c = cmdline[src];
-+		if (!quoted && isspace(c)) {
-+			cmdline[dst++] = 0;
-+			while (cmdline[++src]
-+					&& isspace(cmdline[src]))
-+				; /* skip */
-+			if (count >= size) {
-+				size += 16;
-+				*argv = xrealloc(*argv, sizeof(char*) * size);
-+			}
-+			(*argv)[count++] = cmdline + dst;
-+		} else if (!quoted && (c == '\'' || c == '"')) {
-+			quoted = c;
-+			src++;
-+		} else if (c == quoted) {
-+			quoted = 0;
-+			src++;
-+		} else {
-+			if (c == '\\' && quoted != '\'') {
-+				src++;
-+				c = cmdline[src];
-+				if (!c) {
-+					free(*argv);
-+					*argv = NULL;
-+					return error("cmdline ends with \\");
-+				}
-+			}
-+			cmdline[dst++] = c;
-+			src++;
-+		}
-+	}
-+
-+	cmdline[dst] = 0;
-+
-+	if (quoted) {
-+		free(*argv);
-+		*argv = NULL;
-+		return error("unclosed quote");
-+	}
-+
-+	return count;
-+}
-+
-diff --git a/cache.h b/cache.h
-index 092a997..e342ad3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -831,5 +831,6 @@ int report_path_error(const char *ps_matched, const char **pathspec, int prefix_
- void overlay_tree_on_cache(const char *tree_name, const char *prefix);
- 
- char *alias_lookup(const char *alias);
-+int split_cmdline(char *cmdline, const char ***argv);
- 
- #endif /* CACHE_H */
-diff --git a/git.c b/git.c
-index 272bf03..9935069 100644
---- a/git.c
-+++ b/git.c
-@@ -87,59 +87,6 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 	return handled;
+diff --git a/builtin-remote.c b/builtin-remote.c
+index c49f00f..9c25018 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -29,12 +29,6 @@ static inline int postfixcmp(const char *string, const char *postfix)
+ 	return strcmp(string + len1 - len2, postfix);
  }
  
--static int split_cmdline(char *cmdline, const char ***argv)
+-static inline const char *skip_prefix(const char *name, const char *prefix)
 -{
--	int src, dst, count = 0, size = 16;
--	char quoted = 0;
--
--	*argv = xmalloc(sizeof(char*) * size);
--
--	/* split alias_string */
--	(*argv)[count++] = cmdline;
--	for (src = dst = 0; cmdline[src];) {
--		char c = cmdline[src];
--		if (!quoted && isspace(c)) {
--			cmdline[dst++] = 0;
--			while (cmdline[++src]
--					&& isspace(cmdline[src]))
--				; /* skip */
--			if (count >= size) {
--				size += 16;
--				*argv = xrealloc(*argv, sizeof(char*) * size);
--			}
--			(*argv)[count++] = cmdline + dst;
--		} else if(!quoted && (c == '\'' || c == '"')) {
--			quoted = c;
--			src++;
--		} else if (c == quoted) {
--			quoted = 0;
--			src++;
--		} else {
--			if (c == '\\' && quoted != '\'') {
--				src++;
--				c = cmdline[src];
--				if (!c) {
--					free(*argv);
--					*argv = NULL;
--					return error("cmdline ends with \\");
--				}
--			}
--			cmdline[dst++] = c;
--			src++;
--		}
--	}
--
--	cmdline[dst] = 0;
--
--	if (quoted) {
--		free(*argv);
--		*argv = NULL;
--		return error("unclosed quote");
--	}
--
--	return count;
+-	return !name ? "" :
+-		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
 -}
 -
- static int handle_alias(int *argcp, const char ***argv)
+ static int opt_parse_track(const struct option *opt, const char *arg, int not)
  {
- 	int envchanged = 0, ret = 0, saved_errno = errno;
+ 	struct path_list *list = opt->value;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 01c4045..af515d4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -127,6 +127,12 @@ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
+ 
+ extern int prefixcmp(const char *str, const char *prefix);
+ 
++static inline const char *skip_prefix(const char *name, const char *prefix)
++{
++	return !name ? "" :
++		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
++}
++
+ #ifdef NO_MMAP
+ 
+ #ifndef PROT_READ
+diff --git a/parse-options.c b/parse-options.c
+index acf3fe3..aa164d0 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -22,12 +22,6 @@ static inline const char *get_arg(struct optparse_t *p)
+ 	return *++p->argv;
+ }
+ 
+-static inline const char *skip_prefix(const char *str, const char *prefix)
+-{
+-	size_t len = strlen(prefix);
+-	return strncmp(str, prefix, len) ? NULL : str + len;
+-}
+-
+ static int opterror(const struct option *opt, const char *reason, int flags)
+ {
+ 	if (flags & OPT_SHORT)
+@@ -161,7 +155,7 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 
+ 		rest = skip_prefix(arg, options->long_name);
+ 		if (options->type == OPTION_ARGUMENT) {
+-			if (!rest)
++			if (!strcmp(rest, arg))
+ 				continue;
+ 			if (*rest == '=')
+ 				return opterror(options, "takes no value", flags);
+@@ -170,7 +164,7 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 			p->out[p->cpidx++] = arg - 2;
+ 			return 0;
+ 		}
+-		if (!rest) {
++		if (!strcmp(rest, arg)) {
+ 			/* abbreviated? */
+ 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
+ is_abbreviated:
+@@ -201,9 +195,9 @@ is_abbreviated:
+ 			flags |= OPT_UNSET;
+ 			rest = skip_prefix(arg + 3, options->long_name);
+ 			/* abbreviated and negated? */
+-			if (!rest && !prefixcmp(options->long_name, arg + 3))
++			if (!strcmp(rest, arg + 3) && !prefixcmp(options->long_name, arg + 3))
+ 				goto is_abbreviated;
+-			if (!rest)
++			if (!strcmp(rest, arg + 3))
+ 				continue;
+ 		}
+ 		if (*rest) {
 -- 
 1.5.6.rc0.dirty
