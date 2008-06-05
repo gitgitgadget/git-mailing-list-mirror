@@ -1,118 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/10] Move builtin-remote's skip_prefix() to
- git-compat-util.h
-Date: Thu, 05 Jun 2008 15:38:23 -0700
-Message-ID: <7vtzg7zew0.fsf@gitster.siamese.dyndns.org>
-References: <cover.1212698317.git.vmiklos@frugalware.org>
- <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org> <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org> <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] Allow git-apply to ignore the hunk headers
+Date: Thu, 5 Jun 2008 23:39:48 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806052304300.21190@racer>
+References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
+ <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer> <alpine.DEB.1.00.0806051720070.21190@racer> <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 00:39:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 00:42:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4O7B-0008F5-Fv
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 00:39:25 +0200
+	id 1K4O9p-0000y4-Q2
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 00:42:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbYFEWic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 18:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbYFEWic
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 18:38:32 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33541 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751731AbYFEWib (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 18:38:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0C4453E42;
-	Thu,  5 Jun 2008 18:38:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EE4A83E41; Thu,  5 Jun 2008 18:38:25 -0400 (EDT)
-In-Reply-To: <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> (Miklos Vajna's message of "Thu, 5 Jun 2008 22:44:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1E56A5BA-3350-11DD-AFF2-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753489AbYFEWlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 18:41:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbYFEWlR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 18:41:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38035 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753169AbYFEWlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 18:41:16 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 22:41:14 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp028) with SMTP; 06 Jun 2008 00:41:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+TV25lcYiTczbGN5Ed9Likh1CYTFi6iAFs2hlm15
+	DAFSlp9tP+1tW5
+X-X-Sender: gene099@racer
+In-Reply-To: <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83989>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Hi,
 
-> diff --git a/builtin-remote.c b/builtin-remote.c
-> index c49f00f..9c25018 100644
-> --- a/builtin-remote.c
-> +++ b/builtin-remote.c
-> @@ -29,12 +29,6 @@ static inline int postfixcmp(const char *string, const char *postfix)
->  	return strcmp(string + len1 - len2, postfix);
->  }
->  
-> -static inline const char *skip_prefix(const char *name, const char *prefix)
-> -{
-> -	return !name ? "" :
-> -		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
-> -}
-> -
->  static int opt_parse_track(const struct option *opt, const char *arg, int not)
->  {
->  	struct path_list *list = opt->value;
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 01c4045..af515d4 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -127,6 +127,12 @@ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
->  
->  extern int prefixcmp(const char *str, const char *prefix);
->  
-> +static inline const char *skip_prefix(const char *name, const char *prefix)
-> +{
-> +	return !name ? "" :
-> +		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
-> +}
-> +
+On Thu, 5 Jun 2008, Junio C Hamano wrote:
 
-Somehow you seemed to have picked the one whose semantics is defined much
-less clearly.  For one thing, it takes more effort (and unnatural way to
-check) for the caller to detect the case where prefix did not match than
-the one that returns NULL.  Worse, I think this one is less efficient,
-doing strlen(prefix) twice.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Sometimes, the easiest way to fix up a patch is to edit it directly, 
+> > even adding or deleting lines.  Now, many people are not as divine as 
+> > certain benevolent dictators as to update the hunk headers correctly 
+> > at the first try.
+> >
+> > So teach the tool to do it for us.
+> 
+> Two comments and a half.
+> 
+>  * Latest POSIX draft talks about unified context and allows an empty line
+>    to represent an empty common context line.  GNU diff already emits such
+>    a diff.  fixup_counts() should take this into account.
 
-> diff --git a/parse-options.c b/parse-options.c
-> index acf3fe3..aa164d0 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -22,12 +22,6 @@ static inline const char *get_arg(struct optparse_t *p)
->  	return *++p->argv;
->  }
->  
-> -static inline const char *skip_prefix(const char *str, const char *prefix)
-> -{
-> -	size_t len = strlen(prefix);
-> -	return strncmp(str, prefix, len) ? NULL : str + len;
-> -}
-> -
->  static int opterror(const struct option *opt, const char *reason, int flags)
->  {
->  	if (flags & OPT_SHORT)
-> @@ -161,7 +155,7 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
->  
->  		rest = skip_prefix(arg, options->long_name);
->  		if (options->type == OPTION_ARGUMENT) {
-> -			if (!rest)
-> +			if (!strcmp(rest, arg))
+As you pointed out, I wanted to support only add -e.  But that should not 
+be an issue at all.  I think a "case ' ': case '\n':" should be enough, 
+right?
 
-Ugh.
+>  * I'd sleep better at night if 'Probably "diff ..."' part were written 
+>    in a bit more robust way.
 
-At least please have the courtesy of not making it more expensive than the
-original unnecessarily.  Isn't (rest == arg) enough here?
+How about stopping on "@@" and end of file only, and complaining 
+otherwise?
 
-Still, I think the one from builtin-remote.c you used is a much worse
-implementation of the same thing between the two.  It was Ok while it was
-a local scope hack only for builtin-remote.c's use, but a special calling
-convention like "if name is NULL return empty string" should not be
-promoted to public utility library status without defending why it is
-always a good idea to do so.
+>  * (minor) There is an established term for this operation: recountdiff, 
+>    so --recount might be a better name.  fixup_counts() also is better 
+>    called recount_diff() if we go this route.
+
+Fine!
+
+> If you are too narrowly focused to only support "git add -e", the first 
+> issue does not matter, because we always emit "SP LF" for such a common 
+> context.  The reason why I care about the first two points is because we 
+> may want to teach git-am about this new option as well in 1.6.0.
+
+Point taken.
+
+> And the robustness issue I worry about the second point also applies to 
+> a line that is "^-- $", especially if we were to make this available to 
+> git-am.  Perhaps when the line begins with a '-', the logic could be 
+> extra careful to detect the case where the line looks like the e-mail 
+> signature separator and check one line beyond it to see if it does not 
+> look anything like part of a diff (in which case you stop, without 
+> considering the line you are currently looking at, "^-- $", a deletion 
+> of "^- $", as part of the preimage context).
+
+Is this really an issue?  fixup_counts() is only called after a hunk 
+header was read, and that should be well after any "^-- $".
+
+> As to code structure, we might want to make the later parameters to 
+> apply_patch() an integer, of OR'ed flag values, or even a pointer to a 
+> structure that holds options.
+
+Right.
+
+Will fix up and resubmit.
+
+Ciao,
+Dscho
