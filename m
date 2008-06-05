@@ -1,75 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [TOY PATCH] git wrapper: show similar command names for an
- unknown command
-Date: Fri, 6 Jun 2008 00:00:55 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806052358580.21190@racer>
-References: <alpine.DEB.1.00.0806050747000.21190@racer> <484853B1.80509@dirk.my1.cc>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 06/10] Move read_cache_unmerged() to read-cache.c
+Date: Thu, 05 Jun 2008 16:05:54 -0700
+Message-ID: <7vhcc7zdm5.fsf@gitster.siamese.dyndns.org>
+References: <cover.1212698317.git.vmiklos@frugalware.org>
+ <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org> <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org> <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org> <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org> <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1894355281-1212706864=:21190"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:03:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jun 06 01:07:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4OUH-0006SQ-D8
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:03:17 +0200
+	id 1K4OXp-0007Nm-5Z
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:06:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbYFEXCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 19:02:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752850AbYFEXCY
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:02:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55070 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752411AbYFEXCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 19:02:24 -0400
-Received: (qmail invoked by alias); 05 Jun 2008 23:02:21 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp028) with SMTP; 06 Jun 2008 01:02:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gXclsQHzgYUIQszTDKHuqsaEJJcYri7rJK2qMkx
-	HkdFvMRhZ02703
-X-X-Sender: gene099@racer
-In-Reply-To: <484853B1.80509@dirk.my1.cc>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752411AbYFEXGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 19:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbYFEXGE
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:06:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbYFEXGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 19:06:02 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B94183BEF;
+	Thu,  5 Jun 2008 19:06:00 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0D6DB3BEE; Thu,  5 Jun 2008 19:05:57 -0400 (EDT)
+In-Reply-To: <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org> (Miklos Vajna's message of "Thu, 5 Jun 2008 22:44:32 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F6D553D4-3353-11DD-8998-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83993>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
---8323329-1894355281-1212706864=:21190
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> builtin-read-tree has a read_cache_unmerged() which is useful for other
+> builtins, for example builtin-merge uses it as well. Move it to
+> read-cache.c to avoid code duplication.
 
-Hi,
+Looks good, but as a public interface probably it needs a few lines of
+comment in front of the function's definition to describe what it is used
+for.  Perhaps like...
 
-On Thu, 5 Jun 2008, Dirk Süsserott wrote:
-
-> This is really cool, especially for people that do not know the 
-> different commands by heart -- like me. I often know there's a command 
-> that's spelled somehow like X but I don't exactly remember. Your patch 
-> seems perfect for that situation. :-)
-
-Heh.
-
-> Keen on seeing it in a future release. Thanks in advance. Did someone 
-> suggest it or was it your very own idea?
-
-Maybe someone suggested it in the past.  It just happened that I wanted to 
-procrastinate, and levenshtein.c in my personal fork came before my eyes.  
-This was the next best thing I could think of doing with it.
-
-In the course I realized that my extension to take swaps into account was 
-already known as the Damerau-Levenshtein distance, so I even learnt 
-something in the process ;-)
-
-Ciao,
-Dscho
-
---8323329-1894355281-1212706864=:21190--
+/*
+ * Read the index file that is potentially unmerged into given
+ * index_state, dropping any unmerged entries.  Returns true is
+ * the index is unmerged.  Callers who want to refuse to work
+ * from an unmerged state can call this and check its return value,
+ * instead of calling read_cache().
+ */
