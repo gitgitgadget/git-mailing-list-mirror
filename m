@@ -1,56 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-for-each-ref.txt: minor improvements
-Date: Thu, 05 Jun 2008 11:58:33 -0700
-Message-ID: <7vwsl31zfq.fsf@gitster.siamese.dyndns.org>
-References: <1212673114-15751-1-git-send-email-LeWiemann@gmail.com>
- <1212691205-24399-1-git-send-email-LeWiemann@gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: Patches for some OS's.
+Date: Thu, 5 Jun 2008 13:07:30 -0600
+Message-ID: <Pine.LNX.4.64.0806051301500.18454@xenau.zenez.com>
+References: <Pine.LNX.4.64.0806051114260.18454@xenau.zenez.com>
+ <alpine.DEB.1.00.0806051935540.21190@racer> <Pine.LNX.4.64.0806051240550.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lea Wiemann <LeWiemann@gmail.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 20:59:42 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 05 21:08:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4KgX-0006MW-4G
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 20:59:41 +0200
+	id 1K4KpE-00019f-BY
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 21:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbYFES6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 14:58:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754482AbYFES6q
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 14:58:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53128 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754673AbYFES6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 14:58:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 36CD95825;
-	Thu,  5 Jun 2008 14:58:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 90C135824; Thu,  5 Jun 2008 14:58:40 -0400 (EDT)
-In-Reply-To: <1212691205-24399-1-git-send-email-LeWiemann@gmail.com> (Lea
- Wiemann's message of "Thu, 5 Jun 2008 20:40:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6B91C068-3331-11DD-8EF9-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1754592AbYFETHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 15:07:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753036AbYFETHc
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 15:07:32 -0400
+Received: from zenez.com ([166.70.62.2]:17868 "EHLO xenau.zenez.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750930AbYFETHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 15:07:32 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 54E91E4856; Thu,  5 Jun 2008 13:07:31 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 3E059E4853
+	for <git@vger.kernel.org>; Thu,  5 Jun 2008 13:07:31 -0600 (MDT)
+In-Reply-To: <Pine.LNX.4.64.0806051240550.18454@xenau.zenez.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83959>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+On Thu, 5 Jun 2008, Boyd Lynn Gerber wrote:
+> On Thu, 5 Jun 2008, Johannes Schindelin wrote:
+> > On Thu, 5 Jun 2008, Boyd Lynn Gerber wrote:
+> > > I have attached the patches necessary to use GIT on some Non Linux OS's.
+> >
+> > One might think that you could now use Git to generate the patches, and
+> > follow the conventions to submit them...
+>
+> I should have.  I am just now cloning the git tree.  Once I get a my clone
+> I will create a working copy and make the patches to it.
 
->  <pattern>::
-> -	If given, the name of the ref is matched against this
-> -	using fnmatch(3).  Refs that do not match the pattern
-> -	are not shown.
-> +	If one or more patterns are given, only refs are shown that
-> +	match againt at least one pattern, either using fnmatch(3) or
-> +	literally, in the latter case up to a slash or entirely.
+But I also have to get things working on 20 different Linux/UNIX/Unix-Like
+variants.  So I have 20 different OS specific directories.  You would
+think you could be a little more tolerant of a person new to the list.  I
+submitted my patches to what I thought was a patch list, not a general
+email list.  So, I am sorry for my ignorance of the list/patching ediquit.
 
-Thanks.  I suspect we might want to make it even more explicit that this
-is "match from the beginning" unlike what git-show-ref does, but your
-patch is an improvement even as-is.
+I will follow it from now on, but I may drop membership to the list.  It
+takes a lot of time and git is just one tool of many, I have to use.  I
+still have to use bitkeeper for the sources that use them.  So please
+allow me time to adjust to your methods.
+
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
