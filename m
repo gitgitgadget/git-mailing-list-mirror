@@ -1,59 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/10] Move read_cache_unmerged() to read-cache.c
-Date: Thu, 05 Jun 2008 16:05:54 -0700
-Message-ID: <7vhcc7zdm5.fsf@gitster.siamese.dyndns.org>
-References: <cover.1212698317.git.vmiklos@frugalware.org>
- <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org> <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org> <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org> <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org> <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v3 0/2] git add --edit
+Date: Fri, 6 Jun 2008 00:06:16 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806060005581.21190@racer>
+References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
+ <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer> <alpine.DEB.1.00.0806051720070.21190@racer> <7vabhz1t2f.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806052304300.21190@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:07:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 01:09:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4OXp-0007Nm-5Z
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:06:57 +0200
+	id 1K4OZq-0007wJ-Sa
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 01:09:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbYFEXGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 19:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbYFEXGE
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:06:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38573 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbYFEXGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 19:06:02 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B94183BEF;
-	Thu,  5 Jun 2008 19:06:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0D6DB3BEE; Thu,  5 Jun 2008 19:05:57 -0400 (EDT)
-In-Reply-To: <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org> (Miklos Vajna's message of "Thu, 5 Jun 2008 22:44:32 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F6D553D4-3353-11DD-8998-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753468AbYFEXHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 19:07:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754387AbYFEXHo
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 19:07:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44338 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753497AbYFEXHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 19:07:43 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 23:07:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp024) with SMTP; 06 Jun 2008 01:07:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18MY+ZqgF4M/937xR76fsThrwsCuio3d9nMNZciz3
+	DG1DzA5EC0Cp0r
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0806052304300.21190@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83994>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
 
-> builtin-read-tree has a read_cache_unmerged() which is useful for other
-> builtins, for example builtin-merge uses it as well. Move it to
-> read-cache.c to avoid code duplication.
+Changes relative to v2:
 
-Looks good, but as a public interface probably it needs a few lines of
-comment in front of the function's definition to describe what it is used
-for.  Perhaps like...
+- it works now not by chance, but by design,
 
-/*
- * Read the index file that is potentially unmerged into given
- * index_state, dropping any unmerged entries.  Returns true is
- * the index is unmerged.  Callers who want to refuse to work
- * from an unmerged state can call this and check its return value,
- * instead of calling read_cache().
- */
+- empty lines are interpreted as if they contained a single space,
+
+- it works when adding lines to the beginning or end of a file, and
+
+- the apply option has been renamed to --recount, as per Junio's request.
+
+Johannes Schindelin (2):
+  Allow git-apply to ignore the hunk headers (AKA recountdiff)
+  git-add: introduce --edit (to edit the diff vs. the index)
+
+ Documentation/git-add.txt   |   13 ++++-
+ Documentation/git-apply.txt |    7 ++-
+ builtin-add.c               |   55 ++++++++++++++++++-
+ builtin-apply.c             |   64 ++++++++++++++++++++--
+ t/t3702-add-edit.sh         |  126 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 257 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3702-add-edit.sh
