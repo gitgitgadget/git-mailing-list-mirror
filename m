@@ -1,165 +1,68 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH 3/3] Add configuration option for default untracked files mode
-Date: Thu, 5 Jun 2008 14:47:50 +0200
-Message-ID: <85ee874ad244f086db9f083524db12778b4dffe5.1212670149.git.marius@trolltech.com>
-References: <f7c043b61ce898036d900fefff8421a30b58c38d.1212670149.git.marius@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add subcommand "help" to the list of most commonly used
+ subcommands
+Date: Thu, 5 Jun 2008 13:58:31 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051356520.21190@racer>
+References: <alpine.DEB.1.00.0806050747000.21190@racer> <20080605081911.GA5946@mithlond.arda.local> <alpine.DEB.1.00.0806051131310.21190@racer> <20080605105204.GA17979@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 14:57:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Jun 05 15:00:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4F2A-0000oz-Nm
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:57:39 +0200
+	id 1K4F5F-0001zV-Mv
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757074AbYFEM4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 08:56:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757160AbYFEM4p
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:56:45 -0400
-Received: from hoat.troll.no ([62.70.27.150]:56159 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756925AbYFEM4o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2008 08:56:44 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 7B9F420A5E;
-	Thu,  5 Jun 2008 14:56:38 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 63BD52038E;
-	Thu,  5 Jun 2008 14:56:38 +0200 (CEST)
-Content-Disposition: inline
+	id S1757679AbYFEM74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 08:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756463AbYFEM74
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:59:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54715 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757582AbYFEM7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 08:59:55 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 12:59:52 -0000
+Received: from unknown (EHLO racer.local) [128.177.17.254]
+  by mail.gmx.net (mp058) with SMTP; 05 Jun 2008 14:59:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ohr54x7nohnWwCqZbjHQ4c8DfYWSpIZRkbMLf9L
+	XiWodjTHhW8QPS
+X-X-Sender: gene099@racer
+In-Reply-To: <20080605105204.GA17979@mithlond.arda.local>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83922>
 
-By default, the untracked files mode for commit/status is 'normal'
+Hi,
 
-Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
----
- Documentation/config.txt     |   19 +++++++++++++++++++
- Documentation/git-commit.txt |    4 ++++
- t/t7502-status.sh            |   18 ++++++++++++++++++
- wt-status.c                  |   13 +++++++++++++
- 4 files changed, 54 insertions(+), 0 deletions(-)
+On Thu, 5 Jun 2008, Teemu Likonen wrote:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c298dc2..7ce7816 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1010,6 +1010,25 @@ status.relativePaths::
- 	relative to the repository root (this was the default for git
- 	prior to v1.5.4).
- 
-+status.showUntrackedFiles::
-+	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
-+	files which are not currently tracked by Git. Directories which
-+	contain only untracked files, are shown with the directory name
-+	only. Showing untracked files means that Git needs to lstat() all
-+	all the files in the whole repository, which might be slow on some
-+	systems. So, this variable controls how the commands displays
-+	the untracked files. Possible values are:
-++
-+--
-+		- 'no'     - Show no untracked files
-+		- 'normal' - Shows untracked files and directories
-+		- 'all'    - Shows also individual files in untracked directories.
-+--
-++
-+If this variable is not specified, it defaults to 'normal'.
-+This variable can be overridden with the -u|--untracked-files option
-+of linkgit:git-status[1] and linkgit:git-commit[1].
-+
- tar.umask::
- 	This variable can be used to restrict the permission bits of
- 	tar archive entries.  The default is 0002, which turns off the
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a6db831..1235aae 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -161,6 +161,10 @@ the handling of untracked files. The possible options are:
- 		- 'normal' - Shows untracked files and directories
- 		- 'all'    - Also shows individual files in untracked directories.
- --
-++
-+See linkgit:git-config[1] for configuration variable
-+used to change the default for when the option is not
-+specified.
- 
- -v|--verbose::
- 	Show unified diff between the HEAD commit and what
-diff --git a/t/t7502-status.sh b/t/t7502-status.sh
-index d84bda1..38a48b5 100755
---- a/t/t7502-status.sh
-+++ b/t/t7502-status.sh
-@@ -89,6 +89,12 @@ test_expect_success 'status -uno' '
- 	test_cmp expect output
- '
- 
-+test_expect_success 'status (status.showUntrackedFiles no)' '
-+	git config status.showuntrackedfiles no
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
- cat >expect <<EOF
- # On branch master
- # Changes to be committed:
-@@ -117,6 +123,12 @@ test_expect_success 'status -unormal' '
- 	test_cmp expect output
- '
- 
-+test_expect_success 'status (status.showUntrackedFiles normal)' '
-+	git config status.showuntrackedfiles normal
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
- cat >expect <<EOF
- # On branch master
- # Changes to be committed:
-@@ -143,7 +155,13 @@ cat >expect <<EOF
- EOF
- test_expect_success 'status -uall' '
- 	git status -uall >output &&
-+	test_cmp expect output
-+'
-+test_expect_success 'status (status.showUntrackedFiles all)' '
-+	git config status.showuntrackedfiles all
-+	git status >output &&
- 	rm -rf dir3 &&
-+	git config --unset status.showuntrackedfiles &&
- 	test_cmp expect output
- '
- 
-diff --git a/wt-status.c b/wt-status.c
-index 23017e4..28c9e63 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -397,5 +397,18 @@ int git_status_config(const char *k, const char *v, void *cb)
- 		wt_status_relative_paths = git_config_bool(k, v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "status.showuntrackedfiles")) {
-+		if (!v)
-+			return config_error_nonbool(v);
-+		else if (!strcmp(v, "no"))
-+			show_untracked_files = SHOW_NO_UNTRACKED_FILES;
-+		else if (!strcmp(v, "normal"))
-+			show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-+		else if (!strcmp(v, "all"))
-+			show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
-+		else
-+			return error("Invalid untracked files mode '%s'", v);
-+		return 0;
-+	}
- 	return git_color_default_config(k, v, cb);
- }
--- 
-1.5.6.rc0.160.gf7c043.dirty
+> Johannes Schindelin wrote (2008-06-05 11:32 +0100):
+> 
+> > On Thu, 5 Jun 2008, Teemu Likonen wrote:
+> > 
+> > > Add subcommand "help" to the list of most commonly used subcommands
+> > 
+> > Hrmpf.  IMO "help" is not really a _git_ command.  And I use it
+> > really, really rarely.
+> 
+> But you know git inside out, don't you? It seems common to have such
+> help command: svn help, bzr help, hg help.
+
+Oh, I was not talking about how common that command is, but how commonly 
+used.
+
+And I would be quite annoyed by "git help" telling me that there is a 
+"help" command as well; how does it think I got the list to begin with?  
+Of course I used "git help", so I know that command already, and do not 
+need it listed with more interesting commands.
+
+Whatever,
+Dscho
