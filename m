@@ -1,236 +1,173 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] handle http urls with query string ("?foo") correctly
-Date: Thu, 5 Jun 2008 08:15:01 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806050758210.21190@racer>
-References: <200806050128.33467.bombe@pterodactylus.net> <alpine.DEB.1.00.0806050103520.21190@racer> <200806050848.43462.bombe@pterodactylus.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH 4/5] Add stack creation and initialisation support to lib.Stack
+Date: Thu, 5 Jun 2008 09:28:22 +0200
+Message-ID: <20080605072822.GD23209@diana.vm.bytemark.co.uk>
+References: <20080604210655.32531.82580.stgit@localhost.localdomain> <20080604211343.32531.41429.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1049400261-1212650103=:21190"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?ISO-8859-7?Q?David_=A1Bombe=A2_Roden?= <bombe@pterodactylus.net>
-X-From: git-owner@vger.kernel.org Thu Jun 05 09:17:18 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 09:29:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K49io-0000FP-7b
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 09:17:18 +0200
+	id 1K49uo-0003oD-JD
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 09:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbYFEHQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 03:16:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbYFEHQZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 03:16:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45504 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752127AbYFEHQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 03:16:25 -0400
-Received: (qmail invoked by alias); 05 Jun 2008 07:16:22 -0000
-Received: from unknown (EHLO racer.local) [128.177.17.254]
-  by mail.gmx.net (mp048) with SMTP; 05 Jun 2008 09:16:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WOGMF3VUW/JdqsptPiofe3aOD2zw2jaCfF33bpH
-	8G5Pz9m9ODQnlq
-X-X-Sender: gene099@racer
-In-Reply-To: <200806050848.43462.bombe@pterodactylus.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752237AbYFEH2a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 03:28:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbYFEH23
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 03:28:29 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4436 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752060AbYFEH23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 03:28:29 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K49tW-0006E5-00; Thu, 05 Jun 2008 08:28:22 +0100
+Content-Disposition: inline
+In-Reply-To: <20080604211343.32531.41429.stgit@localhost.localdomain>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83871>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2008-06-04 22:13:43 +0100, Catalin Marinas wrote:
 
---8323329-1049400261-1212650103=:21190
-Content-Type: TEXT/PLAIN; charset=ISO-8859-7
-Content-Transfer-Encoding: 8BIT
+> This patch adds the create and initialise Stack classmethods to
+> handle the initialisation of StGIT patch series on a Git branch.
 
-Hi,
-
-On Thu, 5 Jun 2008, David ¡Bombe¢ Roden wrote:
-
-> 
-> ---
-> handle http urls with query string ("?foo") correctly
-> git breaks when a repository is cloned from an http url that contains a
-> query string. This patch fixes this behaviour be inserting the name of
-> the requested object (like "/info/refs") before the query string.
-
-Usually, this comes before the "---", and your comments/answers after it.  
-And the first line would be the subject:
-
--- snip --
-Handle http urls with query string ("?foo") correctly
-
-Git breaks when a repository is cloned from an http url that contains a
-query string. This patch fixes this behaviour be inserting the name of
-the requested object (like "/info/refs") before the query string.
--- snap --
-
-And of course, you usually sign off your patches.
-
-> diff --git a/http-walker.c b/http-walker.c
-> index 99f397e..b14497a 100644
-> --- a/http-walker.c
-> +++ b/http-walker.c
-> @@ -100,7 +100,6 @@ static void start_object_request(struct walker *walker,
->  	char *hex = sha1_to_hex(obj_req->sha1);
->  	char prevfile[PATH_MAX];
->  	char *url;
-> -	char *posn;
->  	int prevlocal;
->  	unsigned char prev_buf[PREV_BUF_SIZE];
->  	ssize_t prev_read = 0;
-> @@ -109,6 +108,7 @@ static void start_object_request(struct walker *walker,
->  	struct curl_slist *range_header = NULL;
->  	struct active_request_slot *slot;
->  	struct walker_data *data = walker->data;
-> +	struct strbuf suffix_buffer = STRBUF_INIT;
->  
->  	snprintf(prevfile, sizeof(prevfile), "%s.prev", obj_req->filename);
->  	unlink(prevfile);
-> @@ -146,16 +146,10 @@ static void start_object_request(struct walker *walker,
->  
->  	SHA1_Init(&obj_req->c);
->  
-> -	url = xmalloc(strlen(obj_req->repo->base) + 51);
-> +	strbuf_addstr(&suffix_buffer, "/objects/");
-> +	strbuf_addf(&suffix_buffer, "%c%c/%s", hex[0], hex[1], hex + 2);
-
-How about
-
-	strbuf_addf(&suffix_buffer, "/objects/%c%c/%s",
-		hex[0], hex[1], hex + 2);
-
-?
-
-> +	url = transform_url(obj_req->repo->base, strbuf_detach(&suffix_buffer, NULL));
-
-And this line wrapped, like so?
-
-	url = transform_url(obj_req->repo->base,
-		strbuf_detach(&suffix_buffer, NULL));
-
-Oh, but maybe it makes more sense to let transform_url() work on the 
-strbuf itself?
-
-> @@ -608,8 +603,7 @@ static void fetch_alternates(struct walker *walker, const char *base)
->  	if (walker->get_verbosely)
->  		fprintf(stderr, "Getting alternates list for %s\n", base);
->  
-> -	url = xmalloc(strlen(base) + 31);
-> -	sprintf(url, "%s/objects/info/http-alternates", base);
-> +	url = transform_url(base, "/objects/info/http-alternates");
->  
->  	/* Use a callback to process the result, since another request
->  	   may fail and need to have alternates loaded before continuing */
-> @@ -655,8 +649,7 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
->  	if (walker->get_verbosely)
->  		fprintf(stderr, "Getting pack list for %s\n", repo->base);
->  
-> -	url = xmalloc(strlen(repo->base) + 21);
-> -	sprintf(url, "%s/objects/info/packs", repo->base);
-> +	url = transform_url(repo->base, "/objects/info/packs");
->  
->  	slot = get_active_slot();
->  	slot->results = &results;
-
-Of course, these two would have to initialise their strbuf, then.
-
-> diff --git a/http.c b/http.c
-> index 2a21ccb..a60f9ea 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -590,15 +590,17 @@ static char *quote_ref_url(const char *base, const char *ref)
->  	qref = xmalloc(len);
->  	memcpy(qref, base, baselen);
->  	dp = qref + baselen;
-> -	*(dp++) = '/';
-> -	for (cp = ref; (ch = *cp) != 0; cp++) {
-> -		if (needs_quote(ch)) {
-> -			*dp++ = '%';
-> -			*dp++ = hex((ch >> 4) & 0xF);
-> -			*dp++ = hex(ch & 0xF);
-> +	if (*ref) {
-> +		*(dp++) = '/';
-> +		for (cp = ref; (ch = *cp) != 0; cp++) {
-> +			if (needs_quote(ch)) {
-> +				*dp++ = '%';
-> +				*dp++ = hex((ch >> 4) & 0xF);
-> +				*dp++ = hex(ch & 0xF);
-> +			}
-> +			else
-> +				*dp++ = ch;
->  		}
-> -		else
-> -			*dp++ = ch;
->  	}
->  	*dp = 0;
->  
-
-Is this correct?  Either it should work the old way, or you will run into 
-problems when ref is not empty...
-
-> @@ -611,9 +613,12 @@ int http_fetch_ref(const char *base, struct ref *ref)
->  	struct strbuf buffer = STRBUF_INIT;
->  	struct active_request_slot *slot;
->  	struct slot_results results;
-> +	struct strbuf suffix_buffer = STRBUF_INIT;
->  	int ret;
->  
-> -	url = quote_ref_url(base, ref->name);
-> +	strbuf_addf(&suffix_buffer, "/%s", ref->name);
-> +	url = transform_url(base, strbuf_detach(&suffix_buffer, NULL));
-> +	url = quote_ref_url(url, "");
-
-... and indeed, it seems that by now, you would not want to add the ref in 
-quote_ref_url() anymore... which you do not, since you pass "" as ref 
-(and this is the only caller of quote_ref_url).
-
-> @@ -643,3 +648,22 @@ int http_fetch_ref(const char *base, struct ref *ref)
->  	free(url);
->  	return ret;
->  }
+> diff --git a/stgit/lib/stack.py b/stgit/lib/stack.py
+> index aca7a36..7375d41 100644
+> --- a/stgit/lib/stack.py
+> +++ b/stgit/lib/stack.py
+> @@ -3,6 +3,10 @@
+>  import os.path
+>  from stgit import exception, utils
+>  from stgit.lib import git, stackupgrade
+> +from stgit.config import config
 > +
-> +char *transform_url(const char *url, const char *suffix)
-> +{
-> +	struct strbuf new_url = STRBUF_INIT;
-> +	char *question_mark;
-> +	ptrdiff_t offset;
+> +class StackException(exception.StgException):
+> +    """Exception raised by stack objects."""
+
+s/stack/L{Stack}/, perhaps?
+
+> @@ -105,6 +109,14 @@ class PatchOrder(object):
+>      all =3D property(lambda self: self.applied + self.unapplied + se=
+lf.hidden)
+>      all_visible =3D property(lambda self: self.applied + self.unappl=
+ied)
+> =20
+> +    @staticmethod
+> +    def create(stackdir):
+> +        """Create the PatchOrder specific files
+> +        """
+> +        utils.create_empty_file(os.path.join(stackdir, 'applied'))
+> +        utils.create_empty_file(os.path.join(stackdir, 'unapplied'))
+> +        utils.create_empty_file(os.path.join(stackdir, 'hidden'))
 > +
-> +	if ((question_mark = strchr(url, '?'))) {
+>  class Patches(object):
+>      """Creates L{Patch} objects. Makes sure there is only one such o=
+bject
+>      per patch."""
 
-Junio usually prefers assignments outside of the if() statement.
+Wouldn't it be more consistent if the create function actually
+returned a PatchOrder object, like other creation functions? (You
+might even consider having these files auto-created whenever you
+instantiate a PatchOrder object and they don't yet exist.)
 
-> +		offset = (ptrdiff_t) question_mark - (ptrdiff_t) url;
-> +		strbuf_add(&new_url, url, offset);
-> +		strbuf_addstr(&new_url, suffix);
-> +		strbuf_addstr(&new_url, url + offset);
-> +	} else {
-> +		strbuf_addstr(&new_url, url);
-> +		strbuf_addstr(&new_url, suffix);
-> +	}
-> +	return strbuf_detach(&new_url, NULL);
-> +}
+Also, the creation function might instead live in the Stack class,
+since it owns the patch order.
+
+> @@ -133,12 +145,14 @@ class Patches(object):
+>  class Stack(git.Branch):
+>      """Represents an StGit stack (that is, a git branch with some ex=
+tra
+>      metadata)."""
+> +    __repo_subdir =3D 'patches'
 > +
 
-There is an extra empty line at the end.
+This needs to be in the previous patch, I think, since you use it
+there.
 
-But another thing is more pressing: obviously, there were reasons to quote 
-the ref names with this funny URL encoding (%45%75%6E%6E%79), and you 
-effectively undid that change.
+> +    def set_parents(self, remote, localbranch):
+> +        if not localbranch:
+> +            return
+> +        if remote:
+> +            self.set_parent_remote(remote)
+> +        self.set_parent_branch(localbranch)
+> +        config.set('branch.%s.stgit.parentbranch' % self._name, loca=
+lbranch)
 
-> diff --git a/transport.c b/transport.c
-> index 3ff8519..b1966d8 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1,3 +1,4 @@
-> +#include <stddef.h>
+Hmm, I don't quite follow. Why is this a no-op if you give a false
+localbranch? And why is branch.<branchname>.stgit.parentbranch needed,
+when it's always the same as branch.<branchname>.merge? (Backwards
+compatibility? Would you mind making a comment about that, in that
+case?)
 
-Why?
+> +    @classmethod
+> +    def initialise(cls, repository, name =3D None):
+> +        """Initialise a Git branch to handle patch series."""
+> +        if not name:
+> +            name =3D repository.current_branch_name
+> +        # make sure that the corresponding Git branch exists
+> +        git.Branch(repository, name)
+> +
+> +        dir =3D os.path.join(repository.directory, cls.__repo_subdir=
+, name)
+> +        compat_dir =3D os.path.join(dir, 'patches')
+> +        if os.path.exists(dir):
+> +            raise StackException('%s: branch already initialized' % =
+name)
+> +
+> +        # create the stack directory and files
+> +        utils.create_dirs(dir)
+> +        utils.create_dirs(compat_dir)
+> +        PatchOrder.create(dir)
+> +        config.set(stackupgrade.format_version_key(name),
+> +                   str(stackupgrade.FORMAT_VERSION))
+> +
+> +        return repository.get_stack(name)
 
-Ciao,
-Dscho
+This is not quite like the other "create" functions, since it just
+promotes a branch, without really creating it.
 
---8323329-1049400261-1212650103=:21190--
+What I'd really like to see here, I think, is something like this:
+
+  1. You get a Stack object from some stack.Repository method.
+
+  2. The Stack object works without having to be initialized, but the
+     operations that need initialization throw an exception.
+
+  3. The Stack object has an initialize() method -- just a normal
+     method, not a class method.
+
+This will pave the way for automatic initialization -- just call
+self.initialize() instead of throwing an exception in step (2).
+
+What do you think?
+
+> +
+> +    @classmethod
+> +    def create(cls, repository, name,
+> +               create_at =3D None, parent_remote =3D None, parent_br=
+anch =3D None):
+> +        """Create and initialise a Git branch returning the L{Stack}=
+ object."""
+> +        git.Branch.create(repository, name, create_at =3D create_at)
+> +        stack =3D cls.initialise(repository, name)
+> +        stack.set_parents(parent_remote, parent_branch)
+> +        return stack
+
+Same point as with the other creation functions.
+
+And I'd appreciate some documentation on what the parameters mean --
+either here, or in the methods you call from here.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
