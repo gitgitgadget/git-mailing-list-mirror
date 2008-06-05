@@ -1,51 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] Allow git-apply to fix up the line counts
-Date: Thu, 05 Jun 2008 17:07:15 +0200
-Message-ID: <48480123.7030903@viscovery.net>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net> <alpine.DEB.1.00.0806051548140.21190@racer>
+From: Jaroslav Kysela <perex@perex.cz>
+Subject: Re: [PATCH] Keep committer and committer dates
+Date: Thu, 5 Jun 2008 17:16:57 +0200 (CEST)
+Message-ID: <Pine.LNX.4.61.0806051704311.1798@tm8103-a.perex-int.cz>
+References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806032115340.13507@racer.site.net>
+ <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
+ <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
+ <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net>
+ <alpine.DEB.1.00.0806050523120.21190@racer> <4847917A.2050700@viscovery.net>
+ <Pine.LNX.4.61.0806051428390.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806051408520.21190@racer> <Pine.LNX.4.61.0806051528220.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806051452380.21190@racer> <Pine.LNX.4.61.0806051600310.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806051545470.21190@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 17:08:41 2008
+X-From: git-owner@vger.kernel.org Thu Jun 05 17:18:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4H4X-00023M-B8
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 17:08:13 +0200
+	id 1K4HDy-00066I-T9
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 17:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754886AbYFEPHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 11:07:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754361AbYFEPHT
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 11:07:19 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:20319 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753129AbYFEPHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 11:07:18 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K4H3b-0007VT-Ld; Thu, 05 Jun 2008 17:07:16 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 698A66B7; Thu,  5 Jun 2008 17:07:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0806051548140.21190@racer>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1753779AbYFEPRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 11:17:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbYFEPRE
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 11:17:04 -0400
+Received: from mail1.perex.cz ([212.20.107.53]:34532 "EHLO mail1.perex.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753728AbYFEPRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 11:17:03 -0400
+Received: from server.perex.cz (server.perex.cz [172.16.0.20])
+	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id D7107149DC4;
+	Thu,  5 Jun 2008 17:16:58 +0200 (CEST)
+Received: from tm8103.perex-int.cz (localhost [127.0.0.1])
+	by server.perex.cz (Perex's E-mail Delivery System) with ESMTP id C033B84355;
+	Thu,  5 Jun 2008 17:16:58 +0200 (CEST)
+Received: by tm8103.perex-int.cz (Postfix, from userid 1000)
+	id 70B4357FEC; Thu,  5 Jun 2008 17:16:57 +0200 (CEST)
+X-X-Sender: perex@tm8103-a.perex-int.cz
+In-Reply-To: <alpine.DEB.1.00.0806051545470.21190@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83940>
 
-Johannes Schindelin schrieb:
-> So how about --ignore-hunk-headers?  I think this is much more 
-> descriptive, and catches your complaint, IMHO.
+On Thu, 5 Jun 2008, Johannes Schindelin wrote:
 
-Yes, that's good as well. :-)
+> Clearly, you do not want to be convinced, no matter what arguments are 
+> thrown your way.
 
--- Hannes
+No, I just do not want to be restricted with one way to do things. All 
+what I read is about fear to misuse the proposed feature. It stops 
+evolution, especially in open source - propose to remove 'rm -rf /' from 
+all linux distros.  Anyway, GIT maintainer has a right to not accept my 
+change, altough I think that it's a drawback for other users - not for me. 
+Bye for now.
+
+					Jaroslav
+
+-----
+Jaroslav Kysela <perex@perex.cz>
+Linux Kernel Sound Maintainer
+ALSA Project, Red Hat, Inc.
