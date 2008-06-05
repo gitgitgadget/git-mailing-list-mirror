@@ -1,100 +1,85 @@
-From: David =?utf-8?q?=E2=80=98Bombe=E2=80=99_Roden?= 
-	<bombe@pterodactylus.net>
-Subject: Re: [PATCH] handle http urls with query string ("?foo") correctly
-Date: Thu, 5 Jun 2008 10:37:58 +0200
-Message-ID: <200806051037.58675.bombe@pterodactylus.net>
-References: <200806050128.33467.bombe@pterodactylus.net> <alpine.DEB.1.00.0806050758210.21190@racer> <7vtzg82u18.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
+Date: Thu, 5 Jun 2008 04:56:06 -0400
+Message-ID: <20080605085605.GA16624@sigill.intra.peff.net>
+References: <200805232221.45406.trast@student.ethz.ch> <200805291737.53291.trast@student.ethz.ch> <20080529185808.GA2140@sigill.intra.peff.net> <200806010241.51464.trast@student.ethz.ch> <20080605014618.GA27381@sigill.intra.peff.net> <7vprqw2t64.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1609164.mX3qtCb6LQ";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 10:39:12 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 10:57:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Azw-0007xp-7i
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:39:04 +0200
+	id 1K4BHL-0005sW-RV
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752671AbYFEIiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 04:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbYFEIiK
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:38:10 -0400
-Received: from wing.pterodactylus.net ([89.207.253.13]:34178 "HELO
-	pterodactylus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752000AbYFEIiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 04:38:09 -0400
-Received: (qmail 24500 invoked from network); 5 Jun 2008 08:38:05 -0000
-Received: from unknown (HELO ?192.168.178.19?) (10.98.86.10)
-  by 10.98.86.1 with SMTP; 5 Jun 2008 08:38:05 -0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vtzg82u18.fsf@gitster.siamese.dyndns.org>
+	id S1752875AbYFEI4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 04:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbYFEI4L
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:56:11 -0400
+Received: from peff.net ([208.65.91.99]:2462 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752488AbYFEI4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 04:56:10 -0400
+Received: (qmail 18740 invoked by uid 111); 5 Jun 2008 08:56:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 05 Jun 2008 04:56:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jun 2008 04:56:06 -0400
+Content-Disposition: inline
+In-Reply-To: <7vprqw2t64.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83883>
 
---nextPart1609164.mX3qtCb6LQ
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, Jun 05, 2008 at 01:16:19AM -0700, Junio C Hamano wrote:
 
-On Thursday 05 June 2008 09:57:39 Junio C Hamano wrote:
+> > So perhaps manual hunk editing is simply something for advanced users
+> > who are comfortable with the patch format.
+> 
+> Exactly.  To them, "git diff >patch && vi patch && git apply --cached <patch"
+> would likely to be much handier, quicker and a more familiar way. That is
+> one of the reasons I somewhat doubt that we would want to have this patch.
 
-> my understanding is that this peculiar http-hosted git repository
-> takes:
-> 	http://foo.bar.xz/serve.cgi?repo=3Dfoo.git/
-> as the base URL, and the patch author wants us to ask for (for example)
-> "info/alternates" as
-> 	http://foo.bar.xz/serve.cgi/info/alternates?repo=3Dfoo.git/
+I'm not so sure. I think this patch buys you two things:
 
-Actually the base URL is more like
+ 1. It munges the hunk headers as appropriate.
 
-	http://foo.bar.xz/foo.git/0?type=3Dtext/plain
+ 2. It fits more naturally into the "git add -p" workflow. That is, I
+    don't start by saying "I need to edit this patch." Instead, I am
+    staging bits of changes, and looking at a hunk I say "Oh, this needs
+    to be tweaked"; this patch provides an easy route from looking at
+    the hunk to editing the hunk.
 
-and I want to retrieve objects with
+    Granted, 99% of the time my tweak is "these adjacent lines are
+    actually unrelated, so split them into two hunks." So maybe that is
+    an argument for something like Thomas' original patch.
 
-	http://foo.bar.xz/foo.git/0/info/refs?type=3Dtext/plain
+> For the rest of your comments, I agree with the Perl style (use of map and
+> grep instead of repeated push in loops).  The end user input, what the
+> code needs to parse and accept, can screw you up royally and your parsing
+> needs to be careful, and the code looks fragile.
 
-but the gist is basically the same. My patch will indeed break git for URLs=
-=20
-like the one you gave.
+I think there are two extremes here:
 
+ 1. We provide a very limited interface. E.g., you pick a line to
+    arbitrarily split the hunk.
 
->  (2) If that is indeed the issue being tackled, sorry, it is not how "dumb
->      protocol" http server is expected to behave.  Your server needs
->      fixing.
-> If the protocol being used is still the "dumb commit walker" protocol,
-> then, given the base URL of the repository $URL, "info/refs" must exist at
-> "$URL/info/refs", and a loose object deadbeef... must exist at
-> "$URL/objects/de/adbeef...".  That's how the protocol is defined.
+ 2. We provide a very flexible interface. You get dumped in your editor
+    with the hunk text, and we try to apply the result. Powerful, but
+    easy to shoot yourself in the foot.
 
-If that is indeed the case, you're right. That could probably be tackled by=
-=20
-some small fixes in Freenet's http-gateway. I'll talk to the other develope=
-rs=20
-about that.
+And there is probably room for both. But I think it is important not to
+fall into the middle, where we have a hard-to-use but featureless
+interface. That is, if we dump the user in an editor, doing anything
+besides (2) doesn't make sense; trying to infer what happened in the
+user's editing session is a waste of time.
 
+So I think we need to be not so much careful in parsing, as accepting.
+Or we need to dump the idea of letting the user make arbitrary edits.
 
-Thanks,
-
-	David
-
---nextPart1609164.mX3qtCb6LQ
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkhHpeYACgkQsh8Hgp5TwkOiVwCfeRdxEWOYMEUHeCOmLu/hTZDV
-BQkAnjeEfI0cMqYckDn3O5nbWnRgTNCm
-=dHai
------END PGP SIGNATURE-----
-
---nextPart1609164.mX3qtCb6LQ--
+-Peff
