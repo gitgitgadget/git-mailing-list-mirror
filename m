@@ -1,70 +1,60 @@
-From: Jaroslav Kysela <perex@perex.cz>
-Subject: Re: [PATCH] Keep committer and committer dates
-Date: Thu, 5 Jun 2008 17:16:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.61.0806051704311.1798@tm8103-a.perex-int.cz>
-References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806032115340.13507@racer.site.net>
- <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
- <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
- <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net>
- <alpine.DEB.1.00.0806050523120.21190@racer> <4847917A.2050700@viscovery.net>
- <Pine.LNX.4.61.0806051428390.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806051408520.21190@racer> <Pine.LNX.4.61.0806051528220.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806051452380.21190@racer> <Pine.LNX.4.61.0806051600310.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806051545470.21190@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2 0/2] git add --edit
+Date: Thu, 5 Jun 2008 17:19:28 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051719170.21190@racer>
+References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
+ <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 17:18:08 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jun 05 18:22:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4HDy-00066I-T9
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 17:17:59 +0200
+	id 1K4IEA-0003x0-E0
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 18:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779AbYFEPRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 11:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbYFEPRE
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 11:17:04 -0400
-Received: from mail1.perex.cz ([212.20.107.53]:34532 "EHLO mail1.perex.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753728AbYFEPRD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 11:17:03 -0400
-Received: from server.perex.cz (server.perex.cz [172.16.0.20])
-	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id D7107149DC4;
-	Thu,  5 Jun 2008 17:16:58 +0200 (CEST)
-Received: from tm8103.perex-int.cz (localhost [127.0.0.1])
-	by server.perex.cz (Perex's E-mail Delivery System) with ESMTP id C033B84355;
-	Thu,  5 Jun 2008 17:16:58 +0200 (CEST)
-Received: by tm8103.perex-int.cz (Postfix, from userid 1000)
-	id 70B4357FEC; Thu,  5 Jun 2008 17:16:57 +0200 (CEST)
-X-X-Sender: perex@tm8103-a.perex-int.cz
-In-Reply-To: <alpine.DEB.1.00.0806051545470.21190@racer>
+	id S1760659AbYFEQU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 12:20:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYFEQU7
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 12:20:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56912 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760656AbYFEQU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 12:20:57 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 16:20:55 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp041) with SMTP; 05 Jun 2008 18:20:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Hr15vss7HKw+0RyVYrRLDM2xelfaPy6kalpHdOk
+	9+t1E/ANMRmG/r
+X-X-Sender: gene099@racer
+In-Reply-To: <48480123.7030903@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83941>
 
-On Thu, 5 Jun 2008, Johannes Schindelin wrote:
 
-> Clearly, you do not want to be convinced, no matter what arguments are 
-> thrown your way.
+Changes relative to the first version:
 
-No, I just do not want to be restricted with one way to do things. All 
-what I read is about fear to misuse the proposed feature. It stops 
-evolution, especially in open source - propose to remove 'rm -rf /' from 
-all linux distros.  Anyway, GIT maintainer has a right to not accept my 
-change, altough I think that it's a drawback for other users - not for me. 
-Bye for now.
+- rename the apply option to --ignore-hunk-headers
 
-					Jaroslav
+- add a test
 
------
-Jaroslav Kysela <perex@perex.cz>
-Linux Kernel Sound Maintainer
-ALSA Project, Red Hat, Inc.
+Johannes Schindelin (2):
+  Allow git-apply to ignore the hunk headers
+  git-add: introduce --edit (to edit the diff vs. the index)
+
+ Documentation/git-add.txt   |    9 +++-
+ Documentation/git-apply.txt |    7 +++-
+ builtin-add.c               |   47 +++++++++++++++++++++++-
+ builtin-apply.c             |   57 ++++++++++++++++++++++++++--
+ t/t3702-add-edit.sh         |   86 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 198 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3702-add-edit.sh
