@@ -1,66 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
-Date: Thu, 05 Jun 2008 01:16:19 -0700
-Message-ID: <7vprqw2t64.fsf@gitster.siamese.dyndns.org>
-References: <200805232221.45406.trast@student.ethz.ch>
- <200805291737.53291.trast@student.ethz.ch>
- <20080529185808.GA2140@sigill.intra.peff.net>
- <200806010241.51464.trast@student.ethz.ch>
- <20080605014618.GA27381@sigill.intra.peff.net>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: [PATCH] Add subcommand "help" to the list of most commonly used subcommands
+Date: Thu, 5 Jun 2008 11:19:11 +0300
+Message-ID: <20080605081911.GA5946@mithlond.arda.local>
+References: <alpine.DEB.1.00.0806050747000.21190@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 05 10:17:30 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 05 10:20:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Aex-0001EU-NI
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:17:24 +0200
+	id 1K4Ahc-000277-RT
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbYFEIQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 04:16:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYFEIQa
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:16:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42065 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbYFEIQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 04:16:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8BB923C8A;
-	Thu,  5 Jun 2008 04:16:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B2C9A3C89; Thu,  5 Jun 2008 04:16:22 -0400 (EDT)
-In-Reply-To: <20080605014618.GA27381@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 4 Jun 2008 21:46:18 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B156DF98-32D7-11DD-9195-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751808AbYFEITR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 04:19:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYFEITQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:19:16 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:38234 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751731AbYFEITP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 04:19:15 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.5.014)
+        id 483E837C00579AF5; Thu, 5 Jun 2008 11:19:12 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1K4Agh-00047O-9Y; Thu, 05 Jun 2008 11:19:11 +0300
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806050747000.21190@racer>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83879>
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin wrote (2008-06-05 07:48 +0100):
 
-> So perhaps manual hunk editing is simply something for advanced users
-> who are comfortable with the patch format.
+> A typical output would now look like this:
+> 
+> 	$ git reabse
+> 	git: 'reabse' is not a git-command. See 'git --help'.
 
-Exactly.  To them, "git diff >patch && vi patch && git apply --cached <patch"
-would likely to be much handier, quicker and a more familiar way. That is
-one of the reasons I somewhat doubt that we would want to have this patch.
+A side note: The following three commands seem to do exactly the same:
 
->> +# Empty lines and lines starting with # will be removed.
->
-> What about lines starting with characters besides -, +, space, or @?
-> They will normally be ignored by diff.
+  $ git --help log
+  $ git log --help
+  $ git help log
 
-Beware that a totally empty line is the same as an empty context line "SP LF".
+Which in itself is good, I think, since in all the cases user expects to
+get the manual for "log". It seems that "git help <command>" is the most
+often advertised in manuals and tutorials but it does not show in the
+list printed by "git / git --help / git help":
 
-For the rest of your comments, I agree with the Perl style (use of map and
-grep instead of repeated push in loops).  The end user input, what the
-code needs to parse and accept, can screw you up royally and your parsing
-needs to be careful, and the code looks fragile.
+  $ git
+  usage: [...]
+
+  The most commonly used git commands are:
+  [There's no "help" command in the list.]
+
+I think it belongs there, so how about the following patch? There are
+two logically separate changes but I didn't feel that they deserve
+separate commits.
+
+---snip---
+Add subcommand "help" to the list of most commonly used subcommands
+
+Commands "git", "git --help" and "git help" did not list the subcommand
+"help" as one of the most commonly used git commands. Yet "git help" is
+advertised as the help command of git so this patch adds "help" the
+list.
+
+In addition to that change the short description in git-help.txt manual
+to start with a capital letter.
+
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
+ Documentation/git-help.txt |    2 +-
+ command-list.txt           |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index bfbba9e..4d3613c 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -3,7 +3,7 @@ git-help(1)
+ 
+ NAME
+ ----
+-git-help - display help information about git
++git-help - Display help information about git
+ 
+ SYNOPSIS
+ --------
+diff --git a/command-list.txt b/command-list.txt
+index 3583a33..510ac69 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -47,7 +47,7 @@ git-get-tar-commit-id                   ancillaryinterrogators
+ git-grep                                mainporcelain common
+ git-gui                                 mainporcelain
+ git-hash-object                         plumbingmanipulators
+-git-help				ancillaryinterrogators
++git-help				ancillaryinterrogators common
+ git-http-fetch                          synchelpers
+ git-http-push                           synchelpers
+ git-imap-send                           foreignscminterface
+-- 
+1.5.6.rc1.15.gc0c85
