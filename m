@@ -1,90 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH 3/5] Create a git.Branch class as ancestor of stack.Stack
-Date: Thu, 5 Jun 2008 15:04:15 +0200
-Message-ID: <20080605130415.GB28995@diana.vm.bytemark.co.uk>
-References: <20080604210655.32531.82580.stgit@localhost.localdomain> <20080604211334.32531.74258.stgit@localhost.localdomain> <20080605070126.GC23209@diana.vm.bytemark.co.uk> <b0943d9e0806050503x40191104ye332d6a8435811a5@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Allow git-apply to fix up the line counts
+Date: Thu, 5 Jun 2008 14:04:27 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051403370.21190@racer>
+References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 15:05:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jun 05 15:07:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4F9Z-0003PM-Nc
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:05:50 +0200
+	id 1K4FAw-0003rK-B1
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375AbYFENEY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 09:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753181AbYFENEY
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:04:24 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2872 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752777AbYFENEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 09:04:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K4F8Z-0007dj-00; Thu, 05 Jun 2008 14:04:15 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0806050503x40191104ye332d6a8435811a5@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753710AbYFENFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 09:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbYFENFu
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:05:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36996 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753496AbYFENFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 09:05:49 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 13:05:47 -0000
+Received: from unknown (EHLO racer.local) [128.177.17.254]
+  by mail.gmx.net (mp055) with SMTP; 05 Jun 2008 15:05:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FdaxYxmhFtSBymJAjxHYL2DR+ZByYHRu+DqzkVY
+	n55aiE4VIfAbKX
+X-X-Sender: gene099@racer
+In-Reply-To: <4847CCD9.6000305@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83924>
 
-On 2008-06-05 13:03:55 +0100, Catalin Marinas wrote:
+Hi,
 
-> 2008/6/5 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > On 2008-06-04 22:13:35 +0100, Catalin Marinas wrote:
-> >
-> > > +    def __init__(self, repository, name):
-> > > +        self._repository =3D repository
-> > > +        self._name =3D name
-> >
-> > Using double leading underscores will give you a class-local name.
-> > Why just one?
->
-> Just a convention: double underscore - private, simple underscore -
-> protected (using C++ or Java naming). The _repository or _name are
-> meant to be made available to a derived class (stack.Stack in our
-> case), though we have the corresponding public properties already.
+On Thu, 5 Jun 2008, Johannes Sixt wrote:
 
-OK. Then I'd argue that these two should be private since there's no
-particular reason for them to be just protected, but I think I've done
-enough nitpicking for one day already!
+> Johannes Schindelin schrieb:
+> > +--fixup-line-counts::
+> > +	Fix up the line counts (e.g. after editing the patch without
+> > +	adjusting the hunk headers appropriately).
+> 
+> This sort of implies that there is some kind of output that tells the
+> correct line counts. But that isn't the case (if I read the patch
+> correctly). So I suggest to name the option --ignore-line-counts.
 
-> >> +    @classmethod
-> >> +    def create(cls, repository, name, create_at =3D None):
-> >
-> > Minor nit: in case of things that are clearly "owned" by other
-> > things (git objects are owned by a git repository, for example),
-> > I've tried to put the creation function in the owner, not the
-> > owned. I'm not insisting, though.
->
-> As I see these things, the git.Repository and the derived
-> stack.Repository are indeed object factories but they are mainly
-> responsible for creating/returning a new Python object and passing
-> some arguments to the class' __init__. The Repository object doesn't
-> need to know more than the name as the rest is handled by __init__.
+But there is some kind of output: the hunks themselves.  And the line 
+counts are not ignored, but they are actively rewritten.  But if you have 
+a suggestion which keeps the spirit, I am very interested...
 
-Yes. This is exactly how it works e.g. when a Repository creates Blob,
-Tree, or Commit objects.
-
-> The same goes for the "create" function, the repository shouldn't
-> need to know the directory or files structure that a Stack or Branch
-> are using. I think we get a clearer separation this way.
-
-Yes, you're right. Knowledge of internals belong in the class itself.
-
-We'll have to be watchful against attempts to create objects other
-than via the officially designated factories, though. Python doesn't
-really have any mechanisms that help us here.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
