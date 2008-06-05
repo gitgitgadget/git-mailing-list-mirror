@@ -1,8 +1,8 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH 1/3] Add an optional <mode> argument to commit/status -u|--untracked-files option
-Date: Thu, 5 Jun 2008 10:31:19 +0200
-Message-ID: <c756e040b06883cc070bb24954111b4dcd457d2c.1212995703.git.marius@trolltech.com>
-References: <484CD3A7.8090303@trolltech.com>
+Subject: [PATCH 2/3] Add argument 'no' commit/status option -u|--untracked-files
+Date: Thu, 5 Jun 2008 14:22:56 +0200
+Message-ID: <f6ce4457c92b77210ceceeddb32cf30ca65103ed.1212995703.git.marius@trolltech.com>
+References: <c756e040b06883cc070bb24954111b4dcd457d2c.1212995703.git.marius@trolltech.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
@@ -13,168 +13,93 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5bic-00023e-JP
+	id 1K5bic-00023e-0E
 	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 09:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551AbYFIHWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757545AbYFIHWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 9 Jun 2008 03:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757552AbYFIHWD
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 03:22:03 -0400
-Received: from hoat.troll.no ([62.70.27.150]:44923 "EHLO hoat.troll.no"
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753819AbYFIHWB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 03:22:01 -0400
+Received: from hoat.troll.no ([62.70.27.150]:44928 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757551AbYFIHV6 convert rfc822-to-8bit (ORCPT
+	id S1757545AbYFIHV6 convert rfc822-to-8bit (ORCPT
 	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 03:21:58 -0400
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id BDB2F20A90;
+	by hoat.troll.no (Postfix) with SMTP id EF52F202F2;
 	Mon,  9 Jun 2008 09:21:52 +0200 (CEST)
 Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 971B520A60;
+	by hoat.troll.no (Postfix) with ESMTP id C84A520A60;
 	Mon,  9 Jun 2008 09:21:52 +0200 (CEST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84368>
 
-This lets you specify how you want untracked files to be listed. The possible
-options are:
-    normal - Show untracked files and directories
-    all    - Show all untracked files
-
-The 'all' mode is used, if the mode is not specified.
+This new argument teaches Git to not look for any untracked files,
+saving cycles on slow file systems, or large repos.
 
 Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
 ---
- Documentation/git-commit.txt |   18 +++++++-----
- builtin-commit.c             |   16 +++++++++--
- t/t7502-status.sh            |   61 ++++++++++++++++++++++++++++++++++++++++++
- wt-status.c                  |    1 +
- wt-status.h                  |    6 ++++
- 5 files changed, 92 insertions(+), 10 deletions(-)
+ Documentation/git-commit.txt |    1 +
+ builtin-commit.c             |    4 +++-
+ t/t7502-status.sh            |   25 ++++++++++++++++++++++---
+ wt-status.c                  |    7 ++++++-
+ wt-status.h                  |    3 ++-
+ 5 files changed, 34 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index c3c9f5b..cc4374a 100644
+index cc4374a..a6db831 100644
 --- a/Documentation/git-commit.txt
 +++ b/Documentation/git-commit.txt
-@@ -8,7 +8,7 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git-commit' [-a | --interactive] [-s] [-v] [-u]
-+'git-commit' [-a | --interactive] [-s] [-v] [-u[<mode>]]
- 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
- 	   [--allow-empty] [--no-verify] [-e] [--author <author>]
- 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
-@@ -150,12 +150,16 @@ but can be used to amend a merge commit.
- 	the last commit without committing changes that have
- 	already been staged.
- 
---u|--untracked-files::
--	Show all untracked files, also those in uninteresting
--	directories, in the "Untracked files:" section of commit
--	message template.  Without this option only its name and
--	a trailing slash are displayed for each untracked
--	directory.
-+-u[<mode>]|--untracked-files[=<mode>]::
-+	Show untracked files (Default: 'all').
-++
-+The mode parameter is optional, and is used to specify
-+the handling of untracked files. The possible options are:
-++
-+--
-+		- 'normal' - Shows untracked files and directories
-+		- 'all'    - Also shows individual files in untracked directories.
-+--
- 
- -v|--verbose::
- 	Show unified diff between the HEAD commit and what
+@@ -157,6 +157,7 @@ The mode parameter is optional, and is used to specify
+ the handling of untracked files. The possible options are:
+ +
+ --
++		- 'no'     - Show no untracked files
+ 		- 'normal' - Shows untracked files and directories
+ 		- 'all'    - Also shows individual files in untracked directories.
+ --
 diff --git a/builtin-commit.c b/builtin-commit.c
-index b294c1f..95cdb82 100644
+index 95cdb82..f3e524a 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
-@@ -49,7 +49,8 @@ static char *logfile, *force_author, *template_file;
- static char *edit_message, *use_message;
- static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
--static int quiet, verbose, untracked_files, no_verify, allow_empty;
-+static int quiet, verbose, no_verify, allow_empty;
-+static char *untracked_files_arg;
- /*
-  * The default commit message cleanup mode will remove the lines
-  * beginning with # (shell comments) and leading and trailing
-@@ -102,7 +103,7 @@ static struct option builtin_commit_options[] = {
+@@ -103,7 +103,7 @@ static struct option builtin_commit_options[] = {
  	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
  	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
  	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
--	OPT_BOOLEAN('u', "untracked-files", &untracked_files, "show all untracked files"),
-+	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+-	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
  	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
  	OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spaces and #comments from message"),
  
-@@ -347,7 +348,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 		s.reference = "HEAD^1";
- 	}
- 	s.verbose = verbose;
--	s.untracked = untracked_files;
-+	s.untracked = (show_untracked_files == SHOW_ALL_UNTRACKED_FILES);
- 	s.index_file = index_file;
- 	s.fp = fp;
- 	s.nowarn = nowarn;
-@@ -795,6 +796,15 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	else
- 		die("Invalid cleanup mode %s", cleanup_arg);
+@@ -798,6 +798,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
  
-+	if (!untracked_files_arg)
-+		; /* default already initialized */
-+	else if (!strcmp(untracked_files_arg, "normal"))
-+		show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-+	else if (!strcmp(untracked_files_arg, "all"))
-+		show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
-+	else
-+		die("Invalid untracked files mode '%s'", untracked_files_arg);
-+
- 	if (all && argc > 0)
- 		die("Paths with -a does not make sense.");
- 	else if (interactive && argc > 0)
+ 	if (!untracked_files_arg)
+ 		; /* default already initialized */
++	else if (!strcmp(untracked_files_arg, "no"))
++		show_untracked_files = SHOW_NO_UNTRACKED_FILES;
+ 	else if (!strcmp(untracked_files_arg, "normal"))
+ 		show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+ 	else if (!strcmp(untracked_files_arg, "all"))
 diff --git a/t/t7502-status.sh b/t/t7502-status.sh
-index 80a438d..0d24e25 100755
+index 0d24e25..d84bda1 100755
 --- a/t/t7502-status.sh
 +++ b/t/t7502-status.sh
-@@ -67,6 +67,67 @@ test_expect_success 'status (2)' '
- 
- '
- 
-+cat >expect <<EOF
-+# On branch master
-+# Changes to be committed:
-+#   (use "git reset HEAD <file>..." to unstage)
-+#
-+#	new file:   dir2/added
-+#
-+# Changed but not updated:
-+#   (use "git add <file>..." to update what will be committed)
-+#
-+#	modified:   dir1/modified
-+#
-+# Untracked files:
-+#   (use "git add <file>..." to include in what will be committed)
-+#
-+#	dir1/untracked
-+#	dir2/modified
-+#	dir2/untracked
-+#	dir3/
-+#	expect
-+#	output
-+#	untracked
+@@ -79,6 +79,28 @@ cat >expect <<EOF
+ #
+ #	modified:   dir1/modified
+ #
++# Untracked files not listed (use -u option to show untracked files)
 +EOF
-+test_expect_success 'status -unormal' '
++test_expect_success 'status -uno' '
 +	mkdir dir3 &&
 +	: > dir3/untracked1 &&
 +	: > dir3/untracked2 &&
-+	git status -unormal >output &&
++	git status -uno >output &&
 +	test_cmp expect output
 +'
 +
@@ -190,55 +115,57 @@ index 80a438d..0d24e25 100755
 +#
 +#	modified:   dir1/modified
 +#
-+# Untracked files:
-+#   (use "git add <file>..." to include in what will be committed)
-+#
-+#	dir1/untracked
-+#	dir2/modified
-+#	dir2/untracked
-+#	dir3/untracked1
-+#	dir3/untracked2
-+#	expect
-+#	output
-+#	untracked
-+EOF
-+test_expect_success 'status -uall' '
-+	git status -uall >output &&
-+	rm -rf dir3 &&
-+	test_cmp expect output
-+'
-+
- cat > expect << \EOF
- # On branch master
- # Changes to be committed:
+ # Untracked files:
+ #   (use "git add <file>..." to include in what will be committed)
+ #
+@@ -91,9 +113,6 @@ cat >expect <<EOF
+ #	untracked
+ EOF
+ test_expect_success 'status -unormal' '
+-	mkdir dir3 &&
+-	: > dir3/untracked1 &&
+-	: > dir3/untracked2 &&
+ 	git status -unormal >output &&
+ 	test_cmp expect output
+ '
 diff --git a/wt-status.c b/wt-status.c
-index 5b4d74c..25d9985 100644
+index 25d9985..23017e4 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -27,6 +27,7 @@ static const char use_add_rm_msg[] =
- "use \"git add/rm <file>...\" to update what will be committed";
- static const char use_add_to_include_msg[] =
- "use \"git add <file>...\" to include in what will be committed";
-+enum untracked_status_type show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+@@ -348,7 +348,10 @@ void wt_status_print(struct wt_status *s)
+ 	wt_status_print_changed(s);
+ 	if (wt_status_submodule_summary)
+ 		wt_status_print_submodule_summary(s);
+-	wt_status_print_untracked(s);
++	if (show_untracked_files)
++		wt_status_print_untracked(s);
++	else if (s->commitable)
++		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
  
- static int parse_status_slot(const char *var, int offset)
- {
+ 	if (s->verbose && !s->is_initial)
+ 		wt_status_print_verbose(s);
+@@ -363,6 +366,8 @@ void wt_status_print(struct wt_status *s)
+ 			printf("nothing added to commit but untracked files present (use \"git add\" to track)\n");
+ 		else if (s->is_initial)
+ 			printf("nothing to commit (create/copy files and use \"git add\" to track)\n");
++		else if (!show_untracked_files)
++			printf("nothing to commit (use -u to show untracked files)\n");
+ 		else
+ 			printf("nothing to commit (working directory clean)\n");
+ 	}
 diff --git a/wt-status.h b/wt-status.h
-index 597c7ea..54f756d 100644
+index 54f756d..78add09 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -11,6 +11,12 @@ enum color_wt_status {
- 	WT_STATUS_NOBRANCH,
+@@ -12,7 +12,8 @@ enum color_wt_status {
  };
  
-+enum untracked_status_type {
-+	SHOW_NORMAL_UNTRACKED_FILES = 1,
-+	SHOW_ALL_UNTRACKED_FILES
-+};
-+extern enum untracked_status_type show_untracked_files;
-+
- struct wt_status {
- 	int is_initial;
- 	char *branch;
+ enum untracked_status_type {
+-	SHOW_NORMAL_UNTRACKED_FILES = 1,
++	SHOW_NO_UNTRACKED_FILES,
++	SHOW_NORMAL_UNTRACKED_FILES,
+ 	SHOW_ALL_UNTRACKED_FILES
+ };
+ extern enum untracked_status_type show_untracked_files;
 -- 
 1.5.6.rc0.160.gf7c043.dirty
