@@ -1,93 +1,120 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git clone stable-2.6.25.y fails over HTTP
-Date: Thu, 5 Jun 2008 16:53:57 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806051546480.19665@iabervon.org>
-References: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com> <20080604154523.GA25747@kroah.com> <7vr6bdxh3l.fsf@gitster.siamese.dyndns.org> <20080605040315.GA21798@kroah.com> <7vabi05xl1.fsf@gitster.siamese.dyndns.org>
- <20080605050855.GA22825@kroah.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andrew Klossner <andrew@cesa.opbu.xerox.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 22:55:22 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [PATCH] git-for-each-ref.txt: minor fixes
+Date: Thu,  5 Jun 2008 22:54:15 +0200
+Message-ID: <1212699255-26640-1-git-send-email-LeWiemann@gmail.com>
+References: <7vwsl31zfq.fsf@gitster.siamese.dyndns.org>
+Cc: Lea Wiemann <lewiemann@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 05 22:56:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4MUJ-0000uW-0V
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 22:55:11 +0200
+	id 1K4MUx-00018E-MH
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 22:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761817AbYFEUyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 16:54:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759724AbYFEUyA
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:54:00 -0400
-Received: from iabervon.org ([66.92.72.58]:51954 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759688AbYFEUx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 16:53:59 -0400
-Received: (qmail 30698 invoked by uid 1000); 5 Jun 2008 20:53:57 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Jun 2008 20:53:57 -0000
-In-Reply-To: <20080605050855.GA22825@kroah.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1762082AbYFEUyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 16:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753138AbYFEUyX
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 16:54:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:23823 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756682AbYFEUyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 16:54:20 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so464158fgg.17
+        for <git@vger.kernel.org>; Thu, 05 Jun 2008 13:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:from;
+        bh=p1zg2CRTuyXNVjDUrCGoKFD5ncD4Xo1rRHD1giHAGmk=;
+        b=k7UjmhaZo7J7hNNZqkkPkn/ca/bdenW19het42L4T6qrihig6XamzNrGuMP6gb0NXM
+         1WtH02Vr+OwUlAbCC0N87m9+sMV7toGYHx3QgyRdafdDjL4httJNOFPIcyrMgrcYBhPf
+         kDDDMwbTYNyy44SOEzKp3/DQnqpK6MVlHpqh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        b=wgqUx4rIPFP2wThsKnhN5J5BLp6IhBVgPubqv0/YQS25lZTSQ7A/935LW6XWuSsqq1
+         kXF+U38H9h9L0+Vk4yPkzZv6lTain/ixv9f5eWCM/wOfJV/axVzT7D7Hpr82UTis2ZIH
+         IcHfYz8V1VsqZjNRGZBh/yoQORYcfxc+Dy05c=
+Received: by 10.86.60.14 with SMTP id i14mr2813235fga.75.1212699258426;
+        Thu, 05 Jun 2008 13:54:18 -0700 (PDT)
+Received: from fly ( [91.33.234.84])
+        by mx.google.com with ESMTPS id e11sm4215465fga.4.2008.06.05.13.54.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 05 Jun 2008 13:54:17 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <LeWiemann@gmail.com>)
+	id 1K4MTP-0006w2-Ru; Thu, 05 Jun 2008 22:54:15 +0200
+X-Mailer: git-send-email 1.5.6.rc1.9.g69bbf.dirty
+In-Reply-To: <7vwsl31zfq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83980>
 
-On Wed, 4 Jun 2008, Greg KH wrote:
+From: Lea Wiemann <lewiemann@gmail.com>
 
-> On Wed, Jun 04, 2008 at 09:12:42PM -0700, Junio C Hamano wrote:
-> > Greg KH <greg@kroah.com> writes:
-> > 
-> > > On Wed, Jun 04, 2008 at 10:09:02AM -0700, Junio C Hamano wrote:
-> > >
-> > >> A quick fix is obviously to remove the extra prefix but it makes me wonder
-> > >> how these two "stable" repositories were prepared differently.  Could this
-> > >> be a regression in "git clone"?  Or perhaps you "clone -s"'s Linus's
-> > >> repository slightly differently between them?
-> > >
-> > > That's odd.
-> > >
-> > > Chris was the one that created the .24 tree and I created the .25 tree,
-> > > so we must have done so differently, sorry.
-> > 
-> > No need to be sorry.  Thanks for raising the issue up.
-> > 
-> > I think I have one possible explanation.  When "git clone" was rewritten
-> > in C some time ago, it started to dereference symlinks, and newer git
-> > would dereference /pub -> /home/ftp/pub when you do:
-> > 
-> > 	git clone -s --bare /pub/scm/linux/kernel/git/torvalds/linux-2.6/ linux-2.6.2x.y
-> > 
-> > while the scripted version used to keep /pub/scm path.
-> > 
-> > A bit further digging is necessary to make sure if we can fix this easily,
-> > but I suspect this is worth fixing.
-> 
-> I can duplicate what I did, and it did it again:
-> 	on master.kernel.org:
-> 	$ cd /pub/scm/linux/kernel/git/stable/
-> 	$ git clone -s --bare ../torvalds/linux-2.6.git/ test
-> 	$ cat test/objects/info/alternates
-> 	/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects
-> 
-> I'm guessing this is because /pub/ is a symlink:
-> 	$ ls -l /pub
-> 	lrwxrwxrwx 1 root root 13 Feb  4  2006 /pub -> /home/ftp/pub
+Rewrapped synopsis and removed wrong asterisk behind --count option;
+clarified --sort=<key> description for multiple keys; documented that
+for-each-ref supports not only glob patterns but also prefixes like
+"refs/heads" as patterns, and that multiple patterns can be given.
 
-We're using getcwd() to make the absolute path, but it looks like we 
-should check whether $PWD is set and names the same directory, and, if so, 
-base on that instead.
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+Junio C Hamano wrote:
+> I suspect we might want to make it even more explicit that this
+> is "match from the beginning"
 
-Actually, make_absolute_path() seems to go to an awful lot of trouble to 
-make sure that there aren't symlinks in the resulting path. Is this 
-actually necessary or even desireable for some reason? Should clone be 
-just pasting $PWD (or, failing that, getcwd()) and the given path, and 
-using that to identify the repo to clone?
+Sure; see if you like this one (the only change since v3 is under
+<pattern>) or v3 better.
 
-	-Daniel
-*This .sig left intentionally blank*
+ Documentation/git-for-each-ref.txt |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index f1f90cc..87c8389 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -8,9 +8,8 @@ git-for-each-ref - Output information on each ref
+ SYNOPSIS
+ --------
+ [verse]
+-'git-for-each-ref' [--count=<count>]\*
+-                   [--shell|--perl|--python|--tcl]
+-                   [--sort=<key>]\* [--format=<format>] [<pattern>]
++'git-for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
++                   [--sort=<key>]\* [--format=<format>] [<pattern>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -32,8 +31,9 @@ OPTIONS
+ <key>::
+ 	A field name to sort on.  Prefix `-` to sort in
+ 	descending order of the value.  When unspecified,
+-	`refname` is used.  More than one sort keys can be
+-	given.
++	`refname` is used.  You may use the --sort=<key> option
++	multiple times, in which case the last key becomes the primary
++	key.
+ 
+ <format>::
+ 	A string that interpolates `%(fieldname)` from the
+@@ -48,9 +48,10 @@ OPTIONS
+ 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
+ 
+ <pattern>::
+-	If given, the name of the ref is matched against this
+-	using fnmatch(3).  Refs that do not match the pattern
+-	are not shown.
++	If one or more patterns are given, only refs are shown that
++	match againt at least one pattern, either using fnmatch(3) or
++	literally, in the latter case matching completely or from the
++	beginning up to a slash.
+ 
+ --shell, --perl, --python, --tcl::
+ 	If given, strings that substitute `%(fieldname)`
+-- 
+1.5.6.rc1.9.g69bbf.dirty
