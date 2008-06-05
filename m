@@ -1,87 +1,91 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Add subcommand "help" to the list of most commonly used subcommands
-Date: Thu, 5 Jun 2008 20:42:40 +0200
-Message-ID: <F9BB4443-EDCA-4941-9852-B84535DAD097@wincent.com>
-References: <alpine.DEB.1.00.0806050747000.21190@racer> <20080605081911.GA5946@mithlond.arda.local> <7viqwn3g3r.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 20:47:02 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] use natural ordering to display list of branches.
+Date: Thu, 5 Jun 2008 19:47:26 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051946100.21190@racer>
+References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Cedric Vivier <cedricv@neonux.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 20:49:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4KU7-0001QN-CV
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 20:46:51 +0200
+	id 1K4KWy-0002bi-RM
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 20:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbYFESp5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 14:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbYFESp5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 14:45:57 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:33587 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752329AbYFESp4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2008 14:45:56 -0400
-Received: from cuzco.lan (35.pool85-53-24.dynamic.orange.es [85.53.24.35])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m55Igi88016785
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 5 Jun 2008 14:42:47 -0400
-In-Reply-To: <7viqwn3g3r.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1754100AbYFESs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 14:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754020AbYFESs4
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 14:48:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58814 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754063AbYFESsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 14:48:55 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 18:48:52 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 05 Jun 2008 20:48:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QPyAGA1/QswMSShQyjUeVXOAYKu9vTAwKQl9+Pg
+	NqnZ6+WPdT9563
+X-X-Sender: gene099@racer
+In-Reply-To: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83956>
 
+Hi,
 
-El 5/6/2008, a las 20:13, Junio C Hamano escribi=F3:
+On Thu, 5 Jun 2008, Cedric Vivier wrote:
 
-> It is reasonable to mention 'help' somewhere in the output, but if =20
-> we are
-> going to do this, we should make it stand out.  Perhaps like this.
->
-> -- >8 --
-> $ git
-> usage: git [--version] ...
->
-> The most commonly used git commands are:
->   add        Add file contents to the index
->   bisect     Find the change that introduced a bug by binary search
->   branch     List, create, or delete branches
->   ...
->   show       Show various types of objects
->   status     Show the working tree status
->   tag        Create, list, delete or verify a tag object signed with =
-=20
-> GPG
->
-> See 'man git' and 'git help' for more information.
-> -- 8< --
+> Hi everyone,
+> 
+> This small patch makes git display list of branches in natural order.
+> This way, when you name your branches against, for instance, a bug number from
+> some bug-tracking tool, the list will show up in a natural/human/logical order.
+> 
+> Current behavior for "git branch":
+> BUG-1040-doing-bar-is-too-slow
+> BUG-84-calling-Z-with-null-segfaults
+> BUG-900-program-freezes-when-user-click-on-button
+> experimental-feature-X
+> master
+> 
+> With the patch:
+> BUG-84-calling-Z-with-null-segfaults
+> BUG-900-program-freezes-when-user-click-on-button
+> BUG-1040-doing-bar-takes-too-much-time
+> experimental-feature-X
+> master
+> 
+> 
+> Signed-off-by: Cedric Vivier <cedricv@neonux.com>
+> ---
 
-But if the user types "git help" they'll be presented with the exact =20
-same list of common commands again, at which point they'll probably =20
-wonder why Git suggested that.
+This is not a good commit message.
 
-=46unnily enough, if they type "git help help" then they'll get the "gi=
-t-=20
-help" man page. So, there is no command called "git-help" on the =20
-system, but from the user's perspective it walks, talks and quacks =20
-like all the "real" commands, and so they probably consider it to be =20
-one. Whether or not the "help" subcommand corresponds to a real =20
-executable or script is really just an implementation detail, I think.
+> @@ -279,7 +280,7 @@ static int ref_cmp(const void *r1, const void *r2)
+> 
+>  	if (c1->kind != c2->kind)
+>  		return c1->kind - c2->kind;
+> -	return strcmp(c1->name, c2->name);
+> +	return strnatcmp(c1->name, c2->name);
+>  }
+> 
+>  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
 
-Having said that, I think your suggestion is sound if it were reworded =
-=20
-as:
+What about people preferring the status quo?  I think a command line 
+option would be in order.
 
-   See 'man git' and 'git help [command]' for more information.
+Also, you _might_ want to provide a test case, so that it does not get 
+broken by accident.
 
-Cheers,
-Wincent
+Other than that: nice.
+
+Ciao,
+Dscho
