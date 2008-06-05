@@ -1,127 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] Allow git-apply to fix up the line counts
-Date: Thu, 05 Jun 2008 16:13:51 +0200
-Message-ID: <4847F49F.8090004@viscovery.net>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Keep committer and committer dates
+Date: Thu, 5 Jun 2008 15:46:22 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806051545470.21190@racer>
+References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806032115340.13507@racer.site.net> <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz> <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
+ <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net> <alpine.DEB.1.00.0806050523120.21190@racer> <4847917A.2050700@viscovery.net> <Pine.LNX.4.61.0806051428390.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806051408520.21190@racer> <Pine.LNX.4.61.0806051528220.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806051452380.21190@racer> <Pine.LNX.4.61.0806051600310.1798@tm8103-a.perex-int.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 16:15:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Jaroslav Kysela <perex@perex.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 05 16:49:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4GEp-0005R6-Mz
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 16:14:48 +0200
+	id 1K4Glh-0002Q2-0l
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 16:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbYFEONz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 10:13:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbYFEONz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 10:13:55 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:16133 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755008AbYFEONy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 10:13:54 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K4GDw-0004rg-2j; Thu, 05 Jun 2008 16:13:52 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D50216B7; Thu,  5 Jun 2008 16:13:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0806051441560.21190@racer>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754006AbYFEOrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 10:47:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbYFEOrw
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 10:47:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37854 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753907AbYFEOrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 10:47:51 -0400
+Received: (qmail invoked by alias); 05 Jun 2008 14:47:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp031) with SMTP; 05 Jun 2008 16:47:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18oeK5dOCkodPuJIr9NxXkYMNcFiqL3NQKrurADM7
+	t3/WienOeSv4sw
+X-X-Sender: gene099@racer
+In-Reply-To: <Pine.LNX.4.61.0806051600310.1798@tm8103-a.perex-int.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83937>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Thu, 5 Jun 2008, Johannes Sixt wrote:
-> 
->> Johannes Schindelin schrieb:
->>
->>> On Thu, 5 Jun 2008, Johannes Sixt wrote:
->>>
->>>> Johannes Schindelin schrieb:
->>>>> +--fixup-line-counts::
->>>>> +	Fix up the line counts (e.g. after editing the patch without
->>>>> +	adjusting the hunk headers appropriately).
->>>>>
->>>> This sort of implies that there is some kind of output that tells the 
->>>> correct line counts. But that isn't the case (if I read the patch 
->>>> correctly). So I suggest to name the option --ignore-line-counts.
->>> But there is some kind of output: the hunks themselves.
->> Is there?
-> 
-> Yes!
-> 
->> I did this (it rewrites all line counts to 1):
->>
->> $ git diff ..HEAD~1 |
->> 	sed -e '/^@@/s/,[0-9]+ /,1 /g' |
->> 	./git-apply --fixup-line-counts
->>
->> and there was no output. Instead, the patch was applied.
-> 
-> As I said, the data is in the _hunks_, but I maybe should have added _not 
-> in the hunk headers_.
+Hi,
 
-Yes, of course.
+On Thu, 5 Jun 2008, Jaroslav Kysela wrote:
 
-> So in a very real sense, you edit the hunks, and the hunk headers are 
-> adjusted to that.  You did not adjust the hunks, so they got applied.
+> I meant I'm commiter for last patches. So I don't shift my blame to 
+> others. Also even if I'm not the commiter of patches and removing or 
+> touching totaly different area (like just README or some or other little 
+> changes) in repository, I don't see a reason to not to do so. Of course 
+> in 99.9% cases it's better to do it with new commit, because with 
+> git-reset you split trees and users will have to force pull and will 
+> probably cry. But in some cases might be worth just to remove / modify a 
+> patch hardly.
 
-Yes, of course.
+Clearly, you do not want to be convinced, no matter what arguments are 
+thrown your way.  Could you just tell me next time?  Something like "no 
+matter what you say, I will not listen to you, but insist that I am right" 
+would be sufficient.
 
-But the example pretends that the hunks have been edited so heavily that
-they in no way match the line counts in the hunk headers.
-
-> It seems that you think the hunk header's line counts are heeded, and the 
-> hunk adjusted, with --fixup-line-counts?
-
-NO, of course *NOT*.
-
->  Sorry, I find that rather 
-> counterintuitive.
-
-So would I.
-
->>>  And the line counts are not ignored, but they are actively rewritten.
->> Of course, internally there is some sort of "output" from the fixup 
->> routine, and the line counts are rewritten and then are not ignored. But 
->> the user doesn't care about this internal procedure. From the user's 
->> perspective, the line counts of the input patch are ignored.
-> 
-> But they are not!
-
-> There are _two_ things that are the line counts.  Those numbers in the 
-> hunk header, and the real line counts of the hunks.
-
-And I was always talking about the numbers in the hunk headers.
-
-> Now, if you say they are _ignored_, would that not imply in plain English 
-> that they are left unchanged (in limbo, because those two types of numbers 
-> contradict each other)?
-
-That you *internally* rewrite those numbers and then do *not* ignore them
-is totally pointless for the user. It's an implementation detail. The user
-doesn't see what is going on nor should he care. From the user's
-perspective, the hunk header line counts are _ignored_ (because if they
-were not ignored, then there would be an error message in the
-contradicting case).
-
-> Okay, how about shikebedding this to --adjust-line-counts?
-
->From the user's perspective, nothing is "adjusted"; the hunk header line
-counts are ... you guess it ... *ignored*.
-
--- Hannes
+Thankyouverymuch,
+Dscho
