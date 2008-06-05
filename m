@@ -1,112 +1,76 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH v2] git-for-each-ref.txt: minor improvements
-Date: Thu,  5 Jun 2008 15:38:34 +0200
-Message-ID: <1212673114-15751-1-git-send-email-LeWiemann@gmail.com>
-References: <1212664752-12160-1-git-send-email-LeWiemann@gmail.com>
-Cc: Lea Wiemann <lewiemann@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 15:39:38 2008
+From: Jaroslav Kysela <perex@perex.cz>
+Subject: Re: [PATCH] Keep committer and committer dates
+Date: Thu, 5 Jun 2008 15:38:44 +0200 (CEST)
+Message-ID: <Pine.LNX.4.61.0806051528220.1798@tm8103-a.perex-int.cz>
+References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806032115340.13507@racer.site.net>
+ <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
+ <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
+ <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net>
+ <alpine.DEB.1.00.0806050523120.21190@racer> <4847917A.2050700@viscovery.net>
+ <Pine.LNX.4.61.0806051428390.1798@tm8103-a.perex-int.cz>
+ <alpine.DEB.1.00.0806051408520.21190@racer>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 05 15:39:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Fgj-0008Qj-W1
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:39:34 +0200
+	id 1K4Fgw-0008VK-T1
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 15:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241AbYFENil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 09:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754185AbYFENil
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:38:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:44637 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753197AbYFENik (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 09:38:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so366147fgg.17
-        for <git@vger.kernel.org>; Thu, 05 Jun 2008 06:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:from;
-        bh=A7Roas86DIFh/dzueXHmRsJyvKOYzYJ+gujAaBN0aV0=;
-        b=ApIKGYwg6LtOe7g5VNsiz+3+4xBa2loneegUTfxKehEFgeyzehFG0+LpIq0sYp6Y2z
-         tVoFNpagt3oWFlwPVo7FNVuv5S6skK+G+CudqUxyQ8Mmeuw1Oar/6JC8VBXQAZ4hQAI+
-         MFDJQnUUrtCxUW+J3RYudrwnSBMYlkGGmv694=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=JYt5XbgDkiP8+ZUnkhblFdkhKvXStmZSxQlCwpWnJfbEX/peiH+pI1+eUU7wPD1JJD
-         cNKBi6DSeohZrHEyrkYXJYXwztDUfOA9ORPQwW6BlR1JdtvHVO+HfZV/ZvlfDFpQsWnP
-         ZXOjRFNCSKEOjG5Bme/vik2M046GsdWLtDffo=
-Received: by 10.86.73.3 with SMTP id v3mr2092908fga.68.1212673119091;
-        Thu, 05 Jun 2008 06:38:39 -0700 (PDT)
-Received: from fly ( [91.33.197.196])
-        by mx.google.com with ESMTPS id e11sm3495822fga.4.2008.06.05.06.38.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Jun 2008 06:38:38 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K4Ffm-00046P-B2; Thu, 05 Jun 2008 15:38:34 +0200
-X-Mailer: git-send-email 1.5.6.rc1.9.g69bbf.dirty
-In-Reply-To: <1212664752-12160-1-git-send-email-LeWiemann@gmail.com>
+	id S1754391AbYFENis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 09:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbYFENis
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 09:38:48 -0400
+Received: from mail1.perex.cz ([212.20.107.53]:59851 "EHLO mail1.perex.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754323AbYFENir (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 09:38:47 -0400
+Received: from server.perex.cz (server.perex.cz [172.16.0.20])
+	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id 92E38149D8C;
+	Thu,  5 Jun 2008 15:38:46 +0200 (CEST)
+Received: from tm8103.perex-int.cz (localhost [127.0.0.1])
+	by server.perex.cz (Perex's E-mail Delivery System) with ESMTP id 770DB84355;
+	Thu,  5 Jun 2008 15:38:46 +0200 (CEST)
+Received: by tm8103.perex-int.cz (Postfix, from userid 1000)
+	id 3E2AA57FEC; Thu,  5 Jun 2008 15:38:44 +0200 (CEST)
+X-X-Sender: perex@tm8103-a.perex-int.cz
+In-Reply-To: <alpine.DEB.1.00.0806051408520.21190@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83932>
 
-From: Lea Wiemann <lewiemann@gmail.com>
+On Thu, 5 Jun 2008, Johannes Schindelin wrote:
 
-Rewrapped synopsis and removed wrong asterisk behind --count option;
-clarified --sort=<key> description for multiple keys; documented that
-for-each-ref supports not only glob patterns but also prefixes like
-"refs/heads" as patterns.
+> It would make a wonderfully helpful tool less helpful.
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-Added more fixes/improvements since v1.
+I don't agree. Tool is tool. Every tool can be used in a wrong way.
+A notice to documentation that some of functionality should be used very 
+carefully should be enough.
 
- Documentation/git-for-each-ref.txt |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+> > Also, having a possibility to easy remove a changeset (hardly - not 
+> > revert) without touching all other changesets on top is a function worth 
+> > to include.
+> 
+> The problem there is that you -- again -- lie about the committers.  They 
+> _never_ saw, approved, or tested those commits.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index f1f90cc..4ffc65f 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -8,8 +8,7 @@ git-for-each-ref - Output information on each ref
- SYNOPSIS
- --------
- [verse]
--'git-for-each-ref' [--count=<count>]\*
--                   [--shell|--perl|--python|--tcl]
-+'git-for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
-                    [--sort=<key>]\* [--format=<format>] [<pattern>]
- 
- DESCRIPTION
-@@ -32,8 +31,9 @@ OPTIONS
- <key>::
- 	A field name to sort on.  Prefix `-` to sort in
- 	descending order of the value.  When unspecified,
--	`refname` is used.  More than one sort keys can be
--	given.
-+	`refname` is used.  You may use the --sort=<key> option
-+	multiple times, in which case the last key becomes the primary
-+	key.
- 
- <format>::
- 	A string that interpolates `%(fieldname)` from the
-@@ -48,9 +48,9 @@ OPTIONS
- 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
- 
- <pattern>::
--	If given, the name of the ref is matched against this
--	using fnmatch(3).  Refs that do not match the pattern
--	are not shown.
-+	If given, only refs are shown that match againt the pattern
-+	either using fnmatch(3) or literally, in the latter case up to
-+	a slash or entirely.
- 
- --shell, --perl, --python, --tcl::
- 	If given, strings that substitute `%(fieldname)`
--- 
-1.5.6.rc1.9.g69bbf.dirty
+If I changed portion of unpublished tree, as maintainer I can combine any 
+patches and it might make sense to keep at least my commit dates for my 
+reference.
+
+					Thanks,
+						Jaroslav
+
+-----
+Jaroslav Kysela <perex@perex.cz>
+Linux Kernel Sound Maintainer
+ALSA Project, Red Hat, Inc.
