@@ -1,99 +1,66 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
-Date: Thu, 5 Jun 2008 04:11:28 -0400
-Message-ID: <20080605081126.GA16416@sigill.intra.peff.net>
-References: <200805232221.45406.trast@student.ethz.ch> <200806010241.51464.trast@student.ethz.ch> <20080605014618.GA27381@sigill.intra.peff.net> <200806050954.13244.trast@student.ethz.ch>
+Date: Thu, 05 Jun 2008 01:16:19 -0700
+Message-ID: <7vprqw2t64.fsf@gitster.siamese.dyndns.org>
+References: <200805232221.45406.trast@student.ethz.ch>
+ <200805291737.53291.trast@student.ethz.ch>
+ <20080529185808.GA2140@sigill.intra.peff.net>
+ <200806010241.51464.trast@student.ethz.ch>
+ <20080605014618.GA27381@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 05 10:12:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 05 10:17:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4AaZ-0008M1-Ee
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:12:51 +0200
+	id 1K4Aex-0001EU-NI
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 10:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbYFEILg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 04:11:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbYFEILe
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:11:34 -0400
-Received: from peff.net ([208.65.91.99]:3638 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127AbYFEILd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 04:11:33 -0400
-Received: (qmail 15920 invoked by uid 111); 5 Jun 2008 08:11:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 05 Jun 2008 04:11:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jun 2008 04:11:28 -0400
-Content-Disposition: inline
-In-Reply-To: <200806050954.13244.trast@student.ethz.ch>
+	id S1752410AbYFEIQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 04:16:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYFEIQa
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 04:16:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42065 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbYFEIQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 04:16:27 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8BB923C8A;
+	Thu,  5 Jun 2008 04:16:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B2C9A3C89; Thu,  5 Jun 2008 04:16:22 -0400 (EDT)
+In-Reply-To: <20080605014618.GA27381@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 4 Jun 2008 21:46:18 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B156DF98-32D7-11DD-9195-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83878>
 
-On Thu, Jun 05, 2008 at 09:53:54AM +0200, Thomas Rast wrote:
+Jeff King <peff@peff.net> writes:
 
-> On the other hand it would be just as powerful.  Manually splitting a
-> hunk is, in the general case, only possible in "my" scheme.  However,
-> to make any difference, you later have to answer 'n' to some of the
-> sub-hunks.  So in "your" scheme, you could just have deleted the lines
-> in question.
+> So perhaps manual hunk editing is simply something for advanced users
+> who are comfortable with the patch format.
 
-Sorry, I've gotten lost in which is mine and which is yours. Yours is
-the original patch or this patch? Mine is the proposal that spawned this
-patch, or my comments on this patch?
+Exactly.  To them, "git diff >patch && vi patch && git apply --cached <patch"
+would likely to be much handier, quicker and a more familiar way. That is
+one of the reasons I somewhat doubt that we would want to have this patch.
 
-> > What about lines starting with characters besides -, +, space, or @?
-> > They will normally be ignored by diff.
-> 
-> Diff doesn't really have a say in this, does it?  And looking in
-> builtin-apply.c:
+>> +# Empty lines and lines starting with # will be removed.
+>
+> What about lines starting with characters besides -, +, space, or @?
+> They will normally be ignored by diff.
 
-Sorry, I meant to say "patch" here. But even so, I'm still wrong.
-Arbitrary text is OK between _diffs_, but not between _hunks_. And by
-definition, this format is hunks inside a single diff.
+Beware that a totally empty line is the same as an empty context line "SP LF".
 
-> 	default:
-> 		if (apply_verbosely)
-> 			error("invalid start of line: '%c'", first);
-> 		return -1;
-
-Right, so we signal the end of diff, and any hunks afterwards are "patch
-fragment without header".
-
-> so it appears invalid lines are actually not ignored, but abort hunk
-> processing.  While the error checking will be handled by apply
-> --check, I don't think it would be a good idea to silently drop all
-> other lines from the edit, as they probably indicate user error.
-
-Good point. There's really no reason for such lines to occur, so the
-best thing is probably to notice the situation and let the user re-edit.
-
-> On the other hand, this also shows that dropping empty lines is
-> wrong...
-
-Hmm. Yes, it looks like they are significant. Given that they are
-generated by a particular version of GNU diff, and that these should be
-"git diff"-generated patches, we aren't likely to encounter them. But
-probably we should just leave them as-is, and let "git apply --check" do
-what it will with them.
-
-> From a Perl POV, they probably _are_ horrible.  I'm just not used to
-> the idioms, and tend to fall for semantic differences to Python as
-> well.
-
-Heh. The Perl style in git is a bit tricky; it is such a small portion
-of the code base, and there is not a real sense of ownership, so we seem
-to have several different styles.
-
-> Thank you for the very thorough review!  I'll improve the patch
-> accordingly.
-
-Great. I think this is a worthwhile feature, so please keep at it.
-
--Peff
+For the rest of your comments, I agree with the Perl style (use of map and
+grep instead of repeated push in loops).  The end user input, what the
+code needs to parse and accept, can screw you up royally and your parsing
+needs to be careful, and the code looks fragile.
