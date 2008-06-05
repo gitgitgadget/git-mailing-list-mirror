@@ -1,80 +1,64 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH 3/5] Create a git.Branch class as ancestor of stack.Stack
-Date: Thu, 5 Jun 2008 09:01:26 +0200
-Message-ID: <20080605070126.GC23209@diana.vm.bytemark.co.uk>
-References: <20080604210655.32531.82580.stgit@localhost.localdomain> <20080604211334.32531.74258.stgit@localhost.localdomain>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Keep committer and committer dates
+Date: Thu, 05 Jun 2008 09:10:50 +0200
+Message-ID: <4847917A.2050700@viscovery.net>
+References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806032115340.13507@racer.site.net> <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz> <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain> <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz> <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net> <alpine.DEB.1.00.0806050523120.21190@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 09:02:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jaroslav Kysela <perex@perex.cz>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Jun 05 09:11:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K49UP-0004CA-Gc
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 09:02:25 +0200
+	id 1K49dW-0007Ex-L6
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 09:11:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751797AbYFEHBc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 03:01:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYFEHBc
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 03:01:32 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4538 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751736AbYFEHBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 03:01:31 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K49TS-00068i-00; Thu, 05 Jun 2008 08:01:26 +0100
-Content-Disposition: inline
-In-Reply-To: <20080604211334.32531.74258.stgit@localhost.localdomain>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752252AbYFEHK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 03:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752235AbYFEHK6
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 03:10:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:54433 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752127AbYFEHK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 03:10:57 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K49cZ-0006HJ-HR; Thu, 05 Jun 2008 09:10:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7CD476B7; Thu,  5 Jun 2008 09:10:50 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.DEB.1.00.0806050523120.21190@racer>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83869>
 
-On 2008-06-04 22:13:35 +0100, Catalin Marinas wrote:
+Johannes Schindelin schrieb:
+> Hi,
+> 
+> On Thu, 5 Jun 2008, Stephan Beyer wrote:
+> 
+>>> - as has been pointed out several times now, you _are_ the committer, 
+>>>   and you seem to want to lie there.
+>> Lying is already possible with GIT_COMMITTER_{NAME,EMAIL,NAME} 
+>> environment variables.
+> 
+> Of course it is possible!  I even pointed to a method!
+> 
+> The _point_ was that we do not want to recommend it.  And giving prominent 
+> support for it, such as introducing a command line parameter, _would_ 
+> have the effect of recommending it.
 
-> This class deals with Git-specific branch commands. The Stack class
-> is a direct child of Branch and some of its functionality was moved
-> to the new class.
+Furthermore, if you mess with committer dates, you can screw up revision
+walking to some degree. committer dates aren't merely informational.
 
-Looks good except for a few minor points.
-
-> @@ -619,3 +626,47 @@ class IndexAndWorktree(RunWithEnvCwd):
->      def update_index(self, files):
->          self.run(['git', 'update-index', '--remove', '-z', '--stdin'=
-]
->                   ).input_nulterm(files).discard_output()
-> +
-> +class Branch(object):
-> +    """Represents Git branch."""
-
-Missing "a".
-
-> +    def __init__(self, repository, name):
-> +        self._repository =3D repository
-> +        self._name =3D name
-
-Using double leading underscores will give you a class-local name. Why
-just one?
-
-> +    @classmethod
-> +    def create(cls, repository, name, create_at =3D None):
-
-Minor nit: in case of things that are clearly "owned" by other things
-(git objects are owned by a git repository, for example), I've tried
-to put the creation function in the owner, not the owned. I'm not
-insisting, though.
-
-> +        """Create a new Git branch and return the corresponding L{Br=
-anch} object."""
-
-Long line.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- Hannes
