@@ -1,94 +1,62 @@
-From: Jaroslav Kysela <perex@perex.cz>
-Subject: Re: [PATCH] Keep committer and committer dates
-Date: Thu, 5 Jun 2008 14:44:12 +0200 (CEST)
-Message-ID: <Pine.LNX.4.61.0806051428390.1798@tm8103-a.perex-int.cz>
-References: <Pine.LNX.4.61.0806031647320.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806032115340.13507@racer.site.net>
- <Pine.LNX.4.61.0806041113520.1798@tm8103-a.perex-int.cz>
- <20080604102906.GA2126@diana.vm.bytemark.co.uk> <m3ej7dzc7y.fsf@localhost.localdomain>
- <Pine.LNX.4.61.0806041424140.1798@tm8103-a.perex-int.cz>
- <alpine.DEB.1.00.0806041641150.13507@racer.site.net> <20080605010330.GB24466@leksak.fem-net>
- <alpine.DEB.1.00.0806050523120.21190@racer> <4847917A.2050700@viscovery.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH 2/5] Rename Repository.head to Repository.head_ref
+Date: Thu, 5 Jun 2008 14:46:20 +0200
+Message-ID: <20080605124620.GA28995@diana.vm.bytemark.co.uk>
+References: <20080604210655.32531.82580.stgit@localhost.localdomain> <20080604211325.32531.84968.stgit@localhost.localdomain> <20080605064633.GB23209@diana.vm.bytemark.co.uk> <b0943d9e0806050449s4b55d06cu1b7701a562c7a6ba@mail.gmail.com> <20080605115820.GA27430@diana.vm.bytemark.co.uk> <b0943d9e0806050506u25c0441cy86caaec708ba838f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jun 05 14:45:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 14:47:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4EqA-0004fG-IT
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:45:15 +0200
+	id 1K4EsB-0005ND-H0
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 14:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758752AbYFEMoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 08:44:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758738AbYFEMoU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:44:20 -0400
-Received: from mail1.perex.cz ([212.20.107.53]:48084 "EHLO mail1.perex.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758669AbYFEMoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 08:44:18 -0400
-Received: from server.perex.cz (server.perex.cz [172.16.0.20])
-	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id 6E1B1149DAB;
-	Thu,  5 Jun 2008 14:44:14 +0200 (CEST)
-Received: from tm8103.perex-int.cz (localhost [127.0.0.1])
-	by server.perex.cz (Perex's E-mail Delivery System) with ESMTP id 5C64F84355;
-	Thu,  5 Jun 2008 14:44:14 +0200 (CEST)
-Received: by tm8103.perex-int.cz (Postfix, from userid 1000)
-	id 1E21957FEC; Thu,  5 Jun 2008 14:44:12 +0200 (CEST)
-X-X-Sender: perex@tm8103-a.perex-int.cz
-In-Reply-To: <4847917A.2050700@viscovery.net>
+	id S1757072AbYFEMq0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2008 08:46:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbYFEMq0
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 08:46:26 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3200 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757072AbYFEMq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 08:46:26 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K4ErE-0007YL-00; Thu, 05 Jun 2008 13:46:20 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0806050506u25c0441cy86caaec708ba838f@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83917>
 
-On Thu, 5 Jun 2008, Johannes Sixt wrote:
+On 2008-06-05 13:06:39 +0100, Catalin Marinas wrote:
 
-> Johannes Schindelin schrieb:
-> > Hi,
-> > 
-> > On Thu, 5 Jun 2008, Stephan Beyer wrote:
-> > 
-> >>> - as has been pointed out several times now, you _are_ the committer, 
-> >>>   and you seem to want to lie there.
-> >> Lying is already possible with GIT_COMMITTER_{NAME,EMAIL,NAME} 
-> >> environment variables.
-> > 
-> > Of course it is possible!  I even pointed to a method!
-> > 
-> > The _point_ was that we do not want to recommend it.  And giving prominent 
-> > support for it, such as introducing a command line parameter, _would_ 
-> > have the effect of recommending it.
-> 
-> Furthermore, if you mess with committer dates, you can screw up revision
-> walking to some degree. committer dates aren't merely informational.
+> 2008/6/5 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > ( Did you run the test suite on your patches? I always do
+> >   something like this (untested -- I have this command in my bash
+> >   history on another computer)
+> >
+> >    $ stg pop -a
+> >    $ while make test; do stg push || break; done
+> >
+> >  before sending out patches. It takes a few minutes per patch, but
+> >  it's fully automatic. )
+>
+> Not really. It would be good to have a Makefile target for this,
+> something like "test_patches". I'll add it.
 
-Of course, you can find many reasons to not use this function. I just used 
-the proposed function when we migrated from HG to GIT to rebase with 
-actual Linus's tree without touching commiters (because I've not changed 
-patches itself).
+Good idea. But consider the case where the user doesn't want to test
+all the patches -- maybe you could give make FIRST_PATCH and/or
+LAST_PATCH parameters? (Defaulting to all patches, of course.)
 
-Also, having a possibility to easy remove a changeset (hardly - not 
-revert) without touching all other changesets on top is a function worth 
-to include. With --committer parameter, it can be easily implemented using 
-git-format-patch & git-am. And before you complain, yes, I know - it 
-should be used only localy before the repository is published to others.
-
-** I take GIT as a tool to manage repositories and it has already many 
-low-level commands/parameters. My proposal was an extension to them. If 
-there are not real technical reasons agains, it should go in. Users have 
-to decide about useability for their cases. I saw only "political" 
-comments that it's evil to do so in some (most of) cases. End of my 
-opinion. **
-
-						Jaroslav
-
------
-Jaroslav Kysela <perex@perex.cz>
-Linux Kernel Sound Maintainer
-ALSA Project, Red Hat, Inc.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
