@@ -1,83 +1,68 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: [BUG?] "git rebase --interactive" forces me to edit message.
-Date: Thu, 05 Jun 2008 12:58:20 +0900
-Message-ID: <200806050358.m553wgK9013230@mi0.bluebottle.com>
+From: Greg KH <greg@kroah.com>
+Subject: Re: git clone stable-2.6.25.y fails over HTTP
+Date: Wed, 4 Jun 2008 21:03:15 -0700
+Message-ID: <20080605040315.GA21798@kroah.com>
+References: <200806041511.m54FBPL9006783@pogo.cesa.opbu.xerox.com> <20080604154523.GA25747@kroah.com> <7vr6bdxh3l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 05 06:00:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Klossner <andrew@cesa.opbu.xerox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 06:06:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K46dz-0001wI-8n
-	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 06:00:07 +0200
+	id 1K46kD-0003Z2-F0
+	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 06:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbYFED6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2008 23:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754546AbYFED6n
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jun 2008 23:58:43 -0400
-Received: from mi0.bluebottle.com ([206.188.25.15]:51698 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753613AbYFED6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2008 23:58:43 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m553wgK9013230
-	for <git@vger.kernel.org>; Wed, 4 Jun 2008 20:58:42 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=dgxAPmlN9uHUv010OeYINEr6VVfrT7pybjFClo6mykIOIoYDjPTgy8VHuRWbdqCvd
-	A+JNwlSwnVfkso3GoGh/h+GzmETIrTo52EBDnuKcRiZRCwGIgzauI3kEagNYOw5
-Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m553wZpT001908
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 4 Jun 2008 20:58:40 -0700
-X-Trusted-Delivery: <7d3e8dea5c172930b5a7daf8923e0a8b>
+	id S1750981AbYFEEFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 00:05:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbYFEEFK
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 00:05:10 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:44804 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970AbYFEEFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 00:05:09 -0400
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1K46il-00066n-FV; Thu, 05 Jun 2008 04:05:04 +0000
+Content-Disposition: inline
+In-Reply-To: <7vr6bdxh3l.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83851>
 
-When an interactive rebase stops because of conflicts in a commit marked with pick, the user must edit the file to resolve them, run "git add", and run "git rebase --continue".  It then opens vi and asks the user to edit the message.  If I told the command to edit, I think it is OK to start vi, but when I am just picking the commit, I should be able to use the message from the original commit without having to view nor edit nor save it first. Is this a bug?
+On Wed, Jun 04, 2008 at 10:09:02AM -0700, Junio C Hamano wrote:
+> Greg KH <greg@kroah.com> writes:
+> 
+> >> Getting pack list for http://www.kernel.org/home/ftp/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> >> error: Unable to find fdcce40226d7d4273a08cc4ef84bb25755a710a4 under http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
+> > ...
+> > It looks like git over http isn't following the link somehow to the main
+> > repo?
+> 
+> Yeah, see above.  www.kernel.org does not like to serve /home/ftp/pub/scm
+> path; it wants to serve it as /pub/scm/linux instead.
+> 
+> Your objects/info/alternates in 2.6.24.y points at /pub/scm/linux/kernel/git/torvalds/...
+> but in 2.6.25.y it has extra /home/ftp in front of it.
+> 
+> A quick fix is obviously to remove the extra prefix but it makes me wonder
+> how these two "stable" repositories were prepared differently.  Could this
+> be a regression in "git clone"?  Or perhaps you "clone -s"'s Linus's
+> repository slightly differently between them?
 
-To reproduce this, first prepare a file with five lines and create an initial commit:
+That's odd.
 
-% git init
-% cat file
-1
-2
-3
-4
-5
-% git add file
-% git commit -m 'initial'
-% git tag initial
+Chris was the one that created the .24 tree and I created the .25 tree,
+so we must have done so differently, sorry.
 
-Then edit the second line and replace "2" with "two", and commit.
-Then edit the third line and replace "3" with "three", and commit.
+I've edited the alternates file, so it should work now, sorry about
+that.
 
-Then say:
+thanks,
 
-% git rebase --interactive initial
-
-and reverse the first two lines.  It stops at the first commit that changes "3" to "three".
-
-Resolve the conflicts by editing it so that it has "1 2 three 4 5", and say:
-% git add file
-% git rebase --continue
-
-At this point, git opens vi and asks me to edit the message.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
-
-----------------------------------------------------------------------
-Finally - A spam blocker that actually works.
-http://www.bluebottle.com/tag/4
+greg k-h
