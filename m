@@ -1,88 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] Allow git-apply to ignore the hunk headers
-Date: Thu, 05 Jun 2008 14:16:08 -0700
-Message-ID: <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0806051115570.21190@racer>
- <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer>
- <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer>
- <4847F49F.8090004@viscovery.net> <alpine.DEB.1.00.0806051548140.21190@racer>
- <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer>
- <alpine.DEB.1.00.0806051720070.21190@racer>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] Add subcommand "help" to the list of most commonly used subcommands
+Date: Fri, 6 Jun 2008 00:15:36 +0300
+Message-ID: <20080605211536.GA4328@mithlond.arda.local>
+References: <alpine.DEB.1.00.0806050747000.21190@racer> <20080605081911.GA5946@mithlond.arda.local> <7viqwn3g3r.fsf@gitster.siamese.dyndns.org> <408F1687-FC42-4E96-B641-088F200CE8D1@ai.rug.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 23:17:18 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Thu Jun 05 23:17:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4Mpd-0008Tz-Vv
+	id 1K4Mpe-0008Tz-J2
 	for gcvg-git-2@gmane.org; Thu, 05 Jun 2008 23:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbYFEVQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 17:16:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYFEVQU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 17:16:20 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbYFEVQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 17:16:19 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E1B963DE0;
-	Thu,  5 Jun 2008 17:16:17 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0465B3D1C; Thu,  5 Jun 2008 17:16:12 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806051720070.21190@racer> (Johannes
- Schindelin's message of "Thu, 5 Jun 2008 17:20:17 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A328770C-3344-11DD-BAC7-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1752392AbYFEVQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 17:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbYFEVQY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 17:16:24 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:48469 "EHLO
+	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751424AbYFEVQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 17:16:22 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.rokki.sonera.fi (8.5.014)
+        id 483E832F00639193; Fri, 6 Jun 2008 00:15:39 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1K4Mo4-0003s4-Ru; Fri, 06 Jun 2008 00:15:36 +0300
+Content-Disposition: inline
+In-Reply-To: <408F1687-FC42-4E96-B641-088F200CE8D1@ai.rug.nl>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/83984>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Pieter de Bie wrote (2008-06-05 20:38 +0200):
 
-> Sometimes, the easiest way to fix up a patch is to edit it directly, even
-> adding or deleting lines.  Now, many people are not as divine as certain
-> benevolent dictators as to update the hunk headers correctly at the first
-> try.
->
-> So teach the tool to do it for us.
+> On 5 jun 2008, at 20:13, Junio C Hamano wrote:
+> 
+> >See 'man git' and 'git help' for more information.
+> 
+> I'd like to see something more like
+> 
+> See 'git help COMMAND' for more information on a specific command
 
-Two comments and a half.
+Sounds good. Here comes my first _ever_ attempt on C "programming". It
+implements (i.e. tries to) what pretty much seems like an agreement on
+the list: a separate info line after the command list. If the patch
+sucks, well, at least I've had fun trying. And there's no need to ask me
+to defend my code; I'm not able to answer. :-)
 
- * Latest POSIX draft talks about unified context and allows an empty line
-   to represent an empty common context line.  GNU diff already emits such
-   a diff.  fixup_counts() should take this into account.
+---snip---
+Print info about "git help COMMAND" on git's main usage pages
 
- * I'd sleep better at night if 'Probably "diff ..."' part were written in
-   a bit more robust way.
+Git's main usage pages did not show "git help" as a way to get more
+information on a specific subcommand. This patch adds an info line after
+the list of git commands currently printed by "git", "git help", "git
+--help" and "git help --all".
 
- * (minor) There is an established term for this operation: recountdiff,
-   so --recount might be a better name.  fixup_counts() also is better
-   called recount_diff() if we go this route.
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
+ builtin.h |    1 +
+ git.c     |    4 ++++
+ help.c    |    2 ++
+ 3 files changed, 7 insertions(+), 0 deletions(-)
 
-If you are too narrowly focused to only support "git add -e", the first
-issue does not matter, because we always emit "SP LF" for such a common
-context.  The reason why I care about the first two points is because we
-may want to teach git-am about this new option as well in 1.6.0.
-
-And the robustness issue I worry about the second point also applies to a
-line that is "^-- $", especially if we were to make this available to
-git-am.  Perhaps when the line begins with a '-', the logic could be extra
-careful to detect the case where the line looks like the e-mail signature
-separator and check one line beyond it to see if it does not look anything
-like part of a diff (in which case you stop, without considering the line
-you are currently looking at, "^-- $", a deletion of "^- $", as part of
-the preimage context).
-
-As to code structure, we might want to make the later parameters to
-apply_patch() an integer, of OR'ed flag values, or even a pointer to a
-structure that holds options.
-
-Other than that, the patch looks reasonably isolated and clean.
+diff --git a/builtin.h b/builtin.h
+index 8bda111..b460b2d 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -5,6 +5,7 @@
+ 
+ extern const char git_version_string[];
+ extern const char git_usage_string[];
++extern const char git_more_info_string[];
+ 
+ extern void list_common_cmds_help(void);
+ extern void help_unknown_cmd(const char *cmd);
+diff --git a/git.c b/git.c
+index 272bf03..15a0e71 100644
+--- a/git.c
++++ b/git.c
+@@ -6,6 +6,9 @@
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
+ 
++const char git_more_info_string[] =
++	"See 'git help COMMAND' for more information on a specific command.";
++
+ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ {
+ 	int handled = 0;
+@@ -427,6 +430,7 @@ int main(int argc, const char **argv)
+ 		/* The user didn't specify a command; give them help */
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
++		printf("\n%s\n", git_more_info_string);
+ 		exit(1);
+ 	}
+ 	cmd = argv[0];
+diff --git a/help.c b/help.c
+index d89d437..8aff94c 100644
+--- a/help.c
++++ b/help.c
+@@ -649,12 +649,14 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	if (show_all) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_commands();
++		printf("%s\n", git_more_info_string);
+ 		return 0;
+ 	}
+ 
+ 	if (!argv[0]) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
++		printf("\n%s\n", git_more_info_string);
+ 		return 0;
+ 	}
+ 
+-- 
+1.5.6.rc1.16.gc6796
