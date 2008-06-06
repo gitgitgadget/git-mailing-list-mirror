@@ -1,53 +1,60 @@
-From: Kevin Ballard <kevin@rapleaf.com>
-Subject: git-clone still broken wrt. unpacking working tree with http transport
-Date: Thu, 5 Jun 2008 16:48:56 -0700
-Message-ID: <0F5C1FC7-258E-44A4-9FE6-AB6696D0B5BE@rapleaf.com>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH v3 0/23] Implementation of a file tree iteration using ignore rules.
+Date: Fri, 6 Jun 2008 02:22:40 +0200
+Message-ID: <200806060222.40654.robin.rosenberg.lists@dewire.com>
+References: <1211574872-23676-1-git-send-email-florianskarten@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 02:12:22 2008
+Cc: git@vger.kernel.org
+To: Florian Koeberle <florianskarten@web.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 02:26:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4PZ7-0006rF-8c
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 02:12:21 +0200
+	id 1K4Pn4-0001Wu-Fl
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 02:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214AbYFFAL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2008 20:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbYFFAL1
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 20:11:27 -0400
-Received: from mail.rapleaf.com ([208.96.16.213]:41697 "EHLO mail.rapleaf.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752200AbYFFAL0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2008 20:11:26 -0400
-X-Greylist: delayed 1349 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jun 2008 20:11:26 EDT
-Received: from mail.rapleaf.com (localhost.localdomain [127.0.0.1])
-	by mail.rapleaf.com (Postfix) with ESMTP id 87EBE12502F3
-	for <git@vger.kernel.org>; Thu,  5 Jun 2008 16:48:56 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=rapleaf.com; q=dns; s=m1; b=Mg38G
-	016CL3Ecjur6WjaHofbv89G4232SZ0/bKDQM02XFYc1rGqgioBQvVh2jrwInDLEM
-	z1Zx+vgboX+Cj21zpGRZcL5JojHy1GKDLceIUB+zjKUuxiV2mhVO66RZbimVQ6kM
-	C6UAx2bTuYnVL/fg2AOAed6HQRQnHkwYgGfIF8=
-Received: from [10.100.18.156] (unknown [10.100.18.156])
-	by mail.rapleaf.com (Postfix) with ESMTP id 754471250050
-	for <git@vger.kernel.org>; Thu,  5 Jun 2008 16:48:56 -0700 (PDT)
-X-Mailer: Apple Mail (2.924)
+	id S1754104AbYFFAZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2008 20:25:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbYFFAZf
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jun 2008 20:25:35 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:18845 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754104AbYFFAZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2008 20:25:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5B5681434DD0;
+	Fri,  6 Jun 2008 02:25:29 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Ax8cF+V3Crbi; Fri,  6 Jun 2008 02:25:28 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id BF6251434DCE;
+	Fri,  6 Jun 2008 02:25:28 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1211574872-23676-1-git-send-email-florianskarten@web.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84005>
 
-The new builtin git-clone is still broken in that it doesn't unpack  
-the working tree if the clone happened over http.
+fredagen den 23 maj 2008 22.34.09 skrev Florian Koeberle:
+> 
+> Hi
+> 
+> This patch set contains a new fnmatch implementation.
 
-To test, just go ahead and clone <http://moonbase.rydia.net/software/optimized-locking/optimized-locking.git/ 
- >.
+Looks ok, with me. Only minor comments in separate mail.
 
--Kevin Ballard
+> Unsupported are colon expressions like ":alpha:". I didn't expect git-add to support it, but as I just noticed git does.
+Maybe we should anticipate it and throw an exception if one tries the pattern and not treat it as [alph:] .
 
--- 
-Kevin Ballard
-kevin@rapleaf.com
+Well we noted they were broken in Git so (separate thread) so we may as well try something sane. 
+
+-- robin
