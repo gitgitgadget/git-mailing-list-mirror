@@ -1,60 +1,84 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add an optional <mode> argument to commit/status
-	-u|--untracked-files option
-Date: Fri, 6 Jun 2008 08:32:06 +0200
-Message-ID: <20080606063206.GA4181@steel.home>
-References: <7viqwvk04y.fsf@gitster.siamese.dyndns.org> <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Robert Anderson" <rwa000@gmail.com>
+Subject: Re: Problems trying setup git assistance is needed.
+Date: Thu, 5 Jun 2008 23:51:28 -0700
+Message-ID: <9af502e50806052351w71fbf437q4012e7607abe8b3d@mail.gmail.com>
+References: <Pine.LNX.4.64.0806051545260.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 08:33:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Boyd Lynn Gerber" <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 08:52:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4VVb-0006jQ-7v
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 08:33:07 +0200
+	id 1K4VoE-0003P6-PD
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 08:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbYFFGcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 02:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbYFFGcL
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 02:32:11 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:13627 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752066AbYFFGcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 02:32:10 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMna1s/dNMs
-Received: from tigra.home (Fa852.f.strato-dslnet.de [195.4.168.82])
-	by post.webmailer.de (fruni mo64) (RZmta 16.41)
-	with ESMTP id t030e2k5630uUS ; Fri, 6 Jun 2008 08:32:06 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C5A5A277BD;
-	Fri,  6 Jun 2008 08:32:06 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 8845956D28; Fri,  6 Jun 2008 08:32:06 +0200 (CEST)
+	id S1754013AbYFFGva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 02:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbYFFGva
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 02:51:30 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:8732 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752066AbYFFGv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 02:51:29 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so587186fgg.17
+        for <git@vger.kernel.org>; Thu, 05 Jun 2008 23:51:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Fp92xtwJeTd2L7hNYLr++XAlCcAX87t8ZGRASz8QmvI=;
+        b=jvqEPqH8AWdFPNhyfDvOzQ/GQKQ3q32qaQrdo92LfYSCWMxmtZoejlrppiok1qUW8t
+         s0oSFXtsCrhInae3OpMvhpzzDtqQo257DDK1hrmgvDTydX/1/Yd9RcnTnXVz/XdDegB0
+         Zni3kg/jRNF2EC5kmKVuVYFnr/q1XnGjYla/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=AAP2Palr5Ufww8JIzMpnk+jYnam0ZZhdal1+kxFkjTpfpMGIwhx6W21ydv2AUYRNcR
+         WBJbg1L58hXGvjR5/BZmU0kt0wTymEqDCcwT8CumAfoR26umLkITHy5yXn3Ir5/cFkK1
+         cSNE21+38GMs5isprXzv3xwo6HIzDY65Vi/8I=
+Received: by 10.86.82.16 with SMTP id f16mr3522913fgb.9.1212735088099;
+        Thu, 05 Jun 2008 23:51:28 -0700 (PDT)
+Received: by 10.86.95.16 with HTTP; Thu, 5 Jun 2008 23:51:28 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0806051545260.18454@xenau.zenez.com>
 Content-Disposition: inline
-In-Reply-To: <c9062d05cabcbd45657e89b03eac9715a46f8b79.1212498900.git.marius@trolltech.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84031>
 
-Marius Storm-Olsen, Tue, Jun 03, 2008 15:09:10 +0200:
-> Determining untracked files can be a very slow operation on large trees.
-> This commit adds a <mode> argument, which allows you to avoid showing the
-> untracked files in a repository. Possible options are:
->     none   - Show no untracked files
->     normal - Show untracked files and directories
->     all    - Show all untracked files
-> 
-> If the optional argument is not specified, the option defaults to 'all'.
+On Thu, Jun 5, 2008 at 3:03 PM, Boyd Lynn Gerber <gerberb@zenez.com> wrote:
+> To meet the requirements for the various
+> management systems, I have to have their directory with a copy.
 
-Looks very familiar:
+I don't know what this is supposed to mean.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/66183
+It also doesn't sound like you should be bothering any environment variables.
+
+> git clone /master/git/git /working/git/git
+>
+> worked and I am able to use the above to pull every thing for git, but the
+> tools to convert cvs, hg and svn do not seem to work.
+
+"X doesn't seem to work" is not a good description of a problem.  "I
+tried X and expected Y but got Z" is how you should describe your
+problems, with verbatim but concise cut/paste of X and Z input and
+output.
+
+As an example, did you try:
+
+git svn clone /master/svn /working/svn
+
+i.e., the first line under "Basic Examples" in the git svn manual page?
+
+Backing up a step, though, the point of what you're doing is unclear.
+Why bother with /master/svn, rather than just cloning the remote repo?
+
+Bob
