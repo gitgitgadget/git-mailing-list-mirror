@@ -1,62 +1,71 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: Help before pushing to remote repo.
-Date: Fri, 6 Jun 2008 23:28:33 +0000 (UTC)
-Message-ID: <loom.20080606T232618-691@post.gmane.org>
-References: <351720.25873.qm@web30503.mail.mud.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Kevin Ballard <kevin@rapleaf.com>
+Subject: Re: git-clone still broken wrt. unpacking working tree with http transport
+Date: Fri, 6 Jun 2008 16:28:50 -0700
+Message-ID: <32A340A4-BB0C-4D0E-9B8D-A4FCEA4B24D1@rapleaf.com>
+References: <0F5C1FC7-258E-44A4-9FE6-AB6696D0B5BE@rapleaf.com> <20080606061428.GF18257@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 07 01:29:44 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jun 07 01:29:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4lNP-0002Vy-Rr
+	id 1K4lNQ-0002Vy-Ev
 	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 01:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757616AbYFFX2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 19:28:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756482AbYFFX2u
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 19:28:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:47756 "EHLO ciao.gmane.org"
+	id S1756308AbYFFX2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 19:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbYFFX2w
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 19:28:52 -0400
+Received: from mail.rapleaf.com ([208.96.16.213]:50361 "EHLO mail.rapleaf.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756308AbYFFX2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 19:28:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1K4lMS-0005tA-50
-	for git@vger.kernel.org; Fri, 06 Jun 2008 23:28:44 +0000
-Received: from 12.96.234.114 ([12.96.234.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 23:28:44 +0000
-Received: from raible by 12.96.234.114 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 23:28:44 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14)
+	id S1756308AbYFFX2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 19:28:51 -0400
+Received: from mail.rapleaf.com (localhost.localdomain [127.0.0.1])
+	by mail.rapleaf.com (Postfix) with ESMTP id 8344812502D0;
+	Fri,  6 Jun 2008 16:28:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=rapleaf.com; q=dns; s=m1; b=v8QaM
+	Z7K4v6OITd6FaxzfJYtoyXsdgAS46+5DuT06UhaM7RGF0heI1balImCxx5x7+Dpg
+	t4rQ7nHWwp3wpTDc/JBZKFJu1fBfQVLWK+R1VRVtJU4hVQk4+Ao6XSYEkt5nYiEF
+	5HHlAcIYpeolEmygk4bViGfSDdtqU1djPlu2pw=
+Received: from [10.100.18.156] (unknown [10.100.18.156])
+	by mail.rapleaf.com (Postfix) with ESMTP id 5C5461250050;
+	Fri,  6 Jun 2008 16:28:50 -0700 (PDT)
+In-Reply-To: <20080606061428.GF18257@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84143>
 
-Ralph Churchill <mrchucho <at> yahoo.com> writes:
+No I didn't. I guess it's just bad luck that 541fc218 was committed a  
+few hours before I reported the issue ;) I generally git-pull in the  
+morning, so I pulled before that got committed.
 
-> 
-> I have a file that contains a "secret" key value. I unwittingly committed two
-commits to my local repository
-> that contained the value. Is there anything I can do to prevent the value from
-making it to the version(s)
-> visible in the remote repository? I don't know if I can "edit" the commits or
-change the history of the file.
-> 
-> I'm using github for the remote repo. and am, obviously, very new to Git.
+Actually, I ran into it last week but forgot to mention it then.
 
-Assuming that you haven't yet pushed it to the remote repository...
+-Kevin
 
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#fixing-a-mistake-by-rewriting-history
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#undoing-a-merge
+On Jun 5, 2008, at 11:14 PM, Jeff King wrote:
+
+> On Thu, Jun 05, 2008 at 04:48:56PM -0700, Kevin Ballard wrote:
+>
+>> The new builtin git-clone is still broken in that it doesn't unpack  
+>> the
+>> working tree if the clone happened over http.
+>
+> Did you try with a git that contains 541fc218?
+>
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+Kevin Ballard
+kevin@rapleaf.com
