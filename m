@@ -1,68 +1,61 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [PATCH] This patch is to allow 12 different OS's to compile and
- run git.
-Date: Fri, 6 Jun 2008 14:44:19 -0600
-Message-ID: <Pine.LNX.4.64.0806061438200.18454@xenau.zenez.com>
-References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com>
- <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
- <20080606201551.GB31040@leksak.fem-net> <alpine.LFD.1.10.0806061325090.3473@woody.linux-foundation.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGIT PATCH 0/5] Proposed patches
+Date: Fri, 06 Jun 2008 21:45:27 +0100
+Message-ID: <20080606204322.8805.32313.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephan Beyer <s-beyer@gmx.net>, Git List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 22:45:24 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 06 22:46:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4ioK-0000yS-JF
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 22:45:21 +0200
+	id 1K4ipT-0001J4-SP
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 22:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932583AbYFFUoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 16:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbYFFUoV
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 16:44:21 -0400
-Received: from zenez.com ([166.70.62.2]:17926 "EHLO xenau.zenez.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932583AbYFFUoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 16:44:20 -0400
-Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id A6140E4B51; Fri,  6 Jun 2008 14:44:19 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 9A390E49A7;
-	Fri,  6 Jun 2008 14:44:19 -0600 (MDT)
-In-Reply-To: <alpine.LFD.1.10.0806061325090.3473@woody.linux-foundation.org>
+	id S933277AbYFFUpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 16:45:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933274AbYFFUpf
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 16:45:35 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:16740 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933246AbYFFUpe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jun 2008 16:45:34 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20080606204934.RUAE28496.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Fri, 6 Jun 2008 21:49:34 +0100
+Received: from localhost.localdomain ([86.7.22.36])
+          by aamtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20080606205430.LHEW8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
+          Fri, 6 Jun 2008 21:54:30 +0100
+User-Agent: StGIT/0.14.2.168.ge637
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84107>
 
-On Fri, 6 Jun 2008, Linus Torvalds wrote:
-> On Fri, 6 Jun 2008, Stephan Beyer wrote:
-> >
-> > It's not necessary, or even unwanted, to copy&paste this into the 
-> > commit message.
-> 
-> Considering the particular OS's it adds support for and Boyd's 
-> geographical location, I suspect Boyd is pretty used to by now having to 
-> make _very_ clear to people that he understands the GPL and has the 
-> right to post the changes.
-> 
-> Sometimes a little bit of extra clarity is a good thing.
+This series contains the patches pending in my "proposed" branch.
+They've been updated following comments from Karl.
 
-You hit the nail on the head.  I get tired of doing exactly that.  Just 
-south of me 20-40 miles is the location of SCO Lindon, Utah.  I have to 
-make it really clear in most things I do that I understand and totally 
-support the GPL.  I have done work for said group and always add in my 
-contracts that what is being done has to support the GPL and strict 
-compliance is necessary.  All changes will be sent upstream for inclusion 
-at the project head.  Whether they are added or not is really not the 
-issue.  I want any and all changes to follow what ever licence they are 
-under and everything has to be in compliance with the licences.
 
-Thanks,
+Catalin Marinas (5):
+      Add test_patches target to Makefile
+      Convert "init" to the new StGIT infrastructure
+      Add stack creation and initialisation support to lib.Stack
+      Create a git.Branch class as ancestor of stack.Stack
+      Rename Repository.head to Repository.head_ref
 
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+
+ Makefile               |    9 ++++-
+ stgit/commands/init.py |   14 ++-----
+ stgit/commands/new.py  |    3 +-
+ stgit/lib/git.py       |   58 ++++++++++++++++++++++++++++++-
+ stgit/lib/stack.py     |   90 ++++++++++++++++++++++++++++++++++++------------
+ 5 files changed, 137 insertions(+), 37 deletions(-)
+
+-- 
+Catalin
