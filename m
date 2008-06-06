@@ -1,58 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git mv + git pull issue
-Date: Fri, 6 Jun 2008 16:40:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806061639390.1783@racer>
-References: <4848EDDF.7090906@melosgmbh.de>
+From: "Brian Foster" <brian.foster@innova-card.com>
+Subject: [Q] Changing the current branch (HEAD) in a bare repository - how?
+Date: Fri, 6 Jun 2008 17:43:59 +0200
+Message-ID: <a537dd660806060843p4e92932x4e0f5464c5fd1da1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Christoph Duelli <duelli@melosgmbh.de>
-X-From: git-owner@vger.kernel.org Fri Jun 06 17:43:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 06 17:44:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4e5e-0006BM-14
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 17:42:54 +0200
+	id 1K4e7a-0006wJ-VO
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 17:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbYFFPmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 11:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYFFPl7
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 11:41:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47591 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751954AbYFFPl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 11:41:59 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 15:41:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 06 Jun 2008 17:41:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX189U7oHc0Q9853cGEP/4vXgOaVhKhUfV8Orpi688O
-	RgmEj0Unzg+g6H
-X-X-Sender: gene099@racer
-In-Reply-To: <4848EDDF.7090906@melosgmbh.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754063AbYFFPoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 11:44:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbYFFPoA
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 11:44:00 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:33425 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509AbYFFPoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 11:44:00 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so1555820rvb.1
+        for <git@vger.kernel.org>; Fri, 06 Jun 2008 08:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=9md2wT6e1lqUWQD5UO9lbi7pS+t3kBrjzOVc38ioWPU=;
+        b=EMU8iUfnDe3jja84P0RPu58YQyvWAHFsbM9aFCGnbxGM1TV3H4l9HhvD+ishbSWsN/
+         k2yijXgBYZyGXuOnEDBs2AGqRsIID3493tekeszimM+V2QwtM+QhcilXS8VRcblvpWmm
+         Pc825kS5w9s2JlYsTSwKxD9sgOxcIADgQD6vU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=QynBPZubj52DN/HlQP4xAJ74VTDFFBtaMm69BCRr3yp7SZikCvdSrQsVNfZ6lzJanG
+         mVLJl6PLz6uZnfh385Cm3WhL5t0Jif9cIgGTDzQjjZcdx0e6C1ectWkvfYf0NIiXXbhM
+         VjRG4UynVwv+FYCMQhdv4cTQL15rstZ6fX1Is=
+Received: by 10.140.202.21 with SMTP id z21mr156050rvf.81.1212767039503;
+        Fri, 06 Jun 2008 08:43:59 -0700 (PDT)
+Received: by 10.141.197.19 with HTTP; Fri, 6 Jun 2008 08:43:59 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 0676d3b1bb34ebdd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84082>
 
-Hi,
+ Using git 1.5.2.5 (Kubuntu 7.10) and a bare repository,
+ I started with (the commands and output below are typed
+ in by hand, mostly from memory):
 
-On Fri, 6 Jun 2008, Christoph Duelli wrote:
+    $ git branch -a
+    * master
+      foo
+    $
 
-> cd ../gitmv
-> git mv afile newname
-> # do not commit
-> # now: afile is not in the directory anymore
-> # oh, I need those changes my colleague made...
-> git pull ../gitmv-clone/
-> # now: both(!) afile and newname are in the directory
+ and then changed the branch names:
 
-What is so surprising there?  We _always_ recommend to commit before 
-pulling.
+    $ git branch -m master old-master
+    $ git branch -m foo master
 
-Ciao,
-Dscho
+ and got this:
+
+    $ git branch -a
+      master
+    * old-master
+    $
+
+ Now, how do I change the current branch to the (new)
+ `master'?  A `checkout' fails:
+
+    $ git checkout master
+    fatal: /usr/bin/git-checkout cannot be used without a working tree.
+    $
+
+ I (ultimately) hand-edited `HEAD' (apparently successfully),
+ but am wondering what I should have done or may have missed?
+
+ I didn't spot anything in TFM, albeit I could have easily overlooked
+ or misunderstood something.
+
+cheers!
+	-blf-
+
+-- 
+"How many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  | Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools." | http://www.stopesso.com
