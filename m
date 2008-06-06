@@ -1,66 +1,96 @@
-From: "Robert Anderson" <rwa000@gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
 Subject: Re: General question about minimal documentation patches
-Date: Fri, 6 Jun 2008 15:39:14 -0700
-Message-ID: <9af502e50806061539j3962e63oe1124bbe4d76716@mail.gmail.com>
+Date: Sat, 7 Jun 2008 00:46:04 +0200
+Message-ID: <20080606224604.GE31040@leksak.fem-net>
 References: <4849B8E8.1090506@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Dirk_S=FCsserott?=" <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sat Jun 07 00:40:43 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UoPmpPX/dBe4BELn"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sat Jun 07 00:47:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4kbw-0007uO-L3
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 00:40:41 +0200
+	id 1K4kim-0001MW-Bb
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 00:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbYFFWjT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jun 2008 18:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752087AbYFFWjS
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 18:39:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:50505 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbYFFWjS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jun 2008 18:39:18 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so801484fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 15:39:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yjdiD9VP5O4H9d6NNFAMTsJ22MssVYIunrxaoeh4PYI=;
-        b=QzHznth3lWV/CUIv0bTKsGpzzRxr/mtYkyxOLKiy4NO8nV0YXFEEqneRkPBE+JSWPc
-         LiNRsVcQ/u0tPjUKbyZNgGHX4T5JanZuX+hWAp1LYBWnR+zchHIMHiwY62SgC/9912mZ
-         RBZO2do4sjoD4h6wgH8a9j06YPoeknplMJQPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=J9BjHQl2W8TIAVkH4YMqhtZf2sFUSIVGwkAMAKb/h3VJQo833Zc/HklR1hTHj4UL1y
-         J1pxvAmf79HFGIm2oSbsbXgCjB4tZOczhGMYckA+LZ6lEEH8jLuMIKEkTdhm1of0OITm
-         sPzNPVV44bFumysW2gSbnA6cI5dzYU96XaI7I=
-Received: by 10.86.90.2 with SMTP id n2mr1106032fgb.51.1212791954547;
-        Fri, 06 Jun 2008 15:39:14 -0700 (PDT)
-Received: by 10.86.95.16 with HTTP; Fri, 6 Jun 2008 15:39:14 -0700 (PDT)
-In-Reply-To: <4849B8E8.1090506@dirk.my1.cc>
+	id S1756099AbYFFWqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 18:46:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755308AbYFFWqW
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 18:46:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44150 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753799AbYFFWqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 18:46:21 -0400
+Received: (qmail invoked by alias); 06 Jun 2008 22:46:19 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp025) with SMTP; 07 Jun 2008 00:46:19 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+pgec/lvupTS9aLECoz/wdtH0Fs01kuvCe9u3yZC
+	QtGwo171cAnWw6
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K4khA-0005q0-Sc; Sat, 07 Jun 2008 00:46:04 +0200
 Content-Disposition: inline
+In-Reply-To: <4849B8E8.1090506@dirk.my1.cc>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84127>
 
-On Fri, Jun 6, 2008 at 3:23 PM, Dirk S=FCsserott <newsletter@dirk.my1.c=
-c> wrote:
-> OTOH, I really don't want to bother you with such patches
-> that don't bring forward the "real Git" and only marginally
-> contribute to Git itself.
 
-As a new-ish user of git who spends a lot of time in the docs:  please
-do it.  These problems range from distracting to downright confusing.
+--UoPmpPX/dBe4BELn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Bob
+Hi,
+
+> Do you mind if people submit _very_ minimal patches for the
+> docs that fix only some typing errors or the like? I, personally,
+> am a friend of correct spelling and such and when I discover
+> such errors I prefer to have them fixed.
+
+I don't see a reason why tiny documentation fixes (be it typos or not)
+should be less important than tiny feature code fixes,
+so imho it is totally ok ;-)
+
+Out of curiosity I looked for typo-only fixes in git, and found:
+88f6dbaf99f43053f86474b28beedd91e77c64d9
+	builtin-apply: typofix
+e77b0b5d0fdac411607dbae11ccad87dccd332d3
+	git-am: fix typo in usage message
+ed020917147ca733477a0186f3bb1791ec6e5b5c
+	Documentation/git-web--browse.txt: fix small typo
+51836e9e125f67aa26724154757b4734c08057e4
+	Documentation/git-submodule: typofix
+ca593f795994badf7cd543d24d1ed24aabc0d8e1
+	Documentation/git-request-pull: Fixed a typo ("send" -> "end")
+and so on ;-)
+
+What I want to say: just send the patches in ;-)
+
+Regards,
+  Stephan
+
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+
+--UoPmpPX/dBe4BELn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFISb4sbt3SB/zFBA8RAqkJAKCzNxWbaCiwbgPL7Z/ieseAoGlrIQCfW/UH
+hm8TmkSxRr2VxpmYwFKvYb4=
+=upxC
+-----END PGP SIGNATURE-----
+
+--UoPmpPX/dBe4BELn--
