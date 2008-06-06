@@ -1,86 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
-Date: Fri, 6 Jun 2008 15:31:38 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806061528270.1783@racer>
-References: <200805232221.45406.trast@student.ethz.ch> <200805291737.53291.trast@student.ethz.ch> <20080529185808.GA2140@sigill.intra.peff.net> <200806010241.51464.trast@student.ethz.ch> <20080605014618.GA27381@sigill.intra.peff.net> <7vprqw2t64.fsf@gitster.siamese.dyndns.org>
- <20080605085605.GA16624@sigill.intra.peff.net> <alpine.DEB.1.00.0806051126060.21190@racer> <20080606051026.GA18257@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] Allow git-apply to ignore the hunk headers
+Date: Fri, 06 Jun 2008 08:14:44 -0700
+Message-ID: <7vej7awq6z.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0806051115570.21190@racer>
+ <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer>
+ <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer>
+ <4847F49F.8090004@viscovery.net> <alpine.DEB.1.00.0806051548140.21190@racer>
+ <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer>
+ <alpine.DEB.1.00.0806051720070.21190@racer>
+ <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806052304300.21190@racer>
+ <7v4p87zcv6.fsf@gitster.siamese.dyndns.org> <87iqwmzwcn.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 06 16:34:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 17:16:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4d0y-0001N5-81
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 16:34:00 +0200
+	id 1K4dfe-00037Y-20
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 17:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717AbYFFOdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 10:33:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756579AbYFFOdG
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 10:33:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34046 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755925AbYFFOdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 10:33:03 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 14:33:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 06 Jun 2008 16:33:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/HKFMClfHHBPOF6DEJKU/4j7Z+UYoxwmdYRqv5QQ
-	hLlBkrB31TgPhF
-X-X-Sender: gene099@racer
-In-Reply-To: <20080606051026.GA18257@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757946AbYFFPPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 11:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757652AbYFFPPA
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 11:15:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35343 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757508AbYFFPO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 11:14:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D18355842;
+	Fri,  6 Jun 2008 11:14:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 22155583B; Fri,  6 Jun 2008 11:14:52 -0400 (EDT)
+In-Reply-To: <87iqwmzwcn.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
+ 06 Jun 2008 14:33:28 +0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 533EA2CE-33DB-11DD-975C-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84077>
 
-Hi,
+Sergei Organov <osv@javad.com> writes:
 
-On Fri, 6 Jun 2008, Jeff King wrote:
+> Don't you think it's time to fix git-format-patch to put some reliable
+> "end-of-patch" marker line before the signature?
 
-> On Thu, Jun 05, 2008 at 11:28:53AM +0100, Johannes Schindelin wrote:
-> 
-> > We have a tradition of giving the users plenty of rope.
-> > 
-> > And I actually like having the power at my finger tips.  You would not 
-> > believe how I enjoyed using "git add -e" to commit the final version of 
-> > that very patch.
-> 
-> I looked at your patch, and here are my complaints (versus what Thomas
-> has been working on):
-> 
->   1. You edit the whole diff, not just a hunk. Actually, I think this is
->      probably not a big deal, as any decent editor lets you find the
->      spot you're looking for pretty trivially.
+Not at all.  git-apply is designed to (and has to) grok any reasonable
+e-mailed patch, not just format-patch output.  And we should consider
+having e-mail signature separator at the end as "reasonable".
 
-Actually, this is exactly what I wanted.  I positively _hate_ all the key 
-presses I have to go through until I am finally where I want to be.  I 
-cannot just search for a term and be done with it.  Reminds me of 
-Windows-like dialog based configurations.
-
->   2. It's not integrated into the git-add--interactive loop at all. That
->      is, I don't start out saying "I want to edit this diff." I look at
->      the diff while staging with "git add -p" and say "Oops, I need to
->      edit this hunk." So I think it is better implemented as an "e"
->      option in the hunk adding loop, with "git add -e" as a shortcut.
->      Or maybe there is simply room for both (and "git add -e", rather
->      than being a shortcut, just means "do this on the _whole_ file").
-
-This is very much on purpose.  I do not like "git add -i" at all.  It 
-limits my work unduly.  That's why I tried to change the hunk editing in 
-git-gui once upon a time, but I never got round to fix that, and it does 
-not work well with ssh either.
-
-So no, I do not want to use that perl script with that menu.  I want to 
-have the raw diff in a raw editor, where I can change the things I need to 
-change.
-
-Ciao,
-Dscho
+It only becomes an issue when you start deviating from the rule of
+reliable diff parsing, such as ignoring the old/new line count, which is
+the topic of Dscho's patch.
