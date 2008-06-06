@@ -1,95 +1,80 @@
-From: "Brian Foster" <brian.foster@innova-card.com>
-Subject: [Q] Changing the current branch (HEAD) in a bare repository - how?
-Date: Fri, 6 Jun 2008 17:43:59 +0200
-Message-ID: <a537dd660806060843p4e92932x4e0f5464c5fd1da1@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] blame: show "previous" information in --porcelain/--incremental format
+Date: Fri, 6 Jun 2008 17:44:36 +0200
+Message-ID: <200806061744.36687.jnareb@gmail.com>
+References: <940824.46903.qm@web31808.mail.mud.yahoo.com> <200806061128.04031.jnareb@gmail.com> <7vabhywq2c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 06 17:44:57 2008
+Cc: Luben Tuikov <ltuikov@yahoo.com>,
+	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 17:45:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4e7a-0006wJ-VO
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 17:44:55 +0200
+	id 1K4e8F-0007CV-SA
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 17:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063AbYFFPoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 11:44:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbYFFPoA
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 11:44:00 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:33425 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbYFFPoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 11:44:00 -0400
-Received: by rv-out-0506.google.com with SMTP id l9so1555820rvb.1
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 08:43:59 -0700 (PDT)
+	id S1753010AbYFFPon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 11:44:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752941AbYFFPon
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 11:44:43 -0400
+Received: from gv-out-0910.google.com ([216.239.58.191]:6097 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751875AbYFFPom (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 11:44:42 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so384504gvc.37
+        for <git@vger.kernel.org>; Fri, 06 Jun 2008 08:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=9md2wT6e1lqUWQD5UO9lbi7pS+t3kBrjzOVc38ioWPU=;
-        b=EMU8iUfnDe3jja84P0RPu58YQyvWAHFsbM9aFCGnbxGM1TV3H4l9HhvD+ishbSWsN/
-         k2yijXgBYZyGXuOnEDBs2AGqRsIID3493tekeszimM+V2QwtM+QhcilXS8VRcblvpWmm
-         Pc825kS5w9s2JlYsTSwKxD9sgOxcIADgQD6vU=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=prDLrJ1prcd0g7FseGdYmfnBxQhTSLgUHEJdFY/ZFTI=;
+        b=WNcsPc1a/xi/Hxasa15ZSbkCuI6b7FROOrCrBZfkpYyUDotR7eCbhhfcn3H5fjVsdX
+         2F9lPw+CGySZoJQtbtV6v20M8foJTrk99Did3nfSdq/swsPpap7EUkVJzKdo65Fh2R6Q
+         X0+xgRAGrc1ZVG5PS2JGUXFlwzkRa3DEdprCI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=QynBPZubj52DN/HlQP4xAJ74VTDFFBtaMm69BCRr3yp7SZikCvdSrQsVNfZ6lzJanG
-         mVLJl6PLz6uZnfh385Cm3WhL5t0Jif9cIgGTDzQjjZcdx0e6C1ectWkvfYf0NIiXXbhM
-         VjRG4UynVwv+FYCMQhdv4cTQL15rstZ6fX1Is=
-Received: by 10.140.202.21 with SMTP id z21mr156050rvf.81.1212767039503;
-        Fri, 06 Jun 2008 08:43:59 -0700 (PDT)
-Received: by 10.141.197.19 with HTTP; Fri, 6 Jun 2008 08:43:59 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VQeYcNXBNuY7KLMnGKX3EIpwevmYOsiipfVjsmffO0WR2QpKqsxyy9HtC3wfCPgSFX
+         anuQaim/1rWL1MV5AoqhErqDkuiediwQDU57Iy8YnEPcpxsNTT8w4hInOLPNu7Nxrh0r
+         f1EzA50mZG8yi4OwW4yzWj7vz/d2SdQRIEAvI=
+Received: by 10.210.22.8 with SMTP id 8mr201295ebv.19.1212767080690;
+        Fri, 06 Jun 2008 08:44:40 -0700 (PDT)
+Received: from ?192.168.1.15? ( [83.8.247.141])
+        by mx.google.com with ESMTPS id f13sm8340037gvd.2.2008.06.06.08.44.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 06 Jun 2008 08:44:37 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vabhywq2c.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: 0676d3b1bb34ebdd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84083>
 
- Using git 1.5.2.5 (Kubuntu 7.10) and a bare repository,
- I started with (the commands and output below are typed
- in by hand, mostly from memory):
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> What happens if attributed (blamed) commit is "evil merge"?
+>> Would git-blame emit multiple "previous <sha-1 of commit> <filename>"
+>> headers?
+> 
+> Read the code.  There is only one previous pointer in each origin.
 
-    $ git branch -a
-    * master
-      foo
-    $
+Ah. True.
 
- and then changed the branch names:
-
-    $ git branch -m master old-master
-    $ git branch -m foo master
-
- and got this:
-
-    $ git branch -a
-      master
-    * old-master
-    $
-
- Now, how do I change the current branch to the (new)
- `master'?  A `checkout' fails:
-
-    $ git checkout master
-    fatal: /usr/bin/git-checkout cannot be used without a working tree.
-    $
-
- I (ultimately) hand-edited `HEAD' (apparently successfully),
- but am wondering what I should have done or may have missed?
-
- I didn't spot anything in TFM, albeit I could have easily overlooked
- or misunderstood something.
-
-cheers!
-	-blf-
+So the question now is: how git-blame choses one parent if commit
+which is blamed is an evil merge commit?
 
 -- 
-"How many surrealists does it take to   | Brian Foster
- change a lightbulb? Three. One calms   | somewhere in south of France
- the warthog, and two fill the bathtub  | Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools." | http://www.stopesso.com
+Jakub Narebski
+Poland
