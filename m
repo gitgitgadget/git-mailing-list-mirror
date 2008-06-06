@@ -1,205 +1,76 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [PATCH] This patch is to allow 12 different OS's to compile and
- run git.
-Date: Fri, 6 Jun 2008 14:02:33 -0600
-Message-ID: <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
-References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com>
- <87bq2ez72u.fsf@jeremyms.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] This patch is to allow 12 different OS's to compile
+	and run git.
+Date: Fri, 6 Jun 2008 22:15:51 +0200
+Message-ID: <20080606201551.GB31040@leksak.fem-net>
+References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com> <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
-To: Thomas Harning <harningt@gmail.com>,
-	Jeremy Maitin-Shepard <jbms@cmu.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 06 22:03:33 2008
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 22:17:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4i9s-0002jD-Fb
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 22:03:32 +0200
+	id 1K4iN0-0008F3-08
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 22:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757923AbYFFUCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 16:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757898AbYFFUCf
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 16:02:35 -0400
-Received: from zenez.com ([166.70.62.2]:3434 "EHLO xenau.zenez.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756827AbYFFUCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 16:02:34 -0400
-Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id 889A7E4F48; Fri,  6 Jun 2008 14:02:33 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 751CEE4F3E;
-	Fri,  6 Jun 2008 14:02:33 -0600 (MDT)
-In-Reply-To: <87bq2ez72u.fsf@jeremyms.com>
+	id S1759088AbYFFUQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 16:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758559AbYFFUQK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 16:16:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60557 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754087AbYFFUQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 16:16:08 -0400
+Received: (qmail invoked by alias); 06 Jun 2008 20:16:06 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp030) with SMTP; 06 Jun 2008 22:16:06 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/VanwTHSvVgmDHnfKmrvn6cnawLbp+hXBRvv6vhd
+	2xYBP+X6L+fBBr
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K4iLn-00019C-VM; Fri, 06 Jun 2008 22:15:52 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84104>
 
-On Fri, 6 Jun 2008, Jeremy Maitin-Shepard wrote:
-> This change will result in the allocated memory being leaked, which is
-> probably not correct.  Perhaps change it to alloca instead.
+Hi,
 
-OK below is a new version with the suggestions.
+>         Developer's Certificate of Origin 1.1
 
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+It's not necessary, or even unwanted, to copy&paste this into the
+commit message.
 
----------------------------------New-Submittal-------------------------
-From 554045d534dfa89f01fc6b0a819c73ad660f02fb Fri Jun  6 14:01:55 MDT 2008
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Date: Fri, 6 Jun 2008 13:58:04 -0600
-Subject: [PATCH] This patch is to allow 12 different OS's to compile and run git.
+The Signed-off-by: line
+> Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
+is enough.
+So just use the Signed-off-by line and not the whole DCO.
 
-This patch has patches to
-
-Makefile
-git-compat-util.h
-progress.c
-
-This patch allows some older OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4,
-and OpenServer 6.0.X to build and run git.
+As Documentation/SubmittingPatches says:
+----
+The sign-off is a simple line at the end of the explanation for
+the patch[...].
+[...]
+if you can certify the below:
 
         Developer's Certificate of Origin 1.1
+	[...]
 
-        By making a contribution to this project, I certify that:
+then you just add a line saying
 
-        (a) The contribution was created in whole or in part by me and I
-            have the right to submit it under the open source license
-            indicated in the file; or
+        Signed-off-by: Random J Developer <random@developer.example.org>
+----
 
-        (b) The contribution is based upon previous work that, to the best
-            of my knowledge, is covered under an appropriate open source
-            license and I have the right under that license to submit that
-            work with modifications, whether created in whole or in part
-            by me, under the same open source license (unless I am
-            permitted to submit under a different license), as indicated
-            in the file; or
+Regards,
+  Stephan
 
-        (c) The contribution was provided directly to me by some other
-            person who certified (a), (b) or (c) and I have not modified
-            it.
-
-        (d) I understand and agree that this project and the contribution
-            are public and that a record of the contribution (including all
-            personal information I submit with it, including my sign-off) is
-            maintained indefinitely and may be redistributed consistent with
-            this project or the open source license(s) involved.
-
-Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
-
-diff --git a/Makefile b/Makefile
-index cce5a6e..6df008a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -165,6 +165,20 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
- # CFLAGS and LDFLAGS are for the users to override from the command line.
- 
- CFLAGS = -g -O2 -Wall
-+ifeq ($(uname_S),SCO_SV)
-+  ifeq ($(uname_R),3.2)
-+#    CFLAGS = -g -O2
-+    CFLAGS = -g
-+  endif
-+  ifeq ($(uname_R),5)
-+    CFLAGS = -g -O2 -Wall
-+#    CFLAGS = -g -O2
-+  endif
-+endif
-+ifeq ($(uname_S),UnixWare)
-+    CFLAGS = -g -O2 -Wall
-+#    CFLAGS = -g -O2
-+endif
- LDFLAGS =
- ALL_CFLAGS = $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
-@@ -207,7 +221,8 @@ GITWEB_SITE_FOOTER =
- 
- export prefix bindir gitexecdir sharedir template_dir htmldir sysconfdir
- 
--CC = gcc
-+#CC = gcc
-+CC = "cc"
- AR = ar
- RM = rm -f
- TAR = tar
-@@ -564,6 +579,42 @@ endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
- endif
-+ifeq ($(uname_S),UnixWare)
-+	NEEDS_SOCKET = YesPlease
-+#	NEEDS_NSL = YesPlease
-+	NEEDS_SSL_WITH_CRYPTO = YesPlease
-+	NEEDS_LIBICONV = YesPlease
-+	SHELL_PATH = /usr/local/bin/bash
-+	NO_IPV6 = YesPlease
-+	NO_HSTRERROR = YesPlease
-+#	BASIC_CFLAGS +=  -E -H
-+	BASIC_CFLAGS +=  -Kalloca -Kthread
-+	BASIC_CFLAGS += -I/usr/local/include
-+	BASIC_LDFLAGS += -L/usr/local/lib
-+	INSTALL = ginstall
-+	TAR = gtar
-+	NO_STRCASESTR = YesPlease
-+	NO_MEMMEM = YesPlease
-+endif
-+ifeq ($(uname_S),SCO_SV)
-+	NEEDS_SOCKET = YesPlease
-+#	NEEDS_NSL = YesPlease
-+	NEEDS_SSL_WITH_CRYPTO = YesPlease
-+	NEEDS_LIBICONV = YesPlease
-+	SHELL_PATH = /usr/bin/bash
-+	NO_IPV6 = YesPlease
-+#	NO_HSTRERROR = YesPlease
-+#	BASIC_CFLAGS +=  -E -H
-+      ifeq ($(uname_R),5)
-+	BASIC_CFLAGS +=  -Kalloca -Kthread
-+      endif
-+#	BASIC_CFLAGS += -I/usr/local/include
-+#	BASIC_LDFLAGS += -L/usr/local/lib
-+	NO_STRCASESTR = YesPlease
-+	NO_MEMMEM = YesPlease
-+	INSTALL = ginstall
-+	TAR = gtar
-+endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 01c4045..f27aea3 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -39,7 +39,8 @@
- /* Approximation of the length of the decimal representation of this type. */
- #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
- 
--#if !defined(__APPLE__) && !defined(__FreeBSD__)
-+#if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !de
-+fined(_M_UNIX)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
-diff --git a/progress.c b/progress.c
-index d19f80c..295c4e3 100644
---- a/progress.c
-+++ b/progress.c
-@@ -241,7 +241,8 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 	*p_progress = NULL;
- 	if (progress->last_value != -1) {
- 		/* Force the last update */
--		char buf[strlen(msg) + 5];
-+		/* char buf[strlen(msg) + 5]; */
-+		char *buf = alloca (strlen(msg) + 5 );
- 		struct throughput *tp = progress->throughput;
- 		if (tp) {
- 			unsigned int rate = !tp->avg_misecs ? 0 :
 -- 
-1.5.2.4
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
