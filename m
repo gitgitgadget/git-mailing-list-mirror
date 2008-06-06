@@ -1,77 +1,62 @@
 From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [TOY PATCH] git wrapper: show similar command names for an unknown command
-Date: Fri, 6 Jun 2008 14:15:27 +0200
-Message-ID: <200806061415.27507.robin.rosenberg.lists@dewire.com>
-References: <alpine.DEB.1.00.0806050747000.21190@racer>
+Subject: Re: [JGIT PATCH] Change the POM file to take all the sources from the original location
+Date: Fri, 6 Jun 2008 14:20:51 +0200
+Message-ID: <200806061420.52194.robin.rosenberg.lists@dewire.com>
+References: <1212731380-13221-1-git-send-email-imyousuf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 06 14:19:36 2008
+Cc: git@vger.kernel.org, imran.yousuf@smartitengineering.com,
+	Imran M Yousuf <imyousuf@smartitengineering.com>
+To: imyousuf@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jun 06 14:25:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4auY-0005gr-P1
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:19:15 +0200
+	id 1K4azt-0007sz-FF
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272AbYFFMSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 08:18:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbYFFMSV
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:18:21 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:21153 "EHLO dewire.com"
+	id S1751720AbYFFMXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 08:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbYFFMXq
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:23:46 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:21206 "EHLO dewire.com"
 	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753269AbYFFMSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 08:18:21 -0400
+	id S1750744AbYFFMXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 08:23:45 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C95DD8006B6;
-	Fri,  6 Jun 2008 14:18:19 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id 4DF5D8006B6;
+	Fri,  6 Jun 2008 14:23:44 +0200 (CEST)
 X-Virus-Scanned: by amavisd-new at dewire.com
 Received: from dewire.com ([127.0.0.1])
 	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id m4RRoGCtLZYa; Fri,  6 Jun 2008 14:18:19 +0200 (CEST)
+	with ESMTP id plPRqIoBFitb; Fri,  6 Jun 2008 14:23:43 +0200 (CEST)
 Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 4C98B80019B;
-	Fri,  6 Jun 2008 14:18:19 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id CC81D80019B;
+	Fri,  6 Jun 2008 14:23:43 +0200 (CEST)
 User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0806050747000.21190@racer>
+In-Reply-To: <1212731380-13221-1-git-send-email-imyousuf@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84053>
 
-torsdagen den 5 juni 2008 08.48.40 skrev Johannes Schindelin:
+fredagen den 6 juni 2008 07.49.40 skrev imyousuf@gmail.com:
+> From: Imran M Yousuf <imyousuf@smartitengineering.com>
 > 
-> This patch introduces a modified Damerau-Levenshtein algorithm into
-> Git's code base, and uses it with the following penalties to show some
-> similar commands when an unknown command was encountered:
-> 
-> 	swap = 0, insertion = 1, substitution = 2, deletion = 4
-> 
-> A typical output would now look like this:
-> 
-> 	$ git reabse
-> 	git: 'reabse' is not a git-command. See 'git --help'.
-> 
-> 	Did you mean one of these?
-> 		rebase
-> 		merge-base
-> 		rev-parse
-> 		remote
-> 		rerere
-> 
-Sorry about my negativity here..
+> Maven POM has the option of specifying the location of source and test
+> source codes, utilizing that the old source locations are now used to
+> configure maven, thus keeping the old structure as it is and increasing
+> project spectrum.
 
-Doesn't this confuse more than it helps? Most people do not need to know about rerere, rev-parse or merge-base so it is very unlikely they actually meant those. That might be an issue of tuning than general principles, but I have my doubts. It won't hint that there are wildly different variants of rebase, which ctually might be much more important to know than rerere, not will it tell svn users that git revert isn't even close to svn revert.
+You could make the patches more readble using -C -C. That would tell people you
+are copying a whole directory. Maybe someone else could tell my why double -C
+is needed. It's a 100% failtful copy of those files. Even the base names are the same.
 
-Completion or git gui is a much better tool for solving this isssue
-
-Some ancient LISP had a DWIM (do what I mean) and there might be a reason it has not become ery popular.
-
-Despite not being useful, it's still cool :)
+I posted another comment in the original maven thread.
 
 -- robin
