@@ -1,86 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] git-add: introduce --edit (to edit the diff vs.
- the index)
-Date: Fri, 6 Jun 2008 15:21:01 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806061514510.1783@racer>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
- <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer> <alpine.DEB.1.00.0806051720070.21190@racer> <7vabhz1t2f.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806052304300.21190@racer>
- <alpine.DEB.1.00.0806060005581.21190@racer> <alpine.DEB.1.00.0806060007000.21190@racer> <48490B3A.4020900@free.fr>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-677868837-1212762070=:1783"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 06 16:23:27 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [TOY PATCH] git wrapper: show similar command names for an unknown command
+Date: Fri, 6 Jun 2008 16:18:09 +0200
+Message-ID: <FFFBD901-955E-472F-BFAC-E11D69934064@wincent.com>
+References: <alpine.DEB.1.00.0806050747000.21190@racer> <200806061415.27507.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 16:24:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4cqg-0005Iw-Us
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 16:23:23 +0200
+	id 1K4crr-0005np-BC
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 16:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756844AbYFFOW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 10:22:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756817AbYFFOW3
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 10:22:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37467 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756776AbYFFOW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 10:22:28 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 14:22:25 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp025) with SMTP; 06 Jun 2008 16:22:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/pwzhbNGPpS1oT5j04lMzRUY2Nj/HOMHC6FCAdvN
-	cv9v3zJIK+Rkyh
-X-X-Sender: gene099@racer
-In-Reply-To: <48490B3A.4020900@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754752AbYFFOXk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jun 2008 10:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756039AbYFFOXj
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 10:23:39 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:55713 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754752AbYFFOXi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jun 2008 10:23:38 -0400
+Received: from cuzco.lan (35.pool85-53-24.dynamic.orange.es [85.53.24.35])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m56EIAKg029869
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 6 Jun 2008 10:18:13 -0400
+In-Reply-To: <200806061415.27507.robin.rosenberg.lists@dewire.com>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84074>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+El 6/6/2008, a las 14:15, Robin Rosenberg escribi=F3:
 
---8323329-677868837-1212762070=:1783
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> torsdagen den 5 juni 2008 08.48.40 skrev Johannes Schindelin:
+>>
+>> This patch introduces a modified Damerau-Levenshtein algorithm into
+>> Git's code base, and uses it with the following penalties to show =20
+>> some
+>> similar commands when an unknown command was encountered:
+>>
+>> 	swap =3D 0, insertion =3D 1, substitution =3D 2, deletion =3D 4
+>>
+>> A typical output would now look like this:
+>>
+>> 	$ git reabse
+>> 	git: 'reabse' is not a git-command. See 'git --help'.
+>>
+>> 	Did you mean one of these?
+>> 		rebase
+>> 		merge-base
+>> 		rev-parse
+>> 		remote
+>> 		rerere
+>>
+> Sorry about my negativity here..
+>
+> Doesn't this confuse more than it helps? Most people do not need to =20
+> know about rerere, rev-parse or merge-base so it is very unlikely =20
+> they actually meant those. That might be an issue of tuning than =20
+> general principles, but I have my doubts. It won't hint that there =20
+> are wildly different variants of rebase, which ctually might be much =
+=20
+> more important to know than rerere, not will it tell svn users that =20
+> git revert isn't even close to svn revert.
+>
+> Completion or git gui is a much better tool for solving this isssue
 
-Hi,
+All true, but most of those issues would go away if just _one_ guess, =20
+the best guess, was shown.
 
-On Fri, 6 Jun 2008, Olivier Marin wrote:
-
-> Johannes Schindelin a écrit :
-> > 
-> > +int edit_patch(int argc, const char **argv, const char *prefix)
-> > +{
-> 
-> [...]
-> 
-> > +	if (!result)
-> > +		result = run_command(&child);
-> > +	free(child.argv);
-> > +
-> > +	launch_editor(file, NULL, NULL);
-> 
-> Here, it does not launch the editor I defined with core.editor because 
-> you call edit_patch() before calling git_config() in cmd_add().
-
-Will fix.
-
-> Also, wouldn't be better to have the edit_patch stuff in 
-> add--interactive instead ? It seems to work the same way than the 
-> --patch option.
-
-Actually, no.  It does something completely different.  For example, it 
-avoids calling a perl script.  At least as long as your editor is not a 
-Perl script.
-
-Ciao,
-Dscho
-
---8323329-677868837-1212762070=:1783--
+Cheers,
+Wincent
