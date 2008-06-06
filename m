@@ -1,81 +1,84 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Add subcommand "help" to the list of most commonly used subcommands
-Date: Fri, 6 Jun 2008 15:11:58 +1000
-Message-ID: <ee77f5c20806052211q6aca39t37d423aa978e098a@mail.gmail.com>
-References: <alpine.DEB.1.00.0806050747000.21190@racer>
-	 <20080605081911.GA5946@mithlond.arda.local>
-	 <7viqwn3g3r.fsf@gitster.siamese.dyndns.org>
-	 <408F1687-FC42-4E96-B641-088F200CE8D1@ai.rug.nl>
-	 <7v63sn1t0j.fsf@gitster.siamese.dyndns.org>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Re: [PATCH v3 1/2] Allow git-apply to ignore the hunk headers (AKA recountdiff)
+Date: Fri, 6 Jun 2008 00:18:56 -0500
+Message-ID: <5d46db230806052218r67e79a46rd0150cd9fe2af970@mail.gmail.com>
+References: <alpine.DEB.1.00.0806051115570.21190@racer>
+	 <4847F49F.8090004@viscovery.net>
+	 <alpine.DEB.1.00.0806051548140.21190@racer>
+	 <48480123.7030903@viscovery.net>
+	 <alpine.DEB.1.00.0806051719170.21190@racer>
+	 <alpine.DEB.1.00.0806051720070.21190@racer>
+	 <7vabhz1t2f.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0806052304300.21190@racer>
+	 <alpine.DEB.1.00.0806060005581.21190@racer>
+	 <alpine.DEB.1.00.0806060006370.21190@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Pieter de Bie" <pdebie@ai.rug.nl>,
-	"Teemu Likonen" <tlikonen@iki.fi>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 07:12:54 2008
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 07:20:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4UFx-0004JM-FN
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 07:12:53 +0200
+	id 1K4UMr-0005RF-BF
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 07:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbYFFFMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 01:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbYFFFMA
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 01:12:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:12777 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721AbYFFFMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 01:12:00 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so566123fgg.17
-        for <git@vger.kernel.org>; Thu, 05 Jun 2008 22:11:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=JjoE5lnt8Ho1RJd9qYwk+qVL9eWX3FswqrGJJBCm83U=;
-        b=YkaDfxYy25SVs4jYv2qdfetH7Z0YTvtwF8je0NHJ2hJDLo7YQUzEFvj9vJoWlU7o3S
-         TAkC6+Ey/h0kVkiPAJMkNpmfx9mhvdH2A2mI8/i7lWl4UwH3tWHh1Dt8ZDMUeJaLeWdM
-         G1VCiUZqev7zZBwiLGka4bzYTLIL7w53L6jmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=cHOLMcoJ210/2tjAAD3qtCNY5mMVt5eNRA/3EwQRMJ0VTre1C1FKVitYTUR9cdCqUN
-         lBMpPqa2h88kcoGLeZ9PRTVCgpAbU19/REyuGAKCi+Fy1VvrpM/ZL1U2CYra0ta4hQVn
-         8JwD9ucMBorhVIZ6pIRJGTWmdZbakq7a7aVGY=
-Received: by 10.86.94.11 with SMTP id r11mr3417954fgb.0.1212729118630;
-        Thu, 05 Jun 2008 22:11:58 -0700 (PDT)
-Received: by 10.86.74.8 with HTTP; Thu, 5 Jun 2008 22:11:58 -0700 (PDT)
-In-Reply-To: <7v63sn1t0j.fsf@gitster.siamese.dyndns.org>
+	id S1752713AbYFFFS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 01:18:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbYFFFS5
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 01:18:57 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:10547 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752523AbYFFFS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 01:18:57 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so598890ywe.1
+        for <git@vger.kernel.org>; Thu, 05 Jun 2008 22:18:56 -0700 (PDT)
+Received: by 10.150.122.13 with SMTP id u13mr2854513ybc.69.1212729536183;
+        Thu, 05 Jun 2008 22:18:56 -0700 (PDT)
+Received: by 10.150.12.16 with HTTP; Thu, 5 Jun 2008 22:18:56 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0806060006370.21190@racer>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84023>
 
-On Fri, Jun 6, 2008 at 7:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pieter de Bie <pdebie@ai.rug.nl> writes:
+On Thu, Jun 5, 2008 at 6:06 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
->> On 5 jun 2008, at 20:13, Junio C Hamano wrote:
->>
->>> See 'man git' and 'git help' for more information.
->>
->> I'd like to see something more like
->>
->> See 'git help COMMAND' for more information on a specific command
->
-> Yeah, I think that is so far the best color of the shed I suggested
-> "Perhaps like this".
+> +
+> +               switch (*line) {
+> +               case ' ': case '\n':
+> +                       fragment->newlines++;
+> +                       /* fall through */
+> +               case '-':
+> +                       fragment->oldlines++;
+> +                       break;
+> +               case '+':
+> +                       fragment->newlines++;
+> +                       if (line_nr == 0) {
+> +                               fragment->leading = 1;
+> +                               fragment->oldpos = 1;
+> +                       }
+> +                       fragment->trailing = 1;
+> +                       break;
+> +               case '@':
+> +                       return size < 3 || prefixcmp(line, "@@ ");
+> +               case 'd':
+> +                       return size < 5 || prefixcmp(line, "diff ");
+> +               default:
+> +                       return -1;
+> +               }
+> +               line_nr++;
+> +       }
+> +}
 
-I think mauve has the most RAM.
+Perhaps this is accounted for and I did not see, but I believe that
+a backslash is used for the "no newline at end of file" line.  Does that
+need to be allowed here?
 
-
-Dave.
+Thanks,
+Govind.
