@@ -1,84 +1,83 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: How to compare different files in different branches
-Date: Fri, 6 Jun 2008 13:30:44 +0100
-Message-ID: <57518fd10806060530k7a15f79fh1823afef2a747233@mail.gmail.com>
-References: <20080606122421.GA1521@denkbrett.schottelius.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/10] Introduce get_octopus_merge_bases() in commit.c
+Date: Fri, 6 Jun 2008 13:30:34 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806061305490.1783@racer>
+References: <cover.1212698317.git.vmiklos@frugalware.org> <0a2c2130f9fd87e98192ab0fe0d23e16c902997c.1212698317.git.vmiklos@frugalware.org> <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org>
+ <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org> <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org>
+ <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org> <2e4b20178405cf993ce9e0f1ffe4ac402a96fd03.1212698317.git.vmiklos@frugalware.org> <cbafb7e632b176658fe84e1eb9926f0a8d3c96b4.1212698317.git.vmiklos@frugalware.org>
+ <e13c0c2e9c8b0ebef84ac062bf05c05f729b3b20.1212698317.git.vmiklos@frugalware.org> <7vk5h3xlt9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Nico -telmich- Schottelius" <nico-git-20080606@schottelius.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 14:31:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 14:33:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4b6Z-0002A8-R0
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:31:40 +0200
+	id 1K4b7m-0002Yb-0A
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbYFFMar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 08:30:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYFFMar
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:30:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:40213 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884AbYFFMaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 08:30:46 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so664486fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 05:30:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=75b5BPpXlddowX5cTG2OybfYdPZ2yyE0QS2LlcWk8YM=;
-        b=geqsWD1lGGcr3mMSH+IMJZM/xc+aaSUUxqBAC4p8JkrgEltmYZfILI6EtxbmYZNiCR
-         /b3a6zhVx/ukhUk5iRT3yayd3X0G/cBEFJMJmQFrW0oPgfSnwduBxITmp4CfpuV4RQiF
-         pvGIwMuBhKz/ElLEpyBie+EFU0w54iVwqtmtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=aCjswO19CnyBshdslTipdkdZQkcMC86cWektKnUV6kiDhsbCML4i+jm1ap3Fo7dUV9
-         /zjCo/d8pjJyuT8JubWQXYWfMmUIslLfpTvZrcit3L0tLgiHnJrhyrODUCcJSUzfxESY
-         lzYO9azilKcKcyo1uC1EBm2+1hmh7Bm5QRp30=
-Received: by 10.86.68.20 with SMTP id q20mr224341fga.2.1212755444998;
-        Fri, 06 Jun 2008 05:30:44 -0700 (PDT)
-Received: by 10.86.76.17 with HTTP; Fri, 6 Jun 2008 05:30:44 -0700 (PDT)
-In-Reply-To: <20080606122421.GA1521@denkbrett.schottelius.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 025970b1f84486b1
+	id S1753875AbYFFMcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 08:32:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753872AbYFFMcA
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:32:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54132 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753814AbYFFMcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 08:32:00 -0400
+Received: (qmail invoked by alias); 06 Jun 2008 12:31:58 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp035) with SMTP; 06 Jun 2008 14:31:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9tDtTtWH9FCTbFYMFRFLMOiCLC8Loa8HH91VNHl
+	NNBaPK6PJgPJO1
+X-X-Sender: gene099@racer
+In-Reply-To: <7vk5h3xlt9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84057>
 
-On Fri, Jun 6, 2008 at 1:24 PM, Nico -telmich- Schottelius
-<nico-git-20080606@schottelius.org> wrote:
-> Hello!
->
-> I want to compare 'configure.in' from the master branch with
-> 'configure.ac' from the gpm-2-dev branch.
->
-> What I tried:
->
-> % git-diff master..gpm-2-dev configure.ac
-> fatal: ambiguous argument 'configure.ac': unknown revision or path not
-> in the working tree.
-> Use '--' to separate paths from revisions
->
-> # ok, correct, there is no configure.ac in master
-> # But not what I want.
->
-> % git-diff master..gpm-2-dev configure.in
->
-> # shows that the file does not exist in gpm-2-dev. Correct.
-> # But not what I want.
->
+Hi,
 
+On Thu, 5 Jun 2008, Junio C Hamano wrote:
 
+> Miklos Vajna <vmiklos@frugalware.org> writes:
+> 
+> > This is like get_merge_bases() but it works for multiple heads, like
+> > show-branch --merge-base.
+> 
+> In what sense is this "like show-branch --merge-base"?
+> 
+> The only similarlity I can spot is that it can take more than two heads, 
+> but what it computes and the way it computes it seem to be different.  
+> It certainly looks much less efficient as it does not walk the ancestry 
+> chain in one-go like show-branch does.
 
-How about git diff master:configure.in gm-2-dev:configure.ac ?
+Ah, you are right.  I thought that in the typical case (where the initial 
+commits are independent), it will never traverse any commit twice.  I did 
+not really understand your example quickly enough, so I made up my own:
+
+A - B - C - D - E
+  \           X
+    F - G - H   I
+      \   X   \
+        J   \   K
+             \
+              - L 
+
+Now, let's get the merge bases with Miklos' algorithm for E, I, K and L.
+
+First it will find the merge base for E and I, which is D.  Then it 
+calculates the merge base between that merge base and the third head, K, 
+which leads us all the way back to A.
+
+Now, calculating the merge base between that merge base and L will 
+traverse the commits F, G and H _again_.
+
+Ciao,
+Dscho
