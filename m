@@ -1,84 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to compare different files in different branches
-Date: Fri, 06 Jun 2008 05:38:37 -0700 (PDT)
-Message-ID: <m3od6eyc0s.fsf@localhost.localdomain>
-References: <20080606122421.GA1521@denkbrett.schottelius.org>
-	<m3skvqyc78.fsf@localhost.localdomain>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: [JGIT RFC] Mavenized JGit
+Date: Fri, 6 Jun 2008 18:40:07 +0600
+Message-ID: <7bfdc29a0806060540y248b0b92xade0d122cd873d37@mail.gmail.com>
+References: <7bfdc29a0806030742r77b79786n92a5ce6a0aba7726@mail.gmail.com>
+	 <20080604195934.GU12896@spearce.org>
+	 <7bfdc29a0806052228s2fe764d1pe5d2b8e129115c77@mail.gmail.com>
+	 <200806061359.16568.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nico -telmich- Schottelius <nico-git-20080606@schottelius.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 14:39:37 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Nigel Magnay" <nigel.magnay@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 14:41:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4bEG-00055r-Ej
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:39:36 +0200
+	id 1K4bFl-0005dj-6r
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 14:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbYFFMil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 08:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbYFFMil
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:38:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:55416 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbYFFMik (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 08:38:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so666218fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 05:38:39 -0700 (PDT)
+	id S1753872AbYFFMkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 08:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753814AbYFFMkP
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 08:40:15 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:20228 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753226AbYFFMkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 08:40:14 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so706599ywe.1
+        for <git@vger.kernel.org>; Fri, 06 Jun 2008 05:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=Po2N5gK5+S+8grSWPKayZuK1CQpf1gzICFBOSkWtX2Y=;
-        b=fT/XBRfsD3FM8P5BvFgeuH/WBNyiDNhHpNCurlgqWAV5gtuYZq8ygP/MP79kWBfAkW
-         /a36iQEE7lSOTC+TT8QzaQR2Hs1iFaXA718jrcO/pLKu0wSfJw6ts4Lm6jkiwN40gywB
-         g0CZ3H1qpddfwuduG3DcmnJTave7IezwixO5g=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ErQBtqwd9YqKplhR6IQdauemX/Zvh8OlG6iM4QacQi8=;
+        b=dHDExknYYLT8NfrMFRp9UTfQBQBsN8lbIGPtXiGZmyI9EZH7P9KxIFonJbBKvVEKP/
+         d3jI5EasPxeK+j7Hz+0GOCEPfnocOovG5uSlTLZMEGj9VE8p+GhJzj8V5zi4qgUOoXzK
+         M3x3SZs8e/RDzHSS9yZZQY+1PFz6rwV7qOQyw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=qPqCHODGbU5BXszDhS6vzjpHTU3H0/nO5ZkPeShr+Yel1eSzG3MsqGAlz+4VDPAa8d
-         oHtfDfR1h0fgluFyDOL5ssQcoQLjZeYpRNX2BRgUeHd6kQn0DhEoFPdowgeqd3Q74J/F
-         YOpfxAXLJCZUEUNuSZ2GsemCn2YyBO0u4BAC4=
-Received: by 10.86.30.9 with SMTP id d9mr186812fgd.42.1212755919420;
-        Fri, 06 Jun 2008 05:38:39 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.247.141])
-        by mx.google.com with ESMTPS id d6sm5728252fga.2.2008.06.06.05.38.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Jun 2008 05:38:37 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m56CcAqk026327;
-	Fri, 6 Jun 2008 14:38:21 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m56Cbtj4026323;
-	Fri, 6 Jun 2008 14:37:55 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <m3skvqyc78.fsf@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Ik3BnXBFcOvGNISiCPqGFXOoFpwp5qZzRCyeCMmdo024G8+NxE2Fs7eyuROwwKbw48
+         uChT+P6ZsVkgh57E4ZuwNnRmr7LwZXM3n0EeZj3ZdFFUEg6fU6sUv6SArirLvPjG4yTy
+         VPkl9JuuW7m3VfTdAgcXgX2H1lnwqNGBC9fC0=
+Received: by 10.150.205.13 with SMTP id c13mr123912ybg.239.1212756007938;
+        Fri, 06 Jun 2008 05:40:07 -0700 (PDT)
+Received: by 10.150.54.11 with HTTP; Fri, 6 Jun 2008 05:40:07 -0700 (PDT)
+In-Reply-To: <200806061359.16568.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84062>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Jun 6, 2008 at 5:59 PM, Robin Rosenberg
+<robin.rosenberg.lists@dewire.com> wrote:
+> Still you have  a duplicate of the test directory. Can that be fixed too?
 
-> Nico -telmich- Schottelius <nico-git-20080606@schottelius.org> writes:
-> 
-> > I want to compare 'configure.in' from the master branch with
-> > 'configure.ac' from the gpm-2-dev branch.
-> [...]
-> > I really think git can do that, but currently I do not see the right
-> > way. So any idea on how to do that?
-> 
->  $ git diff master:configure.in gpm-2-dev:configure.ac
+Actually I will give it a try checking what happens if the files are
+in maven test resources, will give it a try this weekend and update
+you all.
 
- $ git diff -M master gpm-2-dev -- configure.in configure.ac
+Best regards,
 
-should also work.
+Imran
+
+>
+> -- robin
+>
+
+
+
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Imran M Yousuf
+Entrepreneur & Software Engineer
+Smart IT Engineering
+Dhaka, Bangladesh
+Email: imran@smartitengineering.com
+Blog: http://imyousuf-tech.blogs.smartitengineering.com/
+Mobile: +880-1711402557
