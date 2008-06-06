@@ -1,51 +1,51 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: General question about minimal documentation patches
-Date: Sat, 07 Jun 2008 00:23:36 +0200
-Message-ID: <4849B8E8.1090506@dirk.my1.cc>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [RFC] git diff dira dirb file ...
+Date: Fri, 6 Jun 2008 18:27:23 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806061821320.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 07 00:24:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 00:28:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4kMK-000464-R5
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 00:24:33 +0200
+	id 1K4kPy-0004vw-7r
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 00:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbYFFWXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 18:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753431AbYFFWXj
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 18:23:39 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.18.15]:38874 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbYFFWXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 18:23:39 -0400
-Received: from [84.176.89.113] (helo=[192.168.2.100])
-	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1K4kLR-0006J5-Du
-	for git@vger.kernel.org; Sat, 07 Jun 2008 00:23:37 +0200
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-X-Df-Sender: 757646
+	id S1754304AbYFFW1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 18:27:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbYFFW1Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 18:27:25 -0400
+Received: from iabervon.org ([66.92.72.58]:50772 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751613AbYFFW1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 18:27:24 -0400
+Received: (qmail 28037 invoked by uid 1000); 6 Jun 2008 22:27:23 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Jun 2008 22:27:23 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84125>
 
-This is a general question about documentation patches:
+After a lot of trying, I finally found something that git diff doesn't 
+handle. If you've got two trees of files with the same general structure, 
+even if they aren't at all git-related, you can use:
 
-Do you mind if people submit _very_ minimal patches for the
-docs that fix only some typing errors or the like? I, personally,
-am a friend of correct spelling and such and when I discover
-such errors I prefer to have them fixed.
+$ git diff dira dirb
 
-OTOH, I really don't want to bother you with such patches
-that don't bring forward the "real Git" and only marginally
-contribute to Git itself. I know that all of you have better
-things to do than adding a punctuation mark somewhere
-or checking a patch that does it.
+to get a nice diff between them. But then it would be intuitive and useful 
+to be able to restrict by path the files within those directories that you 
+want to compare (much like "git diff origin master file1 file2 ...") with:
 
-    -- Dirk
+$ git diff dira dirb file1 file2
+
+That would, of course, compare dira/file1 with dirb/file1 and dira/file2 
+with dirb/file2. Before I start looking into implementing this, is it 
+incoherent for some reason I'm not seeing?
+
+	-Daniel
+*This .sig left intentionally blank*
