@@ -1,63 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] Allow git-apply to ignore the hunk headers (AKA
- recountdiff)
-Date: Fri, 6 Jun 2008 17:37:50 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806061735550.1783@racer>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
- <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer> <alpine.DEB.1.00.0806051720070.21190@racer> <7vabhz1t2f.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806052304300.21190@racer>
- <alpine.DEB.1.00.0806060005581.21190@racer> <alpine.DEB.1.00.0806060006370.21190@racer> <7vve0nw4b7.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806061441120.1783@racer> <7vr6bav8ww.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use nonrelative paths instead of absolute paths for
+ cloned repositories
+Date: Fri, 06 Jun 2008 09:45:24 -0700
+Message-ID: <7viqwmv7ff.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0806052244300.19665@iabervon.org>
+ <alpine.DEB.1.00.0806060422310.21190@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 18:40:15 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Greg KH <greg@kroah.com>,
+	Andrew Klossner <andrew@cesa.opbu.xerox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 18:46:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4ez3-0002QS-TW
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 18:40:10 +0200
+	id 1K4f5J-0004i2-6q
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 18:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756817AbYFFQjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 12:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481AbYFFQjQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 12:39:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39191 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754689AbYFFQjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 12:39:16 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 16:39:13 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 06 Jun 2008 18:39:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19bn24+hM5bC2/LRoGt2IoPcgtS10HjNTgXp3DNI6
-	nWPD7No5PDH3+p
-X-X-Sender: gene099@racer
-In-Reply-To: <7vr6bav8ww.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758221AbYFFQph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 12:45:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755875AbYFFQph
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 12:45:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53488 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755415AbYFFQpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 12:45:36 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C39D1EFE;
+	Fri,  6 Jun 2008 12:45:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9D42C1CDE; Fri,  6 Jun 2008 12:45:26 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806060422310.21190@racer> (Johannes
+ Schindelin's message of "Fri, 6 Jun 2008 04:23:01 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FB1B2DC6-33E7-11DD-A56F-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84088>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 6 Jun 2008, Junio C Hamano wrote:
+> On Thu, 5 Jun 2008, Daniel Barkalow wrote:
+>
+>> Particularly for the "alternates" file, if one will be created, we want 
+>> a path that doesn't depend on the current directory, but we want to 
+>> retain any symlinks in the path as given and any in the user's view of 
+>> the current directory when the path was given.
+>
+> I have to say that I do not follow why the symlinks should be trusted any 
+> more than the absolute paths.
 
-> Deleting the common context lines from the beginning, or adding a new
-> "+added line" at the very beginning of a hunk, is a user error for
-> somebody who edits the diff.
+Thanks, Daniel.
 
-Unfortunately, that was exactly what I needed to do.  Not in a theoretical 
-sense, but a very practical one.
+I am obviously in favor of fixing this regression before 1.5.6, and the
+introduction of make_nonrelative_path() for the use of clone alone is
+probably the least impact and safe solution in the short term after -rc1.
 
-Only in hindsight do I realize that I could have increased the context, 
-but that was not easily possible with the way I drive diff-files via 
-run_command().
+In the longer term, we would inevitably face "when should one use
+nonrelative and when should one use absolute?" and we would eventually
+have to answer it.  It may turn out that many current users of "absolute"
+are better off using "nonrelative", but I suspect we won't get rid of
+"absolute" completely, because one of the reasons it avoids symlinks at
+great lengths is so that it can check the containment relationships
+between paths reliably (e.g. "is this path outside the repository, in
+which case we should refuse to add it to the index, and we use --no-index
+without being asked when running "diff"").
 
-Oh well, another iteration.
+But using "absolute" for containment comparison is one thing.  Storing the
+result of "absolute" is quite another.
 
-Ciao,
-Dscho
+We've already learned to love a similar crazyness somebody's system has on
+this list.  If you want to check if the user string is equivalent to a
+path you stored in the filesystem, you compare them after normalizing and
+that is a sensible approach.  Storing path after normalizing, which would
+be different form than what the user originally used to create, is not so
+sane and leads to all sorts of pain.  Ending up storing the output from
+"absolute" in info/alternates is just like giving normalized sequence back
+from readdir(3) on such a system.
