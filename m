@@ -1,84 +1,66 @@
-From: Dennis Schridde <devurandom@gmx.net>
-Subject: Re: Multiple user questions
-Date: Fri, 6 Jun 2008 22:47:39 +0200
-Message-ID: <200806062247.42074.devurandom@gmx.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] use natural ordering to display list of branches.
+Date: Fri, 06 Jun 2008 16:04:10 -0500
+Message-ID: <Jx4nZtFGdU-iUxlX24G6lzMyWe99Z53jtjQp9T9qkMJ1iZC0eZW6xg@cipher.nrlssc.navy.mil>
+References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com> <alpine.DEB.1.00.0806051946100.21190@racer> <484969F0.1030704@gnu.org> <alpine.DEB.1.00.0806061911300.1783@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2165705.O9t0RMJpei";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 23:02:07 2008
+Cc: Paolo Bonzini <bonzini@gnu.org>,
+	Cedric Vivier <cedricv@neonux.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 23:06:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4j4K-0006Z5-Un
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 23:01:53 +0200
+	id 1K4j7k-0007V4-C7
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 23:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758426AbYFFVAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 17:00:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755537AbYFFVAr
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 17:00:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51601 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756786AbYFFVAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 17:00:46 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 21:00:44 -0000
-Received: from hnvr-4dbbcf4f.pool.einsundeins.de (EHLO ernie.local) [77.187.207.79]
-  by mail.gmx.net (mp009) with SMTP; 06 Jun 2008 23:00:44 +0200
-X-Authenticated: #19202771
-X-Provags-ID: V01U2FsdGVkX18pVvAaizgppuY1dfnFcIpM9QIbF254gLSxleXlO+
-	SoUjrSe2p1piGm
-X-Y-GMX-Trusted: 0
+	id S1755082AbYFFVEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 17:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755520AbYFFVEb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 17:04:31 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60152 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750880AbYFFVEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 17:04:30 -0400
+Received: by mail.nrlssc.navy.mil id m56L4BL2021343; Fri, 6 Jun 2008 16:04:11 -0500
+In-Reply-To: <alpine.DEB.1.00.0806061911300.1783@racer>
+X-OriginalArrivalTime: 06 Jun 2008 21:04:11.0353 (UTC) FILETIME=[DE3F7490:01C8C818]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84116>
 
---nextPart2165705.O9t0RMJpei
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 6 Jun 2008, Paolo Bonzini wrote:
+> 
+>>> What about people preferring the status quo?  I think a command line 
+>>> option would be in order.'
+>> config option seems more useful.
+> 
+> Except, of course, if you have a script that wants to override whatever 
+> the user set in her config.
 
-I just ran into a lost stash again and thus would like to get an answer to=
-=20
-this question, which was forgotten last time:
-(lost-found is really growing in a pace it will take me very long to find m=
-y=20
-lost stash.)
+But can't that be just as easily done by piping through sort? (I understand
+there is a platform which lacks the sort utility, boohoo)
 
-5) fsck --full --lost-found shows me a lot of "dangling commit". I would li=
-ke=20
-to clean them up. prune did only remove "dangling tree" and blobs.
-(Reason: Last time I droped a stash accidently, I was able to find it in th=
-at=20
-list. I will not be able to do this again if it continues to grow at that=20
-rate.)
-How can I do that?
-=46urther fsck --full --unreachable also shows a lot of unreachable things=
-=20
-(commits, trees, blobs). Can that be cleaned up as well?
+Is there some legitimate function that depends on the order of listed
+branches (or tags)?
 
-Greetings,
-Dennis
+Rather this seems like one of those things where everyone should either
+welcome the functionality or be indifferent to it. Adding yet another
+toggle for this sort of user-interface tweak seems like over-kill. It is
+not costless, it adds complexity to the code and to the user interface.
 
-Again: Please CC me, as I am not subscribed.
+If someone wants to list their branches alphabetically, or reverse
+alphabetically, or if they only want to see branches beginning with 'BUG-',
+why isn't it enough to just use the functionality provided by the command line?
 
---nextPart2165705.O9t0RMJpei
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+bikeshedmode = off
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkhJom4ACgkQjqfyF1DtJW4ldwCglU10aIe3hSNmcw8VYONq5qyN
-8m8AoL3/ovHyawwgX/5s5pYfTVyQUvqS
-=8wZ2
------END PGP SIGNATURE-----
-
---nextPart2165705.O9t0RMJpei--
+-brandon
