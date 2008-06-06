@@ -1,53 +1,66 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: Created local commit 18281bb8b2bdd07a04a3c0f535cf531a68a5fd3c
-Date: Fri, 6 Jun 2008 11:23:42 -0600
-Message-ID: <Pine.LNX.4.64.0806061122110.18454@xenau.zenez.com>
-References: <Pine.LNX.4.64.0806061059330.18454@xenau.zenez.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use nonrelative paths instead of absolute paths for
+ cloned repositories
+Date: Fri, 6 Jun 2008 18:34:13 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806061832330.1783@racer>
+References: <alpine.LNX.1.00.0806052244300.19665@iabervon.org> <alpine.DEB.1.00.0806060422310.21190@racer> <7viqwmv7ff.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 06 19:24:43 2008
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Greg KH <greg@kroah.com>,
+	Andrew Klossner <andrew@cesa.opbu.xerox.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 19:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4fg4-0001Pt-T6
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 19:24:37 +0200
+	id 1K4frc-0006SR-RE
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 19:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754466AbYFFRXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 13:23:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754529AbYFFRXn
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 13:23:43 -0400
-Received: from zenez.com ([166.70.62.2]:29352 "EHLO xenau.zenez.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754389AbYFFRXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 13:23:43 -0400
-Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id 9FBA5E4D8C; Fri,  6 Jun 2008 11:23:42 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 929B6E4D3B
-	for <git@vger.kernel.org>; Fri,  6 Jun 2008 11:23:42 -0600 (MDT)
-In-Reply-To: <Pine.LNX.4.64.0806061059330.18454@xenau.zenez.com>
+	id S1754169AbYFFRfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 13:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754619AbYFFRfj
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 13:35:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44948 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753763AbYFFRfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 13:35:38 -0400
+Received: (qmail invoked by alias); 06 Jun 2008 17:35:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp035) with SMTP; 06 Jun 2008 19:35:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/0tMl3Z4r0CJZxlaOKce2Hgs+AgVQCUKWlNcniwn
+	djgLcuoRsxvsjv
+X-X-Sender: gene099@racer
+In-Reply-To: <7viqwmv7ff.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84093>
 
-On Fri, 6 Jun 2008, Boyd Lynn Gerber wrote:
-> I have just added my patches to my freshly cloned git/pulled source.
+Hi,
+
+On Fri, 6 Jun 2008, Junio C Hamano wrote:
+
+> In the longer term, we would inevitably face "when should one use 
+> nonrelative and when should one use absolute?" and we would eventually 
+> have to answer it.  It may turn out that many current users of 
+> "absolute" are better off using "nonrelative", but I suspect we won't 
+> get rid of "absolute" completely, because one of the reasons it avoids 
+> symlinks at great lengths is so that it can check the containment 
+> relationships between paths reliably (e.g. "is this path outside the 
+> repository, in which case we should refuse to add it to the index, and 
+> we use --no-index without being asked when running "diff"").
 > 
-> I have the commit 18281bb8b2bdd07a04a3c0f535cf531a68a5fd3c.  What is the 
-> next step to get them to the list for checking/approval?
+> But using "absolute" for containment comparison is one thing.  Storing 
+> the result of "absolute" is quite another.
 
-BTW, I have setup a public git for my stuff.
+The easy way would be to add an option to make_absolute_path(), say 
+"resolve_symlinks".
 
-I did this to clone a copy.
-
-git clone git://www.zenez.com/git git
-
-
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+Ciao,
+Dscho
