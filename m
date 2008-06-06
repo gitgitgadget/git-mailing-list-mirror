@@ -1,61 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] Allow git-apply to ignore the hunk headers (AKA
- recountdiff)
-Date: Fri, 6 Jun 2008 18:35:21 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806061835130.1783@racer>
-References: <alpine.DEB.1.00.0806051115570.21190@racer> <4847CCD9.6000305@viscovery.net> <alpine.DEB.1.00.0806051403370.21190@racer> <4847EBC3.8060509@viscovery.net> <alpine.DEB.1.00.0806051441560.21190@racer> <4847F49F.8090004@viscovery.net>
- <alpine.DEB.1.00.0806051548140.21190@racer> <48480123.7030903@viscovery.net> <alpine.DEB.1.00.0806051719170.21190@racer> <alpine.DEB.1.00.0806051720070.21190@racer> <7vabhz1t2f.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806052304300.21190@racer>
- <alpine.DEB.1.00.0806060005581.21190@racer> <alpine.DEB.1.00.0806060006370.21190@racer> <7vve0nw4b7.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806061441120.1783@racer> <7vr6bav8ww.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806061735550.1783@racer>
- <7vej7av7df.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use nonrelative paths instead of absolute paths for
+ cloned repositories
+Date: Fri, 06 Jun 2008 11:07:19 -0700
+Message-ID: <7v7id2v3mw.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0806052244300.19665@iabervon.org>
+ <alpine.DEB.1.00.0806060422310.21190@racer>
+ <7viqwmv7ff.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806061832330.1783@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 19:37:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Greg KH <greg@kroah.com>,
+	Andrew Klossner <andrew@cesa.opbu.xerox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 06 20:08:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4fsh-0006ws-LQ
-	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 19:37:40 +0200
+	id 1K4gMT-00024j-JM
+	for gcvg-git-2@gmane.org; Fri, 06 Jun 2008 20:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756981AbYFFRgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 13:36:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756629AbYFFRgq
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 13:36:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37554 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755677AbYFFRgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 13:36:45 -0400
-Received: (qmail invoked by alias); 06 Jun 2008 17:36:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 06 Jun 2008 19:36:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/c8Ttmxu3cqaZxB/islAFKaptkF6m62Oa0+0SYeZ
-	acpJoQXFcBlvdD
-X-X-Sender: gene099@racer
-In-Reply-To: <7vej7av7df.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758565AbYFFSHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 14:07:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758432AbYFFSHa
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 14:07:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37254 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758131AbYFFSH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 14:07:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CD5F03CE9;
+	Fri,  6 Jun 2008 14:07:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id F22563CE7; Fri,  6 Jun 2008 14:07:21 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806061832330.1783@racer> (Johannes
+ Schindelin's message of "Fri, 6 Jun 2008 18:34:13 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6C5081AC-33F3-11DD-96DF-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84095>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 6 Jun 2008, Junio C Hamano wrote:
+>> In the longer term, we would inevitably face "when should one use 
+>> nonrelative and when should one use absolute?" and we would eventually 
+>> have to answer it.  It may turn out that many current users of 
+>> "absolute" are better off using "nonrelative", but I suspect we won't 
+>> get rid of "absolute" completely, because one of the reasons it avoids 
+>> symlinks at great lengths is so that it can check the containment 
+>> relationships between paths reliably (e.g. "is this path outside the 
+>> repository, in which case we should refuse to add it to the index, and 
+>> we use --no-index without being asked when running "diff"").
+>> 
+>> But using "absolute" for containment comparison is one thing.  Storing 
+>> the result of "absolute" is quite another.
+>
+> The easy way would be to add an option to make_absolute_path(), say 
+> "resolve_symlinks".
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Only in hindsight do I realize that I could have increased the 
-> > context,
-> 
-> Yeah, I was thinking about suggesting that, using -U7 or something 
-> before dumping the output to the editor.
+I am afraid that it does not solve anything.
 
-Good idea.
+Be they two separate functions, or a one function that has two different
+semantics depending on an option, the API documentation needs to answer
+the "when should I use one and when should I use the other" question.
 
-Ciao,
-Dscho
+And the hard part is figuring out which of the current "absolute" callers
+need to be fixed in a way similar to how Daniel fixed git-clone, and which
+of them stay the same.  Perhaps all of the "chdir then getpwd" patterns
+need to be looked at and some of them need to be restructured to honor $PWD
+better.  I dunno.
