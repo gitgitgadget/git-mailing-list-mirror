@@ -1,87 +1,70 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Allow the envelope sender to be set via configuration
-Date: Sat, 7 Jun 2008 15:03:30 +0200
-Message-ID: <20080607130330.GD29404@genesis.frugalware.org>
-References: <1212824022-31991-1-git-send-email-ask@develooper.com> <m3fxrpy5ji.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GJQzf4n/7sgn7z2y"
-Cc: Ask Bj?rn Hansen <ask@develooper.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 15:05:00 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH v2] builtin-fast-export: Add importing and exporting of revision marks
+Date: Sat, 7 Jun 2008 15:06:01 +0200
+Message-ID: <DB158BDE-70D1-4779-9B03-A85C60EB2FA7@ai.rug.nl>
+References: <BEF1F17D-6F0F-4F09-9CC4-B193B8907901@ai.rug.nl> <1212663163-43064-1-git-send-email-pdebie@ai.rug.nl> <7v8wxirwi1.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 15:07:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4y6K-0001vj-OX
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 15:04:57 +0200
+	id 1K4y8N-0002XZ-19
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 15:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138AbYFGNDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 09:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbYFGNDc
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 09:03:32 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:46635 "EHLO virgo.iok.hu"
+	id S1754519AbYFGNGK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Jun 2008 09:06:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754179AbYFGNGJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 09:06:09 -0400
+Received: from smtp-1.orange.nl ([193.252.22.241]:53962 "EHLO smtp-1.orange.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752904AbYFGNDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 09:03:32 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A1B401B2579;
-	Sat,  7 Jun 2008 15:03:30 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 697F34469E;
-	Sat,  7 Jun 2008 14:45:33 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 192071190ACA; Sat,  7 Jun 2008 15:03:30 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m3fxrpy5ji.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753314AbYFGNGI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jun 2008 09:06:08 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6001.orange.nl (SMTP Server) with ESMTP id AD9E31C000A3;
+	Sat,  7 Jun 2008 15:06:02 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6001.orange.nl (SMTP Server) with ESMTP id 36EE11C0009F;
+	Sat,  7 Jun 2008 15:06:02 +0200 (CEST)
+X-ME-UUID: 20080607130602225.36EE11C0009F@mwinf6001.orange.nl
+In-Reply-To: <7v8wxirwi1.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84200>
 
 
---GJQzf4n/7sgn7z2y
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 7 jun 2008, at 01:09, Junio C Hamano wrote:
 
-On Sat, Jun 07, 2008 at 02:10:16AM -0700, Jakub Narebski <jnareb@gmail.com>=
- wrote:
-> Ask Bj?rn Hansen <ask@develooper.com> writes:
->=20
-> > ---
-> >  git-send-email.perl |    1 +
-> >  1 files changed, 1 insertions(+), 0 deletions(-)
-> >=20
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index a598fdc..ec69c23 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -209,6 +209,7 @@ my %config_settings =3D (
-> >      "bcc" =3D> \@bcclist,
-> >      "aliasesfile" =3D> \@alias_files,
-> >      "suppresscc" =3D> \@suppress_cc,
-> > +    "envelopesender" =3D> \$envelope_sender,
-> >  );
-> > =20
-> >  # Handle Uncouth Termination
->=20
-> Thanks. Documentation, pretty please?
+> I am confused.
+>
+> The type of object_decoration.decorattion is a (void*).  Why isn't it
+> sufficient to do it in a na=EFve and straightforward way?
+>
+> 	mark =3D (uint32_t)(deco->decoration);
+>        add_decoration(&idnums, object, (void*) mark);
+>
+> Is this twisted pointer arithmetic done in order to avoid cast =20
+> between int
+> and pointer of different size in the code?
 
-And it would be nice to add a testcase in the testsuite as well.
+I'm not sure why this is done; I simply copied what the existing code =20
+already
+did.
 
---GJQzf4n/7sgn7z2y
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+>  Even if that is the case,
+> doesn't "(uint32_t *)deco->decoration - (uint32_t *)NULL" mean the =20
+> value
+> range for deco->decoration is one-fourth of U32?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I'd imagine so, yes
 
-iEYEARECAAYFAkhKhyEACgkQe81tAgORUJZ0KwCeM8y3e0HOiv2xsrY+BvizTX6b
-GMsAn1LxhBUhmaPVxz8F70m072m7Ie+J
-=s9AE
------END PGP SIGNATURE-----
-
---GJQzf4n/7sgn7z2y--
+- Pieter
