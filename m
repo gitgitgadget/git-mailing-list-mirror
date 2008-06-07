@@ -1,128 +1,159 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] 0002 This patch is to allow 12 different OS's to compile
- and run git.
-Date: Fri, 6 Jun 2008 20:47:43 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806062043350.19665@iabervon.org>
-References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com> <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com> <7vmylyrwkg.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0806061718420.18454@xenau.zenez.com>
- <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Harning <harningt@gmail.com>,
-	Jeremy Maitin-Shepard <jbms@cmu.edu>,
-	Git List <git@vger.kernel.org>
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 02:48:41 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Move read_cache_unmerged() to read-cache.c
+Date: Sat,  7 Jun 2008 03:00:45 +0200
+Message-ID: <1212800445-4365-1-git-send-email-vmiklos@frugalware.org>
+References: <7vhcc7zdm5.fsf@gitster.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 03:02:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4mbn-0004BP-Ev
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 02:48:39 +0200
+	id 1K4mop-00082R-RG
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 03:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753155AbYFGArr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 20:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbYFGArr
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 20:47:47 -0400
-Received: from iabervon.org ([66.92.72.58]:36578 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753075AbYFGArq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 20:47:46 -0400
-Received: (qmail 1861 invoked by uid 1000); 7 Jun 2008 00:47:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Jun 2008 00:47:43 -0000
-In-Reply-To: <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753315AbYFGBAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 21:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYFGBAo
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 21:00:44 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:36313 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131AbYFGBAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 21:00:44 -0400
+Received: from vmobile.example.net (catv-5062e605.catv.broadband.hu [80.98.230.5])
+	by yugo.frugalware.org (Postfix) with ESMTP id 57BE31DDC5B
+	for <git@vger.kernel.org>; Sat,  7 Jun 2008 03:00:42 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 7AD0318E2A7; Sat,  7 Jun 2008 03:00:45 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc0.dirty
+In-Reply-To: <7vhcc7zdm5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84161>
 
-On Fri, 6 Jun 2008, Boyd Lynn Gerber wrote:
+builtin-read-tree has a read_cache_unmerged() which is useful for other
+builtins, for example builtin-merge uses it as well. Move it to
+read-cache.c to avoid code duplication.
 
-> From db0574a7f89bb90b6ce02cd44053f8cec2c454cc
-> 
-> This patch has patches to
-> 
-> Makefile
-> git-compat-util.h
-> progress.c
-> 
-> This patch allows some older OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4,
-> and OpenServer 6.0.X to build and run git.  Applied suggestions from list.
-> 
->         Developer's Certificate of Origin 1.1
-> 
->         By making a contribution to this project, I certify that:
-> 
->         (a) The contribution was created in whole or in part by me and I
->             have the right to submit it under the open source license
->             indicated in the file; or
-> 
->         (b) The contribution is based upon previous work that, to the best
->             of my knowledge, is covered under an appropriate open source
->             license and I have the right under that license to submit that
->             work with modifications, whether created in whole or in part
->             by me, under the same open source license (unless I am
->             permitted to submit under a different license), as indicated
->             in the file; or
-> 
->         (c) The contribution was provided directly to me by some other
->             person who certified (a), (b) or (c) and I have not modified
->             it.
-> 
->         (d) I understand and agree that this project and the contribution
->             are public and that a record of the contribution (including all
->             personal information I submit with it, including my sign-off) is
->             maintained indefinitely and may be redistributed consistent with
->             this project or the open source license(s) involved.
-> 
-> Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
-> 
-> --
-> Boyd Gerber <gerberb@zenez.com>
-> ZENEZ   1042 East Fort Union #135, Midvale Utah  84047
-> 
-> diff --git a/Makefile b/Makefile
-> index cce5a6e..a0456c8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -165,6 +165,28 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
->  # CFLAGS and LDFLAGS are for the users to override from the command line.
->  
->  CFLAGS = -g -O2 -Wall
-> +ifeq ($(uname_S),SCO_SV)
-> +	ifeq ($(uname_R),3.2)
-> +#	Change to -O2 for released version
-> +#	CFLAGS = -O2
-> +#	Debug Version
-> +		CFLAGS = -g
-> +	endif
-> +#	For System V based OS's
-> +	ifeq ($(uname_R),5)
-> +#	For System V based OS's and shared libraries
-> +		CFLAGS = -g -O2 -Wall
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-You don't need this, because CFLAGS is already -g -O2 -Wall, since we set 
-it above and couldn't have changed it.
+On Thu, Jun 05, 2008 at 04:05:54PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Looks good, but as a public interface probably it needs a few lines of
+> comment in front of the function's definition to describe what it is
+> used
+> for.  Perhaps like...
+>
+> /*
+>  * Read the index file that is potentially unmerged into given
+>  * index_state, dropping any unmerged entries.  Returns true is
+>  * the index is unmerged.  Callers who want to refuse to work
+>  * from an unmerged state can call this and check its return value,
+>  * instead of calling read_cache().
+>  */
 
-> +#	Use for Static version
-> +#		CFLAGS = -g -O2
+Added. I'm sending the patch I just pushed to my working branch.
 
-Static libraries don't support -Wall?
+ builtin-read-tree.c |   24 ------------------------
+ cache.h             |    2 ++
+ read-cache.c        |   31 +++++++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 24 deletions(-)
 
-> +	endif
-> +endif
-> +#	For all UnixWare Versions.
-> +ifeq ($(uname_S),UnixWare)
-> +#	For System V based OS's and shared libraries
-> +	CFLAGS = -g -O2 -Wall
-
-Again, this just sets it to what it must already be.
-
-You might want to test something the person doing the build can put 
-somewhere, rather than commenting out the lines you're not using.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 5a09e17..72a6de3 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -29,30 +29,6 @@ static int list_tree(unsigned char *sha1)
+ 	return 0;
+ }
+ 
+-static int read_cache_unmerged(void)
+-{
+-	int i;
+-	struct cache_entry **dst;
+-	struct cache_entry *last = NULL;
+-
+-	read_cache();
+-	dst = active_cache;
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
+-		if (ce_stage(ce)) {
+-			remove_name_hash(ce);
+-			if (last && !strcmp(ce->name, last->name))
+-				continue;
+-			cache_tree_invalidate_path(active_cache_tree, ce->name);
+-			last = ce;
+-			continue;
+-		}
+-		*dst++ = ce;
+-	}
+-	active_nr = dst - active_cache;
+-	return !!last;
+-}
+-
+ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+ {
+ 	struct tree_desc desc;
+diff --git a/cache.h b/cache.h
+index e342ad3..df0ac56 100644
+--- a/cache.h
++++ b/cache.h
+@@ -254,6 +254,7 @@ static inline void remove_name_hash(struct cache_entry *ce)
+ 
+ #define read_cache() read_index(&the_index)
+ #define read_cache_from(path) read_index_from(&the_index, (path))
++#define read_cache_unmerged() read_index_unmerged(&the_index)
+ #define write_cache(newfd, cache, entries) write_index(&the_index, (newfd))
+ #define discard_cache() discard_index(&the_index)
+ #define unmerged_cache() unmerged_index(&the_index)
+@@ -357,6 +358,7 @@ extern int init_db(const char *template_dir, unsigned int flags);
+ /* Initialize and use the cache information */
+ extern int read_index(struct index_state *);
+ extern int read_index_from(struct index_state *, const char *path);
++extern int read_index_unmerged(struct index_state *);
+ extern int write_index(const struct index_state *, int newfd);
+ extern int discard_index(struct index_state *);
+ extern int unmerged_index(const struct index_state *);
+diff --git a/read-cache.c b/read-cache.c
+index 8e5fbb6..ea23726 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1394,3 +1394,34 @@ int write_index(const struct index_state *istate, int newfd)
+ 	}
+ 	return ce_flush(&c, newfd);
+ }
++
++/*
++ * Read the index file that is potentially unmerged into given
++ * index_state, dropping any unmerged entries.  Returns true is
++ * the index is unmerged.  Callers who want to refuse to work
++ * from an unmerged state can call this and check its return value,
++ * instead of calling read_cache().
++ */
++int read_index_unmerged(struct index_state *istate)
++{
++	int i;
++	struct cache_entry **dst;
++	struct cache_entry *last = NULL;
++
++	read_index(istate);
++	dst = istate->cache;
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++		if (ce_stage(ce)) {
++			remove_name_hash(ce);
++			if (last && !strcmp(ce->name, last->name))
++				continue;
++			cache_tree_invalidate_path(istate->cache_tree, ce->name);
++			last = ce;
++			continue;
++		}
++		*dst++ = ce;
++	}
++	istate->cache_nr = dst - istate->cache;
++	return !!last;
++}
+-- 
+1.5.6.rc0.dirty
