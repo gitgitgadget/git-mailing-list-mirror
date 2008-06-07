@@ -1,88 +1,138 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/2] git-commit.txt: Correct option alternatives
-Date: Sat, 7 Jun 2008 05:34:45 +0200
-Message-ID: <200806070534.45761.chriscool@tuxfamily.org>
-References: <1212798261-26785-1-git-send-email-s-beyer@gmx.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] 0003 This patch is to allow 12 different OS's to compile
+ and run git.
+Date: Fri, 6 Jun 2008 23:40:01 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806062316270.19665@iabervon.org>
+References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com> <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com> <7vmylyrwkg.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0806061718420.18454@xenau.zenez.com>
+ <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com> <alpine.LNX.1.00.0806062043350.19665@iabervon.org> <Pine.LNX.4.64.0806061922290.18454@xenau.zenez.com> <7vzlpyouwf.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0806062015440.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Jun 07 05:31:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Harning <harningt@gmail.com>,
+	Jeremy Maitin-Shepard <jbms@cmu.edu>,
+	Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 05:41:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4p9i-0007RK-25
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 05:31:50 +0200
+	id 1K4pIl-0000aw-FN
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 05:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbYFGDaZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jun 2008 23:30:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753369AbYFGDaZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 23:30:25 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:55647 "EHLO smtp1-g19.free.fr"
+	id S1753601AbYFGDkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 23:40:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbYFGDkG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 23:40:06 -0400
+Received: from iabervon.org ([66.92.72.58]:48642 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753092AbYFGDaY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jun 2008 23:30:24 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 60BC21AB2B7;
-	Sat,  7 Jun 2008 05:30:23 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 2CD2F1AB2B3;
-	Sat,  7 Jun 2008 05:30:23 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1212798261-26785-1-git-send-email-s-beyer@gmx.net>
-Content-Disposition: inline
+	id S1752991AbYFGDkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 23:40:04 -0400
+Received: (qmail 9279 invoked by uid 1000); 7 Jun 2008 03:40:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Jun 2008 03:40:01 -0000
+In-Reply-To: <Pine.LNX.4.64.0806062015440.18454@xenau.zenez.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84170>
 
-Le samedi 7 juin 2008, Stephan Beyer a =E9crit :
->
-> Furthermore, for long-option consistency --author <author>
-> is changed to --author=3D<author>.
+On Fri, 6 Jun 2008, Boyd Lynn Gerber wrote:
 
-[...]
+> On Fri, 6 Jun 2008, Junio C Hamano wrote:
+> > Boyd Lynn Gerber <gerberb@zenez.com> writes:
+> > I guess the patch text itself seems to be getting reasonable, and perhaps
+> > the next few rounds would be to fix the commit log message ;-)
+> 
+> I have it the same, without all the >> as I first posted, but I agree. 
+> that it needs some tweaking.
+>  
+> > > diff --git a/Makefile b/Makefile
+> > > index cce5a6e..000bf1f 100644
+> > > --- a/Makefile
+> > > +++ b/Makefile
+> > > @@ -165,6 +165,11 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
+> > >  # CFLAGS and LDFLAGS are for the users to override from the command line.
+> > >  
+> > >  CFLAGS = -g -O2 -Wall
+> > > +ifeq ($(uname_S),SCO_SV)
+> > > +	ifeq ($(uname_R),3.2)
+> > > +		CFLAGS = -O2
+> > > +	endif
+> > > +endif
+> > 
+> > What makes SCO_SV so special that this platform specific tweak does not
+> > live in "Platform specific tweaks" section like others?
+> > 
+> > CFLAGS is for the user to oerride from the command line, and I do not very
+> > much like any tweaks in Makefile.  I'd suggest dropping this hunk.
+> > 
+> > > @@ -564,6 +569,42 @@ endif
+> > >  ifeq ($(uname_S),GNU/kFreeBSD)
+> > >  	NO_STRLCPY = YesPlease
+> > >  endif
+> > > +ifeq ($(uname_S),UnixWare)
+> > > +	CC=cc
+> > 
+> > s/=/ = /; you have similar one elsewhere.
+> 
+> I only have the one section now.  I will look at it some more.
+> 
+> > > +	NEEDS_SOCKET = YesPlease
+> > > +	NEEDS_NSL = YesPlease
+> > > +	NEEDS_SSL_WITH_CRYPTO = YesPlease
+> > > +	NEEDS_LIBICONV = YesPlease
+> > > +	SHELL_PATH = /usr/local/bin/bash
+> > > +	NO_IPV6 = YesPlease
+> > > +	NO_HSTRERROR = YesPlease
+> > > +	BASIC_CFLAGS +=  -Kalloca -Kthread
+> > 
+> > I am only guessing what -Kalloca is, but is it for alloca(3), and if so do
+> > you still need it?
+> 
+> I will make tests without it on the next run.  It takes about 3 hours for 
+> me to get the patches to all the system review them and then run 
+> everything.  Some of the machines are really slow.
+> 
+> > > diff --git a/git-compat-util.h b/git-compat-util.h
+> > > index 01c4045..b3cd7b3 100644
+> > > --- a/git-compat-util.h
+> > > +++ b/git-compat-util.h
+> > > @@ -39,7 +39,12 @@
+> > >  /* Approximation of the length of the decimal representation of this type. */
+> > >  #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
+> > >  
+> > > -#if !defined(__APPLE__) && !defined(__FreeBSD__)
+> > > +/* Added for __USLC__ for any Novell devrived Compiler and Some Sys V 
+> > > +   Added _M_UNIX for any XENIX/SCO UNIX/OpenServer less than or equal
+> > > +   OpenServer 5.0.7  This is do avoided compiler hell like the other
+> > > +   OS's __APPLE__ and __FreeBSD__ */
+> > 
+> > We generally do not do changelog inside the code comment.
+> 
+> Where do you put your change log stuff, to explain why you made the 
+> change.  Maybe it is a bit left over from doing things for MySQL AB.
 
-> The second hunk is: --author <author> is advertised for historical
-> reasons (I guess), but all the other long options with an argument
-> are --long-opt=3D<arg>, e.g. --message=3D<msg> or --cleanup=3D<mode>.
-> (Notice the equals sign.)
-> Because parse_long_opt() accepts both, I changed this for consistency
-> reasons.
+In the commit message. That is, if your commit message goes:
 
-[...]
+  Allow more systems to build git
 
-> @@ -8,8 +8,8 @@ git-commit - Record changes to the repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git-commit' [-a | --interactive] [-s] [-v] [-u]
-> -	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
-> +'git-commit' [-a | --interactive] [-s] [-v] [-u] [--amend]
-> +	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
->  	   [--allow-empty] [--no-verify] [-e] [--author <author>]
+  __USLC__ indicates a Novell-derived compiler or some SysV
+  __M_UNIX indicates XENIX/SCO UNIX/OpenServer before 5.0.7
+  Like Apple and BSD, both of these shouldn't have _XOPEN_SOURCE defined
 
-In the above line there is still "[--author <author>]" without "=3D",
+then an interested user can use "git blame" on the file, and then read 
+that info in the commit message for the commit that introduced those 
+lines.
 
->  	   [--cleanup=3D<mode>] [--] [[-i | -o ]<file>...]
+Also on the commit message: you should put the list of affected files 
+after a line with just "---", so it appears in the patch but not in the 
+commit; if we want to find out what the commit affects, we can use "git 
+log --stat" and find out for sure. The explanation of the sign-off can 
+probably go after the "---", too, although the "Signed-off-by" line should 
+be above it.
 
-while in this line there is "[--cleanup=3D<mode>]" with "=3D".
-
-So I think that to be consistent, "[--author=3D<author>]" (with "=3D") =
-should be=20
-used in the SYNOPSIS too.
-
-> @@ -68,7 +68,7 @@ OPTIONS
->  	Take the commit message from the given file.  Use '-' to
->  	read the message from the standard input.
->
-> ---author <author>::
-> +--author=3D<author>::
->  	Override the author name used in the commit.  Use
->  	`A U Thor <author@example.com>` format.
-
-Thanks,
-Christian.
+	-Daniel
+*This .sig left intentionally blank*
