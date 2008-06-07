@@ -1,87 +1,88 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Sat, 7 Jun 2008 13:03:11 +0200
-Message-ID: <200806071303.11737.robin.rosenberg@dewire.com>
-References: <20080526044640.GB30245@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Dave Watson <dwatson@mimvista.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jun 07 13:07:10 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH v2] git-commit.txt: Correct option alternatives
+Date: Sat,  7 Jun 2008 13:06:45 +0200
+Message-ID: <1212836805-20684-1-git-send-email-s-beyer@gmx.net>
+References: <200806070534.45761.chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 13:08:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4wGJ-0000EN-Dm
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 13:07:07 +0200
+	id 1K4wHA-0000gh-A5
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 13:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755197AbYFGLGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 07:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755635AbYFGLGO
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 07:06:14 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:25512 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752371AbYFGLGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 07:06:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3C67980265C;
-	Sat,  7 Jun 2008 13:06:09 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xCgxPRPuGlmn; Sat,  7 Jun 2008 13:06:08 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 816FA800681;
-	Sat,  7 Jun 2008 13:06:08 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080526044640.GB30245@spearce.org>
-Content-Disposition: inline
+	id S1755782AbYFGLHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 07:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755824AbYFGLHH
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 07:07:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37840 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755770AbYFGLHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 07:07:05 -0400
+Received: (qmail invoked by alias); 07 Jun 2008 11:07:02 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp063) with SMTP; 07 Jun 2008 13:07:02 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19RtvIgLY5REtTXxFyv7V6Of0x1mbU5hlDHO5zyzs
+	f+Hx7x3AEf3ncN
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K4wFx-0005Nz-Gf; Sat, 07 Jun 2008 13:06:45 +0200
+X-Mailer: git-send-email 1.5.5.1.491.gadf2.dirty
+In-Reply-To: <200806070534.45761.chriscool@tuxfamily.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84198>
 
-Hi Shawn,
+This patch fixes the SYNOPSIS in git-commit.txt:
+ * --amend is not an alternative option to -c/-C/-F/-m
+ * -m and -F are not alternative options to -c/-C,
+   because you can reuse authorship from a commit (-c/-C)
+   but change the message (-m/-F).
 
-I looked through the licensing info and it is inconsistent. In the feature.xml copyright section you dropped the mention of the GPL while the full license itself was retained later in the section. The latter is correct as we have do have the GPL code that you wrote in the visualization part .
+Furthermore, for long-option consistency --author <author>
+is changed to --author=<author>.
 
-Either we reintroduce mentioning GPL at the start or (you) relicense the graph parts.
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+Thanks, Christian.
+Sometimes I'm too blind.
 
-To what extent I still have code in there, I have no objections to changing it to either EPL (or LGPL for consistency reasons). I can do the editorial change the license if you confirm that there are no issues.
+ Documentation/git-commit.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-$ git ls-files -z |xargs -0 grep -l "GNU G"
-org.spearce.egit-feature/feature.xml
-	inconsistent as mentioned above
-
-org.spearce.egit.core/COPYING
-	only mentions LGPL
-org.spearce.egit.core/src/org/spearce/egit/core/ResourceList.java
-org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidCommit.java
-org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidCommitList.java
-org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidWalk.java
-org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
-	GPL licensed
-org.spearce.egit.ui/COPYING
-	only mentions LGPL
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitFileDiffViewer.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitMessageViewer.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitNavigationListener.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiff.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiffContentProvider.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiffLabelProvider.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GenerateHistoryJob.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GraphContentProvider.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GraphLabelProvider.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTCommit.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTCommitList.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTWalk.java
-	GPL licensed
-
--- robin
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 02d4baa..40bf63e 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -8,9 +8,9 @@ git-commit - Record changes to the repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git-commit' [-a | --interactive] [-s] [-v] [-u]
+-	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
+-	   [--allow-empty] [--no-verify] [-e] [--author <author>]
++'git-commit' [-a | --interactive] [-s] [-v] [-u] [--amend]
++	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
++	   [--allow-empty] [--no-verify] [-e] [--author=<author>]
+ 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
+ 
+ DESCRIPTION
+@@ -68,7 +68,7 @@ OPTIONS
+ 	Take the commit message from the given file.  Use '-' to
+ 	read the message from the standard input.
+ 
+---author <author>::
++--author=<author>::
+ 	Override the author name used in the commit.  Use
+ 	`A U Thor <author@example.com>` format.
+ 
+-- 
+1.5.5.1
