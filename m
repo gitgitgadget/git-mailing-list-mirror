@@ -1,81 +1,196 @@
-From: "Cedric Vivier" <cedricv@neonux.com>
-Subject: Re: [PATCH] use natural ordering to display list of branches.
-Date: Sat, 7 Jun 2008 02:43:29 +0200
-Message-ID: <d45085aa0806061743w65df3cd7pe4cf5fa29f83930a@mail.gmail.com>
-References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com>
-	 <alpine.DEB.1.00.0806051946100.21190@racer> <484969F0.1030704@gnu.org>
-	 <alpine.DEB.1.00.0806061911300.1783@racer>
-	 <Jx4nZtFGdU-iUxlX24G6lzMyWe99Z53jtjQp9T9qkMJ1iZC0eZW6xg@cipher.nrlssc.navy.mil>
-	 <d45085aa0806061417ue3f1f51i6580acbb51070e5b@mail.gmail.com>
-	 <alpine.DEB.1.00.0806070006150.1783@racer>
-	 <d45085aa0806061713k72108a87qa6635a5935732f20@mail.gmail.com>
-	 <7vej7aqetd.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Brandon Casey" <casey@nrlssc.navy.mil>,
-	"Paolo Bonzini" <bonzini@gnu.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 02:44:24 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add new test to ensure git-merge handles pull.twohead and pull.octopus
+Date: Sat,  7 Jun 2008 02:47:29 +0200
+Message-ID: <1212799649-3822-1-git-send-email-vmiklos@frugalware.org>
+References: <7vmylzzdyo.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 02:48:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4mXf-0003Gs-QF
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 02:44:24 +0200
+	id 1K4mbV-00047e-KX
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 02:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbYFGAnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 20:43:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752697AbYFGAnb
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 20:43:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:56341 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbYFGAna (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 20:43:30 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so922099waf.23
-        for <git@vger.kernel.org>; Fri, 06 Jun 2008 17:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=ep455IuLIQEHWdXfXxShQ4GL8j1mEmQqaKPk3pQpz00=;
-        b=UDJmEgEKIOhaqh186uMFTLabR1rT2TT0nFJ/gpLPcV4ltHEOmwgHGotYDaFTgObtL6
-         wvwC1j1N4UBkqDtDpzCMvQ16rOCRvftqxQ699yVz5u+VAv9fPEs46lvUaY/3Y4Jl/zUn
-         DTz0ndv9B/fgpD79ibtX8RNsfuvtU+fL1BJTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=jIyuuURckmcEMfe1m5xNNQrLwQxrdGUCYb6sUiiRzhkSB8pab4fEHFedgZyn+C6g5/
-         Apth+l9nsc+EchmDaN5KluV7tVOGNEnUTNGhch00ma3p9SQaWtrPyufEIg+d4oGjfr2e
-         pHj1o5WyWVL+qcHjbnuxBtL5G2RUuXbiddd/c=
-Received: by 10.114.158.1 with SMTP id g1mr893119wae.203.1212799409320;
-        Fri, 06 Jun 2008 17:43:29 -0700 (PDT)
-Received: by 10.115.33.3 with HTTP; Fri, 6 Jun 2008 17:43:29 -0700 (PDT)
-In-Reply-To: <7vej7aqetd.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 78cef75d886aa025
+	id S1753070AbYFGAr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 20:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYFGAr2
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 20:47:28 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39968 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751897AbYFGAr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 20:47:28 -0400
+Received: from vmobile.example.net (catv-5062e605.catv.broadband.hu [80.98.230.5])
+	by yugo.frugalware.org (Postfix) with ESMTP id 030961DDC5B;
+	Sat,  7 Jun 2008 02:47:25 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 417A818E2A7; Sat,  7 Jun 2008 02:47:29 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc0.dirty
+In-Reply-To: <7vmylzzdyo.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84159>
 
-On Sat, Jun 7, 2008 at 2:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Somebody suggested strvercmp(); how does the natcmp() compare with it?
+Test if the given strategies are used and test the case when multiple
+strategies are configured using a space separated list.
+
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+
+On Thu, Jun 05, 2008 at 03:58:23PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > +test_expect_success 'merge c1 with c2' '
+> > +   git reset --hard c1 &&
 >
+> test that c0 and c1 do and c2 and c3 do not exist here, as it is
+> cheap,
+> and otherwise you may end up chasing wild-goose when somebody breaks
+> git-reset.  No need to do so in later tests in this script, but it is
+> a
+> cheap protection for yourself from others' mistakes ;-).
 
-Yeah I did, as a heads-up from the discussion on the apache
-mailing-list linked earlier.
-I've just checked out glibc's implementation, the result would be the
-same, the code seems better to me, and there is no doubt the license
-is 100% compatible this way [1], sounds cool.
+Done.
 
-[1] as I guess we'd still have to borrow the code from glibc and put
-it into git's compat/ directory (or whatever name is choosen in the
-end for this kind of borrowed stuff) to make it work on non-glibc
-platforms (?)
+> > +   git merge c2 &&
+> > +   test -e c1.c &&
+> > +   test -e c2.c
+> > +'
+>
+> Nobody runs V7 that lacked "test -e" to run these test scripts, but
+> you
+> expect them to be regular files at this point of the test, so the
+> correct
+> way to spell these is with "test -f".
+>
+> In general, you are better off training yourself to think if you can
+> use
+> "test -f" before blindly using "test -e".
+
+Sure, corrected.
+
+> > +test_expect_success 'merge c1 with c2 and c3 (recursive in
+> > pull.octopus)' '
+> > +   git reset --hard c1 &&
+> > +   git config pull.octopus "recursive" &&
+> > +   ! git merge c2 c3
+>
+> Is it because it should dump core, or is it because the command should
+> decline to work, gracefully failing with an error message and non-zero
+> exit status?  Use "test_must_fail" to check for the latter.
+
+Obviously the later, corrected.
+
+> Don't you want to check how it fails and in what shape the command
+> leaves
+> the work tree?  I am assuming that recursive sees more than one
+> "remote"
+> head and declines to work without touching work tree nor the index, so
+> if
+> that is what you expect, you should check for that.  Otherwise, a
+> regression that loses local changes will go unnoticed.
+
+Hm yes. I added checks to ensure nothing happened.
+
+> > +test_expect_success 'merge c1 with c2 and c3 (recursive and octopus
+> > in pull.octopus)' '
+> > +   git reset --hard c1 &&
+> > +   git config pull.octopus "recursive octopus" &&
+> > +   git merge c2 c3
+>
+> Likewise, don't you want to check the result of the merge?  Not just
+> "merge exited with 0", but you would want to see that the HEAD has
+> advanced, it has the expected parents, there is no unexpected local
+> changes (because you did not have any when you started the merge), and
+> it
+> has the expected tree contents.
+
+Corrected.
+
+I'm sending the version I just pushed to my working branch.
+
+ t/t7601-merge-pull-config.sh |   72 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 72 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7601-merge-pull-config.sh
+
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+new file mode 100755
+index 0000000..c0b550e
+--- /dev/null
++++ b/t/t7601-merge-pull-config.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Testing pull.* configuration parsing.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo c0 >c0.c &&
++	git add c0.c &&
++	git commit -m c0 &&
++	git tag c0 &&
++	echo c1 >c1.c &&
++	git add c1.c &&
++	git commit -m c1 &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	echo c2 >c2.c &&
++	git add c2.c &&
++	git commit -m c2 &&
++	git tag c2
++	git reset --hard c0 &&
++	echo c3 >c3.c &&
++	git add c3.c &&
++	git commit -m c3 &&
++	git tag c3
++'
++
++test_expect_success 'merge c1 with c2' '
++	git reset --hard c1 &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test ! -f c2.c &&
++	test ! -f c3.c &&
++	git merge c2 &&
++	test -f c1.c &&
++	test -f c2.c
++'
++
++test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
++	git reset --hard c1 &&
++	git config pull.twohead ours &&
++	git merge c2 &&
++	test -f c1.c &&
++	! test -f c2.c
++'
++
++test_expect_success 'merge c1 with c2 and c3 (recursive in pull.octopus)' '
++	git reset --hard c1 &&
++	git config pull.octopus "recursive" &&
++	test_must_fail git merge c2 c3 &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD)"
++'
++
++test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octopus)' '
++	git reset --hard c1 &&
++	git config pull.octopus "recursive octopus" &&
++	git merge c2 c3 &&
++	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
++	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
++	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)"
++	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
++	git diff --exit-code &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test -f c2.c &&
++	test -f c3.c
++'
++
++test_done
+-- 
+1.5.6.rc0.dirty
