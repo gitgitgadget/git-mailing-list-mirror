@@ -1,196 +1,128 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Add new test to ensure git-merge handles pull.twohead and pull.octopus
-Date: Sat,  7 Jun 2008 02:47:29 +0200
-Message-ID: <1212799649-3822-1-git-send-email-vmiklos@frugalware.org>
-References: <7vmylzzdyo.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 02:48:23 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] 0002 This patch is to allow 12 different OS's to compile
+ and run git.
+Date: Fri, 6 Jun 2008 20:47:43 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806062043350.19665@iabervon.org>
+References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com> <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com> <7vmylyrwkg.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0806061718420.18454@xenau.zenez.com>
+ <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Harning <harningt@gmail.com>,
+	Jeremy Maitin-Shepard <jbms@cmu.edu>,
+	Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 02:48:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4mbV-00047e-KX
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 02:48:22 +0200
+	id 1K4mbn-0004BP-Ev
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 02:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753070AbYFGAr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 20:47:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYFGAr2
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 20:47:28 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39968 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbYFGAr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 20:47:28 -0400
-Received: from vmobile.example.net (catv-5062e605.catv.broadband.hu [80.98.230.5])
-	by yugo.frugalware.org (Postfix) with ESMTP id 030961DDC5B;
-	Sat,  7 Jun 2008 02:47:25 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 417A818E2A7; Sat,  7 Jun 2008 02:47:29 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc0.dirty
-In-Reply-To: <7vmylzzdyo.fsf@gitster.siamese.dyndns.org>
+	id S1753155AbYFGArr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 20:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbYFGArr
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 20:47:47 -0400
+Received: from iabervon.org ([66.92.72.58]:36578 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753075AbYFGArq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 20:47:46 -0400
+Received: (qmail 1861 invoked by uid 1000); 7 Jun 2008 00:47:43 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Jun 2008 00:47:43 -0000
+In-Reply-To: <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84160>
 
-Test if the given strategies are used and test the case when multiple
-strategies are configured using a space separated list.
+On Fri, 6 Jun 2008, Boyd Lynn Gerber wrote:
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+> From db0574a7f89bb90b6ce02cd44053f8cec2c454cc
+> 
+> This patch has patches to
+> 
+> Makefile
+> git-compat-util.h
+> progress.c
+> 
+> This patch allows some older OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4,
+> and OpenServer 6.0.X to build and run git.  Applied suggestions from list.
+> 
+>         Developer's Certificate of Origin 1.1
+> 
+>         By making a contribution to this project, I certify that:
+> 
+>         (a) The contribution was created in whole or in part by me and I
+>             have the right to submit it under the open source license
+>             indicated in the file; or
+> 
+>         (b) The contribution is based upon previous work that, to the best
+>             of my knowledge, is covered under an appropriate open source
+>             license and I have the right under that license to submit that
+>             work with modifications, whether created in whole or in part
+>             by me, under the same open source license (unless I am
+>             permitted to submit under a different license), as indicated
+>             in the file; or
+> 
+>         (c) The contribution was provided directly to me by some other
+>             person who certified (a), (b) or (c) and I have not modified
+>             it.
+> 
+>         (d) I understand and agree that this project and the contribution
+>             are public and that a record of the contribution (including all
+>             personal information I submit with it, including my sign-off) is
+>             maintained indefinitely and may be redistributed consistent with
+>             this project or the open source license(s) involved.
+> 
+> Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
+> 
+> --
+> Boyd Gerber <gerberb@zenez.com>
+> ZENEZ   1042 East Fort Union #135, Midvale Utah  84047
+> 
+> diff --git a/Makefile b/Makefile
+> index cce5a6e..a0456c8 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -165,6 +165,28 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
+>  # CFLAGS and LDFLAGS are for the users to override from the command line.
+>  
+>  CFLAGS = -g -O2 -Wall
+> +ifeq ($(uname_S),SCO_SV)
+> +	ifeq ($(uname_R),3.2)
+> +#	Change to -O2 for released version
+> +#	CFLAGS = -O2
+> +#	Debug Version
+> +		CFLAGS = -g
+> +	endif
+> +#	For System V based OS's
+> +	ifeq ($(uname_R),5)
+> +#	For System V based OS's and shared libraries
+> +		CFLAGS = -g -O2 -Wall
 
-On Thu, Jun 05, 2008 at 03:58:23PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> > +test_expect_success 'merge c1 with c2' '
-> > +   git reset --hard c1 &&
->
-> test that c0 and c1 do and c2 and c3 do not exist here, as it is
-> cheap,
-> and otherwise you may end up chasing wild-goose when somebody breaks
-> git-reset.  No need to do so in later tests in this script, but it is
-> a
-> cheap protection for yourself from others' mistakes ;-).
+You don't need this, because CFLAGS is already -g -O2 -Wall, since we set 
+it above and couldn't have changed it.
 
-Done.
+> +#	Use for Static version
+> +#		CFLAGS = -g -O2
 
-> > +   git merge c2 &&
-> > +   test -e c1.c &&
-> > +   test -e c2.c
-> > +'
->
-> Nobody runs V7 that lacked "test -e" to run these test scripts, but
-> you
-> expect them to be regular files at this point of the test, so the
-> correct
-> way to spell these is with "test -f".
->
-> In general, you are better off training yourself to think if you can
-> use
-> "test -f" before blindly using "test -e".
+Static libraries don't support -Wall?
 
-Sure, corrected.
+> +	endif
+> +endif
+> +#	For all UnixWare Versions.
+> +ifeq ($(uname_S),UnixWare)
+> +#	For System V based OS's and shared libraries
+> +	CFLAGS = -g -O2 -Wall
 
-> > +test_expect_success 'merge c1 with c2 and c3 (recursive in
-> > pull.octopus)' '
-> > +   git reset --hard c1 &&
-> > +   git config pull.octopus "recursive" &&
-> > +   ! git merge c2 c3
->
-> Is it because it should dump core, or is it because the command should
-> decline to work, gracefully failing with an error message and non-zero
-> exit status?  Use "test_must_fail" to check for the latter.
+Again, this just sets it to what it must already be.
 
-Obviously the later, corrected.
+You might want to test something the person doing the build can put 
+somewhere, rather than commenting out the lines you're not using.
 
-> Don't you want to check how it fails and in what shape the command
-> leaves
-> the work tree?  I am assuming that recursive sees more than one
-> "remote"
-> head and declines to work without touching work tree nor the index, so
-> if
-> that is what you expect, you should check for that.  Otherwise, a
-> regression that loses local changes will go unnoticed.
-
-Hm yes. I added checks to ensure nothing happened.
-
-> > +test_expect_success 'merge c1 with c2 and c3 (recursive and octopus
-> > in pull.octopus)' '
-> > +   git reset --hard c1 &&
-> > +   git config pull.octopus "recursive octopus" &&
-> > +   git merge c2 c3
->
-> Likewise, don't you want to check the result of the merge?  Not just
-> "merge exited with 0", but you would want to see that the HEAD has
-> advanced, it has the expected parents, there is no unexpected local
-> changes (because you did not have any when you started the merge), and
-> it
-> has the expected tree contents.
-
-Corrected.
-
-I'm sending the version I just pushed to my working branch.
-
- t/t7601-merge-pull-config.sh |   72 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 72 insertions(+), 0 deletions(-)
- create mode 100755 t/t7601-merge-pull-config.sh
-
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-new file mode 100755
-index 0000000..c0b550e
---- /dev/null
-+++ b/t/t7601-merge-pull-config.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+
-+test_description='git-merge
-+
-+Testing pull.* configuration parsing.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo c0 >c0.c &&
-+	git add c0.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	echo c1 >c1.c &&
-+	git add c1.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	echo c2 >c2.c &&
-+	git add c2.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+	git reset --hard c0 &&
-+	echo c3 >c3.c &&
-+	git add c3.c &&
-+	git commit -m c3 &&
-+	git tag c3
-+'
-+
-+test_expect_success 'merge c1 with c2' '
-+	git reset --hard c1 &&
-+	test -f c0.c &&
-+	test -f c1.c &&
-+	test ! -f c2.c &&
-+	test ! -f c3.c &&
-+	git merge c2 &&
-+	test -f c1.c &&
-+	test -f c2.c
-+'
-+
-+test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
-+	git reset --hard c1 &&
-+	git config pull.twohead ours &&
-+	git merge c2 &&
-+	test -f c1.c &&
-+	! test -f c2.c
-+'
-+
-+test_expect_success 'merge c1 with c2 and c3 (recursive in pull.octopus)' '
-+	git reset --hard c1 &&
-+	git config pull.octopus "recursive" &&
-+	test_must_fail git merge c2 c3 &&
-+	test "$(git rev-parse c1)" = "$(git rev-parse HEAD)"
-+'
-+
-+test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octopus)' '
-+	git reset --hard c1 &&
-+	git config pull.octopus "recursive octopus" &&
-+	git merge c2 c3 &&
-+	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
-+	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
-+	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
-+	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)"
-+	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
-+	git diff --exit-code &&
-+	test -f c0.c &&
-+	test -f c1.c &&
-+	test -f c2.c &&
-+	test -f c3.c
-+'
-+
-+test_done
--- 
-1.5.6.rc0.dirty
+	-Daniel
+*This .sig left intentionally blank*
