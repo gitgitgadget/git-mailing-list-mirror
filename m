@@ -1,93 +1,59 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] builtin-fast-export: Add importing and exporting of
- revision marks
-Date: Sat, 7 Jun 2008 16:19:35 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806071612460.1783@racer>
-References: <BEF1F17D-6F0F-4F09-9CC4-B193B8907901@ai.rug.nl> <1212663163-43064-1-git-send-email-pdebie@ai.rug.nl> <7v8wxirwi1.fsf@gitster.siamese.dyndns.org> <DB158BDE-70D1-4779-9B03-A85C60EB2FA7@ai.rug.nl>
+Subject: Re: [PATCH] Documentation/fast-export: Document --import-marks and
+ --export-marks options
+Date: Sat, 7 Jun 2008 16:20:29 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806071619580.1783@racer>
+References: <1212663163-43064-1-git-send-email-pdebie@ai.rug.nl> <1212845104-79789-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-67652928-1212851737=:1783"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailinglist <git@vger.kernel.org>
 To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Sat Jun 07 17:21:50 2008
+X-From: git-owner@vger.kernel.org Sat Jun 07 17:22:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K50Em-00019H-7c
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 17:21:48 +0200
+	id 1K50Fa-0001OW-VN
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 17:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756637AbYFGPUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 11:20:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756907AbYFGPUy
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 11:20:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46574 "HELO mail.gmx.net"
+	id S1757172AbYFGPVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 11:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757156AbYFGPVq
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 11:21:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60791 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752350AbYFGPUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 11:20:53 -0400
-Received: (qmail invoked by alias); 07 Jun 2008 15:20:51 -0000
+	id S1757151AbYFGPVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 11:21:45 -0400
+Received: (qmail invoked by alias); 07 Jun 2008 15:21:43 -0000
 Received: from unknown (EHLO racer.local) [128.177.17.254]
-  by mail.gmx.net (mp018) with SMTP; 07 Jun 2008 17:20:51 +0200
+  by mail.gmx.net (mp007) with SMTP; 07 Jun 2008 17:21:43 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX180om4/jmk0ysED1k0mZCJf7jLCXMANScv4x0RxDF
-	x44oavjjTIeOkx
+X-Provags-ID: V01U2FsdGVkX1++w+IDUr6+4+gAW7QzTUwZ6HdWVraLXhZ9NPiGeG
+	Goo03fA84Qkl8t
 X-X-Sender: gene099@racer
-In-Reply-To: <DB158BDE-70D1-4779-9B03-A85C60EB2FA7@ai.rug.nl>
+In-Reply-To: <1212845104-79789-1-git-send-email-pdebie@ai.rug.nl>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-Content-ID: <alpine.DEB.1.00.0806071619220.1783@racer>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84204>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-67652928-1212851737=:1783
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.DEB.1.00.0806071619221.1783@racer>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84205>
 
 Hi,
 
 On Sat, 7 Jun 2008, Pieter de Bie wrote:
 
-> On 7 jun 2008, at 01:09, Junio C Hamano wrote:
+> This adds a description for git-fast-export's --import-marks and
+> --export-marks options to its man page.
+> ---
 > 
-> >I am confused.
-> >
-> >The type of object_decoration.decorattion is a (void*).  Why isn't it
-> >sufficient to do it in a naïve and straightforward way?
-> >
-> > mark = (uint32_t)(deco->decoration);
-> >       add_decoration(&idnums, object, (void*) mark);
-> >
-> >Is this twisted pointer arithmetic done in order to avoid cast between 
-> >int and pointer of different size in the code?
+> I forgot to add the options to the man page. Perhaps this should be 
+> squashed on top of the other patch?
 
-Yes, it was done in response to a remark that pointers might not be 
-allowed to be unaligned.
-
-> I'm not sure why this is done; I simply copied what the existing code 
-> already did.
-
-Okay, I looked again, and indeed, you _copied_ it.  Instead of using the 
-functions mark_object() and get_object_mark() which are there only to be 
-used by you.
-
-So please fix.
-
-> >Even if that is the case, doesn't "(uint32_t *)deco->decoration - 
-> >(uint32_t *)NULL" mean the value range for deco->decoration is 
-> >one-fourth of U32?
-
-It is.  But since every object needs already at least 20 bytes, and we do 
-not even have the complete address space to put objects into, and we do 
-not plan to support 64-bit only repositories, I think we are fine.  At 
-least for the moment.
+Yes, that and the patch to use the existing functions to set/get the 
+marks instead of duplicating code.
 
 Ciao,
 Dscho
---8323329-67652928-1212851737=:1783--
