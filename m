@@ -1,100 +1,117 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-archive and unwanted .gitattributes
-Date: Sat, 07 Jun 2008 08:47:35 -0700 (PDT)
-Message-ID: <m33anpxn63.fsf@localhost.localdomain>
-References: <fcaeb9bf0806070821r5ba650c2x1fef7947fc4a2de5@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
+Date: Sat, 7 Jun 2008 12:02:04 -0400
+Message-ID: <20080607160204.GF12896@spearce.org>
+References: <20080526044640.GB30245@spearce.org> <200806071303.11737.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 17:48:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Dave Watson <dwatson@mimvista.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
+	"Roger C. Soares" <rogersoares@intelinet.com.br>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 18:03:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K50en-0000Yv-J7
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 17:48:41 +0200
+	id 1K50sj-0005Al-Ag
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 18:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758324AbYFGPrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 11:47:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758168AbYFGPrk
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 11:47:40 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:39997 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756184AbYFGPrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 11:47:39 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so990316fgg.17
-        for <git@vger.kernel.org>; Sat, 07 Jun 2008 08:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=4wBFhm4WAUx3tbzazEfTkxmw73ALbbqZnafQH/kL3iI=;
-        b=H0O9vtcfREovR//ACaYmJCISidVY6ik2f6xBkpLeEZUGFlIqpvahFZyK5+ybnwjk5j
-         FRaR/Odj3MJ734FIG8FWkuoKkIevQKhjbVt7VDkAs0ixM51Gm6iB6JCbrMy3/jUotKjW
-         hdjWjncXzMAvr7Xj56AKM888eRuakEVhIMbSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=pzZ9Haar2jzlkE0fDJ/zg0SHZwCsA4/C9v+aK1D/ob5N1tf8pgVOjq2mXOGp82vzFQ
-         pidqQg3bioCTPHhzvVQVlM7nsd68YYCMRM9csBZRGPWi4e4Lp6CH4DcVPcPQOomdnEyZ
-         qfrjVJHRCESd4YOEsvRCCKx1PTZGFxxA1Gu70=
-Received: by 10.78.171.20 with SMTP id t20mr710185hue.34.1212853656280;
-        Sat, 07 Jun 2008 08:47:36 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.218.155])
-        by mx.google.com with ESMTPS id 4sm3475655hud.27.2008.06.07.08.47.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Jun 2008 08:47:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m57FlBEI001507;
-	Sat, 7 Jun 2008 17:47:22 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m57Fl00e001497;
-	Sat, 7 Jun 2008 17:47:00 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <fcaeb9bf0806070821r5ba650c2x1fef7947fc4a2de5@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758861AbYFGQCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 12:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758765AbYFGQCM
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 12:02:12 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45364 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757576AbYFGQCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 12:02:11 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1K50rg-00047x-0S; Sat, 07 Jun 2008 12:02:00 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E48C120FBAE; Sat,  7 Jun 2008 12:02:04 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200806071303.11737.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84209>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
 
-> Currently attr.c will read .gitattributes on disk no matter there is a
-> real worktree or not. 
+> I looked through the licensing info and it is inconsistent. In
+> the feature.xml copyright section you dropped the mention of
+> the GPL while the full license itself was retained later in the
+> section. The latter is correct as we have do have the GPL code
+> that you wrote in the visualization part .
 
-Currently .gitattributes are read _only_ from the work tree.
-There isn't even infrastructure to read .gitattributes for commit
-(from a tree); git-check-attr, and I guess also internal git API,
-deals only with in-tree .gitattribute file.
+Oy.  I thought I was correcting it, but I forgot code that I
+wrote myself.  Not good.  Very bad mistake.
+ 
+> Either we reintroduce mentioning GPL at the start or (you)
+> relicense the graph parts.
 
-> This can lead to strange behavior. For example when I do
+It is my intent to relicense any code I have written in jgit as
+3-clause BSD and any code I have written in egit as EPL.  The EPL
+relicense I didn't start the discussion thread for yet, but its
+where I am trying to go.
+
+> To what extent I still have code in there, I have no objections
+> to changing it to either EPL (or LGPL for consistency reasons). I
+> can do the editorial change the license if you confirm that there
+> are no issues.
+
+EPL for egit code please.  It trivially makes us compatible with the
+Eclipse foundation's own code and simplifies our project proposal
+with them.
+ 
+> $ git ls-files -z |xargs -0 grep -l "GNU G"
+> org.spearce.egit-feature/feature.xml
+> 	inconsistent as mentioned above
 > 
-> mkdir a && cd a
-> git init
-> echo '$Format:%s$' > a
-> git add a && git commit -m initial
-> cd ..
-> echo 'a export-subst' > .gitattributes # let's assume this is an accident.
-> git --git-dir=a/.git archive --format=tar HEAD|tar xO a
-> 
-> I expect it to show '$Format:%s$', not "initial". git-archive should
-> not bother reading that .gitattributes. I thought an
-> is_inside_work_tree() check would be enough. Unfortunately, setting
-> --git-dir will automatically set worktree too. Any ideas?
+> org.spearce.egit.core/COPYING
+> 	only mentions LGPL
+> org.spearce.egit.core/src/org/spearce/egit/core/ResourceList.java
+> org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidCommit.java
+> org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidCommitList.java
+> org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/KidWalk.java
+> org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
+> 	GPL licensed
 
-And it doesn't work at all for bare repositories.
+Any of this that I wrote, EPL please.
 
-I guess that might have been caused by the fact, that .gitattributes
-are similar to .gitignore file; but in this they are different.  Of
-course there is chicken-and-egg problem with attributes affecting
-checkout...
+> org.spearce.egit.ui/COPYING
+> 	only mentions LGPL
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitFileDiffViewer.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitMessageViewer.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitNavigationListener.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiff.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiffContentProvider.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/FileDiffLabelProvider.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GenerateHistoryJob.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GraphContentProvider.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GraphLabelProvider.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTCommit.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTCommitList.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java
+> org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTWalk.java
+> 	GPL licensed
+
+Any of this that I wrote, EPL please.  I'm fairly certain Roger
+wrote some of this code as well, and its derived from your original
+plotting code.  We should make sure it is acceptable to him as well.
+
+Thanks for noticing Robin.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Shawn.
