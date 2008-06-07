@@ -1,93 +1,80 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [TOY PATCH] git wrapper: show similar command names for an
-	unknown command
-Date: Sat, 7 Jun 2008 09:27:21 +0200
-Message-ID: <20080607072721.GA3347@steel.home>
-References: <alpine.DEB.1.00.0806050747000.21190@racer>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 07 09:28:51 2008
+From: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
+Subject: [PATCH] Fix missing "HEAD" in the RewriteRule
+Date: Sat,  7 Jun 2008 00:19:26 -0700
+Message-ID: <1212823166-25098-1-git-send-email-ask@develooper.com>
+Cc: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 09:28:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4sr4-0001z8-HR
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 09:28:50 +0200
+	id 1K4sr5-0001z8-P4
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 09:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044AbYFGH1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 03:27:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbYFGH1Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 03:27:24 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:33033 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751882AbYFGH1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 03:27:24 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarHHwhMGIA==
-Received: from tigra.home (Fadd9.f.strato-dslnet.de [195.4.173.217])
-	by post.webmailer.de (mrclete mo37) (RZmta 16.42)
-	with ESMTP id 4045e2k574TVBx ; Sat, 7 Jun 2008 09:27:21 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 7D922277BD;
-	Sat,  7 Jun 2008 09:27:21 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 4F25E56D28; Sat,  7 Jun 2008 09:27:21 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806050747000.21190@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753679AbYFGH15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 03:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754487AbYFGH15
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 03:27:57 -0400
+Received: from gw.develooper.com ([64.81.84.140]:59358 "EHLO
+	freja.develooper.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754368AbYFGH1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 03:27:47 -0400
+X-Greylist: delayed 498 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Jun 2008 03:27:47 EDT
+Received: by freja.develooper.com (Postfix, from userid 500)
+	id 2180817D034; Sat,  7 Jun 2008 00:19:26 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.5.561.g140d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84183>
 
-Johannes Schindelin, Thu, Jun 05, 2008 08:48:40 +0200:
-> A typical output would now look like this:
-> 
-> 	$ git reabse
-> 	git: 'reabse' is not a git-command. See 'git --help'.
-> 
-> 	Did you mean one of these?
-> 		rebase
-> 		merge-base
-> 		rev-parse
-> 		remote
-> 		rerere
-> 
+Also add a few more hints for how to setup and configure gitweb as described
+---
+ gitweb/README |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-That's really cool :) And I find it useful (and already applied it to
-my tree). For me, it works like a simple reminder about what I was
-about to do. Helps when working on many things at the same time
-(typical typo: mrge. And your patch shows it as the first hit).
+The important change is to add HEAD into the regexp, everything else is
+optional...
 
-BTW, you probably want to restrict the number of lines output.
-For instance, "git ma" (am, printed correctly in the first line)
-lists around 30 commands, which scrolls clear a 25 line terminal
-and is a lot of output anyway. I tried it with at most 5 hints:
-
-diff --git a/help.c b/help.c
-index ac29225..765eed8 100644
---- a/help.c
-+++ b/help.c
-@@ -640,7 +640,7 @@ static int levenshtein_compare(const void *p1, const void *p2)
+diff --git a/gitweb/README b/gitweb/README
+index 8f7ea36..b96834b 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -255,12 +255,15 @@ Webserver configuration
+ If you want to have one URL for both gitweb and your http://
+ repositories, you can configure apache like this:
  
- void help_unknown_cmd(const char *cmd)
- {
--	int i, header_shown = 0;
-+	int i, header_shown = 0, listed = 0;
+-<VirtualHost www:80>
+-    ServerName git.domain.org
++<VirtualHost *:80>
++    ServerName git.example.org
+     DocumentRoot /pub/git
+-    RewriteEngine on
+-    RewriteRule ^/(.*\.git/(?!/?(info|objects|refs)).*)?$ /cgi-bin/gitweb.cgi%{REQUEST_URI}  [L,PT]
+     SetEnv	GITWEB_CONFIG	/etc/gitweb.conf
++    RewriteEngine on
++    # make the front page an internal rewrite to the gitweb script 
++    RewriteEngine ^/$  /cgi-bin/gitweb.cgi
++    # make access for "dumb clients" work
++    RewriteRule ^/(.*\.git/(?!/?(HEAD|info|objects|refs)).*)?$ /cgi-bin/gitweb.cgi%{REQUEST_URI}  [L,PT]
+ </VirtualHost>
  
- 	fprintf(stderr, "git: '%s' is not a git-command. See 'git --help'.\n", cmd);
+ The above configuration expects your public repositories to live under
+@@ -276,6 +279,13 @@ override the defaults given at the head of the gitweb.perl (or
+ gitweb.cgi).  Look at the comments in that file for information on
+ which variables and what they mean.
  
-@@ -667,6 +667,8 @@ void help_unknown_cmd(const char *cmd)
- 			header_shown = 1;
- 		}
- 		fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
-+		if (++listed >= 5)
-+			break;
- 	}
++If you use the rewrite rules from the example you'll likely also need
++something like the following in your gitweb.conf (or gitweb_config.perl) file:
++
++  @stylesheets = ("/some/absolute/path/gitweb.css");
++  $my_uri = "/";
++  $home_link = "/";
++
  
- 	exit(1);
+ Originally written by:
+   Kay Sievers <kay.sievers@vrfy.org>
+-- 
+1.5.3.5.561.g140d
