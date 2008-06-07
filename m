@@ -1,88 +1,87 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH v2] git-commit.txt: Correct option alternatives
-Date: Sat,  7 Jun 2008 13:06:45 +0200
-Message-ID: <1212836805-20684-1-git-send-email-s-beyer@gmx.net>
-References: <200806070534.45761.chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 07 13:08:15 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Allow the envelope sender to be set via configuration
+Date: Sat, 7 Jun 2008 15:03:30 +0200
+Message-ID: <20080607130330.GD29404@genesis.frugalware.org>
+References: <1212824022-31991-1-git-send-email-ask@develooper.com> <m3fxrpy5ji.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="GJQzf4n/7sgn7z2y"
+Cc: Ask Bj?rn Hansen <ask@develooper.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 15:05:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4wHA-0000gh-A5
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 13:08:00 +0200
+	id 1K4y6K-0001vj-OX
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 15:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755782AbYFGLHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 07:07:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755824AbYFGLHH
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 07:07:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37840 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755770AbYFGLHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 07:07:05 -0400
-Received: (qmail invoked by alias); 07 Jun 2008 11:07:02 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp063) with SMTP; 07 Jun 2008 13:07:02 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19RtvIgLY5REtTXxFyv7V6Of0x1mbU5hlDHO5zyzs
-	f+Hx7x3AEf3ncN
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K4wFx-0005Nz-Gf; Sat, 07 Jun 2008 13:06:45 +0200
-X-Mailer: git-send-email 1.5.5.1.491.gadf2.dirty
-In-Reply-To: <200806070534.45761.chriscool@tuxfamily.org>
-X-Y-GMX-Trusted: 0
+	id S1753138AbYFGNDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 09:03:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbYFGNDc
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 09:03:32 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:46635 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752904AbYFGNDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 09:03:32 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A1B401B2579;
+	Sat,  7 Jun 2008 15:03:30 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 697F34469E;
+	Sat,  7 Jun 2008 14:45:33 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 192071190ACA; Sat,  7 Jun 2008 15:03:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <m3fxrpy5ji.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84199>
 
-This patch fixes the SYNOPSIS in git-commit.txt:
- * --amend is not an alternative option to -c/-C/-F/-m
- * -m and -F are not alternative options to -c/-C,
-   because you can reuse authorship from a commit (-c/-C)
-   but change the message (-m/-F).
 
-Furthermore, for long-option consistency --author <author>
-is changed to --author=<author>.
+--GJQzf4n/7sgn7z2y
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
-Thanks, Christian.
-Sometimes I'm too blind.
+On Sat, Jun 07, 2008 at 02:10:16AM -0700, Jakub Narebski <jnareb@gmail.com>=
+ wrote:
+> Ask Bj?rn Hansen <ask@develooper.com> writes:
+>=20
+> > ---
+> >  git-send-email.perl |    1 +
+> >  1 files changed, 1 insertions(+), 0 deletions(-)
+> >=20
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index a598fdc..ec69c23 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -209,6 +209,7 @@ my %config_settings =3D (
+> >      "bcc" =3D> \@bcclist,
+> >      "aliasesfile" =3D> \@alias_files,
+> >      "suppresscc" =3D> \@suppress_cc,
+> > +    "envelopesender" =3D> \$envelope_sender,
+> >  );
+> > =20
+> >  # Handle Uncouth Termination
+>=20
+> Thanks. Documentation, pretty please?
 
- Documentation/git-commit.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+And it would be nice to add a testcase in the testsuite as well.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 02d4baa..40bf63e 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,9 +8,9 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git-commit' [-a | --interactive] [-s] [-v] [-u]
--	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
--	   [--allow-empty] [--no-verify] [-e] [--author <author>]
-+'git-commit' [-a | --interactive] [-s] [-v] [-u] [--amend]
-+	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
-+	   [--allow-empty] [--no-verify] [-e] [--author=<author>]
- 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
- 
- DESCRIPTION
-@@ -68,7 +68,7 @@ OPTIONS
- 	Take the commit message from the given file.  Use '-' to
- 	read the message from the standard input.
- 
----author <author>::
-+--author=<author>::
- 	Override the author name used in the commit.  Use
- 	`A U Thor <author@example.com>` format.
- 
--- 
-1.5.5.1
+--GJQzf4n/7sgn7z2y
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhKhyEACgkQe81tAgORUJZ0KwCeM8y3e0HOiv2xsrY+BvizTX6b
+GMsAn1LxhBUhmaPVxz8F70m072m7Ie+J
+=s9AE
+-----END PGP SIGNATURE-----
+
+--GJQzf4n/7sgn7z2y--
