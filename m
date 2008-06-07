@@ -1,70 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] "git rebase --interactive" forces me to edit message.
-Date: Fri, 06 Jun 2008 23:53:20 -0700
-Message-ID: <7vabhxpwgv.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0806050536380.21190@racer>
- <200806050358.m553wgK9013230@mi0.bluebottle.com>
- <200806062147.m56LlCOe030269@mi0.bluebottle.com>
- <alpine.DEB.1.00.0806070556030.1783@racer>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 07 08:54:34 2008
+From: rwa000@gmail.com (Robert Anderson)
+Subject: [PATCH] improve doc heading for git-bisect
+Date: Sat,  7 Jun 2008 00:06:37 -0700 (PDT)
+Message-ID: <20080607070637.79B17C7C0E@rwavmlap>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 09:08:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4sJt-00017C-QR
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 08:54:34 +0200
+	id 1K4sWw-0004HC-0M
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 09:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753603AbYFGGxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 02:53:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbYFGGxl
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 02:53:41 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36534 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752859AbYFGGxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 02:53:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8FF781903;
-	Sat,  7 Jun 2008 02:53:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BB7ED1902; Sat,  7 Jun 2008 02:53:36 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 76359A20-345E-11DD-AE06-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753257AbYFGHGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 03:06:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYFGHGg
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 03:06:36 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:56091 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751798AbYFGHGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 03:06:35 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so1847383rvb.1
+        for <git@vger.kernel.org>; Sat, 07 Jun 2008 00:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:subject
+         :message-id:date:from;
+        bh=ljFVtICjVfO5SdzKplPDAQVOffri3AjxNd9i8Tdif1I=;
+        b=A5iLhHwhWp7/dSRyWqGVjZlIf0iCLePfajZF6a08grpEci0il8u7Iqsevm4jYDfC9B
+         pfM//oUixIbLFu2Ab4usZs9zkb4iMpZfx5nOi5N/XAhAi/2GFWcCJfTj04hPdi3rKbCe
+         jNdv9rDu10WckTURAmd+WWuW4P3jfOrkCp9VU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:subject:message-id:date:from;
+        b=Lq/IF7rR0e0GkH3mz5YE1YJ17jBqGQ+vhy73+mux4rQYfVOImH5AZhl10PLYlw7afW
+         QmAv/yi53Qvpu2avT+s6IdnC2Ot5D2HQuhYiq6GycNsYN88Vn+BLiwy1uexyerWzWzuS
+         LB51b3UapzV7KwXXMfL1I75nvaDT2sJ0sIxWg=
+Received: by 10.141.69.1 with SMTP id w1mr619903rvk.185.1212822395051;
+        Sat, 07 Jun 2008 00:06:35 -0700 (PDT)
+Received: from rwavmlap ( [69.108.163.191])
+        by mx.google.com with ESMTPS id k41sm8465418rvb.3.2008.06.07.00.06.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Jun 2008 00:06:34 -0700 (PDT)
+Received: by rwavmlap (Postfix, from userid 1000)
+	id 79B17C7C0E; Sat,  7 Jun 2008 00:06:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84178>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>From 7af03a835b7311c501f2147e25f428642fc3acb7 Mon Sep 17 00:00:00 2001
+From: Robert W. Anderson <rwa000@gmail.com>
+Date: Fri, 6 Jun 2008 23:53:37 -0700
+Subject: [PATCH] improve doc heading for git-bisect
 
->> But I started wondering (especially after read Junio's example) if you 
->> might have to stop and force edit the message even for commits you 
->> "pick", once you have a conflict.  The patch might not conflict, but 
->> with your logic shouldn't you be given a chance to amend messages, now 
->> it was discovered that the upstream did change that overlaps what you 
->> did?
->
-> You do.  With a conflict, it stops.  If you do not commit, but only 
-> resolve the conflicts and add them to the index, then continue the rebase 
-> -i, it will ask you to commit.  Interactively.  (IOW an editor is fired 
-> up.)
+Improve awkward heading in git-bisect documentation.
 
-I might be misreading it, but my understanding of the scenario is:
+Signed-off-by: Robert W. Anderson <rwa000@gmail.com>
+---
+ Documentation/git-bisect.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
- - you have pick A, pick B and pick C;
- - you reordered them to pick C, pick B and pick A;
- - the first one, pick C failed, and "add -u && rebase --continue" does
-   ask for that pick C.
-
-However, if neither pick B and pick A after that step has textual
-conflicts, the command does not stop for them, and does not give you a
-chance to adjust their potentially stale commit log messages.
-
-I've already stated my position on this issue earlier in the thread.
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 37c7acb..3ea2527 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -129,8 +129,8 @@ $ git bisect replay that-file
+ if you find later you made a mistake telling good/bad about a
+ revision.
+ 
+-Avoiding to test a commit
+-~~~~~~~~~~~~~~~~~~~~~~~~~
++Changing the revision to test
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ If in a middle of bisect session, you know what the bisect suggested
+ to try next is not a good one to test (e.g. the change the commit
+-- 
+1.5.4.3
