@@ -1,64 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Add an optional <mode> argument to commit/status
- -u|--untracked-files option
-Date: Fri, 06 Jun 2008 18:55:36 -0700
-Message-ID: <7v4p86qa93.fsf@gitster.siamese.dyndns.org>
-References: <7vod6i1e3p.fsf@gitster.siamese.dyndns.org>
- <5f0ab026ce200e501be81a3b5082e482e1580e42.1212670149.git.marius@trolltech.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 08/10] Introduce commit_list_append() in commit.c
+Date: Sat, 7 Jun 2008 04:03:26 +0200
+Message-ID: <20080607020326.GB29404@genesis.frugalware.org>
+References: <9867fa302ce1c28f4bd8534a70bda19786c75971.1212698317.git.vmiklos@frugalware.org> <5aca216074b88d68f97b8223ebf6272dfe6bddeb.1212698317.git.vmiklos@frugalware.org> <3168647573b1325f47ab16f9ee3cae5abaaee473.1212698317.git.vmiklos@frugalware.org> <01dd116d05eedba51578935e39f679a8747380d6.1212698317.git.vmiklos@frugalware.org> <514d4184569ab033cad97be9afbd88c767bfb484.1212698317.git.vmiklos@frugalware.org> <2e4b20178405cf993ce9e0f1ffe4ac402a96fd03.1212698317.git.vmiklos@frugalware.org> <cbafb7e632b176658fe84e1eb9926f0a8d3c96b4.1212698317.git.vmiklos@frugalware.org> <7v8wxjzd41.fsf@gitster.siamese.dyndns.org> <20080606235239.GY29404@genesis.frugalware.org> <7viqwmqexg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 03:56:51 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vmKz1uriVzYz+bTd"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 04:04:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4nfm-0004tv-Ny
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 03:56:51 +0200
+	id 1K4nn4-0006Q5-WC
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 04:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbYFGBz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2008 21:55:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbYFGBz5
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 21:55:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56797 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753066AbYFGBz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2008 21:55:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E25281908;
-	Fri,  6 Jun 2008 21:55:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A8D0C1907; Fri,  6 Jun 2008 21:55:49 -0400 (EDT)
-In-Reply-To: <5f0ab026ce200e501be81a3b5082e482e1580e42.1212670149.git.marius@trolltech.com> (Marius Storm-Olsen's message of "Thu, 5 Jun 2008 10:31:19 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DCD926B8-3434-11DD-963E-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1754134AbYFGCD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2008 22:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbYFGCD3
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jun 2008 22:03:29 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:44076 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753438AbYFGCD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2008 22:03:29 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 6A3CE1B2532;
+	Sat,  7 Jun 2008 04:03:27 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 5BE53446A1;
+	Sat,  7 Jun 2008 03:45:36 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C27141190ACA; Sat,  7 Jun 2008 04:03:26 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7viqwmqexg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84165>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
 
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index b294c1f..1f4986b 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -102,7 +103,7 @@ static struct option builtin_commit_options[] = {
->  	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
->  	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
->  	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
-> -	OPT_BOOLEAN('u', "untracked-files", &untracked_files, "show all untracked files"),
-> +	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal. (Default: all)", PARSE_OPT_OPTARG, NULL, (int)"all" },
+--vmKz1uriVzYz+bTd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hmm.
+On Fri, Jun 06, 2008 at 05:14:35PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> If that is the case, you might want to check how parse_commit_buffer() in
+> commit.c builds "parents" list.  It is a standard pattern to append to the
+> list using commit_list_insert() and that is the reason why it returns a
+> pointer.
 
-$ make
-builtin-commit.c:106: error: initializer element is not constant
-builtin-commit.c:106: error: (near initialization for 'builtin_commit_options[18].defval')
-make: *** [builtin-commit.o] Error 1
+Ah, great, then this patch is not necessary. I removed it from my
+working branch.
 
-I also have to wonder what the funny cast of (int)"all"  is doing.
+Thanks.
+
+--vmKz1uriVzYz+bTd
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhJ7G4ACgkQe81tAgORUJZLuACgl7q0vqB0UpX0WHhfEwBb9bWR
+81UAoILMlELUr5mJxoxmgZEEmgUlBlsp
+=jxqH
+-----END PGP SIGNATURE-----
+
+--vmKz1uriVzYz+bTd--
