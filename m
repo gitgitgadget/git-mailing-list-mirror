@@ -1,133 +1,63 @@
-From: Mark Lundquist <lundquist.mark@gmail.com>
-Subject: [noob] questions about git-svn, svk
-Date: Fri, 06 Jun 2008 22:51:40 -0700
-Message-ID: <g2d7ld$8dq$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use natural ordering to display list of branches.
+Date: Fri, 06 Jun 2008 23:53:05 -0700
+Message-ID: <7vfxrppwha.fsf@gitster.siamese.dyndns.org>
+References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com>
+ <alpine.DEB.1.00.0806051946100.21190@racer> <484969F0.1030704@gnu.org>
+ <alpine.DEB.1.00.0806061911300.1783@racer>
+ <Jx4nZtFGdU-iUxlX24G6lzMyWe99Z53jtjQp9T9qkMJ1iZC0eZW6xg@cipher.nrlssc.navy.mil> <d45085aa0806061417ue3f1f51i6580acbb51070e5b@mail.gmail.com> <alpine.DEB.1.00.0806070006150.1783@racer> <d45085aa0806061713k72108a87qa6635a5935732f20@mail.gmail.com> <7vej7aqetd.fsf@gitster.siamese.dyndns.org> <d45085aa0806061743w65df3cd7pe4cf5fa29f83930a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 07 07:56:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Brandon Casey" <casey@nrlssc.navy.mil>,
+	"Paolo Bonzini" <bonzini@gnu.org>, git@vger.kernel.org
+To: "Cedric Vivier" <cedricv@neonux.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 08:54:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K4rPD-0007BA-IV
-	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 07:55:59 +0200
+	id 1K4sJc-00012d-4L
+	for gcvg-git-2@gmane.org; Sat, 07 Jun 2008 08:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755952AbYFGFzF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Jun 2008 01:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755841AbYFGFzF
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 01:55:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:53092 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754181AbYFGFzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 01:55:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1K4rOI-0004iP-6S
-	for git@vger.kernel.org; Sat, 07 Jun 2008 05:55:02 +0000
-Received: from c-24-22-114-191.hsd1.mn.comcast.net ([24.22.114.191])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Jun 2008 05:55:02 +0000
-Received: from lundquist.mark by c-24-22-114-191.hsd1.mn.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Jun 2008 05:55:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-22-114-191.hsd1.mn.comcast.net
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+	id S1753232AbYFGGxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 02:53:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbYFGGxX
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 02:53:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36321 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752746AbYFGGxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 02:53:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 46C2A1901;
+	Sat,  7 Jun 2008 02:53:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7848E195F; Sat,  7 Jun 2008 02:53:13 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6AB4A0C4-345E-11DD-8DC4-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84176>
 
-Hi,
+"Cedric Vivier" <cedricv@neonux.com> writes:
 
-Okay, I'm an experienced SVN & SVK user, and I'm ready to start the=20
-process of switching to git.  I just have a couple of questions...
+> On Sat, Jun 7, 2008 at 2:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Somebody suggested strvercmp(); how does the natcmp() compare with it?
+>>
+>
+> Yeah I did, as a heads-up from the discussion on the apache
+> mailing-list linked earlier.
+> I've just checked out glibc's implementation, the result would be the
+> same, the code seems better to me, and there is no doubt the license
+> is 100% compatible this way [1], sounds cool.
+>
+> [1] as I guess we'd still have to borrow the code from glibc and put
+> it into git's compat/ directory (or whatever name is choosen in the
+> end for this kind of borrowed stuff) to make it work on non-glibc
+> platforms (?)
 
-I'm a complete noob to the ways of git, so plz bear with me :-)
-
-All our projects are contained in our main svn repository, for the usua=
-l=20
-reasons.  I've been mirroring that repository with SVK on my local=20
-machine for the last year or two and using SVK as my Subversion=20
-front-end.  So, I have all these working copies of various projects, an=
-d=20
-of course these are all checkouts of SVK local branches (which under th=
-e=20
-hood are svn copies of within the mirror, in the depot repository).
-
-That was a lame explanation... if you know SVK then you alread know all=
-=20
-that, and if you don't then it doesn't matter anyway :-/ but the point=20
-is that I have something like
-
-	work/
-	   projects/
-	      project-A/
-		.
-		.
-	      project-B/
-		.
-		.
-	      project-C/
-		.
-		.
-
-
-So, I'd like to start out by using git-svn, just changing how I do my=20
-own work and developing my git-fu before I roll this learning curve out=
-=20
-to the server side :-).
-
-
-1) So I understand that each of project-A, project-B etc. will be a=20
-local git repository, so.. how do init/clone/whatever these things to=20
-track the remote svn repository, but so that they each just contain the=
-=20
-corresponding project, rather than all projects from the remote repo?
-
-2) Apparently, I can get the ball rolling by importing my SVK mirror=20
-(using "git svn init --use-svm-props") instead of cloning the remote=20
-repository directly... I was thinking to do that and save the long=20
-network suck time.  But then since my git repo would be tracking my SVK=
-=20
-depot, I'd have to use SVK to mediate all my syncs (in SVK jargon) to=20
-the remote.  Anyway, I don't have any desire to keep on using SVK, I=20
-really just want to take advantage of my local depot mirror to speed up=
-=20
-the initial clone, then I want to cut the cord.  Is there a way to poin=
-t=20
-my git-svn repo at the remote Subversion repo after I import, and leave=
-=20
-the SVK mirror behind?
-
-3) One possibly (I don't know! :-) complicating factor... most of these=
-=20
-projects are actually web site implementations, and these all began lif=
-e=20
-as Subversion copies of a skeletal, "template" project that contains a=20
-bunch of stuff to configure our web application framework, etc.  There'=
-s=20
-some version history there that has some value and I'd like to preserve=
-=20
-it.  Any special considerations in view of that?
-
-4) Soon the time will come to switch to Subversion on the server side.=20
-Whatever that setup looks like, I'd like it to reflect git best=20
-practices and not have anything that smells like "well yeah, this is=20
-weird, but see, it's that way because these projects used to be=20
-maintained under Subversion."  So, what will be the best way to "get=20
-from here to there?"  And when I have that, will that then break my=20
-git-svn project repositories that I am about to make on my local=20
-machine?  Will I have to start over with all new project repos tracking=
-=20
-the git repos on the server?
-
-Any help / ideas / random thoughts appreciated... :-)
-
-cheers,
-=97ml=97
+Yes, and we have precedents to it, like compat/strcasestr.c
