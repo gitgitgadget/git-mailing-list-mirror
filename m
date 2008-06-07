@@ -1,378 +1,379 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [RFC] git-sequencer.txt
-Date: Sun, 8 Jun 2008 00:01:01 +0200
-Message-ID: <20080607220101.GM31040@leksak.fem-net>
+From: "Geoffrey Irving" <irving@naml.us>
+Subject: [PATCH / RFC] cherry: cache commit to patch-id pairs to avoid repeating work
+Date: Sat, 7 Jun 2008 16:36:08 -0700
+Message-ID: <7f9d599f0806071636j1df57b6eqb5808f083dafd6a2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Joerg Sommer <joerg@alea.gnuu.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 08 00:02:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 08 01:37:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K56UO-0003B0-GH
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 00:02:20 +0200
+	id 1K57ye-0006Uq-0a
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 01:37:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765700AbYFGWB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 18:01:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765702AbYFGWB1
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 18:01:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46422 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1765691AbYFGWBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 18:01:24 -0400
-Received: (qmail invoked by alias); 07 Jun 2008 22:01:21 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp059) with SMTP; 08 Jun 2008 00:01:21 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/LCMsGhM/L5MPTMyxhhU2v4S44tCmLlVCMkCTzni
-	GxSo6hSJ2psE8G
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K56T7-0002cx-9v; Sun, 08 Jun 2008 00:01:01 +0200
+	id S1754505AbYFGXgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 19:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbYFGXgM
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 19:36:12 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:29144 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754117AbYFGXgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 19:36:11 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2044411rvb.1
+        for <git@vger.kernel.org>; Sat, 07 Jun 2008 16:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=mDQxoMz7+wIPHJBi56iftB6j43j8goNLYk/GhjkShn0=;
+        b=elCIGteBJQdH+f2fk64xog1d7FnP6bQolMS8k9wZa5mTv5rtz6+27qx8UWrfi7hu/7
+         A/XsRNv60bM0eqcZKDHnqcH5rMdIwvwpdxMg6MSHAy1IHgslkNWVNsmEaNGvRyIdJcvQ
+         m+jCjB4wGnj8SPNwUy0dsRmI9jVuXGkEdml/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=P2/Av/phi/01wbGghz2fY3h/Rc3sX8Ai3XOHA1HdoJxzeFE1swsHXeV0lXuWQp9wOH
+         xJHgLZx9sn6XQvmv0I+lqR5fvv95Ei+ZyD3syW+zxE1bSqDPcvdpn2LFhdAjhg6H8ynh
+         LxZE+paw+V8t5s0C3oFYsKzGzp2JtnL1tmiys=
+Received: by 10.141.176.6 with SMTP id d6mr1059695rvp.118.1212881768877;
+        Sat, 07 Jun 2008 16:36:08 -0700 (PDT)
+Received: by 10.140.178.16 with HTTP; Sat, 7 Jun 2008 16:36:08 -0700 (PDT)
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+X-Google-Sender-Auth: aadb8f67eee2d4d0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84231>
 
-Hi,
+Added cached-sha-map.[hc] implementing a persistent hash map from sha1 to sha1.
+The map is read with mmap, and completely rewritten if any entries change.  It
+would be good to add incremental update to handle the usual case where only a
+few entries change.
 
-I inline-attached the documentation (and somehow specification)
-for git-sequencer (my GSoC'08 project) for you to comment on.
+This structure is used by patch-ids.c to cache the mapping from commit to
+patch-id into $GIT_DIR/patch-id-cache.  In the one case I've tested so far,
+this speeds up the second invocation of git-cherry by two orders of magnitude.
 
-git-sequencer wants to become the common backend for git-am and 
-git-rebase(--interactive) and perhaps some other git commands.
-But, if git-sequencer.txt is good enough, you should be able to figure
-out yourself, what it can actually be used for :-)
-
-Some background on the project status:
-There is already a working (shell) implementation of the following 
-specification (90% finished), but we thought that it is useful to 
-first give you only a spec without implementation details to comment on.
-
-Note, that there is also a git-am and git-rebase--interactive that use
-git-sequencer directly and ... all test cases of the test suite (in "next")
-are passed.  So imho a first reality-check is passed, too.
-
-But the second (and perhaps much harder) stage to pass is your 
-point of view.
-So I hope you will have some good ideas and strong opinions ;-)
-
-Regards,
-  Stephan
-
------------------------------- git-sequencer.txt ------------------------------
-git-sequencer(1)
-================
-
-NAME
-----
-git-sequencer - Execute a sequence of git instructions
-
-SYNOPSIS
---------
-[verse]
-'git-sequencer' [-v | --verbose] <file> [<branch>]
-'git-sequencer' --continue | --skip | --abort | --edit
-
-
-DESCRIPTION
------------
-Executes a sequence of git instructions to HEAD or `<branch>`.
-The sequence is given by `<file>` or standard input.
-Also see 'TODO FILE FORMAT' below.
-
-Before doing anything, the TODO file is checked for correct syntax 
-and sanity.
-
-In case of a conflict or request in the TODO file, git-sequencer will
-pause. On conflict you can use git-diff to locate the markers (`<<<<<<`) 
-and make edits to resolve the conflict.
-
-For each file you edit, you need to tell git the changes by doing
-
-    git add <file>
-
-After resolving the conflict manually and updating the index with the
-desired resolution, you can continue the sequencing process with
-
-    git sequencer --continue
-
-Alternatively, you can undo the git-sequencer progress with
-
-    git sequencer --abort
-
-or skip the current instruction with
-
-    git sequencer --skip
-
-or correct the TODO file with
-
-    git sequencer --edit
-
-During pauses or when finished with the sequencing task, the current
-HEAD will always be the result of the last processed instruction.
-
-
-OPTIONS
--------
-<file>::
-	Filename of the TODO file.  Use `-` to read from standard input.
-	See 'TODO FILE FORMAT' below.
-
-<branch>::
-	Working branch; defaults to HEAD.
-
---continue::
-	Restart the sequencing process after having resolved a merge conflict.
-
---abort::
-	Restore the original branch and abort the sequence operation.
-
---skip::
-	Restart the sequencing process by skipping the current patch.
-
---edit::
-	Invoke editor to edit the undone rest of the TODO file.
-+
-The file is syntax- and sanity-checked afterwards, so that you can 
-safely run `git sequencer --skip` or `--continue` after editing.
-If you nonetheless noticed that you made a mistake, you can 
-overwrite `.git/sequencer/todo` with `.git/sequencer/todo.old` and
-rerun `git sequencer --edit`.
-+
-If the check fails you are prompted if you want to correct your 
-changes, edit again, cancel editing or really want to save.
-
--v, \--verbose::
-	Be more verbose. [XXX: to be defined more accurately, i.e. print diffstat]
-
-
-NOTES
------
-
-When sequencing, it is possible, that you are changing the history of
-a branch in a way that can cause problems for anyone who already has 
-a copy of the branch in their repository and tries to pull updates from
-you.  You should understand the implications of using git-sequencer on
-a repository that you share.
-
-git-sequencer will usually be called by another git porcelain, like
-linkgit:git-am[1] or linkgit:git-rebase[1].
-
-
-TODO FILE FORMAT
-----------------
-
-The TODO file contains basically one instruction per line.
-
-Blank lines will be ignored. 
-All characters after a `#` character will be ignored until the end of a line.
-
-The following instructions can be used:
-
-
-edit <commit>::
-	Picks a commit and pauses the sequencer process to let you
-	make changes.
-+
-After you have finished your changes, invoke `git-sequencer --continue`.
-If you only want to edit the commit message with an editor,
-run `git-commit --amend` (see linkgit:git-commit[1]) before.
-+
-Note, that `edit <commit>` is a short form for `pick --edit <commit>`.
-
-
-file [<options>] <file>::
-	If file `<file>` is a pure (diff) patch, then apply the patch.
-	If no `--message` option is given, an editor will
-	be invoked to enter a commit message.
-+
-If `<file>` is a linkgit:git-format-patch[1]-formatted patch,
-then the patch will be commited.
-+
-See the following list and 'GENERAL OPTIONS' for values of `<option>`:
-
-	-3, --3way;;
-		When the patch does not apply cleanly, fall back on
-		3-way merge, if the patch records the identity of blobs
-		it is supposed to apply to, and we have those blobs
-		available locally.
-
-	-k;;
-		Pass `-k` flag to `git-mailinfo` (see linkgit:git-mailinfo[1]).
-
-	-n;;
-		Pass `-n` flag to `git-mailinfo` (see
-		linkgit:git-mailinfo[1]).
-
-	-u;;
-		Pass `-u` flag to `git-mailinfo` (see linkgit:git-mailinfo[1]).
-		The proposed commit log message taken from the e-mail
-		is re-coded into UTF-8 encoding (configuration variable
-		`i18n.commitencoding` can be used to specify project's
-		preferred encoding if it is not UTF-8).
-+
-This was optional in prior versions of git, but now it is the
-default. You could use `-n` to override this.
-
-	-*;;
-		Any other dash-prefixed option is passed to
-		linkgit:git-apply[1].
-		This is especially useful for flags like
-		`--reverse`, `-C<n>`, `-p<n>` or `--whitespace=<action>`.
-
-
-mark <mark>::
-	Set a symbolic mark for the last commit.
-	`<mark>` is an unsigned integer starting at 1 and
-	prefixed with a colon, e.g. `:1`.
-+
-The marks can help if you want to refer to commits that you
-created during the sequencer process, e.g. if you want to
-merge such a commit.
-+
-The set marks are removed after the sequencer has completed.
-
-
-merge [<options>] <commit-ish1> <commit-ish2> ... <commit-ishN>::
-	Merge commits into HEAD.
-+
-A commit can also be given by a mark, if prefixed with a colon.
-+
-If you do not provide a commit message (using `-F`, `-m`, `--reference` 
-or `--standard`), an editor will be invoked.
-+
-See the following list and 'GENERAL OPTIONS' for values of `<option>`:
-
-	--reference=<commit-ish>;;
-		Take author and commit message of <commit-ish>.
-	
-	--standard;;
-		Generates a commit message like 'Merge ... into HEAD'.
-		See also linkgit:git-fmt-merge-msg[1].
-	
-	-s <strategy>;;
-	--strategy=<strategy>;;
-		Use the given merge strategy.
-		See also linkgit:git-merge[1].
-
-
-pick [<options>] <commit>::
-	Pick (see linkgit:git-cherry-pick[1]) a commit.
-	Sequencer will pause on conflicts.
-+
-See 'GENERAL OPTIONS' for values of `<option>`.
-
-
-reset <commit-ish>::
-	Go back (see linkgit:git-reset[1] `--hard`) to commit `<commit-ish>`.
-	`<commit-ish>` can also be given by a mark, if prefixed with a colon.
-
-
-squash [<options>] <commit>::
-	Add the changes introduced by `<commit>` to the last commit.
-+
-See 'GENERAL OPTIONS' for values of `<option>`.
-
-
-tag <tag>::
-	Set tag `<tag>` to the current HEAD,
-	see also linkgit:git-tag[1].
-	If another commit is tagged `<tag>`, it will lose this tag,
-	i.e. the tag will be reset to HEAD.
-
-
-
-GENERAL OPTIONS
----------------
-
-Besides some special options, the instructions
-`file`, `merge`, `pick`, `squash` take the following general options:
-
---edit::
-	Allows you to re-edit the done commit. For example, you can change
-	the commit message in an editor, or fix even bugs or typos.
-	Lets you also manually make further commits on top of the
-	current commit before continuing.
-+
-You will have to invoke `git-sequencer --continue` (or `--edit` or `--abort`),
-when finished.
-
---author=<author>::
-	Override the author name and e-mail address used in the commit.
-	Use `A U Thor <author@example.com>` format.
-
--F <file>::
---file=<file>::
-	Take the commit message from the given file.
-
--m <msg>::
---message=<msg>::
-	Use the given `<msg>` as the commit message.
-
--s::
---signoff::
-	Add `Signed-off-by:` line to the commit message (if not yet there),
-	using the committer identity of yourself.
-
-
-RETURN VALUES
--------------
-
-git-sequencer returns:
-
-* `0`, if git-sequencer successfully completed all the instructions
-       in the TODO file or successfully aborted after
-       `git-sequencer --abort`,
-* `2`, on user-requested pausing, e.g.
-       when using the `edit` instruction.
-* `3`, on pauses that are not requested, e.g.
-       when there are conflicts to resolve.
-* any other value on error, e.g.
-  syntax errors in the TODO file or
-  running git-sequencer on a bare repository.
-
-
-EXAMPLES
---------
-
-XXX [Here the usage of all commands should become clear,
-but it's braindamaged to write this section as long as the file format
-is in discussion.]
-
-
-SEE ALSO
---------
-linkgit:git-add[1],
-linkgit:git-am[1],
-linkgit:git-cherry-pick[1],
-linkgit:git-commit[1],
-linkgit:git-format-patch[1],
-linkgit:git-rebase[1],
-linkgit:git-reset[1],
-linkgit:git-tag[1]
-
-
-Authors
--------
-XXX
-
-Documentation
--------------
-Documentation by Stephan Beyer and the git-list <git@vger.kernel.org>.
-
-GIT
+Original code cannibalized from Johannes Schindelin's notes-index structure.
 ---
-Part of the linkgit:git[1] suite
+ Makefile          |    2 +
+ cached-sha1-map.c |  182 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ cached-sha1-map.h |   45 +++++++++++++
+ patch-ids.c       |   18 +++++-
+ 4 files changed, 246 insertions(+), 1 deletions(-)
+ create mode 100644 cached-sha1-map.c
+ create mode 100644 cached-sha1-map.h
+
+diff --git a/Makefile b/Makefile
+index cce5a6e..013b5d8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -357,6 +357,7 @@ LIB_H += pack.h
+ LIB_H += pack-revindex.h
+ LIB_H += parse-options.h
+ LIB_H += patch-ids.h
++LIB_H += cached-sha1-map.h
+ LIB_H += path-list.h
+ LIB_H += pkt-line.h
+ LIB_H += progress.h
+@@ -435,6 +436,7 @@ LIB_OBJS += pager.o
+ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
++LIB_OBJS += cached-sha1-map.o
+ LIB_OBJS += path-list.o
+ LIB_OBJS += path.o
+ LIB_OBJS += pkt-line.o
+diff --git a/cached-sha1-map.c b/cached-sha1-map.c
+new file mode 100644
+index 0000000..e363745
+--- /dev/null
++++ b/cached-sha1-map.c
+@@ -0,0 +1,182 @@
++#include "cached-sha1-map.h"
++
++union cached_sha1_map_header {
++	struct {
++		char signature[4]; /* HASH */
++		off_t count, size;
++	};
++	struct cached_sha1_entry padding; /* pad header out to 40 bytes */
++};
++
++static const char *signature = "HASH";
++
++static void init_empty_map(struct cached_sha1_map *cache, size_t size)
++{
++	cache->count = 0;
++	cache->size = size;
++	cache->initialized = 1;
++	cache->dirty = 1;
++	cache->mmapped = 0;
++	cache->entries = xcalloc(size, sizeof(struct cached_sha1_entry));
++}
++
++static void grow_map(struct cached_sha1_map *cache)
++{
++	struct cached_sha1_map new_cache;
++	size_t i;
++
++	/* allocate cache with twice the size */
++	new_cache.filename = cache->filename;
++	init_empty_map(&new_cache, cache->size * 2);
++
++	/* reinsert all entries */
++ 	for (i = 0; i < cache->size; i++)
++		if (!is_null_sha1(cache->entries[i].key))
++			set_cached_sha1_entry(&new_cache,
++				cache->entries[i].key, cache->entries[i].value);
++	/* finish */
++	free_cached_sha1_map(cache);
++	*cache = new_cache;
++}
++
++static void init_cached_sha1_map(struct cached_sha1_map *cache)
++{
++	int fd;
++	union cached_sha1_map_header header;
++
++	if (cache->initialized)
++		return;
++
++	fd = open(git_path(cache->filename), O_RDONLY);
++	if (fd < 0) {
++		init_empty_map(cache, 64);
++		return;
++	}
++
++	if (read_in_full(fd, &header, sizeof(header)) != sizeof(header))
++		die("cannot read %s header", cache->filename);
++
++	if (memcmp(header.signature, signature, 4))
++		die("%s has invalid header", cache->filename);
++
++	if (header.size & (header.size-1))
++		die("%s size %lld is not a power of two", cache->filename,
++			(long long)header.size);
++
++	cache->count = header.count;
++	cache->size = header.size;
++	cache->dirty = 0;
++	cache->initialized = 1;
++	cache->mmapped = 1;
++
++	/* check off_t to size_t conversion */
++	if (cache->count != header.count || cache->size != header.size)
++		die("%s is too large to hold in memory", cache->filename);
++
++	/* mmap entire file so that file / memory blocks are aligned */
++	cache->entries = xmmap(NULL,
++		sizeof(struct cached_sha1_entry) * (header.size + 1),
++		PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
++	cache->entries += 1; /* skip header */
++	close(fd);
++}
++
++int write_cached_sha1_map(struct cached_sha1_map *cache)
++{
++	union cached_sha1_map_header header;
++	struct lock_file update_lock;
++	int fd;
++	size_t entry_size;
++
++	if (!cache->initialized || !cache->dirty)
++		return 0;
++
++	fd = hold_lock_file_for_update(&update_lock,
++			git_path(cache->filename), 0);
++
++	if (fd < 0)
++		return error("could not construct %s", cache->filename);
++
++	memcpy(header.signature, signature, 4);
++	header.count = cache->count;
++	header.size = cache->size;
++	entry_size = sizeof(struct cached_sha1_entry) * cache->size;
++	if (write_in_full(fd, &header, sizeof(header)) != sizeof(header)
++		|| write_in_full(fd, cache->entries, entry_size) != entry_size)
++		return error("could not write %s", cache->filename);
++
++	if (commit_lock_file(&update_lock) < 0)
++		return error("could not write %s", cache->filename);
++
++	cache->dirty = 0;
++	return 0;
++}
++
++void free_cached_sha1_map(struct cached_sha1_map *cache)
++{
++	if (!cache->initialized)
++		return;
++
++	if (cache->mmapped)
++		munmap(cache->entries - 1,
++			sizeof(struct cached_sha1_entry) * (cache->size + 1));
++	else
++		free(cache->entries);
++}
++
++static size_t get_hash_index(const unsigned char *sha1)
++{
++	return ntohl(*(size_t*)sha1);
++}
++
++int get_cached_sha1_entry(struct cached_sha1_map *cache,
++	const unsigned char *key, unsigned char *value)
++{
++	size_t i, mask;
++
++	if (!cache->initialized)
++		init_cached_sha1_map(cache);
++
++	mask = cache->size - 1;
++
++	for (i = get_hash_index(key) & mask; ; i = (i+1) & mask) {
++		if (!hashcmp(key, cache->entries[i].key)) {
++			hashcpy(value, cache->entries[i].value);
++			return 0;
++		} else if (is_null_sha1(cache->entries[i].key))
++			return -1;
++	}
++}
++
++void set_cached_sha1_entry(struct cached_sha1_map *cache,
++	const unsigned char *key, const unsigned char *value)
++{
++	size_t i, mask;
++	struct cached_sha1_entry *entry;
++
++	if (!cache->initialized)
++		init_cached_sha1_map(cache);
++
++	if (4*cache->count >= 3*cache->size)
++		grow_map(cache);
++
++	mask = cache->size - 1;
++
++	for (i = get_hash_index(key) & mask; ; i = (i+1) & mask) {
++		entry = cache->entries+i;
++
++		if (is_null_sha1(entry->key)) {
++			hashcpy(entry->key, key);
++			hashcpy(entry->value, value);
++			cache->count++;
++			cache->dirty = 1;
++			return;
++		} else if(!hashcmp(key, entry->key)) {
++			if (hashcmp(value, entry->value)) {
++				hashcpy(entry->value, value);
++				cache->dirty = 1;
++			}
++			return;
++		}
++	}
++}
+diff --git a/cached-sha1-map.h b/cached-sha1-map.h
+new file mode 100644
+index 0000000..f592d07
+--- /dev/null
++++ b/cached-sha1-map.h
+@@ -0,0 +1,45 @@
++#ifndef CACHED_SHA1_MAP_H
++#define CACHED_SHA1_MAP_H
++
++#include "cache.h"
++
++/*
++ * A cached-sha1-map is a file storing a hash map from sha1 to sha1.
++ *
++ * The file is mmap'ed, updated in memory during operation, and flushed
++ * back to disk when freed.  Currently the entire file is rewritten for
++ * any change.  This could be a significant bottleneck for common uses,
++ * so it would be good to fix this later if possible.
++ *
++ * The performance of a hash map depends highly on a good hashing
++ * algorithm, to avoid collisions.  Lucky us!  SHA-1 is a pretty good
++ * hashing algorithm.
++ */
++
++struct cached_sha1_entry {
++	unsigned char key[20];
++	unsigned char value[20];
++};
++
++struct cached_sha1_map {
++	const char *filename; /* relative to GIT_DIR */
++
++	/* rest is for internal use */
++	size_t count, size;
++	unsigned int initialized : 1;
++	unsigned int dirty : 1;
++	unsigned int mmapped : 1;
++	struct cached_sha1_entry *entries; /* pointer to mmap'ed memory + 1 */
++};
++
++extern int get_cached_sha1_entry(struct cached_sha1_map *cache,
++	const unsigned char *key,unsigned char *value);
++
++extern void set_cached_sha1_entry(struct cached_sha1_map *cache,
++	const unsigned char *key, const unsigned char *value);
++
++extern int write_cached_sha1_map(struct cached_sha1_map *cache);
++
++extern void free_cached_sha1_map(struct cached_sha1_map *cache);
++
++#endif
+diff --git a/patch-ids.c b/patch-ids.c
+index 3be5d31..36332f3 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -2,17 +2,31 @@
+ #include "diff.h"
+ #include "commit.h"
+ #include "patch-ids.h"
++#include "cached-sha1-map.h"
++
++struct cached_sha1_map patch_id_cache;
+
+ static int commit_patch_id(struct commit *commit, struct diff_options *options,
+ 		    unsigned char *sha1)
+ {
++	/* pull patch-id out of the cache if possible */
++	patch_id_cache.filename = "patch-id-cache";
++	if (!get_cached_sha1_entry(&patch_id_cache, commit->object.sha1, sha1))
++		return 0;
++
+ 	if (commit->parents)
+ 		diff_tree_sha1(commit->parents->item->object.sha1,
+ 		               commit->object.sha1, "", options);
+ 	else
+ 		diff_root_tree_sha1(commit->object.sha1, "", options);
+ 	diffcore_std(options);
+-	return diff_flush_patch_id(options, sha1);
++	int ret = diff_flush_patch_id(options, sha1);
++	if (ret)
++		return ret;
++
++	/* record commit, patch-id pair in cache */
++	set_cached_sha1_entry(&patch_id_cache, commit->object.sha1, sha1);
++	return 0;
+ }
+
+ static uint32_t take2(const unsigned char *id)
+@@ -136,6 +150,8 @@ int free_patch_ids(struct patch_ids *ids)
+ 		next = patches->next;
+ 		free(patches);
+ 	}
++
++	write_cached_sha1_map(&patch_id_cache);
+ 	return 0;
+ }
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.5.4.5
