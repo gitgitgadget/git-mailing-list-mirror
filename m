@@ -1,213 +1,62 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [PATCH] 0004 This patch is to allow 12 different OS's to compile
- and run git.
-Date: Sat, 7 Jun 2008 21:50:31 -0600
-Message-ID: <Pine.LNX.4.64.0806072146550.18454@xenau.zenez.com>
-References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com>
- <87bq2ez72u.fsf@jeremyms.com> <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
- <7vmylyrwkg.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0806061718420.18454@xenau.zenez.com>
- <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
- <alpine.LNX.1.00.0806062043350.19665@iabervon.org>
- <Pine.LNX.4.64.0806061922290.18454@xenau.zenez.com> <7vzlpyouwf.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0806062015440.18454@xenau.zenez.com>
- <alpine.LNX.1.00.0806062316270.19665@iabervon.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] git-commit.txt: Correct option alternatives
+Date: Sun, 8 Jun 2008 00:23:56 -0400
+Message-ID: <20080608042356.GA11194@sigill.intra.peff.net>
+References: <200806070534.45761.chriscool@tuxfamily.org> <1212836805-20684-1-git-send-email-s-beyer@gmx.net> <484B37B6.1040408@freescale.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Harning <harningt@gmail.com>,
-	Jeremy Maitin-Shepard <jbms@cmu.edu>,
-	Git List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Jun 08 05:51:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Sun Jun 08 06:25:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5BwE-0004YD-Dx
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 05:51:27 +0200
+	id 1K5CT5-0000lB-4n
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 06:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753142AbYFHDud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 23:50:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbYFHDud
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 23:50:33 -0400
-Received: from zenez.com ([166.70.62.2]:11820 "EHLO xenau.zenez.com"
+	id S1750821AbYFHEYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 00:24:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbYFHEYA
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 00:24:00 -0400
+Received: from peff.net ([208.65.91.99]:4873 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752067AbYFHDuc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 23:50:32 -0400
-Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id CBDC0E5443; Sat,  7 Jun 2008 21:50:31 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 8ED23E51DE;
-	Sat,  7 Jun 2008 21:50:31 -0600 (MDT)
-In-Reply-To: <alpine.LNX.1.00.0806062316270.19665@iabervon.org>
+	id S1750771AbYFHEX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 00:23:59 -0400
+Received: (qmail 13657 invoked by uid 111); 8 Jun 2008 04:23:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 08 Jun 2008 00:23:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Jun 2008 00:23:56 -0400
+Content-Disposition: inline
+In-Reply-To: <484B37B6.1040408@freescale.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84252>
 
+On Sat, Jun 07, 2008 at 08:36:54PM -0500, Jon Loeliger wrote:
 
-This patch allows some older OS's, UNIX Systems Labs (USL)/Novell and SYS V
-based OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4, OpenServer 6.0.X and
-SCO pre OSR 5 OS's to build and run git.  Applied suggestions from list.
+>> Furthermore, for long-option consistency --author <author>
+>> is changed to --author=<author>.
+> Say, if we were to document and espouse one form over the other,
+> which would you recommend or prefer?
 
-        Developer's Certificate of Origin 1.1
+$ sed -ne '/sticked/,/^$/p' Documentation/gitcli.txt
+ * when a command line option takes an argument, use the 'sticked' form.  In
+   other words, write `"git foo -oArg"` instead of `"git foo -o Arg"` for short
+   options, and `"git foo --long-opt=Arg"` instead of `"git foo --long-opt Arg"`
+   for long options.  An option that takes optional option-argument must be
+   written in the 'sticked' form.
 
-        By making a contribution to this project, I certify that:
+'sticked' form must be used:
+----------------------------
+$ git describe --abbrev HEAD     # correct
+$ git describe --abbrev=10 HEAD  # correct
+$ git describe --abbrev 10 HEAD  # NOT WHAT YOU MEANT
+----------------------------
 
-        (a) The contribution was created in whole or in part by me and I
-            have the right to submit it under the open source license
-            indicated in the file; or
-
-        (b) The contribution is based upon previous work that, to the best
-            of my knowledge, is covered under an appropriate open source
-            license and I have the right under that license to submit that
-            work with modifications, whether created in whole or in part
-            by me, under the same open source license (unless I am
-            permitted to submit under a different license), as indicated
-            in the file; or
-
-        (c) The contribution was provided directly to me by some other
-            person who certified (a), (b) or (c) and I have not modified
-            it.
-
-        (d) I understand and agree that this project and the contribution
-            are public and that a record of the contribution (including all
-            personal information I submit with it, including my sign-off) is
-            maintained indefinitely and may be redistributed consistent with
-            this project or the open source license(s) involved.
-
-Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
-
----
-Makefile
-
-Add changes for System V, UnixWare, SCO OS's
-
----
-git-compat-util.h
-
-__USLC__ indicates UNIX System Labs Corperation (USLC), or a Novell-derived
-compiler and/or some SysV based OS's.
-
-__M_UNIX indicates XENIX/SCO UNIX/OpenServer before 5.0.7 and prior release
-of and SCO OS.  It is used just like Apple and BSD, both of these shouldn't
-have _XOPEN_SOURCE defined.
-
----
-progress.c
-
-Changes for older OS's that do not support the current methods for allocation
-of memory.
-
-diff --git a/Makefile b/Makefile
-index cce5a6e..bd65509 100644
---- a/Makefile
-+++ b/Makefile
-@@ -164,7 +164,6 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
- 
- # CFLAGS and LDFLAGS are for the users to override from the command line.
- 
--CFLAGS = -g -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
-@@ -564,6 +563,45 @@ endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
- endif
-+ifeq ($(uname_S),UnixWare)
-+	CC=cc
-+	NEEDS_SOCKET = YesPlease
-+	NEEDS_NSL = YesPlease
-+	NEEDS_SSL_WITH_CRYPTO = YesPlease
-+	NEEDS_LIBICONV = YesPlease
-+	SHELL_PATH = /usr/local/bin/bash
-+	NO_IPV6 = YesPlease
-+	NO_HSTRERROR = YesPlease
-+	BASIC_CFLAGS += -Kthread
-+	BASIC_CFLAGS += -I/usr/local/include
-+	BASIC_LDFLAGS += -L/usr/local/lib
-+	INSTALL = ginstall
-+	TAR = gtar
-+	NO_STRCASESTR = YesPlease
-+	NO_MEMMEM = YesPlease
-+endif
-+ifeq ($(uname_S),SCO_SV)
-+	ifeq ($(uname_R),3.2)
-+		CFLAGS = -O2
-+	endif
-+	ifeq ($(uname_R),5)
-+		CC=cc
-+		BASIC_CFLAGS += -Kthread
-+	endif
-+	NEEDS_SOCKET = YesPlease
-+	NEEDS_NSL = YesPlease
-+	NEEDS_SSL_WITH_CRYPTO = YesPlease
-+	NEEDS_LIBICONV = YesPlease
-+	SHELL_PATH = /usr/bin/bash
-+	NO_IPV6 = YesPlease
-+	NO_HSTRERROR = YesPlease
-+	BASIC_CFLAGS += -I/usr/local/include
-+	BASIC_LDFLAGS += -L/usr/local/lib
-+	NO_STRCASESTR = YesPlease
-+	NO_MEMMEM = YesPlease
-+	INSTALL = ginstall
-+	TAR = gtar
-+endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 01c4045..c04e8ba 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -39,7 +39,7 @@
- /* Approximation of the length of the decimal representation of this type. */
- #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
- 
--#if !defined(__APPLE__) && !defined(__FreeBSD__)
-+#if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
-diff --git a/progress.c b/progress.c
-index d19f80c..55a8687 100644
---- a/progress.c
-+++ b/progress.c
-@@ -241,16 +241,21 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 	*p_progress = NULL;
- 	if (progress->last_value != -1) {
- 		/* Force the last update */
--		char buf[strlen(msg) + 5];
-+		char buf[128], *bufp;
-+		size_t len = strlen(msg) + 5;
- 		struct throughput *tp = progress->throughput;
-+
-+		bufp = (len < sizeof(buf)) ? buf : xmalloc(len + 1);
- 		if (tp) {
- 			unsigned int rate = !tp->avg_misecs ? 0 :
- 					tp->avg_bytes / tp->avg_misecs;
- 			throughput_string(tp, tp->curr_total, rate);
- 		}
- 		progress_update = 1;
--		sprintf(buf, ", %s.\n", msg);
--		display(progress, progress->last_value, buf);
-+		sprintf(bufp, ", %s.\n", msg);
-+		display(progress, progress->last_value, bufp);
-+		if (buf != bufp)
-+			free(bufp);
- 	}
- 	clear_progress_signal();
- 	free(progress->throughput);
--- 
-1.5.2.4
-
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+-Peff
