@@ -1,73 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [TOY PATCH] git wrapper: show similar command names for an
- unknown command
-Date: Sun, 08 Jun 2008 10:53:51 -0700
-Message-ID: <7vskvnke34.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0806050747000.21190@racer>
- <20080607072721.GA3347@steel.home> <alpine.DEB.1.00.0806071603470.1783@racer>
- <20080607175103.GA5822@steel.home>
- <7vmylxnmnz.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806081607040.1783@racer> <484BF751.1000203@dirk.my1.cc>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: [PATCH] Port to 12 other Platforms.  (Comments)
+Date: Sun, 8 Jun 2008 11:58:39 -0600
+Message-ID: <Pine.LNX.4.64.0806081147550.18454@xenau.zenez.com>
+References: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
+ <vpqve0j3nkd.fsf@bauges.imag.fr> <Pine.LNX.4.64.0806081028460.18454@xenau.zenez.com>
+ <200806081919.05273.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sun Jun 08 19:55:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Git List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 08 19:59:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5P71-0001AG-7H
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 19:55:27 +0200
+	id 1K5PB2-0002Iz-39
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 19:59:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505AbYFHRyG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jun 2008 13:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbYFHRyF
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 13:54:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59736 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753059AbYFHRyF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Jun 2008 13:54:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6F5DF3931;
-	Sun,  8 Jun 2008 13:54:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B3E2D392F; Sun,  8 Jun 2008 13:53:55 -0400 (EDT)
-In-Reply-To: <484BF751.1000203@dirk.my1.cc> (Dirk =?utf-8?Q?S=C3=BCsserott?=
- =?utf-8?Q?'s?= message of "Sun, 08 Jun 2008 17:14:25 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DFE6C0AE-3583-11DD-B719-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753427AbYFHR6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 13:58:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYFHR6n
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 13:58:43 -0400
+Received: from zenez.com ([166.70.62.2]:6667 "EHLO xenau.zenez.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751394AbYFHR6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 13:58:42 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 708C6E5EC0; Sun,  8 Jun 2008 11:58:41 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 2AC53E5EBF;
+	Sun,  8 Jun 2008 11:58:40 -0600 (MDT)
+In-Reply-To: <200806081919.05273.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84301>
 
-Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+On Sun, 8 Jun 2008, Jakub Narebski wrote:
+> On Sun, 8 Jun 2008, Boyd Lynn Gerber wrote:
+> > On Sun, 8 Jun 2008, Matthieu Moy wrote:
+> >> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+> >>> This was from my own copy of the master archive.  It is my proposal.  I 
+> >>> thought you had to get an OK from this list before you do a push to the 
+> >>> main archive.
+> >> 
+> >> You won't do a push, the maintainer will apply the patch if it seems
+> >> OK.
+> > Thanks, I understand better now.
+> 
+> By the way, if you want to send large series of patches, and you have
+> your git repository published somewhere (repo.or.cz, gitorious, github,
+> freedektop, kernel.org), sometimes pull request is used.  As you
+> usually use git-format-patch (perhaps together with git-send-email)
+> when sending patches, you can use output of git-request-pull there.
+> 
+> Just FYI, you can safely ignore above.
 
-> Johannes Schindelin schrieb:
->> This patch is not meant for inclusion, as indicated by the "TOY
->> PATCH" prefix.
+I have setup a repo on www.zenez.com.
 
-Yes, I understand it.
+I just did a git clone give://www.zenez.com/git git.
 
-I was not complaining about the "who cares, we will exit after we are d=
-one
-with this processing anyway" attitude in this code.  I think it is a
-reasonable approach to take because it is not likely that this codepath=
- to
-change and would start wanting to access the original command table aft=
-er
-it did its munging.  I was suggesting a positive improvement to the pat=
-ch
-by making it explicitly documented to help people polish further, that'=
-s
-all.  You do not have to be so defensive.
+I am trying to get various communities to use git.  So I want all there 
+changes to go to my master repo.  I am trying to get those that still 
+support/work on SCO OS's to embrase the Open Source Software (OSS) 
+concepts and give back to the OSS community inspite of the SCO Group and 
+what they are doing.  I am a firm believer of OSS Concepts.  I still have 
+to support many SCO Systems.  My clients applicatios only run on them.  
+But I want as much as I can to promote the OSS Concepts and have them 
+become a major part of the business I support.  
 
-> What a pity! :-( I liked it.
+Because of all the anti SCO I want them to have a safe place to use and 
+provide good services for them.  Saddly, I do this because of my own 
+experience with retrobuction from fanatics.  I have had over 650 GB over 
+written with "DIE SCO"  I was away for a week and when I came back I had 
+had a break-in on one system and that was the result.  I have had DOS 
+attacks and many others.  So I am trying to be a bridge between the to 
+communities and other communites to promote the true spirt of Open Source.
 
-Likewise.
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
