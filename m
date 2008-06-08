@@ -1,75 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
-Date: Mon, 9 Jun 2008 00:02:30 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806090001090.1783@racer>
-References: <200805232221.45406.trast@student.ethz.ch> <20080606051026.GA18257@sigill.intra.peff.net> <alpine.DEB.1.00.0806061528270.1783@racer> <200806090018.48784.trast@student.ethz.ch>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] provide a new "theirs" strategy, useful for rebase --onto
+Date: Sun, 08 Jun 2008 16:06:33 -0700
+Message-ID: <484C65F9.10007@gnu.org>
+References: <E1K4a1Q-0002hq-QE@fencepost.gnu.org> <7vfxrqrwjm.fsf@gitster.siamese.dyndns.org> <484B49D5.8080708@gnu.org> <7vmylwl4t9.fsf@gitster.siamese.dyndns.org> <484BE0BE.1050102@gnu.org> <7vk5gziqxn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jun 09 01:04:57 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, s-beyer@gmx.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 09 01:07:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5TwL-0004Jw-Kt
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:04:46 +0200
+	id 1K5Tz6-00054w-J6
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755626AbYFHXDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 19:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbYFHXDw
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:03:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46723 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755347AbYFHXDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 19:03:52 -0400
-Received: (qmail invoked by alias); 08 Jun 2008 23:03:50 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 09 Jun 2008 01:03:50 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19wTrJerfVwWqfx9DK0bEHGLzp41Oqci3k4RUrkZU
-	xDmsGVQflr++6t
-X-X-Sender: gene099@racer
-In-Reply-To: <200806090018.48784.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755717AbYFHXGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 19:06:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755745AbYFHXGm
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:06:42 -0400
+Received: from ag-out-0708.google.com ([72.14.246.244]:45717 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755632AbYFHXGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 19:06:41 -0400
+Received: by ag-out-0708.google.com with SMTP id 31so4622862agc.10
+        for <git@vger.kernel.org>; Sun, 08 Jun 2008 16:06:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=bJl/XWhlmAnWahMP8eyiCpKOEWzQ+G7VlAmaIM5ojOQ=;
+        b=iv8i1FPekmmNJYWH6/EEJ7aTSD1Fq95xBmAYnYcRGNpmJtMHNOWa6t2C3tOzEw6/oz
+         0P+HJkA3h6K6a7cMvtMSGqYCXcexSQnHTm+E6J1cdLuspD1w3huWQYV8sQa4wmY+RbfK
+         51jTvZI0o1AyVId54EFv+r0Pk5OROvNH7neoQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=Ks1G2kQW0hDuEKgPXGK6ytvne09uy5R+6bF7qe7g3Pw9CO1Ccd2PJlts/9X59hgV/F
+         ASzPFPeg1CKSVIjnuwmvgXznbsYuhnzwYPgYiF/nHoWby42yS6eX1GDcHRksxXh7YwAP
+         DXxxEY5jGSZSyasbBqUrnpdm2LPvTfzhoU0dY=
+Received: by 10.151.145.21 with SMTP id x21mr5083716ybn.66.1212966397625;
+        Sun, 08 Jun 2008 16:06:37 -0700 (PDT)
+Received: from scientist-2.local ( [66.78.193.43])
+        by mx.google.com with ESMTPS id u62sm12388631pyb.23.2008.06.08.16.06.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 08 Jun 2008 16:06:36 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+In-Reply-To: <7vk5gziqxn.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84341>
 
-Hi,
-
-On Mon, 9 Jun 2008, Thomas Rast wrote:
-
-> Johannes Schindelin wrote:
-> > 
-> > On Fri, 6 Jun 2008, Jeff King wrote:
-> > >   2. It's not integrated into the git-add--interactive loop at all. 
-> > >      That is, I don't start out saying "I want to edit this diff." I 
-> > >      look at the diff while staging with "git add -p" and say "Oops, 
-> > >      I need to edit this hunk." So I think it is better implemented 
-> > >      as an "e"  option in the hunk adding loop, with "git add -e" as 
-> > >      a shortcut.  Or maybe there is simply room for both (and "git 
-> > >      add -e", rather than being a shortcut, just means "do this on 
-> > >      the _whole_ file").
-> > 
-> > This is very much on purpose.  I do not like "git add -i" at all.  It 
-> > limits my work unduly.  That's why I tried to change the hunk editing 
-> > in git-gui once upon a time, but I never got round to fix that, and it 
-> > does not work well with ssh either.
-> > 
-> > So no, I do not want to use that perl script with that menu.  I want 
-> > to have the raw diff in a raw editor, where I can change the things I 
-> > need to change.
+Junio C Hamano wrote:
+> Paolo Bonzini <bonzini@gnu.org> writes:
 > 
-> While there is obviously little point in trying to convince you,
+>>    #! /bin/sh
+>>    # git-merge-after-amend <branch>
+>>    #
+>>    # Makes it possible to do a fast-forward merge of <branch>
+>>    # into HEAD, assuming that the first diverging commit of <branch>
+>>    # is an --amend'ed version of the first diverging commit of HEAD.
+> 
+> Can this strong special case limitation "only the first one can be the
+> amend" somehow be loosened?
 
-Oh, sorry, I really meant the "I do not want" literally.  It is just me.  
-That does not mean that your hunk editing from within add -i has no merit.  
-It's just that this guy is not very interested in that feature.
+Well, the point of the exercise is to split a *single* commit into a 
+"base" commit (already available, possibly on another branch) and a 
+"delta" (the amending, transformed into an independent commit whose 
+parent is the "base").  Indeed you can do that for any commit.
 
-Ciao,
-Dscho
+The script uses the "git-merge-base" to compute the "base", and takes 
+the following commit (on the path to HEAD) as the "delta".  That's what 
+add the restriction.  You can definitely make a two-argument variation 
+that, given arguments "B C" and history
+
+     o--B     (it is irrelevant if B and C have common parents)
+
+     o--o--C--D--E    HEAD
+
+makes
+
+     A--B--C'--D--E
+
+Even in that case, I would make the script (which anyway is obviously 
+not meant to be included in git, it's a commodity script) accept both 
+variations: one-argument to do the special case, and two-arguments to 
+generically split a commit into a base provided by the user + a delta.
+
+Paolo
