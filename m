@@ -1,87 +1,75 @@
-From: "Steven Walter" <stevenrwalter@gmail.com>
-Subject: Re: git-svn: multiple branches directories
-Date: Sun, 8 Jun 2008 12:00:58 -0400
-Message-ID: <e06498070806080900x4ecd730byefedf88aa4feee5e@mail.gmail.com>
-References: <20080608002349.GB23243@xorcom.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: [PATCH] Port to 12 other Platforms.
+Date: Sun, 8 Jun 2008 10:04:21 -0600
+Message-ID: <Pine.LNX.4.64.0806080959390.18454@xenau.zenez.com>
+References: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
+ <m3prqsvsiq.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 08 18:01:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 08 18:06:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5NL8-0003DJ-2N
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 18:01:54 +0200
+	id 1K5NOQ-00042v-Bh
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 18:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303AbYFHQBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 12:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754903AbYFHQBA
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 12:01:00 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:33721 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754810AbYFHQA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 12:00:59 -0400
-Received: by an-out-0708.google.com with SMTP id d40so422084and.103
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 09:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3fp56JAhraRat27hq8854CYEe4e6/4llDL7ehTaDhY0=;
-        b=A5AK6wSl8YbiMqvcGIRS3lQ6MxH6zqI3raS+Gf7rw/pBNlf/LMhonNbnY6dPvGa6BH
-         bSmmKHgHKP1V6FHyT08a2Yi8y6CuwJZAB1fFvE84CQQxYupAmcYuybaIF/SHHXnmi8o1
-         z8KFsvcXoItFr9aJkRFs0UKDibBTwYl/Ty82k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tmio5fGu6N8if9kS4P/0E08J9Mz43QY2bqRNHHBgaJy//kAFj7/uYM9EpdF5fnGLSn
-         mg6S0DtzRxwtycsuzF+5wshwnied8MzkayVoJL+yOZd/36S7czkeJ7lWXZptCE/5kppt
-         bllfBhSkoGqHXoJBo0WZPsOmYeVR8Pd84cDgI=
-Received: by 10.100.247.14 with SMTP id u14mr2462033anh.38.1212940858400;
-        Sun, 08 Jun 2008 09:00:58 -0700 (PDT)
-Received: by 10.100.92.6 with HTTP; Sun, 8 Jun 2008 09:00:58 -0700 (PDT)
-In-Reply-To: <20080608002349.GB23243@xorcom.com>
-Content-Disposition: inline
+	id S1754700AbYFHQEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 12:04:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbYFHQEY
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 12:04:24 -0400
+Received: from zenez.com ([166.70.62.2]:16062 "EHLO xenau.zenez.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754500AbYFHQEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 12:04:24 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 17505E5DBC; Sun,  8 Jun 2008 10:04:23 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 015C3E5DB6;
+	Sun,  8 Jun 2008 10:04:22 -0600 (MDT)
+In-Reply-To: <m3prqsvsiq.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84286>
 
-On Sat, Jun 7, 2008 at 8:23 PM, Tzafrir Cohen <tzafrir.cohen@xorcom.com> wrote:
-> Hi
->
-> Does git-svn support a repository layout where branches may reside under
-> more than one root?
->
-> /trunk
-> /branches
->  branch1
->  branch2
->  branch3
-> /somedir
->  branch4
->  branch5
->  branch6
-> /tags
->  ...
+On Sun, 8 Jun 2008, Jakub Narebski wrote:
+> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+> 
+> > This patch adds support to compile git on 12 additional platforms.
+> > They are based on UNIX Systems Labs (USL)/Novell and SYS V
+> > based OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4, OpenServer 6.0.X and
+> > SCO pre OSR 5 OS's to build and run git.
+> > 
+> > Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com> 
+> > ---
+> [...]
+> > git-compat-util.h
+> > 
+> > __USLC__ indicates UNIX System Labs Corperation (USLC), or a Novell-derived
+> > compiler and/or some SysV based OS's.
+> > 
+> > __M_UNIX indicates XENIX/SCO UNIX/OpenServer 5.0.7 and prior releases
+> > of the SCO OS's.  It is used just like Apple and BSD, both of these
+> > shouldn't have _XOPEN_SOURCE defined.
+> 
+> Above info is neither in commit message, not in comment in some file.
+> It would be nice to have it in somewhere, and not only in mailing list
+> archives.
 
-git-svn does support it.  The way that I interact with repositories
-like this is to have the main git-svn remote track only the trunk
-(fetch = /trunk:...), and then to add addititonal remotes for each
-branch that I want to track.  There may be a nicer way to do it, but
-git-svn certainly supports the method just described.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
- -Robert Heinlein
+This was from my own copy of the master archive.  It is my proposal.  I 
+thought you had to get an OK from this list before you do a push to the 
+main archive.  Am I missing something?  I am new to this list and the 
+proper methods for submitting patches.  I thought I was following the 
+guidelines from 
+
+http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches;hb=HEAD
+
+What am I missing?
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
