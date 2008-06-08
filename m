@@ -1,44 +1,42 @@
 From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: [PATCH] progress.c: avoid use of dynamic-sized array
-Date: Sun, 8 Jun 2008 09:26:15 -0600
-Message-ID: <Pine.LNX.4.64.0806080924330.18454@xenau.zenez.com>
+Subject: [PATCH] Port to 12 other Platforms.
+Date: Sun, 8 Jun 2008 09:28:42 -0600
+Message-ID: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 08 17:27:11 2008
+X-From: git-owner@vger.kernel.org Sun Jun 08 17:29:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5MnX-0002AA-3h
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 17:27:11 +0200
+	id 1K5Mpu-0002nW-W1
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 17:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288AbYFHP0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 11:26:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754329AbYFHP0S
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 11:26:18 -0400
-Received: from zenez.com ([166.70.62.2]:5217 "EHLO xenau.zenez.com"
+	id S1751533AbYFHP2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 11:28:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753575AbYFHP2q
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 11:28:46 -0400
+Received: from zenez.com ([166.70.62.2]:2714 "EHLO xenau.zenez.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754281AbYFHP0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 11:26:17 -0400
+	id S1751006AbYFHP2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 11:28:45 -0400
 Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id 994A1E5D5F; Sun,  8 Jun 2008 09:26:16 -0600 (MDT)
+	id CD3F7E5D33; Sun,  8 Jun 2008 09:28:44 -0600 (MDT)
 Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 1673EE5D5C
-	for <git@vger.kernel.org>; Sun,  8 Jun 2008 09:26:15 -0600 (MDT)
+	by xenau.zenez.com (Postfix) with ESMTP id B8D6DE5D2D
+	for <git@vger.kernel.org>; Sun,  8 Jun 2008 09:28:44 -0600 (MDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84282>
 
 
-Dynamically sized arrays are gcc and C99 construct.  Using them hurts
-portability to older compilers, although using them is nice in this case
-it is not desirable.  This patch removes the only use of the construct
-in stop_progress_msg(); the function is about writing out a single line
-of a message, and the existing callers of this function feed messages
-of only bounded size anyway, so use of dynamic array is simply overkill.
+This patch adds support to compile git on 12 additional platforms.
+They are based on UNIX Systems Labs (USL)/Novell and SYS V
+based OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4, OpenServer 6.0.X and
+SCO pre OSR 5 OS's to build and run git.
 
 Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
 
@@ -74,37 +72,83 @@ ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
             this project or the open source license(s) involved.
 
 ---
-progress.c
+Makefile
 
-diff --git a/progress.c b/progress.c
-index d19f80c..55a8687 100644
---- a/progress.c
-+++ b/progress.c
-@@ -241,16 +241,21 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 	*p_progress = NULL;
- 	if (progress->last_value != -1) {
- 		/* Force the last update */
--		char buf[strlen(msg) + 5];
-+		char buf[128], *bufp;
-+		size_t len = strlen(msg) + 5;
- 		struct throughput *tp = progress->throughput;
-+
-+		bufp = (len < sizeof(buf)) ? buf : xmalloc(len + 1);
- 		if (tp) {
- 			unsigned int rate = !tp->avg_misecs ? 0 :
- 					tp->avg_bytes / tp->avg_misecs;
- 			throughput_string(tp, tp->curr_total, rate);
- 		}
- 		progress_update = 1;
--		sprintf(buf, ", %s.\n", msg);
--		display(progress, progress->last_value, buf);
-+		sprintf(bufp, ", %s.\n", msg);
-+		display(progress, progress->last_value, bufp);
-+		if (buf != bufp)
-+			free(bufp);
- 	}
- 	clear_progress_signal();
- 	free(progress->throughput);
+Add changes for System V, UnixWare, SCO OS's
+
+---
+git-compat-util.h
+
+__USLC__ indicates UNIX System Labs Corperation (USLC), or a Novell-derived
+compiler and/or some SysV based OS's.
+
+__M_UNIX indicates XENIX/SCO UNIX/OpenServer 5.0.7 and prior releases
+of the SCO OS's.  It is used just like Apple and BSD, both of these
+shouldn't have _XOPEN_SOURCE defined.
+
+diff --git a/Makefile b/Makefile
+index cce5a6e..026de2f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -564,6 +564,45 @@ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	NO_STRLCPY = YesPlease
+ endif
++ifeq ($(uname_S),UnixWare)
++	CC=cc
++	NEEDS_SOCKET = YesPlease
++	NEEDS_NSL = YesPlease
++	NEEDS_SSL_WITH_CRYPTO = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	SHELL_PATH = /usr/local/bin/bash
++	NO_IPV6 = YesPlease
++	NO_HSTRERROR = YesPlease
++	BASIC_CFLAGS += -Kthread
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	INSTALL = ginstall
++	TAR = gtar
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++endif
++ifeq ($(uname_S),SCO_SV)
++	ifeq ($(uname_R),3.2)
++		CFLAGS = -O2
++	endif
++	ifeq ($(uname_R),5)
++		CC=cc
++		BASIC_CFLAGS += -Kthread
++	endif
++	NEEDS_SOCKET = YesPlease
++	NEEDS_NSL = YesPlease
++	NEEDS_SSL_WITH_CRYPTO = YesPlease
++	NEEDS_LIBICONV = YesPlease
++	SHELL_PATH = /usr/bin/bash
++	NO_IPV6 = YesPlease
++	NO_HSTRERROR = YesPlease
++	BASIC_CFLAGS += -I/usr/local/include
++	BASIC_LDFLAGS += -L/usr/local/lib
++	NO_STRCASESTR = YesPlease
++	NO_MEMMEM = YesPlease
++	INSTALL = ginstall
++	TAR = gtar
++endif
+ ifeq ($(uname_S),Darwin)
+ 	NEEDS_SSL_WITH_CRYPTO = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 01c4045..c04e8ba 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -39,7 +39,7 @@
+ /* Approximation of the length of the decimal representation of this type. */
+ #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
+ 
+-#if !defined(__APPLE__) && !defined(__FreeBSD__)
++#if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
+ #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+ #endif
 -- 
 1.5.2.4
 
