@@ -1,55 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to compare different files in different branches
-Date: Sun, 08 Jun 2008 02:51:46 -0700
-Message-ID: <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
-References: <20080606122421.GA1521@denkbrett.schottelius.org>
- <20080606123539.GA3119@mithlond.arda.local>
- <20080608094754.GB1521@denkbrett.schottelius.org>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: [PATCH] Documentation/git-remote.txt: remove description for useless
+ -n option
+Date: Sun, 08 Jun 2008 13:03:40 +0200
+Message-ID: <484BBC8C.80700@free.fr>
+References: <484B2DD3.8050307@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nico -telmich- Schottelius <nico-git-20080606@schottelius.org>
-X-From: git-owner@vger.kernel.org Sun Jun 08 11:52:49 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 08 13:04:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5HZw-0002sw-Oh
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 11:52:49 +0200
+	id 1K5IhG-0001ke-65
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 13:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755874AbYFHJv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 05:51:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755958AbYFHJv4
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 05:51:56 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33811 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755609AbYFHJvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 05:51:55 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 713883E80;
-	Sun,  8 Jun 2008 05:51:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E6E3F3DBF; Sun,  8 Jun 2008 05:51:50 -0400 (EDT)
-In-Reply-To: <20080608094754.GB1521@denkbrett.schottelius.org>
- (nico-git-20080606@schottelius.org's message of "Sun, 8 Jun 2008 11:47:54
- +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 86AAE3DC-3540-11DD-B2A1-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1757185AbYFHLDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 07:03:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757558AbYFHLDc
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 07:03:32 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:35937 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757071AbYFHLDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 07:03:31 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 7635D12B6F7
+	for <git@vger.kernel.org>; Sun,  8 Jun 2008 13:03:30 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id C01B312B6BD
+	for <git@vger.kernel.org>; Sun,  8 Jun 2008 13:03:29 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <484B2DD3.8050307@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84262>
 
-Nico -telmich- Schottelius <nico-git-20080606@schottelius.org> writes:
+From: Olivier Marin <dkr@freesurf.fr>
 
-> Very nice syntax, somehow guessed that this is available, but didn't
-> try... my fault. 
->
-> Perhaps we should reference git-rev-list(1) from git-diff(1), too?
+This option comes from the original git-remote.perl script and is not
+used nor needed in the current builtin.
 
-This is just the standard syntax to name blob _anywhere_, so we should not
-hide it in git-rev-list(1) but somewhere people would read before reading
-any "technical manual" material, perhaps in the tutorial and git(1).
+So, remove it from the documentation so that we can reuse it later for
+something else.
+
+Signed-off-by: Olivier Marin <dkr@freesurf.fr>
+---
+  Documentation/git-remote.txt |    7 -------
+  1 files changed, 0 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index e97dc09..e51d232 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -61,9 +61,6 @@ configuration settings for the remote are removed.
+  'show'::
+
+  Gives some information about the remote <name>.
+-+
+-With `-n` option, the remote heads are not queried first with
+-`git ls-remote <name>`; cached information is used instead.
+
+  'prune'::
+
+@@ -71,10 +68,6 @@ Deletes all stale tracking branches under <name>.
+  These stale branches have already been removed from the remote repository
+  referenced by <name>, but are still locally available in
+  "remotes/<name>".
+-+
+-With `-n` option, the remote heads are not confirmed first with `git
+-ls-remote <name>`; cached information is used instead.  Use with
+-caution.
+
+  'update'::
+
+-- 1.5.6.rc2.160.ga44ac
