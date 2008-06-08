@@ -1,102 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] 0003 This patch is to allow 12 different OS's to compile
- and run git.
-Date: Sun, 08 Jun 2008 00:45:33 -0700
-Message-ID: <7vy75gl68y.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0806061330180.18454@xenau.zenez.com>
- <87bq2ez72u.fsf@jeremyms.com>
- <Pine.LNX.4.64.0806061359080.18454@xenau.zenez.com>
- <7vmylyrwkg.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0806061718420.18454@xenau.zenez.com>
- <Pine.LNX.4.64.0806061822220.18454@xenau.zenez.com>
- <alpine.LNX.1.00.0806062043350.19665@iabervon.org>
- <Pine.LNX.4.64.0806061922290.18454@xenau.zenez.com>
- <7vzlpyouwf.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0806062015440.18454@xenau.zenez.com>
- <alpine.LNX.1.00.0806062316270.19665@iabervon.org>
- <Pine.LNX.4.64.0806072143230.18454@xenau.zenez.com>
+From: "Vegard Nossum" <vegard.nossum@gmail.com>
+Subject: Unfathomable merge conflict
+Date: Sun, 8 Jun 2008 09:57:16 +0200
+Message-ID: <19f34abd0806080057i7ddaff3exbf410879c5b7d031@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Thomas Harning <harningt@gmail.com>,
-	Jeremy Maitin-Shepard <jbms@cmu.edu>,
-	Git List <git@vger.kernel.org>
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Sun Jun 08 09:47:16 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 08 09:58:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5FcP-0000Ef-Ab
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 09:47:13 +0200
+	id 1K5FnX-0003CD-4V
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 09:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753954AbYFHHpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 03:45:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753673AbYFHHpv
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 03:45:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52509 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753204AbYFHHpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 03:45:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C70521CD8;
-	Sun,  8 Jun 2008 03:45:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1043E1CD7; Sun,  8 Jun 2008 03:45:40 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E897E1EC-352E-11DD-90E0-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753955AbYFHH5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 03:57:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753979AbYFHH5S
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 03:57:18 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:18344 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753673AbYFHH5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 03:57:17 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2114868rvb.1
+        for <git@vger.kernel.org>; Sun, 08 Jun 2008 00:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=Vz6+YEzmAB6t/+HQ/3L8z5r4J8oTtg0gdFkx8AfUShQ=;
+        b=e2MZ/SKGgmZ3lzhk6cemBkw8mtLYfBq4ULtTS4LiD2uSfNaaj8Wjo+600sv+P9w8fl
+         QToPUySZBdar8DAebQMCpuUDuGPH5/LiG7d9PKzBna4AYxpujSYgn0yzrjiIm6MHmcrQ
+         BOaX2WPuDPlTZgu02O5SNlU1vksZIP3y/wmjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=k2DKZdWxHHZGWSQThWaJafjFrIAsAXNjSgI/Tf7npsBtyA7FsiDvaY5spAmjvpkAvX
+         OAM5n3ulduCzjDHyEggRsOAKu/3Hhte3XXAoOuPhbJq9Jve0sa0586JtKUjBJpFkFeYL
+         RUf/YKzpyWXCM+YhZJ4Xb+dnkvI4Lj60CCnng=
+Received: by 10.141.15.19 with SMTP id s19mr1238789rvi.205.1212911836779;
+        Sun, 08 Jun 2008 00:57:16 -0700 (PDT)
+Received: by 10.140.136.1 with HTTP; Sun, 8 Jun 2008 00:57:16 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84257>
 
-Boyd Lynn Gerber <gerberb@zenez.com> writes:
+Hi,
 
-> So I should have
-> ... (deleted)
+I want to do a kind of manual rebase where I check out an older
+version of a branch and simply re-apply a selection of the commits
+following this point in history.
 
-More like this:
+So in this specific case, I want to check out v2.6.25 of linux-2.6.git
+and re-apply all the changes that were made to the file
+net/mac80211/rc80211_pid_algo.c between v2.6.25 and v2.6.26-rc4.
 
-    From: Boyd Lynn Gerber <gerberb@zenez.com>
-    Subject: [PATCH] Port to other 12 platforms
-    Date: Sat, 7 Jun 2008 21:46:48 -0600
-    To: git@vger.kernel.org
-    Cc: gitster@pobox.com
+In order to determine which commits I need, I used the following command:
 
-    This adds support to compile git on 12 platforms (<<whichever one you
-    ported including UnixWare, SCO,... are listed here.>>).
+$ git log --follow v2.6.25..v2.6.26-rc4 net/mac80211/rc80211_pid_algo.c
 
-    __USLC__ indicates UNIX System Labs Corperation (USLC), or a 
-    Novell-derived compiler and/or some SysV based OS's.  __M_UNIX indicates
-    XENIX/SCO UNIX/OpenServer before 5.0.7 and prior  release of and SCO OS.
-    Like Apple and BSD, both of these do not want _XOPEN_SOURCE defined to
-    allow use of <<the symbols that is hidden if you have _XOPEN_SOURCE
-    defined>>.
+The last entry on the screen is this:
 
-    Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
-    ---
-    << "git diff --stat -p" output for the patch here >>
+commit 8318d78a44d49ac1edf2bdec7299de3617c4232e
+Author: Johannes Berg <johannes@sipsolutions.net>
+Date:   Thu Jan 24 19:38:38 2008 +0100
 
-without removal of dynamic-sized array from progress.c, which is not really
-part of specific port to these 12 platforms, but is a more generic
-"portability fix", which might read like this:
+    cfg80211 API for channels/bitrates, mac80211 and driver conversion
 
-    From: Boyd Lynn Gerber <gerberb@zenez.com>
-    Subject: [PATCH] progress.c: avoid use of dynamic-sized array
-    Date: Sat, 7 Jun 2008 21:46:48 -0600
-    To: git@vger.kernel.org
-    Cc: gitster@pobox.com
+so I checkout v2.6.25 and try to cherry-pick it. But it fails with a conflict:
 
-    Dynamically sized arrays are gcc and C99 construct.  It sometimes is
-    nice to use them but hurts portability to older compilers.  This
-    removes the only use of the construct in stop_progress_msg(); the
-    function is about writing out a single line of message, and the
-    existing callers of this function feed messages of only bounded size
-    anyway, so use of dynamic array is simply overkill.
+CONFLICT (content): Merge conflict in net/mac80211/rc80211_pid_algo.c
 
-    Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com>
-    ---
-    << "git diff --stat -p" output for the patch here >>
+So I wonder: How can this happen? This should be the first change
+since v2.6.25 that touches the file, yet it fails with a conflict in
+the very same file. Where does the conflict come from?
+
+I have tried both --date-order and --topo-order for git-log, and also
+used the symmetric difference (...) in addition to the range format
+(..), but still this is displayed the first commit (in chronological
+order) that should be applied.
+
+Thanks in advance for any explanations or tips.
+
+
+Vegard
+
+-- 
+"The animistic metaphor of the bug that maliciously sneaked in while
+the programmer was not looking is intellectually dishonest as it
+disguises that the error is the programmer's own creation."
+	-- E. W. Dijkstra, EWD1036
