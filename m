@@ -1,73 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] improve doc heading for git-bisect
-Date: Sun, 8 Jun 2008 00:35:43 -0400
-Message-ID: <20080608043543.GB11194@sigill.intra.peff.net>
-References: <20080607070637.79B17C7C0E@rwavmlap> <m37id1y4zj.fsf@localhost.localdomain> <9af502e50806070906u63e52de4wa0bc4dced0c4d984@mail.gmail.com>
+From: "Geoffrey Irving" <irving@naml.us>
+Subject: Re: [PATCH / RFC] cherry: cache commit to patch-id pairs to avoid repeating work
+Date: Sat, 7 Jun 2008 22:39:41 -0700
+Message-ID: <7f9d599f0806072239je3a7ec0q258d7770c15fa962@mail.gmail.com>
+References: <7f9d599f0806071636j1df57b6eqb5808f083dafd6a2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Robert Anderson <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 08 06:36:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jeff King" <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 08 07:41:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5Ce0-0002Za-OR
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 06:36:41 +0200
+	id 1K5DeR-0004fx-8h
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 07:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbYFHEfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 00:35:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbYFHEfq
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 00:35:46 -0400
-Received: from peff.net ([208.65.91.99]:2069 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750903AbYFHEfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 00:35:45 -0400
-Received: (qmail 14403 invoked by uid 111); 8 Jun 2008 04:35:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 08 Jun 2008 00:35:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Jun 2008 00:35:43 -0400
+	id S1752156AbYFHFjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 01:39:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbYFHFjm
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 01:39:42 -0400
+Received: from rv-out-0506.google.com ([209.85.198.234]:17170 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752120AbYFHFjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 01:39:41 -0400
+Received: by rv-out-0506.google.com with SMTP id l9so2097877rvb.1
+        for <git@vger.kernel.org>; Sat, 07 Jun 2008 22:39:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=UFKeJ83oIBHIuv63DZGgXkEDGsQAdGkl5ugBRCzZ7G8=;
+        b=moTpdK+zYdIDFAtE61S7LhkAoN18MVJk7jSDyqORpuNwedzhpheQaVL8hF8XKIKH+8
+         2DkvCA1bbrBOPmw4ODxtyBf6g6oy97pP24YoMNPEEYsAg7/Ul+VCp6PY4usVrA07f41+
+         vngRqogpTZh24EhzswoaSnX5sRJWqhxnR0/Qs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=GJv+xMYji8xU7odPldrcqBS2EuCnLx8wK7MJYBNsEjiYlOtttL3VT9QOvZzgJ6XbQ9
+         nNfAAgOQ8PJR2+255TyzIgF5hyrZ8oXB38Vm2SEuwGf79t71UG9xFD9CiDHrIl7Hb/J6
+         BBjdHvInw2r0zLV2RVHQpnGKdeM1MNYZuoyIQ=
+Received: by 10.141.23.7 with SMTP id a7mr1203169rvj.58.1212903581125;
+        Sat, 07 Jun 2008 22:39:41 -0700 (PDT)
+Received: by 10.140.178.16 with HTTP; Sat, 7 Jun 2008 22:39:41 -0700 (PDT)
+In-Reply-To: <7f9d599f0806071636j1df57b6eqb5808f083dafd6a2@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <9af502e50806070906u63e52de4wa0bc4dced0c4d984@mail.gmail.com>
+X-Google-Sender-Auth: 8bbc5e9c609df324
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84254>
 
-On Sat, Jun 07, 2008 at 09:06:19AM -0700, Robert Anderson wrote:
+On Sat, Jun 7, 2008 at 4:36 PM, Geoffrey Irving <irving@naml.us> wrote:
+> Added cached-sha-map.[hc] implementing a persistent hash map from sha1 to sha1.
+> The map is read with mmap, and completely rewritten if any entries change.  It
+> would be good to add incremental update to handle the usual case where only a
+> few entries change.
+>
+> This structure is used by patch-ids.c to cache the mapping from commit to
+> patch-id into $GIT_DIR/patch-id-cache.  In the one case I've tested so far,
+> this speeds up the second invocation of git-cherry by two orders of magnitude.
+>
+> Original code cannibalized from Johannes Schindelin's notes-index structure.
+>
+> <snip>
 
-> > FYI this line is not necessary, and should be removed from
-> > git-format-patch output when pasting it to your MUA.
-> 
-> Err, then shouldn't it be removed from format-patch, rather than
-> deleted manually every time format-patch is used?
+Forgot to cc people from previous threads.
 
-As others have pointed out, the usual way for using format-patch is to
-create an mbox that you then pull into your MUA (e.g., I do "git
-format-patch --stdout origin >mbox; mutt -f mbox").
+Is starting a new thread each time I update a patch the correct way to
+do things?
 
-However, sometimes it is desirable to cut and paste, either because it
-is inconvenient to bring the message into your MUA this way, or if you
-are just putting a commit into an email you have already started
-writing.
-
-I was going to suggest a "--paste" option for format-patch which would
-produce a nicer output for cutting and pasting, but it is trivial to do
-with an alias:
-
-  git config --global \
-    alias.pastepatch \
-    'format-patch --pretty=format:%s%n%n%b'
-
-(actually, this loses the author information versus using the
---pretty=email format, but if you are just sending your own work, it is
-fine).
-
-It is essentially the same as "git log --stat -p" except that the commit
-message is indented properly, and the revision arguments are interpreted
-as format-patch does.
-
--Peff
+Geoffrey
