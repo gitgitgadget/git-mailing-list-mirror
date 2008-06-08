@@ -1,97 +1,75 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] provide a new "theirs" strategy, useful for rebase --onto
-Date: Sun, 08 Jun 2008 16:06:33 -0700
-Message-ID: <484C65F9.10007@gnu.org>
-References: <E1K4a1Q-0002hq-QE@fencepost.gnu.org> <7vfxrqrwjm.fsf@gitster.siamese.dyndns.org> <484B49D5.8080708@gnu.org> <7vmylwl4t9.fsf@gitster.siamese.dyndns.org> <484BE0BE.1050102@gnu.org> <7vk5gziqxn.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
+Date: Mon, 9 Jun 2008 00:06:03 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806090003450.1783@racer>
+References: <200805232221.45406.trast@student.ethz.ch> <20080606051026.GA18257@sigill.intra.peff.net> <20080606060318.GE18257@sigill.intra.peff.net> <200806090033.51167.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, s-beyer@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 01:07:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jun 09 01:08:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5Tz6-00054w-J6
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:07:36 +0200
+	id 1K5Tzn-0005Fq-Fo
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755717AbYFHXGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 19:06:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755745AbYFHXGm
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:06:42 -0400
-Received: from ag-out-0708.google.com ([72.14.246.244]:45717 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755632AbYFHXGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 19:06:41 -0400
-Received: by ag-out-0708.google.com with SMTP id 31so4622862agc.10
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 16:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=bJl/XWhlmAnWahMP8eyiCpKOEWzQ+G7VlAmaIM5ojOQ=;
-        b=iv8i1FPekmmNJYWH6/EEJ7aTSD1Fq95xBmAYnYcRGNpmJtMHNOWa6t2C3tOzEw6/oz
-         0P+HJkA3h6K6a7cMvtMSGqYCXcexSQnHTm+E6J1cdLuspD1w3huWQYV8sQa4wmY+RbfK
-         51jTvZI0o1AyVId54EFv+r0Pk5OROvNH7neoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=Ks1G2kQW0hDuEKgPXGK6ytvne09uy5R+6bF7qe7g3Pw9CO1Ccd2PJlts/9X59hgV/F
-         ASzPFPeg1CKSVIjnuwmvgXznbsYuhnzwYPgYiF/nHoWby42yS6eX1GDcHRksxXh7YwAP
-         DXxxEY5jGSZSyasbBqUrnpdm2LPvTfzhoU0dY=
-Received: by 10.151.145.21 with SMTP id x21mr5083716ybn.66.1212966397625;
-        Sun, 08 Jun 2008 16:06:37 -0700 (PDT)
-Received: from scientist-2.local ( [66.78.193.43])
-        by mx.google.com with ESMTPS id u62sm12388631pyb.23.2008.06.08.16.06.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Jun 2008 16:06:36 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <7vk5gziqxn.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
+	id S1755771AbYFHXH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 19:07:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755820AbYFHXH0
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:07:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35896 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755771AbYFHXHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 19:07:25 -0400
+Received: (qmail invoked by alias); 08 Jun 2008 23:07:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp046) with SMTP; 09 Jun 2008 01:07:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Od6d+RvgOQ/yfy0vww3UXaoAeM8xsnTgQV9XpAs
+	3Z+sDONioth8EU
+X-X-Sender: gene099@racer
+In-Reply-To: <200806090033.51167.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84342>
 
-Junio C Hamano wrote:
-> Paolo Bonzini <bonzini@gnu.org> writes:
+Hi,
+
+On Mon, 9 Jun 2008, Thomas Rast wrote:
+
+> Jeff King wrote:
+> >
+> > I wrote this after reading just your first patch, and it looks like 
+> > you've made much progress since. It seems like Thomas' patch could 
+> > just get rid of all the recounting entirely, and just pass off the 
+> > edited hunks to "git apply --recount". Which should make his patch 
+> > much smaller and more straightforward.
 > 
->>    #! /bin/sh
->>    # git-merge-after-amend <branch>
->>    #
->>    # Makes it possible to do a fast-forward merge of <branch>
->>    # into HEAD, assuming that the first diverging commit of <branch>
->>    # is an --amend'ed version of the first diverging commit of HEAD.
+> I think there's no way to split hunks, in the way I currently "help" 
+> with @@ line guessing, using just the --recount feature.  Unless the 
+> editor helps you with adding complete correct @@ lines in the middle of 
+> hunks (Emacs does that).  I don't think it is at all possible to remove 
+> the middle part of a hunk in Johannes' scheme without somehow figuring 
+> out the corresponding @@ line (or at least its old line number) or 
+> editing away every +/- line.
 > 
-> Can this strong special case limitation "only the first one can be the
-> amend" somehow be loosened?
+> Then again it's not always easy even with my patch: you may have to
+> manually insert extra context because of the rule against zero lines
+> of context.
 
-Well, the point of the exercise is to split a *single* commit into a 
-"base" commit (already available, possibly on another branch) and a 
-"delta" (the amending, transformed into an independent commit whose 
-parent is the "base").  Indeed you can do that for any commit.
+That is actually where Junio convinced me that my approach is wrong: he 
+said that you can _only_ reliably split a hunk at common lines.
 
-The script uses the "git-merge-base" to compute the "base", and takes 
-the following commit (on the path to HEAD) as the "delta".  That's what 
-add the restriction.  You can definitely make a two-argument variation 
-that, given arguments "B C" and history
+The thing is: if you split _not_ at a common line, the context of the 
+second part would _change_ depending if you want to apply the first part 
+or not.
 
-     o--B     (it is irrelevant if B and C have common parents)
-
-     o--o--C--D--E    HEAD
-
-makes
-
-     A--B--C'--D--E
-
-Even in that case, I would make the script (which anyway is obviously 
-not meant to be included in git, it's a commodity script) accept both 
-variations: one-argument to do the special case, and two-arguments to 
-generically split a commit into a base provided by the user + a delta.
-
-Paolo
+Ciao,
+Dscho
