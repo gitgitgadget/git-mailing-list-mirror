@@ -1,75 +1,73 @@
-From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
-Subject: Re: [JGIT PATCH v3 20/23] Added the class NoGitRepositoryFoundException.
-Date: Sun, 08 Jun 2008 18:14:00 +0200
-Message-ID: <484C0548.8090309@web.de>
-References: <1211574872-23676-1-git-send-email-florianskarten@web.de> <1211574872-23676-21-git-send-email-florianskarten@web.de> <200806060223.09332.robin.rosenberg.lists@dewire.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Port to 12 other Platforms.
+Date: Sun, 08 Jun 2008 18:21:06 +0200
+Message-ID: <vpqve0j3nkd.fsf@bauges.imag.fr>
+References: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
+	<m3prqsvsiq.fsf@localhost.localdomain>
+	<Pine.LNX.4.64.0806080959390.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 08 18:15:10 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Sun Jun 08 18:22:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5NXq-0006Zl-Bm
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 18:15:02 +0200
+	id 1K5Nex-0000Hs-Ah
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 18:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755437AbYFHQOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 12:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755433AbYFHQOI
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 12:14:08 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:33405 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755416AbYFHQOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 12:14:07 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id E21F6DF128C9;
-	Sun,  8 Jun 2008 18:14:04 +0200 (CEST)
-Received: from [84.150.87.27] (helo=[192.168.1.50])
-	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1K5NWu-00030y-00; Sun, 08 Jun 2008 18:14:04 +0200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
-In-Reply-To: <200806060223.09332.robin.rosenberg.lists@dewire.com>
-X-Enigmail-Version: 0.95.6
-X-Sender: FloriansKarten@web.de
-X-Provags-ID: V01U2FsdGVkX18oNvx8up2CrJxtXmz++KUu2GQnHuvA+so7kSUL
-	sMH6aNg2zj60gy1gC8K4y0YHG3mBitIefIzyotYSGM8Jh7cs55
-	ybePOhAqf9DelfmgaQRw==
+	id S1755475AbYFHQVV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jun 2008 12:21:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbYFHQVV
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 12:21:21 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:64166 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755380AbYFHQVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 12:21:21 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m58GL6h3028968;
+	Sun, 8 Jun 2008 18:21:06 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1K5Ndi-0003WT-7j; Sun, 08 Jun 2008 18:21:06 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1K5Ndi-0001wx-5U; Sun, 08 Jun 2008 18:21:06 +0200
+In-Reply-To: <Pine.LNX.4.64.0806080959390.18454@xenau.zenez.com> (Boyd Lynn Gerber's message of "Sun\, 8 Jun 2008 10\:04\:21 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Sun, 08 Jun 2008 18:21:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84290>
 
-Robin Rosenberg wrote:
- >> +		super(String.format("No repository found for file '%s'",
- >> +				fileWeSearchedRepositoryFor));
- >
- > This is any odd patterrn. Usually we use + to concatenate strimgs.
+Boyd Lynn Gerber <gerberb@zenez.com> writes:
 
-Hi Robin,
+> This was from my own copy of the master archive.  It is my proposal. =
+ I=20
+> thought you had to get an OK from this list before you do a push to t=
+he=20
+> main archive.
 
-I know two good reason why you should use formating functions over 
-string concatenation via the plus sign:
+You won't do a push, the maintainer will apply the patch if it seems
+OK.
 
-1.) formated strings are better translatable. e.g.
-"The string '%s' is more then %s characters long"
-is easier to translate then the three strings:
-"The string '"
-"' is more then "
-" characters long"
+> What am I missing?
 
-2.) Whitespace mistakes are easier to see. e.g.
-(i + "coins") and ("%scoins", i)
+The format used to send patches. git format-patch and git send-email
+would do that for you, but in particular : what comes after =AB=A0---=A0=
+=BB
+and before the patch itself is ignored by the tools, just an
+informative message for people reading your email. What comes before
+this =AB=A0---=A0=BB is the commit message.
 
-Sure you can make the mistake to provide not enough arguments, but 
-that's not so worse:
-a.) Some IDEs, like Intellij IDEA warn you if you call a formating 
-function with to few arguments.
-b.) A exception will be thrown at the time the function is called, if 
-there are not enough arguments. Thus you will notice your mistake very soon.
-
-Best regards,
-Florian
+--=20
+Matthieu
