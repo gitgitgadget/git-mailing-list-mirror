@@ -1,91 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Port to 12 other Platforms.
-Date: Sun, 08 Jun 2008 08:46:43 -0700 (PDT)
-Message-ID: <m3prqsvsiq.fsf@localhost.localdomain>
-References: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Remove unused code in parse_commit_buffer()
+Date: Sun, 8 Jun 2008 16:46:32 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806081646200.1783@racer>
+References: <1212871117-1509-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Sun Jun 08 17:47:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jun 08 17:48:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5N7O-0007ji-Sf
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 17:47:43 +0200
+	id 1K5N8b-00083O-7N
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 17:48:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751AbYFHPqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 11:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYFHPqt
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 11:46:49 -0400
-Received: from mu-out-0910.google.com ([209.85.134.190]:51177 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753814AbYFHPqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 11:46:48 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so1240792mue.1
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 08:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=EXe0Nn5htUPUQc9/O724B72A0TjkWrVVe8lL/IOVVKw=;
-        b=GqNCZhsera8wQ7RETHwZOM0+F7d6v0m8vIgooDjxJDivVBxgYH++qYy/JX2iyphjhI
-         fjrP4OrV0Efv3r1zirweV5gjcdlP+pXscgfFkiJM3KgPAgHCjO2sYZsTWlpnlg0oXp2A
-         fbe6A9Xcf9LGge44zyQvsFcy12NhULuh1aL5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=KpsEh0dJX7TnvB7gDDOxKiCvVyGDbZ6Mr6LzY7tSIOhA2C0wXa3FxJH7+DN3QTR8pM
-         4jLC9u9xhuNaDqeaakuxZ3AWzfq80qOt86QXXSVjikfpYWPEhdHzLsBkDmJNyXByxg3t
-         xX8gG7hTrKeIf5CtfM3OM2VCmt93D6/eFFLh0=
-Received: by 10.103.16.14 with SMTP id t14mr1596921mui.130.1212940006998;
-        Sun, 08 Jun 2008 08:46:46 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.251.161])
-        by mx.google.com with ESMTPS id y37sm13814498mug.9.2008.06.08.08.46.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Jun 2008 08:46:43 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m58FkehA008632;
-	Sun, 8 Jun 2008 17:46:40 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m58FkbHU008629;
-	Sun, 8 Jun 2008 17:46:37 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <Pine.LNX.4.64.0806080926240.18454@xenau.zenez.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755281AbYFHPr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 11:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754999AbYFHPr5
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 11:47:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36644 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755165AbYFHPr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 11:47:56 -0400
+Received: (qmail invoked by alias); 08 Jun 2008 15:47:54 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 08 Jun 2008 17:47:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+kb2xJkWikK2yCFZO/goRVw3kWH7IDUp7V7Ew8zC
+	IGzto9L0NvQSiX
+X-X-Sender: gene099@racer
+In-Reply-To: <1212871117-1509-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84284>
 
-Boyd Lynn Gerber <gerberb@zenez.com> writes:
+Hi,
 
-> This patch adds support to compile git on 12 additional platforms.
-> They are based on UNIX Systems Labs (USL)/Novell and SYS V
-> based OS's, SCO OpenServer 5.0.X, SCO UnixWare 7.1.4, OpenServer 6.0.X and
-> SCO pre OSR 5 OS's to build and run git.
+On Sat, 7 Jun 2008, Miklos Vajna wrote:
+
+> The n_refs variable is no longer really used in this function, so there
+> is no reason to keep it.
 > 
-> Signed-off-by: Boyd Lynn Gerber <gerberb@zenez.com> 
-> ---
-[...]
-> git-compat-util.h
-> 
-> __USLC__ indicates UNIX System Labs Corperation (USLC), or a Novell-derived
-> compiler and/or some SysV based OS's.
-> 
-> __M_UNIX indicates XENIX/SCO UNIX/OpenServer 5.0.7 and prior releases
-> of the SCO OS's.  It is used just like Apple and BSD, both of these
-> shouldn't have _XOPEN_SOURCE defined.
+> It was introduced in 27dedf0c and the code that really used it was
+> removed in 7914053.
 
-Above info is neither in commit message, not in comment in some file.
-It would be nice to have it in somewhere, and not only in mailing list
-archives.
+Nice catch!
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Ciao,
+Dscho
