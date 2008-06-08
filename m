@@ -1,82 +1,75 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH] t1006-cat-file.sh: typo
-Date: Mon,  9 Jun 2008 01:03:13 +0200
-Message-ID: <1212966193-27969-1-git-send-email-LeWiemann@gmail.com>
-Cc: Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 09 01:04:15 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] git-add--interactive: manual hunk editing mode v2
+Date: Mon, 9 Jun 2008 00:02:30 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806090001090.1783@racer>
+References: <200805232221.45406.trast@student.ethz.ch> <20080606051026.GA18257@sigill.intra.peff.net> <alpine.DEB.1.00.0806061528270.1783@racer> <200806090018.48784.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jun 09 01:04:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5Tvq-0004Dq-Mg
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:04:15 +0200
+	id 1K5TwL-0004Jw-Kt
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 01:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755453AbYFHXDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 19:03:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbYFHXDW
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:03:22 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:27703 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755386AbYFHXDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 19:03:21 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so1338039mue.1
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 16:03:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date
-         :message-id:x-mailer:from;
-        bh=pUln3NY2oJoUIdxdBs3gYwrt6G1Z07dTgbu8bvmVuaM=;
-        b=Ys56bUNPAe6lOlY1I5yemQUejIaCXZsteDXIBsy8fvaR2rECSB5Wk3W1exxkUM/8Vw
-         Meir6MrTMa0kPqa3ZiLqqSPN+o1MjInFLB9AnnDD0Btq1vMQTRRC1rObDpIHNt4wID6k
-         tG0ZGAkLxS26+BB7c6jPhmZUn4Epn38z2ETvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:from;
-        b=VFgWJu8N89wS4cxMkjma07cte5FPzi7AE9FGzw7unnXd/lpviGqI8yoyzskhMu7g9/
-         ZmYgMWCT9H6EdzFkdJUazobW7+LIB8MpTpHRSemJn2CBT8hvwBqqoiQTNvla6C+e02RK
-         9mpDGVx5gjhG6LxNoxcarvNddrFkDuUefI3hk=
-Received: by 10.102.228.10 with SMTP id a10mr1866135muh.109.1212966197661;
-        Sun, 08 Jun 2008 16:03:17 -0700 (PDT)
-Received: from fly ( [91.33.232.240])
-        by mx.google.com with ESMTPS id y2sm39196323mug.1.2008.06.08.16.03.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Jun 2008 16:03:17 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K5Tus-0007Hb-86; Mon, 09 Jun 2008 01:03:14 +0200
-X-Mailer: git-send-email 1.5.6.rc1.19.gec491.dirty
+	id S1755626AbYFHXDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 19:03:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbYFHXDw
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 19:03:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46723 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755347AbYFHXDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 19:03:52 -0400
+Received: (qmail invoked by alias); 08 Jun 2008 23:03:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 09 Jun 2008 01:03:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19wTrJerfVwWqfx9DK0bEHGLzp41Oqci3k4RUrkZU
+	xDmsGVQflr++6t
+X-X-Sender: gene099@racer
+In-Reply-To: <200806090018.48784.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84340>
 
-Previously timestamps were removed unconditionally (though this didn't
-seem to break this test).  Now they are only removed if $no_ts is
-non-empty.
+Hi,
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-The no_ts feature doesn't seem to be particularly important (it still
-works if you switch it always on), but for now I'll just fix it so
-that it does what the author apparently intended.
+On Mon, 9 Jun 2008, Thomas Rast wrote:
 
- t/t1006-cat-file.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Johannes Schindelin wrote:
+> > 
+> > On Fri, 6 Jun 2008, Jeff King wrote:
+> > >   2. It's not integrated into the git-add--interactive loop at all. 
+> > >      That is, I don't start out saying "I want to edit this diff." I 
+> > >      look at the diff while staging with "git add -p" and say "Oops, 
+> > >      I need to edit this hunk." So I think it is better implemented 
+> > >      as an "e"  option in the hunk adding loop, with "git add -e" as 
+> > >      a shortcut.  Or maybe there is simply room for both (and "git 
+> > >      add -e", rather than being a shortcut, just means "do this on 
+> > >      the _whole_ file").
+> > 
+> > This is very much on purpose.  I do not like "git add -i" at all.  It 
+> > limits my work unduly.  That's why I tried to change the hunk editing 
+> > in git-gui once upon a time, but I never got round to fix that, and it 
+> > does not work well with ssh either.
+> > 
+> > So no, I do not want to use that perl script with that menu.  I want 
+> > to have the raw diff in a raw editor, where I can change the things I 
+> > need to change.
+> 
+> While there is obviously little point in trying to convince you,
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index cb1fbe5..973aef7 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -74,7 +74,7 @@ $content"
-     test -z "$content" ||
-     test_expect_success "--batch output of $type is correct" '
- 	expect="$(maybe_remove_timestamp "$batch_output" $no_ts)"
--	actual="$(maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" no_ts)"
-+	actual="$(maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" $no_ts)"
-         if test "z$expect" = "z$actual"
- 	then
- 		: happy
--- 
-1.5.6.rc1.19.gec491.dirty
+Oh, sorry, I really meant the "I do not want" literally.  It is just me.  
+That does not mean that your hunk editing from within add -i has no merit.  
+It's just that this guy is not very interested in that feature.
+
+Ciao,
+Dscho
