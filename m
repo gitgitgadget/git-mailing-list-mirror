@@ -1,98 +1,94 @@
-From: "Sverre Rabbelier" <srabbelier@gmail.com>
-Subject: Re: [PATCH] A simple script to parse the results from the testcases
-Date: Sun, 8 Jun 2008 02:56:09 +0200
-Message-ID: <bd6139dc0806071756k331c9b29obc5f1cb525ef47d8@mail.gmail.com>
-References: <1210584832-16402-3-git-send-email-srabbelier@gmail.com>
-	 <1212884291-13847-1-git-send-email-vmiklos@frugalware.org>
-	 <bd6139dc0806071734h16aa4218md051fbbe9f025f43@mail.gmail.com>
-	 <20080608004928.GG29404@genesis.frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Use SUDO_UID to guess committer identity
+Date: Sat, 07 Jun 2008 17:57:28 -0700
+Message-ID: <7vprqsn3pj.fsf@gitster.siamese.dyndns.org>
+References: <20080607071130.GZ12896@spearce.org>
+ <7v63slnegm.fsf@gitster.siamese.dyndns.org>
+ <20080608002343.GG12896@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, dsymonds@gmail.com
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Jun 08 02:57:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jun 08 02:58:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K59DU-0002Uu-6N
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 02:57:04 +0200
+	id 1K59F0-0002kT-Rb
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 02:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755297AbYFHA4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 20:56:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755259AbYFHA4L
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 20:56:11 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:24091 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755245AbYFHA4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 20:56:09 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1542288wfd.4
-        for <git@vger.kernel.org>; Sat, 07 Jun 2008 17:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=XEuy57YZQEGFoSWqaiPgXD+xBHbNy7zQ35neXLvLgso=;
-        b=aQVmkvkFdd+Hlt+7m1HypKGNd5OGzMaQ9sJnMBjOutIbr4cMZoal3NibsfszmhyMSk
-         RxzHOwA4es5l58A74cljE/kBcZT4zXu6kn5g86sNXa3VD0zcdopX9ccM8h/iAlAQ13oj
-         4bQ0rbSd92vP3gyLGXhZpr6+O2J0uPANliPdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=jkYywKlwKlrh1xWalfb+L2CnhgFAZ3BC7tuekRrDmfP4XPSpG0JaTn/nS2/CRJnFV+
-         505x9GjSoNGswq1vq3H3ZFEdMwt0/UIWeSmZAj3IMyuHCPcZ2KXx+Iz4VECOaqyrqreG
-         8SZqGFlynmQkMTumZtMV+DMXcQOyaEnfj6idY=
-Received: by 10.142.164.10 with SMTP id m10mr740602wfe.60.1212886569089;
-        Sat, 07 Jun 2008 17:56:09 -0700 (PDT)
-Received: by 10.143.41.7 with HTTP; Sat, 7 Jun 2008 17:56:09 -0700 (PDT)
-In-Reply-To: <20080608004928.GG29404@genesis.frugalware.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 6a44ad6be03add11
+	id S1755314AbYFHA5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 20:57:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755300AbYFHA5q
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 20:57:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36112 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755188AbYFHA5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 20:57:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 587A81918;
+	Sat,  7 Jun 2008 20:57:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7FB7A1917; Sat,  7 Jun 2008 20:57:39 -0400 (EDT)
+In-Reply-To: <20080608002343.GG12896@spearce.org> (Shawn O. Pearce's message
+ of "Sat, 7 Jun 2008 20:23:43 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E6206A26-34F5-11DD-92B5-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84240>
 
-On Sun, Jun 8, 2008 at 2:49 AM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Sun, Jun 08, 2008 at 02:34:25AM +0200, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> Awesome, what do you want to do with the other patches?
->
-> Nothing? It's your series. :-)
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Heh, I'm not sure what the protocol is here :P. I could send in the
-series with your patch as second... that is, if I can figure out how
-to apply it from gmail (maybe you can send me the patch as attachment?
-:D).
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> 
+>> > When invoking Git commands though sudo against a bare repository
+>> > with reflogs enabled we should attempt to record the actual user's
+>> > information in the reflog, not the identity of the user sudo entered.
+>> >
+>> > For example when executing:
+>> >
+>> > 	sudo -u gitadm git --git-dir=/srv/git.git branch -f pu master
+>> >
+>> > We want record information about the caller of sudo, not gitadm.
+> ...
+> The issue is when users run commands though sudo, but forget to set a
+> value for GIT_COMMITTER_NAME/EMAIL, or to configure ~/.gitconfig in
+> their personal account.
 
->> I mean, this patch on it's own doesn't make a lot of sense, but with
->> [1/3] and [3/3] I think it deserves some proper reviewing by the list.
->
-> Sure. I would suggest:
->
-> 1) Remove that ugly /tmp/git-test-results, place it under t/.
+In your scenario, is the above "sudo -u gitadm" the exact command line
+the end users type, or is it wrapped in the script you give to them?
 
-I remember trying that but it not working, which was why I put it
-there in the first place. I'll give it a shot again tomorrow though.
+> Eh, I'm myself not entirely happy with the patch.  It honors the
+> real user's $HOME/.gitconfig user.name/email settings and not the
+> SUDO_UID data.  I'd almost prefer favoring SUDO_UID over whatever
+> we inherit in from the enviroment or from $HOME/.gitconfig when it
+> comes to committer identity.
 
-> 2) Resend a series indicating this is no longer a demonstration but a
-> real series which you want to be included. ;-)
+The thing is, I personally hate pseudo and wish that your solution did not
+rely on SUDO_UID which is too specific to that hack.
 
-ACK on that one ;).
+Sometimes people need to lie to their SCM when doing things in behalf of
+somebody else, and I agree we would want to give them a way to do so.  And
+we do, just like RCS and CVS honor LOGNAME.
 
-> Ah and it's bikesheding, but probably key_value_parser.sh is not the
-> best name for such a script. Maybe aggregate-results.sh or something
-> like that.
+If you have /etc/hosts under RCS control but you do not want all the log
+entries to say 'root', and you would do:
 
-Sure, but that's what it was though, a simple key_value_parser, your
-version is actually a result aggregator.
+	$ cd /etc
+	$ su
+	root# edit /etc/hosts
+	root# LOGNAME=me ci -u -m 'Add host bar' hosts
 
--- 
-Cheers,
+When omebody asks you to help him fixing his bug, you go to his keyboard,
+show him how it should be done, and you concude the session with:
 
-Sverre Rabbelier
+	his shell$ LOGNAME=me ci -u -m 'Fix foo' foo.c
+
+The point is that the same mechanism works (because it is designed to) in
+both cases.
