@@ -1,80 +1,62 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] A simple script to parse the results from the testcases
-Date: Sun, 8 Jun 2008 02:49:28 +0200
-Message-ID: <20080608004928.GG29404@genesis.frugalware.org>
-References: <1210584832-16402-3-git-send-email-srabbelier@gmail.com> <1212884291-13847-1-git-send-email-vmiklos@frugalware.org> <bd6139dc0806071734h16aa4218md051fbbe9f025f43@mail.gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: remote show/prune: strange -n(--dry-run) option.
+Date: Sun, 08 Jun 2008 02:54:43 +0200
+Message-ID: <484B2DD3.8050307@free.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6aeoNhjnQIT/3qlD"
-Cc: git@vger.kernel.org, dsymonds@gmail.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 08 02:51:00 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 08 02:55:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K597b-0001JE-Je
-	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 02:51:00 +0200
+	id 1K59CQ-0002Hq-OQ
+	for gcvg-git-2@gmane.org; Sun, 08 Jun 2008 02:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbYFHAtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2008 20:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755188AbYFHAtb
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 20:49:31 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:48818 "EHLO virgo.iok.hu"
+	id S1755238AbYFHAyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2008 20:54:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbYFHAyg
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jun 2008 20:54:36 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:54882 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755173AbYFHAta (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2008 20:49:30 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2A83C1B2509;
-	Sun,  8 Jun 2008 02:49:29 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 106CA44698;
-	Sun,  8 Jun 2008 02:31:26 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A3B0C1190ACA; Sun,  8 Jun 2008 02:49:28 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <bd6139dc0806071734h16aa4218md051fbbe9f025f43@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755199AbYFHAyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2008 20:54:35 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 488D812B6AF
+	for <git@vger.kernel.org>; Sun,  8 Jun 2008 02:54:34 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 2925F12B6AC
+	for <git@vger.kernel.org>; Sun,  8 Jun 2008 02:54:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84238>
 
+Hello,
 
---6aeoNhjnQIT/3qlD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The git-remote documentation talks about a mysterious -n option for show
+and prune that comes from the old git-remote.perl script. This flag was
+used to prevent the script from calling ls-remote more than once, FWIU.
+Today, the builtin accept an (un)?related -n(--dry-run) flag that does
+nothing, actually. It seems broken.
 
-On Sun, Jun 08, 2008 at 02:34:25AM +0200, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> Awesome, what do you want to do with the other patches?
+So, is it safe to drop it entirely or is it better to just remove it
+from the documentation for compatibility? In the second case, how long
+should we wait before using --dry-run for something different?
 
-Nothing? It's your series. :-)
+I would like to make "git remote prune" more verbose and use --dry-run
+to really prevent it from deleting stale tracking branches.
 
-> I mean, this patch on it's own doesn't make a lot of sense, but with
-> [1/3] and [3/3] I think it deserves some proper reviewing by the list.
+$ git remote prune origin -n
+Pruning origin
+From: git://.../myproject.git
+  * [stale branch]    bla
+  * [stale branch]    bli
+  * [stale branch]    blu
 
-Sure. I would suggest:
+What about something like that ?
 
-1) Remove that ugly /tmp/git-test-results, place it under t/.
-
-2) Resend a series indicating this is no longer a demonstration but a
-real series which you want to be included. ;-)
-
-Ah and it's bikesheding, but probably key_value_parser.sh is not the
-best name for such a script. Maybe aggregate-results.sh or something
-like that.
-
---6aeoNhjnQIT/3qlD
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhLLJgACgkQe81tAgORUJb0ugCeI98s7kNV9UZWNsSnTLsnR3vQ
-cakAoIYVKzP4aafrATpRFzL9UyQj09nN
-=UNkL
------END PGP SIGNATURE-----
-
---6aeoNhjnQIT/3qlD--
+Olivier.
