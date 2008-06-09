@@ -1,82 +1,68 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] cat-file --batch / --batch-check: do not exit if hashes
- are missing
-Date: Mon, 09 Jun 2008 15:27:22 +0200
-Message-ID: <484D2FBA.1010606@gmail.com>
-References: <1212967717-5165-1-git-send-email-LeWiemann@gmail.com>	<alpine.DEB.1.00.0806090033030.1783@racer> <484C73DA.10804@gmail.com>	<alpine.DEB.1.00.0806090201090.1783@racer>	<484D033A.3020006@gmail.com> <m3lk1ex3s6.fsf@localhost.localdomain>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add testcase for merging in a CRLF repo, showing that
+ conflict file is in LF only
+Date: Mon, 09 Jun 2008 15:37:41 +0200
+Message-ID: <484D3225.3020900@viscovery.net>
+References: <"Storm-Olsen*"@MHS> <26299.4828321554$1213013668@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 15:29:05 2008
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Mon Jun 09 15:39:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5hQ8-0000Ev-2P
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 15:28:24 +0200
+	id 1K5ha4-0004bY-Ae
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 15:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750928AbYFIN13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 09:27:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750699AbYFIN13
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 09:27:29 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:49214 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698AbYFIN12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 09:27:28 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1505569fgg.17
-        for <git@vger.kernel.org>; Mon, 09 Jun 2008 06:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=yAhVUYNRrPoYplhv2vgE8IgUDCY4A1cIDTgSp2vVi4o=;
-        b=Kg8bk2mZ5BCxdp+DPMIyY60sO6aZ2PN93PTfctgP8vmHR+bPImmo5InAgCYySzBVIC
-         j8HpU9T1VIsmRiMXurfzC/frLL37/qrs3uI3pKr5wjNz6QfWdD6EhbwnXgr80lHvv9Ce
-         8wlfMH/DGoMPon+6qO1iPLr8G9taUAbMYaEa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=QLSqHBugTu7Y9kSP8H4T9lcKbBhQmDvd4hHSWbA47v8Jl4tCQAl2BH0zDa4rALIGin
-         wh4I3US2Pb9vp8TZza50mLyMgA4SZp+VwRtIbqGWr4QiAupEYYOQ3xhS25uSnLyXLQVn
-         GSB97ItjDh+3vvTgLPTwA2RAnAYWZeKuE96LM=
-Received: by 10.86.33.10 with SMTP id g10mr4297634fgg.15.1213018046861;
-        Mon, 09 Jun 2008 06:27:26 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.232.240])
-        by mx.google.com with ESMTPS id e11sm11227194fga.4.2008.06.09.06.27.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Jun 2008 06:27:26 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <m3lk1ex3s6.fsf@localhost.localdomain>
+	id S1751315AbYFINhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 09:37:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbYFINhq
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 09:37:46 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:53701 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbYFINhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 09:37:45 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K5hZ7-00067r-Gz; Mon, 09 Jun 2008 15:37:41 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 473FB6C4; Mon,  9 Jun 2008 15:37:41 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <26299.4828321554$1213013668@news.gmane.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84382>
 
-Jakub Narebski wrote:
-> I think the (usual) solution is to add --ignore-missing and
-> --no-ignore-missing (or --noignore-missing), add configuration
-> option 'catfile.ignoreMissing', make ignore-missing default and
-> deprecate it with some transition time...
+Marius Storm-Olsen schrieb:
+> An LF only conflict file results in the resolved file being in LF,
+> the commit is in LF and a warning saying that LF will be replaced
+> by CRLF, and the working dir ends up with a mix of CRLF and LF files.
 
-*shrugs*  I'm not convinced that anyone would ever *not* want to use 
---ignore-missing, since programs that use --batch(-check) presumably 
-query for a large batch of objects and therefore define their own error 
-handling anyway.  Also, it's not like you could accidentally ignore the 
-"<object> missing" output in your code since you're parsing the output 
-anyway.  So I'm not sure what the point of changing the current behavior 
-is.  (Perhaps add a --exit-on-missing option?  Not that I or anyone else 
-has ever asked for that feature.)
+After reading these 3 lines I've no idea what you are talking about. Can
+you translate this to English, please? ;-)
 
-In any case, can please someone review my patch?  I think my patch 
-should be independent of these things (since it's a bug fix), and I'd 
-hate to see it not make it into the code just because some people don't 
-seem to like cat-file's behavior. ;-)  (I need it for the Perl API, 
-after all.)
+>  Sorry, no patch to actually *fix* the problem.
 
--- Lea
+Then you should use test_expect_failure instead of test_expect_success.
+And maybe also mention it in the commit message.
+
+> +test_expect_success 'Check that conflict file is CRLF' '
+> +	git reset --hard a &&
+> +	! git merge side &&
+
+	test_must_fail git merge side &&
+
+> +	cat file | remove_cr | append_cr >file.temp &&
+> +	test_cmp file file.temp
+> +'
+
+-- Hannes
