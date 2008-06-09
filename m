@@ -1,79 +1,86 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] fix attribute handling in bare repositories
-Date: Mon, 9 Jun 2008 11:24:19 +0700
-Message-ID: <fcaeb9bf0806082124m604e5280o55bd0fef39345ad1@mail.gmail.com>
-References: <fcaeb9bf0806070821r5ba650c2x1fef7947fc4a2de5@mail.gmail.com>
-	 <484BF7BB.1090802@lsrfire.ath.cx>
-	 <7vskvnirjm.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] remote show: fix the -n option
+Date: Mon, 9 Jun 2008 05:53:10 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806090551070.1783@racer>
+References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr> <484C7DCC.6080303@free.fr> <alpine.DEB.1.00.0806090212270.1783@racer> <484C901B.6000401@free.fr>
+ <alpine.DEB.1.00.0806090330490.1783@racer> <484CAE95.3020008@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "=?UTF-8?Q?Ren=C3=A9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 06:25:44 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-494365117-1212987199=:1783"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 09 06:55:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5Ywx-0007iI-RP
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 06:25:44 +0200
+	id 1K5ZPi-0004iD-Kz
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 06:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbYFIEYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 00:24:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbYFIEYW
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 00:24:22 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:46777 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750894AbYFIEYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 00:24:21 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1383418fgg.17
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 21:24:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dlDoOEx+zBionrhE4GhYcSwTNt8htYoYteU66vYFoFc=;
-        b=Ry/o9SRpDUosgDa8nzPKnBAg3NH11O3JhBlBfRavbxgxOTNP/6Eg74gznQnFr8d9Od
-         0IfpDjMARe2ywf5a4D1za+WcBu1PGX7/Hax7HANa/U6Mcla4wal9cmZRbkKoOZdCkpG4
-         4dsJaDPy/W+KyHUneFvjGQknsi6iXTj/ELmo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=h3lWa7CDKqwvJkfxpyChnthFbWUOq5dnWqLaczSt5oyzqqiKcClE7UZUv4dLYU13vV
-         jxrFYOqchCiOpf1YG2W5C93WBRr8WPh7F8fKnp8l1zQ/lR1FD2vQ2H35PON0X03LJd4/
-         h0DpsqQAKvmG/c/PhNf3rY6EQ6fmolYx4A2fk=
-Received: by 10.86.52.6 with SMTP id z6mr3683844fgz.48.1212985459244;
-        Sun, 08 Jun 2008 21:24:19 -0700 (PDT)
-Received: by 10.86.79.17 with HTTP; Sun, 8 Jun 2008 21:24:19 -0700 (PDT)
-In-Reply-To: <7vskvnirjm.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751734AbYFIEyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 00:54:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbYFIEyd
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 00:54:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56711 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751515AbYFIEyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 00:54:32 -0400
+Received: (qmail invoked by alias); 09 Jun 2008 04:54:30 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp051) with SMTP; 09 Jun 2008 06:54:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX192FJIDnVF2uCx0i4BwMiPcIpUlV9Fp81+xNhymBd
+	pDoZxDPrm673lG
+X-X-Sender: gene099@racer
+In-Reply-To: <484CAE95.3020008@free.fr>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84361>
 
-T24gTW9uLCBKdW4gOSwgMjAwOCBhdCAzOjQ2IEFNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBw
-b2JveC5jb20+IHdyb3RlOgo+IFJlbsOpIFNjaGFyZmUgPHJlbmUuc2NoYXJmZUBsc3JmaXJlLmF0
-aC5jeD4gd3JpdGVzOgo+Cj4+IE5ndXllbiBUaGFpIE5nb2MgRHV5IHNjaHJpZWI6Cj4+PiBIaSwK
-Pj4+Cj4+PiBDdXJyZW50bHkgYXR0ci5jIHdpbGwgcmVhZCAuZ2l0YXR0cmlidXRlcyBvbiBkaXNr
-IG5vIG1hdHRlciB0aGVyZSBpcyBhCj4+PiByZWFsIHdvcmt0cmVlIG9yIG5vdC4gVGhpcyBjYW4g
-bGVhZCB0byBzdHJhbmdlIGJlaGF2aW9yLgo+Pgo+PiBZZXMsIGl0IHByb2JhYmx5IHNob3VsZG4n
-dCBkbyB0aGF0LiAgV2hhdCBhYm91dCB0aGlzIHBhdGNoPwo+Cj4gSG1tLiAgSSBkbyBub3Qga25v
-dyBpZiBpdCBicmVha3MgYW55dGhpbmcsIGJ1dCBpZiB5b3UgYXJlIGluZGVlZCBpbiBhIGJhcmUK
-PiByZXBvc2l0b3J5LCB0aGUgZmlsZXMgdGhlIGNvZGVwYXRocyBhZmZlY3RlZCB0cnkgdG8gcmVh
-ZCB3b3VsZCBub3QgZXhpc3QKPiBhbnl3YXksIHNvIEkgYW0gbm90IHN1cmUgd2hhdCB0aGlzIHdv
-dWxkIGZpeCwgb3RoZXIgdGhhbiBjaGFuZ2luZyB0aGUKPiBiZWhhdmlvdXIgb2YgY2hlY2stYXR0
-ciBmcm9tIG5vdGljaW5nIHRoYXQgaXQgd2FzIGFza2VkIGZvciBub25zZW5zZSBhbmQKPiBiYWls
-IG91dCB0byBub3Qgbm90aWNpbmcgbm9yIHNheWluZyBhbnl0aGluZyB1c2VmdWwuCgpZZXMuIEJ1
-dCBqdXN0IGluIGNhc2UgdGhvc2UgLmdpdGF0dHJpYnV0ZXMgZXhpc3QgYnkgYWNjaWRlbnQgKGZv
-cgpleGFtcGxlIHlvdSBhY2Nlc3MgYSBiYXJlIHJlcG9zaXRvcnkgZnJvbSBhIHdvcmt0cmVlIG9m
-IGFub3RoZXIKcmVwb3NpdG9yeSkuIEkgZG9uJ3Qgd2FudCB0byBjaGVjayBjd2QgZm9yIC5naXRh
-dHRyaWJ1dGVzIGV2ZXJ5dGltZSBJCndhbnQgdG8gdXNlIGdpdC1hcmNoaXZlIDopCgpBbnl3YXkg
-aWYgSSBkbyAiZ2l0LWFyY2hpdmUgPGNvbW1pdD4iIGl0IHNob3VsZCByZWFkIC5naXRhdHRyaWJ1
-dGVzCmZyb20gdGhhdCBjb21taXQsIG5vdCBmcm9tIHdvcmtpbmcgZGlyZWN0b3J5LgotLSAKRHV5
-Cg==
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-494365117-1212987199=:1783
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Mon, 9 Jun 2008, Olivier Marin wrote:
+
+> Johannes Schindelin a écrit :
+> > 
+> > No, I think that the information about stale branches and if the 
+> > branches are up-to-date is missing.  In that sense, it is not like 
+> > "route -n" at all, which just skips one convenience step, but really a 
+> > dry run, because the result is different (as opposed to differently 
+> > displayed).
+> 
+> Am I wrong if I say that dry run is for commands that modify something? 
+> For example there is no "diff --dry-run" probably because diff does not 
+> change anything. A dry run has no real meaning for diff.
+
+For me, a dry run is something that avoids the high-cost operations.
+
+Something like, uhm, a dry run of a ship.
+
+> >> In fact, it seems that get_ref_states() always return 0 or just die 
+> >> when an error occur. And that transport_get_remote_refs() never 
+> >> return if something goes wrong.
+> >>
+> >> So, what about removing got_states and use !no_query instead ?
+> > 
+> > Hrmpf.  I did not mean to die() there...
+> 
+> I don't understand. Is it ok or not?
+
+I would not like to remove the got_states.  I think this is the wrong 
+direction.  Rather change the die() into a return error().
+
+Ciao,
+Dscho
+
+--8323329-494365117-1212987199=:1783--
