@@ -1,75 +1,123 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-Received: (qmail 27963 invoked by uid 111); 23 May 2008 11:04:24 -0000
+X-Spam-Status: No, score=2.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 8691 invoked by uid 111); 9 Jun 2008 12:13:04 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 23 May 2008 07:04:16 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 09 Jun 2008 08:12:57 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbYEWLEN (ORCPT <rfc822;peff@peff.net>);
-	Fri, 23 May 2008 07:04:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753846AbYEWLEN
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 May 2008 07:04:13 -0400
-Received: from manchester.eukhost.com ([92.48.75.3]:41107 "EHLO
-	manchester.eukhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753769AbYEWLEM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 May 2008 07:04:12 -0400
-X-Greylist: delayed 3379 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 May 2008 07:04:12 EDT
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=diamand.org;
-	h=Received:Received:To:Subject:Received:To:Subject:Date:X-Mailer:Message-ID:In-Reply-To:From:Bounce-To:Errors-To:MIME-Version:Content-Type:Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse;
-	b=dDhqBrBnb89hT1jrtglgRIIYRmP0DzGZfLSU3glXr5NNttbEb5qLROjzt53PrrqZfv0G/2wzmv3icNEvREIsBq4baD0ByJ2/wAnsTTTA5pcyTkgmUxvlqhZ4Sej+5Szs;
-Received: from cpc2-cmbg6-0-0-cust826.cmbg.cable.ntl.com ([81.107.35.59]:35416 helo=ethel.local.diamand.org)
-	by manchester.eukhost.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <luke@diamand.org>)
-	id 1JzUBi-00053V-OW
-	for git@vger.kernel.org; Fri, 23 May 2008 10:07:50 +0000
-Received: from www-data by ethel.local.diamand.org with local (Exim 4.69)
-	(envelope-from <luke@diamand.org>)
-	id 1JzUBg-0005F6-HB; Fri, 23 May 2008 11:07:48 +0100
-To:	git@vger.kernel.org
-Subject: perforce import: git-p4 memory usage
-Received: from 212.44.20.129 (auth. user lgd@ethel)
-          by blacksquirrel.dyndns.org with HTTP; Fri, 23 May 2008 10:07:48 +0000
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: perforce import: git-p4 memory usage
-Date:	Fri, 23 May 2008 10:07:48 +0000
-X-Mailer: IlohaMail/0.8.14 (On: blacksquirrel.dyndns.org)
-Message-ID: <H1SlcXmh.1211537268.4996380.lgd@diamand.org>
-In-Reply-To: <20080522160414.GA11158@sigill.intra.peff.net>
-From:	"Luke Diamand" <luke@diamand.org>
-Bounce-To: "Luke Diamand" <luke@diamand.org>
+	id S1755997AbYFIMMx (ORCPT <rfc822;peff@peff.net>);
+	Mon, 9 Jun 2008 08:12:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbYFIMMx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 08:12:53 -0400
+Received: from hoat.troll.no ([62.70.27.150]:49291 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754917AbYFIMMx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 08:12:53 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 9CF6120AFF;
+	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 7F87720AF0;
+	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
+Date:	Mon, 9 Jun 2008 13:40:32 +0200
+From:	Marius Storm-Olsen <marius@trolltech.com>
+To:	git <git@vger.kernel.org>
+cc:	Junio C Hamano <gitster@pobox.com>
+Message-ID: <"Junio C Hamano .gitster*___internet////////RFC-822/Junio#b#C#b#Hamano#b##060#gitster#a#pobox#f#com#062#////////Junio#b#C#b#Hamano#b##f#gitster"@MHS>
+References: <"Storm-Olsen*"@MHS>
+Subject: [PATCH] Add testcase for merging in a CRLF repo, showing that conflict file is in LF only
 MIME-Version: 1.0
 Content-Type:	text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - manchester.eukhost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - diamand.org
+Content-Disposition: inline
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+An LF only conflict file results in the resolved file being in LF,
+the commit is in LF and a warning saying that LF will be replaced
+by CRLF, and the working dir ends up with a mix of CRLF and LF files.
 
-Hi!
+Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
+---
+ (Resend due to "git reset --hard initial" instead of "git reset
+ --hard a", in the first testcase)
+ 
+ Sorry, no patch to actually *fix* the problem.
+ Someone who knows the code in question will probably find the solution in a
+ fraction of the time that I would.
+ Also note that :1:file, :2:file and :3:file all are also in LF format, and not
+ CRLF, which you would want if core.autocrlf == true.
 
-I'm trying to import part of a perforce repo with git-p4.
+ t/t6033-merge-crlf.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 52 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6033-merge-crlf.sh
 
-However, git-p4 appears to try to read all the repo into memory (and
-moreover seems to need about twice as much memory as repo).
+diff --git a/t/t6033-merge-crlf.sh b/t/t6033-merge-crlf.sh
+new file mode 100755
+index 0000000..8bff2f4
+--- /dev/null
++++ b/t/t6033-merge-crlf.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++append_cr () {
++	sed -e 's/$/Q/' | tr Q '\015'
++}
++
++remove_cr () {
++	tr '\015' Q | sed -e 's/Q$//'
++}
++
++test_description='merge conflict in crlf repo
++
++		b---M
++	       /   /
++	initial---a
++
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	git config core.autocrlf true &&
++	echo foo | append_cr >file &&
++	git add file &&
++	git commit -m "Initial" &&
++	git tag initial &&
++	git branch side &&
++	echo line from a | append_cr >file &&
++	git commit -m "add line from a" file &&
++	git tag a &&
++	git checkout side &&
++	echo line from b | append_cr >file &&
++	git commit -m "add line from b" file &&
++	git tag b &&
++	git checkout master
++'
++
++test_expect_success 'Check "ours" is CRLF' '
++	git reset --hard a &&
++	git merge side -s ours &&
++	cat file | remove_cr | append_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_expect_success 'Check that conflict file is CRLF' '
++	git reset --hard a &&
++	! git merge side &&
++	cat file | remove_cr | append_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_done
+-- 
+1.5.6.rc0.162.gaeac2.dirty
 
-Once it runs out of swap, it dies (unsurprisingly).
-
-I think it's failing in readP4Files(), where it appears to read the
-entire repository in one go with "p4 -G -x - print".
-
-Can I just rework this function to do stuff one file at a time? Or is
-that dumb?
-
-Thanks
-Luke Diamand
