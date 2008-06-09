@@ -1,111 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] merge-recursive: respect core.autocrlf
-Date: Mon, 9 Jun 2008 23:59:31 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806092305430.1783@racer>
-References: <"Storm-Olsen*"@MHS> <26299.4828321554$1213013668@news.gmane.org> <484D3225.3020900@viscovery.net> <alpine.DEB.1.00.0806092221420.1783@racer> <alpine.DEB.1.00.0806092223010.1783@racer> <7vod6affz6.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Introduce get_octopus_merge_bases() in commit.c
+Date: Mon, 09 Jun 2008 16:06:12 -0700
+Message-ID: <7v8wxefbtn.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0806091458190.1783@racer>
+ <1213051426-11530-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:01:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:07:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5qMy-0003bq-N0
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 01:01:45 +0200
+	id 1K5qSQ-0005Hc-00
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 01:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbYFIXAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 19:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753255AbYFIXAv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 19:00:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54060 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752208AbYFIXAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 19:00:51 -0400
-Received: (qmail invoked by alias); 09 Jun 2008 23:00:48 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp026) with SMTP; 10 Jun 2008 01:00:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VLU41f2xVxaulaMtmofhrk7ydtf7svw9b6JGgTg
-	RNeKBw+lI3G6rk
-X-X-Sender: gene099@racer
-In-Reply-To: <7vod6affz6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752214AbYFIXG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 19:06:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752672AbYFIXG3
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 19:06:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42193 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751523AbYFIXG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 19:06:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 00FD35482;
+	Mon,  9 Jun 2008 19:06:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 21A89547F; Mon,  9 Jun 2008 19:06:19 -0400 (EDT)
+In-Reply-To: <1213051426-11530-1-git-send-email-vmiklos@frugalware.org>
+ (Miklos Vajna's message of "Tue, 10 Jun 2008 00:43:46 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AF888118-3678-11DD-8913-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84448>
 
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> +struct commit_list *get_octopus_merge_bases(struct commit_list *in, int cleanup)
+> +{
+> +	struct commit_list *ret, *i;
+> +
+> +	ret = merge_bases_many(in->item, in->next);
+> +	if (cleanup)
+> +		for(i = in; i; i = i->next)
+> +			clear_commit_marks(i->item, all_flags);
+> +	return ret;
+> +}
 
-	On Mon, 9 Jun 2008, Junio C Hamano wrote:
+I suspect either me or you are confused, but how is this exactly used?
 
-	> Fairly straightforward fix, except that I suspect this needs to 
-	> be done only for regular files and not symlinks.
-	> 
-	> I think entry.c:write_entry() shows how this should be done.
+The code for merge_bases_many(), at least the one I showed you a few days
+ago, is not a replacement for "show-branch --merge-base", and I do not
+think you would want to use it as such in the rewrite of git-merge, if you
+are trying to replace this part of git-merge.sh:
 
-	Right.  And the relevant clause is actually already there.  D'oh.
+        case "$#" in
+        1)
+                common=$(git merge-base --all $head "$@")
+                ;;
+        *)
+                common=$(git show-branch --merge-base $head "$@")
+                ;;
+        esac
 
- builtin-merge-recursive.c |   12 +++++++++++-
- t/t6033-merge-crlf.sh     |    2 +-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+The purpose of merge-base-many code was to improve this line in the
+git-merge-octopus.sh:
 
-diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-index 7643f17..1fbff3a 100644
---- a/builtin-merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -535,13 +535,22 @@ static void update_file_flags(const unsigned char *sha,
- 			die("cannot read object %s '%s'", sha1_to_hex(sha), path);
- 		if (type != OBJ_BLOB)
- 			die("blob expected for %s '%s'", sha1_to_hex(sha), path);
--
- 		if (make_room_for_path(path) < 0) {
- 			update_wd = 0;
- 			goto update_index;
- 		}
- 		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
- 			int fd;
-+			struct strbuf strbuf;
-+
-+			strbuf_init(&strbuf, 0);
-+			if (convert_to_working_tree(path, buf, size, &strbuf)) {
-+				size_t newsize = 0;
-+				free(buf);
-+				buf = strbuf_detach(&strbuf, &newsize);
-+				size = newsize;
-+			}
-+
- 			if (mode & 0100)
- 				mode = 0777;
- 			else
-@@ -560,6 +569,7 @@ static void update_file_flags(const unsigned char *sha,
- 		} else
- 			die("do not know what to do with %06o %s '%s'",
- 			    mode, sha1_to_hex(sha), path);
-+		free(buf);
- 	}
-  update_index:
- 	if (update_cache)
-diff --git a/t/t6033-merge-crlf.sh b/t/t6033-merge-crlf.sh
-index ea22837..75d9602 100755
---- a/t/t6033-merge-crlf.sh
-+++ b/t/t6033-merge-crlf.sh
-@@ -42,7 +42,7 @@ test_expect_success 'Check "ours" is CRLF' '
- 	test_cmp file file.temp
- '
- 
--test_expect_failure 'Check that conflict file is CRLF' '
-+test_expect_success 'Check that conflict file is CRLF' '
- 	git reset --hard a &&
- 	test_must_fail git merge side &&
- 	cat file | remove_cr | append_cr >file.temp &&
--- 
-1.5.6.rc1.181.gb439d
+	common=$(git merge-base --all $MRC $SHA1) ||
+		die "Unable to find common commit with $SHA1"
+
+Instead of keeping a single MRC, we can compute the merge-base-many
+between the SHA1 (i.e. the one we are looking at right now -- it is fed as
+"one") and all the previous SHA1's we have already looked at (they become
+"two's"), like this:
+
+	common($git merge-base-many $SHA1 $SHA1_SO_FAR)
+
+and you would have at the end of the loop:
+
+	SHA1_SO_FAR="$SHA1_SO_FAR$SHA1 "
+
+or something.
