@@ -1,132 +1,122 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How does git store branchpoints?
-Date: Mon, 09 Jun 2008 08:07:17 -0700 (PDT)
-Message-ID: <m3hcc2wso1.fsf@localhost.localdomain>
-References: <beffea8c-fd2a-44d0-a566-3ded5d09a3d2@l42g2000hsc.googlegroups.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: squashing patches
+Date: Mon, 09 Jun 2008 08:10:01 -0700
+Message-ID: <484D47C9.9050509@gnu.org>
+References: <20080607220101.GM31040@leksak.fem-net> <20080609114550.GA8079@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: davetron5000 <davetron5000@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 17:09:47 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Jun 09 17:11:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5iyo-0005Db-Jy
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 17:08:19 +0200
+	id 1K5j1Z-0006gs-KE
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 17:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755983AbYFIPHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 11:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755567AbYFIPHX
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 11:07:23 -0400
-Received: from mu-out-0910.google.com ([209.85.134.189]:59882 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754668AbYFIPHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 11:07:21 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so1558918mue.1
-        for <git@vger.kernel.org>; Mon, 09 Jun 2008 08:07:19 -0700 (PDT)
+	id S1754863AbYFIPKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 11:10:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754242AbYFIPKO
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 11:10:14 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:30848 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754091AbYFIPKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 11:10:13 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1832527waf.23
+        for <git@vger.kernel.org>; Mon, 09 Jun 2008 08:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=Ftc8yBEBHQAWStX8vshT3X/BF0ik7RKQzxj2UOQBXps=;
-        b=nUBshi9ILDZLuUtUwdgfptA3hJVtiRa9OZZ9URH3FRm4UsCwlDuNS/yjw9eZg0Jdb/
-         Fg/AolJQsHtjpudHrGBeygwCJ2rygb+SoHaEQKa2L3b1LZyqqujo7B2eMHOywabyury3
-         6innatRhOleDdOPdNkZY7CObL/UY4a97OdrGY=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:newsgroups:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=6Zo1iE7QNMV8lB2/0Z4v7GDu1nCutW2wtm8Bna5Gums=;
+        b=G9YnjuJPDygJ9/dFik6OysNcNhQp5coSStD94+Za8HKILuSJFZ4haSjwmZoK7ERZlK
+         GIgNJOywmtz15uS1WFhLI2iUBQ8bJXdCychrRqqjQnNQBqyS0/Iyxl9XpZKezGpWhqmF
+         s/ebTDlv0dYT6Ew1887SSUD9HqXJbjpdenv5E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=kkdCtc47TYTAUXuie/PL0Zdri4NQoMk6h+C1W/CHcEMIVr1ciAS5Czk38PHXKyJ24Z
-         EXg1GchHotv9OwcEChEXcjNVyCBDOFsTWZeI9pmlp2h3A3TrCeFdBcC7Ir6k1OsoTJki
-         4zCnLk0OdS3EKMnEQHG89cwffwJ1YHEIDeuWc=
-Received: by 10.103.207.18 with SMTP id j18mr2487460muq.21.1213024038405;
-        Mon, 09 Jun 2008 08:07:18 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.243.230])
-        by mx.google.com with ESMTPS id s10sm17018337mue.16.2008.06.09.08.07.15
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding:sender;
+        b=r5zTX0NC6OShHyfYjSm3vRgIX1pc2P9wGaNZjYKEjraaCbjPXXec0ozF8UhvTDdg5j
+         eebDg/3C1grXVOV5YwU9nD+zqazBFqwRVsfgYj7p5x8k6GeVybAONvEDb6qUv4+n1qsi
+         OeRbhfMkPCN7CgL9i3R8OKNhcL073nLQiTYvg=
+Received: by 10.114.108.15 with SMTP id g15mr3398907wac.181.1213024212645;
+        Mon, 09 Jun 2008 08:10:12 -0700 (PDT)
+Received: from scientist-2.local ( [65.248.49.163])
+        by mx.google.com with ESMTPS id y11sm14264472pod.5.2008.06.09.08.10.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Jun 2008 08:07:17 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m59FAOWt017153;
-	Mon, 9 Jun 2008 17:10:24 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m59FAMBA017150;
-	Mon, 9 Jun 2008 17:10:22 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <beffea8c-fd2a-44d0-a566-3ded5d09a3d2@l42g2000hsc.googlegroups.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Mon, 09 Jun 2008 08:10:11 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20080609114550.GA8079@leksak.fem-net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84391>
 
-davetron5000 <davetron5000@gmail.com> writes:
 
-> Following up this:
-> 
-> http://groups.google.com/group/git-version-control/browse_thread/thread/aa34d04120d0c361#
-> 
-> I'm trying to learn/examine the .git directory to see what Git thinks.
-> 
-> What I'm trying to determine is how Git knows the parent of a
-> particular commit, how I can change it, and how that affects merging.
+> If you want to pick several commits and squash them together, there is
+> "squash".  BUT there is no equivalent for "file" currently.
+> The only way to squash several patches together is with an external tool
+> like your favourite text editor, which is not fun but error-prone.
+> And there is no way to squash a commit (in the repo) and a patch (as file)
+> together (in exactly this order). The only thing is that you could run
+> sequencer twice and squash in the second move.
 
-The parent (or parents in the case of merge commit) are stored in the
-commit object itself.  You cannot change them short of rewriting
-history, or telling git locally via .git/info/grafts file how it should
-modify history (see "Repository Layout" documentation for more info
-about grafts).
- 
-> My problem is that I have two branches, and a merge between the two
-> produces conflicts in files that are unchanged on one branch.  Since
-> my branches are linked to SVN branches, I'm thinking that Git is not
-> properly clear on their shared history.
-> 
-> Any ideas where to look?
+My feedback is in the message from the "-s theirs" thread that I CCed 
+you on.
 
-Use some kind of history viewer, be it gitk, qgit, giggle, tig,
-git-show-branch (a bit cryptic), git log --graph (not yet released),
-or similar tool.
+Basic points:
 
-> .git/info/refs has some strange data in it:
-> 
-> 5a3e01a8327c6139e9311b01548baf4a8876b5e3    refs/heads/local-FOO
-> 71560b15ad6a2a7542556dfdf2d6c763625d5db4    refs/heads/local-trunk
-> efb2ff2ac363600a2aaae60718bc76b6c3db4228    refs/remotes/FOO
-> 
-> The SHA-1 for refs/heads/local-FOO (branch created via git checkout -b
-> local-FOO FOO) doesn't show in gitk --all, but a git log of that shows
-> it to be a somewhat old commit (not the head, nor the branch point).
+1) I would like a "--strategy" option for cherry-pick and for the 
+sequencer's "pick";
 
-.git/info/refs is auxiliary information for "dumb" protocols, i.e.
-for fetching via HTTP etc.  It is updated using git-update-server-info,
-usually in the bare public repositories run from post-update hook
-(in non-bare you would want to add it also to post-commit).
+2) What about
 
-What you should look at is "git show-refs" or "git ls-remote ."
-output, or "git for-each-ref" output.
+   mark :1
+   pick a
+   file b
+   pick c
+   squash --up-to :1
 
-> The SHA-1 for local-trunk is a similarly old commit
-> 
-> The SHA-1 for refs/remotes/FOO is the commit right before the SHA-1
-> for refs/heads/local-FOO in my git log.
+or, to specify a commit message
 
-That said, if you have two divergent branches 'FOO' and 'trunk',
-for example with the following history
+   mark :1
+   file a
+   pick b
+   squash --up-to :1 -C HEAD^
 
-   a<---b<---c<---d<---e  <--- trunk
-             ^
-              \---1<---2  <--- FOO
+or also
 
-you can derive from parent info where history diverged.
+   mark :1
+   file a
+   pick b
+   squash --up-to :1 -C HEAD^ -s
 
-You can ask git to find branch point using "git merge-base trunk FOO",
-which should return 'c' (actually, sha-1 of this commit).
+to merge all signoffs.  This could be done by providing a stand-alone 
+git-squash command; or alternatively, it could be done in the sequencer 
+and the git-squash command would simply do
 
-HTH.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+   (echo 'mark :1'
+    git-rev-list --reverse $1.. | sed 's,^,pick '
+    echo "squash --up-to :1 $*") | git-sequencer
+
+after some option parsing.
+
+3) I would like a totally batch mode-of-operation, which would fail if 
+user intervention was needed (the user could choose whether to not edit 
+the editor, or whether to use a no-op for GIT_EDITOR).
+
+4) I think the sequencer is an opportunity to improve some commands, 
+e.g. git-cherry-pick should grow more or less the same options as 
+git-sequencer's pick.
+
+Paolo
