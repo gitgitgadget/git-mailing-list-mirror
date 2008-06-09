@@ -1,87 +1,164 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [StGIT PATCH 3/5] Create a git.Branch class as ancestor of stack.Stack
-Date: Mon, 9 Jun 2008 02:46:18 +0200
-Message-ID: <bd6139dc0806081746q3b71dd3cp5dfef55184508930@mail.gmail.com>
-References: <20080604210655.32531.82580.stgit@localhost.localdomain>
-	 <20080604211334.32531.74258.stgit@localhost.localdomain>
-	 <20080605070126.GC23209@diana.vm.bytemark.co.uk>
-	 <b0943d9e0806050503x40191104ye332d6a8435811a5@mail.gmail.com>
-	 <20080605130415.GB28995@diana.vm.bytemark.co.uk>
-	 <b0943d9e0806060144x48176566m277ba2969087b91e@mail.gmail.com>
-	 <20080607090636.GB32647@diana.vm.bytemark.co.uk>
-	 <b0943d9e0806081516y575faba9g8b5a27646615f72f@mail.gmail.com>
-	 <402731c90806081707m384edef4p4c2328ac1ee1ea08@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: [PATCH] remote show: fix the -n option
+Date: Mon, 09 Jun 2008 02:48:12 +0200
+Message-ID: <484C7DCC.6080303@free.fr>
+References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	git-python@googlegroups.com
-To: "David Aguilar" <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 02:47:13 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 09 02:48:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5VXU-0004db-VZ
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 02:47:13 +0200
+	id 1K5VZ6-0004ro-R3
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 02:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669AbYFIAqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jun 2008 20:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752626AbYFIAqT
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 20:46:19 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:31956 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbYFIAqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jun 2008 20:46:18 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1869583wfd.4
-        for <git@vger.kernel.org>; Sun, 08 Jun 2008 17:46:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=bgmfMlgtEQi7cY6Z1gX08Jxu3+hOh1wr5sPwPxwTfI0=;
-        b=jNHGKhgXgp/wRhowEFCu7aABI2jpPQxt9C25NORQe86USk9aLPmhPXsxJUC/p8W9V4
-         yo9xGNoXEv8L+Bd4Rv5fBR4iR6dXIdUn0vNbcLrghEgEfworjwSTKyaPJSXgonj2JuAH
-         rwTNfwLR+1CBLjDUlm/Y2Su0TPSsFcuQoeQ4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=Z7d1VkZS26kAWxmnfW2e1RmjXK1721xg6isSf06hqd0B0Qh/GTr23abWjRDXtnSbna
-         yJgtEwo6kDwFUS7p3eFe0zHWIzizM0to3983jwqUjJH7dNRMS7mW4xbGsYGbinxj5ifF
-         eMJelCsy3TlZYYn06M5nIlDwN++3TyvPCUYAo=
-Received: by 10.142.253.21 with SMTP id a21mr1157572wfi.254.1212972378087;
-        Sun, 08 Jun 2008 17:46:18 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Sun, 8 Jun 2008 17:46:18 -0700 (PDT)
-In-Reply-To: <402731c90806081707m384edef4p4c2328ac1ee1ea08@mail.gmail.com>
-Content-Disposition: inline
+	id S1755758AbYFIAr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jun 2008 20:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbYFIAr7
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jun 2008 20:47:59 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:46526 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752846AbYFIAr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jun 2008 20:47:58 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 60C3312B6BE;
+	Mon,  9 Jun 2008 02:47:57 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 2AD1612B6B8;
+	Mon,  9 Jun 2008 02:47:57 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <484C7CBE.4070700@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84354>
 
-On Mon, Jun 9, 2008 at 2:07 AM, David Aguilar <davvid@gmail.com> wrote:
-> A few folks are working towards an OO git interface for python.
-> Perhaps joining forces would be a big win for everyone?
->
-> http://gitorious.org/projects/git-python
->
-> It would be really cool if we could wrangle in all interested parties
-> towards a common goal for python.  You guys (the stgit team) have a
-> lot of experience in this domain so your ideas and opinions would be
-> greatly appreciated.
+From: Olivier Marin <dkr@freesurf.fr>
 
-I very much agree with you. I'm using git-python for my GSoC project
-myself (although currently I'm only using the Git object really). I
-think it would be awesome if git-python and stgit.lib.git would merge.
-I'd be happy to help with that in any way I can :).
+The perl version accepted a -n flag, to show local informations only
+without querying remote heads, that seems to have been lost in the C
+rewrite.
 
--- 
-Cheers,
+This restores the older behaviour and add a test case.
 
-Sverre Rabbelier
+Signed-off-by: Olivier Marin <dkr@freesurf.fr>
+---
+ builtin-remote.c  |   48 ++++++++++++++++++++++++++----------------------
+ t/t5505-remote.sh |   17 +++++++++++++++++
+ 2 files changed, 43 insertions(+), 22 deletions(-)
+
+diff --git a/builtin-remote.c b/builtin-remote.c
+index c49f00f..cb9e282 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -421,10 +421,10 @@ static void show_list(const char *title, struct path_list *list)
+ 
+ static int show_or_prune(int argc, const char **argv, int prune)
+ {
+-	int dry_run = 0, result = 0;
++	int no_query = 0, result = 0;
+ 	struct option options[] = {
+ 		OPT_GROUP("show specific options"),
+-		OPT__DRY_RUN(&dry_run),
++		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
+ 		OPT_END()
+ 	};
+ 	struct ref_states states;
+@@ -442,21 +442,25 @@ static int show_or_prune(int argc, const char **argv, int prune)
+ 		struct transport *transport;
+ 		const struct ref *ref;
+ 		struct strbuf buf;
+-		int i, got_states;
++		int i, got_states = 1;
+ 
+ 		states.remote = remote_get(*argv);
+ 		if (!states.remote)
+ 			return error("No such remote: %s", *argv);
+-		transport = transport_get(NULL, states.remote->url_nr > 0 ?
+-			states.remote->url[0] : NULL);
+-		ref = transport_get_remote_refs(transport);
+-		transport_disconnect(transport);
+ 
+ 		read_branches();
+-		got_states = get_ref_states(ref, &states);
+-		if (got_states)
+-			result = error("Error getting local info for '%s'",
+-					states.remote->name);
++
++		if (!no_query) {
++			transport = transport_get(NULL, states.remote->url_nr > 0 ?
++				states.remote->url[0] : NULL);
++			ref = transport_get_remote_refs(transport);
++			transport_disconnect(transport);
++
++			got_states = get_ref_states(ref, &states);
++			if (got_states)
++				result = error("Error getting local info for '%s'",
++						states.remote->name);
++		}
+ 
+ 		if (prune) {
+ 			for (i = 0; i < states.stale.nr; i++) {
+@@ -486,17 +490,17 @@ static int show_or_prune(int argc, const char **argv, int prune)
+ 			printf("\n");
+ 		}
+ 
+-		if (got_states)
+-			continue;
+-		strbuf_init(&buf, 0);
+-		strbuf_addf(&buf, "  New remote branch%%s (next fetch will "
+-			"store in remotes/%s)", states.remote->name);
+-		show_list(buf.buf, &states.new);
+-		strbuf_release(&buf);
+-		show_list("  Stale tracking branch%s (use 'git remote prune')",
+-				&states.stale);
+-		show_list("  Tracked remote branch%s",
+-				&states.tracked);
++		if (!got_states) {
++			strbuf_init(&buf, 0);
++			strbuf_addf(&buf, "  New remote branch%%s (next fetch will "
++				"store in remotes/%s)", states.remote->name);
++			show_list(buf.buf, &states.new);
++			strbuf_release(&buf);
++			show_list("  Stale tracking branch%s (use 'git remote prune')",
++					&states.stale);
++			show_list("  Tracked remote branch%s",
++					&states.tracked);
++		}
+ 
+ 		if (states.remote->push_refspec_nr) {
+ 			printf("  Local branch%s pushed with 'git push'\n   ",
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 0d7ed1f..c6a7bfb 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -138,6 +138,23 @@ test_expect_success 'show' '
+ 	 test_cmp expect output)
+ '
+ 
++cat > test/expect << EOF
++* remote origin
++  URL: $(pwd)/one/.git
++  Remote branch merged with 'git pull' while on branch master
++    master
++  Local branches pushed with 'git push'
++    master:upstream +refs/tags/lastbackup
++EOF
++
++test_expect_success 'show -n' '
++	(mv one one.unreachable &&
++	 cd test &&
++	 git remote show -n origin > output &&
++	 mv ../one.unreachable ../one &&
++	 test_cmp expect output)
++'
++
+ test_expect_success 'prune' '
+ 	(cd one &&
+ 	 git branch -m side side2) &&
+-- 1.5.6.rc2.121.gaeb64.dirty
