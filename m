@@ -1,86 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] remote show: fix the -n option
-Date: Mon, 9 Jun 2008 05:53:10 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806090551070.1783@racer>
-References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr> <484C7DCC.6080303@free.fr> <alpine.DEB.1.00.0806090212270.1783@racer> <484C901B.6000401@free.fr>
- <alpine.DEB.1.00.0806090330490.1783@racer> <484CAE95.3020008@free.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v3] git-add--interactive: manual hunk editing mode
+Date: Mon, 09 Jun 2008 07:46:22 +0200
+Message-ID: <200806090746.22512.johan@herland.net>
+References: <200805232221.45406.trast@student.ethz.ch>
+ <200806090032.27516.trast@student.ethz.ch>
+ <alpine.DEB.1.00.0806090018350.1783@racer>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-494365117-1212987199=:1783"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 09 06:55:27 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 09 07:48:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5ZPi-0004iD-Kz
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 06:55:27 +0200
+	id 1K5aEq-00055e-7G
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 07:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbYFIEyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 00:54:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbYFIEyd
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 00:54:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56711 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751515AbYFIEyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 00:54:32 -0400
-Received: (qmail invoked by alias); 09 Jun 2008 04:54:30 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp051) with SMTP; 09 Jun 2008 06:54:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX192FJIDnVF2uCx0i4BwMiPcIpUlV9Fp81+xNhymBd
-	pDoZxDPrm673lG
-X-X-Sender: gene099@racer
-In-Reply-To: <484CAE95.3020008@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753378AbYFIFrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 01:47:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbYFIFrW
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 01:47:22 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:33439 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752775AbYFIFrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 01:47:21 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K2600I0PLETN300@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 09 Jun 2008 07:47:17 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K26001B8LDANN60@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 09 Jun 2008 07:46:22 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K260096LLDARTT2@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 09 Jun 2008 07:46:22 +0200 (CEST)
+In-reply-to: <alpine.DEB.1.00.0806090018350.1783@racer>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84362>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Monday 09 June 2008, Johannes Schindelin wrote:
+> Hi,
+>
+> On Mon, 9 Jun 2008, Thomas Rast wrote:
+> > Compared to the competing bikeshed
+> >   http://article.gmane.org/gmane.comp.version-control.git/83894
+>
+> If you really think this is a bikeshed, I better spend my time elsewhere.
 
---8323329-494365117-1212987199=:1783
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Is there a good reason against having *both*?
 
-Hi,
+AFAICS, there's nothing stopping us from having both a "-e"-option to 
+git-add, and an "e"-command inside git-add--interactive.
 
-On Mon, 9 Jun 2008, Olivier Marin wrote:
+...just like we have "-p" and "p" today...
 
-> Johannes Schindelin a écrit :
-> > 
-> > No, I think that the information about stale branches and if the 
-> > branches are up-to-date is missing.  In that sense, it is not like 
-> > "route -n" at all, which just skips one convenience step, but really a 
-> > dry run, because the result is different (as opposed to differently 
-> > displayed).
-> 
-> Am I wrong if I say that dry run is for commands that modify something? 
-> For example there is no "diff --dry-run" probably because diff does not 
-> change anything. A dry run has no real meaning for diff.
+("git-add -e" would open the entire diff in an editor, as would "e" from the 
+*main* menu of git-add--interactive. However, "e" from the *single hunk* 
+menu would of course open only that single hunk within the editor. We could 
+even have an "E" command to open all remaining/undecided hunks in an 
+editor.)
 
-For me, a dry run is something that avoids the high-cost operations.
 
-Something like, uhm, a dry run of a ship.
+Have fun! :)
 
-> >> In fact, it seems that get_ref_states() always return 0 or just die 
-> >> when an error occur. And that transport_get_remote_refs() never 
-> >> return if something goes wrong.
-> >>
-> >> So, what about removing got_states and use !no_query instead ?
-> > 
-> > Hrmpf.  I did not mean to die() there...
-> 
-> I don't understand. Is it ok or not?
+...Johan
 
-I would not like to remove the got_states.  I think this is the wrong 
-direction.  Rather change the die() into a return error().
-
-Ciao,
-Dscho
-
---8323329-494365117-1212987199=:1783--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
