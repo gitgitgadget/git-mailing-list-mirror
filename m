@@ -1,84 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] git-add--interactive: manual hunk editing mode
-Date: Mon, 9 Jun 2008 16:17:34 -0400
-Message-ID: <20080609201734.GA15662@sigill.intra.peff.net>
-References: <200805232221.45406.trast@student.ethz.ch> <200806090746.22512.johan@herland.net> <20080609122938.GA12210@sigill.intra.peff.net> <200806091931.51221.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jun 09 22:18:46 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-read-tree: document -v option.
+Date: Mon,  9 Jun 2008 22:25:15 +0200
+Message-ID: <1213043115-29236-1-git-send-email-vmiklos@frugalware.org>
+References: <7vhcc2gyp6.fsf@gitster.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 09 22:27:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5np5-0000aT-9l
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 22:18:35 +0200
+	id 1K5nx8-0003xk-U4
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 22:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661AbYFIURi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 16:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754863AbYFIURh
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 16:17:37 -0400
-Received: from peff.net ([208.65.91.99]:3996 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758706AbYFIURh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 16:17:37 -0400
-Received: (qmail 7106 invoked by uid 111); 9 Jun 2008 20:17:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 09 Jun 2008 16:17:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jun 2008 16:17:34 -0400
-Content-Disposition: inline
-In-Reply-To: <200806091931.51221.johan@herland.net>
+	id S1754856AbYFIUZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 16:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753731AbYFIUZS
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 16:25:18 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:42032 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752912AbYFIUZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 16:25:14 -0400
+Received: from vmobile.example.net (dsl5401C409.pool.t-online.hu [84.1.196.9])
+	by yugo.frugalware.org (Postfix) with ESMTP id 2574B1DDC5B
+	for <git@vger.kernel.org>; Mon,  9 Jun 2008 22:25:12 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 3BD4218E2A7; Mon,  9 Jun 2008 22:25:15 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc0.dirty
+In-Reply-To: <7vhcc2gyp6.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84419>
 
-On Mon, Jun 09, 2008 at 07:31:51PM +0200, Johan Herland wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> > His work is about fixing up the hunk header as we apply the patch, but a
-> > working "e" command in the hunk selection should probably not actually
-> > apply, but simply split into two hunks for the loop.
-> 
-> By "split into two hunks", you mean splitting the original "index -> 
-> worktree" hunk (#0) into one hunk that represents "index -> edited" (#1), 
-> and another hunk that represents "edited -> worktree" (#2)?
+On Mon, Jun 09, 2008 at 01:06:45PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> >> +-v::
+> >> +        Be verbose.
+> >> +
+> >
+> > Ping? ;-)
+> >
+> > I guess this was just lost.
+>
+> Most likely it was, especially because the signal content of that
+> patch is
+> next to nil.  "Be verbose" in what sense?
 
-I mean splitting the original "index -> worktree" hunk into two other
-hunks, each of which is "index -> worktree" but which can be staged
-separately. I.e., what the 's'plit command does, but with finer-grained
-control.
+It's about the progress info, when git shows the progress of checking
+out a lot of files.
 
-But I think that is what you are trying to say...
+Maybe this one is better?
 
-> From a technical POV this might make sense, but AFAICS, users would always 
-> want to answer 'y' to #1, and 'n' to #2 (see [1]), so from a user POV, 
-> git-add--interactive should simply stage #1, and drop #2.
+ Documentation/git-read-tree.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Yes. I assumed we wanted to maintain the separate splitting operation,
-since that parallels the existing split (so the interface is consistent)
-and it logically separates the two parts (you split, and then you choose
-the part you want).
-
-But honestly, I don't really see a use case that isn't covered by
-"manually edit the diff and apply the hunk". And the rationale in your
-"side note" indicates that you think the same way.
-
-So now I wonder if we _can_ leverage Dscho's work here. I.e., can we
-simply send the edited hunk to "git apply --recount --cached" (instead
-of doing a "git apply --check")?
-
-The main problem I see at this point is that it screws up the line
-numbering for _every other hunk_, so later hunks in that file might not
-apply (IIRC, we usually save up all of the "yes" hunks and apply at the
-end). So it might be needed to do a --recount --check, and then actually
-apply at the end.
-
-I'll try to play around with that.
-
--Peff
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index cbe6835..58fb906 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -50,6 +50,9 @@ OPTIONS
+ 	trees that are not directly related to the current
+ 	working tree status into a temporary index file.
+ 
++-v::
++	Show the progress of checking files out.
++
+ --trivial::
+ 	Restrict three-way merge by `git-read-tree` to happen
+ 	only if there is no file-level merging required, instead
+-- 
+1.5.6.rc0.dirty
