@@ -1,68 +1,82 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add testcase for merging in a CRLF repo, showing that
- conflict file is in LF only
-Date: Mon, 09 Jun 2008 15:37:41 +0200
-Message-ID: <484D3225.3020900@viscovery.net>
-References: <"Storm-Olsen*"@MHS> <26299.4828321554$1213013668@news.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Introduce get_octopus_merge_bases() in commit.c
+Date: Mon, 9 Jun 2008 15:02:07 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806091458190.1783@racer>
+References: <1212874720-22324-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 15:39:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Jun 09 16:05:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5ha4-0004bY-Ae
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 15:38:40 +0200
+	id 1K5hyx-00067V-GE
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 16:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbYFINhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 09:37:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbYFINhq
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 09:37:46 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:53701 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbYFINhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 09:37:45 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K5hZ7-00067r-Gz; Mon, 09 Jun 2008 15:37:41 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 473FB6C4; Mon,  9 Jun 2008 15:37:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <26299.4828321554$1213013668@news.gmane.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752573AbYFIOD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 10:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbYFIOD3
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 10:03:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40472 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751958AbYFIOD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 10:03:28 -0400
+Received: (qmail invoked by alias); 09 Jun 2008 14:03:26 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp067) with SMTP; 09 Jun 2008 16:03:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UvTEZZahU6XLfZ7xzRuY7mTAal5oE7tb2S3Ihel
+	F+TQNCUik0s3Wn
+X-X-Sender: gene099@racer
+In-Reply-To: <1212874720-22324-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84383>
 
-Marius Storm-Olsen schrieb:
-> An LF only conflict file results in the resolved file being in LF,
-> the commit is in LF and a warning saying that LF will be replaced
-> by CRLF, and the working dir ends up with a mix of CRLF and LF files.
+Hi,
 
-After reading these 3 lines I've no idea what you are talking about. Can
-you translate this to English, please? ;-)
+On Sat, 7 Jun 2008, Miklos Vajna wrote:
 
->  Sorry, no patch to actually *fix* the problem.
+> diff --git a/commit.c b/commit.c
+> index 1dba717..685a144 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -618,6 +618,23 @@ static struct commit_list *merge_bases(struct commit *one, struct commit *two)
+>  	return merge_bases_many(one, 1, &two);
+>  }
+>  
+> +struct commit_list *get_octopus_merge_bases(struct commit_list *in, int cleanup)
+> +{
+> +	struct commit *head = in->item;
+> +	int n = 0;
+> +	struct commit **commits = xmalloc(n*sizeof(struct commit *));
 
-Then you should use test_expect_failure instead of test_expect_success.
-And maybe also mention it in the commit message.
+Here, n will be 0 and therefore commits will be xmalloc(0), right?
 
-> +test_expect_success 'Check that conflict file is CRLF' '
-> +	git reset --hard a &&
-> +	! git merge side &&
+> +	struct commit_list *ret, *i;
+> +
+> +	for(i = in; i; i = i->next, n++)
+> +		commits[n] = i->item;
 
-	test_must_fail git merge side &&
+And here, commits will never be realloc()ed.
 
-> +	cat file | remove_cr | append_cr >file.temp &&
-> +	test_cmp file file.temp
-> +'
+> +	ret = merge_bases_many(head, n, commits);
 
--- Hannes
+If merge_bases_many took a commit_list (yes, as I suggested to Junio), 
+this transformation would not be necessary.
+
+IIRC nothing in merge_bases_many() needed a commit array.
+
+Oh, and whose responsibility is it to free "in"?  Caller or callee?  
+(Because it is a non-const parameter, I would have expected the callee, 
+but I think it makes more sense if the caller can do whatever she wants 
+with the heads after calling octopus_merge_bases()).
+
+Ciao,
+Dscho
