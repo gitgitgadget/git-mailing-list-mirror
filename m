@@ -1,120 +1,69 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH] Add testcase for merging in a CRLF repo, showing that conflict file is in LF only
-Date: Mon, 9 Jun 2008 13:40:32 +0200
-Message-ID: <26299.4828321554$1213013668@news.gmane.org>
-References: <"Storm-Olsen*"@MHS>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] git-add--interactive: manual hunk editing mode
+Date: Mon, 9 Jun 2008 08:29:38 -0400
+Message-ID: <20080609122938.GA12210@sigill.intra.peff.net>
+References: <200805232221.45406.trast@student.ethz.ch> <200806090032.27516.trast@student.ethz.ch> <alpine.DEB.1.00.0806090018350.1783@racer> <200806090746.22512.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 09 14:14:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 09 14:31:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5gFu-0007Ns-Te
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 14:13:47 +0200
+	id 1K5gWc-0004sd-6L
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 14:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997AbYFIMMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 08:12:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbYFIMMx
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 08:12:53 -0400
-Received: from hoat.troll.no ([62.70.27.150]:49291 "EHLO hoat.troll.no"
+	id S1755313AbYFIM3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 08:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753772AbYFIM3l
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 08:29:41 -0400
+Received: from peff.net ([208.65.91.99]:1908 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754917AbYFIMMx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 08:12:53 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 9CF6120AFF;
-	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 7F87720AF0;
-	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
+	id S1752853AbYFIM3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 08:29:41 -0400
+Received: (qmail 9752 invoked by uid 111); 9 Jun 2008 12:29:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 09 Jun 2008 08:29:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jun 2008 08:29:38 -0400
 Content-Disposition: inline
+In-Reply-To: <200806090746.22512.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84379>
 
-An LF only conflict file results in the resolved file being in LF,
-the commit is in LF and a warning saying that LF will be replaced
-by CRLF, and the working dir ends up with a mix of CRLF and LF files.
+On Mon, Jun 09, 2008 at 07:46:22AM +0200, Johan Herland wrote:
 
-Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
----
- (Resend due to "git reset --hard initial" instead of "git reset
- --hard a", in the first testcase)
- 
- Sorry, no patch to actually *fix* the problem.
- Someone who knows the code in question will probably find the solution in a
- fraction of the time that I would.
- Also note that :1:file, :2:file and :3:file all are also in LF format, and not
- CRLF, which you would want if core.autocrlf == true.
+> Is there a good reason against having *both*?
+> 
+> AFAICS, there's nothing stopping us from having both a "-e"-option to 
+> git-add, and an "e"-command inside git-add--interactive.
 
- t/t6033-merge-crlf.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 52 insertions(+), 0 deletions(-)
- create mode 100755 t/t6033-merge-crlf.sh
+I agree (and I tried to make that point in an earlier mail).
 
-diff --git a/t/t6033-merge-crlf.sh b/t/t6033-merge-crlf.sh
-new file mode 100755
-index 0000000..8bff2f4
---- /dev/null
-+++ b/t/t6033-merge-crlf.sh
-@@ -0,0 +1,52 @@
-+#!/bin/sh
-+
-+append_cr () {
-+	sed -e 's/$/Q/' | tr Q '\015'
-+}
-+
-+remove_cr () {
-+	tr '\015' Q | sed -e 's/Q$//'
-+}
-+
-+test_description='merge conflict in crlf repo
-+
-+		b---M
-+	       /   /
-+	initial---a
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	git config core.autocrlf true &&
-+	echo foo | append_cr >file &&
-+	git add file &&
-+	git commit -m "Initial" &&
-+	git tag initial &&
-+	git branch side &&
-+	echo line from a | append_cr >file &&
-+	git commit -m "add line from a" file &&
-+	git tag a &&
-+	git checkout side &&
-+	echo line from b | append_cr >file &&
-+	git commit -m "add line from b" file &&
-+	git tag b &&
-+	git checkout master
-+'
-+
-+test_expect_success 'Check "ours" is CRLF' '
-+	git reset --hard a &&
-+	git merge side -s ours &&
-+	cat file | remove_cr | append_cr >file.temp &&
-+	test_cmp file file.temp
-+'
-+
-+test_expect_success 'Check that conflict file is CRLF' '
-+	git reset --hard a &&
-+	! git merge side &&
-+	cat file | remove_cr | append_cr >file.temp &&
-+	test_cmp file file.temp
-+'
-+
-+test_done
--- 
-1.5.6.rc0.162.gaeac2.dirty
+And I was hoping the right way to do it was to simply build the
+interactive "e" command on top of Johannes' git-apply work. But I don't
+think that quite makes sense. His work is about fixing up the hunk
+header as we apply the patch, but a working "e" command in the hunk
+selection should probably not actually apply, but simply split into two
+hunks for the loop.
+
+> ("git-add -e" would open the entire diff in an editor, as would "e" from the 
+> *main* menu of git-add--interactive. However, "e" from the *single hunk* 
+> menu would of course open only that single hunk within the editor. We could 
+> even have an "E" command to open all remaining/undecided hunks in an 
+> editor.)
+
+I agree with all of this, though I think the big question is what
+happens to the edited portion. In the interactive command, I think it
+becomes a new hunk that can be staged or not. In "git add -e" it makes
+sense to simply stage the result.
+
+-Peff
