@@ -1,86 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] remote show: fix the -n option
-Date: Mon, 9 Jun 2008 17:35:13 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806091733230.1783@racer>
-References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr> <484C7DCC.6080303@free.fr> <484D5322.6050309@free.fr>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: squashing patches
+Date: Mon, 09 Jun 2008 09:37:47 -0700
+Message-ID: <484D5C5B.9090804@gnu.org>
+References: <20080607220101.GM31040@leksak.fem-net> <20080609114550.GA8079@leksak.fem-net> <484D47C9.9050509@gnu.org> <20080609162909.GC8079@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 09 18:37:35 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Jun 09 18:38:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5kN6-0003ft-JW
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 18:37:28 +0200
+	id 1K5kOO-000476-6l
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 18:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbYFIQgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 12:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbYFIQgf
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 12:36:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51573 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751024AbYFIQge (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 12:36:34 -0400
-Received: (qmail invoked by alias); 09 Jun 2008 16:36:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp020) with SMTP; 09 Jun 2008 18:36:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hYdx1L/8hiXa3tKOatbnxEPP88HYLO+NSZ5zQKa
-	AXj0H5hM7n21E/
-X-X-Sender: gene099@racer
-In-Reply-To: <484D5322.6050309@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752584AbYFIQhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 12:37:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYFIQhw
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 12:37:52 -0400
+Received: from ag-out-0708.google.com ([72.14.246.249]:53191 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbYFIQhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 12:37:51 -0400
+Received: by ag-out-0708.google.com with SMTP id 31so5116369agc.10
+        for <git@vger.kernel.org>; Mon, 09 Jun 2008 09:37:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=pauslaUj+BcXsyTp8zCSUgD4Ydnw+IuHjDp8aZK5fFQ=;
+        b=HwB+P0/uWF0gx7oLiLgdfUHNKc/maNeC+3aMC2c64Xn5QAwUBbsPJbrWn+27o4/1iV
+         vQNRgqwfC1zuL9OG7uhZeRJ4ys3wyzMkZ8wUL3vgBH+iCgiq9w+NGXu61zaE0fAAtBji
+         3r5iJfvYhK1FlzAr9YZISZXQHrzGEaMmkq8Ho=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=OqMNyGY6m53V87YbBE+1q4bleJoNJKNumLye7w2px3+c05NLLcWra5s43qIbKiy6z8
+         Scx2WGpDqM1r9til0cUEV3EqYCcLBqE8TiBwAF0b7WmEKFJGpDGSYKt1Qi9GmOSBmget
+         9HbmVKT7Hf6XeiYuVFmt2G99A7K9FBw/x1oYU=
+Received: by 10.150.217.14 with SMTP id p14mr6634586ybg.53.1213029470974;
+        Mon, 09 Jun 2008 09:37:50 -0700 (PDT)
+Received: from scientist-2.local ( [66.78.193.51])
+        by mx.google.com with ESMTPS id p77sm14148369pyb.12.2008.06.09.09.37.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 09 Jun 2008 09:37:50 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+In-Reply-To: <20080609162909.GC8079@leksak.fem-net>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84401>
 
-Hi,
 
-On Mon, 9 Jun 2008, Olivier Marin wrote:
+>> (the user could choose whether to not edit the editor,
+>> or whether to use a no-op for GIT_EDITOR).
 
-> diff --git a/builtin-remote.c b/builtin-remote.c
-> index c49f00f..efe74c7 100644
-> --- a/builtin-remote.c
-> +++ b/builtin-remote.c
-> @@ -421,10 +421,10 @@ static void show_list(const char *title, struct path_list *list)
->  
->  static int show_or_prune(int argc, const char **argv, int prune)
->  {
-> -	int dry_run = 0, result = 0;
-> +	int no_query = 0, result = 0;
+Right now, doing
 
-Just for the record (not that I think anybody will care): I do not like 
-this change.
+pick a
+squash b
 
-> @@ -442,21 +442,23 @@ static int show_or_prune(int argc, const char **argv, int prune)
->  		struct transport *transport;
->  		const struct ref *ref;
->  		struct strbuf buf;
-> -		int i, got_states;
-> +		int i;
->  
->  		states.remote = remote_get(*argv);
->  		if (!states.remote)
->  			return error("No such remote: %s", *argv);
-> -		transport = transport_get(NULL, states.remote->url_nr > 0 ?
-> -			states.remote->url[0] : NULL);
-> -		ref = transport_get_remote_refs(transport);
-> -		transport_disconnect(transport);
->  
->  		read_branches();
-> -		got_states = get_ref_states(ref, &states);
-> -		if (got_states)
-> -			result = error("Error getting local info for '%s'",
-> -					states.remote->name);
+will always invoke the editor.  It could be possible to have two 
+operation modes.  One in which the sanity check fails, one in which the 
+automatic concatenation of two commit messages is used.
 
-And I do not like this change either.  It proliferates the "we just die() 
-and do not care about reusing the code where die()ing is not desired" 
-paradigm.
+> Do you think it's useful to add something like --reference (or -C,
+> or however it is called) to git-merge?
 
-Sad,
-Dscho
+Maybe it's not useful, but I think it's cleaner than adding the option 
+only to git-sequencer.
+
+Paolo
+
+ps: sure you should ask "the others" (who are more knowledgeable than me 
+BTW) for opinions about what I proposed.
