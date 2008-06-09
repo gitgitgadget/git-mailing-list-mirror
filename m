@@ -1,96 +1,108 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] cat-file --batch / --batch-check: do not exit if hashes are missing
-Date: Mon, 09 Jun 2008 04:07:14 -0700 (PDT)
-Message-ID: <m3lk1ex3s6.fsf@localhost.localdomain>
-References: <1212967717-5165-1-git-send-email-LeWiemann@gmail.com>
-	<alpine.DEB.1.00.0806090033030.1783@racer> <484C73DA.10804@gmail.com>
-	<alpine.DEB.1.00.0806090201090.1783@racer>
-	<484D033A.3020006@gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: squashing patches (was: Re: [RFC] git-sequencer.txt)
+Date: Mon, 9 Jun 2008 13:45:50 +0200
+Message-ID: <20080609114550.GA8079@leksak.fem-net>
+References: <20080607220101.GM31040@leksak.fem-net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 13:08:25 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 09 13:46:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5fES-0002IL-15
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 13:08:12 +0200
+	id 1K5fpm-0007ET-25
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 13:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759530AbYFILHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 07:07:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759487AbYFILHR
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 07:07:17 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:22658 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759440AbYFILHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 07:07:15 -0400
-Received: by an-out-0708.google.com with SMTP id d40so480752and.103
-        for <git@vger.kernel.org>; Mon, 09 Jun 2008 04:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=PKTTM6uY+xJIjHZzHyvRpzX29wQ1Gk7+7Os8c32DkrU=;
-        b=sLXnGHoDCIwlcSeeYmNOwmxa/s8hPUXcig3WJEC0Hi0dWuMq65dqdb6spyXJEQlXh/
-         MNezxTAcqhY43gr7io3t9ertl2Z1t7qHl7fvoAD1PoI/5kYA3OTCgLx+bnLqAEi2Dlic
-         7w8w+O5VZeHYm6+0UUfjjCKUEq+A9ZIeFqW9M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=fsUNgE+pvkKiCePXQFKSUmu7JDxSDUyZo6XTkcYgfI9yGIvouTyibBLbKdQET9t9MW
-         FwPjwvS0WdznCoV0DwpD8muZ6mBJm96EmVSBXDoMU3yIf9bPneJU1WGmhSmnpXYhYMYG
-         B7qsdUjz6jZ7dUUNaE19sl6dO7Xoj9l/BhysQ=
-Received: by 10.100.92.9 with SMTP id p9mr3370912anb.13.1213009634884;
-        Mon, 09 Jun 2008 04:07:14 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.243.230])
-        by mx.google.com with ESMTPS id c13sm19742182anc.32.2008.06.09.04.07.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Jun 2008 04:07:14 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m59BAI85015884;
-	Mon, 9 Jun 2008 13:10:19 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m59BAH1P015881;
-	Mon, 9 Jun 2008 13:10:17 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <484D033A.3020006@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1759928AbYFILpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 07:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759867AbYFILpz
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 07:45:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56015 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759430AbYFILpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 07:45:54 -0400
+Received: (qmail invoked by alias); 09 Jun 2008 11:45:52 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp055) with SMTP; 09 Jun 2008 13:45:52 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19KB+cbj1RKEw1Nir6/e0brtc/lj406anXl88EqaB
+	aiI+j72HTlrOE+
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K5fos-0002Hr-J4; Mon, 09 Jun 2008 13:45:50 +0200
+Content-Disposition: inline
+In-Reply-To: <20080607220101.GM31040@leksak.fem-net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84377>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+Wow,
 
->  From a recent IRC conversation (with permission):
-> 
-> Dscho thinks that git-cat-file --batch should print an error and exit
-> if passed an invalid revision (as opposed to the current behavior of
-> printing "<object> missing" and continuing), since anything else would
-> be unexpected. [1]  He says that an --ignore-missing option should be
-> introduced instead, and cat-file --batch should exit on non-existent
-> objects unless the --ignore-missing option is given.
-[...]
+I didn't expect *that much* feedback :-)
+I think I begin slowly to comment some things, and/or tell you
+some things that are still open.
+Then, maybe, someone of you swoops in :)
 
-> If Dscho (or anybody else) wants to introduce an --ignore-missing
-> option, feel free to submit it separately, but please don't object to
-> my patch because of it -- my patch is merely fixing the existing
-> code. (Note that such an option is unlikely to make it into the code
-> though, since it would have to change the existing behavior of
-> cat-file --batch, which other programs rely on.)
+> TODO FILE FORMAT
+> ----------------
 
-I think the (usual) solution is to add --ignore-missing and
---no-ignore-missing (or --noignore-missing), add configuration
-option 'catfile.ignoreMissing', make ignore-missing default and
-deprecate it with some transition time...
+First to say, I tried to be (backwards-)compatible to the 
+rebase--interactive TODO file format in "master".
+It became incompatible to the one in "next" in one point 
+only (-> merge). But if I understood "next" right, this is
+not bad, since Joerg Sommers rebase-i patchset is still
+open for discussion (i.e. mark).
+
+Well, now I come to the subject's topic.
+
+
+I've noticed that one thing is *obviously* missing:
+
+There's a slight asymmetry between
+> file [<options>] <file>::
+and
+> pick [<options>] <commit>::
+> edit <commit>::
+> squash [<options>] <commit>::
+
+"edit" is kept for backwards compatibility. It's a short form for and
+internally `expanded' to "pick --edit".
+As --edit is a general option, there is also "file --edit".
+So there's no functional asymmetry in this case.
+
+If you want to pick several commits and squash them together, there is
+"squash".  BUT there is no equivalent for "file" currently.
+The only way to squash several patches together is with an external tool
+like your favourite text editor, which is not fun but error-prone.
+And there is no way to squash a commit (in the repo) and a patch (as file)
+together (in exactly this order). The only thing is that you could run
+sequencer twice and squash in the second move.
+
+So I wonder if file --squash is useful, too, or even --squash as an
+general option. The latter means that you could squash merge commits
+into other commits, too.
+
+We've also discussed the non-atomic approach of doing something like
+	pick ( a b c d )	# or another syntax for that
+for picking multiple commits into one.
+In my current point of view, this does not seem right, as it:
+ - is not atomic ;), and...
+ - Well, the approach could be used for "file ( a b c d )", too,
+   but it doesn't help for squashing commits AND patches.
+
+Comments? Opinions? Ideas?
+
+A first try to prod,
+  Stephan.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
