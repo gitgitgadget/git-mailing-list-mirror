@@ -1,124 +1,174 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v3] git-add--interactive: manual hunk editing mode
-Date: Mon, 09 Jun 2008 19:31:51 +0200
-Message-ID: <200806091931.51221.johan@herland.net>
-References: <200805232221.45406.trast@student.ethz.ch>
- <200806090746.22512.johan@herland.net>
- <20080609122938.GA12210@sigill.intra.peff.net>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Add a helper script to send patches with Mozilla Thunderbird
+Date: Mon, 09 Jun 2008 19:37:04 +0200
+Organization: Chalmers
+Message-ID: <484D6A40.60002@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 09 19:33:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 09 19:47:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5lFI-000834-Ai
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 19:33:28 +0200
+	id 1K5lSv-0005Mx-CT
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 19:47:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753697AbYFIRcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 13:32:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753714AbYFIRcb
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 13:32:31 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:39532 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752634AbYFIRca (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 13:32:30 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K270000LI1WC700@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 09 Jun 2008 19:32:20 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K27007DII15MB60@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 09 Jun 2008 19:31:53 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K27008Z1I13BOC0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 09 Jun 2008 19:31:52 +0200 (CEST)
-In-reply-to: <20080609122938.GA12210@sigill.intra.peff.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752826AbYFIRqe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2008 13:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752727AbYFIRqe
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 13:46:34 -0400
+Received: from atum.ita.chalmers.se ([129.16.4.148]:45068 "EHLO
+	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752715AbYFIRqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 13:46:33 -0400
+X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Jun 2008 13:46:33 EDT
+Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
+	(Authenticated sender: lukass)
+	by atum.ita.chalmers.se (Postfix) with ESMTP id 360C8839B;
+	Mon,  9 Jun 2008 19:37:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.14) Gecko/20080504 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84406>
 
-On Monday 09 June 2008, Jeff King wrote:
-> On Mon, Jun 09, 2008 at 07:46:22AM +0200, Johan Herland wrote:
-> > Is there a good reason against having *both*?
-> >
-> > AFAICS, there's nothing stopping us from having both a "-e"-option to
-> > git-add, and an "e"-command inside git-add--interactive.
->
-> I agree (and I tried to make that point in an earlier mail).
->
-> And I was hoping the right way to do it was to simply build the
-> interactive "e" command on top of Johannes' git-apply work. But I don't
-> think that quite makes sense.
+The script appp.sh can be used with the External Editor extension for
+Mozilla Thunderbird in order to be able to send inline patches in an
+easy way.
 
-Yeah, the two approaches don't merge easily...
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+---
 
-> His work is about fixing up the hunk header as we apply the patch, but a
-> working "e" command in the hunk selection should probably not actually
-> apply, but simply split into two hunks for the loop.
+Hi,
+I sent this out a year ago or so. I figured I'd put the script
+in contrib/, in case someone finds it useful.
+(and yes, this patch is sent using appp.sh)
 
-By "split into two hunks", you mean splitting the original "index -> 
-worktree" hunk (#0) into one hunk that represents "index -> edited" (#1), 
-and another hunk that represents "edited -> worktree" (#2)?
+ Documentation/SubmittingPatches          |    5 +++
+ contrib/thunderbird-patch-inline/README  |   20 +++++++++++
+ contrib/thunderbird-patch-inline/appp.sh |   55 ++++++++++++++++++++++=
+++++++++
+ 3 files changed, 80 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/thunderbird-patch-inline/README
+ create mode 100755 contrib/thunderbird-patch-inline/appp.sh
 
->From a technical POV this might make sense, but AFAICS, users would always 
-want to answer 'y' to #1, and 'n' to #2 (see [1]), so from a user POV, 
-git-add--interactive should simply stage #1, and drop #2.
-
-(Side note: AFAIR, some of the original rationale for this feature was to 
-provide a more fine-grained split than 's'. Looking at the problem from 
-this POV: What is the reason for splitting a hunk in the first place? It 
-must be because one part of the hunk should be staged while leaving the 
-other unstaged. With 's', it just splits, and lets the user select which 
-parts of the hunk to stage, using 'y'/'n'. But 'e' introduces a much more 
-powerful notion of letting user split AND select in ONE operation (i.e. the 
-editor). Therefore, when the user has already selected which parts of the 
-hunk to stage (#1), it is not necessary to re-ask the user whether or not 
-#1 should be staged (and certainly not #2).
-
-> > ("git-add -e" would open the entire diff in an editor, as would "e"
-> > from the *main* menu of git-add--interactive. However, "e" from the
-> > *single hunk* menu would of course open only that single hunk within
-> > the editor. We could even have an "E" command to open all
-> > remaining/undecided hunks in an editor.)
->
-> I agree with all of this, though I think the big question is what
-> happens to the edited portion. In the interactive command, I think it
-> becomes a new hunk that can be staged or not. In "git add -e" it makes
-> sense to simply stage the result.
-
-Sounds acceptable to me (although I would also be ok with automatically 
-staging the edited portion in the interactive command).
-
-
-Have fun! :)
-
-...Johan
-
-
-[1]: AIUI #1 represents the hunk that the user want to stage at this moment. 
-Conversely, #2 represents the changes that the user is NOT interested in 
-staging at this point. Therefore, the only answers that make sense is 'y' 
-(i.e. "stage this hunk") for #1 and 'n' (i.e. "do not stage this hunk") for 
-#2. The only problem with this is if the user screwed up the hunk edit and 
-wants to revert to the original hunk (#0). I don't know if this is worth 
-supporting.
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/Documentation/SubmittingPatches b/Documentation/Submitting=
+Patches
+index 0e155c9..7c16852 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -419,6 +419,11 @@ settings but I haven't tried, yet.
+ 	mail.identity.default.compose_html	=3D> false
+ 	mail.identity.id?.compose_html		=3D> false
+=20
++( Lukas Sandstr=C3=B6m )
++
++There is a script in contrib/thunderbird-patch-inline which can help
++you include patches with Thunderbird in an easy way. To use it, do the
++steps above and then use the script as the external editor.
+=20
+ Gnus
+ ----
+diff --git a/contrib/thunderbird-patch-inline/README b/contrib/thunderb=
+ird-patch-inline/README
+new file mode 100644
+index 0000000..39f96aa
+--- /dev/null
++++ b/contrib/thunderbird-patch-inline/README
+@@ -0,0 +1,20 @@
++appp.sh is a script that is supposed to be used together with External=
+Editor
++for Mozilla Thundebird. It will let you include patches inline in e-ma=
+ils
++in an easy way.
++
++Usage:
++- Generate the patch with git format-patch.
++- Start writing a new e-mail in Thunderbird.
++- Press the external editor button (or Ctrl-E) to run appp.sh
++- Select the previosly generated patch file.
++- Finish editing the e-mail.
++
++Any text that is entered into the message editor before appp.sh is cal=
+led
++will be moved to the section between the --- and the diffstat.
++
++All S-O-B:s and Cc:s in the patch will be added to the CC list.
++
++To set it up, just install External Editor and tell it to use appp.sh =
+as the
++editor.
++
++Zenity is a required dependency.
+diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunder=
+bird-patch-inline/appp.sh
+new file mode 100755
+index 0000000..cc518f3
+--- /dev/null
++++ b/contrib/thunderbird-patch-inline/appp.sh
+@@ -0,0 +1,55 @@
++#!/bin/bash
++# Copyright 2008 Lukas Sandstr=C3=B6m <luksan@gmail.com>
++#
++# AppendPatch - A script to be used together with ExternalEditor
++# for Mozilla Thunderbird to properly include pathes inline i e-mails.
++
++# ExternalEditor can be downloaded at http://globs.org/articles.php?ln=
+g=3Den&pg=3D2
++
++CONFFILE=3D~/.appprc
++
++SEP=3D"-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D# Don't remove this line #=3D=
+-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-"
++if [ -e "$CONFFILE" ] ; then
++	LAST_DIR=3D`grep -m 1 "^LAST_DIR=3D" "${CONFFILE}"|sed -e 's/^LAST_DI=
+R=3D//'`
++	cd "${LAST_DIR}"
++else
++	cd > /dev/null
++fi
++
++PATCH=3D$(zenity --file-selection)
++
++if [ "$?" !=3D "0" ] ; then
++	#zenity --error --text "No patchfile given."
++	exit 1
++fi
++
++cd - > /dev/null
++
++SUBJECT=3D`sed -n -e '/^Subject: /p' "${PATCH}"`
++HEADERS=3D`sed -e '/^'"${SEP}"'$/,$d' $1`
++BODY=3D`sed -e "1,/${SEP}/d" $1`
++CMT_MSG=3D`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
++DIFF=3D`sed -e '1,/^---$/d' "${PATCH}"`
++
++CCS=3D`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp=
+' \
++	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
++
++echo "$SUBJECT" > $1
++echo "Cc: $CCS" >> $1
++echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
++echo "$SEP" >> $1
++
++echo "$CMT_MSG" >> $1
++echo "---" >> $1
++if [ "x${BODY}x" !=3D "xx" ] ; then
++	echo >> $1
++	echo "$BODY" >> $1
++	echo >> $1
++fi
++echo "$DIFF" >> $1
++
++LAST_DIR=3D`dirname "${PATCH}"`
++
++grep -v "^LAST_DIR=3D" "${CONFFILE}" > "${CONFFILE}_"
++echo "LAST_DIR=3D${LAST_DIR}" >> "${CONFFILE}_"
++mv "${CONFFILE}_" "${CONFFILE}"
+--=20
+1.5.3.7
