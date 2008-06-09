@@ -1,87 +1,127 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: squashing patches
-Date: Mon, 09 Jun 2008 09:37:47 -0700
-Message-ID: <484D5C5B.9090804@gnu.org>
-References: <20080607220101.GM31040@leksak.fem-net> <20080609114550.GA8079@leksak.fem-net> <484D47C9.9050509@gnu.org> <20080609162909.GC8079@leksak.fem-net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] git-sequencer.txt
+Date: Mon, 09 Jun 2008 09:49:44 -0700 (PDT)
+Message-ID: <m3d4mqwnxh.fsf@localhost.localdomain>
+References: <20080607220101.GM31040@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Joerg Sommer <joerg@alea.gnuu.de>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Jun 09 18:38:57 2008
+X-From: git-owner@vger.kernel.org Mon Jun 09 18:51:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5kOO-000476-6l
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 18:38:48 +0200
+	id 1K5kZw-00082o-UO
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 18:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbYFIQhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 12:37:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYFIQhw
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 12:37:52 -0400
-Received: from ag-out-0708.google.com ([72.14.246.249]:53191 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752246AbYFIQhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 12:37:51 -0400
-Received: by ag-out-0708.google.com with SMTP id 31so5116369agc.10
-        for <git@vger.kernel.org>; Mon, 09 Jun 2008 09:37:51 -0700 (PDT)
+	id S1752474AbYFIQts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 12:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752515AbYFIQts
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 12:49:48 -0400
+Received: from mu-out-0910.google.com ([209.85.134.191]:63853 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752262AbYFIQtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 12:49:47 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1580852mue.1
+        for <git@vger.kernel.org>; Mon, 09 Jun 2008 09:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=pauslaUj+BcXsyTp8zCSUgD4Ydnw+IuHjDp8aZK5fFQ=;
-        b=HwB+P0/uWF0gx7oLiLgdfUHNKc/maNeC+3aMC2c64Xn5QAwUBbsPJbrWn+27o4/1iV
-         vQNRgqwfC1zuL9OG7uhZeRJ4ys3wyzMkZ8wUL3vgBH+iCgiq9w+NGXu61zaE0fAAtBji
-         3r5iJfvYhK1FlzAr9YZISZXQHrzGEaMmkq8Ho=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=gzAwuXkUdxKYG7G0u7AiipqnvrF9ltPgeHaAMOSqOm0=;
+        b=xTnT0DH3JWMnMx6Pb+G0/zOhgK64N/Mwxbe1W1ikcfsAoPxAyj89iPXdKE4Q/Ln3Wq
+         Ay4SMXBWIy41E6MhzldbMd43kwTIdXYSTAJLa9TklkaJRM0f/7ZPwseMLhZ2GgJ3nKRY
+         dwwWQoNiTpAf7D9ieFyJHkMvmpNWRLEJxLBI0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=OqMNyGY6m53V87YbBE+1q4bleJoNJKNumLye7w2px3+c05NLLcWra5s43qIbKiy6z8
-         Scx2WGpDqM1r9til0cUEV3EqYCcLBqE8TiBwAF0b7WmEKFJGpDGSYKt1Qi9GmOSBmget
-         9HbmVKT7Hf6XeiYuVFmt2G99A7K9FBw/x1oYU=
-Received: by 10.150.217.14 with SMTP id p14mr6634586ybg.53.1213029470974;
-        Mon, 09 Jun 2008 09:37:50 -0700 (PDT)
-Received: from scientist-2.local ( [66.78.193.51])
-        by mx.google.com with ESMTPS id p77sm14148369pyb.12.2008.06.09.09.37.49
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=KayEOy8R9n27JGkIaDPq5N643Wp9RJ2NFvFTCqncmalZb71ChuqrLzB5z4JUM5haF2
+         +uTY64EpOG0KVayRBMkYj7chZlobfYF7HRVzVSHc+3ainWIOC15s+K8Qj/1WAvwxzWhf
+         bkVyFZZLsCiKurZm34fqvac/A14ekxYEgJoL0=
+Received: by 10.103.170.13 with SMTP id x13mr2563463muo.27.1213030185728;
+        Mon, 09 Jun 2008 09:49:45 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.243.230])
+        by mx.google.com with ESMTPS id j10sm17287865muh.18.2008.06.09.09.49.42
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Jun 2008 09:37:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <20080609162909.GC8079@leksak.fem-net>
-X-Enigmail-Version: 0.95.6
+        Mon, 09 Jun 2008 09:49:44 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m59GqjuZ017705;
+	Mon, 9 Jun 2008 18:52:46 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m59GqgRH017702;
+	Mon, 9 Jun 2008 18:52:42 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080607220101.GM31040@leksak.fem-net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84402>
 
+Stephan Beyer <s-beyer@gmx.net> writes:
 
->> (the user could choose whether to not edit the editor,
->> or whether to use a no-op for GIT_EDITOR).
+> ------------------------------ git-sequencer.txt ------------------------------
+> git-sequencer(1)
+> ================
+> 
+> NAME
+> ----
+> git-sequencer - Execute a sequence of git instructions
+> 
+> SYNOPSIS
+> --------
+> [verse]
+> 'git-sequencer' [-v | --verbose] <file> [<branch>]
 
-Right now, doing
+I think that you should think carefully if there would be no troubles
+with this way of specifying options.  Perhaps explicit file option
+(-F/--file=<file>), or optional '--' separating revisions.  But
+perhaps my fears are for nothing, and current proposal is good
+solution.
 
-pick a
-squash b
+> 'git-sequencer' --continue | --skip | --abort | --edit
 
-will always invoke the editor.  It could be possible to have two 
-operation modes.  One in which the sanity check fails, one in which the 
-automatic concatenation of two commit messages is used.
+The common '--continue | --skip | --abort' infrastructure is, I think,
+one of the most important things about this.  I'd like to have
+'--what' (or '--status') option to tell us if we are in the middle of
+sequence of oprations, and what this sequence is (rebase, rebase -i,
+am, revert, cherry-pick, sequencer <file>,...).
 
-> Do you think it's useful to add something like --reference (or -C,
-> or however it is called) to git-merge?
+> TODO FILE FORMAT
+> ----------------
+> edit <commit>::
+> file [<options>] <file>::
+> mark <mark>::
+> merge [<options>] <commit-ish1> <commit-ish2> ... <commit-ishN>::
 
-Maybe it's not useful, but I think it's cleaner than adding the option 
-only to git-sequencer.
+> pick [<options>] <commit>::
+> 	Pick (see linkgit:git-cherry-pick[1]) a commit.
+> 	Sequencer will pause on conflicts.
 
-Paolo
+Two comments (as I don't use "git rebase -i", preferring to work with
+StGIT, Quilt-like patch management interface).
 
-ps: sure you should ask "the others" (who are more knowledgeable than me 
-BTW) for opinions about what I proposed.
+First, if git-sequencer is to become backbone for cherry-pick,
+allowing for example long requested cherry-picking multiple commits
+(squasing them or not into single commit), is should be able to use it
+also for git-revert.  Thus I'd like to have either "pick -R" or
+"revert" command.
+
+Second, about "pick" accepring (I guess) git-cherry-pick options: I
+would like to have documentation on '--mainline <parent-number>'
+option in git-sequencer manpage, or at lest explicitely mentioned that
+it can be used to pick merge commits.  BTW, is "pick --no-commit"
+symmetric equivalent^W alternative to "squash"?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
