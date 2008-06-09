@@ -1,174 +1,70 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH] Add a helper script to send patches with Mozilla Thunderbird
-Date: Mon, 09 Jun 2008 19:37:04 +0200
-Organization: Chalmers
-Message-ID: <484D6A40.60002@etek.chalmers.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] remote show: fix the -n option
+Date: Mon, 9 Jun 2008 18:56:56 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806091856180.1783@racer>
+References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr> <484C7DCC.6080303@free.fr> <484D5322.6050309@free.fr> <alpine.DEB.1.00.0806091733230.1783@racer>
+ <484D6128.1010800@freesurf.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 09 19:47:42 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-221195252-1213034225=:1783"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Olivier Marin <dkr@freesurf.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 09 19:59:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5lSv-0005Mx-CT
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 19:47:33 +0200
+	id 1K5leB-00014w-FL
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 19:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbYFIRqe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2008 13:46:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752727AbYFIRqe
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 13:46:34 -0400
-Received: from atum.ita.chalmers.se ([129.16.4.148]:45068 "EHLO
-	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752715AbYFIRqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 13:46:33 -0400
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Jun 2008 13:46:33 EDT
-Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
-	(Authenticated sender: lukass)
-	by atum.ita.chalmers.se (Postfix) with ESMTP id 360C8839B;
-	Mon,  9 Jun 2008 19:37:05 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.14) Gecko/20080504 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+	id S1752770AbYFIR6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 13:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYFIR6R
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 13:58:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42157 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752052AbYFIR6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 13:58:16 -0400
+Received: (qmail invoked by alias); 09 Jun 2008 17:58:14 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp026) with SMTP; 09 Jun 2008 19:58:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/NxOIpDXHN8F8aL2XtWSKl0SieFNu+hh1/5Ap4sR
+	Ykd3kHPoRcayXe
+X-X-Sender: gene099@racer
+In-Reply-To: <484D6128.1010800@freesurf.fr>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84407>
 
-The script appp.sh can be used with the External Editor extension for
-Mozilla Thunderbird in order to be able to send inline patches in an
-easy way.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
----
+--8323329-221195252-1213034225=:1783
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
-I sent this out a year ago or so. I figured I'd put the script
-in contrib/, in case someone finds it useful.
-(and yes, this patch is sent using appp.sh)
 
- Documentation/SubmittingPatches          |    5 +++
- contrib/thunderbird-patch-inline/README  |   20 +++++++++++
- contrib/thunderbird-patch-inline/appp.sh |   55 ++++++++++++++++++++++=
-++++++++
- 3 files changed, 80 insertions(+), 0 deletions(-)
- create mode 100644 contrib/thunderbird-patch-inline/README
- create mode 100755 contrib/thunderbird-patch-inline/appp.sh
+On Mon, 9 Jun 2008, Olivier Marin wrote:
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/Submitting=
-Patches
-index 0e155c9..7c16852 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -419,6 +419,11 @@ settings but I haven't tried, yet.
- 	mail.identity.default.compose_html	=3D> false
- 	mail.identity.id?.compose_html		=3D> false
-=20
-+( Lukas Sandstr=C3=B6m )
-+
-+There is a script in contrib/thunderbird-patch-inline which can help
-+you include patches with Thunderbird in an easy way. To use it, do the
-+steps above and then use the script as the external editor.
-=20
- Gnus
- ----
-diff --git a/contrib/thunderbird-patch-inline/README b/contrib/thunderb=
-ird-patch-inline/README
-new file mode 100644
-index 0000000..39f96aa
---- /dev/null
-+++ b/contrib/thunderbird-patch-inline/README
-@@ -0,0 +1,20 @@
-+appp.sh is a script that is supposed to be used together with External=
-Editor
-+for Mozilla Thundebird. It will let you include patches inline in e-ma=
-ils
-+in an easy way.
-+
-+Usage:
-+- Generate the patch with git format-patch.
-+- Start writing a new e-mail in Thunderbird.
-+- Press the external editor button (or Ctrl-E) to run appp.sh
-+- Select the previosly generated patch file.
-+- Finish editing the e-mail.
-+
-+Any text that is entered into the message editor before appp.sh is cal=
-led
-+will be moved to the section between the --- and the diffstat.
-+
-+All S-O-B:s and Cc:s in the patch will be added to the CC list.
-+
-+To set it up, just install External Editor and tell it to use appp.sh =
-as the
-+editor.
-+
-+Zenity is a required dependency.
-diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunder=
-bird-patch-inline/appp.sh
-new file mode 100755
-index 0000000..cc518f3
---- /dev/null
-+++ b/contrib/thunderbird-patch-inline/appp.sh
-@@ -0,0 +1,55 @@
-+#!/bin/bash
-+# Copyright 2008 Lukas Sandstr=C3=B6m <luksan@gmail.com>
-+#
-+# AppendPatch - A script to be used together with ExternalEditor
-+# for Mozilla Thunderbird to properly include pathes inline i e-mails.
-+
-+# ExternalEditor can be downloaded at http://globs.org/articles.php?ln=
-g=3Den&pg=3D2
-+
-+CONFFILE=3D~/.appprc
-+
-+SEP=3D"-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D# Don't remove this line #=3D=
--=3D-=3D-=3D-=3D-=3D-=3D-=3D-=3D-"
-+if [ -e "$CONFFILE" ] ; then
-+	LAST_DIR=3D`grep -m 1 "^LAST_DIR=3D" "${CONFFILE}"|sed -e 's/^LAST_DI=
-R=3D//'`
-+	cd "${LAST_DIR}"
-+else
-+	cd > /dev/null
-+fi
-+
-+PATCH=3D$(zenity --file-selection)
-+
-+if [ "$?" !=3D "0" ] ; then
-+	#zenity --error --text "No patchfile given."
-+	exit 1
-+fi
-+
-+cd - > /dev/null
-+
-+SUBJECT=3D`sed -n -e '/^Subject: /p' "${PATCH}"`
-+HEADERS=3D`sed -e '/^'"${SEP}"'$/,$d' $1`
-+BODY=3D`sed -e "1,/${SEP}/d" $1`
-+CMT_MSG=3D`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
-+DIFF=3D`sed -e '1,/^---$/d' "${PATCH}"`
-+
-+CCS=3D`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp=
-' \
-+	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
-+
-+echo "$SUBJECT" > $1
-+echo "Cc: $CCS" >> $1
-+echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
-+echo "$SEP" >> $1
-+
-+echo "$CMT_MSG" >> $1
-+echo "---" >> $1
-+if [ "x${BODY}x" !=3D "xx" ] ; then
-+	echo >> $1
-+	echo "$BODY" >> $1
-+	echo >> $1
-+fi
-+echo "$DIFF" >> $1
-+
-+LAST_DIR=3D`dirname "${PATCH}"`
-+
-+grep -v "^LAST_DIR=3D" "${CONFFILE}" > "${CONFFILE}_"
-+echo "LAST_DIR=3D${LAST_DIR}" >> "${CONFFILE}_"
-+mv "${CONFFILE}_" "${CONFFILE}"
---=20
-1.5.3.7
+> Johannes Schindelin a écrit :
+> > 
+> > And I do not like this change either.  It proliferates the "we just 
+> > die() and do not care about reusing the code where die()ing is not 
+> > desired" paradigm.
+> 
+> I agree and I'm OK to try to do something about that. But not in that patch.
+> 
+> This patch is just to fix a regression.
+
+But did you not now make it harder to fix "that"?  By relying on the die() 
+behaviour in your regression fix?
+
+Whatever,
+Dscho
+
+--8323329-221195252-1213034225=:1783--
