@@ -1,108 +1,120 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: squashing patches (was: Re: [RFC] git-sequencer.txt)
-Date: Mon, 9 Jun 2008 13:45:50 +0200
-Message-ID: <20080609114550.GA8079@leksak.fem-net>
-References: <20080607220101.GM31040@leksak.fem-net>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: [PATCH] Add testcase for merging in a CRLF repo, showing that conflict file is in LF only
+Date: Mon, 9 Jun 2008 13:40:32 +0200
+Message-ID: <26299.4828321554$1213013668@news.gmane.org>
+References: <"Storm-Olsen*"@MHS>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Joerg Sommer <joerg@alea.gnuu.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 09 13:46:50 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 09 14:14:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5fpm-0007ET-25
-	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 13:46:46 +0200
+	id 1K5gFu-0007Ns-Te
+	for gcvg-git-2@gmane.org; Mon, 09 Jun 2008 14:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759928AbYFILpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 07:45:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759867AbYFILpz
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 07:45:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56015 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759430AbYFILpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 07:45:54 -0400
-Received: (qmail invoked by alias); 09 Jun 2008 11:45:52 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp055) with SMTP; 09 Jun 2008 13:45:52 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19KB+cbj1RKEw1Nir6/e0brtc/lj406anXl88EqaB
-	aiI+j72HTlrOE+
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K5fos-0002Hr-J4; Mon, 09 Jun 2008 13:45:50 +0200
+	id S1755997AbYFIMMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 08:12:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbYFIMMx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 08:12:53 -0400
+Received: from hoat.troll.no ([62.70.27.150]:49291 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754917AbYFIMMx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 08:12:53 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 9CF6120AFF;
+	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 7F87720AF0;
+	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080607220101.GM31040@leksak.fem-net>
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84378>
 
-Wow,
+An LF only conflict file results in the resolved file being in LF,
+the commit is in LF and a warning saying that LF will be replaced
+by CRLF, and the working dir ends up with a mix of CRLF and LF files.
 
-I didn't expect *that much* feedback :-)
-I think I begin slowly to comment some things, and/or tell you
-some things that are still open.
-Then, maybe, someone of you swoops in :)
+Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
+---
+ (Resend due to "git reset --hard initial" instead of "git reset
+ --hard a", in the first testcase)
+ 
+ Sorry, no patch to actually *fix* the problem.
+ Someone who knows the code in question will probably find the solution in a
+ fraction of the time that I would.
+ Also note that :1:file, :2:file and :3:file all are also in LF format, and not
+ CRLF, which you would want if core.autocrlf == true.
 
-> TODO FILE FORMAT
-> ----------------
+ t/t6033-merge-crlf.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 52 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6033-merge-crlf.sh
 
-First to say, I tried to be (backwards-)compatible to the 
-rebase--interactive TODO file format in "master".
-It became incompatible to the one in "next" in one point 
-only (-> merge). But if I understood "next" right, this is
-not bad, since Joerg Sommers rebase-i patchset is still
-open for discussion (i.e. mark).
-
-Well, now I come to the subject's topic.
-
-
-I've noticed that one thing is *obviously* missing:
-
-There's a slight asymmetry between
-> file [<options>] <file>::
-and
-> pick [<options>] <commit>::
-> edit <commit>::
-> squash [<options>] <commit>::
-
-"edit" is kept for backwards compatibility. It's a short form for and
-internally `expanded' to "pick --edit".
-As --edit is a general option, there is also "file --edit".
-So there's no functional asymmetry in this case.
-
-If you want to pick several commits and squash them together, there is
-"squash".  BUT there is no equivalent for "file" currently.
-The only way to squash several patches together is with an external tool
-like your favourite text editor, which is not fun but error-prone.
-And there is no way to squash a commit (in the repo) and a patch (as file)
-together (in exactly this order). The only thing is that you could run
-sequencer twice and squash in the second move.
-
-So I wonder if file --squash is useful, too, or even --squash as an
-general option. The latter means that you could squash merge commits
-into other commits, too.
-
-We've also discussed the non-atomic approach of doing something like
-	pick ( a b c d )	# or another syntax for that
-for picking multiple commits into one.
-In my current point of view, this does not seem right, as it:
- - is not atomic ;), and...
- - Well, the approach could be used for "file ( a b c d )", too,
-   but it doesn't help for squashing commits AND patches.
-
-Comments? Opinions? Ideas?
-
-A first try to prod,
-  Stephan.
-
+diff --git a/t/t6033-merge-crlf.sh b/t/t6033-merge-crlf.sh
+new file mode 100755
+index 0000000..8bff2f4
+--- /dev/null
++++ b/t/t6033-merge-crlf.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++append_cr () {
++	sed -e 's/$/Q/' | tr Q '\015'
++}
++
++remove_cr () {
++	tr '\015' Q | sed -e 's/Q$//'
++}
++
++test_description='merge conflict in crlf repo
++
++		b---M
++	       /   /
++	initial---a
++
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	git config core.autocrlf true &&
++	echo foo | append_cr >file &&
++	git add file &&
++	git commit -m "Initial" &&
++	git tag initial &&
++	git branch side &&
++	echo line from a | append_cr >file &&
++	git commit -m "add line from a" file &&
++	git tag a &&
++	git checkout side &&
++	echo line from b | append_cr >file &&
++	git commit -m "add line from b" file &&
++	git tag b &&
++	git checkout master
++'
++
++test_expect_success 'Check "ours" is CRLF' '
++	git reset --hard a &&
++	git merge side -s ours &&
++	cat file | remove_cr | append_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_expect_success 'Check that conflict file is CRLF' '
++	git reset --hard a &&
++	! git merge side &&
++	cat file | remove_cr | append_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_done
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.5.6.rc0.162.gaeac2.dirty
