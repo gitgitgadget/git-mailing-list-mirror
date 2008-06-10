@@ -1,104 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] remote show: fix the -n option
-Date: Mon, 09 Jun 2008 18:10:49 -0700
-Message-ID: <7vd4mqdrhi.fsf@gitster.siamese.dyndns.org>
-References: <484B2DD3.8050307@free.fr>
- <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr>
- <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr>
- <484C7DCC.6080303@free.fr> <484D5322.6050309@free.fr>
- <alpine.DEB.1.00.0806091733230.1783@racer>
+From: "Philippe Ombredanne" <philippe@easyeclipse.org>
+Subject: RE: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
+Date: Mon, 9 Jun 2008 18:15:06 -0800
+Message-ID: <027101c8ca9f$cd68afe0$1e01a8c0@computer>
+References: <200806092139.58485.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 10 03:11:58 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Dave Watson'" <dwatson@mimvista.com>,
+	"'Marek Zawirski'" <marek.zawirski@gmail.com>,
+	<git@vger.kernel.org>
+To: "'Robin Rosenberg'" <robin.rosenberg@dewire.com>,
+	"'Shawn O. Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 03:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5sOw-0000Jo-1g
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 03:11:54 +0200
+	id 1K5sUs-0001x0-Uc
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 03:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755177AbYFJBLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 21:11:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755074AbYFJBLA
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 21:11:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56148 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754934AbYFJBK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 21:10:59 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1881337F1;
-	Mon,  9 Jun 2008 21:10:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2588537EE; Mon,  9 Jun 2008 21:10:52 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806091733230.1783@racer> (Johannes
- Schindelin's message of "Mon, 9 Jun 2008 17:35:13 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 153FCE74-368A-11DD-A289-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1753491AbYFJBRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 21:17:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYFJBRE
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 21:17:04 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:34524 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749AbYFJBRC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 21:17:02 -0400
+Received: from randymail-a5.g.dreamhost.com (sd-green-bigip-81.dreamhost.com [208.97.132.81])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id A293517AAFE
+	for <git@vger.kernel.org>; Mon,  9 Jun 2008 18:17:00 -0700 (PDT)
+Received: from computer (dsl017-042-218.sfo1.dsl.speakeasy.net [69.17.42.218])
+	by randymail-a5.g.dreamhost.com (Postfix) with ESMTP id E85B490DA0;
+	Mon,  9 Jun 2008 18:15:27 -0700 (PDT)
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <200806092139.58485.robin.rosenberg@dewire.com>
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1807
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84467>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Robin:
+I can check the commit message. If you have a seprate archive of the meails
+that woudl help too .
 
-> On Mon, 9 Jun 2008, Olivier Marin wrote:
->
->> diff --git a/builtin-remote.c b/builtin-remote.c
->> index c49f00f..efe74c7 100644
->> --- a/builtin-remote.c
->> +++ b/builtin-remote.c
->> @@ -421,10 +421,10 @@ static void show_list(const char *title, struct path_list *list)
->>  
->>  static int show_or_prune(int argc, const char **argv, int prune)
->>  {
->> -	int dry_run = 0, result = 0;
->> +	int no_query = 0, result = 0;
->
-> Just for the record (not that I think anybody will care): I do not like 
-> this change.
 
-I do not think nobody cares ;-).
 
-At least I care enough to point out that I think you are wrong in this
-case.  "show -n" in the scripted version was never about "dry-run" but
-was about "no-query".
+-- 
+Cheers
+Philippe
 
-The problem with the area of the code this patch touches is that compared
-to the scripted version, show and prune now share their codepaths a bit
-more, and it is less easy to keep -n disabled for prune (I think it is a
-nonsense because you cannot "prune" sensibly without looking at what the
-remote has.  It was a bug in the scripted version and losing it in C
-rewrite was a "silent bugfix") while resurrecting -n for show (which is a
-quick way to view where the URL points at without bothering to see what
-remote branches there are).
+philippe ombredanne | 1 650 799 0949 | pombredanne at nexb.com 
+nexB - Open by Design (tm) - http://www.nexb.com 
+http://easyeclipse.org - http://phpeclipse.net - http://eclipse.org/atf - 
+http://eclipse.org/vep - http://labs.jboss.org/drools/ -
+http://developer.mozilla.org/en/docs/XULRunner
 
-I think a sensible thing to do would be to:
 
- - Agree that "-n" in the sense that "do not query" and "--dry-run" in the
-   sense that "do not do anything but report what you would do" are
-   different options.
+> -----Original Message-----
+> From: Robin Rosenberg [mailto:robin.rosenberg@dewire.com] 
+> Sent: Monday, June 09, 2008 11:40 AM
+> To: Shawn O. Pearce
+> Cc: Dave Watson; Marek Zawirski; git@vger.kernel.org; 
+> Philippe Ombredanne
+> Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 
+> 3-clause BSD
+> 
+> 
+> Hi, all
+> 
+> I've got confirmation from all needed parties and pushed the 
+> license changes to master. 
+> See 
+> http://repo.or.cz/w/egit.git?a=commit;h=2baa6eb54706926f74d8ca
+5a10c7f0448acb5fe6
+and
+http://repo.or.cz/w/egit.git?a=commit;h=53a2cc3f6144ddcc10954d3abf68a5b90ed9
+5248
 
- - Resurrect "show -n" as a quick way to view URLs without bothering to
-   contact the remote end that is needed to show "the tracked branches"
-   information.
+The changes plus some fixes to the fetch code has been merged and pushed to
+master.
 
- - Forbid "prune -n", which is nonsense.
+Philippe, It would be nice if you could check to see that the licensing
+looks ok. We can hand
+over the complete e-mail messages separately from the commit comments.
 
- - Make "prune --dry-run" truly useful --- contact the other end, and
-   report what will be pruned without really pruning them.
+I think we need to complement the UI for fetch plus and couple other fixes
+and do more testing befire
+bumping the revision number. 
 
- - Perhaps as an enhancement, "show -n" could show what tracking branches
-   we have from the remote, even though the information may be stale.
-   The scripted version did not do this, I think, and it would be an
-   improvement.
-
-I am CC'ing Shawn who authored 859607d (Teach 'git remote' how to cleanup
-stale tracking branches., 2007-02-02) to give him a chance to point out
-why I am wrong in saying "prune -n" is nonsense.  Maybe there is a valid
-use case for that option, even though I do not see one.
+-- robin
