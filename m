@@ -1,84 +1,122 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Recovering from repository corruption
-Date: Tue, 10 Jun 2008 16:00:49 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806101554490.3101@woody.linux-foundation.org>
-References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com>  <m3abhtp42o.fsf@localhost.localdomain>  <6dbd4d000806101238v2bb975abqd39916e45d4bf866@mail.gmail.com>  <200806102159.02875.jnareb@gmail.com>  <6dbd4d000806101303j4b2032ajc6e004e0a82e4db5@mail.gmail.com>
-  <alpine.LFD.1.10.0806101317100.3101@woody.linux-foundation.org>  <6dbd4d000806101328k1fc913f2ia55c3e44273ec5ad@mail.gmail.com>  <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org>  <6dbd4d000806101422j39709906x1b4b03b82b504e62@mail.gmail.com>
-  <alpine.LFD.1.10.0806101431410.3101@woody.linux-foundation.org> <6dbd4d000806101509l516cf467me06fadee6ead0964@mail.gmail.com> <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org>
+From: "Ben Lynn" <benlynn@gmail.com>
+Subject: Re: git bugs
+Date: Tue, 10 Jun 2008 16:09:23 -0700
+Message-ID: <832adb090806101609q17a21948nb5814c3b22bd832d@mail.gmail.com>
+References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
+	 <832adb090806101145w55729676ya7bcfb41b0413f59@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101249580.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Denis Bueno <dbueno@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 01:01:50 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 01:10:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Cqa-0003pS-9z
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 01:01:48 +0200
+	id 1K6CzK-0006eJ-Vh
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 01:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754725AbYFJXAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 19:00:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbYFJXAy
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 19:00:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60674 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752143AbYFJXAy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 19:00:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AN0oqg020211
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 Jun 2008 16:00:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AN0n09001557;
-	Tue, 10 Jun 2008 16:00:50 -0700
-In-Reply-To: <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.38 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754577AbYFJXJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 19:09:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbYFJXJ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 19:09:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:21614 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752651AbYFJXJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 19:09:56 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1943244fgg.17
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 16:09:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ovCMRLTlusEM//CdL7I5f2GeLIvLcOl8rT0d6oOhDpU=;
+        b=IThMhoKrOWvd93yqqEtDwQfNtLa/B5Iane1a0kCIXGbncxl1T8cuJvKJUOaUbkwD6J
+         qY+BenwbTWLQLDoEXAe5vGNuUukCDphnhZLz06hqBI48J/jr9l/ZyzNlAUU2R3gynwfO
+         Gjscq9hki5E88NKzvbJIAs13xPb355N/O1QKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qQm3TjZpq7P/rv7hL02809C8QdQi6qXGHw1EB0EOaZLY9eJ0a2W9RD6r2qJfs6bV7R
+         aAOfhzj0eRG2alojIDMdyoN53lwDUoJ3UzLGUb1A2+Fk3VtBYKD693dbk+lp9aYa6whc
+         HgnaUqU4N8ooGTUdCY8aygN8gBQgzZHsCOe7U=
+Received: by 10.86.26.1 with SMTP id 1mr6361910fgz.49.1213139369863;
+        Tue, 10 Jun 2008 16:09:29 -0700 (PDT)
+Received: by 10.86.79.17 with HTTP; Tue, 10 Jun 2008 16:09:23 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0806101249580.3101@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84561>
 
+>> Nice! I believe I can prove there are no races now.
+>
+> It's worth pointing out that even in the absense of races, you can
+> obviously screw things up if you really work at it, and *want* to. We
+> cannot guarantee that we see all file changes from the stat() information,
+> and we don't even save the whole stat info (ie we only save the low 32
+> bits).
 
+I agree completely. My proof only holds in an abstract setting. It
+assumes things such as a strictly nondecreasing system clock is and
+that ctime and mtime work in an ideal sense.
 
-On Tue, 10 Jun 2008, Linus Torvalds wrote:
-> 
-> It's going to make big "git add" calls *much* slower, so I'm not very 
-> happy about it (especially since we don't actually care that deeply about 
-> the files really being there until much later, so doing something 
-> asynchronous would be perfectly acceptable), but for you this is 
-> definitely worth-while.
+> And different systems have different approaches to what happens when a
+> file gets modified through a writable mmap(). Exactly what is the mtime
+> going to be?
 
-For me, on the whole kernel, on a pretty good system:
+Good point. I confess I've only learned about mmap very recently, from
+browsing the git code. All this time, I've been using streams, file
+descriptors, etc. mmap is so much better!
 
- - before:
+What's Linux do in this case? For indexing purposes, so long as the
+mtime is updated after the last write before git gets to it, things
+should be fine.
 
-	[torvalds@woody test-it-out]$ time git add .
+> So I think git does a really good job at matching the stat() information,
+> and the suggested patch makes it even stricter, but I think we should not
+> even try to make it handle "malicious" changes. I bet you can work at
+> making it miss some update if you really *really* try.
 
-	real    0m7.986s
-	user    0m6.404s
-	sys     0m1.456s
+Definitely. e.g. rig the mtime by 2^32 seconds, or add 2^32 bytes to a
+file within a second.
 
- - after:
+> And I think there is one known race: the index mtime itself is not
+> race-free. Remember: it may take more than a second to write the index
+> file! So I can imagine that if you can set it up so that you change the
+> file as the index is written out, and the index write is delayed
+> sufficiently, the racy timestamp logic can fail just because the timestamp
+> on the index file ends up being later.
 
-	[torvalds@woody test-it-out]$ time ~/git/git-add .
+I had thought about this. I hacked some code up where the index looks
+at the current system time when updating a cache entry to determine if
+the hash is racy. Is doing one time(NULL) call per file reasonable?
+I'm guessing it must be cheaper that a stat call.
 
-	real    0m52.693s
-	user    0m7.416s
-	sys     0m2.516s
+> This is more easily shown by doing a 'touch' on the index file afterwards,
+> of course.
 
-so it's definitely quite noticeable in that simplistic form. 
+Agreed. Another assumption of my proof is that the index is
+trustworthy. If you tamper with it, all bets are off. You can't stop
+determined users from hurting themselves.
 
-A more interesting patch would use aio_fsync(), and then just wait for 
-them at the end with aio_return(). Not that I love AIO, but this is 
-definitely a case where it would make sense to do (of course, systems 
-without AIO support would then fall back to regular fsync()).
+> And yes, we should have written the timestamp to the file itself, instead
+> of reading it from the filesystem.
 
-I will have to think about this.
+Interesting. I had hacked a version of the index that did this (before
+changing it to use a different solution).
 
-			Linus
+In general, is the format of the index file set in stone? Is that why
+it's better to use the size zero trick for the race condition rather
+than introduce a new flag for example? Or are these wrinkles too small
+to justify a potentially painful upgrade?
+
+-Ben
