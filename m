@@ -1,63 +1,70 @@
-From: Andrew Klossner <andrew@cesa.opbu.xerox.com>
-Subject: Re: git clone stable-2.6.25.y fails over HTTP
-Date: Tue, 10 Jun 2008 08:05:05 -0700
-Message-ID: <200806101505.m5AF5525024775@pogo.cesa.opbu.xerox.com>
-To: greg@kroah.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 17:26:49 2008
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Date parsing
+Date: Tue, 10 Jun 2008 17:27:58 +0200
+Message-ID: <bd6139dc0806100827m434748a6u8ce232e1ad967377@mail.gmail.com>
+References: <bd6139dc0806100758xb41d08dh18e3051088b707e5@mail.gmail.com>
+	 <484E98BA.70808@viscovery.net>
+Reply-To: sverre@rabbelier.nl
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 17:29:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K65jX-0001Na-63
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 17:26:03 +0200
+	id 1K65mM-0002jr-1k
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 17:28:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbYFJPZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 11:25:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbYFJPZJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 11:25:09 -0400
-Received: from wbmler2.mail.xerox.com ([13.13.138.217]:42852 "EHLO
-	wbmler2.mail.xerox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751652AbYFJPZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 11:25:08 -0400
-X-Greylist: delayed 1164 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jun 2008 11:25:07 EDT
-Received: from wbmlir1.mail.xerox.com (wbmlir1.mail.xerox.com [13.131.8.221])
-	by wbmler2.mail.xerox.com (8.14.2/8.13.8) with ESMTP id m5AFEIS6022174;
-	Tue, 10 Jun 2008 11:14:20 -0400
-Received: from wbmlir1.mail.xerox.com (localhost [127.0.0.1])
-	by wbmlir1.mail.xerox.com (8.14.2/8.13.6) with ESMTP id m5AF5AKQ007802;
-	Tue, 10 Jun 2008 11:05:10 -0400
-Received: from hermes.opbu.xerox.com (hermes.opbu.xerox.com [13.62.6.81])
-	by wbmlir1.mail.xerox.com (8.14.2/8.13.6) with ESMTP id m5AF576H007783
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Jun 2008 11:05:07 -0400
-X-Xerox-Source-Ip: 13.62.6.81
-X-Xerox-Source-Name: hermes.opbu.xerox.com
-X-Xerox-Reported-Name: hermes.opbu.xerox.com
-Received: from pogo.cesa.opbu.xerox.com (pogo.cesa.opbu.xerox.com [13.62.33.31])
-	by hermes.opbu.xerox.com (8.13.7+Sun/8.13.7) with ESMTP id m5AF56UN004233;
-	Tue, 10 Jun 2008 08:05:06 -0700 (PDT)
-Received: from cesa.opbu.xerox.com (gto.cesa.opbu.xerox.com [13.62.136.98])
-	by pogo.cesa.opbu.xerox.com (8.13.6+Sun/8.13.6) with ESMTP id m5AF5525024775;
-	Tue, 10 Jun 2008 08:05:05 -0700 (PDT)
-In-Reply-To: Your message of "Fri, 06 Jun 2008 14:54:00 PDT."
+	id S1753122AbYFJP2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 11:28:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753062AbYFJP2D
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 11:28:03 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:44130 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889AbYFJP2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 11:28:01 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2636241wfd.4
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 08:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OHx4NFFSpVaUhq8mvhCJF6BwYjNiFR6jlJv+JLntPh8=;
+        b=ZaVlREcuuSoKHo5JBcq4jWNH647TvRg5YP9vy/i3EXEZLhDlPTbCms7tQU3cREaw08
+         MGrrEuaBQidEiO1VR0VVaIWT2o+QUuw9UJsiQWk9Y4Joz3e7DhvKVfhjoyYGGXCgGpKm
+         KNYuFork5pq91UT4AbI28Lj8Nw6F2bueemsMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=UnCoj4AeaSTI0oEn52T9/9wvZfQq6pWrItcUr0xLUtPax4oNrHff/1heEK3w6eH25V
+         4D6Z/1uZnK226AonyQNwi3dKEIz7Y5gpleh7pqCh4fG7b4QGm/WQImf3EPS1U/shIJ8v
+         nWExLzy9nuz5plgOCXe8iTNka2vDfpDbylIl4=
+Received: by 10.142.177.7 with SMTP id z7mr306647wfe.15.1213111678907;
+        Tue, 10 Jun 2008 08:27:58 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Tue, 10 Jun 2008 08:27:58 -0700 (PDT)
+In-Reply-To: <484E98BA.70808@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84518>
 
-Following up last week's problem with the stable-2.6.25.y tree:
+On Tue, Jun 10, 2008 at 5:07 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Since you did not give a timezone, your local timezone is taken,
+> presumably MET, which has daylight saving time in July, but not in
+> January. This is OK.
 
->From the HTTP perspective, the tree is stuck in time.  The two new
-tags v2.6.25.5 and v2.6.25.6 do not appear when I do this:
+Ah, then I agree the timezone change makes sense, although magical
+ordering switching is still bothering me.
 
-% git pull -v
-From http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y
- = [up to date]      master     -> origin/master
-Already up-to-date.
+-- 
+Cheers,
 
-On my home machine, I verified that these tags appear as expected when
-I pull with the git protocol.  But at work I'm behind a firewall and
-am stuck with HTTP.
-
-  -=- Andrew Klossner
+Sverre Rabbelier
