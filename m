@@ -1,55 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add a helper script to send patches with Mozilla Thunderbird
-Date: Tue, 10 Jun 2008 14:33:48 +0200
-Message-ID: <484E74AC.2060306@viscovery.net>
-References: <484D6A40.60002@etek.chalmers.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: freedesktop.org not really up to date?
+Date: Tue, 10 Jun 2008 15:07:58 +0200
+Message-ID: <484E7CAE.4040403@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Tue Jun 10 14:34:47 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 15:09:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K633m-000761-Vm
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 14:34:47 +0200
+	id 1K63az-0003MQ-Hn
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 15:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752912AbYFJMdv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 08:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753062AbYFJMdv
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 08:33:51 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:58907 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752912AbYFJMdu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 08:33:50 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K632q-0001hf-Py; Tue, 10 Jun 2008 14:33:48 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 91DF76D9; Tue, 10 Jun 2008 14:33:48 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <484D6A40.60002@etek.chalmers.se>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753657AbYFJNIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 09:08:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbYFJNIJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 09:08:09 -0400
+Received: from mail.op5.se ([193.201.96.20]:59324 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753461AbYFJNII (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 09:08:08 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 711B324B0002;
+	Tue, 10 Jun 2008 15:04:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.000, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id d4qBnFjR+zJX; Tue, 10 Jun 2008 15:04:18 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id 11B431B8008D;
+	Tue, 10 Jun 2008 15:04:18 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84498>
 
-Lukas Sandstr=C3=B6m schrieb:
-> The script appp.sh can be used with the External Editor extension for
-> Mozilla Thunderbird in order to be able to send inline patches in an
-> easy way.
+I just stumbled across this freedesktop.org site from 2007-06-03:
+http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws
 
-Thanks a lot.
+It seems to me that since then most of the issues have been worked out.
+Are any of them still valid points? If so, which ones and how should we
+go about addressing them?
 
-But sadly, it still wraps long lines. Is there a way to inhibit this sh=
-ort
-of modifying the settings?
+Jakub Cc'd as he was the last one to edit the (now immutable) wiki page.
 
--- Hannes
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
