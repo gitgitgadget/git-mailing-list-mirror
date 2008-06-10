@@ -1,92 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Date parsing
-Date: Tue, 10 Jun 2008 09:55:30 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806100942500.3101@woody.linux-foundation.org>
-References: <bd6139dc0806100758xb41d08dh18e3051088b707e5@mail.gmail.com>  <Zx2uvEYSssjj9E0HrmUL8wYASyWX9L9w8LkR-gGRAmnD9isjoEeyKg@cipher.nrlssc.navy.mil> <bd6139dc0806100831y7a00a0f4sbc8dee9df7a8c16a@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git bugs
+Date: Tue, 10 Jun 2008 12:58:34 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806101236120.19665@iabervon.org>
+References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Tue Jun 10 18:56:41 2008
+Cc: git@vger.kernel.org
+To: Ben Lynn <benlynn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 18:59:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K679E-0000kp-Lg
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 18:56:41 +0200
+	id 1K67C4-0001ry-OR
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 18:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbYFJQzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 12:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752831AbYFJQzr
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 12:55:47 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51285 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751365AbYFJQzq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 12:55:46 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AGtVwu027585
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 Jun 2008 09:55:32 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AGtU2k019633;
-	Tue, 10 Jun 2008 09:55:30 -0700
-In-Reply-To: <bd6139dc0806100831y7a00a0f4sbc8dee9df7a8c16a@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.384 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753393AbYFJQ6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 12:58:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbYFJQ6h
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 12:58:37 -0400
+Received: from iabervon.org ([66.92.72.58]:44902 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753159AbYFJQ6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 12:58:36 -0400
+Received: (qmail 3119 invoked by uid 1000); 10 Jun 2008 16:58:34 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Jun 2008 16:58:34 -0000
+In-Reply-To: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84524>
 
+On Tue, 10 Jun 2008, Ben Lynn wrote:
 
-
-On Tue, 10 Jun 2008, Sverre Rabbelier wrote:
-> On Tue, Jun 10, 2008 at 5:10 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> > Take a look at match_multi_number in date.c
-> > European ordering is preferred when the separator is '.'
+> 2. Kudos to everyone who figured out the nasty race condition and its
+> complex solution as described in Documentation/technical/racy-git.txt
+> and the comments of read-cache.c. It took me a while to get my head
+> around it.
 > 
-> Ok, then I'll use . in the future, that's nice :).
+> Unfortunately, the solution isn't perfect. Try this:
+> 
+> $ echo xyzzy > file
+> $ git update-index --add file   # don't zero size since contents match
+> $ echo frotz > file             # all stats still match, contents don't
+> $ echo nitfol > other  # can be done much earlier
+> $ git update-index --add other  # now the cached size is zeroed
+> $ : > file                      # zero the file size muahahaha
+> $ # Type fast! The above must take place within the same second! ;-)
+> $ sleep 2
+> $ echo filfre > other
+> $ git update-index --add other  # stats of "file" match, hash is wrong
+> 
+> Essentially, we trigger two index writes that avoid operations on
+> "file": one immediately after "file" is first committed and identified
+> as racily clean, and the second some time later, after we have
+> sneakily zeroed the file behind git's back (after previously editing
+> its contents in place). We defeat the safeguards and end up with a bad
+> hash in the index that appears valid.
+> 
+> The"other" file merely causes index writes without reading the "file"
+> entry. It is also racily clean in the above, but this is irrelevant.
+> 
+> It's unlikely this sequence of operations would occur in real usage,
+> but I'd sleep better if this index corruption bug were eliminated. One
+> practical but unsatisfactory easy "fix" is to mark racily clean
+> entries with SIZE_MAX instead of 0.
 
-Well, there are safer ways to give the date.
+We could distinguish a "racily clean" entry from a 0-length file entry 
+based on the hash. That is, say that a file isn't clean even though the 
+size matches, if the size is 0 and the entry's hash isn't the same as the 
+file's hash, which is e69de29bb2d1d6434b8b29ae775ad8c2e48c5391. Nice thing 
+about 0-length files is that you can compute their hashes without reading 
+them.
 
-If you do it in strict rfc822 format, you'll never have any confusion 
-what-so-ever. The "approxidate()" thing tries to parse any random input, 
-but it *is* meant to be excessively liberal.
-
-IOW, you can literally say "at tea-time two weeks ago" and get a date, and 
-it will even work. But you can also say "my 3rd child was born in 
-December", and it will also give you a date. The date will not make 
-_sense_, but it will give you one (it will decide that what you meant 
-is "Dec 3rd").
-
-So if you want to be precise and safe, you should be precise. I'd 
-personally suggest using yyyy-mm-dd, which is the ISO date format, 
-although if that fails approxidate will still try the admittedly 
-crazy yyyy-dd-mm.
-
-And always set the timezone explicitly if you really care. Again, we try 
-out best if you don't explicitly say which timezone to use, but if you 
-don't want any guessing - even _informed_ guessing - you really should 
-state things explicitly.
-
-> I think that it should bail out when it encounters "20-01-2008"
-> instead of automagically going for european notation. Even more
-> helpfull would be to inform the user that "20.01.2008" is the proper
-> notation.
-
-See above. git approxidate() tries the exact reverse: it's extremely 
-willing to turn absolutely any line noise into a date.
-
-Which is really nice when you do
-
-	git log @{last.week}..
-
-but if you actually want to state an exact date it really means that the 
-onus is on _you_ to be exact, and use a well-defined standard format.
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
