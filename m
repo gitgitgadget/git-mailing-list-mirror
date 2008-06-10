@@ -1,128 +1,84 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH v2 4/4] remote show: list tracked remote branches with
- -n
-Date: Wed, 11 Jun 2008 00:54:49 +0200
-Message-ID: <484F0639.4060307@free.fr>
-References: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr> <1213109509-7013-1-git-send-email-dkr+ml.git@free.fr> <7vod69cder.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Recovering from repository corruption
+Date: Tue, 10 Jun 2008 16:00:49 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806101554490.3101@woody.linux-foundation.org>
+References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com>  <m3abhtp42o.fsf@localhost.localdomain>  <6dbd4d000806101238v2bb975abqd39916e45d4bf866@mail.gmail.com>  <200806102159.02875.jnareb@gmail.com>  <6dbd4d000806101303j4b2032ajc6e004e0a82e4db5@mail.gmail.com>
+  <alpine.LFD.1.10.0806101317100.3101@woody.linux-foundation.org>  <6dbd4d000806101328k1fc913f2ia55c3e44273ec5ad@mail.gmail.com>  <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org>  <6dbd4d000806101422j39709906x1b4b03b82b504e62@mail.gmail.com>
+  <alpine.LFD.1.10.0806101431410.3101@woody.linux-foundation.org> <6dbd4d000806101509l516cf467me06fadee6ead0964@mail.gmail.com> <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 00:55:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Denis Bueno <dbueno@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 01:01:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Cka-0001IT-Vx
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 00:55:37 +0200
+	id 1K6Cqa-0003pS-9z
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 01:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398AbYFJWyo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 18:54:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbYFJWyn
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 18:54:43 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:45097 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752793AbYFJWyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 18:54:43 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id C9ED112B6AF;
-	Wed, 11 Jun 2008 00:54:41 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 6159A12B6AD;
-	Wed, 11 Jun 2008 00:54:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <7vod69cder.fsf@gitster.siamese.dyndns.org>
+	id S1754725AbYFJXAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 19:00:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbYFJXAy
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 19:00:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:60674 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752143AbYFJXAy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 19:00:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AN0oqg020211
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 10 Jun 2008 16:00:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5AN0n09001557;
+	Tue, 10 Jun 2008 16:00:50 -0700
+In-Reply-To: <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.38 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84560>
 
-=46rom: Olivier Marin <dkr@freesurf.fr>
 
-Signed-off-by: Olivier Marin <dkr@freesurf.fr>
----
 
-Junio C Hamano a =E9crit :
-> Olivier Marin <dkr+ml.git@free.fr> writes:
->=20
->> +static int append_ref_to_tracked_list(const char *refname,
->> +	const unsigned char *sha1, int flags, void *cb_data)
->> +{
->> +	struct ref_states *states =3D cb_data;
->> +	struct strbuf buf;
->> +
->> +	strbuf_init(&buf, 0);
->> +	strbuf_addf(&buf, "%s/", states->remote->name);
->> +	if (strncmp(buf.buf, refname, buf.len)) {
->> +		strbuf_release(&buf);
->> +		return 0;
->> +	}
->=20
-> Doesn't this have the same issue Shawn fixed in 7ad2458 (Make "git-re=
-mote
-> rm" delete refs acccording to fetch specs, 2008-06-01)?
+On Tue, 10 Jun 2008, Linus Torvalds wrote:
+> 
+> It's going to make big "git add" calls *much* slower, so I'm not very 
+> happy about it (especially since we don't actually care that deeply about 
+> the files really being there until much later, so doing something 
+> asynchronous would be perfectly acceptable), but for you this is 
+> definitely worth-while.
 
-You are right. This version should fix this.
+For me, on the whole kernel, on a pretty good system:
 
- builtin-remote.c  |   22 ++++++++++++++++++++--
- t/t5505-remote.sh |    2 ++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ - before:
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 851bdde..d55d320 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -444,6 +444,22 @@ static int get_remote_ref_states(const char *name,
- 	return 0;
- }
-=20
-+static int append_ref_to_tracked_list(const char *refname,
-+	const unsigned char *sha1, int flags, void *cb_data)
-+{
-+	struct ref_states *states =3D cb_data;
-+	struct refspec refspec;
-+
-+	memset(&refspec, 0, sizeof(refspec));
-+	refspec.dst =3D (char *)refname;
-+	if (!remote_find_tracking(states->remote, &refspec)) {
-+		path_list_append(skip_prefix(refspec.src, "refs/heads/"),
-+			&states->tracked);
-+	}
-+
-+	return 0;
-+}
-+
- static int show(int argc, const char **argv)
- {
- 	int no_query =3D 0, result =3D 0;
-@@ -494,10 +510,12 @@ static int show(int argc, const char **argv)
- 			strbuf_release(&buf);
- 			show_list("  Stale tracking branch%s (use 'git remote "
- 				"prune')", &states.stale);
--			show_list("  Tracked remote branch%s",
--				&states.tracked);
- 		}
-=20
-+		if (no_query)
-+			for_each_ref(append_ref_to_tracked_list, &states);
-+		show_list("  Tracked remote branch%s", &states.tracked);
-+
- 		if (states.remote->push_refspec_nr) {
- 			printf("  Local branch%s pushed with 'git push'\n   ",
- 				states.remote->push_refspec_nr > 1 ?
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index c27cfad..fbf0d30 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -143,6 +143,8 @@ cat > test/expect << EOF
-   URL: $(pwd)/one/.git
-   Remote branch merged with 'git pull' while on branch master
-     master
-+  Tracked remote branches
-+    master side
-   Local branches pushed with 'git push'
-     master:upstream +refs/tags/lastbackup
- EOF
+	[torvalds@woody test-it-out]$ time git add .
+
+	real    0m7.986s
+	user    0m6.404s
+	sys     0m1.456s
+
+ - after:
+
+	[torvalds@woody test-it-out]$ time ~/git/git-add .
+
+	real    0m52.693s
+	user    0m7.416s
+	sys     0m2.516s
+
+so it's definitely quite noticeable in that simplistic form. 
+
+A more interesting patch would use aio_fsync(), and then just wait for 
+them at the end with aio_return(). Not that I love AIO, but this is 
+definitely a case where it would make sense to do (of course, systems 
+without AIO support would then fall back to regular fsync()).
+
+I will have to think about this.
+
+			Linus
