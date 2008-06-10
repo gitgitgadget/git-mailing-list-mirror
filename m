@@ -1,64 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Add an optional <mode> argument to commit/status
- -u|--untracked-files option
-Date: Mon, 09 Jun 2008 23:23:12 -0700
-Message-ID: <7v63sherlb.fsf@gitster.siamese.dyndns.org>
-References: <7vod6i1e3p.fsf@gitster.siamese.dyndns.org>
- <5f0ab026ce200e501be81a3b5082e482e1580e42.1212670149.git.marius@trolltech.com> <7v4p86qa93.fsf@gitster.siamese.dyndns.org> <484CD3A7.8090303@trolltech.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH - stgit] Patch to allow import of compressed files
+Date: Tue, 10 Jun 2008 08:33:28 +0200
+Message-ID: <20080610063328.GB26965@diana.vm.bytemark.co.uk>
+References: <484D78BF.6030504@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 08:24:31 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Clark Williams <clark.williams@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 08:34:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5xHO-0000cZ-GB
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 08:24:26 +0200
+	id 1K5xR9-00038w-VM
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 08:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbYFJGXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 02:23:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbYFJGXd
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 02:23:33 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54616 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750899AbYFJGXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 02:23:32 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F407D1355;
-	Tue, 10 Jun 2008 02:23:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D0BA71354; Tue, 10 Jun 2008 02:23:21 -0400 (EDT)
-In-Reply-To: <484CD3A7.8090303@trolltech.com> (Marius Storm-Olsen's message
- of "Mon, 09 Jun 2008 08:54:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BD0F6CD8-36B5-11DD-9C59-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751131AbYFJGdh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 02:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946AbYFJGdh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 02:33:37 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1515 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbYFJGdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 02:33:37 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K5xQ9-00079K-00; Tue, 10 Jun 2008 07:33:29 +0100
+Content-Disposition: inline
+In-Reply-To: <484D78BF.6030504@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84475>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+On 2008-06-09 13:38:55 -0500, Clark Williams wrote:
 
-> Ops, obviously it should have been s@\(int\)@(intptr_t)@. Sorry about
-> that, I'll resend the patch series.
-
-Requeued.
-
-> (The option struct in parse_options.h uses intptr_t for the default
-> value of an option, thus a normal const char * would make the compiler
-> complain (verified with both Windows MinGW 3.4.5 and Linux GCC 4.1.2))
+> This patch allows StGit to directly import compressed (.gz and .bz2)
+> files with reasonable patch names.
 >
-> BTW, which compiler version are you using?
+> I do a lot of work on modified kernel trees and usually the first
+> two things imported are a stable update patch followed immediately
+> by an -rt patch, both of which are compressed. With this patch I can
+> just copy the files down directly from kernel.org and import them,
+> rather than having to keep uncompressed copies around.
+>
+> Hey, I'm lazy... :)
 
-    gcc (GCC) 4.2.3 20071014 (prerelease) (Debian 4.2.2-3)
-    Copyright (C) 2007 Free Software Foundation, Inc.
-    This is free software; see the source for copying conditions.  There is NO
-    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Lazy is good. Thanks for the patch!
 
-but with -Wold-style-definition -Werror -std=c99 -Wno-pointer-to-int-cast
--Wdeclaration-after-statement etc.
+> +        if filename.endswith(".gz"):
+> +            import gzip
+> +            f =3D gzip.open(filename)
+> +            pname =3D filename.replace(".gz", "")
+> +        elif filename.endswith(".bz2"):
+> +            import bz2
+> +            f =3D bz2.BZ2File(filename, 'r')
+> +            pname =3D filename.replace(".bz2", "")
+
+Some comments here:
+
+  * By my reading of the docs, the second argument to BZ2File defaults
+    to 'r' anyway, so you could omit it.
+
+  * We try to use single quotes wherever possible (except when triple
+    quoting). You're using a mix ...
+
+  * .replace() will happily replace anywhere in the string. Please
+    consider using stgit.util.strip_suffix() instead.
+
+And last but not least, it'd be terrific if you'd let me bully you
+into adding .gz and .bz2 test cases for t1800-import. :-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
