@@ -1,192 +1,157 @@
 From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: [PATCH 2/4] builtin-remote: split show_or_prune() in two separate functions
-Date: Tue, 10 Jun 2008 16:51:21 +0200
-Message-ID: <1213109481-6939-1-git-send-email-dkr+ml.git@free.fr>
+Subject: [PATCH 3/4] remote prune: print the list of pruned branches
+Date: Tue, 10 Jun 2008 16:51:35 +0200
+Message-ID: <1213109495-6974-1-git-send-email-dkr+ml.git@free.fr>
 References: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Olivier Marin <dkr@freesurf.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 16:52:57 2008
+X-From: git-owner@vger.kernel.org Tue Jun 10 16:52:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K65Co-0004Bx-O0
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 16:52:15 +0200
+	id 1K65D0-0004Fk-72
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 16:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074AbYFJOvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 10:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752977AbYFJOvR
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 10:51:17 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:50532 "EHLO smtp2-g19.free.fr"
+	id S1753244AbYFJOvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 10:51:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbYFJOvb
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 10:51:31 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:50731 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752482AbYFJOvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 10:51:16 -0400
+	id S1753035AbYFJOva (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 10:51:30 -0400
 Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 6C8EE12B70D;
-	Tue, 10 Jun 2008 16:51:15 +0200 (CEST)
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 68ABD12B6D3;
+	Tue, 10 Jun 2008 16:51:29 +0200 (CEST)
 Received: from localhost.localdomain (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 1842412B6B7;
-	Tue, 10 Jun 2008 16:51:14 +0200 (CEST)
+	by smtp2-g19.free.fr (Postfix) with ESMTP id D7B4812B758;
+	Tue, 10 Jun 2008 16:51:28 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.rc2.160.gd660c
 In-Reply-To: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84510>
 
 From: Olivier Marin <dkr@freesurf.fr>
 
-This allow us to add different features to each of them and keep the
-code simple at the same time. Also create a get_remote_ref_states()
-to avoid duplicated code.
+This command is really too quiet which make it unconfortable to use.
+
+Also implement a --dry-run option, in place of the original -n one, to
+list stale tracking branches that will be pruned, but do not actually
+prune them.
+
+Add a test case for --dry-run.
 
 Signed-off-by: Olivier Marin <dkr@freesurf.fr>
 ---
- builtin-remote.c |  101 +++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 67 insertions(+), 34 deletions(-)
+ Documentation/git-remote.txt |    7 +++----
+ builtin-remote.c             |   20 ++++++++++++++++----
+ t/t5505-remote.sh            |   18 ++++++++++++++++++
+ 3 files changed, 37 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 7bd024e..345943a 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 'git-remote' add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
+ 'git-remote' rm <name>
+ 'git-remote' show [-n] <name>
+-'git-remote' prune <name>
++'git-remote' prune [-n | --dry-run] <name>
+ 'git-remote' update [group]
+ 
+ DESCRIPTION
+@@ -80,9 +80,8 @@ These stale branches have already been removed from the remote repository
+ referenced by <name>, but are still locally available in
+ "remotes/<name>".
+ +
+-With `-n` option, the remote heads are not confirmed first with `git
+-ls-remote <name>`; cached information is used instead.  Use with
+-caution.
++With `--dry-run` option, report what branches will be pruned, but do no
++actually prune them.
+ 
+ 'update'::
+ 
 diff --git a/builtin-remote.c b/builtin-remote.c
-index efe74c7..745a4ee 100644
+index 745a4ee..851bdde 100644
 --- a/builtin-remote.c
 +++ b/builtin-remote.c
-@@ -419,7 +419,32 @@ static void show_list(const char *title, struct path_list *list)
- 	printf("\n");
+@@ -521,12 +521,14 @@ static int show(int argc, const char **argv)
+ 	return result;
  }
  
--static int show_or_prune(int argc, const char **argv, int prune)
-+static int get_remote_ref_states(const char *name,
-+				 struct ref_states *states,
-+				 int query)
-+{
-+	struct transport *transport;
-+	const struct ref *ref;
++#define SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
 +
-+	states->remote = remote_get(name);
-+	if (!states->remote)
-+		return error("No such remote: %s", name);
-+
-+	read_branches();
-+
-+	if (query) {
-+		transport = transport_get(NULL, states->remote->url_nr > 0 ?
-+			states->remote->url[0] : NULL);
-+		ref = transport_get_remote_refs(transport);
-+		transport_disconnect(transport);
-+
-+		get_ref_states(ref, states);
-+	}
-+
-+	return 0;
-+}
-+
-+static int show(int argc, const char **argv)
+ static int prune(int argc, const char **argv)
  {
- 	int no_query = 0, result = 0;
+-	int no_query = 0, result = 0;
++	int dry_run = 0, result = 0;
  	struct option options[] = {
-@@ -431,42 +456,15 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 
- 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
- 
--	if (argc < 1) {
--		if (!prune)
--			return show_all();
--		usage_with_options(builtin_remote_usage, options);
--	}
-+	if (argc < 1)
-+		return show_all();
- 
- 	memset(&states, 0, sizeof(states));
+ 		OPT_GROUP("prune specific options"),
+-		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
++		OPT__DRY_RUN(&dry_run),
+ 		OPT_END()
+ 	};
+ 	struct ref_states states;
+@@ -540,11 +542,21 @@ static int prune(int argc, const char **argv)
  	for (; argc; argc--, argv++) {
--		struct transport *transport;
--		const struct ref *ref;
- 		struct strbuf buf;
  		int i;
  
--		states.remote = remote_get(*argv);
--		if (!states.remote)
--			return error("No such remote: %s", *argv);
--
--		read_branches();
--
--		if (!no_query) {
--			transport = transport_get(NULL,
--				states.remote->url_nr > 0 ?
--				states.remote->url[0] : NULL);
--			ref = transport_get_remote_refs(transport);
--			transport_disconnect(transport);
--
--			get_ref_states(ref, &states);
--		}
--
--		if (prune) {
--			for (i = 0; i < states.stale.nr; i++) {
--				const char *refname = states.stale.items[i].util;
--				result |= delete_ref(refname, NULL);
--			}
--			goto cleanup_states;
--		}
-+		get_remote_ref_states(*argv, &states, !no_query);
+-		get_remote_ref_states(*argv, &states, !no_query);
++		get_remote_ref_states(*argv, &states, 1);
++
++		printf("Pruning %s\n", *argv);
++		if (states.stale.nr)
++			printf("From: %s\n", states.remote->url[0]);
  
- 		printf("* remote %s\n  URL: %s\n", *argv,
- 			states.remote->url_nr > 0 ?
-@@ -513,7 +511,42 @@ static int show_or_prune(int argc, const char **argv, int prune)
- 			}
- 			printf("\n");
+ 		for (i = 0; i < states.stale.nr; i++) {
+ 			const char *refname = states.stale.items[i].util;
+-			result |= delete_ref(refname, NULL);
++
++			if (!dry_run)
++				result |= delete_ref(refname, NULL);
++
++			printf(" * %-*s %s\n", SUMMARY_WIDTH, "[stale branch]",
++				refname + strlen("refs/remotes/")
++				+ strlen(*argv) + 1);
  		}
--cleanup_states:
-+
-+		/* NEEDSWORK: free remote */
-+		path_list_clear(&states.new, 0);
-+		path_list_clear(&states.stale, 0);
-+		path_list_clear(&states.tracked, 0);
-+	}
-+
-+	return result;
-+}
-+
-+static int prune(int argc, const char **argv)
-+{
-+	int no_query = 0, result = 0;
-+	struct option options[] = {
-+		OPT_GROUP("prune specific options"),
-+		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
-+		OPT_END()
-+	};
-+	struct ref_states states;
-+
-+	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
-+
-+	if (argc < 1)
-+		usage_with_options(builtin_remote_usage, options);
-+
-+	memset(&states, 0, sizeof(states));
-+	for (; argc; argc--, argv++) {
-+		int i;
-+
-+		get_remote_ref_states(*argv, &states, !no_query);
-+
-+		for (i = 0; i < states.stale.nr; i++) {
-+			const char *refname = states.stale.items[i].util;
-+			result |= delete_ref(refname, NULL);
-+		}
-+
+ 
  		/* NEEDSWORK: free remote */
- 		path_list_clear(&states.new, 0);
- 		path_list_clear(&states.stale, 0);
-@@ -634,9 +667,9 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "rm"))
- 		result = rm(argc, argv);
- 	else if (!strcmp(argv[0], "show"))
--		result = show_or_prune(argc, argv, 0);
-+		result = show(argc, argv);
- 	else if (!strcmp(argv[0], "prune"))
--		result = show_or_prune(argc, argv, 1);
-+		result = prune(argc, argv);
- 	else if (!strcmp(argv[0], "update"))
- 		result = update(argc, argv);
- 	else {
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index c6a7bfb..c27cfad 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -165,6 +165,24 @@ test_expect_success 'prune' '
+ 	 ! git rev-parse refs/remotes/origin/side)
+ '
+ 
++cat > test/expect << EOF
++Pruning origin
++From: $(pwd)/one/.git
++ * [stale branch]    side2
++EOF
++
++test_expect_success 'prune --dry-run' '
++	(cd one &&
++	 git branch -m side2 side) &&
++	(cd test &&
++	 git remote prune --dry-run origin > output &&
++	 git rev-parse refs/remotes/origin/side2 &&
++	 ! git rev-parse refs/remotes/origin/side &&
++	(cd ../one &&
++	 git branch -m side side2) &&
++	 test_cmp expect output)
++'
++
+ test_expect_success 'add --mirror && prune' '
+ 	(mkdir mirror &&
+ 	 cd mirror &&
 -- 
 1.5.6.rc2.160.gd660c
