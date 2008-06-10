@@ -1,60 +1,113 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: Re: [PATCH] Add a helper script to send patches with Mozilla Thunderbird
-Date: Tue, 10 Jun 2008 15:25:13 +0200
-Message-ID: <484E80B9.9000805@etek.chalmers.se>
-References: <484D6A40.60002@etek.chalmers.se> <484E74AC.2060306@viscovery.net>
+From: Clark Williams <clark.williams@gmail.com>
+Subject: Re: [PATCH - stgit] Patch to allow import of compressed files
+Date: Tue, 10 Jun 2008 08:54:06 -0500
+Message-ID: <484E877E.801@gmail.com>
+References: <484D78BF.6030504@gmail.com> <20080610063328.GB26965@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?bHVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-To: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 15:27:13 2008
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 15:55:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K63rp-0001pD-Vu
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 15:26:30 +0200
+	id 1K64JW-0006fP-Q4
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 15:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362AbYFJNZQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 09:25:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbYFJNZQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 09:25:16 -0400
-Received: from atum.ita.chalmers.se ([129.16.4.148]:53387 "EHLO
-	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744AbYFJNZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 09:25:15 -0400
-Received: from [192.168.1.152] (sra.eta.chalmers.se [129.16.13.37])
-	(Authenticated sender: lukass)
-	by atum.ita.chalmers.se (Postfix) with ESMTP id DE3668686;
-	Tue, 10 Jun 2008 15:25:13 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <484E74AC.2060306@viscovery.net>
-X-Enigmail-Version: 0.95.6
+	id S1753624AbYFJNyL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 09:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753674AbYFJNyL
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 09:54:11 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:41312 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753624AbYFJNyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 09:54:09 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so904012rvb.1
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 06:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=7NW6dPaFw+VWmVKs241DfNZmhPPUVG5GuY+GEUrAHR0=;
+        b=oZJc3SEeOArPrs4DdJe7kNAiaWUoaDXrvzBrrXJkMJV+UNJ6yZGv6aXJdbmNjqAZNt
+         yPv4eN9eSQ4jW8w3bdCRWVefL7dMGKXxnd/W925XlddKC0qsuLsg4MGs55h15/IGLjz9
+         QJH8EPX4glFWzp1tKoI/1fa5QYtLb/tKVH6Qw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=Vc99w2RVG1wh84dY6/imQIfYY7ddBPTCcOJU+qVjXIzIlezrZVfCCbjrhdlj+OKIAz
+         hEz5R/psFPEHXnSFj/JroXzCFQllqmaaoNrjHROQCyh6g9CO9Ucw28x91B5srr8Plq3a
+         zIryTXprA0W5QvBbPD1s9Xr0ofJ7KzA1O6+l8=
+Received: by 10.141.194.11 with SMTP id w11mr2993294rvp.228.1213106049340;
+        Tue, 10 Jun 2008 06:54:09 -0700 (PDT)
+Received: from ?192.168.2.37? ( [74.239.78.188])
+        by mx.google.com with ESMTPS id 5sm11534604ywl.4.2008.06.10.06.54.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 10 Jun 2008 06:54:08 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070911)
+In-Reply-To: <20080610063328.GB26965@diana.vm.bytemark.co.uk>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84501>
 
-Johannes Sixt wrote:
-> Lukas Sandstr=C3=B6m schrieb:
->> The script appp.sh can be used with the External Editor extension fo=
-r
->> Mozilla Thunderbird in order to be able to send inline patches in an
->> easy way.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Karl Hasselstr=C3=B6m wrote:
+>> +        if filename.endswith(".gz"):
+>> +            import gzip
+>> +            f =3D gzip.open(filename)
+>> +            pname =3D filename.replace(".gz", "")
+>> +        elif filename.endswith(".bz2"):
+>> +            import bz2
+>> +            f =3D bz2.BZ2File(filename, 'r')
+>> +            pname =3D filename.replace(".bz2", "")
 >=20
-> Thanks a lot.
+> Some comments here:
 >=20
-> But sadly, it still wraps long lines. Is there a way to inhibit this =
-short
-> of modifying the settings?
+>   * By my reading of the docs, the second argument to BZ2File default=
+s
+>     to 'r' anyway, so you could omit it.
+
+Done.
+
+>=20
+>   * We try to use single quotes wherever possible (except when triple
+>     quoting). You're using a mix ...
+
+I normally use single quotes too, but I've been doing a bunch of C prog=
+ramming
+lately, so that's my excuse and I'm sticking with it. Replaced.
+
+>=20
+>   * .replace() will happily replace anywhere in the string. Please
+>     consider using stgit.util.strip_suffix() instead.
+
+Ah, didn't know about strip_suffix(). Done.
+
+>=20
+> And last but not least, it'd be terrific if you'd let me bully you
+> into adding .gz and .bz2 test cases for t1800-import. :-)
 >=20
 
-I don't know. I wouldn't expect so. It is a long time since I configure=
-d
-Thunderbird to send patches. I think I more or less followed the
-instructions in SubmittingPatches when I did.
+I'll work on that. Can't do it right now, but I'll look at the test har=
+ness and see
+what it'll take.
 
-/Lukas
+Clark
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+
+iEYEARECAAYFAkhOh34ACgkQqA4JVb61b9ea9gCgoV1MZbT2F62WEkduOfmkgdP3
+BwIAnApT1o+VttF4VRHJj4DkPmi/HXfm
+=3DUwho
+-----END PGP SIGNATURE-----
