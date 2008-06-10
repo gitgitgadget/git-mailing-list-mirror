@@ -1,129 +1,101 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: stg pull/rebase
-Date: Tue, 10 Jun 2008 11:02:18 +0100
-Message-ID: <b0943d9e0806100302j159f5b7fq6d970316b902b39b@mail.gmail.com>
-References: <20080607172202.GA5179@diana.vm.bytemark.co.uk>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: 'git format-patch' on older commits, and mailinglist
+Date: Tue, 10 Jun 2008 12:09:34 +0200
+Message-ID: <484E52DE.1070100@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 12:03:12 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA8F405A53A4C176175958F3F"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 12:10:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K60h6-0005rE-AP
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 12:03:12 +0200
+	id 1K60oY-0008G9-NU
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 12:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754482AbYFJKCV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 06:02:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757840AbYFJKCU
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 06:02:20 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:55327 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760222AbYFJKCT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 06:02:19 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2111674waf.23
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 03:02:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=bfIu+uYzvdIforfN+NfytJNPUYs+ev1mRHQKhfRGzGA=;
-        b=HYqx/sav+PP5SKTab0ErY78rO/oGsAySFqPfrdhSEMOr1v9rJ42TAu/5C2N3OunFiR
-         0oW/1tH4llgfn6+RtfVpurUkYPEj7uFa2tpdKHhqCuLMcH18cRD1U7NUp37XecGzOB9/
-         qHCXLuLlfVEp+XBm3p4YYt1he2b6qA6E88yXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=PPcXrWuVfaczr8BZEL+8PDquMIgXlpvRwFunsLeXaKXYOqagWzwIbJZrkVG1iuV1tm
-         Ms7UMTzPyWCHUlyIYnIPY0kexbd0WUk3dRdE6rWrzMttw7LYZCgxKKKbn32bIkRQSXtM
-         HZnjT503hkOhYnT8DG6rM5kQolAh+Jv/vs5bw=
-Received: by 10.115.50.5 with SMTP id c5mr4610649wak.60.1213092138980;
-        Tue, 10 Jun 2008 03:02:18 -0700 (PDT)
-Received: by 10.114.171.16 with HTTP; Tue, 10 Jun 2008 03:02:18 -0700 (PDT)
-In-Reply-To: <20080607172202.GA5179@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1759983AbYFJKJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 06:09:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759993AbYFJKJl
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 06:09:41 -0400
+Received: from hoat.troll.no ([62.70.27.150]:41509 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759812AbYFJKJk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 06:09:40 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 9781E20A63
+	for <git@vger.kernel.org>; Tue, 10 Jun 2008 12:09:33 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 8D3F1203BA
+	for <git@vger.kernel.org>; Tue, 10 Jun 2008 12:09:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.95.6
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84491>
 
-2008/6/7 Karl Hasselstr=F6m <kha@treskal.com>:
-> As I said, I've been thinking a bit about stg pull and stg rebase
-> recently (though I haven't written any code; I don't want to be
-> juggling too many balls at once).
->
-> Currently, there's stg rebase which only does rebasing, and stg pull
-> which does either rebase or merge depending on a config option. And o=
-n
-> top of that there's config stuff like stgit.pullcmd that is invoked i=
-n
-> some cases but not others.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA8F405A53A4C176175958F3F
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-This would need some clean-up indeed or maybe better documentation.
-They might be a bit difficult and I have to look at the code from time
-to time. However, I found some these policies useful. For example, I
-just do a "stg pull" from a Subversion repository with the config
-below:
+Hi,
 
-[stgit]
-        pull-policy =3D fetch-rebase
-        fetchcmd =3D git svn fetch
-        rebasecmd =3D git svn rebase
+Recently, I sent out patches which were fixed up with --amend on older=20
+commits. When I sent them out, the patches contained
+     Date: <more than 2 days old datestamp>
+in the headers. Now, sending these mails is fine, and mail clients=20
+generally handles it perfectly fine. However, after doing this I got=20
+an email from postmaster@vger.kernel.org, basically telling me to not=20
+do this, since they get a lot of bounces where the return is marked with
+     Diagnostic Code: smtp; 550 (4.5 DATE_IN_PAST_48_96 Date: is 48 to=20
+96 hours before Received: date)
 
-> What I think I'd like is the following:
->
->  * Just one command, stg pull. stg rebase is removed.
+This is understandable. The question is, do we fix the tools to handle=20
+this, so that emails are always generated with now() date, and the=20
+commit content contains a tag for the original commit; or do we simply=20
+say, always send patches to the mailing list with a current timestamp?
 
-I still find "rebase" useful and use it in some situations when I
-don't need a pull. As Jakub mentioned, maybe we could keep the
-"rebase" functionality outside of the "pull" command (make it part of
-Stack with a corresponding Branch.rebase?) and have "rebase" use it.
+Maybe my workflow is incorrect too. I don't mind pointers on this.
 
->  * When pull is invoked, the following happens:
->
->      1. The branch we pull from may be updated, depending on the
->         configuration. (e.g. git fetch or git svn fetch)
-
-OK.
-
->      2. Depending on the configuration (overridable by the
->      --fast-forward, --rebase, and --merge options), one of these
->      three things happen:
-
-But "pull" always suggests fetching something. Adding "--rebase" would
-mean that it doesn't fetch. Shouldn't we leave this functionality to
-"rebase" only?
-
->         1. We pop all patches, fast-forward to the new base, and push
->            them back. If it's not a fast-forward, we error out.
->
->         2. We pop all patches, reset to the new base, and push them
->            back.
->
->         3. We pop all patches, merge with the other branch, then push
->            the patches back.
-
-These are OK, with the comment on have rebase functionality in "rebase"=
- only.
-
->      Fast-forward is the default if no configuration or command-line
->      flag is given.
-
-OK.
-
-> I've personally never had a need for the merge case, but I recall you
-> arguing to keep it, Catalin?
-
-I don't use it either but there might be people that have complicated
-configurations and they mix Git commits with StGIT patches. Not sure
-though.
+I guess rebasing before generating the patch series would have fixed=20
+this, but I really didn't need to. I simply reset HEAD~2, fixed with=20
+--amend, then cherry-picked the other on top again; then created the=20
+patch series.
 
 --=20
-Catalin
+=2Emarius
+- simply wondering what others on the git mailinglist do..
+
+
+--------------enigA8F405A53A4C176175958F3F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFITlLeKzzXl/njVP8RAnNAAKDU6bBd4K8bxwiMdGjHEAlNc4ov/QCgji3U
+D6T5/X+r1b+mJoHLU6cXvpY=
+=OTnx
+-----END PGP SIGNATURE-----
+
+--------------enigA8F405A53A4C176175958F3F--
