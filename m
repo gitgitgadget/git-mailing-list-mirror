@@ -1,60 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: freedesktop.org not really up to date?
-Date: Tue, 10 Jun 2008 15:07:58 +0200
-Message-ID: <484E7CAE.4040403@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 15:09:31 2008
+From: "Philippe Bruhat (BooK)" <book@cpan.org>
+Subject: [PATCH] git-cvsimport: do not fail when CVSROOT is /
+Date: Tue, 10 Jun 2008 14:32:06 +0200
+Message-ID: <1213101126-4974-1-git-send-email-book@cpan.org>
+Cc: gitster@pobox.com, "Philippe Bruhat (BooK)" <book@cpan.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 15:11:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K63az-0003MQ-Hn
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 15:09:05 +0200
+	id 1K63dN-0004MK-SJ
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 15:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657AbYFJNIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 09:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbYFJNIJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 09:08:09 -0400
-Received: from mail.op5.se ([193.201.96.20]:59324 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753461AbYFJNII (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 09:08:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 711B324B0002;
-	Tue, 10 Jun 2008 15:04:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.000, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d4qBnFjR+zJX; Tue, 10 Jun 2008 15:04:18 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id 11B431B8008D;
-	Tue, 10 Jun 2008 15:04:18 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+	id S1753513AbYFJNKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 09:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753458AbYFJNKk
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 09:10:40 -0400
+Received: from zlonk.bruhat.net ([91.121.102.217]:52619 "EHLO
+	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753450AbYFJNKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 09:10:39 -0400
+X-Greylist: delayed 2279 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jun 2008 09:10:39 EDT
+Received: from localhost ([127.0.0.1] helo=plop)
+	by ks354402.kimsufi.com with esmtp (Exim 4.63)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1K62zf-00045X-0I; Tue, 10 Jun 2008 14:30:31 +0200
+Received: from book by plop with local (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1K631C-0001J9-Vm; Tue, 10 Jun 2008 14:32:07 +0200
+X-Mailer: git-send-email 1.5.4.3
+In-Reply-To: <>
+References: <>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84499>
 
-I just stumbled across this freedesktop.org site from 2007-06-03:
-http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws
+For CVS repositories with unusual CVSROOT, git-cvsimport would fail:
 
-It seems to me that since then most of the issues have been worked out.
-Are any of them still valid points? If so, which ones and how should we
-go about addressing them?
+    $ git-cvsimport -v -C foo -d :pserver:anon:@cvs.example.com:/ foo
+    AuthReply: error 0 : no such repository
 
-Jakub Cc'd as he was the last one to edit the (now immutable) wiki page.
+This patch ensures that the path is never empty, but at least '/'.
 
+Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
+---
+ git-cvsimport.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 5a02550..cacbfc0 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -227,6 +227,7 @@ sub conn {
+ 				$proxyport = $1;
+ 			}
+ 		}
++		$repo ||= '/';
+ 
+ 		# if username is not explicit in CVSROOT, then use current user, as cvs would
+ 		$user=(getlogin() || $ENV{'LOGNAME'} || $ENV{'USER'} || "anonymous") unless $user;
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.4.3
