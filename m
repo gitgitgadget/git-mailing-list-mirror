@@ -1,80 +1,130 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git bugs
-Date: Tue, 10 Jun 2008 12:58:34 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806101236120.19665@iabervon.org>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/4] remote show/prune improvement
+Date: Tue, 10 Jun 2008 19:11:01 +0200
+Message-ID: <200806101911.02625.jnareb@gmail.com>
+References: <7vd4mqdrhi.fsf@gitster.siamese.dyndns.org> <m3ej75pbrw.fsf@localhost.localdomain> <484EA77D.7040003@free.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ben Lynn <benlynn@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 18:59:49 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 10 19:12:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K67C4-0001ry-OR
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 18:59:37 +0200
+	id 1K67O8-0007JZ-Lg
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 19:12:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393AbYFJQ6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 12:58:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbYFJQ6h
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 12:58:37 -0400
-Received: from iabervon.org ([66.92.72.58]:44902 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753159AbYFJQ6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 12:58:36 -0400
-Received: (qmail 3119 invoked by uid 1000); 10 Jun 2008 16:58:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Jun 2008 16:58:34 -0000
-In-Reply-To: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753313AbYFJRLK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 13:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbYFJRLJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 13:11:09 -0400
+Received: from gv-out-0910.google.com ([216.239.58.186]:15175 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753436AbYFJRLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 13:11:08 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so644672gvc.37
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 10:11:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=uIw4v9NycJzo/mkNLBvI+lCrgEVM8GbebKd1pp88UlY=;
+        b=AoJkybBRxpOoDlRJ/yUBXI/qe125v/RyTBbf66YdvpCHXpMKtUssDeWbK4SOQZM5X/
+         F+1SwQpfD/xauHl/0t8yQLhzbLQgcbkSpq8U7Ao08n5rlthGtXY6+mSQzj4uj/2Itb1P
+         AOcSjAwVmoO3F734Y1zOYdOPxtUFFCXlCcpDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=aK31UIZjCKfQBzVOKsMSBcSI8CK3gCterDDvgGZXJcouVSn4aN2tuPQTogE9wWPBW1
+         C8oIUYEDd2c8o2q5pREBNJ17+cBc4b5sVYS9ensO9bG8muUxR4BXVIJYWmkf7A+0WgZ3
+         TsR4jTNoHMT18sPVuqxOezOuJ8tBlkX0BYAdU=
+Received: by 10.103.206.12 with SMTP id i12mr3514851muq.33.1213117866559;
+        Tue, 10 Jun 2008 10:11:06 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.192.165])
+        by mx.google.com with ESMTPS id n10sm20341453mue.14.2008.06.10.10.11.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 10 Jun 2008 10:11:05 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <484EA77D.7040003@free.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84525>
 
-On Tue, 10 Jun 2008, Ben Lynn wrote:
+Dnia wtorek 10. czerwca 2008 18:10, Olivier Marin napisa=B3:
+> Jakub Narebski a =E9crit :
+>> Olivier Marin <dkr+ml.git@free.fr> writes:
+>>=20
+>>>   [1/4] remote show: fix the -n option
+>>>   [2/4] builtin-remote: split show_or_prune() in two separate
+>>>         functions.=20
+>>>   [3/4] remote prune: print the list of pruned branches
+>>>   [4/4] remote show: list tracked remote branches with -n.
+>>=20
+>> I like this series... but the [4/4] lacks documentation (all other
+>> patches update documentation).
 
-> 2. Kudos to everyone who figured out the nasty race condition and its
-> complex solution as described in Documentation/technical/racy-git.txt
-> and the comments of read-cache.c. It took me a while to get my head
-> around it.
-> 
-> Unfortunately, the solution isn't perfect. Try this:
-> 
-> $ echo xyzzy > file
-> $ git update-index --add file   # don't zero size since contents match
-> $ echo frotz > file             # all stats still match, contents don't
-> $ echo nitfol > other  # can be done much earlier
-> $ git update-index --add other  # now the cached size is zeroed
-> $ : > file                      # zero the file size muahahaha
-> $ # Type fast! The above must take place within the same second! ;-)
-> $ sleep 2
-> $ echo filfre > other
-> $ git update-index --add other  # stats of "file" match, hash is wrong
-> 
-> Essentially, we trigger two index writes that avoid operations on
-> "file": one immediately after "file" is first committed and identified
-> as racily clean, and the second some time later, after we have
-> sneakily zeroed the file behind git's back (after previously editing
-> its contents in place). We defeat the safeguards and end up with a bad
-> hash in the index that appears valid.
-> 
-> The"other" file merely causes index writes without reading the "file"
-> entry. It is also racily clean in the above, but this is irrelevant.
-> 
-> It's unlikely this sequence of operations would occur in real usage,
-> but I'd sleep better if this index corruption bug were eliminated. One
-> practical but unsatisfactory easy "fix" is to mark racily clean
-> entries with SIZE_MAX instead of 0.
+Ah, sorry, my mistake.  It looks like [4/4] is just improvement
+to [1/4], which is documented.=20
+=20
+> I'm not sure, it's a minor change. Perhaps, I can squashed it in
+> 1/4 instead.=20
+>=20
+> What do you think?
 
-We could distinguish a "racily clean" entry from a 0-length file entry 
-based on the hash. That is, say that a file isn't clean even though the 
-size matches, if the size is 0 and the entry's hash isn't the same as the 
-file's hash, which is e69de29bb2d1d6434b8b29ae775ad8c2e48c5391. Nice thing 
-about 0-length files is that you can compute their hashes without reading 
-them.
+Perhaps it could be, but this is not strictly necessary.
 
-	-Daniel
-*This .sig left intentionally blank*
+After reading patches a bit more carefully, I think that the features
+are documented well enough, and any Documentation (and patches)=20
+improvements are not necessary, and further changes can happen "in=20
+tree".
+
+
+In "[PATCH 1/4] remote show: fix the -n option" you have:
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+[...]
+> -'git-remote' show <name>
+> +'git-remote' show [-n] <name>
+
+while in Documentation/git-remote.txt there is remainder of Perl
+implementation
+
+   'show'::
+
+   Gives some information about the remote <name>.
+   +
+   With `-n` option, the remote heads are not queried first with
+   `git ls-remote <name>`; cached information is used instead.
+
+The information about using `git ls-remote <name>` is no longer fully
+accurate in builtin version, and perhaps could be removed.
+
+
+In "[PATCH 3/4] remote prune: print the list of pruned branches":
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+[...]
+> -'git-remote' prune <name>
+> +'git-remote' prune [-n | --dry-run] <name>
+[...]
+> -With `-n` option, the remote heads are not confirmed first with `git
+> -ls-remote <name>`; cached information is used instead.  Use with
+> -caution.
+> +With `--dry-run` option, report what branches will be pruned, but do
+> +no actually prune them.
+
+No `git ls-remote` is mentioned there, as it should be.
+
+--=20
+Jakub Narebski
+Poland
