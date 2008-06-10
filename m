@@ -1,86 +1,61 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Date parsing
-Date: Tue, 10 Jun 2008 17:31:07 +0200
-Message-ID: <bd6139dc0806100831y7a00a0f4sbc8dee9df7a8c16a@mail.gmail.com>
-References: <bd6139dc0806100758xb41d08dh18e3051088b707e5@mail.gmail.com>
-	 <Zx2uvEYSssjj9E0HrmUL8wYASyWX9L9w8LkR-gGRAmnD9isjoEeyKg@cipher.nrlssc.navy.mil>
-Reply-To: sverre@rabbelier.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
+Date: Tue, 10 Jun 2008 16:34:15 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806101632570.1783@racer>
+References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org> <cover.1213084587.git.marius@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jun 10 17:32:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 17:36:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K65pW-00042P-1z
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 17:32:14 +0200
+	id 1K65th-0005kw-B9
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 17:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822AbYFJPbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 11:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754139AbYFJPbN
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 11:31:13 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:38053 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753761AbYFJPbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 11:31:11 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so258021yxl.1
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 08:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=YL7eJnps84yL59qc5EbK5YDj0CcjqhGp+Y6mJALh1Wk=;
-        b=m0Uppk0Yj+CUjGerpybwkoP10R/rLrDxoF8au7tnH57QxfEvivDA7dbZSZRT0/MSOU
-         v7vAy/67dup0GzkfnHDDXXfyAKKQHb+Cg7HB+6zMwvbhMuYffDNvn3RtD5tE/ZYe9Fy+
-         bLkH/mImz6pXrzl29U7NnYTuFLAgNUCr3Q4N8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=IkjNM3dwb2iMC0eXMvaZjI6Ny9otFZh0RhbgEJGx28IShxndm4VrealXCViF6NKr4y
-         5bf6aVL1LtCJUc3N4Mzd/MAhqOc22d46OVff0vt1MXS/CRecsV/0sqc5mWc8LqXE9498
-         4o5kGeGowqOaVA7cKUO841xKYY9g/SF89AB10=
-Received: by 10.143.42.3 with SMTP id u3mr2113884wfj.148.1213111867840;
-        Tue, 10 Jun 2008 08:31:07 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 10 Jun 2008 08:31:07 -0700 (PDT)
-In-Reply-To: <Zx2uvEYSssjj9E0HrmUL8wYASyWX9L9w8LkR-gGRAmnD9isjoEeyKg@cipher.nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1752518AbYFJPfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 11:35:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752572AbYFJPfe
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 11:35:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55413 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752251AbYFJPfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 11:35:33 -0400
+Received: (qmail invoked by alias); 10 Jun 2008 15:35:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp001) with SMTP; 10 Jun 2008 17:35:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19GPyltPvZGx3pY1R7owiYdMw6D+1WeAeyAyn7h30
+	CfyGgRJ2MVrn6n
+X-X-Sender: gene099@racer
+In-Reply-To: <cover.1213084587.git.marius@trolltech.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84520>
 
-On Tue, Jun 10, 2008 at 5:10 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> Take a look at match_multi_number in date.c
-> European ordering is preferred when the separator is '.'
+Hi,
 
-Ok, then I'll use . in the future, that's nice :).
+On Tue, 10 Jun 2008, Marius Storm-Olsen wrote:
 
-> The timezone didn't change. One date is in daylight saving time, the other
-> is not. The offset from GMT is different to reflect this.
+> When you use 'git show <rev>:<file>' or 'git show :<stage>:<file>', the 
+> objects are shows as they are in the object store, ignoring the 
+> core.autocrlf configuration.
 
-As Hannes said, no bug there, my mistake.
+I think this is the correct behaviour: inside the object repository, the 
+files are supposed to be LF clean.
 
->> What does the list think about this? Is this "normal"
->> behavior? If not, what (if anything) should we do about it?
->
-> There will be flaws in any system that tries to automatically guess the
-> format. If there is not already one, perhaps a statement should be added
-> to the appropriate documentation describing how to ensure that european
-> ordering is used to parse the date.
+Likewise, things in the unmerged stages are in the index, which again is 
+not the working directory, so they should be LF clean.
 
-I think that it should bail out when it encounters "20-01-2008"
-instead of automagically going for european notation. Even more
-helpfull would be to inform the user that "20.01.2008" is the proper
-notation.
+_Only_ when writing a file to the working directory, it should get 
+clobbered.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Ciao,
+Dscho
