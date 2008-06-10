@@ -1,102 +1,64 @@
-From: "Benjamin Lynn" <blynn@google.com>
-Subject: Re: git import/export bug?
-Date: Tue, 10 Jun 2008 01:44:04 -0700
-Message-ID: <ac789dbd0806100144m461da1f1wc9e44fd24598a59f@mail.gmail.com>
-References: <ac789dbd0806100141x55bf1d01k707034af3ec86b0f@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [RFC] git-sequencer.txt
+Date: Tue, 10 Jun 2008 10:59:55 +0200
+Message-ID: <20080610085955.GB5642@leksak.fem-net>
+References: <20080607220101.GM31040@leksak.fem-net> <m3d4mqwnxh.fsf@localhost.localdomain> <20080610012159.GI8079@leksak.fem-net> <200806100646.36528.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 10:45:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 11:00:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5zTZ-00073T-TW
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 10:45:10 +0200
+	id 1K5zio-0003FK-Dl
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 11:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbYFJIoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 04:44:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753660AbYFJIoQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 04:44:16 -0400
-Received: from smtp-out.google.com ([216.239.33.17]:30827 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753605AbYFJIoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 04:44:15 -0400
-Received: from spaceape7.eur.corp.google.com (spaceape7.eur.corp.google.com [172.28.16.141])
-	by smtp-out.google.com with ESMTP id m5A8i8N8017557
-	for <git@vger.kernel.org>; Tue, 10 Jun 2008 09:44:08 +0100
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1213087448; bh=WCMDoHSpD3JZ65BEWFzvWGbKhXw=;
-	h=DomainKey-Signature:Message-ID:Date:From:To:Subject:In-Reply-To:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Content-Disposition:References; b=OTPplO0Qh8DtJTYQg1P62nyJFJpRJBT7
-	YCVOfBnrWh7urfNZ0IdqCF/sjXts2vwUEJTd8HhNb+StNwyU23mP9w==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:
-	content-disposition:references;
-	b=Y6LjuujLYXg7mRlUix87MOtHKwJR0K4Ae+DsgCepa0tdwMTgdnGfJjl+8NMFnIZPe
-	n+mPNuMui9D+qc75i0zFQ==
-Received: from wf-out-1314.google.com (wfc28.prod.google.com [10.142.3.28])
-	by spaceape7.eur.corp.google.com with ESMTP id m5A8i7B2030795
-	for <git@vger.kernel.org>; Tue, 10 Jun 2008 09:44:08 +0100
-Received: by wf-out-1314.google.com with SMTP id 28so2563949wfc.24
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 01:44:07 -0700 (PDT)
-Received: by 10.143.33.19 with SMTP id l19mr1927627wfj.112.1213087445044;
-        Tue, 10 Jun 2008 01:44:05 -0700 (PDT)
-Received: by 10.143.40.10 with HTTP; Tue, 10 Jun 2008 01:44:04 -0700 (PDT)
-In-Reply-To: <ac789dbd0806100141x55bf1d01k707034af3ec86b0f@mail.gmail.com>
+	id S1751870AbYFJI76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 04:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbYFJI76
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 04:59:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51676 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751461AbYFJI76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 04:59:58 -0400
+Received: (qmail invoked by alias); 10 Jun 2008 08:59:56 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp001) with SMTP; 10 Jun 2008 10:59:56 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+UVRJe2wSUvYm/gY/o4e6c6MbJ5APqQCXFrszKk+
+	zIqIYmpBI5WS/Q
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K5zhr-0001vj-Bt; Tue, 10 Jun 2008 10:59:55 +0200
 Content-Disposition: inline
+In-Reply-To: <200806100646.36528.chriscool@tuxfamily.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84487>
 
-Sorry about the dupe, I clicked the send button on the wrong email
-account. This is an earlier edit of my intended post. Please ignore.
-(Or preferably, an admin can delete these?)
+Hi,
 
-On Tue, Jun 10, 2008 at 1:41 AM, Benjamin Lynn <blynn@google.com> wrote:
-> Sorry if this is a well-known problem, but I only just came across it.
-> I tried searching for it briefly, but to no avail. Maybe nobody cares
-> because there's usually no need to export from git! And it's only one
-> of the satellite features, not the core. Nonetheless, if you export
-> git repos, you might want to know about it.
->
-> Try this:
->
-> $ git clone git://git.kernel.org/pub/scm/git/git.git  # clone git source
-> $ git checkout -b test 60ea0fdd7de001405fcc7591beb18a66a1f0dd09
-> $ git fast-export test > /tmp/x
->
-> $ cd /some/empty/dir
-> $ git init
-> $ git fast-import < /tmp/x
-> $ git checkout test
->
-> You'd expect exporting a pristine import to result in a faithful copy.
-> But type "git log" and you'll see the hash of the top commit differs.
-> (It's 56fe9d6d474f5c88c5c9af578802a5479346ea4a.) In fact, most hashes
-> are wrong, because two distinct initial commits are now related. The
-> root cause is git-fast-import: give it two commits with the same
-> branch name, and it assumes the latter is the descendant of the
-> former.
->
-> Normally this is what you want. But if your project, like git, ever
-> merges distinct initial commits, then all but the first will
-> unexpectedly gain parents, corrupting all their descendants' hashes.
->
-> -Ben
->
-> P.S: I found this because I wrote a git importer/exporter (mostly
-> copying git's fast-import.c) for my git clone for testing. To work
-> around it, I have a special "git-import" command that looks for "from"
-> commands: the current git-fast-export omits them from initial commits.
-> But clearly a better solution is needed.
->
-> It can't be fixed in the code. The importer language simply is too
-> weak. They ought to add a "initial" command that explicitly marks a
-> commit as such.
->
+> Maybe the sequencer can look at the filename it is passed.
+> If it is something like "$GIT_DIR/*/git-rebase--interactive-todo" that can 
+> mean it is called by "git rebase --interactive".
+
+It's another variant, but then with every new sequencer-user you have to
+add another entry to the "sequencer caller database".
+
+That means: if a user writes a script that uses sequencer he has to make
+changes to sequencer itself. Baaad for extensibility.
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
