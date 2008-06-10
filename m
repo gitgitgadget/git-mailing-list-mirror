@@ -1,130 +1,174 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/4] remote show/prune improvement
-Date: Tue, 10 Jun 2008 19:11:01 +0200
-Message-ID: <200806101911.02625.jnareb@gmail.com>
-References: <7vd4mqdrhi.fsf@gitster.siamese.dyndns.org> <m3ej75pbrw.fsf@localhost.localdomain> <484EA77D.7040003@free.fr>
+Subject: [PATCH 2/2] gitweb: Separate generating 'sort by' table header
+Date: Tue, 10 Jun 2008 19:21:44 +0200
+Message-ID: <200806101921.45017.jnareb@gmail.com>
+References: <200806101919.24242.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 10 19:12:26 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Lea Wiemann <LeWiemann@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 19:23:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K67O8-0007JZ-Lg
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 19:12:05 +0200
+	id 1K67Ym-0003bB-7T
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 19:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbYFJRLK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2008 13:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbYFJRLJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 13:11:09 -0400
-Received: from gv-out-0910.google.com ([216.239.58.186]:15175 "EHLO
+	id S1757441AbYFJRWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 13:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757424AbYFJRWI
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 13:22:08 -0400
+Received: from gv-out-0910.google.com ([216.239.58.184]:16813 "EHLO
 	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436AbYFJRLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 13:11:08 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so644672gvc.37
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 10:11:06 -0700 (PDT)
+	with ESMTP id S1757398AbYFJRWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 13:22:06 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so645899gvc.37
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 10:22:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=uIw4v9NycJzo/mkNLBvI+lCrgEVM8GbebKd1pp88UlY=;
-        b=AoJkybBRxpOoDlRJ/yUBXI/qe125v/RyTBbf66YdvpCHXpMKtUssDeWbK4SOQZM5X/
-         F+1SwQpfD/xauHl/0t8yQLhzbLQgcbkSpq8U7Ao08n5rlthGtXY6+mSQzj4uj/2Itb1P
-         AOcSjAwVmoO3F734Y1zOYdOPxtUFFCXlCcpDE=
+        bh=1j7PSBl8e9VwSAYwWh0y310FgLT++I5qgQ4Rt5Q8+Zw=;
+        b=c8zmRClievXN/zj9e2JoI2MbV55yeDGYjAFFFTojLMIp88Tv6ALU5+94ci3jnMHMtI
+         QQY0a7koynWDxHMcUHhr4UuRPNV7q8AwLufpBmNbrrv25ll/li1A3npXyYEpQc7od4ma
+         KgWpuMnWkcwPq0vlX9DoULJaorlRU8xQ+Uoqw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=aK31UIZjCKfQBzVOKsMSBcSI8CK3gCterDDvgGZXJcouVSn4aN2tuPQTogE9wWPBW1
-         C8oIUYEDd2c8o2q5pREBNJ17+cBc4b5sVYS9ensO9bG8muUxR4BXVIJYWmkf7A+0WgZ3
-         TsR4jTNoHMT18sPVuqxOezOuJ8tBlkX0BYAdU=
-Received: by 10.103.206.12 with SMTP id i12mr3514851muq.33.1213117866559;
-        Tue, 10 Jun 2008 10:11:06 -0700 (PDT)
+        b=nETvtfeViDiWODTbCC+TbZ79UAGEgEk1y5R+AwJ3EYYqvFh8qAiGrMRaDhccleLkXk
+         2nSzAZlou/E5pG8Bxl+oPICRW9qQo9txQVnWAhORwgFlyF13eGgDNSnB5/1PI5Jtaef3
+         IS6mHP/s3ACUnD6FZm2IBiXDyYh9+9gSWKbLU=
+Received: by 10.103.175.9 with SMTP id c9mr3555002mup.15.1213118524543;
+        Tue, 10 Jun 2008 10:22:04 -0700 (PDT)
 Received: from ?192.168.1.11? ( [83.8.192.165])
-        by mx.google.com with ESMTPS id n10sm20341453mue.14.2008.06.10.10.11.03
+        by mx.google.com with ESMTPS id y2sm8498768mug.1.2008.06.10.10.22.02
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 10 Jun 2008 10:11:05 -0700 (PDT)
+        Tue, 10 Jun 2008 10:22:03 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <484EA77D.7040003@free.fr>
+In-Reply-To: <200806101919.24242.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84526>
 
-Dnia wtorek 10. czerwca 2008 18:10, Olivier Marin napisa=B3:
-> Jakub Narebski a =E9crit :
->> Olivier Marin <dkr+ml.git@free.fr> writes:
->>=20
->>>   [1/4] remote show: fix the -n option
->>>   [2/4] builtin-remote: split show_or_prune() in two separate
->>>         functions.=20
->>>   [3/4] remote prune: print the list of pruned branches
->>>   [4/4] remote show: list tracked remote branches with -n.
->>=20
->> I like this series... but the [4/4] lacks documentation (all other
->> patches update documentation).
+Extract generating table header cell, for tables which can be sorted
+by its columns, into print_sort_th_str() and print_sort_th_num()
+subroutines, and print_sort_th() driver subroutine.
 
-Ah, sorry, my mistake.  It looks like [4/4] is just improvement
-to [1/4], which is documented.=20
-=20
-> I'm not sure, it's a minor change. Perhaps, I can squashed it in
-> 1/4 instead.=20
->=20
-> What do you think?
+This avoids repetition, and should make further improvements (like
+JavaScript sorting) easier.  The subroutine uses now "replay" link,
+so it is generic enough to be able to use it for other tables which
+can be sorted by column, like for example 'heads' and 'tags' view
+(sort by name, or sort by age).
 
-Perhaps it could be, but this is not strictly necessary.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+For further code reusing, and current code clarity.
 
-After reading patches a bit more carefully, I think that the features
-are documented well enough, and any Documentation (and patches)=20
-improvements are not necessary, and further changes can happen "in=20
-tree".
+ gitweb/gitweb.perl |   76 ++++++++++++++++++++++++++-------------------------
+ 1 files changed, 39 insertions(+), 37 deletions(-)
 
-
-In "[PATCH 1/4] remote show: fix the -n option" you have:
-> --- a/Documentation/git-remote.txt
-> +++ b/Documentation/git-remote.txt
-[...]
-> -'git-remote' show <name>
-> +'git-remote' show [-n] <name>
-
-while in Documentation/git-remote.txt there is remainder of Perl
-implementation
-
-   'show'::
-
-   Gives some information about the remote <name>.
-   +
-   With `-n` option, the remote heads are not queried first with
-   `git ls-remote <name>`; cached information is used instead.
-
-The information about using `git ls-remote <name>` is no longer fully
-accurate in builtin version, and perhaps could be removed.
-
-
-In "[PATCH 3/4] remote prune: print the list of pruned branches":
-> --- a/Documentation/git-remote.txt
-> +++ b/Documentation/git-remote.txt
-[...]
-> -'git-remote' prune <name>
-> +'git-remote' prune [-n | --dry-run] <name>
-[...]
-> -With `-n` option, the remote heads are not confirmed first with `git
-> -ls-remote <name>`; cached information is used instead.  Use with
-> -caution.
-> +With `--dry-run` option, report what branches will be pruned, but do
-> +no actually prune them.
-
-No `git ls-remote` is mentioned there, as it should be.
-
---=20
-Jakub Narebski
-Poland
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d7a9809..c7882f2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3598,6 +3598,36 @@ sub fill_project_list_info {
+ 	return @projects;
+ }
+ 
++# print 'sort by' <th> element, either sorting by $key if $name eq $order
++# (changing $list), or generating 'sort by $name' replay link otherwise
++sub print_sort_th {
++	my ($str_sort, $name, $order, $key, $header, $list) = @_;
++	$key    ||= $name;
++	$header ||= ucfirst($name);
++
++	if ($order eq $name) {
++		if ($str_sort) {
++			@$list = sort {$a->{$key} cmp $b->{$key}} @$list;
++		} else {
++			@$list = sort {$a->{$key} <=> $b->{$key}} @$list;
++		}
++		print "<th>$header</th>\n";
++	} else {
++		print "<th>" .
++		      $cgi->a({-href => href(-replay=>1, order=>$name),
++		               -class => "header"}, $header) .
++		      "</th>\n";
++	}
++}
++
++sub print_sort_th_str {
++	print_sort_th(1, @_);
++}
++
++sub print_sort_th_num {
++	print_sort_th(0, @_);
++}
++
+ sub git_project_list_body {
+ 	my ($projlist, $order, $from, $to, $extra, $no_header) = @_;
+ 
+@@ -3614,43 +3644,15 @@ sub git_project_list_body {
+ 		if ($check_forks) {
+ 			print "<th></th>\n";
+ 		}
+-		if ($order eq "project") {
+-			@projects = sort {$a->{'path'} cmp $b->{'path'}} @projects;
+-			print "<th>Project</th>\n";
+-		} else {
+-			print "<th>" .
+-			      $cgi->a({-href => href(project=>undef, order=>'project'),
+-			               -class => "header"}, "Project") .
+-			      "</th>\n";
+-		}
+-		if ($order eq "descr") {
+-			@projects = sort {$a->{'descr'} cmp $b->{'descr'}} @projects;
+-			print "<th>Description</th>\n";
+-		} else {
+-			print "<th>" .
+-			      $cgi->a({-href => href(project=>undef, order=>'descr'),
+-			               -class => "header"}, "Description") .
+-			      "</th>\n";
+-		}
+-		if ($order eq "owner") {
+-			@projects = sort {$a->{'owner'} cmp $b->{'owner'}} @projects;
+-			print "<th>Owner</th>\n";
+-		} else {
+-			print "<th>" .
+-			      $cgi->a({-href => href(project=>undef, order=>'owner'),
+-			               -class => "header"}, "Owner") .
+-			      "</th>\n";
+-		}
+-		if ($order eq "age") {
+-			@projects = sort {$a->{'age'} <=> $b->{'age'}} @projects;
+-			print "<th>Last Change</th>\n";
+-		} else {
+-			print "<th>" .
+-			      $cgi->a({-href => href(project=>undef, order=>'age'),
+-			               -class => "header"}, "Last Change") .
+-			      "</th>\n";
+-		}
+-		print "<th></th>\n" .
++		print_sort_th_str('project', $order, 'path',
++		                  'Project', \@projects);
++		print_sort_th_str('descr', $order, 'descr_long',
++		                  'Description', \@projects);
++		print_sort_th_str('owner', $order, 'owner',
++		                  'Owner', \@projects);
++		print_sort_th_num('age', $order, 'age',
++		                  'Last Change', \@projects);
++		print "<th></th>\n" . # for links
+ 		      "</tr>\n";
+ 	}
+ 	my $alternate = 1;
+-- 
+1.5.5.3
