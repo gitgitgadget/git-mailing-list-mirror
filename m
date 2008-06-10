@@ -1,81 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] Add git-squash tool and tests
-Date: Tue, 10 Jun 2008 01:26:33 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806100121150.1783@racer>
-References: <484D47C9.9050509@gnu.org> <1213043398-30524-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0806092133260.1783@racer> <484D984F.20700@gnu.org> <alpine.DEB.1.00.0806092232480.1783@racer> <20080609234208.GE8079@leksak.fem-net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCHES] Assorted minor fixes
+Date: Mon, 9 Jun 2008 20:31:44 -0400
+Message-ID: <20080610003144.GD4389@spearce.org>
+References: <1213051816-4046-1-git-send-email-robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Jun 10 02:28:50 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 02:32:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5rjF-0005eh-GK
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 02:28:49 +0200
+	id 1K5rmz-000764-GS
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 02:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196AbYFJA1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 20:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbYFJA1x
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 20:27:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59404 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752671AbYFJA1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 20:27:52 -0400
-Received: (qmail invoked by alias); 10 Jun 2008 00:27:50 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp059) with SMTP; 10 Jun 2008 02:27:50 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18skoFnncAsyhfmy8B+EE9xQstHV7eFKdBCM2WWNk
-	YluusOGPRLm5E1
-X-X-Sender: gene099@racer
-In-Reply-To: <20080609234208.GE8079@leksak.fem-net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752945AbYFJAbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 20:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYFJAbs
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 20:31:48 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:47252 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752111AbYFJAbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 20:31:47 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1K5rlv-00052Q-Bp; Mon, 09 Jun 2008 20:31:35 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 47A5620FBAE; Mon,  9 Jun 2008 20:31:44 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1213051816-4046-1-git-send-email-robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84462>
 
-Hi,
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+>  .../egit/core/op/ConnectProviderOperation.java     |   15 ++++++-
+>  org.spearce.egit.ui/icons/toolbar/trackd.png       |  Bin 0 -> 387 bytes
+>  org.spearce.egit.ui/icons/toolbar/tracke.png       |  Bin 0 -> 411 bytes
+>  org.spearce.egit.ui/plugin.properties              |    2 +-
+>  org.spearce.egit.ui/plugin.xml                     |   19 +++++----
+>  .../src/org/spearce/egit/ui/UIText.java            |    3 +
+>  .../egit/ui/internal/actions/ResetAction.java      |    2 +-
+>  .../spearce/egit/ui/internal/actions/Track.java    |   40 +++++++++++++++++---
+>  .../internal/decorators/GitResourceDecorator.java  |    2 +-
+>  .../egit/ui/internal/history/GitHistoryPage.java   |   24 +++++++++---
+>  .../ui/internal/sharing/ExistingOrNewPage.java     |   17 ++++++++
+>  .../egit/ui/internal/sharing/SharingWizard.java    |   16 +++++++-
+>  .../src/org/spearce/egit/ui/uitext.properties      |    1 +
+>  13 files changed, 115 insertions(+), 26 deletions(-)
 
-On Tue, 10 Jun 2008, Stephan Beyer wrote:
+How did you you send this series?  Its not format-patch output.
+The diff-stat is missing from each commit, and there's no ---
+to split message from diff.  I didn't bother trying to run them
+through git-am yet as I assume I can just fetch from you, I'm
+just saying the patches look "odd".
 
-> > Except that zucchini is meant for the sequencer, which can implement it 
-> > much more efficiently (i.e. it does not have to check out HEAD~$n).  Also, 
-> > it must not rely on reflogs being enabled.
-> > 
-> > sequencer is plumbing, while the reset mantra is porcelain.
-> 
-> Do I get you right, that the builtin sequencer must not use any of the 
-> porcelain like cherry-pick, reset and even commit?
-
-AFAIAC cherry-pick and reset, and even commit, are not "pure" porcelain: 
-you can rely on their exit code and to a certain extent on their output.  
-Although I would rather use commit-tree from a script than commit.
-
-I'd probably even use git update-ref instead of reset --soft, but then, I 
-_would_ use cherry-pick.
-
-So there is a lot of gray.
-
-> (Perhaps I got it wrong, but it doesn't seem "right" to me, if a 
-> plumbing uses porcelain.)
-> 
-> Currently my prototype *uses* these porcelain, so is it a porcelain in 
-> its current state? ;)
-
-I would say as long as it is meant to be used by a human, it is porcelain.  
-And I do not think that git-sequencer falls into that category.
-
-So it should avoid pure porcelains, such as "git show", and use the 
-(robust) low-level tools instead.
-
-But I feel quite silly talking about that at length; I think that you can 
-use whatever gets a prototype done, and then go on and make it a builtin.
-
-Ciao,
-Dscho
+-- 
+Shawn.
