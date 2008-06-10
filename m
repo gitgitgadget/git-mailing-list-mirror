@@ -1,83 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Reset the graph plotter internals when HEAD has changed.
-Date: Mon, 9 Jun 2008 20:40:46 -0400
-Message-ID: <20080610004046.GE4389@spearce.org>
-References: <1213051816-4046-1-git-send-email-robin.rosenberg.lists@dewire.com> <1213051816-4046-2-git-send-email-robin.rosenberg.lists@dewire.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: squashing patches
+Date: Mon, 9 Jun 2008 21:00:33 -0400
+Message-ID: <20080610010033.GB16050@sigill.intra.peff.net>
+References: <20080607220101.GM31040@leksak.fem-net> <20080609114550.GA8079@leksak.fem-net> <7vprqqh06j.fsf@gitster.siamese.dyndns.org> <20080609204327.GD8079@leksak.fem-net> <20080609205321.GA15912@sigill.intra.peff.net> <20080609235733.GG8079@leksak.fem-net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 02:41:44 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 03:01:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5rvj-0001LI-KA
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 02:41:44 +0200
+	id 1K5sFI-0006Fm-Sy
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 03:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468AbYFJAku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 20:40:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754185AbYFJAku
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 20:40:50 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52057 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754159AbYFJAkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 20:40:49 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K5ruf-0006Zk-Me; Mon, 09 Jun 2008 20:40:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BCEBC20FBAE; Mon,  9 Jun 2008 20:40:46 -0400 (EDT)
+	id S1754682AbYFJBAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 21:00:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754659AbYFJBAh
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 21:00:37 -0400
+Received: from peff.net ([208.65.91.99]:3825 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754006AbYFJBAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 21:00:36 -0400
+Received: (qmail 25198 invoked by uid 111); 10 Jun 2008 01:00:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 09 Jun 2008 21:00:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jun 2008 21:00:33 -0400
 Content-Disposition: inline
-In-Reply-To: <1213051816-4046-2-git-send-email-robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080609235733.GG8079@leksak.fem-net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84465>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> When we reset HEAD to an old revision it becomes more visible than when
-> we add a new commit. This is an intermediate solution.
+On Tue, Jun 10, 2008 at 01:57:33AM +0200, Stephan Beyer wrote:
 
-Hmm.
- 
-> @@ -521,8 +524,18 @@ public class GitHistoryPage extends HistoryPage {
->  		if (db == null)
->  			return false;
->  
-> +		final AnyObjectId headId;
-> +		try {
-> +			headId = db.resolve("HEAD");
-> +		} catch (IOException e) {
-> +			Activator.logError("Cannot parse HEAD in: "
-> +					+ db.getDirectory().getAbsolutePath(), e);
-> +			return false;
-> +		}
-> +
->  		if (currentWalk == null || currentWalk.getRepository() != db
-> -				|| pathChange(pathFilters, paths)) {
-> +				|| pathChange(pathFilters, paths)
-> +				|| headId != null && !headId.equals(currentHeadId)) {
->  			currentWalk = new SWTWalk(db);
+> > I am just watching this from the sidelines, but it seems to me that you
+> > are best off creating the directives as modular and orthogonal as
+> > possible.  It is very simple to create "pick $1; edit" from "pick --edit
+> > $1" later, but it is more difficult to go the other way around.
+> 
+> Perhaps it is just me, but isn't "pick X ; edit"
+> more modular and orthogonal than "pick --edit X"? ;-)
 
-Tossing the currentWalk just because HEAD changed to a different
-commit shouldn't be necessary.  Its very heavy-handed.  Clearly
-there is a bug in the plotter code where the reset does not clear
-state right.
+Sorry, I chose a bad phrase. When I said "create X from Y", I meant
+"when the user gives you Y, you can produce the canonical X". Not "once
+we have the canonical Y, you can create X out of it."
 
-For now this is a reasonable work around.  I'll try to remember
-to come back and debug this case in the future as tossing the
-entire SWTWalk does reduce redraw performance.
+So I appear to have said the exact opposite of what I meant. :)
 
-Thanks for at least coming up with the work-around.
+> But yes, the "pick --edit X" => "pick X ; edit" conversion seems easier.
 
--- 
-Shawn.
+Exactly.
+
+-Peff
