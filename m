@@ -1,55 +1,95 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCHES] Assorted minor fixes
-Date: Tue, 10 Jun 2008 08:29:50 +0200
-Message-ID: <200806100829.50793.robin.rosenberg.lists@dewire.com>
-References: <1213051816-4046-1-git-send-email-robin.rosenberg.lists@dewire.com> <20080610003144.GD4389@spearce.org>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: [PATCH - stgit] Patch to allow import of compressed files
+Date: Mon, 9 Jun 2008 23:38:04 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0806092335420.17180@swallowtail>
+References: <484D78BF.6030504@gmail.com> <20080610063328.GB26965@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 10 08:35:38 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1863694228-1213079885=:17180"
+Cc: Clark Williams <clark.williams@gmail.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 08:38:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5xSC-0003NH-SC
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 08:35:37 +0200
+	id 1K5xUg-0003zb-DY
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 08:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbYFJGen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 02:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYFJGen
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 02:34:43 -0400
-Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:53199 "EHLO
-	pne-smtpout2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751062AbYFJGen (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 02:34:43 -0400
-Received: from shx250sn1.teliamobile.net (192.71.148.164) by pne-smtpout2-sn2.hy.skanova.net (7.3.129)
-        id 47A02DB90285907E; Tue, 10 Jun 2008 08:34:41 +0200
-Received: from [10.145.100.134] ([10.145.100.134])
-	by shx250sn1.teliamobile.net (8.13.1/8.13.1) with ESMTP id m5A6YZCu029300;
-	Tue, 10 Jun 2008 08:34:38 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080610003144.GD4389@spearce.org>
-Content-Disposition: inline
+	id S1751554AbYFJGhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 02:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYFJGhR
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 02:37:17 -0400
+Received: from wide-rose.makesad.us ([203.178.130.147]:43265 "EHLO
+	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751508AbYFJGhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 02:37:15 -0400
+Received: from swallowtail (localhost [127.0.0.1])
+	by rose.makesad.us (Postfix) with ESMTP id E89C2A0128;
+	Tue, 10 Jun 2008 02:40:47 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+	by swallowtail (Postfix) with ESMTPS id 4F1CB3FCBF;
+	Mon,  9 Jun 2008 23:38:05 -0700 (PDT)
+X-X-Sender: paulproteus@swallowtail
+In-Reply-To: <20080610063328.GB26965@diana.vm.bytemark.co.uk>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-OpenPGP-Key-ID: 0x70096AD1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84477>
 
-tisdagen den 10 juni 2008 02.31.44 skrev Shawn O. Pearce:
-> How did you you send this series?  Its not format-patch output.
-> The diff-stat is missing from each commit, and there's no ---
-> to split message from diff.  I didn't bother trying to run them
-> through git-am yet as I assume I can just fetch from you, I'm
-> just saying the patches look "odd".
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It was git format-patch --binary. Seems that option drops the diffstat
-in that case. Yes you can just pull and get the same series. I mostly
-sent it as patches for review purposes. It is much easier in e-mail.
-Using gtik for reviiew isn't optimal. A nice tool for reviewing and
-commenting directly from a repo would be nice.
+--8323329-1863694228-1213079885=:17180
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
--- robin
+On Tue, 10 Jun 2008, Karl Hasselström wrote:
+
+> On 2008-06-09 13:38:55 -0500, Clark Williams wrote:
+>
+>> This patch allows StGit to directly import compressed (.gz and .bz2)
+>> files with reasonable patch names.
+>>
+>> I do a lot of work on modified kernel trees and usually the first
+>> two things imported are a stable update patch followed immediately
+>> by an -rt patch, both of which are compressed. With this patch I can
+>> just copy the files down directly from kernel.org and import them,
+>> rather than having to keep uncompressed copies around.
+>>
+>> Hey, I'm lazy... :)
+>
+> Lazy is good. Thanks for the patch!
+>
+>> +        if filename.endswith(".gz"):
+>> +            import gzip
+>> +            f = gzip.open(filename)
+>> +            pname = filename.replace(".gz", "")
+>> +        elif filename.endswith(".bz2"):
+>> +            import bz2
+>> +            f = bz2.BZ2File(filename, 'r')
+>> +            pname = filename.replace(".bz2", "")
+>
+> Some comments here:
+>
+>  * By my reading of the docs, the second argument to BZ2File defaults
+>    to 'r' anyway, so you could omit it.
+
+Peanut gallery question: Why not just always try these methods and catch 
+some format exception if they fail, proceeding to the next possible 
+decompressor (proceeding on to no decompressor)?
+
+That way if a file is called .GZ, it will still be handled properly; in 
+fact, all files would still be handled properly.  And these formats leave 
+notes in the first few bytes of the file as to if they should be tried, so 
+it's not as if it would come at some performance cost.
+
+-- Asheesh.
+
+-- 
+Say "twenty-three-skiddoo" to logout.
+--8323329-1863694228-1213079885=:17180--
