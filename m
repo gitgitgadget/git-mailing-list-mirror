@@ -1,76 +1,81 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Introduce get_octopus_merge_bases() in commit.c
-Date: Tue, 10 Jun 2008 02:03:40 +0200
-Message-ID: <20080610000340.GY29404@genesis.frugalware.org>
-References: <alpine.DEB.1.00.0806091458190.1783@racer> <1213051426-11530-1-git-send-email-vmiklos@frugalware.org> <7v8wxefbtn.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806100024310.1783@racer> <7vlk1edvn1.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] Add git-squash tool and tests
+Date: Tue, 10 Jun 2008 01:26:33 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806100121150.1783@racer>
+References: <484D47C9.9050509@gnu.org> <1213043398-30524-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0806092133260.1783@racer> <484D984F.20700@gnu.org> <alpine.DEB.1.00.0806092232480.1783@racer> <20080609234208.GE8079@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lzTnM044bxJwS9+G"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 02:04:42 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 02:28:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5rLp-00064x-4G
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 02:04:37 +0200
+	id 1K5rjF-0005eh-GK
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 02:28:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbYFJADo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 20:03:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYFJADo
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 20:03:44 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:57648 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751378AbYFJADn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2008 20:03:43 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 7D5E21B24FA;
-	Tue, 10 Jun 2008 02:03:42 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3CBAB44697;
-	Tue, 10 Jun 2008 01:45:20 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 258DA1770022; Tue, 10 Jun 2008 02:03:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vlk1edvn1.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753196AbYFJA1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 20:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbYFJA1x
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 20:27:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59404 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752671AbYFJA1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 20:27:52 -0400
+Received: (qmail invoked by alias); 10 Jun 2008 00:27:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 10 Jun 2008 02:27:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18skoFnncAsyhfmy8B+EE9xQstHV7eFKdBCM2WWNk
+	YluusOGPRLm5E1
+X-X-Sender: gene099@racer
+In-Reply-To: <20080609234208.GE8079@leksak.fem-net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84461>
 
+Hi,
 
---lzTnM044bxJwS9+G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, 10 Jun 2008, Stephan Beyer wrote:
 
-On Mon, Jun 09, 2008 at 04:41:06PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Actually a quick glance at git-merge, a rather large case...esac after
-> that "show-branch --merge-base" tells me that we do not really use the
-> output from that operation and instead we check if we are fast-forward
-> from all the other heads by iterating over them.  merge-octupos would
-> accept it as the base but never looks at it.
+> > Except that zucchini is meant for the sequencer, which can implement it 
+> > much more efficiently (i.e. it does not have to check out HEAD~$n).  Also, 
+> > it must not rely on reflogs being enabled.
+> > 
+> > sequencer is plumbing, while the reset mantra is porcelain.
+> 
+> Do I get you right, that the builtin sequencer must not use any of the 
+> porcelain like cherry-pick, reset and even commit?
 
-I may be wrong but I think it would be still nice to pass a valid base
-to the backend, even if _currently_ the only octopus implementation
-ignores it.
+AFAIAC cherry-pick and reset, and even commit, are not "pure" porcelain: 
+you can rely on their exit code and to a certain extent on their output.  
+Although I would rather use commit-tree from a script than commit.
 
-Actually on "valid" I mean what my original get_octopus_merge_bases()
-returned. :-)
+I'd probably even use git update-ref instead of reset --soft, but then, I 
+_would_ use cherry-pick.
 
---lzTnM044bxJwS9+G
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+So there is a lot of gray.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+> (Perhaps I got it wrong, but it doesn't seem "right" to me, if a 
+> plumbing uses porcelain.)
+> 
+> Currently my prototype *uses* these porcelain, so is it a porcelain in 
+> its current state? ;)
 
-iEYEARECAAYFAkhNxNwACgkQe81tAgORUJYAdACgm/e1VE0ek1pp5G9ExntbbO5m
-mwQAn3pEZH9zYQIXtEtuf0Dp8trMHapZ
-=8DS7
------END PGP SIGNATURE-----
+I would say as long as it is meant to be used by a human, it is porcelain.  
+And I do not think that git-sequencer falls into that category.
 
---lzTnM044bxJwS9+G--
+So it should avoid pure porcelains, such as "git show", and use the 
+(robust) low-level tools instead.
+
+But I feel quite silly talking about that at length; I think that you can 
+use whatever gets a prototype done, and then go on and make it a builtin.
+
+Ciao,
+Dscho
