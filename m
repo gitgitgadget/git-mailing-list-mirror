@@ -1,131 +1,102 @@
-From: "Ben Lynn" <benlynn@gmail.com>
-Subject: git bugs
-Date: Tue, 10 Jun 2008 01:41:34 -0700
-Message-ID: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+From: "Benjamin Lynn" <blynn@google.com>
+Subject: Re: git import/export bug?
+Date: Tue, 10 Jun 2008 01:44:04 -0700
+Message-ID: <ac789dbd0806100144m461da1f1wc9e44fd24598a59f@mail.gmail.com>
+References: <ac789dbd0806100141x55bf1d01k707034af3ec86b0f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 10:42:41 2008
+X-From: git-owner@vger.kernel.org Tue Jun 10 10:45:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5zR3-0006Jr-Nl
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 10:42:34 +0200
+	id 1K5zTZ-00073T-TW
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 10:45:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754416AbYFJIlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 04:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754432AbYFJIlj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 04:41:39 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:30728 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754391AbYFJIli (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 04:41:38 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1733949fgg.17
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 01:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=EHBMMKX5j+Xm7B/62QANF3p+M61YeLK3Sea1unH0Y10=;
-        b=Sg8+cS/WEYJ8n0/B+PYagB3sFnQmvYzXjXaS/XQCvQZUr87DD/oPAErbgPbhIZxCQS
-         gmDyMhrlfSXoSXkzA6Y3oDWFHDH2IeFCxw86Fcu2mFb9noJ6kZlCAp/p3ZgLS2cJFor3
-         6XwIAv8RmNwaozJYdn0APjgKCoL26rasyTZbk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=lvnpHcYnxeXx2na39HFPxhpmWbi9c+lVoINbn12S+z/W4PvYYUqMJEy1jKTPoEKj2p
-         RHQkpz1rHYOinqbFbEJlWefWj+fEvm0wqiVs0h2cDFBwjdbcK0KKiWtjhisoxUl+tYjB
-         MdOYuOkp6YZ9AcLi1AtBUvi46asRRtUnv4bDc=
-Received: by 10.86.100.19 with SMTP id x19mr5345922fgb.61.1213087294206;
-        Tue, 10 Jun 2008 01:41:34 -0700 (PDT)
-Received: by 10.86.79.17 with HTTP; Tue, 10 Jun 2008 01:41:34 -0700 (PDT)
+	id S1754031AbYFJIoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 04:44:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753660AbYFJIoQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 04:44:16 -0400
+Received: from smtp-out.google.com ([216.239.33.17]:30827 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753605AbYFJIoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 04:44:15 -0400
+Received: from spaceape7.eur.corp.google.com (spaceape7.eur.corp.google.com [172.28.16.141])
+	by smtp-out.google.com with ESMTP id m5A8i8N8017557
+	for <git@vger.kernel.org>; Tue, 10 Jun 2008 09:44:08 +0100
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1213087448; bh=WCMDoHSpD3JZ65BEWFzvWGbKhXw=;
+	h=DomainKey-Signature:Message-ID:Date:From:To:Subject:In-Reply-To:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Content-Disposition:References; b=OTPplO0Qh8DtJTYQg1P62nyJFJpRJBT7
+	YCVOfBnrWh7urfNZ0IdqCF/sjXts2vwUEJTd8HhNb+StNwyU23mP9w==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:message-id:date:from:to:subject:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:
+	content-disposition:references;
+	b=Y6LjuujLYXg7mRlUix87MOtHKwJR0K4Ae+DsgCepa0tdwMTgdnGfJjl+8NMFnIZPe
+	n+mPNuMui9D+qc75i0zFQ==
+Received: from wf-out-1314.google.com (wfc28.prod.google.com [10.142.3.28])
+	by spaceape7.eur.corp.google.com with ESMTP id m5A8i7B2030795
+	for <git@vger.kernel.org>; Tue, 10 Jun 2008 09:44:08 +0100
+Received: by wf-out-1314.google.com with SMTP id 28so2563949wfc.24
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 01:44:07 -0700 (PDT)
+Received: by 10.143.33.19 with SMTP id l19mr1927627wfj.112.1213087445044;
+        Tue, 10 Jun 2008 01:44:05 -0700 (PDT)
+Received: by 10.143.40.10 with HTTP; Tue, 10 Jun 2008 01:44:04 -0700 (PDT)
+In-Reply-To: <ac789dbd0806100141x55bf1d01k707034af3ec86b0f@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84486>
 
-I've come across a couple of bugs. Most users will probably never
-encounter them, but I think they ought to be fixed. Apologies if
-they're well-known issues. I haven't read much of this list.
+Sorry about the dupe, I clicked the send button on the wrong email
+account. This is an earlier edit of my intended post. Please ignore.
+(Or preferably, an admin can delete these?)
 
-1. The import/export language poorly handles distinct initial commits
-on the same branch, because given two commits with same branch name,
-it assumes the latter is the descendant of the former (if there are no
-"from" commands).
-
-Normally this is what you want. But if your project, like git, ever
-merges distinct initial commits, then all but the first will
-unexpectedly gain parents, corrupting all their descendants' hashes.
-For example:
-
-$ git clone git://git.kernel.org/pub/scm/git/git.git
-$ git checkout -b test 60ea0fdd7de001405fcc7591beb18a66a1f0dd09
-$ git fast-export test > /tmp/x
-$ cd /some/empty/dir
-$ git init
-$ git fast-import < /tmp/x
-$ git checkout test
-
-Importing a pristine export, we discover Linus did not in fact make
-the first commit to the git project:
-
-$ git log d154ebcc23bfcec2ed44e365af9e5c14c6e22015
-
-As a workaround, I have a custom importer that knows that
-git-fast-export omits the "from" command in initial commits. But there
-should be a command to specify that the current commit is an initial
-commit, allowing reliable export of projects such as git.
-
-2. Kudos to everyone who figured out the nasty race condition and its
-complex solution as described in Documentation/technical/racy-git.txt
-and the comments of read-cache.c. It took me a while to get my head
-around it.
-
-Unfortunately, the solution isn't perfect. Try this:
-
-$ echo xyzzy > file
-$ git update-index --add file   # don't zero size since contents match
-$ echo frotz > file             # all stats still match, contents don't
-$ echo nitfol > other  # can be done much earlier
-$ git update-index --add other  # now the cached size is zeroed
-$ : > file                      # zero the file size muahahaha
-$ # Type fast! The above must take place within the same second! ;-)
-$ sleep 2
-$ echo filfre > other
-$ git update-index --add other  # stats of "file" match, hash is wrong
-
-Essentially, we trigger two index writes that avoid operations on
-"file": one immediately after "file" is first committed and identified
-as racily clean, and the second some time later, after we have
-sneakily zeroed the file behind git's back (after previously editing
-its contents in place). We defeat the safeguards and end up with a bad
-hash in the index that appears valid.
-
-The"other" file merely causes index writes without reading the "file"
-entry. It is also racily clean in the above, but this is irrelevant.
-
-It's unlikely this sequence of operations would occur in real usage,
-but I'd sleep better if this index corruption bug were eliminated. One
-practical but unsatisfactory easy "fix" is to mark racily clean
-entries with SIZE_MAX instead of 0. Who uses git to track to files of
-this size?
-
-A better solution would be to introduce a new per-entry flag. Let's
-call it "dodgy". Then during a cache entry update, we set "dodgy" if
-the mtime is bigger or equal to the index timestamp. And during cache
-entry reads, we check "dodgy": if clear, then we trust the hatch,
-otherwise we don't trust the hash and recompute it, again setting
-"dodgy" if necessary (i.e. if the mtime matches the index timestamp
-again).
-
-Although this solution does require adding a flag per index entry, we
-no longer have to scan through the index on every index write to
-perform the size zero hack.
-
--Ben
+On Tue, Jun 10, 2008 at 1:41 AM, Benjamin Lynn <blynn@google.com> wrote:
+> Sorry if this is a well-known problem, but I only just came across it.
+> I tried searching for it briefly, but to no avail. Maybe nobody cares
+> because there's usually no need to export from git! And it's only one
+> of the satellite features, not the core. Nonetheless, if you export
+> git repos, you might want to know about it.
+>
+> Try this:
+>
+> $ git clone git://git.kernel.org/pub/scm/git/git.git  # clone git source
+> $ git checkout -b test 60ea0fdd7de001405fcc7591beb18a66a1f0dd09
+> $ git fast-export test > /tmp/x
+>
+> $ cd /some/empty/dir
+> $ git init
+> $ git fast-import < /tmp/x
+> $ git checkout test
+>
+> You'd expect exporting a pristine import to result in a faithful copy.
+> But type "git log" and you'll see the hash of the top commit differs.
+> (It's 56fe9d6d474f5c88c5c9af578802a5479346ea4a.) In fact, most hashes
+> are wrong, because two distinct initial commits are now related. The
+> root cause is git-fast-import: give it two commits with the same
+> branch name, and it assumes the latter is the descendant of the
+> former.
+>
+> Normally this is what you want. But if your project, like git, ever
+> merges distinct initial commits, then all but the first will
+> unexpectedly gain parents, corrupting all their descendants' hashes.
+>
+> -Ben
+>
+> P.S: I found this because I wrote a git importer/exporter (mostly
+> copying git's fast-import.c) for my git clone for testing. To work
+> around it, I have a special "git-import" command that looks for "from"
+> commands: the current git-fast-export omits them from initial commits.
+> But clearly a better solution is needed.
+>
+> It can't be fixed in the code. The importer language simply is too
+> weak. They ought to add a "initial" command that explicitly marks a
+> commit as such.
+>
