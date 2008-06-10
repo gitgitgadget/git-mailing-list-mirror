@@ -1,98 +1,69 @@
-From: "Philippe Ombredanne" <philippe@easyeclipse.org>
-Subject: RE: [ANNOUNCE] Java Git (aka jgit) has switched to 3-clause BSD
-Date: Mon, 9 Jun 2008 18:15:06 -0800
-Message-ID: <027101c8ca9f$cd68afe0$1e01a8c0@computer>
-References: <200806092139.58485.robin.rosenberg@dewire.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v2] remote show: fix the -n option
+Date: Mon, 9 Jun 2008 21:19:13 -0400
+Message-ID: <20080610011913.GA11793@spearce.org>
+References: <484B2DD3.8050307@free.fr> <1212927772-10006-1-git-send-email-dkr+ml.git@free.fr> <7v63sjk6yo.fsf@gitster.siamese.dyndns.org> <484C7CBE.4070700@free.fr> <484C7DCC.6080303@free.fr> <484D5322.6050309@free.fr> <alpine.DEB.1.00.0806091733230.1783@racer> <7vd4mqdrhi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Dave Watson'" <dwatson@mimvista.com>,
-	"'Marek Zawirski'" <marek.zawirski@gmail.com>,
-	<git@vger.kernel.org>
-To: "'Robin Rosenberg'" <robin.rosenberg@dewire.com>,
-	"'Shawn O. Pearce'" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 10 03:18:04 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 03:20:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K5sUs-0001x0-Uc
-	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 03:18:03 +0200
+	id 1K5sWz-0002TT-Aa
+	for gcvg-git-2@gmane.org; Tue, 10 Jun 2008 03:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491AbYFJBRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2008 21:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYFJBRE
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 21:17:04 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:34524 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752749AbYFJBRC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 21:17:02 -0400
-Received: from randymail-a5.g.dreamhost.com (sd-green-bigip-81.dreamhost.com [208.97.132.81])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id A293517AAFE
-	for <git@vger.kernel.org>; Mon,  9 Jun 2008 18:17:00 -0700 (PDT)
-Received: from computer (dsl017-042-218.sfo1.dsl.speakeasy.net [69.17.42.218])
-	by randymail-a5.g.dreamhost.com (Postfix) with ESMTP id E85B490DA0;
-	Mon,  9 Jun 2008 18:15:27 -0700 (PDT)
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-In-Reply-To: <200806092139.58485.robin.rosenberg@dewire.com>
-Importance: Normal
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1807
+	id S1753309AbYFJBTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2008 21:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752472AbYFJBTT
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 21:19:19 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46911 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbYFJBTT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2008 21:19:19 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1K5sVs-0004uN-Q9; Mon, 09 Jun 2008 21:19:04 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0C09320FBAE; Mon,  9 Jun 2008 21:19:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vd4mqdrhi.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84468>
 
-Robin:
-I can check the commit message. If you have a seprate archive of the meails
-that woudl help too .
+Junio C Hamano <gitster@pobox.com> wrote:
+> At least I care enough to point out that I think you are wrong in this
+> case.  "show -n" in the scripted version was never about "dry-run" but
+> was about "no-query".
+...
+> I am CC'ing Shawn who authored 859607d (Teach 'git remote' how to cleanup
+> stale tracking branches., 2007-02-02) to give him a chance to point out
+> why I am wrong in saying "prune -n" is nonsense.  Maybe there is a valid
+> use case for that option, even though I do not see one.
 
+I agree with you Junio.  "prune -n" is nonsense.  You cannot know
+what to remove locally that the remote no longer advertises without
+querying the remote.
 
+So "prune -n" is nonsense and should issue an error.  "prune --dry-run"
+is different and means "query, show what you would delete, but don't
+actually delete".
+
+Likewise "show --dry-run" is nonsense.  What does it mean to show
+what would show without showing it?  Just show it.   :)
 
 -- 
-Cheers
-Philippe
-
-philippe ombredanne | 1 650 799 0949 | pombredanne at nexb.com 
-nexB - Open by Design (tm) - http://www.nexb.com 
-http://easyeclipse.org - http://phpeclipse.net - http://eclipse.org/atf - 
-http://eclipse.org/vep - http://labs.jboss.org/drools/ -
-http://developer.mozilla.org/en/docs/XULRunner
-
-
-> -----Original Message-----
-> From: Robin Rosenberg [mailto:robin.rosenberg@dewire.com] 
-> Sent: Monday, June 09, 2008 11:40 AM
-> To: Shawn O. Pearce
-> Cc: Dave Watson; Marek Zawirski; git@vger.kernel.org; 
-> Philippe Ombredanne
-> Subject: Re: [ANNOUNCE] Java Git (aka jgit) has switched to 
-> 3-clause BSD
-> 
-> 
-> Hi, all
-> 
-> I've got confirmation from all needed parties and pushed the 
-> license changes to master. 
-> See 
-> http://repo.or.cz/w/egit.git?a=commit;h=2baa6eb54706926f74d8ca
-5a10c7f0448acb5fe6
-and
-http://repo.or.cz/w/egit.git?a=commit;h=53a2cc3f6144ddcc10954d3abf68a5b90ed9
-5248
-
-The changes plus some fixes to the fetch code has been merged and pushed to
-master.
-
-Philippe, It would be nice if you could check to see that the licensing
-looks ok. We can hand
-over the complete e-mail messages separately from the commit comments.
-
-I think we need to complement the UI for fetch plus and couple other fixes
-and do more testing befire
-bumping the revision number. 
-
--- robin
+Shawn.
