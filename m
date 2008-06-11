@@ -1,82 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: autocrlf and git manual
-Date: Wed, 11 Jun 2008 06:06:57 -0700 (PDT)
-Message-ID: <m3d4moruhg.fsf@localhost.localdomain>
-References: <1033a22d0806110453h16782758i7318ef4fce434ba@mail.gmail.com>
+From: Chris Ridd <chris.ridd@isode.com>
+Subject: [PATCH] Improve sed portability
+Date: Wed, 11 Jun 2008 14:09:19 +0100
+Message-ID: <1213189759-11565-1-git-send-email-chris.ridd@isode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "John Yesberg" <john.yesberg@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 15:09:01 2008
+Cc: Chris Ridd <chris.ridd@isode.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 11 15:16:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Q3r-0008F5-ED
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 15:08:23 +0200
+	id 1K6QBY-0003Q3-8d
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 15:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbYFKNHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 09:07:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbYFKNHA
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 09:07:00 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:11682 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbYFKNG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 09:06:59 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so99800ugf.16
-        for <git@vger.kernel.org>; Wed, 11 Jun 2008 06:06:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=o53VJNoqRVW5BMrRAOJ1TtpTo4oy7Udfc/Rw2cS5I7E=;
-        b=s7/Anp/1ZCZasdXMCjwaRiYQFHz7PDylrXdAWMRP6472Wi3nOA0jj/NKJVqB8lipy4
-         1zqfVEyu8vjCOZXmIvrRpRAi47J/dSUb2SBetEcqP0zxs0WM/KNIK/ZHZTRMB0s1TCQU
-         U/xS+YD2CNR8mf1Qfeqm/PxA5af/yHDpDvKsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=KEwSQXH6kQwMjq5Zw0xFLJg12YWi+DP7rUN92brvwTTtBXFxnwODfD9oqsYiXbrZcj
-         wf6oq9F2/AJYZHA+qHMli874FEr5tzePx54JEGQ69yoPnFYK9FLxTzh9tB1IoUAY5XQy
-         By/4NBdW5cWozLioLvoTKDVKKr6HdnvRpFxdw=
-Received: by 10.67.115.17 with SMTP id s17mr1144097ugm.56.1213189618160;
-        Wed, 11 Jun 2008 06:06:58 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.225.81])
-        by mx.google.com with ESMTPS id s7sm4120398uge.48.2008.06.11.06.06.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Jun 2008 06:06:57 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5BD6sal018660;
-	Wed, 11 Jun 2008 15:06:54 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5BD6pjQ018657;
-	Wed, 11 Jun 2008 15:06:51 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1033a22d0806110453h16782758i7318ef4fce434ba@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751317AbYFKNP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 09:15:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbYFKNP0
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 09:15:26 -0400
+Received: from rufus.isode.com ([62.3.217.251]:57930 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751196AbYFKNPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 09:15:25 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jun 2008 09:15:24 EDT
+Received: from localhost.localdomain (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with ESMTP 
+          id <SE=OfwBZBKpX@rufus.isode.com>; Wed, 11 Jun 2008 14:09:19 +0100
+X-Mailer: git-send-email 1.5.3.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84608>
 
-"John Yesberg" <john.yesberg@gmail.com> writes:
+On Solaris /usr/bin/sed apparently fails to process input that doesn't
+end in a \n. Consequently constructs like
 
-> I didn't see any contact details in the manual or on the web site. I'd
-> be happy to contribute text if that helps: Is there a markup language?
+  re=$(printf '%s' foo | sed -e 's/bar/BAR/g' $)
 
-Yes, all (almost all) documentation in git use AsciiDoc markup language.
+cause re to be set to the empty string. Such a construct is used in
+git-submodule.sh.
 
-> Who is the editor?
+Changing the printf to add a \n seems the safest change. The
+POSIX-compliant seds shipped with Solaris do not have this problem.
 
-"Git User's Manual" is mainly creation of J. Bruce Fields (from what I
-rememeber, and also from the number of commits).  So if you want to
-add to that, it would be I think best simply to send patch (if
-possible), Cc-ing him.
+Signed-off-by: Chris Ridd <chris.ridd@isode.com>
+---
+ git-submodule.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 1007372..e515bcc 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -73,7 +73,7 @@ resolve_relative_url ()
+ module_name()
+ {
+ 	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+-	re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
++	re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+ 	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+ 		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+        test -z "$name" &&
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.3.6
