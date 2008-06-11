@@ -1,66 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] builtin-fast-export: Add importing and exporting of
- revision marks
-Date: Wed, 11 Jun 2008 14:43:06 -0700
-Message-ID: <7vr6b3bqc5.fsf@gitster.siamese.dyndns.org>
-References: <7vve0hdbvv.fsf@gitster.siamese.dyndns.org>
- <1213183024-60013-1-git-send-email-pdebie@ai.rug.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Wed, 11 Jun 2008 22:44:17 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806112242370.1783@racer>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Jun 11 23:44:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 23:46:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Y76-0002XF-2d
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:44:16 +0200
+	id 1K6Y9C-0003hs-2Y
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963AbYFKVnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 17:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYFKVnV
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:43:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750850AbYFKVnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 17:43:21 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C85E66FDE;
-	Wed, 11 Jun 2008 17:43:18 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 05A206FDA; Wed, 11 Jun 2008 17:43:14 -0400 (EDT)
-In-Reply-To: <1213183024-60013-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
- Bie's message of "Wed, 11 Jun 2008 13:17:04 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 67C3D8CC-37FF-11DD-8625-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751024AbYFKVpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 17:45:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYFKVpc
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:45:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37309 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750894AbYFKVpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 17:45:31 -0400
+Received: (qmail invoked by alias); 11 Jun 2008 21:45:29 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp033) with SMTP; 11 Jun 2008 23:45:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YarEIbIxYIqfPl20EPe8lfwu0wnIx1X3vfC7tb7
+	x+8ruFsn+yCPZ0
+X-X-Sender: gene099@racer
+In-Reply-To: <20080611213648.GA13362@glandium.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84670>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+Hi,
 
-> This adds the --import-marks and --export-marks to fast-export. These import
-> and export the marks used to for all revisions exported in a similar fashion
-> to what fast-import does. The format is the same as fast-import, so you can
-> create a bidirectional importer / exporter by using the same marks file on
-> both sides.
+On Wed, 11 Jun 2008, Mike Hommey wrote:
 
-Heh, I've long queued a fixed-up version in 'pu' as 4ba0575
-(builtin-fast-export: Add importing and exporting of revision marks,
-2008-06-05).
+> On Wed, Jun 11, 2008 at 04:29:56PM -0500, Brandon Casey wrote:
+> > The stash makes use of git's reflog mechanism, but it is not a reflog 
+> > in the traditional sense. Each entry is a state that the user 
+> > explicitly requested git to remember. The stash is generally 
+> > short-lived, but the user probably expects that a stash will continue 
+> > to exist until it is explicitly deleted. So we should not expire stash 
+> > entries.
+> 
+> I wonder if it wouldn't make sense to have git reflog expire not expire 
+> stashes *at all*. I mean, you don't necessarily cleanup your repo with 
+> git gc, and you may end up killing your stashes with git reflog yourself 
+> if you don't use the "magic" --exclude...
 
-I think renaming the "mark_object" to "mark_next_object" makes quite a lot
-of sense, and I do not have any preference between mark2deco vs mark_to_ptr 
-nor between a macro vs a static inline function for something small like
-these.
+FWIW I thought it was one of the clever designs of git-stash that it 
+automatically expires together with the other reflogs.  A stash is only a 
+temporary thing, that is not even meant to leave the local repository, 
+after all.
 
-You still use export_filename and import_filename uninitialized in
-cmd_fast_export() and breaks everybody who does not use export-marks
-option.  Has this patch (and the previous one I fixed up before queuing it
-in 'pu') ever been tested?
+Ciao,
+Dscho
