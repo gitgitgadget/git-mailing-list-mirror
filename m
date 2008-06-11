@@ -1,65 +1,94 @@
-From: Chris Ridd <chris.ridd@isode.com>
-Subject: [PATCH] Improve sed portability
-Date: Wed, 11 Jun 2008 14:09:19 +0100
-Message-ID: <1213189759-11565-1-git-send-email-chris.ridd@isode.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-daemon on Windows?
+Date: Wed, 11 Jun 2008 06:27:08 -0700 (PDT)
+Message-ID: <m38wxcrtjr.fsf@localhost.localdomain>
+References: <63c5d3820806110551y69e895eeg4fde4bfdaf22bbf2@mail.gmail.com>
 Mime-Version: 1.0
-Cc: Chris Ridd <chris.ridd@isode.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 15:16:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Chris Hoffman" <chris.c.hoffman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 15:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6QBY-0003Q3-8d
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 15:16:20 +0200
+	id 1K6QNX-00086H-7y
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 15:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317AbYFKNP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 09:15:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbYFKNP0
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 09:15:26 -0400
-Received: from rufus.isode.com ([62.3.217.251]:57930 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751196AbYFKNPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 09:15:25 -0400
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jun 2008 09:15:24 EDT
-Received: from localhost.localdomain (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (smtp internal) via TCP with ESMTP 
-          id <SE=OfwBZBKpX@rufus.isode.com>; Wed, 11 Jun 2008 14:09:19 +0100
-X-Mailer: git-send-email 1.5.3.6
+	id S1751551AbYFKN1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 09:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbYFKN1f
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 09:27:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:17022 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751510AbYFKN1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 09:27:11 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so103747ugf.16
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 06:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=e+GATvDGXq5PAoyAUnhgmLqvQYvbSt0iLVYx1I1Qv4U=;
+        b=GBK7Zx0BtvrBrgYNtmmj7de1R4FeV7owHx1BWsvgU7kgsMcU24hs8RkvLnySDWWnqx
+         hVPfusAKTbvYxqqEQqRXVgLWujPEChwtw2rnFXNMoOv65GzQDimGa9srVY9mSFRHPL9L
+         v5v3zyd3nGe2toGcEs0kkLEXQROrmDgrNz6mQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=dRySMUMVsbkAgofbxiZSm4VpngXFY+eCYpHpZ3sQ5MyiLH7rCsJJH29K39pHVXe97e
+         evQxmCEyYcqwccZoa52X1KzDJDMO0RFtp3g+T0UWAWz4glHg0KN9lNpmVHwKtnfzuaAq
+         22/6/yWYq6xYCk9FxnsK9v9C/OhlHEMwuSlMw=
+Received: by 10.210.70.14 with SMTP id s14mr5152403eba.161.1213190829216;
+        Wed, 11 Jun 2008 06:27:09 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.225.81])
+        by mx.google.com with ESMTPS id z34sm13313815ikz.9.2008.06.11.06.27.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Jun 2008 06:27:08 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5BDR5cC018876;
+	Wed, 11 Jun 2008 15:27:05 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5BDR4QH018873;
+	Wed, 11 Jun 2008 15:27:04 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <63c5d3820806110551y69e895eeg4fde4bfdaf22bbf2@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84609>
 
-On Solaris /usr/bin/sed apparently fails to process input that doesn't
-end in a \n. Consequently constructs like
+"Chris Hoffman" <chris.c.hoffman@gmail.com> writes:
 
-  re=$(printf '%s' foo | sed -e 's/bar/BAR/g' $)
+> Is there a distribution of the git server for Windows, or am I totally
+> missing the point of git?
 
-cause re to be set to the empty string. Such a construct is used in
-git-submodule.sh.
+I don't know about git-daemon (git server) under Windows, but you can
+use I think any web server (Apache, lighttpd, or even IIS) can serve
+git over HTTP, and any web server with WebDAV can enable pushing to
+git repositories.  Please remember that "dumb" protocols such as HTTP
+require additional info which must be generated by git (usually in
+post-update / post-commit hook), or transferred.
 
-Changing the printf to add a \n seems the safest change. The
-POSIX-compliant seds shipped with Solaris do not have this problem.
+You can use SSH to access repositories, but I don't know any SSH
+server for Windows.  You can use Cygwin OpenSSH server, I think
+(restrict access with git-shell, or use gitosis)...
 
-Signed-off-by: Chris Ridd <chris.ridd@isode.com>
----
- git-submodule.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Or you can use any networked file system.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1007372..e515bcc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -73,7 +73,7 @@ resolve_relative_url ()
- module_name()
- {
- 	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
--	re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
-+	re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
- 	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
- 		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
-        test -z "$name" &&
+> Will a simple file share work, or do I have to worry about file
+> locking and such (e.g., two people try to commit at the same time).
+
+The preferred workflow is for each person to have its own clone of
+repository; one repository plays role of central one, ut not by
+socilogical not technical reasons.  Centralized workflow is possible,
+but id doesn't take as much attention.
+
 -- 
-1.5.3.6
+Jakub Narebski
+Poland
+ShadeHawk on #git
