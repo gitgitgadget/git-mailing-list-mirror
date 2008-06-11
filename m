@@ -1,119 +1,66 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] git-rebase -i: have an option for amending the commit
-	message only.
-Date: Thu, 12 Jun 2008 00:51:07 +0200
-Message-ID: <20080611225107.GB7200@leksak.fem-net>
-References: <1213196490-7762-1-git-send-email-madcoder@debian.org> <48501B3D.3000405@free.fr> <20080611222744.GD16439@artemis.madism.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add test-tr: poor-man tr
+Date: Wed, 11 Jun 2008 18:54:48 -0400
+Message-ID: <20080611225448.GC19474@sigill.intra.peff.net>
+References: <20080611182501.GA3344@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="y0ulUmNC+osPPQO6"
-Cc: Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org,
-	gitster@pobox.com, Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 00:52:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>,
+	Alex Riesen <raa@limbo.localdomain>
+X-From: git-owner@vger.kernel.org Thu Jun 12 00:56:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6ZAr-0004Kw-3S
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:52:13 +0200
+	id 1K6ZEX-0005Po-5l
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbYFKWvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 18:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYFKWvN
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:51:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37113 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753260AbYFKWvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 18:51:12 -0400
-Received: (qmail invoked by alias); 11 Jun 2008 22:51:10 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp023) with SMTP; 12 Jun 2008 00:51:10 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18CNgYm1ZoCMkXoWGA1EHnWVBiSiK3MH6QE9Ybin7
-	w7FYvaZGvXkpDA
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K6Z9n-0000PN-Ef; Thu, 12 Jun 2008 00:51:07 +0200
+	id S1758527AbYFKWyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 18:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758456AbYFKWyv
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:54:51 -0400
+Received: from peff.net ([208.65.91.99]:1381 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753427AbYFKWyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 18:54:50 -0400
+Received: (qmail 14197 invoked by uid 111); 11 Jun 2008 22:54:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 11 Jun 2008 18:54:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jun 2008 18:54:48 -0400
 Content-Disposition: inline
-In-Reply-To: <20080611222744.GD16439@artemis.madism.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20080611182501.GA3344@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84677>
 
+On Wed, Jun 11, 2008 at 08:25:01PM +0200, Alex Riesen wrote:
 
---y0ulUmNC+osPPQO6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It offers a limited set of POSIX tr, in particular: no character class
+> support and no [n*m] operators. Only 8bit. C-escapes supported, and
+> character ranges. Deletion and squeezing should work, but -s does not
+> match the GNU tr from coreutils (which, in turn, does not match POSIX).
+> 
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+> 
+> Rebased on top of current master. I still think it makes the test
+> suite more portable.
 
-Hi,
+Having wrestled with Solaris tr, I can understand where you are coming
+from. However, does this _actually_ increase the portability of the test
+suite? That is, are there failing tests that this fixes, and if so, for
+which platforms (getting a successful run of the test suite on Solaris
+is still on my long-term todo, but I thought I had fixed all of the tr
+issues)?
 
-I want to add a quick note as the one who is currently responsible for
-future git-sequencer ;-)
+Or is your rationale "this will prevent people from screwing up the test
+scripts accidentally in the future"?
 
-> > > +		comment_for_reflog comment
-> > > +
-> > > +		mark_action_done
-> > > +		pick_one $sha1 ||
-> > > +			die_with_patch $sha1 "Could not apply $sha1... $rest"
-> > > +		output git commit --no-verify --amend -e -C HEAD
+I am not opposed to the latter, but I think it makes sense to state it
+clearly in the commit message.
 
-I dislike that "comment" does a pick.
-Well, your version is consistent with the rest of rebase-i, but=20
-inconsistent to the more atomic and general approach of the
-git-sequencer thread.
-
-You use
-	comment deadf00
-instead of
-	pick deadf00
-Would you mind if you had to use something like this:
-	pick deadf00
-	comment
-to reedit the message of deadf00?
-
-The difference for you as vim user is that you won't type "<Home> c w comme=
-nt",
-but "o comment" :-)
-The outcome is that you can also use it for patches, not only for
-cherry-picks ;)
-
->   To be fair, if someone has a better name, I'm all for it.
-
-What about "amend"? :)
-=2E..or "amend-message" or something like this.
-
-> I quite care about the feature, edit needs me to run the --amend myself,
-> whereas I often just want to fix a typo in a commit log.
-
-I understand ;)
-
-Well, I like to add it to the sequencer spec and to the prototype as soon=
-=20
-as the name is clear ;-)
-
-Regards,
-  Stephan
-
---=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
-
---y0ulUmNC+osPPQO6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIUFbbbt3SB/zFBA8RAjAVAJ0b2tnj02LAfzWtDUyJcbPdCisbMQCgxNMJ
-7UVS+BsMyILjhSyGRjk18Dc=
-=jZae
------END PGP SIGNATURE-----
-
---y0ulUmNC+osPPQO6--
+-Peff
