@@ -1,71 +1,65 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] git-rebase -i: have an option for amending the commit message only.
-Date: Wed, 11 Jun 2008 17:01:29 +0200
-Message-ID: <1213196490-7762-1-git-send-email-madcoder@debian.org>
-Cc: gitster@pobox.com, Pierre Habouzit <madcoder@debian.org>
+From: "Alf Clement" <alf.clement@gmail.com>
+Subject: Question on subprojects
+Date: Wed, 11 Jun 2008 17:09:55 +0200
+Message-ID: <556d90580806110809o57b561b9peb4eda4368461fa3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 17:03:46 2008
+X-From: git-owner@vger.kernel.org Wed Jun 11 17:12:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6RrL-0000XR-LE
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 17:03:36 +0200
+	id 1K6Ryh-0003xM-Sd
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 17:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754242AbYFKPBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 11:01:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754382AbYFKPBg
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 11:01:36 -0400
-Received: from pan.madism.org ([88.191.52.104]:42767 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754239AbYFKPBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 11:01:35 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 79E6C35358;
-	Wed, 11 Jun 2008 17:01:33 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id DEB99163B5; Wed, 11 Jun 2008 17:01:30 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc2.128.g6656e
+	id S1760649AbYFKPKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 11:10:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbYFKPKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 11:10:00 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:24338 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760643AbYFKPKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 11:10:00 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2149411fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 08:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=QW94UvO3/TrTuYXYrFYmahh8r1bRuyhwZ7EWq5zPK8Q=;
+        b=IWBB+8hxUOsku92ew4sHlIfj75aKXFYY3Hk412ma9qgt6TfKLr2hsgp0WvU8Fbc4/z
+         6k/MJeNMaPEhdw/7A0OhoaG2fA37oW0qQTcZZSFt8450eBDC96yeTnm+NQv4SD5E5CUT
+         /U1m93ehxMXKdGH2TAtD8/QWQu5/x0wN3Mtq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=AgJTBA0CYVbZPG4ooy330B9WCxIf74CyuaOH23wvZbMEAtHh8EwMPj6rQOZmR7JIf6
+         HXtxQr1kz0aNaLYNMHrf3IKCPNvowyrDUNI/4h8phwviVgTSYSKm1kvMM0nVDc20IBYq
+         EgcSDgdeNj8QiaRPBG6AfvfbUKHYqR0sh63Ps=
+Received: by 10.86.23.17 with SMTP id 17mr381563fgw.44.1213196995574;
+        Wed, 11 Jun 2008 08:09:55 -0700 (PDT)
+Received: by 10.86.96.14 with HTTP; Wed, 11 Jun 2008 08:09:55 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84617>
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- git-rebase--interactive.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+Hi all,
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 3f926d8..c1b4260 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -215,6 +215,15 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		;;
-+	comment|c)
-+		comment_for_reflog comment
-+
-+		mark_action_done
-+		pick_one $sha1 ||
-+			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		output git commit --no-verify --amend -e -C HEAD
-+		;;
-+
- 	edit|e)
- 		comment_for_reflog edit
- 
-@@ -688,6 +697,7 @@ do
- # Commands:
- #  p, pick = use commit
- #  e, edit = use commit, but stop for amending
-+#  c, comment = use commit, but stop for changing the commit message
- #  s, squash = use commit, but meld into previous commit
- #  mark :mark = mark the current HEAD for later reference
- #  reset commit = reset HEAD to the commit
--- 
-1.5.6.rc2.128.g6656e
+I have a little problem and maybe someone can advice a nice workflow for this.
+I have a directory structure with 6 git repositories, which are
+dependent on each other.
+Now I think it makes more sense to have a single git repository for
+them in the main directory, as each project is
+also not very big.
+Any idea how to do this and keeping the .gitignore files for each of
+the directories?
+
+CU,
+Alf
