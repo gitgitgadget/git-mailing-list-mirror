@@ -1,76 +1,151 @@
-From: "Ben Lynn" <benlynn@gmail.com>
-Subject: Re: git bugs
-Date: Tue, 10 Jun 2008 19:04:33 -0700
-Message-ID: <832adb090806101904k5eba3bd6p277c955b1782afbe@mail.gmail.com>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
-	 <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
-	 <832adb090806101145w55729676ya7bcfb41b0413f59@mail.gmail.com>
-	 <alpine.LFD.1.10.0806101249580.3101@woody.linux-foundation.org>
-	 <832adb090806101609q17a21948nb5814c3b22bd832d@mail.gmail.com>
-	 <7v1w34dfn3.fsf@gitster.siamese.dyndns.org>
-	 <832adb090806101702l79aba80cvba1eaab029e9ecd5@mail.gmail.com>
-	 <alpine.LFD.1.10.0806101834460.3101@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Help rescuing a repository
+Date: Tue, 10 Jun 2008 19:08:31 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806101848320.3101@woody.linux-foundation.org>
+References: <C061111B-1696-4545-A3F0-D0B8B961A352@vicaya.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 04:05:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 04:09:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6FiN-0007ja-PE
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 04:05:46 +0200
+	id 1K6FmC-0000Vu-ET
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 04:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755254AbYFKCEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 22:04:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755235AbYFKCEg
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 22:04:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:8699 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754620AbYFKCEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 22:04:35 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1969013fgg.17
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 19:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ekPgZc+SE8giYv2oS+1x124D4SGt08MiiQpUZG+eeZg=;
-        b=qJhiGtQZCFoGJewlcoD6TCu3rFnNLkCbE/MkXdDhpmfJi4RcUdvG8EXs0qcFgIcyC7
-         CecfrFNdOYvNJ2mYNT/Msvtur0OfU3fWLo6SYKAynJ06Vt1nzIX2eCDcgrP+AdqWWKYh
-         uWOET64zX7rs7vvNGCaOH3G2KW+7Qz+AJIiyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=bBjBVFwShKwfLjgEuXeHsBajGj49LD0jowZDIaWvH1IFBfEjGaQFkgMMbeuC/nAGvw
-         5TZEtNuzCL4YmF/1bU2jlLZpOBSmwZpxZOSgDbHhO9zlTlpyzt4xTtQ2e2GiVcC1TjoN
-         ua0hNfZm5FveYjINsPm+IXV/DqQkXIOO1HC74=
-Received: by 10.86.66.19 with SMTP id o19mr6459057fga.62.1213149873267;
-        Tue, 10 Jun 2008 19:04:33 -0700 (PDT)
-Received: by 10.86.79.17 with HTTP; Tue, 10 Jun 2008 19:04:33 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0806101834460.3101@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1755132AbYFKCIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 22:08:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754256AbYFKCIf
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 22:08:35 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54413 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754144AbYFKCIe (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 22:08:34 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B28VAC029066
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 10 Jun 2008 19:08:33 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B28VPp008111;
+	Tue, 10 Jun 2008 19:08:31 -0700
+In-Reply-To: <C061111B-1696-4545-A3F0-D0B8B961A352@vicaya.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.378 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84580>
 
-> The right way to do things would be to just do a stat() on the index file
-> as it is created, and then save the mtime of that stat into the file. That
-> way, you have the mtime of the index file not for the *last* write, but
-> for the *first* one.
 
-Sorry, but if we're assuming no one is touching the files while we're
-updating the index (including writing it to disk), why does it matter
-whether we use the time of first or last write? In fact, if a index
-write takes a long time, using the last write time as the mtime would
-be beneficial for the race condition stuff.
 
--Ben
+On Tue, 10 Jun 2008, Luke Lu wrote:
+>
+> I was doing some git rebase -i in a topic branch (topic/ser) to squash and
+> reorder some commits. There were some conflicts. I fixed the conflicts and
+> typed git rebase --continue. The cycle continued a few times and then this
+> happened:
+> 
+> 13 files changed, 68 insertions(+), 41 deletions(-)
+> error: Ref refs/heads/topic/ser is at 5cfb6b694f2d5a1ff429fe86f6c5ecafed159e47
+> but expected a10a7127be3441c732cab5baa2dd8684591f91f7
+> fatal: Cannot lock the ref 'refs/heads/topic/ser'.
+
+Ok, you seem to have committed something in another session (other window 
+or something) at the same time as doing that git rebase series. As a 
+result, the rebasing commit was unhappy, because you basically ripped the 
+rug out from under it by changing the branch it was working on.
+
+> $ git status
+> # Not currently on any branch.
+> nothing to commit (working directory clean)
+
+Don't worry. Nothing has gone away, although you may now need to *find* 
+the particular branch tip(s) that you are interested in.
+
+> I've used git rebase -i before without any problem. The only difference this
+> time is that there are more commits (50+) and more files (hundreds) and
+> changes (thousands) involved due to some global find & replace.
+
+That shouldn't matter, except that it was obviously very likely one of the 
+reasons for the conflicts too.
+
+What mattered is:
+
+> I *might* have committed something in the same branch, while the git 
+> rebase -i editor window is open (there are a lot of commits to reorder 
+> and squash, so I used another window to look at the commits I'm not sure 
+> about. I might have done a quick fix (likely whitespace errors :) and 
+> committed)
+
+Yup, that would explain it.
+
+> I have the gut feeling that it might be fixable by some magical incantation to
+> connect the refs to my branch. But I don't know git internal very well. I need
+> your help. My work obviously depend upon it.
+
+Most likely, the only thing you actually need to do is simply
+
+	git rebase --abort
+
+and it will just take you back to the state you were in before the rebase, 
+and now you'll have to redo it all.
+
+BUT. You can also decide that instead of doing that, you want to keep the 
+work you did do, and just try to continue. You'll just need to figure out 
+where you are, and where the rest of the commits you want to do are.
+
+And those things should not be so hard to figure out, at least if you 
+still have a reasonably good idea about what the commits were that you 
+cared about. You just need to find all the relevant development tips, and 
+it turns out that that is actually mostly pretty easy.
+
+You have one right there: the current disconnected HEAD you are on is one 
+tip. You can save that one away by making that a real branch, so you don't 
+lose it, with something like
+
+	git branch middle-of-rebase
+
+which will just take your current state, and make it the new branch 
+'middle-of-rebase'.
+
+You can also try to get a better view of where you are by doing
+
+	gitk --all
+
+to show all the branches graphically, which is usually a great way to get 
+your bearings. Keep the gitk window open in the background as a reference.
+
+After that, do
+
+	git log -g
+
+wher the "-g" (or "--walk-reflogs" for the long version) just means that 
+instead of looking through history as a chain of commits and their 
+parents, you look through not the chain of commits, but as the chain of 
+reflog entries (which are basically about how the HEAD has changed due to 
+the commands you have done).
+
+In all of that info, look for the place you want to go back to, and just 
+start all over from there. You can either re-use one of your old branches 
+and just start over from some state that you want:
+
+	git checkout <branch>
+	git reset --hard <startingpoint>
+
+or you can decide that you want to start a new branch to fix up the mess 
+
+	git checkout -b <newbranch> <startingpoint>
+
+and only when it's all fixed up and you're happy will you change any of 
+your old branches.
+
+But it may well be that "git rebase --abort" and re-doing everything is
+the least confusing option.
+
+			Linus
