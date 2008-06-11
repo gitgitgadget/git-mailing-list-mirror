@@ -1,78 +1,76 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: "git pull . <branch>" versus "git merge <branch>"
+From: "Ben Lynn" <benlynn@gmail.com>
+Subject: Re: git bugs
 Date: Tue, 10 Jun 2008 19:04:33 -0700
-Message-ID: <484F32B1.4050506@gnu.org>
-References: <484F2174.9020508@keyaccess.nl> <ee77f5c20806101806u6dc04152rb8307eb12a6167c@mail.gmail.com> <484F26C9.9080608@keyaccess.nl> <20080611015608.GD29404@genesis.frugalware.org>
+Message-ID: <832adb090806101904k5eba3bd6p277c955b1782afbe@mail.gmail.com>
+References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
+	 <832adb090806101145w55729676ya7bcfb41b0413f59@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101249580.3101@woody.linux-foundation.org>
+	 <832adb090806101609q17a21948nb5814c3b22bd832d@mail.gmail.com>
+	 <7v1w34dfn3.fsf@gitster.siamese.dyndns.org>
+	 <832adb090806101702l79aba80cvba1eaab029e9ecd5@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101834460.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Rene Herman <rene.herman@keyaccess.nl>,
-	David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 04:05:56 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 04:05:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Fid-0007ja-2F
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 04:05:47 +0200
+	id 1K6FiN-0007ja-PE
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 04:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754985AbYFKCEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 22:04:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755246AbYFKCEh
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 22:04:37 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:24146 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754985AbYFKCEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 22:04:36 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2348959waf.23
-        for <git@vger.kernel.org>; Tue, 10 Jun 2008 19:04:35 -0700 (PDT)
+	id S1755254AbYFKCEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 22:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755235AbYFKCEg
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 22:04:36 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:8699 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754620AbYFKCEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 22:04:35 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1969013fgg.17
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 19:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=Kz2crFd0QM7wkwwQ6vD1zRLHK/PXlh6DibMC1g0egg8=;
-        b=ijZ2JGuZ7jY8M/daHPHxTzUd0uToe5/JA+P6GbtEFTreZnjTPqfOrKJ70LoRWhll9e
-         /l376u4KQl6xi5lFtM9/gGXMFJoK4Wottm5CNaRe36oq/eCeKpSn7q6Oigq5xpq1E2yV
-         yo/AImCAplkGtZxtD7s5YXKTOPEtgtWZLBDqk=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ekPgZc+SE8giYv2oS+1x124D4SGt08MiiQpUZG+eeZg=;
+        b=qJhiGtQZCFoGJewlcoD6TCu3rFnNLkCbE/MkXdDhpmfJi4RcUdvG8EXs0qcFgIcyC7
+         CecfrFNdOYvNJ2mYNT/Msvtur0OfU3fWLo6SYKAynJ06Vt1nzIX2eCDcgrP+AdqWWKYh
+         uWOET64zX7rs7vvNGCaOH3G2KW+7Qz+AJIiyI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=pd47UkoqrqWi4CEDYxNtE5g9S0LiEf+CnnUUTEegUCrauRkbz2g1HBvy1o5kwB++8o
-         lH0ENs0mIM+s9KT36NvbbS86Hf+iRQ+soLAhib5sqQsW3LDYZmZEsNOvx6PBDzYomEL7
-         Svua3Gwcn3Ig4gZs2Qjly5megDJu5jdMKdV7k=
-Received: by 10.114.66.2 with SMTP id o2mr5835469waa.124.1213149875688;
-        Tue, 10 Jun 2008 19:04:35 -0700 (PDT)
-Received: from scientist-2.local ( [65.248.49.163])
-        by mx.google.com with ESMTPS id t1sm17479699poh.9.2008.06.10.19.04.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 10 Jun 2008 19:04:34 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <20080611015608.GD29404@genesis.frugalware.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=bBjBVFwShKwfLjgEuXeHsBajGj49LD0jowZDIaWvH1IFBfEjGaQFkgMMbeuC/nAGvw
+         5TZEtNuzCL4YmF/1bU2jlLZpOBSmwZpxZOSgDbHhO9zlTlpyzt4xTtQ2e2GiVcC1TjoN
+         ua0hNfZm5FveYjINsPm+IXV/DqQkXIOO1HC74=
+Received: by 10.86.66.19 with SMTP id o19mr6459057fga.62.1213149873267;
+        Tue, 10 Jun 2008 19:04:33 -0700 (PDT)
+Received: by 10.86.79.17 with HTTP; Tue, 10 Jun 2008 19:04:33 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0806101834460.3101@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84579>
 
-Miklos Vajna wrote:
-> On Wed, Jun 11, 2008 at 03:13:45AM +0200, Rene Herman <rene.herman@keyaccess.nl> wrote:
->> So in the case of merging a branch from the local repository into the 
->> current branch, there is no difference between the two?
-> 
-> There is no difference, but you really want to use git merge and not git
-> pull in such a case, I guess the git pull form is supported mainly to
-> keep backwards compatibility.
+> The right way to do things would be to just do a stat() on the index file
+> as it is created, and then save the mtime of that stat into the file. That
+> way, you have the mtime of the index file not for the *last* write, but
+> for the *first* one.
 
-However, when you're on a tracking merge only "git pull" will merge the 
-right branch automatically into the current branch, fetching the branch 
-name to merge from the config.  If the branch.*.remote config key is 
-".", it will do a local merge.
+Sorry, but if we're assuming no one is touching the files while we're
+updating the index (including writing it to disk), why does it matter
+whether we use the time of first or last write? In fact, if a index
+write takes a long time, using the last write time as the mtime would
+be beneficial for the race condition stuff.
 
-Note that "git pull ." is optimized in that the fetch does nothing 
-except setting up MERGE_HEAD.
-
-Paolo
+-Ben
