@@ -1,55 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-reflog infinite loop
-Date: Tue, 10 Jun 2008 23:47:18 -0400
-Message-ID: <20080611034718.GB7198@sigill.intra.peff.net>
-References: <484EBD92.8040603@obry.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC] git-sequencer.txt
+Date: Wed, 11 Jun 2008 06:10:50 +0200
+Message-ID: <200806110610.50619.chriscool@tuxfamily.org>
+References: <20080607220101.GM31040@leksak.fem-net> <200806100646.36528.chriscool@tuxfamily.org> <20080610085955.GB5642@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Wed Jun 11 05:48:17 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Joerg Sommer <joerg@alea.gnuu.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jun 11 06:07:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6HJo-00088T-4D
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 05:48:16 +0200
+	id 1K6Hch-0003mf-C9
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 06:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461AbYFKDrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 23:47:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbYFKDrV
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 23:47:21 -0400
-Received: from peff.net ([208.65.91.99]:1253 "EHLO peff.net"
+	id S1751000AbYFKEGi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 00:06:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbYFKEGi
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 00:06:38 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38896 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755272AbYFKDrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 23:47:21 -0400
-Received: (qmail 30018 invoked by uid 111); 11 Jun 2008 03:47:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 10 Jun 2008 23:47:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jun 2008 23:47:18 -0400
+	id S1750717AbYFKEGh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 00:06:37 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9EE5C1AB2AB;
+	Wed, 11 Jun 2008 06:06:35 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 4F4791AB2BA;
+	Wed, 11 Jun 2008 06:06:35 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080610085955.GB5642@leksak.fem-net>
 Content-Disposition: inline
-In-Reply-To: <484EBD92.8040603@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84586>
 
-On Tue, Jun 10, 2008 at 07:44:50PM +0200, Pascal Obry wrote:
+Hi,
 
-> In one of my repository, "git gc" will never terminate.
+Le mardi 10 juin 2008, Stephan Beyer a =E9crit :
+> Hi,
 >
-> I have traced to the underlying call git-reflog:
+> > Maybe the sequencer can look at the filename it is passed.
+> > If it is something like "$GIT_DIR/*/git-rebase--interactive-todo" t=
+hat
+> > can mean it is called by "git rebase --interactive".
 >
->    $ git-reflog expire --all
+> It's another variant, but then with every new sequencer-user you have=
+ to
+> add another entry to the "sequencer caller database".
 >
-> It seems to heat a good amount of heap memory and will keep running using 
-> 100% of CPU.
->
-> Is that a known issue?
+> That means: if a user writes a script that uses sequencer he has to m=
+ake
+> changes to sequencer itself. Baaad for extensibility.
 
-I can't reproduce here, so presumably it is some condition in your
-repository; can you make a tarball of your .git directory available?
+We could have config options for that. For example:
 
--Peff
+[sequenceruser "user_script1"]
+	filename =3D user-script1-todo
+	continuecall =3D user_script1.sh --continue
+
+Regards,
+Christian.
