@@ -1,73 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] fix typo in tutorial
-Date: Wed, 11 Jun 2008 19:09:48 -0400
-Message-ID: <20080611230948.GE19474@sigill.intra.peff.net>
-References: <c647e93f0806111434q1cf99ff5pa99858c56951beeb@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Wed, 11 Jun 2008 19:21:18 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806111918300.23110@xanadu.home>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
+ <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
+ <20080611213648.GA13362@glandium.org>
+ <alpine.DEB.1.00.0806112242370.1783@racer>
+ <20080611230344.GD19474@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fred =?utf-8?B?TWFyYW5ow6Nv?= <fred.maranhao@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 01:10:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 12 01:22:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6ZSq-0001VZ-SK
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 01:10:49 +0200
+	id 1K6Zdv-00053e-LM
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 01:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756386AbYFKXJv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 19:09:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753384AbYFKXJv
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 19:09:51 -0400
-Received: from peff.net ([208.65.91.99]:3644 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755438AbYFKXJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 19:09:50 -0400
-Received: (qmail 15224 invoked by uid 111); 11 Jun 2008 23:09:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 11 Jun 2008 19:09:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jun 2008 19:09:48 -0400
-Content-Disposition: inline
-In-Reply-To: <c647e93f0806111434q1cf99ff5pa99858c56951beeb@mail.gmail.com>
+	id S1754325AbYFKXVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 19:21:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbYFKXVV
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 19:21:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:24818 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754108AbYFKXVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 19:21:20 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K2B00DXCNIXO2C0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 11 Jun 2008 19:20:57 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080611230344.GD19474@sigill.intra.peff.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84682>
 
-=46rom: Fred Maranh=C3=A3o <fred.maranhao@gmail.com>
+On Wed, 11 Jun 2008, Jeff King wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On Wed, Jun 11, 2008 at 06:34:15PM -0300, Fred Maranh=C3=A3o wrote:
+> I agree. If you are concerned about valuable stashes getting deleted, my
+> guess is one of:
+> 
+>   - you would like reflog expiration to be longer
+> 
+>   - you are using stash as a long-term storage, which it was never
+>     intended for. Use a branch.
+> 
+> The latter, of course, is based on my use and my impression of others
+> use (I almost always apply a stash within 30 seconds of having stashed
+> it). So maybe everyone is keeping stashes around for months, and this is
+> a useful change.
 
-> It seems that there is a little typo in git tutorial
-> (http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html).In
+As you say, branches are there just for that: keeping changes for 
+months.  Stashes are not meant to be used like that nor should we 
+encourage it.
 
-Thanks. Patch-ified for Junio's convenience.
 
- Documentation/gittutorial.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.=
-txt
-index 9563a63..d465aab 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -114,7 +114,7 @@ newly modified content to the index.  Finally, comm=
-it your changes with:
- $ git commit
- ------------------------------------------------
-=20
--This will again prompt your for a message describing the change, and t=
-hen
-+This will again prompt you for a message describing the change, and th=
-en
- record a new version of the project.
-=20
- Alternatively, instead of running `git add` beforehand, you can use
---=20
-1.5.6.rc2.158.g5896e
+Nicolas
