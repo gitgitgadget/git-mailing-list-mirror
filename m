@@ -1,73 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Recovering from repository corruption
-Date: Tue, 10 Jun 2008 21:47:38 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806102143080.23110@xanadu.home>
-References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com>
- <m3abhtp42o.fsf@localhost.localdomain>
- <6dbd4d000806101238v2bb975abqd39916e45d4bf866@mail.gmail.com>
- <200806102159.02875.jnareb@gmail.com>
- <6dbd4d000806101303j4b2032ajc6e004e0a82e4db5@mail.gmail.com>
- <alpine.LFD.1.10.0806101317100.3101@woody.linux-foundation.org>
- <6dbd4d000806101328k1fc913f2ia55c3e44273ec5ad@mail.gmail.com>
- <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org>
- <6dbd4d000806101422j39709906x1b4b03b82b504e62@mail.gmail.com>
- <alpine.LFD.1.10.0806101431410.3101@woody.linux-foundation.org>
- <6dbd4d000806101509l516cf467me06fadee6ead0964@mail.gmail.com>
- <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org>
- <alpine.LFD.1.10.0806102026430.23110@xanadu.home>
- <alpine.LFD.1.10.0806101836510.3101@woody.linux-foundation.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: "git pull . <branch>" versus "git merge <branch>"
+Date: Wed, 11 Jun 2008 03:56:08 +0200
+Message-ID: <20080611015608.GD29404@genesis.frugalware.org>
+References: <484F2174.9020508@keyaccess.nl> <ee77f5c20806101806u6dc04152rb8307eb12a6167c@mail.gmail.com> <484F26C9.9080608@keyaccess.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Denis Bueno <dbueno@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 03:48:33 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4gNJB4SEdaEXssw0"
+Cc: David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
+To: Rene Herman <rene.herman@keyaccess.nl>
+X-From: git-owner@vger.kernel.org Wed Jun 11 03:57:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6FRx-00034i-8r
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 03:48:33 +0200
+	id 1K6FaD-0005WL-Vj
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 03:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754566AbYFKBrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 21:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754256AbYFKBrj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 21:47:39 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14618 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753513AbYFKBrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2008 21:47:39 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2900MC2ZNEXHA0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 10 Jun 2008 21:47:38 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.10.0806101836510.3101@woody.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1754477AbYFKB4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 21:56:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754256AbYFKB4M
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 21:56:12 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:33367 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753256AbYFKB4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2008 21:56:11 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A21051B2558;
+	Wed, 11 Jun 2008 03:56:09 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id CFD6344697;
+	Wed, 11 Jun 2008 03:37:47 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3C9FA1770022; Wed, 11 Jun 2008 03:56:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <484F26C9.9080608@keyaccess.nl>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84575>
-
-On Tue, 10 Jun 2008, Linus Torvalds wrote:
-
-> 
-> 
-> On Tue, 10 Jun 2008, Nicolas Pitre wrote:
-> > 
-> > I think this only gives a false sense of security with a huge 
-> > performance cost.  If the machine crashes at the right moment, the 
-> > object will still be half written/fsync'd and you'll be in the same 
-> > situation again.
-> 
-> No you wouldn't.
-> 
-> We do the write and the fsync() of the write to a _temporary_ filename. We 
-> do the rename _after_ the fsync.
-
-Ah, true.  That part somehow evaded my mind.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84576>
 
 
-Nicolas
+--4gNJB4SEdaEXssw0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 11, 2008 at 03:13:45AM +0200, Rene Herman <rene.herman@keyacces=
+s.nl> wrote:
+> So in the case of merging a branch from the local repository into the=20
+> current branch, there is no difference between the two?
+
+There is no difference, but you really want to use git merge and not git
+pull in such a case, I guess the git pull form is supported mainly to
+keep backwards compatibility.
+
+--4gNJB4SEdaEXssw0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhPMLgACgkQe81tAgORUJbFxQCgnVqamCAAVrLI3/HGATAMh9BN
+wK8An3JV7eQ0ozQugwyXONsfSHJTeeEh
+=UN38
+-----END PGP SIGNATURE-----
+
+--4gNJB4SEdaEXssw0--
