@@ -1,56 +1,61 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: git bugs
-Date: Wed, 11 Jun 2008 14:46:34 +0200
-Message-ID: <20080611124634.GA26729@cuci.nl>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com> <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org> <832adb090806101145w55729676ya7bcfb41b0413f59@mail.gmail.com> <alpine.LFD.1.10.0806101249580.3101@woody.linux-foundation.org> <832adb090806101609q17a21948nb5814c3b22bd832d@mail.gmail.com> <7v1w34dfn3.fsf@gitster.siamese.dyndns.org> <832adb090806101702l79aba80cvba1eaab029e9ecd5@mail.gmail.com> <7vwskwbz63.fsf@gitster.siamese.dyndns.org> <832adb090806101724k6199694ftbbc6ed151489a6e3@mail.gmail.com>
+From: "Chris Hoffman" <chris.c.hoffman@gmail.com>
+Subject: git-daemon on Windows?
+Date: Wed, 11 Jun 2008 08:51:25 -0400
+Message-ID: <63c5d3820806110551y69e895eeg4fde4bfdaf22bbf2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Ben Lynn <benlynn@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 14:47:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 11 14:52:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Pji-0007yG-Bi
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 14:47:34 +0200
+	id 1K6PoK-0001pG-T9
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 14:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbYFKMqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 08:46:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbYFKMqj
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 08:46:39 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:53413 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbYFKMqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 08:46:39 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 17299545E; Wed, 11 Jun 2008 14:46:34 +0200 (CEST)
+	id S1751833AbYFKMv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 08:51:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbYFKMv0
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 08:51:26 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:59035 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbYFKMv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 08:51:26 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1443889rvb.1
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 05:51:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=umsHtdCgW4zPeqkciVGibvIKS/C3H5stSiLwr5XG3So=;
+        b=azfYp2lK3A4YIV10gwHpFycdirrk9L8lxO7uOYj+JOnwZ8F2IFcYlZbWF9HQIvOowD
+         2jDOYkPCWbCee7uymElgFT1grt1DkNad7aQmtR8y+f2/FPgop/PgUbP7yCKdKBpmpAaQ
+         JDDWBuHm+krdrCaZYGMQxMttVmKu0cOVCoxdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=tDGeiqCdd+tjP2kz5SmZzmyODtq75kqEARo7NUOojtZvzxVGb4w+KZXc9GqYc3HB/k
+         cy266wZTuanJVAdIvTFAQm1ZOMZb/HYm4GGlqGeCWwMxogdEVJq7gljVTEFLW0nbULjX
+         jd9ZTZJAdGiKG9vsA7+IeWmcZXMfs+iMWzV+M=
+Received: by 10.141.13.16 with SMTP id q16mr3796768rvi.99.1213188685678;
+        Wed, 11 Jun 2008 05:51:25 -0700 (PDT)
+Received: by 10.141.87.15 with HTTP; Wed, 11 Jun 2008 05:51:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <832adb090806101724k6199694ftbbc6ed151489a6e3@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84606>
 
-Ben Lynn wrote:
->That is problematic. How do I figure out what the filesystem thinks is
->the current time? I could touch some file and read its mtime, but I
->want a shortcut.
+Hello,
 
-That basically is as short as it gets, except perhaps statting a freshly
-modified file (not necessarily by oneself).
+Is there a distribution of the git server for Windows, or am I totally
+missing the point of git?  Will a simple file share work, or do I have
+to worry about file locking and such (e.g., two people try to commit
+at the same time).
 
->Are there any guarantees of any kind? e.g. is the filesystem current
->time at least never ahead of the system time?
-
-Practically no guarantees, just that it is rather likely for the time at
-the fileserver to progress at about the same pace as yours.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-Differentiation is an integral part of calculus.
+Thanks,
+Chris
