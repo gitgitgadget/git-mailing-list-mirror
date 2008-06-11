@@ -1,59 +1,66 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Wed, 11 Jun 2008 23:36:48 +0200
-Organization: glandium.org
-Message-ID: <20080611213648.GA13362@glandium.org>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] builtin-fast-export: Add importing and exporting of
+ revision marks
+Date: Wed, 11 Jun 2008 14:43:06 -0700
+Message-ID: <7vr6b3bqc5.fsf@gitster.siamese.dyndns.org>
+References: <7vve0hdbvv.fsf@gitster.siamese.dyndns.org>
+ <1213183024-60013-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jun 11 23:39:55 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Wed Jun 11 23:44:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Y2V-0008UN-AV
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:39:31 +0200
+	id 1K6Y76-0002XF-2d
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbYFKViV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 17:38:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbYFKViU
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:38:20 -0400
-Received: from vuizook.err.no ([194.24.252.247]:55662 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751510AbYFKViT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 17:38:19 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1K6Y0i-0004Dc-QI; Wed, 11 Jun 2008 23:37:47 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1K6Xzs-0003Uq-SA; Wed, 11 Jun 2008 23:36:48 +0200
-Content-Disposition: inline
-In-Reply-To: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1750963AbYFKVnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 17:43:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYFKVnV
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:43:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36858 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbYFKVnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 17:43:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C85E66FDE;
+	Wed, 11 Jun 2008 17:43:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 05A206FDA; Wed, 11 Jun 2008 17:43:14 -0400 (EDT)
+In-Reply-To: <1213183024-60013-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
+ Bie's message of "Wed, 11 Jun 2008 13:17:04 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 67C3D8CC-37FF-11DD-8625-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84669>
 
-On Wed, Jun 11, 2008 at 04:29:56PM -0500, Brandon Casey wrote:
-> The stash makes use of git's reflog mechanism, but it is not a reflog
-> in the traditional sense. Each entry is a state that the user explicitly
-> requested git to remember. The stash is generally short-lived, but the
-> user probably expects that a stash will continue to exist until it is
-> explicitly deleted. So we should not expire stash entries.
+Pieter de Bie <pdebie@ai.rug.nl> writes:
 
-I wonder if it wouldn't make sense to have git reflog expire not expire
-stashes *at all*. I mean, you don't necessarily cleanup your repo with
-git gc, and you may end up killing your stashes with git reflog yourself
-if you don't use the "magic" --exclude...
+> This adds the --import-marks and --export-marks to fast-export. These import
+> and export the marks used to for all revisions exported in a similar fashion
+> to what fast-import does. The format is the same as fast-import, so you can
+> create a bidirectional importer / exporter by using the same marks file on
+> both sides.
 
-Mike
+Heh, I've long queued a fixed-up version in 'pu' as 4ba0575
+(builtin-fast-export: Add importing and exporting of revision marks,
+2008-06-05).
+
+I think renaming the "mark_object" to "mark_next_object" makes quite a lot
+of sense, and I do not have any preference between mark2deco vs mark_to_ptr 
+nor between a macro vs a static inline function for something small like
+these.
+
+You still use export_filename and import_filename uninitialized in
+cmd_fast_export() and breaks everybody who does not use export-marks
+option.  Has this patch (and the previous one I fixed up before queuing it
+in 'pu') ever been tested?
