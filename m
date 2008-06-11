@@ -1,91 +1,91 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Help rescuing a repository
-Date: Wed, 11 Jun 2008 09:46:49 +0200
-Message-ID: <20080611074649.GC28629@artemis.madism.org>
-References: <C061111B-1696-4545-A3F0-D0B8B961A352@vicaya.com> <alpine.LFD.1.10.0806101848320.3101@woody.linux-foundation.org> <025E3DB6-D0A8-497E-A5EF-9B4011FA3272@vicaya.com>
+From: Armen Baghumian <armen@OpenSourceClub.org>
+Subject: Re: Project's repository infrastructure (sunbtree and submodules)
+Date: Wed, 11 Jun 2008 12:34:57 +0430
+Message-ID: <20080611123457.442d1029@debian>
+References: <20080609194203.06698e01@debian>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="LwW0XdcUbUexiWVK";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Luke Lu <git@vicaya.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 09:47:55 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 10:06:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6L3a-0008OG-LM
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 09:47:47 +0200
+	id 1K6LLE-0005rH-73
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 10:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462AbYFKHqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 03:46:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752775AbYFKHqv
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 03:46:51 -0400
-Received: from pan.madism.org ([88.191.52.104]:36456 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753229AbYFKHqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 03:46:51 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 5562619CC4;
-	Wed, 11 Jun 2008 09:46:50 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5AFB04D33E3; Wed, 11 Jun 2008 09:46:49 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Luke Lu <git@vicaya.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <025E3DB6-D0A8-497E-A5EF-9B4011FA3272@vicaya.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753774AbYFKIFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 04:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbYFKIFF
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 04:05:05 -0400
+Received: from static.88-198-8-89.clients.your-server.de ([88.198.8.89]:47166
+	"EHLO julius.technotux.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753541AbYFKIFC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 04:05:02 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by julius.technotux.org (Postfix) with ESMTP id 386D5504EB
+	for <git@vger.kernel.org>; Wed, 11 Jun 2008 10:05:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at julius.technotux.org
+Received: from julius.technotux.org ([127.0.0.1])
+	by localhost (julius.technotux.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IQR62gMLBzGL for <git@vger.kernel.org>;
+	Wed, 11 Jun 2008 10:05:38 +0200 (CEST)
+Received: from debian (unknown [91.184.88.117])
+	by julius.technotux.org (Postfix) with ESMTP id 04355504BF
+	for <git@vger.kernel.org>; Wed, 11 Jun 2008 10:05:37 +0200 (CEST)
+In-Reply-To: <20080609194203.06698e01@debian>
+X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84599>
 
+Hi,
 
---LwW0XdcUbUexiWVK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Am I asking totally wrong question or asking it in wrong place?
+would you please point me to correct place or documentation.
 
-On Wed, Jun 11, 2008 at 05:04:25AM +0000, Luke Lu wrote:
-> git rebase --abort, I think, would actually blow away my last commit (I=
-=20
-> sneaked in) though. git reset --hard to that last commit is probably the=
-=20
-> right thing to do. The least confusing option would be to update the=20
-> error message to be a bit more informative, like "Did you change the=20
-> branch while rebasing? git reset --hard to your last known commit and=20
-> redo the rebase". Yet another safeguard would be for git commit to check=
-=20
-> if there is a rebase in progress and warn or abort the commit.
+--Armen
 
-  OTOH the commit you did has been your HEAD for a moment, so it's
-easily cherry-pickable from your reflog. So I'd go for the git rebase
---abort route, redo the rebase, and once done, then run git reflog and
-find the commit that you want to get back, and cherry-pick it with its
-proper reflog name: git cherry-pick HEAD@{nnn}.
+On Mon, 9 Jun 2008 19:42:03 +0430
+Armen Baghumian <armen@OpenSourceClub.org> wrote:
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---LwW0XdcUbUexiWVK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhPgukACgkQvGr7W6HudhxOjgCghDY1A/W6RGGR1CbpnkvWAa8R
-acAAnjRMvZJ+1L49k9pVo1Z60BoyIa5S
-=3Whm
------END PGP SIGNATURE-----
-
---LwW0XdcUbUexiWVK--
+> Hi,
+> 
+> I have several projects which each project contains several modules.
+> modules are shared between projects.
+> 
+> For example let say there is three modules A, B, and C, and two
+> project called P1 and P2. P1 uses A and B modules and P2 uses B and C.
+> 
+> I want to have centralized place to clone/pull/push in P1 and P2 and
+> it would be nice to push changes in modules(A,B,C) from projects
+> (P1,P2) so when changes in B pushed from P1 it could be pulled from P2
+> (think B as a shared module between P1 and P2). 
+> 
+> As far as modules are not big enough I don't want to push changes
+> directly in to those repositories.
+> 
+> To solve the problem I just create three separated repositories for
+> each modules (A,B,C) and create two other repositories for each
+> project and use git-submodule to add modules in each repository.
+> 
+> pushing changes to modules(A,B,C) are really error prone and annoying
+> so I searched for a better way to solve that problem.
+> 
+> Seems subtree merge[1] is other choice but I'm not sure.
+> 
+> 1) What is best way to solve such situation?
+> 2) If subtree is best choice how to push changes to modules(A,B,C)
+> from projects?
+> 
+> --Armen
+> 
+> [1]
+> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
