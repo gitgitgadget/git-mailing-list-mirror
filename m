@@ -1,105 +1,152 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Consolidate SHA1 object file close
-Date: Wed, 11 Jun 2008 10:25:28 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806110952290.3101@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0806101842460.3101@woody.linux-foundation.org> <20080611074309.GB28629@artemis.madism.org> <alpine.LFD.1.10.0806110755190.3101@woody.linux-foundation.org> <20080611154020.GE28629@artemis.madism.org>
+From: Clark Williams <clark.williams@gmail.com>
+Subject: Re: [PATCH - stgit] Patch to allow import of compressed files
+Date: Wed, 11 Jun 2008 12:28:08 -0500
+Message-ID: <48500B28.1050505@gmail.com>
+References: <484D78BF.6030504@gmail.com> <20080610063328.GB26965@diana.vm.bytemark.co.uk> <484E87B2.2090506@gmail.com> <20080611062753.GB15034@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Denis Bueno <dbueno@gmail.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 19:27:10 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 19:29:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6U6A-0000Uh-QI
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 19:27:03 +0200
+	id 1K6U8F-0001Fz-9h
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 19:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbYFKR0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 13:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbYFKR0F
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 13:26:05 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36209 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751088AbYFKR0E (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 13:26:04 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BHPT4Q027838
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Jun 2008 10:25:30 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BHPSDc008836;
-	Wed, 11 Jun 2008 10:25:28 -0700
-In-Reply-To: <20080611154020.GE28629@artemis.madism.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.374 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751365AbYFKR2R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 13:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751681AbYFKR2R
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 13:28:17 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:1988 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbYFKR2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 13:28:16 -0400
+Received: by py-out-1112.google.com with SMTP id p76so1486586pyb.10
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 10:28:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=aqGKGETJFyHVKXfG09ntUPz2KRKDZFaTuHcKnOMY8Ug=;
+        b=TIO3Z5q95p4fmq9JCzTpYYjNcqrkj4QVP7LRwyhtJiLt4XLcHRBpcPlVbS4MtL+xXA
+         F/sQJ9gKVoouHfaSakx1gGBslU0HDKot9mkZfrSp1bNArpYu7wrTPF3+Sxnb/9aaLePD
+         bLNv+lxyyOhGvk+iRh/cZfIRJx1Guc2BocGnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=ttvD3BtWsoTyPC3ZFm2+k7bZAJAKt656pWsM0kDaHrrG+otfS+Q9wZiolNEFUPb50F
+         eLrUoiPv5dn1QMlja+mB5CoJn4kUBPnb/comeYc8gpm+YruiNB4G5e2w4KviMlGPzWYK
+         Hl8HlgpdcShYrsOoiV3w4rhXv8jOxmI9JAnfo=
+Received: by 10.115.77.1 with SMTP id e1mr149874wal.58.1213205295042;
+        Wed, 11 Jun 2008 10:28:15 -0700 (PDT)
+Received: from ?172.16.17.168? ( [66.187.231.200])
+        by mx.google.com with ESMTPS id 13sm129843wrl.19.2008.06.11.10.28.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Jun 2008 10:28:13 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070911)
+In-Reply-To: <20080611062753.GB15034@diana.vm.bytemark.co.uk>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84626>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Karl Hasselstr=C3=83=C2=B6m wrote:
+> On 2008-06-10 08:54:58 -0500, Clark Williams wrote:
+>=20
+>> --- a/stgit/commands/imprt.py
+>> +++ b/stgit/commands/imprt.py
+>> @@ -178,8 +178,22 @@ def __create_patch(filename, message, author_na=
+me, author_email,
+>>  def __import_file(filename, options, patch =3D None):
+>>      """Import a patch from a file or standard input
+>>      """
+>> +    if patch:
+>> +        pname =3D patch
+>> +    else:
+>> +        pname =3D filename
+>> +
+>>      if filename:
+>> -        f =3D file(filename)
+>> +        if filename.endswith('.gz'):
+>> +            import gzip
+>> +            f =3D gzip.open(filename)
+>> +            pname =3D strip_suffix('.gz', filename)
+>> +        elif filename.endswith('.bz2'):
+>> +            import bz2
+>> +            f =3D bz2.BZ2File(filename)
+>> +            pname =3D strip_suffic('.bz2', filename)
+>                                   ^
+> Here's why I keep blathering about tests! In Python, you don't have a
+> compiler to catch these for you ...
+>=20
+
+Yup, caught that right after I sent the updated patch :)
+
+>> +        else:
+>> +            f =3D file(filename)
+>>      else:
+>>          f =3D sys.stdin
+>> =20
+>> @@ -197,11 +211,6 @@ def __import_file(filename, options, patch =3D =
+None):
+>>      if filename:
+>>          f.close()
+>> =20
+>> -    if patch:
+>> -        pname =3D patch
+>> -    else:
+>> -        pname =3D filename
+>> -
+>=20
+> I just realized a problem with this that was already present in your
+> first version: if patch !=3D None, so that you set pname =3D patch, y=
+ou
+> overwrite pname since you strip the .gz/.bz2 suffixes _later_.
+>=20
+
+Ah, I didn't realize that patchname overrides all (should have). I'll f=
+ix that next
+go-round.
+
+> Other than that, it looks good. But you sounded tempted to go with th=
+e
+> idea of just trying the decompressors rather than go by the suffix? I
+> think that'd be an improvement.
+>=20
+
+Yeah, it's tempting. I'll play with it a bit and see what it would take=
+=2E Seems it
+would just take a try/except block with logic to make the patchname rig=
+ht (I still
+would want to remove a .gz/.bz2 suffix from the patchname).
+
+> As for testing, you'd simply make two copies of one of the subtests i=
+n
+> t1800, where you test .gz- and .bz2-compressed versions of the same
+> patch. Should take about five minutes to write.
+>=20
+
+I'll make sure I have tests to go with the next patch.
+
+Clark
 
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
 
-On Wed, 11 Jun 2008, Pierre Habouzit wrote:
-> > 
-> > Hmm. Very interesting. That definitely sounds like a cache coherency 
-> > issue (ie the "fsck" probably doesn't really _do_ anything, it just 
-> > delays things and possibly causes memory pressure to throw some stuff out 
-> > of the cache).
-> > 
-> > What clients, what server?
-> 
->   Server uses NFSv3 kernel server from Debian's 2.6.18 etch (up to
-> date).
-
-Ok, it's almost impossible to be a server-side issue then - I could 
-imagine that if you had some fancy cluster server or something, but in 
-that kind os straightforward situation the only thing that is going to 
-matter is the client-side caching.
-
-I stopped using NFS so long ago that the only case I ever worried about 
-and knew anything about was the traditional v2 issues. But iirc, v3 does 
-nothing much to change the caching rules (v4, on the other hand, does add 
-delegations and explicit caching support).
-
-> Clients are various Unbuntu/Debian's with at least 2.6.18 kernels, some 
-> .22 .24 and .25.
-
-I'll ask Trond if he has any comments on this from the NFS client side. We 
-_did_ hit some other NFS client bug with git long ago, I forget what it 
-was all about (pread/pwrite?).
-
-What is quite odd, though, is that exactly because of how git works, I 
-would normally expect each client to not even *try* to look up objects 
-that are written by other clients until long long after they have been 
-written.
-
-IOW, access to new objects is not something a git client will do just 
-because the object suddenly appears in a directory - after the file is 
-written and closed, it will not just be moved to the right position, but 
-there has to be *other* files modified (ie the refs) to tell other clients 
-about the changes too!
-
-And that matters because even though there can be things like local 
-directory caches (and Linux does support negative caching - ie the caching 
-of the fact that a file was *not* there), those caches should be empty 
-simply because other clients that didn't create the file shouldn't even 
-have tried to look up non-existent objects!
-
-If it's a directory content caching issue, then adding an fsync() won't 
-matter. In fact, the fsync() should matter only if the client who wrote 
-the object didn't write it out to the server at close() time, and that 
-really sounds very unlikely indeed. So my personal guess is that the 
-fsync() won't make any difference at all.
-
-Do you have people using special flags for your NFS mounts? And do you 
-know if there is some pattern to the client kernel versions when the 
-problem happens?
-
-		Linus
+iEYEARECAAYFAkhQCygACgkQqA4JVb61b9fckgCfbjep1oC3WT3hxVSo/8y6/FVM
+O8AAn1GEGjvbwerEY0U0N1UlJC8Lv37R
+=3DRHjB
+-----END PGP SIGNATURE-----
