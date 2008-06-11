@@ -1,68 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Wed, 11 Jun 2008 19:21:18 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806111918300.23110@xanadu.home>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
- <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
- <20080611213648.GA13362@glandium.org>
- <alpine.DEB.1.00.0806112242370.1783@racer>
- <20080611230344.GD19474@sigill.intra.peff.net>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: To graft or not to graft... (Re: Recovering from repository corruption)
+Date: Thu, 12 Jun 2008 01:21:26 +0200
+Message-ID: <20080611232126.GA9054@cuci.nl>
+References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com> <m3abhtp42o.fsf@localhost.localdomain> <6dbd4d000806101238v2bb975abqd39916e45d4bf866@mail.gmail.com> <200806102159.02875.jnareb@gmail.com> <6dbd4d000806101303j4b2032ajc6e004e0a82e4db5@mail.gmail.com> <alpine.LFD.1.10.0806101317100.3101@woody.linux-foundation.org> <6dbd4d000806101328k1fc913f2ia55c3e44273ec5ad@mail.gmail.com> <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Denis Bueno <dbueno@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 12 01:22:17 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 01:22:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Zdv-00053e-LM
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 01:22:16 +0200
+	id 1K6Ze6-000567-UR
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 01:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325AbYFKXVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 19:21:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbYFKXVV
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 19:21:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:24818 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754108AbYFKXVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 19:21:20 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2B00DXCNIXO2C0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 11 Jun 2008 19:20:57 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080611230344.GD19474@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1754107AbYFKXV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 19:21:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520AbYFKXV2
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 19:21:28 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:38124 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754505AbYFKXV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 19:21:27 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id A82F5545E; Thu, 12 Jun 2008 01:21:26 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84683>
 
-On Wed, 11 Jun 2008, Jeff King wrote:
+Linus Torvalds wrote:
+>more corruption by hiding things (ie if you clone a repo with a grafts 
+>file, the result will now have neither the grafts file _nor_ the state 
+>that was hidden by it, so the result is guaranteed to be corrupt).
 
-> I agree. If you are concerned about valuable stashes getting deleted, my
-> guess is one of:
-> 
->   - you would like reflog expiration to be longer
-> 
->   - you are using stash as a long-term storage, which it was never
->     intended for. Use a branch.
-> 
-> The latter, of course, is based on my use and my impression of others
-> use (I almost always apply a stash within 30 seconds of having stashed
-> it). So maybe everyone is keeping stashes around for months, and this is
-> a useful change.
+This is kind of confusing.
+As I understood it from the few shreds of documentation that actually
+mention the grafts file, the grafts file is *not* being cloned.
+Therefore, my assumption was that cloning a repository that has a grafts
+file gives an identical result to cloning the same repository *without*
+the grafts file present.
 
-As you say, branches are there just for that: keeping changes for 
-months.  Stashes are not meant to be used like that nor should we 
-encourage it.
+As I understand it now, the cloning process actually peeks at the grafts
+file while cloning, and then doesn't copy it.  This results in a rather
+confusingly corrupt clone.
 
+I suggest two things:
+a. That during the cloning process, the grafts file is completely
+   disregarded in any case at first.
+b. Preferably the grafts file is copied as well (after cloning).  I
+   never really understood why the file is not being copied in the first
+   place (anyone care to explain that?).
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-Nicolas
+Differentiation is an integral part of calculus.
