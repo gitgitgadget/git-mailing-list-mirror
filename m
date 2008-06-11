@@ -1,64 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git bugs
-Date: Wed, 11 Jun 2008 11:53:27 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806111151260.3101@woody.linux-foundation.org>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>  <832adb090806101904k5eba3bd6p277c955b1782afbe@mail.gmail.com>  <alpine.LFD.1.10.0806101909430.3101@woody.linux-foundation.org>  <832adb090806101931y754fa6b7nfcb58a9c34f0c582@mail.gmail.com>
-  <alpine.LFD.1.10.0806101935130.3101@woody.linux-foundation.org>  <832adb090806102258v3fd63605p8c45513690b78fe8@mail.gmail.com>  <832adb090806102318k5727bb06p6c3211a6aebbfbe9@mail.gmail.com>  <alpine.LFD.1.10.0806110752550.3101@woody.linux-foundation.org>
-  <832adb090806111052p32a750c2n5f2d43e0ed1b910d@mail.gmail.com>  <alpine.LFD.1.10.0806111105150.3101@woody.linux-foundation.org> <832adb090806111148u5e13e9c5g7afc5b013e6f1223@mail.gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-reflog infinite loop
+Date: Wed, 11 Jun 2008 20:58:23 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4850204F.50401@obry.net>
+References: <484EBD92.8040603@obry.net> <20080611034718.GB7198@sigill.intra.peff.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ben Lynn <benlynn@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 20:56:30 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 11 21:00:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6VUg-0008Ve-QK
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 20:56:27 +0200
+	id 1K6VYk-0001hj-6B
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 21:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765381AbYFKSzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 14:55:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754869AbYFKSza
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 14:55:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48583 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1765381AbYFKSz3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 14:55:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BIrT8d001735
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Jun 2008 11:53:30 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BIrRKG012343;
-	Wed, 11 Jun 2008 11:53:28 -0700
-In-Reply-To: <832adb090806111148u5e13e9c5g7afc5b013e6f1223@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.371 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1762245AbYFKS6e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 14:58:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765996AbYFKS6d
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 14:58:33 -0400
+Received: from gv-out-0910.google.com ([216.239.58.188]:25669 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765991AbYFKS6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 14:58:31 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so795194gvc.37
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 11:58:29 -0700 (PDT)
+Received: by 10.78.133.2 with SMTP id g2mr215188hud.70.1213210708194;
+        Wed, 11 Jun 2008 11:58:28 -0700 (PDT)
+Received: from ?192.168.0.100? ( [83.199.33.70])
+        by mx.google.com with ESMTPS id y1sm332504hua.41.2008.06.11.11.58.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Jun 2008 11:58:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <20080611034718.GB7198@sigill.intra.peff.net>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84640>
 
+Jeff King a =C3=A9crit :
+> I can't reproduce here, so presumably it is some condition in your
+> repository; can you make a tarball of your .git directory available?
 
+Ok, mystery solved.
 
-On Wed, 11 Jun 2008, Ben Lynn wrote:
->
-> The only drawback is that I'm not sure how acceptable it is to write to 
-> the index on a read operation. Is this a big deal?
+The problem was that the repository had been imported using git-svn and=
+=20
+contained something like 86000 reflog entries in=20
+=2Egit/logs/refs/remotes/pre/trunk.
 
-Historically, we *never* did it. In fact, it was a big deal. These days we 
-do it opportunistically for "git diff" if we can, but making sure that it 
-all still works for a read-only access (think gitweb etc - the reader is 
-*not* necessarily the owner of the archive at all!)
+Using the debugger I have seen that the loop was not endless... but ver=
+y=20
+slow as there was many many reflog to process. Don't know if this is=20
+expected or not though.
 
-So I really prefer not to. But you can take it up with Junio if you think 
-it can be a big deal.
+To fix that I have launched:
 
-		Linus
+    $ git-reflog expire --expire=3D10 --all
+
+It has removed all the old reflogs dating from the git-svn initial=20
+import lowering the number of enties in .git/logs/refs/remotes/pre/trun=
+k=20
+to 0 :)
+
+git gc is now working like a charm!
+
+Pascal.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
