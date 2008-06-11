@@ -1,103 +1,58 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-rebase -i: have an option for amending the commit  message only.
-Date: Thu, 12 Jun 2008 00:27:44 +0200
-Message-ID: <20080611222744.GD16439@artemis.madism.org>
-References: <1213196490-7762-1-git-send-email-madcoder@debian.org> <48501B3D.3000405@free.fr>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Wed, 11 Jun 2008 17:35:29 -0500
+Message-ID: <VvvF8m917iheDGmce6GDbHpylrcdO5FHv3p0WaTpMdrLPTsIwooVnQ@cipher.nrlssc.navy.mil>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="eheScQNz3K90DVRs";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 12 00:28:44 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 00:39:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Yo7-0004QA-HW
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:28:43 +0200
+	id 1K6YwZ-0007s0-2A
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259AbYFKW1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 18:27:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYFKW1s
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:27:48 -0400
-Received: from pan.madism.org ([88.191.52.104]:34116 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753234AbYFKW1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 18:27:47 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9BEAC2BA63;
-	Thu, 12 Jun 2008 00:27:46 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id C222BCFC9; Thu, 12 Jun 2008 00:27:44 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-Content-Disposition: inline
-In-Reply-To: <48501B3D.3000405@free.fr>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753050AbYFKWgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 18:36:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbYFKWgG
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:36:06 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39415 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752634AbYFKWgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 18:36:05 -0400
+Received: by mail.nrlssc.navy.mil id m5BMZUHk026673; Wed, 11 Jun 2008 17:35:30 -0500
+In-Reply-To: <20080611213648.GA13362@glandium.org>
+X-OriginalArrivalTime: 11 Jun 2008 22:35:29.0901 (UTC) FILETIME=[73C849D0:01C8CC13]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84675>
 
+Mike Hommey wrote:
+> On Wed, Jun 11, 2008 at 04:29:56PM -0500, Brandon Casey wrote:
+>> The stash makes use of git's reflog mechanism, but it is not a reflog
+>> in the traditional sense. Each entry is a state that the user explicitly
+>> requested git to remember. The stash is generally short-lived, but the
+>> user probably expects that a stash will continue to exist until it is
+>> explicitly deleted. So we should not expire stash entries.
+> 
+> I wonder if it wouldn't make sense to have git reflog expire not expire
+> stashes *at all*. I mean, you don't necessarily cleanup your repo with
+> git gc, and you may end up killing your stashes with git reflog yourself
+> if you don't use the "magic" --exclude...
 
---eheScQNz3K90DVRs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How do you do it cleanly? I don't like the idea of a config option which
+must be set by default when a repository is created and I don't really
+like the idea of a hard-coded refs/stash in builtin-reflog.c.
 
-On Wed, Jun 11, 2008 at 06:36:45PM +0000, Olivier Marin wrote:
-> Hi,
->=20
-> I like the feature and I have just two comments:
->=20
-> Pierre Habouzit a =C3=A9crit :
-> >
-> > +	comment|c)
->=20
-> Is "comment" the right name? I'm not sure, I just ask.
+git-reflog is currently a generic command. I didn't mind teaching git-gc
+about stashes, but to a quasi-plumbing command like git-reflog it doesn't
+seem right.
 
-  Well, edit would have been better, but it's taken already. 'message'
-has m as a shortcut, already taken by merge, so 'comment' felt like the
-best I could come up with.
-
-  To be fair, if someone has a better name, I'm all for it. I quite care
-about the feature, edit needs me to run the --amend myself, whereas I
-often just want to fix a typo in a commit log.
-
-> > +		comment_for_reflog comment
-> > +
-> > +		mark_action_done
-> > +		pick_one $sha1 ||
-> > +			die_with_patch $sha1 "Could not apply $sha1... $rest"
-> > +		output git commit --no-verify --amend -e -C HEAD
->=20
-> It does not work with an editor that opens in the current terminal
-> like vi. Just remove "output" should fix the problem, I think.
-
-  I'm surprised because I used it this way, but maybe it was on the
-machine where my git editor is gvim and not vim =E2=80=A6
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---eheScQNz3K90DVRs
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhQUWAACgkQvGr7W6HudhwmPgCgjeXH1PjrdGQVNx5hBZgnWvoQ
-+egAoJYHXb+xrsjZKtqXyYr4i53GoycP
-=BUbd
------END PGP SIGNATURE-----
-
---eheScQNz3K90DVRs--
+-brandon
