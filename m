@@ -1,85 +1,83 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git-reflog infinite loop
-Date: Wed, 11 Jun 2008 20:58:23 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <4850204F.50401@obry.net>
-References: <484EBD92.8040603@obry.net> <20080611034718.GB7198@sigill.intra.peff.net>
-Reply-To: pascal@obry.net
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
+Date: Wed, 11 Jun 2008 20:06:08 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806112000400.1783@racer>
+References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org> <cover.1213084587.git.marius@trolltech.com> <alpine.DEB.1.00.0806101632570.1783@racer> <7vk5gxc4gz.fsf@gitster.siamese.dyndns.org> <484F6A27.1040602@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 11 21:00:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 21:08:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6VYk-0001hj-6B
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 21:00:38 +0200
+	id 1K6VgD-0004bY-RG
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 21:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762245AbYFKS6e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 14:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765996AbYFKS6d
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 14:58:33 -0400
-Received: from gv-out-0910.google.com ([216.239.58.188]:25669 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765991AbYFKS6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 14:58:31 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so795194gvc.37
-        for <git@vger.kernel.org>; Wed, 11 Jun 2008 11:58:29 -0700 (PDT)
-Received: by 10.78.133.2 with SMTP id g2mr215188hud.70.1213210708194;
-        Wed, 11 Jun 2008 11:58:28 -0700 (PDT)
-Received: from ?192.168.0.100? ( [83.199.33.70])
-        by mx.google.com with ESMTPS id y1sm332504hua.41.2008.06.11.11.58.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Jun 2008 11:58:26 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <20080611034718.GB7198@sigill.intra.peff.net>
-X-Enigmail-Version: 0.95.6
+	id S1754177AbYFKTHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 15:07:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbYFKTHY
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 15:07:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47306 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753643AbYFKTHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 15:07:23 -0400
+Received: (qmail invoked by alias); 11 Jun 2008 19:07:21 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp042) with SMTP; 11 Jun 2008 21:07:21 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX182fgctHJg27nD7C3E/aIvGfkIGvI5cXk00rRWy9S
+	bsevFyypGinmp7
+X-X-Sender: gene099@racer
+In-Reply-To: <484F6A27.1040602@trolltech.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84641>
 
-Jeff King a =C3=A9crit :
-> I can't reproduce here, so presumably it is some condition in your
-> repository; can you make a tarball of your .git directory available?
+Hi,
 
-Ok, mystery solved.
+On Wed, 11 Jun 2008, Marius Storm-Olsen wrote:
 
-The problem was that the repository had been imported using git-svn and=
-=20
-contained something like 86000 reflog entries in=20
-=2Egit/logs/refs/remotes/pre/trunk.
+> Well, consider this:
+>
+> Say you are merging two branches, and know that you want to just use the 
+> parts which conflict from the branch being merged in. Then you simply 
+> do:
+>
+> 	git merge side
+> 	git show :3:file.txt > file.txt
 
-Using the debugger I have seen that the loop was not endless... but ver=
-y=20
-slow as there was many many reflog to process. Don't know if this is=20
-expected or not though.
+This is not really how I would do things.  I would do
 
-To fix that I have launched:
+	git checkout side file.txt here.
 
-    $ git-reflog expire --expire=3D10 --all
+The _point_ is: "git show" is supposed to show you the contents _in the 
+repository_.  For example, no smudge/clean filters will be heeded, and 
+neither other attributes.
 
-It has removed all the old reflogs dating from the git-svn initial=20
-import lowering the number of enties in .git/logs/refs/remotes/pre/trun=
-k=20
-to 0 :)
+Further, "git show" will work without any problems in any bare repository.
 
-git gc is now working like a charm!
+In other words: "git show" is _not_ an operation on a working directory.
 
-Pascal.
+"git checkout" is.  So use that instead.
 
---=20
+> Given that 'git show' *is* porcelain, I'd expect it to work 'naturally' 
+> in my workflow, and not dump raw object store content.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+Do not confuse porcelain with "works on the working directory".
+
+> The fact that the stage files are in the index doesn't matter. I'd want 
+> CRLF files from 'git show v1.5.6-rc0:builtin-log.c' as well.
+
+But it _does_ matter!
+
+The index works on raw objects, not on smudged files.  Period.
+
+Ciao,
+Dscho
