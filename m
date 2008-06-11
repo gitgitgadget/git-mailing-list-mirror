@@ -1,62 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Improve sed portability
-Date: Wed, 11 Jun 2008 12:39:04 -0400
-Message-ID: <20080611163904.GB19172@sigill.intra.peff.net>
-References: <1213189759-11565-1-git-send-email-chris.ridd@isode.com> <484FDB5D.7060606@viscovery.net> <484FEF71.2030909@isode.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-daemon on Windows?
+Date: Wed, 11 Jun 2008 12:41:41 -0400
+Message-ID: <32541b130806110941n2b8c880bk79fb09db3f089f82@mail.gmail.com>
+References: <63c5d3820806110551y69e895eeg4fde4bfdaf22bbf2@mail.gmail.com>
+	 <m38wxcrtjr.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Chris Ridd <chris.ridd@isode.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 18:40:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Chris Hoffman" <chris.c.hoffman@gmail.com>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 18:42:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6TN5-0007T8-VR
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 18:40:28 +0200
+	id 1K6TPD-0008Mq-KM
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 18:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbYFKQjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 12:39:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbYFKQjH
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 12:39:07 -0400
-Received: from peff.net ([208.65.91.99]:3436 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733AbYFKQjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 12:39:06 -0400
-Received: (qmail 17395 invoked by uid 111); 11 Jun 2008 16:39:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 11 Jun 2008 12:39:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jun 2008 12:39:04 -0400
+	id S1760817AbYFKQln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 12:41:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbYFKQln
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 12:41:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:14304 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160AbYFKQlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 12:41:42 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2174941fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 09:41:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Xu5yLeAs4DsEmiLnZTtHvCPA02IUdu+trqsft1NikaQ=;
+        b=j4qmKojYPjPaa83W8eHHB2z5voS9Mb6IyqF4WuPkNO+FOQGM4XftdR0QXPrMk/ciO0
+         5dmfrwIJiDxbKcjAQYHjUJ/VG1D05sQK88m1V3n4npF/o/Qd+t8KZV9RMrceCQ2NhCJ+
+         E2qq4uDom1me6GNrzG/zMnOyxxnJmAPdIk+po=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ol3YCqS0971YyiRW9jbB5lok1WdrVGF+UE3hdlmFtorKCTwnnruELmJPwgfS02aHHS
+         LRBASEq8hXMXeSad+UpQwr4ctfJ2KlaRRwiF11sxij+cuitB3ahSXN2c/hDcAEDdrjfm
+         lYqaF3gP1ugHQKKhf+6T7qqpx6V5mmvCMAuuc=
+Received: by 10.82.174.20 with SMTP id w20mr1156bue.58.1213202501226;
+        Wed, 11 Jun 2008 09:41:41 -0700 (PDT)
+Received: by 10.82.100.5 with HTTP; Wed, 11 Jun 2008 09:41:41 -0700 (PDT)
+In-Reply-To: <m38wxcrtjr.fsf@localhost.localdomain>
 Content-Disposition: inline
-In-Reply-To: <484FEF71.2030909@isode.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84622>
 
-On Wed, Jun 11, 2008 at 04:29:53PM +0100, Chris Ridd wrote:
+On 6/11/08, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Chris Hoffman" <chris.c.hoffman@gmail.com> writes:
+>
+>  > Is there a distribution of the git server for Windows, or am I totally
+>  > missing the point of git?
+>
+> I don't know about git-daemon (git server) under Windows
 
-> It is necessary to use double quotes. This:
->
->     printf '%s\n' foobar
->
-> prints a literal \, a literal n, and no newline:
->
->     foobar\n
->
-> Not desirable :-(
+I can confirm that the git-daemon works fine on Windows (cygwin).
+Currently using git 1.5.5, but previous versions worked for me as
+well.
 
-On what platform?
+But Jakub's other suggestions are probably more appropriate for a "git
+server" in the same sense as an "svn server" or "p4 server" (ie.
+read-write access with authentication).
 
-> Of course, using a plain old:
->
->     echo "$1"
->
-> should work well too. Why is printf being used here and not echo, anyway?
+Have fun,
 
-Because the original didn't have a newline, and "echo -n" isn't
-portable?
-
--Peff
+Avery
