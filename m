@@ -1,41 +1,37 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Recovering from repository corruption
-Date: Tue, 10 Jun 2008 18:39:51 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806101836510.3101@woody.linux-foundation.org>
-References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com> <m3abhtp42o.fsf@localhost.localdomain> <6dbd4d000806101238v2bb975abqd39916e45d4bf866@mail.gmail.com> <200806102159.02875.jnareb@gmail.com> <6dbd4d000806101303j4b2032ajc6e004e0a82e4db5@mail.gmail.com>
- <alpine.LFD.1.10.0806101317100.3101@woody.linux-foundation.org> <6dbd4d000806101328k1fc913f2ia55c3e44273ec5ad@mail.gmail.com> <alpine.LFD.1.10.0806101403080.3101@woody.linux-foundation.org> <6dbd4d000806101422j39709906x1b4b03b82b504e62@mail.gmail.com>
- <alpine.LFD.1.10.0806101431410.3101@woody.linux-foundation.org> <6dbd4d000806101509l516cf467me06fadee6ead0964@mail.gmail.com> <alpine.LFD.1.10.0806101518590.3101@woody.linux-foundation.org> <alpine.LFD.1.10.0806102026430.23110@xanadu.home>
+Subject: Consolidate SHA1 object file close
+Date: Tue, 10 Jun 2008 18:47:18 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806101842460.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Denis Bueno <dbueno@gmail.com>,
+Cc: Denis Bueno <dbueno@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 03:40:54 2008
+X-From: git-owner@vger.kernel.org Wed Jun 11 03:48:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6FKX-0000v4-3D
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 03:40:53 +0200
+	id 1K6FRh-0002z0-Mb
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 03:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245AbYFKBj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2008 21:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753496AbYFKBj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 21:39:58 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40143 "EHLO
+	id S1753616AbYFKBrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2008 21:47:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659AbYFKBrX
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jun 2008 21:47:23 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:47721 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753027AbYFKBj5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 21:39:57 -0400
+	by vger.kernel.org with ESMTP id S1753076AbYFKBrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2008 21:47:22 -0400
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B1dqSh027678
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B1lJKm027919
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 Jun 2008 18:39:53 -0700
+	Tue, 10 Jun 2008 18:47:20 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B1dpSE007114;
-	Tue, 10 Jun 2008 18:39:51 -0700
-In-Reply-To: <alpine.LFD.1.10.0806102026430.23110@xanadu.home>
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5B1lI6U007391;
+	Tue, 10 Jun 2008 18:47:18 -0700
 User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.379 required=5 tests=AWL,BAYES_00
+X-Spam-Status: No, hits=-3.378 required=5 tests=AWL,BAYES_00
 X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
@@ -43,25 +39,71 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84574>
 
 
+This consolidates the common operations for closing the new temporary file 
+that we have written, before we move it into place with the final name. 
 
-On Tue, 10 Jun 2008, Nicolas Pitre wrote:
-> 
-> I think this only gives a false sense of security with a huge 
-> performance cost.  If the machine crashes at the right moment, the 
-> object will still be half written/fsync'd and you'll be in the same 
-> situation again.
+There's some common code there (make it read-only and check for errors on 
+close), but more importantly, this also gives a single place to add an 
+fsync_or_die() call if we want to add a safe mode.
 
-No you wouldn't.
+This was triggered due to Denis Bueno apparently twice being able to 
+corrupt his git repository on OS X due to an unlucky combination of kernel 
+crashes and a not-very-robust filesystem.
 
-We do the write and the fsync() of the write to a _temporary_ filename. We 
-do the rename _after_ the fsync.
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
-So you'd never have a half-written object file.
+Junio, this is just the scaffolding, without the actual fsync_or_die call. 
 
-That said, I do agree that the bigger problem is that Denis' machine is 
-simply so unreliable.
+I think it's a worthy place-holder regardless of whether we really want to 
+do the fsync (whether conditionally with a config option or not, and 
+whether there are more clever options like aio_fsync()).
 
-			Linus
+ sha1_file.c |   17 +++++++++++------
+ 1 files changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index adcf37c..f311c79 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2105,6 +2105,15 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+ 	return 0;
+ }
+ 
++/* Finalize a file on disk, and close it. */
++static void close_sha1_file(int fd)
++{
++	/* For safe-mode, we could fsync_or_die(fd, "sha1 file") here */
++	fchmod(fd, 0444);
++	if (close(fd) != 0)
++		die("unable to write sha1 file");
++}
++
+ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 			      void *buf, unsigned long len, time_t mtime)
+ {
+@@ -2170,9 +2179,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 
+ 	if (write_buffer(fd, compressed, size) < 0)
+ 		die("unable to write sha1 file");
+-	fchmod(fd, 0444);
+-	if (close(fd))
+-		die("unable to write sha1 file");
++	close_sha1_file(fd);
+ 	free(compressed);
+ 
+ 	if (mtime) {
+@@ -2350,9 +2357,7 @@ int write_sha1_from_fd(const unsigned char *sha1, int fd, char *buffer,
+ 	} while (1);
+ 	inflateEnd(&stream);
+ 
+-	fchmod(local, 0444);
+-	if (close(local) != 0)
+-		die("unable to write sha1 file");
++	close_sha1_file(local);
+ 	SHA1_Final(real_sha1, &c);
+ 	if (ret != Z_STREAM_END) {
+ 		unlink(tmpfile);
