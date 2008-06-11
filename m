@@ -1,105 +1,170 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Introduce get_octopus_merge_bases() in commit.c
-Date: Wed, 11 Jun 2008 23:17:19 +0200
-Message-ID: <1213219039-1211-1-git-send-email-vmiklos@frugalware.org>
-References: <2acf029a4230f840e9f3f936e1949e01c774b4a2.1213217187.git.vmiklos@frugalware.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 23:18:16 2008
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 1/2] git-reflog: add new option '--exclude=' to expire subcommand
+Date: Wed, 11 Jun 2008 16:28:45 -0500
+Message-ID: <OB99Y9Hiy2c1naDAzYj91bRmhr-KtTLrzzhzcVSN6-blyrxKhqEWtg@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 23:30:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6Xhv-0006SX-1F
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:18:15 +0200
+	id 1K6Xtm-0003bw-H9
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbYFKVRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 17:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYFKVRT
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:17:19 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:34251 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751840AbYFKVRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 17:17:18 -0400
-Received: from vmobile.example.net (dsl5401C482.pool.t-online.hu [84.1.196.130])
-	by yugo.frugalware.org (Postfix) with ESMTP id 3AD6D1DDC5B
-	for <git@vger.kernel.org>; Wed, 11 Jun 2008 23:17:16 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 1462A18DFDC; Wed, 11 Jun 2008 23:17:20 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc2.dirty
-In-Reply-To: <2acf029a4230f840e9f3f936e1949e01c774b4a2.1213217187.git.vmiklos@frugalware.org>
+	id S1752019AbYFKV3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 17:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbYFKV3b
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:29:31 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43684 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751624AbYFKV3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 17:29:31 -0400
+Received: by mail.nrlssc.navy.mil id m5BLSjk0023269; Wed, 11 Jun 2008 16:28:45 -0500
+X-OriginalArrivalTime: 11 Jun 2008 21:28:45.0388 (UTC) FILETIME=[20E818C0:01C8CC0A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84664>
 
-This is like get_merge_bases() but it works for multiple heads, like
-show-branch --merge-base.
+This new option will allow refs to be specified which will be skipped
+when expiring, i.e. they will not be expired. Currently it is convenient
+to use the '--all' option to operate on _all_ reflogs. In some cases it
+may be convenient to operate on _all_ reflogs except one or two or ...
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+The primary motivation behind this option is to allow git-gc to exclude
+refs/stash when calling git-reflog to expire reflogs.
+
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
 
-On Wed, Jun 11, 2008 at 10:50:32PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> +                     commit_list_append(i->item, &ret);
 
-Oops, sorry. When I cherry-picked the old get_octopus_merge_bases(), I
-picked the version that did not use commit_list_insert() here yet.
+I had one reservation against using --exclude= as the option name and that
+is that --exclude= is generally used with a glob. In the future this can easily
+be extended to accept a glob, and may be necessary depending on how per-branch
+stashes are implemented. For now it is not necessary (for me).
 
-Here is the correct version, which one I have in my working branch.
+-brandon
 
- commit.c |   27 +++++++++++++++++++++++++++
- commit.h |    1 +
- 2 files changed, 28 insertions(+), 0 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index bbf9c75..f9410d8 100644
---- a/commit.c
-+++ b/commit.c
-@@ -600,6 +600,33 @@ static struct commit_list *merge_bases(struct commit *one, struct commit *two)
- 	return result;
+ Documentation/git-reflog.txt |    5 +++++
+ builtin-reflog.c             |   27 ++++++++++++++++++++++++---
+ t/t1410-reflog.sh            |   16 +++++++++++++++-
+ 3 files changed, 44 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 8492aea..d1c4a14 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -65,6 +65,11 @@ should not have to ever worry about missing objects, because the current
+ prune and pack-objects know about reflogs and protect objects referred by
+ them.
+ 
++--exclude=<ref>::
++	When expiring, do not operate on the reflog of the named ref.
++	This option may be used multiple times to exclude more than one ref.
++	This is not a glob, it is a ref name such as `stash` or `refs/stash`.
++
+ --expire=<time>::
+ 	Entries older than this time are pruned.  Without the
+ 	option it is taken from configuration `gc.reflogExpire`,
+diff --git a/builtin-reflog.c b/builtin-reflog.c
+index 897d1dc..9bb964b 100644
+--- a/builtin-reflog.c
++++ b/builtin-reflog.c
+@@ -350,7 +350,9 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ {
+ 	struct cmd_reflog_expire_cb cb;
+ 	unsigned long now = time(NULL);
+-	int i, status, do_all;
++	int i, n, status, do_all;
++	const char **excludes = NULL;
++	int num_excludes = 0;
+ 
+ 	git_config(reflog_expire_config, NULL);
+ 
+@@ -375,6 +377,11 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		const char *arg = argv[i];
+ 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+ 			cb.dry_run = 1;
++		else if (!prefixcmp(arg, "--exclude=")) {
++			excludes = xrealloc(excludes,
++				sizeof(*excludes) * (num_excludes+1));
++			excludes[num_excludes++] = arg+10;
++		}
+ 		else if (!prefixcmp(arg, "--expire="))
+ 			cb.expire_total = approxidate(arg + 9);
+ 		else if (!prefixcmp(arg, "--expire-unreachable="))
+@@ -415,7 +422,13 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		for_each_reflog(collect_reflog, &collected);
+ 		for (i = 0; i < collected.nr; i++) {
+ 			struct collected_reflog *e = collected.e[i];
+-			status |= expire_reflog(e->reflog, e->sha1, 0, &cb);
++			for (n = 0; n < num_excludes; n++)
++				if (refname_match(excludes[n], e->reflog,
++					    ref_rev_parse_rules))
++					break;
++			if (n == num_excludes)
++				status |= expire_reflog(e->reflog, e->sha1, 0,
++					&cb);
+ 			free(e);
+ 		}
+ 		free(collected.e);
+@@ -428,8 +441,16 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 			status |= error("%s points nowhere!", ref);
+ 			continue;
+ 		}
+-		status |= expire_reflog(ref, sha1, 0, &cb);
++		for (n = 0; n < num_excludes; n++)
++			if (refname_match(excludes[n], ref,
++				    ref_rev_parse_rules))
++				break;
++		if (n == num_excludes)
++			status |= expire_reflog(ref, sha1, 0, &cb);
+ 	}
++
++	free(excludes);
++
+ 	return status;
  }
  
-+struct commit_list *get_octopus_merge_bases(struct commit_list *in, int cleanup)
-+{
-+	struct commit_list *i, *j, *k, *ret = NULL;
-+	struct commit_list **pptr = &ret;
-+
-+	for (i = in; i; i = i->next) {
-+		if (!ret)
-+			pptr = &commit_list_insert(i->item, pptr)->next;
-+		else {
-+			struct commit_list *new = NULL, *end = NULL;
-+
-+			for (j = ret; j; j = j->next) {
-+				struct commit_list *bases;
-+				bases = get_merge_bases(i->item, j->item, cleanup);
-+				if (!new)
-+					new = bases;
-+				else
-+					end->next = bases;
-+				for (k = bases; k; k = k->next)
-+					end = k;
-+			}
-+			ret = new;
-+		}
-+	}
-+	return ret;
-+}
-+
- struct commit_list *get_merge_bases(struct commit *one,
- 					struct commit *two, int cleanup)
- {
-diff --git a/commit.h b/commit.h
-index 7f8c5ee..ca858ed 100644
---- a/commit.h
-+++ b/commit.h
-@@ -121,6 +121,7 @@ int read_graft_file(const char *graft_file);
- struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 73f830d..d33f3d0 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -158,6 +158,19 @@ test_expect_success 'reflog expire' '
+ 	check_fsck "dangling commit $K"
+ '
  
- extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
-+extern struct commit_list *get_octopus_merge_bases(struct commit_list *in, int cleanup);
++test_expect_success 'reflog expire --exclude=' '
++
++	git reflog expire --exclude=master \
++		--expire=now \
++		--expire-unreachable=now \
++		--all &&
++
++	loglen=$(wc -l <.git/logs/HEAD) &&
++	test $loglen = 0 &&
++	loglen=$(wc -l <.git/logs/refs/heads/master) &&
++	test $loglen = 2
++'
++
+ test_expect_success 'prune and fsck' '
  
- extern int register_shallow(const unsigned char *sha1);
- extern int unregister_shallow(const unsigned char *sha1);
+ 	git prune &&
+@@ -188,7 +201,8 @@ test_expect_success 'delete' '
+ 	test_tick &&
+ 	git commit -m tiger C &&
+ 
+-	test 5 = $(git reflog | wc -l) &&
++	test 3 = $(git reflog | wc -l) &&
++	test 5 = $(git reflog show master | wc -l) &&
+ 
+ 	git reflog delete master@{1} &&
+ 	git reflog show master > output &&
 -- 
-1.5.6.rc2.dirty
+1.5.5.3
