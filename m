@@ -1,168 +1,140 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stg pull/rebase
-Date: Wed, 11 Jun 2008 08:11:10 +0200
-Message-ID: <20080611061110.GA15034@diana.vm.bytemark.co.uk>
-References: <20080607172202.GA5179@diana.vm.bytemark.co.uk> <b0943d9e0806100302j159f5b7fq6d970316b902b39b@mail.gmail.com> <20080610104244.GC30119@diana.vm.bytemark.co.uk> <b0943d9e0806100843j28bb3353y5889a50712377959@mail.gmail.com>
+From: "Ben Lynn" <benlynn@gmail.com>
+Subject: Re: git bugs
+Date: Wed, 11 Jun 2008 06:18:49 +0000
+Message-ID: <832adb090806102318k5727bb06p6c3211a6aebbfbe9@mail.gmail.com>
+References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+	 <832adb090806101609q17a21948nb5814c3b22bd832d@mail.gmail.com>
+	 <7v1w34dfn3.fsf@gitster.siamese.dyndns.org>
+	 <832adb090806101702l79aba80cvba1eaab029e9ecd5@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101834460.3101@woody.linux-foundation.org>
+	 <832adb090806101904k5eba3bd6p277c955b1782afbe@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101909430.3101@woody.linux-foundation.org>
+	 <832adb090806101931y754fa6b7nfcb58a9c34f0c582@mail.gmail.com>
+	 <alpine.LFD.1.10.0806101935130.3101@woody.linux-foundation.org>
+	 <832adb090806102258v3fd63605p8c45513690b78fe8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 08:12:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 08:19:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6JZC-0006GH-K7
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 08:12:19 +0200
+	id 1K6JgQ-0007tv-KN
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 08:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbYFKGLZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 02:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYFKGLZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 02:11:25 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1101 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbYFKGLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 02:11:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K6JY6-000444-00; Wed, 11 Jun 2008 07:11:10 +0100
+	id S1752603AbYFKGSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 02:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbYFKGSw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 02:18:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:43418 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752167AbYFKGSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 02:18:51 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2017558fgg.17
+        for <git@vger.kernel.org>; Tue, 10 Jun 2008 23:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=tDYMvC7oAsP3JNhcuqoKBM/Ss5nd8/D0HIwAjr58DN8=;
+        b=fIjeB6NruHCUGaBhQkgB2r79aRoVhoJHijwHahOhVfgXrMZZEQ5iF7dLTNZNd5k5xD
+         X6v/lPGeHO4ot23jzvRuHYDF7ZSOMmELDFFQMSRymlzo+IsnhCwazeeNhQBq18t1jM9T
+         VBRwDWyFWHoLu3bkOgwTFNpyR7xJSyQJFceJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JgcJLdni8XHZh4QtF8+1bxJjBLA7PGaI8xrcOnwL0jp42CnQpBE8BL6WJVnXVW3s+K
+         EJI+IvJzUqbI+ma19Z8YtQFeyWKISKHhqalxklntgqYWlBVdWCRBIBciWZ+gmsdTkwgx
+         UyAemSPdBbRoTswGgCwlynO/eR9N5eOD7pnwU=
+Received: by 10.86.26.1 with SMTP id 1mr6655789fgz.49.1213165129862;
+        Tue, 10 Jun 2008 23:18:49 -0700 (PDT)
+Received: by 10.86.79.17 with HTTP; Tue, 10 Jun 2008 23:18:49 -0700 (PDT)
+In-Reply-To: <832adb090806102258v3fd63605p8c45513690b78fe8@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0806100843j28bb3353y5889a50712377959@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84593>
 
-On 2008-06-10 16:43:27 +0100, Catalin Marinas wrote:
+And I'm sure you've also realized we could use the old race fix with
+SIZE_MAX instead of zero, i.e:
 
-> 2008/6/10 Karl Hasselstr=F6m <kha@treskal.com>:
+ if (!ce_match_stat_basic(ce, &st)) {
+   ce->ce_size = ~0;
+ }
+ return; // don't bother with ce_modified_check_fs
+
+This is dissatisfying in that we're abusing the size variable. I'd
+much prefer adding a flag per entry. And now there are other file
+sizes, albeit ridiculously large ones, that will trick git. But it is
+much faster than examining file contents. Luckily the decision of
+which fix to use is not up to me.
+
+-Ben
+
+On Wed, Jun 11, 2008 at 5:58 AM, Ben Lynn <benlynn@gmail.com> wrote:
+> Am I going crazy? All of a sudden I think I can get away without a
+> size zero hack. How about this smudging routine:
 >
-> > On 2008-06-10 11:02:18 +0100, Catalin Marinas wrote:
-> >
-> > > However, I found some these policies useful. For example, I just
-> > > do a "stg pull" from a Subversion repository with the config
-> > > below:
-> > >
-> > > [stgit]
-> > >         pull-policy =3D fetch-rebase
-> > >         fetchcmd =3D git svn fetch
-> > >         rebasecmd =3D git svn rebase
-> >
-> > Looks useful.
-> >
-> > But what exactly is "rebasecmd" useful for, when you already have
-> > "fetchcmd" and a built-in rebase?
+> if (!ce_match_stat_basic(ce, &st)) {
+>  recompute_sha1_and_update_index();  // no other checks required
+> }
 >
-> In case the built-in rebase is not enough. Can you use "git svn
-> fetch" followed by plain "git rebase"? There are some comments in
-> git-svn.txt that recommend to use "git svn rebase" to preserve
-> linear history.
-
-You most definitely can. I've been doing so daily for more than a
-year:
-
-  $ git svn fetch -q
-  $ stg rebase -m svn/branch
-
-I _think_ what git svn rebase does is look at the git-svn commit
-metadata to determine how many commits to rebase. But stg already has
-this information, so we don't need it. (I haven't actually looked into
-exactly what git svn rebase does, so it might turn out it's doing
-something else too, but I can't think of anything that would be
-necessary. As I said, I've been using this workflow for a long time,
-and it works.)
-
-The _advantage_ of having fetch be the only external command (besides
-reducing complexity) is that we can make it all one single StGit
-transaction (since the fetch runs to completion before the transaction
-starts). This means that we don't have to touch files unnecessarily,
-which means less recompilation.
-
-> > > But "pull" always suggests fetching something. Adding "--rebase"
-> > > would mean that it doesn't fetch. Shouldn't we leave this
-> > > functionality to "rebase" only?
-> >
-> > These two things are orthogonal:
-> >
-> >  1. Whether and how to update the branch we're pulling from
-> >     (fetching).
-> >
-> >  2. How to do the actual pulling (rebase, fast-forward, or merge).
+> That should be sufficient. I think what happened was the following.
+> Once upon a time, the race fix was "if (stats_match) cached_size = 0",
+> which is nice because you don't have to examine file contents. Later,
+> because of the
 >
-> I think it's more of an language interpretation issue (I'm not a
-> native English speaker). I see the "pull" action as pulling (can't
-> find meaningful synonyms) remote changes into the current branch
-> (i.e. fetch + merge). I think you see it as pulling the current
-> stack onto a new base (i.e. rebase).
-
-Well, the reason I proposed to keep "stg pull" rather than "stg
-rebase" is that I agree with you that "pull" means "fetch _and_
-integrate". (Let's try a new term; "integrate" means either "merge",
-"fast-forward", or "rebase" (none of which implies any fetching, of
-course).) This is how I imagine it working:
-
-  stg pull
-
-    Do a default fetch (that is, fetch according to the branch
-    config), followed by a default integrate.
-
-  stg pull --no-fetch
-
-    Just a default integrate, no fetch.
-
-  stg pull --fetch-only
-
-    Just a default fetch, no integrate.
-
-  stg pull --fast-forward
-
-    Default fetch, followed by a "fast-forward" integrate.
-
-  stg pull --rebase
-
-    Default fetch, followed by a "rebase" integrate.
-
-  stg pull --merge
-
-    Default fetch, followed by a "merge" integrate.
-
-Any of --no-fetch/--fetch-only can be combined with any of
---fast-forward/--rebase/--merge.
-
-If stg pull is given a committish argument, this automatically means
---no-fetch, and causes it to integrate with that committish rather
-than the branch specified in the config. We might want to allow other
-kinds of arguments as well, I don't know.
-
-And of course,
-
-  stg rebase [committish]
-
-    The same as "stg pull --no-fetch --rebase [committish]"; that is,
-    no fetch, just rebase.
-
-> > > These are OK, with the comment on have rebase functionality in
-> > > "rebase" only.
-> >
-> > Why? I don't see the difference between rebase and the other two
-> > that would motivate such a separation.
+>  $ echo xyzzy >frotz ; git-update-index --add frotz ; : >frotz
+>  $ sleep 3
+>  $ echo filfre >nitfol ; git-update-index --add nitfol
 >
-> See my interpretation of the word "pull". I can change my mind, no
-> problem, but it would be interesting to see what a native English
-> speaker says (though you are probably closer to English than me
-> :-)).
-
-Mph, I don't know about me being "closer". I thought you were the one
-living in the UK? ;-)
-
-Regardless, I don't think we're actually in disagreement -- as I
-understand it, we both think that pull =3D fetch + integrate. And
-"rebase" is one possible value of "integrate". (Holler if you disagree
-with either of the views I've attributed to you.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+> issue, the ce_modified_check_fs was added.
+>
+> But then if we're going to be examining file contents anyway, we may
+> as well drop the whole size zero trick and simply update the hash. The
+> bug I brought up also goes away.
+>
+> -Ben
+>
+> P.S: I could go through the history to see, but I bet there was a
+> stage after the race condition was discovered but before it was
+> realized that
+>  $ git update-index 'foo'
+>  : modify 'foo' in-place without changing its size
+>  : wait for enough time
+>  $ git update-index 'bar'
+> was a problem.
+>
+> On Tue, Jun 10, 2008 at 7:39 PM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>>
+>> On Tue, 10 Jun 2008, Ben Lynn wrote:
+>>>
+>>> Ah, I hadn't seen that. Yes, it is better to use the first write as
+>>> the timestamp. Would this catch everything? If the filesystem clock is
+>>> monotonically increasing and consistent then with this setup, you can
+>>> touch files even as they are being indexed? (Disregarding nonsense
+>>> like changing sizes by 2^32.)
+>>
+>> Yes, I think that at that point it would protect against arbitrary
+>> modifications even concurrently to index file creation.
+>>
+>> That said, I don't think you even need a new index file format. We could
+>> just do a stat() on starting the index file creation, and then do a
+>> futimes() system call at the end to re-set the mtime to the beginning
+>> before we rename it back over the old index file.
+>>
+>>                Linus
+>>
+>
