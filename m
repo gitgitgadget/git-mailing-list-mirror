@@ -1,58 +1,119 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Wed, 11 Jun 2008 17:35:29 -0500
-Message-ID: <VvvF8m917iheDGmce6GDbHpylrcdO5FHv3p0WaTpMdrLPTsIwooVnQ@cipher.nrlssc.navy.mil>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] git-rebase -i: have an option for amending the commit
+	message only.
+Date: Thu, 12 Jun 2008 00:51:07 +0200
+Message-ID: <20080611225107.GB7200@leksak.fem-net>
+References: <1213196490-7762-1-git-send-email-madcoder@debian.org> <48501B3D.3000405@free.fr> <20080611222744.GD16439@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 00:39:25 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="y0ulUmNC+osPPQO6"
+Cc: Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org,
+	gitster@pobox.com, Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 00:52:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6YwZ-0007s0-2A
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:37:27 +0200
+	id 1K6ZAr-0004Kw-3S
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 00:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbYFKWgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 18:36:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbYFKWgG
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:36:06 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39415 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752634AbYFKWgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 18:36:05 -0400
-Received: by mail.nrlssc.navy.mil id m5BMZUHk026673; Wed, 11 Jun 2008 17:35:30 -0500
-In-Reply-To: <20080611213648.GA13362@glandium.org>
-X-OriginalArrivalTime: 11 Jun 2008 22:35:29.0901 (UTC) FILETIME=[73C849D0:01C8CC13]
+	id S1753437AbYFKWvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 18:51:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYFKWvN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 18:51:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37113 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753260AbYFKWvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 18:51:12 -0400
+Received: (qmail invoked by alias); 11 Jun 2008 22:51:10 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp023) with SMTP; 12 Jun 2008 00:51:10 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18CNgYm1ZoCMkXoWGA1EHnWVBiSiK3MH6QE9Ybin7
+	w7FYvaZGvXkpDA
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K6Z9n-0000PN-Ef; Thu, 12 Jun 2008 00:51:07 +0200
+Content-Disposition: inline
+In-Reply-To: <20080611222744.GD16439@artemis.madism.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84676>
 
-Mike Hommey wrote:
-> On Wed, Jun 11, 2008 at 04:29:56PM -0500, Brandon Casey wrote:
->> The stash makes use of git's reflog mechanism, but it is not a reflog
->> in the traditional sense. Each entry is a state that the user explicitly
->> requested git to remember. The stash is generally short-lived, but the
->> user probably expects that a stash will continue to exist until it is
->> explicitly deleted. So we should not expire stash entries.
-> 
-> I wonder if it wouldn't make sense to have git reflog expire not expire
-> stashes *at all*. I mean, you don't necessarily cleanup your repo with
-> git gc, and you may end up killing your stashes with git reflog yourself
-> if you don't use the "magic" --exclude...
 
-How do you do it cleanly? I don't like the idea of a config option which
-must be set by default when a repository is created and I don't really
-like the idea of a hard-coded refs/stash in builtin-reflog.c.
+--y0ulUmNC+osPPQO6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git-reflog is currently a generic command. I didn't mind teaching git-gc
-about stashes, but to a quasi-plumbing command like git-reflog it doesn't
-seem right.
+Hi,
 
--brandon
+I want to add a quick note as the one who is currently responsible for
+future git-sequencer ;-)
+
+> > > +		comment_for_reflog comment
+> > > +
+> > > +		mark_action_done
+> > > +		pick_one $sha1 ||
+> > > +			die_with_patch $sha1 "Could not apply $sha1... $rest"
+> > > +		output git commit --no-verify --amend -e -C HEAD
+
+I dislike that "comment" does a pick.
+Well, your version is consistent with the rest of rebase-i, but=20
+inconsistent to the more atomic and general approach of the
+git-sequencer thread.
+
+You use
+	comment deadf00
+instead of
+	pick deadf00
+Would you mind if you had to use something like this:
+	pick deadf00
+	comment
+to reedit the message of deadf00?
+
+The difference for you as vim user is that you won't type "<Home> c w comme=
+nt",
+but "o comment" :-)
+The outcome is that you can also use it for patches, not only for
+cherry-picks ;)
+
+>   To be fair, if someone has a better name, I'm all for it.
+
+What about "amend"? :)
+=2E..or "amend-message" or something like this.
+
+> I quite care about the feature, edit needs me to run the --amend myself,
+> whereas I often just want to fix a typo in a commit log.
+
+I understand ;)
+
+Well, I like to add it to the sequencer spec and to the prototype as soon=
+=20
+as the name is clear ;-)
+
+Regards,
+  Stephan
+
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+
+--y0ulUmNC+osPPQO6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFIUFbbbt3SB/zFBA8RAjAVAJ0b2tnj02LAfzWtDUyJcbPdCisbMQCgxNMJ
+7UVS+BsMyILjhSyGRjk18Dc=
+=jZae
+-----END PGP SIGNATURE-----
+
+--y0ulUmNC+osPPQO6--
