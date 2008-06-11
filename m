@@ -1,91 +1,85 @@
-From: Armen Baghumian <armen@OpenSourceClub.org>
-Subject: Re: Project's repository infrastructure (sunbtree and submodules)
-Date: Wed, 11 Jun 2008 12:34:57 +0430
-Message-ID: <20080611123457.442d1029@debian>
-References: <20080609194203.06698e01@debian>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
+Date: Wed, 11 Jun 2008 01:25:57 -0700 (PDT)
+Message-ID: <m3hcc0s7f5.fsf@localhost.localdomain>
+References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org>
+	<cover.1213084587.git.marius@trolltech.com>
+	<alpine.DEB.1.00.0806101632570.1783@racer>
+	<7vk5gxc4gz.fsf@gitster.siamese.dyndns.org>
+	<484F6A27.1040602@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 10:06:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 10:27:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6LLE-0005rH-73
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 10:06:00 +0200
+	id 1K6LfW-0005FF-DQ
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 10:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbYFKIFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 04:05:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbYFKIFF
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 04:05:05 -0400
-Received: from static.88-198-8-89.clients.your-server.de ([88.198.8.89]:47166
-	"EHLO julius.technotux.org" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753541AbYFKIFC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 04:05:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by julius.technotux.org (Postfix) with ESMTP id 386D5504EB
-	for <git@vger.kernel.org>; Wed, 11 Jun 2008 10:05:40 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at julius.technotux.org
-Received: from julius.technotux.org ([127.0.0.1])
-	by localhost (julius.technotux.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IQR62gMLBzGL for <git@vger.kernel.org>;
-	Wed, 11 Jun 2008 10:05:38 +0200 (CEST)
-Received: from debian (unknown [91.184.88.117])
-	by julius.technotux.org (Postfix) with ESMTP id 04355504BF
-	for <git@vger.kernel.org>; Wed, 11 Jun 2008 10:05:37 +0200 (CEST)
-In-Reply-To: <20080609194203.06698e01@debian>
-X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1753337AbYFKI0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 04:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbYFKI0D
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 04:26:03 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:47521 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbYFKI0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 04:26:00 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2049616fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 01:25:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=C0ROoS3Tl+yXKv/pMb0QdJ+K0qazGvOpmmg5QdngHj8=;
+        b=H498Yz/8ehrEHNt5j0MPq9Qb8c7C3Cbgr1Mr4tEk2jly5FGzcksWAQHwJ5yecQji2b
+         R3aW3APnC1a6ljbC0FuUe0nY/qe98HlcOaToFspHVhyBMBO4oIhxhG08FlUsSoXn6vNG
+         pQMn/KLYNtB7+r3uIoA4zofdSYY0bdeJP3TKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=XbjwmStTdFboFd2QSi4tRfctGiYw/ZiWjbwhl6W2byslOyrAhMRz/2Lb14mxOuGqOc
+         t5GVtI1NEP8s9z+851mw/u5XxTNAP3BfMm1xXbXTr5eP5dU8J4W9vbyNjP03sfmQ9Vb6
+         fUq3ShamO+6XXX1yX5n6cQdDJNYcvhclOI3lY=
+Received: by 10.86.27.9 with SMTP id a9mr6787968fga.57.1213172758839;
+        Wed, 11 Jun 2008 01:25:58 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.225.81])
+        by mx.google.com with ESMTPS id l12sm14720749fgb.6.2008.06.11.01.25.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Jun 2008 01:25:57 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5B8S1Zg006016;
+	Wed, 11 Jun 2008 10:28:11 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5B8RQcR006006;
+	Wed, 11 Jun 2008 10:27:26 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <484F6A27.1040602@trolltech.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84600>
 
-Hi,
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
-Am I asking totally wrong question or asking it in wrong place?
-would you please point me to correct place or documentation.
+> However, I also see that it can be useful at times. Almost makes me
+> consider a --raw option to 'git show' for those seldom cases. IMO,
+> 'git show' *should* care about autocrlf. Not doing so is just
+> confusing to the end-user.
 
---Armen
+There is always "git cat-file -p" which is porcelain, and should not
+care about attributes (perhaps with the exception of explicitely told
+so with some command option).
 
-On Mon, 9 Jun 2008 19:42:03 +0430
-Armen Baghumian <armen@OpenSourceClub.org> wrote:
-
-> Hi,
-> 
-> I have several projects which each project contains several modules.
-> modules are shared between projects.
-> 
-> For example let say there is three modules A, B, and C, and two
-> project called P1 and P2. P1 uses A and B modules and P2 uses B and C.
-> 
-> I want to have centralized place to clone/pull/push in P1 and P2 and
-> it would be nice to push changes in modules(A,B,C) from projects
-> (P1,P2) so when changes in B pushed from P1 it could be pulled from P2
-> (think B as a shared module between P1 and P2). 
-> 
-> As far as modules are not big enough I don't want to push changes
-> directly in to those repositories.
-> 
-> To solve the problem I just create three separated repositories for
-> each modules (A,B,C) and create two other repositories for each
-> project and use git-submodule to add modules in each repository.
-> 
-> pushing changes to modules(A,B,C) are really error prone and annoying
-> so I searched for a better way to solve that problem.
-> 
-> Seems subtree merge[1] is other choice but I'm not sure.
-> 
-> 1) What is best way to solve such situation?
-> 2) If subtree is best choice how to push changes to modules(A,B,C)
-> from projects?
-> 
-> --Armen
-> 
-> [1]
-> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
