@@ -1,107 +1,101 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH User manual-Added advice on proxies and autocrlf]
-Date: Wed, 11 Jun 2008 15:58:32 -0400
-Message-ID: <20080611195832.GQ15380@fieldses.org>
-References: <1033a22d0806111248l5184cf1at3c3130262d8fd0a0@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Porcelain/Plumbing
+Date: Wed, 11 Jun 2008 13:42:37 -0700 (PDT)
+Message-ID: <m3zlprr9fu.fsf@localhost.localdomain>
+References: <bd6139dc0806111250y53cfbdbdj9f00e38bf6e1c912@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Yesberg <john.yesberg@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 21:59:30 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Sverre Rabbelier" <sverre@rabbelier.nl>
+X-From: git-owner@vger.kernel.org Wed Jun 11 22:43:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6WTg-0001bY-CE
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 21:59:28 +0200
+	id 1K6XAN-0004ho-O9
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 22:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838AbYFKT6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 15:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbYFKT6e
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 15:58:34 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:38615 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750771AbYFKT6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 15:58:33 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1K6WSm-0006CC-Jq; Wed, 11 Jun 2008 15:58:32 -0400
-Content-Disposition: inline
-In-Reply-To: <1033a22d0806111248l5184cf1at3c3130262d8fd0a0@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752684AbYFKUml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 16:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752659AbYFKUmk
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 16:42:40 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:39047 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482AbYFKUmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 16:42:39 -0400
+Received: by py-out-1112.google.com with SMTP id p76so1553256pyb.10
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 13:42:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=VSN79ir6g6eNaKjiB65Gp4g3iIAnW3ew28h0vh8RCI8=;
+        b=ilUHBgaDuGpP280MhLt8mWeT2YhYz0mlIWetau1ERjYnuOWZMYOKkT5dqN33DwXo9A
+         0YSDrhkreqIZQPyTR1DNx3md5sY9R01XjSHZOpV2E6nmnOJLukR6wCHuIJA1/UQMvDev
+         S1Z1kfZMR/ypp3sm9I/ODAQqNW/QvZBzg1xzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=SPzm6q5F6wD7DPnUXKhi+RSDcc58Kqflj2OhFLp/N5Q1r9dssIbkDqA50TuzhRtI2n
+         Gej3ylH+fHKvblGTOr4Nw0OpXOQi9NtAjC6cjGp0LlXUHTRBONywyqbIvUlAUBL464Uv
+         wuP/JdONYcBvF6CA0+G1RAv13fkNHxjwWKrHw=
+Received: by 10.115.91.2 with SMTP id t2mr496056wal.62.1213216958073;
+        Wed, 11 Jun 2008 13:42:38 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.226.105])
+        by mx.google.com with ESMTPS id i12sm833260wxd.11.2008.06.11.13.42.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Jun 2008 13:42:37 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5BKfpYg026037;
+	Wed, 11 Jun 2008 22:42:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5BKfPUD026032;
+	Wed, 11 Jun 2008 22:41:25 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <bd6139dc0806111250y53cfbdbdj9f00e38bf6e1c912@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84649>
 
-On Wed, Jun 11, 2008 at 08:48:47PM +0100, John Yesberg wrote:
-> ---
->  Documentation/user-manual.txt |   23 +++++++++++++++++++++++
->  1 files changed, 23 insertions(+), 0 deletions(-)
+"Sverre Rabbelier" <alturin@gmail.com> writes:
 
-Thanks!
+> During my efforts gsoc efforts, I stumbled across (or actually, was
+> pointed at) 'git branch --contains' to list only branches that contain
+> a specific commit. The problem here is that 'git branch' is listed as
+> porcelain, and that there seems to be no plumbing equivalent of this
+> feature. 
 
-> 
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index bfde507..02b1be0 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -56,6 +56,16 @@ $ git clone
-> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
->  The initial clone may be time-consuming for a large project, but you
->  will only need to clone once.
-> 
-> +If there is a proxy between you and the repository you want to clone, you
-> +may not be able to use the git protocol. But you can use the http protocol, by
-> +configuring the proxy. Note that the address to access the repository via http
-> +may be different from the git address:
-> +
-> +------------------------------------------------
-> +$ export http_proxy=http://theproxy.example.com:8080
-> +$ git clone http://www.kernel.org/pub/scm/git/git.git
-> +------------------------------------------------
-> +
+I think there isn't.  If there were, its place probably would be
+either in git-show-ref, or in git-for-each-ref, or in both.
 
-Especially this early in the manual, I really want to keep the text
-short--we need to get to the basics as quickly as possible--even if that
-means leaving out some corner cases.
+> I have the same problem with 'git log -S', although 'git log'
+> is pretty sturdy output wise (if you specify the output with
+> '--pretty=format:' that is), the idea is the same.
 
-What actually happens when you run across this case as a user?  Are
-there any improvements to the error reporting from "clone" that would
-lead the user to the right solution without needing to deal with this
-case here?
+log = rev-list + diff-tree.  The -S (aka. pickaxe) option is option to
+git-diff-tree (and friends).  You would have to pipe output of
+rev-list to diff-tree (via --stdin) to use -S in porcelain.
 
->  The clone command creates a new directory named after the project ("git"
->  or "linux-2.6" in the examples above).  After you cd into this
->  directory, you will see that it contains a copy of the project files,
-> @@ -129,6 +139,19 @@ $ git branch
->  * new
->  ------------------------------------------------
-> 
-> +It is possible, particularly on Windows platforms, that as you checkout
-> +the original version, it will in fact be modified, by the autocrlf process.
-> +(Windows and Unix store newlines as CRLF and LF respectively, and autocrlf
-> +tries to adapt intelligently.) If the checked out version is modified, then
-> +trying to switch to a new branch will not work, because then the uncommitted
-> +changes would be lost. So you may need to add the +-f+ flag to _force_ these
-> +changes to be thrown away. Another option might be to edit +~/.gitconfig+ or
-> +use the following command to disable the autocrlf function.
-> +
-> +------------------------------------------------
-> ++git config --global core.autocrlf false
-> +------------------------------------------------
-> +
+> My question is, is it intentional that there is no plumbing equivalent
+> forsome functionality, and, in such cases, is it 'ok' to use the
+> porcelain from a script? (I think it is not.) I've been recommended to
+> stick with the plumbing as much as possible from my code, but with the
+> above two cases I've been unsure on what to do.
+> What is the advised course of action here?
 
-Again, I'd rather not deal with this case in the main text; if we
-absolutely need to, a quick reference to the appropriate documentation
-("note: if you see an error like XXX, see the XXX man page...") might be
-the thing to do.
+I think using git-log from scripts is O.K., for example qgit uses
+git-log to parse revisions, and IIRC it was recommended on git mailing
+list to do that (IIRC it was around adding --encoding=<encoding> and
+logOutputEncoding to git).
 
---b.
-
->  If you decide that you'd rather see version 2.6.17, you can modify
->  the current branch to point at v2.6.17 instead, with
-> 
-> -- 
-> 1.5.5.1015.g9d258
+git-branch I think is too much a porcelain...
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
