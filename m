@@ -1,61 +1,64 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Wed, 11 Jun 2008 16:29:56 -0500
-Message-ID: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
+From: "=?UTF-8?Q?Fred_Maranh=C3=A3o?=" <fred.maranhao@gmail.com>
+Subject: typo in tutorial
+Date: Wed, 11 Jun 2008 18:34:15 -0300
+Message-ID: <c647e93f0806111434q1cf99ff5pa99858c56951beeb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 23:32:04 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 11 23:35:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6XuQ-00040z-Tn
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:31:11 +0200
+	id 1K6XyJ-0006RT-DX
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753005AbYFKVaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 17:30:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbYFKVaK
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:30:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43688 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752114AbYFKVaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 17:30:09 -0400
-Received: by mail.nrlssc.navy.mil id m5BLTuTU023329; Wed, 11 Jun 2008 16:29:56 -0500
-In-Reply-To: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 11 Jun 2008 21:29:56.0312 (UTC) FILETIME=[4B2E3D80:01C8CC0A]
+	id S1751356AbYFKVeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 17:34:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbYFKVeS
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:34:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:62740 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696AbYFKVeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 17:34:17 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2252228fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=uRJA+yc/qAbdPEpJYgSdeAKIc/tUPfZ4sVYO9T26Gy8=;
+        b=tTGXv7D6Ll01YUkFwCWlWKBOivPnkdWRNZTbF1hrA0EEG9WV/TH2NOuxRU4K3qoUBt
+         iGoT/tHGh8meJ3pZjY5RSUYwmWOpraE3lCGJDlTVKQdj/SmAArrzUmz0qU5q/Ge6bH4n
+         t6wmm27MbcjLhsRFw+SYFgsrBCCc7mD6p1y7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=QurvWDn9oOa8PCHCWH+SNtXtSfN2ewyhlFutUP3ENAWSbhWEl6hB1wdcVRS8fRbg8k
+         TGA5uX8FNaHqlmq+JgzPeuZiR5wTW6qIpe9KwoojFIuFkNkFclt35FNCToNvbA1NKkU9
+         1yHM4GhsvvHSyQgdBcjXgPtHO76KrjtkyfBuo=
+Received: by 10.82.105.1 with SMTP id d1mr25598buc.26.1213220055651;
+        Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
+Received: by 10.82.168.14 with HTTP; Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84666>
 
-The stash makes use of git's reflog mechanism, but it is not a reflog
-in the traditional sense. Each entry is a state that the user explicitly
-requested git to remember. The stash is generally short-lived, but the
-user probably expects that a stash will continue to exist until it is
-explicitly deleted. So we should not expire stash entries.
+Hi,
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- builtin-gc.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+It seems that there is a little typo in git tutorial
+(http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html).In
+the following text:
 
-diff --git a/builtin-gc.c b/builtin-gc.c
-index f5625bb..5cb74ec 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -30,7 +30,7 @@ static char *prune_expire = "2.weeks.ago";
- 
- #define MAX_ADD 10
- static const char *argv_pack_refs[] = {"pack-refs", "--all", "--prune", NULL};
--static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
-+static const char *argv_reflog[] = {"reflog", "expire", "--all", "--exclude=refs/stash", NULL};
- static const char *argv_repack[MAX_ADD] = {"repack", "-d", "-l", NULL};
- static const char *argv_prune[] = {"prune", "--expire", NULL, NULL};
- static const char *argv_rerere[] = {"rerere", "gc", NULL};
--- 
-1.5.5.3
+"This will again prompt your for a message describing the change, and
+then record a new version of the project."
+
+"your" should be "you"
+
+    Fred
