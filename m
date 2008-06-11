@@ -1,145 +1,168 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
-Date: Wed, 11 Jun 2008 08:01:11 +0200
-Message-ID: <484F6A27.1040602@trolltech.com>
-References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org> <cover.1213084587.git.marius@trolltech.com> <alpine.DEB.1.00.0806101632570.1783@racer> <7vk5gxc4gz.fsf@gitster.siamese.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stg pull/rebase
+Date: Wed, 11 Jun 2008 08:11:10 +0200
+Message-ID: <20080611061110.GA15034@diana.vm.bytemark.co.uk>
+References: <20080607172202.GA5179@diana.vm.bytemark.co.uk> <b0943d9e0806100302j159f5b7fq6d970316b902b39b@mail.gmail.com> <20080610104244.GC30119@diana.vm.bytemark.co.uk> <b0943d9e0806100843j28bb3353y5889a50712377959@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig485FABC17B8825B4C48CB666"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 08:02:22 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 08:12:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6JPO-0003GL-H6
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 08:02:10 +0200
+	id 1K6JZC-0006GH-K7
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 08:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751111AbYFKGBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 02:01:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbYFKGBR
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 02:01:17 -0400
-Received: from hoat.troll.no ([62.70.27.150]:36712 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751057AbYFKGBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 02:01:16 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 301C420B00;
-	Wed, 11 Jun 2008 08:01:11 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 2114820A5B;
-	Wed, 11 Jun 2008 08:01:11 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7vk5gxc4gz.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1752245AbYFKGLZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2008 02:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYFKGLZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 02:11:25 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1101 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752245AbYFKGLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 02:11:24 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K6JY6-000444-00; Wed, 11 Jun 2008 07:11:10 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0806100843j28bb3353y5889a50712377959@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84592>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig485FABC17B8825B4C48CB666
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On 2008-06-10 16:43:27 +0100, Catalin Marinas wrote:
 
-Junio C Hamano said the following on 11.06.2008 00:25:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> On Tue, 10 Jun 2008, Marius Storm-Olsen wrote:
->>> When you use 'git show <rev>:<file>' or 'git show :<stage>:<file>', t=
-he=20
->>> objects are shows as they are in the object store, ignoring the=20
->>> core.autocrlf configuration.
->> I think this is the correct behaviour: inside the object repository, t=
-he=20
->> files are supposed to be LF clean.
->>
->> Likewise, things in the unmerged stages are in the index, which again =
-is=20
->> not the working directory, so they should be LF clean.
->>
->> _Only_ when writing a file to the working directory, it should get=20
->> clobbered.
->=20
-> I'd agree with your argument on general principle, but it might make se=
-nse
-> to give an option to let you say "here is a blob contents, and use the
-> attribute for this path to munge it out to the filesystem."  I am not s=
-ure
-> if that belongs to "git show" Porcelain, though.  It _could_ be more li=
-ke:
->=20
->         git checkout-blob $blob_sha1 $path
->=20
-> that (1) reads the blob object specified by its object name, (2)
-> grabs attribute for the $path, and (3) applies convert_to_worktree()
-> filtering given that attribute and deposits the results to $path.
->=20
-> Alternatively, the interface could be:
->=20
->         git cat-file blob $blob_sha1 |
->         git filter-blob --use-attr-for=3D$path >$path.old
->=20
-> so that you can then do:
->=20
-> 	git diff --no-index $path.old $path
->=20
-> I dunno.
+> 2008/6/10 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > On 2008-06-10 11:02:18 +0100, Catalin Marinas wrote:
+> >
+> > > However, I found some these policies useful. For example, I just
+> > > do a "stg pull" from a Subversion repository with the config
+> > > below:
+> > >
+> > > [stgit]
+> > >         pull-policy =3D fetch-rebase
+> > >         fetchcmd =3D git svn fetch
+> > >         rebasecmd =3D git svn rebase
+> >
+> > Looks useful.
+> >
+> > But what exactly is "rebasecmd" useful for, when you already have
+> > "fetchcmd" and a built-in rebase?
+>
+> In case the built-in rebase is not enough. Can you use "git svn
+> fetch" followed by plain "git rebase"? There are some comments in
+> git-svn.txt that recommend to use "git svn rebase" to preserve
+> linear history.
 
-Well, consider this:
-Say you are merging two branches, and know that you want to just use=20
-the parts which conflict from the branch being merged in. Then you=20
-simply do:
-	git merge side
-	git show :3:file.txt > file.txt
-	git add file.txt
-	git commit ...blah blah...
+You most definitely can. I've been doing so daily for more than a
+year:
 
-Now, with the current behavior, this workflow breaks for=20
-core.autocrlf=3Dtrue repos. Given that 'git show' *is* porcelain, I'd=20
-expect it to work 'naturally' in my workflow, and not dump raw object=20
-store content.
-However, I also see that it can be useful at times. Almost makes me=20
-consider a --raw option to 'git show' for those seldom cases. IMO,=20
-'git show' *should* care about autocrlf. Not doing so is just=20
-confusing to the end-user.
+  $ git svn fetch -q
+  $ stg rebase -m svn/branch
 
-The fact that the stage files are in the index doesn't matter. I'd=20
-want CRLF files from 'git show v1.5.6-rc0:builtin-log.c' as well.
+I _think_ what git svn rebase does is look at the git-svn commit
+metadata to determine how many commits to rebase. But stg already has
+this information, so we don't need it. (I haven't actually looked into
+exactly what git svn rebase does, so it might turn out it's doing
+something else too, but I can't think of anything that would be
+necessary. As I said, I've been using this workflow for a long time,
+and it works.)
+
+The _advantage_ of having fetch be the only external command (besides
+reducing complexity) is that we can make it all one single StGit
+transaction (since the fetch runs to completion before the transaction
+starts). This means that we don't have to touch files unnecessarily,
+which means less recompilation.
+
+> > > But "pull" always suggests fetching something. Adding "--rebase"
+> > > would mean that it doesn't fetch. Shouldn't we leave this
+> > > functionality to "rebase" only?
+> >
+> > These two things are orthogonal:
+> >
+> >  1. Whether and how to update the branch we're pulling from
+> >     (fetching).
+> >
+> >  2. How to do the actual pulling (rebase, fast-forward, or merge).
+>
+> I think it's more of an language interpretation issue (I'm not a
+> native English speaker). I see the "pull" action as pulling (can't
+> find meaningful synonyms) remote changes into the current branch
+> (i.e. fetch + merge). I think you see it as pulling the current
+> stack onto a new base (i.e. rebase).
+
+Well, the reason I proposed to keep "stg pull" rather than "stg
+rebase" is that I agree with you that "pull" means "fetch _and_
+integrate". (Let's try a new term; "integrate" means either "merge",
+"fast-forward", or "rebase" (none of which implies any fetching, of
+course).) This is how I imagine it working:
+
+  stg pull
+
+    Do a default fetch (that is, fetch according to the branch
+    config), followed by a default integrate.
+
+  stg pull --no-fetch
+
+    Just a default integrate, no fetch.
+
+  stg pull --fetch-only
+
+    Just a default fetch, no integrate.
+
+  stg pull --fast-forward
+
+    Default fetch, followed by a "fast-forward" integrate.
+
+  stg pull --rebase
+
+    Default fetch, followed by a "rebase" integrate.
+
+  stg pull --merge
+
+    Default fetch, followed by a "merge" integrate.
+
+Any of --no-fetch/--fetch-only can be combined with any of
+--fast-forward/--rebase/--merge.
+
+If stg pull is given a committish argument, this automatically means
+--no-fetch, and causes it to integrate with that committish rather
+than the branch specified in the config. We might want to allow other
+kinds of arguments as well, I don't know.
+
+And of course,
+
+  stg rebase [committish]
+
+    The same as "stg pull --no-fetch --rebase [committish]"; that is,
+    no fetch, just rebase.
+
+> > > These are OK, with the comment on have rebase functionality in
+> > > "rebase" only.
+> >
+> > Why? I don't see the difference between rebase and the other two
+> > that would motivate such a separation.
+>
+> See my interpretation of the word "pull". I can change my mind, no
+> problem, but it would be interesting to see what a native English
+> speaker says (though you are probably closer to English than me
+> :-)).
+
+Mph, I don't know about me being "closer". I thought you were the one
+living in the UK? ;-)
+
+Regardless, I don't think we're actually in disagreement -- as I
+understand it, we both think that pull =3D fetch + integrate. And
+"rebase" is one possible value of "integrate". (Holler if you disagree
+with either of the views I've attributed to you.)
 
 --=20
-=2Emarius [@trolltech.com]
-'if you know what you're doing, it's not research'
-
-
---------------enig485FABC17B8825B4C48CB666
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFIT2onKzzXl/njVP8RAolbAKDedaO2BuZp9XRVrxBu2Cc0r5M7RQCglm3J
-yIxIZvuNj0miNW3+Yvcf9nk=
-=3QUO
------END PGP SIGNATURE-----
-
---------------enig485FABC17B8825B4C48CB666--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
