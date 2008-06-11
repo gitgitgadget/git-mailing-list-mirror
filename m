@@ -1,110 +1,103 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Consolidate SHA1 object file close
-Date: Wed, 11 Jun 2008 08:17:04 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806110755190.3101@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0806101842460.3101@woody.linux-foundation.org> <20080611074309.GB28629@artemis.madism.org>
+From: Chris Ridd <chris.ridd@isode.com>
+Subject: Re: [PATCH] Improve sed portability
+Date: Wed, 11 Jun 2008 16:29:53 +0100
+Message-ID: <484FEF71.2030909@isode.com>
+References: <1213189759-11565-1-git-send-email-chris.ridd@isode.com>
+            <484FDB5D.7060606@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Denis Bueno <dbueno@gmail.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 17:24:17 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Jun 11 17:31:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6SBF-00011Z-QJ
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 17:24:10 +0200
+	id 1K6SIE-0003ze-VG
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 17:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816AbYFKPWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 11:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYFKPWr
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 11:22:47 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53975 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753255AbYFKPWr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2008 11:22:47 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BFH5ej018945
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Jun 2008 08:17:06 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5BFH41o003952;
-	Wed, 11 Jun 2008 08:17:04 -0700
-In-Reply-To: <20080611074309.GB28629@artemis.madism.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.374 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1760725AbYFKP36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 11:29:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760633AbYFKP36
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 11:29:58 -0400
+Received: from rufus.isode.com ([62.3.217.251]:34833 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758874AbYFKP35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 11:29:57 -0400
+Received: from [172.16.0.138] (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (submission channel) via TCP with ESMTPSA 
+          id <SE=vcQBZBLpQ@rufus.isode.com> for <git@vger.kernel.org>;
+          Wed, 11 Jun 2008 16:29:53 +0100
+User-Agent: Thunderbird 2.0.0.14 (X11/20080507)
+In-Reply-To: <484FDB5D.7060606@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84619>
 
-
-
-On Wed, 11 Jun 2008, Pierre Habouzit wrote:
+Johannes Sixt wrote:
+> Chris Ridd schrieb:
+>> On Solaris /usr/bin/sed apparently fails to process input that doesn't
+>> end in a \n. Consequently constructs like
+>>
+>>   re=$(printf '%s' foo | sed -e 's/bar/BAR/g' $)
+>>
+>> cause re to be set to the empty string.
 > 
->   Could this be the source of a problem we often meet at work ? Let me
-> try to describe it.
+> So does /usr/bin/sed of AIX 4.3!
 
-The fsync() *should* make no difference unless you actually crash. So my 
-initial reaction is no, but non-coherent client-side write caching over 
-NFS may actually make a difference.
+I ought to have mentioned this occurs on Solaris 8, 10, build 90 of 
+OpenSolaris, and on HP-UX 11iv1. I stared at that regex for quite a 
+while before realising the problem was with the input :-)
 
->   We work with our git repositories (storages I should say) on NFS
-> homes, with workdirs on a local directory (NFS homes are backuped daily,
-> hence everything commited get backuped, and developers have shorter
-> compilation times thanks to the local FS).
+>> @@ -73,7 +73,7 @@ resolve_relative_url ()
+>>  module_name()
+>>  {
+>>  	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+>> -	re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+>> +	re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+> 
+> You change sq into dq. Is this not dangerous? Shouldn't backslash-en be
+> hidden from the shell so that printf can interpret it?
 
-Ok, so your actual git object directory is on NFS?
+It is necessary to use double quotes. This:
 
->   Quite often, when people commit, they have corrupt repositories. The
-> symptom is a `cannot read <sha1>` error message (or many at times). The
-> usual way to "fix" it is to git fsck, and git reset (because after the
-> fsck the index is totally screwed and all local files are marked new),
-> and usually everything is fine then.
+     printf '%s\n' foobar
 
-Hmm. Very interesting. That definitely sounds like a cache coherency 
-issue (ie the "fsck" probably doesn't really _do_ anything, it just 
-delays things and possibly causes memory pressure to throw some stuff out 
-of the cache).
+prints a literal \, a literal n, and no newline:
 
-What clients, what server?
+     foobar\n
 
-NFS clients (I assume v2, which is not coherent) _should_ be doing what is 
-called open-close consistent, which means that while clients can cache 
-data locally, they should aim to be consistent between two clients over a 
-an open-close pair (ie if two clients have the same file open at the same 
-time, there are no consistency guarantees, but if you close on one client 
-and then open on another, the data should be consistent).
+Not desirable :-(
 
-If open-close consistency doesn't work, then things like various parallel 
-load distribution things (clusters with a NFS filesystem doing parallel 
-makes, etc) don't tend to work all that well either (ie an object file is 
-written on one client, and then used for linking on another).
+Of course, using a plain old:
 
-And that is what git does: even without the fsync(), git will "close()" 
-the file before it actually does the link + unlink to move it to the new 
-position. So it all _should_ be perfectly consistent even in the absense 
-of explicit syncs.
+     echo "$1"
 
-That said, if there is some problem with that whole thing, then yes, the 
-fsync() may well hide it. So yes, adding the fsync() is certainly worth 
-testing.
+should work well too. Why is printf being used here and not echo, anyway?
 
->   This is not really a hard corruption, and it's really hard to
-> reproduce, I don't know why it happens, and I wonder if this patch could
-> help, or if it's unrelated. I can only bring speculations as it's really
-> hard to reproduce, and it quite depends on the load of the NFS server :/
+>>  	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+>>  		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+> 
+> I trust you have tested this. But I wonder whether this leaves a stray
+> newline in $re that gets in the way inside the sed expression...
 
-Yes, that sounds very much like a cache coherency issue. The "corruption" 
-goes away when the cache gets flushed and the clients see the real state 
-again. But as mentioned, git should already do things in a way that this 
-should all work, but hey, that's using certain assumptions that perhaps 
-aren't true in your environment.
+Yes, I've tested this as we use submodules heavily. I think the $( .. ) 
+notation will remove the trailing \n printed by sed, but to be sure I 
+inserted a 'set -x' at the top of the module_name() function and 
+double-checked that the re variable didn't get any stray \n 
+character(s). Bash versions 2 and 3 were used.
 
-			Linus
+So without the change, on Solaris I get:
+
+     No submodule mapping found in .gitmodules for path 'foobar'
+
+for the first submodule that we use, and the repository clone fails.
+
+With the change, all our repositories clone OK.
+
+Cheers,
+
+Chris
