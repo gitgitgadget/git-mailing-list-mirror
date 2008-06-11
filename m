@@ -1,64 +1,55 @@
-From: "=?UTF-8?Q?Fred_Maranh=C3=A3o?=" <fred.maranhao@gmail.com>
-Subject: typo in tutorial
-Date: Wed, 11 Jun 2008 18:34:15 -0300
-Message-ID: <c647e93f0806111434q1cf99ff5pa99858c56951beeb@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add test-tr: poor-man tr
+Date: Wed, 11 Jun 2008 23:34:44 +0200
+Message-ID: <20080611213444.GA14753@steel.home>
+References: <20080611182501.GA3344@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 23:35:26 2008
+X-From: git-owner@vger.kernel.org Wed Jun 11 23:36:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6XyJ-0006RT-DX
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:35:11 +0200
+	id 1K6Xyn-0006ia-GU
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 23:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbYFKVeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 17:34:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbYFKVeS
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:34:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:62740 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696AbYFKVeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 17:34:17 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2252228fgg.17
-        for <git@vger.kernel.org>; Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=uRJA+yc/qAbdPEpJYgSdeAKIc/tUPfZ4sVYO9T26Gy8=;
-        b=tTGXv7D6Ll01YUkFwCWlWKBOivPnkdWRNZTbF1hrA0EEG9WV/TH2NOuxRU4K3qoUBt
-         iGoT/tHGh8meJ3pZjY5RSUYwmWOpraE3lCGJDlTVKQdj/SmAArrzUmz0qU5q/Ge6bH4n
-         t6wmm27MbcjLhsRFw+SYFgsrBCCc7mD6p1y7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=QurvWDn9oOa8PCHCWH+SNtXtSfN2ewyhlFutUP3ENAWSbhWEl6hB1wdcVRS8fRbg8k
-         TGA5uX8FNaHqlmq+JgzPeuZiR5wTW6qIpe9KwoojFIuFkNkFclt35FNCToNvbA1NKkU9
-         1yHM4GhsvvHSyQgdBcjXgPtHO76KrjtkyfBuo=
-Received: by 10.82.105.1 with SMTP id d1mr25598buc.26.1213220055651;
-        Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
-Received: by 10.82.168.14 with HTTP; Wed, 11 Jun 2008 14:34:15 -0700 (PDT)
+	id S1751295AbYFKVer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 17:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYFKVer
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 17:34:47 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:59439 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbYFKVeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 17:34:46 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gYkBuibEUndJ36PWMnarZw4lQg
+Received: from tigra.home (Fae0e.f.strato-dslnet.de [195.4.174.14])
+	by post.webmailer.de (fruni mo1) (RZmta 16.42)
+	with ESMTP id e06654k5BLCQbE ; Wed, 11 Jun 2008 23:34:45 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id CF28C277BD;
+	Wed, 11 Jun 2008 23:34:44 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id A4BC356D28; Wed, 11 Jun 2008 23:34:44 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080611182501.GA3344@steel.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84667>
 
-Hi,
+Alex Riesen, Wed, Jun 11, 2008 20:25:01 +0200:
+> --- /dev/null
+> +++ b/test-tr.c
+> @@ -0,0 +1,206 @@
+> +/*
+> +vim: sw=8
+> +*/
 
-It seems that there is a little typo in git tutorial
-(http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html).In
-the following text:
-
-"This will again prompt your for a message describing the change, and
-then record a new version of the project."
-
-"your" should be "you"
-
-    Fred
+Sorry about that...
