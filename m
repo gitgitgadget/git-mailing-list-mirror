@@ -1,100 +1,89 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 02/10] Move commit_list_count() to commit.c
-Date: Wed, 11 Jun 2008 22:50:26 +0200
-Message-ID: <dedcc8309fed3282df455bec7fbc9d0f8275b74b.1213217187.git.vmiklos@frugalware.org>
-References: <cover.1213217187.git.vmiklos@frugalware.org>
- <4818a0b71b7f6b44ef49621045a5871458ba5c38.1213217187.git.vmiklos@frugalware.org>
+Subject: [PATCH 00/10] Build in merge
+Date: Wed, 11 Jun 2008 22:50:24 +0200
+Message-ID: <cover.1213217187.git.vmiklos@frugalware.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 22:52:00 2008
+X-From: git-owner@vger.kernel.org Wed Jun 11 22:52:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6XI5-00007M-25
-	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 22:51:33 +0200
+	id 1K6XI3-00007M-Pu
+	for gcvg-git-2@gmane.org; Wed, 11 Jun 2008 22:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbYFKUum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 16:50:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYFKUuk
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 16:50:40 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:32877 "EHLO
+	id S1752520AbYFKUui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 16:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYFKUug
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 16:50:36 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:32875 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752197AbYFKUuf (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752208AbYFKUuf (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Jun 2008 16:50:35 -0400
 Received: from vmobile.example.net (dsl5401C482.pool.t-online.hu [84.1.196.130])
-	by yugo.frugalware.org (Postfix) with ESMTP id 47B871DDC5E
-	for <git@vger.kernel.org>; Wed, 11 Jun 2008 22:50:32 +0200 (CEST)
+	by yugo.frugalware.org (Postfix) with ESMTP id F02481DDC5C
+	for <git@vger.kernel.org>; Wed, 11 Jun 2008 22:50:31 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 3EF6118DFDF; Wed, 11 Jun 2008 22:50:35 +0200 (CEST)
+	id 7928718DFDD; Wed, 11 Jun 2008 22:50:35 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.rc2.dirty
-In-Reply-To: <4818a0b71b7f6b44ef49621045a5871458ba5c38.1213217187.git.vmiklos@frugalware.org>
-In-Reply-To: <cover.1213217187.git.vmiklos@frugalware.org>
-References: <cover.1213217187.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84653>
 
-This function is useful outside builtin-merge-recursive, for example in
-builtin-merge.
+Hi,
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- builtin-merge-recursive.c |    8 --------
- commit.c                  |    8 ++++++++
- commit.h                  |    1 +
- 3 files changed, 9 insertions(+), 8 deletions(-)
+It was almost a week ago I posted the previous series here and there
+were numerous improvements since then.
 
-diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-index 4aa28a1..98b09fb 100644
---- a/builtin-merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -42,14 +42,6 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two)
-  * - *(int *)commit->object.sha1 set to the virtual id.
-  */
- 
--static unsigned commit_list_count(const struct commit_list *l)
--{
--	unsigned c = 0;
--	for (; l; l = l->next )
--		c++;
--	return c;
--}
--
- static struct commit *make_virtual_commit(struct tree *tree, const char *comment)
- {
- 	struct commit *commit = xcalloc(1, sizeof(struct commit));
-diff --git a/commit.c b/commit.c
-index e2d8624..bbf9c75 100644
---- a/commit.c
-+++ b/commit.c
-@@ -325,6 +325,14 @@ struct commit_list *commit_list_insert(struct commit *item, struct commit_list *
- 	return new_list;
- }
- 
-+unsigned commit_list_count(const struct commit_list *l)
-+{
-+	unsigned c = 0;
-+	for (; l; l = l->next )
-+		c++;
-+	return c;
-+}
-+
- void free_commit_list(struct commit_list *list)
- {
- 	while (list) {
-diff --git a/commit.h b/commit.h
-index 2d94d41..7f8c5ee 100644
---- a/commit.h
-+++ b/commit.h
-@@ -41,6 +41,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size);
- int parse_commit(struct commit *item);
- 
- struct commit_list * commit_list_insert(struct commit *item, struct commit_list **list_p);
-+unsigned commit_list_count(const struct commit_list *l);
- struct commit_list * insert_by_date(struct commit *item, struct commit_list **list);
- 
- void free_commit_list(struct commit_list *list);
--- 
-1.5.6.rc2.dirty
+A short changelog:
+
+ - introducing filter_independent() in commit.c
+
+ - avoiding commit_list_append()
+
+ - using parseopt's skip_prefix()
+
+ - avoiding unnecessary strbuf_addf() in builtin-fmt-merge-msg.c
+
+As always, comments are welcome. I hope I addressed all the issues which
+were pointed out in the previous thread. If this is not the case, please
+correct me.
+
+Thanks.
+
+Miklos Vajna (10):
+  Move split_cmdline() to alias.c
+  Move commit_list_count() to commit.c
+  Move parse-options's skip_prefix() to git-compat-util.h
+  Add new test to ensure git-merge handles pull.twohead and
+    pull.octopus
+  parseopt: add a new PARSE_OPT_ARGV0_IS_AN_OPTION option
+  Move read_cache_unmerged() to read-cache.c
+  git-fmt-merge-msg: make it usable from other builtins
+  Introduce get_octopus_merge_bases() in commit.c
+  Introduce filter_independent() in commit.c
+  Build in merge
+
+ Makefile                                      |    2 +-
+ alias.c                                       |   54 ++
+ builtin-fmt-merge-msg.c                       |  157 ++--
+ builtin-merge-recursive.c                     |    8 -
+ builtin-merge.c                               | 1128 +++++++++++++++++++++++++
+ builtin-read-tree.c                           |   24 -
+ builtin-remote.c                              |   39 +-
+ builtin.h                                     |    4 +
+ cache.h                                       |    3 +
+ commit.c                                      |   56 ++
+ commit.h                                      |    3 +
+ git-merge.sh => contrib/examples/git-merge.sh |    0 
+ git-compat-util.h                             |    6 +
+ git.c                                         |   54 +--
+ parse-options.c                               |   11 +-
+ parse-options.h                               |    1 +
+ read-cache.c                                  |   31 +
+ t/t7601-merge-pull-config.sh                  |   72 ++
+ 18 files changed, 1482 insertions(+), 171 deletions(-)
+ create mode 100644 builtin-merge.c
+ rename git-merge.sh => contrib/examples/git-merge.sh (100%)
+ create mode 100755 t/t7601-merge-pull-config.sh
