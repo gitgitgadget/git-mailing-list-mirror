@@ -1,60 +1,86 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: To graft or not to graft... (Re: Recovering from repository corruption)
-Date: Thu, 12 Jun 2008 14:20:16 +0200
-Message-ID: <20080612122016.GA25926@cuci.nl>
-References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com> <200806120914.22083.johan@herland.net> <20080612074752.GA507@sigill.intra.peff.net> <200806121221.02287.johan@herland.net>
+From: "Shak" <sshaikh@hotmail.com>
+Subject: Re: Deleting files
+Date: Thu, 12 Jun 2008 13:23:53 +0100
+Message-ID: <g2r4ha$74i$1@ger.gmane.org>
+References: <g2r19e$s6e$1@ger.gmane.org> <g2r1sb$tut$1@ger.gmane.org> <g2r36d$2ju$1@ger.gmane.org> <477B22F6-9F24-4CBE-98EE-58EF697E6320@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Denis Bueno <dbueno@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Jun 12 14:21:15 2008
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 12 14:25:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6lnm-0005fg-5t
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 14:21:14 +0200
+	id 1K6lrg-0007Gr-BQ
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 14:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760440AbYFLMUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 08:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760426AbYFLMUU
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 08:20:20 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:43118 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760410AbYFLMUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 08:20:18 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id CB4CC545E; Thu, 12 Jun 2008 14:20:16 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200806121221.02287.johan@herland.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758633AbYFLMYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 08:24:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758005AbYFLMYV
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 08:24:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:35013 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756890AbYFLMYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 08:24:20 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1K6lqk-0000lq-Sx
+	for git@vger.kernel.org; Thu, 12 Jun 2008 12:24:18 +0000
+Received: from cpc4-seve16-0-0-cust781.popl.cable.ntl.com ([86.21.191.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 12:24:18 +0000
+Received: from sshaikh by cpc4-seve16-0-0-cust781.popl.cable.ntl.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 12:24:18 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cpc4-seve16-0-0-cust781.popl.cable.ntl.com
+In-Reply-To: <477B22F6-9F24-4CBE-98EE-58EF697E6320@ai.rug.nl>
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Windows Mail 6.0.6001.18000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84752>
 
-Johan Herland wrote:
->I can only draw the conclusion that with current versions of Git, repos 
->with grafts should _never_ be made public.
+"Pieter de Bie" <pdebie@ai.rug.nl> wrote in message 
+news:477B22F6-9F24-4CBE-98EE-58EF697E6320@ai.rug.nl...
+>
+> In short, the point is that you never commited the deletions! Your  whole 
+> history
+> until now will still show those deleted files. You can commit the 
+> actually deletions
+> now, as you should have done before (either by using "git rm <file>", 
+> "git add -u",
+> "git commit -a" or "git commit <file>".
+>
 
-Correct.
+Thanks for the quick workflow. To fill in a gap in my OP, I was using "git 
+add ." to add new files before a "commit". Since I (perhaps incorrectly) 
+took "commit -a" as a short cut for these two commands, I assumed that "git 
+add ." would also commit deletions.
 
-I still prefer my original suggestion, i.e. allow repos with grafts to
-be cloned, yet disregard the grafts during the cloning process.
-The trouble is that with your suggestion, it becomes a bit convoluted
-when grafts are being used and when not.  It already is complicated as
-it is, so I suggest we try and keep git honest so that it does exactly
-what one would expect (instead of documenting awkward behaviour).
+So sticking to my previous workflow (I need to do this since "commit -a" as 
+I understand it doesn't commit new files, and I often forget that I've added 
+:)), it seems I should do the following to keep the working directory in 
+sync with the repository:
 
-As soon as time permits, I'll submit appropriate patches to implement
-this, as well as some other sanity check patches which I've been
-contemplating to help the grafter detect "bad" grafts as early as
-possible.
--- 
-Sincerely,
-           Stephen R. van den Berg.
+git add .
+git add -u
+git commit
 
-"Always look on the bright side of life!"
+Is that right? Should the two add commands be called in that order or 
+doesn't it matter?
+
+I ask because I'm still concerned with how git assumed I had renamed files 
+after I had "git rm"d them. As far as I could tell they were not very alike. 
+Perhaps adding the new files before removing the old ones would stop this 
+behavior?
+
+Shak 
