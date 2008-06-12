@@ -1,89 +1,106 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH] t/.gitattributes: only ignore whitespace errors in test files
-Date: Fri, 13 Jun 2008 00:35:59 +0200
-Message-ID: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com>
-Cc: Lea Wiemann <LeWiemann@gmail.com>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] git-gui: Move on to the next filename after staging/unstaging a change
+Date: Fri, 13 Jun 2008 03:42:10 +0530
+Message-ID: <1213308730-12707-1-git-send-email-ams@toroid.org>
+Cc: gitster@pobox.com, Abhijit Menon-Sen <ams@toroid.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 00:36:52 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 00:46:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6vPS-0000mz-S5
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:36:47 +0200
+	id 1K6vYo-0003wS-2z
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbYFLWfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 18:35:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752880AbYFLWfr
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:35:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:29901 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbYFLWfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 18:35:46 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2627908fgg.17
-        for <git@vger.kernel.org>; Thu, 12 Jun 2008 15:35:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date
-         :message-id:x-mailer:from;
-        bh=7Dar9vRK9eMNKBEzkw8KRpO7NRV+pKNdCmOofDuGSTE=;
-        b=aImBD72rrAwf1Ie5v2+I++nNbiBE1ZneYjJZ0+hdoQUlOnGvyRfpRvJJcf/6x/DiY5
-         rbdebLGQfCc9QGShj4P0fz/UHUF4gIQfErFqOKoOZtO9jsReZX6YAr8qk+0CqYh/uYZ5
-         Ape1UMQdT0mLo1FgAbnvUqy6aBP6z2h65lwuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:from;
-        b=dWlzk8aJfN2gwkMaysrDrOHX/VASActqsLwoKytkzMm8mOaQnIXltJuKpsy2tXy+Y0
-         IOlshBAfXWangxtVdnNJwdQZaTBC1J+dt81NSkVFdhyVjqlqFDQXBRnL5O0hn+GDnF82
-         rp/AcpJOcJEehj60neN9rqWOWmjsgZ/8OObhs=
-Received: by 10.86.82.16 with SMTP id f16mr3077887fgb.9.1213310143162;
-        Thu, 12 Jun 2008 15:35:43 -0700 (PDT)
-Received: from fly ( [91.33.248.95])
-        by mx.google.com with ESMTPS id 4sm3804432fgg.9.2008.06.12.15.35.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 12 Jun 2008 15:35:41 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <LeWiemann@gmail.com>)
-	id 1K6vOi-0007Iq-2x; Fri, 13 Jun 2008 00:36:00 +0200
-X-Mailer: git-send-email 1.5.6.rc2.23.gfef6b.dirty
+	id S1755195AbYFLWpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 18:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbYFLWpa
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:45:30 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:47742 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753907AbYFLWp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 18:45:29 -0400
+X-Greylist: delayed 1995 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jun 2008 18:45:29 EDT
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 42298558244;
+	Fri, 13 Jun 2008 00:12:12 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id C8EF3ADC0CB; Fri, 13 Jun 2008 03:42:10 +0530 (IST)
+X-Mailer: git-send-email 1.5.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84808>
 
-Only ignore whitespace errors in t/tNNNN-*.sh and the t/tNNNN
-subdirectories.  Other files (like test libraries) should still be
-checked.
+Suppose the "Unstaged Changes" pane contains a list of files, and one of
+them is selected (i.e., that diff is currently being displayed). If one
+clicks on the icon to stage the change, git-gui clears the diff and one
+has to click on another filename to see the next diff in the list.
 
-Also fix a whitespace error in t/test-lib.sh.
+This patch changes that behaviour. If one clicks on the icon to stage
+(or unstage) the file whose diff is being displayed, git-gui will move
+on to the next filename in the list and display that diff instead of a
+blank diff pane. If the selected file was at the end of the list, the
+diff pane will display the previous diff instead; if the selected file
+was the only one listed, the diff pane will become blank.
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+If no diff is currently being displayed, this patch changes nothing.
+
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
 ---
- t/.gitattributes |    3 ++-
- t/test-lib.sh    |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ git-gui/git-gui.sh |   29 +++++++++++++++++++++++++++--
+ 1 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/t/.gitattributes b/t/.gitattributes
-index 562b12e..ab6edbf 100644
---- a/t/.gitattributes
-+++ b/t/.gitattributes
-@@ -1 +1,2 @@
--* -whitespace
-+t[0-9][0-9][0-9][0-9]-*.sh -whitespace
-+t[0-9][0-9][0-9][0-9]/* -whitespace
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 2a08cdc..73079d8 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -168,7 +168,7 @@ trap 'die' exit
- # environment variables to work around this.
- #
- # In particular, quoting isn't enough, as the path may contain the same quote
--# that we're using. 
-+# that we're using.
- test_set_editor () {
- 	FAKE_EDITOR="$1"
- 	export FAKE_EDITOR
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index e6e8890..23d7dfe 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1774,6 +1774,11 @@ proc do_commit {} {
+ 	commit_tree
+ }
+ 
++proc next_diff {} {
++	global next_diff_p next_diff_w next_diff_i
++	show_diff $next_diff_p $next_diff_w $next_diff_i
++}
++
+ proc toggle_or_diff {w x y} {
+ 	global file_states file_lists current_diff_path ui_index ui_workdir
+ 	global last_clicked selected_paths
+@@ -1793,11 +1798,31 @@ proc toggle_or_diff {w x y} {
+ 	$ui_workdir tag remove in_sel 0.0 end
+ 
+ 	if {$col == 0} {
+-		if {$current_diff_path eq $path} {
++		set i [expr {$lno-1}]
++		set ll [expr {[llength $file_lists($w)]-1}]
++
++		if {$i == $ll && $i == 0} {
+ 			set after {reshow_diff;}
+ 		} else {
+-			set after {}
++			global next_diff_p next_diff_w next_diff_i
++
++			if {$i < $ll} {
++				set i [expr {$i + 1}]
++			} else {
++				set i [expr {$i - 1}]
++			}
++
++			set next_diff_i $i
++			set next_diff_w $w
++			set next_diff_p [lindex $file_lists($w) $i]
++
++			if {$next_diff_p ne {} && $current_diff_path ne {}} {
++				set after {next_diff;}
++			} else {
++				set after {}
++			}
+ 		}
++
+ 		if {$w eq $ui_index} {
+ 			update_indexinfo \
+ 				"Unstaging [short_path $path] from commit" \
 -- 
-1.5.6.rc2.23.gfef6b.dirty
+1.5.5.1
