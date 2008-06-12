@@ -1,79 +1,52 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git bugs
-Date: Thu, 12 Jun 2008 13:06:17 -0700
-Message-ID: <7v4p7y1kqu.fsf@gitster.siamese.dyndns.org>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
- <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Thu, 12 Jun 2008 13:13:54 -0700
+Message-ID: <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ben Lynn <benlynn@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:07:40 2008
+Cc: Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:15:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6t4u-0001WH-Vx
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:07:25 +0200
+	id 1K6tCC-0004pc-4R
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283AbYFLUGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 16:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbYFLUGa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:06:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39972 "EHLO
+	id S1754472AbYFLUOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbYFLUOE
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:14:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41568 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbYFLUG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 16:06:29 -0400
+	with ESMTP id S1753641AbYFLUOC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:14:02 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E6F423EE9;
-	Thu, 12 Jun 2008 16:06:27 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B5072143;
+	Thu, 12 Jun 2008 16:14:01 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 130413EE7; Thu, 12 Jun 2008 16:06:23 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
- (Linus Torvalds's message of "Tue, 10 Jun 2008 10:44:43 -0700 (PDT)")
+ ESMTPSA id 5A9E12142; Thu, 12 Jun 2008 16:13:56 -0400 (EDT)
+In-Reply-To: <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> (Wincent
+ Colaiuta's message of "Thu, 12 Jun 2008 07:35:43 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0AA0C5EE-38BB-11DD-959B-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 18BC5142-38BC-11DD-87D4-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84781>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Wincent Colaiuta <win@wincent.com> writes:
 
-> The other approach is to know that an empty blob always has a very 
-> specific SHA1. Here's an trial patch.
+> So yes, branches _are_ better and more appropriate for long term  
+> storage than stashes, but even so I don't think it's right for us to  
+> risk throwing away information that the user explicitly stashed and  
+> expected Git to look after for them.
 
->  read-cache.c |   16 ++++++++++++++++
->  1 files changed, 16 insertions(+), 0 deletions(-)
->
-> diff --git a/read-cache.c b/read-cache.c
-> index 8e5fbb6..f83de8c 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> ...
-> @@ -193,6 +203,12 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
->  	if (ce->ce_size != (unsigned int) st->st_size)
->  		changed |= DATA_CHANGED;
->  
-> +	/* Racily smudged entry? */
-> +	if (!ce->ce_size) {
-> +		if (!is_empty_blob_sha1(ce->sha1))
-> +			changed |= DATA_CHANGED;
-> +	}
-> +
->  	return changed;
->  }
-
-Thanks.  This would be a good fix to the issue.
-
-The only theoretical worry I can think of is if there is an insane
-convert_to_worktree() filter that turns a non-empty blob into an empty
-work tree file.
-
-An "In blobs, always store everything as UTF16 with BOM" filter, when
-badly implemented, might turn an empty work tree file into a blob with BOM
-and nothing else in it, but we can safely declare that such use case is
-simply insane and broken ;-).
+Yes, but for a limited amount of time.
