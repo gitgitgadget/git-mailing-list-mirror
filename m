@@ -1,76 +1,270 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 11/14] New command: stg undo
-Date: Thu, 12 Jun 2008 07:35:13 +0200
-Message-ID: <20080612053513.23549.70063.stgit@yoghurt>
+Subject: [StGit PATCH 14/14] Make "stg log" show stack log instead of patch log
+Date: Thu, 12 Jun 2008 07:35:31 +0200
+Message-ID: <20080612053531.23549.77890.stgit@yoghurt>
 References: <20080612052913.23549.69687.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 07:36:32 2008
+X-From: git-owner@vger.kernel.org Thu Jun 12 07:37:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6fU1-000594-MK
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 07:36:26 +0200
+	id 1K6fUl-0005PP-GS
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 07:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbYFLFfb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2008 01:35:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbYFLFfa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 01:35:30 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2186 "EHLO
+	id S1752829AbYFLFfj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2008 01:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbYFLFfi
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 01:35:38 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2191 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752560AbYFLFf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 01:35:26 -0400
+	with ESMTP id S1752739AbYFLFfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 01:35:37 -0400
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1K6fSs-00016H-00; Thu, 12 Jun 2008 06:35:14 +0100
+	id 1K6fT9-000174-00; Thu, 12 Jun 2008 06:35:32 +0100
 In-Reply-To: <20080612052913.23549.69687.stgit@yoghurt>
 User-Agent: StGIT/0.14.2.171.g5c0d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84716>
 
-Basically, this is just a user-friendly way to access a subset of the
-functionality of "stg reset".
+Make "stg log" show the new stack log instead of the old patch logs,
+which is now obsolete. Delete t1400-patch-history, which is specific
+to the old "stg log".
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- stgit/commands/undo.py  |   40 +++++++---------------
- stgit/lib/log.py        |   38 +++++++++++++++++++++
- stgit/main.py           |    2 +
- t/t3102-undo.sh         |   86 +++++++++++++++++++++++++++++++++++++++=
-++++++++
- t/t3103-undo-hard.sh    |   10 +++--
- 5 files changed, 144 insertions(+), 32 deletions(-)
- copy stgit/commands/{reset.py =3D> undo.py} (56%)
- create mode 100755 t/t3102-undo.sh
- copy t/{t3101-reset-hard.sh =3D> t3103-undo-hard.sh} (82%)
+ stgit/commands/log.py    |  169 ++++++++++++++------------------------=
+--------
+ stgit/commands/reset.py  |   15 +---
+ stgit/lib/log.py         |    3 +
+ t/t1400-patch-history.sh |  103 ----------------------------
+ 4 files changed, 58 insertions(+), 232 deletions(-)
+ delete mode 100755 t/t1400-patch-history.sh
 
 
-diff --git a/stgit/commands/reset.py b/stgit/commands/undo.py
-similarity index 56%
-copy from stgit/commands/reset.py
-copy to stgit/commands/undo.py
-index 5ad9914..b1d7de9 100644
+diff --git a/stgit/commands/log.py b/stgit/commands/log.py
+index 13e0baa..cf15c7d 100644
+--- a/stgit/commands/log.py
++++ b/stgit/commands/log.py
+@@ -1,5 +1,8 @@
++# -*- coding: utf-8 -*-
++
+ __copyright__ =3D """
+ Copyright (C) 2006, Catalin Marinas <catalin.marinas@gmail.com>
++Copyright (C) 2008, Karl Hasselstr=C3=B6m <kha@treskal.com>
+=20
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 2 as
+@@ -15,133 +18,67 @@ along with this program; if not, write to the Free=
+ Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
+A
+ """
+=20
+-import sys, os, time
+-from optparse import OptionParser, make_option
+-from pydoc import pager
+-from stgit.commands.common import *
+-from stgit import stack, git
+-from stgit.out import *
+-from stgit.run import Run
++import os.path
++from optparse import make_option
++from stgit import run
++from stgit.commands import common
++from stgit.lib import log
++from stgit.out import out
+=20
+ help =3D 'display the patch changelog'
+-usage =3D """%prog [options] [patch]
+-
+-List all the current and past commit ids of the given patch. The
+---graphical option invokes gitk instead of printing. The changelog
+-commit messages have the form '<action> <new-patch-id>'. The <action>
+-can be one of the following:
++usage =3D """%prog [options] [<patchnames>]
+=20
+-  new     - new patch created
+-  refresh - local changes were added to the patch
+-  push    - the patch was cleanly pushed onto the stack
+-  push(m) - the patch was pushed onto the stack with a three-way merge
+-  push(f) - the patch was fast-forwarded
+-  undo    - the patch boundaries were restored to the old values
++List the history of the patch stack: the stack log. If one or more
++patch names are given, limit the list to the log entries that touch
++the named patches.
+=20
+-Note that only the diffs shown in the 'refresh', 'undo' and 'sync'
+-actions are meaningful for the patch changes. The 'push' actions
+-represent the changes to the entire base of the current
+-patch. Conflicts reset the patch content and a subsequent 'refresh'
+-will show the entire patch."""
++"stg undo" and "stg redo" let you step back and forth in the patch
++stack. "stg reset" lets you go directly to any state."""
+=20
+-directory =3D DirectoryHasRepository(log =3D False)
++directory =3D common.DirectoryHasRepositoryLib()
+ options =3D [make_option('-b', '--branch',
+                        help =3D 'use BRANCH instead of the default one=
+'),
+-           make_option('-p', '--patch',
+-                       help =3D 'show the refresh diffs',
+-                       action =3D 'store_true'),
++           make_option('-d', '--diff', action =3D 'store_true',
++                       help =3D 'show diff to previous state'),
+            make_option('-n', '--number', type =3D 'int',
+-                       help =3D 'limit the output to NUMBER commits'),
+-           make_option('-f', '--full',
+-                       help =3D 'show the full commit ids',
+-                       action =3D 'store_true'),
+-           make_option('-g', '--graphical',
+-                       help =3D 'run gitk instead of printing',
+-                       action =3D 'store_true')]
+-
+-def show_log(log, options):
+-    """List the patch changelog
+-    """
+-    commit =3D git.get_commit(log)
+-    if options.number !=3D None:
+-        n =3D options.number
+-    else:
+-        n =3D -1
+-    diff_list =3D []
+-    while commit:
+-        if n =3D=3D 0:
+-            # limit the output
+-            break
+-
+-        log =3D commit.get_log().split('\n')
+-
+-        cmd_rev =3D log[0].split()
+-        if len(cmd_rev) >=3D 2:
+-            cmd =3D cmd_rev[0]
+-            rev =3D cmd_rev[1]
+-        elif len(cmd_rev) =3D=3D 1:
+-            cmd =3D cmd_rev[0]
+-            rev =3D ''
+-        else:
+-            cmd =3D rev =3D ''
+-
+-        if options.patch:
+-            if cmd in ['refresh', 'undo', 'sync', 'edit']:
+-                diff_list.append(git.pretty_commit(commit.get_id_hash(=
+)))
+-
+-                # limiter decrement
+-                n -=3D 1
+-        else:
+-            if len(log) >=3D 3:
+-                notes =3D log[2]
+-            else:
+-                notes =3D ''
+-            author_name, author_email, author_date =3D \
+-                         name_email_date(commit.get_author())
+-            secs, tz =3D author_date.split()
+-            date =3D '%s %s' % (time.ctime(int(secs)), tz)
+-
+-            if options.full:
+-                out.stdout('%-7s %-40s %s' % (cmd[:7], rev[:40], date)=
+)
+-            else:
+-                out.stdout('%-8s [%-7s] %-28s  %s' % \
+-                           (rev[:8], cmd[:7], notes[:28], date))
+-
+-            # limiter decrement
+-            n -=3D 1
+-
+-        parent =3D commit.get_parent()
+-        if parent:
+-            commit =3D git.get_commit(parent)
+-        else:
+-            commit =3D None
+-
+-    if options.patch and diff_list:
+-        pager('\n'.join(diff_list).rstrip())
++                       help =3D 'limit the output to NUMBER entries'),
++           make_option('-f', '--full', action =3D 'store_true',
++                       help =3D 'show the log in more detail'),
++           make_option('-g', '--graphical', action =3D 'store_true',
++                       help =3D 'run gitk instead of printing')]
++
++def show_log(stacklog, pathlim, num, full, show_diff):
++    cmd =3D ['git', 'log']
++    if num !=3D None and num > 0:
++        cmd.append('-%d' % num)
++    if show_diff:
++        cmd.append('-p')
++    elif not full:
++        cmd.append('--pretty=3Dformat:%h   %aD   %s')
++    run.Run(*(cmd + [stacklog.sha1, '--'] + pathlim)).run()
+=20
+ def func(parser, options, args):
+-    """Show the patch changelog
+-    """
+-    if len(args) =3D=3D 0:
+-        name =3D crt_series.get_current()
+-        if not name:
+-            raise CmdException, 'No patches applied'
+-    elif len(args) =3D=3D 1:
+-        name =3D args[0]
+-        if not name in crt_series.get_applied() + crt_series.get_unapp=
+lied() + \
+-               crt_series.get_hidden():
+-            raise CmdException, 'Unknown patch "%s"' % name
++    if options.branch:
++        stack =3D directory.repository.get_stack(options.branch)
+     else:
+-        parser.error('incorrect number of arguments')
+-
+-    patch =3D crt_series.get_patch(name)
+-
+-    log =3D patch.get_log()
+-    if not log:
+-        raise CmdException, 'No changelog for patch "%s"' % name
++        stack =3D directory.repository.current_stack
++    patches =3D common.parse_patches(args, list(stack.patchorder.all))
++    logref =3D log.log_ref(stack.name)
++    try:
++        logcommit =3D stack.repository.refs.get(logref)
++    except KeyError:
++        out.info('Log is empty')
++        return
++    stacklog =3D log.Log(stack.repository, logref, logcommit)
++    pathlim =3D [os.path.join('patches', pn) for pn in patches]
+=20
+     if options.graphical:
+-        # discard the exit codes generated by SIGINT, SIGKILL, SIGTERM
+-        Run('gitk', log).returns([0, -2, -9, -15]).run()
++        for o in ['diff', 'number', 'full']:
++            if getattr(options, o):
++                parser.error('cannot combine --graphical and --%s' % o=
+)
++        # Discard the exit codes generated by SIGINT, SIGKILL, and SIG=
+TERM.
++        run.Run(*(['gitk', stacklog.pretty.sha1, '--'] + pathlim)
++                 ).returns([0, -2, -9, -15]).run()
+     else:
+-        show_log(log, options)
++        show_log(stacklog.pretty, pathlim,
++                 options.number, options.full, options.diff)
+diff --git a/stgit/commands/reset.py b/stgit/commands/reset.py
+index 22d7731..bbe5dda 100644
 --- a/stgit/commands/reset.py
-+++ b/stgit/commands/undo.py
-@@ -22,42 +22,28 @@ from stgit.commands import common
- from stgit.lib import git, log, transaction
- from stgit.out import out
++++ b/stgit/commands/reset.py
+@@ -26,19 +26,8 @@ help =3D 'reset the patch stack to an earlier state'
+ usage =3D """%prog [options] <state> [<patchnames>]
 =20
--help =3D 'reset the patch stack to an earlier state'
--usage =3D """%prog [options] <state> [<patchnames>]
-+help =3D 'undo the last operation'
-+usage =3D """%prog [options]
-=20
--Reset the patch stack to an earlier state. The state is specified with
+ Reset the patch stack to an earlier state. The state is specified with
 -a commit from a stack log; for a branch foo, StGit stores the stack
 -log in foo.stgit^. So to undo the last N StGit commands (or rather,
 -the last N log entries; there is not an exact one-to-one
@@ -84,254 +278,131 @@ index 5ad9914..b1d7de9 100644
 -  gitk foo.stgit^
 -
 -and then reset to any sha1 you see in the log.
--
--If one or more patch names are given, reset only those patches, and
--leave the rest alone."""
-+Reset the patch stack to the previous state. Consecutive invocations
-+of "stg undo" will take you ever further into the past."""
++a commit id from a stack log; "stg log" lets you view this log, and
++"stg reset" lets you reset to any state you see in the log.
 =20
- directory =3D common.DirectoryHasRepositoryLib()
--options =3D [make_option('--hard', action =3D 'store_true',
-+options =3D [make_option('-n', '--number', type =3D 'int', metavar =3D=
- 'N',
-+                       default =3D 1,
-+                       help =3D 'undo the last N commands'),
-+           make_option('--hard', action =3D 'store_true',
-                        help =3D 'discard changes in your index/worktre=
-e')]
-=20
- def func(parser, options, args):
-     stack =3D directory.repository.current_stack
--    if len(args) >=3D 1:
--        ref, patches =3D args[0], args[1:]
--        state =3D log.Log(stack.repository, ref, stack.repository.rev_=
-parse(ref))
--    else:
--        raise common.CmdException('Wrong number of arguments')
--    trans =3D transaction.StackTransaction(stack, 'reset',
-+    if options.number < 1:
-+        raise common.CmdException('Bad number of commands to undo')
-+    state =3D log.undo_state(stack, options.number)
-+    trans =3D transaction.StackTransaction(stack, 'undo %d' % options.=
-number,
-                                          discard_changes =3D options.h=
-ard)
-     try:
--        log.reset_stack(trans, stack.repository.default_iw, state, pat=
-ches)
-+        log.reset_stack(trans, stack.repository.default_iw, state, [])
-     except transaction.TransactionHalted:
-         pass
-     return trans.run(stack.repository.default_iw)
+ If one or more patch names are given, reset only those patches, and
+ leave the rest alone."""
 diff --git a/stgit/lib/log.py b/stgit/lib/log.py
-index 2449913..3b242cd 100644
+index 8c0516b..61e9cf2 100644
 --- a/stgit/lib/log.py
 +++ b/stgit/lib/log.py
-@@ -95,6 +95,7 @@ except for the following:
- The simplified log contains no information not in the full log; its
- purpose is ease of visualization."""
-=20
-+import re
- from stgit.lib import git, stack
- from stgit import exception
- from stgit.out import out
-@@ -258,6 +259,16 @@ class Log(object):
-             self.base =3D self.patches[self.applied[0]].data.parent
-         else:
-             self.base =3D self.head
+@@ -270,6 +270,9 @@ class Log(object):
+     def parents(self):
+         num_refs =3D len(set([self.top, self.head]))
+         return self.commit.data.parents[(1 + num_refs):]
 +    @property
-+    def top(self):
-+        if self.applied:
-+            return self.patches[self.applied[-1]]
-+        else:
-+            return self.head
-+    @property
-+    def parents(self):
-+        num_refs =3D len(set([self.top, self.head]))
-+        return self.commit.data.parents[(1 + num_refs):]
++    def pretty(self):
++        return self.commit.data.parents[0]
 =20
  class FullLog(Log):
      full_log =3D property(lambda self: self.commit)
-@@ -347,3 +358,30 @@ def reset_stack(trans, iw, state, only_patches):
-     else:
-         # Recreate the exact order specified by the goal state.
-         trans.reorder_patches(state.applied, state.unapplied, iw)
-+
-+def undo_state(stack, undo_steps):
-+    """Find the log entry C{undo_steps} steps in the past. (Successive
-+    undo operations are supposed to "add up", so if we find other undo
-+    operations along the way we have to add those undo steps to
-+    C{undo_steps}.)
-+
-+    @return: The log entry that is the destination of the undo
-+             operation
-+    @rtype: L{Log}"""
-+    ref =3D log_ref(stack.name)
-+    try:
-+        commit =3D stack.repository.refs.get(ref)
-+    except KeyError:
-+        raise LogException('Log is empty')
-+    log =3D Log(stack.repository, ref, commit)
-+    while undo_steps > 0:
-+        msg =3D log.commit.data.message.strip()
-+        m =3D re.match(r'^undo\s+(\d+)$', msg)
-+        if m:
-+            undo_steps +=3D int(m.group(1))
-+        else:
-+            undo_steps -=3D 1
-+        if not log.parents:
-+            raise LogException('Not enough undo information available'=
-)
-+        log =3D Log(stack.repository, log.parents[0].sha1, log.parents=
-[0])
-+    return log
-diff --git a/stgit/main.py b/stgit/main.py
-index 83e6b08..cf7b404 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -99,6 +99,7 @@ commands =3D Commands({
-     'top':              'top',
-     'unapplied':        'unapplied',
-     'uncommit':         'uncommit',
-+    'undo':             'undo',
-     'unhide':           'unhide'
-     })
-=20
-@@ -129,6 +130,7 @@ stackcommands =3D (
-     'top',
-     'unapplied',
-     'uncommit',
-+    'undo',
-     'unhide',
-     )
- patchcommands =3D (
-diff --git a/t/t3102-undo.sh b/t/t3102-undo.sh
-new file mode 100755
-index 0000000..1093f70
---- /dev/null
-+++ b/t/t3102-undo.sh
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+
-+test_description=3D'Simple test cases for "stg undo"'
-+
-+. ./test-lib.sh
-+
-+# Ignore our own output files.
-+cat > .git/info/exclude <<EOF
-+/expected.txt
-+EOF
-+
-+test_expect_success 'Initialize StGit stack with three patches' '
-+    stg init &&
-+    echo 000 >> a &&
-+    git add a &&
-+    git commit -m a &&
-+    echo 111 >> a &&
-+    git commit -a -m p1 &&
-+    echo 222 >> a &&
-+    git commit -a -m p2 &&
-+    echo 333 >> a &&
-+    git commit -a -m p3 &&
-+    stg uncommit -n 3 &&
-+    stg pop
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+EOF
-+test_expect_success 'Pop one patch ...' '
-+    stg pop &&
-+    test "$(echo $(stg applied))" =3D "p1" &&
-+    test "$(echo $(stg unapplied))" =3D "p2 p3" &&
-+    test_cmp expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo it' '
-+    stg undo &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    test_cmp expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+EOF
-+test_expect_success 'Pop two patches ...' '
-+    stg pop &&
-+    stg pop &&
-+    test "$(echo $(stg applied))" =3D "" &&
-+    test "$(echo $(stg unapplied))" =3D "p1 p2 p3" &&
-+    test_cmp expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success '... and undo it' '
-+    stg undo &&
-+    stg undo &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    test_cmp expected.txt a
-+'
-+
-+cat > expected.txt <<EOF
-+000
-+111
-+222
-+EOF
-+test_expect_success 'Undo past end of history' '
-+    ! stg undo -n 100 &&
-+    test "$(echo $(stg applied))" =3D "p1 p2" &&
-+    test "$(echo $(stg unapplied))" =3D "p3" &&
-+    test_cmp expected.txt a
-+'
-+
-+test_done
-diff --git a/t/t3101-reset-hard.sh b/t/t3103-undo-hard.sh
-similarity index 82%
-copy from t/t3101-reset-hard.sh
-copy to t/t3103-undo-hard.sh
-index 1e02805..21412f7 100755
---- a/t/t3101-reset-hard.sh
-+++ b/t/t3103-undo-hard.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
-=20
--test_description=3D'Simple test cases for "stg reset"'
-+test_description=3D'Simple test cases for "stg undo"'
-=20
- . ./test-lib.sh
-=20
-@@ -35,8 +35,8 @@ test_expect_success 'Pop middle patch, creating a con=
-flict' '
-     test "$(echo $(stg unapplied))" =3D "p2"
- '
-=20
--test_expect_success 'Try to reset without --hard' '
--    ! stg reset master.stgit^~1 &&
-+test_expect_success 'Try to undo without --hard' '
-+    ! stg undo &&
-     stg status a > actual.txt &&
-     test_cmp expected.txt actual.txt &&
-     test "$(echo $(stg applied))" =3D "p1 p3" &&
-@@ -45,8 +45,8 @@ test_expect_success 'Try to reset without --hard' '
-=20
- cat > expected.txt <<EOF
- EOF
--test_expect_success 'Try to reset with --hard' '
--    stg reset --hard master.stgit^~1 &&
-+test_expect_success 'Try to undo with --hard' '
-+    stg undo --hard &&
-     stg status a > actual.txt &&
-     test_cmp expected.txt actual.txt &&
-     test "$(echo $(stg applied))" =3D "p1" &&
+diff --git a/t/t1400-patch-history.sh b/t/t1400-patch-history.sh
+deleted file mode 100755
+index a693e75..0000000
+--- a/t/t1400-patch-history.sh
++++ /dev/null
+@@ -1,103 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2006 Catalin Marinas
+-#
+-
+-test_description=3D'Test the patch history generation.
+-
+-'
+-
+-. ./test-lib.sh
+-
+-test_expect_success \
+-	'Initialize the StGIT repository' \
+-	'
+-	stg init
+-	'
+-
+-test_expect_success \
+-	'Create the first patch' \
+-	'
+-	stg new foo -m "Foo Patch" &&
+-	echo foo > test && echo foo2 >> test &&
+-	git add test &&
+-	stg refresh --annotate=3D"foo notes"
+-	'
+-
+-test_expect_success \
+-	'Create the second patch' \
+-	'
+-	stg new bar -m "Bar Patch" &&
+-	echo bar >> test &&
+-	stg refresh
+-	'
+-
+-test_expect_success \
+-	'Check the "new" and "refresh" logs' \
+-	'
+-	stg log --full foo | grep -q -e "^refresh" &&
+-	stg log --full | grep -q -e "^refresh"
+-	'
+-
+-test_expect_success \
+-	'Check the log annotation' \
+-	'
+-	stg log foo | grep -q -e    "\[refresh\] foo notes  " &&
+-	stg log bar | grep -q -e    "\[refresh\]            " &&
+-	stg refresh -p foo --annotate=3D"foo notes 2" &&
+-	stg log foo | grep -q -v -e "\[refresh\] foo notes  " &&
+-	stg log foo | grep -q -e    "\[refresh\] foo notes 2"
+-	'
+-
+-test_expect_success \
+-	'Check the "push" log' \
+-	'
+-	stg pop &&
+-	echo foo > test2 && git add test2 && stg refresh &&
+-	stg push &&
+-	stg log --full | grep -q -e "^push    "
+-	'
+-
+-test_expect_success \
+-	'Check the "push(f)" log' \
+-	'
+-	stg pop &&
+-	stg edit -m "Foo2 Patch" &&
+-	stg push &&
+-	stg log --full | grep -q -e "^push(f) "
+-	'
+-
+-test_expect_success \
+-	'Check the "push(m)" log' \
+-	'
+-	stg pop &&
+-	echo foo2 > test && stg refresh &&
+-	stg push &&
+-	stg log --full | grep -q -e "^push(m) "
+-	'
+-
+-test_expect_success \
+-	'Check the "push(c)" log' \
+-	'
+-	echo bar > test && stg refresh &&
+-	stg pop &&
+-	echo foo > test && stg refresh &&
+-	! stg push &&
+-	stg log --full | grep -q -e "^push(c) "
+-	'
+-
+-test_expect_success \
+-	'Check the push "undo" log' \
+-	'
+-	stg push --undo &&
+-	stg log --full bar | grep -q -e "^undo    "
+-	'
+-
+-test_expect_success \
+-	'Check the refresh "undo" log' \
+-	'
+-	stg refresh --undo &&
+-	stg log --full | grep -q -e "^undo    "
+-	'
+-
+-test_done
