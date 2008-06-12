@@ -1,146 +1,70 @@
-From: "Flavio Poletti (polettix)" <flavio@polettix.it>
-Subject: [PATCH] Enhanced auto-discovery of httpd location and call conventions.
-Date: Thu, 12 Jun 2008 03:51:20 +0200
-Message-ID: <1213235480-21925-1-git-send-email-flavio@polettix.it>
-Cc: normalperson@yhbt.net,
-	"Flavio Poletti (polettix)" <flavio@polettix.it>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 05:43:46 2008
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: [PATCH] Typo in RelNotes.
+Date: Wed, 11 Jun 2008 20:59:37 -0700
+Message-ID: <905315640806112059r713bf807l20a1bc1e14ce4e27@mail.gmail.com>
+References: <alpine.LNX.1.00.0806120434290.5838@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Mikael Magnusson" <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 06:01:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6diz-0002Pp-PQ
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 05:43:46 +0200
+	id 1K6dzi-0006yo-6s
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 06:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbYFLDmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2008 23:42:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753485AbYFLDmw
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 23:42:52 -0400
-Received: from [195.130.249.251] ([195.130.249.251]:34553 "HELO desantix.it"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with SMTP
-	id S1752487AbYFLDmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2008 23:42:51 -0400
-X-Greylist: delayed 3941 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jun 2008 23:42:51 EDT
-Received: (qmail 22969 invoked by uid 511); 12 Jun 2008 02:04:45 -0000
-Received: from localhost.localdomain (127.0.0.1)
-  by localhost.localdomain with SMTP; 12 Jun 2008 02:04:45 -0000
-X-Mailer: git-send-email 1.5.5.3
+	id S1751798AbYFLD7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2008 23:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbYFLD7k
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jun 2008 23:59:40 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:17892 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751124AbYFLD7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2008 23:59:39 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2344724fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Jun 2008 20:59:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=AyNz/OabQLBeADA9nhdmJstoOOqOy/CA5J1+3TN6X9c=;
+        b=R5dRLcsf2alYUx/RU3MzXLzQqHl2d4W6JlJ0R0iOkAh9i67HRQDw9rAtk/80wwO0On
+         JBId/Cy8OO1nH6+1qR6zKZrqX2pnMslX4rLW7pnGLO+XSf4fUVpqNHkMl2ZZeAhhICjU
+         /S5IXeyaRGWPEkfFj+B+Vsc/uxLE8/mbjpdFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=HwEPqW0YC/Y4ZJfMKTIehcMhwjTOqhVJ/vnOKFo55UcOdBzN38356dW7jJdQT8SOdl
+         qSRkMDTnd4pHCKVirhXi47/GbYybjk166QKd+BtA7da0Fh3ppN7b9byfP7WsUJ8QMSUJ
+         H42inRmu3wuUAt0kOLW6e3R3npFFSz2exkO4E=
+Received: by 10.82.151.14 with SMTP id y14mr43706bud.83.1213243177602;
+        Wed, 11 Jun 2008 20:59:37 -0700 (PDT)
+Received: by 10.82.157.18 with HTTP; Wed, 11 Jun 2008 20:59:37 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0806120434290.5838@localhost>
+Content-Disposition: inline
+X-Google-Sender-Auth: 4bb990c9d7cb57f0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84695>
 
-This patch allows calling:
+On Wed, Jun 11, 2008 at 7:38 PM, Mikael Magnusson <mikachu@gmail.com> wrote:
+>  * "git init --bare" is a synonym for "git --bare init" now.
+>
+> -* "git gc --auto" honors a new pre-aut-gc hook to temporarily disable it.
+> +* "git gc --auto" honors a new pre-auto-gc hook to temporarily disable it.
+>
+>  * "git log --pretty=tformat:<custom format>" gives a LF after each entry,
+>   instead of giving a LF between each pair of entries which is how
 
-   git-instaweb -d apache2
+Any interest in fixing the typo on the next line while you're at it?
 
-and have the script Do The Right Thing. In particular, the auto-discovery
-mechanism has been extended in order to be used for module listing as
-well, and the call convention is that if the daemon is apache2/lighttpd
-and the parameter to the "-d" option does not end by "-f", the "-f" is
-added to the end of the option itself.
-
-Another minor change is a substitution of a shell sub-call using "$()"
-by means of backticks. In my understanding, plain /bin/sh does not support
-"$()".
-
-Signed-off-by: Flavio Poletti <flavio@polettix.it>
----
-Hello,
-
-   this is the first time I submit a patch here so please point me to the
-right FM to Read if I've messed up with the standard submission
-procedure at http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches;hb=HEAD
-
-Cheers,
-
-   Flavio.
-
- git-instaweb.sh |   34 +++++++++++++++++++++++++---------
- 1 files changed, 25 insertions(+), 9 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 6f91c8f..cc9d4f3 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -37,11 +37,23 @@ test -z "$httpd" && httpd='lighttpd -f'
- # any untaken local port will do...
- test -z "$port" && port=1234
- 
--start_httpd () {
--	httpd_only="`echo $httpd | cut -f1 -d' '`"
-+resolve_httpd () {
-+	local_httpd=$1
-+
-+	case "$local_httpd" in
-+	*apache2*|*lighttpd*)
-+		# ensure that the apache2/lighttpd command ends with "-f"
-+		if ! echo "$local_httpd" | grep -- '-f *$' >/dev/null 2>&1
-+		then
-+			local_httpd="$local_httpd -f"
-+		fi
-+		;;
-+	esac
-+
-+	httpd_only="`echo $local_httpd | cut -f1 -d' '`"
- 	if case "$httpd_only" in /*) : ;; *) which $httpd_only >/dev/null;; esac
- 	then
--		$httpd "$fqgitdir/gitweb/httpd.conf"
-+		echo $local_httpd
- 	else
- 		# many httpds are installed in /usr/sbin or /usr/local/sbin
- 		# these days and those are not in most users $PATHs
-@@ -51,16 +63,19 @@ start_httpd () {
- 		do
- 			if test -x "$i/$httpd_only"
- 			then
--				# don't quote $httpd, there can be
--				# arguments to it (-f)
--				$i/$httpd "$fqgitdir/gitweb/httpd.conf"
-+				echo $i/$local_httpd
- 				return
- 			fi
- 		done
--		echo "$httpd_only not found. Install $httpd_only or use" \
-+		echo >&2 "$httpd_only not found. Install $httpd_only or use" \
- 		     "--httpd to specify another http daemon."
- 		exit 1
- 	fi
-+}
-+
-+start_httpd () {
-+	# don't quote $httpd, there can be arguments to it (-f)
-+	$httpd "$fqgitdir/gitweb/httpd.conf"
- 	if test $? != 0; then
- 		echo "Could not execute http daemon $httpd."
- 		exit 1
-@@ -71,6 +86,7 @@ stop_httpd () {
- 	test -f "$fqgitdir/pid" && kill `cat "$fqgitdir/pid"`
- }
- 
-+httpd=`resolve_httpd "$httpd"`
- while test $# != 0
- do
- 	case "$1" in
-@@ -92,7 +108,7 @@ do
- 		;;
- 	-d|--httpd)
- 		shift
--		httpd="$1"
-+		httpd=`resolve_httpd "$1"`
- 		;;
- 	-b|--browser)
- 		shift
-@@ -228,7 +244,7 @@ EOF
- }
- 
- script='
--s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
-+s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'`dirname "$fqgitdir"`'";#;
- s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
- s#(my|our) \$projects_list =.*#$1 \$projects_list = \$projectroot;#;
- s#(my|our) \$git_temp =.*#$1 \$git_temp = "'$fqgitdir/gitweb/tmp'";#;'
--- 
-1.5.5.3
+-Tarmigan
