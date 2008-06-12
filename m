@@ -1,90 +1,66 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Thu, 12 Jun 2008 13:35:10 -0700
-Message-ID: <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
-	 <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
-	 <20080611213648.GA13362@glandium.org>
-	 <alpine.DEB.1.00.0806112242370.1783@racer>
-	 <20080611230344.GD19474@sigill.intra.peff.net>
-	 <alpine.LFD.1.10.0806111918300.23110@xanadu.home>
-	 <loom.20080612T042942-698@post.gmane.org>
-	 <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>
-	 <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Added mergetool.kdiff3.doubledash config option
+Date: Thu, 12 Jun 2008 13:36:32 -0700
+Message-ID: <7vve0ez8z3.fsf@gitster.siamese.dyndns.org>
+References: <1213300505-3867-1-git-send-email-patrick.higgins@cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Wincent Colaiuta" <win@wincent.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Nicolas Pitre" <nico@cam.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:36:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
+To: Patrick Higgins <patrick.higgins@cexp.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:37:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6tWg-0005cE-98
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:36:06 +0200
+	id 1K6tY9-0006IM-Rt
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620AbYFLUfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 16:35:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYFLUfM
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:35:12 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:47723 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751846AbYFLUfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 16:35:10 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3771074wfd.4
-        for <git@vger.kernel.org>; Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ksLnARVVCQlmkes8CxjDY8ROW8CO2Th2oI+kAYWeXuU=;
-        b=xefPBqKOSNW7UmY+WoSvz/H5rqPgYx3gPXjuYtpfRqchHsL1E+P2B5aA2l/sx2hVUX
-         VHEwQl1gMyV4Ueo09mrHBNC9/R9inZr5SO/u+llV7UgzIMPMDibyEcCyT5iXX5PrcJpD
-         0e3WaAGh6ZSB1fIM42tU6l4AEyZRaWXF14TY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tZLsS8glMMTh6KfQyqwI7DvOFY++z0/YMfdyQEjAYO74+BIX+4L85v1CVvBsd1UOQK
-         gK6Ow3bOzYdBFtVkKd08BsFUXJTO2FhDu0QEjLyjmPSKr/Yy+62yL+mcSV3IZD/s/XeI
-         tpXdZDevMTv6uA4taXquIJleakiwJ2ynBevjM=
-Received: by 10.142.230.11 with SMTP id c11mr699545wfh.334.1213302910056;
-        Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
-Received: by 10.142.180.10 with HTTP; Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
-In-Reply-To: <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755417AbYFLUgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:36:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755460AbYFLUgn
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:36:43 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46322 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755417AbYFLUgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:36:42 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E92DB361F;
+	Thu, 12 Jun 2008 16:36:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3DE16361B; Thu, 12 Jun 2008 16:36:34 -0400 (EDT)
+In-Reply-To: <1213300505-3867-1-git-send-email-patrick.higgins@cexp.com>
+ (Patrick Higgins's message of "Thu, 12 Jun 2008 13:55:05 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 42AB46D6-38BF-11DD-A0F0-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84789>
 
-On Thu, Jun 12, 2008 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Wincent Colaiuta <win@wincent.com> writes:
+Patrick Higgins <patrick.higgins@cexp.com> writes:
+
+> Qt-only builds of kdiff3 (no KDE) do not support a bare '--' on the command
+> line. It will fail silently and mysteriously.
 >
->> So yes, branches _are_ better and more appropriate for long term
->> storage than stashes, but even so I don't think it's right for us to
->> risk throwing away information that the user explicitly stashed and
->> expected Git to look after for them.
->
-> Yes, but for a limited amount of time.
->
+> Signed-off-by: Patrick Higgins <patrick.higgins@cexp.com>
 
-A limited amount of time?  Why is that?  Can you give a rationale which
-at least addresses Wincent's points?
+Hmm, I am seeing this patch for the first time, I have not seen any
+discussion history leading to the patch, and I have not been primarily
+involved in mergetool.  I'll Cc Ted to see what he thinks...
 
-It's bad enough that 'git stash clear' drops all pending stashes w/out
-at least echoing them (the way git stash drop does), but what is the
-rationale for having git _ever_ forget information which it was specifically
-requested to remember?
+> +mergetool.kdiff3.doubledash::
+> +	A boolean to indicate whether or not your kdiff3 supports a '--'
+> +	on the command line to separate options from filenames. If you
+> +	built it without KDE, it probably doesn't have this support and
+> +	you	should set this to false.  Defaults to true.
 
-I know that stash is implemented in terms of reflogs, but that seems
-to me an implementation detail which ought not leak out.  Especially
-if that leakage ends up forgetting potentially important data.
-
-- Eric
+The above description makes it clear that there is an issue that needs to
+be addressed.  I however am wondering if this can be either autodetected
+at runtime, or if it can't, the user should be able to specify the option
+when the user runs mergetool from the command line.  It would be necessary
+to countermand whichever choice you configured in your config when you
+need to run kdiff3 with KDE from one machine and the one without from
+another machine, wouldn't it?
