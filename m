@@ -1,66 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Thu, 12 Jun 2008 13:51:25 -0700
-Message-ID: <7vlk1az8aa.fsf@gitster.siamese.dyndns.org>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-svn-import or CVS import from local HD rather than remote.
+Date: Thu, 12 Jun 2008 16:56:13 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806121652220.19665@iabervon.org>
+References: <Pine.LNX.4.64.0806121214210.18454@xenau.zenez.com> <20080612185545.GN29404@genesis.frugalware.org> <Pine.LNX.4.64.0806121315540.18454@xenau.zenez.com> <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
+ <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Wincent Colaiuta" <win@wincent.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Nicolas Pitre" <nico@cam.org>
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:52:37 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:57:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6tmY-00041g-AQ
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:52:30 +0200
+	id 1K6tr3-0005qf-5q
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755067AbYFLUvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 16:51:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYFLUvg
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:51:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49322 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754689AbYFLUvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 16:51:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 37F523D30;
-	Thu, 12 Jun 2008 16:51:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 527AF3D2D; Thu, 12 Jun 2008 16:51:27 -0400 (EDT)
-In-Reply-To: <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
- (Eric Raible's message of "Thu, 12 Jun 2008 13:35:10 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 57B2D3B2-38C1-11DD-823E-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1754329AbYFLU4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:56:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYFLU4P
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:56:15 -0400
+Received: from iabervon.org ([66.92.72.58]:36981 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754215AbYFLU4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:56:14 -0400
+Received: (qmail 13412 invoked by uid 1000); 12 Jun 2008 20:56:13 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Jun 2008 20:56:13 -0000
+In-Reply-To: <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84797>
 
-"Eric Raible" <raible@gmail.com> writes:
+On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
 
-> On Thu, Jun 12, 2008 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Wincent Colaiuta <win@wincent.com> writes:
->>
->>> So yes, branches _are_ better and more appropriate for long term
->>> storage than stashes, but even so I don't think it's right for us to
->>> risk throwing away information that the user explicitly stashed and
->>> expected Git to look after for them.
->>
->> Yes, but for a limited amount of time.
->
-> A limited amount of time?  Why is that?  Can you give a rationale which
-> at least addresses Wincent's points?
+> On Thu, 12 Jun 2008, Daniel Barkalow wrote:
+> > On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
+> > > On Thu, 12 Jun 2008, Miklos Vajna wrote:
+> > > > On Thu, Jun 12, 2008 at 12:36:43PM -0600, Boyd Lynn Gerber 
+> > > > <gerberb@zenez.com> wrote:
+> > > > > git-svnimport -C /working/git/project /master/svn/pub-svn/category/project
+> > > > 
+> > > > From RelNotes-1.5.4.txt:
+> > > > 
+> > > >  * "git svnimport" was removed in favor of "git svn".  It is still there
+> > > >    in the source tree (contrib/examples) but unsupported.
+> > > > 
+> > > > Try using git-svn.
+> > > 
+> > > Thanks, I was not sure which I should use,  I had tried both with similar 
+> > > results.  Here is what I used with git-svn
+> > > 
+> > > > git-svn clone /working/svn/networking/wireshark .
+> > > Initialized empty Git repository in .git/
+> > > Bad URL passed to RA layer: Unrecognized URL scheme for 
+> > > '/working/svn/networking/wireshark' at /usr/bin/git-svn line 934
+> > 
+> > Maybe file:///working/svn/networking/wireshark?
+> 
+> This is really frustrating.
+> 
+> I have tried every combination of file://localhost/ file:///
+> 
+> This is what I get
+> 
+> git-svn clone file:///working/svn/network/wireshark/ -T trunk -b branches 
+> -t tags wireshark
+> Initialized empty Git repository in .git/
+> Couldn't open a repository: Unable to open an ra_local session to URL: 
+> Unable to open repository 'file:///working/svn/network/wireshark' at 
+> /usr/bin/git-svn line 1048
+> 
+> > ls -la /working/svn/network/wireshark/
+> total 16
+> drwxr-xr-x  8 gerberb zenez  208 2008-06-10 12:44 .
+> drwxr-xr-x  9 gerberb zenez  240 2008-06-12 13:00 ..
+> drwxr-xr-x  6 gerberb zenez  240 2008-06-12 12:14 .svn
+> drwxr-xr-x  6 gerberb zenez  152 2008-06-10 12:43 historic
+> drwxr-xr-x  5 gerberb zenez  152 2008-06-10 12:46 prereleases
+> drwxr-xr-x 86 gerberb zenez 2728 2008-06-10 12:37 releases
+> drwxr-xr-x 26 gerberb zenez 7016 2008-06-10 12:39 trunk
+> drwxr-xr-x 25 gerberb zenez 7136 2008-06-10 11:45 trunk-1.0
 
-Perhaps
+That looks like a SVN working copy, not an SVN repository. Maybe you want 
+file:///master/svn/...?
 
- http://thread.gmane.org/gmane.comp.version-control.git/84665/focus=84670
-
-The user explicitly asks to stash it for a while, where the definition of
-the "while" comes from reflog's retention period.
+	-Daniel
+*This .sig left intentionally blank*
