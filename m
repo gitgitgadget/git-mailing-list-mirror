@@ -1,110 +1,79 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: git-svn-import or CVS import from local HD rather than remote.
-Date: Thu, 12 Jun 2008 13:57:28 -0600
-Message-ID: <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
-References: <Pine.LNX.4.64.0806121214210.18454@xenau.zenez.com>
- <20080612185545.GN29404@genesis.frugalware.org> <Pine.LNX.4.64.0806121315540.18454@xenau.zenez.com>
- <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git bugs
+Date: Thu, 12 Jun 2008 13:06:17 -0700
+Message-ID: <7v4p7y1kqu.fsf@gitster.siamese.dyndns.org>
+References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com>
+ <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Git List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 21:58:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Lynn <benlynn@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:07:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6swR-0006NZ-IV
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 21:58:39 +0200
+	id 1K6t4u-0001WH-Vx
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758029AbYFLT5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 15:57:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbYFLT5a
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 15:57:30 -0400
-Received: from zenez.com ([166.70.62.2]:26834 "EHLO xenau.zenez.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754130AbYFLT53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 15:57:29 -0400
-Received: by xenau.zenez.com (Postfix, from userid 1000)
-	id 2DE5EE7FDE; Thu, 12 Jun 2008 13:57:28 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by xenau.zenez.com (Postfix) with ESMTP id 190F2E7FDD;
-	Thu, 12 Jun 2008 13:57:28 -0600 (MDT)
-In-Reply-To: <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
+	id S1754283AbYFLUGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbYFLUGa
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:06:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39972 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670AbYFLUG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:06:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E6F423EE9;
+	Thu, 12 Jun 2008 16:06:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 130413EE7; Thu, 12 Jun 2008 16:06:23 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Tue, 10 Jun 2008 10:44:43 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0AA0C5EE-38BB-11DD-959B-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84780>
 
-On Thu, 12 Jun 2008, Daniel Barkalow wrote:
-> On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
-> > On Thu, 12 Jun 2008, Miklos Vajna wrote:
-> > > On Thu, Jun 12, 2008 at 12:36:43PM -0600, Boyd Lynn Gerber 
-> > > <gerberb@zenez.com> wrote:
-> > > > git-svnimport -C /working/git/project /master/svn/pub-svn/category/project
-> > > 
-> > > From RelNotes-1.5.4.txt:
-> > > 
-> > >  * "git svnimport" was removed in favor of "git svn".  It is still there
-> > >    in the source tree (contrib/examples) but unsupported.
-> > > 
-> > > Try using git-svn.
-> > 
-> > Thanks, I was not sure which I should use,  I had tried both with similar 
-> > results.  Here is what I used with git-svn
-> > 
-> > > git-svn clone /working/svn/networking/wireshark .
-> > Initialized empty Git repository in .git/
-> > Bad URL passed to RA layer: Unrecognized URL scheme for 
-> > '/working/svn/networking/wireshark' at /usr/bin/git-svn line 934
-> 
-> Maybe file:///working/svn/networking/wireshark?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-This is really frustrating.
+> The other approach is to know that an empty blob always has a very 
+> specific SHA1. Here's an trial patch.
 
-I have tried every combination of file://localhost/ file:///
+>  read-cache.c |   16 ++++++++++++++++
+>  1 files changed, 16 insertions(+), 0 deletions(-)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index 8e5fbb6..f83de8c 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> ...
+> @@ -193,6 +203,12 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+>  	if (ce->ce_size != (unsigned int) st->st_size)
+>  		changed |= DATA_CHANGED;
+>  
+> +	/* Racily smudged entry? */
+> +	if (!ce->ce_size) {
+> +		if (!is_empty_blob_sha1(ce->sha1))
+> +			changed |= DATA_CHANGED;
+> +	}
+> +
+>  	return changed;
+>  }
 
-This is what I get
+Thanks.  This would be a good fix to the issue.
 
-git-svn clone file:///working/svn/network/wireshark/ -T trunk -b branches 
--t tags wireshark
-Initialized empty Git repository in .git/
-Couldn't open a repository: Unable to open an ra_local session to URL: 
-Unable to open repository 'file:///working/svn/network/wireshark' at 
-/usr/bin/git-svn line 1048
+The only theoretical worry I can think of is if there is an insane
+convert_to_worktree() filter that turns a non-empty blob into an empty
+work tree file.
 
-> ls -la /working/svn/network/wireshark/
-total 16
-drwxr-xr-x  8 gerberb zenez  208 2008-06-10 12:44 .
-drwxr-xr-x  9 gerberb zenez  240 2008-06-12 13:00 ..
-drwxr-xr-x  6 gerberb zenez  240 2008-06-12 12:14 .svn
-drwxr-xr-x  6 gerberb zenez  152 2008-06-10 12:43 historic
-drwxr-xr-x  5 gerberb zenez  152 2008-06-10 12:46 prereleases
-drwxr-xr-x 86 gerberb zenez 2728 2008-06-10 12:37 releases
-drwxr-xr-x 26 gerberb zenez 7016 2008-06-10 12:39 trunk
-drwxr-xr-x 25 gerberb zenez 7136 2008-06-10 11:45 trunk-1.0
-
-It is the exact same message wheter I use...
-
-> cd /working/git/network/wireshark/
-> git-svn clone file:///working/svn/network/wireshark .
-> git-svn clone file:///working/svn/network/wireshark? .
-> git-svn clone file:///working/svn/network/wireshark/ .
-> cd /working/git/network/
-> git-svn clone file:///working/svn/network/wireshark wireshark
-> git-svn clone file:///working/svn/network/wireshark? wireshark
-> git-svn clone file:///working/svn/network/wireshark/ wireshark
-
-Add the options -T trunk -b branches -t tags above same results.
-
-git-svn really does not like to import from a local svn file...
-
-Any other ideas,
-
-Thanks, I really apperciate the assistance.
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+An "In blobs, always store everything as UTF16 with BOM" filter, when
+badly implemented, might turn an empty work tree file into a blob with BOM
+and nothing else in it, but we can safely declare that such use case is
+simply insane and broken ;-).
