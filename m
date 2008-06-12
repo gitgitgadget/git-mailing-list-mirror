@@ -1,98 +1,86 @@
-From: Chris Ridd <chris.ridd@isode.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Improve sed portability
-Date: Thu, 12 Jun 2008 09:29:27 +0100
-Message-ID: <4850DE67.703@isode.com>
+Date: Thu, 12 Jun 2008 01:33:14 -0700
+Message-ID: <7vy75b833p.fsf@gitster.siamese.dyndns.org>
 References: <1213189759-11565-1-git-send-email-chris.ridd@isode.com>
-            <484FDB5D.7060606@viscovery.net> <484FEF71.2030909@isode.com>
-            <4850D45E.8000802@viscovery.net>
+ <484FDB5D.7060606@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 10:30:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Ridd <chris.ridd@isode.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jun 12 10:34:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6iCP-0004C0-BQ
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 10:30:25 +0200
+	id 1K6iGO-0005Z5-Bq
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 10:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347AbYFLI3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 04:29:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbYFLI3a
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 04:29:30 -0400
-Received: from rufus.isode.com ([62.3.217.251]:38698 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752296AbYFLI33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 04:29:29 -0400
-Received: from [172.16.0.138] (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (submission channel) via TCP with ESMTPSA 
-          id <SFDeaABZBB9G@rufus.isode.com> for <git@vger.kernel.org>;
-          Thu, 12 Jun 2008 09:29:28 +0100
-User-Agent: Thunderbird 2.0.0.14 (X11/20080507)
-In-Reply-To: <4850D45E.8000802@viscovery.net>
+	id S1754025AbYFLIdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 04:33:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752372AbYFLIdf
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 04:33:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753665AbYFLIde (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 04:33:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AB302283E;
+	Thu, 12 Jun 2008 04:33:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B78BD283D; Thu, 12 Jun 2008 04:33:22 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3C102694-385A-11DD-87C3-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84736>
 
-Johannes Sixt wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
 > Chris Ridd schrieb:
->> Johannes Sixt wrote:
->>> Chris Ridd schrieb:
->>>> @@ -73,7 +73,7 @@ resolve_relative_url ()
->>>>  module_name()
->>>>  {
->>>>      # Do we have "submodule.<something>.path = $1" defined in
->>>> .gitmodules file?
->>>> -    re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
->>>> +    re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
->>> You change sq into dq. Is this not dangerous? Shouldn't backslash-en be
->>> hidden from the shell so that printf can interpret it?
->> It is necessary to use double quotes. This:
->>
->>     printf '%s\n' foobar
->>
->> prints a literal \, a literal n, and no newline:
->>
->>     foobar\n
->>
->> Not desirable :-(
-> 
-> On both Linux and AIX 4.3 I see:
-> 
-> $  printf 'x\ny'; echo z
-> x
-> yz
-> 
-> The printf turns the \n into LF.
+>> On Solaris /usr/bin/sed apparently fails to process input that doesn't
+>> end in a \n. Consequently constructs like
+>> 
+>>   re=$(printf '%s' foo | sed -e 's/bar/BAR/g' $)
+>> 
+>> cause re to be set to the empty string.
+>
+> So does /usr/bin/sed of AIX 4.3!
+>
+>> @@ -73,7 +73,7 @@ resolve_relative_url ()
+>>  module_name()
+>>  {
+>>  	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+>> -	re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+>> +	re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+>
+> You change sq into dq. Is this not dangerous? Shouldn't backslash-en be
+> hidden from the shell so that printf can interpret it?
 
-Yes, and I don't know *what* I did yesterday, but Solaris 8, 10, (every 
-OS I mentioned before) behave the same as your test.
+"\n" inside dq is _not_ interpreted by the shell (printf interprets it),
+but I tend to agree that using sq is worry-free and better.
 
-I did actually have my eyes tested later on yesterday :-)
+>>  	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+>>  		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+>
+> I trust you have tested this. But I wonder whether this leaves a stray
+> newline in $re that gets in the way inside the sed expression...
 
-> I mentioned this in the first place because I don't know what various
-> shells do with \n when they see "%s\n". But one way or the other, the \n
-> will be turned into LF, either by the shell or by printf. So it's not a
-> big deal.
+I suspect the very original was written (or copied from something that
+wrote) like this:
 
-I agree.
+	re=$(echo -n "$1" | sed -e '...')
 
->> Of course, using a plain old:
->>
->>     echo "$1"
->>
->> should work well too. Why is printf being used here and not echo, anyway?
-> 
-> Because the "$1" could contain character sequences that some 'echo'
-> implementations mangle.
+and mechanically replaced to
 
-Indeed. If $1 started with -n that might cause problems on some platforms.
+	re=$(printf '%s' "$1" | sed -e '...')
 
-Should I revise my commit to use single quotes again?
+because "echo" is not quite portable.
 
-Cheers,
-
-Chris
+But the original misunderstands the command substitution.  The trailing LF
+is removed by it, so as long as "$1" is a single line, $re will get a line
+without the trailing LF _anyway_.
