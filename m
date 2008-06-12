@@ -1,57 +1,70 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH 3/4] remote prune: print the list of pruned branches
-Date: Thu, 12 Jun 2008 13:07:46 +0200
-Message-ID: <48510382.9000302@free.fr>
-References: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr> <1213109495-6974-1-git-send-email-dkr+ml.git@free.fr> <7v63sf9lye.fsf@gitster.siamese.dyndns.org>
+From: "Shak" <sshaikh@hotmail.com>
+Subject: Deleting files
+Date: Thu, 12 Jun 2008 12:28:30 +0100
+Message-ID: <g2r19e$s6e$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 13:08:46 2008
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 12 13:31:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6kfJ-00065F-Gx
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:08:25 +0200
+	id 1K6l1B-00054N-K0
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbYFLLHa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2008 07:07:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbYFLLHa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:07:30 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:52773 "EHLO smtp2-g19.free.fr"
+	id S1751844AbYFLLaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 07:30:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbYFLLaG
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:30:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:33776 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753636AbYFLLHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 07:07:30 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 048A312B6F1;
-	Thu, 12 Jun 2008 13:07:29 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 9CAB212B6E6;
-	Thu, 12 Jun 2008 13:07:28 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <7v63sf9lye.fsf@gitster.siamese.dyndns.org>
+	id S1751552AbYFLLaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 07:30:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1K6l0E-0006pr-Tj
+	for git@vger.kernel.org; Thu, 12 Jun 2008 11:30:02 +0000
+Received: from cpc4-seve16-0-0-cust781.popl.cable.ntl.com ([86.21.191.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 11:30:02 +0000
+Received: from sshaikh by cpc4-seve16-0-0-cust781.popl.cable.ntl.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 11:30:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cpc4-seve16-0-0-cust781.popl.cable.ntl.com
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Windows Mail 6.0.6001.18000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84743>
 
-Junio C Hamano a =E9crit :
->=20
-> Thanks.  I've queued the series (with minor fixups and rewording) to
-> 'next' already, hoping that we can merge this fix to 'master' before
-> 1.5.6.
+Hi,
 
-Thanks. I find your "would prune/pruned" better.
+Are files supposed to be continually tracked after commiting after deleting 
+them?
 
-> But I am very tempted to also apply the following on top.  Thoughts?
+git status reports that files have been deleted as expected (they're not 
+there anymore). I commit as wanted. I do some more work, but then git status 
+still reports that the same files have been deleted. As such I have a 
+historical list of "deleted" files that I may have been working on 
+previously and had committed.
 
-Actually, I did that to stay consistent with "git remote update" and, a=
-s
-a user, I prefer to see something. That said, I not opposed to your pat=
-ch.
+I have to run git rm to erase these entries, but I've no idea how that 
+affects my history.
 
-Olivier.
+Shouldn't git add/commit remember that a file has been deleted previously?
+
+On a related note, once I do git rm on one of these files, git status 
+sometimes reports that these rm'd files have been renamed to a new one 
+instead! What's going on? :(
+
+Shak 
