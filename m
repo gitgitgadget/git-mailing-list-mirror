@@ -1,106 +1,73 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] git-gui: Move on to the next filename after staging/unstaging a change
-Date: Fri, 13 Jun 2008 03:42:10 +0530
-Message-ID: <1213308730-12707-1-git-send-email-ams@toroid.org>
-Cc: gitster@pobox.com, Abhijit Menon-Sen <ams@toroid.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 00:46:28 2008
+From: <Patrick.Higgins@cexp.com>
+Subject: RE: [PATCH] Added mergetool.kdiff3.doubledash config option
+Date: Thu, 12 Jun 2008 16:44:03 -0600
+Message-ID: <911589C97062424796D53B625CEC0025E46159@USCOBRMFA-SE-70.northamerica.cexp.com>
+References: <7vve0ez8z3.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: <git@vger.kernel.org>, <tytso@mit.edu>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 01:05:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6vYo-0003wS-2z
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:46:26 +0200
+	id 1K6vrY-0000Vc-8i
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 01:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbYFLWpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 18:45:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbYFLWpa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:45:30 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:47742 "EHLO fugue.toroid.org"
+	id S1755231AbYFLXEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 19:04:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755084AbYFLXEp
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 19:04:45 -0400
+Received: from mx02.cexp.com ([170.131.136.83]:44019 "EHLO mx02.cexp.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753907AbYFLWp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 18:45:29 -0400
-X-Greylist: delayed 1995 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jun 2008 18:45:29 EDT
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 42298558244;
-	Fri, 13 Jun 2008 00:12:12 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id C8EF3ADC0CB; Fri, 13 Jun 2008 03:42:10 +0530 (IST)
-X-Mailer: git-send-email 1.5.5.1
+	id S1754875AbYFLXEp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2008 19:04:45 -0400
+X-Greylist: delayed 1240 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jun 2008 19:04:45 EDT
+Received: from mailgate2.cexp.com (uscobrmfa-se-07.cexp.com [170.131.144.37])
+	by mx02.cexp.com (Postfix) with ESMTP id 038FF1E4C0A
+	for <git@vger.kernel.org>; Thu, 12 Jun 2008 16:44:05 -0600 (MDT)
+Received: from USCOBRMFA-SE-70.northamerica.cexp.com ([10.128.26.35]) by USCOBRMFA-SE-51.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 12 Jun 2008 16:44:04 -0600
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <7vve0ez8z3.fsf@gitster.siamese.dyndns.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Added mergetool.kdiff3.doubledash config option
+Thread-Index: AcjMzGqkBRoy6JNwRa+TomJcw3MjwQADPbCQ
+X-OriginalArrivalTime: 12 Jun 2008 22:44:04.0621 (UTC) FILETIME=[D0FE13D0:01C8CCDD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84809>
 
-Suppose the "Unstaged Changes" pane contains a list of files, and one of
-them is selected (i.e., that diff is currently being displayed). If one
-clicks on the icon to stage the change, git-gui clears the diff and one
-has to click on another filename to see the next diff in the list.
+From: Junio C Hamano [mailto:gitster@pobox.com]
 
-This patch changes that behaviour. If one clicks on the icon to stage
-(or unstage) the file whose diff is being displayed, git-gui will move
-on to the next filename in the list and display that diff instead of a
-blank diff pane. If the selected file was at the end of the list, the
-diff pane will display the previous diff instead; if the selected file
-was the only one listed, the diff pane will become blank.
+> Patrick Higgins <patrick.higgins@cexp.com> writes:
+> 
+> > +mergetool.kdiff3.doubledash::
+> > +	A boolean to indicate whether or not your kdiff3 supports a '--'
+> > +	on the command line to separate options from filenames. If you
+> > +	built it without KDE, it probably doesn't have this support and
+> > +	you	should set this to false.  Defaults to true.
+> 
+> The above description makes it clear that there is an issue 
+> that needs to
+> be addressed.  I however am wondering if this can be either 
+> autodetected
+> at runtime, or if it can't, the user should be able to 
+> specify the option
+> when the user runs mergetool from the command line.  It would 
+> be necessary
+> to countermand whichever choice you configured in your config when you
+> need to run kdiff3 with KDE from one machine and the one without from
+> another machine, wouldn't it?
 
-If no diff is currently being displayed, this patch changes nothing.
+I have found the following to be a way to distinguish the two versions based solely on exit status. The broken one exits with 255.
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
- git-gui/git-gui.sh |   29 +++++++++++++++++++++++++++--
- 1 files changed, 27 insertions(+), 2 deletions(-)
+kdiff3 --auto -o /dev/null -- /dev/null /dev/null
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index e6e8890..23d7dfe 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1774,6 +1774,11 @@ proc do_commit {} {
- 	commit_tree
- }
- 
-+proc next_diff {} {
-+	global next_diff_p next_diff_w next_diff_i
-+	show_diff $next_diff_p $next_diff_w $next_diff_i
-+}
-+
- proc toggle_or_diff {w x y} {
- 	global file_states file_lists current_diff_path ui_index ui_workdir
- 	global last_clicked selected_paths
-@@ -1793,11 +1798,31 @@ proc toggle_or_diff {w x y} {
- 	$ui_workdir tag remove in_sel 0.0 end
- 
- 	if {$col == 0} {
--		if {$current_diff_path eq $path} {
-+		set i [expr {$lno-1}]
-+		set ll [expr {[llength $file_lists($w)]-1}]
-+
-+		if {$i == $ll && $i == 0} {
- 			set after {reshow_diff;}
- 		} else {
--			set after {}
-+			global next_diff_p next_diff_w next_diff_i
-+
-+			if {$i < $ll} {
-+				set i [expr {$i + 1}]
-+			} else {
-+				set i [expr {$i - 1}]
-+			}
-+
-+			set next_diff_i $i
-+			set next_diff_w $w
-+			set next_diff_p [lindex $file_lists($w) $i]
-+
-+			if {$next_diff_p ne {} && $current_diff_path ne {}} {
-+				set after {next_diff;}
-+			} else {
-+				set after {}
-+			}
- 		}
-+
- 		if {$w eq $ui_index} {
- 			update_indexinfo \
- 				"Unstaging [short_path $path] from commit" \
--- 
-1.5.5.1
+I'll work up another patch that uses this. This check adds about 0.5s overhead. That seems a little high to me, but given that mergetool is interactive, I guess that could be acceptable.
