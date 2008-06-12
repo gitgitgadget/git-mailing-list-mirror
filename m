@@ -1,80 +1,66 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
-Date: Thu, 12 Jun 2008 15:50:34 -0500
-Message-ID: <1213303835.5327.24.camel@ld0161-tx32>
-References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org>
-	 <cover.1213084587.git.marius@trolltech.com>
-	 <alpine.DEB.1.00.0806101632570.1783@racer>
-	 <7vk5gxc4gz.fsf@gitster.siamese.dyndns.org>
-	 <484F6A27.1040602@trolltech.com> <alpine.DEB.1.00.0806112000400.1783@racer>
-	 <4850E647.7050602@trolltech.com>
-	 <7vtzfy8n4i.fsf@gitster.siamese.dyndns.org>
-	 <20080612195553.GK13626@fieldses.org>
-	 <7vprqmz8kj.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Thu, 12 Jun 2008 13:51:25 -0700
+Message-ID: <7vlk1az8aa.fsf@gitster.siamese.dyndns.org>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:52:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Eric Raible" <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:52:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6tm8-0003qZ-09
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:52:04 +0200
+	id 1K6tmY-00041g-AQ
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077AbYFLUvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 16:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbYFLUvH
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:51:07 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:34961 "EHLO
-	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754704AbYFLUvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 16:51:06 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m5CKoauo016858;
-	Thu, 12 Jun 2008 13:50:36 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m5CKoZYd010765;
-	Thu, 12 Jun 2008 15:50:35 -0500 (CDT)
-In-Reply-To: <7vprqmz8kj.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.0.2 (2.0.2-35.el4) 
+	id S1755067AbYFLUvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:51:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYFLUvg
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:51:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49322 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754689AbYFLUvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:51:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 37F523D30;
+	Thu, 12 Jun 2008 16:51:34 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 527AF3D2D; Thu, 12 Jun 2008 16:51:27 -0400 (EDT)
+In-Reply-To: <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
+ (Eric Raible's message of "Thu, 12 Jun 2008 13:35:10 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 57B2D3B2-38C1-11DD-823E-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84796>
 
-On Thu, 2008-06-12 at 13:45 -0700, Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
-> > (Is there any advantage, then, to the :n:filename syntax to a user?
-> > Is it useful in any cases when they couldn't use HEAD or MERGE_HEAD
-> > instead?  If not I might be tempted to cut this bit entirely (or
-> > postpone it till later.)
-> 
-> I am somewhat torn between the two.
-> 
-> This section is only about merge conflicts, so using "checkout HEAD path"
-> would be a good substitute.  The text flows better that way, because the
-> previous paragraph talks about HEAD and MERGE_HEAD.
-> 
-> When people run "am -3", however, they may wish that they learned how the
-> notation to name blob objects in the index (e.g. :2:path) can be used to
-> examine and resolve the conflict, as there is no HEAD/MERGE_HEAD in that
-> usage context.
+"Eric Raible" <raible@gmail.com> writes:
 
+> On Thu, Jun 12, 2008 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Wincent Colaiuta <win@wincent.com> writes:
+>>
+>>> So yes, branches _are_ better and more appropriate for long term
+>>> storage than stashes, but even so I don't think it's right for us to
+>>> risk throwing away information that the user explicitly stashed and
+>>> expected Git to look after for them.
+>>
+>> Yes, but for a limited amount of time.
+>
+> A limited amount of time?  Why is that?  Can you give a rationale which
+> at least addresses Wincent's points?
 
-Hi Junio,
+Perhaps
 
-I was planning on specifically pointing out the :n: forms as well.
-So I'm watching this one a bit carefully and would appreciate a
-bit of long-term guidance on the issue here.
+ http://thread.gmane.org/gmane.comp.version-control.git/84665/focus=84670
 
-Thanks,
-jdl
+The user explicitly asks to stash it for a while, where the definition of
+the "while" comes from reflog's retention period.
