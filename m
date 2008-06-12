@@ -1,115 +1,110 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH 0/2] Respecting core.autocrlf when showing objects
-Date: Thu, 12 Jun 2008 15:55:53 -0400
-Message-ID: <20080612195553.GK13626@fieldses.org>
-References: <7vprqqdwh7.fsf@gitster.siamese.dyndns.org> <cover.1213084587.git.marius@trolltech.com> <alpine.DEB.1.00.0806101632570.1783@racer> <7vk5gxc4gz.fsf@gitster.siamese.dyndns.org> <484F6A27.1040602@trolltech.com> <alpine.DEB.1.00.0806112000400.1783@racer> <4850E647.7050602@trolltech.com> <7vtzfy8n4i.fsf@gitster.siamese.dyndns.org>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: git-svn-import or CVS import from local HD rather than remote.
+Date: Thu, 12 Jun 2008 13:57:28 -0600
+Message-ID: <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
+References: <Pine.LNX.4.64.0806121214210.18454@xenau.zenez.com>
+ <20080612185545.GN29404@genesis.frugalware.org> <Pine.LNX.4.64.0806121315540.18454@xenau.zenez.com>
+ <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 21:57:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 21:58:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6suu-0005im-5p
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 21:57:04 +0200
+	id 1K6swR-0006NZ-IV
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 21:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753704AbYFLT4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 15:56:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbYFLT4I
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 15:56:08 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:33828 "EHLO fieldses.org"
+	id S1758029AbYFLT5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 15:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbYFLT5a
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 15:57:30 -0400
+Received: from zenez.com ([166.70.62.2]:26834 "EHLO xenau.zenez.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752724AbYFLT4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 15:56:07 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1K6stl-0005Fe-If; Thu, 12 Jun 2008 15:55:53 -0400
-Content-Disposition: inline
-In-Reply-To: <7vtzfy8n4i.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754130AbYFLT53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 15:57:29 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 2DE5EE7FDE; Thu, 12 Jun 2008 13:57:28 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 190F2E7FDD;
+	Thu, 12 Jun 2008 13:57:28 -0600 (MDT)
+In-Reply-To: <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84779>
 
-On Thu, Jun 12, 2008 at 12:33:01PM -0700, Junio C Hamano wrote:
-> Marius Storm-Olsen <marius@trolltech.com> writes:
+On Thu, 12 Jun 2008, Daniel Barkalow wrote:
+> On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
+> > On Thu, 12 Jun 2008, Miklos Vajna wrote:
+> > > On Thu, Jun 12, 2008 at 12:36:43PM -0600, Boyd Lynn Gerber 
+> > > <gerberb@zenez.com> wrote:
+> > > > git-svnimport -C /working/git/project /master/svn/pub-svn/category/project
+> > > 
+> > > From RelNotes-1.5.4.txt:
+> > > 
+> > >  * "git svnimport" was removed in favor of "git svn".  It is still there
+> > >    in the source tree (contrib/examples) but unsupported.
+> > > 
+> > > Try using git-svn.
+> > 
+> > Thanks, I was not sure which I should use,  I had tried both with similar 
+> > results.  Here is what I used with git-svn
+> > 
+> > > git-svn clone /working/svn/networking/wireshark .
+> > Initialized empty Git repository in .git/
+> > Bad URL passed to RA layer: Unrecognized URL scheme for 
+> > '/working/svn/networking/wireshark' at /usr/bin/git-svn line 934
 > 
-> > Johannes Schindelin said the following on 11.06.2008 21:06:
-> >> On Wed, 11 Jun 2008, Marius Storm-Olsen wrote:
-> >>> Well, consider this:
-> >>>
-> >>> Say you are merging two branches, and know that you want to just
-> >>> use the parts which conflict from the branch being merged in. Then
-> >>> you simply do:
-> >>>
-> >>> 	git merge side
-> >>> 	git show :3:file.txt > file.txt
-> >>
-> >> This is not really how I would do things.  I would do
-> >>
-> >> 	git checkout side file.txt here.
-> >
-> > Uhm, 'git checkout side file.txt' is not the same file content
-> > (ignoring EOLs please) as 'git show :3:file.txt'.
-> > Ref: user-manual.html#conflict-resolution
-> 
-> Bruce, I think the comment in this quoted section is wrong.
-> 
-> True, the combined diff can show only the interesting differences between
-> the three, but that is not because we munge stage #2 and #3.  They contain
-> verbatim copies from the HEAD and the MERGE_HEAD respectively, and the
-> combining logic runs three-way diffs between the three stages to discard
-> the hunks that the result comes solely from either stage #2 or stage #3.
+> Maybe file:///working/svn/networking/wireshark?
 
-Oops, thanks for catching that!  I don't know how I got the idea it
-worked that way.
+This is really frustrating.
 
-(Is there any advantage, then, to the :n:filename syntax to a user?
-Is it useful in any cases when they couldn't use HEAD or MERGE_HEAD
-instead?  If not I might be tempted to cut this bit entirely (or
-postpone it till later.)
+I have tried every combination of file://localhost/ file:///
 
---b.
+This is what I get
 
-> 
-> So perhaps something like this is in order...
-> 
-> ---
-> 
->  Documentation/user-manual.txt |   15 +++++++--------
->  1 files changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index bfde507..64a820b 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -1254,16 +1254,15 @@ these three "file stages" represents a different version of the file:
->  
->  -------------------------------------------------
->  $ git show :1:file.txt	# the file in a common ancestor of both branches
-> -$ git show :2:file.txt	# the version from HEAD, but including any
-> -			# nonconflicting changes from MERGE_HEAD
-> -$ git show :3:file.txt	# the version from MERGE_HEAD, but including any
-> -			# nonconflicting changes from HEAD.
-> +$ git show :2:file.txt	# the version from HEAD.
-> +$ git show :3:file.txt	# the version from MERGE_HEAD.
->  -------------------------------------------------
->  
-> -Since the stage 2 and stage 3 versions have already been updated with
-> -nonconflicting changes, the only remaining differences between them are
-> -the important ones; thus linkgit:git-diff[1] can use the information in
-> -the index to show only those conflicts.
-> +When you ask linkgit:git-diff[1] to show the conflicts, it runs a
-> +three-way diff between the conflicted merge results in the work tree with
-> +stages 2 and 3 to show only hunks whose contents come from both sides,
-> +mixed (in other words, when a hunk's merge results come only from stage 2,
-> +that part is not conflicting and is not shown.  Same for stage 3).
->  
->  The diff above shows the differences between the working-tree version of
->  file.txt and the stage 2 and stage 3 versions.  So instead of preceding
+git-svn clone file:///working/svn/network/wireshark/ -T trunk -b branches 
+-t tags wireshark
+Initialized empty Git repository in .git/
+Couldn't open a repository: Unable to open an ra_local session to URL: 
+Unable to open repository 'file:///working/svn/network/wireshark' at 
+/usr/bin/git-svn line 1048
+
+> ls -la /working/svn/network/wireshark/
+total 16
+drwxr-xr-x  8 gerberb zenez  208 2008-06-10 12:44 .
+drwxr-xr-x  9 gerberb zenez  240 2008-06-12 13:00 ..
+drwxr-xr-x  6 gerberb zenez  240 2008-06-12 12:14 .svn
+drwxr-xr-x  6 gerberb zenez  152 2008-06-10 12:43 historic
+drwxr-xr-x  5 gerberb zenez  152 2008-06-10 12:46 prereleases
+drwxr-xr-x 86 gerberb zenez 2728 2008-06-10 12:37 releases
+drwxr-xr-x 26 gerberb zenez 7016 2008-06-10 12:39 trunk
+drwxr-xr-x 25 gerberb zenez 7136 2008-06-10 11:45 trunk-1.0
+
+It is the exact same message wheter I use...
+
+> cd /working/git/network/wireshark/
+> git-svn clone file:///working/svn/network/wireshark .
+> git-svn clone file:///working/svn/network/wireshark? .
+> git-svn clone file:///working/svn/network/wireshark/ .
+> cd /working/git/network/
+> git-svn clone file:///working/svn/network/wireshark wireshark
+> git-svn clone file:///working/svn/network/wireshark? wireshark
+> git-svn clone file:///working/svn/network/wireshark/ wireshark
+
+Add the options -T trunk -b branches -t tags above same results.
+
+git-svn really does not like to import from a local svn file...
+
+Any other ideas,
+
+Thanks, I really apperciate the assistance.
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
