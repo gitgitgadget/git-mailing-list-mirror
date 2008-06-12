@@ -1,112 +1,96 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v3] git-add--interactive: manual hunk editing mode
-Date: Thu, 12 Jun 2008 08:55:24 +0200
-Message-ID: <200806120855.26847.trast@student.ethz.ch>
-References: <200805232221.45406.trast@student.ethz.ch> <200806111102.31481.trast@student.ethz.ch> <20080612044932.GA25992@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] remote prune: print the list of pruned branches
+Date: Thu, 12 Jun 2008 00:00:41 -0700
+Message-ID: <7v63sf9lye.fsf@gitster.siamese.dyndns.org>
+References: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr>
+ <1213109495-6974-1-git-send-email-dkr+ml.git@free.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1678283.0LAWiV7agL";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 12 08:56:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Olivier Marin <dkr@freesurf.fr>
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 12 09:01:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6gjK-0001Zl-H9
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 08:56:18 +0200
+	id 1K6gok-000396-3Z
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 09:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515AbYFLGzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 02:55:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753826AbYFLGzZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 02:55:25 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:57844 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111AbYFLGzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 02:55:24 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 12 Jun 2008 08:55:22 +0200
-Received: from vpn-global-dhcp3-095.ethz.ch ([129.132.210.95]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 12 Jun 2008 08:55:22 +0200
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <20080612044932.GA25992@sigill.intra.peff.net>
-X-OriginalArrivalTime: 12 Jun 2008 06:55:22.0962 (UTC) FILETIME=[490A3320:01C8CC59]
+	id S1752869AbYFLHA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 03:00:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbYFLHA7
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 03:00:59 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35767 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752356AbYFLHA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 03:00:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 02C8113DE;
+	Thu, 12 Jun 2008 03:00:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 07C2013DD; Thu, 12 Jun 2008 03:00:49 -0400 (EDT)
+In-Reply-To: <1213109495-6974-1-git-send-email-dkr+ml.git@free.fr> (Olivier
+ Marin's message of "Tue, 10 Jun 2008 16:51:35 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4E66C120-384D-11DD-B071-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84726>
 
---nextPart1678283.0LAWiV7agL
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Olivier Marin <dkr+ml.git@free.fr> writes:
 
-Jeff King wrote:
-> On Wed, Jun 11, 2008 at 11:02:29AM +0200, Thomas Rast wrote:
->=20
-> > +# If the patch applies cleanly, the hunk will immediately be marked
-> > +# for staging as if you had answered 'y'.  (However, if you remove
-> > +# everything, nothing happens.)  Otherwise, you will be asked to edit
-> > +# again.
->=20
-> This "however" confused me the first time I read it. I assume you mean
-> that "if the diff is empty, then staging it will do nothing"? I wonder
-> if that is even worth mentioning, since it seems obvious.
+> diff --git a/builtin-remote.c b/builtin-remote.c
+> index 745a4ee..851bdde 100644
+> --- a/builtin-remote.c
+> +++ b/builtin-remote.c
+> ...  
+> +		printf("Pruning %s\n", *argv);
+> +		if (states.stale.nr)
+> +			printf("From: %s\n", states.remote->url[0]);
 
-I wanted to make the same special case that 'recount -i' has: Deleting
-everything does not "do nothing", but actually aborts the edit.  So in
-rebase, deleting everything will not rebase anything (instead of
-rebasing "no patches" onto wherever you said).  Along the same lines,
-in the above patch deleting everything does not patch "no changes",
-but aborts editing the hunk and leaves it unchanged.
+Thanks.  I've queued the series (with minor fixups and rewording) to
+'next' already, hoping that we can merge this fix to 'master' before
+1.5.6.
 
-Do you think that behaviour confuses users?
+But I am very tempted to also apply the following on top.  Thoughts?
 
-> > +# Do not add @ lines unless you know what you are doing.  The original
-> > +# @ line will be reinserted if you remove it.
->=20
-> This can probably be moved from the "every time" instructions to the
-> manual, if we want to keep the size of the instructions a bit smaller.
->=20
-> > +		if (diff_applies($head,
-> > +				 @{$hunk}[0..$ix-1],
-> > +				 $newhunk,
-> > +				 @{$hunk}[$ix+1..$#{$hunk}])) {
->=20
-> I'm confused here...we are feeding _all_ of the hunks to git-apply. In
-> my patch, I simply fed the hunk of interest. Since we are recounting,
-> shouldn't the single hunk be enough? And if it isn't, then shouldn't we
-> be feeding only the hunks that are to be applied?
+-- >8 --
+[PATCH] "remote prune": be quiet when there is nothing to prune
 
-=46eeding it the single hunk would be enough, but doing it this way
-ensures that the edited hunk cannot step on another hunk's toes,
-i.e. produce a conflict that may prevent us from applying the patch at
-the end of the hunk selection loop.
+The previous commit made it always say "Pruning $remote" but reported the
+URL only when there is something to prune.  Make it consistent by not
+saying anything at all when there is nothing to prune.
 
-It's fairly unlikely of course, because the user would deliberately
-have to extend the hunk beyond its current borders by adding extra
-context from the original file.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-remote.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
---nextPart1678283.0LAWiV7agL
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
-
-iD8DBQBIUMheqUud07tmzP0RAuxgAJ9yy6yRmfpK7N19oKT5DfP7bWt0YQCgllpn
-l6iEO7mNFQpigSNl0hfi/Sc=
-=yrPL
------END PGP SIGNATURE-----
-
---nextPart1678283.0LAWiV7agL--
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 4b00cf9..145dd85 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -560,12 +560,13 @@ static int prune(int argc, const char **argv)
+ 
+ 		get_remote_ref_states(*argv, &states, 1);
+ 
+-		printf("Pruning %s\n", *argv);
+-		if (states.stale.nr)
++		if (states.stale.nr) {
++			printf("Pruning %s\n", *argv);
+ 			printf("URL: %s\n",
+ 			       states.remote->url_nr
+ 			       ? states.remote->url[0]
+ 			       : "(no URL)");
++		}
+ 
+ 		for (i = 0; i < states.stale.nr; i++) {
+ 			const char *refname = states.stale.items[i].util;
+-- 
+1.5.6.rc2.26.g8c37
