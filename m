@@ -1,105 +1,57 @@
-From: Yves Orton <yves.orton@booking.com>
-Subject: git-fast-export bug, commits emmitted in incorrect order causing
-	parent data to be lost from commits turning essentially linear repo into
-	"islands"
-Date: Thu, 12 Jun 2008 12:21:40 +0200
-Message-ID: <1213266100.6940.207.camel@gemini>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 3/4] remote prune: print the list of pruned branches
+Date: Thu, 12 Jun 2008 13:07:46 +0200
+Message-ID: <48510382.9000302@free.fr>
+References: <1213109413-6842-1-git-send-email-dkr+ml.git@free.fr> <1213109495-6974-1-git-send-email-dkr+ml.git@free.fr> <7v63sf9lye.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 13:06:20 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 13:08:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6kb7-00040S-NE
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:04:06 +0200
+	id 1K6kfJ-00065F-Gx
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbYFLLDL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2008 07:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbYFLLDL
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:03:11 -0400
-Received: from msx1.activehotels.net ([62.190.24.9]:33714 "EHLO
-	mx1.activehotels.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753909AbYFLLDK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2008 07:03:10 -0400
-X-Greylist: delayed 2482 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jun 2008 07:03:09 EDT
-Received: from p5098d9db.dip0.t-ipconnect.de ([80.152.217.219] helo=[192.168.250.20])
-	by mx1.activehotels.net with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.50)
-	id 1K6jw5-0004fL-M0
-	for git@vger.kernel.org; Thu, 12 Jun 2008 11:21:42 +0100
-X-Mailer: Evolution 2.22.2 
-X-AH-Spam-Helo: [192.168.250.20]
+	id S1753858AbYFLLHa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2008 07:07:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbYFLLHa
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:07:30 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:52773 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753636AbYFLLHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 07:07:30 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 048A312B6F1;
+	Thu, 12 Jun 2008 13:07:29 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 9CAB212B6E6;
+	Thu, 12 Jun 2008 13:07:28 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <7v63sf9lye.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84742>
 
-Hi,
+Junio C Hamano a =E9crit :
+>=20
+> Thanks.  I've queued the series (with minor fixups and rewording) to
+> 'next' already, hoping that we can merge this fix to 'master' before
+> 1.5.6.
 
-Ive been working with git-fast-export a bit recently and Ive hit a bug
-that is causing some trouble.=20
+Thanks. I find your "would prune/pruned" better.
 
-Essentially it seems that one of our repos git-fast-export fails to emi=
-t
-the proper 'from' information for several commits in the repo. These
-commits are emitted first without parent data even though their parents
-ARE emitted later.
+> But I am very tempted to also apply the following on top.  Thoughts?
 
-The code responsible for skipping the parent info is in
-
-builtin-fast-export.c around line 402:
-
-        for (i =3D 0, p =3D commit->parents; p; p =3D p->next) {
-                int mark =3D get_object_mark(&p->item->object);
-                if (!mark)
-                        continue;
-                if (i =3D=3D 0)
-                        printf("from :%d\n", mark);
-                else
-                        printf("merge :%d\n", mark);
-                i++;
-        }
-
-If i modify this loop to warn when skipping a parent I get a warning fo=
-r
-each of the "broken" commits. Apparently because they are emitted befor=
-e
-their parents the parents have no "mark" assigned to them (via
-decoration) and thus are skipped in this emit process. This would make
-sense for emitting a limited number of patches, but makes no sense when
-the --all option is used. Ive tried to investigate further but i got
-lost in a twisty maze of routines in revision.c, which apparently is
-responsible for building a list of items to emit in the correct order.=20
-
-However i think it is notable that both gitk and git log seem quite abl=
-e
-to deal with things properly, thus i find it a bit strange that
-fast-export would get it wrong.
-
-Unfortunately I have no idea how to create a minimal repo that
-illustrates this problem.=20
-
-Im currently on git version 1.5.6.rc2.29.g3ba9 (latest version from las=
-t
-night), however this problem shows itself on 1.5.4.3 as well, as well a=
+Actually, I did that to stay consistent with "git remote update" and, a=
 s
-an earlier version whose exact number i no longer know.=20
+a user, I prefer to see something. That said, I not opposed to your pat=
+ch.
 
-Other evidence that might be useful
-
-	=EF=BB=BFgit log --pretty=3Dformat:"%H:%P"=20
-
-shows that every commit but one (the root) has parents. And gitk render=
-s
-the original repo fine. The repo can be cloned and etc, without trouble=
-=2E
-The problem seems to be strictly related to fast-export.
-
-Im not on list so please cc me on any replies.=20
-
-Thanks a lot!
-Yves
+Olivier.
