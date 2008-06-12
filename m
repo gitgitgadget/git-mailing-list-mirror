@@ -1,84 +1,112 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Thu, 12 Jun 2008 17:10:36 -0500
-Message-ID: <fRW8sBboq1iMWGtwlFUpiDE6HkG2OzTHQ13Xtne_hLyGoZQw04GL7Q@cipher.nrlssc.navy.mil>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <tTKBrUhaELJElLgsC8Wvr60D-bMFtfyvc87q5ZYW35M@cipher.nrlssc.navy.mil> <7vhcbyz5pp.fsf@gitster.siamese.dyndns.org>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: git-svn-import or CVS import from local HD rather than remote.
+Date: Thu, 12 Jun 2008 16:20:36 -0600
+Message-ID: <Pine.LNX.4.64.0806121615290.18454@xenau.zenez.com>
+References: <Pine.LNX.4.64.0806121214210.18454@xenau.zenez.com>
+ <20080612185545.GN29404@genesis.frugalware.org> <Pine.LNX.4.64.0806121315540.18454@xenau.zenez.com>
+ <alpine.LNX.1.00.0806121523370.19665@iabervon.org>
+ <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
+ <alpine.LNX.1.00.0806121652220.19665@iabervon.org>
+ <Pine.LNX.4.64.0806121457490.18454@xenau.zenez.com>
+ <alpine.LNX.1.00.0806121759300.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 00:12:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 00:21:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6v2D-0000m4-Gm
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:12:45 +0200
+	id 1K6vAi-0004OD-EO
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbYFLWLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 18:11:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbYFLWLr
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:11:47 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34666 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbYFLWLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 18:11:46 -0400
-Received: by mail.nrlssc.navy.mil id m5CMAaRY031489; Thu, 12 Jun 2008 17:10:37 -0500
-In-Reply-To: <7vhcbyz5pp.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Jun 2008 22:10:36.0659 (UTC) FILETIME=[24276430:01C8CCD9]
+	id S1754845AbYFLWUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 18:20:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754379AbYFLWUi
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:20:38 -0400
+Received: from zenez.com ([166.70.62.2]:20819 "EHLO xenau.zenez.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754003AbYFLWUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 18:20:37 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id D8974E814E; Thu, 12 Jun 2008 16:20:36 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id C7027E8123;
+	Thu, 12 Jun 2008 16:20:36 -0600 (MDT)
+In-Reply-To: <alpine.LNX.1.00.0806121759300.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84806>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
+On Thu, 12 Jun 2008, Daniel Barkalow wrote:
+> On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
+> > On Thu, 12 Jun 2008, Daniel Barkalow wrote:
+> > > On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
+> > > > 
+> > > > This is really frustrating.
+> > > > 
+> > > > I have tried every combination of file://localhost/ file:///
+> > > > 
+> > > > This is what I get
+> > > > 
+> > > > git-svn clone file:///working/svn/network/wireshark/ -T trunk -b 
+> > > > branches -t tags wireshark Initialized empty Git repository in .git/ 
+> > > > Couldn't open a repository: Unable to open an ra_local session to URL: 
+> > > > Unable to open repository 'file:///working/svn/network/wireshark' at 
+> > > > /usr/bin/git-svn line 1048
+> > > > 
+> > > > > ls -la /working/svn/network/wireshark/
+> > > > total 16
+> > > > drwxr-xr-x  8 gerberb zenez  208 2008-06-10 12:44 .
+> > > > drwxr-xr-x  9 gerberb zenez  240 2008-06-12 13:00 ..
+> > > > drwxr-xr-x  6 gerberb zenez  240 2008-06-12 12:14 .svn
+> > > > drwxr-xr-x  6 gerberb zenez  152 2008-06-10 12:43 historic
+> > > > drwxr-xr-x  5 gerberb zenez  152 2008-06-10 12:46 prereleases
+> > > > drwxr-xr-x 86 gerberb zenez 2728 2008-06-10 12:37 releases
+> > > > drwxr-xr-x 26 gerberb zenez 7016 2008-06-10 12:39 trunk
+> > > > drwxr-xr-x 25 gerberb zenez 7136 2008-06-10 11:45 trunk-1.0
+> > > 
+> > > That looks like a SVN working copy, not an SVN repository. Maybe you 
+> > > want file:///master/svn/...?
+> > 
+> > I tried /master/svn/network/... as well.  Same results.  I can cd 
+> > /master/svn/network/... svn update and I get any updates from the URL.
 > 
->> The fact that this caveat is not mentioned anywhere in the stash
->> documentation or anywhere in the commit log related to git-stash.sh makes
->> me think that this idea of 'a limited amount of time' was possibly not a
->> design decision but merely a side effect of stashes being implemented using the
->> reflog. Of course I didn't pay any attention to the discussions about stash
->> back when it was implemented, so I may definitely be wrong.
+> That means it's a SVN working copy; SVN working copies don't contain the 
+> project history, so it's impossible to import from them. 
 > 
-> I do not deeply care either way, but perhaps
+> Basically, if you can't use your master copy for "svn co <URL>", you can't 
+> use it for "git svn".
+
+OK, but when I have web-dav running I am able to do a svn co URL.
+ 
+> > I really do not want to run web-dav.  I am able to do it if I run web-dav 
+> > and have my server as a svn master.  I have had security issues with 
+> > web-dav and I really want to avoid running it at all costs.
 > 
->  http://thread.gmane.org/gmane.comp.version-control.git/50737/focus=50863 
+> The SVN FAQ has information on running a SVN master without any web 
+> service. You should probably read that.
 
-Ahh, you reveal that you were not always a supporter of "stash per branch" in
-this thread. :)
+That is what I have been going over and play with for the last about 2 
+hours.  Thanks for the hints.  
 
-> and yes use of reflog was more or less conscious thing and the mechanism
-> is very much temporary in nature
+> Alternatively, you could give up on having any local SVN-based storage, 
+> and have /master/svn/... be a git repository that you update from the 
+> upstream SVN server with "git svn".
 
-I see. Thanks for the reference.
+The problem is I have over 100 projects in my /master/svn/... we use them 
+to do checkouts.  I am able to check out from my /master/svn/ with svn, I 
+just can not seem to get the same to work with git.  But it probably is 
+just me being dumb or missing something.  I am going to finish going over 
+the various FAQ's again.  I am sure I am missing something.  I am sure 
+there has to be a way without having web-dav running.
 
-> (see the use case stated in the starting
-> thread).
+Thanks,
 
-Yes, I understand the use case. I am just not convinced that a persistent
-stash would be detrimental, but I also do not care deeply.
-
->> it were true that if I were to create a stash today, and then be surprised 30
->> days from now when I do a 'stash list' and find the stash is still there.
->> Something along the lines of:
->>
->>    $ git stash save my work
->>    # wait 30 days
->>    $ git stash list
->>    stash@{0}: WIP on master: my work
->>
->>    # and if my reaction were something like:
->>    # hmm, that's strange, what is that stash still doing there? It's been 30 days,
->>    # it should be gone.
-> 
-> We could prune before running "git stash list", but why bother?  The fact
-> you can see it is like a bonus.
-
-hmph :)
-
--brandon
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
