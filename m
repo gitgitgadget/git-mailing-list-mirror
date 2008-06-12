@@ -1,225 +1,87 @@
-From: Clark Williams <clark.williams@gmail.com>
-Subject: [StGit PATCH] compressed import v3
-Date: Thu, 12 Jun 2008 16:32:50 -0500
-Message-ID: <48519602.2090103@gmail.com>
+From: "Eric Raible" <raible@gmail.com>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Thu, 12 Jun 2008 14:36:58 -0700
+Message-ID: <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
+	 <20080611213648.GA13362@glandium.org>
+	 <alpine.DEB.1.00.0806112242370.1783@racer>
+	 <20080611230344.GD19474@sigill.intra.peff.net>
+	 <alpine.LFD.1.10.0806111918300.23110@xanadu.home>
+	 <loom.20080612T042942-698@post.gmane.org>
+	 <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>
+	 <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
+	 <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
+	 <7vlk1az8aa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010608080503000908030407"
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 23:34:04 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Wincent Colaiuta" <win@wincent.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 23:38:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6uQi-00038g-GR
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 23:34:00 +0200
+	id 1K6uUp-0004cu-Hg
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 23:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751797AbYFLVdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 17:33:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbYFLVdF
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 17:33:05 -0400
-Received: from wx-out-0506.google.com ([66.249.82.239]:36295 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536AbYFLVdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 17:33:02 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so1440689wxd.4
-        for <git@vger.kernel.org>; Thu, 12 Jun 2008 14:32:58 -0700 (PDT)
+	id S1756811AbYFLVhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 17:37:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756756AbYFLVhS
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 17:37:18 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:62115 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756638AbYFLVhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 17:37:15 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so2340266ywe.1
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 14:36:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:x-enigmail-version
-         :content-type;
-        bh=eT0HPPsMGQ4br2wHYcHBsj1wwmGZl6oa/i2NWyvN0nc=;
-        b=r7tz1VanMPlSp92dwzPzyIwbOUGskzzcoRbrIGZicr7tjUhFI4H2i71514fyeg5XWs
-         wj+Cn1JsFQuiDtHeifiYve/6s4zwQdP4KMW4bkjXdHk24nH2mN6lNEKjrY7utWDg+Dr/
-         72d2LR9OXBpLgViinOmaGu0iIn3nmYqe4gR60=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=WGTlnf/iQLbi0HyGp6fvwrfSmqkOeM1lMuDBoX4xl9c=;
+        b=uDAgc9lTPMSQKjlwtRA0p+7vF2bH8BTtQ+YCZonJrY4m81FEAL5J7bzdTY0SlRr6lh
+         VS5LNEkCBgw5kQij9vD5zW9W3oAlgzIlE9uleRglFF+Egjm1udvFSylRUKwrOf+NDdkH
+         XzgNeRKak8mB44hNd9C+iUR3p2lPbXz7YuWrk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :x-enigmail-version:content-type;
-        b=SLhRaAyQFYYy3w3AYdl2PQYFd4YD/3ZGeU7I3L0MiCIY7Jpgo5Vw6vkHmHnvQc3vid
-         t4tB2A3rIVjvCnb00+ocyNMpyoCHl7ghrvSKuYvYcUNt9q3ziekDik/vbgdl4X7eMoZy
-         yyIiapZk1Yb4fhG1rBEgZfkCuqqfpOOPe0gsU=
-Received: by 10.70.43.16 with SMTP id q16mr1911307wxq.82.1213306378230;
-        Thu, 12 Jun 2008 14:32:58 -0700 (PDT)
-Received: from ?172.16.17.168? ( [66.187.231.200])
-        by mx.google.com with ESMTPS id h15sm2868746wxd.38.2008.06.12.14.32.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 12 Jun 2008 14:32:57 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070911)
-X-Enigmail-Version: 0.95.3
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vIJn+bd4IOXVHvgFxBOodWbdrIexEiD7CXN2hf+lLYBXu6oaQKzVvqtk4MaK7T4wnH
+         WW8LUlfBI4f7yDPO7XiNHzL5kL9ZDHmWds5z93oa/yOaFNFH+8NDbFce063hIJ734t7V
+         c08NwE1cg32qe/6uODENOaT8TDozJE+UnxHSs=
+Received: by 10.150.84.41 with SMTP id h41mr3039674ybb.215.1213306618953;
+        Thu, 12 Jun 2008 14:36:58 -0700 (PDT)
+Received: by 10.151.113.10 with HTTP; Thu, 12 Jun 2008 14:36:58 -0700 (PDT)
+In-Reply-To: <7vlk1az8aa.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84801>
 
-This is a multi-part message in MIME format.
---------------010608080503000908030407
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+On Thu, Jun 12, 2008 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Perhaps
+>
+>  http://thread.gmane.org/gmane.comp.version-control.git/84665/focus=84670
+>
+> The user explicitly asks to stash it for a while, where the definition of
+> the "while" comes from reflog's retention period.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+But that doesn't answer the basic question as to why it's ok
+to trash data that the user explicitly asked git to save?
 
-Karl/Catalin, et al,
+The fact that stash is implemented in terms of reflogs seems irrelevant to me.
+If stash were implemented via branches and cherry picking would it still be
+natural to automatically expire them?
 
-Attached is my latest stab at StGit importing patches from compressed files. This
-version doesn't try to differentiate by the file extension; it just tries to open
-gzip or bz2 files and if those fail it reverts to text. I'm not completely happy with
-it, but I've spent about as much time on it as I can afford to (for this week anyway).
+At the very least the man page might want to mention the temporary nature
+of stashes.  Better yet when 'git stash' could print that out when creating
+the stash, eh?
 
-Yeah, yeah, Karl, there are four new tests in t1800-import. Let me know if you think
-there should be more (more for compressed input that is; I'm not crazy enough to sign
-up to write more tests for *everything*). :)
-
-Clark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
-
-iEYEARECAAYFAkhRlgIACgkQqA4JVb61b9d2ygCfTUPc5I9eXM4947VTrTZ+mO0H
-+vIAoJJACG94TdnyUIac73lB4UYCZVlG
-=sa3t
------END PGP SIGNATURE-----
-
---------------010608080503000908030407
-Content-Type: text/x-patch;
- name="compressed-input.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="compressed-input.patch"
-
-Patch to allow import from compressed files (gzip and bzip2)
-
-From: Clark Williams <williams@redhat.com>
-
-Signed-off-by: Clark Williams <williams@redhat.com>
----
-
- stgit/commands/imprt.py |   42 ++++++++++++++++++++++++++++++++++++------
- t/t1800-import.sh       |   42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 6 deletions(-)
-
-diff --git a/stgit/commands/imprt.py b/stgit/commands/imprt.py
-index 4a4b792..fc5cdce 100644
---- a/stgit/commands/imprt.py
-+++ b/stgit/commands/imprt.py
-@@ -175,14 +175,49 @@ def __create_patch(filename, message, author_name, author_email,
-                                  backup = False)
-         out.done()
- 
-+def __mkpatchname(name, suffix):
-+    if name.lower().endswith(suffix.lower()):
-+        return name[:-len(suffix)]
-+    return name
-+
-+def __gethandleandname(filename):
-+    """return a file handle and a patch name derived from filename
-+    """
-+    # see if it's a gzip'ed patch
-+    try:
-+        import gzip
-+        f = gzip.open(filename)
-+        f.read(1)
-+        f.seek(0)
-+        return (f, __mkpatchname(filename, '.gz'))
-+    except IOError, e:
-+            pass
-+    # see if it's a bzip2'ed patch
-+    try:
-+        import bz2
-+        f = bz2.BZ2File(filename)
-+        f.read(1)
-+        f.seek(0)
-+        return (f, __mkpatchname(filename, '.bz2'))
-+    except IOError, e:
-+            pass
-+    # plain old file...
-+    return (open(filename), filename)
-+
- def __import_file(filename, options, patch = None):
-     """Import a patch from a file or standard input
-     """
-+    pname = None
-     if filename:
--        f = file(filename)
-+        (f, pname) = __gethandleandname(filename)
-     else:
-         f = sys.stdin
- 
-+    if patch:
-+        pname = patch
-+    elif not pname:
-+        pname = filename
-+
-     if options.mail:
-         try:
-             msg = email.message_from_file(f)
-@@ -197,11 +232,6 @@ def __import_file(filename, options, patch = None):
-     if filename:
-         f.close()
- 
--    if patch:
--        pname = patch
--    else:
--        pname = filename
--
-     __create_patch(pname, message, author_name, author_email,
-                    author_date, diff, options)
- 
-diff --git a/t/t1800-import.sh b/t/t1800-import.sh
-index 8c8c9a0..1352743 100755
---- a/t/t1800-import.sh
-+++ b/t/t1800-import.sh
-@@ -80,4 +80,46 @@ test_expect_success \
-     stg delete ..
-     '
- 
-+test_expect_success \
-+    'Apply a bzip2 patch created with "git diff"' \
-+    '
-+    bzip2 -c ../t1800-import/git-diff >../t1800-import/bzip2-git-diff &&
-+    stg import ../t1800-import/bzip2-git-diff &&
-+    [ $(git cat-file -p $(stg id) \
-+        | grep -c "tree e96b1fba2160890ff600b675d7140d46b022b155") = 1 ] &&
-+    rm ../t1800-import/bzip2-git-diff &&
-+    stg delete .. 
-+    '
-+test_expect_success \
-+    'Apply a bzip2 patch with a .bz2 suffix' \
-+    '
-+    bzip2 -c ../t1800-import/git-diff >../t1800-import/git-diff.bz2 &&
-+    stg import ../t1800-import/git-diff.bz2 &&
-+    [ $(git cat-file -p $(stg id) \
-+        | grep -c "tree e96b1fba2160890ff600b675d7140d46b022b155") = 1 ] &&
-+    rm ../t1800-import/git-diff.bz2 &&
-+    stg delete .. 
-+    '
-+
-+test_expect_success \
-+    'Apply a gzip patch created with GNU diff' \
-+    '
-+    gzip -c ../t1800-import/gnu-diff >../t1800-import/gzip-gnu-diff &&
-+    stg import ../t1800-import/gzip-gnu-diff &&
-+    [ $(git cat-file -p $(stg id) \
-+        | grep -c "tree e96b1fba2160890ff600b675d7140d46b022b155") = 1 ] &&
-+    rm ../t1800-import/gzip-gnu-diff &&
-+    stg delete ..
-+    '
-+test_expect_success \
-+    'Apply a gzip patch with a .gz suffix' \
-+    '
-+    gzip -c ../t1800-import/gnu-diff >../t1800-import/gnu-diff.gz &&
-+    stg import ../t1800-import/gnu-diff.gz &&
-+    [ $(git cat-file -p $(stg id) \
-+        | grep -c "tree e96b1fba2160890ff600b675d7140d46b022b155") = 1 ] &&
-+    rm ../t1800-import/gnu-diff.gz &&
-+    stg delete ..
-+    '
-+
- test_done
-
---------------010608080503000908030407--
+- Eric
