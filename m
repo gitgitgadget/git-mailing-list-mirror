@@ -1,103 +1,90 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add test-tr: poor-man tr
-Date: Thu, 12 Jun 2008 22:32:45 +0200
-Message-ID: <20080612203245.GB8057@steel.home>
-References: <20080611182501.GA3344@steel.home> <20080611225448.GC19474@sigill.intra.peff.net> <20080612060152.GA3798@steel.home> <20080612062309.GA31816@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Eric Raible" <raible@gmail.com>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Thu, 12 Jun 2008 13:35:10 -0700
+Message-ID: <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>
+	 <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
+	 <20080611213648.GA13362@glandium.org>
+	 <alpine.DEB.1.00.0806112242370.1783@racer>
+	 <20080611230344.GD19474@sigill.intra.peff.net>
+	 <alpine.LFD.1.10.0806111918300.23110@xanadu.home>
+	 <loom.20080612T042942-698@post.gmane.org>
+	 <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>
+	 <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:33:49 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Wincent Colaiuta" <win@wincent.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:36:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6tUL-0004cE-M6
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:33:42 +0200
+	id 1K6tWg-0005cE-98
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 22:36:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbYFLUcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 16:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbYFLUcs
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:32:48 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:45184 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752546AbYFLUcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 16:32:47 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf50S7
-Received: from tigra.home (Fab42.f.strato-dslnet.de [195.4.171.66])
-	by post.webmailer.de (klopstock mo3) (RZmta 16.42)
-	with ESMTP id g06f4bk5CHBxHd ; Thu, 12 Jun 2008 22:32:45 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 50BE4277BD;
-	Thu, 12 Jun 2008 22:32:45 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 6E45C56D28; Thu, 12 Jun 2008 22:32:45 +0200 (CEST)
+	id S1754620AbYFLUfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 16:35:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYFLUfM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 16:35:12 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:47723 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbYFLUfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 16:35:10 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3771074wfd.4
+        for <git@vger.kernel.org>; Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ksLnARVVCQlmkes8CxjDY8ROW8CO2Th2oI+kAYWeXuU=;
+        b=xefPBqKOSNW7UmY+WoSvz/H5rqPgYx3gPXjuYtpfRqchHsL1E+P2B5aA2l/sx2hVUX
+         VHEwQl1gMyV4Ueo09mrHBNC9/R9inZr5SO/u+llV7UgzIMPMDibyEcCyT5iXX5PrcJpD
+         0e3WaAGh6ZSB1fIM42tU6l4AEyZRaWXF14TY4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=tZLsS8glMMTh6KfQyqwI7DvOFY++z0/YMfdyQEjAYO74+BIX+4L85v1CVvBsd1UOQK
+         gK6Ow3bOzYdBFtVkKd08BsFUXJTO2FhDu0QEjLyjmPSKr/Yy+62yL+mcSV3IZD/s/XeI
+         tpXdZDevMTv6uA4taXquIJleakiwJ2ynBevjM=
+Received: by 10.142.230.11 with SMTP id c11mr699545wfh.334.1213302910056;
+        Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
+Received: by 10.142.180.10 with HTTP; Thu, 12 Jun 2008 13:35:10 -0700 (PDT)
+In-Reply-To: <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20080612062309.GA31816@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84788>
 
-Jeff King, Thu, Jun 12, 2008 08:23:09 +0200:
-> On Thu, Jun 12, 2008 at 08:01:52AM +0200, Alex Riesen wrote:
-> 
-> > Frankly, it started because I wanted to minimize use of Perl on
-> > Windows (because I can't get around ActiveState Perl at work, and it
-> > breaks almost everything it touches). Accidentally, it is also faster
-> > there (maybe just because it's smaller).
-> 
-> Ah, right. Well, I am not opposed to getting rid of perl in the test
-> scripts (there is core functionality provided by perl, so one can easily
-> run git on a system with no perl at all).
+On Thu, Jun 12, 2008 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Wincent Colaiuta <win@wincent.com> writes:
+>
+>> So yes, branches _are_ better and more appropriate for long term
+>> storage than stashes, but even so I don't think it's right for us to
+>> risk throwing away information that the user explicitly stashed and
+>> expected Git to look after for them.
+>
+> Yes, but for a limited amount of time.
+>
 
-"git add --interactive" and "git send-mail". The first has a very good
-replacement (git gui). The other, even if not that "core", is a very
-popular tool. (And I can't use it at work at all: noone to understand
-word "patch" there. And even then, noone would care about change
-review anyway).
+A limited amount of time?  Why is that?  Can you give a rationale which
+at least addresses Wincent's points?
 
-> However, even with your patch, there is still some perl left, so I am
-> not sure that it has really bought us very much.
+It's bad enough that 'git stash clear' drops all pending stashes w/out
+at least echoing them (the way git stash drop does), but what is the
+rationale for having git _ever_ forget information which it was specifically
+requested to remember?
 
-I was forced to carefully check every instance and am positive that
-the others are ok with regard to ActiveState Perl and Windows quirks :)
-(IOW, I run the testsuite every day and it aint broke yet)
+I know that stash is implemented in terms of reflogs, but that seems
+to me an implementation detail which ought not leak out.  Especially
+if that leakage ends up forgetting potentially important data.
 
-> > But, as was already noted, tr does not behave the same for all
-> > platforms (there were even differences in output, BSD or Solaris put
-> > out a stray LF?).
-> 
-> I think those were all resolved by using perl, and your patch replaces
-> them with test-tr.
-
-That was the problem. ActiveState Perl always replaces LF in the
-output with CRLF, which caused mismatches with template files in some
-tests (even the generated templates had LF line endings, cygwins tools
-follow that convention). At first, I tried to get by putting
-"binmode(STDOUT)" into every test, but this became boring with a time.
-Besides, the lines get very long and ugly (and make conflict resolving
-harder).
-
-> > In any case, I wont push this change too hard. I must admit, that
-> > there is no real good reason besides one "screwed" company using
-> > obsoleted tools in a weird way. And it is a maintenance effort (and
-> > people will forget to use test-tr instead of perl and tr).
-> 
-> There is maintenance effort either way; people need to know not to do
-> unportable things with tr (and other tools), and the solution to that is
-> to run the test scripts on each platform (something we are starting to
-> do).
-
-With test-tr they still have to do all that, but also support its
-existence. So I'm not sure.
-
-> So I am not opposed to test-tr, I just wanted you to explain it better
-> in the commit log. ;)
-
-I already tried.
+- Eric
