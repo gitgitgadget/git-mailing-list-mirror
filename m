@@ -1,79 +1,83 @@
-From: "Shak" <sshaikh@hotmail.com>
-Subject: Re: Deleting files
-Date: Thu, 12 Jun 2008 12:38:37 +0100
-Message-ID: <g2r1sb$tut$1@ger.gmane.org>
-References: <g2r19e$s6e$1@ger.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: git diff --cc bug
+Date: Thu, 12 Jun 2008 13:48:10 +0200
+Message-ID: <48510CFA.3060101@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 13:40:17 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 12 13:49:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6l9x-0007tl-9t
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:40:05 +0200
+	id 1K6lJ8-0002Z2-In
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 13:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbYFLLjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 07:39:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755886AbYFLLjK
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:39:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:54461 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755175AbYFLLjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 07:39:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1K6l8x-0007Bm-7y
-	for git@vger.kernel.org; Thu, 12 Jun 2008 11:39:03 +0000
-Received: from cpc4-seve16-0-0-cust781.popl.cable.ntl.com ([86.21.191.14])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jun 2008 11:39:03 +0000
-Received: from sshaikh by cpc4-seve16-0-0-cust781.popl.cable.ntl.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jun 2008 11:39:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cpc4-seve16-0-0-cust781.popl.cable.ntl.com
-In-Reply-To: <g2r19e$s6e$1@ger.gmane.org>
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Windows Mail 6.0.6001.18000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18000
+	id S1751691AbYFLLsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 07:48:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbYFLLsN
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 07:48:13 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:15739 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbYFLLsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 07:48:13 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K6lHn-0008Q8-Ac
+	for git@vger.kernel.org; Thu, 12 Jun 2008 13:48:11 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP id 1D7D569F
+	for <git@vger.kernel.org>; Thu, 12 Jun 2008 13:48:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84745>
 
-"Shak" <sshaikh@hotmail.com> wrote in message 
-news:g2r19e$s6e$1@ger.gmane.org...
-> Hi,
->
-> Are files supposed to be continually tracked after commiting after 
-> deleting them?
->
-> git status reports that files have been deleted as expected (they're not 
-> there anymore). I commit as wanted. I do some more work, but then git 
-> status still reports that the same files have been deleted. As such I have 
-> a historical list of "deleted" files that I may have been working on 
-> previously and had committed.
->
-> I have to run git rm to erase these entries, but I've no idea how that 
-> affects my history.
->
-> Shouldn't git add/commit remember that a file has been deleted previously?
->
-> On a related note, once I do git rm on one of these files, git status 
-> sometimes reports that these rm'd files have been renamed to a new one 
-> instead! What's going on? :(
+While resolving a conflict, I noticed this output of 'git diff':
 
-To be clear on the last point, git seems to be incorrectly detecting that 
-I've copied (sometimes to the same directory) and renamed files. What's the 
-difference anyway? And is there anyway to override it's overzelaous 
-assumptions?
+@@@ -109,7 -130,8 +114,8 @@@ void CValuesView::UpdateValues...
+  	lvc.mask = LVCF_TEXT;
+  	lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTST...
+ -	m_table.SetColumn(1, &lvc);
+ +	GetListCtrl().SetColumn(1, &lvc);
++ 	m_columnTitles[1].id = valuesHeader;
+  }
 
-Shak 
+
+@@@ -635,31 -865,171 +641,169 @@@ void CValuesView::EraseVa...
+ -LRESULT CValuesView::OnOptionsChanged(WPARAM, LPARAM)
+ -{
+ -	if (GetDocument()->ShowPointerValues()) {
+ -		// invalidate values in the display
+ -		CPoint pt(m_x, m_y);	// will be erased
+ -		InvalidateValues();
+ -		FindFmtStrings();
+ -		Update(pt.x, pt.y);
+ -	}
+ -	return 0;
+ -}
+ -
+  void CValuesView::OnUpdate(CView* pSender, LPARAM lHint, ...
+  {
+  	switch (lHint) {
+++<<<<<<< HEAD:SomUI/ValuesWnd.cpp
+++=======
++ 	case UPDATE_MONITORFRAME:
++ 		{
+(hunk truncated for exposition)
+
+Notice that there are no context lines at the beginning of the second
+hunk. I would not have expected this, and I think it's a bug in git diff.
+
+I don't feel like diving into the diff machinery, and would appreciate if
+someone could have a closer look. I have prepared a small repository to
+reproduce the behavior, but I don't want to post it to the public.
+
+-- Hannes
