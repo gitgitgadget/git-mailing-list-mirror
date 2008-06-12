@@ -1,139 +1,122 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Consolidate SHA1 object file close
-Date: Thu, 12 Jun 2008 18:00:12 +0200
-Message-ID: <20080612160012.GA13533@artemis.madism.org>
-References: <alpine.LFD.1.10.0806110755190.3101@woody.linux-foundation.org> <20080611154020.GE28629@artemis.madism.org> <alpine.LFD.1.10.0806110952290.3101@woody.linux-foundation.org> <alpine.LFD.1.10.0806101842460.3101@woody.linux-foundation.org> <20080611074309.GB28629@artemis.madism.org> <alpine.LFD.1.10.0806110755190.3101@woody.linux-foundation.org> <20080611154020.GE28629@artemis.madism.org> <alpine.LFD.1.10.0806111030580.3101@woody.linux-foundation.org> <20080611222534.GC16439@artemis.madism.org> <alpine.LFD.1.10.0806120758090.3041@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="8t9RHnE3ZwKMSgU+";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Denis Bueno <dbueno@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 18:01:17 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Introduce get_octopus_merge_bases() in commit.c
+Date: Thu, 12 Jun 2008 18:59:58 +0200
+Message-ID: <1213289998-14410-1-git-send-email-vmiklos@frugalware.org>
+References: <7vprqna5t6.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 19:00:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6pEd-0008SF-G4
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 18:01:11 +0200
+	id 1K6qAQ-0006ke-JQ
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 19:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498AbYFLQAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 12:00:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYFLQAR
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 12:00:17 -0400
-Received: from pan.madism.org ([88.191.52.104]:41526 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751279AbYFLQAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 12:00:15 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id D0F05356C1;
-	Thu, 12 Jun 2008 18:00:13 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 98AD73A76; Thu, 12 Jun 2008 18:00:12 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Denis Bueno <dbueno@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0806120758090.3041@woody.linux-foundation.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752269AbYFLQ76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 12:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYFLQ76
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 12:59:58 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:35423 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752205AbYFLQ75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 12:59:57 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id AA8B51DDC5B;
+	Thu, 12 Jun 2008 18:59:54 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id E547018DFDC; Thu, 12 Jun 2008 18:59:58 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc2.dirty
+In-Reply-To: <7vprqna5t6.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84765>
 
+This is like get_merge_bases() but it works for multiple heads, like
+show-branch --merge-base.
 
---8t9RHnE3ZwKMSgU+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-On Thu, Jun 12, 2008 at 03:33:53PM +0000, Linus Torvalds wrote:
-> IOW, there are safety nets in place, but they tend to be fairly easily=20
-> broken under certain circumstances.
+On Wed, Jun 11, 2008 at 04:51:49PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Why is passing "cleanup" through to get_merge_bases() safe, even when you
+> are running it more than once?
+>
+> get_merge_bases() uses PARENT1, PARENT2 and other flags internally, and
+> the information necessary to clean them efficiently (i.e. the set of
+> commits that could be smudged with these flags due to its operation) is
+> known only to it _after it finishes_.  You cannot even say "previous run
+> did not clean things up, so please clean-up before starting this round"
+> upfront.  That is why we have clean-up loops at the _end_ of the function
+> after it finishes computing what it wants to return.
+>
+> The only reason clean-up is optional to the function is because there are
+> one-shot callers such as "git merge-base" that do not want to pay penalty
+> for cleaning up (the only time you do not have to tell it to clean up is
+> when you know the invocation is the _last_ invocation of the function, iow
+> there is no later invocation that will be harmed by leftover flags).
 
-  Right, though this is a LAN with really few switches between the
-clients and the server, and the issue happens with any client with that
-setup.
+Yes, you have reason, cleanup in get_octopus_merge_bases() should not be
+optional. Here is an updated patch that does not have this problem.
 
-> Add to the above the possibility of just a kernel NFS bug (or a NFSd one)=
-,=20
-> and it would really be very interesting to hear:
->=20
->  - do the errors seem to happen more at certain clients than others?
+(Also available in my working branch where I fixed up 9/10 and 10/10 to
+reflect this change.)
 
-  Not really, it happens more often with the script I inlined in one of
-my mails, than with the one I attached to it. And people working on
-_pure_ NFS have the issue a bit less than the ones using their workdir
-on a separate local device. That's all I can tell for now.
+ commit.c |   27 +++++++++++++++++++++++++++
+ commit.h |    1 +
+ 2 files changed, 28 insertions(+), 0 deletions(-)
 
-  One of the developper told me that this pattern of use triggers the
-problem more for him: he has a 'master' branch checkouted in his NFS
-home, and a 'local' branch on his local hard drive workdir[0]. The issue
-happens more when he's working on the two workdirs at the same time
-(for a value of "at the same time" that is like in the same minute, not
-at the same nanosecond of course, he never commits in both workdirs at
-the same time).  When he only works in his NFS 'master' or the local
-'local' branch, it happens really less often.
-
->    If it's a client-side problem, it really should happen more for certai=
-n=20
->    kernel versions or certain hardware.
-
-  It doesn't afaict. Clients are heterogenous in kernel versions (.18,
-=2E22, .24, .25 for whate I've seen), and in hardware (all machines are
-Dell computers, but from really different years, hence different mobos
-and NICs. Some even have non Dell gigabit NICs in them).
-
-
->  - have you had any other anecdotal evidence of problems with non-git=20
->    usage? Unexplained SIGSEGV's if you have binaries over NFS, for=20
->    example? Strange syntax errors when compiling over NFS?
-
-  Not really no. Our NFS server is remarkably stable with anything else
-(it's also remarkably slow compared to local drives but that's not
-really relevant ;p).
-
-> I'm not discounting a git bug, but quite frankly, it really is worth=20
-> checking that your network/NFS setup is solid.
-
-  Well to date I'd say it's quite solid. We are a software company and
-even have tested our software (that does heavy use of mmap, pread,
-pwrite, and other things that NFS is not often dealing with very well)
-on that very server without a glitch that could have been attributed to
-NFS (I mean we've had tons of bugs, but it was always in our software in
-the end ;p). Though we really rarely pread what we just pwrite-d or
-things like that, so maybe we never triggered a possible kernel bug
-either :)
-
-
-  [0] the reason of that setup is that when we work on topic branches,
-      we sometimes spot big bugs that are small to fix, and we use the
-      "NFS" master branch to push those bugfixes as soon as we find
-      them, whereas local is pushed only when the feature is ready.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---8t9RHnE3ZwKMSgU+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhRSAoACgkQvGr7W6HudhzLHgCgh3iGjpJ6l8rCOYCOQAyNoi4X
-Sd0An2PZsL/NYwp4rcdTU4kgmKTAmEei
-=yX92
------END PGP SIGNATURE-----
-
---8t9RHnE3ZwKMSgU+--
+diff --git a/commit.c b/commit.c
+index bbf9c75..6052ca3 100644
+--- a/commit.c
++++ b/commit.c
+@@ -600,6 +600,33 @@ static struct commit_list *merge_bases(struct commit *one, struct commit *two)
+ 	return result;
+ }
+ 
++struct commit_list *get_octopus_merge_bases(struct commit_list *in)
++{
++	struct commit_list *i, *j, *k, *ret = NULL;
++	struct commit_list **pptr = &ret;
++
++	for (i = in; i; i = i->next) {
++		if (!ret)
++			pptr = &commit_list_insert(i->item, pptr)->next;
++		else {
++			struct commit_list *new = NULL, *end = NULL;
++
++			for (j = ret; j; j = j->next) {
++				struct commit_list *bases;
++				bases = get_merge_bases(i->item, j->item, 1);
++				if (!new)
++					new = bases;
++				else
++					end->next = bases;
++				for (k = bases; k; k = k->next)
++					end = k;
++			}
++			ret = new;
++		}
++	}
++	return ret;
++}
++
+ struct commit_list *get_merge_bases(struct commit *one,
+ 					struct commit *two, int cleanup)
+ {
+diff --git a/commit.h b/commit.h
+index 7f8c5ee..dcec7fb 100644
+--- a/commit.h
++++ b/commit.h
+@@ -121,6 +121,7 @@ int read_graft_file(const char *graft_file);
+ struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
+ 
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
++extern struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+ 
+ extern int register_shallow(const unsigned char *sha1);
+ extern int unregister_shallow(const unsigned char *sha1);
+-- 
+1.5.6.rc2.dirty
