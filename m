@@ -1,77 +1,74 @@
-From: Patrick Higgins <patrick.higgins@cexp.com>
-Subject: [PATCH v2] Detect if kdiff3 supports '--' and do not supply it if not supported
-Date: Thu, 12 Jun 2008 17:03:37 -0600
-Message-ID: <1213311817-4673-1-git-send-email-patrick.higgins@cexp.com>
-Cc: tytso@mit.edu, Patrick Higgins <patrick.higgins@cexp.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: [PATCH 2/2] git-svn: test that extra blank lines aren't inserted in commit messages.
+Date: Thu, 12 Jun 2008 19:10:51 -0400
+Message-ID: <1213312251-8081-2-git-send-email-apenwarr@gmail.com>
+References: <1213312251-8081-1-git-send-email-apenwarr@gmail.com>
+Cc: gitster@pobox.com, Avery Pennarun <apenwarr@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 01:05:57 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 01:19:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6vr4-0000Vc-Lc
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 01:05:46 +0200
+	id 1K6w4M-0003oQ-9Q
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 01:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754263AbYFLXEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 19:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753787AbYFLXEY
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 19:04:24 -0400
-Received: from mx02.cexp.com ([170.131.136.83]:43885 "EHLO mx02.cexp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753400AbYFLXEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 19:04:24 -0400
-Received: from mailgate2.cexp.com (uscobrmfa-se-07.cexp.com [170.131.144.37])
-	by mx02.cexp.com (Postfix) with ESMTP id 9164C1E4D8E
-	for <git@vger.kernel.org>; Thu, 12 Jun 2008 17:03:39 -0600 (MDT)
-Received: from localhost.localdomain ([10.128.5.63]) by USCOBRMFA-SE-51.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 12 Jun 2008 17:03:38 -0600
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.1/8.13.1) with ESMTP id m5CN3bkI004697;
-	Thu, 12 Jun 2008 17:03:37 -0600
-Received: (from phiggins@localhost)
-	by localhost.localdomain (8.13.1/8.13.1/Submit) id m5CN3bsB004696;
-	Thu, 12 Jun 2008 17:03:37 -0600
-X-Mailer: git-send-email 1.5.6.rc2
-X-OriginalArrivalTime: 12 Jun 2008 23:03:38.0605 (UTC) FILETIME=[8CBDD1D0:01C8CCE0]
+	id S1756252AbYFLXSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 19:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756734AbYFLXSH
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 19:18:07 -0400
+Received: from host.239.160.mtl.cablemodem.vdn.ca ([206.223.239.160]:52907
+	"EHLO insight.mtl.versabanq.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756233AbYFLXSG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2008 19:18:06 -0400
+Received: by insight.mtl.versabanq.com (Postfix, from userid 1000)
+	id 8F696E7C530; Thu, 12 Jun 2008 19:10:51 -0400 (EDT)
+X-Mailer: git-send-email 1.5.6.rc2.26.g8c37
+In-Reply-To: <1213312251-8081-1-git-send-email-apenwarr@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84811>
 
-kdiff3 can be compiled with Qt only or with KDE support. If compiled with
-Qt only, it does not support '--' and mergetool fails silently.
+Improve the git-svn-author test to check that extra newlines aren't inserted
+into commit messages as they take a round trip from git to svn and back.
 
-Signed-off-by: Patrick Higgins <patrick.higgins@cexp.com>
+We test both with and without the --add-author-from option to git-svn.
+
+git-svn: test that svn repo doesn't have extra newlines.
+
+Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
 ---
- git-mergetool.sh |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+ t/t9122-git-svn-author.sh |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index fcdec4a..85ce004 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -181,12 +181,19 @@ merge_file () {
+diff --git a/t/t9122-git-svn-author.sh b/t/t9122-git-svn-author.sh
+index 8c58f0b..1190576 100755
+--- a/t/t9122-git-svn-author.sh
++++ b/t/t9122-git-svn-author.sh
+@@ -64,7 +64,21 @@ test_expect_success 'interact with it via git-svn' '
  
-     case "$merge_tool" in
- 	kdiff3)
-+	    "$merge_tool_path" --auto -o /dev/null -- /dev/null /dev/null
-+	    if test $? -ne 0; then
-+		double_dash=""
-+	    else
-+		double_dash="--"
-+	    fi
+ 	# Make sure --add-author-from with --use-log-author affected
+ 	# the authorship information
+-	grep "^Author: A U Thor " actual.4
++	grep "^Author: A U Thor " actual.4 &&
 +
- 	    if base_present ; then
- 		("$merge_tool_path" --auto --L1 "$MERGED (Base)" --L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" \
--		    -o "$MERGED" -- "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		    -o "$MERGED" $double_dash "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
- 	    else
- 		("$merge_tool_path" --auto --L1 "$MERGED (Local)" --L2 "$MERGED (Remote)" \
--		    -o "$MERGED" -- "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		    -o "$MERGED" $double_dash "$LOCAL" "$REMOTE" > /dev/null 2>&1)
- 	    fi
- 	    status=$?
- 	    ;;
++	# Make sure there are no commit messages with excess blank lines
++	test $(grep "^ " actual.2 | wc -l) = 3 &&
++	test $(grep "^ " actual.3 | wc -l) = 5 &&
++	test $(grep "^ " actual.4 | wc -l) = 5 &&
++
++	# Make sure there are no svn commit messages with excess blank lines
++	(
++		cd work.svn &&
++		svn up &&
++		
++		test $(svn log -r2:2 | wc -l) = 5 &&
++		test $(svn log -r4:4 | wc -l) = 7
++	)
+ '
+ 
+ test_done
 -- 
-1.5.6.rc2
+1.5.4.3
