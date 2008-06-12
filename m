@@ -1,170 +1,91 @@
-From: Flavio Poletti <flavio@polettix.it>
-Subject: [PATCH v3] git-instaweb: Enhanced auto-discovery of httpd and call conventions. Removed backticks.
-Date: Thu, 12 Jun 2008 23:54:55 +0200
-Message-ID: <1213307695-2563-1-git-send-email-flavio@polettix.it>
-References: <1213264759-5264-1-git-send-email-flavio@polettix.it>
-Cc: normalperson@yhbt.net, Flavio Poletti <flavio@polettix.it>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 23:56:01 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-svn-import or CVS import from local HD rather than remote.
+Date: Thu, 12 Jun 2008 18:11:09 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806121759300.19665@iabervon.org>
+References: <Pine.LNX.4.64.0806121214210.18454@xenau.zenez.com> <20080612185545.GN29404@genesis.frugalware.org> <Pine.LNX.4.64.0806121315540.18454@xenau.zenez.com> <alpine.LNX.1.00.0806121523370.19665@iabervon.org> <Pine.LNX.4.64.0806121348340.18454@xenau.zenez.com>
+ <alpine.LNX.1.00.0806121652220.19665@iabervon.org> <Pine.LNX.4.64.0806121457490.18454@xenau.zenez.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 00:12:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6ulx-0002m0-Jz
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 23:55:58 +0200
+	id 1K6v1b-0000Tx-3Z
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 00:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623AbYFLVzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 17:55:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbYFLVzD
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 17:55:03 -0400
-Received: from [195.130.249.251] ([195.130.249.251]:33994 "HELO desantix.it"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with SMTP
-	id S1751011AbYFLVzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 17:55:00 -0400
-Received: (qmail 6471 invoked by uid 511); 12 Jun 2008 22:08:23 -0000
-Received: from localhost.localdomain (127.0.0.1)
-  by localhost.localdomain with SMTP; 12 Jun 2008 22:08:23 -0000
-X-Mailer: git-send-email 1.5.5.4
-In-Reply-To: <1213264759-5264-1-git-send-email-flavio@polettix.it>
+	id S1758553AbYFLWLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 18:11:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758533AbYFLWLM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 18:11:12 -0400
+Received: from iabervon.org ([66.92.72.58]:44038 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758419AbYFLWLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 18:11:11 -0400
+Received: (qmail 16172 invoked by uid 1000); 12 Jun 2008 22:11:09 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Jun 2008 22:11:09 -0000
+In-Reply-To: <Pine.LNX.4.64.0806121457490.18454@xenau.zenez.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84804>
 
-This patch allows calling:
+On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
 
-   git-instaweb -d apache2
+> On Thu, 12 Jun 2008, Daniel Barkalow wrote:
+> > On Thu, 12 Jun 2008, Boyd Lynn Gerber wrote:
+> > > 
+> > > This is really frustrating.
+> > > 
+> > > I have tried every combination of file://localhost/ file:///
+> > > 
+> > > This is what I get
+> > > 
+> > > git-svn clone file:///working/svn/network/wireshark/ -T trunk -b 
+> > > branches -t tags wireshark Initialized empty Git repository in .git/ 
+> > > Couldn't open a repository: Unable to open an ra_local session to URL: 
+> > > Unable to open repository 'file:///working/svn/network/wireshark' at 
+> > > /usr/bin/git-svn line 1048
+> > > 
+> > > > ls -la /working/svn/network/wireshark/
+> > > total 16
+> > > drwxr-xr-x  8 gerberb zenez  208 2008-06-10 12:44 .
+> > > drwxr-xr-x  9 gerberb zenez  240 2008-06-12 13:00 ..
+> > > drwxr-xr-x  6 gerberb zenez  240 2008-06-12 12:14 .svn
+> > > drwxr-xr-x  6 gerberb zenez  152 2008-06-10 12:43 historic
+> > > drwxr-xr-x  5 gerberb zenez  152 2008-06-10 12:46 prereleases
+> > > drwxr-xr-x 86 gerberb zenez 2728 2008-06-10 12:37 releases
+> > > drwxr-xr-x 26 gerberb zenez 7016 2008-06-10 12:39 trunk
+> > > drwxr-xr-x 25 gerberb zenez 7136 2008-06-10 11:45 trunk-1.0
+> > 
+> > That looks like a SVN working copy, not an SVN repository. Maybe you 
+> > want file:///master/svn/...?
+> 
+> I tried /master/svn/network/... as well.  Same results.  I can cd 
+> /master/svn/network/... svn update and I get any updates from the URL.
 
-and have the script Do The Right Thing. In particular, the auto-discovery
-mechanism has been extended in order to be used for module listing as
-well, and the call convention is that if the daemon is apache2/lighttpd
-and the parameter to the "-d" option does not end by "-f", the "-f" is
-added to the end of the option itself.
+That means it's a SVN working copy; SVN working copies don't contain the 
+project history, so it's impossible to import from them. 
 
-Changed all backticks to $( ... ) as per Documentation/CodingGuidelines:
+Basically, if you can't use your master copy for "svn co <URL>", you can't 
+use it for "git svn".
 
-   For shell scripts specifically (not exhaustive):
+> I really do not want to run web-dav.  I am able to do it if I run web-dav 
+> and have my server as a svn master.  I have had security issues with 
+> web-dav and I really want to avoid running it at all costs.
 
-      - We prefer $( ... ) for command substitution; unlike ``, it
-         properly nests.  It should have been the way Bourne spelled
-         it from day one, but unfortunately isn't.
+The SVN FAQ has information on running a SVN master without any web 
+service. You should probably read that.
 
-The rationale is that the POSIX shell does support $( ... ), and git
-does make use of it rather extensively. (Thanks to Jakub Narebski for
-pointing this out).
+Alternatively, you could give up on having any local SVN-based storage, 
+and have /master/svn/... be a git repository that you update from the 
+upstream SVN server with "git svn".
 
-Signed-off-by: Flavio Poletti <flavio@polettix.it>
----
-
-Sorry for the traffic, but I noticed that a stray warning was emitted
-due to a last-second change (which teaches me once more that those
-"innocent" last-second it-cannot-spoil-anything changes are the
-most poisonus snakes in programming.
-
- git-instaweb.sh |   48 +++++++++++++++++++++++++++++++++---------------
- 1 files changed, 33 insertions(+), 15 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 6f91c8f..af0fde5 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -22,10 +22,10 @@ restart        restart the web server
- . git-sh-setup
- 
- fqgitdir="$GIT_DIR"
--local="`git config --bool --get instaweb.local`"
--httpd="`git config --get instaweb.httpd`"
--port=`git config --get instaweb.port`
--module_path="`git config --get instaweb.modulepath`"
-+local="$(git config --bool --get instaweb.local)"
-+httpd="$(git config --get instaweb.httpd)"
-+port=$(git config --get instaweb.port)
-+module_path="$(git config --get instaweb.modulepath)"
- 
- conf="$GIT_DIR/gitweb/httpd.conf"
- 
-@@ -37,11 +37,21 @@ test -z "$httpd" && httpd='lighttpd -f'
- # any untaken local port will do...
- test -z "$port" && port=1234
- 
--start_httpd () {
--	httpd_only="`echo $httpd | cut -f1 -d' '`"
-+resolve_full_httpd () {
-+	case "$httpd" in
-+	*apache2*|*lighttpd*)
-+		# ensure that the apache2/lighttpd command ends with "-f"
-+		if ! echo "$httpd" | grep -- '-f *$' >/dev/null 2>&1
-+		then
-+			httpd="$httpd -f"
-+		fi
-+		;;
-+	esac
-+
-+	httpd_only="$(echo $httpd | cut -f1 -d' ')"
- 	if case "$httpd_only" in /*) : ;; *) which $httpd_only >/dev/null;; esac
- 	then
--		$httpd "$fqgitdir/gitweb/httpd.conf"
-+		full_httpd=$httpd
- 	else
- 		# many httpds are installed in /usr/sbin or /usr/local/sbin
- 		# these days and those are not in most users $PATHs
-@@ -51,16 +61,23 @@ start_httpd () {
- 		do
- 			if test -x "$i/$httpd_only"
- 			then
--				# don't quote $httpd, there can be
--				# arguments to it (-f)
--				$i/$httpd "$fqgitdir/gitweb/httpd.conf"
-+				full_httpd=$i/$httpd
- 				return
- 			fi
- 		done
--		echo "$httpd_only not found. Install $httpd_only or use" \
--		     "--httpd to specify another http daemon."
-+
-+		echo >&2 "$httpd_only not found. Install $httpd_only or use" \
-+		     "--httpd to specify another httpd daemon."
- 		exit 1
- 	fi
-+}
-+
-+start_httpd () {
-+	# here $httpd should have a meaningful value
-+	resolve_full_httpd
-+
-+	# don't quote $full_httpd, there can be arguments to it (-f)
-+	$full_httpd "$fqgitdir/gitweb/httpd.conf"
- 	if test $? != 0; then
- 		echo "Could not execute http daemon $httpd."
- 		exit 1
-@@ -68,7 +85,7 @@ start_httpd () {
- }
- 
- stop_httpd () {
--	test -f "$fqgitdir/pid" && kill `cat "$fqgitdir/pid"`
-+	test -f "$fqgitdir/pid" && kill $(cat "$fqgitdir/pid")
- }
- 
- while test $# != 0
-@@ -116,7 +133,7 @@ do
- done
- 
- mkdir -p "$GIT_DIR/gitweb/tmp"
--GIT_EXEC_PATH="`git --exec-path`"
-+GIT_EXEC_PATH="$(git --exec-path)"
- GIT_DIR="$fqgitdir"
- export GIT_EXEC_PATH GIT_DIR
- 
-@@ -215,7 +232,8 @@ PerlPassEnv GIT_EXEC_DIR
- EOF
- 	else
- 		# plain-old CGI
--		list_mods=`echo "$httpd" | sed "s/-f$/-l/"`
-+		resolve_full_httpd
-+		list_mods=$(echo "$full_httpd" | sed "s/-f$/-l/")
- 		$list_mods | grep 'mod_cgi\.c' >/dev/null 2>&1 || \
- 		echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
- 		cat >> "$conf" <<EOF
--- 
-1.5.5.4
+	-Daniel
+*This .sig left intentionally blank*
