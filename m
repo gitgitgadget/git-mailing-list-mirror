@@ -1,91 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Typo in RelNotes.
-Date: Thu, 12 Jun 2008 02:14:28 -0400
-Message-ID: <20080612061428.GA28696@sigill.intra.peff.net>
-References: <alpine.LNX.1.00.0806120434290.5838@localhost> <905315640806112059r713bf807l20a1bc1e14ce4e27@mail.gmail.com> <20080612045330.GB25992@sigill.intra.peff.net> <905315640806112206g4df6ce11h2a98412223e13fdd@mail.gmail.com>
+Subject: Re: [PATCH] Add test-tr: poor-man tr
+Date: Thu, 12 Jun 2008 02:23:09 -0400
+Message-ID: <20080612062309.GA31816@sigill.intra.peff.net>
+References: <20080611182501.GA3344@steel.home> <20080611225448.GC19474@sigill.intra.peff.net> <20080612060152.GA3798@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 08:15:43 2008
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 08:24:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6g61-0006n8-To
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 08:15:42 +0200
+	id 1K6gE9-0000W1-Ei
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 08:24:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbYFLGOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 02:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbYFLGOb
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 02:14:31 -0400
-Received: from peff.net ([208.65.91.99]:3595 "EHLO peff.net"
+	id S1752075AbYFLGXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 02:23:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYFLGXM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 02:23:12 -0400
+Received: from peff.net ([208.65.91.99]:3127 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752326AbYFLGOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 02:14:30 -0400
-Received: (qmail 9503 invoked by uid 111); 12 Jun 2008 06:14:29 -0000
+	id S1751509AbYFLGXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 02:23:11 -0400
+Received: (qmail 10055 invoked by uid 111); 12 Jun 2008 06:23:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 12 Jun 2008 02:14:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jun 2008 02:14:28 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 12 Jun 2008 02:23:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jun 2008 02:23:09 -0400
 Content-Disposition: inline
-In-Reply-To: <905315640806112206g4df6ce11h2a98412223e13fdd@mail.gmail.com>
+In-Reply-To: <20080612060152.GA3798@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84720>
 
-On Wed, Jun 11, 2008 at 10:06:13PM -0700, Tarmigan wrote:
+On Thu, Jun 12, 2008 at 08:01:52AM +0200, Alex Riesen wrote:
 
-> > Maybe I am blind, but I don't see a typo. Are you referring to tformat,
-> > which looks like a typo, but is actually correct?
-> 
-> Oops you're right.  That's what I was thinking of.  Junio's commit
-> message explains it well.  Should something be added to the man page
-> about it?
+> Frankly, it started because I wanted to minimize use of Perl on
+> Windows (because I can't get around ActiveState Perl at work, and it
+> breaks almost everything it touches). Accidentally, it is also faster
+> there (maybe just because it's smaller).
 
-How about this? I worry that the perl in the example is unnecessarily
-complex, but I couldn't think of a simpler way to show "in this one, the
-trailing newline is missing". So I am open to suggestions.
+Ah, right. Well, I am not opposed to getting rid of perl in the test
+scripts (there is core functionality provided by perl, so one can easily
+run git on a system with no perl at all).
 
--- >8 --
-document --pretty=tformat: option
+However, even with your patch, there is still some perl left, so I am
+not sure that it has really bought us very much.
 
-This was introduced in 4da45bef, but never documented
-anywhere.
----
- Documentation/pretty-formats.txt |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+> But, as was already noted, tr does not behave the same for all
+> platforms (there were even differences in output, BSD or Solaris put
+> out a stray LF?).
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index e8bea3e..14a2665 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -124,3 +124,24 @@ The placeholders are:
- - '%m': left, right or boundary mark
- - '%n': newline
- - '%x00': print a byte from a hex code
-+
-+* 'tformat:'
-++
-+The 'tformat:' format works exactly like 'format:', except that it
-+provides "terminator" semantics instead of "separator" semantics. In
-+other words, each commit has the message separator (usually a newline)
-+appended, rather than placed between entries. This means that the final
-+entry of a single-line format will be properly terminated with a new
-+line, just as the "oneline" format does. For example:
-++
-+---------------------
-+$ git log -2 --pretty=format:%h 4da45bef \
-+  | perl -pe '$_ .= " -- NO NEWLINE\n" unless /\n/'
-+4da45be
-+7134973 -- NO NEWLINE
-+
-+$ git log -2 --pretty=tformat:%h 4da45bef \
-+  | perl -pe '$_ .= " -- NO NEWLINE\n" unless /\n/'
-+4da45be
-+7134973
-+---------------------
--- 
-1.5.6.rc2.168.g23af0b.dirty
+I think those were all resolved by using perl, and your patch replaces
+them with test-tr.
+
+> > Or is your rationale "this will prevent people from screwing up the test
+> > scripts accidentally in the future"?
+> We just can't have that. Nothing can prevent people from screwing up
+> anything in any given point of time :)
+
+Heh. At least we can yell at them after the fact for not using the
+available tool. :)
+
+> In any case, I wont push this change too hard. I must admit, that
+> there is no real good reason besides one "screwed" company using
+> obsoleted tools in a weird way. And it is a maintenance effort (and
+> people will forget to use test-tr instead of perl and tr).
+
+There is maintenance effort either way; people need to know not to do
+unportable things with tr (and other tools), and the solution to that is
+to run the test scripts on each platform (something we are starting to
+do).
+
+So I am not opposed to test-tr, I just wanted you to explain it better
+in the commit log. ;)
+
+-Peff
