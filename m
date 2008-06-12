@@ -1,91 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Improve sed portability
-Date: Thu, 12 Jun 2008 09:46:38 +0200
-Message-ID: <4850D45E.8000802@viscovery.net>
-References: <1213189759-11565-1-git-send-email-chris.ridd@isode.com>            <484FDB5D.7060606@viscovery.net> <484FEF71.2030909@isode.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: To graft or not to graft... (Re: Recovering from repository
+	corruption)
+Date: Thu, 12 Jun 2008 03:47:53 -0400
+Message-ID: <20080612074752.GA507@sigill.intra.peff.net>
+References: <6dbd4d000806101026m458513ecqa8141f509bad7602@mail.gmail.com> <20080611232126.GA9054@cuci.nl> <alpine.LFD.1.10.0806111635200.3101@woody.linux-foundation.org> <200806120914.22083.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: no To-header on input <"unlisted-recipients:;"@eudaptics.com>,
-	git@vger.kernel.org
-To: Chris Ridd <chris.ridd@isode.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 09:47:45 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Stephen R. van den Berg" <srb@cuci.nl>,
+	Denis Bueno <dbueno@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Jun 12 09:48:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6hX4-0007q9-6a
-	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 09:47:42 +0200
+	id 1K6hYB-0008AI-DL
+	for gcvg-git-2@gmane.org; Thu, 12 Jun 2008 09:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047AbYFLHqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 03:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbYFLHqp
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 03:46:45 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:61883 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753482AbYFLHqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 03:46:44 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K6hW5-00064z-Ii; Thu, 12 Jun 2008 09:46:41 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 199CA69F; Thu, 12 Jun 2008 09:46:39 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <484FEF71.2030909@isode.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754060AbYFLHr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 03:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbYFLHr5
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 03:47:57 -0400
+Received: from peff.net ([208.65.91.99]:3292 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753878AbYFLHr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 03:47:57 -0400
+Received: (qmail 15372 invoked by uid 111); 12 Jun 2008 07:47:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 12 Jun 2008 03:47:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jun 2008 03:47:53 -0400
+Content-Disposition: inline
+In-Reply-To: <200806120914.22083.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84733>
 
-Chris Ridd schrieb:
-> Johannes Sixt wrote:
->> Chris Ridd schrieb:
->>> @@ -73,7 +73,7 @@ resolve_relative_url ()
->>>  module_name()
->>>  {
->>>      # Do we have "submodule.<something>.path = $1" defined in
->>> .gitmodules file?
->>> -    re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
->>> +    re=$(printf "%s\n" "$1" | sed -e 's/[].[^$\\*]/\\&/g')
->>
->> You change sq into dq. Is this not dangerous? Shouldn't backslash-en be
->> hidden from the shell so that printf can interpret it?
+On Thu, Jun 12, 2008 at 09:14:21AM +0200, Johan Herland wrote:
+
+> > The grafts file isn't part of the object stream and refs, and clones (and
+> > fetches) very much just copy the object database.
 > 
-> It is necessary to use double quotes. This:
+> AFAICS, there's already a perfectly fine way to distribute grafted history:
+> 1. Add a grafts file
+> 2. Run git-filter-branch
+> 3. Remove grafts file
+> 4. Distribute repo
+> 5. Profit!
 > 
->     printf '%s\n' foobar
-> 
-> prints a literal \, a literal n, and no newline:
-> 
->     foobar\n
-> 
-> Not desirable :-(
+> Since git-filter-branch turns grafted parentage into _real_ parentage,
+> there's no point in ever having a grafts file at all (except transiently
+> for telling git-filter-branch what to do).
 
-On both Linux and AIX 4.3 I see:
+But then you have rewritten all of the later commits, so you can no
+longer talk to other people about them.
 
-$  printf 'x\ny'; echo z
-x
-yz
+The kernel repo is split into "historical" and active repos. You can
+graft the historical repo and get more far-reaching answers to things
+like "git log" and "git blame". But if you run filter-branch, you can't
+share development on that repo via push / pull to people who _don't_ use
+the graft, since they don't share your history (and they probably don't
+want to, because of the extra resources required to pull in the
+historical chunk).
 
-The printf turns the \n into LF.
+That being said, I don't know how common such a setup is. And you did
+mention a "follow-grafts" config option for such people.
 
-I mentioned this in the first place because I don't know what various
-shells do with \n when they see "%s\n". But one way or the other, the \n
-will be turned into LF, either by the shell or by printf. So it's not a
-big deal.
-
-> Of course, using a plain old:
-> 
->     echo "$1"
-> 
-> should work well too. Why is printf being used here and not echo, anyway?
-
-Because the "$1" could contain character sequences that some 'echo'
-implementations mangle.
-
--- Hannes
+-Peff
