@@ -1,73 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 01:58:00 -0400
-Message-ID: <20080613055800.GA26768@sigill.intra.peff.net>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se>
+From: Len Brown <lenb@kernel.org>
+Subject: Re: merge weirdness
+Date: Fri, 13 Jun 2008 01:00:33 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806130049420.8340@localhost.localdomain>
+References: <alpine.LFD.1.10.0806130028080.8340@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Wincent Colaiuta <win@wincent.com>, Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Jun 13 07:59:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 08:02:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K72JQ-0008Ux-RE
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 07:59:01 +0200
+	id 1K72MO-0000yx-Nw
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:02:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288AbYFMF6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 01:58:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYFMF6G
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 01:58:06 -0400
-Received: from peff.net ([208.65.91.99]:3621 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535AbYFMF6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 01:58:04 -0400
-Received: (qmail 28143 invoked by uid 111); 13 Jun 2008 05:58:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 01:58:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 01:58:00 -0400
-Content-Disposition: inline
-In-Reply-To: <4851F6F4.8000503@op5.se>
+	id S1752086AbYFMGBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 02:01:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbYFMGBJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:01:09 -0400
+Received: from vms173001pub.verizon.net ([206.46.173.1]:42009 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559AbYFMGBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 02:01:08 -0400
+X-Greylist: delayed 3622 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jun 2008 02:01:08 EDT
+Received: from localhost.localdomain ([72.93.254.151])
+ by vms173001.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0K2D00LHDXWZ1ML4@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Fri, 13 Jun 2008 00:00:35 -0500 (CDT)
+Received: from localhost.localdomain (d975xbx2 [127.0.0.1])
+	by localhost.localdomain (8.14.2/8.14.2) with ESMTP id m5D50Y5T015750; Fri,
+ 13 Jun 2008 01:00:34 -0400
+Received: from localhost (lenb@localhost)
+	by localhost.localdomain (8.14.2/8.14.2/Submit) with ESMTP id m5D50Xj2015745;
+ Fri, 13 Jun 2008 01:00:34 -0400
+In-reply-to: <alpine.LFD.1.10.0806130028080.8340@localhost.localdomain>
+X-X-Sender: lenb@localhost.localdomain
+X-Authentication-warning: localhost.localdomain: lenb owned process doing -bs
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84837>
 
-On Fri, Jun 13, 2008 at 06:26:28AM +0200, Andreas Ericsson wrote:
 
-> Why are branches better and more appropriate?
-> Is it because the developer who first thought of stashes didn't think they'd
-> be used for any halflong period of time?
-> Is it because there are actions you can do on a branch that you can't do on
-> a stash?
->
-> Who's to say what's appropriate and not? If I explicitly tell a system to
-> save something for me I damn well expect it to be around when I ask that
-> same system to load it for me too.
+On Fri, 13 Jun 2008, Len Brown wrote:
 
-I think we are getting into circular reasoning here (on both sides):
+> I merged about a dozen small branches earlier this week and sent the batch 
+> to Linus, who pulled them upstream with 
+> da50ccc6a0f32ad29c1168837330a78e6e2e2923
+> 
+> I pulled Linus' tree and then went to compare which of my branches had 
+> made it upstream, and my topic branches "git.status" script (pasted 
+> below) said that none of them had!
+> 
+> Looking at Linus' history, it seems that my merge is gone.  Instead there 
+> is a series of patches that look like they've been cherry-picked -- same 
+> commit but different commit id.
+> 
+> I run the top-of-tree version of git.
+> Did something strange happen with git a few days ago in this department?
+> 
+> I still had my merge in command history so I checked out an old branch and 
+> did the same merge using today's git (git version 1.5.6.rc2.26.g8c37)
+> and gitk shows it as an octopus, as expected.
 
-Branches are better, because they don't expire. Stashes expire, because
-branches are a better way to do what you want.
+I think I figured out what happened.
 
-Stashes shouldn't expire, because the user told the stash to save
-information. The user considers it a "save" because stashes hold things
-forever. Stashes hold things forever because they shouldn't expire.
+I prepared the original history, as shown in the commit-id's
+in this shortlog:
 
-In other words, yes, the developer who thought of stashes didn't think
-they'd be used for a long period of time. That's _why_ they were
-designed as they were. The status quo argument says "this is what a
-stash is, because that is how it is implemented."
+http://ftp.kernel.org/pub/linux/kernel/people/lenb/acpi/patches/release/2.6.26/acpi-release-20080321-2.6.26-rc5.diff.bz2
 
-So I would expect people in favor of the change to say "here is why
-long-term stashes are useful." And I would expect such an argument to
-address the fact that we don't simply want to recreate branches (badly).
-In other words, what is the compelling use case that makes people want
-to stash for months at a time?
+Then some time passed and Linus pushed a few more things
+into his tree.
 
--Peff
+I figured I'd merge with his latest to avoid any last minute merge
+conflicts for him.
+
+But instead of "git pull" to merge linus into release, for some reason I 
+did a "git rebase linus release" -- which re-checked in my commits
+and flattened all of my branches into a random sequence of patches.
+
+I'll not do that again...
+
+sorry for the noise.
+
+thanks,
+-Len
