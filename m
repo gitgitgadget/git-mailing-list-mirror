@@ -1,74 +1,72 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
-Subject: Re: git-instaweb portability issue (maybe?)
-Date: Fri, 13 Jun 2008 09:46:32 -0400 (EDT)
-Message-ID: <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>
-References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com> <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 08:54:27 -0500
+Message-ID: <48527C13.2000800@freescale.com>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se> <20080613055800.GA26768@sigill.intra.peff.net> <48521EDA.5040802@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Denis Bueno <dbueno@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 15:48:19 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Jun 13 15:56:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K79dL-0006d7-Sm
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 15:48:04 +0200
+	id 1K79km-0001eH-Ls
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 15:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbYFMNqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 09:46:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753885AbYFMNqj
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 09:46:39 -0400
-Received: from wide-rose.makesad.us ([203.178.130.147]:50898 "EHLO
-	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753050AbYFMNqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 09:46:38 -0400
-Received: from alchemy (localhost [127.0.0.1])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rose.makesad.us (Postfix) with ESMTP id C74F2A0127;
-	Fri, 13 Jun 2008 09:48:04 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-	by alchemy (Postfix) with ESMTPS id E405F6CCD3;
-	Fri, 13 Jun 2008 06:46:32 -0700 (PDT)
-X-X-Sender: paulproteus@alchemy.localdomain
-In-Reply-To: <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-X-OpenPGP-Key-ID: 0x70096AD1
+	id S1755866AbYFMNys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 09:54:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755814AbYFMNys
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 09:54:48 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:54752 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbYFMNyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 09:54:47 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m5DDsSYO014664;
+	Fri, 13 Jun 2008 06:54:29 -0700 (MST)
+Received: from [10.214.73.115] (mvp-10-214-73-115.am.freescale.net [10.214.73.115])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m5DDsQ3J002425;
+	Fri, 13 Jun 2008 08:54:26 -0500 (CDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <48521EDA.5040802@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84876>
 
-On Fri, 13 Jun 2008, Denis Bueno wrote:
+Andreas Ericsson wrote:
 
-> On Fri, Jun 13, 2008 at 09:26, Denis Bueno <dbueno@gmail.com> wrote:
->> That line simply calls perl by the $PERL variable, which is set at the
->> top of the script, like so:
->>
->>    PERL='/usr/bin/env perl'
->>
->> If I change this line to point to my perl directly, it works.  On a
->> hunch, I changed it to:
->>
->>    PERL="/usr/bin/env perl"  # note the double-quotes
->
-> [snip lies]
->
-> Apparently I didn't test this thoroughly enough, and I was wrong.
-> Changing the quotes has no effect.
->
-> So git-instaweb only works for me if I manually specify my perl path.
-> Can anyone think of why this might be?
+> I think these are the options we're faced with:
+> 1. Never expire stashes (don't shoot the user)
+> 2. Don't treat stashes specially (shoot the user)
+> 3. Don't purge stashes when auto-gc-ing (let the users shoot themselves)
+> 4. Make the behaviour configurable (let the users shoot themselves)
+> 5. Double the expiration time on stashes and warn for them when they should
+>   normally have expired (during gc, that is) (shoot the user, but warn 
+> first).
+> 
+> I'm all for #4 and will cook up a patch for that next week when I'm on
+> vacation unless #1 gets applied before that.
+> 
 
-Does OS X ship /usr/bin/env?
+There are additional choices too, I think, with config-driven
+variations as well.
 
-If you type "/usr/bin/env perl" in a Terminal window, do you get Perl?
+At git-gc time, notice a reflog entry for a stash that
+is about to expire and either convert it to a branch or
+interactively offer to convert it or delete it.
 
--- Asheesh.
+Provide a command that converts stash entries to branches.
+Maybe even take over refs/stash/ name-space or so?
 
--- 
-Hark ye, Clinker, you are a most notorious offender.  You stand convicted of
-sickness, hunger, wretchedness, and want.
- 		-- Tobias Smollet
+All with various config options to do that quietly, interactively,
+always, never, etc.
+
+jdl
