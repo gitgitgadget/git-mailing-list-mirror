@@ -1,69 +1,156 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [EGIT RFC] Commit behaviour
-Date: Sat, 14 Jun 2008 00:41:33 +0200
-Message-ID: <4852F79D.4080100@gmail.com>
-References: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com> <4852EFBF.6000406@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:42:33 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] path-list documentation: document all functions and data structures
+Date: Sat, 14 Jun 2008 00:48:20 +0200
+Message-ID: <1213397300-23224-1-git-send-email-vmiklos@frugalware.org>
+References: <alpine.DEB.1.00.0806132131180.6439@racer>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:49:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7HyZ-0004wN-FD
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:42:31 +0200
+	id 1K7I56-0006rw-5B
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755189AbYFMWlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 18:41:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbYFMWlh
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:41:37 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:60380 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754954AbYFMWlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 18:41:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2893883fgg.17
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:41:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8SJKcah/iDAUHhKpMlAAKKPUAe7itq6Dsqw24il8Nfc=;
-        b=TXRVL7au7qFL+lHThnZM6fI5IbCeKy4jZdsCXBCMlJTWzPtbUDDsgyRdD8FOZZSYvm
-         //3BSCQmRSVfSzZIdV1qxwJfEkJdaciZcXDePeCF4D1ctq6Fbzf9OcKfT5U8f/Vb0RJS
-         BG9t6gh6mle1liOxXXqHcxt0vWd39C8rNZCw4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=xCY1iGk3TohEdlE3NMGDm5xlYZ1rRs2GujtboRVtk+DA+YWceyD2m0IsrxebOHHSbs
-         RP0zbaML9ohdxUWPNB7Q4rOHIP24Rnv/CNxVyzE6h+H8jcf7XDMEGzvCn6QRjLv9d+0g
-         2fSl/0iEL9PE7AQWDZfRXh7+0ol5hvnNmRM4Y=
-Received: by 10.86.99.9 with SMTP id w9mr4688895fgb.70.1213396895072;
-        Fri, 13 Jun 2008 15:41:35 -0700 (PDT)
-Received: from ?62.21.4.140? ( [62.21.4.140])
-        by mx.google.com with ESMTPS id 3sm6780165fge.3.2008.06.13.15.41.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Jun 2008 15:41:34 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080313 Iceape/1.1.9 (Debian-1.1.9-3)
-In-Reply-To: <4852EFBF.6000406@gmail.com>
+	id S1755772AbYFMWsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 18:48:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbYFMWsV
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:48:21 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:33523 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755270AbYFMWsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 18:48:20 -0400
+Received: from vmobile.example.net (dsl5401CDF8.pool.t-online.hu [84.1.205.248])
+	by yugo.frugalware.org (Postfix) with ESMTP id 1941D1DDC5B;
+	Sat, 14 Jun 2008 00:48:17 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id BF52218DFDC; Sat, 14 Jun 2008 00:48:20 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc2.dirty
+In-Reply-To: <alpine.DEB.1.00.0806132131180.6439@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84949>
 
-> Robin Rosenberg wrote:
->> Then we could ask ourselved, should we do something similar for Checkout
->> and reset too? I think that is not as important as those operations are
->> much less frequent.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Hey, by the way - do we already have some action for checkout? Did I 
-missed something?
+On Fri, Jun 13, 2008 at 09:32:52PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Not that performance matters here, I guess, but we _already_ have
+> something much more efficient in Git, namely path-lists.
+>
+> You could use that, and end up with a substantially smaller patch.
 
+I just noticed that Documentation/technical/api-path-list.txt is almost
+empty. Here is an attempt to document the path-list API.
+
+ Documentation/technical/api-path-list.txt |   92 +++++++++++++++++++++++++++-
+ 1 files changed, 88 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
+index d077683..844eee9 100644
+--- a/Documentation/technical/api-path-list.txt
++++ b/Documentation/technical/api-path-list.txt
+@@ -1,9 +1,93 @@
+ path-list API
+ =============
+ 
+-Talk about <path-list.h>, things like
++The path_list API offers a data structure and functions to handle sorted
++and unsorted string lists.
+ 
+-* it is not just paths but strings in general;
+-* the calling sequence.
++The name is a bit misleading, a path_list may store not only paths but
++strings in general.
+ 
+-(Dscho)
++The caller:
++
++. Allocates and clears (`memset(&list, '0', sizeof(path_list));`) a
++  `struct path_list` variable.
++
++. Initializes the members. You can manually set the `items` member, but
++  then you have to set `nr`, accordingly. Also don't forget to set
++  `strdup_paths` if you need it.
++
++. Adds new items to the list, using `path_list_append` or `path_list_insert`.
++
++. Can check if a string is in the list using `path_list_has_path` or
++  `unsorted_path_list_has_path` and get it from the list using
++  `path_list_lookup` for sorted lists.
++
++. Can sort an unsorted list using `sort_path_list`.
++
++. Finally it should free the list using `path_list_clear`.
++
++Functions
++---------
++
++* General ones (works with sorted and unsorted lists as well)
++
++`print_path_list`::
++
++	Dump a path_list to stdout, useful mainly for debugging purposes. It
++	can take an optional header argument and it writes out the
++	string-pointer pairs of the path_list, each one in its own line.
++
++`path_list_clear`::
++
++	Free a path_list. The `path` pointer of the items will be freed in case
++	the `strdup_paths` member of the path_list is set. The second parameter
++	controls if the `util` pointer of the items should be freed or not.
++
++* Functions for sorted lists only
++
++`path_list_has_path`::
++
++	Determine if the path_list has a given string or not.
++
++`path_list_insert`::
++
++	Insert a new element to the path_list. The returned pointer can be handy
++	if you want to write something to the `util` pointer of the
++	path_list_item containing the just added string.
++
++`path_list_lookup`::
++
++	Look up a given string in the path_list, returning the containing
++	path_list_item. If the string is not found, NULL is returned.
++
++* Functions for unsorted lists only
++
++`path_list_append`::
++
++	Append a new string to the end of the path_list.
++
++`sort_path_list`::
++
++	Make an unsorted list sorted.
++
++`unsorted_path_list_has_path`::
++
++	It's like `path_list_has_path()` but for unsorted lists.
++
++Data structures
++---------------
++
++* `struct path_list_item`
++
++Represent an item of the list. The `path` member is a pointer to the
++string, and you may use the `util` member for any purpose, if you want.
++
++* `struct path_list`
++
++Represents the list itself.
++
++. The array of items are available via the `items` member.
++. The `nr` member contains the number of items stored in the list.
++. The `alloc` member is used for `ALLOC_GROW()`.
++. Setting the `strdup_paths` member to 1 means that the added paths are
++  copied to the path list and not just a pointer to them is stored.
 -- 
-Marek Zawirski [zawir]
-marek.zawirski@gmail.com
+1.5.6.rc2.dirty
