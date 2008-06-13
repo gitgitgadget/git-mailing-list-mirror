@@ -1,83 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 1/2] git-svn: don't append extra newlines at the end of commit messages.
-Date: Fri, 13 Jun 2008 08:29:51 +0200
-Message-ID: <20080613062951.GB24245@diana.vm.bytemark.co.uk>
-References: <1213312251-8081-1-git-send-email-apenwarr@gmail.com> <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Dubious format-patch options
+Date: Fri, 13 Jun 2008 02:33:37 -0400
+Message-ID: <20080613063337.GE26768@sigill.intra.peff.net>
+References: <E1K6xrt-00033S-2J@jdl.com> <alpine.LFD.1.10.0806121923400.2949@woody.linux-foundation.org> <7vtzfyxckm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 08:31:54 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 08:41:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K72pC-0001Dm-6e
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:31:50 +0200
+	id 1K72yK-0003mQ-QX
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158AbYFMGaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2008 02:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbYFMGaq
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:30:46 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4517 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbYFMGap (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 02:30:45 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K72nH-0006dd-00; Fri, 13 Jun 2008 07:29:51 +0100
+	id S1753253AbYFMGkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 02:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753328AbYFMGkW
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:40:22 -0400
+Received: from peff.net ([208.65.91.99]:2320 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753051AbYFMGkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 02:40:22 -0400
+Received: (qmail 30447 invoked by uid 111); 13 Jun 2008 06:33:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 02:33:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 02:33:37 -0400
 Content-Disposition: inline
-In-Reply-To: <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vtzfyxckm.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84842>
 
-On 2008-06-12 22:41:46 -0700, Junio C Hamano wrote:
+On Thu, Jun 12, 2008 at 08:01:45PM -0700, Junio C Hamano wrote:
 
-> Avery Pennarun <apenwarr@gmail.com> writes:
->
-> > In git, all commits end in exactly one newline character. In svn,
-> > commits end in zero or more newlines. Thus, when importing commits
-> > from svn into git, git-svn always appends two extra newlines to
-> > ensure that the git-svn-id: line is separated from the main commit
-> > message by at least one blank line.
-> >
-> > Combined with the terminating newline that's always present in svn
-> > commits produced by git, you usually end up with two blank lines
-> > instead of one between the commit message and git-svn-id: line,
-> > which is undesirable.
-> >
-> > Instead, let's remove all trailing whitespace from the git commit
-> > on the way through to svn.
->
-> Perl part of the code looks fine but I am unsure if we like the
-> ramifications of this patch on existing git-svn managed
-> repositories. Doesn't this change the commit object name on our end
-> for almost all of them?
+> makes some sense.  Being able to produce an unusable patch by saying
+> 
+>     $ git format-patch --stat old..
+> 
+> at the first glance is of quite dubious value, but even that would make
+> sense as a good input source for "commit log automailer".
+> 
+> I think I know where Jon is coming from and where he wants to go.  While I
+> am somewhat sympathetic to the cause of adding some warning or safety
+> valve to prevent nonsense option combinations from being given, I am not
+> sure we can draw a line to classify options into black and white.
 
-You're correct that this will change the commit id of imported svn
-revisions -- the new verson of git-svn will give other ids than the
-old version. However, the only thing that's going to "break" is that
-two separate imports of the same repository with the two different
-versions of git-svn will not give the exact same result on the git
-side.
+I am against a safety valve here. For example, I have the following
+alias:
 
-I think this is a good change, and it would be a pity if this and
-other changes like it had to be dropped out of a desire to keep the
-svn -> git transformation function forever fixed. (IIRC, such changes
-have been allowed in the past -- e.g. 0bed5eaa: "enable follow-parent
-functionality by default".)
+  format-patch --pretty=format:%s%n%n%b
 
-One could imagine a policy of not introducing this kind of change
-during a stable version, or some such, but historically that's not
-been the case as far as I can remember.
+which obviously does not generate a valid email, but which I use for
+pulling "how about this?" patches directly into existing emails
+(otherwise, I have to delete the header cruft myself). Yes, I _could_ do
+this with git-log, but format-patch has slightly different command line
+semantics. And it most clearly expresses what I want: the patch
+submission format, but with the header bits pretty-printed differently.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+My point being that this flexibility _is_ useful, and I am not sure it
+is worth removing it in favor of people who get confused about why
+
+  git format-patch --pretty=format:%s%n%n%b origin | git send-email
+
+doesn't work.
+
+-Peff
