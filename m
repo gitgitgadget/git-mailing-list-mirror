@@ -1,68 +1,79 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add test-tr: poor-man tr
-Date: Fri, 13 Jun 2008 19:26:34 +0200
-Message-ID: <20080613172634.GB5671@steel.home>
-References: <20080611182501.GA3344@steel.home> <20080611225448.GC19474@sigill.intra.peff.net> <20080612060152.GA3798@steel.home> <20080612062309.GA31816@sigill.intra.peff.net> <20080612203245.GB8057@steel.home> <20080613060215.GB26768@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 19:31:00 +0200
+Message-ID: <4852AED4.50206@free.fr>
+References: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>	 <20080611230344.GD19474@sigill.intra.peff.net>	 <alpine.LFD.1.10.0806111918300.23110@xanadu.home>	 <loom.20080612T042942-698@post.gmane.org>	 <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>	 <4851F6F4.8000503@op5.se>	 <20080613055800.GA26768@sigill.intra.peff.net>	 <48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net>	 <7vtzfxwtt0.fsf@gitster.siamese.dyndns.org> <bd6139dc0806130333n2cfbc564k79ed5562f14fc848@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 19:27:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Andreas Ericsson <ae@op5.se>,
+	Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Fri Jun 13 19:31:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7D3k-0005HC-HB
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:27:32 +0200
+	id 1K7D7d-0006hx-1H
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbYFMR0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 13:26:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYFMR0i
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:26:38 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:47688 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbYFMR0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 13:26:37 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r84gudV
-Received: from tigra.home (Fa84e.f.strato-dslnet.de [195.4.168.78])
-	by post.webmailer.de (fruni mo36) (RZmta 16.43)
-	with ESMTP id x0131ek5DGOdHK ; Fri, 13 Jun 2008 19:26:35 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 135AD277BD;
-	Fri, 13 Jun 2008 19:26:35 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id E3DD756D28; Fri, 13 Jun 2008 19:26:34 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080613060215.GB26768@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751388AbYFMRag convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2008 13:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYFMRag
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:30:36 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:46797 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751302AbYFMRaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 13:30:35 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 84D8712B6C5;
+	Fri, 13 Jun 2008 19:30:34 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 0C13F12B6D8;
+	Fri, 13 Jun 2008 19:30:33 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <bd6139dc0806130333n2cfbc564k79ed5562f14fc848@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84904>
 
-Jeff King, Fri, Jun 13, 2008 08:02:15 +0200:
-> On Thu, Jun 12, 2008 at 10:32:45PM +0200, Alex Riesen wrote:
-> 
-> > That was the problem. ActiveState Perl always replaces LF in the
-> > output with CRLF, which caused mismatches with template files in some
-> > tests (even the generated templates had LF line endings, cygwins tools
-> > follow that convention). At first, I tried to get by putting
-> > "binmode(STDOUT)" into every test, but this became boring with a time.
-> > Besides, the lines get very long and ugly (and make conflict resolving
-> > harder).
-> 
-> Does ActiveState respect the PERLIO environment variable? I haven't
-> played with it much, but my understanding is that setting
-> PERLIO=:unix:perlio should give you sane behavior (the default on
-> Windows should be PERLIO=:unix:crlf).
+Sverre Rabbelier a =E9crit :
+>=20
+>  OTOH: I dislike the idea of 'forcing' the users to go through their
+> stashes lest they lose their work. I don't see why anybody would want
+> to do some work, stash it, and then "for no apparent reason" (the
+> reason being not touching it for some time) lose it later.
 
-I didn't know about it (and managed to miss it when I looked to
-workaround the problem. I even looked into the manpage documenting
-environment variables!)
+I agree. And even without that:
 
-Yes, it works. It has side effects (the scripts of some build
-processes will be affected), but that's already something...
+> What if
+> their system borks up and gives a wrong value as current time (say, 1=
+0
+> years in the future), all of a sudden their stashes are gone, and the=
+y
+> might not even find out till it was too late. Sure, they'd lose some
+> stale objects too, but that I can live with, those they did not ask
+> git to take care of explicitly!
+
+it seems pretty strange to ask the user for a confirmation: are you sur=
+e
+you want to keep what you ask us to store in the stash?
+
+> The per-branch stashes sounds very nice, especially if you can get a
+> 'git stash list --all' feature, that shows all stashes, regardless of
+> what branch they are on. I myself would use such a per-branch feature
+> most of the time, it would be nice to have a config option that
+> defaults to that (making 'git stash' create a per-branch stash by
+> default that is).
+
+I think the same and would prefer per-branch stash by default because I
+don't see a real use of a "global" one but maybe I'm wrong. Perhaps, a
+config option could make everyone happy. :-)
+
+Olivier.
