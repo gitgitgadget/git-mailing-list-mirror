@@ -1,117 +1,88 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT RFC] Add utilities for figuring out repositories for selected resources
-Date: Fri, 13 Jun 2008 01:39:56 +0200
-Message-ID: <1213313997-1520-2-git-send-email-robin.rosenberg@dewire.com>
-References: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 01:44:40 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [biseced bug] make info fails with master
+Date: Thu, 12 Jun 2008 17:12:19 -0700
+Message-ID: <7v4p7yyyzg.fsf@gitster.siamese.dyndns.org>
+References: <20080605234016.GO29404@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Kastrup <dak@gnu.org>,
+	"John J. Franey" <jjfraney@gmail.com>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 02:13:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6wT7-0002ZA-2d
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 01:44:37 +0200
+	id 1K6wuz-0000Yx-3S
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 02:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552AbYFLXno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 19:43:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755154AbYFLXnO
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 19:43:14 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:29443 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754642AbYFLXnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 19:43:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id EDBE8800691;
-	Fri, 13 Jun 2008 01:43:11 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8sHnvXLjFoaa; Fri, 13 Jun 2008 01:43:10 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 1A2C81434CD1;
-	Fri, 13 Jun 2008 01:43:10 +0200 (CEST)
-X-Mailer: git-send-email 1.5.5.1.178.g1f811
-In-Reply-To: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com>
+	id S1757619AbYFMAMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 20:12:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757621AbYFMAMb
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 20:12:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52843 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757601AbYFMAMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2008 20:12:30 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9684523A0;
+	Thu, 12 Jun 2008 20:12:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B9B33239E; Thu, 12 Jun 2008 20:12:22 -0400 (EDT)
+In-Reply-To: <20080605234016.GO29404@genesis.frugalware.org> (Miklos Vajna's
+ message of "Fri, 6 Jun 2008 01:40:16 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 68139E8C-38DD-11DD-88DB-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84816>
 
-We want to go from selected resources to repositories and back
-to any resource in those repositories
----
- .../egit/ui/internal/actions/RepositoryAction.java |   50 ++++++++++++++++++++
- 1 files changed, 50 insertions(+), 0 deletions(-)
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/RepositoryAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/RepositoryAction.java
-index c4e3256..8c250ca 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/RepositoryAction.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/RepositoryAction.java
-@@ -13,6 +13,8 @@ import java.util.HashSet;
- import java.util.Set;
- 
- import org.eclipse.core.resources.IProject;
-+import org.eclipse.core.resources.IResource;
-+import org.eclipse.core.resources.ResourcesPlugin;
- import org.eclipse.jface.action.IAction;
- import org.eclipse.jface.dialogs.MessageDialog;
- import org.eclipse.team.internal.ui.actions.TeamAction;
-@@ -36,6 +38,54 @@ public abstract class RepositoryAction extends TeamAction {
+> make info seem to fails here recently.
+> ...
+> The commit obviously touches this part of the documentation but I don't see
+> where the bug is.
+>
+> I'm not sure, maybe this is a bug in the toolchain?
+
+I've made a few changes to work these around but haven't pushed the
+results out.  Here is a preview of two relevant commits.
+
+The *NOTE:* thing could be new but @pxref{[REMOTES]} thing has been with
+us from very beginning and we already had a similar workaround for it.
+
+
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 5f55f64..d0f1595 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -38,7 +38,8 @@ include::merge-options.txt[]
+ 	for branch `<name>`, set configuration `branch.<name>.rebase`
+ 	to `true`.
+ +
+-*NOTE:* This is a potentially _dangerous_ mode of operation.
++[NOTE]
++This is a potentially _dangerous_ mode of operation.
+ It rewrites history, which does not bode well when you
+ published that history already.  Do *not* use this option
+ unless you have read linkgit:git-rebase[1] carefully.
+
+
+diff --git a/Documentation/cat-texi.perl b/Documentation/cat-texi.perl
+index e3d8e9f..dbc133c 100755
+--- a/Documentation/cat-texi.perl
++++ b/Documentation/cat-texi.perl
+@@ -11,7 +11,7 @@ while (<STDIN>) {
+ 	if (s/^\@top (.*)/\@node $1,,,Top/) {
+ 		push @menu, $1;
  	}
- 
- 	/**
-+	 * @return the projects hosting the selected resources
-+	 */
-+	protected IProject[] getProjectsForSelectedResources() {
-+		Set<IProject> ret = new HashSet<IProject>();
-+		for (IResource resource : (IResource[])getSelectedAdaptables(getSelection(), IResource.class))
-+			ret.add(resource.getProject());
-+		return ret.toArray(new IProject[ret.size()]);
-+	}
-+
-+	/**
-+	 * @param projects
-+	 *            a list of projects
-+	 * @return the repositories that projects map to iff all projects are mapped
-+	 */ 
-+	protected Repository[] getRepositoriesFor(final IProject[] projects) {
-+		Set<Repository> ret = new HashSet<Repository>();
-+		for (IProject project : projects) {
-+			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
-+			if (repositoryMapping == null)
-+				return new Repository[0];
-+			ret.add(repositoryMapping.getRepository());
-+		}
-+		return ret.toArray(new Repository[ret.size()]);
-+	}
-+	
-+	/**
-+	 * List the projects with selected resources, if all projects are connected
-+	 * to a Git repository.
-+	 * 
-+	 * @return the tracked projects affected by the current resource selection
-+	 */
-+	public IProject[] getProjectsInRepositoryOfSelectedResources() {
-+		Set<IProject> ret = new HashSet<IProject>();
-+		Repository[] repositories = getRepositoriesFor(getProjectsForSelectedResources());
-+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-+		for (IProject project : projects) {
-+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-+			for (Repository repository : repositories) {
-+				if (mapping != null && mapping.getRepository() == repository) {
-+					ret.add(project);
-+					break;
-+				}
-+			}
-+		}
-+		return ret.toArray(new IProject[ret.size()]);
-+	}
-+
-+	/**
- 	 * Figure out which repository to use. All selected
- 	 * resources must map to the same Git repository.
- 	 *
--- 
-1.5.5.1.178.g1f811
+-	s/\(\@pxref{\[URLS\]}\)//;
++	s/\(\@pxref{\[(URLS|REMOTES)\]}\)//;
+ 	print TMP;
+ }
+ close TMP;
