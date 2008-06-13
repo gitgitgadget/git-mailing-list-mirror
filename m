@@ -1,72 +1,72 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 08:54:27 -0500
-Message-ID: <48527C13.2000800@freescale.com>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se> <20080613055800.GA26768@sigill.intra.peff.net> <48521EDA.5040802@op5.se>
+From: "Denis Bueno" <dbueno@gmail.com>
+Subject: Re: git-instaweb portability issue (maybe?)
+Date: Fri, 13 Jun 2008 09:59:12 -0400
+Message-ID: <6dbd4d000806130659r2a8bc57ev6db4ef058ee97440@mail.gmail.com>
+References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com>
+	 <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
+	 <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Wincent Colaiuta <win@wincent.com>,
-	Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Jun 13 15:56:23 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Asheesh Laroia" <asheesh@asheesh.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:00:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K79km-0001eH-Ls
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 15:55:45 +0200
+	id 1K79p5-0003dv-NW
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755866AbYFMNys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 09:54:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755814AbYFMNys
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 09:54:48 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:54752 "EHLO
-	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753885AbYFMNyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 09:54:47 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m5DDsSYO014664;
-	Fri, 13 Jun 2008 06:54:29 -0700 (MST)
-Received: from [10.214.73.115] (mvp-10-214-73-115.am.freescale.net [10.214.73.115])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m5DDsQ3J002425;
-	Fri, 13 Jun 2008 08:54:26 -0500 (CDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48521EDA.5040802@op5.se>
+	id S1756051AbYFMN7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 09:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756013AbYFMN7Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 09:59:16 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:30884 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754478AbYFMN7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 09:59:16 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2768211fgg.17
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 06:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0XDizauWYq7754hQQY5zcJIvK7VMhStEol+9bziwb3c=;
+        b=kIDfcdPknSdP/iocvrHmyPPUIV+whVPRaOsz0i9qf5pDqYBLiVHqX0e+rtb+cV3eDv
+         QH/wndYVMEdc0+f1ME6gO4xSnn9b1aZVwwBqiUighbaBMvxg3a2Lhjzn5Nb1TNpb8Dir
+         jlUfBNrFrzD8+YssKKeNPGex1mxdva7htZ890=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=s7Qb7Du3NlutuX2zFAw0Rgu0USNiCstJugCHSZF1DvJRsjpAkdclfVxMpnA52yIAiv
+         u7xaqeeJNfTwN7G98yUj6S4F52HY7g3jda1moT7TvabuOf530dyrbL00dI5JN3lpcHh6
+         ciQkUrQDFZZM5PNP/PVxB8n4BMdJRjtzhXhMw=
+Received: by 10.86.58.3 with SMTP id g3mr4040818fga.21.1213365552610;
+        Fri, 13 Jun 2008 06:59:12 -0700 (PDT)
+Received: by 10.86.59.7 with HTTP; Fri, 13 Jun 2008 06:59:12 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84877>
 
-Andreas Ericsson wrote:
+On Fri, Jun 13, 2008 at 09:46, Asheesh Laroia <asheesh@asheesh.org> wrote:
+> Does OS X ship /usr/bin/env?
+>
+> If you type "/usr/bin/env perl" in a Terminal window, do you get Perl?
 
-> I think these are the options we're faced with:
-> 1. Never expire stashes (don't shoot the user)
-> 2. Don't treat stashes specially (shoot the user)
-> 3. Don't purge stashes when auto-gc-ing (let the users shoot themselves)
-> 4. Make the behaviour configurable (let the users shoot themselves)
-> 5. Double the expiration time on stashes and warn for them when they should
->   normally have expired (during gc, that is) (shoot the user, but warn 
-> first).
-> 
-> I'm all for #4 and will cook up a patch for that next week when I'm on
-> vacation unless #1 gets applied before that.
-> 
+Sorry, I should have made that clear earlier: yes.
 
-There are additional choices too, I think, with config-driven
-variations as well.
+funsat[122] > /usr/bin/env perl --version
 
-At git-gc time, notice a reflog entry for a stash that
-is about to expire and either convert it to a branch or
-interactively offer to convert it or delete it.
+This is perl, v5.8.8 built for darwin-2level
 
-Provide a command that converts stash entries to branches.
-Maybe even take over refs/stash/ name-space or so?
 
-All with various config options to do that quietly, interactively,
-always, never, etc.
-
-jdl
+-- 
+ Denis
