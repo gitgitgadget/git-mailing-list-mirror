@@ -1,56 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/.gitattributes: only ignore whitespace errors in
-	test files
-Date: Fri, 13 Jun 2008 02:06:30 -0400
-Message-ID: <20080613060629.GC26768@sigill.intra.peff.net>
-References: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com>
+Subject: Re: [PATCH v2 1/3] filter-branch: add new --blob-filter option.
+Date: Fri, 13 Jun 2008 02:25:46 -0400
+Message-ID: <20080613062546.GD26768@sigill.intra.peff.net>
+References: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 08:07:28 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 08:27:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K72Rb-0002O3-28
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:07:27 +0200
+	id 1K72ka-0008OF-2a
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbYFMGGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 02:06:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbYFMGGd
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:06:33 -0400
-Received: from peff.net ([208.65.91.99]:1350 "EHLO peff.net"
+	id S1752158AbYFMGZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 02:25:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbYFMGZt
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:25:49 -0400
+Received: from peff.net ([208.65.91.99]:1204 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535AbYFMGGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 02:06:32 -0400
-Received: (qmail 28725 invoked by uid 111); 13 Jun 2008 06:06:31 -0000
+	id S1752096AbYFMGZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 02:25:48 -0400
+Received: (qmail 29938 invoked by uid 111); 13 Jun 2008 06:25:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 02:06:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 02:06:30 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 02:25:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 02:25:46 -0400
 Content-Disposition: inline
-In-Reply-To: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com>
+In-Reply-To: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84840>
 
-On Fri, Jun 13, 2008 at 12:35:59AM +0200, Lea Wiemann wrote:
+On Thu, Jun 12, 2008 at 08:52:22PM -0400, Avery Pennarun wrote:
 
-> Only ignore whitespace errors in t/tNNNN-*.sh and the t/tNNNN
-> subdirectories.  Other files (like test libraries) should still be
-> checked.
+> It was easy enough to work up the patch below, which allows
+> 
+>   git filter-branch --blob-filter 'tr a-z A-Z'
 
-Why?
+First, two procedural complaints:
 
-What is the difference between test-lib.sh and tNNNN-*.sh that makes one
-subject to whitespace checking and the other not?
+  1. We're supposed to be in rc freeze, so this is not a great time to
+     publish a new feature. ;)
 
-(I suspect the answer is "shoving all the code in tNNNN-*.sh into eval'd
-strings screws up the whitespace checking", but my point is that I
-shouldn't have to guess; the justification should go in the commit
-message).
+  2. When bringing back an old patch, please please please give at least
+     a little bit of cover letter context. "Here is what happened last
+     time, here are the reasons this patch was not accepted before, and
+     here is {why I think it that decision was wrong, what I have done
+     to improve the patch, etc}.
+
+IIRC, the situation last time had two issues:
+
+  1. it was a one-off "we're not sure if this is really useful" patch
+
+  2. it was unclear whether paths should be available, and if they were,
+     there was an issue of encountering the same hash at two different
+     paths.
+
+I assume your answer to '1' is "I have been using this and it is
+useful". And for '2', it looks like you have extended the cache
+mechanism to take into account the sha1 and the path, which I think is
+the right solution (and I am pleased to see it looks like the final test
+covers the exact situation I was concerned about).
+
+So:
+
+(for 1/3):
+Signed-off-by: Jeff King <peff@peff.net>
+
+(for the others (and for 1/3, do I get to ack my own patch?)):
+Acked-by: Jeff King <peff@peff.net>
 
 -Peff
