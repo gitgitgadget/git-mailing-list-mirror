@@ -1,81 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 22:41:40 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806132239490.6439@racer>
-References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>  <20080611213648.GA13362@glandium.org>  <alpine.DEB.1.00.0806112242370.1783@racer>  <20080611230344.GD19474@sigill.intra.peff.net> 
- <alpine.LFD.1.10.0806111918300.23110@xanadu.home>  <loom.20080612T042942-698@post.gmane.org>  <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>  <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>  <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> 
- <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: Re: [EGIT RFC] Commit behaviour
+Date: Sat, 14 Jun 2008 00:07:59 +0200
+Message-ID: <4852EFBF.6000406@gmail.com>
+References: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1742235697-1213393309=:6439"
-Cc: Eric Raible <raible@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 23:44:36 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:09:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7H4I-00022t-V1
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 23:44:23 +0200
+	id 1K7HS9-0002GS-NF
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbYFMVn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 17:43:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754054AbYFMVn3
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 17:43:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43397 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752392AbYFMVn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 17:43:28 -0400
-Received: (qmail invoked by alias); 13 Jun 2008 21:43:25 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp009) with SMTP; 13 Jun 2008 23:43:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18C6mpUwGMCbk3rAtAmAx7eTvP0apfs7tVSMXxsRF
-	jXi5F8xGiSuItA
-X-X-Sender: gene099@racer
-In-Reply-To: <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754650AbYFMWII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 18:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754647AbYFMWIH
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:08:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:16412 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754562AbYFMWIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 18:08:05 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2889416fgg.17
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:08:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=BJK28vJREArqMsX5e+HSRes1YSdi15Js7PeLrLNUZRE=;
+        b=gIXpnEk11n+XAOc4GjfxOCVwJ4F5nNyujh5K0ZCIwa3DKpqXIhvqU5hZPSi4xoEzXo
+         7kKeEawm7H0UaCZzkvhfmcfgCkvbxvLyPMsHRuBiXlqJykM7N+XD6YmuNLgORQ1GLh5w
+         fXaVXW5x+lKFZi3t9jY42ZxqzY4P6LSaZWlVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=BIFXIvy0npZZoLjD58o6l05/B2FEUon5pQpcIWftZJVsz3oIshOznxN14BN51xg6ps
+         1MKQ5a3lKGX7pS+Gt2nzglXcJMpu5VyvoZehSWMDIVPaWflUezhFjvMMBfXDqaco3C7X
+         OowrSwBOJWgfib2TUolpt8Tcs6wBQJ+3kalSs=
+Received: by 10.86.59.18 with SMTP id h18mr4698239fga.30.1213394881435;
+        Fri, 13 Jun 2008 15:08:01 -0700 (PDT)
+Received: from ?62.21.4.140? ( [62.21.4.140])
+        by mx.google.com with ESMTPS id 4sm6013599fgg.9.2008.06.13.15.07.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Jun 2008 15:08:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080313 Iceape/1.1.9 (Debian-1.1.9-3)
+In-Reply-To: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84945>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Robin Rosenberg wrote:
+> I got annoyed about having change my selection to a project to be able
+> to commit. This tentative feature allows me to hit the commit button
+> when any resource is selected and figure out which resources have been
+> modified. This makes it much easier to commit. Only the toolbar commit
+> is affected for now.
 
---8323329-1742235697-1213393309=:6439
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+That's a nice idea! I also thought about that one day, as such feature 
+already exists in (e.g.) Subclipse that I was used to.
 
-Hi,
-
-On Fri, 13 Jun 2008, Wincent Colaiuta wrote:
-
-> El 13/6/2008, a las 6:52, Johannes Schindelin escribió:
 > 
-> >If you need something from the stash a day after stashing it, you have 
-> >a serious problem with understanding what branches are for.
+> Another twist would be to list all changed resources, but only enable
+> the selected ones, or only the ones in in the same projects as the selected
+> resources. Comments?
+
+I think that only selected && changed ones should be listed. When user 
+selects explicitly some resources, he/she is probably interested only in 
+these ones. And he/she probably did it for easier selection than from 
+list of all changed resources, isn't it?
+
+> Code is not efficient either. This is question about the user interface.
+
+Theses patches don't work for me however :/ When I introduce some change 
+to a resource/file, even add it to index and click commit (toolbar or 
+menu), commit action does nothing. It is - nothing happens. Can you 
+reproduce this problem, or should I debug it on my instance? Or do I use 
+it in some wrong way?
+
+
+> Then we could ask ourselved, should we do something similar for Checkout
+> and reset too? I think that is not as important as those operations are
+> much less frequent.
 > 
-> While this may be true for codebases which move forward quickly, what 
-> about one which is basically finished and tends not to get touched in a 
-> long time. A situation arises, you stash something, the phone rings, and 
-> for whatever reason the stash gets forgotten and you don't revisit the 
-> project at all for days, weeks, months. It wouldn't be nice to 
-> eventually come back and discover that your in-progress work had been 
-> "garbage" collected for you.
+> -- robin
 
-You cannot be serious about not wanting to lose the changes when you keep 
-them in _one_ _single_ repository anyway.
+Well, I think that checkout (maybe reset too) would be useful too - to 
+revert some file quickly.
 
-And you cannot be serious about not wanting to lose the changes when you 
-forget about them, for months, even.
-
-So you are making my point for me.
-
-Thanks,
-Dscho
-
---8323329-1742235697-1213393309=:6439--
+-- 
+Marek Zawirski [zawir]
+marek.zawirski@gmail.com
