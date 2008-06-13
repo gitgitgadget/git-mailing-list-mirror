@@ -1,156 +1,73 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] path-list documentation: document all functions and data structures
-Date: Sat, 14 Jun 2008 00:48:20 +0200
-Message-ID: <1213397300-23224-1-git-send-email-vmiklos@frugalware.org>
-References: <alpine.DEB.1.00.0806132131180.6439@racer>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:49:18 2008
+From: Sven <svoop@delirium.ch>
+Subject: Git over HTTPS Oddity with HEAD
+Date: Fri, 13 Jun 2008 22:59:04 +0000 (UTC)
+Message-ID: <loom.20080613T225103-368@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 14 01:06:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7I56-0006rw-5B
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:49:16 +0200
+	id 1K7ILX-0003fJ-Pw
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 01:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755772AbYFMWsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 18:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbYFMWsV
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:48:21 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:33523 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755270AbYFMWsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 18:48:20 -0400
-Received: from vmobile.example.net (dsl5401CDF8.pool.t-online.hu [84.1.205.248])
-	by yugo.frugalware.org (Postfix) with ESMTP id 1941D1DDC5B;
-	Sat, 14 Jun 2008 00:48:17 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id BF52218DFDC; Sat, 14 Jun 2008 00:48:20 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc2.dirty
-In-Reply-To: <alpine.DEB.1.00.0806132131180.6439@racer>
+	id S1755876AbYFMXFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 19:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbYFMXFG
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 19:05:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:47950 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753866AbYFMXFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 19:05:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1K7IKM-0001Yw-Um
+	for git@vger.kernel.org; Fri, 13 Jun 2008 23:05:03 +0000
+Received: from 151.121.221.87.dynamic.jazztel.es ([87.221.121.151])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 23:05:02 +0000
+Received: from svoop by 151.121.221.87.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 23:05:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.221.121.151 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9) Gecko/2008061004 Firefox/3.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84950>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+Hi
 
-On Fri, Jun 13, 2008 at 09:32:52PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Not that performance matters here, I guess, but we _already_ have
-> something much more efficient in Git, namely path-lists.
->
-> You could use that, and end up with a substantially smaller patch.
+I'm using Git over HTTPS with up-to-date versions on both ends. With a populated
+repo, I try the following:
 
-I just noticed that Documentation/technical/api-path-list.txt is almost
-empty. Here is an attempt to document the path-list API.
+# git ls-remote https://git.domain.com/myapp.git HEAD
 
- Documentation/technical/api-path-list.txt |   92 +++++++++++++++++++++++++++-
- 1 files changed, 88 insertions(+), 4 deletions(-)
+This gives me no reply at all, and indeed ...
 
-diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
-index d077683..844eee9 100644
---- a/Documentation/technical/api-path-list.txt
-+++ b/Documentation/technical/api-path-list.txt
-@@ -1,9 +1,93 @@
- path-list API
- =============
- 
--Talk about <path-list.h>, things like
-+The path_list API offers a data structure and functions to handle sorted
-+and unsorted string lists.
- 
--* it is not just paths but strings in general;
--* the calling sequence.
-+The name is a bit misleading, a path_list may store not only paths but
-+strings in general.
- 
--(Dscho)
-+The caller:
-+
-+. Allocates and clears (`memset(&list, '0', sizeof(path_list));`) a
-+  `struct path_list` variable.
-+
-+. Initializes the members. You can manually set the `items` member, but
-+  then you have to set `nr`, accordingly. Also don't forget to set
-+  `strdup_paths` if you need it.
-+
-+. Adds new items to the list, using `path_list_append` or `path_list_insert`.
-+
-+. Can check if a string is in the list using `path_list_has_path` or
-+  `unsorted_path_list_has_path` and get it from the list using
-+  `path_list_lookup` for sorted lists.
-+
-+. Can sort an unsorted list using `sort_path_list`.
-+
-+. Finally it should free the list using `path_list_clear`.
-+
-+Functions
-+---------
-+
-+* General ones (works with sorted and unsorted lists as well)
-+
-+`print_path_list`::
-+
-+	Dump a path_list to stdout, useful mainly for debugging purposes. It
-+	can take an optional header argument and it writes out the
-+	string-pointer pairs of the path_list, each one in its own line.
-+
-+`path_list_clear`::
-+
-+	Free a path_list. The `path` pointer of the items will be freed in case
-+	the `strdup_paths` member of the path_list is set. The second parameter
-+	controls if the `util` pointer of the items should be freed or not.
-+
-+* Functions for sorted lists only
-+
-+`path_list_has_path`::
-+
-+	Determine if the path_list has a given string or not.
-+
-+`path_list_insert`::
-+
-+	Insert a new element to the path_list. The returned pointer can be handy
-+	if you want to write something to the `util` pointer of the
-+	path_list_item containing the just added string.
-+
-+`path_list_lookup`::
-+
-+	Look up a given string in the path_list, returning the containing
-+	path_list_item. If the string is not found, NULL is returned.
-+
-+* Functions for unsorted lists only
-+
-+`path_list_append`::
-+
-+	Append a new string to the end of the path_list.
-+
-+`sort_path_list`::
-+
-+	Make an unsorted list sorted.
-+
-+`unsorted_path_list_has_path`::
-+
-+	It's like `path_list_has_path()` but for unsorted lists.
-+
-+Data structures
-+---------------
-+
-+* `struct path_list_item`
-+
-+Represent an item of the list. The `path` member is a pointer to the
-+string, and you may use the `util` member for any purpose, if you want.
-+
-+* `struct path_list`
-+
-+Represents the list itself.
-+
-+. The array of items are available via the `items` member.
-+. The `nr` member contains the number of items stored in the list.
-+. The `alloc` member is used for `ALLOC_GROW()`.
-+. Setting the `strdup_paths` member to 1 means that the added paths are
-+  copied to the path list and not just a pointer to them is stored.
--- 
-1.5.6.rc2.dirty
+# git ls-remote https://git.domain.com/myapp.git
+bb629d461b11d3c8edbc1e4f3c44085198fdaede	refs/heads/master
+
+Besides this, however, Git over HTTPS seems to work just fine and if I look
+inside the myapp.git on the server, a HEAD file is there:
+
+# cat myapp.git/HEAD
+ref: refs/heads/master
+
+I assume it's something fishy on the server side although I haven't done
+anything exotic there. Any idea what could be the reason for this?
+
+Thanks!   -sven
+
+
+PS:
+The background story: Capistrano (Ruby on Rails) issues the above ls-remote HEAD
+command during deployment, therefore not getting the head version in reply
+causes Capistrano to bark.
