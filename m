@@ -1,74 +1,98 @@
-From: "Denis Bueno" <dbueno@gmail.com>
-Subject: Re: git-instaweb portability issue (maybe?)
-Date: Fri, 13 Jun 2008 10:39:11 -0400
-Message-ID: <6dbd4d000806130739r633cb34cx9edbe48724d6a325@mail.gmail.com>
-References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com>
-	 <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
-	 <20080613142118.GA20027@bit.office.eurotux.com>
+From: Mirko Stocker <mirko.stocker@hsr.ch>
+Subject: Working with Git and CVS in a team.
+Date: Fri, 13 Jun 2008 16:33:34 +0200
+Organization: HSR
+Message-ID: <200806131633.34980.mirko.stocker@hsr.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Luciano Rocha" <luciano@eurotux.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 16:40:55 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:42:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7ARm-0004bj-AK
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:40:10 +0200
+	id 1K7ATa-0005Ji-P7
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845AbYFMOjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 10:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbYFMOjO
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:39:14 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:35496 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739AbYFMOjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 10:39:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2779449fgg.17
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 07:39:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5YBKgJb7FCss+IhZShzIF1GSLQsm/f2dhWcmfmBC6nI=;
-        b=OPUj10Dg9pvcUMF8MUzPP/qVwPc6DunLN0soiYgvH5nqvvUtFAqhH3M78APKiJGXT6
-         HMbOdh+u4CnHj/kiHRUeUgSCiz9pMs5/z6BFCWExONBWGrQRa8a9cMrYHxFtwHJxlAC2
-         PhrSgAJY2X2j+gPyKRaQfSqUVFCMHBhUmh3K8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=KI9oMgJKc5ucNA9CtXspAg1oQiVezqL+VRFtPTAo/uZujfj2tdgizE2WMoWylnpH9w
-         DgoGiR1mIEnBCxhT+vt34rS3r6LcIWGwEYAMW92ELZIY3EDrzmzjfxDFkBcnW+WqNCPS
-         Q0MaRadEU1/XK/AO0ovJ8KiNVvzmtj8enCYZ0=
-Received: by 10.86.59.18 with SMTP id h18mr4107754fga.30.1213367951791;
-        Fri, 13 Jun 2008 07:39:11 -0700 (PDT)
-Received: by 10.86.59.7 with HTTP; Fri, 13 Jun 2008 07:39:11 -0700 (PDT)
-In-Reply-To: <20080613142118.GA20027@bit.office.eurotux.com>
+	id S1753885AbYFMOlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 10:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbYFMOlH
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:41:07 -0400
+Received: from luc80-74-131-252.ch-meta.net ([80.74.131.252]:35886 "EHLO
+	lucius.metanet.ch" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752623AbYFMOlG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2008 10:41:06 -0400
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jun 2008 10:41:05 EDT
+Received: (qmail 22621 invoked from network); 13 Jun 2008 16:33:39 +0200
+Received: from unknown (HELO pin6108034.hsr.ch) (152.96.200.175)
+  by luc80-74-131-153.ch-meta.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 13 Jun 2008 16:33:39 +0200
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84883>
 
-On Fri, Jun 13, 2008 at 10:21, Luciano Rocha <luciano@eurotux.com> wrote:
-> Try changing the following line instead:
->        "$PERL" -p -e "$script" "$1.tmp"  > "$1"
-> to
->        $PERL -p -e "$script" "$1.tmp"  > "$1"
->
-> about line 6121 of the git-instaweb script.
+Hello,
 
-This is line 6033 for me; however, this change makes it work!  (I
-verified my changing this line; trying it; then changing it back to
-the double-quotes version, and verifying it breaks.)
+Our team works on an existing project that's in CVS, but we don't have
+the permissions to commit directly to it. We still need to make
+changes and want to stay as up to date as possible, so we are trying
+to use git to track the CVS repository and to collaborate inside the
+team.
 
-Why?
+Now, I'm quite new to git, so I'm not sure if the solution I created
+is "correct", not way too complicated, or if there are problems waiting
+for us.
 
--- 
- Denis
+git-cvsimport seems to be the solution, so I've established the 
+following structure:
+
++-----------------+
+| dev.eclipse.org |
++-----------------+
+        ^
+        | (1)
+        |         (2)                      (3)
++---------------+      +---------------+        +------------+
+| ifs:/from-cvs | ---> | ifs:/git-proj | <----- | Merge-Dude |
++---------------+      +---------------+        +------------+
+                          /           \
+                         /             \
+                        /               \
+                    +------+         +------+
+                    | User |   (4)   | User |
+                    +------+         +------+
+
+1) I use git-cvsimport to update the repository every night. /git-proj
+   is a "clone --bare" of the /from-cvs repository.
+
+2) After the import, I push the changes from CVS to /git-proj using
+   'git push /git-proj origin'.
+
+This first two steps can be done with a cronjob, there shouldn't be
+any conflicts.
+
+3) Then we have the role of a "Merge-Dude" who pulls the changes from
+   /git-proj and uses 'git merge origin/origin' to update his master.
+   If there are any conflicts, he resolves them and pushes everything
+   back to the master at /git-proj.
+
+4) The users can just push and pull from /git-proj.
+
+>From time to time, we can use 'git diff origin/origin' to get a patch
+with all the changes we made and have to send upstream.
+
+What do you guys think, is this approach feasible?
+
+What I don't like is how we have to make the upstream patch(es). Is
+there an easy way we can get multiple patches, lets say for each
+commit we made? Or is it easier to make a lots of branches and to
+then create a patch from the diff between the branch and origin/origin?
+
+Wow, this got longer than I expected. Thanks in advance!
+
+Mirko Stocker
