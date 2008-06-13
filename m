@@ -1,102 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git-svn: don't append extra newlines at the end of
- commit messages.
-Date: Thu, 12 Jun 2008 22:41:46 -0700
-Message-ID: <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
-References: <1213312251-8081-1-git-send-email-apenwarr@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 01:48:40 -0400
+Message-ID: <20080613054840.GA27122@sigill.intra.peff.net>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <co7kgJpJNdIs2f8n_PwYKAS7MwV9t1G_P3BPr1eXTZ4ytUHcsPvVaw@cipher.nrlssc.navy.mil> <20080612041847.GB24868@sigill.intra.peff.net> <u5dYyGz0Q8KNQXnvGOEGmG2BTfT-vJCEFeSUa2I_99Q@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 07:42:53 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Wincent Colaiuta <win@wincent.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Jun 13 07:49:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K723n-00041h-2x
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 07:42:51 +0200
+	id 1K72AM-00060p-K7
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 07:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbYFMFl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 01:41:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbYFMFl5
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 01:41:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38496 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981AbYFMFl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 01:41:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF06A26BA;
-	Fri, 13 Jun 2008 01:41:55 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D654B26B8; Fri, 13 Jun 2008 01:41:48 -0400 (EDT)
-In-Reply-To: <1213312251-8081-1-git-send-email-apenwarr@gmail.com> (Avery
- Pennarun's message of "Thu, 12 Jun 2008 19:10:50 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6ED28066-390B-11DD-816A-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1751981AbYFMFso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 01:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbYFMFso
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 01:48:44 -0400
+Received: from peff.net ([208.65.91.99]:1740 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555AbYFMFso (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 01:48:44 -0400
+Received: (qmail 27550 invoked by uid 111); 13 Jun 2008 05:48:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 01:48:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 01:48:40 -0400
+Content-Disposition: inline
+In-Reply-To: <u5dYyGz0Q8KNQXnvGOEGmG2BTfT-vJCEFeSUa2I_99Q@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84835>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+On Thu, Jun 12, 2008 at 11:46:34AM -0500, Brandon Casey wrote:
 
-> In git, all commits end in exactly one newline character.  In svn, commits
-> end in zero or more newlines.  Thus, when importing commits from svn into
-> git, git-svn always appends two extra newlines to ensure that the
-> git-svn-id: line is separated from the main commit message by at least one
-> blank line.
->
-> Combined with the terminating newline that's always present in svn commits
-> produced by git, you usually end up with two blank lines instead of one
-> between the commit message and git-svn-id: line, which is undesirable.
->
-> Instead, let's remove all trailing whitespace from the git commit on the way
-> through to svn.
+> > stash list" and "git pull"). Not to mention that you actually _care_
+> > about the stash 90 days later.
+> 
+> Wouldn't it usually be 30 days? Wouldn't stash objects generally be
+> unreachable?
 
-Perl part of the code looks fine but I am unsure if we like the
-ramifications of this patch on existing git-svn managed repositories.
-Doesn't this change the commit object name on our end for almost all of
-them?
+Yes, sorry, I was looking at the wrong config value.
 
-> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
-> ---
->  git-svn.perl |    8 +++++---
->  1 files changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 47b0c37..a54979d 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1023,6 +1023,7 @@ sub get_commit_entry {
->  		my $in_msg = 0;
->  		my $author;
->  		my $saw_from = 0;
-> +		my $msgbuf = "";
->  		while (<$msg_fh>) {
->  			if (!$in_msg) {
->  				$in_msg = 1 if (/^\s*$/);
-> @@ -1035,14 +1036,15 @@ sub get_commit_entry {
->  				if (/^From:/ || /^Signed-off-by:/) {
->  					$saw_from = 1;
->  				}
-> -				print $log_fh $_ or croak $!;
-> +				$msgbuf .= $_;
->  			}
->  		}
-> +		$msgbuf =~ s/\s+$//s;
->  		if ($Git::SVN::_add_author_from && defined($author)
->  		    && !$saw_from) {
-> -			print $log_fh "\nFrom: $author\n"
-> -			      or croak $!;
-> +			$msgbuf .= "\n\nFrom: $author";
->  		}
-> +		print $log_fh $msgbuf or croak $!;
->  		command_close_pipe($msg_fh, $ctx);
->  	}
->  	close $log_fh or croak $!;
-> -- 
-> 1.5.4.3
+> Also, the sequence above would not have to be performed _exactly_ at the
+> expiration date. The listing of the stashes i.e. git-log, does not perform
+> reflog expiration AFAIK. So the initial 'stash list' and the 'git pull' do
+> not have to straddle the expiration date, they can all be performed any time
+> after the expiration point to produce the above behavior.
+
+No, but it would have to be performed _after_ the expiration, but
+_before_ any auto-gc happened. So it is a smaller window than "anytime
+after expiration" but not as small as a particular 30-second window.
+
+> from reflogs even though stashes are implemented using reflogs. The big
+> difference is that reflogs are created automatically and stashes are created
+> by explicit user action. Automatically deleting something that git creates
+> automatically is ok and desirable, doing so for something the user explicitly
+> created is not necessarily so.
+
+Wincent made this same argument. I don't really agree with it. It is
+predicated on the assumption that stashing something _is_ asking for git
+to remember it. My mental model of stashing is that it hasn't been saved
+at all, but is rather a convenient way of naming and storing a set of
+changes for a second while I do something else.  I think of it in the
+same way as a register in vi: I can yank text into it for pasting
+after a few commands. But I don't expect yanked text to be stored in the
+register a month later.
+
+So I think we are disagreeing not on how stashes should expire, but
+rather on what a stash _is_, and what it is useful for. And I am open to
+arguments that stashes are useful for longer-term storage. But I also
+find the expiration behavior useful (I seem to have accumulated some
+cruft in my stash list, and I expect git to clean it out during a gc,
+rather than me having to clean it manually). So personally, I would not
+be in favor of removing the expiration unless I saw evidence that the
+utility of keeping stashes long-term outweighed the benefit of cleaning.
+
+And that evidence is probably "here is a workflow I find useful, and
+here is why it is better than any other way of doing it in git" (and
+maybe the "better" is simply "new users are going to jump on this way of
+using stash, even though it was not as intended").
+
+-Peff
