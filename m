@@ -1,7 +1,7 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v4 04/24] Added the iterface Rules.
-Date: Fri, 13 Jun 2008 20:35:01 +0200
-Message-ID: <1213382121-19786-4-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v4 06/24] Added the class FilePathPattern.
+Date: Fri, 13 Jun 2008 20:35:03 +0200
+Message-ID: <1213382121-19786-6-git-send-email-florianskarten@web.de>
 References: <4852BCCA.4030404@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
@@ -13,11 +13,11 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7EAK-0005zA-3b
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 20:38:24 +0200
+	id 1K7EAK-0005zA-Mw
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 20:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbYFMSfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 14:35:38 -0400
+	id S1752516AbYFMSfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 14:35:40 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -28,48 +28,49 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754396AbYFMSfg
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 14:35:36 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:41919 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752339AbYFMSf1 (ORCPT <rfc822;git@vger.kernel.org>);
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbYFMSfi
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 14:35:38 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:33483 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355AbYFMSf1 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 13 Jun 2008 14:35:27 -0400
 Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id C0D6BDFAF684
-	for <git@vger.kernel.org>; Fri, 13 Jun 2008 20:35:25 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 914E3E3F1982
+	for <git@vger.kernel.org>; Fri, 13 Jun 2008 20:35:26 +0200 (CEST)
 Received: from [84.150.79.9] (helo=localhost.localdomain)
 	by smtp08.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1K7E7R-0000eI-00; Fri, 13 Jun 2008 20:35:25 +0200
+	id 1K7E7S-0000eI-00; Fri, 13 Jun 2008 20:35:26 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <4852BCCA.4030404@web.de>
 In-Reply-To: <4852BCCA.4030404@web.de>
 References: <4852BCCA.4030404@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX1/AyFaaXl8gC+lxBPAIseQjks29G/nTcIgaWVsJ
-	SNfLt6E+97cWeYmmqy1hPyyJY5pCUIgMSE0m7tmrEqBZbK+XtE
-	Ozhk4i+A/EoC/GWEhvww==
+X-Provags-ID: V01U2FsdGVkX18B1EaWT3WfXChX8ahpyF8s9bsGdP2S9dZapQxM
+	QvIVgpK6I8mTy59lm6hIJ5u3ibopF9fZlVA7AigBeh4+8hWiwC
+	MULm0Gz8fFQBzrStdyXw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84918>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../src/org/spearce/jgit/treewalk/rules/Rules.java |  121 ++++++++++++=
+ .../jgit/treewalk/rules/FilePathPattern.java       |   97 ++++++++++++=
 ++++++++
- 1 files changed, 121 insertions(+), 0 deletions(-)
+ 1 files changed, 97 insertions(+), 0 deletions(-)
  create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/Rules.java
+s/FilePathPattern.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules=
-=2Ejava b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules.ja=
-va
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FileP=
+athPattern.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/=
+=46ilePathPattern.java
 new file mode 100644
-index 0000000..0a71150
+index 0000000..cd7c9aa
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules.java
-@@ -0,0 +1,121 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/FilePathPatt=
+ern.java
+@@ -0,0 +1,97 @@
 +/*
 + * Copyright (C) 2008, Florian K=C3=B6berle <florianskarten@web.de>
 + *
@@ -109,91 +110,64 @@ index 0000000..0a71150
 +
 +package org.spearce.jgit.treewalk.rules;
 +
++import org.spearce.jgit.errors.InvalidPatternException;
++import org.spearce.jgit.fnmatch.FileNameMatcher;
++
 +/**
-+ * A {@link Rules} instances defines ignore or do not ignore rules for=
- files in
-+ * a directory. It can't directly be used to match files in sub direct=
-ories, but
-+ * provides a method {@link #getRulesForSubDirectory}.
++ * A {@link FilePathPattern} represents a pattern for a file path.
 + *=20
 + */
-+public interface Rules {
++class FilePathPattern implements FilePattern {
++	private final FileNameMatcher matcher;
 +
-+	/**
-+	 * Provides the instance of {@link IgnoreAllRules}.
-+	 */
-+	public static final Rules IGNORE_ALL =3D new IgnoreAllRules();
++	private final boolean matchDirectoriesOnly;
 +
-+	/**
-+	 * Provides the instance of {@link IgnoreNothingRules}.
-+	 */
-+	public static final Rules IGNORE_NOTHING =3D new IgnoreNothingRules()=
-;
-+
-+	/**
-+	 * @param fileName
-+	 *            the name of the file or directory.
-+	 * @param fileIsDirectory
-+	 *            should be true if the file is a directory.
-+	 * @return true if the file or directory should be ignored.
-+	 */
-+	public abstract boolean shouldIgnore(String fileName,
-+			boolean fileIsDirectory);
-+
-+	/**
-+	 * @param directoryName
-+	 *            the sub directory for which you want an {@link Rules}
-+	 *            instance.
-+	 * @return an {@link Rules} instance, which can be used to check file=
-s in
-+	 *         the specified sub directory.
-+	 */
-+	public abstract Rules getRulesForSubDirectory(String directoryName);
-+
-+	/**
-+	 * This implementation ignores everything.
-+	 */
-+	public static final class IgnoreAllRules implements Rules {
-+		private IgnoreAllRules() {
-+			// declared to make the constructor private
-+		}
-+
-+		public Rules getRulesForSubDirectory(String directoryName) {
-+			return this;
-+		}
-+
-+		public boolean shouldIgnore(String fileName, boolean fileIsDirectory=
-) {
-+			return true;
-+		}
-+
-+		@Override
-+		public String toString() {
-+			return "Rules[IGNORE_ALL]";
-+		}
++	private FilePathPattern(final FileNameMatcher matcher,
++			final boolean matchDirectoriesOnly) {
++		this.matcher =3D matcher;
++		this.matchDirectoriesOnly =3D matchDirectoriesOnly;
 +	}
 +
-+	/**
-+	 * This implementation ignores nothing.
-+	 */
-+	public static final class IgnoreNothingRules implements Rules {
-+		private IgnoreNothingRules() {
-+			// declared to make the constructor private
-+		}
++	FilePathPattern(final String pattern, final boolean allowSlashInWildC=
+ard,
++			final boolean matchDirectoriesOnly) throws InvalidPatternException =
+{
 +
-+		public Rules getRulesForSubDirectory(String directoryName) {
-+			return this;
-+		}
++		if (allowSlashInWildCard)
++			this.matcher =3D new FileNameMatcher(pattern, null);
++		else
++			this.matcher =3D new FileNameMatcher(pattern, new Character('/'));
++		this.matchDirectoriesOnly =3D matchDirectoriesOnly;
++	}
 +
-+		public boolean shouldIgnore(String fileName, boolean fileIsDirectory=
-) {
++	public FilePattern getPatternForSubDirectory(String directoryName) {
++		matcher.reset();
++		matcher.append(directoryName);
++
++		if (matcher.isMatch())
++			return FilePattern.MATCH_ALWAYS;
++
++		matcher.append("/");
++
++		if (!matcher.canAppendMatch())
++			return FilePattern.MATCH_NEVER;
++
++		final FileNameMatcher childMatcher =3D matcher.createMatcherForSuffi=
+x();
++		return new FilePathPattern(childMatcher, matchDirectoriesOnly);
++	}
++
++	public boolean match(String fileName, boolean fileIsDirectory) {
++		if (!fileIsDirectory && matchDirectoriesOnly) {
 +			return false;
 +		}
++		matcher.reset();
++		matcher.append(fileName);
++		return matcher.isMatch();
++	}
 +
-+		@Override
-+		public String toString() {
-+			return "Rules[IGNORE_NOTHING]";
-+		}
++	public boolean isSameForSubDirectories() {
++		return false;
 +	}
 +
 +}
