@@ -1,78 +1,75 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [RFCv2/FYI] git-sequencer.txt
-Date: Fri, 13 Jun 2008 07:42:25 -0700
-Message-ID: <48528751.8070601@gnu.org>
-References: <20080607220101.GM31040@leksak.fem-net> <20080612002258.GC7200@leksak.fem-net> <7vabhr9qru.fsf@gitster.siamese.dyndns.org> <20080612170715.GC6848@leksak.fem-net> <4851FFE9.30108@gnu.org> <20080613121607.GC7925@leksak.fem-net>
+From: Chris Ridd <chris.ridd@isode.com>
+Subject: Re: git-instaweb portability issue (maybe?)
+Date: Fri, 13 Jun 2008 15:42:49 +0100
+Message-ID: <48528769.2000007@isode.com>
+References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com>
+            <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
+            <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>
+            <6dbd4d000806130659r2a8bc57ev6db4ef058ee97440@mail.gmail.com>
+            <48527FEC.8080909@isode.com>
+            <alpine.DEB.1.10.0806131016120.8043@alchemy.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 16:43:44 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:43:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7AUs-0005uM-Kz
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:43:23 +0200
+	id 1K7AVH-00066J-Pk
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbYFMOm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 10:42:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbYFMOm1
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:42:27 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:60841 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751317AbYFMOm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 10:42:26 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1834361pyb.10
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 07:42:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=1F9QDLpqbMyd219X4/X5Cz4PaGWzIUwBUkhcn4LYyPw=;
-        b=CMkM06LKb7YOMATIBU90Vxmqzd0/ws/az3TpubbewtWimSXGTHfNI205DOEflAWiRy
-         4GdRkKDEm6I9uq2vViNnzfCOCobci8AisNJRLSypcKC77KzXMFVCaAEjbGFdZKR3WjCS
-         0a0OQPxcGojmf+0UI6JW9BZmwMGdcWiq5gRFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=nzteNj9GQlRxWMpzdlWtJdnbUqO/odLc8IVKHZphen6D8ZVcYJNHHOzbOjLoIKEzXi
-         SuaDcMgVN4B2/gbAqvd1afcgUIecdxxKLQSR84EpdSwNVK/6oqjz12trP+JOHMXgIq1c
-         6wIVbEZqNldNlOEFnDiNCsSxJiwjrRcK7/iDI=
-Received: by 10.115.50.5 with SMTP id c5mr3170503wak.60.1213368145110;
-        Fri, 13 Jun 2008 07:42:25 -0700 (PDT)
-Received: from scientist-2.local ( [65.248.49.163])
-        by mx.google.com with ESMTPS id y25sm4089505pod.8.2008.06.13.07.42.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Jun 2008 07:42:23 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
-In-Reply-To: <20080613121607.GC7925@leksak.fem-net>
-X-Enigmail-Version: 0.95.6
+	id S1755416AbYFMOmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 10:42:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755438AbYFMOmw
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:42:52 -0400
+Received: from rufus.isode.com ([62.3.217.251]:41455 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754962AbYFMOmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 10:42:51 -0400
+Received: from [172.16.0.138] (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (submission channel) via TCP with ESMTPSA 
+          id <SFKHagBZBFv-@rufus.isode.com> for <git@vger.kernel.org>;
+          Fri, 13 Jun 2008 15:42:50 +0100
+User-Agent: Thunderbird 2.0.0.14 (X11/20080507)
+In-Reply-To: <alpine.DEB.1.10.0806131016120.8043@alchemy.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84885>
 
-
-> Now?
-> 1)  squash --up-to :5
-> 2)  squash --from :5
-> 3)  squash --after :5
+Asheesh Laroia wrote:
+> On Fri, 13 Jun 2008, Chris Ridd wrote:
 > 
-> (1) suggests the wrong direction...
-> My English feeling says that (2) "squash from" is better than 
-> (3) "squash after", but I'm not a native speaker ;-)
+>> Denis Bueno wrote:
+>>> On Fri, Jun 13, 2008 at 09:46, Asheesh Laroia <asheesh@asheesh.org> 
+>>> wrote:
+>>>> Does OS X ship /usr/bin/env?
+>>>>
+>>>> If you type "/usr/bin/env perl" in a Terminal window, do you get Perl?
+>>>
+>>> Sorry, I should have made that clear earlier: yes.
+>>>
+>>> funsat[122] > /usr/bin/env perl --version
+>>>
+>>> This is perl, v5.8.8 built for darwin-2level
+>>
+>> MacPorts /tends/ to make ports use stuff from other ports instead of 
+>> using Apple-installed bits. In this case, maybe git from MacPorts is 
+>> using perl from MacPorts?
+> 
+> FWIW, the problem seems to be that it's not finding *any* Perl.
 
-Yes, it would be squash "everything after" X.  --from sounds good enough.
+That's odd, because the Portfile for git-core (1.5.5.3_0) does the 
+build, test and destroot install setting:
 
-Paolo
+PERL_PATH="/usr/bin/env perl" NO_FINK=1 NO_DARWIN_PORTS=1
+
+(and some other stuff). Have you pinged the port maintainer 
+(bryan@larsen.st)?
+
+Cheers,
+
+Chris
