@@ -1,79 +1,102 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 19:31:00 +0200
-Message-ID: <4852AED4.50206@free.fr>
-References: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>	 <20080611230344.GD19474@sigill.intra.peff.net>	 <alpine.LFD.1.10.0806111918300.23110@xanadu.home>	 <loom.20080612T042942-698@post.gmane.org>	 <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>	 <4851F6F4.8000503@op5.se>	 <20080613055800.GA26768@sigill.intra.peff.net>	 <48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net>	 <7vtzfxwtt0.fsf@gitster.siamese.dyndns.org> <bd6139dc0806130333n2cfbc564k79ed5562f14fc848@mail.gmail.com>
+Date: Fri, 13 Jun 2008 13:30:42 -0400
+Message-ID: <20080613173041.GA7974@sigill.intra.peff.net>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <co7kgJpJNdIs2f8n_PwYKAS7MwV9t1G_P3BPr1eXTZ4ytUHcsPvVaw@cipher.nrlssc.navy.mil> <20080612041847.GB24868@sigill.intra.peff.net> <u5dYyGz0Q8KNQXnvGOEGmG2BTfT-vJCEFeSUa2I_99Q@cipher.nrlssc.navy.mil> <20080613054840.GA27122@sigill.intra.peff.net> <GL75k5fYVorDQQh654Db9qgZ3DAr5EfRqLBwQe-VpacRGGbsy3c7WA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Andreas Ericsson <ae@op5.se>,
-	Wincent Colaiuta <win@wincent.com>,
-	Eric Raible <raible@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Jun 13 19:31:34 2008
+	Wincent Colaiuta <win@wincent.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Jun 13 19:31:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7D7d-0006hx-1H
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:31:33 +0200
+	id 1K7D7r-0006nD-NV
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:31:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbYFMRag convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2008 13:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYFMRag
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:30:36 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:46797 "EHLO smtp2-g19.free.fr"
+	id S1751372AbYFMRaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 13:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYFMRaq
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:30:46 -0400
+Received: from peff.net ([208.65.91.99]:2904 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751302AbYFMRaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 13:30:35 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 84D8712B6C5;
-	Fri, 13 Jun 2008 19:30:34 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 0C13F12B6D8;
-	Fri, 13 Jun 2008 19:30:33 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <bd6139dc0806130333n2cfbc564k79ed5562f14fc848@mail.gmail.com>
+	id S1751359AbYFMRap (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 13:30:45 -0400
+Received: (qmail 8597 invoked by uid 111); 13 Jun 2008 17:30:44 -0000
+Received: from lawn-128-61-17-201.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.17.201)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 13:30:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 13:30:42 -0400
+Content-Disposition: inline
+In-Reply-To: <GL75k5fYVorDQQh654Db9qgZ3DAr5EfRqLBwQe-VpacRGGbsy3c7WA@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84905>
 
-Sverre Rabbelier a =E9crit :
->=20
->  OTOH: I dislike the idea of 'forcing' the users to go through their
-> stashes lest they lose their work. I don't see why anybody would want
-> to do some work, stash it, and then "for no apparent reason" (the
-> reason being not touching it for some time) lose it later.
+On Fri, Jun 13, 2008 at 11:43:42AM -0500, Brandon Casey wrote:
 
-I agree. And even without that:
+> > No, but it would have to be performed _after_ the expiration, but
+> > _before_ any auto-gc happened. So it is a smaller window than "anytime
+> > after expiration" but not as small as a particular 30-second window.
+> 
+> Right, that's why I showed the 'git-stash list' which still had the
+> stash entry before the 'git-pull'.
 
-> What if
-> their system borks up and gives a wrong value as current time (say, 1=
-0
-> years in the future), all of a sudden their stashes are gone, and the=
-y
-> might not even find out till it was too late. Sure, they'd lose some
-> stale objects too, but that I can live with, those they did not ask
-> git to take care of explicitly!
+Right, but I meant that you would have to perform the example commands
+you gave after the expiration, but before you had done anything that did
+an auto-gc. So you could do it at day 31, unless on day 30 you had done
+a "git pull".
 
-it seems pretty strange to ask the user for a confirmation: are you sur=
-e
-you want to keep what you ask us to store in the stash?
+But somebody else mentioned that they leave cloned working trees sitting
+around, and then find them later. So they might truly have done no
+commands.
 
-> The per-branch stashes sounds very nice, especially if you can get a
-> 'git stash list --all' feature, that shows all stashes, regardless of
-> what branch they are on. I myself would use such a per-branch feature
-> most of the time, it would be nice to have a config option that
-> defaults to that (making 'git stash' create a per-branch stash by
-> default that is).
+At any rate, I don't think is especially relevant.
 
-I think the same and would prefer per-branch stash by default because I
-don't see a real use of a "global" one but maybe I'm wrong. Perhaps, a
-config option could make everyone happy. :-)
+> Funny you should mentioned that since I had thought of using a similar
+> example in defense of my point of view. So I offer a question: after how
+> much time after you have yanked some text into a register in vi do you
+> expect vi to clear that register?
 
-Olivier.
+After 10 other yanks? ;)
+
+I was referring not to the named registers, but to the unnamed ones.
+IOW, I know that vim will keep my registers from session to session. But
+when I yank, it implicitly goes into "0, and the old "0 bumps to "1, "1
+to "2, and so forth. "9 is thrown away.
+
+And I think that works pretty well in practice. The size is bounded, but
+text stays around long enough for me to use it. And if I want storage
+that is guaranteed to last (and I sometimes do), then I use a named
+register.
+
+Now here we are bounding by time rather than by number of stashes, but
+it is the same concept.
+
+> yanks as being tied to the session. Similarly with something like X11
+> when you highlight text, you expect it to be there in the copy buffer
+> until other text is highlighted or until X terminates.
+
+Ah, if only that was how X cut buffers actually worked. ;)
+
+> I see it as less of a workflow issue than a safety issue, and a user
+> interface issue. I don't know if there are workflows that would be
+> made possible by not expiring the stash. I do think the benefit of
+> automatically cleaning out the stash so it doesn't accumulate old
+> cruft is less important to me than an intuitive interface and
+> predictable behavior.
+
+At this point I am inclined to agree. Enough people seem to want to
+leave things stashed for long periods that it is a potential hazard to
+people who don't know about the expiration. And while I prefer the
+expiring cruft behavior, not expiring it isn't _that_ big a deal to me,
+compared against the potential for loss.
+
+-Peff
