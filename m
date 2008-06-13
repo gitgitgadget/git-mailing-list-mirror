@@ -1,113 +1,73 @@
-From: Alejandro Riveira =?ISO-8859-1?Q?Fern=E1ndez?= 
-	<alejandro.riveira@gmail.com>
-Subject: Patch to add  git-help--browse to .gitignore
-Date: Sat, 14 Jun 2008 00:30:39 +0200
-Message-ID: <1213396239.12920.2.camel@Varda>
-Reply-To: alejandro.riveira@gmail.com
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: perl/Makefile if MakeMaker is not installed (NO_PERL_MAKEMAKER)
+Date: Sat, 14 Jun 2008 00:35:41 +0200
+Message-ID: <4852F63D.802@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-EcVGhk347GOlDB+F8TnD"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:31:43 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Ho4-0001Sb-Io
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:31:40 +0200
+	id 1K7Hss-0002ye-9R
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754945AbYFMWaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 18:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbYFMWaq
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:30:46 -0400
-Received: from ik-out-1112.google.com ([66.249.90.182]:31644 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754610AbYFMWap (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 18:30:45 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so3154979ika.5
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:30:42 -0700 (PDT)
+	id S1755196AbYFMWfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 18:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755028AbYFMWfl
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:35:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:53015 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755189AbYFMWfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 18:35:40 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2893151fgg.17
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:reply-to:to
-         :content-type:date:message-id:mime-version:x-mailer;
-        bh=fUlHqAKUw9G+epOHHLVhAegX46DyFo1viEanmcPl5wg=;
-        b=kPqZWQ06wTisYQYewmTvzUnkl4SI2pWWK6aUgx/7VvXt794URSLjvAN8rhE4gp3GQO
-         mAE5o9L9GhDet0rs9GRD3O1/ajpnYoblxFo1EwRyAZJ9nUi/lPLJ17I0l1AqW3+hkkas
-         g5R5qCL2eIenpd9aa2WSquzoC7TgC4deG8J1I=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:subject:content-type:content-transfer-encoding:from;
+        bh=e3Sjla1VSzB2HxEuOMMGrArShI0sw2ApATNYOaimGfg=;
+        b=YTu3461KQMn69aVH82Zx7CN2nx2uVIULOfg9yZi3FODDkw4AIL8JDUTaAUQP3x/xxA
+         bOyjvJU3ELHpRAtY9AtdgAh9l7kM85GPFWyiIC1aspcuSq04jdeWOGko/q+qdMVNOiQj
+         VUOrgXkfgBzTHyuRE+9FxOiyrHizZt4agrNH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:reply-to:to:content-type:date:message-id:mime-version
-         :x-mailer;
-        b=wa4Vi2Lr/NChc1LpgqtSWUypPzclsRjtyBquBPG4N2fRgzuIXgZEABqZuaMRMZMM5u
-         FP1GoYNhYa7QQ65nd6Unf+AhoBLWEJhCcgZFMeaBP8+4eT7S9X/gEHBCYsfMN9L+BaBa
-         G48S1vph7t+ANdq16u5Y+npTAVv8vB8eGMUf8=
-Received: by 10.210.131.6 with SMTP id e6mr3155877ebd.10.1213396241677;
-        Fri, 13 Jun 2008 15:30:41 -0700 (PDT)
-Received: from ?10.0.0.2? ( [83.37.199.169])
-        by mx.google.com with ESMTPS id q9sm5654872gve.5.2008.06.13.15.30.39
+        h=message-id:date:user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding:from;
+        b=FYzIO/SwJvXthtYZmKvKhyNntFNtYwJQ/KOqMGkkmWYtGM+bvCba1rwfidAcWuImkp
+         XX73AgQg72bhsPR9Pj2iGecDlMHl7Z9XCZYhCasO4y20MfjZai3XesXtKyMSFtuy8aHb
+         9hHAxO+A3pb/1fRDN9APabGr0FfVC4d8PBezg=
+Received: by 10.86.52.6 with SMTP id z6mr4703245fgz.48.1213396537284;
+        Fri, 13 Jun 2008 15:35:37 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.222.17])
+        by mx.google.com with ESMTPS id e11sm6091015fga.4.2008.06.13.15.35.36
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 13 Jun 2008 15:30:40 -0700 (PDT)
-X-Mailer: Evolution 2.22.2 
+        Fri, 13 Jun 2008 15:35:36 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84947>
 
+I just wanted to report that Git.pm is installed to $(prefix)/lib if 
+NO_PERL_MAKEMAKER is set, which doesn't seem right.
 
---=-EcVGhk347GOlDB+F8TnD
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+$ make NO_PERL_MAKEMAKER=yes prefix=$HOME/tmp/git-install install
+[...]
+$ find ~/tmp/git-install -name \*.pm
+/home/lea/tmp/git-install/lib/Git.pm
+/home/lea/tmp/git-install/lib/Error.pm
 
-When i run =C2=ABgit status=C2=BB on a cloned git repo with
-build files around i get
+Without NO_PERL_MAKEMAKER, it works fine:
 
-$ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       git-help--browse
-nothing added to commit but untracked files present (use "git add" to track=
-)
+$ make clean
+$ rm ~/tmp/git-install -r
+$ make prefix=$HOME/tmp/git-install install
+[...]
+$ find ~/tmp/git-install -name \*.pm
+/home/lea/tmp/git-install/share/perl/5.10.0/Git.pm
 
-So i think something like this is needed
-
-Thanks for your time.
-
----
-
-diff --git a/.gitignore b/.gitignore
-index 4ff2fec..8c77234 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -51,6 +51,7 @@ git-gc
- git-get-tar-commit-id
- git-grep
- git-hash-object
-+git-help--browse
- git-http-fetch
- git-http-push
- git-imap-send
-
-
---=20
-The idea that Bill Gates has appeared like a knight in shining armour to
-lead all customers out of a mire of technological chaos neatly ignores
-the fact that it was he who, by peddling second-rate technology, led
-them into it in the first place.=20
-                                     Douglas Adams
-
---=-EcVGhk347GOlDB+F8TnD
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: Esta parte del mensaje =?ISO-8859-1?Q?est=E1?= firmada
-	digitalmente
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iEYEABECAAYFAkhS9Q8ACgkQ3GEkiSnUSOH6pwCfb8hUoYMMI3EtTmD3d/6gTeBs
-D/EAmQE7dTTt7mS/4tUbyVAE+ICuh/Sx
-=T8w4
------END PGP SIGNATURE-----
-
---=-EcVGhk347GOlDB+F8TnD--
+-- Lea
