@@ -1,78 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/3] filter-branch: add new --blob-filter option.
-Date: Fri, 13 Jun 2008 02:25:46 -0400
-Message-ID: <20080613062546.GD26768@sigill.intra.peff.net>
-References: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/2] git-svn: don't append extra newlines at the end of commit messages.
+Date: Fri, 13 Jun 2008 08:29:51 +0200
+Message-ID: <20080613062951.GB24245@diana.vm.bytemark.co.uk>
+References: <1213312251-8081-1-git-send-email-apenwarr@gmail.com> <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 08:27:06 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 08:31:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K72ka-0008OF-2a
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:27:04 +0200
+	id 1K72pC-0001Dm-6e
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 08:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbYFMGZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 02:25:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbYFMGZt
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:25:49 -0400
-Received: from peff.net ([208.65.91.99]:1204 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752096AbYFMGZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 02:25:48 -0400
-Received: (qmail 29938 invoked by uid 111); 13 Jun 2008 06:25:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 02:25:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 02:25:46 -0400
+	id S1753158AbYFMGaq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2008 02:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbYFMGaq
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 02:30:46 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4517 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752598AbYFMGap (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 02:30:45 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K72nH-0006dd-00; Fri, 13 Jun 2008 07:29:51 +0100
 Content-Disposition: inline
-In-Reply-To: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
+In-Reply-To: <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84841>
 
-On Thu, Jun 12, 2008 at 08:52:22PM -0400, Avery Pennarun wrote:
+On 2008-06-12 22:41:46 -0700, Junio C Hamano wrote:
 
-> It was easy enough to work up the patch below, which allows
-> 
->   git filter-branch --blob-filter 'tr a-z A-Z'
+> Avery Pennarun <apenwarr@gmail.com> writes:
+>
+> > In git, all commits end in exactly one newline character. In svn,
+> > commits end in zero or more newlines. Thus, when importing commits
+> > from svn into git, git-svn always appends two extra newlines to
+> > ensure that the git-svn-id: line is separated from the main commit
+> > message by at least one blank line.
+> >
+> > Combined with the terminating newline that's always present in svn
+> > commits produced by git, you usually end up with two blank lines
+> > instead of one between the commit message and git-svn-id: line,
+> > which is undesirable.
+> >
+> > Instead, let's remove all trailing whitespace from the git commit
+> > on the way through to svn.
+>
+> Perl part of the code looks fine but I am unsure if we like the
+> ramifications of this patch on existing git-svn managed
+> repositories. Doesn't this change the commit object name on our end
+> for almost all of them?
 
-First, two procedural complaints:
+You're correct that this will change the commit id of imported svn
+revisions -- the new verson of git-svn will give other ids than the
+old version. However, the only thing that's going to "break" is that
+two separate imports of the same repository with the two different
+versions of git-svn will not give the exact same result on the git
+side.
 
-  1. We're supposed to be in rc freeze, so this is not a great time to
-     publish a new feature. ;)
+I think this is a good change, and it would be a pity if this and
+other changes like it had to be dropped out of a desire to keep the
+svn -> git transformation function forever fixed. (IIRC, such changes
+have been allowed in the past -- e.g. 0bed5eaa: "enable follow-parent
+functionality by default".)
 
-  2. When bringing back an old patch, please please please give at least
-     a little bit of cover letter context. "Here is what happened last
-     time, here are the reasons this patch was not accepted before, and
-     here is {why I think it that decision was wrong, what I have done
-     to improve the patch, etc}.
+One could imagine a policy of not introducing this kind of change
+during a stable version, or some such, but historically that's not
+been the case as far as I can remember.
 
-IIRC, the situation last time had two issues:
-
-  1. it was a one-off "we're not sure if this is really useful" patch
-
-  2. it was unclear whether paths should be available, and if they were,
-     there was an issue of encountering the same hash at two different
-     paths.
-
-I assume your answer to '1' is "I have been using this and it is
-useful". And for '2', it looks like you have extended the cache
-mechanism to take into account the sha1 and the path, which I think is
-the right solution (and I am pleased to see it looks like the final test
-covers the exact situation I was concerned about).
-
-So:
-
-(for 1/3):
-Signed-off-by: Jeff King <peff@peff.net>
-
-(for the others (and for 1/3, do I get to ack my own patch?)):
-Acked-by: Jeff King <peff@peff.net>
-
--Peff
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
