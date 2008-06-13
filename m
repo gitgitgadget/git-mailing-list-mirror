@@ -1,178 +1,90 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v3] git-instaweb: Enhanced auto-discovery of httpd and call conventions. Removed backticks.
-Date: Fri, 13 Jun 2008 10:02:14 -0700
-Message-ID: <20080613170214.GF5966@yp-box.dyndns.org>
-References: <1213264759-5264-1-git-send-email-flavio@polettix.it> <1213307695-2563-1-git-send-email-flavio@polettix.it>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 19:03:26 +0200
+Message-ID: <4852A85E.6020406@free.fr>
+References: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se> <20080613055800.GA26768@sigill.intra.peff.net> <48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net> <7vtzfxwtt0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Flavio Poletti <flavio@polettix.it>
-X-From: git-owner@vger.kernel.org Fri Jun 13 19:03:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
+	Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 19:04:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7CgC-0004V6-55
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:03:12 +0200
+	id 1K7Cgx-0004oI-MQ
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 19:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880AbYFMRCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 13:02:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbYFMRCQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:02:16 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:47616 "EHLO hand.yhbt.net"
+	id S1752622AbYFMRDG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2008 13:03:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYFMRDF
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 13:03:05 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:34223 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750834AbYFMRCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 13:02:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 078D97DC026;
-	Fri, 13 Jun 2008 10:02:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1213307695-2563-1-git-send-email-flavio@polettix.it>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752516AbYFMRDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 13:03:03 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 69F0312B721;
+	Fri, 13 Jun 2008 19:03:01 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id B41B912B705;
+	Fri, 13 Jun 2008 19:03:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <7vtzfxwtt0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84902>
 
-Flavio Poletti <flavio@polettix.it> wrote:
-> This patch allows calling:
-> 
->    git-instaweb -d apache2
-> 
-> and have the script Do The Right Thing. In particular, the auto-discovery
-> mechanism has been extended in order to be used for module listing as
-> well, and the call convention is that if the daemon is apache2/lighttpd
-> and the parameter to the "-d" option does not end by "-f", the "-f" is
-> added to the end of the option itself.
-> 
-> Changed all backticks to $( ... ) as per Documentation/CodingGuidelines:
-> 
->    For shell scripts specifically (not exhaustive):
-> 
->       - We prefer $( ... ) for command substitution; unlike ``, it
->          properly nests.  It should have been the way Bourne spelled
->          it from day one, but unfortunately isn't.
-> 
-> The rationale is that the POSIX shell does support $( ... ), and git
-> does make use of it rather extensively. (Thanks to Jakub Narebski for
-> pointing this out).
-> 
-> Signed-off-by: Flavio Poletti <flavio@polettix.it>
+Junio C Hamano a =E9crit :
+>=20
+>  * We _did not have to_ make stashes into refs/stash@{$N}.  We could =
+have
+>    implemented them as individual refs under "refs/stash/$N" hierarch=
+y.
+>    E.g. refs/stashes/1, refs/stash/2, etc.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+I don't really see what is the need for "global" stashes but why not?
 
-> ---
-> 
-> Sorry for the traffic, but I noticed that a stray warning was emitted
-> due to a last-second change (which teaches me once more that those
-> "innocent" last-second it-cannot-spoil-anything changes are the
-> most poisonus snakes in programming.
-> 
->  git-instaweb.sh |   48 +++++++++++++++++++++++++++++++++---------------
->  1 files changed, 33 insertions(+), 15 deletions(-)
-> 
-> diff --git a/git-instaweb.sh b/git-instaweb.sh
-> index 6f91c8f..af0fde5 100755
-> --- a/git-instaweb.sh
-> +++ b/git-instaweb.sh
-> @@ -22,10 +22,10 @@ restart        restart the web server
->  . git-sh-setup
->  
->  fqgitdir="$GIT_DIR"
-> -local="`git config --bool --get instaweb.local`"
-> -httpd="`git config --get instaweb.httpd`"
-> -port=`git config --get instaweb.port`
-> -module_path="`git config --get instaweb.modulepath`"
-> +local="$(git config --bool --get instaweb.local)"
-> +httpd="$(git config --get instaweb.httpd)"
-> +port=$(git config --get instaweb.port)
-> +module_path="$(git config --get instaweb.modulepath)"
->  
->  conf="$GIT_DIR/gitweb/httpd.conf"
->  
-> @@ -37,11 +37,21 @@ test -z "$httpd" && httpd='lighttpd -f'
->  # any untaken local port will do...
->  test -z "$port" && port=1234
->  
-> -start_httpd () {
-> -	httpd_only="`echo $httpd | cut -f1 -d' '`"
-> +resolve_full_httpd () {
-> +	case "$httpd" in
-> +	*apache2*|*lighttpd*)
-> +		# ensure that the apache2/lighttpd command ends with "-f"
-> +		if ! echo "$httpd" | grep -- '-f *$' >/dev/null 2>&1
-> +		then
-> +			httpd="$httpd -f"
-> +		fi
-> +		;;
-> +	esac
-> +
-> +	httpd_only="$(echo $httpd | cut -f1 -d' ')"
->  	if case "$httpd_only" in /*) : ;; *) which $httpd_only >/dev/null;; esac
->  	then
-> -		$httpd "$fqgitdir/gitweb/httpd.conf"
-> +		full_httpd=$httpd
->  	else
->  		# many httpds are installed in /usr/sbin or /usr/local/sbin
->  		# these days and those are not in most users $PATHs
-> @@ -51,16 +61,23 @@ start_httpd () {
->  		do
->  			if test -x "$i/$httpd_only"
->  			then
-> -				# don't quote $httpd, there can be
-> -				# arguments to it (-f)
-> -				$i/$httpd "$fqgitdir/gitweb/httpd.conf"
-> +				full_httpd=$i/$httpd
->  				return
->  			fi
->  		done
-> -		echo "$httpd_only not found. Install $httpd_only or use" \
-> -		     "--httpd to specify another http daemon."
-> +
-> +		echo >&2 "$httpd_only not found. Install $httpd_only or use" \
-> +		     "--httpd to specify another httpd daemon."
->  		exit 1
->  	fi
-> +}
-> +
-> +start_httpd () {
-> +	# here $httpd should have a meaningful value
-> +	resolve_full_httpd
-> +
-> +	# don't quote $full_httpd, there can be arguments to it (-f)
-> +	$full_httpd "$fqgitdir/gitweb/httpd.conf"
->  	if test $? != 0; then
->  		echo "Could not execute http daemon $httpd."
->  		exit 1
-> @@ -68,7 +85,7 @@ start_httpd () {
->  }
->  
->  stop_httpd () {
-> -	test -f "$fqgitdir/pid" && kill `cat "$fqgitdir/pid"`
-> +	test -f "$fqgitdir/pid" && kill $(cat "$fqgitdir/pid")
->  }
->  
->  while test $# != 0
-> @@ -116,7 +133,7 @@ do
->  done
->  
->  mkdir -p "$GIT_DIR/gitweb/tmp"
-> -GIT_EXEC_PATH="`git --exec-path`"
-> +GIT_EXEC_PATH="$(git --exec-path)"
->  GIT_DIR="$fqgitdir"
->  export GIT_EXEC_PATH GIT_DIR
->  
-> @@ -215,7 +232,8 @@ PerlPassEnv GIT_EXEC_DIR
->  EOF
->  	else
->  		# plain-old CGI
-> -		list_mods=`echo "$httpd" | sed "s/-f$/-l/"`
-> +		resolve_full_httpd
-> +		list_mods=$(echo "$full_httpd" | sed "s/-f$/-l/")
->  		$list_mods | grep 'mod_cgi\.c' >/dev/null 2>&1 || \
->  		echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
->  		cat >> "$conf" <<EOF
-> -- 
-> 1.5.5.4
-> 
+>    As a side note, we also could have implemented per-branch stash as
+>    refs/stashes/master@{$N} or refs/stashes/$branch/$N (and we still =
+can.
+>    Perhaps we can have "git stash save -B" option that tells the comm=
+and
+>    to send the resulting stash to the per-branch namespace).
+
+I really like your refs/stashes/$branch/$N idea because it seems easier=
+ to
+list and clean with git stash list/drop/clear.
+But I think stash should stay a per-branch thing by default. What about=
+ a
+-g (--global) option instead?
+
+>  * We later introduced "drop" because even as a volatile and short-li=
+ved
+>    collection of local modifications, you can tell that some stashes =
+are
+>    utter crap immediately while deciding that some are worth keeping,=
+ even
+>    for a short term.
+
+"drop" is nice, but I think the real improvement was "pop".
+
+>  * We could add "keep" which is a complementary operation to "drop". =
+ This
+>    would mark a stash as a gem in a more direct way, excempt even fro=
+m the
+>    usual auto pruning.
+
+I don't like it at all. Why not just have "keep" by default? The users =
+can
+already use "pop", "drop" and "clear" if they want to trash their stash=
+=2E
+
+Olivier.
