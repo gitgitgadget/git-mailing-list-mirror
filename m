@@ -1,67 +1,87 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
+From: Luciano Rocha <luciano@eurotux.com>
 Subject: Re: git-instaweb portability issue (maybe?)
-Date: Fri, 13 Jun 2008 10:16:36 -0400 (EDT)
-Message-ID: <alpine.DEB.1.10.0806131016120.8043@alchemy.localdomain>
-References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com>            <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>            <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>            <6dbd4d000806130659r2a8bc57ev6db4ef058ee97440@mail.gmail.com>
- <48527FEC.8080909@isode.com>
+Date: Fri, 13 Jun 2008 15:21:18 +0100
+Message-ID: <20080613142118.GA20027@bit.office.eurotux.com>
+References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com> <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 13 16:18:11 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BXVAT5kNtrzKuDFl"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Denis Bueno <dbueno@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:22:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7A5y-0002UN-M5
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:17:39 +0200
+	id 1K7AAQ-0004Xc-Jz
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755430AbYFMOQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 10:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755022AbYFMOQm
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:16:42 -0400
-Received: from wide-rose.makesad.us ([203.178.130.147]:44514 "EHLO
-	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753016AbYFMOQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 10:16:42 -0400
-Received: from alchemy (localhost [127.0.0.1])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rose.makesad.us (Postfix) with ESMTP id 8F19BA0127
-	for <git@vger.kernel.org>; Fri, 13 Jun 2008 10:18:07 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-	by alchemy (Postfix) with ESMTPS id 72F7B6CCD3
-	for <git@vger.kernel.org>; Fri, 13 Jun 2008 07:16:36 -0700 (PDT)
-X-X-Sender: paulproteus@alchemy.localdomain
-In-Reply-To: <48527FEC.8080909@isode.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-X-OpenPGP-Key-ID: 0x70096AD1
+	id S1752383AbYFMOVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 10:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752343AbYFMOVU
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:21:20 -0400
+Received: from os.eurotux.com ([216.75.63.6]:52997 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751721AbYFMOVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 10:21:19 -0400
+Received: (qmail 30924 invoked from network); 13 Jun 2008 14:21:17 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 13 Jun 2008 14:21:17 -0000
+Content-Disposition: inline
+In-Reply-To: <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84880>
 
-On Fri, 13 Jun 2008, Chris Ridd wrote:
 
-> Denis Bueno wrote:
->> On Fri, Jun 13, 2008 at 09:46, Asheesh Laroia <asheesh@asheesh.org> wrote:
->>> Does OS X ship /usr/bin/env?
->>> 
->>> If you type "/usr/bin/env perl" in a Terminal window, do you get Perl?
->> 
->> Sorry, I should have made that clear earlier: yes.
->> 
->> funsat[122] > /usr/bin/env perl --version
->> 
->> This is perl, v5.8.8 built for darwin-2level
->
-> MacPorts /tends/ to make ports use stuff from other ports instead of using 
-> Apple-installed bits. In this case, maybe git from MacPorts is using perl 
-> from MacPorts?
+--BXVAT5kNtrzKuDFl
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-FWIW, the problem seems to be that it's not finding *any* Perl.
+On Fri, Jun 13, 2008 at 09:38:18AM -0400, Denis Bueno wrote:
+> On Fri, Jun 13, 2008 at 09:26, Denis Bueno <dbueno@gmail.com> wrote:
+> > That line simply calls perl by the $PERL variable, which is set at the
+> > top of the script, like so:
+> >
+> >    PERL=3D'/usr/bin/env perl'
+> >
+> > If I change this line to point to my perl directly, it works.  On a
+> > hunch, I changed it to:
+> >
+> >    PERL=3D"/usr/bin/env perl"  # note the double-quotes
+>=20
+> [snip lies]
+>=20
+> Apparently I didn't test this thoroughly enough, and I was wrong.
+> Changing the quotes has no effect.
 
--- Asheesh.
+That makes more sense.
 
--- 
-A can of ASPARAGUS, 73 pigeons, some LIVE ammo, and a FROZEN DAQUIRI!!
+Try changing the following line instead:
+	"$PERL" -p -e "$script" "$1.tmp"  > "$1"
+to
+	$PERL -p -e "$script" "$1.tmp"  > "$1"
+
+about line 6121 of the git-instaweb script.
+
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--BXVAT5kNtrzKuDFl
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhSgl4ACgkQinSul6a7oB9lbQCfeuCtiuGR2R8/UBYQaLyg+z7U
+vRYAoJzNSJjBGPq1mu7oShXBJ7LoSKdT
+=dDUq
+-----END PGP SIGNATURE-----
+
+--BXVAT5kNtrzKuDFl--
