@@ -1,105 +1,176 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: git format-patch documentation anomaly
-Date: Thu, 12 Jun 2008 19:37:11 -0500
-Message-ID: <E1K6xHz-0002y4-Dv@jdl.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: [PATCH v2 2/3] filter-branch --blob-filter: speed/flexibility improvements.
+Date: Thu, 12 Jun 2008 20:52:23 -0400
+Message-ID: <1213318344-26013-2-git-send-email-apenwarr@gmail.com>
+References: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
+Cc: gitster@pobox.com, Avery Pennarun <apenwarr@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 02:38:20 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 03:04:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K6xJ5-0006s4-5a
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 02:38:19 +0200
+	id 1K6xhy-0006Da-3D
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 03:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755783AbYFMAhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2008 20:37:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755876AbYFMAhP
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 20:37:15 -0400
-Received: from jdl.com ([208.123.74.7]:48810 "EHLO jdl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755739AbYFMAhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2008 20:37:15 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.63)
-	(envelope-from <jdl@jdl.com>)
-	id 1K6xHz-0002y4-Dv
-	for git@vger.kernel.org; Thu, 12 Jun 2008 19:37:13 -0500
-X-Spam-Score: -2.6
+	id S1757968AbYFMBDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2008 21:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758211AbYFMBDI
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jun 2008 21:03:08 -0400
+Received: from host.237.101.mtl.cablemodem.vdn.ca ([206.223.237.101]:33078
+	"EHLO insight.mtl.versabanq.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757941AbYFMBDF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2008 21:03:05 -0400
+Received: by insight.mtl.versabanq.com (Postfix, from userid 1000)
+	id 27D48E7C534; Thu, 12 Jun 2008 20:52:24 -0400 (EDT)
+X-Mailer: git-send-email 1.5.6.rc2.29.g4717e
+In-Reply-To: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84818>
 
+Export the current file path as $GIT_BLOB_PATH, so we can filter a blob
+differently based on its path, and change the caching mechanism to re-filter
+a particular blob if its path changes.
 
-Git-ites,
+Also, make it much faster by not calling 'cat'. The main loop of
+munge_blobs() had to fork-exec "cat" every time through the loop, even when
+a blob was already cached.  Let's use the sh builtin 'read' instead for a
+huge speedup.
 
-I noticed that there is a bit of an anomaly with
-the "git-format-patch" documentation.  The option
-for --ignore-if-in-upstream reads like this:
+cd git
+time git filter-branch --blob-filter 'tr a-z A-Z' HEAD~10..HEAD
 
-    --ignore-if-in-upstream::
-        Do not include a patch that matches a commit in
-        <until>..<since>.  This will examine all patches reachable
-        from <since> but not from <until> and compare them with the
-        patches being generated, and any patch that matches is
-        ignored.
+(original --blob-filter)
+real    3m58.569s
+user    0m22.900s
+sys     3m32.030s
 
-First, the English on the <until>..<since> is a bit odd,
-and directly opposite the corresponding ordering from git-log:
+(with 'cat' calls removed)
+real	1m11.931s
+user	0m8.520s
+sys	1m2.900s
 
-    <since>..<until>
-        Show only commits between the named two commits. When either
-        <since> or <until> is omitted, it defaults to HEAD, i.e. the tip
-        of the current branch. For a more complete list of ways to spell
-        <since> and <until>, see "SPECIFYING REVISIONS" section in
-        git-rev-parse(1).
+(with 'cat' calls removed and blob cache already filled)
+real	0m19.660s
+user	0m3.930s
+sys	0m15.720s
 
-But the real issue is that git-format-patch doesn't
-even mention <since>..<until> (or <until>..<since>)
-as its revision range specifier anywhere.  It says
+Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
+---
+ Documentation/git-filter-branch.txt |   27 +++++++++++++++++++++++++++
+ git-filter-branch.sh                |   27 +++++++++++++++++----------
+ 2 files changed, 44 insertions(+), 10 deletions(-)
 
-    [ <since> | <revision range> ]
-
-in its synopsis.
-
-And I wonder if it is just me or not, but I had to read this
-paragaph about 3 times and compare it to my already-known
-mental model of what format-patch does before I figured out
-what it was trying to say:
-
-    A single commit, when interpreted as a <revision range> expression,
-    means "everything that leads to that commit", but if you write git
-    format-patch <commit>, the previous rule applies to that command
-    line and you do not get "everything since the beginning of the
-    time". If you want to format everything since project inception to
-    one commit, say "git format-patch --root <commit>" to make it clear
-    that it is the latter case.
-
-Granted, that is a little out of context ("the previous rule" refers
-to this:
-
-    1. A single commit, <since>, specifies that the commits leading to
-       the tip of the current branch that are not in the history that
-       leads to the <since> to be output.
-
-So, at the risk of complaining and not contributing, I'll
-offer this rewrite or clarification for the confusing paragraph
-and, if needed, followup with a patch unless someone else
-beats me to it.
-
-    Other Git commands that receive a single commit, <commit>,
-    parameter as part of a range generally mean "every commit
-    that contributes to and leads up to <commit>".  However,
-    in the context of git-format-patch, that is generally not
-    the desired behavior; instead a single commit is interpreted
-    as a "<since>" parameter as if "<commit>..HEAD" were requested,
-    and specifies the commits leading to the tip of the current
-    branch that are not in the history up to and including <commit>.
-    If all commits from the root of the history up to the specified
-    commit are wanted, use "--root <commit>".
-
-Is a single commit, in fact, identical to "<commit>..HEAD"?
-Should we just state that straight up and be done with it?
-
-jdl
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index ea77f1f..0c5cd0f 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 	[--index-filter <command>] [--parent-filter <command>]
+ 	[--msg-filter <command>] [--commit-filter <command>]
+ 	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
++	[--blob-filter <command]
+ 	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[<rev-list options>...]
+ 
+@@ -149,6 +150,16 @@ to other tags will be rewritten to point to the underlying commit.
+ 	The result will contain that directory (and only that) as its
+ 	project root.
+ 
++--blob-filter <command>::
++	This is the filter for modifying the contents of each file (blob) in
++	the tree.  The contents of a file are provided on stdin, and the new
++	file contents should be provided on stdout.  The pathname of the
++	blob in the current revision is in $GIT_BLOB_PATH. For efficiency,
++	the before/after results of a given blob+filename are only
++	calculated once and then cached, so your filter must always return
++	the same output blob for any given input blob.  You might use this
++	filter for converting CRLF to LF in all your files, for example.
++
+ --original <namespace>::
+ 	Use this option to set the namespace where the original commits
+ 	will be stored. The default value is 'refs/original'.
+@@ -196,6 +207,22 @@ git filter-branch --index-filter 'git update-index --remove filename' HEAD
+ 
+ Now, you will get the rewritten history saved in HEAD.
+ 
++To convert CRLF to LF in all your files using the "fromdos" program (be
++careful: this will attempt to modify binary files too!):
++
++----------------------------------------------
++git filter-branch --blob-filter 'fromdos' HEAD
++----------------------------------------------
++
++To convert CRLF to LF in all your *.c and *.cpp files:
++
++---------------------------------------------------------
++git filter-branch --blob-filter 'case "$GIT_BLOB_PATH" in
++	*.c|*.cpp) fromdos;;
++	*) cat;;
++esac' HEAD
++---------------------------------------------------------
++
+ To set a commit (which typically is at the tip of another
+ history) to be the parent of the current initial commit, in
+ order to paste the other history behind the current history:
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a0d9a79..f1ee263 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -55,19 +55,24 @@ EOF
+ eval "$functions"
+ 
+ munge_blobs() {
+-	while read mode sha1 stage path
++	while read GIT_BLOB_MODE GIT_BLOB_SHA1 stage GIT_BLOB_PATH
+ 	do
+-		if ! test -r "$workdir/../blob-cache/$sha1"
++		export GIT_BLOB_MODE GIT_BLOB_SHA1 GIT_BLOB_PATH
++		cachefile="$cachedir/$GIT_BLOB_SHA1/$GIT_BLOB_PATH"
++		if ! test -r "$cachefile"
+ 		then
+-			new=`git cat-file blob $sha1 |
+-			     eval "$filter_blob" |
+-			     git hash-object -w --stdin`
+-			printf $new >$workdir/../blob-cache/$sha1
++			new=$(git cat-file blob $GIT_BLOB_SHA1 |
++			      eval "$filter_blob" |
++			      git hash-object -w --stdin)
++			mkdir -p "$(dirname "$cachefile")"
++			echo -n $new >"$cachefile"
++		else
++			read new <"$cachefile"
+ 		fi
+ 		printf "%s %s\t%s\n" \
+-			"$mode" \
+-			$(cat "$workdir/../blob-cache/$sha1") \
+-			"$path"
++			"$GIT_BLOB_MODE" \
++			"$new" \
++			"$GIT_BLOB_PATH"
+ 	done
+ }
+ 
+@@ -108,6 +113,7 @@ USAGE="[--env-filter <command>] [--tree-filter <command>] \
+ [--index-filter <command>] [--parent-filter <command>] \
+ [--msg-filter <command>] [--commit-filter <command>] \
+ [--tag-name-filter <command>] [--subdirectory-filter <directory>] \
++[--blob-filter <command>] \
+ [--original <namespace>] [-d <directory>] [-f | --force] \
+ [<rev-list options>...]"
+ 
+@@ -249,7 +255,8 @@ ret=0
+ mkdir ../map || die "Could not create map/ directory"
+ 
+ # cache rewritten blobs for blob filter
+-mkdir ../blob-cache || die "Could not create blob-cache/ directory"
++cachedir="$workdir/../blob-cache"
++mkdir "$cachedir" || die "Could not create blob-cache/ directory"
+ 
+ case "$filter_subdir" in
+ "")
+-- 
+1.5.6.rc2.29.g4717e
