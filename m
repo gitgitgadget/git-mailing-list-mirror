@@ -1,61 +1,72 @@
-From: Teemu Likonen <tlikonen@iki.fi>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 12:07:39 +0300
-Message-ID: <20080613090739.GA8265@mithlond.arda.local>
-References: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <co7kgJpJNdIs2f8n_PwYKAS7MwV9t1G_P3BPr1eXTZ4ytUHcsPvVaw@cipher.nrlssc.navy.mil> <20080612041847.GB24868@sigill.intra.peff.net> <u5dYyGz0Q8KNQXnvGOEGmG2BTfT-vJCEFeSUa2I_99Q@cipher.nrlssc.navy.mil> <20080613054840.GA27122@sigill.intra.peff.net> <CA1D4ABE-0B83-44CC-B582-1E85784330AB@wincent.com> <bd6139dc0806130153u75c53b4do8e7b63f4a7f144e7@mail.gmail.com>
+Date: Fri, 13 Jun 2008 05:10:40 -0400
+Message-ID: <20080613091040.GB4474@sigill.intra.peff.net>
+References: <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se> <20080613055800.GA26768@sigill.intra.peff.net> <48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net> <bd6139dc0806130156o747fc128hbe28440ed4d228d4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>, Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
 To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Jun 13 11:10:24 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 11:11:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K75Ib-000696-Cb
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 11:10:21 +0200
+	id 1K75Jp-0006au-QR
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 11:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404AbYFMJJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 05:09:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755271AbYFMJJ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 05:09:26 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:45613 "EHLO
-	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754876AbYFMJJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 05:09:25 -0400
-Received: from mithlond.arda.local (80.220.180.140) by jenni2.rokki.sonera.fi (8.5.014)
-        id 483E832F00C12287; Fri, 13 Jun 2008 12:07:46 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1K75Fz-0002AE-7Z; Fri, 13 Jun 2008 12:07:39 +0300
+	id S1755271AbYFMJKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 05:10:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755049AbYFMJKn
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 05:10:43 -0400
+Received: from peff.net ([208.65.91.99]:2550 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754742AbYFMJKm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 05:10:42 -0400
+Received: (qmail 8840 invoked by uid 111); 13 Jun 2008 09:10:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 05:10:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 05:10:40 -0400
 Content-Disposition: inline
-In-Reply-To: <bd6139dc0806130153u75c53b4do8e7b63f4a7f144e7@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <bd6139dc0806130156o747fc128hbe28440ed4d228d4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84855>
 
-Sverre Rabbelier wrote (2008-06-13 10:53 +0200):
+On Fri, Jun 13, 2008 at 10:56:56AM +0200, Sverre Rabbelier wrote:
 
-> On Fri, Jun 13, 2008 at 10:41 AM, Wincent Colaiuta <win@wincent.com>
-> wrote:
+> > So of course my first question is "then why didn't you use a branch?" :)
 > 
-> > For me it is quite clear that stashing something _is_ asking for Git
-> > to remember it. It's an explicit user action. It's a request to
-> > remember something. Whether or not this is actually the best tool
-> > for the job of long-term storage is much less important than the
-> > fact that the user explicitly requested it.
-[...]
-> I agree fully with what Wincent is saying, stashes have an explicit
-> way of cleaning them up:
+> Because nobody / not everybody has perfect foresight, sometimes you
+> don't know in advance that what you thought was going to be a
+> temporary stash will turn into a long lived stash. What you are saying
+> is that really you should always create a branch, just in case your
+> temporary stash proved to be more long-lived than thought?
 
-I agree too. I didn't even know that stashes are currently expired
-automatically. I don't use them that much but I'd expect that what
-I explicitly ask to save stays there until I decide otherwise.
+Well, two things here:
+
+  1. I was being somewhat tounge in cheek with that comment. If you read
+     the rest of the email, I was trying to figure out reasons why
+     people are using "git stash" for long-term storage, to see if we
+     could improve the branch interface or find a middle ground between
+     temporary stashes and branches.
+
+  2. You don't need perfect foresight. Sometime in the thirty days (but
+     probably about 5 minutes later) you realize "oh, this is some
+     stashed work that I'm not going to deal with for a while" and you
+     promote it to a topic branch.
+
+     But then, I have good reason to want works-in-progress to become
+     topic branches: I can then push them to a location which is backed
+     up, and from which I can retrieve them if I want to access them
+     from a different machine. Not everybody uses the same workflow.
+     If you don't see any other benefits to topic branches, then the
+     promotion is just a pain.
+
+-Peff
