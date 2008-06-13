@@ -1,89 +1,119 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] fast-export: Correctly generate initial commits with no parents
-Date: Fri, 13 Jun 2008 00:38:55 -0400
-Message-ID: <20080613043855.GA28644@spearce.org>
+From: Len Brown <lenb@kernel.org>
+Subject: merge weirdness
+Date: Fri, 13 Jun 2008 00:42:25 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806130028080.8340@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 06:40:06 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 06:44:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7152-0007xD-BU
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 06:40:04 +0200
+	id 1K718g-0000Dt-3a
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 06:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbYFMEjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 00:39:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbYFMEjD
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 00:39:03 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43356 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbYFMEjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 00:39:01 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K713x-0004MZ-I6; Fri, 13 Jun 2008 00:38:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E829B20FBAE; Fri, 13 Jun 2008 00:38:55 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1760657AbYFMEml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 00:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbYFMEml
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 00:42:41 -0400
+Received: from vms042pub.verizon.net ([206.46.252.42]:55241 "EHLO
+	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760499AbYFMEmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 00:42:40 -0400
+Received: from localhost.localdomain ([72.93.254.151])
+ by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0K2D00CDAX2RTYF4@vms042.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 12 Jun 2008 23:42:28 -0500 (CDT)
+Received: from localhost.localdomain (d975xbx2 [127.0.0.1])
+	by localhost.localdomain (8.14.2/8.14.2) with ESMTP id m5D4gQ7q015339; Fri,
+ 13 Jun 2008 00:42:27 -0400
+Received: from localhost (lenb@localhost)
+	by localhost.localdomain (8.14.2/8.14.2/Submit) with ESMTP id m5D4gQr0015334;
+ Fri, 13 Jun 2008 00:42:26 -0400
+X-X-Sender: lenb@localhost.localdomain
+X-Authentication-warning: localhost.localdomain: lenb owned process doing -bs
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we are exporting a commit which has no parents we may be doing
-it to a branch that already exists, causing fast-import to assume
-the branch's current revision should be the sole parent of the
-new commit.  This can cause `git fast-export | git fast-import`
-to produce an incorrect graph for:
+I merged about a dozen small branches earlier this week and sent the batch 
+to Linus, who pulled them upstream with 
+da50ccc6a0f32ad29c1168837330a78e6e2e2923
 
-   A-------M----o------o  refs/heads/master
-          /
-       B-+
+I pulled Linus' tree and then went to compare which of my branches had 
+made it upstream, and my topic branches "git.status" script (pasted 
+below) said that none of them had!
 
-In this graph A and B are initial commits (no parents) but if A was
-output first to refs/heads/master and then B is output fast-import
-would assume the graph was this instead:
+Looking at Linus' history, it seems that my merge is gone.  Instead there 
+is a series of patches that look like they've been cherry-picked -- same 
+commit but different commit id.
 
-   A-------M----o------o  refs/heads/master
-    \     /
-     +-B-+
+I run the top-of-tree version of git.
+Did something strange happen with git a few days ago in this department?
 
-Which would cause B, M, and all later commits to have a different
-SHA-1, and obviously be quite a different graph.
+I still had my merge in command history so I checked out an old branch and 
+did the same merge using today's git (git version 1.5.6.rc2.26.g8c37)
+and gitk shows it as an octopus, as expected.
 
-Sending a reset command prior to B informs fast-import to clear
-the implied parent of A, allowing B to remain an initial commit.
+clues?
 
-Reported-by: Ben Lynn <benlynn@gmail.com>
-Deemed-obviously-correct-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+thanks,
+-Len
+
 ---
- builtin-fast-export.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+#!/bin/bash
+# report on status of my ia64 GIT tree
+cd ~/src/acpi
 
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index 1dfc01e..d0a462f 100644
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -188,6 +188,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
- 	mark_object(&commit->object);
- 	if (!is_encoding_utf8(encoding))
- 		reencoded = reencode_string(message, "UTF-8", encoding);
-+	if (!commit->parents)
-+		printf("reset %s\n", (const char*)commit->util);
- 	printf("commit %s\nmark :%d\n%.*s\n%.*s\ndata %u\n%s",
- 	       (const char *)commit->util, last_idnum,
- 	       (int)(author_end - author), author,
--- 
-1.5.6.rc2.165.g2a0cc
+gb=$(tput setab 2)
+rb=$(tput setab 1)
+restore=$(tput setab 9)
+
+#if [ `git-rev-list release ^test | wc -c` -gt 0 ]
+if [ `git rev-list test..release | wc -c` -gt 0 ]
+then
+	echo $rb Warning: commits in release that are not in test $restore
+	git-whatchanged release ^test
+fi
+
+#for branch in `ls .git/refs/heads`
+for branch in `git show-ref --heads | sed 's|^.*/||'`
+do
+	if [ $branch = linus -o $branch = test -o $branch = release ]
+	then
+		continue
+	fi
+
+	echo -n $gb ======= $branch ====== $restore " "
+	status=
+	for ref in test release linus
+	do
+		if [ `git-rev-list $branch ^$ref | wc -c` -gt 0 ]
+		then
+			status=$status${ref:0:1}
+		fi
+	done
+	case $status in
+	trl)
+		echo $rb Need to pull into test $restore
+		;;
+	rl)
+		echo "In test"
+		;;
+	l)
+		echo "Waiting for linus"
+		;;
+	"")
+		echo $rb All done $restore
+		;;
+	*)
+		echo $rb "<$status>" $restore
+		;;
+	esac
+#	git-whatchanged $branch ^linus | git-shortlog | cat
+	git log linus..$branch | git shortlog | cat
+done
