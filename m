@@ -1,70 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/.gitattributes: only ignore whitespace errors in test
- files
-Date: Fri, 13 Jun 2008 03:00:35 -0700
-Message-ID: <7vod65wt6k.fsf@gitster.siamese.dyndns.org>
-References: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com>
- <20080613060629.GC26768@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 03:05:47 -0700 (PDT)
+Message-ID: <m3ej71r6ob.fsf@localhost.localdomain>
+References: <5vuJsx6Kidj7e8EABk_d63dLAYuWF-S880RrJKu83cJo_ejU3VN-VA@cipher.nrlssc.navy.mil>
+	<20080611213648.GA13362@glandium.org>
+	<alpine.DEB.1.00.0806112242370.1783@racer>
+	<20080611230344.GD19474@sigill.intra.peff.net>
+	<alpine.LFD.1.10.0806111918300.23110@xanadu.home>
+	<loom.20080612T042942-698@post.gmane.org>
+	<6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>
+	<4851F6F4.8000503@op5.se>
+	<20080613055800.GA26768@sigill.intra.peff.net>
+	<48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net>
+	<7vtzfxwtt0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 12:01:58 2008
+Cc: Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
+	Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 12:06:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K766L-00087m-Pl
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 12:01:46 +0200
+	id 1K76BC-0001N3-CA
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 12:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755700AbYFMKAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 06:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755667AbYFMKAu
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 06:00:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47317 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196AbYFMKAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 06:00:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6F4E222CB;
-	Fri, 13 Jun 2008 06:00:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B3AF922CA; Fri, 13 Jun 2008 06:00:44 -0400 (EDT)
-In-Reply-To: <20080613060629.GC26768@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 13 Jun 2008 02:06:30 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 99045764-392F-11DD-8FE1-F9737025C2AA-77302942!a-sasl-fastnet.pobox.com
+	id S1757030AbYFMKFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 06:05:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbYFMKFv
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 06:05:51 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:28343 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756264AbYFMKFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 06:05:50 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so50450ugf.16
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 03:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=yAQWvT0nVUErUQyn1G4OEhxCN6JIiJb2Hqp9XDZthgA=;
+        b=mImpPDIJowyiagFB2Q9Yeo0bz1oz2L2irkrfRx/BVD6beA8qegy2f8aSM2/TCyKaT5
+         SbvkC0118ORQUGeG0U6L8m7X5SfiUozu8EMgn+XJu4wcPuMLaoqx1zsJTD8C7MGQ/diQ
+         NwnXEBguMGaC3lFeGgW+lFd56AzbQfyUGcl0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Tc1mCh4yqvb+bfWVg0f12feINKfzeR1v+6uPmvtpQSIpkbWSmG9IKzO3H0IIOtkNFk
+         0zoKpEwr2EHxl/btcrvqclOh2NaTj59ZIv8yP9tzvF6OWt/GrXClXiXlbjubIdUaX9La
+         ZgDEW30WG+P0pQv4KGLPWh45mZZgY08yH0g18=
+Received: by 10.66.245.2 with SMTP id s2mr733965ugh.23.1213351549169;
+        Fri, 13 Jun 2008 03:05:49 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.221.64])
+        by mx.google.com with ESMTPS id 23sm306545ugf.54.2008.06.13.03.05.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Jun 2008 03:05:47 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5DA5hSj006455;
+	Fri, 13 Jun 2008 12:05:44 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5DA5eMD006452;
+	Fri, 13 Jun 2008 12:05:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vtzfxwtt0.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84860>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, Jun 13, 2008 at 12:35:59AM +0200, Lea Wiemann wrote:
->
->> Only ignore whitespace errors in t/tNNNN-*.sh and the t/tNNNN
->> subdirectories.  Other files (like test libraries) should still be
->> checked.
->
-> Why?
->
-> What is the difference between test-lib.sh and tNNNN-*.sh that makes one
-> subject to whitespace checking and the other not?
+>  * We however chose to take advantage of the auto reclamation behaviour of
+>    reflog, and for most practical purposes, it is a good thing.
 
-Eventually we would want to make all of the t/*.sh not exempt from the
-whitespace rules.  Some currently do have trailing whitespaces as part of
-their embedded test vectors, but there are many that are more carefully
-written to avoid trailing whitespaces, by marking the EOL explicitly with
-a non whitespace characters in the source, and running sed to produce the
-actual vector that is used in the test.  That style is vastly preferrable
-than having actual lines that end with trailing whitespaces, because it
-makes it much clearer what is being fed to the scripts and what are
-expected output when reading the source.  You do not have to "cat -e" to
-see what they exactly do.
+By the way, this makes stashes a bit similar to using $TMPDIR to store
+files with 'tmpwatch' (or equivalent) enabled.  Is this a good analogy?
 
-So I think this is one step in the right direction.  I do not want to keep
-tNNNN-*.sh exemption forever.
+[...]
+> But let's not talk nor think about per-branch stash for now.  How does the
+> "keep" thing sound to people?
+
+This looks nice, although I'd rather not use any magic.  I'm only
+afraid that people would notice that some stash / stash entry should
+have been "kept" when it is too late.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
