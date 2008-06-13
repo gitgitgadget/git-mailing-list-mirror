@@ -1,105 +1,85 @@
 From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH v2 1/3] filter-branch: add new --blob-filter option.
-Date: Fri, 13 Jun 2008 12:10:16 -0400
-Message-ID: <32541b130806130910w1975e092y192785fbab5c908@mail.gmail.com>
-References: <1213318344-26013-1-git-send-email-apenwarr@gmail.com>
-	 <20080613062546.GD26768@sigill.intra.peff.net>
+Subject: Re: [PATCH 1/2] git-svn: don't append extra newlines at the end of commit messages.
+Date: Fri, 13 Jun 2008 12:17:44 -0400
+Message-ID: <32541b130806130917y23a55751tfccac0de8143ebe4@mail.gmail.com>
+References: <1213312251-8081-1-git-send-email-apenwarr@gmail.com>
+	 <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 18:12:43 2008
+Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>,
+	"Sam Vilain" <sam.vilain@catalyst.net.nz>, kha@treskal.com,
+	ae@op5.se
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 18:19:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Brt-0000oU-85
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 18:11:13 +0200
+	id 1K7Bzb-0004Et-DI
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 18:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009AbYFMQKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 12:10:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757012AbYFMQKT
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 12:10:19 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:23009 "EHLO
+	id S1757229AbYFMQRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 12:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756989AbYFMQRr
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 12:17:47 -0400
+Received: from fk-out-0910.google.com ([209.85.128.189]:31798 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757004AbYFMQKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 12:10:18 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so2132934fkq.5
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 09:10:16 -0700 (PDT)
+	with ESMTP id S1756610AbYFMQRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 12:17:46 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so2135703fkq.5
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 09:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=7de0bjwXjmiaHK0H3IuU0+zAUmb0H6SzM3lf2c6Niq8=;
-        b=HuFOwmVyi9euZs5yrOaCPF4jxHw8Dm7b0FGlO+oQiBYXHDX28C3aOhTaQtIEX8Zsom
-         jh9MlkZSUlZv67LNIW9SiEp3lxqXAEmJypyGaE+u5t1jJSsX+ubJK9M0rWo0yUp0guvx
-         DC1FWCnU0Y3PEO3uSQqw0GzTbv1QOVzKB9Mwo=
+        bh=i5HQAEY0RIzaO6HxTVyBjQPFCqtMfb9HdI0lNIhUkg8=;
+        b=UzsEpEJRvqUnV1MozLbZ90VWynqF5+UZ/Wx7Wt05KlMKnsEVzQK9m+z+etX+ZrR03P
+         s2iTenzGBEq4MB2ZQbnk2gOnSEAzckigt3uS1nGYAFt00MKFf1z1eEnM40Zenl7d52qJ
+         MxJsYFBx0hX8vPuvCfc/0ck5vgDcJ4lDWGfHw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=bYRqV1JSIuE1HdOTJ3Boj2MKVBrL3bAmWn5hhC6CrjSXoN2jD+aaZBzHui+oJSSTYw
-         Wo2HyNA1qY4ge8h7c4sAt6lLUdpsbOdD5zBXBeZqLZWbxMzRwiCb27YU3cksiSkX4klm
-         Wy41YSQE+R8HQPCD3Cx3SeJHPAttMsbjfpLsE=
-Received: by 10.82.107.15 with SMTP id f15mr179405buc.86.1213373416400;
-        Fri, 13 Jun 2008 09:10:16 -0700 (PDT)
-Received: by 10.82.100.5 with HTTP; Fri, 13 Jun 2008 09:10:16 -0700 (PDT)
-In-Reply-To: <20080613062546.GD26768@sigill.intra.peff.net>
+        b=YLdeY2j7bQeUlx/D5agwZigh9iy4vG7gJ11KMw3paUExT1cEOF+RzQeAAG607p2UHi
+         MdCFw0tDzQ0haCOJhHe8kRvoohMpz2x6VgvaXLtK5qNMhubRCRex4P75h5aSX2ZQZ3K5
+         TjH2zj2wQISHFgXpHB4oLGg+Zycgdg9xZGysw=
+Received: by 10.82.150.15 with SMTP id x15mr182865bud.23.1213373865008;
+        Fri, 13 Jun 2008 09:17:45 -0700 (PDT)
+Received: by 10.82.100.5 with HTTP; Fri, 13 Jun 2008 09:17:44 -0700 (PDT)
+In-Reply-To: <7vfxrhyjqd.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84896>
 
-On 6/13/08, Jeff King <peff@peff.net> wrote:
->   1. We're supposed to be in rc freeze, so this is not a great time to
->      publish a new feature. ;)
-
-I thought that was what branches were for :)  Anyway, I only rarely
-get the chance to work on this stuff lately, so I guess I got excited.
-
->   2. When bringing back an old patch, please please please give at least
->      a little bit of cover letter context. "Here is what happened last
->      time, here are the reasons this patch was not accepted before, and
->      here is {why I think it that decision was wrong, what I have done
->      to improve the patch, etc}.
-
-Will do next time.
-
->  IIRC, the situation last time had two issues:
+On 6/13/08, Junio C Hamano <gitster@pobox.com> wrote:
+> Avery Pennarun <apenwarr@gmail.com> writes:
+>  > Instead, let's remove all trailing whitespace from the git commit on the way
+>  > through to svn.
 >
->   1. it was a one-off "we're not sure if this is really useful" patch
->
->   2. it was unclear whether paths should be available, and if they were,
->      there was an issue of encountering the same hash at two different
->      paths.
->
->  I assume your answer to '1' is "I have been using this and it is
->  useful". And for '2', it looks like you have extended the cache
->  mechanism to take into account the sha1 and the path, which I think is
->  the right solution (and I am pleased to see it looks like the final test
->  covers the exact situation I was concerned about).
+> Perl part of the code looks fine but I am unsure if we like the
+>  ramifications of this patch on existing git-svn managed repositories.
+>  Doesn't this change the commit object name on our end for almost all of
+>  them?
 
-Yes, for #1 it is indeed useful.  I'm using git-svn on Windows with an
-IDE that auto-generates files with CRLF in them, and the translation
-of that is something roughly like "ARRGH!"  I have to re-fix the
-newlines on various different branches at various times and this is
-the best way I've found.  (Although I can also imagine using it for
-whitespace fixes, etc.)
+Unless I got confused while coding this (I don't think I did), this
+should *not* affect existing or re-imported svn or git-svn
+repositories.  It only removes trailing whitespace the first time a
+git commit is sent into svn, which should happen only once for a brand
+new commit by someone who has made it in git and is now dcommiting it
+to svn.
 
-You are correct about #2.  I believe I've covered all the complaints
-that were brought up at the time.
+Naturally, the dcommit round-trip *always* produces a new sha1 hash
+for that commit anyhow because of the added git-svn-id: line.  After
+this change, the sha1 will be different than it would have been
+before, but it will still be the same for anyone who checks out from
+svn again with git-svn.
 
->  (for 1/3):
->  Signed-off-by: Jeff King <peff@peff.net>
->
->  (for the others (and for 1/3, do I get to ack my own patch?)):
->  Acked-by: Jeff King <peff@peff.net>
-
-Thanks!
+Thanks,
 
 Avery
