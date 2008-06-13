@@ -1,104 +1,90 @@
-From: "Denis Bueno" <dbueno@gmail.com>
-Subject: Re: git-instaweb portability issue (maybe?)
-Date: Fri, 13 Jun 2008 10:47:44 -0400
-Message-ID: <6dbd4d000806130747r403cf637t66d59b58b9489e33@mail.gmail.com>
-References: <6dbd4d000806130626pfdb06f2qbfea6f1909710b7b@mail.gmail.com>
-	 <6dbd4d000806130638k4461a41eo8ce6fe803505fa88@mail.gmail.com>
-	 <alpine.DEB.1.10.0806130946060.8043@alchemy.localdomain>
-	 <6dbd4d000806130659r2a8bc57ev6db4ef058ee97440@mail.gmail.com>
-	 <48527FEC.8080909@isode.com>
-	 <alpine.DEB.1.10.0806131016120.8043@alchemy.localdomain>
-	 <48528769.2000007@isode.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Working with Git and CVS in a team.
+Date: Fri, 13 Jun 2008 16:50:10 +0200
+Message-ID: <20080613145010.GU29404@genesis.frugalware.org>
+References: <200806131633.34980.mirko.stocker@hsr.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Chris Ridd" <chris.ridd@isode.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 16:48:47 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tIJ0yshv4NgnvLR0"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mirko Stocker <mirko.stocker@hsr.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:51:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Aa4-0008FL-Vg
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:48:45 +0200
+	id 1K7AcP-0000l6-Vq
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 16:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224AbYFMOrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 10:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755022AbYFMOrv
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:47:51 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:51357 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754709AbYFMOru (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 10:47:50 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2781682fgg.17
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 07:47:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=acLGyRWc5jHmckoyQw/6FpJnlFT9QDPqmCMH0Jmlrlk=;
-        b=uEQdjZha2K4RkQtupvUhdMmGzFPGfVT9J71ALNKt1U5QlfOVpmIbERRRh3CCn5y/qn
-         G+JGRzDqQX+MYFw0RClvka4/sfrYKLbJZc8Vo+/8P/RqMgDJidqBOycowrDwBAOCyOSl
-         8BHF7cVoKUcRZZ2+9/NxFtLtcxqvGHflDnzzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=baj86I0pXieX3ad5wy6m7kYwD08oIIn0Vh2nhyVZHdIxHqvRglhZcLyMpM1MdTkmot
-         zfvktuLplxM4J53zk0h5UsaTvFsoZYVtUsUd1bqjb40VQ7oS9vHMQYR6chNuDgh+9XEm
-         Mx7ow92KESYItcG93ZOcqWWFKt/SwjQmXi7Bo=
-Received: by 10.86.87.13 with SMTP id k13mr4105677fgb.38.1213368464580;
-        Fri, 13 Jun 2008 07:47:44 -0700 (PDT)
-Received: by 10.86.59.7 with HTTP; Fri, 13 Jun 2008 07:47:44 -0700 (PDT)
-In-Reply-To: <48528769.2000007@isode.com>
+	id S1755555AbYFMOuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 10:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755240AbYFMOuP
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 10:50:15 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:43975 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755215AbYFMOuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 10:50:14 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 2762B1B2507;
+	Fri, 13 Jun 2008 16:50:12 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 64D1A4469F;
+	Fri, 13 Jun 2008 16:31:27 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 7A66C1770022; Fri, 13 Jun 2008 16:50:10 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <200806131633.34980.mirko.stocker@hsr.ch>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84887>
 
-On Fri, Jun 13, 2008 at 10:42, Chris Ridd <chris.ridd@isode.com> wrote:
-> Asheesh Laroia wrote:
->>
->> On Fri, 13 Jun 2008, Chris Ridd wrote:
->>
->>> Denis Bueno wrote:
->>>>
->>>> On Fri, Jun 13, 2008 at 09:46, Asheesh Laroia <asheesh@asheesh.org>
->>>> wrote:
->>>>>
->>>>> Does OS X ship /usr/bin/env?
->>>>>
->>>>> If you type "/usr/bin/env perl" in a Terminal window, do you get Perl?
->>>>
->>>> Sorry, I should have made that clear earlier: yes.
->>>>
->>>> funsat[122] > /usr/bin/env perl --version
->>>>
->>>> This is perl, v5.8.8 built for darwin-2level
->>>
->>> MacPorts /tends/ to make ports use stuff from other ports instead of
->>> using Apple-installed bits. In this case, maybe git from MacPorts is using
->>> perl from MacPorts?
->>
->> FWIW, the problem seems to be that it's not finding *any* Perl.
->
-> That's odd, because the Portfile for git-core (1.5.5.3_0) does the build,
-> test and destroot install setting:
->
-> PERL_PATH="/usr/bin/env perl" NO_FINK=1 NO_DARWIN_PORTS=1
->
-> (and some other stuff). Have you pinged the port maintainer
-> (bryan@larsen.st)?
 
-The issue seems to be one of the way bash is treating quotes.  It
-apparently is trying to find the *command* "/usr/bin/env perl" and not
-executing the command "/usr/bin/env" with a first argument of "perl".
+--tIJ0yshv4NgnvLR0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-See my message to Luciano moments ago.
+On Fri, Jun 13, 2008 at 04:33:34PM +0200, Mirko Stocker <mirko.stocker@hsr.=
+ch> wrote:
+> 3) Then we have the role of a "Merge-Dude" who pulls the changes from
+>    /git-proj and uses 'git merge origin/origin' to update his master.
+>    If there are any conflicts, he resolves them and pushes everything
+>    back to the master at /git-proj.
+>=20
+> 4) The users can just push and pull from /git-proj.
+>=20
+> From time to time, we can use 'git diff origin/origin' to get a patch
+> with all the changes we made and have to send upstream.
+>=20
+> What do you guys think, is this approach feasible?
+>=20
+> What I don't like is how we have to make the upstream patch(es). Is
+> there an easy way we can get multiple patches, lets say for each
+> commit we made? Or is it easier to make a lots of branches and to
+> then create a patch from the diff between the branch and origin/origin?
 
--- 
- Denis
+Don't you mean origin/master?
+
+In general, if you don't merge your changes but you rebase on top of the
+new upstream head, then you can use 'git format-patch origin/master..'
+to create patches for each commit.
+
+It'll include the commit message and each commit will be written out as
+a separate file.
+
+--tIJ0yshv4NgnvLR0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhSiSIACgkQe81tAgORUJZtiwCeJq7EfR82hBuMl6gOEO78AOmD
+ip0Anjsttw16P477XcT99r7piKlmaa/n
+=kydm
+-----END PGP SIGNATURE-----
+
+--tIJ0yshv4NgnvLR0--
