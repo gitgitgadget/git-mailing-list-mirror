@@ -1,73 +1,69 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: perl/Makefile if MakeMaker is not installed (NO_PERL_MAKEMAKER)
-Date: Sat, 14 Jun 2008 00:35:41 +0200
-Message-ID: <4852F63D.802@gmail.com>
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: Re: [EGIT RFC] Commit behaviour
+Date: Sat, 14 Jun 2008 00:41:33 +0200
+Message-ID: <4852F79D.4080100@gmail.com>
+References: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com> <4852EFBF.6000406@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:36:43 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:42:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Hss-0002ye-9R
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:36:38 +0200
+	id 1K7HyZ-0004wN-FD
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 00:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196AbYFMWfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 18:35:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755028AbYFMWfl
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:35:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:53015 "EHLO
+	id S1755189AbYFMWlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 18:41:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbYFMWlh
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 18:41:37 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:60380 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755189AbYFMWfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 18:35:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2893151fgg.17
-        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:35:37 -0700 (PDT)
+	with ESMTP id S1754954AbYFMWlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 18:41:36 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2893883fgg.17
+        for <git@vger.kernel.org>; Fri, 13 Jun 2008 15:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:subject:content-type:content-transfer-encoding:from;
-        bh=e3Sjla1VSzB2HxEuOMMGrArShI0sw2ApATNYOaimGfg=;
-        b=YTu3461KQMn69aVH82Zx7CN2nx2uVIULOfg9yZi3FODDkw4AIL8JDUTaAUQP3x/xxA
-         bOyjvJU3ELHpRAtY9AtdgAh9l7kM85GPFWyiIC1aspcuSq04jdeWOGko/q+qdMVNOiQj
-         VUOrgXkfgBzTHyuRE+9FxOiyrHizZt4agrNH4=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=8SJKcah/iDAUHhKpMlAAKKPUAe7itq6Dsqw24il8Nfc=;
+        b=TXRVL7au7qFL+lHThnZM6fI5IbCeKy4jZdsCXBCMlJTWzPtbUDDsgyRdD8FOZZSYvm
+         //3BSCQmRSVfSzZIdV1qxwJfEkJdaciZcXDePeCF4D1ctq6Fbzf9OcKfT5U8f/Vb0RJS
+         BG9t6gh6mle1liOxXXqHcxt0vWd39C8rNZCw4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding:from;
-        b=FYzIO/SwJvXthtYZmKvKhyNntFNtYwJQ/KOqMGkkmWYtGM+bvCba1rwfidAcWuImkp
-         XX73AgQg72bhsPR9Pj2iGecDlMHl7Z9XCZYhCasO4y20MfjZai3XesXtKyMSFtuy8aHb
-         9hHAxO+A3pb/1fRDN9APabGr0FfVC4d8PBezg=
-Received: by 10.86.52.6 with SMTP id z6mr4703245fgz.48.1213396537284;
-        Fri, 13 Jun 2008 15:35:37 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.222.17])
-        by mx.google.com with ESMTPS id e11sm6091015fga.4.2008.06.13.15.35.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 13 Jun 2008 15:35:36 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=xCY1iGk3TohEdlE3NMGDm5xlYZ1rRs2GujtboRVtk+DA+YWceyD2m0IsrxebOHHSbs
+         RP0zbaML9ohdxUWPNB7Q4rOHIP24Rnv/CNxVyzE6h+H8jcf7XDMEGzvCn6QRjLv9d+0g
+         2fSl/0iEL9PE7AQWDZfRXh7+0ol5hvnNmRM4Y=
+Received: by 10.86.99.9 with SMTP id w9mr4688895fgb.70.1213396895072;
+        Fri, 13 Jun 2008 15:41:35 -0700 (PDT)
+Received: from ?62.21.4.140? ( [62.21.4.140])
+        by mx.google.com with ESMTPS id 3sm6780165fge.3.2008.06.13.15.41.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Jun 2008 15:41:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080313 Iceape/1.1.9 (Debian-1.1.9-3)
+In-Reply-To: <4852EFBF.6000406@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84948>
 
-I just wanted to report that Git.pm is installed to $(prefix)/lib if 
-NO_PERL_MAKEMAKER is set, which doesn't seem right.
+> Robin Rosenberg wrote:
+>> Then we could ask ourselved, should we do something similar for Checkout
+>> and reset too? I think that is not as important as those operations are
+>> much less frequent.
 
-$ make NO_PERL_MAKEMAKER=yes prefix=$HOME/tmp/git-install install
-[...]
-$ find ~/tmp/git-install -name \*.pm
-/home/lea/tmp/git-install/lib/Git.pm
-/home/lea/tmp/git-install/lib/Error.pm
+Hey, by the way - do we already have some action for checkout? Did I 
+missed something?
 
-Without NO_PERL_MAKEMAKER, it works fine:
-
-$ make clean
-$ rm ~/tmp/git-install -r
-$ make prefix=$HOME/tmp/git-install install
-[...]
-$ find ~/tmp/git-install -name \*.pm
-/home/lea/tmp/git-install/share/perl/5.10.0/Git.pm
-
--- Lea
+-- 
+Marek Zawirski [zawir]
+marek.zawirski@gmail.com
