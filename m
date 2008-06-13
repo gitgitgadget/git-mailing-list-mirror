@@ -1,72 +1,56 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Fri, 13 Jun 2008 05:10:40 -0400
-Message-ID: <20080613091040.GB4474@sigill.intra.peff.net>
-References: <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <4851F6F4.8000503@op5.se> <20080613055800.GA26768@sigill.intra.peff.net> <48521EDA.5040802@op5.se> <20080613074257.GA513@sigill.intra.peff.net> <bd6139dc0806130156o747fc128hbe28440ed4d228d4@mail.gmail.com>
+Date: Fri, 13 Jun 2008 05:13:04 -0400
+Message-ID: <20080613091304.GC4474@sigill.intra.peff.net>
+References: <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Andreas Ericsson <ae@op5.se>, Wincent Colaiuta <win@wincent.com>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Eric Raible <raible@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Nicolas Pitre <nico@cam.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Jun 13 11:11:59 2008
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 11:14:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K75Jp-0006au-QR
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 11:11:38 +0200
+	id 1K75MB-0007UP-IW
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 11:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755271AbYFMJKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 05:10:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755049AbYFMJKn
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 05:10:43 -0400
-Received: from peff.net ([208.65.91.99]:2550 "EHLO peff.net"
+	id S1755049AbYFMJNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 05:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754327AbYFMJNI
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 05:13:08 -0400
+Received: from peff.net ([208.65.91.99]:2558 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754742AbYFMJKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 05:10:42 -0400
-Received: (qmail 8840 invoked by uid 111); 13 Jun 2008 09:10:41 -0000
+	id S1754227AbYFMJNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 05:13:07 -0400
+Received: (qmail 9008 invoked by uid 111); 13 Jun 2008 09:13:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 05:10:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 05:10:40 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 13 Jun 2008 05:13:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2008 05:13:04 -0400
 Content-Disposition: inline
-In-Reply-To: <bd6139dc0806130156o747fc128hbe28440ed4d228d4@mail.gmail.com>
+In-Reply-To: <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84856>
 
-On Fri, Jun 13, 2008 at 10:56:56AM +0200, Sverre Rabbelier wrote:
+On Fri, Jun 13, 2008 at 10:43:59AM +0200, Wincent Colaiuta wrote:
 
-> > So of course my first question is "then why didn't you use a branch?" :)
-> 
-> Because nobody / not everybody has perfect foresight, sometimes you
-> don't know in advance that what you thought was going to be a
-> temporary stash will turn into a long lived stash. What you are saying
-> is that really you should always create a branch, just in case your
-> temporary stash proved to be more long-lived than thought?
+> While this may be true for codebases which move forward quickly, what  
+> about one which is basically finished and tends not to get touched in a 
+> long time. A situation arises, you stash something, the phone rings, and 
+> for whatever reason the stash gets forgotten and you don't revisit the 
+> project at all for days, weeks, months. It wouldn't be nice to eventually 
+> come back and discover that your in-progress work had been "garbage" 
+> collected for you.
 
-Well, two things here:
-
-  1. I was being somewhat tounge in cheek with that comment. If you read
-     the rest of the email, I was trying to figure out reasons why
-     people are using "git stash" for long-term storage, to see if we
-     could improve the branch interface or find a middle ground between
-     temporary stashes and branches.
-
-  2. You don't need perfect foresight. Sometime in the thirty days (but
-     probably about 5 minutes later) you realize "oh, this is some
-     stashed work that I'm not going to deal with for a while" and you
-     promote it to a topic branch.
-
-     But then, I have good reason to want works-in-progress to become
-     topic branches: I can then push them to a location which is backed
-     up, and from which I can retrieve them if I want to access them
-     from a different machine. Not everybody uses the same workflow.
-     If you don't see any other benefits to topic branches, then the
-     promotion is just a pain.
+I think this argues more for increasing the expiration period on
+reflogs, if your project moves very slowly.
 
 -Peff
