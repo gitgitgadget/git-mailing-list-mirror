@@ -1,119 +1,72 @@
-From: Len Brown <lenb@kernel.org>
-Subject: merge weirdness
-Date: Fri, 13 Jun 2008 00:42:25 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806130028080.8340@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Fri, 13 Jun 2008 05:52:53 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806130551200.6439@racer>
+References: <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil>  <20080611213648.GA13362@glandium.org>  <alpine.DEB.1.00.0806112242370.1783@racer>  <20080611230344.GD19474@sigill.intra.peff.net> 
+ <alpine.LFD.1.10.0806111918300.23110@xanadu.home>  <loom.20080612T042942-698@post.gmane.org>  <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com>  <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>  <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> 
+ <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 06:44:23 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 06:55:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K718g-0000Dt-3a
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 06:43:50 +0200
+	id 1K71K4-0002X4-Ts
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 06:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760657AbYFMEml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 00:42:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbYFMEml
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 00:42:41 -0400
-Received: from vms042pub.verizon.net ([206.46.252.42]:55241 "EHLO
-	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760499AbYFMEmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 00:42:40 -0400
-Received: from localhost.localdomain ([72.93.254.151])
- by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0K2D00CDAX2RTYF4@vms042.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 12 Jun 2008 23:42:28 -0500 (CDT)
-Received: from localhost.localdomain (d975xbx2 [127.0.0.1])
-	by localhost.localdomain (8.14.2/8.14.2) with ESMTP id m5D4gQ7q015339; Fri,
- 13 Jun 2008 00:42:27 -0400
-Received: from localhost (lenb@localhost)
-	by localhost.localdomain (8.14.2/8.14.2/Submit) with ESMTP id m5D4gQr0015334;
- Fri, 13 Jun 2008 00:42:26 -0400
-X-X-Sender: lenb@localhost.localdomain
-X-Authentication-warning: localhost.localdomain: lenb owned process doing -bs
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752748AbYFMEym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 00:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbYFMEym
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 00:54:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48183 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750798AbYFMEym (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 00:54:42 -0400
+Received: (qmail invoked by alias); 13 Jun 2008 04:54:39 -0000
+Received: from unknown (EHLO racer.local) [128.177.17.254]
+  by mail.gmx.net (mp010) with SMTP; 13 Jun 2008 06:54:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18EDkoc+nEETsT9HBK8Ad2tByaJ9tacyGTuI3p4Li
+	yeygNKgMAkmDOc
+X-X-Sender: gene099@racer
+In-Reply-To: <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84830>
 
-I merged about a dozen small branches earlier this week and sent the batch 
-to Linus, who pulled them upstream with 
-da50ccc6a0f32ad29c1168837330a78e6e2e2923
+Hi,
 
-I pulled Linus' tree and then went to compare which of my branches had 
-made it upstream, and my topic branches "git.status" script (pasted 
-below) said that none of them had!
+On Thu, 12 Jun 2008, Eric Raible wrote:
 
-Looking at Linus' history, it seems that my merge is gone.  Instead there 
-is a series of patches that look like they've been cherry-picked -- same 
-commit but different commit id.
+> On Thu, Jun 12, 2008 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Perhaps
+> >
+> >  http://thread.gmane.org/gmane.comp.version-control.git/84665/focus=84670
+> >
+> > The user explicitly asks to stash it for a while, where the definition of
+> > the "while" comes from reflog's retention period.
+> 
+> But that doesn't answer the basic question as to why it's ok
+> to trash data that the user explicitly asked git to save?
 
-I run the top-of-tree version of git.
-Did something strange happen with git a few days ago in this department?
+If the user really asked git to save the changes, she would have 
+_committed_ them.
 
-I still had my merge in command history so I checked out an old branch and 
-did the same merge using today's git (git version 1.5.6.rc2.26.g8c37)
-and gitk shows it as an octopus, as expected.
+"git stash" really is only about shelving quickly and dirtily something 
+you'll need (or maybe need) in a moment.
 
-clues?
+If you need something from the stash a day after stashing it, you have a 
+serious problem with understanding what branches are for.
 
-thanks,
--Len
-
----
-#!/bin/bash
-# report on status of my ia64 GIT tree
-cd ~/src/acpi
-
-gb=$(tput setab 2)
-rb=$(tput setab 1)
-restore=$(tput setab 9)
-
-#if [ `git-rev-list release ^test | wc -c` -gt 0 ]
-if [ `git rev-list test..release | wc -c` -gt 0 ]
-then
-	echo $rb Warning: commits in release that are not in test $restore
-	git-whatchanged release ^test
-fi
-
-#for branch in `ls .git/refs/heads`
-for branch in `git show-ref --heads | sed 's|^.*/||'`
-do
-	if [ $branch = linus -o $branch = test -o $branch = release ]
-	then
-		continue
-	fi
-
-	echo -n $gb ======= $branch ====== $restore " "
-	status=
-	for ref in test release linus
-	do
-		if [ `git-rev-list $branch ^$ref | wc -c` -gt 0 ]
-		then
-			status=$status${ref:0:1}
-		fi
-	done
-	case $status in
-	trl)
-		echo $rb Need to pull into test $restore
-		;;
-	rl)
-		echo "In test"
-		;;
-	l)
-		echo "Waiting for linus"
-		;;
-	"")
-		echo $rb All done $restore
-		;;
-	*)
-		echo $rb "<$status>" $restore
-		;;
-	esac
-#	git-whatchanged $branch ^linus | git-shortlog | cat
-	git log linus..$branch | git shortlog | cat
-done
+Ciao,
+Dscho
