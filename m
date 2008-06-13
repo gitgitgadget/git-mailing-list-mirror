@@ -1,345 +1,733 @@
 From: Florian Koeberle <florianskarten@web.de>
-Subject: [JGIT PATCH v4 08/24] Added a Rules interface implementation and a factory for it.
-Date: Fri, 13 Jun 2008 20:35:05 +0200
-Message-ID: <1213382121-19786-8-git-send-email-florianskarten@web.de>
+Subject: [JGIT PATCH v4 20/24] Formatted Repository class.
+Date: Fri, 13 Jun 2008 20:35:17 +0200
+Message-ID: <1213382121-19786-20-git-send-email-florianskarten@web.de>
 References: <4852BCCA.4030404@web.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Florian Koeberle <florianskarten@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 20:38:32 2008
+X-From: git-owner@vger.kernel.org Fri Jun 13 20:38:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7EAL-0005zA-To
-	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 20:38:26 +0200
+	id 1K7EAQ-0005zA-Nh
+	for gcvg-git-2@gmane.org; Fri, 13 Jun 2008 20:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881AbYFMSfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 14:35:45 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754396AbYFMSfl
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 14:35:41 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:41945 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752587AbYFMSf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 14:35:28 -0400
+	id S1753201AbYFMSgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 14:36:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753080AbYFMSgB
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 14:36:01 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:43439 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752779AbYFMSfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 14:35:34 -0400
 Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 90CB0DFAF6F6
-	for <git@vger.kernel.org>; Fri, 13 Jun 2008 20:35:27 +0200 (CEST)
+	by fmmailgate02.web.de (Postfix) with ESMTP id D3F3AE184E02
+	for <git@vger.kernel.org>; Fri, 13 Jun 2008 20:35:33 +0200 (CEST)
 Received: from [84.150.79.9] (helo=localhost.localdomain)
 	by smtp08.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1K7E7T-0000eI-00; Fri, 13 Jun 2008 20:35:27 +0200
+	id 1K7E7Y-0000eI-02; Fri, 13 Jun 2008 20:35:33 +0200
 X-Mailer: git-send-email 1.5.5.1
 In-Reply-To: <4852BCCA.4030404@web.de>
 In-Reply-To: <4852BCCA.4030404@web.de>
 References: <4852BCCA.4030404@web.de>
 X-Sender: florianskarten@web.de
-X-Provags-ID: V01U2FsdGVkX19kzY99SiA/fFX7ZZmi1LyLTLeELfAmErQJ1Tk/
-	8NyiPVLCtuS9mc4bYt/Z6dcILIdSu//8eNC193sUT6J9hnlBxT
-	iW76pwlbjTBM4nMU0CTw==
+X-Provags-ID: V01U2FsdGVkX18S2I+2Fn1NjOArBKdnR8G8Se9LzaOSlcpw5lfB
+	P4qgRADD81Jx4u4bKQJp4ALsZqnKpI53tKp7QJeMEg5ezcitbS
+	SJRNwfQD4sGgJae2/sJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84916>
 
 Signed-off-by: Florian Koeberle <florianskarten@web.de>
 ---
- .../treewalk/rules/RuleListToObjectConverter.java  |  151 ++++++++++++=
-++++++++
- .../jgit/treewalk/rules/RulesImplementation.java   |   88 ++++++++++++
- 2 files changed, 239 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/RuleListToObjectConverter.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/rule=
-s/RulesImplementation.java
+ .../src/org/spearce/jgit/lib/Repository.java       |  285 +++++++++++---------
+ 1 files changed, 160 insertions(+), 125 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RuleL=
-istToObjectConverter.java b/org.spearce.jgit/src/org/spearce/jgit/treew=
-alk/rules/RuleListToObjectConverter.java
-new file mode 100644
-index 0000000..96f27bb
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RuleListToOb=
-jectConverter.java
-@@ -0,0 +1,151 @@
-+/*
-+ * Copyright (C) 2008, Florian K=C3=B6berle <florianskarten@web.de>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.treewalk.rules;
-+
-+import java.util.ArrayList;
-+import java.util.Iterator;
-+import java.util.List;
-+
-+/**
-+ * This class converts a list of {@link Rule} objects into a {@Rules} =
-object.
-+ * During the conversion some optimizations are done:
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index 5a21c6e..d7c3b13 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -66,16 +66,17 @@ import org.spearce.jgit.util.FS;
+  *
+  * <ul>
+  * <li>GIT_DIR
+- * 	<ul>
+- * 		<li>objects/ - objects</li>
+- * 		<li>refs/ - tags and heads</li>
+- * 		<li>config - configuration</li>
+- * 		<li>info/ - more configurations</li>
+- * 	</ul>
 + * <ul>
-+ * <li>Rules which can never match are removed. e.g. There is no need =
-to check
-+ * the rule "/a" in the directory b.</li>
-+ * <li>The list is cut at the first rule which match always. *.txt\n/a=
- for
-+ * example would result in an internal list "ignore all, ignore *.txt"=
- which is
-+ * then reduced to "ignore all".</li>
-+ * <li>Ignore rules which are direcly before an "ignore all" all rule =
-are
-+ * removed. /a\n*.txt for example would result in an intern "ignore *.=
-txt,
-+ * ignore all" list which is then reduced to "ignore all",</li>
-+ * <li>"do not ignore" rules at the bottom of the intern list are remo=
-ved. This
-+ * optimization would remove !a from "!a\n/b" as it is in the inversed=
- list at
-+ * the bottom.</li>
++ * <li>objects/ - objects</li>
++ * <li>refs/ - tags and heads</li>
++ * <li>config - configuration</li>
++ * <li>info/ - more configurations</li>
 + * </ul>
-+ */
-+class RuleListToObjectConverter {
-+	protected Rules createIgnoreRules(Iterator<Rule> ruleIterator) {
-+		final List<Rule> rules =3D getNessesaryRulesFromIterator(ruleIterato=
-r);
-+		removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(rules);
-+		removeUnnecessaryIgnoreRulesNearTheEndOfTheList(rules);
+  * </li>
+  * </ul>
+  *
+- * This implementation only handles a subtly undocumented subset of git features.
++ * This implementation only handles a subtly undocumented subset of git
++ * features.
+  *
+  */
+ public class Repository {
+@@ -93,7 +94,7 @@ public class Repository {
+ 
+ 	/**
+ 	 * Construct a representation of a Git repository.
+-	 * 
++	 *
+ 	 * @param d
+ 	 *            GIT_DIR (the location of the repository metadata).
+ 	 * @throws IOException
+@@ -106,7 +107,8 @@ public class Repository {
+ 			objectsDirs = readObjectsDirs(FS.resolve(gitDir, "objects"),
+ 					new ArrayList<File>()).toArray(new File[0]);
+ 		} catch (IOException e) {
+-			IOException ex = new IOException("Cannot find all object dirs for " + gitDir);
++			IOException ex = new IOException("Cannot find all object dirs for "
++					+ gitDir);
+ 			ex.initCause(e);
+ 			throw ex;
+ 		}
+@@ -130,12 +132,13 @@ public class Repository {
+ 			scanForPacks();
+ 	}
+ 
+-	private Collection<File> readObjectsDirs(File objectsDir, Collection<File> ret) throws IOException {
++	private Collection<File> readObjectsDirs(File objectsDir,
++			Collection<File> ret) throws IOException {
+ 		ret.add(objectsDir);
+ 		final File altFile = FS.resolve(objectsDir, "info/alternates");
+ 		if (altFile.exists()) {
+ 			BufferedReader ar = new BufferedReader(new FileReader(altFile));
+-			for (String alt=ar.readLine(); alt!=null; alt=ar.readLine()) {
++			for (String alt = ar.readLine(); alt != null; alt = ar.readLine()) {
+ 				readObjectsDirs(FS.resolve(objectsDir, alt), ret);
+ 			}
+ 			ar.close();
+@@ -204,9 +207,9 @@ public class Repository {
+ 	 */
+ 	public File toFile(final AnyObjectId objectId) {
+ 		final String n = objectId.toString();
+-		String d=n.substring(0, 2);
+-		String f=n.substring(2);
+-		for (int i=0; i<objectsDirs.length; ++i) {
++		String d = n.substring(0, 2);
++		String f = n.substring(2);
++		for (int i = 0; i < objectsDirs.length; ++i) {
+ 			File ret = new File(new File(objectsDirs[i], d), f);
+ 			if (ret.exists())
+ 				return ret;
+@@ -233,14 +236,13 @@ public class Repository {
+ 	/**
+ 	 * @param id
+ 	 *            SHA-1 of an object.
+-	 * 
++	 *
+ 	 * @return a {@link ObjectLoader} for accessing the data of the named
+ 	 *         object, or null if the object does not exist.
+ 	 * @throws IOException
+ 	 */
+-	public ObjectLoader openObject(final AnyObjectId id)
+-			throws IOException {
+-		return openObject(new WindowCursor(),id);
++	public ObjectLoader openObject(final AnyObjectId id) throws IOException {
++		return openObject(new WindowCursor(), id);
+ 	}
+ 
+ 	/**
+@@ -248,7 +250,7 @@ public class Repository {
+ 	 *            temporary working space associated with the calling thread.
+ 	 * @param id
+ 	 *            SHA-1 of an object.
+-	 * 
++	 *
+ 	 * @return a {@link ObjectLoader} for accessing the data of the named
+ 	 *         object, or null if the object does not exist.
+ 	 * @throws IOException
+@@ -266,7 +268,8 @@ public class Repository {
+ 					// This shouldn't happen unless the pack was corrupted
+ 					// after we opened it or the VM runs out of memory. This is
+ 					// a know problem with memory mapped I/O in java and have
+-					// been noticed with JDK < 1.6. Tell the gc that now is a good
++					// been noticed with JDK < 1.6. Tell the gc that now is a
++					// good
+ 					// time to collect and try once more.
+ 					try {
+ 						curs.release();
+@@ -312,13 +315,15 @@ public class Repository {
+ 	}
+ 
+ 	/**
+-	 * Access a Commit object using a symbolic reference. This reference may
+-	 * be a SHA-1 or ref in combination with a number of symbols translating
+-	 * from one ref or SHA1-1 to another, such as HEAD^ etc.
++	 * Access a Commit object using a symbolic reference. This reference may be
++	 * a SHA-1 or ref in combination with a number of symbols translating from
++	 * one ref or SHA1-1 to another, such as HEAD^ etc.
+ 	 *
+-	 * @param revstr a reference to a git commit object
++	 * @param revstr
++	 *            a reference to a git commit object
+ 	 * @return a Commit named by the specified string
+-	 * @throws IOException for I/O error or unexpected object type.
++	 * @throws IOException
++	 *             for I/O error or unexpected object type.
+ 	 *
+ 	 * @see #resolve(String)
+ 	 */
+@@ -332,11 +337,13 @@ public class Repository {
+ 	 *
+ 	 * @param id
+ 	 *            SHA-1 of object to read
+-	 * @param refName optional, only relevant for simple tags
++	 * @param refName
++	 *            optional, only relevant for simple tags
+ 	 * @return The Git object if found or null
+ 	 * @throws IOException
+ 	 */
+-	public Object mapObject(final ObjectId id, final String refName) throws IOException {
++	public Object mapObject(final ObjectId id, final String refName)
++			throws IOException {
+ 		final ObjectLoader or = openObject(id);
+ 		final byte[] raw = or.getBytes();
+ 		if (or.getType() == Constants.OBJ_TREE)
+@@ -352,9 +359,11 @@ public class Repository {
+ 
+ 	/**
+ 	 * Access a Commit by SHA'1 id.
++	 *
+ 	 * @param id
+ 	 * @return Commit or null
+-	 * @throws IOException for I/O error or unexpected object type.
++	 * @throws IOException
++	 *             for I/O error or unexpected object type.
+ 	 */
+ 	public Commit mapCommit(final ObjectId id) throws IOException {
+ 		final ObjectLoader or = openObject(id);
+@@ -372,11 +381,12 @@ public class Repository {
+ 	}
+ 
+ 	/**
+-	 * Access a Tree object using a symbolic reference. This reference may
+-	 * be a SHA-1 or ref in combination with a number of symbols translating
+-	 * from one ref or SHA1-1 to another, such as HEAD^{tree} etc.
++	 * Access a Tree object using a symbolic reference. This reference may be a
++	 * SHA-1 or ref in combination with a number of symbols translating from one
++	 * ref or SHA1-1 to another, such as HEAD^{tree} etc.
+ 	 *
+-	 * @param revstr a reference to a git commit object
++	 * @param revstr
++	 *            a reference to a git commit object
+ 	 * @return a Tree named by the specified string
+ 	 * @throws IOException
+ 	 *
+@@ -389,9 +399,11 @@ public class Repository {
+ 
+ 	/**
+ 	 * Access a Tree by SHA'1 id.
++	 *
+ 	 * @param id
+ 	 * @return Tree or null
+-	 * @throws IOException for I/O error or unexpected object type.
++	 * @throws IOException
++	 *             for I/O error or unexpected object type.
+ 	 */
+ 	public Tree mapTree(final ObjectId id) throws IOException {
+ 		final ObjectLoader or = openObject(id);
+@@ -406,12 +418,14 @@ public class Repository {
+ 		throw new IncorrectObjectTypeException(id, Constants.TYPE_TREE);
+ 	}
+ 
+-	private Tree makeTree(final ObjectId id, final byte[] raw) throws IOException {
++	private Tree makeTree(final ObjectId id, final byte[] raw)
++			throws IOException {
+ 		Tree ret = new Tree(this, id, raw);
+ 		return ret;
+ 	}
+ 
+-	private Tag makeTag(final ObjectId id, final String refName, final byte[] raw) {
++	private Tag makeTag(final ObjectId id, final String refName,
++			final byte[] raw) {
+ 		Tag ret = new Tag(this, id, refName, raw);
+ 		return ret;
+ 	}
+@@ -421,7 +435,8 @@ public class Repository {
+ 	 *
+ 	 * @param revstr
+ 	 * @return a Tag or null
+-	 * @throws IOException on I/O error or unexpected type
++	 * @throws IOException
++	 *             on I/O error or unexpected type
+ 	 */
+ 	public Tag mapTag(String revstr) throws IOException {
+ 		final ObjectId id = resolve(revstr);
+@@ -430,12 +445,15 @@ public class Repository {
+ 
+ 	/**
+ 	 * Access a Tag by SHA'1 id
++	 *
+ 	 * @param refName
+ 	 * @param id
+ 	 * @return Commit or null
+-	 * @throws IOException for I/O error or unexpected object type.
++	 * @throws IOException
++	 *             for I/O error or unexpected object type.
+ 	 */
+-	public Tag mapTag(final String refName, final ObjectId id) throws IOException {
++	public Tag mapTag(final String refName, final ObjectId id)
++			throws IOException {
+ 		final ObjectLoader or = openObject(id);
+ 		if (or == null)
+ 			return null;
+@@ -447,7 +465,7 @@ public class Repository {
+ 
+ 	/**
+ 	 * Create a command to update (or create) a ref in this repository.
+-	 * 
++	 *
+ 	 * @param ref
+ 	 *            name of the ref the caller wants to modify.
+ 	 * @return an update command. The caller must finish populating this command
+@@ -466,13 +484,13 @@ public class Repository {
+ 	 *
+ 	 * Currently supported is combinations of these.
+ 	 * <ul>
+-	 *  <li>SHA-1 - a SHA-1</li>
+-	 *  <li>refs/... - a ref name</li>
+-	 *  <li>ref^n - nth parent reference</li>
+-	 *  <li>ref~n - distance via parent reference</li>
+-	 *  <li>ref@{n} - nth version of ref</li>
+-	 *  <li>ref^{tree} - tree references by ref</li>
+-	 *  <li>ref^{commit} - commit references by ref</li>
++	 * <li>SHA-1 - a SHA-1</li>
++	 * <li>refs/... - a ref name</li>
++	 * <li>ref^n - nth parent reference</li>
++	 * <li>ref~n - distance via parent reference</li>
++	 * <li>ref@{n} - nth version of ref</li>
++	 * <li>ref^{tree} - tree references by ref</li>
++	 * <li>ref^{commit} - commit references by ref</li>
+ 	 * </ul>
+ 	 *
+ 	 * Not supported is
+@@ -481,9 +499,11 @@ public class Repository {
+ 	 * <li>abbreviated SHA-1's</li>
+ 	 * </ul>
+ 	 *
+-	 * @param revstr A git object references expression
++	 * @param revstr
++	 *            A git object references expression
+ 	 * @return an ObjectId
+-	 * @throws IOException on serious errors
++	 * @throws IOException
++	 *             on serious errors
+ 	 */
+ 	public ObjectId resolve(final String revstr) throws IOException {
+ 		char[] rev = revstr.toCharArray();
+@@ -493,7 +513,7 @@ public class Repository {
+ 			switch (rev[i]) {
+ 			case '^':
+ 				if (refId == null) {
+-					String refstr = new String(rev,0,i);
++					String refstr = new String(rev, 0, i);
+ 					refId = resolveSimple(refstr);
+ 					if (refId == null)
+ 						return null;
+@@ -513,23 +533,24 @@ public class Repository {
+ 						int j;
+ 						ref = mapObject(refId, null);
+ 						if (!(ref instanceof Commit))
+-							throw new IncorrectObjectTypeException(refId, Constants.TYPE_COMMIT);
+-						for (j=i+1; j<rev.length; ++j) {
++							throw new IncorrectObjectTypeException(refId,
++									Constants.TYPE_COMMIT);
++						for (j = i + 1; j < rev.length; ++j) {
+ 							if (!Character.isDigit(rev[j]))
+ 								break;
+ 						}
+-						String parentnum = new String(rev, i+1, j-i-1);
++						String parentnum = new String(rev, i + 1, j - i - 1);
+ 						int pnum = Integer.parseInt(parentnum);
+ 						if (pnum != 0)
+-							refId = ((Commit)ref).getParentIds()[pnum - 1];
++							refId = ((Commit) ref).getParentIds()[pnum - 1];
+ 						i = j - 1;
+ 						break;
+ 					case '{':
+ 						int k;
+ 						String item = null;
+-						for (k=i+2; k<rev.length; ++k) {
++						for (k = i + 2; k < rev.length; ++k) {
+ 							if (rev[k] == '}') {
+-								item = new String(rev, i+2, k-i-2);
++								item = new String(rev, i + 2, k - i - 2);
+ 								break;
+ 							}
+ 						}
+@@ -538,44 +559,43 @@ public class Repository {
+ 							if (item.equals("tree")) {
+ 								ref = mapObject(refId, null);
+ 								while (ref instanceof Tag) {
+-									Tag t = (Tag)ref;
++									Tag t = (Tag) ref;
+ 									refId = t.getObjId();
+ 									ref = mapObject(refId, null);
+ 								}
+ 								if (ref instanceof Treeish)
+-									refId = ((Treeish)ref).getTreeId();
++									refId = ((Treeish) ref).getTreeId();
+ 								else
+-									throw new IncorrectObjectTypeException(refId,  Constants.TYPE_TREE);
+-							}
+-							else if (item.equals("commit")) {
++									throw new IncorrectObjectTypeException(
++											refId, Constants.TYPE_TREE);
++							} else if (item.equals("commit")) {
+ 								ref = mapObject(refId, null);
+ 								while (ref instanceof Tag) {
+-									Tag t = (Tag)ref;
++									Tag t = (Tag) ref;
+ 									refId = t.getObjId();
+ 									ref = mapObject(refId, null);
+ 								}
+ 								if (!(ref instanceof Commit))
+-									throw new IncorrectObjectTypeException(refId,  Constants.TYPE_COMMIT);
+-							}
+-							else if (item.equals("blob")) {
++									throw new IncorrectObjectTypeException(
++											refId, Constants.TYPE_COMMIT);
++							} else if (item.equals("blob")) {
+ 								ref = mapObject(refId, null);
+ 								while (ref instanceof Tag) {
+-									Tag t = (Tag)ref;
++									Tag t = (Tag) ref;
+ 									refId = t.getObjId();
+ 									ref = mapObject(refId, null);
+ 								}
+ 								if (!(ref instanceof byte[]))
+-									throw new IncorrectObjectTypeException(refId,  Constants.TYPE_COMMIT);
+-							}
+-							else if (item.equals("")) {
++									throw new IncorrectObjectTypeException(
++											refId, Constants.TYPE_COMMIT);
++							} else if (item.equals("")) {
+ 								ref = mapObject(refId, null);
+ 								if (ref instanceof Tag)
+-									refId = ((Tag)ref).getObjId();
++									refId = ((Tag) ref).getObjId();
+ 								else {
+ 									// self
+ 								}
+-							}
+-							else
++							} else
+ 								throw new RevisionSyntaxException(revstr);
+ 						else
+ 							throw new RevisionSyntaxException(revstr);
+@@ -583,22 +603,24 @@ public class Repository {
+ 					default:
+ 						ref = mapObject(refId, null);
+ 						if (ref instanceof Commit)
+-							refId = ((Commit)ref).getParentIds()[0];
++							refId = ((Commit) ref).getParentIds()[0];
+ 						else
+-							throw new IncorrectObjectTypeException(refId,  Constants.TYPE_COMMIT);
+-						
++							throw new IncorrectObjectTypeException(refId,
++									Constants.TYPE_COMMIT);
 +
-+		if (rules.size() =3D=3D 1) {
-+			final Rule rule =3D rules.get(0);
-+			if (rule.getPattern() =3D=3D FilePattern.MATCH_ALWAYS) {
-+				if (rule.isIgnoreAtMatch()) {
-+					return Rules.IGNORE_ALL;
-+				} else {
-+					return Rules.IGNORE_NOTHING;
-+				}
-+			}
-+		} else if (rules.isEmpty()) {
-+			return Rules.IGNORE_NOTHING;
-+		}
-+		return new RulesImplementation(rules, this);
-+	}
-+
-+	private List<Rule> getNessesaryRulesFromIterator(Iterator<Rule> ruleI=
-terator) {
-+		final List<Rule> rules =3D new ArrayList<Rule>();
-+		while (ruleIterator.hasNext()) {
-+			final Rule subRule =3D ruleIterator.next();
-+			if (subRule.getPattern() =3D=3D FilePattern.MATCH_NEVER) {
-+				continue;
-+			}
-+			rules.add(subRule);
-+			// There is no need for rules after a rule witch match always,
-+			// as such a rule would never be the first rule which matches.
-+			if (subRule.getPattern() =3D=3D FilePattern.MATCH_ALWAYS) {
-+				break;
-+			}
-+		}
-+		return rules;
-+	}
-+
+ 					}
+ 				} else {
+ 					ref = mapObject(refId, null);
+ 					if (ref instanceof Commit)
+-						refId = ((Commit)ref).getParentIds()[0];
++						refId = ((Commit) ref).getParentIds()[0];
+ 					else
+-						throw new IncorrectObjectTypeException(refId,  Constants.TYPE_COMMIT);
++						throw new IncorrectObjectTypeException(refId,
++								Constants.TYPE_COMMIT);
+ 				}
+ 				break;
+ 			case '~':
+ 				if (ref == null) {
+-					String refstr = new String(rev,0,i);
++					String refstr = new String(rev, 0, i);
+ 					refId = resolveSimple(refstr);
+ 					ref = mapCommit(refId);
+ 				}
+@@ -607,10 +629,10 @@ public class Repository {
+ 					if (!Character.isDigit(rev[l]))
+ 						break;
+ 				}
+-				String distnum = new String(rev, i+1, l-i-1);
++				String distnum = new String(rev, i + 1, l - i - 1);
+ 				int dist = Integer.parseInt(distnum);
+ 				while (dist >= 0) {
+-					refId = ((Commit)ref).getParentIds()[0];
++					refId = ((Commit) ref).getParentIds()[0];
+ 					ref = mapCommit(refId);
+ 					--dist;
+ 				}
+@@ -619,14 +641,16 @@ public class Repository {
+ 			case '@':
+ 				int m;
+ 				String time = null;
+-				for (m=i+2; m<rev.length; ++m) {
++				for (m = i + 2; m < rev.length; ++m) {
+ 					if (rev[m] == '}') {
+-						time = new String(rev, i+2, m-i-2);
++						time = new String(rev, i + 2, m - i - 2);
+ 						break;
+ 					}
+ 				}
+ 				if (time != null)
+-					throw new RevisionSyntaxException("reflogs not yet supported by revision parser yet", revstr);
++					throw new RevisionSyntaxException(
++							"reflogs not yet supported by revision parser yet",
++							revstr);
+ 				i = m - 1;
+ 				break;
+ 			default:
+@@ -662,7 +686,7 @@ public class Repository {
+ 
+ 	/**
+ 	 * Add a single existing pack to the list of available pack files.
+-	 * 
++	 *
+ 	 * @param pack
+ 	 *            path of the pack file to open.
+ 	 * @param idx
+@@ -675,10 +699,10 @@ public class Repository {
+ 		final String p = pack.getName();
+ 		final String i = idx.getName();
+ 		if (p.length() != 50 || !p.startsWith("pack-") || !p.endsWith(".pack"))
+-		    throw new IllegalArgumentException("Not a valid pack " + pack);
++			throw new IllegalArgumentException("Not a valid pack " + pack);
+ 		if (i.length() != 49 || !i.startsWith("pack-") || !i.endsWith(".idx"))
+-		    throw new IllegalArgumentException("Not a valid pack " + idx);
+-		if (!p.substring(0,45).equals(i.substring(0,45)))
++			throw new IllegalArgumentException("Not a valid pack " + idx);
++		if (!p.substring(0, 45).equals(i.substring(0, 45)))
+ 			throw new IllegalArgumentException("Pack " + pack
+ 					+ "does not match index " + idx);
+ 
+@@ -690,12 +714,11 @@ public class Repository {
+ 	}
+ 
+ 	/**
+-	 * Scan the object dirs, including alternates for packs
+-	 * to use.
++	 * Scan the object dirs, including alternates for packs to use.
+ 	 */
+ 	public void scanForPacks() {
+ 		final ArrayList<PackFile> p = new ArrayList<PackFile>();
+-		for (int i=0; i<objectsDirs.length; ++i)
++		for (int i = 0; i < objectsDirs.length; ++i)
+ 			scanForPacks(new File(objectsDirs[i], "pack"), p);
+ 		final PackFile[] arr = new PackFile[p.size()];
+ 		p.toArray(arr);
+@@ -735,14 +758,16 @@ public class Repository {
+ 		}
+ 	}
+ 
+-    /**
+-     * Writes a symref (e.g. HEAD) to disk
+-     *
+-     * @param name symref name
+-     * @param target pointed to ref
+-     * @throws IOException
+-     */
+-    public void writeSymref(final String name, final String target)
 +	/**
-+	 * Expects that
-+	 * {@link #removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(List)} =
-has
-+	 * been executed first.
-+	 *=20
-+	 * @param rules
-+	 *            rule list to reduce.
++	 * Writes a symref (e.g. HEAD) to disk
++	 *
++	 * @param name
++	 *            symref name
++	 * @param target
++	 *            pointed to ref
++	 * @throws IOException
 +	 */
-+	private void removeUnnecessaryIgnoreRulesNearTheEndOfTheList(
-+			final List<Rule> rules) {
-+		// Why the following optimization makes only sense for the end of th=
-e
-+		// list:
-+		// If there is a "ignore all"- rule,
-+		// then it is located at the end of the list
-+		// See how the list is filled to prove this statement.
-+		if (rules.size() >=3D 2) {
-+			final Rule lastRule =3D rules.get(rules.size() - 1);
-+			assert lastRule.isIgnoreAtMatch() : "Expected that no 'not ignore'-=
-rule is at the end of the list any more";
-+			final boolean ignoreAllAtEnd =3D lastRule.getPattern().equals(
-+					FilePattern.MATCH_ALWAYS);
-+			if (ignoreAllAtEnd) {
-+				while (rules.size() >=3D 2) {
-+					final int ruleBeforeLastIndex =3D rules.size() - 2;
-+					final Rule ruleBeforeLast =3D rules.get(ruleBeforeLastIndex);
-+					if (ruleBeforeLast.isIgnoreAtMatch()) {
-+						rules.remove(ruleBeforeLastIndex);
-+					} else {
-+						break;
-+					}
-+				}
-+			}
-+		}
-+	}
++	public void writeSymref(final String name, final String target)
+ 			throws IOException {
+ 		refs.link(name, target);
+ 	}
+@@ -756,12 +781,13 @@ public class Repository {
+ 	 * @throws IOException
+ 	 */
+ 	public String getPatch() throws IOException {
+-		final File ptr = new File(getDirectory(),"patches/"+getBranch()+"/applied");
++		final File ptr = new File(getDirectory(), "patches/" + getBranch()
++				+ "/applied");
+ 		final BufferedReader br = new BufferedReader(new FileReader(ptr));
+-		String last=null;
++		String last = null;
+ 		try {
+ 			String line;
+-			while ((line=br.readLine())!=null) {
++			while ((line = br.readLine()) != null) {
+ 				last = line;
+ 			}
+ 		} finally {
+@@ -775,7 +801,7 @@ public class Repository {
+ 	 * @throws IOException
+ 	 */
+ 	public String getFullBranch() throws IOException {
+-		final File ptr = new File(getDirectory(),"HEAD");
++		final File ptr = new File(getDirectory(), "HEAD");
+ 		final BufferedReader br = new BufferedReader(new FileReader(ptr));
+ 		String ref;
+ 		try {
+@@ -787,7 +813,7 @@ public class Repository {
+ 			ref = ref.substring(5);
+ 		return ref;
+ 	}
+-	
 +
-+	private void removeUnnecessaryDoNotIgnoreRulesAtTheEndOfTheList(
-+			final List<Rule> rules) {
-+		// Why it is save to remove "don't ignore rules" at the end of the l=
-ist
-+		// if there is no "ignore rule" below a "don't ignore rule" then
-+		// the path which haven't match jet will never be ignored:
-+		// -> if another "don't ignore rule" match then the patch will not b=
-e
-+		// ignored
-+		// -> if no "don't ignore rule" match then the path will not be igno=
-red.
-+		while (!rules.isEmpty()) {
-+			final int indexOfLastRule =3D rules.size() - 1;
-+			final Rule lastRule =3D rules.get(indexOfLastRule);
-+			if (lastRule.isIgnoreAtMatch()) {
-+				break;
-+			} else {
-+				rules.remove(indexOfLastRule);
-+			}
-+		}
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/Rules=
-Implementation.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/ru=
-les/RulesImplementation.java
-new file mode 100644
-index 0000000..cd12701
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/rules/RulesImpleme=
-ntation.java
-@@ -0,0 +1,88 @@
-+/*
-+ * Copyright (C) 2008, Florian K=C3=B6berle <florianskarten@web.de>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
+ 	/**
+ 	 * @return name of current branch.
+ 	 * @throws IOException
+@@ -808,7 +834,7 @@ public class Repository {
+ 				ref = ref.substring(11);
+ 			return ref;
+ 		} catch (FileNotFoundException e) {
+-			final File ptr = new File(getDirectory(),"head-name");
++			final File ptr = new File(getDirectory(), "head-name");
+ 			final BufferedReader br = new BufferedReader(new FileReader(ptr));
+ 			String ref;
+ 			try {
+@@ -819,7 +845,7 @@ public class Repository {
+ 			return ref;
+ 		}
+ 	}
+-	
 +
-+package org.spearce.jgit.treewalk.rules;
+ 	/**
+ 	 * @return all known refs (heads, tags, remotes).
+ 	 */
+@@ -864,13 +890,17 @@ public class Repository {
+ 	 * @return applied patches in a map indexed on current commit id
+ 	 * @throws IOException
+ 	 */
+-	public Map<ObjectId,StGitPatch> getAppliedPatches() throws IOException {
+-		Map<ObjectId,StGitPatch> ret = new HashMap<ObjectId,StGitPatch>();
++	public Map<ObjectId, StGitPatch> getAppliedPatches() throws IOException {
++		Map<ObjectId, StGitPatch> ret = new HashMap<ObjectId, StGitPatch>();
+ 		if (isStGitMode()) {
+-			File patchDir = new File(new File(getDirectory(),"patches"),getBranch());
+-			BufferedReader apr = new BufferedReader(new FileReader(new File(patchDir,"applied")));
+-			for (String patchName=apr.readLine(); patchName!=null; patchName=apr.readLine()) {
+-				File topFile = new File(new File(new File(patchDir,"patches"), patchName), "top");
++			File patchDir = new File(new File(getDirectory(), "patches"),
++					getBranch());
++			BufferedReader apr = new BufferedReader(new FileReader(new File(
++					patchDir, "applied")));
++			for (String patchName = apr.readLine(); patchName != null; patchName = apr
++					.readLine()) {
++				File topFile = new File(new File(new File(patchDir, "patches"),
++						patchName), "top");
+ 				BufferedReader tfr = new BufferedReader(new FileReader(topFile));
+ 				String objectId = tfr.readLine();
+ 				ObjectId id = ObjectId.fromString(objectId);
+@@ -881,7 +911,7 @@ public class Repository {
+ 		}
+ 		return ret;
+ 	}
+-	
 +
-+import java.util.Iterator;
-+import java.util.List;
-+
-+class RulesImplementation implements Rules {
-+	/**
-+	 * Complete list of rules. Note that order is: determining rule first=
-=2E
-+	 */
-+	private final List<Rule> rules;
-+
-+	/**
-+	 * Factory used to create {@link Rules} for sub directories.
-+	 */
-+	private RuleListToObjectConverter factory;
-+
-+	RulesImplementation(List<Rule> rules, RuleListToObjectConverter facto=
-ry) {
-+		this.rules =3D rules;
-+		this.factory =3D factory;
-+	}
-+
-+	public boolean shouldIgnore(String fileName, boolean fileIsDirectory)=
- {
-+		for (Rule rule : rules) {
-+			if (rule.getPattern().match(fileName, fileIsDirectory)) {
-+				return rule.isIgnoreAtMatch();
-+			}
-+		}
-+		return false;
-+	}
-+
-+	public Rules getRulesForSubDirectory(final String directoryName) {
-+		final Iterator<Rule> subRuleIterator =3D new Iterator<Rule>() {
-+			final Iterator<Rule> ruleIterator =3D rules.iterator();
-+
-+			public boolean hasNext() {
-+				return ruleIterator.hasNext();
-+			}
-+
-+			public Rule next() {
-+				return ruleIterator.next()
-+						.getRuleForSubDirectory(directoryName);
-+			}
-+
-+			public void remove() {
-+				throw new UnsupportedOperationException();
-+			}
-+
-+		};
-+		return factory.createIgnoreRules(subRuleIterator);
-+	}
-+}
---=20
+ 	/** Clean up stale caches */
+ 	public void refreshFromDisk() {
+ 		refs.clearCache();
+@@ -904,7 +934,7 @@ public class Repository {
+ 	static byte[] gitInternalSlash(byte[] bytes) {
+ 		if (File.separatorChar == '/')
+ 			return bytes;
+-		for (int i=0; i<bytes.length; ++i)
++		for (int i = 0; i < bytes.length; ++i)
+ 			if (bytes[i] == File.separatorChar)
+ 				bytes[i] = '/';
+ 		return bytes;
+@@ -916,18 +946,18 @@ public class Repository {
+ 	public RepositoryState getRepositoryState() {
+ 		if (new File(getWorkDir(), ".dotest").exists())
+ 			return RepositoryState.REBASING;
+-		if (new File(gitDir,".dotest-merge").exists())
++		if (new File(gitDir, ".dotest-merge").exists())
+ 			return RepositoryState.REBASING_INTERACTIVE;
+-		if (new File(gitDir,"MERGE_HEAD").exists())
++		if (new File(gitDir, "MERGE_HEAD").exists())
+ 			return RepositoryState.MERGING;
+-		if (new File(gitDir,"BISECT_LOG").exists())
++		if (new File(gitDir, "BISECT_LOG").exists())
+ 			return RepositoryState.BISECTING;
+ 		return RepositoryState.SAFE;
+ 	}
+ 
+ 	/**
+-	 * Check validty of a ref name. It must not contain character that has
+-	 * a special meaning in a Git object reference expression. Some other
++	 * Check validty of a ref name. It must not contain character that has a
++	 * special meaning in a Git object reference expression. Some other
+ 	 * dangerous characters are also excluded.
+ 	 *
+ 	 * @param refName
+@@ -937,11 +967,11 @@ public class Repository {
+ 	public static boolean isValidRefName(final String refName) {
+ 		final int len = refName.length();
+ 		char p = '\0';
+-		for (int i=0; i<len; ++i) {
++		for (int i = 0; i < len; ++i) {
+ 			char c = refName.charAt(i);
+ 			if (c <= ' ')
+ 				return false;
+-			switch(c) {
++			switch (c) {
+ 			case '.':
+ 				if (i == 0)
+ 					return false;
+@@ -953,11 +983,14 @@ public class Repository {
+ 			case '/':
+ 				if (i == 0)
+ 					return false;
+-				if (i == len -1)
++				if (i == len - 1)
+ 					return false;
+ 				break;
+-			case '~': case '^': case ':':
+-			case '?': case '[':
++			case '~':
++			case '^':
++			case ':':
++			case '?':
++			case '[':
+ 				return false;
+ 			case '*':
+ 				return false;
+@@ -970,8 +1003,10 @@ public class Repository {
+ 	/**
+ 	 * String work dir and return normalized repository path
+ 	 *
+-	 * @param wd Work dir
+-	 * @param f File whose path shall be stripp off it's workdir
++	 * @param wd
++	 *            Work dir
++	 * @param f
++	 *            File whose path shall be stripp off it's workdir
+ 	 * @return normalized repository relative path
+ 	 */
+ 	public static String stripWorkDir(File wd, File f) {
+@@ -989,7 +1024,7 @@ public class Repository {
+ 
+ 	/**
+ 	 * Creates a new {@link WorkTree} and initialize a repository for it.
+-	 * 
++	 *
+ 	 * @param workTreeDirectory
+ 	 *            the directory with the project files.
+ 	 * @return a new {@link WorkTree} with a new and open {@link Repository}.
+-- 
 1.5.4.3
