@@ -1,53 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG REPORT] "git ls-remote http://git.domain.com/repo.git
-	HEAD" doesn't work
-Date: Sat, 14 Jun 2008 05:19:00 -0400
-Message-ID: <20080614091900.GA22538@sigill.intra.peff.net>
+From: Sven <svoop@delirium.ch>
+Subject: Re: [BUG REPORT] "git ls-remote =?utf-8?b?aHR0cDovL2dpdC5kb21haW4uY29tL3JlcG8uZ2l0CUhFQUQi?= doesn't work
+Date: Sat, 14 Jun 2008 09:24:57 +0000 (UTC)
+Message-ID: <loom.20080614T092039-924@post.gmane.org>
 References: <loom.20080614T065448-251@post.gmane.org> <20080614071011.GA29699@glandium.org> <7vprqkh423.fsf@gitster.siamese.dyndns.org> <loom.20080614T074854-525@post.gmane.org> <20080614090244.GA1262@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sven <svoop@delirium.ch>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat Jun 14 11:20:03 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 14 11:26:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7RvV-0006sj-1u
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 11:20:01 +0200
+	id 1K7S1j-0008Mf-JX
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 11:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754318AbYFNJTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 05:19:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754684AbYFNJTF
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:19:05 -0400
-Received: from peff.net ([208.65.91.99]:3064 "EHLO peff.net"
+	id S1754684AbYFNJZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 05:25:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754716AbYFNJZO
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:25:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:40272 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754227AbYFNJTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 05:19:03 -0400
-Received: (qmail 6934 invoked by uid 111); 14 Jun 2008 09:19:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 14 Jun 2008 05:19:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun 2008 05:19:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20080614090244.GA1262@glandium.org>
+	id S1754300AbYFNJZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 05:25:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1K7S0S-0005N7-TY
+	for git@vger.kernel.org; Sat, 14 Jun 2008 09:25:09 +0000
+Received: from 151.121.221.87.dynamic.jazztel.es ([87.221.121.151])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jun 2008 09:25:08 +0000
+Received: from svoop by 151.121.221.87.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jun 2008 09:25:08 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.221.121.151 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9) Gecko/2008061004 Firefox/3.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84997>
 
-On Sat, Jun 14, 2008 at 11:02:44AM +0200, Mike Hommey wrote:
-
-> > How likely is it that ls-remote HEAD is added for HTTP as well rather than
-> > stripped for all protocols?
-> 
 > When someone sends a patch ;)
 
-I'm not sure I can bring myself to wait for that. After all, it could
-take nearly negative seven weeks:
+As I said, I'm lacking the skills. But I'd take part in sponsoring the patch so
+it's not another 7 weeks wait :-) I know, it's kinda unusual, but it's important
+to me that Capistrano works out of the box with Git over HTTP. So I'd throw in
+$50, anybody willing to join, too. Or to do the patch?
 
-  $ git log -1 --pretty=tformat:'%s (%ar)' be885d96
-  Make ls-remote http://... list HEAD, like for git://... (7 weeks ago)
-
--Peff
+-sven
