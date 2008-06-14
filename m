@@ -1,117 +1,187 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Document clone of clone loosing branches?
-Date: Sun, 15 Jun 2008 01:03:01 +0200
-Message-ID: <200806150103.02260.jnareb@gmail.com>
-References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz> <4853D967.5080903@gmail.com> <20080614.233645.71097102.hanzl@noel.feld.cvut.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: lewiemann@gmail.com, peff@peff.net, git@vger.kernel.org
-To: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>
-X-From: git-owner@vger.kernel.org Sun Jun 15 01:04:10 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] path-list documentation: document all functions and data structures
+Date: Sun, 15 Jun 2008 01:22:05 +0200
+Message-ID: <1213485725-6755-1-git-send-email-vmiklos@frugalware.org>
+References: <alpine.DEB.1.00.0806141705050.6439@racer>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 15 01:23:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7en3-00054P-Ld
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 01:04:10 +0200
+	id 1K7f5N-0008TY-Od
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 01:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509AbYFNXDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 19:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755527AbYFNXDP
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 19:03:15 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:4515 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755507AbYFNXDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 19:03:14 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so3524657ika.5
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 16:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=8dKYje85Nuz4dfjeTmQGdh8oNtvVuDsqIY0OwLSJzjo=;
-        b=MgnGJQqtooaHOpkqlWZs9PKELWnf18lFcH2pVGXq6X8/LX5chI2tvNyf8zcjDfvAgw
-         +q9ILA1Yg/KUHLckWsy7cn1DwyN6hLLDAvz8i80Xp1xgow624DL4qU8Fo7ut9VaQihGb
-         IMHLDB4XO3swQDOXHxCeRIaVIYeP3MWwcmXd0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=r/m5dhSXcFGXWwFr9fpjckYjkZjrZ3BjvsrFdV+E94RdVLjWctnVeaSVYIjb9jjm6I
-         F6KPe5RETLUdB8EkWdMHDDynBi23NHhHxE/opFCOQNXY9/vegX+xVXoSfkogfJ1XsSit
-         p72BmeLfJDhIwI8zW9l7eJFHSOr1XhxlJHJFc=
-Received: by 10.210.80.2 with SMTP id d2mr4458921ebb.7.1213484590281;
-        Sat, 14 Jun 2008 16:03:10 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.239.84])
-        by mx.google.com with ESMTPS id y37sm6080665iky.8.2008.06.14.16.03.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 14 Jun 2008 16:03:08 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080614.233645.71097102.hanzl@noel.feld.cvut.cz>
-Content-Disposition: inline
+	id S1755678AbYFNXWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 19:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755651AbYFNXWK
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 19:22:10 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60732 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755632AbYFNXWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 19:22:09 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id 28AA91DDC5B
+	for <git@vger.kernel.org>; Sun, 15 Jun 2008 01:22:05 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 8917B18DFDC; Sun, 15 Jun 2008 01:22:05 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc2.dirty
+In-Reply-To: <alpine.DEB.1.00.0806141705050.6439@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85052>
 
-Vaclav Hanzl wrote:
-> Jakub Narebski wrote:
->>
->> The idea is for git-clone to clone (by default) _your_ work, not sb
->> else work.  Think about two repositories, fetching from each other:
->> you don't want for branches to proliferate like mad, remote of remote,
->> then remote of remote of remote, and ad infinitum.
->> 
->> Besides there is I think implicit assumption that public repositories
->> one might want to clone are _bare_ repositories, 1:1 or mirror
->> refspecs, which simply do not contain remote tracking branches. 
-> 
-> Yes. It would be no shame if an explanation like this made it to 'man
-> clone'?
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-The question of course is _what_ to put into git-clone(1), what to
-generic documentation in git(1), and what in "Git User's Manual".
+On Sat, Jun 14, 2008 at 07:08:19PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Thanks for doing this... I meant to document it after pushing the
+> path_list -> string_list patch.
 
-> After all, how many other commands do distinguish regular branches and
-> remote tracking branches?
+Here is an updated version, hopefully I added all your suggestion, and
+appended a short example as well.
 
-Errr... many of them? git-branch treats regular branches (refs/heads/*)
-and remote-tracking branches (refs/remotes/<remotename>/*) differently
-(compare "git branch" and "git branch -r", and "git branch -a").
-git-checkout treats regular branches (can checkout) different from
-other refs, including remote-tracking branches (result in detached
-HEAD).
+(Sending to the list only, as I accidently removed the list from Cc, sorry for that.)
 
-> Even if there are any other (I do not know), 
-> git-clone is likely the most prominent of them and 'man git-clone' is
-> quite good place to document this. Unless it is explained in 'man git'
-> itself (I think it is not now).
+ Documentation/technical/api-path-list.txt |  125 ++++++++++++++++++++++++++++-
+ 1 files changed, 121 insertions(+), 4 deletions(-)
 
-I'm not sure how it is put in documentation, but I wouldn't wonder
-if it is not dicumented, because most of gitters who can write this
-documentation do know the difference between regular branches and
-remote-tracking branches, and know recoomended workflows and best
-practices.
+diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
+index d077683..654470d 100644
+--- a/Documentation/technical/api-path-list.txt
++++ b/Documentation/technical/api-path-list.txt
+@@ -1,9 +1,126 @@
+ path-list API
+ =============
  
-> (Thought I am quite happy with UNIX tradition of very exact and very
-> condensed man pages, up to the point of being a hard puzzle, and I
-> agree that man pages are no tutorial, in this case I would be happy to
-> see 'regular branches' and 'remote tracking branches' clearly
-> distinguished in 'man git-clone' itself, without an implicit reference
-> to 'usual' meaning of words among geeks.)
-
-So, what should be mentioned ar two facts, I think.  (a) that git-clone
-copies only regular branches and tags; it does not copy remote-tracking
-branches, it does not copy stash, it does not copy reflogs, it does not
-copy StGIT stacks...  (b) that recommended workflow (best practice) is
-to have public published repository which is bare clone
-(1:1 correspondnce) of interesting subset of refs.
-
+-Talk about <path-list.h>, things like
++The path_list API offers a data structure and functions to handle sorted
++and unsorted string lists.
+ 
+-* it is not just paths but strings in general;
+-* the calling sequence.
++The name is a bit misleading, a path_list may store not only paths but
++strings in general.
+ 
+-(Dscho)
++The caller:
++
++. Allocates and clears a `struct path_list` variable.
++
++. Initializes the members. You might want to set the flag `strdup_paths`
++  if the strings should be strdup()ed. For example, this is necessary
++  when you add something like git_path("..."), since that function returns
++  a static buffer that will change with the next call to git_path().
+++
++If you need something advanced, you can manually malloc() the `items`
++member (you need this if you add things later) and you should set the
++`nr` and `alloc` members in that case, too.
++
++. Adds new items to the list, using `path_list_append` or `path_list_insert`.
++
++. Can check if a string is in the list using `path_list_has_path` or
++  `unsorted_path_list_has_path` and get it from the list using
++  `path_list_lookup` for sorted lists.
++
++. Can sort an unsorted list using `sort_path_list`.
++
++. Finally it should free the list using `path_list_clear`.
++
++Example:
++
++----
++struct path_list list;
++int i;
++
++memset(&list, 0, sizeof(struct path_list));
++path_list_append("foo", &list);
++path_list_append("bar", &list);
++for (i = 0; i < list.nr; i++)
++	printf("%s\n", list.items[i].path)
++----
++
++NOTE: It is more efficient to build an unsorted list and sort it
++afterwards, instead of building a sorted list `(O(n log n)` instead of
++`O(n^2))`.
+++
++However, if you use the list to check if a certain string was added
++already, you should not do that (using unsorted_path_list_has_path()),
++because the complexity would be quadratic again (but with a worse factor).
++
++Functions
++---------
++
++* General ones (works with sorted and unsorted lists as well)
++
++`print_path_list`::
++
++	Dump a path_list to stdout, useful mainly for debugging purposes. It
++	can take an optional header argument and it writes out the
++	string-pointer pairs of the path_list, each one in its own line.
++
++`path_list_clear`::
++
++	Free a path_list. The `path` pointer of the items will be freed in case
++	the `strdup_paths` member of the path_list is set. The second parameter
++	controls if the `util` pointer of the items should be freed or not.
++
++* Functions for sorted lists only
++
++`path_list_has_path`::
++
++	Determine if the path_list has a given string or not.
++
++`path_list_insert`::
++
++	Insert a new element to the path_list. The returned pointer can be handy
++	if you want to write something to the `util` pointer of the
++	path_list_item containing the just added string.
+++
++Since this function uses xrealloc() (which die()s if it fails) if the
++list needs to grow, it is safe not to check the pointer. I.e. you may
++write `path_list_insert(...)->util = ...;`.
++
++`path_list_lookup`::
++
++	Look up a given string in the path_list, returning the containing
++	path_list_item. If the string is not found, NULL is returned.
++
++* Functions for unsorted lists only
++
++`path_list_append`::
++
++	Append a new string to the end of the path_list.
++
++`sort_path_list`::
++
++	Make an unsorted list sorted.
++
++`unsorted_path_list_has_path`::
++
++	It's like `path_list_has_path()` but for unsorted lists.
+++
++This function needs to look through all items, as opposed to its
++counterpart for sorted lists, which performs a binary search.
++
++Data structures
++---------------
++
++* `struct path_list_item`
++
++Represents an item of the list. The `path` member is a pointer to the
++string, and you may use the `util` member for any purpose, if you want.
++
++* `struct path_list`
++
++Represents the list itself.
++
++. The array of items are available via the `items` member.
++. The `nr` member contains the number of items stored in the list.
++. The `alloc` member is used to avoid reallocating at every insertion.
++  You should not tamper with it.
++. Setting the `strdup_paths` member to 1 will strdup() the strings
++  before adding them, see above.
 -- 
-Jakub Narebski
-Poland
+1.5.6.rc2.dirty
