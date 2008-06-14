@@ -1,55 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git bugs
-Date: Sat, 14 Jun 2008 02:25:13 -0400
-Message-ID: <20080614062513.GA24508@sigill.intra.peff.net>
-References: <832adb090806100141n69c086a2v2f59fe94b2f4ead3@mail.gmail.com> <alpine.LFD.1.10.0806101028040.3101@woody.linux-foundation.org> <20080613101024.GA8221@sigill.intra.peff.net> <7vbq25j5ke.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Added mergetool.kdiff3.doubledash config option
+Date: Sat, 14 Jun 2008 02:29:04 -0400
+Message-ID: <20080614062904.GB12260@mit.edu>
+References: <7vve0ez8z3.fsf@gitster.siamese.dyndns.org> <911589C97062424796D53B625CEC0025E46159@USCOBRMFA-SE-70.northamerica.cexp.com> <20080613145803.GE24675@mit.edu> <7vhcbwilps.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Ben Lynn <benlynn@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Patrick.Higgins@cexp.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 08:26:13 2008
+X-From: git-owner@vger.kernel.org Sat Jun 14 08:30:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7PDH-0002nt-SL
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:26:12 +0200
+	id 1K7PHE-0003Zt-SV
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751721AbYFNGZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 02:25:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbYFNGZR
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:25:17 -0400
-Received: from peff.net ([208.65.91.99]:3875 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751459AbYFNGZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 02:25:16 -0400
-Received: (qmail 25652 invoked by uid 111); 14 Jun 2008 06:25:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 14 Jun 2008 02:25:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun 2008 02:25:13 -0400
+	id S1752083AbYFNG3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 02:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYFNG3U
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:29:20 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:46860 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752037AbYFNG3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 02:29:20 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1K7PG5-0001dc-Kk; Sat, 14 Jun 2008 02:29:05 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1K7PG4-0003IR-4G; Sat, 14 Jun 2008 02:29:04 -0400
 Content-Disposition: inline
-In-Reply-To: <7vbq25j5ke.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vhcbwilps.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84964>
 
-On Fri, Jun 13, 2008 at 04:09:05PM -0700, Junio C Hamano wrote:
+On Fri, Jun 13, 2008 at 11:17:51PM -0700, Junio C Hamano wrote:
+> The reason I suggested either a cheap runtime check or command line
+> override was because you can be accessing the same repository from two
+> different machines, with different kdiff3.  If you check once and store
+> the result in .gitconfig or .git/config, it would not help the situation a
+> bit, would it?
 
-> When telling apply to affect index and work tree at the same time (that is
-> what --index means), the caller must make sure that the diff-files won't
-> report stale stat information.
+Good point.  I'm not sure 0.5s is really fast enough to be considered
+a "cheap runtime check", unfortunately.  At the very least it should
+be cached across a single "git mergetool" invocation, though; maybe if
+that were the case it would be acceptable.
 
-Ah, I had assumed that git-apply would notice the stale stat information
-and fall back to checking the content, which should be accurate.
-
-> I think "reset --hard" without ">empty" is enough as the head commit
-> records an empty blob there.
-
-Yes, it is redundant. With your patch I was not able to reproduce the
-problem over a few thousand trials.
-
--Peff
+          					- Ted
