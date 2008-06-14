@@ -1,98 +1,73 @@
-From: Clark Williams <clark.williams@gmail.com>
-Subject: Re: [StGit PATCH] compressed import v3
-Date: Sat, 14 Jun 2008 10:49:03 -0500
-Message-ID: <4853E86F.1050504@gmail.com>
-References: <48519602.2090103@gmail.com> <20080613051127.GA24245@diana.vm.bytemark.co.uk> <485289FD.50808@gmail.com> <20080614102646.GD14282@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Mercurial to git converter.
+Date: Sat, 14 Jun 2008 16:53:04 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806141648020.6439@racer>
+References: <1168537766.22649.19.camel@localhost.localdomain> <loom.20080614T101342-542@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 17:50:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nick Andrew <nick@nick-andrew.net>
+X-From: git-owner@vger.kernel.org Sat Jun 14 17:55:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Y1d-0007zU-O3
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 17:50:46 +0200
+	id 1K7Y6g-00012t-98
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 17:55:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbYFNPtY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008 11:49:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYFNPtX
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 11:49:23 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:14704 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420AbYFNPtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 11:49:22 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2753850ywe.1
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 08:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=vZIN+/Icrc7Pr6240k0vkapyTTf/+3AGJtNOLIObyBc=;
-        b=biFTQGG+s6xyQuq2Aabk2e6ogcC/mASQq2uSUFWCPbJgI4otSiv2VJ5algVGS2+yx9
-         j7dxu4gPvK9vaEGQNMwpczCBJ2QBi1FVuXjbTvrvBA4bAdN53DYOMHG2dRK/ER5rEe5/
-         +zfbEQ4QU2HhmwhE927NEXUpzKGa4dXYRfx+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=ayi6loD1qNWerktnc8m9LLYY0gpv5R1GJc2fMIrbxwt3wS7XM3P38l+NzcIqnvcw6R
-         f45xU0ZVmezEvX//NLHokfiGUYw7n8YIYDUl/TJfs24VkAPN27W6njr/B7NJcaQgj42C
-         1r8JoB3iuN7k88kyZbvBlHgULYgVrcCfTrB+w=
-Received: by 10.151.145.17 with SMTP id x17mr3455729ybn.220.1213458561832;
-        Sat, 14 Jun 2008 08:49:21 -0700 (PDT)
-Received: from ?172.31.0.50? ( [66.32.50.27])
-        by mx.google.com with ESMTPS id k8sm10756362qba.5.2008.06.14.08.49.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 14 Jun 2008 08:49:20 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070911)
-In-Reply-To: <20080614102646.GD14282@diana.vm.bytemark.co.uk>
-X-Enigmail-Version: 0.95.3
+	id S1752997AbYFNPyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 11:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752996AbYFNPyw
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 11:54:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52229 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752420AbYFNPyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 11:54:51 -0400
+Received: (qmail invoked by alias); 14 Jun 2008 15:54:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
+  by mail.gmx.net (mp006) with SMTP; 14 Jun 2008 17:54:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18tbbB2/A4tEXSRlKJ7nzmnKS9rAwJkmGBuhMjw6A
+	I//O74cPsgJMZ2
+X-X-Sender: gene099@racer
+In-Reply-To: <loom.20080614T101342-542@post.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85021>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Karl Hasselstr=C3=B6m wrote:
-> On 2008-06-13 09:53:49 -0500, Clark Williams wrote:
->=20
->> I'm interested to hear how you'd condense the code in
->> __gethandleandname().
->=20
-> Like this, for example:
->=20
->     import bz2, gzip
->     for copen, ext in [(gzip.open, '.gz'), (bz2.BZ2File, '.bz2')]:
->         try:
->             f =3D copen(filename)
->             f.read(1)
->             f.seek(0)
->             return (f, __mkpatchname(filename, ext))
->         except IOError, e:
->             pass
->=20
-> If you don't mind, I'll just fix that up directly in your patch. (I
-> also took the liberty to rename the function to __get_handle_and_name=
-,
-> since that's more consistent with other functions in that file.)
->=20
+On Sat, 14 Jun 2008, Nick Andrew wrote:
 
-Ah, that's very nice. Your changes work for me.
+> Stelian Pop <stelian <at> popies.net> writes:
+> 
+> > I switched recently from Mercurial to git for some of my projects, and
+> > needed a conversion tool with branch support (unlike tailor). I didn't
+> > find any, so I ended up writing my own one. 
+> > 
+> > hg-to-git.py can probably be greatly improved (it's a rather crude 
+> > combination of shell and python) but it does already work quite well 
+> > for me. [...]
+> 
+> Thanks for that. One small problem is that it does not get the changelog 
+> right if a commit is made on a local branch. It thinks the "branch:" 
+> line is part of the changelog.
 
-Clark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+FWIW I switched my local mercurial2git conversion to the hg-fast-export 
+solution from 
 
-iEYEARECAAYFAkhT6G8ACgkQqA4JVb61b9cCeQCfedD0BjOeRa3sbGvkRNe2BPMq
-6roAoJE7klMbgymRCJ3B+pEjzgnTWO2l
-=3DuZ+n
------END PGP SIGNATURE-----
+	git://repo.or.cz/fast-export.git
+
+Even if it's documentation leaves almost completely to be desired, after 
+figuring out how to operate it by reading the source, it works pretty 
+nicely, and fast, because it uses fast-import.
+
+Originally, I did not try it because I thought it cannot operate in 
+incremental mode, but it can.
+
+Ciao,
+Dscho
