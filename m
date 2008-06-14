@@ -1,56 +1,45 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: [PATCH] path-list documentation: document all functions and data structures
-Date: Sat, 14 Jun 2008 02:13:48 +0200
-Message-ID: <1213402428-24025-1-git-send-email-vmiklos@frugalware.org>
+Date: Sat, 14 Jun 2008 02:56:04 +0200
+Message-ID: <1213404964-25161-1-git-send-email-vmiklos@frugalware.org>
 References: <48530331.70807@free.fr>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
 To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 14 02:15:13 2008
+X-From: git-owner@vger.kernel.org Sat Jun 14 02:57:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7JQ6-0003og-TD
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 02:15:03 +0200
+	id 1K7K5A-0005ZH-VB
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 02:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761425AbYFNANt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2008 20:13:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760392AbYFNANt
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 20:13:49 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39759 "EHLO
+	id S1757436AbYFNA4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2008 20:56:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYFNA4E
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jun 2008 20:56:04 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:45104 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761387AbYFNANr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2008 20:13:47 -0400
+	with ESMTP id S1753880AbYFNA4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2008 20:56:04 -0400
 Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTP id 55D8D1DDC5B;
-	Sat, 14 Jun 2008 02:13:45 +0200 (CEST)
+	by yugo.frugalware.org (Postfix) with ESMTP id 8E3921DDC5B;
+	Sat, 14 Jun 2008 02:56:00 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 0734B18DFDC; Sat, 14 Jun 2008 02:13:48 +0200 (CEST)
+	id 7D66018DFDC; Sat, 14 Jun 2008 02:56:04 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.rc2.dirty
 In-Reply-To: <48530331.70807@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84956>
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
 
-On Sat, Jun 14, 2008 at 01:30:57AM +0200, Olivier Marin <dkr+ml.git@free.fr> wrote:
-> > +. Allocates and clears (`memset(&list, '0', sizeof(path_list));`) a
-> > +  `struct path_list` variable.
->
-> Don't you mean sizeof(list) here?
-
-Right, it was a typo. Thanks for the correction.
-
-Also I just noticed that the '0' did not render properly in asciidoc,
-using \'0' fixes the issue.
-
-Updated patch below.
+Updated patch, obviously we want to init the struct with '\0', not '0'.
 
  Documentation/technical/api-path-list.txt |   92 +++++++++++++++++++++++++++-
  1 files changed, 88 insertions(+), 4 deletions(-)
@@ -75,7 +64,7 @@ index d077683..313d088 100644
 -(Dscho)
 +The caller:
 +
-+. Allocates and clears (`memset(&list, \'0', sizeof(list));`) a
++. Allocates and clears (`memset(&list, \'\0', sizeof(list));`) a
 +  `struct path_list` variable.
 +
 +. Initializes the members. You can manually set the `items` member, but
