@@ -1,95 +1,117 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [RFC/PATCH (WIP)] gitweb: Use Test::WWW::Mechanize::CGI to test
- gitweb output
-Date: Sat, 14 Jun 2008 23:12:27 +0200
-Message-ID: <4854343B.40707@gmail.com>
-References: <200806141447.28052.jnareb@gmail.com> <200806142007.35288.jnareb@gmail.com> <48540E70.4030507@gmail.com> <200806142059.52373.jnareb@gmail.com>
+From: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>
+Subject: Re: Document clone of clone loosing branches?
+Date: Sat, 14 Jun 2008 23:36:45 +0200 (CEST)
+Message-ID: <20080614.233645.71097102.hanzl@noel.feld.cvut.cz>
+References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
+	<4853D967.5080903@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 23:13:18 2008
+To: lewiemann@gmail.com, jnareb@gmail.com, peff@peff.net
+X-From: git-owner@vger.kernel.org Sat Jun 14 23:43:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7d3l-000679-I3
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 23:13:17 +0200
+	id 1K7dWV-00053v-QK
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 23:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbYFNVLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 17:11:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754620AbYFNVLy
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 17:11:54 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:1881 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754214AbYFNVLx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 17:11:53 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so3030888fgg.17
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 14:11:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=aT/Ma/KkEhUBSy7oYUnb5zzWVjpzScdsFLJRqS2SCYk=;
-        b=g5i+bTNE/I7frGrfc72yM2L+bXwCQPke4ta0gxdawDcqmXww14NYb8k1nePaICLukh
-         8QSm4zM13Umjd1hRAEy0qkVdUOlvue3sX/5zWfu4iibX3kowtxL78EUnmSrl1w1NTb8V
-         5+k2AGrhckxKAv/AdzdHsqGlMNXqQtcWRYDUY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=mdOBw2q+R7RCP2TE9R3pAWmvKUCgHTqlV1lI+gQHsNLEIm0iQW4y2s0b1Z4IhzayQ1
-         t9J26TpPikT6Z++CxX4RxAW+Am7Pv7kn8gdnSfP2axs7qitmMZzidIUzcT0oE5XfYGyO
-         5rDzPHPiUhk0v470wfT8MoteEDYrKBKyjIbVw=
-Received: by 10.86.1.11 with SMTP id 11mr6360406fga.27.1213477911988;
-        Sat, 14 Jun 2008 14:11:51 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.200.93])
-        by mx.google.com with ESMTPS id l19sm9585804fgb.7.2008.06.14.14.11.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 14 Jun 2008 14:11:51 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <200806142059.52373.jnareb@gmail.com>
+	id S1754892AbYFNVmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 17:42:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754884AbYFNVmD
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 17:42:03 -0400
+Received: from magi4.feld.cvut.cz ([147.32.198.214]:57838 "EHLO mepi"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754878AbYFNVmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 17:42:00 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mepi (Postfix) with ESMTP id BD2C2FD806;
+	Sat, 14 Jun 2008 23:36:45 +0200 (CEST)
+In-Reply-To: <4853D967.5080903@gmail.com>
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85044>
+
+Lea Wiemann wrote:
+> I got bitten by that, too.  Perhaps the intro paragraph of git-clone.txt 
+> (man git-clone) could mention that remote branches are not cloned or so. 
+>   (I don't know git-clone well enough to be able to phrase it 
+> accurately, but perhaps someone else wants to send a documentation patch...)
+
+This is exactly what I would like to happen. (If nobody seems
+interested, I might propose my own bad very first patch few days or
+weeks later...)
+
+Jeff King wrote:
+> The new repository has remote tracking branches of the _regular_
+> branches that are in the original repository. So the statement is
+> correct; git-clone creates remote-tracking branches, and it makes one
+> such branch for each branch in the cloned repository.
+> 
+> Unless you are complaining that it makes one for each non-remote branch
+> in the cloned repository. But I think it is the general pattern to refer
+> to things in refs/heads/ as simply unadorned "branch". If you want to
+> say "all refs, including remote-tracking branches", you would typically
+> say "refs" (which would also include tags).
+
+I am not sure that the term 'branch' can be reasonably expected to
+mean 'regular branch' unless specified otherwise. For example, 'man
+git' says:
+
+       git-branch(1)
+          List, create, or delete branches.
+
+It can also list remote-tracking branches, cannot it? Or:
+
+       git-show-branch(1)
+          Show branches and their commits.
+
+Can also show remote-tracking branches, cannot it?
+
+Even if 'branch' were very well known to mean 'regular branch', I
+would still argue that 'man clone' is a very good place to define
+these vocabulary conventions.
+
+So I still think that 'man clone' is wrong as it stands now. It is not
+true that all 'branches' are cloned. It would be better to say quite
+explicitly that regular branches are cloned and remote tracking
+branches are not.
+
 
 Jakub Narebski wrote:
-> Well, I'd divert stderr in tests cases (or use simply 'test_external'),
-> or better filter stderr, only in those cases where there is spurious
-> but not dangerous thing on stderr.
-
-Since you can only run whole perl scripts with test_external, we'll have 
-to resort to using those discard_/restore_stderr functions.  I doubt 
-filtering for specific messages is worth the effort.
-
-> But again, I think the solution would be either to add feature to
-> Git.pm, something like command_output_pipe_no_stderr, which would
-> redirect stderr to /dev/null,
-
-(FYI, Git.pm has such a feature in the command method, though it it 
-simply closes STDERR and doesn't properly re-open it, I believe.)  The 
-Git::Repo API I'm writing doesn't currently generate any spurious output 
-on stderr, but if it ever does I'll make sure it gets discarded.
-
->> Since you're accessing http://localhost/ URLs, the web server's PATH is 
->> in effect,...
+> The idea is for git-clone to clone (by default) _your_ work, not sb
+> else work.  Think about two repositories, fetching from each other:
+> you don't want for branches to proliferate like mad, remote of remote,
+> then remote of remote of remote, and ad infinitum.
 > 
-> It isn't.  http://localhost/ is just access convention,
+> Besides there is I think implicit assumption that public repositories
+> one might want to clone are _bare_ repositories, 1:1 or mirror
+> refspecs, which simply do not contain remote tracking branches.
 
-Yup, I should've read TFM. :)  On my system, $PATH is empty in 
-gitweb.cgi for some strange reason, but since using an absolute path for 
-$GIT works, I won't track it down for now.
 
-> [*1*] it would be nice to have perl_application in WWW::Mechanize::CGI,
-> which would simply setup %ENV and use do() instead of system() on
-> provided application.
+Yes. It would be no shame if an explanation like this made it to 'man
+clone'?
 
-Gitweb and probably CGI::Carp qw(fatalsToBrowser) use 'exit', so we'd 
-have to use Test::Trap (or so) to catch those.  I think we should defer 
-this until performance actually becomes an issue.
+After all, how many other commands do distinguish regular branches and
+remote tracking branches? Even if there are any other (I do not know),
+git-clone is likely the most prominent of them and 'man git-clone' is
+quite good place to document this. Unless it is explained in 'man git'
+itself (I think it is not now).
 
--- Lea
+(Thought I am quite happy with UNIX tradition of very exact and very
+condensed man pages, up to the point of being a hard puzzle, and I
+agree that man pages are no tutorial, in this case I would be happy to
+see 'regular branches' and 'remote tracking branches' clearly
+distinguished in 'man git-clone' itself, without an implicit reference
+to 'usual' meaning of words among geeks.)
+
+Regards,
+
+Vaclav Hanzl
+
+P.S. Sorry for screwing up mail threads by this synthetic answer but I
+thought it is not worth 3 messages (?)
