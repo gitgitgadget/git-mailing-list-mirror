@@ -1,118 +1,84 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGIT RFC] Commit behaviour
-Date: Sat, 14 Jun 2008 11:08:17 +0200
-Message-ID: <200806141108.17854.robin.rosenberg@dewire.com>
-References: <1213313997-1520-1-git-send-email-robin.rosenberg@dewire.com> <4852EFBF.6000406@gmail.com>
+From: Lars Jarnbo Pedersen <lars.jarnbo.pedersen@gmail.com>
+Subject: No common commits question
+Date: Sat, 14 Jun 2008 11:17:45 +0200
+Organization: Home
+Message-ID: <1213435065.9800.13.camel@neo>
+Reply-To: Lars.Jarnbo.Pedersen@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 11:12:58 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 14 11:18:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7RoW-00053N-Fv
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 11:12:48 +0200
+	id 1K7RuQ-0006az-IU
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 11:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754467AbYFNJLk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008 05:11:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754516AbYFNJLk
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:11:40 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:13343 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754299AbYFNJLj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jun 2008 05:11:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 04CA91447775;
-	Sat, 14 Jun 2008 11:11:38 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0b-t3oFDhfM4; Sat, 14 Jun 2008 11:11:37 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 62B868006B7;
-	Sat, 14 Jun 2008 11:11:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4852EFBF.6000406@gmail.com>
-Content-Disposition: inline
+	id S1758600AbYFNJR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 05:17:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758506AbYFNJR7
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:17:59 -0400
+Received: from ik-out-1112.google.com ([66.249.90.182]:41343 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757786AbYFNJR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 05:17:58 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so3339394ika.5
+        for <git@vger.kernel.org>; Sat, 14 Jun 2008 02:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:reply-to:to
+         :content-type:organization:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding:from;
+        bh=64U5RCKliwZ5F5+U+hvGIpfhBigtCWTWbS3uINblUqY=;
+        b=cpGG96RqFmvCy2KpHw0RnMYX68iNQUmPe50OpkiNGeXDX16cSuH1TpeDhco2qqiqhG
+         q85jqv2JHCPGUeXbysRR8NBAMoSz3XcGaVtJwakpdw67ic8k2ur/wxicuFNJngzh2uK+
+         iszwTKTo4g11zYO3gt+tosyMPuwIrFJZ/jSsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:reply-to:to:content-type:organization:date:message-id
+         :mime-version:x-mailer:content-transfer-encoding:from;
+        b=nm8hb+HBPjhI1ehkcR0bFDTkhQDvymR98Cf167IQgDwDM78Ui8g0e4rHWkOhJgMpIG
+         tYJaaoJw3W9JENKHhMw13BAvkPpzH/XY18uBWX/of+pLQaH9PwlAXq07b4lfq9DEGyFo
+         kGtJLRSgxM8nwvrAEngugxUY4HbxZuIUT+jPk=
+Received: by 10.210.129.10 with SMTP id b10mr3649274ebd.25.1213435076463;
+        Sat, 14 Jun 2008 02:17:56 -0700 (PDT)
+Received: from ?192.168.1.137? ( [217.157.186.14])
+        by mx.google.com with ESMTPS id 31sm3433669ugg.25.2008.06.14.02.17.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 14 Jun 2008 02:17:54 -0700 (PDT)
+X-Mailer: Evolution 2.22.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84995>
 
-l=C3=B6rdagen den 14 juni 2008 00.07.59 skrev Marek Zawirski:
-> Robin Rosenberg wrote:
-> > I got annoyed about having change my selection to a project to be a=
-ble
-> > to commit. This tentative feature allows me to hit the commit butto=
-n
-> > when any resource is selected and figure out which resources have b=
-een
-> > modified. This makes it much easier to commit. Only the toolbar com=
-mit
-> > is affected for now.
->=20
-> That's a nice idea! I also thought about that one day, as such featur=
-e=20
-> already exists in (e.g.) Subclipse that I was used to.
->=20
-> >=20
-> > Another twist would be to list all changed resources, but only enab=
-le
-> > the selected ones, or only the ones in in the same projects as the =
-selected
-> > resources. Comments?
->=20
-> I think that only selected && changed ones should be listed. When use=
-r=20
-> selects explicitly some resources, he/she is probably interested only=
- in=20
-> these ones. And he/she probably did it for easier selection than from=
-=20
-> list of all changed resources, isn't it?
+Hi,
 
-Selection is often implicit, i.e. if you link editor and selection, whi=
-ch I do, the selection
-change every time you switch editor.=20
+I have been tracking the Linux kernel with for at least a year now doing
+frequent pulls (once every other day or so). I'm not doing any
+development so it should be a clean update everytime. However once in a
+while I get a "no common commit" warning and git starts to download the
+entire repo again. (It happened again today - therefore this mail)
 
-> > Code is not efficient either. This is question about the user inter=
-face.
->=20
-> Theses patches don't work for me however :/ When I introduce some cha=
-nge=20
-> to a resource/file, even add it to index and click commit (toolbar or=
-=20
-> menu), commit action does nothing. It is - nothing happens. Can you=20
-> reproduce this problem, or should I debug it on my instance? Or do I =
-use=20
-> it in some wrong way?
-It it's too hard to use properly it's wrong. Anyway I could reproduce i=
-t. Not sure
-why it works sometimes though. I found this in the workspace log. Pleas=
-e=20
-check if you see it too, so I know we're chasing the same bug.
+As Im not changing anything I would not expect this to happen, but I may
+be wrong. Can anyone explain?
 
-java.lang.ArrayIndexOutOfBoundsException: 0
-        at org.spearce.egit.ui.internal.actions.CommitAction.loadPrevio=
-usCommit(CommitAction.java:127)
+Im using Ubuntu 8.04 using the following version of git and Linux:
+- git version 1.5.4.3
+- Linux neo 2.6.24-19-generic #1 SMP Wed Jun 4 16:35:01 UTC 2008 i686
+GNU/Linux
 
+Finally I would like to take the opportunity to thank all of you
+developers for a GREAT tool. Im currently working as a Software Release
+manager and have been working with many of the commercial competitors
+and what surprises me about git is that it seems to solve all of the
+*BIG* problems you have with SCM in a big corporate environment.
+Unfortunately we are NOT using git for the major part of my work, so Im
+currently only really enjoing git in my spare time :-)
 
-> > Then we could ask ourselved, should we do something similar for Che=
-ckout
-> > and reset too? I think that is not as important as those operations=
- are
-> > much less frequent.
-> >=20
-> > -- robin
->=20
-> Well, I think that checkout (maybe reset too) would be useful too - t=
-o=20
-> revert some file quickly.
+Regards
 
-We do not have a per-file checout/reset yet. What we have checks out al=
-l files in the repository.
-
--- robin
+Lars Jarnbo Pedersen
