@@ -1,56 +1,56 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Added mergetool.kdiff3.doubledash config option
-Date: Sat, 14 Jun 2008 02:29:04 -0400
-Message-ID: <20080614062904.GB12260@mit.edu>
-References: <7vve0ez8z3.fsf@gitster.siamese.dyndns.org> <911589C97062424796D53B625CEC0025E46159@USCOBRMFA-SE-70.northamerica.cexp.com> <20080613145803.GE24675@mit.edu> <7vhcbwilps.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t/.gitattributes: only ignore whitespace errors in
+	test files
+Date: Sat, 14 Jun 2008 02:48:57 -0400
+Message-ID: <20080614064857.GA8930@sigill.intra.peff.net>
+References: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com> <20080613060629.GC26768@sigill.intra.peff.net> <7vod65wt6k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Patrick.Higgins@cexp.com, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 08:30:21 2008
+X-From: git-owner@vger.kernel.org Sat Jun 14 08:50:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7PHE-0003Zt-SV
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:30:17 +0200
+	id 1K7Pag-0007QC-PM
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbYFNG3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 02:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYFNG3U
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:29:20 -0400
-Received: from www.church-of-our-saviour.org ([69.25.196.31]:46860 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752037AbYFNG3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 02:29:20 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1K7PG5-0001dc-Kk; Sat, 14 Jun 2008 02:29:05 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1K7PG4-0003IR-4G; Sat, 14 Jun 2008 02:29:04 -0400
+	id S1752185AbYFNGtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 02:49:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYFNGtB
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:49:01 -0400
+Received: from peff.net ([208.65.91.99]:4151 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751962AbYFNGtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 02:49:00 -0400
+Received: (qmail 27717 invoked by uid 111); 14 Jun 2008 06:48:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 14 Jun 2008 02:48:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun 2008 02:48:57 -0400
 Content-Disposition: inline
-In-Reply-To: <7vhcbwilps.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <7vod65wt6k.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84965>
 
-On Fri, Jun 13, 2008 at 11:17:51PM -0700, Junio C Hamano wrote:
-> The reason I suggested either a cheap runtime check or command line
-> override was because you can be accessing the same repository from two
-> different machines, with different kdiff3.  If you check once and store
-> the result in .gitconfig or .git/config, it would not help the situation a
-> bit, would it?
+On Fri, Jun 13, 2008 at 03:00:35AM -0700, Junio C Hamano wrote:
 
-Good point.  I'm not sure 0.5s is really fast enough to be considered
-a "cheap runtime check", unfortunately.  At the very least it should
-be cached across a single "git mergetool" invocation, though; maybe if
-that were the case it would be acceptable.
+> Eventually we would want to make all of the t/*.sh not exempt from the
+> whitespace rules.  Some currently do have trailing whitespaces as part of
 
-          					- Ted
+This turned out to be a fairly easy change, as most of the places had
+been caught already.
+
+Four part patch series follows. The only one potentially not
+maint-worthy is 3/4, because it actually changes git's output slightly.
+
+  1/4: fix whitespace violations in test scripts
+  2/4: mask necessary whitespace policy violations in test scripts
+  3/4: avoid trailing whitespace in zero-change diffstat lines
+  4/4: enable whitespace checking of test scripts
+
+-Peff
