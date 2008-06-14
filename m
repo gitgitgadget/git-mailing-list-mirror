@@ -1,135 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Junio C Hamano] Re: Consolidate SHA1 object file close
-Date: Sat, 14 Jun 2008 15:42:33 -0700
-Message-ID: <7viqwbfxk6.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Add SVN->Git conversion example to documentation
+Date: Sun, 15 Jun 2008 00:47:58 +0200
+Message-ID: <20080614224758.GL29404@genesis.frugalware.org>
+References: <20080614215812.GA28574@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 15 00:43:46 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PesaOPe2z2CaM1eN"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Heikki Orsila <heikki.orsila@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Jun 15 00:48:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7eTJ-0000dw-Fw
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:43:45 +0200
+	id 1K7eYI-0001pD-4v
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755440AbYFNWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 18:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755431AbYFNWmu
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:42:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37004 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755322AbYFNWmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 18:42:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D05B85433;
-	Sat, 14 Jun 2008 18:42:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9F2685432; Sat, 14 Jun 2008 18:42:42 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 35B819C2-3A63-11DD-8BC4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755472AbYFNWsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 18:48:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449AbYFNWsA
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:48:00 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48349 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755241AbYFNWr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 18:47:59 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 9390B1B24F0;
+	Sun, 15 Jun 2008 00:47:58 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 190BA4469F;
+	Sun, 15 Jun 2008 00:28:29 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 28E2B1770022; Sun, 15 Jun 2008 00:47:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080614215812.GA28574@zakalwe.fi>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85048>
-
---=-=-=
-
-Somehow the thread went off-list, so I'm diverting it back to the list...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85049>
 
 
---=-=-=
-Content-Type: message/rfc822
+--PesaOPe2z2CaM1eN
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-X-From-Line: gitster@pobox.com Sat Jun 14 15:32:07 2008
-X-Delivered: at request of junio on gitster
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	gitster.siamese.dyndns.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,
-	FORGED_RCVD_HELO autolearn=ham version=3.1.7-deb
-X-Delivered: at request of junio on gitster
-Received: from snug.pobox.com (snug.pobox.com [208.210.124.72]) by
- mailstore.pobox.com (Postfix) with ESMTP id D97DFA61E1 for
- <77302942@mailstore.pobox.com>; Sat, 14 Jun 2008 18:28:37 -0400 (EDT)
-Received: from snug.pobox.com (localhost [127.0.0.1]) by snug.pobox.com
- (Postfix) with ESMTP id BCF1BAAFF8 for <77302942@mailstore.pobox.com>; Sat,
- 14 Jun 2008 18:28:59 -0400 (EDT)
-Delivered-To: gitster@pobox.com
-X-Pobox-Delivery-ID:
- 4769CB2C-3A61-11DD-B8B0-D5FA46518568-77302942!snug.pobox.com
-x-pobox-client-address: 207.106.133.19
-x-pobox-client-name: a-sasl-fastnet.sasl.smtp.pobox.com
-Received: from sasl.smtp.pobox.com (a-sasl-fastnet.sasl.smtp.pobox.com
- [207.106.133.19]) by snug.pobox.com (Postfix) with ESMTP id C550CAB981 for
- <gitster@pobox.com>; Sat, 14 Jun 2008 18:28:56 -0400 (EDT)
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CAB715360; Sat, 14
- Jun 2008 18:28:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1150C535F; Sat, 14 Jun 2008 18:28:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Consolidate SHA1 object file close
-References: <20080611222534.GC16439@artemis.madism.org>
- <alpine.LFD.1.10.0806120758090.3041@woody.linux-foundation.org>
- <20080612160012.GA13533@artemis.madism.org>
- <alpine.LFD.1.10.0806121108210.3041@woody.linux-foundation.org>
- <20080613074951.GA596@artemis.madism.org>
- <20080613093101.GA4372@artemis.madism.org>
- <alpine.LFD.1.10.0806130749190.2949@woody.linux-foundation.org>
- <20080613155948.GB8340@artemis.madism.org>
- <alpine.LFD.1.10.0806130911520.2949@woody.linux-foundation.org>
- <20080613181044.GC27202@artemis.madism.org>
- <20080613181557.GD27202@artemis.madism.org>
- <alpine.LFD.1.10.0806131431320.2949@woody.linux-foundation.org>
- <7vhcbvhohr.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0806141212280.2949@woody.linux-foundation.org>
-Date: Sat, 14 Jun 2008 15:28:27 -0700
-In-Reply-To: <alpine.LFD.1.10.0806141212280.2949@woody.linux-foundation.org>
- (Linus Torvalds's message of "Sat, 14 Jun 2008 12:16:42 -0700 (PDT)")
-Message-ID: <7vmylnfy7o.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID:
- 39470578-3A61-11DD-A04B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
-X-ICG-Account-ID: 77302942
-Lines: 27
-Xref: gitster.siamese.dyndns.org all:19108 outgo-mail:18323 git-mail:45236
-MIME-Version: 1.0
+On Sun, Jun 15, 2008 at 12:58:12AM +0300, Heikki Orsila <heikki.orsila@iki.fi> wrote:
+> +After that, the new repository should be cleaned, and fetch heads should
+> +be set.
+> +------------------------------------------------------------------------
+> +	cd foo.git/.git
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Heh, I was confused. foo.git is usually a bare repo, if the repo has a
+working directory as well, then just call it foo.
 
-> On Sat, 14 Jun 2008, Junio C Hamano wrote:
->> 
->> I've queued this...
->> 
->> commit 6483925999cde47e5108414ac3f57760394ee2d2
->> Author: Junio C Hamano <gitster@pobox.com>
->> Date:   Fri Jun 13 23:00:51 2008 -0700
->> 
->>     sha1_file.c: dead code removal
->
-> Ok, the following three emails will contain three patches on top of that 
-> commit that I think are ready for inclusion. They haven't seen a ton of 
-> testing, and they are obviously to very core functionality, so in that 
-> sense they are a big "scary".
+And then: if you convert an svn repo to a git one, don't you want to
+convert it to a bare repo?
 
-Other than that I had to stop for a few seconds to think at the magic "20
-bytes longer", they look scary-but-correct ;-).
+I haven't tried git-svn clone but the following will work for sure:
 
-I've tagged 1.5.6-rc3 with this (and other fixups), but it appears the
-network between me and k.org is crappy today so I'll stop hacking for the
-rest of the afternoon and spend time on something else.  Will push the
-results out sometime tonight.
+git --bare init
+git --bare svn init -s URL
+git --bare svn fetch
 
-Thanks.
+> +	rm -rf svn
+> +	git config --remove-section svn-remote.svn
+> +	git config remote.origin.url .
+> +	git config remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
+> +	git config --add remote.origin.fetch +refs/remotes/*:refs/heads/*
+> +	git fetch
+> +	git gc
 
+If you remove the svn dir, why don't you remove refs/remotes as well?
+(Probably via update-ref since git svn will pack refs before it ends for
+big repos, I think.)
 
---=-=-=--
+Also I think it would be a good idea to give a hint how to do
+incremental updates. Something like not deleting the svn dir and using
+git --bare svn fetch; git fetch.
+
+PS: I'm not a git-svn contributor or anything, just thought I give you
+some advices, I hope it helped. :-)
+
+--PesaOPe2z2CaM1eN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhUSp4ACgkQe81tAgORUJaSVACfduE7WCdAkS8k4lN96PTKDR4g
+03AAn1BTQGLaRWjNRqucf05IgQz5n8dg
+=M8mL
+-----END PGP SIGNATURE-----
+
+--PesaOPe2z2CaM1eN--
