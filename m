@@ -1,79 +1,68 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [RFC/PATCH (WIP)] gitweb: Use Test::WWW::Mechanize::CGI to test
- gitweb output
-Date: Sat, 14 Jun 2008 20:18:16 +0200
-Message-ID: <48540B68.1050108@gmail.com>
-References: <200806141447.28052.jnareb@gmail.com>
+From: Sven <svoop@delirium.ch>
+Subject: Re: [BUG REPORT]
+Date: Sat, 14 Jun 2008 18:26:00 +0000 (UTC)
+Message-ID: <loom.20080614T181822-325@post.gmane.org>
+References: <loom.20080614T065448-251@post.gmane.org> <20080614071011.GA29699@glandium.org> <7vprqkh423.fsf@gitster.siamese.dyndns.org> <7vlk17horn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 20:18:42 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 14 20:27:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7aKn-0000cC-1c
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 20:18:41 +0200
+	id 1K7aTQ-0002vk-Hk
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 20:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbYFNSRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 14:17:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbYFNSRr
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 14:17:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:49108 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753075AbYFNSRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 14:17:46 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so3011222fgg.17
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 11:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=PGYGeGREp9R/oQTIY+DDpVh9XNPqq4MyXygcveZFYmk=;
-        b=LhcAtcvjBFDVxlTz63o664eVj/TWVQfLInlQcjBq3zBcDvh4jNHbLkWH/gKGmI8O2B
-         UpuPp2RWt2nHtqtxFZH0UEI0kFS3+Ggp0fhoAYfSOMh11HrFawFgiIylktq34JOqXbov
-         WNwGiRZVhW/ba7YOuJA/OGbQqJuZXHmtlriCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=Ol1O3KuoAOhPInNX6oQOmHIOQtHkYYTju9MunKQes1CghiCJ+EJ1XWPqhWcyS0+XbU
-         Aa2nhs6hfMofBN77P2SOzDlCNxGIJYB4b+/gOGirfcOCnR3BcxEqWsMvtHZYEVn4lVof
-         A2KRmV7r8q+Uu3U7Ie88JN/TQS6fWFWYGkym4=
-Received: by 10.86.87.13 with SMTP id k13mr6134958fgb.1.1213467464716;
-        Sat, 14 Jun 2008 11:17:44 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.200.93])
-        by mx.google.com with ESMTPS id e20sm9212320fga.1.2008.06.14.11.17.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 14 Jun 2008 11:17:44 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <200806141447.28052.jnareb@gmail.com>
+	id S1753789AbYFNS0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 14:26:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbYFNS0K
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 14:26:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:57426 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753567AbYFNS0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 14:26:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1K7aS0-00005S-D1
+	for git@vger.kernel.org; Sat, 14 Jun 2008 18:26:08 +0000
+Received: from 151.121.221.87.dynamic.jazztel.es ([87.221.121.151])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jun 2008 18:26:08 +0000
+Received: from svoop by 151.121.221.87.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jun 2008 18:26:08 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.221.121.151 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9) Gecko/2008061004 Firefox/3.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85032>
 
-Jakub Narebski wrote:
-> +	skip "Could not get $pagename", 2 + $lint_installed
-> +		unless $mech->get_ok('http://localhost/', "GET $pagename");
+>  (1) I do not think it is unreasonable to change update-server-info
+>      to include HEAD in its output.  That would make ls-remote 
+>      output over all protocols consistent;
 
-Just noticed this -- here's the cause of the problem I encountered in my 
-previous post.
+As Jeff said, he has already done this and it will roll with the 
+upcoming release.
 
-You can't really probe for a running gitweb installation on localhost, 
-because even if there's one, you don't know if you're testing against 
-your tree and your test repo.
+>  (2) However, the client-side tools that run ls-remote may have to
+>      interact with repositories that are managed with older git
+>      (including "Today's git").  If they rely on the presense of 
+>      HEAD, they _are_ buggy today (and have been so forever), and
+>      they _will stay_ buggy when they need to access such 
+>      repositories.
 
-So unless it's (easily) possible to force Mechanize to eat gitweb.cgi's 
-output in lieu of making actual HTTP requests, I'd suggest that we 
-simply use an environment variable (e.g. 
-GITWEB_TEST_BASE_URL=http://localhost/cgi-bin/gitweb.cgi) -- if it's 
-unset, the tests get skipped, otherwise they're run against that base URL.
+Indeed, there is a way to tell Capistrano to use a specific branch: 
+Adding ...
 
-*wanders-off-to-write-a-patch*
+set :branch, "master"
 
--- Lea
+... to the configuration in deploy.rb does the trick.
+
+-sven
