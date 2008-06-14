@@ -1,87 +1,135 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Document clone of clone loosing branches?
-Date: Sat, 14 Jun 2008 15:18:08 -0700
-Message-ID: <7vr6azfyov.fsf@gitster.siamese.dyndns.org>
-References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
- <4853D967.5080903@gmail.com>
- <20080614.233645.71097102.hanzl@noel.feld.cvut.cz>
+Subject: [Junio C Hamano] Re: Consolidate SHA1 object file close
+Date: Sat, 14 Jun 2008 15:42:33 -0700
+Message-ID: <7viqwbfxk6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: lewiemann@gmail.com, jnareb@gmail.com, peff@peff.net,
-	git@vger.kernel.org
-To: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>
-X-From: git-owner@vger.kernel.org Sun Jun 15 00:19:24 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 15 00:43:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7e5i-0004fU-I4
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:19:22 +0200
+	id 1K7eTJ-0000dw-Fw
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:43:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755114AbYFNWS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 18:18:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754983AbYFNWS0
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:18:26 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34241 "EHLO
+	id S1755440AbYFNWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 18:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755431AbYFNWmu
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:42:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37004 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878AbYFNWSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 18:18:25 -0400
+	with ESMTP id S1755322AbYFNWmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 18:42:49 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DF7F35311;
-	Sat, 14 Jun 2008 18:18:22 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D05B85433;
+	Sat, 14 Jun 2008 18:42:46 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id F0355530E; Sat, 14 Jun 2008 18:18:16 -0400 (EDT)
-In-Reply-To: <20080614.233645.71097102.hanzl@noel.feld.cvut.cz> (Vaclav
- Hanzl's message of "Sat, 14 Jun 2008 23:36:45 +0200 (CEST)")
+ ESMTPSA id 9F2685432; Sat, 14 Jun 2008 18:42:42 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CD24C03E-3A5F-11DD-A6AE-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 35B819C2-3A63-11DD-8BC4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85048>
 
-Vaclav Hanzl <hanzl@noel.feld.cvut.cz> writes:
+--=-=-=
 
-> I am not sure that the term 'branch' can be reasonably expected to
-> mean 'regular branch' unless specified otherwise. For example, 'man
-> git' says:
+Somehow the thread went off-list, so I'm diverting it back to the list...
+
+
+--=-=-=
+Content-Type: message/rfc822
+Content-Disposition: inline
+
+X-From-Line: gitster@pobox.com Sat Jun 14 15:32:07 2008
+X-Delivered: at request of junio on gitster
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	gitster.siamese.dyndns.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,
+	FORGED_RCVD_HELO autolearn=ham version=3.1.7-deb
+X-Delivered: at request of junio on gitster
+Received: from snug.pobox.com (snug.pobox.com [208.210.124.72]) by
+ mailstore.pobox.com (Postfix) with ESMTP id D97DFA61E1 for
+ <77302942@mailstore.pobox.com>; Sat, 14 Jun 2008 18:28:37 -0400 (EDT)
+Received: from snug.pobox.com (localhost [127.0.0.1]) by snug.pobox.com
+ (Postfix) with ESMTP id BCF1BAAFF8 for <77302942@mailstore.pobox.com>; Sat,
+ 14 Jun 2008 18:28:59 -0400 (EDT)
+Delivered-To: gitster@pobox.com
+X-Pobox-Delivery-ID:
+ 4769CB2C-3A61-11DD-B8B0-D5FA46518568-77302942!snug.pobox.com
+x-pobox-client-address: 207.106.133.19
+x-pobox-client-name: a-sasl-fastnet.sasl.smtp.pobox.com
+Received: from sasl.smtp.pobox.com (a-sasl-fastnet.sasl.smtp.pobox.com
+ [207.106.133.19]) by snug.pobox.com (Postfix) with ESMTP id C550CAB981 for
+ <gitster@pobox.com>; Sat, 14 Jun 2008 18:28:56 -0400 (EDT)
+Received: from localhost.localdomain (localhost [127.0.0.1]) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CAB715360; Sat, 14
+ Jun 2008 18:28:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1150C535F; Sat, 14 Jun 2008 18:28:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Consolidate SHA1 object file close
+References: <20080611222534.GC16439@artemis.madism.org>
+ <alpine.LFD.1.10.0806120758090.3041@woody.linux-foundation.org>
+ <20080612160012.GA13533@artemis.madism.org>
+ <alpine.LFD.1.10.0806121108210.3041@woody.linux-foundation.org>
+ <20080613074951.GA596@artemis.madism.org>
+ <20080613093101.GA4372@artemis.madism.org>
+ <alpine.LFD.1.10.0806130749190.2949@woody.linux-foundation.org>
+ <20080613155948.GB8340@artemis.madism.org>
+ <alpine.LFD.1.10.0806130911520.2949@woody.linux-foundation.org>
+ <20080613181044.GC27202@artemis.madism.org>
+ <20080613181557.GD27202@artemis.madism.org>
+ <alpine.LFD.1.10.0806131431320.2949@woody.linux-foundation.org>
+ <7vhcbvhohr.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0806141212280.2949@woody.linux-foundation.org>
+Date: Sat, 14 Jun 2008 15:28:27 -0700
+In-Reply-To: <alpine.LFD.1.10.0806141212280.2949@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Sat, 14 Jun 2008 12:16:42 -0700 (PDT)")
+Message-ID: <7vmylnfy7o.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID:
+ 39470578-3A61-11DD-A04B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-ICG-Account-ID: 77302942
+Lines: 27
+Xref: gitster.siamese.dyndns.org all:19108 outgo-mail:18323 git-mail:45236
+MIME-Version: 1.0
+
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Sat, 14 Jun 2008, Junio C Hamano wrote:
+>> 
+>> I've queued this...
+>> 
+>> commit 6483925999cde47e5108414ac3f57760394ee2d2
+>> Author: Junio C Hamano <gitster@pobox.com>
+>> Date:   Fri Jun 13 23:00:51 2008 -0700
+>> 
+>>     sha1_file.c: dead code removal
 >
->        git-branch(1)
->           List, create, or delete branches.
->
-> It can also list remote-tracking branches, cannot it? Or:
->
->        git-show-branch(1)
->           Show branches and their commits.
->
-> Can also show remote-tracking branches, cannot it?
+> Ok, the following three emails will contain three patches on top of that 
+> commit that I think are ready for inclusion. They haven't seen a ton of 
+> testing, and they are obviously to very core functionality, so in that 
+> sense they are a big "scary".
 
-These fall into "quibbling" category, but that judgement can only be made
-by people who know the history.
+Other than that I had to stop for a few seconds to think at the magic "20
+bytes longer", they look scary-but-correct ;-).
 
-Updates to glossary and other introductory documents might be necessary.
-For example, the entry about "tracking branch" in the glossary still talks
-about the ancient convention of copying 'master' to 'origin' as a regular
-branch:
+I've tagged 1.5.6-rc3 with this (and other fixups), but it appears the
+network between me and k.org is crappy today so I'll stop hacking for the
+rest of the afternoon and spend time on something else.  Will push the
+results out sometime tonight.
 
-    [[def_tracking_branch]]tracking branch::
-            A regular git <<def_branch,branch>> that is used to follow changes from
-            another <<def_repository,repository>>. A tracking
-            branch should not contain direct modifications or have local commits
-            made to it. A tracking branch can usually be
-            identified as the right-hand-side <<def_ref,ref>> in a Pull:
-            <<def_refspec,refspec>>.
+Thanks.
 
-This does _not_ reflect post v1.3.0 reality at all.  No git more recent
-than Apr 2006 has used a "regular git branch" for tracking.
 
-It probably is enough to say:
-
-        A ref that is used to follow changes from another repository.
-	In modern git, they are found in `refs/remotes/` hierarchy.
-
-because you cannot add "direct modifications or have local commits" to
-them anymore.
+--=-=-=--
