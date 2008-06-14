@@ -1,98 +1,74 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Add SVN->Git conversion example to documentation
-Date: Sun, 15 Jun 2008 00:47:58 +0200
-Message-ID: <20080614224758.GL29404@genesis.frugalware.org>
-References: <20080614215812.GA28574@zakalwe.fi>
+Subject: Re: [PATCH] path-list documentation: document all functions and
+	data structures
+Date: Sun, 15 Jun 2008 00:50:29 +0200
+Message-ID: <20080614225029.GM29404@genesis.frugalware.org>
+References: <1213404964-25161-1-git-send-email-vmiklos@frugalware.org> <4853BE8E.4030009@free.fr>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PesaOPe2z2CaM1eN"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Heikki Orsila <heikki.orsila@iki.fi>
-X-From: git-owner@vger.kernel.org Sun Jun 15 00:48:58 2008
+	protocol="application/pgp-signature"; boundary="vLMw7YUSGBnioq2/"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 15 00:51:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7eYI-0001pD-4v
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:48:54 +0200
+	id 1K7eaj-0002YQ-3L
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 00:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbYFNWsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 18:48:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449AbYFNWsA
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:48:00 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:48349 "EHLO virgo.iok.hu"
+	id S1755491AbYFNWub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 18:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755489AbYFNWub
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 18:50:31 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48356 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755241AbYFNWr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 18:47:59 -0400
+	id S1755449AbYFNWua (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 18:50:30 -0400
 Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 9390B1B24F0;
-	Sun, 15 Jun 2008 00:47:58 +0200 (CEST)
+	by virgo.iok.hu (Postfix) with ESMTP id C2C9A1B24F0;
+	Sun, 15 Jun 2008 00:50:29 +0200 (CEST)
 Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 190BA4469F;
-	Sun, 15 Jun 2008 00:28:29 +0200 (CEST)
+	by kag.elte.hu (Postfix) with ESMTP id 815B64469F;
+	Sun, 15 Jun 2008 00:31:00 +0200 (CEST)
 Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 28E2B1770022; Sun, 15 Jun 2008 00:47:58 +0200 (CEST)
+	id A801F1770022; Sun, 15 Jun 2008 00:50:29 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080614215812.GA28574@zakalwe.fi>
+In-Reply-To: <4853BE8E.4030009@free.fr>
 User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85050>
 
 
---PesaOPe2z2CaM1eN
+--vLMw7YUSGBnioq2/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 15, 2008 at 12:58:12AM +0300, Heikki Orsila <heikki.orsila@iki.fi> wrote:
-> +After that, the new repository should be cleaned, and fetch heads should
-> +be set.
-> +------------------------------------------------------------------------
-> +	cd foo.git/.git
+On Sat, Jun 14, 2008 at 02:50:22PM +0200, Olivier Marin <dkr+ml.git@free.fr=
+> wrote:
+> What about just `memset(&list, 0, sizeof(list))` instead?
+>=20
+> It's readable in the text format, clean in html and this is the way
+> memset() is used.
 
-Heh, I was confused. foo.git is usually a bare repo, if the repo has a
-working directory as well, then just call it foo.
+Good idea, thanks. Will do in a bit.
 
-And then: if you convert an svn repo to a git one, don't you want to
-convert it to a bare repo?
-
-I haven't tried git-svn clone but the following will work for sure:
-
-git --bare init
-git --bare svn init -s URL
-git --bare svn fetch
-
-> +	rm -rf svn
-> +	git config --remove-section svn-remote.svn
-> +	git config remote.origin.url .
-> +	git config remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
-> +	git config --add remote.origin.fetch +refs/remotes/*:refs/heads/*
-> +	git fetch
-> +	git gc
-
-If you remove the svn dir, why don't you remove refs/remotes as well?
-(Probably via update-ref since git svn will pack refs before it ends for
-big repos, I think.)
-
-Also I think it would be a good idea to give a hint how to do
-incremental updates. Something like not deleting the svn dir and using
-git --bare svn fetch; git fetch.
-
-PS: I'm not a git-svn contributor or anything, just thought I give you
-some advices, I hope it helped. :-)
-
---PesaOPe2z2CaM1eN
+--vLMw7YUSGBnioq2/
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAkhUSp4ACgkQe81tAgORUJaSVACfduE7WCdAkS8k4lN96PTKDR4g
-03AAn1BTQGLaRWjNRqucf05IgQz5n8dg
-=M8mL
+iEYEARECAAYFAkhUSzUACgkQe81tAgORUJbbjwCbBBvPdlwiR7EeVFSJrQeM0AJ7
+fJAAnjqifos0qX3LYTpqqViWvfGu1IzD
+=5sx4
 -----END PGP SIGNATURE-----
 
---PesaOPe2z2CaM1eN--
+--vLMw7YUSGBnioq2/--
