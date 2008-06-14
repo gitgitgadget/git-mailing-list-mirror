@@ -1,56 +1,150 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/.gitattributes: only ignore whitespace errors in
-	test files
-Date: Sat, 14 Jun 2008 02:48:57 -0400
-Message-ID: <20080614064857.GA8930@sigill.intra.peff.net>
-References: <1213310159-28049-1-git-send-email-LeWiemann@gmail.com> <20080613060629.GC26768@sigill.intra.peff.net> <7vod65wt6k.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH 1/4] fix whitespace violations in test scripts
+Date: Sat, 14 Jun 2008 02:51:19 -0400
+Message-ID: <20080614065119.GA9006@sigill.intra.peff.net>
+References: <20080614064857.GA8930@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 08:50:27 2008
+X-From: git-owner@vger.kernel.org Sat Jun 14 08:52:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Pag-0007QC-PM
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:50:23 +0200
+	id 1K7Pcb-0007lL-FP
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 08:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbYFNGtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 02:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYFNGtB
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:49:01 -0400
-Received: from peff.net ([208.65.91.99]:4151 "EHLO peff.net"
+	id S1751249AbYFNGvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 02:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbYFNGvW
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 02:51:22 -0400
+Received: from peff.net ([208.65.91.99]:1264 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751962AbYFNGtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 02:49:00 -0400
-Received: (qmail 27717 invoked by uid 111); 14 Jun 2008 06:48:59 -0000
+	id S1751107AbYFNGvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 02:51:21 -0400
+Received: (qmail 27882 invoked by uid 111); 14 Jun 2008 06:51:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 14 Jun 2008 02:48:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun 2008 02:48:57 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 14 Jun 2008 02:51:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun 2008 02:51:19 -0400
 Content-Disposition: inline
-In-Reply-To: <7vod65wt6k.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080614064857.GA8930@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/84966>
 
-On Fri, Jun 13, 2008 at 03:00:35AM -0700, Junio C Hamano wrote:
+These violations are simply wrong, but were never caught
+because whitespace policy checking is turned off in the test
+scripts.
 
-> Eventually we would want to make all of the t/*.sh not exempt from the
-> whitespace rules.  Some currently do have trailing whitespaces as part of
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t1502-rev-parse-parseopt.sh |    2 +-
+ t/t3800-mktag.sh              |    2 +-
+ t/t3903-stash.sh              |    2 +-
+ t/t4014-format-patch.sh       |    6 +++---
+ t/t4150-am.sh                 |    2 +-
+ t/t5540-http-push.sh          |    2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-This turned out to be a fairly easy change, as most of the places had
-been caught already.
-
-Four part patch series follows. The only one potentially not
-maint-worthy is 3/4, because it actually changes git's output slightly.
-
-  1/4: fix whitespace violations in test scripts
-  2/4: mask necessary whitespace policy violations in test scripts
-  3/4: avoid trailing whitespace in zero-change diffstat lines
-  4/4: enable whitespace checking of test scripts
-
--Peff
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index d24a47d..7cdd70a 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -5,7 +5,7 @@ test_description='test git rev-parse --parseopt'
+ 
+ cat > expect.err <<EOF
+ usage: some-command [options] <args>...
+-    
++
+     some-command does foo and bar!
+ 
+     -h, --help            show the help
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index df1fd6f..3907e67 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -245,7 +245,7 @@ cat >tag.sig <<EOF
+ object $head
+ type commit
+ tag mytag
+-tagger T A Gger <tagger@example.com>  
++tagger T A Gger <tagger@example.com>
+ 
+ EOF
+ 
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 2d3ee3b..54d99ed 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -41,7 +41,7 @@ test_expect_success 'apply needs clean working directory' '
+ 	echo 4 > other-file &&
+ 	git add other-file &&
+ 	echo 5 > other-file &&
+- 	test_must_fail git stash apply
++	test_must_fail git stash apply
+ '
+ 
+ test_expect_success 'apply stashed changes' '
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 3583e68..7fe853c 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -98,7 +98,7 @@ test_expect_success 'extra headers' '
+ 	sed -e "/^$/q" patch2 > hdrs2 &&
+ 	grep "^To: R. E. Cipient <rcipient@example.com>$" hdrs2 &&
+ 	grep "^Cc: S. E. Cipient <scipient@example.com>$" hdrs2
+-	
++
+ '
+ 
+ test_expect_success 'extra headers without newlines' '
+@@ -109,7 +109,7 @@ test_expect_success 'extra headers without newlines' '
+ 	sed -e "/^$/q" patch3 > hdrs3 &&
+ 	grep "^To: R. E. Cipient <rcipient@example.com>$" hdrs3 &&
+ 	grep "^Cc: S. E. Cipient <scipient@example.com>$" hdrs3
+-	
++
+ '
+ 
+ test_expect_success 'extra headers with multiple To:s' '
+@@ -170,7 +170,7 @@ test_expect_success 'thread cover-letter' '
+ 	git checkout side &&
+ 	git format-patch --cover-letter --thread -o patches/ master &&
+ 	FIRST_MID=$(grep "Message-Id:" patches/0000-* | sed "s/^[^<]*\(<[^>]*>\).*$/\1/") &&
+-	for i in patches/0001-* patches/0002-* patches/0003-* 
++	for i in patches/0001-* patches/0002-* patches/0003-*
+ 	do
+ 	  grep "References: $FIRST_MID" $i &&
+ 	  grep "In-Reply-To: $FIRST_MID" $i || break
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 722ae96..bc98260 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -110,7 +110,7 @@ test_expect_success 'am applies patch correctly' '
+ 
+ GIT_AUTHOR_NAME="Another Thor"
+ GIT_AUTHOR_EMAIL="a.thor@example.com"
+-GIT_COMMITTER_NAME="Co M Miter" 
++GIT_COMMITTER_NAME="Co M Miter"
+ GIT_COMMITTER_EMAIL="c.miter@example.com"
+ export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
+ 
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 7372439..f15dd03 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -38,7 +38,7 @@ test_expect_success 'setup remote repository' '
+ 	cd - &&
+ 	mv test_repo.git $HTTPD_DOCUMENT_ROOT_PATH
+ '
+-	
++
+ test_expect_success 'clone remote repository' '
+ 	cd "$ROOT_PATH" &&
+ 	git clone $HTTPD_URL/test_repo.git test_repo_clone
+-- 
+1.5.6.rc2.183.g04614
