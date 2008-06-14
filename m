@@ -1,71 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 015/144] t0204-gettext-reencode-sanity.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 09:36:44 +0100
-Message-ID: <vpq4n2m7jz7.fsf@anie.imag.fr>
-References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
-	<1395735989-3396-16-git-send-email-gitter.spiros@gmail.com>
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG REPORT] "git ls-remote
+	http://git.domain.com/repo.git?HEAD" doesn't work
+Date: Sat, 14 Jun 2008 05:31:26 -0400
+Message-ID: <20080614093126.GC22538@sigill.intra.peff.net>
+References: <loom.20080614T065448-251@post.gmane.org> <20080614071011.GA29699@glandium.org> <7vprqkh423.fsf@gitster.siamese.dyndns.org> <loom.20080614T074854-525@post.gmane.org> <20080614090244.GA1262@glandium.org> <loom.20080614T092039-924@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 25 Mar 2014 08:36:51 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+NNTP-Posting-Date: Sat, 14 Jun 2008 09:31:44 +0000 (UTC)
 Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
+To: Sven <svoop@delirium.ch>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-In-Reply-To: <1395735989-3396-16-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Tue, 25 Mar 2014 01:24:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 25 Mar 2014 09:36:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2P8ahkG027825
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1396341404.72155@PmDxvftft2kX7tMo6hgmbQ
+Envelope-to: gcvg-git-2@gmane.org
+Content-Disposition: inline
+In-Reply-To: <loom.20080614T092039-924@post.gmane.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245000>
-Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
- esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
- 1WSMqy-0001pQ-8E for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:37:00
- +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1K7S7U-0001Ny-TF for gcvg-git-2@gmane.org; Sat, 14 Jun 2008
+ 11:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753345AbaCYIgv convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:36:51 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60634 "EHLO rominette.imag.fr"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1753702AbaCYIgs
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 04:36:48 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215]) by
- rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8ahkG027825
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Tue, 25
- Mar 2014 09:36:43 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32]) by
- clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8aiUH022449; Tue, 25 Mar
- 2014 09:36:44 +0100
+ S1755676AbYFNJb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008
+ 05:31:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYFNJb3
+ (ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:31:29 -0400
+Received: from peff.net ([208.65.91.99]:4332 "EHLO peff.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1755148AbYFNJb2
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 14 Jun 2008 05:31:28 -0400
+Received: (qmail 7843 invoked by uid 111); 14 Jun 2008 09:31:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ (smtp-auth username relayok, mechanism cram-md5) by peff.net (qpsmtpd/0.32)
+ with ESMTP; Sat, 14 Jun 2008 05:31:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun
+ 2008 05:31:26 -0400
 Sender: git-owner@vger.kernel.org
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+On Sat, Jun 14, 2008 at 09:24:57AM +0000, Sven wrote:
 
-> --- a/t/t0204-gettext-reencode-sanity.sh
-> +++ b/t/t0204-gettext-reencode-sanity.sh
-> @@ -58,7 +58,7 @@ test_expect_success GETTEXT_LOCALE 'gettext: Fetchi=
-ng a UTF-8 msgid -> UTF-8' '
->  # How these quotes get transliterated depends on the gettext impleme=
-ntation:
->  #
->  #   Debian:  ,einfaldar' og ,,tv=F6faldar" [GNU libintl]
-> -#   FreeBSD: `einfaldar` og "tv=F6faldar"  [GNU libintl]
-> +#   FreeBSD: $(einfaldar) og "tv=F6faldar"  [GNU libintl]
->  #   Solaris: ?einfaldar? og ?tv=F6faldar?  [Solaris libintl]
+> As I said, I'm lacking the skills. But I'd take part in sponsoring the
+> patch so it's not another 7 weeks wait :-) I know, it's kinda unusual,
+> but it's important to me that Capistrano works out of the box with Git
+> over HTTP. So I'd throw in $50, anybody willing to join, too. Or to do
+> the patch?
 
-I don't think you wanted this to be changed.
+Maybe I wasn't clear in my other message. The wait is either "none,
+upgrade to the current master", or "a week or so, wait for 1.5.6 to be
+released."
 
---=20
-Matthieu Moy
+But I'll take the $50. ;)
+
