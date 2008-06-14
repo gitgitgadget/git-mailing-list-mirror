@@ -1,104 +1,64 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 1/2] git add: add long equivalents of '-u' and '-f' options
-Date: Sat, 14 Jun 2008 11:48:00 +0200
-Message-ID: <1213436881-2360-1-git-send-email-szeder@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jun 14 11:49:04 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Don't allocate too much memory in quote_ref_url
+Date: Sat, 14 Jun 2008 12:02:22 +0200
+Message-ID: <1213437742-5751-1-git-send-email-mh@glandium.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jun 14 12:04:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7SNa-0005X4-KL
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 11:49:03 +0200
+	id 1K7ScX-0000mn-HC
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 12:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756338AbYFNJsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008 05:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756237AbYFNJsH
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:48:07 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:52859 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756129AbYFNJsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 05:48:06 -0400
-Received: from [127.0.1.1] (p5B131E03.dip0.t-ipconnect.de [91.19.30.3])
-	by mrelayeu.kundenserver.de (node=mrelayeu8) with ESMTP (Nemesis)
-	id 0ML31I-1K7SMb1wCU-00018f; Sat, 14 Jun 2008 11:48:02 +0200
-X-Mailer: git-send-email 1.5.6.rc2.55.g9b8c
-X-Provags-ID: V01U2FsdGVkX1+t01qMXBrjtn9S5aN+S26zZSFDSKtzRZBdM1f
- pPvfQXKFmTXVKZDEVVKiCneLgq4rclDVSsC67HWL/IxXsn6wYR
- jzWZ0e0wRnUb4ZRy1zm7A==
+	id S1755460AbYFNKD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 06:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753900AbYFNKD2
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 06:03:28 -0400
+Received: from vuizook.err.no ([194.24.252.247]:40784 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753246AbYFNKD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 06:03:27 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1K7SbN-0002X7-86; Sat, 14 Jun 2008 12:03:23 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1K7SaU-0001VB-Vl; Sat, 14 Jun 2008 12:02:23 +0200
+X-Mailer: git-send-email 1.5.5.4
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85005>
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+In c13b263, http_fetch_ref got "refs/" included in the ref passed to it,
+which, incidentally, makes the allocation in quote_ref_url too big, now.
 ---
- Documentation/git-add.txt |    7 +++++--
- builtin-add.c             |    4 ++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 9c6b081..b8e3fa6 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -8,8 +8,9 @@ git-add - Add file contents to the index
- SYNOPSIS
- --------
- [verse]
--'git-add' [-n] [-v] [-f] [--interactive | -i] [--patch | -p] [-u] [--r=
-efresh]
--	  [--ignore-errors] [--] <filepattern>...
-+'git-add' [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
-+	  [--update | -u] [--refresh] [--ignore-errors] [--]
-+	  <filepattern>...
-=20
- DESCRIPTION
- -----------
-@@ -59,6 +60,7 @@ OPTIONS
-         Be verbose.
-=20
- -f::
-+--force::
- 	Allow adding otherwise ignored files.
-=20
- -i::
-@@ -75,6 +77,7 @@ OPTIONS
- 	the specified filepatterns before exiting.
-=20
- -u::
-+--update::
- 	Update only files that git already knows about, staging modified
- 	content for commit and marking deleted files for removal. This
- 	is similar
-diff --git a/builtin-add.c b/builtin-add.c
-index 1da22ee..9930cf5 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -200,8 +200,8 @@ static struct option builtin_add_options[] =3D {
- 	OPT_GROUP(""),
- 	OPT_BOOLEAN('i', "interactive", &add_interactive, "interactive pickin=
-g"),
- 	OPT_BOOLEAN('p', "patch", &patch_interactive, "interactive patching")=
-,
--	OPT_BOOLEAN('f', NULL, &ignored_too, "allow adding otherwise ignored =
-files"),
--	OPT_BOOLEAN('u', NULL, &take_worktree_changes, "update tracked files"=
-),
-+	OPT_BOOLEAN('f', "force", &ignored_too, "allow adding otherwise ignor=
-ed files"),
-+	OPT_BOOLEAN('u', "update", &take_worktree_changes, "update tracked fi=
-les"),
- 	OPT_BOOLEAN( 0 , "refresh", &refresh_only, "don't add, only refresh t=
-he index"),
- 	OPT_BOOLEAN( 0 , "ignore-errors", &ignore_add_errors, "just skip file=
-s which cannot be added because of errors"),
- 	OPT_END(),
---=20
-1.5.6.rc2.55.g9b8c
+I noticed this when rebasing some of my private branches onto current
+master. I had a commit similar to c13b263 that ended up conflicting,
+and after conflict resolving, this is all that was left, which is
+an obvious change that was lacking there.
+
+ http.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/http.c b/http.c
+index bc14bdb..9b6d5ed 100644
+--- a/http.c
++++ b/http.c
+@@ -583,7 +583,7 @@ static char *quote_ref_url(const char *base, const char *ref)
+ 	int len, baselen, ch;
+ 
+ 	baselen = strlen(base);
+-	len = baselen + 7; /* "/refs/" + NUL */
++	len = baselen + 2;
+ 	for (cp = ref; (ch = *cp) != 0; cp++, len++)
+ 		if (needs_quote(ch))
+ 			len += 2; /* extra two hex plus replacement % */
+-- 
+1.5.5.4
