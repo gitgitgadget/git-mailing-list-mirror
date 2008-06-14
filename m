@@ -1,68 +1,58 @@
-From: Sven <svoop@delirium.ch>
-Subject: Re: [BUG REPORT]
-Date: Sat, 14 Jun 2008 18:26:00 +0000 (UTC)
-Message-ID: <loom.20080614T181822-325@post.gmane.org>
-References: <loom.20080614T065448-251@post.gmane.org> <20080614071011.GA29699@glandium.org> <7vprqkh423.fsf@gitster.siamese.dyndns.org> <7vlk17horn.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule - Fix errors regarding resolve_relative_url
+Date: Sat, 14 Jun 2008 11:28:11 -0700
+Message-ID: <7vd4mjhnwk.fsf@gitster.siamese.dyndns.org>
+References: <1213463381-3316-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 14 20:27:37 2008
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 20:29:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7aTQ-0002vk-Hk
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 20:27:36 +0200
+	id 1K7aV5-0003Hm-Gn
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 20:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753789AbYFNS0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 14:26:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbYFNS0K
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 14:26:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:57426 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753567AbYFNS0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 14:26:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1K7aS0-00005S-D1
-	for git@vger.kernel.org; Sat, 14 Jun 2008 18:26:08 +0000
-Received: from 151.121.221.87.dynamic.jazztel.es ([87.221.121.151])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 18:26:08 +0000
-Received: from svoop by 151.121.221.87.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 18:26:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.221.121.151 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9) Gecko/2008061004 Firefox/3.0)
+	id S1751596AbYFNS2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 14:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753562AbYFNS2Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 14:28:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001AbYFNS2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 14:28:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F29AF2571;
+	Sat, 14 Jun 2008 14:28:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6A4232570; Sat, 14 Jun 2008 14:28:18 -0400 (EDT)
+In-Reply-To: <1213463381-3316-1-git-send-email-mlevedahl@gmail.com> (Mark
+ Levedahl's message of "Sat, 14 Jun 2008 13:09:41 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AB273E8C-3A3F-11DD-BED5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85033>
 
->  (1) I do not think it is unreasonable to change update-server-info
->      to include HEAD in its output.  That would make ls-remote 
->      output over all protocols consistent;
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-As Jeff said, he has already done this and it will roll with the 
-upcoming release.
+> git-submodule was invoking "die" from within resolve-relative-url, but
+> this does not actually cause the script to exit. Fix this by returning
+> the error to the caller and have the caller exit.
 
->  (2) However, the client-side tools that run ls-remote may have to
->      interact with repositories that are managed with older git
->      (including "Today's git").  If they rely on the presense of 
->      HEAD, they _are_ buggy today (and have been so forever), and
->      they _will stay_ buggy when they need to access such 
->      repositories.
+Thanks for catching this.  But don't you think the first hunk is
+unnecessary?
 
-Indeed, there is a way to tell Capistrano to use a specific branch: 
-Adding ...
+> While we're at it, clean up the quoting on invocation of
+> resolve_relative_url as it was wrong.
 
-set :branch, "master"
+Yup.  if you make it pass through the non-zero exit status that would be
+perfect, like this:
 
-... to the configuration in deploy.rb does the trick.
-
--sven
+    realrepo=$(resolve_relative_url "$repo") || exit
