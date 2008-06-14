@@ -1,84 +1,62 @@
-From: Lars Jarnbo Pedersen <lars.jarnbo.pedersen@gmail.com>
-Subject: Re: No common commits question
-Date: Sat, 14 Jun 2008 12:09:08 +0200
-Organization: Home
-Message-ID: <1213438148.9800.17.camel@neo>
-References: <1213435065.9800.13.camel@neo>
-	 <20080614092923.GB22538@sigill.intra.peff.net>
-Reply-To: Lars.Jarnbo.Pedersen@gmail.com
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] compressed import v3
+Date: Sat, 14 Jun 2008 12:26:46 +0200
+Message-ID: <20080614102646.GD14282@diana.vm.bytemark.co.uk>
+References: <48519602.2090103@gmail.com> <20080613051127.GA24245@diana.vm.bytemark.co.uk> <485289FD.50808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 14 12:10:20 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Clark Williams <clark.williams@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 12:28:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7Si8-0002Gy-5A
-	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 12:10:16 +0200
+	id 1K7SzJ-0006x6-A3
+	for gcvg-git-2@gmane.org; Sat, 14 Jun 2008 12:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392AbYFNKJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jun 2008 06:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYFNKJP
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 06:09:15 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:55099 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753380AbYFNKJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 06:09:14 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2708656ywe.1
-        for <git@vger.kernel.org>; Sat, 14 Jun 2008 03:09:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:reply-to:to:cc
-         :in-reply-to:references:content-type:organization:date:message-id
-         :mime-version:x-mailer:content-transfer-encoding:from;
-        bh=cUyyT6DXcimZLiIl1REXWd8iV0F2JMLPpou9qOUbrrw=;
-        b=UdTbEfe4quQpGokZTFppKU7CyqFNrSMmBi+UOYqDerL/C4zLEZgphoVgzHlQ4bFSrT
-         ZI/aIy7BsUwMZhtUK19/xnBAFM8slswXRI+0lIb8t0uyA8ZcFiAeJgGJrEKSUBsejP6B
-         As6z9NispiyHpmrJNAs6SZjSYFL49/FPCc2lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:reply-to:to:cc:in-reply-to:references:content-type
-         :organization:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding:from;
-        b=pxrQ7acnPLDfC3YHWin3g05CWnRRITd29YcT9jFOiolJ38xPQnCJqGGx1VB0VXY7t3
-         /LVsIWGqCuvK00BA6WHFDNtZcfzn/jeoIlKR+Qp/SZgvRv7ykJnAQA68VX9+/GzI2lsW
-         D1GcxsjpS0A9k8lLJW3hX2iGJeU/Z3JIiu/cY=
-Received: by 10.150.92.12 with SMTP id p12mr6319690ybb.236.1213438153266;
-        Sat, 14 Jun 2008 03:09:13 -0700 (PDT)
-Received: from ?192.168.1.137? ( [217.157.186.14])
-        by mx.google.com with ESMTPS id s35sm10089909qbs.13.2008.06.14.03.09.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 14 Jun 2008 03:09:11 -0700 (PDT)
-In-Reply-To: <20080614092923.GB22538@sigill.intra.peff.net>
-X-Mailer: Evolution 2.22.2 
+	id S1753344AbYFNK1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008 06:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753246AbYFNK1H
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 06:27:07 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2832 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753166AbYFNK0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 06:26:54 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K7Sy6-00045G-00; Sat, 14 Jun 2008 11:26:46 +0100
+Content-Disposition: inline
+In-Reply-To: <485289FD.50808@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85008>
 
-On Sat, 2008-06-14 at 05:29 -0400, Jeff King wrote:
-> On Sat, Jun 14, 2008 at 11:17:45AM +0200, Lars Jarnbo Pedersen wrote:
-> 
-> > I have been tracking the Linux kernel with for at least a year now doing
-> > frequent pulls (once every other day or so). I'm not doing any
-> > development so it should be a clean update everytime. However once in a
-> > while I get a "no common commit" warning and git starts to download the
-> > entire repo again. (It happened again today - therefore this mail)
-> > [...]
-> > - git version 1.5.4.3
-> 
-> This has been noted a few times on the list (try searching for "no
-> common commits"), and there were some patches a few months ago that made
-> it into 1.5.5.
-> 
-> Can you try with the latest stable release, 1.5.5.4?
-I have not build and installed the latest stable release and use that
-instead of what is included in Ubuntu. However I did let the download
-complete so I cannot re-test this error (sorry). But thanks for your
-quick response.
+On 2008-06-13 09:53:49 -0500, Clark Williams wrote:
 
-- Lars
+> I'm interested to hear how you'd condense the code in
+> __gethandleandname().
+
+Like this, for example:
+
+    import bz2, gzip
+    for copen, ext in [(gzip.open, '.gz'), (bz2.BZ2File, '.bz2')]:
+        try:
+            f =3D copen(filename)
+            f.read(1)
+            f.seek(0)
+            return (f, __mkpatchname(filename, ext))
+        except IOError, e:
+            pass
+
+If you don't mind, I'll just fix that up directly in your patch. (I
+also took the liberty to rename the function to __get_handle_and_name,
+since that's more consistent with other functions in that file.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
