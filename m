@@ -1,92 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Sun, 15 Jun 2008 05:00:46 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806150457180.6439@racer>
-References: <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer>
- <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
- <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
- <alpine.DEB.1.00.0806132239490.6439@racer> <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <200806142359.m5ENxsBL028758@mi0.bluebottle.com>
+From: Allan Wind <allan_wind@lifeintegrity.com>
+Subject: gc changes permissions of files
+Date: Sat, 14 Jun 2008 23:59:17 -0400
+Message-ID: <20080615035917.GA13414@lifeintegrity.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1579785999-1213502456=:6439"
-Cc: Wincent Colaiuta <win@wincent.com>, Eric Raible <raible@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: =?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 06:03:33 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 15 06:28:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7jSi-0003pF-Qe
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 06:03:29 +0200
+	id 1K7jqn-0008Fp-Fy
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 06:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750753AbYFOECe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 00:02:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750739AbYFOECe
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 00:02:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45898 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750707AbYFOECd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 00:02:33 -0400
-Received: (qmail invoked by alias); 15 Jun 2008 04:02:29 -0000
-Received: from pacific.mpi-cbg.de (EHLO [10.8.0.10]) [141.5.10.38]
-  by mail.gmx.net (mp004) with SMTP; 15 Jun 2008 06:02:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19AST5/+HNA1SNpn19eWWFhopeyyzV9hChMvj424K
-	juiHAukNopirXQ
-X-X-Sender: gene099@racer
-In-Reply-To: <200806142359.m5ENxsBL028758@mi0.bluebottle.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1750820AbYFOE0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 00:26:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbYFOE0z
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 00:26:55 -0400
+Received: from aeol.lifeintegrity.com ([209.135.157.90]:49523 "EHLO
+	lifeintegrity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbYFOE0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 00:26:55 -0400
+X-Greylist: delayed 1656 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jun 2008 00:26:55 EDT
+Received: from vent.lifeintegrity.com (pool-71-174-251-18.bstnma.fios.verizon.net [71.174.251.18])
+	by submission.lifeintegrity.com (Postfix) with ESMTP id ECB2FD5C1E3
+	for <git@vger.kernel.org>; Sun, 15 Jun 2008 03:59:18 +0000 (UTC)
+Received: by vent.lifeintegrity.com (Postfix, from userid 1000)
+	id A267C304362; Sat, 14 Jun 2008 23:59:17 -0400 (EDT)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85061>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Is anyone looking into fixing gc so it does not change permission on 
+files?  I would think it should consider current permissions of files 
+before umask.
 
---8323329-1579785999-1213502456=:6439
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I believe Nigel reported this issue with:
+http://thread.gmane.org/gmane.comp.version-control.git/79213/focus=79237
+and still seeing issues with 1.5.5.4.
 
-Hi,
 
-On Sun, 15 Jun 2008, しらいしななこ wrote:
-
-> The following is a trial patch to change how a stash is recorded.
-> With this patch I do not think we will keep unnecessary commits
-> behind H in the repository even when a stash is kept forever.
-> 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 4938ade..f4c4236 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -54,6 +54,9 @@ create_stash () {
->  	fi
->  	msg=$(printf '%s: %s' "$branch" "$head")
->  
-> +	# create the base commit that is parentless
-> +	b_commit=$(printf 'base of %s\n' "$msg" | git commit-tree "HEAD:")
-> +
-
-I think that this does not help the case of Wincent (which I do not agree 
-with), as it does not prevent the stashes from expiring.
-
-What your patch does, however, might be something people need to prevent 
-unnecessary bloat of the object database, if they choose never to expire 
-stashes.
-
-However, it makes it harder to see where the stashed revision came from.
-
-Besides, I think that your printf would look nicer as
-
-	b_commit=$(echo "base of $msg" | git commit-tree HEAD^{tree})
-
-Ciao,
-Dscho
-
---8323329-1579785999-1213502456=:6439--
+/Allan
