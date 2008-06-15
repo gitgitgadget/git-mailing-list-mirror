@@ -1,136 +1,105 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [Junio C Hamano] Re: Consolidate SHA1 object file close
-Date: Sun, 15 Jun 2008 11:08:10 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806151057100.2949@woody.linux-foundation.org>
-References: <7viqwbfxk6.fsf@gitster.siamese.dyndns.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [RFC/WIP/PATCH v2] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Sun, 15 Jun 2008 20:45:32 +0200
+Message-ID: <4855634C.8060606@gmail.com>
+References: <200806141447.28052.jnareb@gmail.com> <1213487844-685-1-git-send-email-LeWiemann@gmail.com> <200806152001.34350.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 20:09:16 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 15 20:46:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7wfD-00006O-Tb
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 20:09:16 +0200
+	id 1K7xF5-0002LC-DU
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 20:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758914AbYFOSIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 14:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758929AbYFOSIV
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 14:08:21 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:55510 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758856AbYFOSIU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jun 2008 14:08:20 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5FI8BWs025603
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 15 Jun 2008 11:08:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5FI8AhO019592;
-	Sun, 15 Jun 2008 11:08:11 -0700
-In-Reply-To: <7viqwbfxk6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.858 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1750858AbYFOSpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 14:45:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbYFOSpY
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 14:45:24 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:37473 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750755AbYFOSpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 14:45:24 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so3122050fgg.17
+        for <git@vger.kernel.org>; Sun, 15 Jun 2008 11:45:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=yDaAVDESG/UY1GFxNpJq+/EmTWZqoH1vrzSxuxahC7o=;
+        b=dkMDlKNMhzL/Yl84Hp7o9yTCGUvdKwi7yBrh5/M27qsFHlvXqpTdK3YZh4HhdcEtK2
+         urcZQZue3KxmuSj+1iWAVVVOYTV16bzsR4QzC2t+PPHM319fKD+Qt9+qMKIuuTfZwEe/
+         zFa5g4pbeZExjT192ZwfjZnnQV9UFGLqCAtqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=sjIiDJUuQlGhXI2bdUzxiEwH8IaPcK2D652NqeSb/HJRwZm+D4sZu/siUqMAyXxj8b
+         ILJ4thLT+O8rMGZL5SEUDkll358iJqgYlXLXSlL2f3uWdcBnSu1sdh9xDHvhjFNT09Ah
+         QL6EYygsObiAozyMMgJ+8UbVDBjjkPGwOjl3E=
+Received: by 10.86.70.11 with SMTP id s11mr7110222fga.71.1213555519815;
+        Sun, 15 Jun 2008 11:45:19 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.242.85])
+        by mx.google.com with ESMTPS id e20sm10722710fga.1.2008.06.15.11.45.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 15 Jun 2008 11:45:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200806152001.34350.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85107>
 
+Jakub Narebski wrote:
+> 1.) Should we put all tests in one file, or should they be split
 
+I'd suggest we leave it in a single file until test execution time 
+becomes an issue.  Then (when it has become too large) we'll be able to 
+figure out good boundaries along which to split the test suite.
 
-On Sat, 14 Jun 2008, Junio C Hamano wrote:
->
-> Other than that I had to stop for a few seconds to think at the magic 
-> "20 bytes longer", they look scary-but-correct ;-).
+> 2.) What invariants should we test [...]  Checking for example if all items
+>     are listed in a 'tree' view, or if all inner links (#link) are
+>     valid would be a good start... 
 
-Actually, thinking about it, the +20 was not just fairly arbitrary and 
-would have been better off with a comment, it was also not a very good 
-number to begin with - it just was the old tempfile pattern rounded up to 
-the next "even" number.
+Yup; completeness of item lists is especially relevant for paginated 
+output.  Also check for the presence and validity of links (like 
+"parent" links, etc.), and for the presence of certain elements (like 
+the file modes in the tree view).
 
-The _correct_ number to use is +39, with a better tempfile pattern.
+Also, with a $ENV{LONG_GIT_TEST} variable or so, we could automatically 
+validate all links for each page we're checking -- it takes a long time, 
+but it's still way more efficient than exhaustive spidering of the whole 
+site.
 
-That needs a few comments, though. So I added those too.
+> (by the way, is there some Perl module for RSS, Atom and OPML validation?)
 
-This patch is totally unimportant, but it does mean that a really 
-traditional filesystem can now do the final rename in-place, because the 
-temporary file is not just in the same directory as the final one, but ti 
-also has the same length, so old-style filesystems can literally just edit 
-the name in place and mark the buffer dirty.
+I can't find anything on Google right now, but piping them into external 
+validators might be just as fine.  Also, since those formats are 
+generated using print statements (which is really error-prone for XML 
+formats), I'd say that a good start would be to check for XML validity.
 
-And more modern filesystems will generally end up doing more complex 
-things regardless of what we do, but at least this won't _hurt_ either.
+> 3.) What invariants you want to test for your caching efforts, e.g.
+>     checking if cached output matches non-cached
 
-There is one more funny (or sad) detail to this: the old temporary 
-filename was an interesting size: 14 characters. That happens to be the 
-traditional path component limit on really old UNIX filesystems, so if you 
-were to try to use such a filesystem, you'd always be able to create the 
-temporary file, but then you'd never actually be able to do the final link 
-or rename due to the final name being too long.
+How about this:
 
-So take this or leave it as you want - it's really not very important, I 
-just wrote this because I was thinking about what really goes on at a very 
-low level when we do that final atomic rename to create the actual 
-directory entry. This makes it theoretically just a tiny bit more atomic 
-on old-fashioned filesystems.
+1. Run the Mechanize tests (and possibly also the existing t9500 tests) 
+*without* caching, recording the URL's and contents of all pages the 
+test suite accesses.
 
-		Linus
+2. Get all those URL's again *with* caching (from a cold cache), and 
+assert that the output is identical.
 
----
- sha1_file.c |   21 ++++++++++++++++++---
- 1 files changed, 18 insertions(+), 3 deletions(-)
+3. Get all those URL's again *with* caching (from a warm cache), and 
+assert that the output is identical.  Perhaps also assert that no call 
+to the git binary is made (i.e. everything has actually been cached). 
+(Of course we might need options for the production site to not cache 
+certain things, but let's defer this discussion.)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 37bcc54..f9ec069 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2110,17 +2110,31 @@ static inline int directory_size(const char *filename)
-  *
-  * We want to avoid cross-directory filename renames, because those
-  * can have problems on various filesystems (FAT, NFS, Coda).
-+ *
-+ * In order to make the final rename as simple as possible to do
-+ * in-place for traditional filesystems, we make the temporary
-+ * filename have the same size as the final one - 38 characters
-+ * (19 bytes of SHA1 info - the first byte is used for the sub-
-+ * directory fan-out).
-+ *
-+ * The temporary filename pattern is
-+ *  - 8 characters of "tmp_obj_"
-+ *  - 23 characters of the object filename
-+ *  - 7 characters of "_XXXXXX" for mkstemp().
-  */
- static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
- {
- 	int fd, dirlen = directory_size(filename);
- 
--	if (dirlen + 20 > bufsiz) {
-+	if (dirlen + 39 > bufsiz) {
- 		errno = ENAMETOOLONG;
- 		return -1;
- 	}
- 	memcpy(buffer, filename, dirlen);
--	strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
-+	memcpy(buffer + dirlen, "tmp_obj_", 8);
-+	memcpy(buffer + dirlen + 8, filename + dirlen, 23);
-+	memcpy(buffer + dirlen + 31, "_XXXXXX", 8);
-+	
- 	fd = mkstemp(buffer);
- 	if (fd < 0 && dirlen) {
- 		/* Make sure the directory exists */
-@@ -2129,7 +2143,8 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
- 			return -1;
- 
- 		/* Try again */
--		strcpy(buffer + dirlen - 1, "/tmp_obj_XXXXXX");
-+		buffer[dirlen-1] = '/';
-+		memcpy(buffer + dirlen + 32, "XXXXXX", 6);
- 		fd = mkstemp(buffer);
- 	}
- 	return fd;
+-- Lea
