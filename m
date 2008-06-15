@@ -1,98 +1,129 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 01/20] Fix typo in PackIndexV2
-Date: Sun, 15 Jun 2008 23:45:30 +0200
-Message-ID: <1213566349-25395-2-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 02/20] Integer versions of copyRawTo() and fromRaw() in ObjectId
+Date: Sun, 15 Jun 2008 23:45:31 +0200
+Message-ID: <1213566349-25395-3-git-send-email-marek.zawirski@gmail.com>
 References: <1213566349-25395-1-git-send-email-marek.zawirski@gmail.com>
+ <1213566349-25395-2-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Jun 15 23:47:01 2008
+X-From: git-owner@vger.kernel.org Sun Jun 15 23:47:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K803w-0001YY-Gi
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:47:00 +0200
+	id 1K804C-0001bl-BK
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861AbYFOVp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 17:45:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752822AbYFOVp7
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:45:59 -0400
+	id S1753120AbYFOVqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 17:46:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbYFOVqM
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:46:12 -0400
 Received: from fg-out-1718.google.com ([72.14.220.155]:49881 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752659AbYFOVp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 17:45:59 -0400
+	with ESMTP id S1752822AbYFOVqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 17:46:01 -0400
 Received: by fg-out-1718.google.com with SMTP id 19so3137938fgg.17
-        for <git@vger.kernel.org>; Sun, 15 Jun 2008 14:45:57 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 15 Jun 2008 14:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=peg0emu9RZIc+tOggTyapQS647V38WKQh2XKCxEqxM0=;
-        b=NAgkNYp39Rl5h9kGV4BfaoKHj5nHSCfH4lm8GRrCmgwJNm85aktCJbXSGZbeJI45Hz
-         PL7MhJloC+xj6OktJDo6rqYWgXeL9plDGrc3LLKww0I9zwMpsopAJWhkr0iFhHuXEH27
-         UXArDQFgw5nfzBcH75MzKfu189qk8GpBJiopU=
+        bh=bcKoxcHPJ3F0NqopWdJu/VZ4GtEKScghmjfmJc5/xWw=;
+        b=lZcByqoibWTUPRWqjfOOhcGYtVhi5D+csbVH0unPwM5t9gTB7Wk7U7yj1AUcSlFzXD
+         +A5aBqGvtONssPTs3uxlFAH7TPF8DDSMRt8FMh0iy+5UKBcMpubbEPwfKdzJH1bRKhWn
+         Mi9ygEBwWntZDSuO+2fidsUnxgHFm6qbSYzSo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=RcagWJHiScyi4MgWSMxjlz04BqWVAdtrwOQI7eSft+ssVmPp9U16qMtXHHp0sgA6IP
-         YSlzKppH2pcQs17jkMI3ml3wAr+PP8ehrUQEaWeWwjS0ATi3PlWgSZcALsKPYFnj/hlq
-         H15Mi14tJKW3dpeDcm8I0d72nY/wrG6gRtKwI=
-Received: by 10.86.100.19 with SMTP id x19mr7226071fgb.61.1213566357017;
-        Sun, 15 Jun 2008 14:45:57 -0700 (PDT)
+        b=R7MCjARSnbhIJZu+XH9AszOZ/nxMW/+YPy7EYtqzhV1RV9nxWKB7lsAQ6DXRYORlSp
+         +6e9ks/QKFXLUOEMgXaWtMEDxLP2Uzms9MlZL3+UNXcKPpdXdTQ6bHBG4i8c7hXrZuvO
+         jnoRMU3v35DnQ7k+CBaWg3UBnThu5aTn+rKzI=
+Received: by 10.86.71.1 with SMTP id t1mr7224230fga.36.1213566360278;
+        Sun, 15 Jun 2008 14:46:00 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id d6sm8595856fga.2.2008.06.15.14.45.55
+        by mx.google.com with ESMTPS id l12sm9661909fgb.6.2008.06.15.14.45.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Jun 2008 14:45:55 -0700 (PDT)
+        Sun, 15 Jun 2008 14:45:59 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.1
-In-Reply-To: <1213566349-25395-1-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1213566349-25395-2-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85126>
 
-levelTWo -> levelTwo
+Helper methods in ObjectId and AnyobjectId for int[], overload existing
+byte[] versions.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../src/org/spearce/jgit/lib/PackIndexV2.java      |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ .../src/org/spearce/jgit/lib/AnyObjectId.java      |   16 ++++++++++++
+ .../src/org/spearce/jgit/lib/ObjectId.java         |   26 ++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 0 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-index 9a695ef..ae70f11 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-@@ -184,13 +184,13 @@ class PackIndexV2 extends PackIndex {
- 	private class EntriesIteratorV2 extends EntriesIterator {
- 		private int levelOne;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+index c348598..871a76d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+@@ -276,6 +276,22 @@ public abstract class AnyObjectId implements Comparable {
+ 	}
  
--		private int levelTWo;
-+		private int levelTwo;
+ 	/**
++	 * Copy this ObjectId to an int array.
++	 * 
++	 * @param b
++	 *            the buffer to copy to.
++	 * @param o
++	 *            the offset within b to write at.
++	 */
++	public void copyRawTo(final int[] b, final int o) {
++		b[o] = w1;
++		b[o + 1] = w2;
++		b[o + 2] = w3;
++		b[o + 3] = w4;
++		b[o + 4] = w5;
++	}
++
++	/**
+ 	 * Copy this ObjectId to an output writer in raw binary.
+ 	 * 
+ 	 * @param w
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+index 9688a2e..7646a7b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+@@ -168,6 +168,32 @@ public class ObjectId extends AnyObjectId {
+ 	}
  
- 		public MutableEntry next() {
- 			for (; levelOne < names.length; levelOne++) {
--				if (levelTWo < names[levelOne].length) {
--					objectId.fromRaw(names[levelOne], levelTWo);
--					int arrayIdx = levelTWo / (Constants.OBJECT_ID_LENGTH / 4)
-+				if (levelTwo < names[levelOne].length) {
-+					objectId.fromRaw(names[levelOne], levelTwo);
-+					int arrayIdx = levelTwo / (Constants.OBJECT_ID_LENGTH / 4)
- 							* 4;
- 					long offset = NB.decodeUInt32(offset32[levelOne], arrayIdx);
- 					if ((offset & IS_O64) != 0) {
-@@ -199,11 +199,11 @@ class PackIndexV2 extends PackIndex {
- 					}
- 					objectId.setOffset(offset);
- 
--					levelTWo += Constants.OBJECT_ID_LENGTH / 4;
-+					levelTwo += Constants.OBJECT_ID_LENGTH / 4;
- 					returnedNumber++;
- 					return objectId;
- 				} else {
--					levelTWo = 0;
-+					levelTwo = 0;
- 				}
- 			}
- 			throw new NoSuchElementException();
+ 	/**
++	 * Convert an ObjectId from raw binary representation.
++	 * 
++	 * @param is
++	 *            the raw integers buffer to read from. At least 5 integers must
++	 *            be available within this int array.
++	 * @return the converted object id.
++	 */
++	public static final ObjectId fromRaw(final int[] is) {
++		return fromRaw(is, 0);
++	}
++
++	/**
++	 * Convert an ObjectId from raw binary representation.
++	 * 
++	 * @param is
++	 *            the raw integers buffer to read from. At least 5 integers
++	 *            after p must be available within this int array.
++	 * @param p
++	 *            position to read the first integer of data from.
++	 * @return the converted object id.
++	 */
++	public static final ObjectId fromRaw(final int[] is, final int p) {
++		return new ObjectId(is[p], is[p + 1], is[p + 2], is[p + 3], is[p + 4]);
++	}
++
++	/**
+ 	 * Convert an ObjectId from hex characters (US-ASCII).
+ 	 * 
+ 	 * @param buf
 -- 
 1.5.5.1
