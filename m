@@ -1,72 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git add: add long equivalents of '-u' and '-f'
- options
-Date: Sun, 15 Jun 2008 13:21:57 -0700
-Message-ID: <7vlk16cuu2.fsf@gitster.siamese.dyndns.org>
-References: <1213436881-2360-1-git-send-email-szeder@ira.uka.de>
- <200806142344.m5ENiLqk020529@mi0.bluebottle.com>
- <20080615085305.GA7003@neumann>
+From: Mirko Stocker <me@misto.ch>
+Subject: Re: Working with Git and CVS in a team.
+Date: Sun, 15 Jun 2008 22:20:05 +0200
+Message-ID: <200806152220.05290.me@misto.ch>
+References: <200806131633.34980.mirko.stocker@hsr.ch> <200806132243.36695.m1stocke@hsr.ch> <20080613204740.GA29404@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Jun 15 22:23:38 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Stocker Mirko (m1stocke@hsr.ch)" <m1stocke@hsr.ch>,
+	Git Mailing List <git@vger.kernel.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jun 15 22:25:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7ylC-0004Nz-3J
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 22:23:34 +0200
+	id 1K7ynS-0004vO-Qi
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 22:25:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945AbYFOUWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jun 2008 16:22:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751634AbYFOUWM
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 16:22:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbYFOUWL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jun 2008 16:22:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C2C5E6CED;
-	Sun, 15 Jun 2008 16:22:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DA7A26CEB; Sun, 15 Jun 2008 16:22:05 -0400 (EDT)
-In-Reply-To: <20080615085305.GA7003@neumann> (SZEDER =?utf-8?Q?G=C3=A1bor'?=
- =?utf-8?Q?s?= message of "Sun, 15 Jun 2008 10:53:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BBD9CA40-3B18-11DD-AE2E-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751973AbYFOUZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 16:25:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbYFOUZA
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 16:25:00 -0400
+Received: from luc80-74-131-252.ch-meta.net ([80.74.131.252]:56179 "EHLO
+	lucius.metanet.ch" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751959AbYFOUZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 16:25:00 -0400
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jun 2008 16:24:59 EDT
+Received: (qmail 10458 invoked from network); 15 Jun 2008 22:17:36 +0200
+Received: from 84-72-93-108.dclient.hispeed.ch (HELO ?192.168.1.127?) (84.72.93.108)
+  by luc80-74-131-153.ch-meta.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 15 Jun 2008 22:17:36 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080613204740.GA29404@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85114>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Friday 13 June 2008 22:47:40 Miklos Vajna wrote:
+> 'origin/origin' means the 'origin' branch of the 'origin' remote. Given
+> that you said you created the 'origin' remote's repo using
+> git-cvsimport, I assumed that the 'origin' remote has only one branch
+> (named 'master').
 
-> On Sun, Jun 15, 2008 at 08:43:12AM +0900, =E3=81=97=E3=82=89=E3=81=84=
-=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 wrote:
->> Isn't this patch adding a new feature during the freezing period bef=
-ore
->> the release?  What is the policy of accepting such a patch in genera=
-l?
-
-The policy during the freeze is "bugfix only unless otherwise noted",
-which is, admittedly, not saying much ;-)
-
-> I think this patch is rather a bugfix in the user interface than a ne=
-w
-> feature.
-
-Strictly speaking, this is a new feature but I think the documentation
-value to clarify -u stands for "update" is great enough to make it an
-exception.  I've rewritten (from empty!  Szeder, next time please write
-sensible commit log message to defend your changes, instead of having _=
-me_
-to defend your changes to others here, like this) the commit log messag=
-e
-to clarify this point.
+Hm, git-cvsimport created a master and an origin branch. And then I push the 
+origin branch to the bare repository to share it with my colleagues. So for 
+the users, origin/origin contains the original CVS content, so we need to 
+make the diff against that, don't we? That's how I think this whole thing 
+works, I might be wrong :-)
