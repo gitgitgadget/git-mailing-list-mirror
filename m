@@ -1,74 +1,63 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: [PATCH] Documentation: Note about the meaning of "clone"
-Date: Sun, 15 Jun 2008 15:05:27 +0200
-Message-ID: <200806151505.27686.robin.rosenberg.lists@dewire.com>
-References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz> <m3od63ozuf.fsf@localhost.localdomain>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Add SVN->Git conversion example to documentation
+Date: Sun, 15 Jun 2008 15:17:42 +0200
+Message-ID: <20080615131742.GA316@diana.vm.bytemark.co.uk>
+References: <20080614180334.GA26359@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 15:10:24 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Heikki Orsila <heikki.orsila@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Jun 15 15:19:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7rzz-0001E2-6j
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 15:10:23 +0200
+	id 1K7s8N-0003ri-1F
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 15:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757380AbYFONI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 09:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757376AbYFONI4
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 09:08:56 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:18951 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752208AbYFONI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 09:08:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E41558026D9;
-	Sun, 15 Jun 2008 15:08:53 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 86xYE7MC5I7e; Sun, 15 Jun 2008 15:08:53 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 1C61C8006AA;
-	Sun, 15 Jun 2008 15:08:53 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <m3od63ozuf.fsf@localhost.localdomain>
+	id S1757395AbYFONSJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jun 2008 09:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbYFONSH
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 09:18:07 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2751 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753461AbYFONSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 09:18:07 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1K7s74-0000f2-00; Sun, 15 Jun 2008 14:17:42 +0100
 Content-Disposition: inline
+In-Reply-To: <20080614180334.GA26359@zakalwe.fi>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85088>
 
-Clarify that a clone is not an exact copy.
+On 2008-06-14 21:03:34 +0300, Heikki Orsila wrote:
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- Documentation/git-clone.txt |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+>  DESCRIPTION
+>  -----------
+> -git-svn is a simple conduit for changesets between Subversion and gi=
+t.
+> -It is not to be confused with linkgit:git-svnimport[1], which is
+> -read-only.
+> +git-svn is a simple bidirectional conduit for changesets between
+> +Subversion and git. It is used to develop projects with Git tools,
+> +but commit changes to a Subversion repository. It can also be used t=
+o
+> +convert a Subversion repository to a Git repository. It should not t=
+o
+> +be confused with linkgit:git-svnimport[1], which does Subversion to
+> +Git conversion, but not the other direction.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 7973e6a..c9bc627 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -31,7 +31,12 @@ This default configuration is achieved by creating references to
- the remote branch heads under `$GIT_DIR/refs/remotes/origin` and
- by initializing `remote.origin.url` and `remote.origin.fetch`
- configuration variables.
--
-++
-+*NOTE*: Although this command is called clone, the clone is not identical
-+in all respects. Local branches in the repository being cloned
-+becomes remote tracking branches in the clone and remote tracking
-+branches are not cloned at all. For security reasone the config sections
-+and triggers are not cloned either.
- 
- OPTIONS
- -------
--- 
-1.5.5.1.178.g1f811
+I don't know if it's such a good idea to mention git-svnimport at all;
+but if you do, please also mention that it's no longer supported. (But
+really, since it is no longer supported, I doubt mentioning it is a
+good idea.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
