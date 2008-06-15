@@ -1,7 +1,7 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 15/20] Refactor getRevSort() calls to hasRevSort()
-Date: Sun, 15 Jun 2008 23:45:44 +0200
-Message-ID: <1213566349-25395-16-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 18/20] New CountingOutputStream class - stream decorator
+Date: Sun, 15 Jun 2008 23:45:47 +0200
+Message-ID: <1213566349-25395-19-git-send-email-marek.zawirski@gmail.com>
 References: <1213566349-25395-1-git-send-email-marek.zawirski@gmail.com>
  <1213566349-25395-2-git-send-email-marek.zawirski@gmail.com>
  <1213566349-25395-3-git-send-email-marek.zawirski@gmail.com>
@@ -17,125 +17,160 @@ References: <1213566349-25395-1-git-send-email-marek.zawirski@gmail.com>
  <1213566349-25395-13-git-send-email-marek.zawirski@gmail.com>
  <1213566349-25395-14-git-send-email-marek.zawirski@gmail.com>
  <1213566349-25395-15-git-send-email-marek.zawirski@gmail.com>
+ <1213566349-25395-16-git-send-email-marek.zawirski@gmail.com>
+ <1213566349-25395-17-git-send-email-marek.zawirski@gmail.com>
+ <1213566349-25395-18-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Jun 15 23:48:50 2008
+X-From: git-owner@vger.kernel.org Sun Jun 15 23:49:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K805c-00020y-Nq
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:48:45 +0200
+	id 1K8061-00026j-N0
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753781AbYFOVrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 17:47:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753801AbYFOVrl
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:47:41 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:31454 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753766AbYFOVrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 17:47:40 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2958678ywe.1
-        for <git@vger.kernel.org>; Sun, 15 Jun 2008 14:47:40 -0700 (PDT)
+	id S1753920AbYFOVr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 17:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbYFOVr7
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:47:59 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:50674 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753852AbYFOVr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 17:47:58 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so3138098fgg.17
+        for <git@vger.kernel.org>; Sun, 15 Jun 2008 14:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=AE+/OQFakv3SJrD9Cc/NRNW8qpHeXPPQ5/X2AKb8bX8=;
-        b=KiG/yXnZLp320tAk3FgIYegJ3Ei2H7WCQ0llOP/3gOlcHpOw6XSOMaWztSYQXbk1eh
-         DZHy5OlvHkMljL4sVIgHj8rfyFKYnrzdZy0E/0w6zp/J2Ulucux0q2+1aLr8BAuEVx8B
-         T0f/aAtQaa/5iG2NBsYirOqHw5IwvdxecPL4Y=
+        bh=BsTkhmzZgZa/+tR+hJytk8c3iKQf7PEvCMw7E9ev50U=;
+        b=uc5DPKGNcL80IG247w3lFN/Z1D8EYeUuUtRenjaHZKoO85ABr3q/Ljxn4tahK9hpVi
+         o/8npcSBqo6I1F21Q0XJp6IN3DcpNXsNbcu4I59JqHKA1fWlduUi+E1K6n41hCRj0XWa
+         wjYivNO4vVFZRSVFF6ENCnTaBKX1qA7kv3+98=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=S4cgtg2LT8p2ArvyzBpnC1yJDjcGzGyENuGdOMA95uEb7gGUNR99mRvZMhuVNs+brc
-         +qbeFv57ysZzxLyepRQ59ATpVXyzjquYUuPrhIy6ZtATRFBNc2cBSTOBqqMxwPAUWdU/
-         e/EPZdgKkDEVIB+XswZWoAIC+JIRaG1Q3r7/E=
-Received: by 10.151.101.20 with SMTP id d20mr9431799ybm.104.1213566459970;
-        Sun, 15 Jun 2008 14:47:39 -0700 (PDT)
+        b=AsxGR1F8um5E1eO+uh5T5bx4DUw8ZEekIKJiL5pCHO7TYqXuPSE1RyuXQAT8rr9Yxt
+         ieANDcin9SmcwAWCG3A0GyFhV4dsUvkosxb1RPa3qGrUMCMyc4kqUDUzJVDZkvsYxk/j
+         IY9XFJ7CgWxjv+8eOcoaD/lZK8DYGfx/Z/JoI=
+Received: by 10.86.82.16 with SMTP id f16mr7257858fgb.9.1213566473325;
+        Sun, 15 Jun 2008 14:47:53 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id k7sm16646880qba.3.2008.06.15.14.47.37
+        by mx.google.com with ESMTPS id 12sm10839394fgg.0.2008.06.15.14.47.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Jun 2008 14:47:39 -0700 (PDT)
+        Sun, 15 Jun 2008 14:47:52 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.1
-In-Reply-To: <1213566349-25395-15-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1213566349-25395-18-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85143>
 
-It is not signifficant performance improvement, just avoids creation of
-few unnecessary objects.
-However, it improves encapsulation and keeps existing RevSort checking
-code consistent with further use of hasRevSort().
+This decorator provides information about number of already written
+bytes.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../src/org/spearce/jgit/revwalk/ObjectWalk.java   |    2 +-
- .../org/spearce/jgit/revwalk/StartGenerator.java   |   14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ .../spearce/jgit/util/CountingOutputStream.java    |   89 ++++++++++++++++++++
+ 1 files changed, 89 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
-index a36c1cc..68ed861 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
-@@ -198,7 +198,7 @@ public class ObjectWalk extends RevWalk {
- 				return null;
- 			if ((r.flags & UNINTERESTING) != 0) {
- 				markTreeUninteresting(r.getTree());
--				if (getRevSort().contains(RevSort.BOUNDARY))
-+				if (hasRevSort(RevSort.BOUNDARY))
- 					return r;
- 				continue;
- 			}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
-index debd168..7ddcd3c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
-@@ -38,7 +38,6 @@
- package org.spearce.jgit.revwalk;
- 
- import java.io.IOException;
--import java.util.EnumSet;
- 
- import org.spearce.jgit.errors.IncorrectObjectTypeException;
- import org.spearce.jgit.errors.MissingObjectException;
-@@ -91,8 +90,7 @@ class StartGenerator extends Generator {
- 			return mbg.next();
- 		}
- 
--		final EnumSet<RevSort> sort = w.getRevSort();
--		boolean boundary = sort.contains(RevSort.BOUNDARY);
-+		boolean boundary = walker.hasRevSort(RevSort.BOUNDARY);
- 
- 		if (!boundary && walker instanceof ObjectWalk) {
- 			// The object walker requires boundary support to color
-@@ -110,9 +108,10 @@ class StartGenerator extends Generator {
- 		}
- 
- 		int pendingOutputType = 0;
--		if (sort.contains(RevSort.START_ORDER) && !(q instanceof FIFORevQueue))
-+		if (walker.hasRevSort(RevSort.START_ORDER)
-+				&& !(q instanceof FIFORevQueue))
- 			q = new FIFORevQueue(q);
--		if (sort.contains(RevSort.COMMIT_TIME_DESC)
-+		if (walker.hasRevSort(RevSort.COMMIT_TIME_DESC)
- 				&& !(q instanceof DateRevQueue))
- 			q = new DateRevQueue(q);
- 		if (tf != TreeFilter.ALL) {
-@@ -141,9 +140,10 @@ class StartGenerator extends Generator {
- 			g = new RewriteGenerator(g);
- 		}
- 
--		if (sort.contains(RevSort.TOPO) && (g.outputType() & SORT_TOPO) == 0)
-+		if (walker.hasRevSort(RevSort.TOPO)
-+				&& (g.outputType() & SORT_TOPO) == 0)
- 			g = new TopoSortGenerator(g);
--		if (sort.contains(RevSort.REVERSE))
-+		if (walker.hasRevSort(RevSort.REVERSE))
- 			g = new LIFORevQueue(q);
- 		if (boundary)
- 			g = new BoundaryGenerator(w, g);
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java b/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
+new file mode 100644
+index 0000000..574bb96
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
+@@ -0,0 +1,89 @@
++/*
++ * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.util;
++
++import java.io.FilterOutputStream;
++import java.io.IOException;
++import java.io.OutputStream;
++
++/**
++ * Counting output stream decoration. Counts bytes written to stream.
++ */
++public class CountingOutputStream extends FilterOutputStream {
++
++	private int count;
++
++	/**
++	 * Create counting stream being decorated to provided real output stream.
++	 * 
++	 * @param out
++	 *            output stream where data should be written
++	 */
++	public CountingOutputStream(OutputStream out) {
++		super(out);
++	}
++
++	@Override
++	public void write(int b) throws IOException {
++		out.write(b);
++		count++;
++	}
++
++	@Override
++	public void write(byte[] b, int off, int len) throws IOException {
++		out.write(b, off, len);
++		count += len;
++	}
++
++	/**
++	 * Return number of already written bytes.
++	 * 
++	 * @return number of written bytes since last reset (object is reset upon
++	 *         creation)
++	 */
++	public int getCount() {
++		return count;
++	}
++
++	/**
++	 * Reset counter to zero value.
++	 */
++	public void reset() {
++		count = 0;
++	}
++}
 -- 
 1.5.5.1
