@@ -1,58 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Working with Git and CVS in a team.
-Date: Sun, 15 Jun 2008 16:48:41 -0400
-Message-ID: <20080615204841.GA10270@sigill.intra.peff.net>
-References: <200806131633.34980.mirko.stocker@hsr.ch> <200806132247.03947.m1stocke@hsr.ch> <20080613205525.GA21165@sigill.intra.peff.net> <200806152222.50119.me@misto.ch>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [Crash] git-push $remote $non_ref:$anything
+Date: Sun, 15 Jun 2008 17:06:52 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806151626260.19665@iabervon.org>
+References: <20080615193823.GA11218@glandium.org> <20080615195541.GA7683@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Stocker Mirko (m1stocke@hsr.ch)" <m1stocke@hsr.ch>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mirko Stocker <me@misto.ch>
-X-From: git-owner@vger.kernel.org Sun Jun 15 22:50:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 15 23:08:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7zAw-0002ZH-4N
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 22:50:10 +0200
+	id 1K7zSZ-0006oa-PP
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbYFOUso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 16:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbYFOUso
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 16:48:44 -0400
-Received: from peff.net ([208.65.91.99]:2230 "EHLO peff.net"
+	id S1752229AbYFOVGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 17:06:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752166AbYFOVGy
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:06:54 -0400
+Received: from iabervon.org ([66.92.72.58]:51467 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752070AbYFOUso (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 16:48:44 -0400
-Received: (qmail 14686 invoked by uid 111); 15 Jun 2008 20:48:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 15 Jun 2008 16:48:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Jun 2008 16:48:41 -0400
-Content-Disposition: inline
-In-Reply-To: <200806152222.50119.me@misto.ch>
+	id S1752070AbYFOVGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 17:06:54 -0400
+Received: (qmail 13010 invoked by uid 1000); 15 Jun 2008 21:06:52 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Jun 2008 21:06:52 -0000
+In-Reply-To: <20080615195541.GA7683@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85118>
 
-On Sun, Jun 15, 2008 at 10:22:49PM +0200, Mirko Stocker wrote:
+On Sun, 15 Jun 2008, Jeff King wrote:
 
-> >   mkdir bare.git && (cd bare.git && git init)
-> >   mkdir cvsimport-hack && ln -s ../bare.git cvsimport-hack/.git
-> >   git cvsimport -C cvsimport-hack
+> [cc'ing Daniel for remote.c advice]
 > 
-> Uh, ok.. :) Thanks. 
+> On Sun, Jun 15, 2008 at 09:38:23PM +0200, Mike Hommey wrote:
 > 
-> I just wondered, do I even need the additional bare repository? If I use 
-> git-cvsimport with -i, then it creates only the .git without doing a 
-> checkout, then we could just clone this one from the clients and pull/push to 
-> it?
+> > I somehow managed to get a segfault by running this:
+> > 
+> > git push origin non-existant-branch-name:non-existant-branch-name
+> 
+> Hmm. The problem is the ref-guessing code. Given "git push foo:bar",
+> when we try to figure out what "bar" means we first try to find
+> refs/heads/bar or refs/heads/bar on the remote. But if that fails, we
+> are pushing a new item, so we try to use the same prefix as what "foo"
+> resolved to (e.g., if "foo" is a branch, we make it "refs/heads/bar").
+> 
+> So if "foo" doesn't resolve, we end up dereferencing NULL as part of our
+> guess. And the fix is obvious and the patch is below.
+> 
+> But it kind of makes me wonder why we bother looking at the dst side of
+> the refspec at all, since the src has already failed. Is there a good
+> reason not to just bail from match_explicit when we can't resolve the
+> src?
 
-Sure. From the client perspective, there's not really a difference
-between a bare repo and one with a working directory. Using just one
-repo with a working directory will mean you just have one extra checkout
-on the server, which wastes a little space.
+The only thing I can think of is that a user might have made some mistake 
+that would be more obvious with the error messages about both sides. Aside 
+from that, it doesn't seem to have any possible effects anyway.
 
--Peff
+	-Daniel
+*This .sig left intentionally blank*
