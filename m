@@ -1,81 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] path-list documentation: document all functions and data structures
-Date: Sun, 15 Jun 2008 02:01:19 -0700 (PDT)
-Message-ID: <m3k5groyw8.fsf@localhost.localdomain>
-References: <alpine.DEB.1.00.0806141705050.6439@racer>
-	<1213485725-6755-1-git-send-email-vmiklos@frugalware.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 1/3] cpio is no longer used by git-clone
+Date: Sun, 15 Jun 2008 12:13:22 +0200
+Message-ID: <200806151213.22624.johan@herland.net>
+References: <200806120920.31161.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Jun 15 11:02:45 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 15 12:15:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7o8J-0004Da-Uu
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 11:02:44 +0200
+	id 1K7pGd-0003OD-F8
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 12:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756548AbYFOJBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 05:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbYFOJBX
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 05:01:23 -0400
-Received: from ik-out-1112.google.com ([66.249.90.177]:21680 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756475AbYFOJBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 05:01:22 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so3678812ika.5
-        for <git@vger.kernel.org>; Sun, 15 Jun 2008 02:01:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=VA9TBYvXYHf/woMhDiHAiECOJPBm4FtZrTDzrxuyNhc=;
-        b=R63Q7hhxnK+LbymWQA4BFV0HjeQoyKn3mY1bNNZ7pxqaiowNdYZ5jkQNtnsqZHA9TF
-         B1ggMY98uLLR7ZS8E2Bt/7WP215/YhWozYB2bi4XtXxJFScBWbksNycydtvQLxTVEOVB
-         R1l5itTCaRMUSQQyyg+1AoEkoJcN2KseP/lsk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=h8ViI/wp8o5KNDbh6MPqnVJhrbXK8f7QEZfcJPZfHhUdOli7ppDuAwmOjCSrs6chMs
-         aUDAXqCWjhwPSk3amItopIPE3cLZik2WkaKiLlVJP74hvB89Ru6huL96m8bTV1yX+mX6
-         HgweD9DRcEvve3MhIbGtLSSUITo0OLaUcaBow=
-Received: by 10.210.54.15 with SMTP id c15mr4829294eba.128.1213520480220;
-        Sun, 15 Jun 2008 02:01:20 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.239.84])
-        by mx.google.com with ESMTPS id c25sm6751643ika.11.2008.06.15.02.01.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Jun 2008 02:01:19 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5F91Fqg031023;
-	Sun, 15 Jun 2008 11:01:15 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5F91BqD031020;
-	Sun, 15 Jun 2008 11:01:11 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1213485725-6755-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757011AbYFOKNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 06:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757006AbYFOKNz
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 06:13:55 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:59619 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756992AbYFOKNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 06:13:54 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K2I0080X1QUO500@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 15 Jun 2008 12:13:42 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2I00LJQ1QAKJ90@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 15 Jun 2008 12:13:22 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2I00IO61QAQDF0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 15 Jun 2008 12:13:22 +0200 (CEST)
+In-reply-to: <200806120920.31161.johan@herland.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85074>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ INSTALL |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
 
-> +NOTE: It is more efficient to build an unsorted list and sort it
-> +afterwards, instead of building a sorted list `(O(n log n)` instead of
-> +`O(n^2))`.
-
-I think there is typo here (misplaced backticks '`' on the wrong side
-of enclosing parentheses), and this fragment should read:
-
-+afterwards, instead of building a sorted list (`O(n log n)` instead of
-+`O(n^2)`).
-
+diff --git a/INSTALL b/INSTALL
+index d9b425f..9888f25 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -83,9 +83,6 @@ Issues of note:
+ 	- "perl" and POSIX-compliant shells are needed to use most of
+ 	  the barebone Porcelainish scripts.
+ 
+-	- "cpio" is used by git-clone when doing a local (possibly
+-	  hardlinked) clone.
+-
+  - Some platform specific issues are dealt with Makefile rules,
+    but depending on your specific installation, you may not
+    have all the libraries/tools needed, or you may have
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.6.rc2.128.gf64ae
