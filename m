@@ -1,197 +1,83 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] path-list documentation: document all functions and data structures
-Date: Sun, 15 Jun 2008 14:06:43 +0200
-Message-ID: <1213531603-8364-1-git-send-email-vmiklos@frugalware.org>
-References: <m3k5groyw8.fsf@localhost.localdomain>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr+ml.git@free.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: PATCH] cvsimport: Clarification on the use of -r
+Date: Sun, 15 Jun 2008 15:05:28 +0200
+Message-ID: <200806151505.28987.robin.rosenberg.lists@dewire.com>
+References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz> <m3od63ozuf.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 14:07:46 2008
+X-From: git-owner@vger.kernel.org Sun Jun 15 15:10:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7r1H-0000Mu-2i
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 14:07:39 +0200
+	id 1K7rzz-0001E2-Pw
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 15:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757337AbYFOMGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 08:06:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757336AbYFOMGn
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 08:06:43 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:38876 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757317AbYFOMGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 08:06:42 -0400
-Received: from vmobile.example.net (dsl5401C769.pool.t-online.hu [84.1.199.105])
-	by yugo.frugalware.org (Postfix) with ESMTP id CDAC21DDC5B;
-	Sun, 15 Jun 2008 14:06:39 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id D5E5218DFDC; Sun, 15 Jun 2008 14:06:43 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.rc2.dirty
-In-Reply-To: <m3k5groyw8.fsf@localhost.localdomain>
+	id S1757408AbYFONJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 09:09:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbYFONI6
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 09:08:58 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:18959 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753461AbYFONI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 09:08:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E98ED1456A30;
+	Sun, 15 Jun 2008 15:08:54 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id W9ikd9p5PtxY; Sun, 15 Jun 2008 15:08:54 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 3C56B8006AA;
+	Sun, 15 Jun 2008 15:08:54 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <m3od63ozuf.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85086>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
+ Documentation/git-cvsimport.txt |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
 
-On Sun, Jun 15, 2008 at 02:01:19AM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
-> > +NOTE: It is more efficient to build an unsorted list and sort it
-> > +afterwards, instead of building a sorted list `(O(n log n)` instead
-> > of
-> > +`O(n^2))`.
->
-> I think there is typo here (misplaced backticks '`' on the wrong side
-> of enclosing parentheses), and this fragment should read:
->
-> +afterwards, instead of building a sorted list (`O(n log n)` instead
-> of
-> +`O(n^2)`).
-
-Exactly, thanks for pointing out. Updated patch below.
-
- Documentation/technical/api-path-list.txt |  125 ++++++++++++++++++++++++++++-
- 1 files changed, 121 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
-index d077683..9dbedd0 100644
---- a/Documentation/technical/api-path-list.txt
-+++ b/Documentation/technical/api-path-list.txt
-@@ -1,9 +1,126 @@
- path-list API
- =============
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index 2f9b35f..b873882 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -28,8 +28,12 @@ You should *never* do any work of your own on the branches that are
+ created by git-cvsimport.  By default initial import will create and populate a
+ "master" branch from the CVS repository's main branch which you're free
+ to work with; after that, you need to 'git merge' incremental imports, or
+-any CVS branches, yourself.  It is advisable to specify a named remote via
+--r to separate and protect the incoming branches.
++any CVS branches, yourself.
++
++It is advisable to specify a named remote via -r to separate and protect
++the incoming branches if you intend to do your work in the same repository. If
++you want to have a cvs import-only repostory which you clone to your work
++repository, then do not use the -r option.
  
--Talk about <path-list.h>, things like
-+The path_list API offers a data structure and functions to handle sorted
-+and unsorted string lists.
  
--* it is not just paths but strings in general;
--* the calling sequence.
-+The name is a bit misleading, a path_list may store not only paths but
-+strings in general.
+ OPTIONS
+@@ -56,7 +60,7 @@ OPTIONS
+ -r <remote>::
+ 	The git remote to import this CVS repository into.
+ 	Moves all CVS branches into remotes/<remote>/<branch>
+-	akin to the git-clone --use-separate-remote option.
++	akin what git clone does when cloning a repository.
  
--(Dscho)
-+The caller:
-+
-+. Allocates and clears a `struct path_list` variable.
-+
-+. Initializes the members. You might want to set the flag `strdup_paths`
-+  if the strings should be strdup()ed. For example, this is necessary
-+  when you add something like git_path("..."), since that function returns
-+  a static buffer that will change with the next call to git_path().
-++
-+If you need something advanced, you can manually malloc() the `items`
-+member (you need this if you add things later) and you should set the
-+`nr` and `alloc` members in that case, too.
-+
-+. Adds new items to the list, using `path_list_append` or `path_list_insert`.
-+
-+. Can check if a string is in the list using `path_list_has_path` or
-+  `unsorted_path_list_has_path` and get it from the list using
-+  `path_list_lookup` for sorted lists.
-+
-+. Can sort an unsorted list using `sort_path_list`.
-+
-+. Finally it should free the list using `path_list_clear`.
-+
-+Example:
-+
-+----
-+struct path_list list;
-+int i;
-+
-+memset(&list, 0, sizeof(struct path_list));
-+path_list_append("foo", &list);
-+path_list_append("bar", &list);
-+for (i = 0; i < list.nr; i++)
-+	printf("%s\n", list.items[i].path)
-+----
-+
-+NOTE: It is more efficient to build an unsorted list and sort it
-+afterwards, instead of building a sorted list (`O(n log n)` instead of
-+`O(n^2)`).
-++
-+However, if you use the list to check if a certain string was added
-+already, you should not do that (using unsorted_path_list_has_path()),
-+because the complexity would be quadratic again (but with a worse factor).
-+
-+Functions
-+---------
-+
-+* General ones (works with sorted and unsorted lists as well)
-+
-+`print_path_list`::
-+
-+	Dump a path_list to stdout, useful mainly for debugging purposes. It
-+	can take an optional header argument and it writes out the
-+	string-pointer pairs of the path_list, each one in its own line.
-+
-+`path_list_clear`::
-+
-+	Free a path_list. The `path` pointer of the items will be freed in case
-+	the `strdup_paths` member of the path_list is set. The second parameter
-+	controls if the `util` pointer of the items should be freed or not.
-+
-+* Functions for sorted lists only
-+
-+`path_list_has_path`::
-+
-+	Determine if the path_list has a given string or not.
-+
-+`path_list_insert`::
-+
-+	Insert a new element to the path_list. The returned pointer can be handy
-+	if you want to write something to the `util` pointer of the
-+	path_list_item containing the just added string.
-++
-+Since this function uses xrealloc() (which die()s if it fails) if the
-+list needs to grow, it is safe not to check the pointer. I.e. you may
-+write `path_list_insert(...)->util = ...;`.
-+
-+`path_list_lookup`::
-+
-+	Look up a given string in the path_list, returning the containing
-+	path_list_item. If the string is not found, NULL is returned.
-+
-+* Functions for unsorted lists only
-+
-+`path_list_append`::
-+
-+	Append a new string to the end of the path_list.
-+
-+`sort_path_list`::
-+
-+	Make an unsorted list sorted.
-+
-+`unsorted_path_list_has_path`::
-+
-+	It's like `path_list_has_path()` but for unsorted lists.
-++
-+This function needs to look through all items, as opposed to its
-+counterpart for sorted lists, which performs a binary search.
-+
-+Data structures
-+---------------
-+
-+* `struct path_list_item`
-+
-+Represents an item of the list. The `path` member is a pointer to the
-+string, and you may use the `util` member for any purpose, if you want.
-+
-+* `struct path_list`
-+
-+Represents the list itself.
-+
-+. The array of items are available via the `items` member.
-+. The `nr` member contains the number of items stored in the list.
-+. The `alloc` member is used to avoid reallocating at every insertion.
-+  You should not tamper with it.
-+. Setting the `strdup_paths` member to 1 will strdup() the strings
-+  before adding them, see above.
+ -o <branch-for-HEAD>::
+ 	When no remote is specified (via -r) the 'HEAD' branch
 -- 
-1.5.6.rc2.dirty
+1.5.5.1.178.g1f811
