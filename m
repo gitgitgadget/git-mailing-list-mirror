@@ -1,81 +1,50 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Bug with approxidate("never")?
-Date: Mon, 16 Jun 2008 01:20:44 +0200
-Message-ID: <4855A3CC.2090701@free.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: Re: [PATCH] use natural ordering to display list of branches.
+Date: Sun, 15 Jun 2008 16:26:03 -0700
+Message-ID: <98E71E29-BDAD-4C80-AB44-37CC4D355053@develooper.com>
+References: <d45085aa0806051041y42ce467fq2e07371d225ccca3@mail.gmail.com> <alpine.DEB.1.00.0806051946100.21190@racer>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 16 01:21:06 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 01:27:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K81Wv-0003DN-Hz
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 01:21:01 +0200
+	id 1K81cq-0004Oa-0j
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 01:27:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbYFOXUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 19:20:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbYFOXUH
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 19:20:07 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:36780 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751393AbYFOXUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 19:20:06 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 8A45512B6BD;
-	Mon, 16 Jun 2008 01:20:04 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 426DB12B6B8;
-	Mon, 16 Jun 2008 01:20:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+	id S1751393AbYFOX0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 19:26:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbYFOX0G
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 19:26:06 -0400
+Received: from x8.develooper.com ([216.52.237.208]:46511 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751471AbYFOX0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 19:26:05 -0400
+Received: (qmail 24341 invoked from network); 15 Jun 2008 23:26:04 -0000
+Received: from gw.develooper.com (HELO embla.bn.dev) (ask@mail.dev@64.81.84.140)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 15 Jun 2008 23:26:04 -0000
+In-Reply-To: <alpine.DEB.1.00.0806051946100.21190@racer>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85153>
 
-Hi,
 
-While I was playing in the stash area and with "reflog expire" I was
-surprised by the fact that "never" is not always never. For example,
-approxidate("never") returns 4294960096 for my timezone (CET-2), it
-loops with all negative timezones.
+Not to pick on anyone in particular, but as a casual reader of the  
+list just having read the 25 replies this patch got I feel compelled  
+to send a link to the original "any colour of bikeshed will do" mail.
 
-I fixed it by replacing date_never() with this one:
+	http://xrl.us/b7g9d (Link to www.freebsd.org)
+	or http://www.bikeshed.com/	
 
-static void date_never(struct tm *tm, int *num)
-{
-        time_t n = 0;
-        localtime_r(&n, tm);
-}
 
-but I not sure this is the right fix. Better idea?
 
-If you want to try yourself, the following test case should trigger
-the problem.
+  - ask
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 73f830d..b07d7bd 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -158,6 +158,17 @@ test_expect_success 'reflog expire' '
-        check_fsck "dangling commit $K"
- '
- 
-+test_expect_success 'reflog expire --expire=never' '
-+
-+       TZ=CET-2 &&
-+       git reflog expire --expire=never \
-+               --stale-fix \
-+               --all &&
-+
-+       loglen=$(wc -l <.git/logs/refs/heads/master) &&
-+       test $loglen = 2
-+'
-+
- test_expect_success 'prune and fsck' '
- 
-        git prune &&
+-- 
+http://develooper.com/ - http://askask.com/
