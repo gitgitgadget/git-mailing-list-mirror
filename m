@@ -1,52 +1,61 @@
-From: pijama@proexpo.ru
-Subject: =?windows-1251?B?z/Du5OC48vH/IOri4PDy6PDgIOIg0e736A==?=
-Date: Sun, 15 Jun 2008 05:47:16 +0400
-Message-ID: <000501c8ce89-bdf2e7c0-f2378955@ono.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 15 03:50:03 2008
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: Re: How to compare different files in different branches
+Date: Sat, 14 Jun 2008 18:49:43 -0700
+Message-ID: <3E23E92E-37E7-4076-9277-0E1002EC196F@develooper.com>
+References: <20080606122421.GA1521@denkbrett.schottelius.org> <20080606123539.GA3119@mithlond.arda.local> <20080608094754.GB1521@denkbrett.schottelius.org> <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Nico -telmich- Schottelius <nico-git-20080606@schottelius.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 15 03:58:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7hNZ-0000WR-Q8
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 03:50:02 +0200
+	id 1K7hVF-0001sH-8S
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 03:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077AbYFOBtG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008 21:49:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754937AbYFOBtF
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 21:49:05 -0400
-Received: from smtp2.ono.com ([62.42.230.20]:43738 "EHLO resmaa04.ono.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754861AbYFOBtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jun 2008 21:49:05 -0400
-X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Jun 2008 21:49:04 EDT
-Received: from 85.137.55.242.dyn.user.ono.com (85.137.55.242) by resmaa04.ono.com (7.3.118.8)
-        id 48526459001CC004; Sun, 15 Jun 2008 03:43:39 +0200
-X-Priority: 3
+	id S1755239AbYFOB42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jun 2008 21:56:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755032AbYFOB42
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 21:56:28 -0400
+Received: from x8.develooper.com ([216.52.237.208]:45991 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754781AbYFOB41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2008 21:56:27 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Jun 2008 21:56:27 EDT
+Received: (qmail 24616 invoked from network); 15 Jun 2008 01:49:44 -0000
+Received: from gw.develooper.com (HELO embla.bn.dev) (ask@mail.dev@64.81.84.140)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 15 Jun 2008 01:49:44 -0000
+In-Reply-To: <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.7 points;
- *  0.2 NO_REAL_NAME From: does not include a real name
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: 2-ec.net]
- *  0.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: 2-ec.net]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: 2-ec.net]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: 2-ec.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: 2-ec.net]
- *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85058>
 
-=CF=F0=E5=E4=EB=E0=E3=E0=E5=F2=F1=FF =EA =EF=F0=EE=E4=E0=E6=E5 =EA=E2=E0=
-=F0=F2=E8=F0=E0 =E2 =D1=EE=F7=E8
-=CF=EE=E4=F0=EE=E1=ED=EE=F1=F2=E8 =F1=EC. =ED=E0 =F1=E0=E9=F2=E5 http:/=
-/2-ec.net/rek1.html
+
+On Jun 8, 2008, at 2:51, Junio C Hamano wrote:
+
+>> Perhaps we should reference git-rev-list(1) from git-diff(1), too?
+>
+> This is just the standard syntax to name blob _anywhere_, so we  
+> should not
+> hide it in git-rev-list(1) but somewhere people would read before  
+> reading
+> any "technical manual" material, perhaps in the tutorial and git(1).
+
++1!   A "how to specify files and revisions" tutorial with tips,  
+tricks and examples would be great.
+
+Since it's much more powerful in git than in other SCMs, this is one  
+of the larger bits of things to learn.
+
+
+  - ask
+
+-- 
+http://develooper.com/ - http://askask.com/
