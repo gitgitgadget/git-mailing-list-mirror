@@ -1,92 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Document clone of clone loosing branches?
-Date: Sun, 15 Jun 2008 01:40:45 -0700 (PDT)
-Message-ID: <m3od63ozuf.fsf@localhost.localdomain>
-References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 1/2] git add: add long equivalents of '-u' and '-f' options
+Date: Sun, 15 Jun 2008 10:53:05 +0200
+Message-ID: <20080615085305.GA7003@neumann>
+References: <1213436881-2360-1-git-send-email-szeder@ira.uka.de>
+	<200806142344.m5ENiLqk020529@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>
-X-From: git-owner@vger.kernel.org Sun Jun 15 10:41:45 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Sun Jun 15 10:54:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7nny-00086G-PO
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 10:41:43 +0200
+	id 1K7o0F-0002Qt-9y
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 10:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756443AbYFOIkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 04:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756326AbYFOIkt
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 04:40:49 -0400
-Received: from hu-out-0506.google.com ([72.14.214.235]:41333 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755533AbYFOIks (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 04:40:48 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so5891730hub.21
-        for <git@vger.kernel.org>; Sun, 15 Jun 2008 01:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=MI1u/N8YzLCAFp+Ommc1vL3p5p1KpbyZjn7S3LATTt4=;
-        b=WuE3AWe57PtJrxV5Gr6rdd+RQOt7VoOdtUMGWz3N8H8HbI9ToZWKGbzNSMTRZMKbiD
-         3lTSvNqJBK3OMrt2WeSOjKHKwyTUezVYbzgQoaG/A3eNWCCsh13vB+DzFPXHUm6PMzbb
-         66YeMuun2DGjSHbo5mN8A4D8ZkFvhLb83cFyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=tKRghW30zAwVTwEbrDwOklu0QqeF8qlHokiO/gUOq8XHopFzRTrRCb5TfZtHwx5fno
-         fDj5EHu2pORfCaaBbL00cY66lLsvdHn3XZn0RjEB4j13iwmC74kgJ+4XDV7BaPwGE4dO
-         mX/Xbk7Uj+MNUFqmiWLb92UmdX1EsQLXBu86Q=
-Received: by 10.210.21.6 with SMTP id 6mr4841862ebu.3.1213519246270;
-        Sun, 15 Jun 2008 01:40:46 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.239.84])
-        by mx.google.com with ESMTPS id b36sm6654413ika.5.2008.06.15.01.40.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Jun 2008 01:40:45 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5F8efXt030909;
-	Sun, 15 Jun 2008 10:40:41 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5F8eehA030906;
-	Sun, 15 Jun 2008 10:40:40 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756530AbYFOIxY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jun 2008 04:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756548AbYFOIxY
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 04:53:24 -0400
+Received: from moutng.kundenserver.de ([212.227.126.179]:54805 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756475AbYFOIxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 04:53:21 -0400
+Received: from [127.0.1.1] (p5B13131C.dip0.t-ipconnect.de [91.19.19.28])
+	by mrelayeu.kundenserver.de (node=mrelayeu7) with ESMTP (Nemesis)
+	id 0ML2xA-1K7nz00ui8-0005jS; Sun, 15 Jun 2008 10:53:11 +0200
+Content-Disposition: inline
+In-Reply-To: <200806142344.m5ENiLqk020529@mi0.bluebottle.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX197+fqJ/29LchlLq2rgRqTUvHhuPDJ1Pjo/wck
+ QR19vdrEqYAUNKGqfNON+KO/6YeDhFftW7GadXkbFaUKPeMXhK
+ PkgE062t61cTLSj9/ZDRw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85072>
 
-Vaclav Hanzl <hanzl@noel.feld.cvut.cz> writes:
+On Sun, Jun 15, 2008 at 08:43:12AM +0900, =E3=81=97=E3=82=89=E3=81=84=E3=
+=81=97=E3=81=AA=E3=81=AA=E3=81=93 wrote:
+> Isn't this patch adding a new feature during the freezing period befo=
+re
+> the release?  What is the policy of accepting such a patch in general=
+?
+I think this patch is rather a bugfix in the user interface than a new
+feature.
 
-> I wander whether man git-clone is correct when it says "creates
-> remote-tracking branches for each branch in the cloned repository".
-> 
-> IMHO remote-tracking branches in the original repository _are_
-> branches and they are _not_ cloned (when using git-clone with no
-> options) - maybe this is worth noting very explicitly?
-
-It probably should read "for each _regular_ branch in the cloned
-repository".
-
-And of course if you are creating bare clone it does mirror regular
-branches (1:1 mapping) instead of remote-tracking branches (mappping
-from refs/heads/* into refs/remotes/origin/* namespace).
-
-[...]
-> Is it just my failure to read those few hundred man pages carefully
-> enough (I did my best :-) ), or something worth fixing in man
-> git-clone and tutorials?
-
-Even if it is just your failure it would be worh correcting
-(enhancing) documentation to make it more clear.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Regards,
+G=C3=A1bor
