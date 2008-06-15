@@ -1,83 +1,92 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH (WIP)] gitweb: Use Test::WWW::Mechanize::CGI to test gitweb output
-Date: Sun, 15 Jun 2008 10:36:21 +0200
-Message-ID: <200806151036.22205.jnareb@gmail.com>
-References: <200806141447.28052.jnareb@gmail.com> <200806142059.52373.jnareb@gmail.com> <4854343B.40707@gmail.com>
+Subject: Re: Document clone of clone loosing branches?
+Date: Sun, 15 Jun 2008 01:40:45 -0700 (PDT)
+Message-ID: <m3od63ozuf.fsf@localhost.localdomain>
+References: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 10:37:48 2008
+To: Vaclav Hanzl <hanzl@noel.feld.cvut.cz>
+X-From: git-owner@vger.kernel.org Sun Jun 15 10:41:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7nkB-00075C-JF
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 10:37:47 +0200
+	id 1K7nny-00086G-PO
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 10:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756278AbYFOIgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 04:36:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756161AbYFOIgg
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 04:36:36 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:10237 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755533AbYFOIge (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 04:36:34 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so255917ugf.16
-        for <git@vger.kernel.org>; Sun, 15 Jun 2008 01:36:32 -0700 (PDT)
+	id S1756443AbYFOIkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 04:40:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756326AbYFOIkt
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 04:40:49 -0400
+Received: from hu-out-0506.google.com ([72.14.214.235]:41333 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755533AbYFOIks (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 04:40:48 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so5891730hub.21
+        for <git@vger.kernel.org>; Sun, 15 Jun 2008 01:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=wZFcolXcpqy9D+EmPOM4Z7y58UMuL88QoSEV0RaaMMo=;
-        b=ePcvEnREBef2rAtmwgMUgELEPawqWZ9t5pl1LYJ8jKEU2aUsmldJUcR3LXT1zMa4R3
-         ezoC+UfDvjHHuTgIXj3E4Ghefty/p+BMEE7bNHN98Qa3FMxQ6P3ZAj+TrjcHM1qwpZuk
-         OLwzEFPCQg6rVX2PyEuhX0fHqVRJ7KGc+V4BM=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=MI1u/N8YzLCAFp+Ommc1vL3p5p1KpbyZjn7S3LATTt4=;
+        b=WuE3AWe57PtJrxV5Gr6rdd+RQOt7VoOdtUMGWz3N8H8HbI9ToZWKGbzNSMTRZMKbiD
+         3lTSvNqJBK3OMrt2WeSOjKHKwyTUezVYbzgQoaG/A3eNWCCsh13vB+DzFPXHUm6PMzbb
+         66YeMuun2DGjSHbo5mN8A4D8ZkFvhLb83cFyg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mTV/ncAt49WRb+tYzh6lgU/Mz9KCdXd3qCauprfvys1cgXSuezw00BhAmWL+Utbb/b
-         lKOGc3wSxT78fDErK0IfHPBn6hW1TWRkSfwUFQaLCd/sj1MxlyubihzaMIDn+IpDmX5f
-         mUybo3sJGDalqqMujwrHm50H7rj9ghKPKBm/Q=
-Received: by 10.67.16.13 with SMTP id t13mr4234208ugi.64.1213518992816;
-        Sun, 15 Jun 2008 01:36:32 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.239.84])
-        by mx.google.com with ESMTPS id m1sm5854851uge.36.2008.06.15.01.36.30
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=tKRghW30zAwVTwEbrDwOklu0QqeF8qlHokiO/gUOq8XHopFzRTrRCb5TfZtHwx5fno
+         fDj5EHu2pORfCaaBbL00cY66lLsvdHn3XZn0RjEB4j13iwmC74kgJ+4XDV7BaPwGE4dO
+         mX/Xbk7Uj+MNUFqmiWLb92UmdX1EsQLXBu86Q=
+Received: by 10.210.21.6 with SMTP id 6mr4841862ebu.3.1213519246270;
+        Sun, 15 Jun 2008 01:40:46 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.239.84])
+        by mx.google.com with ESMTPS id b36sm6654413ika.5.2008.06.15.01.40.44
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Jun 2008 01:36:31 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4854343B.40707@gmail.com>
-Content-Disposition: inline
+        Sun, 15 Jun 2008 01:40:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5F8efXt030909;
+	Sun, 15 Jun 2008 10:40:41 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5F8eehA030906;
+	Sun, 15 Jun 2008 10:40:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080614.150548.71104932.hanzl@noel.feld.cvut.cz>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85071>
 
-Lea Wiemann wrote:
-> Jakub Narebski wrote:
->>
->> [*1*] it would be nice to have perl_application in WWW::Mechanize::CGI,
->> which would simply setup %ENV and use do() instead of system() on
->> provided application.
+Vaclav Hanzl <hanzl@noel.feld.cvut.cz> writes:
+
+> I wander whether man git-clone is correct when it says "creates
+> remote-tracking branches for each branch in the cloned repository".
 > 
-> Gitweb and probably CGI::Carp qw(fatalsToBrowser) use 'exit', so we'd 
-> have to use Test::Trap (or so) to catch those.  I think we should defer 
-> this until performance actually becomes an issue.
+> IMHO remote-tracking branches in the original repository _are_
+> branches and they are _not_ cloned (when using git-clone with no
+> options) - maybe this is worth noting very explicitly?
 
-The idea was more to avoid bug in cgi_application() method of WM::CGI,
-which fails on pathname containing embedded spaces (that is why
-workaround in setting $gitweb path, to avoid 'trash directory' in it),
-than for performance reasons.
+It probably should read "for each _regular_ branch in the cloned
+repository".
 
-Nevertheless naive $mech->cgi( sub { do "$gitweb"; } ); doesn't work;
-and after thinking about it a little it simply couldn't work...
+And of course if you are creating bare clone it does mirror regular
+branches (1:1 mapping) instead of remote-tracking branches (mappping
+from refs/heads/* into refs/remotes/origin/* namespace).
+
+[...]
+> Is it just my failure to read those few hundred man pages carefully
+> enough (I did my best :-) ), or something worth fixing in man
+> git-clone and tutorials?
+
+Even if it is just your failure it would be worh correcting
+(enhancing) documentation to make it more clear.
 
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
