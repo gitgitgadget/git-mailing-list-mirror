@@ -1,76 +1,197 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 3/3] The "curl" executable is no longer required
-Date: Sun, 15 Jun 2008 14:04:50 +0200
-Message-ID: <vpqej6ylx99.fsf@bauges.imag.fr>
-References: <200806120920.31161.johan@herland.net>
-	<ee77f5c20806150352n6ccf00e9w8083a17d8c5c2326@mail.gmail.com>
-	<m3fxreq60t.fsf@localhost.localdomain>
-	<200806151347.31676.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	David Symonds <dsymonds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Jun 15 14:07:38 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] path-list documentation: document all functions and data structures
+Date: Sun, 15 Jun 2008 14:06:43 +0200
+Message-ID: <1213531603-8364-1-git-send-email-vmiklos@frugalware.org>
+References: <m3k5groyw8.fsf@localhost.localdomain>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr+ml.git@free.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Don Zickus <dzickus@redhat.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 15 14:07:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7r13-0000IL-FL
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 14:07:25 +0200
+	id 1K7r1H-0000Mu-2i
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 14:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757339AbYFOMGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 08:06:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757337AbYFOMGb
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 08:06:31 -0400
-Received: from imag.imag.fr ([129.88.30.1]:59294 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757307AbYFOMGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 08:06:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m5FC5HWP011302
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 15 Jun 2008 14:05:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1K7qyY-0001l6-Co; Sun, 15 Jun 2008 14:04:50 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1K7qyY-0004KZ-AR; Sun, 15 Jun 2008 14:04:50 +0200
-In-Reply-To: <200806151347.31676.johan@herland.net> (Johan Herland's message of "Sun\, 15 Jun 2008 13\:47\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 15 Jun 2008 14:05:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757337AbYFOMGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2008 08:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757336AbYFOMGn
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 08:06:43 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:38876 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757317AbYFOMGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 08:06:42 -0400
+Received: from vmobile.example.net (dsl5401C769.pool.t-online.hu [84.1.199.105])
+	by yugo.frugalware.org (Postfix) with ESMTP id CDAC21DDC5B;
+	Sun, 15 Jun 2008 14:06:39 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id D5E5218DFDC; Sun, 15 Jun 2008 14:06:43 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc2.dirty
+In-Reply-To: <m3k5groyw8.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85085>
 
-Johan Herland <johan@herland.net> writes:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> On Sunday 15 June 2008, Jakub Narebski wrote:
->> It is not necessary to enumerate simple library dependencies, as
->> rpmbuild _detects_ those dependencies during building binary RPMS.
+On Sun, Jun 15, 2008 at 02:01:19AM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
+> > +NOTE: It is more efficient to build an unsorted list and sort it
+> > +afterwards, instead of building a sorted list `(O(n log n)` instead
+> > of
+> > +`O(n^2))`.
+>
+> I think there is typo here (misplaced backticks '`' on the wrong side
+> of enclosing parentheses), and this fragment should read:
+>
+> +afterwards, instead of building a sorted list (`O(n log n)` instead
+> of
+> +`O(n^2)`).
 
-Good to know, and that seems to be a valid argument ("seems to"
-because of my lack of knowledge of rpm, not lack of trust ;-) ).
+Exactly, thanks for pointing out. Updated patch below.
 
->> Besides it worked without libcurl in Requires, so it should
->> continue to work without it, isn't it?
+ Documentation/technical/api-path-list.txt |  125 ++++++++++++++++++++++++++++-
+ 1 files changed, 121 insertions(+), 4 deletions(-)
 
-It used to have a dependency on curl, which itself requires libcurl,
-so the dependency was implicit.
-
-> Someone with more RPM knowledge will have to determine which is
-> right.
-
-+1
-
+diff --git a/Documentation/technical/api-path-list.txt b/Documentation/technical/api-path-list.txt
+index d077683..9dbedd0 100644
+--- a/Documentation/technical/api-path-list.txt
++++ b/Documentation/technical/api-path-list.txt
+@@ -1,9 +1,126 @@
+ path-list API
+ =============
+ 
+-Talk about <path-list.h>, things like
++The path_list API offers a data structure and functions to handle sorted
++and unsorted string lists.
+ 
+-* it is not just paths but strings in general;
+-* the calling sequence.
++The name is a bit misleading, a path_list may store not only paths but
++strings in general.
+ 
+-(Dscho)
++The caller:
++
++. Allocates and clears a `struct path_list` variable.
++
++. Initializes the members. You might want to set the flag `strdup_paths`
++  if the strings should be strdup()ed. For example, this is necessary
++  when you add something like git_path("..."), since that function returns
++  a static buffer that will change with the next call to git_path().
+++
++If you need something advanced, you can manually malloc() the `items`
++member (you need this if you add things later) and you should set the
++`nr` and `alloc` members in that case, too.
++
++. Adds new items to the list, using `path_list_append` or `path_list_insert`.
++
++. Can check if a string is in the list using `path_list_has_path` or
++  `unsorted_path_list_has_path` and get it from the list using
++  `path_list_lookup` for sorted lists.
++
++. Can sort an unsorted list using `sort_path_list`.
++
++. Finally it should free the list using `path_list_clear`.
++
++Example:
++
++----
++struct path_list list;
++int i;
++
++memset(&list, 0, sizeof(struct path_list));
++path_list_append("foo", &list);
++path_list_append("bar", &list);
++for (i = 0; i < list.nr; i++)
++	printf("%s\n", list.items[i].path)
++----
++
++NOTE: It is more efficient to build an unsorted list and sort it
++afterwards, instead of building a sorted list (`O(n log n)` instead of
++`O(n^2)`).
+++
++However, if you use the list to check if a certain string was added
++already, you should not do that (using unsorted_path_list_has_path()),
++because the complexity would be quadratic again (but with a worse factor).
++
++Functions
++---------
++
++* General ones (works with sorted and unsorted lists as well)
++
++`print_path_list`::
++
++	Dump a path_list to stdout, useful mainly for debugging purposes. It
++	can take an optional header argument and it writes out the
++	string-pointer pairs of the path_list, each one in its own line.
++
++`path_list_clear`::
++
++	Free a path_list. The `path` pointer of the items will be freed in case
++	the `strdup_paths` member of the path_list is set. The second parameter
++	controls if the `util` pointer of the items should be freed or not.
++
++* Functions for sorted lists only
++
++`path_list_has_path`::
++
++	Determine if the path_list has a given string or not.
++
++`path_list_insert`::
++
++	Insert a new element to the path_list. The returned pointer can be handy
++	if you want to write something to the `util` pointer of the
++	path_list_item containing the just added string.
+++
++Since this function uses xrealloc() (which die()s if it fails) if the
++list needs to grow, it is safe not to check the pointer. I.e. you may
++write `path_list_insert(...)->util = ...;`.
++
++`path_list_lookup`::
++
++	Look up a given string in the path_list, returning the containing
++	path_list_item. If the string is not found, NULL is returned.
++
++* Functions for unsorted lists only
++
++`path_list_append`::
++
++	Append a new string to the end of the path_list.
++
++`sort_path_list`::
++
++	Make an unsorted list sorted.
++
++`unsorted_path_list_has_path`::
++
++	It's like `path_list_has_path()` but for unsorted lists.
+++
++This function needs to look through all items, as opposed to its
++counterpart for sorted lists, which performs a binary search.
++
++Data structures
++---------------
++
++* `struct path_list_item`
++
++Represents an item of the list. The `path` member is a pointer to the
++string, and you may use the `util` member for any purpose, if you want.
++
++* `struct path_list`
++
++Represents the list itself.
++
++. The array of items are available via the `items` member.
++. The `nr` member contains the number of items stored in the list.
++. The `alloc` member is used to avoid reallocating at every insertion.
++  You should not tamper with it.
++. Setting the `strdup_paths` member to 1 will strdup() the strings
++  before adding them, see above.
 -- 
-Matthieu
+1.5.6.rc2.dirty
