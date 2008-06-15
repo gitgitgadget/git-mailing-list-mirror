@@ -1,320 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 2/4 v2] Move pack_refs() and friends into libgit
-Date: Sun, 15 Jun 2008 23:27:24 +0200
-Message-ID: <200806152327.24586.johan@herland.net>
-References: <200806151602.03445.johan@herland.net>
- <200806151605.07008.johan@herland.net>
- <20080615175159.GA6127@sigill.intra.peff.net>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] git-svn: follow revisions of svm-mirrored repositories
+Date: Mon, 16 Jun 2008 09:30:29 +1200
+Message-ID: <485589F5.6020409@vilain.net>
+References: <7bf6f1d20806132102x71422617s26260fdc348a7c04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 15 23:29:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Jo=E3o_Abecasis?= <joao@abecasis.name>
+X-From: git-owner@vger.kernel.org Sun Jun 15 23:31:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K7zmh-0005wM-Rh
-	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:29:12 +0200
+	id 1K7zox-0006Ny-T2
+	for gcvg-git-2@gmane.org; Sun, 15 Jun 2008 23:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbYFOV2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2008 17:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbYFOV2S
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:28:18 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:54057 "EHLO smtp.getmail.no"
+	id S1752677AbYFOVai convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jun 2008 17:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYFOVai
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jun 2008 17:30:38 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58695 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752344AbYFOV2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2008 17:28:16 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K2I0032PWZ3UX00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 15 Jun 2008 23:28:15 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K2I00L4LWXO7050@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 15 Jun 2008 23:27:25 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K2I00HG6WXOC5E0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 15 Jun 2008 23:27:24 +0200 (CEST)
-In-reply-to: <20080615175159.GA6127@sigill.intra.peff.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752659AbYFOVah (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2008 17:30:37 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id BD5AA21C6AF; Mon, 16 Jun 2008 09:30:36 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=5.0 tests=AWL,BAYES_00 autolearn=ham
+	version=3.2.3
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 2BFE121C158;
+	Mon, 16 Jun 2008 09:30:29 +1200 (NZST)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <7bf6f1d20806132102x71422617s26260fdc348a7c04@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85123>
 
-This moves pack_refs() and underlying functionality into the library,
-to make pack-refs functionality easily available to all git programs.
+Jo=E3o Abecasis wrote:
+> Hi,
+>=20
+> When using an svk mirror repository as the source for git-svn,
+> find-rev and rebase don't work.
+>=20
+> find-rev takes a while, while it traverses and processes commit logs
+> for the branch, and ultimately fails with the error message: "Unable
+> to determine upstream SVN information from git-svn history". This
+> happens because find-rev doesn't relate information in the commit
+> messages to the internal svm-source revision maps.
+>=20
+> Similarly, rebase is faster but still exits with the message "Unable
+> to determine upstream SVN information from working tree history".
+>=20
+> The attached patch fixes a couple of underlying issues to get at leas=
+t
+> these two commands working. AFAICT it still works well with plain svn
+> repositories.
+>=20
+> Can this be merged upstream? Any comments are welcome.
 
-Most of builtin-pack-refs.c has been moved verbatim into a new file
-pack-refs.c that is compiled into libgit.a. A corresponding header
-file, pack-refs.h, has also been added, declaring pack_refs() and
-the #defines associated with the flags parameter to pack_refs().
+Can you give an approximate series of commands that led to this not
+working?  Just to clarify what happened.  Ideally, it would be a test
+case; see if you can add it to the existing SVM test case.  In fact thi=
+s
+might be a regression compared to the original support, due to lack of
+tests - in which case it would be good to fix this "for good".
 
-This patch introduces no other changes in functionality.
+Also, please try to send your patches inline if possible, or at least
+try to get them to be Content-Disposition: inline, it makes review
+easier for casual list subscribers.
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
-
-On Sunday 15 June 2008, Jeff King wrote:
-> This patch would have been a lot easier to read, btw, if it had been
-> generated with '-C' (then patch to pack-refs.c is based on
-> builtin-pack-refs instead of /dev/null).
-
-Sorry about that. Here you go.
-
-...Johan	
-
-
- Makefile                           |    2 +
- builtin-pack-refs.c                |  121 +-----------------------------------
- builtin-pack-refs.c => pack-refs.c |   27 +--------
- pack-refs.h                        |   18 +++++
- 4 files changed, 23 insertions(+), 145 deletions(-)
- copy builtin-pack-refs.c => pack-refs.c (80%)
- create mode 100644 pack-refs.h
-
-diff --git a/Makefile b/Makefile
-index 1937507..4a78388 100644
---- a/Makefile
-+++ b/Makefile
-@@ -354,6 +354,7 @@ LIB_H += log-tree.h
- LIB_H += mailmap.h
- LIB_H += object.h
- LIB_H += pack.h
-+LIB_H += pack-refs.h
- LIB_H += pack-revindex.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
-@@ -429,6 +430,7 @@ LIB_OBJS += merge-file.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += object.o
- LIB_OBJS += pack-check.o
-+LIB_OBJS += pack-refs.o
- LIB_OBJS += pack-revindex.o
- LIB_OBJS += pack-write.o
- LIB_OBJS += pager.o
-diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
-index 1aaa76d..ff90aef 100644
---- a/builtin-pack-refs.c
-+++ b/builtin-pack-refs.c
-@@ -1,125 +1,6 @@
--#include "builtin.h"
- #include "cache.h"
--#include "refs.h"
--#include "object.h"
--#include "tag.h"
- #include "parse-options.h"
--
--struct ref_to_prune {
--	struct ref_to_prune *next;
--	unsigned char sha1[20];
--	char name[FLEX_ARRAY];
--};
--
--#define PACK_REFS_PRUNE	0x0001
--#define PACK_REFS_ALL	0x0002
--
--struct pack_refs_cb_data {
--	unsigned int flags;
--	struct ref_to_prune *ref_to_prune;
--	FILE *refs_file;
--};
--
--static int do_not_prune(int flags)
--{
--	/* If it is already packed or if it is a symref,
--	 * do not prune it.
--	 */
--	return (flags & (REF_ISSYMREF|REF_ISPACKED));
--}
--
--static int handle_one_ref(const char *path, const unsigned char *sha1,
--			  int flags, void *cb_data)
--{
--	struct pack_refs_cb_data *cb = cb_data;
--	int is_tag_ref;
--
--	/* Do not pack the symbolic refs */
--	if ((flags & REF_ISSYMREF))
--		return 0;
--	is_tag_ref = !prefixcmp(path, "refs/tags/");
--
--	/* ALWAYS pack refs that were already packed or are tags */
--	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref && !(flags & REF_ISPACKED))
--		return 0;
--
--	fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
--	if (is_tag_ref) {
--		struct object *o = parse_object(sha1);
--		if (o->type == OBJ_TAG) {
--			o = deref_tag(o, path, 0);
--			if (o)
--				fprintf(cb->refs_file, "^%s\n",
--					sha1_to_hex(o->sha1));
--		}
--	}
--
--	if ((cb->flags & PACK_REFS_PRUNE) && !do_not_prune(flags)) {
--		int namelen = strlen(path) + 1;
--		struct ref_to_prune *n = xcalloc(1, sizeof(*n) + namelen);
--		hashcpy(n->sha1, sha1);
--		strcpy(n->name, path);
--		n->next = cb->ref_to_prune;
--		cb->ref_to_prune = n;
--	}
--	return 0;
--}
--
--/* make sure nobody touched the ref, and unlink */
--static void prune_ref(struct ref_to_prune *r)
--{
--	struct ref_lock *lock = lock_ref_sha1(r->name + 5, r->sha1);
--
--	if (lock) {
--		unlink(git_path("%s", r->name));
--		unlock_ref(lock);
--	}
--}
--
--static void prune_refs(struct ref_to_prune *r)
--{
--	while (r) {
--		prune_ref(r);
--		r = r->next;
--	}
--}
--
--static struct lock_file packed;
--
--static int pack_refs(unsigned int flags)
--{
--	int fd;
--	struct pack_refs_cb_data cbdata;
--
--	memset(&cbdata, 0, sizeof(cbdata));
--	cbdata.flags = flags;
--
--	fd = hold_lock_file_for_update(&packed, git_path("packed-refs"), 1);
--	cbdata.refs_file = fdopen(fd, "w");
--	if (!cbdata.refs_file)
--		die("unable to create ref-pack file structure (%s)",
--		    strerror(errno));
--
--	/* perhaps other traits later as well */
--	fprintf(cbdata.refs_file, "# pack-refs with: peeled \n");
--
--	for_each_ref(handle_one_ref, &cbdata);
--	if (ferror(cbdata.refs_file))
--		die("failed to write ref-pack file");
--	if (fflush(cbdata.refs_file) || fsync(fd) || fclose(cbdata.refs_file))
--		die("failed to write ref-pack file (%s)", strerror(errno));
--	/*
--	 * Since the lock file was fdopen()'ed and then fclose()'ed above,
--	 * assign -1 to the lock file descriptor so that commit_lock_file()
--	 * won't try to close() it.
--	 */
--	packed.fd = -1;
--	if (commit_lock_file(&packed) < 0)
--		die("unable to overwrite old ref-pack file (%s)", strerror(errno));
--	if (cbdata.flags & PACK_REFS_PRUNE)
--		prune_refs(cbdata.ref_to_prune);
--	return 0;
--}
-+#include "pack-refs.h"
- 
- static char const * const pack_refs_usage[] = {
- 	"git-pack-refs [options]",
-diff --git a/builtin-pack-refs.c b/pack-refs.c
-similarity index 80%
-copy from builtin-pack-refs.c
-copy to pack-refs.c
-index 1aaa76d..848d311 100644
---- a/builtin-pack-refs.c
-+++ b/pack-refs.c
-@@ -1,9 +1,7 @@
--#include "builtin.h"
- #include "cache.h"
- #include "refs.h"
--#include "object.h"
- #include "tag.h"
--#include "parse-options.h"
-+#include "pack-refs.h"
- 
- struct ref_to_prune {
- 	struct ref_to_prune *next;
-@@ -11,9 +9,6 @@ struct ref_to_prune {
- 	char name[FLEX_ARRAY];
- };
- 
--#define PACK_REFS_PRUNE	0x0001
--#define PACK_REFS_ALL	0x0002
--
- struct pack_refs_cb_data {
- 	unsigned int flags;
- 	struct ref_to_prune *ref_to_prune;
-@@ -86,7 +81,7 @@ static void prune_refs(struct ref_to_prune *r)
- 
- static struct lock_file packed;
- 
--static int pack_refs(unsigned int flags)
-+int pack_refs(unsigned int flags)
- {
- 	int fd;
- 	struct pack_refs_cb_data cbdata;
-@@ -120,21 +115,3 @@ static int pack_refs(unsigned int flags)
- 		prune_refs(cbdata.ref_to_prune);
- 	return 0;
- }
--
--static char const * const pack_refs_usage[] = {
--	"git-pack-refs [options]",
--	NULL
--};
--
--int cmd_pack_refs(int argc, const char **argv, const char *prefix)
--{
--	unsigned int flags = PACK_REFS_PRUNE;
--	struct option opts[] = {
--		OPT_BIT(0, "all",   &flags, "pack everything", PACK_REFS_ALL),
--		OPT_BIT(0, "prune", &flags, "prune loose refs (default)", PACK_REFS_PRUNE),
--		OPT_END(),
--	};
--	if (parse_options(argc, argv, opts, pack_refs_usage, 0))
--		usage_with_options(pack_refs_usage, opts);
--	return pack_refs(flags);
--}
-diff --git a/pack-refs.h b/pack-refs.h
-new file mode 100644
-index 0000000..518acfb
---- /dev/null
-+++ b/pack-refs.h
-@@ -0,0 +1,18 @@
-+#ifndef PACK_REFS_H
-+#define PACK_REFS_H
-+
-+/*
-+ * Flags for controlling behaviour of pack_refs()
-+ * PACK_REFS_PRUNE: Prune loose refs after packing
-+ * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
-+ */
-+#define PACK_REFS_PRUNE 0x0001
-+#define PACK_REFS_ALL   0x0002
-+
-+/*
-+ * Write a packed-refs file for the current repository.
-+ * flags: Combination of the above PACK_REFS_* flags.
-+ */
-+int pack_refs(unsigned int flags);
-+
-+#endif /* PACK_REFS_H */
--- 
-1.5.6.rc2.128.gf64ae
+Thanks,
+Sam.
