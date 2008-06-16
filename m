@@ -1,49 +1,66 @@
-From: Mike Hommey <mh@glandium.org>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: git-rerere observations and feature suggestions
-Date: Mon, 16 Jun 2008 13:09:18 +0200
-Organization: glandium.org
-Message-ID: <20080616110918.GA30856@glandium.org>
+Date: Mon, 16 Jun 2008 13:26:34 +0200
+Organization: Organization?!?
+Message-ID: <85bq21fwnp.fsf@lola.goethe.zz>
 References: <20080616110113.GA22945@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Mon Jun 16 13:11:31 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 13:27:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8CcO-0007BL-FT
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 13:11:24 +0200
+	id 1K8CsJ-0003mr-Vq
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 13:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155AbYFPLKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 07:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbYFPLKa
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 07:10:30 -0400
-Received: from vuizook.err.no ([194.24.252.247]:48576 "EHLO vuizook.err.no"
+	id S1751808AbYFPL0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 07:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbYFPL0s
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 07:26:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:36734 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752011AbYFPLK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 07:10:29 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1K8CbK-0006Jr-AD; Mon, 16 Jun 2008 13:10:24 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1K8CaM-00083c-4w; Mon, 16 Jun 2008 13:09:18 +0200
-Content-Disposition: inline
-In-Reply-To: <20080616110113.GA22945@elte.hu>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751777AbYFPL0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 07:26:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1K8CrD-0007tj-IE
+	for git@vger.kernel.org; Mon, 16 Jun 2008 11:26:43 +0000
+Received: from dslb-084-061-063-029.pools.arcor-ip.net ([84.61.63.29])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 11:26:43 +0000
+Received: from dak by dslb-084-061-063-029.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 11:26:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-063-029.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:JJEMh25IYUlj3uSyCc+ddNXu24w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85178>
 
-- At least, compress the data in the rr-cache. It can grow big quite
-  easily. Also, I wonder if keeping the entire files is not overkill...
+Ingo Molnar <mingo@elte.hu> writes:
 
-Mike
+>    ( Also, it's a GPL nitpicky issue: the conflict resolution database 
+>      can be argued to be part of "source code" and as such it should be 
+>      shared with everyone who asks.
+
+I don't think that interpretation holds water.  Not even the version
+control history is part of the _corresponding_ source code AFAICT.  If
+it were, GPLed software distributions would be a nightmare since you
+would have to deliver everything with complete history.
+
+Only very nonstandard usage of version control might make the
+_corresponding_ source code be contained in more than HEAD of the
+release branch.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
