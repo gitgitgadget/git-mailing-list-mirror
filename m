@@ -1,111 +1,89 @@
-From: Nico -telmich- Schottelius <nico-git-svn-20080616@schottelius.org>
-Subject: git-svn breaks svn when adding .svn
-Date: Mon, 16 Jun 2008 14:21:17 +0200
-Message-ID: <20080616122117.GA14292@denkbrett.schottelius.org>
-References: <20080606122421.GA1521@denkbrett.schottelius.org> <20080606123539.GA3119@mithlond.arda.local> <20080608094754.GB1521@denkbrett.schottelius.org> <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
+From: Brian Foster <brian.foster@innova-card.com>
+Subject: no `bare = true' in `config' of a bare repository - problem or ignore?
+Date: Mon, 16 Jun 2008 14:36:37 +0200
+Message-ID: <200806161436.37278.brian.foster@innova-card.com>
+Reply-To: Brian Foster <brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2oS5YaxWCcQjTEyO"
-Cc: Frederik Dohr <F.N.Dohr@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 14:29:26 2008
+X-From: git-owner@vger.kernel.org Mon Jun 16 14:37:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Dpt-0007Ca-86
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 14:29:25 +0200
+	id 1K8DyB-0001GG-2v
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 14:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818AbYFPM2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 08:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753741AbYFPM2S
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 08:28:18 -0400
-Received: from mx2.schottelius.org ([62.65.138.77]:56707 "EHLO
-	mx2.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754195AbYFPM2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 08:28:17 -0400
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Jun 2008 08:28:17 EDT
-Received: from denkbrett.schottelius.org (natgw.netstream.ch [62.65.128.28])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.schottelius.org (Postfix) with ESMTPSA id D6B3C364E52;
-	Mon, 16 Jun 2008 14:21:17 +0200 (CEST)
-Received: by denkbrett.schottelius.org (Postfix, from userid 1000)
-	id 33CED214E5; Mon, 16 Jun 2008 14:21:17 +0200 (CEST)
+	id S1754744AbYFPMgw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jun 2008 08:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754181AbYFPMgw
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 08:36:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:10623 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754508AbYFPMgv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2008 08:36:51 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so3242823fgg.17
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 05:36:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:to:subject:date
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:sender;
+        bh=tFiDQiCeQM/GVWLm+SOd6TJtw8xmfbAR7+4WA+cACWk=;
+        b=EIr8SPnv1gYcA2g4qEbARVckVLLqBKIn4Rrwg1uozfjNWXu8wtmOlCQlvCxGajCRVq
+         GilQZvcs6xIgJphoo5K+PSxE9vuQhU2oq0SQv9M1mIF/eDi+Ng5b2CQTJ/RL2EKrx18O
+         Ssr7tPMXVQb6hY7Pdfds5XmKpHSrNNdcrqG9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:reply-to:to:subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id:sender;
+        b=iRvH+il2ie0MsVX5l3JcOpxZ2zqPgjbxxkS9c3iAnHGGoVX+kfaDhCs4znEor4mM/w
+         +SMd6hXwbZ1vez5F3RFGXi4gpB/+P5QuGiN0IoPgUbCaT1ypcWNVzLSBn3tUYbA32Sa7
+         aEyyR3Wj098n+F3wneJztMusF9q8WQKPvYB4g=
+Received: by 10.86.71.1 with SMTP id t1mr7810905fga.36.1213619810068;
+        Mon, 16 Jun 2008 05:36:50 -0700 (PDT)
+Received: from innova-card.com ( [81.252.61.1])
+        by mx.google.com with ESMTPS id d4sm10445151fga.8.2008.06.16.05.36.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jun 2008 05:36:48 -0700 (PDT)
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
 Content-Disposition: inline
-In-Reply-To: <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: denkbrett running Linux 2.6.25.3-denkbrett on x86_64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85186>
 
 
---2oS5YaxWCcQjTEyO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ Whilst investigating a (probably unrelated) mystery,
+ I noticed that some of my bare git repositories had:
 
-Hello dear git list!
+	[core]
+ 	    bare =3D true
 
-The following information was submitted to me by Frederik and is forwarded =
-to
-the list, because he's no mail access right now:
+ whilst others did not (they had no `bare' setting at
+ all).  All, with or without `bare', seem to be quite
+ happy, but I was wondering what's going on;  is this
+ a problem;  and if not, is there any point to adding
+ the setting anyways?
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -=
- - -=20
-Using "git-svn dcommit", files or folders named ".svn" can be committed to =
-the Subversion repository.
-This breaks the SVN repo - e.g. "svn update" results in the following error:
-    svn: Failed to add directory '.svn': object of the same name already ex=
-ists
+ As to _why_ some do and some don't, I haven't a clew,
+ but suspect the ones that do NOT were originally made
+ with an (unknown) older version of git;  and the ones
+ that do were made with git 1.5.3 or later.
 
-Ideally, the SVN server would reject such a commit.
-However, if I interpret the following issues correctly, Subversion doesn't =
-want to handle this server-side:
-    http://subversion.tigris.org/issues/show_bug.cgi?id=3D1068
-    (also: http://subversion.tigris.org/issues/show_bug.cgi?id=3D1065)
+ The git-config(1) man page (1.5.5) doesn't directly
+ mention this, only talking about auto-guessing the
+ value on init and clone.  Apologies if TFM explains;
+ I didn't spot anything.
 
-Since this is potentially a very critical issue, I suggest git-svn dcommit =
-check and filter for such occurrences.
-Alternatively, a prominent warning could be added to the relevant git-svn c=
-ommands.
-
-
-Details:
-    git version 1.5.4.3
-    svn version 1.4.6 (r28521)
-    Plattform: Ubuntu 8.04 Hardy Heron
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -=
- - -=20
-
-Sincerly
-
-Nico
-
-PS: Please CC him and me on reply.
+cheers!
+	-blf-
 
 --=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---2oS5YaxWCcQjTEyO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIVlq9uL75KpiFGIwRAun/AJwKJCrDP3WDw9n6seDXP0ZFIPwGXgCdGWnB
-jTk9xamigzmzhCWV19dGJrQ=
-=FrPk
------END PGP SIGNATURE-----
-
---2oS5YaxWCcQjTEyO--
+=E2=80=9CHow many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
+sso.com
