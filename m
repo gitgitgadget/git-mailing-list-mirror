@@ -1,84 +1,117 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
-Date: Mon, 16 Jun 2008 11:30:40 -0500
-Message-ID: <lZpNyxfI-KdPeks7z8vB8LO0LOJTHllWcHbQS34JEY4@cipher.nrlssc.navy.mil>
-References: <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com> <alpine.DEB.1.00.0806132239490.6439@racer> <612BAE20-8DF3-43
- 23-8AEF-527B92122A7A@wincent.com> <200806142359.m5ENxsBI028758@mi0.bluebottle.com> <7vabhne15k.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: return correct HTTP status codes
+Date: Mon, 16 Jun 2008 18:43:08 +0200
+Message-ID: <200806161843.09372.jnareb@gmail.com>
+References: <1213564515-14356-1-git-send-email-LeWiemann@gmail.com> <m37icqpb5f.fsf@localhost.localdomain> <48568D5C.5090909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: =?ISO-2022-JP?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>, Wincent Colaiuta <win@wincent.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 18:39:45 2008
+Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@suse.de>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 18:44:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Hk8-00014C-10
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:39:44 +0200
+	id 1K8Hoe-0002ip-05
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754212AbYFPQir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 12:38:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbYFPQir
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:38:47 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56638 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbYFPQiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 12:38:46 -0400
-Received: by mail.nrlssc.navy.mil id m5GGUfvC014612; Mon, 16 Jun 2008 11:30:42 -0500
-In-Reply-To: <7vabhne15k.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 16 Jun 2008 16:30:41.0608 (UTC) FILETIME=[51689480:01C8CFCE]
+	id S1754304AbYFPQn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 12:43:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbYFPQn3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:43:29 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:30048 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753954AbYFPQn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 12:43:28 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so4392708waf.23
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 09:43:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vaTvPLu6btfvL+QNnudsfsKMRpssfhIyfq68DpFL4Vg=;
+        b=CS4/m+qiJtO6L5sKWXUJyvKjvHAnpsS3n/qnY0t+bbEr3bSIZ+vzLmag00w8sf/zkc
+         pOiH99PzotN9NYs+RToO/EscxBLkX5DmzSDT7d1Bt3xmaDvXkw93PuIzbcNM0pzsDFX2
+         N7L8hLM5R6gn4htRBLm0wbAAqOI4HYPLB8lck=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=TMrJqvugvAVpVbwdwLroDGumIcwa9CANf4A1HqDMEq/jgrzlDn8Sck+OLxi04aiMh0
+         HE3LVVfkR9zWTQYZDbM9gat8k5DQ610BbXDgHecZRG0ppSYHRicy8RQ77Z7Ra8onp8pU
+         YqE2O9BKCqNLMLKqlVhiW5+Z89f2H/Nb4/lQE=
+Received: by 10.114.15.16 with SMTP id 16mr6481950wao.113.1213634608020;
+        Mon, 16 Jun 2008 09:43:28 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.236.117])
+        by mx.google.com with ESMTPS id k26sm9602535waf.38.2008.06.16.09.43.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jun 2008 09:43:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <48568D5C.5090909@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85209>
 
-Junio C Hamano wrote:
-> しらいしななこ  <nanako3@bluebottle.com> writes:
+[Fast reply, I will reply more in depth later]
+
+Lea Wiemann wrote:
+> Jakub Narebski wrote:
+>> Lea Wiemann wrote:
+
+>>>  	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
+>>> -		or die_error(undef, "Open git-ls-tree failed");
+>>> +		or die_error(500, "Open git-ls-tree failed");
+>> 
+>> Should we really use "500 Internal Server Error" here?  Usually this
+>> would be not an error at all, but wrong parameters to git command,
+>> i.e. it is _user_ who erred, not some error on _server_ side.
 > 
->> I apologize for my lack of perfect foresight as the original
->> author of the command.  As I already said, I think expiration
->> period of reflogs that is configurable for each ref as suggested
->> earlier by Junio makes sense.
+> You cannot tell for sure -- all you know here is that the command
+> somehow failed when it shouldn't have, and so all you can give is 500;
+> see below.  I don't think we should apply reasoning like "most commonly
+> it's a wrong hash, so let's return 404" -- we don't know, and we
+> shouldn't assume.
+
+Well, we could, perhaps, examine stderr (or redirect it to stdout and
+examine upon error) to check what was the error.  Or when/if gitweb
+start to use Git.pm methods, examine catched Error (for example
+"fatal: bad revision '$hash'" would mean "404 Not Found" revision).
+
+But I think in all, or almost all cases, the source is wrong parameters
+in URL.  Now, returning 5xx _server_ error would make me want to email
+webmaster about error on his/her server, while 4xx _user_ error would
+make me examine my input, i.e. URL I have entered, or handcrafted, or
+magled.  That is IMVHO *very* important difference, and why I am
+against using "500 Internal Server Error" as catch-all; I can agree
+that "403 Forbidden" (which is from the times where gitweb was developed
+as separate project by Kay Sievers, old, old times of v056) is better
+left for disabled features[*1*], and "404 Not Found" is better
+catch-all.
+
+Kay, do you remember why "403 Forbidden" was used as default catch-all
+gitweb HTTP error status code?
+ 
+> > probably me, Petr Baudis, John Hawley, perhaps Luben Tuikov
 > 
-> You do not need to be overly apologetic.
+> I wouldn't want to Cc people if I don't address them personally -- e.g.
+> neither Petr nor John are currently working on gitweb, so flooding their
+> mailboxes might seem a little rude; if they're interested they can
+> always filter for subjects.  (Unless someone requests to always be CC'ed
+> of course.)
 
-I whole-heartedly second this.
+O.K. although I have though that as John is your GSoC mentor, he might
+be interested gitweb caching related posts.  But this is something
+better made agree with him.
 
-> ... the
-> way for them to thank you would be to scratch their own itch by filling
-> the remaining 10% to make it work better in their context, not by bitching
-> and quibbling on what the dictionary definition of the word "stash" is.
-
-I think you're being a little unfair here on two points:
-
- 1) I think it is a valid point that the name of the command and it's
-    subcommand "save" have contributed to the confusion by those who were
-    not involved in the implementation of the stash feature.
-
- 2) A patch _has_ been offered and there has been no discussion of the
-    merits of that patch, only on why the stash should be persistent or not.
-
-You have suggested two alternatives, one (--keep) was not commented on
-favorably by anyone, and the other was not really commented on at all.
-
-Besides, the point (for those arguing it) was not that users should
-have the option to keep stashes, it was that keeping stashes
-_by_default_ is the option of least surprise and doing so modifies the
-stash behavior to match user expectations. So up until now, there has
-been no reason for anyone to offer any alternative patch, since "--keep"
-is not satisfactory and per reflog expiration _alone_ does not solve what
-people think the problem is (that stashes expire by default).
-
-Your suggestion of per reflog expiration, along with a default
-configuration of never for the stash reflog expiration, _does_ solve
-the problem. Time will tell if this feature is useful outside of
-controlling the stash reflog expiration.
-
--brandon
+BTW. I got three copies of this email: was it you fighting VGER
+anti-spam filter?
+-- 
+Jakub Narebski
+Poland
