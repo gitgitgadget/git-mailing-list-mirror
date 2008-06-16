@@ -1,111 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: return correct HTTP status codes
-Date: Mon, 16 Jun 2008 15:38:50 -0700
-Message-ID: <7vy75580p1.fsf@gitster.siamese.dyndns.org>
-References: <1213564515-14356-1-git-send-email-LeWiemann@gmail.com>
- <m37icqpb5f.fsf@localhost.localdomain> <48568D5C.5090909@gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: Guided merge with override
+Date: Tue, 17 Jun 2008 08:15:50 +0930
+Message-ID: <93c3eada0806161545m5c6e1073q5522ce31f72be9f0@mail.gmail.com>
+References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
+	 <20080616092554.GB29404@genesis.frugalware.org>
+	 <48563D6C.8060704@viscovery.net>
+	 <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 00:40:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Tue Jun 17 00:46:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8NMl-00009M-Ns
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 00:40:00 +0200
+	id 1K8NTL-0002ba-6Z
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 00:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756402AbYFPWjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 18:39:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756202AbYFPWjE
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 18:39:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39991 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754060AbYFPWjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 18:39:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 85412DA8B;
-	Mon, 16 Jun 2008 18:38:59 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4525DDA82; Mon, 16 Jun 2008 18:38:53 -0400 (EDT)
-In-Reply-To: <48568D5C.5090909@gmail.com> (Lea Wiemann's message of "Mon, 16
- Jun 2008 17:57:16 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 030F2194-3BF5-11DD-A474-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1757041AbYFPWpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 18:45:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757023AbYFPWpw
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 18:45:52 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:29482 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751363AbYFPWpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 18:45:51 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so3548340fkq.5
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 15:45:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=lsEHHzq2+tYP3tgoqlRjV+aLfU43zzl3gw9dWGXyTJ4=;
+        b=q4UYDr/0lHExWOd3VlH7NkcOaT8rtSbG21Ssd9rpx85NiAoScbeh2DgFw7n7bZ5ou+
+         oDoJPDuxuVYTV+6FIZXj880ygTSBAD/9efAA5WgFjXtkVfRFHfBqg07Y0rOXSA1nRcIb
+         7RI7BXHsT5IO35hMj/D3pzRUafmTWJSDLbIvs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=B6a3C0HIenZJtbFcdgVIryUhFNpoQ7vO4HfeG8kyrQw34kkXSYdS0JaH/ku6fqBcOr
+         SZPChy/F64knV+gBef8qCLxw842r93EAvhzrFWJesXEPunijPNBs12Yc0jdhl2Bx48nY
+         GDeH2UhCyFEJYk7CWyAM4nTu/50nJMn+6+iFw=
+Received: by 10.82.126.5 with SMTP id y5mr406841buc.89.1213656350159;
+        Mon, 16 Jun 2008 15:45:50 -0700 (PDT)
+Received: by 10.82.107.11 with HTTP; Mon, 16 Jun 2008 15:45:50 -0700 (PDT)
+In-Reply-To: <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85245>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+Thanks everybody,
 
-> Jakub Narebski wrote:
->...
->>> I recommend that you apply [PATCH] gitweb: remove git_blame
->>
->> I think it is not possible, as IIRC [it] got already applied.
+On 6/17/08, Sverre Rabbelier <alturin@gmail.com> wrote:
+> On Mon, Jun 16, 2008 at 12:16 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>  > The solution depends on whether *all* files in B should be taken, or only
+>  > those files in B where there's a merge conflict. I don't know an easy way
+>  > to do the former, but the latter I'd do like this:
+>  >
+>  >        $ git diff --name-only | xargs git checkout B --
+
+This looks like a manageable approach and better than the scripting I was
+thinking about -- ie. scan the conflict files with perl and fix them!
+
+Cheers,
+Geoff
+
 >
-> It isn't applied on master (at the time I'm writing this), only on next.
-> Should I be working on the next branch?
-
-I think it was sensible for you to mention the patch dependency, and if
-you said the same thing with a different phrasing "this depends on remove
-git_blame patch" you wouldn't have opened yourself up to such a nitpick
-;-)
-
-Since you are working on something that is outside the current 1.5.6
-freeze, and removal of the unused "other" blame sub was something nobody
-seemed to have objected to, I think it is Ok to assume that the removal
-will happen when this new code is ready and after 1.5.6 ships.
-
-It's up to you to work on 'next' or 'master with extra patches'.  Just
-state what you are basing your development on and with what extra patches
-if there is a risk of confusion among your readers.
-
->>>  	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
->>> -		or die_error(undef, "Open git-ls-tree failed");
->>> +		or die_error(500, "Open git-ls-tree failed");
->>
->> Should we really use "500 Internal Server Error" here?  Usually this
->> would be not an error at all, but wrong parameters to git command,
->> i.e. it is _user_ who erred, not some error on _server_ side.
 >
-> You cannot tell for sure -- all you know here is that the command
-> somehow failed when it shouldn't have, and so all you can give is 500;
-> see below.  I don't think we should apply reasoning like "most commonly
-> it's a wrong hash, so let's return 404" -- we don't know, and we
-> shouldn't assume.
+> Wouldn't something similar work but do a 'git ls-files' and filter it
+>  on files that have a merge conflict?
 >
->>> ... I suspect that the error could be triggered by non-existent hashes
->>> as well, in which case the more specific 404 would be more appropriate
->>> -- however, the current implementation oftentimes doesn't allow for
->>> more fine-granulared checking
->>
->> ...that is why I'd rather have "403 Forbidden" as catch-all error, as
->> it was done in gitweb.  But that also seems not very good idea.
+>  --
+>  Cheers,
 >
-> [IANA HTTP expert, but:] All we have in cases like the one above is "I
-> cannot deliver the content you requested, but I'm so confused that I
-> don't even know why" -- which sounds like 500 to me (definitely not
-> 403).  403 would be used for some deactivated feature (commonly for
-> disabled directory listings I think) or something that shouldn't be
-> accessible to the public.
+>
+>  Sverre Rabbelier
+>
 
-Hmph... if we cared deeply enough about this issue, isn't it possible for
-you to unconfuse yourself in a slow path and figure out exactly why it
-failed?
 
-        unless (open $fd, '-|', ls-tree $base -- $path) {
-                # Oh, an error?  why?
-                if (!object_exists($base)) {
-                        die_error(404, "No such object $base");
-                } elsif (!is_a_treeish($base)) {
-                        die_error(404, "No such tree-ish $base");
-                } else {
-                        die_error();
-                }
-        }
+-- 
+6 Fifth Ave,
+St Morris, S.A. 5068
+Australia
+Ph: 041 8805 184 / 08 8332 5069
