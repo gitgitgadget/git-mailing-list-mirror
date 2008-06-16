@@ -1,97 +1,84 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [EGIT PATCH 00/20] PackWriter, first usable attempt
-Date: Mon, 16 Jun 2008 18:37:18 +0200
-Message-ID: <485696BE.4010608@gmail.com>
-References: <1213566349-25395-1-git-send-email-marek.zawirski@gmail.com> <20080616051927.GV11793@spearce.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Mon, 16 Jun 2008 11:30:40 -0500
+Message-ID: <lZpNyxfI-KdPeks7z8vB8LO0LOJTHllWcHbQS34JEY4@cipher.nrlssc.navy.mil>
+References: <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer> <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org> <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com> <alpine.DEB.1.00.0806132239490.6439@racer> <612BAE20-8DF3-43
+ 23-8AEF-527B92122A7A@wincent.com> <200806142359.m5ENxsBI028758@mi0.bluebottle.com> <7vabhne15k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
-Cc: robin.rosenberg@dewire.com, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 16 18:38:20 2008
+Cc: =?ISO-2022-JP?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
+	<nanako3@bluebottle.com>, Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 18:39:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Hil-0000e0-Sb
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:38:20 +0200
+	id 1K8Hk8-00014C-10
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285AbYFPQhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 12:37:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754195AbYFPQhY
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:37:24 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:50873 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754081AbYFPQhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 12:37:24 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1214003and.103
-        for <git@vger.kernel.org>; Mon, 16 Jun 2008 09:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=6wF3/ASBB+hyB7hqLI53gYPnNZmnso7Drstfawy2v+w=;
-        b=Hd1BjPPAQ5P65JkwX/VPcdQJLapn12OTYASpZe2gGBNpR1DyDNKL6xAxVJW7uyfk9V
-         kVp+MfLoFrWFBv2tVtdUaiF8vLGZENNsa//6IeKMBzoAbWGhBNSlqJuceAI2J+h3hudb
-         PvhxZpK6cMun2eWN/w52TE0Zp8T1wLdYxGg1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=aI8CNjSkIhAHrVZuv7EhQDX6drKnr2K8J/g3J27GvNqfHm4/qgYQrZBPj92/04scB3
-         KlfV0YhpGkgc+a8GVWdDFBQBYIQJcdeE16K3mVb3m4RDNudGsclg6xil8oCqUqi/cI8z
-         drH/t9L7e6o91NidYdb0H6GmC1vKPCrqCHh2Q=
-Received: by 10.100.173.9 with SMTP id v9mr4816398ane.92.1213634242868;
-        Mon, 16 Jun 2008 09:37:22 -0700 (PDT)
-Received: from ?62.21.4.140? ( [62.21.4.140])
-        by mx.google.com with ESMTPS id k29sm444679qba.7.2008.06.16.09.37.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 16 Jun 2008 09:37:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080313 Iceape/1.1.9 (Debian-1.1.9-5)
-In-Reply-To: <20080616051927.GV11793@spearce.org>
+	id S1754212AbYFPQir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 12:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbYFPQir
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:38:47 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56638 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753232AbYFPQiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 12:38:46 -0400
+Received: by mail.nrlssc.navy.mil id m5GGUfvC014612; Mon, 16 Jun 2008 11:30:42 -0500
+In-Reply-To: <7vabhne15k.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 16 Jun 2008 16:30:41.0608 (UTC) FILETIME=[51689480:01C8CFCE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85208>
 
-Shawn O. Pearce wrote:
-> Marek Zawirski <marek.zawirski@gmail.com> wrote:
->> At first, some stuff was still missing to produce packs, mostly
->> raw-data access related and ObjectWalk related.
+Junio C Hamano wrote:
+> しらいしななこ  <nanako3@bluebottle.com> writes:
 > 
-> I'm glad it turned out to be so little missing actually.  Reusing
-> ObjectWalk saved a lot of code in the pack writer, and for the most
-> part our existing data access structures were already well organized.
-
-Yeah, I actually expected that this feature implementation would cause 
-more changes. But existence of transport and rev-walking frameworks in 
-jgit helped a lot. Jgit code changed significantly between my first look 
-at it (march/april) and GSoC start date.
-
-(...)
->> Finally, we've got some support for pack writing! It's not that
->> power that C git version offers, but something usable. Delta
->> generation is not supported. Although we can reuse deltas and objects,
->> and support all other (I hope) options of git-pack-objects directly or
->> indirectly, most importantly --thin.
->>
->> Pack writing and some other features are tested, seem to work.
->>
->> This implementation of packing is not a very valuable thing directly
->> (achieving efficient storage), however it's a base for enhancements
->> and can be used for sending packs over net (with some assumptions).
->> It's more a "repacking" than "packing" tool.
+>> I apologize for my lack of perfect foresight as the original
+>> author of the command.  As I already said, I think expiration
+>> period of reflogs that is configurable for each ref as suggested
+>> earlier by Junio makes sense.
 > 
-> Yup.  The critical part here is jgit can now format a pack file,
-> which means we can now actually implement native push over the
-> local pipe (to fork+exec'd git-receive-pack) or over SSH.  That
-> is one of the major missing features in the Eclipse plugin, so
-> this is a huge milestone for us.  Thank you Marek.
+> You do not need to be overly apologetic.
 
-Hey, I'm here for doing this, they even pay me for that fun;)
+I whole-heartedly second this.
 
--- 
-Marek Zawirski [zawir]
-marek.zawirski@gmail.com
+> ... the
+> way for them to thank you would be to scratch their own itch by filling
+> the remaining 10% to make it work better in their context, not by bitching
+> and quibbling on what the dictionary definition of the word "stash" is.
+
+I think you're being a little unfair here on two points:
+
+ 1) I think it is a valid point that the name of the command and it's
+    subcommand "save" have contributed to the confusion by those who were
+    not involved in the implementation of the stash feature.
+
+ 2) A patch _has_ been offered and there has been no discussion of the
+    merits of that patch, only on why the stash should be persistent or not.
+
+You have suggested two alternatives, one (--keep) was not commented on
+favorably by anyone, and the other was not really commented on at all.
+
+Besides, the point (for those arguing it) was not that users should
+have the option to keep stashes, it was that keeping stashes
+_by_default_ is the option of least surprise and doing so modifies the
+stash behavior to match user expectations. So up until now, there has
+been no reason for anyone to offer any alternative patch, since "--keep"
+is not satisfactory and per reflog expiration _alone_ does not solve what
+people think the problem is (that stashes expire by default).
+
+Your suggestion of per reflog expiration, along with a default
+configuration of never for the stash reflog expiration, _does_ solve
+the problem. Time will tell if this feature is useful outside of
+controlling the stash reflog expiration.
+
+-brandon
