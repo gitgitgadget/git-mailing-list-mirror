@@ -1,69 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH] Implement a new patch identification scheme and id command
-Date: Mon, 16 Jun 2008 16:08:57 +0200
-Message-ID: <20080616140857.GA24433@diana.vm.bytemark.co.uk>
-References: <20080614072833.7899.91460.stgit@localhost.localdomain> <20080614094714.GC14282@diana.vm.bytemark.co.uk> <b0943d9e0806160300q55dde16fg90de0fa12e3d5dc0@mail.gmail.com> <b0943d9e0806160630m12f5bc7x39053e6c81d983c0@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: current repository hash
+Date: Mon, 16 Jun 2008 11:04:17 -0400
+Message-ID: <20080616150416.GA6164@sigill.intra.peff.net>
+References: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 16:10:31 2008
+To: Alf Clement <alf.clement@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 17:06:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8FPL-0001Jw-TA
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 16:10:08 +0200
+	id 1K8GH6-0006CI-Qr
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 17:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753749AbYFPOJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jun 2008 10:09:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753715AbYFPOJL
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 10:09:11 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4612 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753589AbYFPOJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 10:09:10 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K8FOD-0006O9-00; Mon, 16 Jun 2008 15:08:57 +0100
+	id S1751271AbYFPPEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 11:04:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYFPPEU
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 11:04:20 -0400
+Received: from peff.net ([208.65.91.99]:4733 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751170AbYFPPET (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 11:04:19 -0400
+Received: (qmail 11677 invoked by uid 111); 16 Jun 2008 15:04:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 16 Jun 2008 11:04:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jun 2008 11:04:17 -0400
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0806160630m12f5bc7x39053e6c81d983c0@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85191>
 
-On 2008-06-16 14:30:32 +0100, Catalin Marinas wrote:
+On Mon, Jun 16, 2008 at 01:51:52PM +0200, Alf Clement wrote:
 
-> What about supporting patch ranges with the new id format, something
-> like:
->
->   branch:patch1..patch2,patch3
->
-> or
->
->   branch:patch1..patch2 branch:patch3
+> What would be the best command to get a unique identifier?
 
-Yes, that's a good idea; the endpoints of a range have to be on the
-same branch no matter what, so having the branch: prefix apply to both
-of the endpoint patches in "branch:patch1..patch2" is a good idea.
+If you just want the commit sha1, then "git rev-list -1 HEAD" will give
+it to you. But take a look at git-describe, which is designed to give a
+nice human-readable name based on your tags.
 
-I'm not sure if the comma notation is worth it. And if it turns out to
-have been useful, we can just advise users to write
+> Do I need the 40 digit hash id?
 
-  $ stg foo branch:{p1..p2,p3}
+No, but you increase your chances of a collision in the future. In
+practice, 8 or 9 characters tends to give unique commits.
 
-which the shell will expand to
+> How can I make sure that a shorter hash id will be unique?
 
-  $ stg foo branch:p1..p2 branch:p3
+git-describe will find the shortest unique hash. But bear in mind that
+it may not be unique forever.
 
-> This way we could get rid of many --branch options.
-
-Indeed.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-Peff
