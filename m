@@ -1,57 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: current repository hash
-Date: Mon, 16 Jun 2008 11:04:17 -0400
-Message-ID: <20080616150416.GA6164@sigill.intra.peff.net>
-References: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make git reflog expire honour core.sharedRepository.
+Date: Mon, 16 Jun 2008 17:15:12 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0806161713520.3302@eeepc-johanness>
+References: <1213565862-23247-1-git-send-email-madcoder@debian.org> <7vhcbuco2w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Alf Clement <alf.clement@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 17:06:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
+	gitster@pobox.com, joerg@debian.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 17:15:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8GH6-0006CI-Qr
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 17:05:52 +0200
+	id 1K8GQ6-00020r-Sd
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 17:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbYFPPEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 11:04:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYFPPEU
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 11:04:20 -0400
-Received: from peff.net ([208.65.91.99]:4733 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751170AbYFPPET (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 11:04:19 -0400
-Received: (qmail 11677 invoked by uid 111); 16 Jun 2008 15:04:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 16 Jun 2008 11:04:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jun 2008 11:04:17 -0400
-Content-Disposition: inline
-In-Reply-To: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
+	id S1752573AbYFPPOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 11:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbYFPPOD
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 11:14:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38011 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752505AbYFPPOB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 11:14:01 -0400
+Received: (qmail invoked by alias); 16 Jun 2008 15:13:58 -0000
+Received: from unknown (EHLO eeepc-johanness.viawireless.co.uk) [212.183.134.211]
+  by mail.gmx.net (mp066) with SMTP; 16 Jun 2008 17:13:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/oyUkpDZXoZYr6FozUVKN7kgdNb+s1+Z+iV2oVEE
+	TO9mrKatSSq7un
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vhcbuco2w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85192>
 
-On Mon, Jun 16, 2008 at 01:51:52PM +0200, Alf Clement wrote:
+Hi,
 
-> What would be the best command to get a unique identifier?
+On Sun, 15 Jun 2008, Junio C Hamano wrote:
 
-If you just want the commit sha1, then "git rev-list -1 HEAD" will give
-it to you. But take a look at git-describe, which is designed to give a
-nice human-readable name based on your tags.
+> Pierre Habouzit <madcoder@debian.org> writes:
+> 
+> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> > ---
+> >  builtin-reflog.c       |    1 +
+> >  t/t1301-shared-repo.sh |   15 +++++++++++++++
+> >  2 files changed, 16 insertions(+), 0 deletions(-)
+> >
+> >  Some people like to have logAllRefUpdates even for bare repositories, and if
+> >  shared, git-gc breaks them.
+> >
+> > diff --git a/builtin-reflog.c b/builtin-reflog.c
+> > index 897d1dc..430929f 100644
+> > --- a/builtin-reflog.c
+> > +++ b/builtin-reflog.c
+> > @@ -308,6 +308,7 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
+> >  		} else if (cmd->updateref && commit_ref(lock)) {
+> >  			status |= error("Couldn't set %s", lock->ref_name);
+> >  		}
+> > +		adjust_shared_perm(log_file);
+> 
+> Why is it sane to do this unconditionally, instead of putting in another
+> else or something?
 
-> Do I need the 40 digit hash id?
+Because adjust_shared_perm() checks for shared_repository, and returns 
+when there is nothing to do.
 
-No, but you increase your chances of a collision in the future. In
-practice, 8 or 9 characters tends to give unique commits.
+IMO this is a sane convention, since you _never_ want to do this 
+unconditionally anyway, and you avoid a lot of identical "if () adjust()" 
+constructs.
 
-> How can I make sure that a shorter hash id will be unique?
-
-git-describe will find the shortest unique hash. But bear in mind that
-it may not be unique forever.
-
--Peff
+Ciao,
+Dscho
