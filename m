@@ -1,103 +1,72 @@
-From: "Ian Brown" <ianbrn@gmail.com>
-Subject: How to omit/alter the sigend-off line in a patch set?
-Date: Mon, 16 Jun 2008 13:24:58 +0300
-Message-ID: <d0383f90806160324j3f1b2a09tbb4caa1e934c7635@mail.gmail.com>
+From: bill lam <cbill.lam@gmail.com>
+Subject: how to track changes of a file
+Date: Mon, 16 Jun 2008 18:46:49 +0800
+Message-ID: <48564499.3050008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 12:26:00 2008
+X-From: git-owner@vger.kernel.org Mon Jun 16 12:47:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8BuQ-0001XC-B2
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 12:25:58 +0200
+	id 1K8CFa-00086U-Lc
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 12:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751057AbYFPKZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 06:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbYFPKZD
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 06:25:03 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:1673 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978AbYFPKZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 06:25:01 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so3218326fgg.17
-        for <git@vger.kernel.org>; Mon, 16 Jun 2008 03:24:58 -0700 (PDT)
+	id S1753199AbYFPKq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 06:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbYFPKq6
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 06:46:58 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:34976 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754152AbYFPKq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 06:46:56 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so4297167waf.23
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 03:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=W70PeLyUE6fXbDMF87gv+ZuhPaCPnp2g+7FZN+JChck=;
-        b=uHM7WpqPVyiF70rMfvKIE4Ikna8rXrkZ5bDbNWxJjjQYs47Hfm860e7ze3iaYhVWDI
-         sr3Crq4anFo/gQO0+c64/DzJHpEM2oXbc5yqN7+ry8BvIZ8oZfhvobd1vIVLLTM8nqK4
-         fSu2sybuC8tlfqeWqa+U3TY9CcsRUc3oWn6OU=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=W97R9pbKaIUhyrMNK3uGlIoPef3M23wvEK1losZZuVM=;
+        b=mECwhLKP/Tl1+VZwyyYIzfaNkOn6OG2JDAhGaQEI3E3hMzvcY4RxQXiiHlYJwzduE+
+         GXmb0UReW/hDOPVJpgy6AUzucah3DPMswFuvIhfe1jVJF8ts3MF/IIROImW331r7g9Kl
+         TPq2M5s+oo5qkhlhfhMrwvJqM++EHIomw89aI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=ZSwUBq8D7QBba1S7s7joyPb7/tyOlTWoSBNez7Krq0EknYz6JQopE8QlXNzr/SlONe
-         ZpDamXOq1aiQvO72o2UrXlH3n5hSFya6HuCHWghXEQGqxi/60t9v5GIXj90Fl3e7oqZa
-         5E3XGtEB6ME/6Gn4gAy04kQI9TOaPxCNzmqoM=
-Received: by 10.86.82.16 with SMTP id f16mr7752617fgb.9.1213611898021;
-        Mon, 16 Jun 2008 03:24:58 -0700 (PDT)
-Received: by 10.86.33.13 with HTTP; Mon, 16 Jun 2008 03:24:58 -0700 (PDT)
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=mTLgFAVzn69UhmEYLdp73IYJo/a/kwtPHnLqf6kY83l+z4hKFJx7pG2cfrTReFkcfr
+         q/Kw9vMbHP+Uc1OmBgndgrxvw85FIg5yb2yc6BsYm2F26L4U7Wvpm9pn7Vsg9Wyy0Hp7
+         2rdkq2ogVD9HwkjhQowjPo4ZOgoRTq9EbesgQ=
+Received: by 10.114.135.1 with SMTP id i1mr5970089wad.5.1213613214193;
+        Mon, 16 Jun 2008 03:46:54 -0700 (PDT)
+Received: from ?192.168.1.201? ( [219.77.26.32])
+        by mx.google.com with ESMTPS id n38sm9114512wag.24.2008.06.16.03.46.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jun 2008 03:46:53 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85174>
 
-Hello,
+I want to see what had been done to a particular file, so I started with the log,
 
-  I am creating a patch set in this way:
-I make a change in one file, than commit it. (git commit file1)
-Then I make a change in a second file, than commit it. (git commit file1)
-and so on.
+$ git-log --no-color glinvc03.ijs |grep commit |head -3
+commit 23335cf4acadb9f09410f106adbcc2b190fe9c70
+commit 31e4f2c519caa9afa2e29ed8ffb40deb62aa972f
+commit b515f020d05f2967a7283751c8dd3740de7136a4
 
-Then I create a patch set thus:
+I want to know how to,
+1. cat the content this file for these 3 versions
+2. show the differences between versions,
 
-git-format-patch -M -s -n -o patchdir origin
+I use vim to view man page, and git-log without redirection will invoke vim as a 
+man viewer.  Does git-log always use man?  Without the --no-color option there 
+will be some "33m" prepending to some lines, is there any global setting to turn 
+off color in git-log?
 
-And a number of patch files are created, according to the number of commits
-I had made.
-
-
-Now, in each created patch file there is a line saying:
-Signed-off-by: root <root@hostName.(none)>
-
-
-Which is caused as I am doing this patches as root, and the machine name is
-hostName (and the domain name is none).
-
-Now, is there a way to cause git-format-patch to omit this
-Signed-off-by: root <root@hostName.(none)> line ?
-Or, altetnatively, is there a way to cause the git-format-patch to
-generate a differnet
-signed off by line (like signed off by ianbrn@gmail.com)?
-
-I had tried using the --signoff option for  git-format-patch , in
-these two ways,
-but got an error:
-
-git-format-patch --signoff=ianbrn@gmail.com -M -n -o patchdir origin
-fatal: unrecognized argument: --signoff=ianbrn@gmail.com
-
-git-format-patch --signoff ianbrn@gmail.com -M -n -o patchdir origin
-fatal: ambiguous argument 'ianbrn@gmail.com': unknown revision or path
-not in the working tree.
-Use '--' to separate paths from revisions
-
-I also tried to use the -a flag for commit
-git-commit -a ianbrn@gmail.com
-but again it did not help either.
-
-Any ideas?
-
-Any help will be appreciated,
-
-
-Regards,
-Ian
+regards,
