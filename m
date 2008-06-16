@@ -1,252 +1,85 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH] git-apply doesn't handle same name patches well [V3]
-Date: Mon, 16 Jun 2008 16:04:46 -0400
-Message-ID: <1213646686-31964-1-git-send-email-dzickus@redhat.com>
-Cc: Don Zickus <dzickus@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 22:06:03 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Mon, 16 Jun 2008 13:11:10 -0700 (PDT)
+Message-ID: <m3y755nq99.fsf@localhost.localdomain>
+References: <20080616110113.GA22945@elte.hu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Mon Jun 16 22:12:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8KxT-0001Iu-3g
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 22:05:45 +0200
+	id 1K8L3m-00041Q-4p
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 22:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541AbYFPUEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 16:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbYFPUEs
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 16:04:48 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:59387 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751552AbYFPUEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 16:04:47 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m5GK4lnC001555
-	for <git@vger.kernel.org>; Mon, 16 Jun 2008 16:04:47 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m5GK4kR3007637;
-	Mon, 16 Jun 2008 16:04:46 -0400
-Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m5GK4ktq030295;
-	Mon, 16 Jun 2008 16:04:46 -0400
-Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m5GK4kMr031990;
-	Mon, 16 Jun 2008 16:04:46 -0400
-Received: (from dzickus@localhost)
-	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m5GK4kuX031989;
-	Mon, 16 Jun 2008 16:04:46 -0400
-X-Mailer: git-send-email 1.5.6.rc2.48.g13da
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1753015AbYFPULQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 16:11:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbYFPULP
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 16:11:15 -0400
+Received: from ik-out-1112.google.com ([66.249.90.180]:31343 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753010AbYFPULP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 16:11:15 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so4267226ika.5
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 13:11:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=r4a+NxAHGbBquQHj4VZe3XdnM9eePyDM1i7gPLAR1VU=;
+        b=TFvbxjKioFh31/s4RrNp2iiD3XUVjYlKVI13M6XBMv44oE12Mo2ci0/59L0jG3VN2s
+         uu74a0MGtRpv5uriS8Igh4CJpaZe/XX7wmAoP+YTOA6wrFIUaBawHBhJVkeGk7nFPEz+
+         bqH2GHkO49rM31Y/YmGn/+roq0wsipdkndrXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=WRcr44vShsBEMbmSsNApbp5sYFElauJF/mmtnz03RxaBFtQIsOYxRebrvm3vcMdq3k
+         XU2A4NJJywHYdNwUkkMngNlE0cGDIwq3SA7p2dXhNRNziaff+VMVxJSAgQXCO6rOa89h
+         YEQxPOpL4QevPPqCAAVj9fyHK5Scj5mO8Qd7w=
+Received: by 10.210.91.17 with SMTP id o17mr6555204ebb.172.1213647071092;
+        Mon, 16 Jun 2008 13:11:11 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.236.117])
+        by mx.google.com with ESMTPS id k27sm2694466ugd.72.2008.06.16.13.11.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jun 2008 13:11:10 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5GJHfHx026516;
+	Mon, 16 Jun 2008 21:17:42 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5GJHdXO026513;
+	Mon, 16 Jun 2008 21:17:39 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080616110113.GA22945@elte.hu>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85224>
 
-When working with a lot of people who backport patches all day long, every
-once in a while I get a patch that modifies the same file more than once
-inside the same patch.  git-apply either fails if the second change relies
-on the first change or silently drops the first change if the second change
-is independent.
+Ingo Molnar <mingo@elte.hu> writes:
 
-The silent part is the scary scenario for us.  Also this behaviour is
-different from the patch-utils.
+> We are running a rather complex Git tree with heavy use of git-rerere 
+> (the -tip kernel tree, with more than 80 topic branches). git-rerere is 
+> really nice in that it caches conflict resolutions, but there are a few 
+> areas where it would be nice to have improvements:
+[...]
 
-I have modified git-apply to cache the filenames of files it modifies such
-that if a later patch chunk modifies a file in the cache it will buffer the
-previously changed file instead of reading the original file from disk.
+>  - File deletion: would be nice if git-rerere picked up git-rm
+>    resolutions. We hit this every now and then and right now i know 
+>    which ones need an extra git-rm pass.
 
-Logic has been put in to handle creations/deletions/renames/copies.  All the
-relevant tests of git-apply succeed.
+>From what I remember some time ago on git mailing list there was idea
+for git-rerere2, which would record resolutions on tree level,
+i.e. record file renames.  It could probably record file deletion as
+well... would someone implement it, and didn't it stay loose idea.
 
-A new test has been added to cover the cases I addressed.  However,
-currently adding changes to renamed file inside the same patch doesn't work
-correctly (it fails to find new file).  I didn't know how to fix this
-correctly, so I have the test fail expectedly.
-
-The fix is relatively straight-forward.  But I'm not sure if this new
-behaviour is something the git community wants.
-
-Changes since v2
-================
-- the updated patch not a v1 copy (doh!)
-
-Changes since v1
-================
-- converted to path-list structs
-- added testcases for renaming a patch and apply a new patch on top inside
-the same patch file
-
-Signed-off-by: Don Zickus <dzickus@redhat.com>
----
- builtin-apply.c          |   52 +++++++++++++++++++++++++++++++++++-
- t/t4127-apply-same-fn.sh |   67 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 118 insertions(+), 1 deletions(-)
- create mode 100755 t/t4127-apply-same-fn.sh
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index c497889..9f76ce4 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -12,6 +12,7 @@
- #include "blob.h"
- #include "delta.h"
- #include "builtin.h"
-+#include "path-list.h"
- 
- /*
-  *  --check turns on checking that the working tree matches the
-@@ -185,6 +186,13 @@ struct image {
- 	struct line *line;
- };
- 
-+/*
-+ * Caches patch filenames to handle the case where a
-+ * patch chunk reuses a filename
-+ */
-+
-+struct path_list fn_cache = {NULL, 0, 0, 0};
-+
- static uint32_t hash_line(const char *cp, size_t len)
- {
- 	size_t i;
-@@ -2176,6 +2184,38 @@ static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
- 	return 0;
- }
- 
-+struct patch *in_fn_cache(char *name)
-+{
-+	struct path_list_item *item;
-+
-+	item = path_list_lookup(name, &fn_cache);
-+	if (item != NULL)
-+		return (struct patch *)item->util;
-+
-+	return NULL;
-+}
-+
-+void add_to_fn_cache(char *name, struct patch *patch)
-+{
-+	struct path_list_item *item;
-+
-+	/* Always add new_name unless patch is a deletion */
-+	if (name != NULL) {
-+		item = path_list_insert(name, &fn_cache);
-+		item->util = patch;
-+	}
-+
-+	/* skip normal diffs, creations and copies */
-+	/*
-+	 * store a failure on rename/deletion cases because
-+	 * later chunks shouldn't patch old names
-+	 */
-+	if ((name == NULL) || (patch->is_rename)) {
-+		item = path_list_insert(patch->old_name, &fn_cache);
-+		item->util = (struct patch *) -1;
-+	}
-+}
-+
- static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
- {
- 	struct strbuf buf;
-@@ -2188,7 +2228,16 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
- 		if (read_file_or_gitlink(ce, &buf))
- 			return error("read of %s failed", patch->old_name);
- 	} else if (patch->old_name) {
--		if (S_ISGITLINK(patch->old_mode)) {
-+		struct patch *tpatch = in_fn_cache(patch->old_name);
-+
-+		if (tpatch != NULL) {
-+			if (tpatch == (struct patch *) -1) {
-+				return error("patch %s has been renamed/deleted",
-+					patch->old_name);
-+			}
-+			/* We have a patched copy in memory use that */
-+			strbuf_add(&buf, tpatch->result, tpatch->resultsize);
-+		} else if (S_ISGITLINK(patch->old_mode)) {
- 			if (ce) {
- 				read_file_or_gitlink(ce, &buf);
- 			} else {
-@@ -2211,6 +2260,7 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
- 		return -1; /* note with --reject this succeeds. */
- 	patch->result = image.buf;
- 	patch->resultsize = image.len;
-+	add_to_fn_cache(patch->new_name, patch);
- 	free(image.line_allocated);
- 
- 	if (0 < patch->is_delete && patch->resultsize)
-diff --git a/t/t4127-apply-same-fn.sh b/t/t4127-apply-same-fn.sh
-new file mode 100755
-index 0000000..47b59d5
---- /dev/null
-+++ b/t/t4127-apply-same-fn.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+
-+test_description='apply same filename'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	for i in a b c d e f g h i j k l m
-+	do
-+		echo $i
-+	done >same_fn &&
-+	git add same_fn &&
-+	git commit -m initial
-+'
-+test_expect_success 'apply same filename with independent changes' '
-+	sed -i -e "s/^d/z/" same_fn &&
-+	git diff > patch0 &&
-+	git add same_fn &&
-+	sed -i -e "s/^i/y/" same_fn &&
-+	git diff >> patch0 &&
-+	cp same_fn same_fn2 &&
-+	git reset --hard &&
-+	git-apply patch0 &&
-+	diff same_fn same_fn2
-+'
-+
-+test_expect_success 'apply same filename with overlapping changes' '
-+	git reset --hard
-+	sed -i -e "s/^d/z/" same_fn &&
-+	git diff > patch0 &&
-+	git add same_fn &&
-+	sed -i -e "s/^e/y/" same_fn &&
-+	git diff >> patch0 &&
-+	cp same_fn same_fn2 &&
-+	git reset --hard &&
-+	git-apply patch0 &&
-+	diff same_fn same_fn2
-+'
-+
-+test_expect_failure 'apply same new filename after rename' '
-+	git reset --hard
-+	git mv same_fn new_fn
-+	sed -i -e "s/^d/z/" new_fn &&
-+	git add new_fn &&
-+	git diff -M --cached > patch1 &&
-+	sed -i -e "s/^e/y/" new_fn &&
-+	git diff >> patch1 &&
-+	cp new_fn new_fn2 &&
-+	git reset --hard &&
-+	git apply patch1 &&
-+	diff new_fn new_fn2
-+'
-+
-+test_expect_success 'apply same old filename after rename' '
-+	git reset --hard
-+	git mv same_fn new_fn
-+	sed -i -e "s/^d/z/" new_fn &&
-+	git add new_fn &&
-+	git diff -M --cached > patch1 &&
-+	git mv new_fn same_fn
-+	sed -i -e "s/^e/y/" same_fn &&
-+	git diff >> patch1 &&
-+	git reset --hard &&
-+	test_must_fail git apply patch1
-+'
-+
-+test_done
 -- 
-1.5.6.rc2.48.g13da
+Jakub Narebski
+Poland
+ShadeHawk on #git
