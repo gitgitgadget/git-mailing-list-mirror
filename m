@@ -1,80 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: how to track changes of a file
-Date: Mon, 16 Jun 2008 18:08:35 +0200
-Message-ID: <48569003.6080406@viscovery.net>
-References: <48564499.3050008@gmail.com> <485646F9.1030300@viscovery.net> <48568B76.5050108@gmail.com>
+From: "Frederik Dohr" <f.n.dohr@gmail.com>
+Subject: Re: git-svn breaks svn when adding .svn
+Date: Mon, 16 Jun 2008 17:09:35 +0100
+Message-ID: <af6c748e0806160909t1e6dd22exf8e6d6c47215ec80@mail.gmail.com>
+References: <20080606122421.GA1521@denkbrett.schottelius.org>
+	 <7v1w38l0el.fsf@gitster.siamese.dyndns.org>
+	 <20080616122117.GA14292@denkbrett.schottelius.org>
+	 <200806161603.05166.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 18:09:50 2008
+Cc: "Nico -telmich- Schottelius" <nico-git-svn-20080616@schottelius.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 18:11:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8HGw-0006pB-Si
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:09:35 +0200
+	id 1K8HHx-0007DK-9P
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 18:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbYFPQIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 12:08:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751564AbYFPQIl
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:08:41 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:63544 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbYFPQIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 12:08:40 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K8HG1-00010d-9N; Mon, 16 Jun 2008 18:08:38 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1165A6D9; Mon, 16 Jun 2008 18:08:37 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48568B76.5050108@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753980AbYFPQJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 12:09:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753506AbYFPQJm
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 12:09:42 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:62859 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753163AbYFPQJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 12:09:41 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so3138918ywe.1
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 09:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=f9n3CtEkRRfprZBxZ92ikp21tvVk7t9N0EC0WIaohC4=;
+        b=WEE0CACzliYn70HZRBxY4owX9+5v83uletXxjpU+z4Wcz9UKJYPdWYF331rEyznVsz
+         jxwl+tT495lsw3TSeF+NfIklX9Tb2Tq/NV+bqG33mQ2TDdES0MP+WJQzF2gg4nluqxmd
+         AJRDU8nOw1uMSGvBja1hhjdgTxc+A5CYGSKZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Kr+IhQBfNNWiUHa7iBOryzANedKycNHfK6h1j6P7qCykvOUimA8gNj+ibjCdYg9AGT
+         3DCX104clOXcC5VNq3TDfYW+wCOAhkNaFU+JVhIFB3y0ci4VYlN3RZ2NHX5qRJap0Yom
+         D3hR0rqOeSfVrNdwjepBkjCdl0ZsaHxpR5NcE=
+Received: by 10.142.177.7 with SMTP id z7mr2417382wfe.249.1213632575240;
+        Mon, 16 Jun 2008 09:09:35 -0700 (PDT)
+Received: by 10.142.158.21 with HTTP; Mon, 16 Jun 2008 09:09:35 -0700 (PDT)
+In-Reply-To: <200806161603.05166.thomas@koch.ro>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85201>
 
-bill lam schrieb:
-> Johannes Sixt wrote:
->> $ git rev-list -3 -- glinvc03.ijs
->>
->>
->> $ git show {23335c,31e4f2,b515f0}:glinvc03.ijs
-> 
-> Thank for you help, but these 2 command did not work, did I missing
-> something? I I use git version 1.5.4.3 on linux.
-> 
-> $ git rev-list -3 -- glinvc03.ijs
-> usage: git-rev-list [OPTION] <commit-id>... [ -- paths... ]
+> I've reported the exact same problem on 18.04.08 under the subject: "git svn
+> should refuse to checkin .svn directories"
 
-Sorry, should have been
+Sorry about that - I did search the archives before having this
+posted, but that didn't come up with anything (the search
+functionality is quite limited though).
 
-$ git rev-list -3 HEAD -- glinvc03.ijs
+>> [...] Add this as the
+>> pre-commit hook in .git/hooks (make sure to make it executable).
 
-But this is not intended for daily use anyway. You are better off using
-git log family of commands. Eg. if you insist on a 1-commit-per-line
-listing, you'd use
+Not a bad idea - but this still requires manual intervention (and thus
+awareness), which doesn't solve the potential destructiveness of this
+issue.
 
-$ git log -3 --pretty=oneline -- glinvc03.ijs
+> The Git website seems to be currently down, but one of us should search, if
+> there is a Bugtracker for GIT and then open an issue for this.
 
-> $ git show {23335c,31e4f2,b515f0}:glinvc03.ijs
-> fatal: ambiguous argument '23335c:glinvc03.ijs': unknown revision or
-> path not in the working tree.
-> Use '--' to separate paths from revisions
+The website is up again.
+However, there doesn't seem to be a dedicated bug tracking tool.
 
-My guess is that glinvc03.ijs lives in a subdirectory of your repo. Then
-you must supply the complete path from the repository root:
 
-$ git show {23335c,31e4f2,b515f0}:some/subdir/glinvc03.ijs
-
-(No, this will not be changed.)
-
--- Hannes
+-- F.
