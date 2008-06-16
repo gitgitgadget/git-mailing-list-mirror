@@ -1,77 +1,87 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: how to track changes of a file
-Date: Mon, 16 Jun 2008 12:56:57 +0200
-Message-ID: <485646F9.1030300@viscovery.net>
-References: <48564499.3050008@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: git-rerere observations and feature suggestions
+Date: Mon, 16 Jun 2008 13:01:13 +0200
+Message-ID: <20080616110113.GA22945@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 12:57:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 13:02:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8CPI-00033v-Aj
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 12:57:52 +0200
+	id 1K8CTb-0004UN-Ut
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 13:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875AbYFPK46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 06:56:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbYFPK46
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 06:56:58 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:38329 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbYFPK45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 06:56:57 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K8COO-00030o-Bh; Mon, 16 Jun 2008 12:56:56 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 23A246D9; Mon, 16 Jun 2008 12:56:56 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48564499.3050008@gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751070AbYFPLB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 07:01:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbYFPLBZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 07:01:25 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:50945 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750868AbYFPLBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 07:01:25 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1K8CSY-0005qp-IA
+	from <mingo@elte.hu>; Mon, 16 Jun 2008 13:01:22 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id EEFBA3E21DC; Mon, 16 Jun 2008 13:01:14 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85176>
 
-bill lam schrieb:
-> I want to see what had been done to a particular file, so I started with
-> the log,
-> 
-> $ git-log --no-color glinvc03.ijs |grep commit |head -3
-> commit 23335cf4acadb9f09410f106adbcc2b190fe9c70
-> commit 31e4f2c519caa9afa2e29ed8ffb40deb62aa972f
-> commit b515f020d05f2967a7283751c8dd3740de7136a4
+We are running a rather complex Git tree with heavy use of git-rerere 
+(the -tip kernel tree, with more than 80 topic branches). git-rerere is 
+really nice in that it caches conflict resolutions, but there are a few 
+areas where it would be nice to have improvements:
 
-All you neede here probably was just
+ - Fixing resolutions: currently, when i do an incorrect conflict
+   resolution, and fix it on the next run, git-rerere does not pick up
+   the new resolution but uses the old (buggy) one on the next run. To
+   fix it up i have to find the right entries in .git/rr-cache/* and
+   manually erase them. Would be nice to have "git-rerere gc <pathspec>"
+   to flush out a single bad resolution.
 
-$ git rev-list -3 -- glinvc03.ijs
+ - File deletion: would be nice if git-rerere picked up git-rm
+   resolutions. We hit this every now and then and right now i know 
+   which ones need an extra git-rm pass.
 
-> I want to know how to,
-> 1. cat the content this file for these 3 versions
+ - Automation: would be nice to have a git-rerere modus operandi where
+   it would auto-commit things if and only if all conflicting files were 
+   resolved.
 
-$ git show {23335c,31e4f2,b515f0}:glinvc03.ijs
+ - Sharing .git/rr-cache. It's quite a PITA to share the .git/rr-cache
+   amongst -tip maintainers right now. It seems to have dependencies on 
+   the index file, so if we want to share the conflict resolution data, 
+   we have to copy our index file (which is dangerous anyway and assumes 
+   very similar repositories).
 
-> 2. show the differences between versions,
+   It would be much nicer if we could share conflict resolutions with 
+   each other - and with others as well. For example linux-next could 
+   re-use our conflict resolution data as well - often Stephen Rothwell 
+   has to re-do the same conflict resolution as well, creating 
+   duplicated work.
 
-$ git log -p -2 -- glinvc03.ijs
+   ( Also, it's a GPL nitpicky issue: the conflict resolution database 
+     can be argued to be part of "source code" and as such it should be 
+     shared with everyone who asks. With trivial merges the data is
+     probably not copyrightable hence probably falls outside the scope 
+     of the GPL, but with a complex topic tree like -tip with dozens of 
+     conflict resolutions, the boundary is perhaps more blurred. )
 
-> I use vim to view man page, and git-log without redirection will invoke
-> vim as a man viewer.  Does git-log always use man?  Without the
-> --no-color option there will be some "33m" prepending to some lines, is
-> there any global setting to turn off color in git-log?
-
-You have set PAGER=vim in your .profile? Then put
-
-GIT_PAGER=less; export GIT_PAGER
-
-there, too.
-
--- Hannes
+	Ingo
