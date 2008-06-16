@@ -1,61 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: using git-blame with patches as input
-Date: Mon, 16 Jun 2008 15:08:00 -0700
-Message-ID: <7v4p7t9gov.fsf@gitster.siamese.dyndns.org>
-References: <20080616213517.GE20727@redhat.com>
- <7vabhl9hap.fsf@gitster.siamese.dyndns.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] gitweb: return correct HTTP status codes
+Date: Mon, 16 Jun 2008 23:49:28 +0200
+Message-ID: <4856DFE8.9010809@gmail.com>
+References: <1213564515-14356-1-git-send-email-LeWiemann@gmail.com> <m37icqpb5f.fsf@localhost.localdomain> <48568D5C.5090909@gmail.com> <200806161843.09372.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Don Zickus <dzickus@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 00:09:06 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@suse.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 00:15:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Msr-00058j-Tj
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 00:09:06 +0200
+	id 1K8Myy-00078E-04
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 00:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756411AbYFPWIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 18:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755401AbYFPWIK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 18:08:10 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35806 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753659AbYFPWIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 18:08:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 793F6D81A;
-	Mon, 16 Jun 2008 18:08:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EDF2ED819; Mon, 16 Jun 2008 18:08:02 -0400 (EDT)
-In-Reply-To: <7vabhl9hap.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 16 Jun 2008 14:54:54 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B28E2F52-3BF0-11DD-A658-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756957AbYFPWO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 18:14:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756826AbYFPWO2
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 18:14:28 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:37235 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754851AbYFPWO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 18:14:28 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so3391822fgg.17
+        for <git@vger.kernel.org>; Mon, 16 Jun 2008 15:14:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=6dObxW2D3/B+B0B6mQgJxRG6svS4gWRb4GSSIWVZ6pk=;
+        b=PYlQh/F8MG6LHrXZEl8RnxFZ5VlMliDet7sPYuO4VYZsii9nzMFQNPomCVz6Zl2ns2
+         3oof8x+hPGJu2oUxIDG1avKCUIu2x46IA+bTbABjcU59z2lIW3gLl1A0NQ0o2vghimWa
+         s6U3JJs2M/g/0Hz/O0pCAmHsqbnCnTCh23+RE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=HIQVOnaUOHfU6vsWcoYPZ/zAiaTzPqe+CRuwC0mrnFIxM7JbvqbV42YAa4JrlshVda
+         Q4uUawlHJKIS7LddaWaDnmnJ1J9ZXoHt878xEox1q5NOGLqXwEmnSPzuhdJmKniDEI0e
+         uw/kf7Av0pzXTkpD73Lb0XKMycrgo/rZxIkzc=
+Received: by 10.86.31.18 with SMTP id e18mr8282513fge.6.1213654466226;
+        Mon, 16 Jun 2008 15:14:26 -0700 (PDT)
+Received: from ?172.16.30.128? ( [80.187.209.58])
+        by mx.google.com with ESMTPS id e20sm12221004fga.1.2008.06.16.15.14.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jun 2008 15:14:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200806161843.09372.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85241>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jakub Narebski wrote:
+> Well, we could, perhaps, examine stderr (or redirect it to stdout and
+> examine upon error) to check what was the error.
 
-> Don Zickus <dzickus@redhat.com> writes:
-> ...
->> ...  Unfortunately, I don't quite understand
->> some of the algorithms git-blame does when it splits the patch chunks into
->> smaller pieces to determine which pieces are blame-able on the parents.
->
-> http://thread.gmane.org/gmane.comp.version-control.git/28826
+We don't have to -- gitweb's current (suboptimal) error checking is 
+because it doesn't interface with git very well.  The API I'm writing 
+will fix this (i.e. provide proper feedback in all cases) so we'll have 
+more specific status codes.  IOW, we'll be able to differentiate between 
+500 and 404.  Trust me on this one. ;-)
 
-In the article quoted, "blame" refers to a very old "git-blame" code that
-does not in our codebase anymore.  It talks about "git-pickaxe" which
-later took over the "git-blame" name, which happend in acca687
-(git-pickaxe: retire pickaxe, 2006-11-08).
+> But I think in all, or almost all cases, the source is wrong parameters
+> in URL.  Now, returning 5xx _server_ error would make me want to email
+> webmaster about error on his/her server, while 4xx _user_ error would
+> make me examine my input
 
-It talks about "NEEDSWORK" to hint that the implementation was incomplete,
-refering to the version that eventually lead to cee7f24 (git-pickaxe:
-blame rewritten., 2006-10-19).
+Since the status codes will get better (more accurate) anyway, I care 
+more about correctness than practicalities right now (and I'm convinced 
+that only 500 is correct in the cases we're talking about).  That said, 
+if you really want 404s in there, go ahead and send a follow-up patch, I 
+won't object.
+
+> BTW. I got three copies of this email: was it you fighting VGER
+> anti-spam filter?
+
+Yup.  Apparently it simply greps for Content-TypXe: text/hXtml.  *shakes 
+head* :-)
+
+-- Lea
