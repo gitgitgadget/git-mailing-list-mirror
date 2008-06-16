@@ -1,80 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git reflog expire honour core.sharedRepository.
-Date: Mon, 16 Jun 2008 17:19:03 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0806161718050.3302@eeepc-johanness>
-References: <1213565862-23247-1-git-send-email-madcoder@debian.org> <7vhcbuco2w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806161713520.3302@eeepc-johanness>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Mon, 16 Jun 2008 17:48:51 +0200
+Message-ID: <20080616154851.GA6938@artemis.madism.org>
+References: <20080616110113.GA22945@elte.hu> <20080616110918.GA30856@glandium.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	gitster@pobox.com, joerg@debian.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 17:18:57 2008
+Content-Type: multipart/signed; boundary="azLHFNyN32YCQGCU";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Mon Jun 16 17:49:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8GTb-0003gK-Cs
-	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 17:18:35 +0200
+	id 1K8Gxq-0008H5-V0
+	for gcvg-git-2@gmane.org; Mon, 16 Jun 2008 17:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753859AbYFPPRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 11:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753776AbYFPPRk
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 11:17:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753506AbYFPPRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 11:17:39 -0400
-Received: (qmail invoked by alias); 16 Jun 2008 15:17:37 -0000
-Received: from unknown (EHLO eeepc-johanness.viawireless.co.uk) [212.183.134.211]
-  by mail.gmx.net (mp066) with SMTP; 16 Jun 2008 17:17:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX195MZ5z5AN5UfbXh7VmV4uYnp09uANY8PbAocqZyy
-	TZJdES6V8VF0eA
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <alpine.DEB.1.00.0806161713520.3302@eeepc-johanness>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753913AbYFPPs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 11:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753642AbYFPPs4
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 11:48:56 -0400
+Received: from pan.madism.org ([88.191.52.104]:34720 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752739AbYFPPsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 11:48:55 -0400
+Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 2F8402BE0A;
+	Mon, 16 Jun 2008 17:48:53 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id EF6B346418A; Mon, 16 Jun 2008 17:48:51 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Mike Hommey <mh@glandium.org>, Ingo Molnar <mingo@elte.hu>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <20080616110918.GA30856@glandium.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85194>
 
-Hi,
 
-On Mon, 16 Jun 2008, Johannes Schindelin wrote:
+--azLHFNyN32YCQGCU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Sun, 15 Jun 2008, Junio C Hamano wrote:
-> 
-> > Pierre Habouzit <madcoder@debian.org> writes:
-> > 
-> > > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > > ---
-> > >  builtin-reflog.c       |    1 +
-> > >  t/t1301-shared-repo.sh |   15 +++++++++++++++
-> > >  2 files changed, 16 insertions(+), 0 deletions(-)
-> > >
-> > >  Some people like to have logAllRefUpdates even for bare repositories, and if
-> > >  shared, git-gc breaks them.
-> > >
-> > > diff --git a/builtin-reflog.c b/builtin-reflog.c
-> > > index 897d1dc..430929f 100644
-> > > --- a/builtin-reflog.c
-> > > +++ b/builtin-reflog.c
-> > > @@ -308,6 +308,7 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
-> > >  		} else if (cmd->updateref && commit_ref(lock)) {
-> > >  			status |= error("Couldn't set %s", lock->ref_name);
-> > >  		}
-> > > +		adjust_shared_perm(log_file);
-> > 
-> > Why is it sane to do this unconditionally, instead of putting in another
-> > else or something?
-> 
-> Because adjust_shared_perm() checks for shared_repository, and returns 
-> when there is nothing to do.
+On Mon, Jun 16, 2008 at 11:09:18AM +0000, Mike Hommey wrote:
+> - At least, compress the data in the rr-cache. It can grow big quite
+>   easily. Also, I wonder if keeping the entire files is not overkill...
 
-Ooops.  I think I missed your point, namely that this should only be done 
-when no error occurred.  I just blame it on the short snippet.
+  Actually it would be rather straightforward to put it in the usual git
+store, and represent the current rr-cache with a flat file that points
+to the in-git preimage/postimages, and make git-gc aware of those.
 
-Sorry,
-Dscho
+  This would deal with the huge number of files + compression quite
+easily. I'm quite sure it's pretty straightforward actually :)
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--azLHFNyN32YCQGCU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkhWi2IACgkQvGr7W6HudhwMagCfQa1KDg77BV9aNje+ISElWCXW
+p5YAn0qYvrMdGCxnVQPHD8mzeCVi2Ojd
+=znuK
+-----END PGP SIGNATURE-----
+
+--azLHFNyN32YCQGCU--
