@@ -1,169 +1,68 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 03/14] Write to a stack log when stack is modified
-Date: Tue, 17 Jun 2008 11:24:53 +0100
-Message-ID: <b0943d9e0806170324j12605a55m41b582ad09925cce@mail.gmail.com>
-References: <20080612052913.23549.69687.stgit@yoghurt>
-	 <20080612053424.23549.64457.stgit@yoghurt>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Tue, 17 Jun 2008 11:24:35 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806171122130.6439@racer>
+References: <20080616110113.GA22945@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 12:25:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Tue Jun 17 12:27:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8YNp-0004b2-Mc
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 12:25:50 +0200
+	id 1K8YPF-0005CB-JG
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 12:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118AbYFQKYz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2008 06:24:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbYFQKYz
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 06:24:55 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:24730 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbYFQKYy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2008 06:24:54 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so4664528waf.23
-        for <git@vger.kernel.org>; Tue, 17 Jun 2008 03:24:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yvxapZSxcc35p1eBbeWmTBdtqzXJNjt1tyCYEJaNWg0=;
-        b=iQEsvJ38fx5CBqKRYuGmblMM7lDXGirY18UpvKFifMzSQkn3hnBOF39U4WxfqfGeno
-         eA/6UtIB8tF3M3I/E26hE1Cv6XTOM6eg/+C5X/ITFbWQpB6YaxpmLmajYltLvAZCLee6
-         w7yvwza8TcWgceVmCOIqG6ge/xDE1e5zn7Dqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Uvg/xQtuKWhiSMvyAtGokTJ7lPVUfkZo496vJySap3EUTEZSO/GQT2oEh5bBIRuh79
-         MvLOCXcc6ob3mC5hPLOVK7hnJ45fsu/LfE3YdEhgyNtHqJXNIr+124gyEwvhlf0u5TXz
-         2askw04Iib/Crz4L6ZBCv52D9v7GCV8XXJ4ZU=
-Received: by 10.114.26.18 with SMTP id 18mr7550083waz.162.1213698293354;
-        Tue, 17 Jun 2008 03:24:53 -0700 (PDT)
-Received: by 10.114.193.12 with HTTP; Tue, 17 Jun 2008 03:24:53 -0700 (PDT)
-In-Reply-To: <20080612053424.23549.64457.stgit@yoghurt>
-Content-Disposition: inline
+	id S1754579AbYFQK0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 06:26:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754425AbYFQK0O
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 06:26:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55986 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754558AbYFQK0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 06:26:13 -0400
+Received: (qmail invoked by alias); 17 Jun 2008 10:26:12 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp050) with SMTP; 17 Jun 2008 12:26:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/PxTgi88zPCdui0xdGeZKS8pcKpH9+3qziDm2ZNf
+	gERo64a/4OGw2z
+X-X-Sender: gene099@racer
+In-Reply-To: <20080616110113.GA22945@elte.hu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85286>
 
-Hi Karl,
+Hi,
 
-There are some comments below but I think I haven't fully understood th=
-is.
-
-2008/6/12 Karl Hasselstr=F6m <kha@treskal.com>:
-> Create a log branch (called <branchname>.stgit) for each StGit branch=
-,
-> and write to it whenever the stack is modified.
+On Mon, 16 Jun 2008, Ingo Molnar wrote:
 >
-> Commands using the new infrastructure write to the log when they
-> commit a transaction. Commands using the old infrastructure get a log
-> entry write written for them when they exit, unless they explicitly
-> ask for this not to happen.
+>  - Sharing .git/rr-cache. It's quite a PITA to share the .git/rr-cache 
+>    amongst -tip maintainers right now. It seems to have dependencies on 
+>    the index file, so if we want to share the conflict resolution data, 
+>    we have to copy our index file (which is dangerous anyway and assumes 
+>    very similar repositories).
 
-I was more thinking for this to be the default for backwards API compat=
-ibility.
+I was dreaming about having "git rerere infer-from <merge-commit>".  This 
+would be
 
->  class _Directory(object):
-> -    def __init__(self, needs_current_series =3D True):
-> +    def __init__(self, needs_current_series =3D True, log =3D True):
+- more versatile, as you do not have to ask the guy to share the cache,
 
-i.e. we make log =3D False here by default.
+- would avoid transmitting lots of data that can be inferred from the 
+  data,
 
-> --- /dev/null
-> +++ b/stgit/lib/log.py
-> @@ -0,0 +1,254 @@
-> +r"""This module contains functions and classes for manipulating
+- would avoid relying on the honesty of the person sharing the cache, and
 
-Why does this start with an 'r'? I thought this is for regular expressi=
-ons.
+- it would put all license wieners^Wissues at rest.
 
-> +A stack log is a git branch. Each commit contains the complete state
-> +of the stack at the moment it was written; the most recent commit ha=
-s
-> +the most recent state.
-> +
-> +For a branch C{I{foo}}, the stack log is stored in C{I{foo}.stgit}.
+FWIW this is in my TODO list, but I am unlikely to get to it, least of all 
+before 1.5.6 comes out.
 
-The main question. Is this history preserved after a git-gc?
-
-> +Tree
-> +----
-> +
-> +The top-level tree object has the following entries:
-> +
-> +  - C{version}: a blob containing the string "C{5\n}".
-> +
-> +  - C{head}: a blob containing the ASCII hex sha1 of the current HEA=
-D,
-> +    followed by a newline.
-> +
-> +  - C{applied}, C{unapplied}: blobs containing one line for each
-> +    applied or unapplied patch, in order. Each line consists of
-> +
-> +      - the ASCII hex sha1 of the patch's commit object,
-> +
-> +      - a space, and
-> +
-> +      - the patch's name.
-> +
-> +  - C{patches}: a tree containing one subtree for each patch, named
-> +    after that patch. Each such subtree contains:
-> +
-> +      - C{a}, C{b}: the patch's I{bottom} and I{top} trees.
-> +
-> +      - C{info}: a blob containing::
-> +
-> +          Author: <author name and e-mail>
-> +          Date: <patch timestamp>
-> +
-> +          <commit message>
-
-I might not fully understand this but can we not store just the commit
-object if the patch, which would have the bottom/top information.
-
-> +Simplified log
-> +--------------
-> +
-> +The simplified log looks exactly like the normal, or I{full}, log,
-> +except for the following:
-> +
-> +  - Instead of having a tree per patch in the C{patches} subtree, it
-> +    has a blob per patch. This blob contains::
-> +
-> +      Bottom: <sha1 of patch's bottom tree>
-> +      Top:    <sha1 of patch's top tree>
-> +      Author: <author name and e-mail>
-> +      Date:   <patch timestamp>
-
-Can we not point to the original commit corresponding to the patch? It
-already has this information.
-
-> +
-> +      <commit message>
-> +
-> +      ---
-> +
-> +      <patch's diff>
-
-What is the patch's diff here? Cannot it be determined from the trees?
-
-> +The simplified log contains no information not in the full log; its
-> +purpose is ease of visualization."""
-
-Ah, OK. But I think it would be more useful to see the diff between
-subsequent revisions of a stack rather than the full patch diff.
-
-Thanks.
-
---=20
-Catalin
+Ciao,
+Dscho
