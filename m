@@ -1,73 +1,87 @@
-From: Saurabh Raje <saurabh.raje@gmail.com>
-Subject: git & svn related merge questions ...
-Date: Tue, 17 Jun 2008 11:28:53 +0000 (UTC)
-Message-ID: <loom.20080617T112816-101@post.gmane.org>
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: cvs2git with  modules?
+Date: Tue, 17 Jun 2008 06:21:42 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794302389A59@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 13:31:24 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 17 13:38:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8ZP7-0007dR-BY
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 13:31:13 +0200
+	id 1K8ZVj-0001Lh-Hg
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 13:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755205AbYFQLaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 07:30:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755124AbYFQLaH
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 07:30:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:37966 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755105AbYFQLaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 07:30:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1K8ZNy-0005cW-La
-	for git@vger.kernel.org; Tue, 17 Jun 2008 11:30:03 +0000
-Received: from bbs.webaroo.com ([125.18.21.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Jun 2008 11:30:02 +0000
-Received: from saurabh.raje by bbs.webaroo.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Jun 2008 11:30:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 125.18.21.2 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9) Gecko/2008052906 Firefox/3.0)
+	id S1755697AbYFQLg4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2008 07:36:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755615AbYFQLg4
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 07:36:56 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:59200 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755366AbYFQLgz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2008 07:36:55 -0400
+X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jun 2008 07:36:55 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: cvs2git with  modules?
+Thread-Index: AcjQbFFu07OhxeR7SxOa3pPKswGfpw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85291>
 
 Hi All,
+	I'm trying to use cvs2svn in cvs2git mode to convert a repo with a num=
+ber of modules. =20
+Can anyone tell me how to keep that module structure in the new git rep=
+o?  So, if in cvs there are two modules,=20
+ModA and ModB, I want to see those two as top level directories in the =
+git repo.
 
-I have a question regarding 3-way merge ...
+I've tried putting adding the projects in my options file as below, but=
+ it puts the files ModA/* and ModB/* at the top level in the git repo.
 
-Here's how the subversion commits had happened
-- Initially we had 'trunk' at revision T1
-- We made a 'branch' (svn cp) at revision B1 (T1 -> B1)
-(...development continues in trunk & branch...)
-- We merge (svn merge) changes T2 - T1 in branch B2 and resolve all the
-conflicts (if any) committing revision B3
-(...development continues in trunk...)
 
-After this I imported the entire subversion repository in Git (git-svn clone) &
-then tried to merge the 'branch' (@B3) in 'trunk' (@T3).
+run_options.add_project(
+    r'/home/foo/cvsrepo/ModA,
+    trunk_path=3DModA',
+    symbol_transforms=3D[
+        ReplaceSubstringsSymbolTransform('\\','/'),
+        NormalizePathsSymbolTransform(),
+        ],
+    symbol_strategy_rules=3D[
+        UnambiguousUsageRule(),
+        BranchIfCommitsRule(),
+        HeuristicStrategyRule(),
+        HeuristicPreferredParentRule(),
+        ],
+    )
 
-The problem here is that the common ancestor is considered as T1 for 'trunk' &
-branch' & not T2 which causes many more merge conflicts which should not have
-been there ... In subversion flow we used to merge diff of branch@B3 and
-trunk@T2 in trunk to achieve the result with minimum conflicts.
+run_options.add_project(
+    r'/home/foo/cvsrepo/ModB,
+    trunk_path=3DModB',
+    symbol_transforms=3D[
+        ReplaceSubstringsSymbolTransform('\\','/'),
+        NormalizePathsSymbolTransform(),
+        ],
+    symbol_strategy_rules=3D[
+        UnambiguousUsageRule(),
+        BranchIfCommitsRule(),
+        HeuristicStrategyRule(),
+        HeuristicPreferredParentRule(),
+        ],
+    )
 
-Any idea of how to fix this?
 
-I just started using Git. It is a fantastic piece of software.
-Thank you all.
-
-Regards,
-
-Saurabh Raje 
+--=20
+=A0
+Kelly F. Hickel
+Senior Software Architect
+MQSoftware, Inc
+952.345.8677
+kfh@mqsoftware.com
