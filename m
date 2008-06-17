@@ -1,74 +1,113 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [Junio C Hamano] Re: Consolidate SHA1 object file close
-Date: Tue, 17 Jun 2008 09:30:54 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806170919370.25099@woody.linux-foundation.org>
-References: <7viqwbfxk6.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0806151057100.2949@woody.linux-foundation.org> <7v4p7s8xjc.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: [PATCH] Fix approxidate("never") to always return 0
+Date: Tue, 17 Jun 2008 18:34:57 +0200
+Message-ID: <1213720497-9093-1-git-send-email-dkr+ml.git@free.fr>
+References: <4855A3CC.2090701@free.fr>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Olivier Marin <dkr@freesurf.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 18:33:59 2008
+X-From: git-owner@vger.kernel.org Tue Jun 17 18:36:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8e7K-00030T-DE
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 18:33:10 +0200
+	id 1K8e9x-0004D0-Jc
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 18:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752432AbYFQQcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 12:32:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbYFQQcO
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 12:32:14 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44184 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751843AbYFQQcN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2008 12:32:13 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5HGUu3m001377
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 17 Jun 2008 09:30:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5HGUsZ2022873;
-	Tue, 17 Jun 2008 09:30:55 -0700
-In-Reply-To: <7v4p7s8xjc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.857 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754177AbYFQQfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 12:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755811AbYFQQe7
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 12:34:59 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:39742 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753218AbYFQQe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 12:34:58 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 1778512B74A;
+	Tue, 17 Jun 2008 18:34:57 +0200 (CEST)
+Received: from localhost.localdomain (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id C723512B6FE;
+	Tue, 17 Jun 2008 18:34:56 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.rc3.156.g1a01
+In-Reply-To: <4855A3CC.2090701@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85311>
 
+From: Olivier Marin <dkr@freesurf.fr>
 
+Commit af66366a9feb0194ed04b1f538998021ece268a8 introduced the keyword
+"never" to be used with approxidate() but defined it with a fixed date
+without taking care of timezone. As a result approxidate() will return
+a timestamp in the future with a negative timezone.
 
-On Mon, 16 Jun 2008, Junio C Hamano wrote:
-> 
-> However, this may be more important fix.  We want to make sure that
-> adjust_shared_perm() is called on the success codepath, especially not
-> when mkdir() does _not_ fail.
+With this patch, approxidate("never") always return 0 whatever your
+timezone is.
 
-Oops. Yes.
+Also, print seconds since the Epoch in test-date.
 
-The old code this came from actually did it differently: it failed if 
-mkdir _succeeded_ but then adjust_shared_perm() failed. If the mkdir 
-failed, it would just try again. That was what confused me - it was a 
-copy-and-paste thing, but with me misreading the source of it and being 
-confused.
+Signed-off-by: Olivier Marin <dkr@freesurf.fr>
+---
 
-IOW, the old code looked like
+Without this patch:
 
-	if (!mkdir(filename, 0777) && adjust_shared_perm(filename)) {
-		.. failure path ..
+	$ git --version
+	git version 1.5.6.rc3.156.g1a01 (next)
 
-which is just really odd. A failing mkdir would be a "success" from this 
-standpoint, leading to another "link()" being attempted. I think it may 
-have wanted to return the errno from the link() or something.
+	$ mkdir /tmp/repo1 && cd /tmp/repo1 && git init
+	$ echo A > A && git add A && git commit -m A
 
-Your fix is obviously superior. And equally obviously we don't seem to 
-have any tests for this case. Maybe because I have a umask of 0002, so the 
-mkdir() would already make it group-writable?
+	$ git config gc.reflogexpire never
 
-		Linus
+	$ TZ=UTC git reflog expire --dry-run --verbose HEAD
+	keep commit (initial): A
+
+	$ TZ=UTC-2 git reflog expire --dry-run --verbose HEAD
+	would prune commit (initial): A
+
+This test does not trigger the problem with Junio's "Per-ref reflog expiry
+configuration" patch because it explicitly tests for "never" without relying
+on approxidate() but the bug still remains with --expire option and in date.c
+
+This make me thinking about TZ=UTC forced into t/test-lib.sh. Should not
+test cases to be independant of the timezone?
+
+ date.c      |    6 ++----
+ test-date.c |    2 +-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/date.c b/date.c
+index a74ed86..1a4eb87 100644
+--- a/date.c
++++ b/date.c
+@@ -682,10 +682,8 @@ static void date_am(struct tm *tm, int *num)
+ 
+ static void date_never(struct tm *tm, int *num)
+ {
+-	tm->tm_mon = tm->tm_wday = tm->tm_yday
+-		= tm->tm_hour = tm->tm_min = tm->tm_sec = 0;
+-	tm->tm_year = 70;
+-	tm->tm_mday = 1;
++	time_t n = 0;
++	localtime_r(&n, tm);
+ }
+ 
+ static const struct special {
+diff --git a/test-date.c b/test-date.c
+index 62e8f23..b84e000 100644
+--- a/test-date.c
++++ b/test-date.c
+@@ -14,7 +14,7 @@ int main(int argc, char **argv)
+ 		printf("%s -> %s -> %s", argv[i], result, ctime(&t));
+ 
+ 		t = approxidate(argv[i]);
+-		printf("%s -> %s\n", argv[i], ctime(&t));
++		printf("%s -> %lu -> %s\n", argv[i], t, ctime(&t));
+ 	}
+ 	return 0;
+ }
+-- 
+1.5.6.rc3.204.gf01a.dirty
