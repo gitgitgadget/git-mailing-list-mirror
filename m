@@ -1,67 +1,68 @@
-From: Andy Neitzke <neitzke@ias.edu>
-Subject: "git log -5 --follow" returns too few commits
-Date: Tue, 17 Jun 2008 07:21:23 -0400
-Message-ID: <200806170721.23950.neitzke@ias.edu>
+From: Mirko Stocker <mirko.stocker@hsr.ch>
+Subject: git-cvsserver: Index already exists in git repo
+Date: Tue, 17 Jun 2008 14:09:25 +0200
+Organization: HSR
+Message-ID: <200806171409.25572.mirko.stocker@hsr.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 13:51:11 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 17 14:11:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8ZiF-0005eI-Nn
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 13:51:00 +0200
+	id 1K8a1g-00041f-Cx
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 14:11:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755371AbYFQLuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 07:50:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755359AbYFQLuF
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 07:50:05 -0400
-Received: from smtp2.ias.edu ([192.16.204.102]:59749 "EHLO smtp2.ias.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755272AbYFQLuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 07:50:04 -0400
-X-Greylist: delayed 1655 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jun 2008 07:50:04 EDT
-X-IAS: Institute for Advanced Study
-Received: from pps2 (pps2.ias.edu [172.16.12.132])
-	by smtp2.ias.edu (8.13.4/8.13.4) with ESMTP id m5HBMNMp014636
-	for <git@vger.kernel.org>; Tue, 17 Jun 2008 07:22:27 -0400 (EDT)
-Received: from iris.sns.ias.edu (iris.sns.ias.edu [172.16.17.15])
-	by pps2.ias.edu (8.14.1/8.14.1) with ESMTP id m5HBMMJF027970
-	for <git@vger.kernel.org>; Tue, 17 Jun 2008 07:22:22 -0400
-X-SNS: School of Natural Sciences
-Received: from [192.168.11.3] ([157.82.237.102])
-	(authenticated bits=0)
-	by iris.sns.ias.edu (8.13.1/8.13.1) with ESMTP id m5HBMIIx021218
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 17 Jun 2008 07:22:22 -0400
+	id S1754611AbYFQMKE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2008 08:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755105AbYFQMKE
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 08:10:04 -0400
+Received: from luc80-74-131-252.ch-meta.net ([80.74.131.252]:35347 "EHLO
+	lucius.metanet.ch" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754382AbYFQMKD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2008 08:10:03 -0400
+Received: (qmail 16462 invoked from network); 17 Jun 2008 14:09:34 +0200
+Received: from unknown (HELO pin6108034.hsr.ch) (152.96.200.175)
+  by luc80-74-131-153.ch-meta.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 17 Jun 2008 14:09:34 +0200
 User-Agent: KMail/1.9.9
 Content-Disposition: inline
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7160:2.4.4,1.2.40,4.0.166 definitions=2008-06-17_03:2008-06-16,2008-06-17,2008-06-16 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0805090000 definitions=main-0806170040
-X-IAS-PPS-SPAM: NO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85294>
 
-Hi,
+Hi
 
-Using either git 1.5.5.4 or the current master, on my system the command
+I'm using git-cvsimport (with -i) to import an existing repository, whi=
+ch I=20
+then clone for development. Now, we have some guys here that'd rather=20
+continue to use the Eclipse CVS plug-in than working directly with Git,=
+ so I=20
+thought I could tell them to try git-cvsserver.
 
-git log -5 --follow some-file
+Now, git-cvsserver complains about an existing index file in the server=
+=20
+repository. If I just remove the index file on the server, everything s=
+eems=20
+to work just fine. But 'rm .git/index'  just doesn't feel right... what=
+ I=20
+understand so far: the index file seems to contain information about th=
+e=20
+files in the tree, but it doesn't exist in a bare repository. So, is th=
+ere a=20
+way to 'convert' a repository to a bare repository so that git-cvsimpor=
+t and=20
+git-cvsserver still work on it? Or, how would you do it?
 
-often returns fewer than 5 commits, even when
+Thanks!
 
-git log --follow some-file
+Mirko
 
-returns more than 5.  This behavior occurs even for some files which have 
-never been renamed.  Is this a bug, or is this the expected behavior for some 
-reason?
-
-Best wishes and thanks,
-
--Andy
+--=20
+Mirko Stocker
+Institut f=FCr Software - http://ifs.hsr.ch - +41 55 222 4713
+HSR Hochschule f=FCr Technik Rapperswil
+Oberseestr 10, Postfach 1475, CH-8640 Rapperswil
