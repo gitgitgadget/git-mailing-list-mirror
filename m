@@ -1,84 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: 'setup_work_tree()' considered harmful
-Date: Tue, 17 Jun 2008 12:01:43 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806171142290.6439@racer>
-References: <alpine.LFD.1.10.0806161723081.2949@woody.linux-foundation.org>
+From: Saurabh Raje <saurabh.raje@gmail.com>
+Subject: git & svn related merge questions ...
+Date: Tue, 17 Jun 2008 11:28:53 +0000 (UTC)
+Message-ID: <loom.20080617T112816-101@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 17 13:04:18 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 17 13:31:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Yz4-0007M2-C6
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 13:04:18 +0200
+	id 1K8ZP7-0007dR-BY
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 13:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754503AbYFQLDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 07:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754444AbYFQLDV
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 07:03:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34375 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754299AbYFQLDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 07:03:21 -0400
-Received: (qmail invoked by alias); 17 Jun 2008 11:03:19 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp021) with SMTP; 17 Jun 2008 13:03:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+g2wokgmegz0jXlY1h4fmkQzMsMe7HAxP/gvGqca
-	WuJQ+7Ci73+k4T
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.LFD.1.10.0806161723081.2949@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755205AbYFQLaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 07:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755124AbYFQLaH
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 07:30:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:37966 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755105AbYFQLaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 07:30:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1K8ZNy-0005cW-La
+	for git@vger.kernel.org; Tue, 17 Jun 2008 11:30:03 +0000
+Received: from bbs.webaroo.com ([125.18.21.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Jun 2008 11:30:02 +0000
+Received: from saurabh.raje by bbs.webaroo.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Jun 2008 11:30:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 125.18.21.2 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9) Gecko/2008052906 Firefox/3.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85290>
 
-Hi,
+Hi All,
 
-On Mon, 16 Jun 2008, Linus Torvalds wrote:
+I have a question regarding 3-way merge ...
 
-> [ Dscho cc'd because I think he is the primary culprits for this thing, I 
->   think. Commit e90fdc39b6903502192b2dd11e5503cea721a1ad in particular, 
->   methinks. ]
+Here's how the subversion commits had happened
+- Initially we had 'trunk' at revision T1
+- We made a 'branch' (svn cp) at revision B1 (T1 -> B1)
+(...development continues in trunk & branch...)
+- We merge (svn merge) changes T2 - T1 in branch B2 and resolve all the
+conflicts (if any) committing revision B3
+(...development continues in trunk...)
 
-Yes, I am not happy with work-tree.  In fact, I grew to positively hate 
-it.  IMHO it was not well designed when it entered Git, and unfortunately 
-my endeavors to clean it up were not very successful, either.
+After this I imported the entire subversion repository in Git (git-svn clone) &
+then tried to merge the 'branch' (@B3) in 'trunk' (@T3).
 
-> [...]
->
-> In particular, doing a "git add ." will use absolute pathnames for all 
-> git files, while a "git diff" will not. And this is quite noticeable - 
-> the absolute pathnames are not just longer, they have more path 
-> components in them. Making them a lot slower to look up and use.
-> 
-> [...]
-> 
-> In general, I think we've gone in the wrong direction with a lot of the 
-> "make_absolute_path" stuff. See above. 5% performance loss is not good.
+The problem here is that the common ancestor is considered as T1 for 'trunk' &
+branch' & not T2 which causes many more merge conflicts which should not have
+been there ... In subversion flow we used to merge diff of branch@B3 and
+trunk@T2 in trunk to achieve the result with minimum conflicts.
 
-Yes, that is true.  However, I think we need it for the case where 
-work_tree is set (technically, we could try to be clever when work_tree is 
-set in such a manner that we can operate with relative paths, but I think 
-that is just not worth it).
+Any idea of how to fix this?
 
-So I am thinking about reverting to the old behavior, but _just_ for the 
-common case that no work tree was set.
+I just started using Git. It is a fantastic piece of software.
+Thank you all.
 
-This might be more tricky than it used to be, because of the many special 
-cases work trees require.
+Regards,
 
-I briefly considered working on this now, but I simply do not have the 
-time, and I seem to be unconcentrated these days.  Probably the best thing 
-would be to scrap the whole work-tree thing and throw it out, admitting 
-that it was a mistake to begin with.
-
-Ciao,
-Dscho
+Saurabh Raje 
