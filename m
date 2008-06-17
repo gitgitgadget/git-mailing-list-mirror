@@ -1,72 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3/RFC] Remove the use of '--' in merge program invocation
-Date: Mon, 16 Jun 2008 17:05:25 -0700
-Message-ID: <7vlk157woq.fsf@gitster.siamese.dyndns.org>
-References: <1213659221-27519-1-git-send-email-patrick.higgins@cexp.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] diff: reset color before printing newline
+Date: Tue, 17 Jun 2008 02:22:05 +0200
+Message-ID: <20080617002205.GD7003@neumann>
+References: <1213653602-31307-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
-To: Patrick Higgins <patrick.higgins@cexp.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 02:06:39 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 02:23:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Oid-0001bW-2a
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 02:06:39 +0200
+	id 1K8OzE-0006PQ-Qh
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 02:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822AbYFQAFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 20:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbYFQAFo
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 20:05:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50845 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbYFQAFn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 20:05:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CC5ACC025;
-	Mon, 16 Jun 2008 20:05:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 56369C024; Mon, 16 Jun 2008 20:05:28 -0400 (EDT)
-In-Reply-To: <1213659221-27519-1-git-send-email-patrick.higgins@cexp.com>
- (Patrick Higgins's message of "Mon, 16 Jun 2008 17:33:41 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1D7B40F6-3C01-11DD-91D2-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753404AbYFQAWy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jun 2008 20:22:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYFQAWy
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 20:22:54 -0400
+Received: from moutng.kundenserver.de ([212.227.126.188]:51949 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753161AbYFQAWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 20:22:53 -0400
+Received: from [127.0.1.1] (p5B133450.dip0.t-ipconnect.de [91.19.52.80])
+	by mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis)
+	id 0ML21M-1K8Oxa0ys4-0000ls; Tue, 17 Jun 2008 02:22:09 +0200
+Content-Disposition: inline
+In-Reply-To: <1213653602-31307-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX1/uVESBeWvurfWpiZA6kJrJPuBoOBWykg1Irvr
+ omfCIdgqLdUyu8Wu2WQ9ik7shw61YnW0RvP9fMgpXbQqF6E4v+
+ Den6ilfRu/SQFbXVlCjSA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85250>
 
-Patrick Higgins <patrick.higgins@cexp.com> writes:
+Junio,
 
-> Put a "./" at the beginning of all paths given to the merge program so
-> that filenames beginning with a '-' character don't get interpreted as
-> options.
->
-> This deals with a problem where kdiff3 can be compiled with or without
-> support for the '--' separator between options and filenames.
->
-> Signed-off-by: Patrick Higgins <patrick.higgins@cexp.com>
-> ---
->
-> This is applying Junio's idea because my earlier attempts would fail on files
-> that started with a dash. This should work for those files with kdiff3
-> compiled with or without '--' support, does not require any additional
-> overhead to determine if kdiff3 has that support, and the technique should
-> work for all merge programs in case any others have the problem kdiff3 has.
->
-> My only concern is if 'git ls-files -u' ever returns absolute paths,
-> then this will not work.
+On Tue, Jun 17, 2008 at 12:00:02AM +0200, SZEDER G=E1bor wrote:
+> I'm not sure about putting a newline unconditionally at the end of th=
+e
+> line, but this was the status quo before c1795bb0.
+we _must_ not print a newline when there was none, as it breaks
+"normal" colored diffs very badly.
 
-What do you mean by "absolute paths"?  The path git proper deals with is
-always relative to the root of the repository's work tree, so you won't be
-seeing "/home/patrick/src/Makefile" from ls-files if that is what you are
-worried about.
+Since c1795bb0, for whatever reason, checkdiff_consume() first calls
+emit_line() to print only the first '+' character of the line, without
+trailing newline, and then calls check_and_emit_line() to print the
+rest of the line.  Now if we restore the status quo prior to c1795bb0
+regarding unconditional newlines in emit_line(), then there is always
+a newline between the the '+' and the rest of the line, which is bad,
+bad, bad.
 
-This change applies to all the backends not just kdiff3; people who use
-different merge backends please give success (or breakage) reports.
+So this should be squashed to the previous patch.
 
-Thanks.
+---
+ diff.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index f23657b..722f577 100644
+--- a/diff.c
++++ b/diff.c
+@@ -514,13 +514,18 @@ const char *diff_get_color(int diff_use_color, en=
+um color_diff ix)
+=20
+ static void emit_line(FILE *file, const char *set, const char *reset, =
+const char *line, int len)
+ {
+-	if (len > 0 && line[len-1] =3D=3D '\n')
++	int trailing_newline =3D 0;
++
++	if (len > 0 && line[len-1] =3D=3D '\n') {
+ 		len--;
++		trailing_newline =3D 1;
++	}
+=20
+ 	fputs(set, file);
+ 	fwrite(line, len, 1, file);
+ 	fputs(reset, file);
+-	fputc('\n', file);
++	if (trailing_newline)
++		fputc('\n', file);
+ }
+=20
+ static void emit_add_line(const char *reset, struct emit_callback *ecb=
+data, const char *line, int len)
