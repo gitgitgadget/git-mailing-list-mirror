@@ -1,64 +1,82 @@
-From: "helight.xu" <helight.xu@gmail.com>
-Subject: fatal: Not a valid object name: 'master'.
-Date: Tue, 17 Jun 2008 15:05:37 +0800
-Message-ID: <48576241.1070409@gmail.com>
-References: <20080608134601.GA7020@cvg> <20080608135949.GE19777@albany.tokkee.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: current repository hash
+Date: Tue, 17 Jun 2008 09:07:39 +0200
+Message-ID: <200806170907.39665.johan@herland.net>
+References: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
+ <20080616184520.GA11992@sigill.intra.peff.net>
+ <556d90580806162348q6c6b90daoe48c3fa330f488ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Alf Clement <alf.clement@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 09:07:09 2008
+X-From: git-owner@vger.kernel.org Tue Jun 17 09:08:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8VHY-0000kk-Ea
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 09:07:08 +0200
+	id 1K8VJK-0001ER-9N
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 09:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506AbYFQHGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 03:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbYFQHGM
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 03:06:12 -0400
-Received: from po-out-1718.google.com ([72.14.252.154]:45753 "EHLO
-	po-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751798AbYFQHGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 03:06:12 -0400
-Received: by po-out-1718.google.com with SMTP id c31so10591703poi.1
-        for <git@vger.kernel.org>; Tue, 17 Jun 2008 00:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=Yyg6yRX7yx/Ahnq6URjUvsbl9LykwnuNYxEN/PXEfdU=;
-        b=FLGFMD5HfNxIjE7M2/nLqu4BU+LU3JNErjp+lQVCYBEGLpaTpwtrGtZ4n56GeriHFn
-         QMuI6okCUxkxrJHtR125y+etIrr3h0ST2Xg5lIad3upFvaHTpFzY4m5YEAkDm5hnvB2I
-         B7z8LCI31PRENgNCUKFyineEEk7nn6WOy6bDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=aj3elHO5Lpxur1V003nUs6jGKHiq7TCWe/BJw78g5aPu5zEDG4nKUimBrXszkotusZ
-         Hj/s/Z6/ra6SB5FtE0Gc2Hd38f1biTucASW6rUM+Dy57nYcc7C/NDE+fiKQxOQ2lGQjl
-         WCDlGIoPwQRg/mwZOhSKPJlRhkv0XX5d+Gr5E=
-Received: by 10.114.27.14 with SMTP id a14mr7322167waa.209.1213686371618;
-        Tue, 17 Jun 2008 00:06:11 -0700 (PDT)
-Received: from ?202.117.129.79? ( [221.11.22.40])
-        by mx.google.com with ESMTPS id z15sm7069209pod.2.2008.06.17.00.06.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 17 Jun 2008 00:06:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080227)
-In-Reply-To: <20080608135949.GE19777@albany.tokkee.org>
+	id S1752503AbYFQHID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 03:08:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbYFQHID
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 03:08:03 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:43029 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752128AbYFQHIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 03:08:01 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K2L0020VIH22Z00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 17 Jun 2008 09:07:50 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2L00EKFIGSPDC0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 17 Jun 2008 09:07:40 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2L003OGIGRRTE0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Tue, 17 Jun 2008 09:07:40 +0200 (CEST)
+In-reply-to: <556d90580806162348q6c6b90daoe48c3fa330f488ec@mail.gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85269>
 
-Hi everyone here,
+On Tuesday 17 June 2008, Alf Clement wrote:
+> Hi all,
+>
+> when I run
+>    $ git describe --tags HEAD
+> on my branch "fire1", I get:
+>     v1.5-13-g27f64b3
+>
+> I wonder why it's -13. The last action I did was to merge the master
+> branch, which has the v1.5 tag. So it should be much less than 13?
+> A snapshot from gitk is attached.
+>
+> CU,
+> Alf
 
-    I manger my websit with git,but today I cann't use it anymore.
+AFAICS from your graph there are exactly 13 commits that are part of fire1, 
+but not part of v.1.5 (from the bottom of the graph):
+- "fire 1       modified: main.c"
+- The 8 commits on a parallel branch leading towards origin/fire1
+- The origin/fire1 merge
+- The 4th last commit: "Merge branch 'master' into fire1"
+- The 3rd last commit: "modified: main.c"
+- The very last commit: fire1
 
-fatal: Not a valid object name: 'master'.
 
-How can i do,anyone can help me?
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
