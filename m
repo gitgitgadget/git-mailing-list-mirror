@@ -1,84 +1,91 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Guided merge with override
-Date: Tue, 17 Jun 2008 10:53:53 +0200
-Message-ID: <bd6139dc0806170153h4fba934ei62cb06e98e0280fd@mail.gmail.com>
-References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
-	 <20080616092554.GB29404@genesis.frugalware.org>
-	 <48563D6C.8060704@viscovery.net>
-	 <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
-	 <485756AE.9050904@viscovery.net>
-Reply-To: sverre@rabbelier.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-gc: skip stashes when expiring reflogs
+Date: Tue, 17 Jun 2008 10:05:24 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806171000400.6439@racer>
+References: <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <OLvkESB0JjBNs9kF8Q2M5UFNBJqq4FjbgGeQVyWstGwcXqCOq16_oomM0y-utOBbV7BnndyrICE@cipher.nrlssc.navy.mil> <20080611213648.GA13362@glandium.org> <alpine.DEB.1.00.0806112242370.1783@racer>
+ <20080611230344.GD19474@sigill.intra.peff.net> <alpine.LFD.1.10.0806111918300.23110@xanadu.home> <loom.20080612T042942-698@post.gmane.org> <6413041E-A64A-4BF4-9ECF-F7BFA5C1EAEF@wincent.com> <7vzlpqza0t.fsf@gitster.siamese.dyndns.org>
+ <279b37b20806121335p90a6d40qb39b73f71dae990b@mail.gmail.com> <7vlk1az8aa.fsf@gitster.siamese.dyndns.org> <279b37b20806121436w4f09c8f7n1009ef2f77b66f87@mail.gmail.com> <alpine.DEB.1.00.0806130551200.6439@racer> <0F87000C-B51E-45B8-A21D-1DA184BD603F@wincent.com>
+ <alpine.DEB.1.00.0806132239490.6439@racer> <612BAE20-8DF3-4323-8AEF-527B92122A7A@wincent.com> <200806142359.m5ENxsBI028758 @mi0.bluebottle.com> <7vabhne15k.fsf@gitster.siamese.dyndns.org> <7vy755c0b2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Miklos Vajna" <vmiklos@frugalware.org>,
-	"Geoff Russell" <geoffrey.russell@gmail.com>, git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jun 17 10:55:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= 
+	<nanako3@bluebottle.com>, Wincent Colaiuta <win@wincent.com>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 11:08:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8Wxo-0007TX-5u
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 10:54:52 +0200
+	id 1K8XAZ-0002pq-SZ
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 11:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589AbYFQIx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 04:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755282AbYFQIx4
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 04:53:56 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:54136 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753523AbYFQIxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 04:53:55 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so5636191wfd.4
-        for <git@vger.kernel.org>; Tue, 17 Jun 2008 01:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=bZGwmfU/Crm3e5f670PvPHD+fto5PNqQSVzxnh4aSKk=;
-        b=VcLxi6Bdg64sZm7Gz3STii2qHT4RyUI+IznJQ3HsmDfHaQ/eGKErnbctaks+4aVcO3
-         oczZ5ya3jO9oELdIWc3SEyurAIZ+w2wZIXwoFsnFpGvxhrw/dLkO01CDgVVZwYNk67fB
-         Ll542BOii67VeZf9eLJqaoYPTRsZyqJcfNAgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=nc3rfFJ3/rsNbLUOtp2XeQJ7YvMr9fbGnpFYD+yIZf2TH89R1P0eH5N4vlip7+oeDZ
-         gyS+VW6MDCTkmqrE/tqx3INwRmEXzmk6s2r7iKbyhKTIQBVc19/Zxd7Auzf3mokvAT0X
-         ulnOLYkVAOR1TIOjKCVsMqlFVlICrGOCkp3uY=
-Received: by 10.142.158.17 with SMTP id g17mr2812590wfe.17.1213692833159;
-        Tue, 17 Jun 2008 01:53:53 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 17 Jun 2008 01:53:53 -0700 (PDT)
-In-Reply-To: <485756AE.9050904@viscovery.net>
-Content-Disposition: inline
+	id S1754194AbYFQJHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 05:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbYFQJHG
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 05:07:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51158 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753730AbYFQJHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 05:07:03 -0400
+Received: (qmail invoked by alias); 17 Jun 2008 09:07:01 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp058) with SMTP; 17 Jun 2008 11:07:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19OBKot2KlObLa7wKGIF+0vPRO83XvQShW+/XkPkk
+	r3mF7Iblg7gJHe
+X-X-Sender: gene099@racer
+In-Reply-To: <7vy755c0b2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85276>
 
-On Tue, Jun 17, 2008 at 8:16 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Sverre Rabbelier schrieb:
->> On Mon, Jun 16, 2008 at 12:16 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> The solution depends on whether *all* files in B should be taken, or only
->>> those files in B where there's a merge conflict. I don't know an easy way
->>> to do the former, but the latter I'd do like this:
->>>
->>>        $ git diff --name-only | xargs git checkout B --
->>
->> Wouldn't something similar work but do a 'git ls-files' and filter it
->> on files that have a merge conflict?
->
-> Well, you could 'git ls-files --unmerged', but that prints the whole index
-> entry, not just the name, and then you need a more complicated pipeline.
+Hi,
 
-How about 'git ls-files -t | grep "^M " | xargs git checkout B --',
-that would list all files that are unmerged and check them out?
+On Mon, 16 Jun 2008, Junio C Hamano wrote:
 
--- 
-Cheers,
+> From: Junio C Hamano <gitster@pobox.com>
+> Date: Sun, 15 Jun 2008 23:48:46 -0700
+> Subject: [PATCH] Per-ref reflog expiry configuration
+> 
+> In addition to gc.reflogexpireunreachable and gc.reflogexpire, this lets
+> you set gc.<pattern>.reflogexpireunreachable and gc.<pattern>.reflogexpire
+> variables.
+> 
+> When "git reflog expire" expires reflog entry for $ref, the expiry timers
+> are taken from the first <pattern> that matches $ref (and if there isn't
+> the global default value is used).
+> 
+> For example, you could:
+> 
+> 	[gc "refs/stash"]
+> 		reflogexpire = never
+> 		reflogexpireunreachable = never
+> 
+> 	[gc "refs/remotes/*"]
+> 		reflogexpire = 7 days
+> 		reflogexpireunreachable = 3 days
+> 
+> 	[gc]
+> 		reflogexpire = 90 days
+> 		reflogexpireunreachable = 30 days
 
-Sverre Rabbelier
+Isn't this overkill?  I mean, we could just change git-stash to output a 
+warning:
+
+	Note: your changes have been stored temporarily.  If you need to 
+	keep them permanently, consider putting them into a branch:
+
+		git branch stashed-longer stash
+
+Don't get me wrong: I think per-ref reflog expiry is nifty, but it may be 
+_too_ nifty, i.e. so complicated only power-users will use it.
+
+Ciao,
+Dscho
