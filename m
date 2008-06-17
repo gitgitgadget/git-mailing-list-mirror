@@ -1,101 +1,93 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2git with  modules?
-Date: Tue, 17 Jun 2008 17:45:16 +0200
-Message-ID: <4857DC0C.8060902@alum.mit.edu>
-References: <63BEA5E623E09F4D92233FB12A9F794302389A59@emailmn.mqsoftware.com>
+From: Nicolas Bock <nbock@lanl.gov>
+Subject: Re: error: cannot lock ref 'refs/remotes/origin/*'
+Date: Tue, 17 Jun 2008 09:49:48 -0600
+Message-ID: <1213717788.13390.2.camel@localhost>
+References: <1213635227.17814.6.camel@localhost>
+	 <alpine.DEB.1.00.0806171140470.6439@racer>
+	 <1213712520.6400.1.camel@localhost>  <200806171629.06570.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Kelly F. Hickel" <kfh@mqsoftware.com>
-X-From: users-return-2081-gcvscu-users=m.gmane.org@cvs2svn.tigris.org Tue Jun 17 17:46:19 2008
-Return-path: <users-return-2081-gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscu-users@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1K8dNr-0007um-RH
-	for gcvscu-users@gmane.org; Tue, 17 Jun 2008 17:46:12 +0200
-Received: (qmail 9180 invoked by uid 5000); 17 Jun 2008 15:45:20 -0000
-Mailing-List: contact users-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-zwV8UC6BnVwIasBc1DJ1"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:51:10 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1K8dSQ-0001Ht-Bt
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 17:50:54 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751693AbYFQPt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 11:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbYFQPt6
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 11:49:58 -0400
+Received: from proofpoint3.lanl.gov ([204.121.3.28]:54150 "EHLO
+	proofpoint3.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603AbYFQPt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 11:49:57 -0400
+Received: from mailrelay2.lanl.gov (mailrelay2.lanl.gov [128.165.4.103])
+	by proofpoint3.lanl.gov (8.13.8/8.13.8) with ESMTP id m5HFnpXw032745;
+	Tue, 17 Jun 2008 09:49:51 -0600
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mailrelay2.lanl.gov (Postfix) with ESMTP id 419AD1A8C536;
+	Tue, 17 Jun 2008 09:49:51 -0600 (MDT)
+X-CTN-5-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
+Received: from [128.165.249.1] (dsl-usr-1.lanl.gov [128.165.249.1])
+	by mailrelay2.lanl.gov (Postfix) with ESMTP id A26F21A8C513;
+	Tue, 17 Jun 2008 09:49:50 -0600 (MDT)
+In-Reply-To: <200806171629.06570.johan@herland.net>
+X-Mailer: Evolution 2.12.3 
+X-Proofpoint-Virus-Version: vendor=fsecure engine=4.65.7161:2.4.4,1.2.40,4.0.164 definitions=2008-06-17_05:2008-06-17,2008-06-17,2008-06-16 signatures=0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:users-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:users-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:users@cvs2svn.tigris.org>
-Delivered-To: mailing list users@cvs2svn.tigris.org
-Received: (qmail 9170 invoked from network); 17 Jun 2008 15:45:20 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkICAON4V0jAbSoIiGdsb2JhbACSNgEBAQ8gnDw
-X-IronPort-AV: E=Sophos;i="4.27,659,1204531200"; 
-   d="scan'208";a="7368646"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080505 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-Followup-To: git@vger.kernel.org
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794302389A59@emailmn.mqsoftware.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85308>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85309>
 
-[I see you sent essentially the same question to both the git and the
-cvs2svn mailing lists.  I am replying on the git list with bcc to the
-cvs2svn list.  Followups please to git@vger.kernel.org.]
 
-Kelly F. Hickel wrote:
-> I'm trying to use cvs2svn in cvs2git mode to convert a repo with a
-> number of modules.  Can anyone tell me how to keep that module
-> structure in the new git repo? So, if in cvs there are two modules,
-> ModA and ModB, I want to see those two as top level directories in
-> the git repo.
-> 
-> I've tried putting adding the projects in my options file as below,
-> but it puts the files ModA/* and ModB/* at the top level in the git repo.
-> 
-> run_options.add_project(
->     r'/home/foo/cvsrepo/ModA,
->     trunk_path=ModA',
->     [...]
->     )
-> 
-> run_options.add_project(
->     r'/home/foo/cvsrepo/ModB,
->     trunk_path=ModB',
->     [...]
->     )
+--=-zwV8UC6BnVwIasBc1DJ1
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-I assume that what you mean is that the CVS repository contains
-directories like ModA/a, ModA/b, ModB/c, and ModB/d, but the resulting
-git repository has only /a, /b, /c, and /d.  That is because cvs2git
-completely ignores the trunk_path argument to add_project().
+I guess I don't understand refs. I figured that since I have
 
-It is strange that the code allows you to add multiple projects,
-considering that the cvs2git documentation[1] states that cvs2git only
-supports converting single projects at a time.  I guess I forgot to
-build that check in.
+remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
 
-You can get the result you want by treating ModA and ModB not as two
-separate projects, but simply as two separate subdirectories within a
-bigger project; i.e.,
+set, I should have a ref refs/remotes/origin/* as well.
 
-run_options.add_project(
-    r'/home/foo/cvsrepo,
-    [...]
-    )
 
-.  This is assuming that ModA and ModB are the only subdirectories
-within /home/foo/cvsrepo/; otherwise, make a copy of your CVS repo and
-remove the other subdirectories from the copy before the conversion.
 
-Please note that when cvs2git is run this way, it treats tags and
-branches as being global.  If you tagged your projects simultaneously,
-then this is probably what you want.  But if you tagged your projects
-separately, then tag names that happen to be the same across projects
-will be considered the same.
+On Tue, 2008-06-17 at 16:29 +0200, Johan Herland wrote:
+> On Tuesday 17 June 2008, Nicolas Bock wrote:
+> > This is what I get:
+> >
+> > $ git show-ref
+> > a4995ae293fd95697a643cd3ea45585ecc38a19d refs/heads/ACT
+> > 3378ccb42c22740b7fcc240ffa0e4f798b8acf1f refs/heads/master
+> > 78e33155a0ab4ab0acba4c64758681fe99f1c5ca refs/heads/nick
+> > ef66b3aa74b8c1edb55161e01a99dee7cf9edaa3 refs/remotes/origin/*
+> > 3378ccb42c22740b7fcc240ffa0e4f798b8acf1f refs/remotes/origin/master
+> >
+> > in what sense is this ref "bogus"? Is it syntactically incorrect?
+>=20
+> Yes, According to "man git-check-ref-format", asterisk is NOT allowed in=20
+> a ref name.
+>=20
+>=20
+> ...Johan
+>=20
 
-It would be possible to add cvs2git support for multiproject
-conversions, but I was under the impression that it doesn't make much
-sense to put multiple projects into a single git repository.  But I'm a
-novice git user, so I could very well be wrong about that.
+--=-zwV8UC6BnVwIasBc1DJ1
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-Michael
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-[1] http://cvs2svn.tigris.org/cvs2git.html
+iEYEABECAAYFAkhX3RwACgkQOEV5akt0Npj9kwCgulacwfk0SOEa/5daz8+uX+E+
+6eQAn1VM2qzWgaolF8RoVnxjNPr3UDzo
+=55GC
+-----END PGP SIGNATURE-----
+
+--=-zwV8UC6BnVwIasBc1DJ1--
