@@ -1,82 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: current repository hash
-Date: Tue, 17 Jun 2008 09:07:39 +0200
-Message-ID: <200806170907.39665.johan@herland.net>
-References: <556d90580806160451g36daefb6o48b93b92589211bf@mail.gmail.com>
- <20080616184520.GA11992@sigill.intra.peff.net>
- <556d90580806162348q6c6b90daoe48c3fa330f488ec@mail.gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] test-lib.sh: add --long-tests option
+Date: Tue, 17 Jun 2008 09:09:57 +0200
+Message-ID: <48576345.7000809@gmail.com>
+References: <1213666142-24680-1-git-send-email-LeWiemann@gmail.com> <7vy7547egk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Alf Clement <alf.clement@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 09:08:59 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 09:11:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8VJK-0001ER-9N
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 09:08:58 +0200
+	id 1K8VLG-0001kE-7D
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 09:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752503AbYFQHID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 03:08:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbYFQHID
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 03:08:03 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:43029 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752128AbYFQHIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 03:08:01 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K2L0020VIH22Z00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 17 Jun 2008 09:07:50 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K2L00EKFIGSPDC0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 17 Jun 2008 09:07:40 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K2L003OGIGRRTE0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 17 Jun 2008 09:07:40 +0200 (CEST)
-In-reply-to: <556d90580806162348q6c6b90daoe48c3fa330f488ec@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752354AbYFQHKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 03:10:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752508AbYFQHKD
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 03:10:03 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:16539 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192AbYFQHKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 03:10:01 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so514944ugf.16
+        for <git@vger.kernel.org>; Tue, 17 Jun 2008 00:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=5ImOruDHt2ip43XAa3UpzUvrJE3kgC5lWjUjvGbeADE=;
+        b=MFVpO4Iuim4hR4pZG3xtA9XwZgMK1y0YQQN0uEGcKlemJvT1jhh5q3qFlHaN6g6mPP
+         jcQFtucVLholQbTiJoc27dhXxEwbrAUrXMhPpXZSjSXryuNM37Xfj6AQHeox+PyyplAr
+         NSy8Sa999Xd6eBSCnAlXVmEVixu12Jgu48YZ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=WwRMoeeFissyd4lqYNgTVsFg2Lk6HrPSyq23YwhhcEiO97I6J0O3S0OuQIEXKATu/X
+         lOWfledtrm511hCf6l5KeJoivsSNFPR4dha+wAd5GTN5y2j7SiVBmgRoC1U0Cw8NdDo5
+         OFOsLQ+2C2XrD/eseAUJz6OnUHMeTAJgpguyk=
+Received: by 10.210.67.20 with SMTP id p20mr7280246eba.66.1213686597766;
+        Tue, 17 Jun 2008 00:09:57 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.200.72])
+        by mx.google.com with ESMTPS id f13sm11698494gvd.2.2008.06.17.00.09.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 17 Jun 2008 00:09:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <7vy7547egk.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85270>
 
-On Tuesday 17 June 2008, Alf Clement wrote:
-> Hi all,
->
-> when I run
->    $ git describe --tags HEAD
-> on my branch "fire1", I get:
->     v1.5-13-g27f64b3
->
-> I wonder why it's -13. The last action I did was to merge the master
-> branch, which has the v1.5 tag. So it should be much less than 13?
-> A snapshot from gitk is attached.
->
-> CU,
-> Alf
+Junio C Hamano wrote:
+> I am guessing that the reason why you do not unset GIT_TEST_LONG upfront
+> in the script is because the user can do:
+> 
+>         $ GIT_TEST_LONG=t; export GIT_TEST_LONG
+>         $ ./t9999-this-test.sh
+>         $ ./t9999-that-test.sh
+> 
+> or even:
+> 
+> 	$ GIT_TEST_LONG=t make test
 
-AFAICS from your graph there are exactly 13 commits that are part of fire1, 
-but not part of v.1.5 (from the bottom of the graph):
-- "fire 1       modified: main.c"
-- The 8 commits on a parallel branch leading towards origin/fire1
-- The origin/fire1 merge
-- The 4th last commit: "Merge branch 'master' into fire1"
-- The 3rd last commit: "modified: main.c"
-- The very last commit: fire1
+Yes, that's the idea.
 
+> If that is the case, however, I wonder if this --long-tests option is even
+> necessary.
 
-...Johan
+It's very convenient for development, where you go back and forth 
+between "./t9503-gitweb-Mechanize.sh -v -l" and 
+"./t9503-gitweb-Mechanize.sh -v".  All it takes is to add or remove the 
+"-l" at each invocation.  So I think the switch is actually quite useful.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Lea
