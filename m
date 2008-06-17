@@ -1,85 +1,77 @@
 From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH] git-apply doesn't handle same name patches well [V2]
-Date: Tue, 17 Jun 2008 10:14:52 -0400
-Message-ID: <20080617141452.GJ16941@redhat.com>
-References: <1213633441-29185-1-git-send-email-dzickus@redhat.com> <alpine.DEB.1.00.0806171027200.6439@racer>
+Subject: Re: using git-blame with patches as input
+Date: Tue, 17 Jun 2008 10:15:19 -0400
+Message-ID: <20080617141519.GK16941@redhat.com>
+References: <20080616213517.GE20727@redhat.com> <7vej6x9hpk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 17 16:16:39 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 16:17:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8byU-0004rD-Ma
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 16:15:55 +0200
+	id 1K8bz5-00057y-Bv
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 16:16:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757918AbYFQOO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 10:14:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757715AbYFQOO7
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 10:14:59 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:35872 "EHLO mx1.redhat.com"
+	id S1757944AbYFQOPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 10:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757941AbYFQOPg
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 10:15:36 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:35893 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757218AbYFQOO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 10:14:58 -0400
+	id S1757940AbYFQOPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 10:15:35 -0400
 Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m5HEEswn005651;
-	Tue, 17 Jun 2008 10:14:54 -0400
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m5HEFMe0006060;
+	Tue, 17 Jun 2008 10:15:22 -0400
 Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m5HEEr3j018591;
-	Tue, 17 Jun 2008 10:14:53 -0400
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m5HEFJkc019327;
+	Tue, 17 Jun 2008 10:15:19 -0400
 Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m5HEEr1L022997;
-	Tue, 17 Jun 2008 10:14:53 -0400
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m5HEFJBt023420;
+	Tue, 17 Jun 2008 10:15:19 -0400
 Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m5HEEr7X019778;
-	Tue, 17 Jun 2008 10:14:53 -0400
+	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m5HEFJo1019795;
+	Tue, 17 Jun 2008 10:15:19 -0400
 Received: (from dzickus@localhost)
-	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m5HEErxG019777;
-	Tue, 17 Jun 2008 10:14:53 -0400
+	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m5HEFJwQ019794;
+	Tue, 17 Jun 2008 10:15:19 -0400
 X-Authentication-Warning: drseuss.usersys.redhat.com: dzickus set sender to dzickus@redhat.com using -f
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806171027200.6439@racer>
+In-Reply-To: <7vej6x9hpk.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.17 (2007-11-01)
 X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85301>
 
-On Tue, Jun 17, 2008 at 10:30:35AM +0100, Johannes Schindelin wrote:
-> Hi,
+On Mon, Jun 16, 2008 at 02:45:59PM -0700, Junio C Hamano wrote:
+> Don Zickus <dzickus@redhat.com> writes:
 > 
-> On Mon, 16 Jun 2008, Don Zickus wrote:
+> > I deal with a lot of backported patches that are a combination of multiple
+> > commits.  I was looking to develop a tool that would help me determine
+> > which chunks of the patch are upstream (not necessarily currently in HEAD
+> > but at some point in the file's history).
+> >
+> > For example, if I took the top three commits from HEAD and appended them
+> > into one patch file and then ran this tool with the patch as input, I
+> > would hope that it gave as output the three original commits.
 > 
-> > Changes since v1
-> > ================
-> > - converted to path-list structs
-> > - added testcases for renaming a patch and apply a new patch on top inside
-> > the same patch file
+> A quick and dirty hack would be to:
 > 
-> Just for future reference: commonly, this is not put into the commit 
-> message, but after the "---" separator into the mail comments.
+> 	rm .git/index
+> 	sed -ne 's/^[+ ]//p' -e '/^@@/p' patches... >file
+>         git add file
+>         git commit -m 'only "a file" remains'
+>         git blame -C -C -w file
+> 
+> which would try blaming all the postimage concatenated together ;-)
 
-Ok. Thanks.
-
-> 
-> > +/*
-> > + * Caches patch filenames to handle the case where a
-> > + * patch chunk reuses a filename
-> > + */
-> > +struct fn_cache {
-> > +	char *name;
-> > +	struct patch *patch;
-> > +	struct fn_cache *next;
-> > +};
-> 
-> It is still not a path_list.  Even if you said so in the "Changes since 
-> V1".
-
-Yeah, I attached the wrong patch, see V3. :-)
+Heh.  Interesting.  I'll try that today.  Thanks.
 
 Cheers,
 Don
