@@ -1,72 +1,81 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: git-svn equivalent to "svn switch --relocate"
-Date: Tue, 17 Jun 2008 18:06:02 +0200
-Message-ID: <20080617160602.GB29897@zoy.org>
+From: Galder Zamarreno <galder.zamarreno@redhat.com>
+Subject: [egit-jgit] excluded patterns are decorated as being untracked
+Date: Tue, 17 Jun 2008 18:43:12 +0200
+Message-ID: <4857E9A0.7070408@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 18:42:10 2008
+X-From: git-owner@vger.kernel.org Tue Jun 17 18:44:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8eFT-0006Vf-SU
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 18:41:36 +0200
+	id 1K8eHz-0007hC-Ly
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 18:44:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157AbYFQQkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 12:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753340AbYFQQkk
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 12:40:40 -0400
-Received: from poulet.zoy.org ([80.65.228.129]:42998 "EHLO poulet.zoy.org"
+	id S1753937AbYFQQnR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2008 12:43:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753763AbYFQQnR
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 12:43:17 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:54240 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752846AbYFQQkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 12:40:40 -0400
-X-Greylist: delayed 2076 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jun 2008 12:40:39 EDT
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id 1176E1203FC; Tue, 17 Jun 2008 18:06:02 +0200 (CEST)
-Content-Disposition: inline
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753666AbYFQQnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 12:43:16 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m5HGhFjg002365
+	for <git@vger.kernel.org>; Tue, 17 Jun 2008 12:43:15 -0400
+Received: from pobox-2.corp.redhat.com (pobox-2.corp.redhat.com [10.11.255.15])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m5HGhFAe011053
+	for <git@vger.kernel.org>; Tue, 17 Jun 2008 12:43:15 -0400
+Received: from dhcp-144-245.gva.redhat.com (dhcp-144-245.gva.redhat.com [10.33.144.245])
+	by pobox-2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m5HGhDuZ032235
+	for <git@vger.kernel.org>; Tue, 17 Jun 2008 12:43:14 -0400
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85313>
 
-   I know this has been addressed a few times, but since I haven't found
-any reasonable way to relocate a git-svn repository (after a protocol
-change, or a server name change) I thought I'd share how I did it.
+Hi,
 
-   Step 1 is to edit ".git/config" and modify the "url = " line so
-that it reflects the new repository address. For instance:
+I've been using egit for a few weeks and firstly, I'd like to thank the=
+=20
+people involved in the project for the work done so far.
 
--	url = http://svn.gnome.org/svn/gimp
-+	url = svn+ssh://svn.gnome.org/svn/gimp
+There's one thing that has been bugging me about egit though which is=20
+related to the decoration of untracked files. Egit/JGit does not seem t=
+o=20
+pay attention to .git/info/exclude that I have configured so that=20
+anything under output folder is excluded.
 
-   From now on, git-svn will basically stop working, because the
-"git-svn-id:" lines in the commit logs will no longer match its
-configuration. And git-filter-branch is of no use here either, because
-it will change the md5sum of each commit, and git-svn will no longer be
-able to track the commits.
+Egit/JGit does seem to have decorations working fine for patterns=20
+specified in "Team/Ignored Resources" but it only applies it to files=20
+not folders, hence, adding "output" as pattern does not work and=20
+instead, I have to specify any pattern that would match a file within=20
+the output folder which is not practical. Folders are taken into accoun=
+t=20
+as ignored resources in subeclipse (subversion eclipse plugin)
 
-   Step 2 is therefore to temporarily hack git-svn to make it think
-the commit messages do use the new URL. This is done at the end of the
-"extract_metadata" subroutine:
+I can see two ways of implementing this that I'm happy to have a look=20
+into but I wanted to get some advice from the experts of egit/jgit to=20
+indicate which would be the preferred solution going forward.
 
- 		($rev, $uuid) = ($id =~/^\s*git-svn-id:\s(\d+)\@([a-f\d\-]+)/);
- 	}
-+	$url =~ s|http://svn.gnome.org/svn/gimp/|svn+ssh://svn.gnome.org/svn/gimp/|;
- 	return ($url, $rev, $uuid);
- }
+1.- Implement .git/info/exclude functionality in egit/jgit
 
-   This will usually be needed only until the next SVN commit is merged
-and the git-svn tree is rebased.
+2.- Improve the decoration handling in jgit/egit so that it can check=20
+whether the file is under a pattern that should be excluded. I tried to=
+=20
+implement this but requires using API that eclipse considers internal.
 
-   Hope this can help a few. Unfortunately I don't understand the
-git-svn source code well enough to work on a cleaner way to do that.
+What do people think? Should I bother with 2 or is it better to=20
+implement decorations for patterns in .git/info/exclude correctly?
 
-Cheers,
--- 
-Sam.
+Thanks!
+--=20
+Galder Zamarre=F1o
+Sr. Software Maintenance Engineer
+JBoss, a division of Red Hat
