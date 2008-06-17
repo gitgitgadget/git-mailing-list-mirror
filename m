@@ -1,96 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: fix support for repository directories with spaces
-Date: Mon, 16 Jun 2008 18:38:02 -0700 (PDT)
-Message-ID: <m3k5goon7v.fsf@localhost.localdomain>
-References: <1213664977-23964-1-git-send-email-LeWiemann@gmail.com>
+From: Nicolas Bock <nbock@lanl.gov>
+Subject: Re: error: cannot lock ref 'refs/remotes/origin/*'
+Date: Mon, 16 Jun 2008 19:47:25 -0600
+Message-ID: <1213667245.14393.3.camel@localhost>
+References: <1213635227.17814.6.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lea Wiemann <LeWiemann@gmail.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 03:39:07 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 17 03:58:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8QA6-0001QT-3O
-	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 03:39:06 +0200
+	id 1K8QSp-0006L4-Fs
+	for gcvg-git-2@gmane.org; Tue, 17 Jun 2008 03:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbYFQBiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2008 21:38:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbYFQBiJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 21:38:09 -0400
-Received: from ik-out-1112.google.com ([66.249.90.181]:21300 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752384AbYFQBiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2008 21:38:08 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so4361930ika.5
-        for <git@vger.kernel.org>; Mon, 16 Jun 2008 18:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=+tmJho1D4mbuj15qt0w3KbAy6TfENBvjW1/PsPoxISA=;
-        b=fd6p0stGjMKX0OPRRdwcN53dijGYlMyPybZlan2L+IHRKrH7pRE907YzudDJgSPG99
-         mCn2LygbrZEUwNUsc5W5BhE6mXIvJa/Y/emjFk0jAJaTIsjRTOqGgw8OI/homP4yW/sw
-         EW5SCVEZLiSWfIomPLJDcgQ6CHBThohfPx6RQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=aqbgK2dXBbRApZCsKodtCrBd3hLh5epnZDohugxiPvJsHkQ1h90b+7J8xLduGDCs37
-         iP9Fbulkn6HoBI2Tvk08eTxOHr+Y2SJ2v6bnVCphnFDNz5g/3PV89L/f4G1H2KlDe3Qd
-         Ca50BoE3Y43+k27NTfrY70R/VCwvH/3080IRc=
-Received: by 10.210.70.14 with SMTP id s14mr6890642eba.33.1213666683281;
-        Mon, 16 Jun 2008 18:38:03 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.236.117])
-        by mx.google.com with ESMTPS id c22sm9638234ika.1.2008.06.16.18.38.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 16 Jun 2008 18:38:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5H1bxVS029368;
-	Tue, 17 Jun 2008 03:37:59 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5H1buLo029365;
-	Tue, 17 Jun 2008 03:37:56 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1213664977-23964-1-git-send-email-LeWiemann@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753183AbYFQB5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2008 21:57:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753175AbYFQB5c
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jun 2008 21:57:32 -0400
+Received: from proofpoint3.lanl.gov ([204.121.3.28]:38855 "EHLO
+	proofpoint3.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752739AbYFQB5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2008 21:57:31 -0400
+Received: from mailrelay2.lanl.gov (mailrelay2.lanl.gov [128.165.4.103])
+	by proofpoint3.lanl.gov (8.13.8/8.13.8) with ESMTP id m5H1ljnU002937
+	for <git@vger.kernel.org>; Mon, 16 Jun 2008 19:47:45 -0600
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mailrelay2.lanl.gov (Postfix) with ESMTP id 0C00E1A8C4B0
+	for <git@vger.kernel.org>; Mon, 16 Jun 2008 19:47:45 -0600 (MDT)
+X-CTN-5-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
+Received: from [128.165.249.1] (dsl-usr-1.lanl.gov [128.165.249.1])
+	by mailrelay2.lanl.gov (Postfix) with ESMTP id 6F1E91A8C49B
+	for <git@vger.kernel.org>; Mon, 16 Jun 2008 19:47:38 -0600 (MDT)
+In-Reply-To: <1213635227.17814.6.camel@localhost>
+X-Mailer: Evolution 2.12.3 
+X-Proofpoint-Virus-Version: vendor=fsecure engine=4.65.7161:2.4.4,1.2.40,4.0.164 definitions=2008-06-17_01:2008-06-16,2008-06-17,2008-06-16 signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85257>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+I realized that I recently upgraded from version 1.5.3.7 to 1.5.4.5. I
+double checked and downgraded again, and yes, I don't have any problems
+running "git gc" with the older version, but I get the below error
+message with the newer version of git.
 
-> git_cmd_str does not quote the directory names without this patch.
+nick
+
+
+On Mon, 2008-06-16 at 10:53 -0600, Nicolas Bock wrote:
+> Hello list,
 > 
-> Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
-> ---
-> git_cmd_str is really really bad from a security POV: Where it is
-> used, command lines are passed to the shell, which (I believe) just
-> *happen* to open no security holes.  Hence the function should
-> ultimately go away.  However, let's make the tests work for the
-> meantime while it's still there.
-
-I'd like to do away with need for git_cmd_str(), but unfortunately it
-is needed in a place where git has to form pipeline, namely in
-creating externally compressed snapshot (in git_snapshot), and to
-redirect stderr to /dev/null in git_object.
-
-Perhaps we could simply do without second, but this pipeline is here
-to stay (there was pipeline in git-search, but was replaced by
-invoking git-log instead of rev-list | diff-tree pipeline).  And it is
-not easy to create pipeline using some variant of list form of open;
-if you search git mailing list archive you can find aborted (RFC only)
-attempt to create pipeline safely
-  http://thread.gmane.org/gmane.comp.version-control.git/76566
-
-If you are extending Git.pm (please do not foget Cc Petr Baudis, as it
-is mainly his code) for gitweb, you can try to add this.  It doesn't
-have to be very generic...
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> when running "git gc" I get the following error message as of late:
+> 
+> $ git gc
+> error: cannot lock ref 'refs/remotes/origin/*'
+> error: failed to run reflog
+> 
+> When I rsync the directory tree to another machine, I can run "git gc"
+> without any error messages. What exactly does this error mean? Why would
+> locking fail?
+> 
+> Thanks already,
+> 
+> nick
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
