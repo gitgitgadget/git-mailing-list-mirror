@@ -1,95 +1,81 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [egit-jgit] excluded patterns are decorated as being untracked
-Date: Thu, 19 Jun 2008 00:03:36 +0200
-Message-ID: <200806190003.36791.robin.rosenberg.lists@dewire.com>
-References: <4857E9A0.7070408@redhat.com> <200806172316.46416.robin.rosenberg.lists@dewire.com> <48592C88.3080302@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 0/4] Add 'core.fsyncobjectfiles' config option
+Date: Wed, 18 Jun 2008 15:29:48 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806181524490.2907@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Florian Koeberle <florianskarten@web.de>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: Galder Zamarreno <galder.zamarreno@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 00:08:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Denis Bueno <dbueno@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 19 00:31:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K95pA-0002da-Up
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 00:08:17 +0200
+	id 1K96Bs-0003KJ-Oe
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 00:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbYFRWHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 18:07:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752763AbYFRWHU
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 18:07:20 -0400
-Received: from av10-2-sn2.hy.skanova.net ([81.228.8.182]:42418 "EHLO
-	av10-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754223AbYFRWHT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2008 18:07:19 -0400
-Received: by av10-2-sn2.hy.skanova.net (Postfix, from userid 502)
-	id D66B13841D; Thu, 19 Jun 2008 00:07:16 +0200 (CEST)
-Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
-	by av10-2-sn2.hy.skanova.net (Postfix) with ESMTP
-	id A190137E52; Thu, 19 Jun 2008 00:07:16 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 8459E37E47;
-	Thu, 19 Jun 2008 00:07:16 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <48592C88.3080302@redhat.com>
-Content-Disposition: inline
+	id S1756057AbYFRWas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 18:30:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbYFRWar
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 18:30:47 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35637 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755785AbYFRWap (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2008 18:30:45 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5IMTo9b016976
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 18 Jun 2008 15:29:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5IMTnY4024066;
+	Wed, 18 Jun 2008 15:29:49 -0700
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.853 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85414>
 
-onsdagen den 18 juni 2008 17.40.56 skrev Galder Zamarreno:
-> Hmmmm, is marking a resource as "derived" recursive? i.e. if I mark 
-> "output" folder as derived, would anything under it be considered 
-> derived? It'd be a pain to go a mark as derived each and every class.
 
-It seems it is not recursive and worse, not saved with the project.
+So these four patches end up adding support for conditionally enabling 
+fsync() on loose object creation in the .gitconfig file with something 
+like
 
-> I suppose you still need the patch to use Team.isIgnoredHint to get 
-> derived resources to be ignored, correct?
+	[core]
+		FsyncObjectFiles = true
 
-You'll need another patch for the decorator to pick up derived resources
-properly. Probably not the final solution to decorations. For one thing the
-decorators are horribly inefficient.
+which can be useful on filesystems that don't already guarantee data 
+consistency for other reasons (whether due to ordered writes or due to 
+full data journalling).
 
-> Hmmmm, so the proper way is either marking resources as derived and use 
-> your patch or implementing .git/info/exclude, correct?
+Actually, just the last one adds the fairly trivial feature, the three 
+first patches are just cleanups of the config parsing that I needed in 
+order to not gouge my eyes out when looking at the code. The config file 
+parser is kind of ad-hoc and people have added more and more options to it 
+without ever trying to clean it up, and I refuse to do that.
 
-I'd say implementing .git/info/exlude is the proper solution. The others are
-mere workarounds.
+The full patch-series is
 
--- robin
+  Split up default "core" config parsing into helper routine
+  Split up default "user" config parsing into helper routine
+  Split up default "i18n" and "branch" config parsing into helper
+    routines
+  Add config option to enable 'fsync()' of object files
 
->From 7acc0e63886ed8eda6b38a5edbfe9a6aa4d509dc Mon Sep 17 00:00:00 2001
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Date: Wed, 18 Jun 2008 23:50:42 +0200
-Subject: [PATCH] Decorate derived resources as ignored.
+resulting in the following diffstat:
 
-This is done by using the appropriate API.
+ Documentation/config.txt |    8 ++++
+ cache.h                  |    1 +
+ config.c                 |   82 ++++++++++++++++++++++++++++++++++-----------
+ environment.c            |    1 +
+ sha1_file.c              |    3 +-
+ 5 files changed, 74 insertions(+), 21 deletions(-)
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../internal/decorators/GitResourceDecorator.java  |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+and the patches themselves will follow..
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-index 4b6394c..0308f6a 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-@@ -273,8 +273,7 @@ public class GitResourceDecorator extends LabelProvider implements
- 							}
- 
- 						} else {
--							if (rsrc.getType() == IResource.FILE
--									&& Team.isIgnored((IFile) rsrc)) {
-+							if (Team.isIgnoredHint(rsrc)) {
- 								decoration.addSuffix("(ignored)");
- 							} else {
- 								decoration.addPrefix(">");
--- 
-1.5.5.1.178.g1f811
+			Linus
