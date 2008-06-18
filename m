@@ -1,101 +1,95 @@
-From: Heikki Orsila <shd@modeemi.fi>
-Subject: Re: [PATCH] Add SVN->Git conversion example to documentation
-Date: Wed, 18 Jun 2008 03:55:55 +0300
-Message-ID: <20080618005555.GB5930@jolt.modeemi.cs.tut.fi>
-References: <20080614215812.GA28574@zakalwe.fi> <7viqw74phb.fsf@gitster.siamese.dyndns.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] gitweb: return correct HTTP status codes
+Date: Wed, 18 Jun 2008 03:25:20 +0200
+Message-ID: <48586400.4000504@gmail.com>
+References: <1213564515-14356-1-git-send-email-LeWiemann@gmail.com> <200806180054.33490.jnareb@gmail.com> <48584D1F.5070000@gmail.com> <200806180212.15392.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 02:58:06 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 03:26:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8lzv-0006Q6-1U
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 02:58:03 +0200
+	id 1K8mRq-0005D6-58
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 03:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758318AbYFRA4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2008 20:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758180AbYFRA4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 20:56:37 -0400
-Received: from mail.cs.tut.fi ([130.230.4.42]:60608 "EHLO mail.cs.tut.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757356AbYFRA4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2008 20:56:36 -0400
-Received: from amavis2.cs.tut.fi (amavis2.cs.tut.fi [130.230.4.70])
-	by mail.cs.tut.fi (Postfix) with ESMTP id 3128822C1;
-	Wed, 18 Jun 2008 03:56:27 +0300 (EEST)
-Received: from mail.cs.tut.fi ([130.230.4.42])
- by amavis2.cs.tut.fi (amavis2.cs.tut.fi [130.230.4.70]) (amavisd-maia, port 10024)
- with ESMTP id 28251-09-4; Wed, 18 Jun 2008 03:56:26 +0300 (EEST)
-Received: from modeemi.modeemi.cs.tut.fi (modeemi.modeemi.cs.tut.fi [130.230.72.134])
-	by mail.cs.tut.fi (Postfix) with ESMTP id 3C1B222BF;
-	Wed, 18 Jun 2008 03:56:26 +0300 (EEST)
-Received: from jolt.modeemi.cs.tut.fi (jolt.modeemi.cs.tut.fi [130.230.72.144])
-	by modeemi.modeemi.cs.tut.fi (Postfix) with ESMTP id 0592F22201;
-	Wed, 18 Jun 2008 03:55:56 +0300 (EEST)
-Received: by jolt.modeemi.cs.tut.fi (Postfix, from userid 16311)
-	id DD1B7501EE; Wed, 18 Jun 2008 03:55:55 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <7viqw74phb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: Maia Mailguard 1.0.2
+	id S1758837AbYFRBZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2008 21:25:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758314AbYFRBZY
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jun 2008 21:25:24 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:50166 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757480AbYFRBZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2008 21:25:23 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so12209fgg.17
+        for <git@vger.kernel.org>; Tue, 17 Jun 2008 18:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=83TauJCLeKqbUZ2dWRUbGnFdEj3TaMYdZHi/whyVZF8=;
+        b=DTt7DGmVz8MHLIfoe5VIyNGE7nkDqZT27A9q8SYvRpPr9Ssjv3TYSMlZPM+rDW+KOW
+         owlqIJAoOJW45arIUA77a+X40lkr7FExwyDGXSpgPHH2U8hj4bhcqB3rjHmyaNxRXnQx
+         zDVQZUHrkIXGizDTZPTfx4SyNv9/FOP/Mq6SQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=flABpgO0fJ2IFEFuM5W+gnGI43IvN16VzRraGNldkNG3d0fv/aU10mr79kzwVtMZXf
+         VSF6PdbS3TN/DcNGSD9SRPZvpJW+AsaWo7U087y6V/hj0DFvB074kC1OzoHlZOgDdCqy
+         bU/JTnuGtVtVlq+7UWh11vQkR0XTzzBtGcz2c=
+Received: by 10.86.68.20 with SMTP id q20mr40286fga.2.1213752320855;
+        Tue, 17 Jun 2008 18:25:20 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.241.48])
+        by mx.google.com with ESMTPS id l19sm14200241fgb.7.2008.06.17.18.25.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 17 Jun 2008 18:25:20 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200806180212.15392.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85351>
 
-On Tue, Jun 17, 2008 at 04:21:36PM -0700, Junio C Hamano wrote:
-> > -git-svn is a simple conduit for changesets between Subversion and git.
-> > -It is not to be confused with linkgit:git-svnimport[1], which is
-> > -read-only.
-> > +git-svn is a simple bidirectional conduit for changesets between
-> > +Subversion and git. It is used to develop projects with Git tools,
-> > +but commit changes to a Subversion repository. It can also be used to
+Jakub Narebski wrote:
+> Lea Wiemann wrote:
+>> $hash = get_hash($symbol, 'commit'); # 'commit' to resolve tags
 > 
-> That is correct but doesn't the above give a false impression that commits
-> are only made on subversion side and never on git side?
+> Errr... is there equivalent to ^{}, i.e. resolve to non-tag?
 
-Hmm.. I'll try to make it more explicity. Will send another patch soon.
+Yup.  Haven't quite decided whether to simply use "$symbol^{type}" or 
+make type a separate parameter.
 
-> > +convert a Subversion repository to a Git repository. It should not
-> > +be confused with linkgit:git-svnimport[1], which does Subversion to
-> > +Git conversion, but not the other direction.
-> 
-> We do not ship nor document svnimport anymore and linkgit: there is
-> actively wrong.  People seem to be confused with ancient documents still
-> floating on the Web that talk about svnimport, and I think it is a good
-> idea to try to clear the confusion here, but perhaps...
+> Note that you would have to examine gitweb sources to check if it
+> uses href(..., -replay=>1) when it should,
 
-OK, I will not mention svnimport in the next patch.
+Good point, will do.
 
-> 	... with the deprecated `git-svnimport`, which was used for
-> 	one-way conversion from Subversion to git.
-> 
-> > @@ -520,6 +523,38 @@ have each person clone that repository with 'git clone':
-> >  	git-svn rebase
-> >  ------------------------------------------------------------------------
-> >  
-> > +CONVERTING A SUBVERSION REPOSITORY TO A GIT REPOSITORY
-> > +------------------------------------------------------
-> > +
-> > +When converting a Subversion repository to a Git repository
-> > +--no-metadata removes "git-svn-id:" comments from the log.
-> > +-A option is used to convert SVN pseudonyms to real names
-> 
-> Anything that user usually would type on the command line it is preferred
-> to typeset with `quoted like this`, so "`--no-metadata`" and "`-A` option".
-> 
-> It is not `--no-metadata` "removes".  git-svn adds cruft because it wants
-> to use it for bidi operation, but --no-metadata prevents it from doing
-> so.
+> BTW. one of earliest idea was to fully resolve hashes, add missing
+> parameters if possible (like 'h', 'hp', 'f') and convert hashes to
+> sha-1.  One of intended uses was (weak) ETag for simple HTTP caching.
 
-OK
+Interesting.  Something to keep in mind is that using name-rev still can 
+wreck with this since it has the unique property of taking hashes but 
+still depending on the current refs.  Gitweb isn't using name-rev a lot 
+right now, but that might change of course (e.g. I think that it would 
+be convenient to always display names along with any commit hashes).
 
--- 
-Heikki Orsila
-heikki.orsila@iki.fi
-http://www.iki.fi/shd
+> All the time I think that caching _everything_ is a bad solution.
+
+So?  We can easily add an option to the cache; e.g. no_cache => 
+['get_blob', 'ls_tree'].  I doubt that it will be needed, but if it 
+does, it's easy to add it.  Don't worry about it, really.
+
+> CHI (or other in recommended thread) for inobtrusive data caching
+
+Thanks for the pointer!  On the one hand CHI is very recent and not even 
+in Debian, on the other hand it provides things like busy_lock on top of 
+Memcached (AFAICS), at fairly little cost.  I'll look into it.
+
+-- Lea
