@@ -1,98 +1,91 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH 2/2 v4] Git.pm: add test suite
-Date: Wed, 18 Jun 2008 20:04:50 +0200
-Message-ID: <48594E42.2050402@gmail.com>
-References: <d94c2a62edfdec22c32ef5d9649078430b30ecfd.1213685306.git.LeWiemann@gmail.com> <4db23d5b625de1aa026cf4630d49b57fd3a09d07.1213685306.git.LeWiemann@gmail.com> <7v63s7301m.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Wed, 18 Jun 2008 20:43:29 +0200
+Message-ID: <20080618184329.GB25707@elte.hu>
+References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080616190911.GA7047@elte.hu> <20080618105731.GA9242@elte.hu> <20080618112931.GY29404@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 20:06:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jun 18 20:44:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K922k-0004ap-Pf
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 20:06:03 +0200
+	id 1K92eJ-0003T5-Ew
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 20:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbYFRSFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 14:05:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752559AbYFRSFA
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 14:05:00 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:51208 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754599AbYFRSEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 14:04:53 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so271647wri.5
-        for <git@vger.kernel.org>; Wed, 18 Jun 2008 11:04:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=QyvqUzQCnf3hCPSF5GX1CO5tS5uWXzionrHam6COIw8=;
-        b=FvY3hglwWjhcaXr7CPKdpZ7uSApQI+1NOQCJwg75vsARplG5P3nrbc7UKVib05sGf/
-         qXDTCTmR3HRj4H4k1Rjodvw7koxAPXBjYFRv/DCdv36AWUQsshR71XES/RRmelWYSqWO
-         65xNTdhlXIFPdMAgLIXidedtRJwrv72u8TWVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=f4OFh4kgeaLCGH8DwVdW9APuWm06hhceeU4Cpp8ngXHuDYLr1P1pc+gLhrtE6E16QC
-         jsAzAELWbp/gFdyl3QxfWdksPDgHPT5LCWllyXHOrmXvw5l1CnWOKIeqRoxJS62yPsmS
-         MVt9VFIdF0qlHinCWOhi+jArr9TFiKERZL7Yg=
-Received: by 10.90.52.1 with SMTP id z1mr129446agz.119.1213812292558;
-        Wed, 18 Jun 2008 11:04:52 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.248.220])
-        by mx.google.com with ESMTPS id b45sm8148302hsa.6.2008.06.18.11.04.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 18 Jun 2008 11:04:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7v63s7301m.fsf@gitster.siamese.dyndns.org>
+	id S1753076AbYFRSnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 14:43:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbYFRSnz
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 14:43:55 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:43376 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753074AbYFRSny (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 14:43:54 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1K92d2-0001Ws-4s
+	from <mingo@elte.hu>; Wed, 18 Jun 2008 20:43:40 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 5F5933E21DD; Wed, 18 Jun 2008 20:43:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080618112931.GY29404@genesis.frugalware.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85396>
 
-Junio C Hamano wrote:
-> The system I first tried this did not have IO::String installed.
 
-My bad, I should've checked this before sending it off.  I guess we'll 
-solve this in Michael's patch thread; don't expect a reply from me in 
-the next 12h though, I'm way tired and utterly unproductive right now.
+* Miklos Vajna <vmiklos@frugalware.org> wrote:
 
-> [test_external:] Can it become a bit easier to tell such a basic
-> problem apart from real test errors?  I needed to look into
-> /tmp/* to see where it is failing
+> On Wed, Jun 18, 2008 at 12:57:31PM +0200, Ingo Molnar <mingo@elte.hu> wrote:
+> > just to demonstrate it, i tried today to do an octopus merge of 87 topic 
+> > branches:
+> > 
+> > git-merge build checkme core/checkme core/debugobjects core/futex-64bit 
+> > core/iter-div core/kill-the-BKL core/locking core/misc core/percpu 
+> > core/printk core/rcu core/rodata core/softirq core/softlockup 
+> > core/stacktrace core/topology core/urgent cpus4096 genirq kmemcheck 
+> > kmemcheck2 mm/xen out-of-tree pci-for-jesse safe-poison-pointers sched 
+> > sched-devel scratch stackprotector timers/clockevents timers/hpet 
+> > timers/hrtimers timers/nohz timers/posixtimers tip tracing/ftrace 
+> > tracing/ftrace-mergefixups tracing/immediates tracing/markers 
+> > tracing/mmiotrace tracing/mmiotrace-mergefixups tracing/nmisafe 
+> > tracing/sched_markers tracing/stopmachine-allcpus tracing/sysprof 
+> > tracing/textedit x86/apic x86/apm x86/bitops x86/build x86/checkme 
+> > x86/cleanups x86/cpa x86/cpu x86/defconfig x86/delay x86/gart x86/i8259 
+> > x86/idle x86/intel x86/irq x86/irqstats x86/kconfig x86/ldt x86/mce 
+> > x86/memtest x86/mmio x86/mpparse x86/nmi x86/numa x86/numa-fixes x86/pat 
+> > x86/pebs x86/ptemask x86/resumetrace x86/scratch x86/setup x86/smpboot 
+> > x86/threadinfo x86/timers x86/urgent x86/urgent-undo-ioapic x86/uv 
+> > x86/vdso x86/xen x86/xsave
+> > 
+> > it failed miserably:
+> > 
+> >  warning: ignoring 066519068ad2fbe98c7f45552b1f592903a9c8c8; cannot 
+> >  handle more than 25 refs
+> 
+> The upcoming builtin-merge won't have this problem. I have added a 
+> testcase for this in my working branch:
+> 
+> http://repo.or.cz/w/git/vmiklos.git?a=commit;h=7eef40b3cd772692c6eb7520686300533f35f10c
 
-Hm, is your test output somehow different from the following?  It states 
-the error quite clearly at the bottom.
+cool, thanks a ton!
 
-$ ./t9700-perl-git.sh -v
-* expecting success: echo "test file 1" > file1 &&
-      echo "test file 2" > file2 &&
-      [...]
-      git-config --add test.int 2k
+stupid question: does this mean that if i install the latest Git devel 
+snapshot (v1.5.6-rc3-21-g8c6b578 or later), i'll be able to experiment 
+around with it right now?
 
-*   ok 1: set up test repository
-[...]
-*  run 2: Perl API (perl ../t9700/test.pl)
-* FAIL 2: Perl API
-	perl ../t9700/test.pl
-* expecting no stderr from previous command
-* FAIL 3: no stderr: Perl API
-	perl ../t9700/test.pl
-	Stderr is:
-	Can't locate IO/String.pm in @INC (@INC contains: 
-/home/lea/G/t/../perl/blib/lib /home/lea/G/t/../perl/blib/arch/auto/Git 
-/home/lea/.perl/lib /etc/perl /usr/local/lib/perl/5.10.0 
-/usr/local/share/perl/5.10.0 /usr/lib/perl5 /usr/share/perl5 
-/usr/lib/perl/5.10 /usr/share/perl/5.10 /usr/local/lib/site_perl .) at 
-../t9700/test.pl line 12.
-	BEGIN failed--compilation aborted at ../t9700/test.pl line 12.
-	# Looks like your test died before it could output anything.
-* failed 2 among 3 test(s)
-
--- Lea
+	Ingo
