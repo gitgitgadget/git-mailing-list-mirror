@@ -1,73 +1,63 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-rerere observations and feature suggestions
-Date: Wed, 18 Jun 2008 21:53:53 +0200
-Message-ID: <20080618195353.GG29404@genesis.frugalware.org>
-References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080616190911.GA7047@elte.hu> <20080618105731.GA9242@elte.hu> <20080618112931.GY29404@genesis.frugalware.org> <20080618184329.GB25707@elte.hu>
+From: marc.zonzon+git@gmail.com
+Subject: sharing object packs
+Date: Wed, 18 Jun 2008 21:57:26 +0200
+Message-ID: <20080618195726.GA20440@kernoel.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sgBJvoTKD7bfhnmo"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jun 18 21:55:18 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 18 21:58:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K93kD-0004uJ-Sq
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 21:55:02 +0200
+	id 1K93nY-0006Em-Gc
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 21:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654AbYFRTx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 15:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYFRTx5
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 15:53:57 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:33430 "EHLO virgo.iok.hu"
+	id S1753909AbYFRT5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 15:57:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbYFRT5b
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 15:57:31 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:33228 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753183AbYFRTx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 15:53:57 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B8FA41B250F;
-	Wed, 18 Jun 2008 21:53:55 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id DA0AB44699;
-	Wed, 18 Jun 2008 21:32:13 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 624AE1778015; Wed, 18 Jun 2008 21:53:53 +0200 (CEST)
+	id S1753660AbYFRT5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 15:57:30 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 4196A17B656;
+	Wed, 18 Jun 2008 21:57:27 +0200 (CEST)
+Received: from kernoel.kernoel.fr (lns-bzn-47f-81-56-187-30.adsl.proxad.net [81.56.187.30])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id F2DE317B636;
+	Wed, 18 Jun 2008 21:57:26 +0200 (CEST)
+Received: by kernoel.kernoel.fr (Postfix, from userid 206)
+	id 6F5F5300D8; Wed, 18 Jun 2008 21:57:25 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080618184329.GB25707@elte.hu>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85407>
 
+Hello
 
---sgBJvoTKD7bfhnmo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have a big bare repository 'main.git' and many small git repositories sub1, sub2, ... subn.
+All repositories lie in the same file file system, and each subx repository track and fetch main.git in a remote branch.
 
-On Wed, Jun 18, 2008 at 08:43:29PM +0200, Ingo Molnar <mingo@elte.hu> wrote:
-> cool, thanks a ton!
->=20
-> stupid question: does this mean that if i install the latest Git devel=20
-> snapshot (v1.5.6-rc3-21-g8c6b578 or later), i'll be able to experiment=20
-> around with it right now?
+I would like to avoid duplicating main.git objects, I have made some tries:
 
-Nope. It is currently in the 'builtin-merge' branch of
-git://repo.or.cz/git/vmiklos.git. And I'm working on to be merged after
-1.5.6 will be out.
+- Putting a hard link to the pack in the object repository of main.git into subx object repository before fetching the main.git remote. 
+It works well... until the first repack on either side. 
+Note that the problem is the same for any clone of a local repository, the hard link of packs vanish on the first repack. 
+You end up with a pack with the same objects, and so the same name, but organized in a different way so with an associated idx file and often a different file size.
 
---sgBJvoTKD7bfhnmo
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+- Using an objects/info/alternates with the path of main.git object repository.
+It work well too, but I import objects from main.git inside subx, and they don't have the same life time than those in main.git. So they can, disapear during a git-prune-packed or gc. (The same problem we have with: git clone --share)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+- I tried also to use git-relink to synchronize diverging repositories. But git-relink see different packs with the same name, (because repacked in a different way) and refuse to hard-link the packs but hard-links the .idx which has also an identical name and had the same size in my experiments.
+So the .idx does no longer agree with the .pack and git fsck fail. Of course we can recover the repository by generating a new idx, but git-relink is a dangerous tool to use here.
 
-iEYEARECAAYFAkhZZ9EACgkQe81tAgORUJYePACghxt8t6nNO0rLzVuD+OB6e3Dm
-frEAoJA5gAPdp/7HYr59sGRdke5FNCS2
-=EtcG
------END PGP SIGNATURE-----
+If we unpack all objects we have not all these problems, but the main.git is in this case quite big. Of course it may be better to have a big repository than 20 copies of the packed repository. 
+But I suppose that that there is some way to share an object repository in a safe way, even if it includes some packs.
 
---sgBJvoTKD7bfhnmo--
+I am quite new to git core and internals, so I may have missed the point.
+
+Marc
