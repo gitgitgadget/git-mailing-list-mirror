@@ -1,67 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Guided merge with override
-Date: Wed, 18 Jun 2008 09:31:13 -0700
-Message-ID: <7viqw6zovi.fsf@gitster.siamese.dyndns.org>
-References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
- <20080616092554.GB29404@genesis.frugalware.org>
- <48563D6C.8060704@viscovery.net>
- <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
- <93c3eada0806161545m5c6e1073q5522ce31f72be9f0@mail.gmail.com>
- <7vve076d6t.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806181618070.6439@racer>
- <alpine.DEB.1.00.0806181627260.6439@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for further
+ processing
+Date: Wed, 18 Jun 2008 17:50:31 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806181709300.6439@racer>
+References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com> <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com> <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org> <20080618033010.GA19657@sigill.intra.peff.net>
+ <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: geoffrey.russell@gmail.com, sverre@rabbelier.nl,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 18 18:32:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Shawn Bohrer <shawn.bohrer@gmail.com>,
+	git@vger.kernel.org, madcoder@debian.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 18:53:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K90aB-0000DU-Cm
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 18:32:27 +0200
+	id 1K90uD-0008WM-1Y
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 18:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbYFRQbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 12:31:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752400AbYFRQbd
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 12:31:33 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59754 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbYFRQbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 12:31:32 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8DD4315BB9;
-	Wed, 18 Jun 2008 12:31:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 66F1F15BB5; Wed, 18 Jun 2008 12:31:16 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806181627260.6439@racer> (Johannes
- Schindelin's message of "Wed, 18 Jun 2008 16:28:42 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FF4B4780-3D53-11DD-A42D-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753183AbYFRQwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 12:52:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753133AbYFRQwL
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 12:52:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48373 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752849AbYFRQwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 12:52:09 -0400
+Received: (qmail invoked by alias); 18 Jun 2008 16:52:07 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp060) with SMTP; 18 Jun 2008 18:52:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/rXghjwtPrupr6w4YSiib33VmSAmhswcCAfWul9X
+	q5YTVgEBx10dyb
+X-X-Sender: gene099@racer
+In-Reply-To: <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85391>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Thinking about this again, there could be a problem: in case of complex 
-> merges, it is possible that the sides are switched around for an 
-> intermediate merge.  IOW you'd expect it to take "theirs", but it really 
-> takes "ours".
+On Tue, 17 Jun 2008, Junio C Hamano wrote:
 
-Are you thinking about using this in merge-recursive?
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think the only right way to accomplish this is to convert the revision
+> > and diff parameters into a parseopt-understandable format.
+> 
+> Not necessarily.  You could structure individual option parsers like how 
+> diff option parsers are done.  You iterate over argv[], feed diff option 
+> parser the current index into argv[] and ask if it is an option diff 
+> understands, have diff eat the option (and possibly its parameter) to 
+> advance the index, or allow diff option to say "I do not understand 
+> this", and then handle it yourself or hand it to other parsers.
 
-I do not think there is any reason to use this during intermediate merges
-done inside merge-recursive.  The point of recursive merge is to create a
-neutral intermediate merge result, with conflicts and all.  Do this only
-during the final round and you are fine (for some definition of "fine" ---
-I still have not heard a convincing argument as to why it is even a good
-thing to be able to take one side for only parts that did conflict, while
-taking the change from the other side in places that did not).
+AFAIR Pierre tried a few ways, and settled with a macro to introduce the 
+diff options into a caller's options.
+
+IOW it would look something like this:
+
+static struct option builtin_what_options[] = {
+	[... options specific to this command ...]
+	DIFF__OPT(&diff_options)
+};
+
+Ciao,
+Dscho
