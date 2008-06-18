@@ -1,73 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/4] Split up default "core" config parsing into helper
- routine
-Date: Wed, 18 Jun 2008 16:34:49 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806181632080.2907@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0806181524490.2907@woody.linux-foundation.org> <alpine.LFD.1.10.0806181529570.2907@woody.linux-foundation.org> <20080618224919.GA22599@sigill.intra.peff.net> <alpine.LFD.1.10.0806181552590.2907@woody.linux-foundation.org>
- <20080618231316.GB23053@sigill.intra.peff.net>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@lavabit.com>
+Subject: [PATCH] environment.c: remove unused function
+Date: Thu, 19 Jun 2008 08:21:09 +0900
+Message-ID: <20080619082109.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Denis Bueno <dbueno@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 19 01:36:28 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 01:47:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K97CT-0007ZS-4m
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 01:36:25 +0200
+	id 1K97NT-0001wH-1S
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 01:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754691AbYFRXfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 19:35:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754664AbYFRXfa
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 19:35:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37943 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754660AbYFRXf3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2008 19:35:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5INYowA022030
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jun 2008 16:34:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5INYnRU026635;
-	Wed, 18 Jun 2008 16:34:50 -0700
-In-Reply-To: <20080618231316.GB23053@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.853 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754614AbYFRXqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 19:46:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbYFRXqv
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 19:46:51 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:37468 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752421AbYFRXqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 19:46:50 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id B50B2C7B26;
+	Wed, 18 Jun 2008 18:21:40 -0500 (CDT)
+Received: from nanako3.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id XUCABUPVV87Y; Wed, 18 Jun 2008 18:21:48 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=xNmBkEd0vUQqowsJLEtrvNe11VCNA7H70EezlSdfJqamci6Kwh76In8JsPUbCRBGcLh161HZwmXyGwQDQrgj/2ReyxzfLjkcYEjokw943uP6/xplXRirltyFJ/P5df4yacm3/2pH939NFzCeUI8r8yUaxW4HKTlDGnOp+kLZfU4=;
+  h=From:Date:To:Cc:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85425>
 
+Removes get_refs_directory() that is not used anywhere.
 
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+ cache.h       |    1 -
+ environment.c |    7 -------
+ 2 files changed, 0 insertions(+), 8 deletions(-)
 
-On Wed, 18 Jun 2008, Jeff King wrote:
-> 
-> It seems like the '.' implies hierarchy, but the syntax of the file
-> doesn't really follow it. But that's a minor issue, and really not worth
-> the pain it would take to change at this point.
-
-Hierarchy is idiotic in a human-readable file. It's not how people work.
-
-And you're looking at the wrong part. You're looking at the _code_ part, 
-which is not the primary thing. The primary thing is the config file 
-syntax. And
-
-	[branch "mybranch"]
-		url = xyz
-
-is a hell of a lot more readable than any alternatives I've ever seen, and 
-no, there is no hierarchy _anywhere_ there, and shouldn't be.
-
-Forget about "branch.mybranch.url". It has no meaning. It's not what you 
-are supposed to ever use as a human (it's purely for scripting). It's not 
-worth even thinking about.
-
-			Linus
+diff --git a/cache.h b/cache.h
+index fdf07b7..64eba9d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -311,7 +311,6 @@ extern char *git_work_tree_cfg;
+ extern int is_inside_work_tree(void);
+ extern const char *get_git_dir(void);
+ extern char *get_object_directory(void);
+-extern char *get_refs_directory(void);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+ extern int set_git_dir(const char *path);
+diff --git a/environment.c b/environment.c
+index 73feb2d..187248b 100644
+--- a/environment.c
++++ b/environment.c
+@@ -129,13 +129,6 @@ char *get_object_directory(void)
+ 	return git_object_dir;
+ }
+ 
+-char *get_refs_directory(void)
+-{
+-	if (!git_refs_dir)
+-		setup_git_env();
+-	return git_refs_dir;
+-}
+-
+ char *get_index_file(void)
+ {
+ 	if (!git_index_file)
+-- 
+1.5.5.4
