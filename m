@@ -1,67 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix approxidate("never") to always return 0
-Date: Wed, 18 Jun 2008 16:06:57 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806181550190.6439@racer>
-References: <4855A3CC.2090701@free.fr> <1213720497-9093-1-git-send-email-dkr+ml.git@free.fr>
+From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+Subject: Re: [PATCH] Remove dependency on IO::String from Git.pm test
+Date: Wed, 18 Jun 2008 17:10:57 +0200
+Message-ID: <b77c1dce0806180810r46a3e2a5i4eb228e6dc19613d@mail.gmail.com>
+References: <1213796224-995-1-git-send-email-michael@ndrix.org>
+	 <m37icmol6y.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 18 17:10:02 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Michael Hendricks" <michael@ndrix.org>, gitster@pobox.com,
+	git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 17:12:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8zHv-0005f4-5W
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 17:09:31 +0200
+	id 1K8zKE-0006p5-Js
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 17:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbYFRPIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 11:08:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751836AbYFRPIg
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 11:08:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35173 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751773AbYFRPIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 11:08:35 -0400
-Received: (qmail invoked by alias); 18 Jun 2008 15:08:33 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp050) with SMTP; 18 Jun 2008 17:08:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/ZnswpRELZzoXyOG1lw5+b1LROPtcje8EAojM2IB
-	Lz7cSgLaUVLC1+
-X-X-Sender: gene099@racer
-In-Reply-To: <1213720497-9093-1-git-send-email-dkr+ml.git@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751798AbYFRPK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 11:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbYFRPK6
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 11:10:58 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:31217 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751608AbYFRPK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 11:10:57 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so302005wfd.4
+        for <git@vger.kernel.org>; Wed, 18 Jun 2008 08:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=FEggsYJXdQimApX6qF3TsG+mNp5bCdXQdB3034QQVf8=;
+        b=L3/6m4AkpueasUITwpucDm6IxuGHYHPkTzFgUpykzb+F4ZgIpUTE+gy4gPBnfCJVui
+         /Urae6Cw8LHk01yvzyvmTos/Zbj60Dui7d5x9ztBVEle3n5WH85bN0ml3vaRhDiBVWHy
+         t4DetVbCiP1PFqqV/l/42G+7DuG42djEicCfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=w54Lgt0l+2VBOwf8vH0MuIXORRO4pw5PmcDKNlJo6CHtx/GJsIsFcao1l/KENp1Ja1
+         jIVl/KFRgv0V5RyKcjhrTBAlUHtpIKCEMxHnWMByJIO/Izu8ctnh6a21q57UV6g+CvtG
+         4cEv8X4C5Qt5EyYoRrjQJg9PHMxE8putVxXTU=
+Received: by 10.142.114.15 with SMTP id m15mr350868wfc.25.1213801857520;
+        Wed, 18 Jun 2008 08:10:57 -0700 (PDT)
+Received: by 10.142.11.3 with HTTP; Wed, 18 Jun 2008 08:10:57 -0700 (PDT)
+In-Reply-To: <m37icmol6y.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85383>
 
-Hi,
+2008/6/18 Jakub Narebski <jnareb@gmail.com>:
+> Michael Hendricks <michael@ndrix.org> writes:
+>
+>> Instead of using IO::String to create an in-memory filehandle, use
+>> open() with a scalar reference as the filename.  This feature has been
+>> available since Perl 5.8.0 (which was released in 2002), so it should
+>> be available pretty much everywhere by now.
+>
+> Besides if I understand correctly gitweb very much requires Perl >= 5.8
+> because of required Unicode support.
+>
+> Nevertheless adding "use v5.8.0;" or "use 5.008_000;" would be I guess
+> good idea.
 
-On Tue, 17 Jun 2008, Olivier Marin wrote:
-
-> diff --git a/date.c b/date.c
-> index a74ed86..1a4eb87 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -682,10 +682,8 @@ static void date_am(struct tm *tm, int *num)
->  
->  static void date_never(struct tm *tm, int *num)
->  {
-> -	tm->tm_mon = tm->tm_wday = tm->tm_yday
-> -		= tm->tm_hour = tm->tm_min = tm->tm_sec = 0;
-> -	tm->tm_year = 70;
-> -	tm->tm_mday = 1;
-> +	time_t n = 0;
-> +	localtime_r(&n, tm);
-
-I would have reused local_tzoffset() and been explicit about the used 
-date, but your version is shorter.
-
-Ciao,
-Dscho
+"use 5.008;" is preferred form; "use v5.8.0" might yield obscure error
+messages on perls < 5.6, which is not the desired result.
