@@ -1,74 +1,73 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] Remove dependency on IO::String from Git.pm test
-Date: Wed, 18 Jun 2008 21:42:58 +0200
-Message-ID: <48596542.4000308@gmail.com>
-References: <1213796224-995-1-git-send-email-michael@ndrix.org> <m37icmol6y.fsf@localhost.localdomain> <alpine.DEB.1.00.0806181756540.6439@racer> <200806181952.02048.jnareb@gmail.com> <alpine.DEB.1.00.0806182030200.6439@racer>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Wed, 18 Jun 2008 21:53:53 +0200
+Message-ID: <20080618195353.GG29404@genesis.frugalware.org>
+References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080616190911.GA7047@elte.hu> <20080618105731.GA9242@elte.hu> <20080618112931.GY29404@genesis.frugalware.org> <20080618184329.GB25707@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio Hamano <gitster@pobox.com>,
-	Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 18 21:44:11 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sgBJvoTKD7bfhnmo"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Jun 18 21:55:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K93ZY-0000YA-Kl
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 21:44:01 +0200
+	id 1K93kD-0004uJ-Sq
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 21:55:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753092AbYFRTnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 15:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752470AbYFRTnE
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 15:43:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:23411 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752230AbYFRTnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 15:43:02 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so226215fgg.17
-        for <git@vger.kernel.org>; Wed, 18 Jun 2008 12:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=7WLWwOoJ60bwcLbXX1MqjP3+iG9X3qvxMrBLwr46pjc=;
-        b=sDSN34bfh17BbXRXbtEy3yL3LL4+KcBhZPYaHYnH7Qzeo3AfutY2fdBu98saj+K/Tk
-         53aVSNswjXwiA3vIOMl2n9saZWfQ+qOSySVDZcMo5Qki+o29lALzLP98HM2MCQHaiBVJ
-         hk1NLDeJPZxcSNuE7xi7qChlr6d4xz50/Q790=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=QNGSoeVmKfC96CaP6uqpMgcz4pHdN2wztCaPIX6VVKzfa8jKKYMBKaiY9WH3Hwb8vJ
-         pwvpXvsQsOHGjefIPO/djdEiynXcI/vgx3BBGJqEXwzZoATN0lQAXU4wHD2dGyuO/xr0
-         ginUcNLji+udIrFihMT35A/Tps4ynVEHKp6ew=
-Received: by 10.78.134.7 with SMTP id h7mr595424hud.94.1213818177040;
-        Wed, 18 Jun 2008 12:42:57 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.248.220])
-        by mx.google.com with ESMTPS id o39sm5970310hub.46.2008.06.18.12.42.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 18 Jun 2008 12:42:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <alpine.DEB.1.00.0806182030200.6439@racer>
+	id S1754654AbYFRTx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 15:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYFRTx5
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 15:53:57 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:33430 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753183AbYFRTx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 15:53:57 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id B8FA41B250F;
+	Wed, 18 Jun 2008 21:53:55 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id DA0AB44699;
+	Wed, 18 Jun 2008 21:32:13 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 624AE1778015; Wed, 18 Jun 2008 21:53:53 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080618184329.GB25707@elte.hu>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85406>
 
-Johannes Schindelin wrote:
-> So?  Why do you want to break the _test_ on those machines where you need 
-> them most?  We _know_ that a release from Junio works fine on Linux.
 
-Goodness.  Everyone in this thread, please relax a notch.  I thought we 
-had pretty clear agreement that we want to keep Perl 5.6 compatibility 
-for Git.pm.  The solution is to use a temporary file in the current 
-directory (and unlink it afterwards).  If nobody has done that by 
-tomorrow I'll do it.  It'll take that less time than to even read this 
-thread.
+--sgBJvoTKD7bfhnmo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now lets get back to work.
+On Wed, Jun 18, 2008 at 08:43:29PM +0200, Ingo Molnar <mingo@elte.hu> wrote:
+> cool, thanks a ton!
+>=20
+> stupid question: does this mean that if i install the latest Git devel=20
+> snapshot (v1.5.6-rc3-21-g8c6b578 or later), i'll be able to experiment=20
+> around with it right now?
 
--- Lea
+Nope. It is currently in the 'builtin-merge' branch of
+git://repo.or.cz/git/vmiklos.git. And I'm working on to be merged after
+1.5.6 will be out.
+
+--sgBJvoTKD7bfhnmo
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhZZ9EACgkQe81tAgORUJYePACghxt8t6nNO0rLzVuD+OB6e3Dm
+frEAoJA5gAPdp/7HYr59sGRdke5FNCS2
+=EtcG
+-----END PGP SIGNATURE-----
+
+--sgBJvoTKD7bfhnmo--
