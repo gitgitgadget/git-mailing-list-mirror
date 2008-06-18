@@ -1,112 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [egit-jgit] excluded patterns are decorated as being untracked
-Date: Wed, 18 Jun 2008 00:39:31 -0400
-Message-ID: <20080618043931.GC11793@spearce.org>
-References: <4857E9A0.7070408@redhat.com> <200806172316.46416.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for
+ further processing
+Date: Tue, 17 Jun 2008 22:13:02 -0700
+Message-ID: <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
+References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com>
+ <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com>
+ <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org>
+ <20080618033010.GA19657@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Galder Zamarreno <galder.zamarreno@redhat.com>,
-	git@vger.kernel.org, Florian Koeberle <florianskarten@web.de>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 06:40:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
+	madcoder@debian.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 18 07:14:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8pTF-0002nH-Gc
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 06:40:33 +0200
+	id 1K8pzj-0000wb-Nl
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 07:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbYFREji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 00:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbYFREji
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 00:39:38 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35938 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353AbYFREjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 00:39:37 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K8pSI-0006pI-13; Wed, 18 Jun 2008 00:39:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E1CB120FBAE; Wed, 18 Jun 2008 00:39:31 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200806172316.46416.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753441AbYFRFNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 01:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYFRFNQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 01:13:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753312AbYFRFNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 01:13:15 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3D9C412FE5;
+	Wed, 18 Jun 2008 01:13:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DDDC812FE0; Wed, 18 Jun 2008 01:13:05 -0400 (EDT)
+In-Reply-To: <20080618033010.GA19657@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 17 Jun 2008 23:30:10 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3F958846-3CF5-11DD-A4B8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85362>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> Btw, Here is an attempt to match folders by Team ignore patterns too.
-> 
-> (OT: I did not format the code. (please try, and you'll see why). We'll have
-> to come up with something better than an 80-column format, it's so seventies)
+Jeff King <peff@peff.net> writes:
 
-Ignoring the patch for a second, I'm a die-hard 80 column format
-person.  You can pry my 80 column wide terminals from me long after
-I'm dead.
+> I think the only right way to accomplish this is to convert the revision
+> and diff parameters into a parseopt-understandable format.
 
-In Java it may seem like an 80 column limit is a problem, because
-the code often gets nested deep and far to the right, such as in
-this example here.  I find that just like in C, when code is this
-far indented to the right in Java its too damn complex as-is and
-should be refactored into smaller methods, and anonymous types
-should perhaps be converted to named inner classes or top-level
-classes of their own right.
-
-My laptop display panel is only 1440 pixels wide.  By the time I
-get my Eclipse workbench open I have about 90 characters wide for
-the editor page, given how I place the other views and non-Eclipse
-applications around the edges.  Pushing much beyond 80 characters
-wide makes it very hard to read code quickly.
-
-And no, I do not want to tote a laptop with a display that is 9000
-pixels wide, thanks.
-
-So IMHO, code in jgit+egit should try to target 80 characters wide
-as much as possible.  If you can't hit that you need to rethink how
-you have the code structured.  I've never refactored something into
-smaller more modular methods (to hit the 80 target) and said "gee,
-that refactoring made my code harder to understand, what with those
-highly descriptive method names and javadoc I gave everything".
-
-OK, now you can call me crazy.
- 
-> diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/TrackOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/TrackOperation.java
-> index 6521f1c..af16cdb 100644
-> --- a/org.spearce.egit.core/src/org/spearce/egit/core/op/TrackOperation.java
-> +++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/TrackOperation.java
-> @@ -90,13 +90,20 @@ public class TrackOperation implements IWorkspaceRunnable {
->  							public boolean visit(IResource resource) throws CoreException {
->  								try {
->  									String repoPath = rm.getRepoRelativePath(resource);
-> +									// We use add to reset the assume valid bit, so we check the bit
-> +									// first. If a resource within a ignored folder is marked
-> +									// we ignore it here, i.e. there is no way to unmark it expect
-> +									// by explicitly selecting and invoking track on it.
->  									if (resource.getType() == IResource.FILE) {
->  										Entry entry = index.getEntry(repoPath);
-> -										if (!Team.isIgnored((IFile)resource) || entry != null && entry.isAssumedValid()) {
-> +										if (!Team.isIgnoredHint(resource) || entry != null && entry.isAssumedValid()) {
->  											entry = index.add(rm.getWorkDir(), new File(rm.getWorkDir(), repoPath));
->  											entry.setAssumeValid(false);
->  										}
->  									}
-> +									if (Team.isIgnoredHint(resource))
-> +										return false;
-> +
->  								} catch (IOException e) {
->  									e.printStackTrace();
->  									throw Activator.error(CoreText.AddOperation_failed, e);
-
--- 
-Shawn.
+Not necessarily.  You could structure individual option parsers like how
+diff option parsers are done.  You iterate over argv[], feed diff option
+parser the current index into argv[] and ask if it is an option diff
+understands, have diff eat the option (and possibly its parameter) to
+advance the index, or allow diff option to say "I do not understand this",
+and then handle it yourself or hand it to other parsers.
