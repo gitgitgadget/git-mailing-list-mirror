@@ -1,71 +1,93 @@
-From: injoin <injoin.injoin@gmail.com>
-Subject: [git-p4] log problem
-Date: Wed, 18 Jun 2008 06:07:32 +0000 (UTC)
-Message-ID: <loom.20080618T054324-772@post.gmane.org>
+From: =?ISO-8859-15?Q?Martin_R=F6hricht?= <public@felicis.org>
+Subject: Re: bare init and gitweb
+Date: Wed, 18 Jun 2008 08:14:39 +0200
+Message-ID: <4858A7CF.5060005@felicis.org>
+References: <g38t49$lgr$3@ger.gmane.org> <m3bq1zolh6.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 08:11:07 2008
+X-From: git-owner@vger.kernel.org Wed Jun 18 08:15:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K8qss-0006IJ-DJ
-	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 08:11:06 +0200
+	id 1K8qxX-0007jR-G0
+	for gcvg-git-2@gmane.org; Wed, 18 Jun 2008 08:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758847AbYFRGKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 02:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758889AbYFRGKI
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 02:10:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:53947 "EHLO ciao.gmane.org"
+	id S1759075AbYFRGO7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jun 2008 02:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759094AbYFRGO7
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 02:14:59 -0400
+Received: from main.gmane.org ([80.91.229.2]:36222 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755941AbYFRGKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 02:10:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1K8qrq-0007nc-4O
-	for git@vger.kernel.org; Wed, 18 Jun 2008 06:10:03 +0000
-Received: from hcfw.mstarsemi.com ([59.120.57.250])
+	id S1759038AbYFRGO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 02:14:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1K8qwX-0007z5-5N
+	for git@vger.kernel.org; Wed, 18 Jun 2008 06:14:53 +0000
+Received: from i72archimedes.tm.uni-karlsruhe.de ([141.3.71.83])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jun 2008 06:10:02 +0000
-Received: from injoin.injoin by hcfw.mstarsemi.com with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Wed, 18 Jun 2008 06:14:53 +0000
+Received: from public by i72archimedes.tm.uni-karlsruhe.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jun 2008 06:10:02 +0000
+        for <git@vger.kernel.org>; Wed, 18 Jun 2008 06:14:53 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 59.120.57.250 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9) Gecko/2008052906 Firefox/2.0.0.8;MEGAUPLOAD 1.0)
+X-Gmane-NNTP-Posting-Host: i72archimedes.tm.uni-karlsruhe.de
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <m3bq1zolh6.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85364>
 
-`p4 describes 114996' shows something like this:
+Hi Jakub,
 
-Change 114996 by puma@injoin.injoin on 2008/06/18 12:11:24
+On 06/17/2008 10:27 PM, Jakub Narebski wrote:
+> Martin R=F6hricht <public@felicis.org> writes:
+>=20
+>> in order to use git for some projects via WebDAV I followed the
+>> instructions given in
+>> http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-serv=
+er-over-http.txt
+>=20
+> [...]
+>> Whenever I clone the server's repository somewhere else, I get the
+>> README file as expected. But when I use gitweb to show me the conten=
+ts
+>> of the repository, all I get is this:
+>>=20
+>> -------------------------8<------------------------
+>> projects /
+>>=20
+>> 403 Forbidden - No projects found
+>> -------------------------8<------------------------
+>>=20
+>> The projectroot variable within /etc/gitweb.conf points to my
+>> ~/gitrepo.git, and whenever I use "git init", add and commit some
+>> files locally on the server I see the contents as expected by using
+>> gitweb, but never by using a repository created with "git --bare ini=
+t".
+>>=20
+>> Can someone help me out? I would really appreciate any help.
+>=20
+> The $projectroot variable should point to the _common root_ of all
+> projects, in your case it could be one directory up your repository,
+> for example
+>=20
+>   our $projectroot =3D /home/nick
+>=20
+> not
+>=20
+>   our $projectroot =3D /home/nick/gitrepo.git
 
-	fix buffer overflow.
+thank you very much -- you solved my problem and it works like a charm.=
+ :-)
 
-Affected files ...
-
-
-//puma/Trunk/lib/string/map.c#47 edit
-
-
-But `git log' shows
-Author: puma <puma@p4_server>
-Date:   Wed Jun 18 12:11:24 2008 +0800
-
-    fix buffer overflow.
-
-    [git-p4: depot-paths = "//puma/Trunk/": change = 114996]
-
-The Author field in all logs shows puma <puma@p4_server>
-All of the programmers use the perforce username 'puma' but use a different
-clientspec. How can I configure git-p4 to use puma@injoin.injoin as the Author
-rather than puma?
-
-Thank you.
+Have a nice day,
+Martin
