@@ -1,89 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-diff question
-Date: Thu, 19 Jun 2008 05:03:30 -0700 (PDT)
-Message-ID: <m3tzfpmy2b.fsf@localhost.localdomain>
-References: <556d90580806190448y2bfeebardb05c5b0b91e53a7@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-pack: don't consider branch lagging behind as
+	errors.
+Date: Thu, 19 Jun 2008 09:37:48 -0400
+Message-ID: <20080619133747.GA31209@sigill.intra.peff.net>
+References: <1213872715-11182-1-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Alf Clement" <alf.clement@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 14:04:51 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jun 19 15:39:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9IsU-0003ZO-6u
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 14:04:34 +0200
+	id 1K9KLy-0000ZD-3H
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 15:39:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380AbYFSMDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 08:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754569AbYFSMDi
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 08:03:38 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:13074 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754309AbYFSMDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 08:03:37 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so435850ika.5
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 05:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=aEz2PJjCSPEgS1NmAhuEbd8h3uRtlD5JT0GLnjEbi9Y=;
-        b=fZaNOzoEiyCGEsuG4C6m8r3l+S/PfMyK3xY1eMNBFc/wrK4NmqMupKDL3BhdcAtoRq
-         /WRzchG7iXIyTnAlRAqfT//TDQ2udfjRk9SZV8d81Opii+ZXFSjeNERfo0aYtM1nVJBA
-         YxJX6WIi6N0vqIBhG7m0g3hKMBSh9tHej1y+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=u5r52AdPQd1NXJ7gIBCQ9CbrPMi42wdZu6mjR5ZTYZHlHtfYj/GBHNEl7w0yOODrwQ
-         KDZsUDi5yTjq36C42/9HFCYqsFlN5l+MNB9za46EoBYvqq9Fg1c/aw9L40NRjtrwl2au
-         b9Ud7vy1Jag6cPAjEyHl+zJhWz9d7ZOb9oelg=
-Received: by 10.210.75.6 with SMTP id x6mr1781263eba.31.1213877011778;
-        Thu, 19 Jun 2008 05:03:31 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.242.161])
-        by mx.google.com with ESMTPS id c25sm819678ika.11.2008.06.19.05.03.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Jun 2008 05:03:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5JC3QaT030216;
-	Thu, 19 Jun 2008 14:03:26 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5JC3PmY030213;
-	Thu, 19 Jun 2008 14:03:25 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <556d90580806190448y2bfeebardb05c5b0b91e53a7@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753909AbYFSNhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 09:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbYFSNhv
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 09:37:51 -0400
+Received: from peff.net ([208.65.91.99]:2392 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753737AbYFSNhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 09:37:50 -0400
+Received: (qmail 18442 invoked by uid 111); 19 Jun 2008 13:37:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 19 Jun 2008 09:37:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jun 2008 09:37:48 -0400
+Content-Disposition: inline
+In-Reply-To: <1213872715-11182-1-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85473>
 
-"Alf Clement" <alf.clement@gmail.com> writes:
+On Thu, Jun 19, 2008 at 12:51:55PM +0200, Pierre Habouzit wrote:
 
-> $ git diff
-> diff --git a/Firmware/Firmware.ccscc b/Firmware/Firmware.ccscc
-> old mode 100755
-> new mode 100644
-> ....
-> returns a list of files where the mode was changed, which seems to be
-> correct. Also
-> modified files are flaged.
-> I wonder why
-> $ git diff --diff-filter=T
-> outputs nothing.
+> It's really painful to have git push error out when it's just that one of
+> your tracking branches isn't up to date with respect to a remote branch.
+> 
+> Let just add a new status: "lagging", always print it to screen when we're
+> lagging, but don't exit with a non 0 value, as it really alarms users.
 
-Isn't 'T' about *t*ype change, i.e. change between ordinary file,
-symlink, directory and commit (submodule)?
+This has been discussed before, and the suggested term was "stale".
 
-> I am running this under Cygwin.
+Check out:
 
-Or perhaps this is a cause.
+  http://thread.gmane.org/gmane.comp.version-control.git/73038/focus=73186
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+which is uncannily identical (the difference is the name, and that I
+don't show the lagged branches unless -v is given).
+
+Among the issues that were not sorted out last time:
+
+  - should stale branches be shown without -v?
+
+  - calling ref_newer here is inefficient, since we have already called
+    it in the other direction. We should probably do the traversal once
+    in such a way as to find out which ref is newer (or if it is
+    indeterminate).
+
+  - there is a possible danger with "git push -f", in that you force
+    both rejected branches as well as stale branches. Junio and I
+    discussed the possibility of disallowing "-f" unless the user
+    explicitly requested _what_ to push; i.e., --all, --matching,
+    --mirror, or a refspec. See:
+
+      http://thread.gmane.org/gmane.comp.version-control.git/74425/focus=74481
+
+I was considering resurrecting my patch after working up that safety
+valve.
+
+-Peff
