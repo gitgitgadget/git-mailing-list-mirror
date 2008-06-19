@@ -1,114 +1,103 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: [PATCH] git-svn: make rebuild respect rewriteRoot option
-Date: Fri, 20 Jun 2008 00:33:59 +0200
-Message-ID: <20080620003359.0dbb7725@neuron>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3] gitweb: standarize HTTP status codes
+Date: Thu, 19 Jun 2008 15:37:35 -0700 (PDT)
+Message-ID: <m3hcbpm4pe.fsf@localhost.localdomain>
+References: <1213905801-2811-1-git-send-email-LeWiemann@gmail.com>
+	<1213907110-5080-1-git-send-email-LeWiemann@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 20 00:35:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Lea Wiemann <LeWiemann@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 00:38:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Sia-0003Aw-PO
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:35:01 +0200
+	id 1K9Sm5-000461-9k
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394AbYFSWeF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 18:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752947AbYFSWeE
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:34:04 -0400
-Received: from zoidberg.org ([213.133.99.5]:60109 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753379AbYFSWeD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 18:34:03 -0400
-Received: from neuron (xdsl-87-78-141-113.netcologne.de [::ffff:87.78.141.113])
-  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Fri, 20 Jun 2008 00:34:00 +0200
-  id 0016F154.485ADEDA.0000195F
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1751556AbYFSWhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 18:37:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYFSWhm
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:37:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:13326 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbYFSWhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 18:37:41 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so1057114ugf.16
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 15:37:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=mrvyC6IiRoTX9st0HN+qt5opZM2ZCeQ5FzbEhwYQBQ8=;
+        b=jgpaEedq+H8THIYEq09AVArT6K1YxB6T3FFWpb0CYC8WR6Ihb8XCioRicYVhQqWal9
+         MDL4avPhAabRMkQ0nPTDm6B62DI6QQTTI5AF924EvfHDZzpRbvOe6RkBdQGNuxys2wK8
+         lpmfybfiD54Yijrv2r7Lx5f4jhp6pgH72VJ94=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=dquVC+d0dzix5scUh5heX4wlsSic23iUsDlcdRYAoaXIPyeNDIjcdafTHGlzUMQd2Z
+         yUQkKT5KXmpeiJvY5rFrM2Xnz/CuKcnWVWEGq+BiqhKP775ePIsBXoQbtWKA4YaAmtvl
+         Y1yTCFXCaB1mb4EZdxmn8BU2UCLrjea6/FajM=
+Received: by 10.67.97.1 with SMTP id z1mr10930102ugl.11.1213915056349;
+        Thu, 19 Jun 2008 15:37:36 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.242.161])
+        by mx.google.com with ESMTPS id 24sm19562456ugf.62.2008.06.19.15.37.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 15:37:35 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5JMbZBB002691;
+	Fri, 20 Jun 2008 00:37:35 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5JMbXEG002688;
+	Fri, 20 Jun 2008 00:37:33 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1213907110-5080-1-git-send-email-LeWiemann@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85552>
 
-Suppose someone fetches git-svn-ified commits from another repo and the=
-n
-attempts to use 'git-svn init --rewrite-root=3Dfoo bar'. Using git svn =
-rebase
-after that will fail badly:
+Lea Wiemann <lewiemann@gmail.com> writes:
 
- * For each commit tried by working_head_info, rebuild is called indire=
-ctly.
- * rebuild will iterate over all commits and skip all of them because t=
-he
-   URL does not match. Because of that no rev_map file is generated at =
-all.
- * Thus, rebuild will run once for every commit. This takes ages.
- * In the end there still isn't any rev_map file and thus working_head_=
-info
-   fails.
+> Changes since v2: die_error now adds the reason strings defined by RFC
+> 2616 to the HTTP status code; incorporated Jakub's other suggestions.
+> Diff to v2 follows.
 
-Addressing this behaviour fixes an apparently not too uncommon problem =
-with
-providing git-svn mirrors of Subversion repositories. Some repositories=
- are
-accessed using different URLs depending on whether the user has push
-privileges or not. In the latter case, an anonymous URL is often used t=
-hat
-differs from the push URL. Providing a mirror that is usable in both ca=
-ses
-becomes a lot more possible with this change.
+This address both of my concerns: first, that for someone examining
+Mechanize-based gitweb test number like 403, or 500 would be magical
+number without explanation (reason phrase) other than 'Error'.
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
-Since this patch focuses on a case that is discouraged by the git-svn
-manpage (use rewriteRoot even though commits already exist), a bit of
-discussion might be helpful. On the up side, I think it doesn't affect =
-any
-other cases.
+Second, that for casual / accidental gitweb developer who has to add
+or modify a bit of code with die_error(...) wouldn't know which of
+"magic number" to use, if the case didn't fail into described
+situation.  Now it is enough to example die_error(...) in addition to
+similar code...
+ 
+> I didn't use the HTTP_NOT_FOUND etc. suggestion because I found it too
+> verbose and obtrusive.
 
-The specific problem situation looks like this:
+I can agree with that.
 
-% git fetch git://.../clone-of-some-svn-repo (...)
-% git svn init -s --rewrite-root=3D<url contained in fetched commits> <=
-url \
-      we want to use>
-% git svn rebase
-[Boom]
+> Just a friendly reminder, please remember that discussing fairly
+> trivial changes in-depth might be not a good use of all participants'
+> time [...]
 
-This patch passes all existing git-svn tests; feel free to suggest
-additional test(s) to cover this sort of situation.
+Well, this was what I though was patch revies... :-/
 
- git-svn.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+> Anyways, I hope everyone is happy with this version of the patch.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index a54979d..4c9c59b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2577,8 +2577,8 @@ sub rebuild {
- 	my ($log, $ctx) =3D
- 	    command_output_pipe(qw/rev-list --pretty=3Draw --no-color --rever=
-se/,
- 	                        $self->refname, '--');
--	my $full_url =3D $self->full_url;
--	remove_username($full_url);
-+	my $metadata_url =3D $self->metadata_url;
-+	remove_username($metadata_url);
- 	my $svn_uuid =3D $self->ra_uuid;
- 	my $c;
- 	while (<$log>) {
-@@ -2596,7 +2596,7 @@ sub rebuild {
- 		# if we merged or otherwise started elsewhere, this is
- 		# how we break out of it
- 		if (($uuid ne $svn_uuid) ||
--		    ($full_url && $url && ($url ne $full_url))) {
-+		    ($metadata_url && $url && ($url ne $metadata_url))) {
- 			next;
- 		}
-=20
---=20
-1.5.5.1
+FWIW:
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
