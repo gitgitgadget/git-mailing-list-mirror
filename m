@@ -1,98 +1,101 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-rerere observations and feature suggestions
-Date: Thu, 19 Jun 2008 10:33:56 +0200
-Message-ID: <20080619083356.GN29404@genesis.frugalware.org>
-References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080616190911.GA7047@elte.hu> <20080618105731.GA9242@elte.hu> <m33anao11u.fsf@localhost.localdomain> <20080618223821.GJ29404@genesis.frugalware.org> <20080619072308.GA12727@diana.vm.bytemark.co.uk> <7v7iclx4nw.fsf@gitster.siamese.dyndns.org> <20080619082156.GB12727@diana.vm.bytemark.co.uk>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 19 Jun 2008 10:58:58 +0200
+Message-ID: <200806191058.58074.johan@herland.net>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+ <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fvotiRPmxuu5ONx4"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 10:35:52 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 11:00:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Fc8-0007AU-R3
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 10:35:29 +0200
+	id 1K9G0R-0000dO-Ol
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 11:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751119AbYFSIeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 04:34:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbYFSIeC
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 04:34:02 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:35904 "EHLO virgo.iok.hu"
+	id S1751325AbYFSI7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 04:59:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbYFSI7l
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 04:59:41 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:38776 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751103AbYFSIeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 04:34:00 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 232321B2586;
-	Thu, 19 Jun 2008 10:33:59 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 8FE6A4465E;
-	Thu, 19 Jun 2008 10:11:59 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AC6E21778015; Thu, 19 Jun 2008 10:33:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080619082156.GB12727@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751158AbYFSI7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 04:59:40 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K2P00IEBCYSFH00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 19 Jun 2008 10:59:16 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2P000BOCYA86C0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 19 Jun 2008 10:58:58 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K2P00JRECYATY40@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 19 Jun 2008 10:58:58 +0200 (CEST)
+In-reply-to: <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85460>
+
+On Wednesday 18 June 2008, Junio C Hamano wrote:
+> [New Topics]
+>
+> * jh/clone-packed-refs (Sun Jun 15 16:06:16 2008 +0200) 4 commits
+>  - Teach "git clone" to pack refs
+>  - Prepare testsuite for a "git clone" that packs refs
+>  - Move pack_refs() and friends into libgit
+>  - Incorporate fetched packs in future object traversal
+>
+> Would be helpful cloning from a repository with insanely large number of
+> refs.
+
+The first 3 patches (i.e. the bottom 3 in the above list) might be 
+considered general cleanup patches, and are independent of each other (i.e. 
+you might want to include them on their own merit, independently of patch 
+#4).
+
+The final patch doesn't make any difference for "regular" repos (e.g. 
+git.git with ~200 refs) on Linux (see below). But once the number of refs 
+increase, the difference becomes obvious.
+
+Here are some numbers to give some more context:
+
+All tests done on 64-bit quad-core Linux, cloning locally (hard-linked):
+
+~200 refs (git.git):
+current next:    0.2s
+w/above patches: 0.2s
+
+~1000 refs (test repo):
+current next:    0.16s
+w/above patches: 0.05s
+
+~11000 refs (test repo):
+current next:    1.3s
+w/above patches: 0.3s
+
+~26000 refs (actual repo at $dayjob):
+current next:    3.2s
+w/above patches: 0.8s
 
 
---fvotiRPmxuu5ONx4
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Regards,
 
-On Thu, Jun 19, 2008 at 10:21:56AM +0200, Karl Hasselstr=F6m <kha@treskal.c=
-om> wrote:
-> Catalin and I are tossing ideas around for how to represent the
-> history of an StGit patch stack (using a git commit for each log
-> entry). One complication is that we have to keep references to all
-> unapplied patches so that gc will leave them alone (and so that they
-> will get carried along during a pull, in the future). And the number
-> of unapplied patches is potentially large, so I thought we'd be going
-> to have to make a tree of "merge" commits to connect them all up.
->=20
-> (What we'd really like, of course, is a way to refer to a set of
-> commits such that they are guaranteed to be reachable (in the gc and
-> pull sense), but not considered "parents".)
+...Johan
 
-I had a similar problem in git/vmiklos.git on repo.or.cz, while working
-on builtin-rebase: I squash several patches using rebase -i before
-sending a series, but it's nice to have the old long list of small
-patches in case I would need them later.
-
-What I did is to have a rebase-history branch: each commit in it is an
-octopus merge:
-
-- The first parent is the previous rebase-history ref
-
-- The second is the old HEAD
-
-- The third is the new HEAD
-
-This way I can use git rebase -i without worrying about loosing history,
-even if reflogs are not shared among machines.
-
-(It may or may not be a good idea to do something like this in StGit, I
-just though I share this idea here.)
-
---fvotiRPmxuu5ONx4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhaGfQACgkQe81tAgORUJbmZgCglcyX8Pv2E7MJJa878wA8WTOY
-ZUcAniTCbVYNHI6hJW5Px4yR+F1L5sbe
-=3xhc
------END PGP SIGNATURE-----
-
---fvotiRPmxuu5ONx4--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
