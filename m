@@ -1,105 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-pack: don't consider branch lagging behind as
-	errors.
-Date: Thu, 19 Jun 2008 11:11:10 -0400
-Message-ID: <20080619151110.GA31654@sigill.intra.peff.net>
-References: <1213872715-11182-1-git-send-email-madcoder@debian.org> <20080619133747.GA31209@sigill.intra.peff.net> <20080619135159.GA19560@artemis.madism.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: Best practice question
+Date: Thu, 19 Jun 2008 17:40:10 +0200
+Message-ID: <8aa486160806190840m697ac1en3214626a56014be1@mail.gmail.com>
+References: <485A6E03.6090509@et.gatech.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:12:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: stuart.freeman@et.gatech.edu
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:41:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Lo4-0007cn-Dl
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:12:12 +0200
+	id 1K9MG5-0003bu-7X
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbYFSPLN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 11:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbYFSPLN
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:11:13 -0400
-Received: from peff.net ([208.65.91.99]:1921 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750864AbYFSPLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 11:11:12 -0400
-Received: (qmail 18920 invoked by uid 111); 19 Jun 2008 15:11:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 19 Jun 2008 11:11:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jun 2008 11:11:10 -0400
+	id S1752085AbYFSPkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 11:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbYFSPkM
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:40:12 -0400
+Received: from rn-out-0910.google.com ([64.233.170.188]:36358 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751372AbYFSPkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 11:40:11 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so39793rnd.17
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=gXNoyiD7gSIqpg0fioia8Bw4Q9DonY9rXMp8ZXryd/w=;
+        b=NN0sAGn7HMn5sHpatCKnopiatv3s5ZTUFMNguIBu9BfNImnzc63aW8BpgsaRgir9iU
+         oKBXLz6SM7mOT8ETfPj53Kp+D0c3lZ2M3F9Ml0BX7kWmIj8H/m2xMzYRM5gknQdhTMZ+
+         /WbbOV0Y+wLnD8CPX8so28rMV6mPYVd7Ce4yc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=W4iOCviMt5YZtgBqgvf3tFwpROhz6nHKVF8bpZZsAHhon+zdvWkx6l+ZxWzCwqo4AQ
+         3jw7yJZM196byFuE5k21FpYzHb+k7vH2P/xfBbRDAaasMNBRiZvbh9RjO+6/K2XHz1S7
+         ZDh9y7A+O75mr1GRW0hpQxy2XoLwruajw7eVI=
+Received: by 10.151.157.1 with SMTP id j1mr3321258ybo.173.1213890010102;
+        Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
+Received: by 10.150.152.19 with HTTP; Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
+In-Reply-To: <485A6E03.6090509@et.gatech.edu>
 Content-Disposition: inline
-In-Reply-To: <20080619135159.GA19560@artemis.madism.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85483>
 
-On Thu, Jun 19, 2008 at 03:52:00PM +0200, Pierre Habouzit wrote:
+On Thu, Jun 19, 2008 at 16:32, D. Stuart Freeman
+<stuart.freeman@et.gatech.edu> wrote:
+> My project has an "about" page that lists the version.  I understand why
+> git doesn't do keyword expansion, but I'm wondering if there's a
+> recommended best practice for keeping that up to date.
 
-> >   http://thread.gmane.org/gmane.comp.version-control.git/73038/focu=
-s=3D73186
-> [...]
-> >   - should stale branches be shown without -v?
->=20
->   I believe so, it's valuable information. It's as valuable as what y=
-ou
-> get after a git fetch nowadays (like branches have diverged n and m
-> commits each or similar) But oh well=E2=80=A6 I don't care that much.
+You can look at how git does it:
+It generates a GIT-VERSION-FILE with:
 
-If you read the beginning of that thread, the original impetus was
-people cloning repos that had dozens of branches, then doing a push.
-If they hadn't recently done a fetch, they got dozens of lines of
-"rejected".
+http://git.kernel.org/?p=git/git.git;a=blob;f=GIT-VERSION-GEN;hb=HEAD
 
-> >   - calling ref_newer here is inefficient, since we have already ca=
-lled
-> >     it in the other direction. We should probably do the traversal =
-once
-> >     in such a way as to find out which ref is newer (or if it is
-> >     indeterminate).
->=20
->   Well, true, though I don't expect people to have tons of local
-> branches that match a refspec _and_ lag behind. I suspect this is a v=
-ery
-> minor performance loss.
+and reads it in the Makefile. Or you could generate a version.h file.
 
-Yeah, maybe it is not worth worrying about; I haven't actually measured
-any performance issue. I'll try to look and see how painful it is to
-combine the traversals.
-
-> >   - there is a possible danger with "git push -f", in that you forc=
-e
-> >     both rejected branches as well as stale branches. Junio and I
->   Well afaict this is a separate issue, as we're (with such a patch)
-> only changing what gets printed on the console, not the internal
-> behavior. So solving this second issue should not really be a
-> precondition to the inclusion of such a patch.
-
-It is a separate issue, but it is exacerbated by hiding stale refs.
-Imagine:
-
-$ git push
-To /path/to/repo
-   ! [rejected]        master -> master (non-fast forward)
-
-$ git push -f
-To /path/to/repo
-   + 0abfa88...c1ed93b master -> master (forced update)
-   + 0329485...3498576 stale_branch -> stale_branch (forced update)
-
-I think that is a nasty surprise to spring on an unsuspecting user.
-Another solution might be "-f" not pushing rewound branches, but then w=
-e
-need a way to specify "no, really, push this rewound branch". Perhaps
-"-f -f"?
-
->   Please please please do :)
->   The exit 1 of git-push is really annoying me these days.
-
-OK, I will try to take a look in the next few days.
-
--Peff
+Santi
