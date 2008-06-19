@@ -1,147 +1,268 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH 1/2 v3] t/test-lib.sh: add test_external and test_external_without_stderr
-Date: Thu, 19 Jun 2008 20:18:03 +0200
-Message-ID: <d5ac06cabb7eb235ca82525fad2e96cdab205469.1213899000.git.LeWiemann@gmail.com>
-References: <48596EE7.90202@free.fr>
-Cc: Lea Wiemann <LeWiemann@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 20:19:41 2008
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: difficulties with http proxy
+Date: Thu, 19 Jun 2008 14:23:52 -0400
+Message-ID: <20080619182352.GF18557@fieldses.org>
+References: <1033a22d0806180206g2cf3315bh1e533902fc834ecf@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Yesberg <john.yesberg@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 20:25:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9OjK-00082X-DO
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 20:19:30 +0200
+	id 1K9Oos-0001x8-9Q
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 20:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759083AbYFSSSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 14:18:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758709AbYFSSSG
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 14:18:06 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:42715 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757461AbYFSSSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 14:18:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so451938fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 11:18:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:from;
-        bh=LIBPoAj01VEUko/Zmv9RaOLlPtzy9Y4KZtboSOcjQNU=;
-        b=ILDTfiXrDuxRZI7nIaaC0VAQQuGvcNM9D+Uqiy3/gcpBCGwKj7XiGpMUMLIp4GGSMx
-         JZ128K8/TzcMWqS7iSFmWSKYlIS25qUw8OiLsoMxPZqoQ9FKklnkdrttCf1R7ADKLjk2
-         YSWLzYDk2+X8WLeGjuMJpmmoJvSeybRVTeo2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=Oi5snXDBNiMqztS95jUs7luhgpDNcuBa+O96WyOsGpK2OjP8z7DQOtHpM6f8KGNxpX
-         zpG7RyrXINxwY3Dj1RlbKOwuVNo00tEAqdLxAbA9uMU+DWk6jJICl5uA20wKZAogYd7C
-         YKiNP66P7ZGazFs+s7Xj2QJO0XyzbwRP8HY1c=
-Received: by 10.86.58.3 with SMTP id g3mr2560939fga.21.1213899481278;
-        Thu, 19 Jun 2008 11:18:01 -0700 (PDT)
-Received: from fly ( [91.33.204.94])
-        by mx.google.com with ESMTPS id 12sm1631544fgg.0.2008.06.19.11.17.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Jun 2008 11:17:35 -0700 (PDT)
-Received: from lea by fly with local (Exim 4.69)
-	(envelope-from <lea@fly>)
-	id 1K9Ohw-0008BS-Km; Thu, 19 Jun 2008 20:18:04 +0200
-X-Mailer: git-send-email 1.5.6.149.g06c04.dirty
-In-Reply-To: <48596EE7.90202@free.fr>
+	id S1755555AbYFSSXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 14:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752516AbYFSSXz
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 14:23:55 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:36046 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751973AbYFSSXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 14:23:54 -0400
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1K9OnY-0006Eu-Aa; Thu, 19 Jun 2008 14:23:52 -0400
+Content-Disposition: inline
+In-Reply-To: <1033a22d0806180206g2cf3315bh1e533902fc834ecf@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85505>
 
-This is for running external test scripts in other programming
-languages that provide continuous output about their tests.  Using
-test_expect_success (like "test_expect_success 'description' 'perl
-test-script.pl'") doesn't suffice here because test_expect_success
-eats stdout in non-verbose mode, which is not fixable without major
-file descriptor trickery.
+On Wed, Jun 18, 2008 at 10:06:49AM +0100, John Yesberg wrote:
+> Hi Bruce,
+> 
+> Short version:
+> 0. Using git on WinXP from
+> http://msysgit.googlecode.com/files/Git-1.5.5-preview20080413.exe
+> 1. When a proxy is required, the error message isn't very helpful:
+>      Cannot get remote repository information.
+>      Perhaps git-update-server-info needs to be run there?
+> 2. I can't get git config to set the proxy
+> 3. When I use a shell variable, I can set the proxy, but I still have
+> trouble cloning git over http.
 
-Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
----
-Olivier Marin wrote:
-> Just a typo here: s/eror/error/
+Yeah, looks like git clone could be more helpful, but unfortunately I'm
+probably not the right person to help:
 
-Thanks for spotting this, and also the missing ampersand in the other
-patch!
+> John.
+> 
+> Long version:
+> I'm back behind my proxy.
+> I've tried
+> $ git config --global http.proxy http://proxyname:80
+> and
+> $ git config --global http.proxy proxyname:80
+> but neither seems to work:
+> 
+> $ git clone http://www.kernel.org/pub/scm/git/git.git git2
+> Initialized empty Git repository in c:/[path]/git2/.git/
+> Cannot get remote repository information.
+> Perhaps git-update-server-info needs to be run there?
 
-(This typo is the only change since v2.)
+So would it be possible for clone to differentiate between the case
+where it can't find info/refs (or whatever it's looking for there), and
+the case where it just can't do any http requests at all?  It's less
+helpful if the "git-update-server-info needs to be run" message is the
+error users always get.
 
- t/test-lib.sh |   58 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 58 insertions(+), 0 deletions(-)
+> 
+> When I try
+> $ export http_proxy=http://proxyname:80
+> then the following at least starts to work:
+> $ git clone http://www.kernel.org/pub/scm/git/git.git git
+> 
+> $ git clone http://www.kernel.org/pub/scm/git/git.git git2
+> Initialized empty Git repository in c:/[path]/git2/.git/
+> got 7562b87f6fcfb31a5fa52d2edfe866b5f1ee08d5
+> walk 7562b87f6fcfb31a5fa52d2edfe866b5f1ee08d5
+> got d47c7c24b429eac4bacc107c0b5e2987db40f04a
+> got 71910874a081be5196ae122c8d0b6024ec3afa5e
+> walk d47c7c24b429eac4bacc107c0b5e2987db40f04a
+> Getting alternates list for http://www.kernel.org/pub/scm/git/git.git
+> Getting pack list for http://www.kernel.org/pub/scm/git/git.git
+> Getting index for pack f7be43530c5b167d6eff8e1d4ee72d7c98aa6710
+> Getting index for pack 38b949b3b9446f6ef31fe3bc5a70b09cf8cc5c82
+> Getting index for pack 535070eccfdc5b080d4b38e682f66b357f3cb4bd
+> got 89fa6d03bc038d6210e94d7fe9fbbffdbc84d883
+> Getting index for pack fb9e204382bfea5b1821f19b7a9e82d0e5be8498
+> got 02823413987d5a10364d936327e3a1cfb38cbac2
+> 
+> [snip]
+> 
+> Getting pack 17d608d0bea63b7c5b68bccd1515e9c5ac0961c5
+>  which contains 859d67990a62049c2f328dfd676cf21da8ff9a27
+> got 1afd0c69ed823f419f52951c3c02dcc50f1a44d1
+> got c824d887420754f98db0553a006865d31d01cf1d
+> got 0b8b0ebba758871ac9c79e729664b5057128e9ac
+> got 18330cdcd2cda94c9c16c02d70229fa16d4aeb33
+> got d8e0a5b843d8c8d02df2150a05f4d9c5928596f4
+> got e051903352f06b0ac9ba1594cd9451baf215bdc5
+> error: Unable to find a2e23c928a11bf526a3c63b34c9a00a94aac6b49 under
+> http://www.kernel.org/pub/scm/git/git.git
+> Cannot obtain needed blob a2e23c928a11bf526a3c63b34c9a00a94aac6b49
+> while processing commit 69cd7c5f72da62a221a740c4d454b29da15186f3.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3ac8755..dc2736e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -304,6 +304,64 @@ test_expect_code () {
- 	echo >&3 ""
- }
- 
-+# test_external runs external test scripts that provide continuous
-+# test output about their progress, and succeeds/fails on
-+# zero/non-zero exit code.  It outputs the test output on stdout even
-+# in non-verbose mode, and announces the external script with "* run
-+# <n>: ..." before running it.  When providing relative paths, keep in
-+# mind that all scripts run in "trash directory".
-+# Usage: test_external description command arguments...
-+# Example: test_external 'Perl API' perl ../path/to/test.pl
-+test_external () {
-+	test "$#" -eq 3 ||
-+	error >&5 "bug in the test script: not 3 parameters to test_external"
-+	descr="$1"
-+	shift
-+	if ! test_skip "$descr" "$@"
-+	then
-+		# Announce the script to reduce confusion about the
-+		# test output that follows.
-+		say_color "" " run $(expr "$test_count" + 1): $descr ($*)"
-+		# Run command; redirect its stderr to &4 as in
-+		# test_run_, but keep its stdout on our stdout even in
-+		# non-verbose mode.
-+		"$@" 2>&4
-+		if [ "$?" = 0 ]
-+		then
-+			test_ok_ "$descr"
-+		else
-+			test_failure_ "$descr" "$@"
-+		fi
-+	fi
-+}
-+
-+# Like test_external, but in addition tests that the command generated
-+# no output on stderr.
-+test_external_without_stderr () {
-+	# The temporary file has no (and must have no) security
-+	# implications.
-+	tmp="$TMPDIR"; if [ -z "$tmp" ]; then tmp=/tmp; fi
-+	stderr="$tmp/git-external-stderr.$$.tmp"
-+	test_external "$@" 4> "$stderr"
-+	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
-+	descr="no stderr: $1"
-+	shift
-+	say >&3 "expecting no stderr from previous command"
-+	if [ ! -s "$stderr" ]; then
-+		rm "$stderr"
-+		test_ok_ "$descr"
-+	else
-+		if [ "$verbose" = t ]; then
-+			output=`echo; echo Stderr is:; cat "$stderr"`
-+		else
-+			output=
-+		fi
-+		# rm first in case test_failure exits.
-+		rm "$stderr"
-+		test_failure_ "$descr" "$@" "$output"
-+	fi
-+}
-+
- # This is not among top-level (test_expect_success | test_expect_failure)
- # but is a prefix that can be used in the test script, like:
- #
--- 
-1.5.6.149.g06c04.dirty
+I assume that could just be explained by a race where the repository got
+updated at the same time you were cloning?  But I wonder why this cleanup
+is failing.
+
+--b.
+
+> rm: cannot remove directory `c:/[path]/git2/.git/clone-tmp': Directory not
+> empty
+> rm: cannot remove directory `c:/[path]/git2/.git': Directory not empty
+> rm: cannot remove directory `c:/[path]/git2': Directory not empty
+> 
+> If I try to clone it again, I get a similar, but not identical failure:
+> ...
+> Getting pack 1dbb69127c8efb2534f925b7cf031b0a2428e8b4
+>  which contains cb4b83de1eb48d163480185da54a828c5bb20941
+> got f1875d3b3de72c1834867ac4d6afe5243f54513e
+> got 347af19febc25fd47db2d11a634c2b38dbfe2c06
+> got 1f405709e7341c27e20c0159fb7c17efbf85975c
+> got 1df4bbf7263a22a2f8c94e0d8bd1d5fbcbab2152
+> got 345943a26466dab73034b41698c54ca317cc4d75
+> got b26b4e34bdfedbe7111dea48b4e5176d10555a76
+> got d6c44a5ed1cd8768a30f9e0e2339bbc49e8fa57e
+> error: Unable to find d69b20549bf956a5c7c3f64f5315a17ec71af038 under
+> http://www.kernel.org/pub/scm/git/git.git
+> Cannot obtain needed blob d69b20549bf956a5c7c3f64f5315a17ec71af038
+> while processing commit d47c7c24b429eac4bacc107c0b5e2987db40f04a.
+> rm: cannot remove directory `c:/[path]/git2/.git/clone-tmp': Directory not
+> empty
+> rm: cannot remove directory `c:/[path]/git2/.git': Directory not empty
+> rm: cannot remove directory `c:/[path]/git2': Directory not empty
+> 
+> 
+> On Sat, Jun 14, 2008 at 6:29 PM, J. Bruce Fields <bfields@fieldses.org>
+> wrote:
+> 
+> > On Sat, Jun 14, 2008 at 02:04:25PM +0100, John Yesberg wrote:
+> > > Bruce,
+> > >
+> > > Sorry, missed your reply in the flood (didn't realise how busy the list
+> > > would be). I'll check for more details next time I'm in the office - may
+> > be
+> > > Wednesday.
+> > > Appreciate your concerns; I didn't want newbies (who might be at work) to
+> > be
+> > > turned off too early in their git experience. I'm sure we can come up
+> > with
+> > > something suitable.
+> >
+> > Sure.
+> >
+> > > I'll try to find out more about why the git config http.proxy isn't
+> > working
+> > > too.
+> >
+> > OK, thanks.  Sorry that I don't have more constructive suggestions, but
+> > I'm a bit swamped right now.... So I'll expect to hear from you next
+> > week and leave thinking about this till then.
+> >
+> > --b.
+> >
+> > >
+> > > John.
+> > >
+> > > On Wed, Jun 11, 2008 at 8:58 PM, J. Bruce Fields <bfields@fieldses.org>
+> > > wrote:
+> > >
+> > > > On Wed, Jun 11, 2008 at 08:48:47PM +0100, John Yesberg wrote:
+> > > > > ---
+> > > > >  Documentation/user-manual.txt |   23 +++++++++++++++++++++++
+> > > > >  1 files changed, 23 insertions(+), 0 deletions(-)
+> > > >
+> > > > Thanks!
+> > > >
+> > > > >
+> > > > > diff --git a/Documentation/user-manual.txt
+> > > > b/Documentation/user-manual.txt
+> > > > > index bfde507..02b1be0 100644
+> > > > > --- a/Documentation/user-manual.txt
+> > > > > +++ b/Documentation/user-manual.txt
+> > > > > @@ -56,6 +56,16 @@ $ git clone
+> > > > > git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> > > > >  The initial clone may be time-consuming for a large project, but you
+> > > > >  will only need to clone once.
+> > > > >
+> > > > > +If there is a proxy between you and the repository you want to
+> > clone,
+> > > > you
+> > > > > +may not be able to use the git protocol. But you can use the http
+> > > > protocol, by
+> > > > > +configuring the proxy. Note that the address to access the
+> > repository
+> > > > via http
+> > > > > +may be different from the git address:
+> > > > > +
+> > > > > +------------------------------------------------
+> > > > > +$ export http_proxy=http://theproxy.example.com:8080
+> > > > > +$ git clone http://www.kernel.org/pub/scm/git/git.git
+> > > > > +------------------------------------------------
+> > > > > +
+> > > >
+> > > > Especially this early in the manual, I really want to keep the text
+> > > > short--we need to get to the basics as quickly as possible--even if
+> > that
+> > > > means leaving out some corner cases.
+> > > >
+> > > > What actually happens when you run across this case as a user?  Are
+> > > > there any improvements to the error reporting from "clone" that would
+> > > > lead the user to the right solution without needing to deal with this
+> > > > case here?
+> > > >
+> > > > >  The clone command creates a new directory named after the project
+> > ("git"
+> > > > >  or "linux-2.6" in the examples above).  After you cd into this
+> > > > >  directory, you will see that it contains a copy of the project
+> > files,
+> > > > > @@ -129,6 +139,19 @@ $ git branch
+> > > > >  * new
+> > > > >  ------------------------------------------------
+> > > > >
+> > > > > +It is possible, particularly on Windows platforms, that as you
+> > checkout
+> > > > > +the original version, it will in fact be modified, by the autocrlf
+> > > > process.
+> > > > > +(Windows and Unix store newlines as CRLF and LF respectively, and
+> > > > autocrlf
+> > > > > +tries to adapt intelligently.) If the checked out version is
+> > modified,
+> > > > then
+> > > > > +trying to switch to a new branch will not work, because then the
+> > > > uncommitted
+> > > > > +changes would be lost. So you may need to add the +-f+ flag to
+> > _force_
+> > > > these
+> > > > > +changes to be thrown away. Another option might be to edit
+> > > > +~/.gitconfig+ or
+> > > > > +use the following command to disable the autocrlf function.
+> > > > > +
+> > > > > +------------------------------------------------
+> > > > > ++git config --global core.autocrlf false
+> > > > > +------------------------------------------------
+> > > > > +
+> > > >
+> > > > Again, I'd rather not deal with this case in the main text; if we
+> > > > absolutely need to, a quick reference to the appropriate documentation
+> > > > ("note: if you see an error like XXX, see the XXX man page...") might
+> > be
+> > > > the thing to do.
+> > > >
+> > > > --b.
+> > > >
+> > > > >  If you decide that you'd rather see version 2.6.17, you can modify
+> > > > >  the current branch to point at v2.6.17 instead, with
+> > > > >
+> > > > > --
+> > > > > 1.5.5.1015.g9d258
+> > > >
+> >
