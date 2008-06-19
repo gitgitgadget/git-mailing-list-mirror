@@ -1,71 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Simplify git-rev-parse's example
-Date: Thu, 19 Jun 2008 16:28:48 -0700
-Message-ID: <7v63s5rolr.fsf@gitster.siamese.dyndns.org>
-References: <1213873976-4192-1-git-send-email-pdebie@ai.rug.nl>
- <485AAF82.3030209@freescale.com> <7v8wx1te20.fsf@gitster.siamese.dyndns.org>
- <D6812FD2-F61D-4813-95B4-4FCCDE35C418@ai.rug.nl>
+From: Mircea Bardac <dev@mircea.bardac.net>
+Subject: git svn --use-log-author misbehavior?
+Date: Fri, 20 Jun 2008 00:51:39 +0100
+Message-ID: <485AF10B.7060202@mircea.bardac.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@freescale.com>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Fri Jun 20 01:30:06 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 20 01:52:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9TZp-0007qe-Ou
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 01:30:02 +0200
+	id 1K9Tvl-0005I9-Ke
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 01:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbYFSX3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 19:29:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbYFSX3G
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 19:29:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754128AbYFSX3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 19:29:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EB3831B5E1;
-	Thu, 19 Jun 2008 19:28:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2EF851B5E0; Thu, 19 Jun 2008 19:28:51 -0400 (EDT)
-In-Reply-To: <D6812FD2-F61D-4813-95B4-4FCCDE35C418@ai.rug.nl> (Pieter de
- Bie's message of "Fri, 20 Jun 2008 01:02:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7CE5B82A-3E57-11DD-B5BC-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754327AbYFSXvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 19:51:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754320AbYFSXvq
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 19:51:46 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:21211 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754223AbYFSXvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 19:51:46 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so1066246ugf.16
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 16:51:44 -0700 (PDT)
+Received: by 10.210.26.10 with SMTP id 10mr2465375ebz.15.1213919503545;
+        Thu, 19 Jun 2008 16:51:43 -0700 (PDT)
+Received: from macmac.local ( [89.155.32.52])
+        by mx.google.com with ESMTPS id i6sm1842868gve.4.2008.06.19.16.51.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 16:51:42 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85577>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+Hi,
 
-> On 19 jun 2008, at 21:33, Junio C Hamano wrote:
->
->>> How is this a vast improvement?
->>>
->>> I could see that inverting it top-to-bottom would
->>> be more consistent with gitk or show-branch output.
->>> Your example doesn't have a 3-parent commit, though,
->>> and it isn't _that_ much simpler otherwise...
->>>
->>> So this is really better _how_?
->>>
->>> Oh, right, of course.  It removes my name.  Got it. :-)
->>
->> I agree that the patch should have just flipped the tree upside down
->> without changing the shape of the history the section talks about.
->
-> I tried to make it less of a monster while still keeping examples of
-> all possibilities, which is why I removed two of the nodes.
+According to the documentation, this parameter (--use-log-author) should 
+  use the author from the From/Signed-off-by line. Unfortunately, I 
+found this to be working only on the first git svn clone. Later rebasing 
+made the commits use the old username@uuid format.
 
-I do not care _that_ deeply myself, but judging from how often the word
-Octopus comes up on this list (even though I do not think we would want to
-especially encourage the practice), I think it is a disservice to drop an
-octopus from the section that teaches how to name a commit in an ancestry
-graph.
+I am assuming the option is not being preserved in the Git repository 
+metadata and it is only used on cloning/init. Is this the intended 
+behavior?
+
+Many thanks.
+
+-- 
+Mircea
+http://mircea.bardac.net
