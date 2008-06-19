@@ -1,70 +1,50 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: cannot use stable 2.6.25.y tree with HTTP
-Date: Wed, 18 Jun 2008 17:07:22 -0700
-Message-ID: <20080619000722.GA14270@kroah.com>
-References: <200806182037.m5IKboGC012108@pogo.cesa.opbu.xerox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] Split up default "core" config parsing into helper
+	routine
+Date: Wed, 18 Jun 2008 20:08:42 -0400
+Message-ID: <20080619000842.GA25117@sigill.intra.peff.net>
+References: <alpine.LFD.1.10.0806181524490.2907@woody.linux-foundation.org> <alpine.LFD.1.10.0806181529570.2907@woody.linux-foundation.org> <20080618224919.GA22599@sigill.intra.peff.net> <alpine.LFD.1.10.0806181552590.2907@woody.linux-foundation.org> <20080618231316.GB23053@sigill.intra.peff.net> <alpine.LFD.1.10.0806181632080.2907@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Andrew Klossner <andrew@cesa.opbu.xerox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 02:09:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Denis Bueno <dbueno@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jun 19 02:09:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K97iU-0007lK-SZ
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 02:09:31 +0200
+	id 1K97ig-0007ox-D0
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 02:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755560AbYFSAIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2008 20:08:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755553AbYFSAIf
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 20:08:35 -0400
-Received: from casper.infradead.org ([85.118.1.10]:54801 "EHLO
-	casper.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754835AbYFSAIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2008 20:08:35 -0400
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
-	by casper.infradead.org with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
-	id 1K97hP-0006ok-S5; Thu, 19 Jun 2008 00:08:24 +0000
+	id S1755591AbYFSAIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2008 20:08:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755581AbYFSAIp
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jun 2008 20:08:45 -0400
+Received: from peff.net ([208.65.91.99]:3523 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755553AbYFSAIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2008 20:08:44 -0400
+Received: (qmail 14183 invoked by uid 111); 19 Jun 2008 00:08:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 18 Jun 2008 20:08:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2008 20:08:42 -0400
 Content-Disposition: inline
-In-Reply-To: <200806182037.m5IKboGC012108@pogo.cesa.opbu.xerox.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <alpine.LFD.1.10.0806181632080.2907@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85430>
 
-On Wed, Jun 18, 2008 at 01:37:50PM -0700, Andrew Klossner wrote:
-> Hi Greg,
-> 
-> At the risk of being a pest, I'm following up on my note of last week
-> about how the stable-2.6.25.y tree is frozen at 2.6.25.4 when accessed
-> via HTTP.  That's the only protocol I can use, and so I cannot pull
-> the newer versions.  Is there any hope of fixing this?
-> 
-> % git pull -v
-> >From http://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y
->  = [up to date]      master     -> origin/master
-> Already up-to-date.
-> 
-> % ls .git/refs/tags/v2.6.25.*
-> .git/refs/tags/v2.6.25.1  .git/refs/tags/v2.6.25.3
-> .git/refs/tags/v2.6.25.2  .git/refs/tags/v2.6.25.4
+On Wed, Jun 18, 2008 at 04:34:49PM -0700, Linus Torvalds wrote:
 
-Argh, this is getting annoying.
+> Forget about "branch.mybranch.url". It has no meaning. It's not what you 
+> are supposed to ever use as a human (it's purely for scripting). It's not 
+> worth even thinking about.
 
-git developers, do I need to do something to get git-update-server-info
-to run on kernel.org every time I do a push so that I don't have to do
-it by hand (and then forget for new releases, like I did above?)
+Have you read "man git-config" lately?
 
-I thought I remember a script somewhere telling me what to put into a
-trigger in the git documentation a long time ago.
-
-Oh, wait, is it just:
-	chmod +x my-git.git/hooks/post-update
-
-as the core-tutorial.txt file shows?  Is that all that is needed?
-
-thanks,
-
-greg k-h
+-Peff
