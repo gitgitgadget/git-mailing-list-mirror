@@ -1,70 +1,64 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Best practice question
-Date: Thu, 19 Jun 2008 17:40:10 +0200
-Message-ID: <8aa486160806190840m697ac1en3214626a56014be1@mail.gmail.com>
-References: <485A6E03.6090509@et.gatech.edu>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] Add option to git-branch to set up automatic rebasing
+Date: Thu, 19 Jun 2008 17:43:50 +0200
+Message-ID: <20080619154350.GA21625@atjola.homenet>
+References: <1213836802-3163-1-git-send-email-pdebie@ai.rug.nl> <alpine.DEB.1.00.0806191459150.6439@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: stuart.freeman@et.gatech.edu
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:41:21 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Git Mailinglist <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:46:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9MG5-0003bu-7X
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:41:09 +0200
+	id 1K9MKg-0005hq-Ld
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbYFSPkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 11:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbYFSPkM
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:40:12 -0400
-Received: from rn-out-0910.google.com ([64.233.170.188]:36358 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372AbYFSPkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 11:40:11 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so39793rnd.17
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=gXNoyiD7gSIqpg0fioia8Bw4Q9DonY9rXMp8ZXryd/w=;
-        b=NN0sAGn7HMn5sHpatCKnopiatv3s5ZTUFMNguIBu9BfNImnzc63aW8BpgsaRgir9iU
-         oKBXLz6SM7mOT8ETfPj53Kp+D0c3lZ2M3F9Ml0BX7kWmIj8H/m2xMzYRM5gknQdhTMZ+
-         /WbbOV0Y+wLnD8CPX8so28rMV6mPYVd7Ce4yc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=W4iOCviMt5YZtgBqgvf3tFwpROhz6nHKVF8bpZZsAHhon+zdvWkx6l+ZxWzCwqo4AQ
-         3jw7yJZM196byFuE5k21FpYzHb+k7vH2P/xfBbRDAaasMNBRiZvbh9RjO+6/K2XHz1S7
-         ZDh9y7A+O75mr1GRW0hpQxy2XoLwruajw7eVI=
-Received: by 10.151.157.1 with SMTP id j1mr3321258ybo.173.1213890010102;
-        Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
-Received: by 10.150.152.19 with HTTP; Thu, 19 Jun 2008 08:40:10 -0700 (PDT)
-In-Reply-To: <485A6E03.6090509@et.gatech.edu>
+	id S1760559AbYFSPoA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 11:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760554AbYFSPn6
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:43:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34654 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760487AbYFSPn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 11:43:57 -0400
+Received: (qmail invoked by alias); 19 Jun 2008 15:43:53 -0000
+Received: from i577BB2CE.versanet.de (EHLO atjola.local) [87.123.178.206]
+  by mail.gmx.net (mp003) with SMTP; 19 Jun 2008 17:43:53 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19kHKFTrJxkpAfqs7UaJ5tCMZvQ1mWnGUOHZpKRsp
+	P0cMIlWDsuluSK
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806191459150.6439@racer>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85484>
 
-On Thu, Jun 19, 2008 at 16:32, D. Stuart Freeman
-<stuart.freeman@et.gatech.edu> wrote:
-> My project has an "about" page that lists the version.  I understand why
-> git doesn't do keyword expansion, but I'm wondering if there's a
-> recommended best practice for keeping that up to date.
+On 2008.06.19 15:00:19 +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 19 Jun 2008, Pieter de Bie wrote:
+>=20
+> > This functionality was actually introduced in
+> >  0a02186f924aee1bd69f18ed01f645aa332ce0d1, but can only be activate=
+d by the
+> > configuration flag. Now we can also setup auto rebasing using the -=
+-rebase
+> > flag in git-branch or git-checkout, similar to how --track works.
+>=20
+> How about "--rebasing"?  I would scratch my head a bit how a new bran=
+ch=20
+> and a rebase would go together.
 
-You can look at how git does it:
-It generates a GIT-VERSION-FILE with:
+Hm, --rebasing sounds weird to me as well. Maybe --track=3Dmerge and
+--track=3Drebase, with --track being equal to --track=3Dmerge?
 
-http://git.kernel.org/?p=git/git.git;a=blob;f=GIT-VERSION-GEN;hb=HEAD
-
-and reads it in the Makefile. Or you could generate a version.h file.
-
-Santi
+Bj=F6rn
