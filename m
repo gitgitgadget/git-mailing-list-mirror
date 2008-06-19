@@ -1,213 +1,101 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: [PATCH] git-push: add a --delete flag to allow branch deletion
-Date: Thu, 19 Jun 2008 16:13:07 +0200
-Message-ID: <1213884787-24692-1-git-send-email-pdebie@ai.rug.nl>
-Cc: Pieter de Bie <pdebie@ai.rug.nl>
-To: Git Mailinglist <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 16:14:22 2008
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for
+	further processing
+Date: Thu, 19 Jun 2008 09:25:27 -0500
+Message-ID: <20080619142527.GA8429@mediacenter>
+References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com> <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com> <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org> <20080618033010.GA19657@sigill.intra.peff.net> <7vwskn1g2p.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806181709300.6439@racer> <7v8wx2zibp.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	madcoder@debian.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 16:27:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Ktx-0007Pp-BV
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 16:14:13 +0200
+	id 1K9L6N-0004Nw-9P
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 16:27:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755010AbYFSONL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 10:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754611AbYFSONL
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 10:13:11 -0400
-Received: from smtp-3.orange.nl ([193.252.22.243]:36239 "EHLO smtp-3.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754672AbYFSONJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 10:13:09 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6204.online.nl (SMTP Server) with ESMTP id 293261C00095;
-	Thu, 19 Jun 2008 16:13:08 +0200 (CEST)
-Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6204.online.nl (SMTP Server) with ESMTP id 90E891C00091;
-	Thu, 19 Jun 2008 16:13:07 +0200 (CEST)
-X-ME-UUID: 20080619141307593.90E891C00091@mwinf6204.online.nl
-X-Mailer: git-send-email 1.5.6.rc1.153.gc1d96
+	id S1751702AbYFSO0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 10:26:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbYFSO0G
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 10:26:06 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:10796 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591AbYFSO0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 10:26:04 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so5183358rvb.1
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 07:26:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=G0mRpg833Or+XpE0hfNDKYeON11g4+7WHX9Bj+lSEZ4=;
+        b=rp1iqMWSxh2WvprROMaoSw/RS3pCrBJTe3Z+6oXyQh9VR8dyq0Ef1ED4aM5sdy5hCV
+         1XyjzlBmzIoJCiBmj6VhbfAyHDeW+I7xAtSOTZqjewejg/x5PcGlFcsF3EFaKVO3LOXu
+         ZawArtgeiy5vmrWkKMRe0coeQHSuHIgywTrVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iSDfK3npQ/l5af9SXk1S9jBjK0Rh4yutUyLyM0DJAXPGAi8I6YSdoiPG0ZeR6hnPDq
+         Bpfse9BEA4lWjhNd9CyHEFJ2Wl07sOYt8qmv0ZBXVJ7bkDeWfbymB7CSLL6NL6MdD4Uz
+         Fr30Xc0E9H9foEv/sCvt/u09bxW6asDj3NbVA=
+Received: by 10.140.200.16 with SMTP id x16mr6523148rvf.120.1213885560565;
+        Thu, 19 Jun 2008 07:26:00 -0700 (PDT)
+Received: from @ ( [70.114.134.204])
+        by mx.google.com with ESMTPS id 7sm768867ywo.7.2008.06.19.07.25.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 07:25:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8wx2zibp.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85479>
 
-While this is already possible with the :<dst> refspec syntax,
-a flag specifically for this action is more userfriendly.
+On Wed, Jun 18, 2008 at 11:52:42AM -0700, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Tue, 17 Jun 2008, Junio C Hamano wrote:
+> >
+> >> Jeff King <peff@peff.net> writes:
+> >> 
+> >> > I think the only right way to accomplish this is to convert the revision
+> >> > and diff parameters into a parseopt-understandable format.
+> >> 
+> >> Not necessarily.  You could structure individual option parsers like how 
+> >> diff option parsers are done.  You iterate over argv[], feed diff option 
+> >> parser the current index into argv[] and ask if it is an option diff 
+> >> understands, have diff eat the option (and possibly its parameter) to 
+> >> advance the index, or allow diff option to say "I do not understand 
+> >> this", and then handle it yourself or hand it to other parsers.
+> >
+> > AFAIR Pierre tried a few ways, and settled with a macro to introduce the 
+> > diff options into a caller's options.
+> >
+> > IOW it would look something like this:
+> >
+> > static struct option builtin_what_options[] = {
+> > 	[... options specific to this command ...]
+> > 	DIFF__OPT(&diff_options)
+> > };
+> 
+> I think that is the more painful approach Jeff mentioned, and my comment
+> was to show that it is not the only way.
+> 
 
-Signed-off-by: Pieter de Bie <pdebie@ai.rug.nl>
----
+It seems to me that you could implement Jeff's
+PARSE_OPT_STOP_AT_UNKNOWN, and then if multiple option parsers are
+needed you would simply loop over parse_options for each of the
+commands, waiting for argc to stop changing.  Of course Jeff's flag
+would also need to stop parse_options from eating the first argument.
+Is this sort of what you are suggesting Junio?
 
-The question on how to delete remote branches appears frequently in the
-irc channel. If we add an explicit option to do this to git push, hopefully
-it will be more clear.
-
- Documentation/git-push.txt |   13 ++++++++++++-
- builtin-push.c             |   37 +++++++++++++++++++++++++++++++++++--
- t/t5516-fetch-push.sh      |   13 +++++++++++++
- 3 files changed, 60 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 89e0049..6a772a5 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -11,6 +11,8 @@ SYNOPSIS
- [verse]
- 'git-push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-            [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
-+'git push' --delete <repository> <branchname> [<branch2> ...]
-+
- 
- DESCRIPTION
- -----------
-@@ -18,6 +20,8 @@ DESCRIPTION
- Updates remote refs using local refs, while sending objects
- necessary to complete the given refs.
- 
-+In the second form, deletes one or more branches on a given repository.
-+
- You can make interesting things happen to a repository
- every time you push into it, by setting up 'hooks' there.  See
- documentation for linkgit:git-receive-pack[1].
-@@ -52,7 +56,7 @@ A parameter <ref> without a colon pushes the <ref> from the source
- repository to the destination repository under the same name.
- +
- Pushing an empty <src> allows you to delete the <dst> ref from
--the remote repository.
-+the remote repository. The same can be done by using the --delete flag.
- +
- The special refspec `:` (or `+:` to allow non-fast forward updates)
- directs git to push "matching" heads: for every head that exists on
-@@ -75,6 +79,10 @@ nor in any Push line of the corresponding remotes file---see below).
- 	if the configuration option `remote.<remote>.mirror` is
- 	set.
- 
-+--delete::
-+	Does not push anything, but instead deletes <branchname> on the
-+	remote repository.
-+
- --dry-run::
- 	Do everything except actually send the updates.
- 
-@@ -179,6 +187,9 @@ git push origin :experimental::
- 	Find a ref that matches `experimental` in the `origin` repository
- 	(e.g. `refs/heads/experimental`), and delete it.
- 
-+git push --delete origin experimental::
-+	Does the same as the above, but is more friendly.
-+
- git push origin master:satellite/master::
- 	Find a ref that matches `master` in the source repository
- 	(most likely, it would find `refs/heads/master`), and update
-diff --git a/builtin-push.c b/builtin-push.c
-index b35aad6..81f9a58 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,8 @@
- #include "parse-options.h"
- 
- static const char * const push_usage[] = {
--	"git-push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push --delete <repository> <branchname> [<branch2> ...]",
- 	NULL,
- };
- 
-@@ -48,6 +49,24 @@ static void set_refspecs(const char **refs, int nr)
- 	}
- }
- 
-+static void set_delete_refspecs(const char **branches, int nr)
-+{
-+	int i;
-+	for (i = 0; i < nr; i++) {
-+		const char *branch = branches[i];
-+		int len;
-+		char *delete_refspec;
-+
-+		if (strchr(branch, ':'))
-+			die("%s is not a valid branchname", branch);
-+		len = strlen(branch) + 1;
-+		delete_refspec = xmalloc(len);
-+		*delete_refspec = ':';
-+		strcpy(delete_refspec + 1, branch);
-+		add_refspec(delete_refspec);
-+	}
-+}
-+
- static int do_push(const char *repo, int flags)
- {
- 	int i, errs;
-@@ -108,6 +127,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	int tags = 0;
- 	int rc;
- 	const char *repo = NULL;	/* default repository */
-+	int delete = 0;
- 
- 	struct option options[] = {
- 		OPT__VERBOSE(&verbose),
-@@ -118,6 +138,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN( 0 , "dry-run", &dry_run, "dry run"),
- 		OPT_BOOLEAN('f', "force", &force, "force updates"),
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
-+		OPT_BOOLEAN('d', "delete", &delete, "delete remote branch"),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
- 		OPT_END()
-@@ -125,6 +146,18 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, options, push_usage, 0);
- 
-+	if (delete) {
-+		if (all || mirror || tags || force || repo)
-+			die("--delete cannot be used with --all, --mirror, --tags, --farce or --repo");
-+
-+		if (argc == 0)
-+			die("Need a remote on which to delete a branch");
-+		if (argc == 1)
-+			die("Need a branch on the remote to delete");
-+		repo = argv[0];
-+		set_delete_refspecs(argv + 1, argc - 1);
-+	}
-+
- 	if (force)
- 		flags |= TRANSPORT_PUSH_FORCE;
- 	if (dry_run)
-@@ -138,7 +171,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	if (mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
- 
--	if (argc > 0) {
-+	if (!delete && argc > 0) {
- 		repo = argv[0];
- 		set_refspecs(argv + 1, argc - 1);
- 	}
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 6805032..42fe89c 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -361,6 +361,19 @@ test_expect_success 'push with HEAD nonexisting at remote' '
- 	git push testrepo HEAD &&
- 	check_push_result $the_commit heads/local
- '
-+test_expect_success 'delete with --delete syntax' '
-+
-+	git push testrepo master:test1 &&
-+	git push --delete testrepo test1 &&
-+	git push testrepo master:test1 master:test2 &&
-+	check_push_result $the_commit heads/test1 &&
-+	check_push_result $the_commit heads/test2 &&
-+	git push --delete testrepo test1 test2 &&
-+	!(check_push_result $the_commit heads/test1) &&
-+	!(check_push_result $the_commit heads/test2) &&
-+	test_must_fail git push --delete testrepo test1
-+
-+'
- 
- test_expect_success 'push with +HEAD' '
- 
--- 
-1.5.6.rc1.153.gc1d96
+--
+Shawn
