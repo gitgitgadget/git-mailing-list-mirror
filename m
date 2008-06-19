@@ -1,101 +1,79 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for
-	further processing
-Date: Thu, 19 Jun 2008 09:25:27 -0500
-Message-ID: <20080619142527.GA8429@mediacenter>
-References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com> <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com> <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org> <20080618033010.GA19657@sigill.intra.peff.net> <7vwskn1g2p.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806181709300.6439@racer> <7v8wx2zibp.fsf@gitster.siamese.dyndns.org>
+From: "D. Stuart Freeman" <stuart.freeman@et.gatech.edu>
+Subject: Best practice question
+Date: Thu, 19 Jun 2008 10:32:35 -0400
+Message-ID: <485A6E03.6090509@et.gatech.edu>
+Reply-To: stuart.freeman@et.gatech.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	madcoder@debian.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 16:27:59 2008
+Content-Type: multipart/mixed;
+ boundary="------------050900010408070607050404"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 16:34:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9L6N-0004Nw-9P
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 16:27:03 +0200
+	id 1K9LDN-0007da-By
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 16:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbYFSO0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 10:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbYFSO0G
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 10:26:06 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:10796 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591AbYFSO0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 10:26:04 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so5183358rvb.1
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 07:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=G0mRpg833Or+XpE0hfNDKYeON11g4+7WHX9Bj+lSEZ4=;
-        b=rp1iqMWSxh2WvprROMaoSw/RS3pCrBJTe3Z+6oXyQh9VR8dyq0Ef1ED4aM5sdy5hCV
-         1XyjzlBmzIoJCiBmj6VhbfAyHDeW+I7xAtSOTZqjewejg/x5PcGlFcsF3EFaKVO3LOXu
-         ZawArtgeiy5vmrWkKMRe0coeQHSuHIgywTrVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=iSDfK3npQ/l5af9SXk1S9jBjK0Rh4yutUyLyM0DJAXPGAi8I6YSdoiPG0ZeR6hnPDq
-         Bpfse9BEA4lWjhNd9CyHEFJ2Wl07sOYt8qmv0ZBXVJ7bkDeWfbymB7CSLL6NL6MdD4Uz
-         Fr30Xc0E9H9foEv/sCvt/u09bxW6asDj3NbVA=
-Received: by 10.140.200.16 with SMTP id x16mr6523148rvf.120.1213885560565;
-        Thu, 19 Jun 2008 07:26:00 -0700 (PDT)
-Received: from @ ( [70.114.134.204])
-        by mx.google.com with ESMTPS id 7sm768867ywo.7.2008.06.19.07.25.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 19 Jun 2008 07:25:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v8wx2zibp.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1758814AbYFSOcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 10:32:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756001AbYFSOcn
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 10:32:43 -0400
+Received: from deliverator2.ecc.gatech.edu ([130.207.185.172]:35674 "EHLO
+	deliverator2.ecc.gatech.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758772AbYFSOch (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 10:32:37 -0400
+Received: from deliverator2.ecc.gatech.edu (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id ED5D65C8855
+	for <git@vger.kernel.org>; Thu, 19 Jun 2008 10:32:36 -0400 (EDT)
+Received: from mailprx3.gatech.edu (mailprx3.prism.gatech.edu [130.207.171.17])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "smtp.mail.gatech.edu", Issuer "Equifax" (verified OK))
+	by deliverator2.ecc.gatech.edu (Postfix) with ESMTP id 938675C883E
+	for <git@vger.kernel.org>; Thu, 19 Jun 2008 10:32:36 -0400 (EDT)
+Received: from [130.207.46.56] (cetel-004-xx6.admin.gatech.edu [130.207.46.56])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	(sasl: method=PLAIN, username=dfreeman31@mailprx3.gatech.edu, sender=n/a)
+	by mailprx3.gatech.edu (Postfix) with ESMTP id 5C3AC1F84
+	for <git@vger.kernel.org>; Thu, 19 Jun 2008 10:32:36 -0400 (EDT)
+	(envelope-from stuart.freeman@et.gatech.edu)
+User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85480>
 
-On Wed, Jun 18, 2008 at 11:52:42AM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Tue, 17 Jun 2008, Junio C Hamano wrote:
-> >
-> >> Jeff King <peff@peff.net> writes:
-> >> 
-> >> > I think the only right way to accomplish this is to convert the revision
-> >> > and diff parameters into a parseopt-understandable format.
-> >> 
-> >> Not necessarily.  You could structure individual option parsers like how 
-> >> diff option parsers are done.  You iterate over argv[], feed diff option 
-> >> parser the current index into argv[] and ask if it is an option diff 
-> >> understands, have diff eat the option (and possibly its parameter) to 
-> >> advance the index, or allow diff option to say "I do not understand 
-> >> this", and then handle it yourself or hand it to other parsers.
-> >
-> > AFAIR Pierre tried a few ways, and settled with a macro to introduce the 
-> > diff options into a caller's options.
-> >
-> > IOW it would look something like this:
-> >
-> > static struct option builtin_what_options[] = {
-> > 	[... options specific to this command ...]
-> > 	DIFF__OPT(&diff_options)
-> > };
-> 
-> I think that is the more painful approach Jeff mentioned, and my comment
-> was to show that it is not the only way.
-> 
+This is a multi-part message in MIME format.
+--------------050900010408070607050404
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-It seems to me that you could implement Jeff's
-PARSE_OPT_STOP_AT_UNKNOWN, and then if multiple option parsers are
-needed you would simply loop over parse_options for each of the
-commands, waiting for argc to stop changing.  Of course Jeff's flag
-would also need to stop parse_options from eating the first argument.
-Is this sort of what you are suggesting Junio?
+My project has an "about" page that lists the version.  I understand why
+git doesn't do keyword expansion, but I'm wondering if there's a
+recommended best practice for keeping that up to date.
 
---
-Shawn
+-- 
+D. Stuart Freeman
+Georgia Institute of Technology
+
+--------------050900010408070607050404
+Content-Type: text/x-vcard; charset=utf-8;
+ name="stuart_freeman.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="stuart_freeman.vcf"
+
+begin:vcard
+fn:D. Stuart Freeman
+n:Freeman;Douglas
+email;internet:stuart.freeman@et.gatech.edu
+tel;work:(404)385-1473
+x-mozilla-html:FALSE
+version:2.1
+end:vcard
+
+
+--------------050900010408070607050404--
