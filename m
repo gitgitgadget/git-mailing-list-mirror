@@ -1,107 +1,87 @@
-From: Ben Schmidt <mail_ben_schmidt@yahoo.com.au>
-Subject: Further Re: Getting the path right for git over SSH
-Date: Fri, 20 Jun 2008 03:13:40 +1000
-Message-ID: <485A93C4.3060603@yahoo.com.au>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] t7502-commit.sh: test_must_fail doesn't work with inline
+ environment variables
+Date: Thu, 19 Jun 2008 12:32:02 -0500
+Message-ID: <JvISWq5uUteLVQOl-3QkroLV8SsQufGuWrfseMUjpYY@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 19:15:01 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 19:36:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Nib-0000jA-Rc
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 19:14:42 +0200
+	id 1K9O3n-0008W8-Rw
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 19:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047AbYFSRNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 13:13:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbYFSRNo
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 13:13:44 -0400
-Received: from outbound.icp-qv1-irony-out2.iinet.net.au ([203.59.1.107]:7175
-	"EHLO outbound.icp-qv1-irony-out2.iinet.net.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752085AbYFSRNo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 13:13:44 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AqkAALgwWkh8qAm+/2dsb2JhbAAIsC8
-X-IronPort-AV: E=Sophos;i="4.27,673,1204470000"; 
-   d="scan'208";a="331443040"
-Received: from unknown (HELO [192.168.1.11]) ([124.168.9.190])
-  by outbound.icp-qv1-irony-out2.iinet.net.au with ESMTP; 20 Jun 2008 01:13:40 +0800
-User-Agent: Thunderbird 2.0.0.12 (Macintosh/20080213)
+	id S1751975AbYFSRfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 13:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbYFSRfg
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 13:35:36 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50170 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751471AbYFSRff (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 13:35:35 -0400
+Received: by mail.nrlssc.navy.mil id m5JHW2p8012222; Thu, 19 Jun 2008 12:32:02 -0500
+X-OriginalArrivalTime: 19 Jun 2008 17:32:02.0455 (UTC) FILETIME=[629A8270:01C8D232]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85496>
 
-[Further to my previous message...]
+When the arguments to test_must_fail() begin with a variable assignment,
+test_must_fail() attempts to execute the variable assignment as a command.
+This fails, and so test_must_fail returns with a successful status value
+without running the command it was intended to test.
 
-[When starting a non-interactive non-login shell from an ssh session...]
- >   What bash does is source /etc/bashrc and ~/.bashrc--it evidently
- >   treats ssh like rsh and does a little more than is documented even for
- >   rsh (search for rsh in the bash man page for details).
+For example, the following script:
 
-So another, simpler, system-wide solution is to set your $PATH in
-/etc/bashrc. However, this is not documented in the bash man page (which
-is why I came up with the more complicated solution, as I hadn't
-realised this behaviour at that stage). So I'm not sure whether it is
-standard/will occur on all systems, etc.
+	#!/bin/sh
+	test_must_fail () {
+		"$@"
+		test $? -gt 0 -a $? -le 129
+	}
+	foo='wo adrian'
+	test_must_fail foo='yo adrian' sh -c 'echo foo: $foo'
 
-If you're like me and like to have interactive stuff in bashrc and login
-stuff in profile, you can arrange your files like this (very similar to
-before, but ~/.bashrc needn't source /etc/profile now, nor do its check
-with $- and grep, as /etc/bashrc does that and avoids setting $PS1).
+always exits zero and prints the message:
 
-    In /etc/profile
+	test.sh: line 3: foo=yo adrian: command not found
 
-      # System-wide .profile for sh(1)
-      PATH=...
-      export PATH
-      # Source /etc/bashrc for interactive shells.
-      [ -n "$PS1" -a -r /etc/bashrc ] && source /etc/bashrc
-      ... stuff for login shells (more environment mostly)
+Test 16 calls test_must_fail in such a way and therefore has not been
+testing whether git 'do[es] not fire editor in the presence of conflicts'.
+Fix this by reverting to the traditional negation operator '!' and accept
+the caveat that segfault will not be detected.
 
-    In /etc/bashrc
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-      # System-wide .bashrc file for interactive bash(1) shells.
-      # If the shell isn't actually interactive it is an ssh session, and
-      # we want to source etc/profile instead.
-      if [ -z "$PS1" ] ; then
-        [ -r /etc/profile ] && source /etc/profile
-        return
-      fi
-      ... stuff for interactive shells (aliases and terminal stuff mostly)
 
-    In ~/.profile
+Unless you have a better work around...
 
-      # For login shells (interactive or not).
-      # For interactive non-login shells see ~/.bashrc.
-      # For non-interactive non-login ssh shells see ~/.bashrc.
-      # For other non-interactive non-login shells see $BASH_ENV.
-      # At present this is sourced by ~/.bashrc for the ssh case, so
-      # all ssh sessions act like login sessions.
-      PATH=...
-      export PATH
-      # Source ~/.bashrc for interactive shells.
-      if [ -n "$PS1" -a -r ~/.bashrc ]; then source ~/.bashrc ; fi
-      ... stuff for login shells (more environment mostly)
+-brandon
 
-    In ~/.bashrc
 
-      # For interactive non-login shells
-      # and non-interactive non-login ssh shells.
-      # For login shells (interactive or not) see first existent of
-      # ~/.bash_profile, ~/.bash_login and ~/.profile.
-      # For other non-interactive non-login shells see $BASH_ENV.
-      # At present, this is sourced by ~/.profile so runs for all
-      # interactive shells (login or not).
-      # If the shell isn't actually interactive it is an ssh session, and
-      # we want to source ~/.profile instead.
-      if [ -z "$PS1" ] ; then
-        source ~/.profile
-        return
-      fi
-      ... stuff for interactive shells (aliases and terminal stuff mostly)
+ t/t7502-commit.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-Ben.
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index ed871a6..e3469e0 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -212,7 +212,9 @@ test_expect_success 'do not fire editor in the presence of conflicts' '
+ 	# Must fail due to conflict
+ 	test_must_fail git cherry-pick -n master &&
+ 	echo "editor not started" >.git/result &&
+-	test_must_fail GIT_EDITOR="$(pwd)/.git/FAKE_EDITOR" git commit &&
++	# We intentionally do not use test_must_fail on the next line since the
++	# mechanism does not work when setting environment variables inline
++	! GIT_EDITOR="$(pwd)/.git/FAKE_EDITOR" git commit &&
+ 	test "$(cat .git/result)" = "editor not started"
+ '
+ 
+-- 
+1.5.5.3
