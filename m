@@ -1,64 +1,63 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [PATCH] Add option to git-branch to set up automatic rebasing
-Date: Fri, 20 Jun 2008 00:58:06 +0200
-Message-ID: <12AB50C8-6CBF-4D96-8FAB-90234A9006D0@ai.rug.nl>
-References: <1213836802-3163-1-git-send-email-pdebie@ai.rug.nl> <alpine.DEB.1.00.0806191459150.6439@racer> <20080619154350.GA21625@atjola.homenet> <7vr6attey8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 00:59:15 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: name-rev --stdin is slow
+Date: Thu, 19 Jun 2008 19:00:31 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806191849540.19665@iabervon.org>
+References: <485ACB34.2020901@gmail.com> <alpine.LNX.1.00.0806191755510.19665@iabervon.org> <485AD90E.6000309@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 01:01:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9T61-0000h0-5u
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:59:13 +0200
+	id 1K9T8C-0001Fd-GS
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 01:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbYFSW6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 18:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753115AbYFSW6J
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:58:09 -0400
-Received: from smtp-1.orange.nl ([193.252.22.241]:60712 "EHLO smtp-1.orange.nl"
+	id S1752479AbYFSXAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 19:00:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752808AbYFSXAd
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 19:00:33 -0400
+Received: from iabervon.org ([66.92.72.58]:36348 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753015AbYFSW6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 18:58:08 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6007.online.nl (SMTP Server) with ESMTP id 70D4B7000091;
-	Fri, 20 Jun 2008 00:58:07 +0200 (CEST)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6007.online.nl (SMTP Server) with ESMTP id 17BAF7000081;
-	Fri, 20 Jun 2008 00:58:06 +0200 (CEST)
-X-ME-UUID: 20080619225807972.17BAF7000081@mwinf6007.online.nl
-In-Reply-To: <7vr6attey8.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1750932AbYFSXAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 19:00:32 -0400
+Received: (qmail 15954 invoked by uid 1000); 19 Jun 2008 23:00:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Jun 2008 23:00:31 -0000
+In-Reply-To: <485AD90E.6000309@gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85558>
 
+On Fri, 20 Jun 2008, Lea Wiemann wrote:
 
-On 19 jun 2008, at 21:14, Junio C Hamano wrote:
+> Daniel Barkalow wrote:
+> > Actually, I think it's the reverse: without --stdin, name-rev can do a first
+> > pass that lets it eliminate a lot of data from consideration; with --stdin,
+> > it doesn't know if an item it hasn't seen is going to need some data, and so
+> > it's conservative and doesn't eliminate anything,
+> 
+> Are you sure that's the case?  time git-name-rev --stdin < /dev/null gives the
+> same high startup time without looking up anything.
 
->> Hm, --rebasing sounds weird to me as well. Maybe --track=merge and
->> --track=rebase, with --track being equal to --track=merge?
->
-> That looks like the best wording so far, although I suspect that the  
-> true
-> reason why all of the above sounds confusing may be because the  
-> concept
-> itself is not clear.
+Ah, okay. There's a startup pass that goes through all of the refs (tags 
+in particular), and does stuff with them, but only if they aren't filtered 
+out.
 
-That's why I suggested --auto-rebase, which is more verbose in what
-it does. Perhaps we should add it as an optional flag for --track, like
+> Anyways, it would be great if someone could try to fix that, since a 6-second
+> startup time on a repository like linux-2.6 makes the --stdin option unusable
+> for applications like gitweb (for which it would actually be quite useful to
+> reduce the number of forks).
 
-   git branch --track --auto-rebase local remote/branch
+It might be possible to collect all of the input, set up the filter, and 
+do the (now cheaper) initial pass, but I don't think that would offer any 
+real advantage over just collecting them in the caller and calling 
+name-rev with a long command line.
 
-? That is a bit long though.
-
-I don't think "--track=rebase" makes a lot of sense, since "track" is
-still a boolean in my head ;)
+	-Daniel
+*This .sig left intentionally blank*
