@@ -1,53 +1,75 @@
-From: Mukund Sivaraman <muks@banu.com>
-Subject: Including branch info in git format-patch
-Date: Thu, 19 Jun 2008 21:12:52 +0530
-Message-ID: <20080619154251.GA16475@jurassic>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2] Make git_dir a path relative to work_tree in
+ setup_work_tree()
+Date: Thu, 19 Jun 2008 12:12:19 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806191146210.19665@iabervon.org>
+References: <alpine.LNX.1.00.0806182327090.19665@iabervon.org> <alpine.DEB.1.00.0806191510060.6439@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 18:03:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 19 18:13:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Mbz-0004MR-Fi
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 18:03:47 +0200
+	id 1K9MlC-0000WP-2K
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 18:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761534AbYFSQCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 12:02:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761538AbYFSQCp
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 12:02:45 -0400
-Received: from mail.banu.com ([67.19.28.195]:36727 "EHLO mail.banu.com"
+	id S1754945AbYFSQMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 12:12:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755759AbYFSQMV
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 12:12:21 -0400
+Received: from iabervon.org ([66.92.72.58]:36706 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761528AbYFSQCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 12:02:44 -0400
-X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jun 2008 12:02:44 EDT
-Received: from ? (unknown [59.93.81.46])
-	by mail.banu.com (Postfix) with ESMTP id 486701110066;
-	Thu, 19 Jun 2008 10:42:57 -0500 (CDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754945AbYFSQMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 12:12:20 -0400
+Received: (qmail 28308 invoked by uid 1000); 19 Jun 2008 16:12:19 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Jun 2008 16:12:19 -0000
+In-Reply-To: <alpine.DEB.1.00.0806191510060.6439@racer>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85487>
 
-Hi all
+On Thu, 19 Jun 2008, Johannes Schindelin wrote:
 
-We have two public branches on the tinyproxy project[1]: master and 1.6.
-We send patches to the mailing list to get them reviewed before they are
-applied and pushed to the public repo.
+> Hi,
+> 
+> On Wed, 18 Jun 2008, Daniel Barkalow wrote:
+> 
+> > diff --git a/setup.c b/setup.c
+> > index d630e37..1643ee4 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -292,7 +292,8 @@ void setup_work_tree(void)
+> >  	work_tree = get_git_work_tree();
+> >  	git_dir = get_git_dir();
+> >  	if (!is_absolute_path(git_dir))
+> 
+> I suspect it needs "work_tree &&" here.
 
-When i use "git format-patch", it doesn't seem to include the branch (or
-remote) name in the email it creates. So a reader of this mail may not
-know what branch to apply it on to test it. Aside from adding in branch
-information manually in the body of the message, is there any other
-existing way to get git format-patch to include it?
+I'm not clear on the semantics of !get_git_work_tree(); is a non-absolute 
+path for git_dir right then?
 
-Apologies in advance if this is a stupid question.
+> > -		set_git_dir(make_absolute_path(git_dir));
+> > +		set_git_dir(make_relative_path(make_absolute_path(git_dir),
+> > +					       work_tree));
+> >  	if (!work_tree || chdir(work_tree))
+> >  		die("This operation must be run in a work tree");
+> >  	initialized = 1;
+> 
+> All in all I am pretty surprised how easy it was.  I tried yesterday, for 
+> half an hour, to come up with something sensible, and failed.
 
-		Mukund
+I was sure you'd come up with just this solution, because you'd just 
+recently explained that make_absolute_path() means you can find when one 
+path is in another path with a simple string compare. And, since we know 
+what pwd is going to be...
 
-Refs:
- 1. http://git.banu.com/?p=tinyproxy;a=summary
+	-Daniel
+*This .sig left intentionally blank*
