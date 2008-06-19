@@ -1,206 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-apply doesn't handle same name patches well [V3]
-Date: Thu, 19 Jun 2008 15:15:16 -0700
-Message-ID: <7vk5glrs0b.fsf@gitster.siamese.dyndns.org>
-References: <1213646686-31964-1-git-send-email-dzickus@redhat.com>
- <7vbq1z375d.fsf@gitster.siamese.dyndns.org>
- <20080619213341.GP16941@redhat.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] gitweb: standarize HTTP status codes
+Date: Fri, 20 Jun 2008 00:22:38 +0200
+Message-ID: <200806200022.39685.jnareb@gmail.com>
+References: <1213564515-14356-1-git-send-email-LeWiemann@gmail.com> <m3y752melj.fsf_-_@localhost.localdomain> <485AAEB9.2080100@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Don Zickus <dzickus@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 00:16:44 2008
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 00:24:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9SQm-0006lb-HV
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:16:37 +0200
+	id 1K9SY2-0000M9-U1
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155AbYFSWPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 18:15:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbYFSWPk
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:15:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48543 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751828AbYFSWPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 18:15:40 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 928AD1CAD5;
-	Thu, 19 Jun 2008 18:15:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5FC0E1CACF; Thu, 19 Jun 2008 18:15:24 -0400 (EDT)
-In-Reply-To: <20080619213341.GP16941@redhat.com> (Don Zickus's message of
- "Thu, 19 Jun 2008 17:33:41 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3C4A080C-3E4D-11DD-AE78-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753105AbYFSWWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 18:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752402AbYFSWWw
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:22:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:9453 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375AbYFSWWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 18:22:51 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so1055277ugf.16
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 15:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=WKh1zHByt0rMPMly1sO/B66kD0Mg0zAYaH24cFYhfyM=;
+        b=FmDDKQmOAGrMqgxrPOEbIH4qcGIoMex0edzmhR874wlpEDrMQur/AOZGMYZK2A0dM+
+         HnJSdov9uK7paEHKb6QJKHIiyL5FnfA9pr3eXIqv06J6lNVp1AHR+BygIfuPdRNnvQbG
+         i0dGR/lH2wI2PdciN+vQrbQreSW1YIJKMMQlU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OU+5eefoho3lYRXlR65iPmEVz8fAcc+C/1qsxznt8d8Q0XqxrkmKn89CrNmOnR0ZZZ
+         r5lESQFv3Uf+5TI82an4EtxDVJcWi9HZXK1rggRMr7D6n9ap/PntQbZHDkJFl0Tx7dW9
+         l9A7BRjRbDU753LZys/H3IOvpORlkqMujBNno=
+Received: by 10.210.120.7 with SMTP id s7mr2386515ebc.76.1213914169586;
+        Thu, 19 Jun 2008 15:22:49 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.242.161])
+        by mx.google.com with ESMTPS id c22sm1673435ika.1.2008.06.19.15.22.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 15:22:47 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <485AAEB9.2080100@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85549>
 
-Don Zickus <dzickus@redhat.com> writes:
-
-> On Tue, Jun 17, 2008 at 05:42:54PM -0700, Junio C Hamano wrote:
->> Don Zickus <dzickus@redhat.com> writes:
-> ...
-> I was going to try to figure out a way to grab it from fn_cache but I
-> wasn't sure how much of the 'lstat' info is needed later.
-
-The usual case of one-diff-one-path patch application wants to make sure
-that there is no discrepancy between the index and the work tree for the
-path when working in --index mode.  When working in work-tree-only mode,
-lstat just makes sure that the path to be patched actually exists (or
-doesn't, if it is a creation patch).
-
-When fn_cache is used, you pretend as if the resulting path exists and up
-to date when found in fn_cache and the previous round succeeded, so you
-can substitute the lstat (you cannot just lose it, but need to make sure
-the path exists after applying the earlier fn_cache contents when handling
-a later patch that wants to touch an existing file).  As you pretend that
-the previous round succeeded, you do not have to check the up-to-dateness
-between the index and work tree when dealing with a path that has previous
-result in fn_cache, even when operating in --index mode.
-
->> or do you mean that the first patch rename-edits A to B, but the second
->> one still wants to edit A in place and you would want to pretend as if the
->> later one is for a patch to B?  I would think that is doable but asking
->> for too much magic, and a tool with too much magic is scary.
->
-> Personally I think this case should be a failure.  I even attached a
-> testcase in my patch to make sure this failed.  I wasn't comfortable doing
-> this magic either.
-
-Good.
-
->> There is a case where a normal git patch contains two separate patches to
->> the same file.  A typechange patch is always expressed as a deletion of
->> the old path immediately followed by a creation of the same path.  I have
->> to wonder why that codepath for handing that particular special case is
->> not changed in this patch.  Surely the mechanism you are adding is a
->> generalization that can cover such a case as well, isn't it?
->
-> Heh.  Maybe, but I didn't know the code well enough to do that.  Pointers?
-
-See the way "prev_patch" is used in check_patch.
-
->> > @@ -2176,6 +2184,38 @@ static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
->> >  	return 0;
->> >  }
->> >  
->> > +struct patch *in_fn_cache(char *name)
->> > +{
->> > +	struct path_list_item *item;
->> > +
->> > +	item = path_list_lookup(name, &fn_cache);
->> > +	if (item != NULL)
->> > +		return (struct patch *)item->util;
->> > +
->> > +	return NULL;
->> > +}
->> > +
->> > +void add_to_fn_cache(char *name, struct patch *patch)
->> > +{
->> > +	struct path_list_item *item;
->> > +
->> > +	/* Always add new_name unless patch is a deletion */
->> > +	if (name != NULL) {
->> > +		item = path_list_insert(name, &fn_cache);
->> > +		item->util = patch;
->> > +	}
->> > +
->> > +	/* skip normal diffs, creations and copies */
+Lea Wiemann wrote:
+> Jakub Narebski wrote:
+>> Lea Wiemann <lewiemann@gmail.com> writes:
+>>>
+>>> For convenience the die_error function now only takes the status code
+>>> without reason as first parameter (e.g. 404 instead of "404 Not Found")
 >> 
->> This comment is a "Huh?".
-> I was just making a note about which cases I wanted to skip and which ones
-> I wanted to process.  I can expand on it.  For example, patches that
-> contain normal diffs, file creations and git copies or ignored as don't
-> cares.  Only file deletions and git renames were interesting to me in the
-> code below.
+>> _Whose_ convenience?
+> 
+> The developer's convenience of course.  It's plain redundant.
 
-The function's purpose is to record what the expected state of the path
-after the current patch has applied successfully, and
+Redundancy isn't always bad.
 
- * If it is not a deletion, you will record the postimage, so that a later
-   patch can work from there, not from what is in the initial state;
+Moreover I think that "convenience of developer" here is a bit matter
+of taste, and the fact if one is web developer, or "accidental" gitweb
+developer.
+ 
+>>  * I don't think that RFC 2616 allows blanket replacing reason phrase
+>>    by generic "Error",
+>>  * Test::WWW::Mechanize displays both HTTP error status code and
+>>    reason phrase when get_ok(...) fails:
+>>  * From the point of view of someone examinimg gitweb.perl code, 400,
+>>    403, 404, 500 are _magic numbers_;
+> 
+> I think we're really arguing about the color of the bikeshed here.  IMO 
+> we're not stretching RFC 2616 too much by putting "Error" there (since 
+> reason codes don't matter on a technical level), and the status codes 
+> make enough sense to me (and I'm not even a web developer) that I'm not 
+> concerned about readability.
 
- * If it is a deletion (or rename-away), you record that the path after
-   this patch no longer exists, so that you can catch a later broken patch
-   that tries to touch the path.
+Well, I didn't know what 400 code meant, and I had to check RFC 2616
+for that.  '400 Bad Request' is more readable.
 
-You have already handled "normal diff, creation and copy" in the first
-part "if (name != NULL)", but you talk about it again here, which was the
-"Huh?" inducing part.  It gave an impression that the part that follows
-does something other than the above two.
+But it is a bit bikeshedding.  This patch consist of two things: using
+better HTTP error status codes (for example getting rid of 
+403 Forbidden as default catch-all code and using 500 Internal Server
+Error for cases where an error _is_ serious server error), and
+changing die_error(...) signature / calling convention (meant for
+convenience).  I agree wholeheartly with first part (modulo using
+404 Not Found for errors which usually happens because of user error).
+Second part might wait when code stabilizes and there is lull in the
+gitweb development (changes shouldn't conflict anyway, but applying
+patches might fail because of changed context)...
 
->> > +	/*
->> > +	 * store a failure on rename/deletion cases because
->> > +	 * later chunks shouldn't patch old names
->> > +	 */
->> > +	if ((name == NULL) || (patch->is_rename)) {
->> > +		item = path_list_insert(patch->old_name, &fn_cache);
->> > +		item->util = (struct patch *) -1;
+...but as I can see you have send PATCH v3, in the form I can agree
+with.
+ 
+> I don't think your constants a la HTTP_INVALID are a good idea (I 
+> remember the status codes in a year, but maybe not the constants); 
 
-If you have a patch that does A->B (rename), C->A (rename), A->A (mod),
-would your code handle that?
+I can agree with that.
 
->> If you look at the patch->old_name _anyway_, why do you give a separate
->> name parameter to this function?  The function would be much easier to
->> read if you pass only patch, and use patch->new_name instead of the
->> separate name parameter.  Otherwise the reader needs to scroll down and
->> figure out that name is a new name by looking at the call site to
->> understand what is going on.
->
-> Yeah, leftover code that was added when I ran into rename and copy
-> problems.
->
+> die_error could figure out the right reason code using a hash. (...)
+
+Good idea.  I see it is done this way in PATCH v3.
+ 
+>>> -		die_error(undef, "At least two characters are required for search parameter");
+>>> +		die_error(403, "At least two characters are required for search parameter");
 >> 
->> > +	}
->> > +}
->> > +
->> >  static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
->> >  {
->> >  	struct strbuf buf;
->> > @@ -2188,7 +2228,16 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
->> >  		if (read_file_or_gitlink(ce, &buf))
->> >  			return error("read of %s failed", patch->old_name);
->> >  	} else if (patch->old_name) {
->> > -		if (S_ISGITLINK(patch->old_mode)) {
->> > +		struct patch *tpatch = in_fn_cache(patch->old_name);
->> > +
->> > +		if (tpatch != NULL) {
->> > +			if (tpatch == (struct patch *) -1) {
->> > +				return error("patch %s has been renamed/deleted",
->> > +					patch->old_name);
->> > +			}
->> > +			/* We have a patched copy in memory use that */
->> > +			strbuf_add(&buf, tpatch->result, tpatch->resultsize);
->> > +		} else if (S_ISGITLINK(patch->old_mode)) {
+>> Should gitweb use there '403 Forbidden', or '400 Bad Request'?
+>> This is failing static validation of CGI parameters, not a matter of
+>> some permissions...
+> 
+> I used 403 in the sense of "sorry, we don't have shorter search strings 
+> activated for performance reasons".  The '2' could even become 
+> configurable.  400 is fine too, though, I don't care.
+
+I had in mind using '403 Forbidden' for "permission denied" errors,
+i.e. for cases where different _configuration_ could result in access.
+ 
+>>> -	close $fd or die_error(undef, "Reading tree failed");
+>>> +	close $fd or die_error(500, "Reading tree failed");
 >> 
->> Isn't this wrong?  Why can't this new enhancement be used while operating
->> only on the index?
->
-> I don't know, can it?  You tell me.  I wasn't sure on the whole index
-> thing worked.
+>> Not O.K.  Barring errors in gitweb code this might happen when
+>> [X Y Z].  All those are clearly 4xx _client_ errors,
+> 
+> I haven't verified that, so until we have better error handling I prefer 
+> 500, but I really won't bother objecting to 404.
 
-Perhaps a "git-apply" primer might help.  The program can work in three
-modes of operation.
+I'd rather have '404 Not Found' here; in most cases this is client
+error, and one should examine URL not mail webmaster.
 
- * normal mode: look at and operate only on work tree files.
+> FWIW I'm  
+> assuming that once gitweb uses the new API, that error handling code 
+> will go away anyway.
 
- * --index mode: work on both the index and the work tree.  IOW, patch the
-   files and immediately do "git add -u" on that path, so that even
-   addition and deletion are recorded in the index.  In this case, the
-   paths involved must be up-to-date between the work tree and the index
-   when you start "git apply"; otherwise you will lose your local
-   changes.
+I hope that performance impact for non-caching case would be negligible,
+and cleaner code would overweigth this concern.
+ 
+>>>  	if (!defined $ftype) {
+>>> -		die_error(undef, "Unknown type of object");
+>>> +		die_error(500, "Unknown type of object");
+>> 
+>> Errr... shouldn't be '400 Bad Request' here, per convention?
+> 
+> Nope, we didn't get *anything* back, so something weird happened.  500.
 
- * --cached mode: work only on the index and never look at nor touch the
-   work tree.
+Ohhh... right.  I didn't get that from seeing only this part.
 
-Now, if you have a patch that has A->A (mod), followed by another A->A(mod),
-is there a good reason why you allow it in the first two modes and not the
-last one?  I do not think so.
+-- 
+Jakub Narebski
+Poland
