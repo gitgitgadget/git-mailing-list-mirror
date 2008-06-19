@@ -1,52 +1,105 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Best practice question
-Date: Thu, 19 Jun 2008 16:54:13 +0200
-Message-ID: <20080619145413.GA18563@diana.vm.bytemark.co.uk>
-References: <485A6E03.6090509@et.gatech.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-pack: don't consider branch lagging behind as
+	errors.
+Date: Thu, 19 Jun 2008 11:11:10 -0400
+Message-ID: <20080619151110.GA31654@sigill.intra.peff.net>
+References: <1213872715-11182-1-git-send-email-madcoder@debian.org> <20080619133747.GA31209@sigill.intra.peff.net> <20080619135159.GA19560@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "D. Stuart Freeman" <stuart.freeman@et.gatech.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 19 16:55:39 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:12:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9LXw-0007vx-Ie
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 16:55:32 +0200
+	id 1K9Lo4-0007cn-Dl
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbYFSOyZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 10:54:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbYFSOyZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 10:54:25 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4265 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751970AbYFSOyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 10:54:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1K9LWf-0004wk-00; Thu, 19 Jun 2008 15:54:13 +0100
+	id S1751032AbYFSPLN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 11:11:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbYFSPLN
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:11:13 -0400
+Received: from peff.net ([208.65.91.99]:1921 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750864AbYFSPLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 11:11:12 -0400
+Received: (qmail 18920 invoked by uid 111); 19 Jun 2008 15:11:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 19 Jun 2008 11:11:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jun 2008 11:11:10 -0400
 Content-Disposition: inline
-In-Reply-To: <485A6E03.6090509@et.gatech.edu>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20080619135159.GA19560@artemis.madism.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85482>
 
-On 2008-06-19 10:32:35 -0400, D. Stuart Freeman wrote:
+On Thu, Jun 19, 2008 at 03:52:00PM +0200, Pierre Habouzit wrote:
 
-> My project has an "about" page that lists the version. I understand
-> why git doesn't do keyword expansion, but I'm wondering if there's a
-> recommended best practice for keeping that up to date.
+> >   http://thread.gmane.org/gmane.comp.version-control.git/73038/focu=
+s=3D73186
+> [...]
+> >   - should stale branches be shown without -v?
+>=20
+>   I believe so, it's valuable information. It's as valuable as what y=
+ou
+> get after a git fetch nowadays (like branches have diverged n and m
+> commits each or similar) But oh well=E2=80=A6 I don't care that much.
 
-Usually when people ask this question on this list, the recommendation
-is to have the build system generate a suitable version string. Look
-at how git's own built-in version string is generated, for example.
-(The GIT-VERSION-GEN script.)
+If you read the beginning of that thread, the original impetus was
+people cloning repos that had dozens of branches, then doing a push.
+If they hadn't recently done a fetch, they got dozens of lines of
+"rejected".
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+> >   - calling ref_newer here is inefficient, since we have already ca=
+lled
+> >     it in the other direction. We should probably do the traversal =
+once
+> >     in such a way as to find out which ref is newer (or if it is
+> >     indeterminate).
+>=20
+>   Well, true, though I don't expect people to have tons of local
+> branches that match a refspec _and_ lag behind. I suspect this is a v=
+ery
+> minor performance loss.
+
+Yeah, maybe it is not worth worrying about; I haven't actually measured
+any performance issue. I'll try to look and see how painful it is to
+combine the traversals.
+
+> >   - there is a possible danger with "git push -f", in that you forc=
+e
+> >     both rejected branches as well as stale branches. Junio and I
+>   Well afaict this is a separate issue, as we're (with such a patch)
+> only changing what gets printed on the console, not the internal
+> behavior. So solving this second issue should not really be a
+> precondition to the inclusion of such a patch.
+
+It is a separate issue, but it is exacerbated by hiding stale refs.
+Imagine:
+
+$ git push
+To /path/to/repo
+   ! [rejected]        master -> master (non-fast forward)
+
+$ git push -f
+To /path/to/repo
+   + 0abfa88...c1ed93b master -> master (forced update)
+   + 0329485...3498576 stale_branch -> stale_branch (forced update)
+
+I think that is a nasty surprise to spring on an unsuspecting user.
+Another solution might be "-f" not pushing rewound branches, but then w=
+e
+need a way to specify "no, really, push this rewound branch". Perhaps
+"-f -f"?
+
+>   Please please please do :)
+>   The exit 1 of git-push is really annoying me these days.
+
+OK, I will try to take a look in the next few days.
+
+-Peff
