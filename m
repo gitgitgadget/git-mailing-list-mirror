@@ -1,103 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3] gitweb: standarize HTTP status codes
-Date: Thu, 19 Jun 2008 15:37:35 -0700 (PDT)
-Message-ID: <m3hcbpm4pe.fsf@localhost.localdomain>
-References: <1213905801-2811-1-git-send-email-LeWiemann@gmail.com>
-	<1213907110-5080-1-git-send-email-LeWiemann@gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] completion: add --graph to log command completion
+Date: Fri, 20 Jun 2008 01:40:12 +0300
+Message-ID: <20080619224012.GA6705@mithlond.arda.local>
+References: <1213910153-10679-1-git-send-email-dpmcgee@gmail.com> <20080619215842.GL11793@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lea Wiemann <LeWiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 00:38:39 2008
+Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 20 00:41:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Sm5-000461-9k
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:38:37 +0200
+	id 1K9Sod-0004j7-Ri
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbYFSWhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 18:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYFSWhm
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:37:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:13326 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbYFSWhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 18:37:41 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so1057114ugf.16
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 15:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=mrvyC6IiRoTX9st0HN+qt5opZM2ZCeQ5FzbEhwYQBQ8=;
-        b=jgpaEedq+H8THIYEq09AVArT6K1YxB6T3FFWpb0CYC8WR6Ihb8XCioRicYVhQqWal9
-         MDL4avPhAabRMkQ0nPTDm6B62DI6QQTTI5AF924EvfHDZzpRbvOe6RkBdQGNuxys2wK8
-         lpmfybfiD54Yijrv2r7Lx5f4jhp6pgH72VJ94=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=dquVC+d0dzix5scUh5heX4wlsSic23iUsDlcdRYAoaXIPyeNDIjcdafTHGlzUMQd2Z
-         yUQkKT5KXmpeiJvY5rFrM2Xnz/CuKcnWVWEGq+BiqhKP775ePIsBXoQbtWKA4YaAmtvl
-         Y1yTCFXCaB1mb4EZdxmn8BU2UCLrjea6/FajM=
-Received: by 10.67.97.1 with SMTP id z1mr10930102ugl.11.1213915056349;
-        Thu, 19 Jun 2008 15:37:36 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.242.161])
-        by mx.google.com with ESMTPS id 24sm19562456ugf.62.2008.06.19.15.37.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Jun 2008 15:37:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5JMbZBB002691;
-	Fri, 20 Jun 2008 00:37:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5JMbXEG002688;
-	Fri, 20 Jun 2008 00:37:33 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1213907110-5080-1-git-send-email-LeWiemann@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752896AbYFSWkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 18:40:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbYFSWkV
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:40:21 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:35944 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751991AbYFSWkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 18:40:20 -0400
+Received: from mithlond.arda.local (80.220.180.140) by kirsi1.rokki.sonera.fi (8.5.014)
+        id 483E837C0109CFD7; Fri, 20 Jun 2008 01:40:13 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1K9Snc-0001kj-FJ; Fri, 20 Jun 2008 01:40:12 +0300
+Content-Disposition: inline
+In-Reply-To: <20080619215842.GL11793@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85553>
 
-Lea Wiemann <lewiemann@gmail.com> writes:
+Shawn O. Pearce wrote (2008-06-19 17:58 -0400):
 
-> Changes since v2: die_error now adds the reason strings defined by RFC
-> 2616 to the HTTP status code; incorporated Jakub's other suggestions.
-> Diff to v2 follows.
+> Dan McGee <dpmcgee@gmail.com> wrote:
+> > Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+> 
+> Acked-by: Shawn O. Pearce <spearce@spearce.org>
+> 
+> First change for 1.5.6.1?  With --graph in 1.5.6 we really should have
+> included this as part of 1.5.6.  Oh well.  1.5.6.1 perhaps Junio?
 
-This address both of my concerns: first, that for someone examining
-Mechanize-based gitweb test number like 403, or 500 would be magical
-number without explanation (reason phrase) other than 'Error'.
+Liked-by: me
 
-Second, that for casual / accidental gitweb developer who has to add
-or modify a bit of code with die_error(...) wouldn't know which of
-"magic number" to use, if the case didn't fail into described
-situation.  Now it is enough to example die_error(...) in addition to
-similar code...
- 
-> I didn't use the HTTP_NOT_FOUND etc. suggestion because I found it too
-> verbose and obtrusive.
+I think I have already sent twice a patch with --graph completion. I use
+bash completions quite a lot and here's my current additions to "git
+log":
 
-I can agree with that.
 
-> Just a friendly reminder, please remember that discussing fairly
-> trivial changes in-depth might be not a good use of all participants'
-> time [...]
+---snip---
+bash: Add more option completions for 'git log'
 
-Well, this was what I though was patch revies... :-/
+Options added: --graph --walk-reflogs --stat --numstat --shortstat
+--decorate --diff-filter= --color-words
 
-> Anyways, I hope everyone is happy with this version of the patch.
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
+ contrib/completion/git-completion.bash |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-FWIW:
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 506b40c..e78ca8e 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -761,6 +761,9 @@ _git_log ()
+ 			--pretty= --name-status --name-only --raw
+ 			--not --all
+ 			--left-right --cherry-pick
++			--stat --numstat --shortstat
++			--decorate --diff-filter=
++			--color-words --walk-reflogs --graph
+ 			"
+ 		return
+ 		;;
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.6.2.g3c3a
