@@ -1,52 +1,256 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Including branch info in git format-patch
-Date: Thu, 19 Jun 2008 14:41:54 -0700
-Message-ID: <7vod5xrtjx.fsf@gitster.siamese.dyndns.org>
-References: <20080619154251.GA16475@jurassic>
- <20080619202843.GA6207@sigill.intra.peff.net>
- <7vskv9rvrc.fsf@gitster.siamese.dyndns.org> <20080619212626.GA29643@jurassic>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGIT PATCH 2/4] Implement a new patch identification scheme and id
+	command
+Date: Thu, 19 Jun 2008 22:42:10 +0100
+Message-ID: <20080619214210.27794.76950.stgit@localhost.localdomain>
+References: <20080619214023.27794.97039.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Mukund Sivaraman <muks@banu.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 23:43:29 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org,
+	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 23:43:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Rui-0005eT-GV
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 23:43:28 +0200
+	id 1K9Ruj-0005eT-4j
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 23:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753937AbYFSVmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 17:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752961AbYFSVmT
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 17:42:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41255 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752764AbYFSVmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 17:42:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CE161C7D1;
-	Thu, 19 Jun 2008 17:42:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id ACE6B1C7CD; Thu, 19 Jun 2008 17:42:02 -0400 (EDT)
-In-Reply-To: <20080619212626.GA29643@jurassic> (Mukund Sivaraman's message of
- "Fri, 20 Jun 2008 02:56:27 +0530")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9214F2BA-3E48-11DD-99E8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752961AbYFSVmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 17:42:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbYFSVmV
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 17:42:21 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:19994 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752528AbYFSVmT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 17:42:19 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20080619214634.KRYS28496.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Thu, 19 Jun 2008 22:46:34 +0100
+Received: from localhost.localdomain ([86.7.22.36])
+          by aamtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20080619215147.ESLY8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
+          Thu, 19 Jun 2008 22:51:47 +0100
+In-Reply-To: <20080619214023.27794.97039.stgit@localhost.localdomain>
+User-Agent: StGIT/0.14.3.163.g06f9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85539>
 
-Mukund Sivaraman <muks@banu.com> writes:
+The new scheme allows '[<branch>:]<patch>' and '[<branch>:]{base}'
+(the latter showing the base of a stack). The former format allows
+symbols like ^ and ^{...}.
 
-> My problem is that I can't send a patch out to the list for other
-> developers to try, without some annotation for them, of which branch to
-> try it on.
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+---
 
-So what's wrong telling that when you send out the patch, between the time
-you run format-patch and send-email?
+ stgit/commands/common.py   |   32 ++++++++++++++++++++++++++++++++
+ stgit/commands/id.py       |   28 ++++++++++++----------------
+ stgit/lib/git.py           |    4 ++--
+ t/t0001-subdir-branches.sh |   24 ++++++++++--------------
+ t/t1200-push-modified.sh   |    2 +-
+ t/t1201-pull-trailing.sh   |    2 +-
+ t/t2200-rebase.sh          |    2 +-
+ 7 files changed, 59 insertions(+), 35 deletions(-)
+
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 029ec65..349389f 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -28,6 +28,7 @@ from stgit.run import *
+ from stgit import stack, git, basedir
+ from stgit.config import config, file_extensions
+ from stgit.lib import stack as libstack
++from stgit.lib import git as libgit
+ 
+ # Command exception class
+ class CmdException(StgException):
+@@ -116,6 +117,37 @@ def git_id(crt_series, rev):
+ 
+     raise CmdException, 'Unknown patch or revision: %s' % rev
+ 
++def git_commit(name, repository, branch = None):
++    """Return the a Commit object if 'name' is a patch name or Git commit.
++    The patch names allowed are in the form '<branch>:<patch>' and can be
++    followed by standard symbols used by git-rev-parse. If <patch> is '{base}',
++    it represents the bottom of the stack.
++    """
++    # Try a [branch:]patch name first
++    try:
++        branch, patch = name.split(':', 1)
++    except ValueError:
++        patch = name
++    if not branch:
++        branch = repository.current_branch_name
++
++    # The stack base
++    if patch == '{base}':
++        return repository.get_stack(branch).base
++
++    # Other combination of branch and patch
++    try:
++        return repository.rev_parse('patches/%s/%s' % (branch, patch),
++                                    discard_stderr = True)
++    except libgit.RepositoryException:
++        pass
++
++    # Try a Git commit
++    try:
++        return repository.rev_parse(name, discard_stderr = True)
++    except libgit.RepositoryException:
++        raise CmdException('%s: Unknown patch or revision name' % name)
++
+ def check_local_changes():
+     if git.local_changes():
+         raise CmdException('local changes in the tree. Use "refresh" or'
+diff --git a/stgit/commands/id.py b/stgit/commands/id.py
+index 94b0229..3819acc 100644
+--- a/stgit/commands/id.py
++++ b/stgit/commands/id.py
+@@ -15,28 +15,24 @@ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ """
+ 
+-import sys, os
+ from optparse import OptionParser, make_option
+ 
+-from stgit.commands.common import *
+-from stgit.utils import *
+-from stgit.out import *
+-from stgit import stack, git
+-
++from stgit.out import out
++from stgit.commands import common
++from stgit.lib import stack
+ 
+ help = 'print the GIT hash value of a StGIT reference'
+ usage = """%prog [options] [id]
+ 
+-Print the hash value of a GIT id (defaulting to HEAD). In addition to
+-the standard GIT id's like heads and tags, this command also accepts
+-'base[@<branch>]' and '[<patch>[@<branch>]][//[bottom | top]]'. If no
+-'top' or 'bottom' are passed and <patch> is a valid patch name, 'top'
+-will be used by default."""
+-
+-directory = DirectoryHasRepository()
+-options = [make_option('-b', '--branch',
+-                       help = 'use BRANCH instead of the default one')]
++Print the SHA1 value of a Git id (defaulting to HEAD). In addition to
++the standard Git id's like heads and tags, this command also accepts
++'[<branch>:]<patch>' and '[<branch>:]{base}' showing the id of a patch
++or the base of the stack. If no branch is specified, it defaults to the
++current one. The bottom of a patch is accessible with the
++'[<branch>:]<patch>^' format."""
+ 
++directory = common.DirectoryHasRepositoryLib()
++options = []
+ 
+ def func(parser, options, args):
+     """Show the applied patches
+@@ -48,4 +44,4 @@ def func(parser, options, args):
+     else:
+         parser.error('incorrect number of arguments')
+ 
+-    out.stdout(git_id(crt_series, id_str))
++    out.stdout(common.git_commit(id_str, directory.repository).sha1)
+diff --git a/stgit/lib/git.py b/stgit/lib/git.py
+index 6ccdfa7..4746da3 100644
+--- a/stgit/lib/git.py
++++ b/stgit/lib/git.py
+@@ -422,11 +422,11 @@ class Repository(RunWithEnv):
+     refs = property(lambda self: self.__refs)
+     def cat_object(self, sha1):
+         return self.run(['git', 'cat-file', '-p', sha1]).raw_output()
+-    def rev_parse(self, rev):
++    def rev_parse(self, rev, discard_stderr = False):
+         try:
+             return self.get_commit(self.run(
+                     ['git', 'rev-parse', '%s^{commit}' % rev]
+-                    ).output_one_line())
++                    ).discard_stderr(discard_stderr).output_one_line())
+         except run.RunException:
+             raise RepositoryException('%s: No such revision' % rev)
+     def get_tree(self, sha1):
+diff --git a/t/t0001-subdir-branches.sh b/t/t0001-subdir-branches.sh
+index 0eed3a4..4df0481 100755
+--- a/t/t0001-subdir-branches.sh
++++ b/t/t0001-subdir-branches.sh
+@@ -18,25 +18,21 @@ test_expect_success 'Create a patch' \
+    stg new foo -m "Add foo.txt" &&
+    stg refresh'
+ 
+-test_expect_success 'Old and new id with non-slashy branch' \
+-  'stg id foo &&
+-   stg id foo// &&
+-   stg id foo/ &&
+-   stg id foo//top &&
+-   stg id foo/top &&
+-   stg id foo@master &&
+-   stg id foo@master//top &&
+-   stg id foo@master/top'
++test_expect_success 'Try id with non-slashy branch' \
++  'stg id &&
++   stg id foo &&
++   stg id foo^ &&
++   stg id master:foo &&
++   stg id master:foo^'
+ 
+ test_expect_success 'Clone branch to slashier name' \
+   'stg branch --clone x/y/z'
+ 
+-test_expect_success 'Try new form of id with slashy branch' \
++test_expect_success 'Try new id with slashy branch' \
+   'stg id foo &&
+-   stg id foo// &&
+-   stg id foo//top &&
+-   stg id foo@x/y/z &&
+-   stg id foo@x/y/z//top'
++   stg id foo^ &&
++   stg id x/y/z:foo &&
++   stg id x/y/z:foo^'
+ 
+ test_expect_success 'Try old id with slashy branch' '
+    ! stg id foo/ &&
+diff --git a/t/t1200-push-modified.sh b/t/t1200-push-modified.sh
+index ba4f70c..e3c6425 100755
+--- a/t/t1200-push-modified.sh
++++ b/t/t1200-push-modified.sh
+@@ -36,7 +36,7 @@ test_expect_success \
+     (
+         cd foo &&
+         GIT_DIR=../bar/.git git-format-patch --stdout \
+-          $(cd ../bar && stg id base@master)..HEAD | git-am -3 -k
++          $(cd ../bar && stg id master:{base})..HEAD | git-am -3 -k
+     )
+ '
+ 
+diff --git a/t/t1201-pull-trailing.sh b/t/t1201-pull-trailing.sh
+index 9d70fe0..8a74873 100755
+--- a/t/t1201-pull-trailing.sh
++++ b/t/t1201-pull-trailing.sh
+@@ -30,7 +30,7 @@ test_expect_success \
+     'Port those patches to orig tree' \
+     '(cd foo &&
+       GIT_DIR=../bar/.git git-format-patch --stdout \
+-          $(cd ../bar && stg id base@master)..HEAD |
++          $(cd ../bar && stg id master:{base})..HEAD |
+       git-am -3 -k
+      )
+     '
+diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
+index ec2a104..cd43c41 100755
+--- a/t/t2200-rebase.sh
++++ b/t/t2200-rebase.sh
+@@ -27,7 +27,7 @@ test_expect_success \
+ 	'Rebase to previous commit' \
+ 	'
+ 	stg rebase master~1 &&
+-	test `stg id base@stack` = `git rev-parse master~1` &&
++	test `stg id stack:{base}` = `git rev-parse master~1` &&
+ 	test `stg applied | wc -l` = 1
+ 	'
+ 
