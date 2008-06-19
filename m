@@ -1,97 +1,70 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Including branch info in git format-patch
-Date: Thu, 19 Jun 2008 23:15:57 +0200
-Message-ID: <bd6139dc0806191415r64755ef3p90cecba7a074d9bc@mail.gmail.com>
-References: <20080619154251.GA16475@jurassic>
-	 <20080619202843.GA6207@sigill.intra.peff.net>
-	 <7vskv9rvrc.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, "Mukund Sivaraman" <muks@banu.com>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 23:17:44 2008
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: [PATCH] completion: add --graph to log command completion
+Date: Thu, 19 Jun 2008 16:15:53 -0500
+Message-ID: <1213910153-10679-1-git-send-email-dpmcgee@gmail.com>
+Cc: git@vger.kernel.org, Dan McGee <dpmcgee@gmail.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 23:17:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9RVo-00059q-FA
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 23:17:44 +0200
+	id 1K9RVp-00059q-3H
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 23:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753984AbYFSVQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 17:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbYFSVQS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 17:16:18 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:45853 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753895AbYFSVP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 17:15:59 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so223701yxl.1
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 14:15:58 -0700 (PDT)
+	id S1753962AbYFSVQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 17:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751564AbYFSVQU
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 17:16:20 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:2060 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753953AbYFSVQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 17:16:08 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so535476ywe.1
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 14:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=u+EfVX+dF2d9WMG6NoOHvyrrkhtFWk5SCYwM86TWQJo=;
-        b=sHIONPIlwFDqtYmlP96Vj1f5D+pzjd0teI+zGdR5aPrKcYVkBIx24aHO8OSHvwZrFV
-         VOaRPT1ODT3i3T10FFeHX8rVYxsu53E8a1v1eXUrLUov92XSANnr257S8qad3yTGxFNV
-         O9pB8x6YlnhAAK4DAuO6j7P+0tHk3+32DJ4qQ=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=b4vQp9ZzavzoXuuMu61Fh2xvZ9Zjwr1Ez2eZGvpAQ90=;
+        b=Tk4RggfkVstnaZQs+CaZWIhnBJ/O7wIrWhQwKzGLl2qeHbtXze+HTmg2+vXRYfNUlP
+         DmO9+m1kIcM0cvlWdilZrMDOeLRJMAZWsmqlJ4u6sqQpcGMh5rSTYkdQrMlp1cSQ9LZn
+         cfbECC3s+mo/N5oY2o8CPOeAlIwVW1gqAeZM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=kJtuswH4RBO2BQb/lsBNmss2RSf0zzljGB5F/ZjxmDxlie8OvQkhF0YXAAF2zUOHfM
-         52XZlC582FwE/6jzyMbJNtrP56eLyzIvCkfplbHa9IlZDxU5KxMjVorA+GRAfYrz0FmN
-         l+A/VIAukY3CEv2wDc5vWUJ4xJOXQhVfAUuvs=
-Received: by 10.150.182.15 with SMTP id e15mr3817883ybf.72.1213910158045;
-        Thu, 19 Jun 2008 14:15:58 -0700 (PDT)
-Received: by 10.150.149.14 with HTTP; Thu, 19 Jun 2008 14:15:57 -0700 (PDT)
-In-Reply-To: <7vskv9rvrc.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ZBnVQZFb4uijMICz/7dEe6xICFyVW9hCLOfA9jiNLlfwtkDL5rqc6+/jTIDsOa0uek
+         m2LLNvXqDmYWztZmYfCHD8vsyXS2JdMKhv+YdKR1PAwpCKxb6LaBTfm6icUPNDpAKeJX
+         ScNAtBt3aX53MWRHUcFB4NUkoEEdn0QpjtEfo=
+Received: by 10.151.141.16 with SMTP id t16mr3832575ybn.60.1213910163383;
+        Thu, 19 Jun 2008 14:16:03 -0700 (PDT)
+Received: from localhost ( [76.197.196.93])
+        by mx.google.com with ESMTPS id x72sm421958pyg.26.2008.06.19.14.15.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 14:16:01 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85533>
 
-On Thu, Jun 19, 2008 at 10:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> You could potentially add a config option to put the branch name inside
->> the '[PATCH]' text. This text is generally stripped away before
->> applying, so it would still free up the receiver to apply on whatever
->> branch they wanted. I don't think it would make sense for git
->> development, since we typically use topic branches, so keeping it
->> configurable would make sense.
->
-> People would work on individual patches on topic branches that are named
-> differently from the branch on the other end anyway (the branch that
-> corresonds to the other end will be used for local integration testing in
-> such a setup), so I do not see much point in stating which local branch
-> happened to have been checked out when the patch was generated, in the
-> output.
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+---
+ contrib/completion/git-completion.bash |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-I think what Mukund is asking for is a way to specify what upstream
-branch the commit should be applied to. This would be a feature to
-help the person who is going to do the applying, so it is ok if the
-person formatting the patch has to do a little work for that (e.g.,
-specify which upstream branch to format-patch as a cmdline option)
-
-> If you have a history of this shape:
-<snip>
-> which "branch label" would you give to the format-patch output that shows
-> commit A?  It may apply to both master and next, and it is really up to
-> the project's convention what to do with it.  The side branch the patch
-> was developed on may be named "quick-hack", which would not have any
-> relevance to the final location of where that patch wants to be in.
-
-You would give it the label of the branch you want it applied to!
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2141b6b..0eb8df0 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -761,6 +761,7 @@ _git_log ()
+ 			--pretty= --name-status --name-only --raw
+ 			--not --all
+ 			--left-right --cherry-pick
++			--graph
+ 			"
+ 		return
+ 		;;
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.5.6
