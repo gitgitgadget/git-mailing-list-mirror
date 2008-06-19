@@ -1,64 +1,68 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
-Subject: git pull error message woes
-Date: Thu, 19 Jun 2008 09:32:53 +0200
-Message-ID: <1213860773.6444.9.camel@localhost>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git diff --cc bug
+Date: Thu, 19 Jun 2008 10:11:35 +0200
+Message-ID: <485A14B7.8080807@viscovery.net>
+References: <48510CFA.3060101@viscovery.net> <48565311.9070407@viscovery.net> <7vhcbpx6bq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 19 09:33:57 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 10:12:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9EeW-0003TW-DO
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 09:33:52 +0200
+	id 1K9FG1-0008A4-Ck
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 10:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755904AbYFSHc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 03:32:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbYFSHc5
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 03:32:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:54156 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752834AbYFSHc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 03:32:57 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so328511fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 00:32:55 -0700 (PDT)
-Received: by 10.86.28.2 with SMTP id b2mr1771987fgb.78.1213860775093;
-        Thu, 19 Jun 2008 00:32:55 -0700 (PDT)
-Received: from ?192.168.1.150? ( [213.3.44.95])
-        by mx.google.com with ESMTPS id d4sm586032fga.8.2008.06.19.00.32.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 19 Jun 2008 00:32:54 -0700 (PDT)
-X-Mailer: Evolution 2.22.2 
+	id S1754753AbYFSILm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 04:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756249AbYFSILl
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 04:11:41 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:42967 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753739AbYFSILj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 04:11:39 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K9FF1-0000dV-RT; Thu, 19 Jun 2008 10:11:36 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 76AA8AFCC; Thu, 19 Jun 2008 10:11:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vhcbpx6bq.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85456>
 
-Hi,
+Junio C Hamano schrieb:
+> The problem is that the internal data structure hooks the deleted lines in
+> front of the surviving line that follows it.  That means that showing the
+> sline[] that holds "void CValuesView::" will show the unwanted "-LRESULT"
+> deletion part as part of it.
+> 
+> You can view this in action by running "git diff -U2" in your tarball
+> repository.  By reducing the context to 2, the leading edge context now
+> begins at the opening brace after "void CValuesView::" line, which does
+> not have deletion lines in front of it, so you will see what you expect.
+> 
+> This patch would fix it for the sample repository, but I am not sure if it
+> has unintended side effects.
 
-I noticed strange behavior while pulling git.git today (this isn't new,
-it just occurred to me for the first time today that there is something
-wrong going on)
+I can verify that it fixes the case in hands as well as a "symmetric" one
+where the accidentally visible deletion is against the first parent, i.e.
+it looks like "- delete_me" instead of the " -delete_me" above. I also did
+some brief tests with various "normal" conflict diffs, and looked at a
+number of merges in my repository, and I noticed nothing odd with this
+patch. So:
 
-I run the 'pu' branch most of the time, and do not create a local branch
-because 'pu' is constantly rebased. I just run git checkout origin/pu
-after pulling (I know I should fetch if I don't want to fetch+merge, but
-it's hard to retrain the fingers)
+Tested-by: Johannes Sixt <johannes.sixt@telecom.at>
 
-Although I am on no branch ($curr_branch is empty), I get the error
-message from error_on_no_merge_candidates instead of being notified that
-I am on no branch currently. Something around line 150-160 in
-git-pull.sh does not seem to work as it should.
-
-The reason might be, that every line in .git/FETCH_HEAD is marked as
-not-for-merge?
-
-I don't know if that's the sign of a deeper problem or if it's just
-confusing behavior.
-
-I tried fixing it myself, but got lost somewhere in the fetch machinery.
-
-Matthias
+-- Hannes
