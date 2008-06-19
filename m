@@ -1,81 +1,81 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 00/11] Build in merge
-Date: Fri, 20 Jun 2008 01:22:25 +0200
-Message-ID: <cover.1213917600.git.vmiklos@frugalware.org>
+Subject: [PATCH 05/11] parseopt: add a new PARSE_OPT_ARGV0_IS_AN_OPTION option
+Date: Fri, 20 Jun 2008 01:22:30 +0200
+Message-ID: <adba33a239d99b30fcccedc0638b060daec1016e.1213917600.git.vmiklos@frugalware.org>
+References: <cover.1213917600.git.vmiklos@frugalware.org>
+ <b9fc7f1cc6c36ba197ed2c0394a6b89ed33c4b96.1213917600.git.vmiklos@frugalware.org>
+ <45f73cd0355a5375dcd8a123dd0facf5cad99061.1213917600.git.vmiklos@frugalware.org>
+ <f41fbf4630e6341ae89eacad52c465cecc605e42.1213917600.git.vmiklos@frugalware.org>
+ <702cfa09fdf6203e1199415af21de787c4a19ead.1213917600.git.vmiklos@frugalware.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 01:23:40 2008
+X-From: git-owner@vger.kernel.org Fri Jun 20 01:23:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9TTd-0006Lk-5e
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 01:23:37 +0200
+	id 1K9TTe-0006Lk-E3
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 01:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753150AbYFSXWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 19:22:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYFSXWk
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 19:22:40 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46945 "EHLO
+	id S1753599AbYFSXWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 19:22:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbYFSXWo
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 19:22:44 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46947 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbYFSXWk (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751372AbYFSXWk (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 19 Jun 2008 19:22:40 -0400
 Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTP id 9E56C1DDC5B
-	for <git@vger.kernel.org>; Fri, 20 Jun 2008 01:22:37 +0200 (CEST)
+	by yugo.frugalware.org (Postfix) with ESMTP id 394CF1DDC5E
+	for <git@vger.kernel.org>; Fri, 20 Jun 2008 01:22:39 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 6A22B18E0E7; Fri, 20 Jun 2008 01:22:36 +0200 (CEST)
+	id AAD0518E0E9; Fri, 20 Jun 2008 01:22:36 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6
+In-Reply-To: <702cfa09fdf6203e1199415af21de787c4a19ead.1213917600.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1213917600.git.vmiklos@frugalware.org>
+References: <cover.1213917600.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85565>
 
-Hi,
+This new option tells parse-options not to ignore argv[0]. This is
+useful when argv cames from split_cmdline(), as in that case argv[0]
+contains a valuable option as well.
 
-Changes since the previous series I sent out to the list:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ parse-options.c |    5 +++++
+ parse-options.h |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
-- get_octopus_merge_bases() now always does a cleanup
-
-- added a new test to make sure git-merge handles more than 25 refs
-
-As usual, comments are welcome. :-)
-
-Miklos Vajna (11):
-  Move split_cmdline() to alias.c
-  Move commit_list_count() to commit.c
-  Move parse-options's skip_prefix() to git-compat-util.h
-  Add new test to ensure git-merge handles pull.twohead and
-    pull.octopus
-  parseopt: add a new PARSE_OPT_ARGV0_IS_AN_OPTION option
-  Move read_cache_unmerged() to read-cache.c
-  git-fmt-merge-msg: make it usable from other builtins
-  Introduce get_octopus_merge_bases() in commit.c
-  Introduce filter_independent() in commit.c
-  Build in merge
-  Add new test to ensure git-merge handles more than 25 refs.
-
- Makefile                                      |    2 +-
- alias.c                                       |   54 ++
- builtin-fmt-merge-msg.c                       |  157 ++--
- builtin-merge-recursive.c                     |    8 -
- builtin-merge.c                               | 1128 +++++++++++++++++++++++++
- builtin-read-tree.c                           |   24 -
- builtin-remote.c                              |   39 +-
- builtin.h                                     |    4 +
- cache.h                                       |    3 +
- commit.c                                      |   51 ++
- commit.h                                      |    3 +
- git-merge.sh => contrib/examples/git-merge.sh |    0 
- git-compat-util.h                             |    6 +
- git.c                                         |   54 +--
- parse-options.c                               |   11 +-
- parse-options.h                               |    1 +
- read-cache.c                                  |   31 +
- t/t7601-merge-pull-config.sh                  |   72 ++
- t/t7602-merge-octopus-many.sh                 |   52 ++
- 19 files changed, 1529 insertions(+), 171 deletions(-)
- create mode 100644 builtin-merge.c
- rename git-merge.sh => contrib/examples/git-merge.sh (100%)
- create mode 100755 t/t7601-merge-pull-config.sh
- create mode 100755 t/t7602-merge-octopus-many.sh
+diff --git a/parse-options.c b/parse-options.c
+index b98833c..1d01a86 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -249,6 +249,11 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ {
+ 	struct optparse_t args = { argv + 1, argv, argc - 1, 0, NULL };
+ 
++	if (flags & PARSE_OPT_ARGV0_IS_AN_OPTION) {
++		args.argv = argv;
++		args.argc = argc;
++	}
++
+ 	for (; args.argc; args.argc--, args.argv++) {
+ 		const char *arg = args.argv[0];
+ 
+diff --git a/parse-options.h b/parse-options.h
+index 4ee443d..3238401 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -20,6 +20,7 @@ enum parse_opt_type {
+ enum parse_opt_flags {
+ 	PARSE_OPT_KEEP_DASHDASH = 1,
+ 	PARSE_OPT_STOP_AT_NON_OPTION = 2,
++	PARSE_OPT_ARGV0_IS_AN_OPTION = 4,
+ };
+ 
+ enum parse_opt_option_flags {
+-- 
+1.5.6
