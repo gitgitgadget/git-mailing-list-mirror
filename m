@@ -1,65 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-rerere observations and feature suggestions
-Date: Thu, 19 Jun 2008 00:30:43 -0700
-Message-ID: <7v7iclx4nw.fsf@gitster.siamese.dyndns.org>
-References: <20080616110113.GA22945@elte.hu>
- <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080616190911.GA7047@elte.hu>
- <20080618105731.GA9242@elte.hu> <m33anao11u.fsf@localhost.localdomain>
- <20080618223821.GJ29404@genesis.frugalware.org>
- <20080619072308.GA12727@diana.vm.bytemark.co.uk>
+From: Matthias Kestenholz <mk@spinlock.ch>
+Subject: git pull error message woes
+Date: Thu, 19 Jun 2008 09:32:53 +0200
+Message-ID: <1213860773.6444.9.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 09:32:01 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 19 09:33:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9Ecf-0002wX-L4
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 09:31:58 +0200
+	id 1K9EeW-0003TW-DO
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 09:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920AbYFSHbD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 03:31:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYFSHbB
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 03:31:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63005 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597AbYFSHbA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 03:31:00 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57A831869F;
-	Thu, 19 Jun 2008 03:30:59 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 091CA1869E; Thu, 19 Jun 2008 03:30:51 -0400 (EDT)
-In-Reply-To: <20080619072308.GA12727@diana.vm.bytemark.co.uk> (Karl
- =?utf-8?Q?Hasselstr=C3=B6m's?= message of "Thu, 19 Jun 2008 09:23:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A993B04C-3DD1-11DD-9A98-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755904AbYFSHc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 03:32:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbYFSHc5
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 03:32:57 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:54156 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752834AbYFSHc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 03:32:57 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so328511fgg.17
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 00:32:55 -0700 (PDT)
+Received: by 10.86.28.2 with SMTP id b2mr1771987fgb.78.1213860775093;
+        Thu, 19 Jun 2008 00:32:55 -0700 (PDT)
+Received: from ?192.168.1.150? ( [213.3.44.95])
+        by mx.google.com with ESMTPS id d4sm586032fga.8.2008.06.19.00.32.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 19 Jun 2008 00:32:54 -0700 (PDT)
+X-Mailer: Evolution 2.22.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85455>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Hi,
 
-> So how many parents can a commit have, exactly? Is there a hard limit
-> somewhere, or just a point beyond which some git tools will start
-> behaving strangely?
+I noticed strange behavior while pulling git.git today (this isn't new,
+it just occurred to me for the first time today that there is something
+wrong going on)
 
-There is no hard limit at the data structure level.
+I run the 'pu' branch most of the time, and do not create a local branch
+because 'pu' is constantly rebased. I just run git checkout origin/pu
+after pulling (I know I should fetch if I don't want to fetch+merge, but
+it's hard to retrain the fingers)
 
-git-commit-tree has a hard limit of accepting 16 parents.  git-blame ha=
-s
-the same 16-parent limit while following the history (but the one in
-'next' has lifted the latter limitation).
+Although I am on no branch ($curr_branch is empty), I get the error
+message from error_on_no_merge_candidates instead of being notified that
+I am on no branch currently. Something around line 150-160 in
+git-pull.sh does not seem to work as it should.
 
-But that is purely academic.  Anybody who does an octopus with more tha=
-n 8
-legs should get his head examined ;-).
+The reason might be, that every line in .git/FETCH_HEAD is marked as
+not-for-merge?
+
+I don't know if that's the sign of a deeper problem or if it's just
+confusing behavior.
+
+I tried fixing it myself, but got lost somewhere in the fetch machinery.
+
+Matthias
