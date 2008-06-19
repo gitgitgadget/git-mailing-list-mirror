@@ -1,94 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] completion: add --graph to log command completion
-Date: Thu, 19 Jun 2008 18:55:52 -0400
-Message-ID: <20080619225552.GQ11793@spearce.org>
-References: <1213910153-10679-1-git-send-email-dpmcgee@gmail.com> <20080619215842.GL11793@spearce.org> <20080619224012.GA6705@mithlond.arda.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Fri Jun 20 00:57:06 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [PATCH] Add option to git-branch to set up automatic rebasing
+Date: Fri, 20 Jun 2008 00:58:06 +0200
+Message-ID: <12AB50C8-6CBF-4D96-8FAB-90234A9006D0@ai.rug.nl>
+References: <1213836802-3163-1-git-send-email-pdebie@ai.rug.nl> <alpine.DEB.1.00.0806191459150.6439@racer> <20080619154350.GA21625@atjola.homenet> <7vr6attey8.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 00:59:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9T3w-00009V-HA
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:57:04 +0200
+	id 1K9T61-0000h0-5u
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 00:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbYFSWz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 18:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbYFSWz7
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:55:59 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45532 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751904AbYFSWz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 18:55:58 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1K9T2e-0007kG-34; Thu, 19 Jun 2008 18:55:44 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 62FE420FBAE; Thu, 19 Jun 2008 18:55:52 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20080619224012.GA6705@mithlond.arda.local>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753395AbYFSW6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 18:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753115AbYFSW6J
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 18:58:09 -0400
+Received: from smtp-1.orange.nl ([193.252.22.241]:60712 "EHLO smtp-1.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753015AbYFSW6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 18:58:08 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6007.online.nl (SMTP Server) with ESMTP id 70D4B7000091;
+	Fri, 20 Jun 2008 00:58:07 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6007.online.nl (SMTP Server) with ESMTP id 17BAF7000081;
+	Fri, 20 Jun 2008 00:58:06 +0200 (CEST)
+X-ME-UUID: 20080619225807972.17BAF7000081@mwinf6007.online.nl
+In-Reply-To: <7vr6attey8.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85557>
 
-Teemu Likonen <tlikonen@iki.fi> wrote:
-> I think I have already sent twice a patch with --graph completion.
 
-I didn't Ack them because at the time --graph wasn't even in next
-yet I think.  Then I got busy and forgot.  And --graph slipped
-through into the 1.5.6 release without your bash completion patches.
-Sorry.
+On 19 jun 2008, at 21:14, Junio C Hamano wrote:
 
-> ---snip---
-> bash: Add more option completions for 'git log'
-> 
-> Options added: --graph --walk-reflogs --stat --numstat --shortstat
-> --decorate --diff-filter= --color-words
-> 
-> Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
-> ---
+>> Hm, --rebasing sounds weird to me as well. Maybe --track=merge and
+>> --track=rebase, with --track being equal to --track=merge?
+>
+> That looks like the best wording so far, although I suspect that the  
+> true
+> reason why all of the above sounds confusing may be because the  
+> concept
+> itself is not clear.
 
-This conflicts with the patch you are replying to, but it makes
-sense to do these options as well.
+That's why I suggested --auto-rebase, which is more verbose in what
+it does. Perhaps we should add it as an optional flag for --track, like
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+   git branch --track --auto-rebase local remote/branch
 
-assuming the semantic (or merge) conflict on --graph is worked out.
-;-)
+? That is a bit long though.
 
->  contrib/completion/git-completion.bash |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 506b40c..e78ca8e 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -761,6 +761,9 @@ _git_log ()
->  			--pretty= --name-status --name-only --raw
->  			--not --all
->  			--left-right --cherry-pick
-> +			--stat --numstat --shortstat
-> +			--decorate --diff-filter=
-> +			--color-words --walk-reflogs --graph
->  			"
->  		return
->  		;;
-> -- 
-> 1.5.6.2.g3c3a
-> 
-
--- 
-Shawn.
+I don't think "--track=rebase" makes a lot of sense, since "track" is
+still a boolean in my head ;)
