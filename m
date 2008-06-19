@@ -1,98 +1,53 @@
-From: "Alf Clement" <alf.clement@gmail.com>
-Subject: Re: git-diff question
-Date: Thu, 19 Jun 2008 17:55:37 +0200
-Message-ID: <556d90580806190855j7f247854m725ed7e6efa48f0b@mail.gmail.com>
-References: <556d90580806190448y2bfeebardb05c5b0b91e53a7@mail.gmail.com>
-	 <m3tzfpmy2b.fsf@localhost.localdomain>
+From: Mukund Sivaraman <muks@banu.com>
+Subject: Including branch info in git format-patch
+Date: Thu, 19 Jun 2008 21:12:52 +0530
+Message-ID: <20080619154251.GA16475@jurassic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:56:55 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 18:03:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9MV2-0001Ul-So
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:56:37 +0200
+	id 1K9Mbz-0004MR-Fi
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 18:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910AbYFSPzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 11:55:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbYFSPzk
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:55:40 -0400
-Received: from gv-out-0910.google.com ([216.239.58.187]:50130 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754016AbYFSPzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 11:55:39 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so128361gvc.37
-        for <git@vger.kernel.org>; Thu, 19 Jun 2008 08:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=cQe/cqGz0P+kRE9DbVPtvKXd0xs2vT/cpuQMCAbvChQ=;
-        b=fs5oTYew0r+GFBMRSvXy05VWQG5eNn/GeQ3rSR7Y0D5kAxFeSLVu/nghIs3nzjYGkF
-         DQF1kPWYLfJfmOIdKvasFTKcKtCHbq4QSm1RfZJ2zx4qI6FdOolkJJv6bElMo5pLMLJ6
-         MbQi0108FabKcTEZHTXTvhrR0J/q/Fo7lPXGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=t1YSUl4HGQ5pRRSpbmN8OEz7siVxk5wi8ZO0+hi+rWWeIcCx8VKsLODudbxrPx5AVn
-         LzfKAQkLm0x929SCb3mB42bUJ6qf+DE5IalTMW99w94cId6ky1VrIlqOkEmXvyGFcoqM
-         5tOcYfZEG9JxdX2C3WwX/G5QvZrUkgWXgH+VM=
-Received: by 10.78.147.6 with SMTP id u6mr1111748hud.67.1213890937796;
-        Thu, 19 Jun 2008 08:55:37 -0700 (PDT)
-Received: by 10.78.144.6 with HTTP; Thu, 19 Jun 2008 08:55:37 -0700 (PDT)
-In-Reply-To: <m3tzfpmy2b.fsf@localhost.localdomain>
+	id S1761534AbYFSQCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 12:02:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761538AbYFSQCp
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 12:02:45 -0400
+Received: from mail.banu.com ([67.19.28.195]:36727 "EHLO mail.banu.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761528AbYFSQCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 12:02:44 -0400
+X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jun 2008 12:02:44 EDT
+Received: from ? (unknown [59.93.81.46])
+	by mail.banu.com (Postfix) with ESMTP id 486701110066;
+	Thu, 19 Jun 2008 10:42:57 -0500 (CDT)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85486>
 
-Hi,
+Hi all
 
-regarding git diff --help:
+We have two public branches on the tinyproxy project[1]: master and 1.6.
+We send patches to the mailing list to get them reviewed before they are
+applied and pushed to the public repo.
 
- --diff-filter=[ACDMRTUXB*]
-        Select only files that are Added (A), Copied (C), Deleted (D),
-        Modified (M), Renamed (R), have their type (mode) changed (T),
-        are Unmerged (U), are Unknown (X), or have had their pairing
+When i use "git format-patch", it doesn't seem to include the branch (or
+remote) name in the email it creates. So a reader of this mail may not
+know what branch to apply it on to test it. Aside from adding in branch
+information manually in the body of the message, is there any other
+existing way to get git format-patch to include it?
 
-and git diff reports mode changes...
+Apologies in advance if this is a stupid question.
 
-CU,
-Alf
+		Mukund
 
-On Thu, Jun 19, 2008 at 2:03 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> "Alf Clement" <alf.clement@gmail.com> writes:
->
->> $ git diff
->> diff --git a/Firmware/Firmware.ccscc b/Firmware/Firmware.ccscc
->> old mode 100755
->> new mode 100644
->> ....
->> returns a list of files where the mode was changed, which seems to be
->> correct. Also
->> modified files are flaged.
->> I wonder why
->> $ git diff --diff-filter=T
->> outputs nothing.
->
-> Isn't 'T' about *t*ype change, i.e. change between ordinary file,
-> symlink, directory and commit (submodule)?
->
->> I am running this under Cygwin.
->
-> Or perhaps this is a cause.
->
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
->
+Refs:
+ 1. http://git.banu.com/?p=tinyproxy;a=summary
