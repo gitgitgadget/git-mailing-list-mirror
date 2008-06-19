@@ -1,64 +1,98 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Add option to git-branch to set up automatic rebasing
-Date: Thu, 19 Jun 2008 17:43:50 +0200
-Message-ID: <20080619154350.GA21625@atjola.homenet>
-References: <1213836802-3163-1-git-send-email-pdebie@ai.rug.nl> <alpine.DEB.1.00.0806191459150.6439@racer>
+From: "Alf Clement" <alf.clement@gmail.com>
+Subject: Re: git-diff question
+Date: Thu, 19 Jun 2008 17:55:37 +0200
+Message-ID: <556d90580806190855j7f247854m725ed7e6efa48f0b@mail.gmail.com>
+References: <556d90580806190448y2bfeebardb05c5b0b91e53a7@mail.gmail.com>
+	 <m3tzfpmy2b.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:46:16 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:56:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9MKg-0005hq-Ld
-	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:45:55 +0200
+	id 1K9MV2-0001Ul-So
+	for gcvg-git-2@gmane.org; Thu, 19 Jun 2008 17:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760559AbYFSPoA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 11:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760554AbYFSPn6
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:43:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34654 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760487AbYFSPn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 11:43:57 -0400
-Received: (qmail invoked by alias); 19 Jun 2008 15:43:53 -0000
-Received: from i577BB2CE.versanet.de (EHLO atjola.local) [87.123.178.206]
-  by mail.gmx.net (mp003) with SMTP; 19 Jun 2008 17:43:53 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19kHKFTrJxkpAfqs7UaJ5tCMZvQ1mWnGUOHZpKRsp
-	P0cMIlWDsuluSK
+	id S1755910AbYFSPzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2008 11:55:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbYFSPzk
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 11:55:40 -0400
+Received: from gv-out-0910.google.com ([216.239.58.187]:50130 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754016AbYFSPzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 11:55:39 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so128361gvc.37
+        for <git@vger.kernel.org>; Thu, 19 Jun 2008 08:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=cQe/cqGz0P+kRE9DbVPtvKXd0xs2vT/cpuQMCAbvChQ=;
+        b=fs5oTYew0r+GFBMRSvXy05VWQG5eNn/GeQ3rSR7Y0D5kAxFeSLVu/nghIs3nzjYGkF
+         DQF1kPWYLfJfmOIdKvasFTKcKtCHbq4QSm1RfZJ2zx4qI6FdOolkJJv6bElMo5pLMLJ6
+         MbQi0108FabKcTEZHTXTvhrR0J/q/Fo7lPXGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=t1YSUl4HGQ5pRRSpbmN8OEz7siVxk5wi8ZO0+hi+rWWeIcCx8VKsLODudbxrPx5AVn
+         LzfKAQkLm0x929SCb3mB42bUJ6qf+DE5IalTMW99w94cId6ky1VrIlqOkEmXvyGFcoqM
+         5tOcYfZEG9JxdX2C3WwX/G5QvZrUkgWXgH+VM=
+Received: by 10.78.147.6 with SMTP id u6mr1111748hud.67.1213890937796;
+        Thu, 19 Jun 2008 08:55:37 -0700 (PDT)
+Received: by 10.78.144.6 with HTTP; Thu, 19 Jun 2008 08:55:37 -0700 (PDT)
+In-Reply-To: <m3tzfpmy2b.fsf@localhost.localdomain>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806191459150.6439@racer>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85485>
 
-On 2008.06.19 15:00:19 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Thu, 19 Jun 2008, Pieter de Bie wrote:
->=20
-> > This functionality was actually introduced in
-> >  0a02186f924aee1bd69f18ed01f645aa332ce0d1, but can only be activate=
-d by the
-> > configuration flag. Now we can also setup auto rebasing using the -=
--rebase
-> > flag in git-branch or git-checkout, similar to how --track works.
->=20
-> How about "--rebasing"?  I would scratch my head a bit how a new bran=
-ch=20
-> and a rebase would go together.
+Hi,
 
-Hm, --rebasing sounds weird to me as well. Maybe --track=3Dmerge and
---track=3Drebase, with --track being equal to --track=3Dmerge?
+regarding git diff --help:
 
-Bj=F6rn
+ --diff-filter=[ACDMRTUXB*]
+        Select only files that are Added (A), Copied (C), Deleted (D),
+        Modified (M), Renamed (R), have their type (mode) changed (T),
+        are Unmerged (U), are Unknown (X), or have had their pairing
+
+and git diff reports mode changes...
+
+CU,
+Alf
+
+On Thu, Jun 19, 2008 at 2:03 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Alf Clement" <alf.clement@gmail.com> writes:
+>
+>> $ git diff
+>> diff --git a/Firmware/Firmware.ccscc b/Firmware/Firmware.ccscc
+>> old mode 100755
+>> new mode 100644
+>> ....
+>> returns a list of files where the mode was changed, which seems to be
+>> correct. Also
+>> modified files are flaged.
+>> I wonder why
+>> $ git diff --diff-filter=T
+>> outputs nothing.
+>
+> Isn't 'T' about *t*ype change, i.e. change between ordinary file,
+> symlink, directory and commit (submodule)?
+>
+>> I am running this under Cygwin.
+>
+> Or perhaps this is a cause.
+>
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+>
