@@ -1,63 +1,69 @@
-From: Cristian Peraferrer <corellian.c@gmail.com>
-Subject: Is git-imap-send able to use SSL?
-Date: Fri, 20 Jun 2008 18:08:42 +0200
-Message-ID: <D3F1364D-68DC-457D-AC54-AE4B70B1B5AB@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Jose =?iso-8859-1?q?Mar=EDa_G=F3mez_Vergara?= <josemaria@jmgv.org>
+Subject: Re: Are C++ contributions welcome?
+Date: Fri, 20 Jun 2008 18:11:01 +0200
+Organization: JmGV Research
+Message-ID: <200806201811.01444.josemaria@jmgv.org>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost> <alpine.DEB.1.00.0806201400550.6439@racer> <46a038f90806200859r520d0593q367d6625a240595a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 18:09:48 2008
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 18:12:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9jBI-0004Fk-Q1
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 18:09:45 +0200
+	id 1K9jDe-00057E-4R
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 18:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbYFTQIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 12:08:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbYFTQIs
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 12:08:48 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:32677 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642AbYFTQIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 12:08:47 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so19785ugf.16
-        for <git@vger.kernel.org>; Fri, 20 Jun 2008 09:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=DIh3QyIJa5c05gek+upVRpnPBphTxMpZQ1JkiQcSmlw=;
-        b=x7PBeSqouTjKEA4SEJDylInnHcgoFJTVNOsvbNrUuvrSlsg1HG3ZL5Um7kgYyYGyB1
-         kX2pEKowEsSV+sniS8w2j7MkHhW1HeqsQvMGZg91d5dgLcQ1ukI905C4gQg4IAo1HZhG
-         8cxlOUk2392sLBW4LgH+96I3NFWYVYDjLUm90=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=JtKvQ/Qf1c/B7lpDDpJ+4yh1UJP8oRj01k1ZFQ7hNPQSTfRr6NGBc+3hjFLiPtKR0O
-         wdKr2eLqmUnR+w+FsYsTXqjy41bsvjXHCHlW5PWApQ9gwNvDPAS8bwQzOXZWeUjxBgcO
-         amgBr2QhEAA7Hlpt7nC1HisIiIJ1U7wcFIYfw=
-Received: by 10.210.54.15 with SMTP id c15mr3209468eba.128.1213978126342;
-        Fri, 20 Jun 2008 09:08:46 -0700 (PDT)
-Received: from ?192.168.1.5? ( [80.33.90.183])
-        by mx.google.com with ESMTPS id g9sm3226548gvc.0.2008.06.20.09.08.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Jun 2008 09:08:45 -0700 (PDT)
-X-Mailer: Apple Mail (2.924)
+	id S1752542AbYFTQLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 12:11:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754623AbYFTQLM
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 12:11:12 -0400
+Received: from laura.centrologic.com ([212.34.136.105]:32813 "EHLO
+	laura.centrologic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbYFTQLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 12:11:11 -0400
+Received: from [84.76.236.140] (helo=neura.local)
+	by laura.centrologic.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1K9jCY-0007KW-Ts; Fri, 20 Jun 2008 18:11:03 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <46a038f90806200859r520d0593q367d6625a240595a@mail.gmail.com>
+Content-Disposition: inline
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85660>
 
-I am trying to use git-imap-send to send a Draft to my GMail account  
-which uses SSL to connect, I have put the correct port (993 in that  
-case) in the config file but it seems it doesn't work. I figure that  
-git-imap-send is not able to connect using SSL.
+Good that is a really good news because I really like doing front-ends and GUI 
+applications. I will take care of this.
 
--- 
-Cristian Peraferrer
-Jabber ID: corellian at swissjabber.ch
+On Friday 20 June 2008 17:59:09 Martin Langhoff wrote:
+> On Fri, Jun 20, 2008 at 9:03 AM, Johannes Schindelin
+>
+> <Johannes.Schindelin@gmx.de> wrote:
+> >> I don't feel comfortable programing in C and I prefer C++ only because I
+> >> have more experience using this one. May I contribute to this project in
+> >> that language?.
+>
+> if you have UI/Win32 experience, a good friendly UI for newcomers to
+> GIT is something we are lacking. Johannes got started with git-cheetah
+> a while ago, and there is a similar project called TortoiseHg, either
+> might be a good starting point.
+>
+> As Jakub noted, C++ is a reasonably good fit for UIs, and we are
+> lacking those. We have a fantastic team of people doing C work on the
+> core of git, and noone on GUIs. So I'd say yes, C++/UI help is
+> something we need 'round here :-)
+>
+> cheers,
+>
+>
+>
+> m
