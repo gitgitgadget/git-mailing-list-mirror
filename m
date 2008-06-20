@@ -1,79 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push: add a --delete flag to allow branch deletion
-Date: Thu, 19 Jun 2008 17:51:13 -0700
-Message-ID: <7vej6tq67y.fsf@gitster.siamese.dyndns.org>
-References: <1213884787-24692-1-git-send-email-pdebie@ai.rug.nl>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@lavabit.com>
+Subject: Re: [PATCH -resend] Add a helper script to send patches with Mozilla Thunderbird
+Date: Fri, 20 Jun 2008 10:22:12 +0900
+Message-ID: <20080620102212.6117@nanako3.lavabit.com>
+References: <7vmylhq6lb.fsf@gitster.siamese.dyndns.org>
+	<484D6A40.60002@etek.chalmers.se>
+	<485AE9FD.8050508@etek.chalmers.se>
+	<7vmylhq6lb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Fri Jun 20 02:52:33 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lukas Sandstrm <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 03:24:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9UrZ-0004ND-Pf
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 02:52:26 +0200
+	id 1K9VM7-0003w7-Fi
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 03:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbYFTAvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 20:51:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752833AbYFTAvb
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 20:51:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447AbYFTAva (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 20:51:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 235E81D2EB;
-	Thu, 19 Jun 2008 20:51:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 232DC1D2EA; Thu, 19 Jun 2008 20:51:15 -0400 (EDT)
-In-Reply-To: <1213884787-24692-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
- Bie's message of "Thu, 19 Jun 2008 16:13:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 010D6C82-3E63-11DD-88C0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754353AbYFTBWv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 21:22:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754326AbYFTBWv
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 21:22:51 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:40460 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340AbYFTBWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2008 21:22:50 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 4F46EC7A77;
+	Thu, 19 Jun 2008 20:22:42 -0500 (CDT)
+Received: from nanako3.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id 9W6GC8NTCL7L; Thu, 19 Jun 2008 20:22:50 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=tYosfktuQG5hBONHVTq5PphNAeff/dG3H37NefE2UtLMA8nXZhPz6Br3wtiEedls9bJcVv0ai2UGoBQZfABIpfF7PHynWllHblsYd2Cr29EC58887gK0FByufG0k5b9QZCVUVNBdCQiRLSH0td4fbi5rMe4YcyekMGGlAEimOQ8=;
+  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
+In-Reply-To: <7vmylhq6lb.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85585>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index 89e0049..6a772a5 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -11,6 +11,8 @@ SYNOPSIS
->  [verse]
->  'git-push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
->             [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
-> +'git push' --delete <repository> <branchname> [<branch2> ...]
-> +
->  
->  DESCRIPTION
->  -----------
-> @@ -18,6 +20,8 @@ DESCRIPTION
->  Updates remote refs using local refs, while sending objects
->  necessary to complete the given refs.
->  
-> +In the second form, deletes one or more branches on a given repository.
-> +
+> Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se> writes:
+>
+>> The script appp.sh can be used with the External Editor extension fo=
+r
+>> Mozilla Thunderbird in order to be able to send inline patches in an
+>> easy way.
+>>
+>> Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+>> ---
+>>
+>> Resending. It would be nice if this ended up in contrib/
+>>
+>> /Lukas
+>>
+>>  Documentation/SubmittingPatches          |    5 +++
+>>  contrib/thunderbird-patch-inline/README  |   20 +++++++++++
+>>  contrib/thunderbird-patch-inline/appp.sh |   55 +++++++++++++++++++=
+++++++++
+>
+> A silly question.  What does "appp" stand for?  AppendPatch does not =
+have
+> that many P's in it.
 
-Is this really about branches?  Is it usable to somehow delete tags, and
-if so how?
+Silly Junio (^_^).  Count them again.
 
-What happens if you have a branch 'foo' and a tag 'foo' in the remote
-repository and you say "git push --delete $there foo"?
-
-> @@ -125,6 +146,18 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  
->  	argc = parse_options(argc, argv, options, push_usage, 0);
->  
-> +	if (delete) {
-> +		if (all || mirror || tags || force || repo)
-> +			die("--delete cannot be used with --all, --mirror, --tags, --farce or --repo");
-
-Nice try, but it is not so amusing.
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
