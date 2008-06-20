@@ -1,111 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] t/README: Add 'Skipping Tests' section below 'Running Tests'
-Date: Fri, 20 Jun 2008 23:10:50 +0200
-Message-ID: <1213996250-10406-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 23:11:54 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [WIP/PATCH v3] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Sat, 21 Jun 2008 00:04:57 +0200
+Message-ID: <485C2989.6060406@gmail.com>
+References: <1213487844-685-1-git-send-email-LeWiemann@gmail.com> <200806201408.05254.jnareb@gmail.com> <485BB578.3040605@gmail.com> <200806202003.55919.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 00:06:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9nth-0000sX-Dc
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 23:11:53 +0200
+	id 1K9ok4-0006sG-IQ
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 00:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754454AbYFTVK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 17:10:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbYFTVK4
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 17:10:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:12105 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753734AbYFTVKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 17:10:55 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so66848ugf.16
-        for <git@vger.kernel.org>; Fri, 20 Jun 2008 14:10:54 -0700 (PDT)
+	id S1755201AbYFTWFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 18:05:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755211AbYFTWFE
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 18:05:04 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:47955 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755000AbYFTWFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 18:05:02 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1421483fkq.5
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 15:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc
-         :subject:date:message-id:x-mailer;
-        bh=yNLAvzZs+g2WwFZuUeCaCTt0CaHKGtU//6gQfQx1cdA=;
-        b=CtE2nO5LF9s59jLkfLRMdcBRwVqTqCuPDHVdah6LU2wrHi7biLDAz/2aC5dMT9Zlff
-         oSHdO6ibHcx22gI5J1H8VGUs451VqPBQ1iMVwf8rRTCa0mqFD+t5rgVBSKtgr54mrRPp
-         WS6MZn0A2n2nixpkJrfPCqQjM3cR9RC7Am1Jg=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=Wab5IIpyAlTrqHZozq7ZhjVMGXz8tk7Gjbp/3GYdOEo=;
+        b=Motp9Pq9jGjh2mI5fEng1gr3ZY8gGWG/UbnawJD+lnOoF4rtJEfQtSY6iZtOCWAsIq
+         gSaUtb9cijmKI4Zz6MKBWoxxZyGHti/3WxIauGGP2Yx9ghsLweYGGXaNxXI/0N9dJwSl
+         sWTJQMrZBGUdcg8VumfGNlvL4EkCfVbeOQtvA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Zewmr9E67U/qGdFg/ntQ9fSlNmHr9TbLduQY3Xhhfn2kytl9g2WJ85WZILHqM+eL0i
-         o4umvXeWbULuDdtDMjGKgRr1KO3Sw4Tm9aYGzc4T+gKp+JvLV+13v3Q9RY63BCVkjp7K
-         0BcvRdlMdaiiEB2zQeXuEHtZ3I9jIDgWNbVnQ=
-Received: by 10.210.76.12 with SMTP id y12mr3537996eba.151.1213996254200;
-        Fri, 20 Jun 2008 14:10:54 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.208.51])
-        by mx.google.com with ESMTPS id z33sm3500219ikz.0.2008.06.20.14.10.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Jun 2008 14:10:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5KLAqeV010430;
-	Fri, 20 Jun 2008 23:10:52 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5KLApFN010429;
-	Fri, 20 Jun 2008 23:10:51 +0200
-X-Mailer: git-send-email 1.5.6
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=HCY+nsi7OkHh9INMIMt5htlvjI2m9CwwsD5XkShft3uf9W1ZaZ/GoSJQQ8JENHzfQs
+         KuZxV2BkLjEr9IVZdTBX08ovrn57xxTpFstmcsoRQRr3uWSU+EptCamWLBi7IIBirL2J
+         yox7oqkWH35yJgIDa11EYPJFFWSrI0z38aLDQ=
+Received: by 10.78.195.10 with SMTP id s10mr1795167huf.32.1213999500466;
+        Fri, 20 Jun 2008 15:05:00 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.240.210])
+        by mx.google.com with ESMTPS id 20sm1664318huf.3.2008.06.20.15.04.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 20 Jun 2008 15:04:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200806202003.55919.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85678>
 
-Add description of GIT_SKIP_TESTS variable, taken almost verbatim
-(adjusting for conventions in t/README) from the commit message in
+Jakub Narebski wrote:
+> Lea Wiemann wrote:
+>> Sure; FWIW I'm generally in favor of having a large initial commit for 
+>> new independent files [...]
+> 
+> I just think that having this separate could help bisectability in
+> the case of errors.
 
-   04ece59 (GIT_SKIP_TESTS: allow users to omit tests that are known to break)
+Hm...  I wouldn't think that bisect could be necessary for a long linear 
+(sequential) test script, where the errors are clearly locatable.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-So I don't have to look it up every time I want to use it...
+> What could be added is different types of stage output: filenames with
+> '*', '+', '=', ':', '?', whitespace, etc.  Checking if submodules
+> doesn't trip gitweb would be good idea too.
 
- t/README |   28 ++++++++++++++++++++++++++++
- 1 files changed, 28 insertions(+), 0 deletions(-)
+Yup, filenames with ampersands and semicolons would be fun, too. 
+(Submodules seem to work, but that should be covered as well of course.)
 
-diff --git a/t/README b/t/README
-index dc89263..8f12d48 100644
---- a/t/README
-+++ b/t/README
-@@ -59,6 +59,34 @@ Running Tests
- 	available), for more exhaustive testing.
- 
- 
-+Skipping Tests
-+--------------
-+
-+In some environments, certain tests have no way of succeeding
-+due to platform limitation, such as lack of 'unzip' program, or
-+filesystem that do not allow arbitrary sequence of non-NUL bytes
-+as pathnames.
-+
-+You should be able to say something like
-+
-+    $ GIT_SKIP_TESTS=t9200.8 sh ./t9200-git-cvsexport-commit.sh
-+
-+and even:
-+
-+    $ GIT_SKIP_TESTS='t[0-4]??? t91?? t9200.8' make
-+
-+to omit such tests.  The value of the environment variable is a
-+SP separated list of patterns that tells which tests to skip,
-+and either can match the "t[0-9]{4}" part to skip the whole
-+test, or t[0-9]{4} followed by ".$number" to say which
-+particular test to skip.
-+
-+Note that some tests in the existing test suite rely on previous
-+test item, so you cannot arbitrarily disable one and expect the
-+remainder of test to check what the test originally was intended
-+to check.
-+
-+
- Naming Tests
- ------------
- 
--- 
-1.5.6
+> [Full SHA1s] would reduce number of operations when crawling gitweb output.
+
+Right; changed.
+
+> Actually ->cgi_application(<path>) is implemented using ->cgi(<sub>)
+> in TWM::CGI.  The bug is that it uses straight "system($application)",
+> 
+> [it] would fail if you run test from the directory which contains spaces,
+
+OK, now I see what you mean.  Well, awesome, borked lirbareis.  I've put 
+this as a TODO into the commit message; will take care of it later.
+
+>>>> +our $baseurl = "http://localhost";
+>>>> +our($params, $url, $pagedesc, $status);
+>>> I think we can use 'my' here;
+
+Fixed, and thanks for the offline explanations.
+
+-- Lea
