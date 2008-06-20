@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] git-merge-file --ours, --theirs
-Date: Fri, 20 Jun 2008 00:38:22 -0700
-Message-ID: <7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org>
+Subject: [PATCH 2/2] git-merge-recursive-{ours,theirs}
+Date: Fri, 20 Jun 2008 00:48:11 -0700
+Message-ID: <7vbq1wo8ck.fsf_-_@gitster.siamese.dyndns.org>
 References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
  <20080616092554.GB29404@genesis.frugalware.org>
  <48563D6C.8060704@viscovery.net>
@@ -11,259 +11,378 @@ References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
  <alpine.DEB.1.00.0806181618070.6439@racer>
  <alpine.DEB.1.00.0806181627260.6439@racer>
  <7viqw6zovi.fsf@gitster.siamese.dyndns.org>
+ <7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: geoffrey.russell@gmail.com, sverre@rabbelier.nl,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 20 09:39:43 2008
+X-From: git-owner@vger.kernel.org Fri Jun 20 09:49:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9bDX-0002MI-TG
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 09:39:32 +0200
+	id 1K9bN5-0005r6-Mv
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 09:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251AbYFTHij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 03:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbYFTHii
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 03:38:38 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63745 "EHLO
+	id S1751639AbYFTHsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 03:48:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbYFTHsZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 03:48:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64985 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbYFTHih (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 03:38:37 -0400
+	with ESMTP id S1750986AbYFTHsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 03:48:24 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DBFF21E748;
-	Fri, 20 Jun 2008 03:38:34 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DF89E1E7C0;
+	Fri, 20 Jun 2008 03:48:22 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7F5511E747; Fri, 20 Jun 2008 03:38:24 -0400 (EDT)
-In-Reply-To: <7viqw6zovi.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 18 Jun 2008 09:31:13 -0700")
+ ESMTPSA id 193921E7BE; Fri, 20 Jun 2008 03:48:13 -0400 (EDT)
+In-Reply-To: <7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
+ Hamano's message of "Fri, 20 Jun 2008 00:38:22 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E3839BDA-3E9B-11DD-A7BF-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 41FF25DE-3E9D-11DD-81DB-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85602>
 
-Often people want their conflicting merges autoresolved by favouring
-upstream changes (or their own --- it's the same thing), and hinted to run
-"git diff --name-only | xargs git checkout MERGE_HEAD --".  This is
-essentially to accept automerge results for the paths that are fully
-resolved automatically while taking their version of the file in full for
-paths that have conflicts.
-
-This is problematic on two counts.
-
-One problem is that this is not exactly what these people want.  They
-usually want to salvage as much automerge result as possible.  In
-particular, they want to keep autoresolved parts in conflicting paths, as
-well as the paths that are fully autoresolved.
-
-This patch teaches two new modes of operation to the lowest-lever merge
-machinery, xdl_merge().  Instead of leaving the conflicted lines from both
-sides enclosed in <<<, ===, and >>> markers, you can tell the conflicts to
-be resolved favouring your side or their side of changes.
-
-A larger problem is that this tends to encourage a bad workflow by
-allowing them to record such a mixed up half-merge result as a full commit
-without auditing.  This commit does not tackle this latter issue.  In git,
-we usually give long enough rope to users with strange wishes as long as
-the risky features is not on by default.
+This uses the low-level mechanism for "ours" and "theirs" autoresolution
+introduced by the previous commit to introduce two additional merge
+strategies, merge-recursive-ours and merge-recursive-theirs.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ Makefile                     |    3 ++
+ builtin-merge-recursive.c    |   37 ++++++++++++++++++++++++---
+ git-merge.sh                 |    3 +-
+ git.c                        |    2 +
+ ll-merge.c                   |   24 +++++++++++------
+ ll-merge.h                   |    4 ++-
+ t/t6034-merge-ours-theirs.sh |   56 ++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 114 insertions(+), 15 deletions(-)
+ create mode 100755 t/t6034-merge-ours-theirs.sh
 
- * Essentially the same patch but with documentation.
-
- Documentation/git-merge-file.txt |   12 ++++++++++--
- builtin-merge-file.c             |   10 ++++++++--
- xdiff/xdiff.h                    |    8 +++++++-
- xdiff/xmerge.c                   |   24 ++++++++++++++++--------
- 4 files changed, 41 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
-index 149f131..87e07d3 100644
---- a/Documentation/git-merge-file.txt
-+++ b/Documentation/git-merge-file.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git-merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
--	[-p|--stdout] [-q|--quiet] <current-file> <base-file> <other-file>
-+	[--ours|--theirs] [-p|--stdout] [-q|--quiet]
-+	<current-file> <base-file> <other-file>
+diff --git a/Makefile b/Makefile
+index b003e3e..82d2892 100644
+--- a/Makefile
++++ b/Makefile
+@@ -304,6 +304,8 @@ BUILT_INS += git-format-patch$X
+ BUILT_INS += git-fsck-objects$X
+ BUILT_INS += git-get-tar-commit-id$X
+ BUILT_INS += git-init$X
++BUILT_INS += git-merge-recursive-ours$X
++BUILT_INS += git-merge-recursive-theirs$X
+ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+@@ -1381,6 +1383,7 @@ check-docs::
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
++		git-merge-recursive-ours | git-merge-recursive-theirs | \
+ 		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
+ 		git-fsck-objects | git-init-db | \
+ 		git-?*--?* ) continue ;; \
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index 4aa28a1..a355e7a 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -20,7 +20,11 @@
+ #include "attr.h"
+ #include "merge-recursive.h"
  
+-static int subtree_merge;
++static enum {
++	MERGE_RECURSIVE_SUBTREE = 1,
++	MERGE_RECURSIVE_OURS,
++	MERGE_RECURSIVE_THEIRS,
++} merge_recursive_variants;
  
- DESCRIPTION
-@@ -34,7 +35,9 @@ normally outputs a warning and brackets the conflict with <<<<<<< and
- 	>>>>>>> B
- 
- If there are conflicts, the user should edit the result and delete one of
--the alternatives.
-+the alternatives.  When `--ours` or `--theirs` option is in effect, however,
-+these conflicts are resolved favouring lines from `<current-file>` or
-+lines from `<other-file>` respectively.
- 
- The exit value of this program is negative on error, and the number of
- conflicts otherwise. If the merge was clean, the exit value is 0.
-@@ -62,6 +65,11 @@ OPTIONS
- -q::
- 	Quiet;  do  not  warn about conflicts.
- 
-+--ours::
-+--theirs::
-+	Instead of leaving conflicts in the file, resolve conflicts
-+	favouring our (or their) side of the lines.
-+
- 
- EXAMPLES
- --------
-diff --git a/builtin-merge-file.c b/builtin-merge-file.c
-index 3605960..7d4ca8c 100644
---- a/builtin-merge-file.c
-+++ b/builtin-merge-file.c
-@@ -4,7 +4,7 @@
- #include "xdiff-interface.h"
- 
- static const char merge_file_usage[] =
--"git merge-file [-p | --stdout] [-q | --quiet] [-L name1 [-L orig [-L name2]]] file1 orig_file file2";
-+"git merge-file [-p | --stdout] [-q | --quiet] [--ours|--theirs] [-L name1 [-L orig [-L name2]]] file1 orig_file file2";
- 
- int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ static struct tree *shift_tree_object(struct tree *one, struct tree *two)
  {
-@@ -13,6 +13,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	mmbuffer_t result = {NULL, 0};
- 	xpparam_t xpp = {XDF_NEED_MINIMAL};
- 	int ret = 0, i = 0, to_stdout = 0;
-+	int flags, favor = 0;
+@@ -642,6 +646,7 @@ static int merge_3way(mmbuffer_t *result_buf,
+ 	mmfile_t orig, src1, src2;
+ 	char *name1, *name2;
+ 	int merge_status;
++	int flag, favor;
  
- 	while (argc > 4) {
- 		if (!strcmp(argv[1], "-L") && i < 3) {
-@@ -25,6 +26,10 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 		else if (!strcmp(argv[1], "-q") ||
- 				!strcmp(argv[1], "--quiet"))
- 			freopen("/dev/null", "w", stderr);
-+		else if (!strcmp(argv[1], "--ours"))
+ 	name1 = xstrdup(mkpath("%s:%s", branch1, a->path));
+ 	name2 = xstrdup(mkpath("%s:%s", branch2, b->path));
+@@ -650,9 +655,26 @@ static int merge_3way(mmbuffer_t *result_buf,
+ 	fill_mm(a->sha1, &src1);
+ 	fill_mm(b->sha1, &src2);
+ 
++	if (index_only)
++		favor = 0;
++	else {
++		switch (merge_recursive_variants) {
++		case MERGE_RECURSIVE_OURS:
 +			favor = XDL_MERGE_FAVOR_OURS;
-+		else if (!strcmp(argv[1], "--theirs"))
++			break;
++		case MERGE_RECURSIVE_THEIRS:
 +			favor = XDL_MERGE_FAVOR_THEIRS;
- 		else
- 			usage(merge_file_usage);
- 		argc--;
-@@ -45,8 +50,9 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 					argv[i + 1]);
- 	}
- 
-+	flags = XDL_MERGE_FLAGS(XDL_MERGE_ZEALOUS_ALNUM, favor);
- 	ret = xdl_merge(mmfs + 1, mmfs + 0, names[0], mmfs + 2, names[2],
--			&xpp, XDL_MERGE_ZEALOUS_ALNUM, &result);
-+			&xpp, flags, &result);
- 
- 	for (i = 0; i < 3; i++)
- 		free(mmfs[i].ptr);
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 413082e..d40cf21 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -99,9 +99,15 @@ long xdl_mmfile_size(mmfile_t *mmf);
- int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb);
- 
-+#define XDL_MERGE_FAVOR_OURS		1
-+#define XDL_MERGE_FAVOR_THEIRS		2
-+#define XDL_MERGE_FAVOR(flag)		(((flag)>>4) & 03)
-+#define XDL_MERGE_LEVEL(flag)		((flag) & 07)
-+#define XDL_MERGE_FLAGS(level,flag)	((level) | ((flag)<<4))
++			break;
++		default:
++			favor = 0;
++			break;
++		}
++	}
++	flag = LL_MERGE_FLAGS(index_only, favor);
 +
- int xdl_merge(mmfile_t *orig, mmfile_t *mf1, const char *name1,
- 		mmfile_t *mf2, const char *name2,
--		xpparam_t const *xpp, int level, mmbuffer_t *result);
-+		xpparam_t const *xpp, int flag, mmbuffer_t *result);
+ 	merge_status = ll_merge(result_buf, a->path, &orig,
+ 				&src1, name1, &src2, name2,
+-				index_only);
++				flag);
  
- #ifdef __cplusplus
- }
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 82b3573..88c29ae 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -114,7 +114,9 @@ static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
- }
- 
- static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
--		xdfenv_t *xe2, const char *name2, xdmerge_t *m, char *dest)
-+				 xdfenv_t *xe2, const char *name2,
-+				 int favor,
-+				 xdmerge_t *m, char *dest)
+ 	free(name1);
+ 	free(name2);
+@@ -1171,7 +1193,7 @@ int merge_trees(struct tree *head,
  {
- 	const int marker_size = 7;
- 	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
-@@ -124,6 +126,9 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
- 	int size, i1, j;
+ 	int code, clean;
  
- 	for (size = i1 = 0; m; m = m->next) {
-+		if (favor && !m->mode)
-+			m->mode = favor;
-+
- 		if (m->mode == 0) {
- 			size += xdl_recs_copy(xe1, i1, m->i1 - i1, 0,
- 					dest ? dest + size : NULL);
-@@ -322,8 +327,9 @@ static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m,
-  * returns < 0 on error, == 0 for no conflicts, else number of conflicts
-  */
- static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
--		xdfenv_t *xe2, xdchange_t *xscr2, const char *name2,
--		int level, xpparam_t const *xpp, mmbuffer_t *result) {
-+			xdfenv_t *xe2, xdchange_t *xscr2, const char *name2,
-+			int level, int favor,
-+			xpparam_t const *xpp, mmbuffer_t *result) {
- 	xdmerge_t *changes, *c;
- 	int i1, i2, chg1, chg2;
- 
-@@ -430,25 +436,27 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
- 	/* output */
- 	if (result) {
- 		int size = xdl_fill_merge_buffer(xe1, name1, xe2, name2,
--			changes, NULL);
-+						 favor, changes, NULL);
- 		result->ptr = xdl_malloc(size);
- 		if (!result->ptr) {
- 			xdl_cleanup_merge(changes);
- 			return -1;
- 		}
- 		result->size = size;
--		xdl_fill_merge_buffer(xe1, name1, xe2, name2, changes,
--				result->ptr);
-+		xdl_fill_merge_buffer(xe1, name1, xe2, name2,
-+				      favor, changes, result->ptr);
+-	if (subtree_merge) {
++	if (merge_recursive_variants == MERGE_RECURSIVE_SUBTREE) {
+ 		merge = shift_tree_object(head, merge);
+ 		common = shift_tree_object(head, common);
  	}
- 	return xdl_cleanup_merge(changes);
+@@ -1379,11 +1401,18 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 	int index_fd;
+ 
++	merge_recursive_variants = 0;
+ 	if (argv[0]) {
+ 		int namelen = strlen(argv[0]);
+ 		if (8 < namelen &&
+ 		    !strcmp(argv[0] + namelen - 8, "-subtree"))
+-			subtree_merge = 1;
++			merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
++		else if (5 < namelen &&
++			 !strcmp(argv[0] + namelen - 5, "-ours"))
++			merge_recursive_variants = MERGE_RECURSIVE_OURS;
++		else if (7 < namelen &&
++			 !strcmp(argv[0] + namelen - 7, "-theirs"))
++			merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
+ 	}
+ 
+ 	git_config(merge_config, NULL);
+diff --git a/git-merge.sh b/git-merge.sh
+index 8026ccf..39b5cd9 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -31,10 +31,11 @@ LF='
+ '
+ 
+ all_strategies='recur recursive octopus resolve stupid ours subtree'
++all_strategies="$all_strategies recursive-ours recursive-theirs"
+ default_twohead_strategies='recursive'
+ default_octopus_strategies='octopus'
+ no_fast_forward_strategies='subtree ours'
+-no_trivial_strategies='recursive recur subtree ours'
++no_trivial_strategies='recursive recur subtree ours recursive-ours recursive-theirs'
+ use_strategies=
+ 
+ allow_fast_forward=t
+diff --git a/git.c b/git.c
+index 59f0fcc..44cb8eb 100644
+--- a/git.c
++++ b/git.c
+@@ -328,6 +328,8 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "merge-file", cmd_merge_file },
+ 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+ 		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
++		{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
++		{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "name-rev", cmd_name_rev, RUN_SETUP },
+diff --git a/ll-merge.c b/ll-merge.c
+index 9837c84..c6a05bf 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -19,7 +19,7 @@ typedef int (*ll_merge_fn)(const struct ll_merge_driver *,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+-			   int virtual_ancestor);
++			   int flag);
+ 
+ struct ll_merge_driver {
+ 	const char *name;
+@@ -39,13 +39,15 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+-			   int virtual_ancestor)
++			   int flag)
+ {
+ 	/*
+ 	 * The tentative merge result is "ours" for the final round,
+ 	 * or common ancestor for an internal merge.  Still return
+ 	 * "conflicted merge" status.
+ 	 */
++	int virtual_ancestor = flag & 01;
++
+ 	mmfile_t *stolen = virtual_ancestor ? orig : src1;
+ 
+ 	result->ptr = stolen->ptr;
+@@ -60,9 +62,10 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+-			int virtual_ancestor)
++			int flag)
+ {
+ 	xpparam_t xpp;
++	int favor = ((flag)>>1) & 03;
+ 
+ 	if (buffer_is_binary(orig->ptr, orig->size) ||
+ 	    buffer_is_binary(src1->ptr, src1->size) ||
+@@ -73,14 +76,15 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 				       path_unused,
+ 				       orig, src1, name1,
+ 				       src2, name2,
+-				       virtual_ancestor);
++				       flag);
+ 	}
+ 
+ 	memset(&xpp, 0, sizeof(xpp));
+ 	return xdl_merge(orig,
+ 			 src1, name1,
+ 			 src2, name2,
+-			 &xpp, XDL_MERGE_ZEALOUS,
++			 &xpp,
++			 XDL_MERGE_FLAGS(XDL_MERGE_ZEALOUS, favor),
+ 			 result);
  }
  
- int xdl_merge(mmfile_t *orig, mmfile_t *mf1, const char *name1,
- 		mmfile_t *mf2, const char *name2,
--		xpparam_t const *xpp, int level, mmbuffer_t *result) {
-+		xpparam_t const *xpp, int flag, mmbuffer_t *result) {
- 	xdchange_t *xscr1, *xscr2;
- 	xdfenv_t xe1, xe2;
- 	int status;
-+	int level = XDL_MERGE_LEVEL(flag);
-+	int favor = XDL_MERGE_FAVOR(flag);
+@@ -90,11 +94,12 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 			  mmfile_t *orig,
+ 			  mmfile_t *src1, const char *name1,
+ 			  mmfile_t *src2, const char *name2,
+-			  int virtual_ancestor)
++			  int flag)
+ {
+ 	char *src, *dst;
+ 	long size;
+ 	const int marker_size = 7;
++	int virtual_ancestor = flag & 01;
  
- 	result->ptr = NULL;
- 	result->size = 0;
-@@ -482,7 +490,7 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, const char *name1,
- 		} else {
- 			status = xdl_do_merge(&xe1, xscr1, name1,
- 					      &xe2, xscr2, name2,
--					      level, xpp, result);
-+					      level, favor, xpp, result);
- 		}
- 		xdl_free_script(xscr1);
- 		xdl_free_script(xscr2);
+ 	int status = ll_xdl_merge(drv_unused, result, path_unused,
+ 				  orig, src1, NULL, src2, NULL,
+@@ -158,7 +163,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+-			int virtual_ancestor)
++			int flag)
+ {
+ 	char temp[3][50];
+ 	char cmdbuf[2048];
+@@ -362,10 +367,11 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	     mmfile_t *ancestor,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
+-	     int virtual_ancestor)
++	     int flag)
+ {
+ 	const char *ll_driver_name;
+ 	const struct ll_merge_driver *driver;
++	int virtual_ancestor = flag & 01;
+ 
+ 	ll_driver_name = git_path_check_merge(path);
+ 	driver = find_ll_merge_driver(ll_driver_name);
+@@ -375,5 +381,5 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	return driver->fn(driver, result_buf, path,
+ 			  ancestor,
+ 			  ours, our_label,
+-			  theirs, their_label, virtual_ancestor);
++			  theirs, their_label, flag);
+ }
+diff --git a/ll-merge.h b/ll-merge.h
+index 5388422..5daef58 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -5,11 +5,13 @@
+ #ifndef LL_MERGE_H
+ #define LL_MERGE_H
+ 
++#define LL_MERGE_FLAGS(virtual_ancestor,favor) ((!!(virtual_ancestor)) | ((favor)<<1))
++
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
+-	     int virtual_ancestor);
++	     int flag);
+ 
+ #endif
+diff --git a/t/t6034-merge-ours-theirs.sh b/t/t6034-merge-ours-theirs.sh
+new file mode 100755
+index 0000000..56a9247
+--- /dev/null
++++ b/t/t6034-merge-ours-theirs.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='Merge-recursive ours and theirs variants'
++. ./test-lib.sh
++
++test_expect_success setup '
++	for i in 1 2 3 4 5 6 7 8 9
++	do
++		echo "$i"
++	done >file &&
++	git add file &&
++	cp file elif &&
++	git commit -m initial &&
++
++	sed -e "s/1/one/" -e "s/9/nine/" >file <elif &&
++	git commit -a -m ours &&
++
++	git checkout -b side HEAD^ &&
++
++	sed -e "s/9/nueve/" >file <elif &&
++	git commit -a -m theirs &&
++
++	git checkout master^0
++'
++
++test_expect_success 'plain recursive - should conflict' '
++	git reset --hard master &&
++	test_must_fail git merge -s recursive side &&
++	grep nine file &&
++	grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_expect_success 'recursive favouring theirs' '
++	git reset --hard master &&
++	git merge -s recursive-theirs side &&
++	! grep nine file &&
++	grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_expect_success 'recursive favouring ours' '
++	git reset --hard master &&
++	git merge -s recursive-ours side &&
++	grep nine file &&
++	! grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_done
 -- 
 1.5.6.6.gd3e97
