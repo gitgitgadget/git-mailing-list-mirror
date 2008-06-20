@@ -1,86 +1,349 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@lavabit.com>
-Subject: Re: [PATCH] git-send-pack: don't consider branch lagging behind as  errors.
-Date: Sat, 21 Jun 2008 07:14:40 +0900
-Message-ID: <20080621071440.6117@nanako3.lavabit.com>
-References: <7vhcbpuvfb.fsf@gitster.siamese.dyndns.org>
-	<1213872715-11182-1-git-send-email-madcoder@debian.org>
-	<20080619133747.GA31209@sigill.intra.peff.net>
-	<20080619135159.GA19560@artemis.madism.org>
-	<20080619151110.GA31654@sigill.intra.peff.net>
-	<20080619162801.GA2468@artemis.madism.org>
-	<7vhcbpuvfb.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Pierre Habouzit <madcoder@debian.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 00:16:57 2008
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [WIP/PATCH v4] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Sat, 21 Jun 2008 00:18:45 +0200
+Message-ID: <1214000325-26389-1-git-send-email-LeWiemann@gmail.com>
+References: <485C2989.6060406@gmail.com>
+Cc: Lea Wiemann <LeWiemann@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 21 00:20:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9ouL-0001V0-G3
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 00:16:37 +0200
+	id 1K9oyF-0002Ye-4m
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 00:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753877AbYFTWPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 18:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753876AbYFTWPa
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 18:15:30 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:39377 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753859AbYFTWP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 18:15:29 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 0E21EC7AFA;
-	Fri, 20 Jun 2008 17:15:19 -0500 (CDT)
-Received: from nanako3.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 3HSEIXFX20HJ; Fri, 20 Jun 2008 17:15:26 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=GGQ562VrjeYVnTXUdW44xLpqxNVzKTsyGN9H8vZv+ZqApAPbaiyuhcG7d848fHXMz9/C234AhKLhUE1B/iIgDsAvAMgGsZcOYGmO5GKnL/wv1E2YCNcy5r1u3ndXNAntx3/GA0sm9OWWpUYVB2RvPIk89wXqNp27yezwAUqlCuc=;
-  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
-In-Reply-To: <7vhcbpuvfb.fsf@gitster.siamese.dyndns.org>
+	id S1754025AbYFTWTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 18:19:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753971AbYFTWTo
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 18:19:44 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:30394 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753935AbYFTWTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 18:19:42 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so752656fgg.17
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 15:19:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:from;
+        bh=nCr5yGOW/+rTk4PxmjOU16ROyj2YD4fPxutsuP9kIUk=;
+        b=h8oJLIqmTvFd+jR8nZi0HqQQ6ofdbycm4Rf9PEOsRdqyLCOKD8rIU77qX+vamjGxWU
+         lPAF5jwjDG7KKJnEiKIDuYgTsjbRZa5f51YiCGUv3poatHapj+ltRu7vSSwDgOE3mJew
+         Qyx3nSTkOJ7Xo77sHZlu9dixWeEDWj8EKlX/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
+        b=wU+dl4XdHQOSZ7kIlpySI+UutXfOjIBpMDFQH4OoBJqLOzOZa2GoOmR/+kS4hkTX1k
+         WPRPrqVT91vvyp7iXuqbZhq4my6hC+3/Z+AXjlIpH5B8ZCLoSWZHR+4Zj+HwyfLtNOBu
+         siyQmRWVHN6NYLX0gBRe8uIvzWx+EEzoQu4XE=
+Received: by 10.86.27.19 with SMTP id a19mr4533995fga.56.1214000380845;
+        Fri, 20 Jun 2008 15:19:40 -0700 (PDT)
+Received: from fly ( [91.33.240.210])
+        by mx.google.com with ESMTPS id l19sm4456177fgb.7.2008.06.20.15.18.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Jun 2008 15:18:48 -0700 (PDT)
+Received: from lea by fly with local (Exim 4.69)
+	(envelope-from <lea@fly>)
+	id 1K9owP-0006s0-Po; Sat, 21 Jun 2008 00:18:45 +0200
+X-Mailer: git-send-email 1.5.6.80.g3141.dirty
+In-Reply-To: <485C2989.6060406@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85680>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+This test uses Test::WWW::Mechanize::CGI to check gitweb's output.  It
+also uses HTML::Lint (if present) to validate the HTML.
 
-> The issue of "many refs in the repo but I work only on a few" has already
-> been resolved by being able to say "I push only the current branch" in the
-> previous thread, I think, but I am too busy to go back to re-study the
-> history, so could you kindly do that for us?
+TOOD: Make this runnable even when the path to the git tree (i.e. your
+working copy) contains blanks.
+http://mid.gmane.org/200806202003.55919.jnareb@gmail.com
 
-I almost agreed with Pierre before I read your response, but as
-always you are right.  If the only thing I know is that my
-current branch is ready to be pushed and I do not know if other
-branches are, I do not have to push all branches (I am not sure
-how exactly it works. Do we push all the branches, or do we push
-branches that exist on both sides?).  Pushing the one I want to
-push is the right thing to do, and I can easily say it.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+---
+This for everyone's reference so you have my most recent version to
+base changes on.
 
-> You might argue that the case where you are truly behind _could_ be
-> ignored and pretend as if the user did not even _ask_ to push it (hence,
-> return success without doing anything to that branch), but I am not
-> convinced even that is a good idea.
+Changed since v3: applied Jakub's suggestions, and added TODO note to
+commit message so this doesn't get applied accidentally.
 
-But I think that is a reasonable new feature and is close to
-what Pierre is asking for.  He wants to be able to push "all
-except for the ones that he does not want to push", wants
-git to guess which ones are the ones he does not, and wants to
-make the logic of guessing to consider stale ones are unwanted.
+ t/t9503-gitweb-Mechanize.sh |  128 +++++++++++++++++++++++++++++++++++++++++++
+ t/t9503/test.pl             |  128 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 256 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9503-gitweb-Mechanize.sh
+ create mode 100755 t/t9503/test.pl
 
-But I do agree with you that it is wrong to replace existing
-"push all" with such a new feature.  When people want to push
-all, they do want to push all and see the command report error
-when some branches are not updated.  Even though I think what
-Pierre wants to have may be a reasonable new feature, it should
-not break "push all" for people who rely on the existing
-behavior.
-
+diff --git a/t/t9503-gitweb-Mechanize.sh b/t/t9503-gitweb-Mechanize.sh
+new file mode 100755
+index 0000000..abcf987
+--- /dev/null
++++ b/t/t9503-gitweb-Mechanize.sh
+@@ -0,0 +1,128 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Jakub Narebski
++# Copyright (c) 2008 Lea Wiemann
++#
++
++test_description='gitweb as CGI (using WWW::Mechanize)
++
++This test uses Perl module Test::WWW::Mechanize::CGI to
++check gitweb output, using HTML::Lint to validate HTML.'
++
++# helper functions
++
++safe_chmod () {
++	chmod "$1" "$2" &&
++	if [ "$(git config --get core.filemode)" = false ]
++	then
++		git update-index --chmod="$1" "$2"
++	fi
++}
++
++. ./test-lib.sh
++
++# check if test can be run
++perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
++	test_expect_success \
++		'skipping gitweb tests, perl version is too old' :
++	test_done
++	exit
++}
++
++perl -MTest::WWW::Mechanize::CGI -e '' >/dev/null 2>&1 || {
++	test_expect_success \
++		'skipping gitweb tests, Test::WWW::Mechanize::CGI not found' :
++	test_done
++	exit
++}
++
++# set up test repository
++test_expect_success 'set up test repository' '
++
++	echo "Not an empty file." > file &&
++	git add file &&
++	test_tick && git commit -a -m "Initial commit." &&
++	git branch b &&
++
++	echo "New file" > new_file &&
++	git add new_file &&
++	test_tick && git commit -a -m "File added." &&
++
++	safe_chmod +x new_file &&
++	test_tick && git commit -a -m "Mode changed." &&
++
++	git mv new_file renamed_file &&
++	test_tick && git commit -a -m "File renamed." &&
++
++	rm renamed_file &&
++	ln -s file renamed_file &&
++	test_tick && git commit -a -m "File to symlink." &&
++	git tag with-symlink &&
++
++	git rm renamed_file &&
++	rm -f renamed_file &&
++	test_tick && git commit -a -m "File removed." &&
++
++	cp file file2 &&
++	git add file2 &&
++	test_tick && git commit -a -m "File copied." &&
++
++	echo "New line" >> file2 &&
++	safe_chmod +x file2 &&
++	test_tick && git commit -a -m "Mode change and modification." &&
++
++	git checkout b &&
++	echo "Branch" >> b &&
++	git add b &&
++	test_tick && git commit -a -m "On branch" &&
++	git checkout master &&
++	test_tick && git pull . b
++'
++
++# set up empty repository
++# TODO!
++
++# set up repositories for gitweb
++# TODO!
++
++# set up gitweb configuration
++safe_pwd="$(perl -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
++cat >gitweb_config.perl <<EOF
++#!/usr/bin/perl
++
++# gitweb configuration for tests
++
++our \$version = "current";
++our \$GIT = "$GIT_EXEC_PATH/git";
++our \$projectroot = "$safe_pwd";
++our \$project_maxdepth = 8;
++our \$home_link_str = "projects";
++our \$site_name = "[localhost]";
++our \$site_header = "";
++our \$site_footer = "";
++our \$home_text = "indextext.html";
++our @stylesheets = ("file:///$safe_pwd/../../gitweb/gitweb.css");
++our \$logo = "file:///$safe_pwd/../../gitweb/git-logo.png";
++our \$favicon = "file:///$safe_pwd/../../gitweb/git-favicon.png";
++our \$projects_list = "";
++our \$export_ok = "";
++our \$strict_export = "";
++
++1;
++__END__
++EOF
++
++cat >.git/description <<EOF
++$0 test repository
++EOF
++
++GITWEB_CONFIG="$(pwd)/gitweb_config.perl"
++export GITWEB_CONFIG
++
++# run tests
++
++test_external \
++	'test gitweb output' \
++	perl ../t9503/test.pl
++
++test_done
+diff --git a/t/t9503/test.pl b/t/t9503/test.pl
+new file mode 100755
+index 0000000..7e7c98c
+--- /dev/null
++++ b/t/t9503/test.pl
+@@ -0,0 +1,128 @@
++#!/usr/bin/perl
++use lib (split(/:/, $ENV{GITPERLLIB}));
++
++use warnings;
++use strict;
++
++use Cwd qw(abs_path);
++use File::Spec;
++
++# We don't count properly when skipping, so no_plan is necessary.
++use Test::More qw(no_plan);
++use Test::WWW::Mechanize::CGI;
++
++my $long_tests = $ENV{GIT_TEST_LONG};
++
++eval { require HTML::Lint };
++my $use_lint = !$@;
++diag('HTML::Lint is not installed; no HTML validation tests')
++    unless $use_lint;
++
++my @revisions = split /\s/, `git-rev-list --first-parent HEAD`;
++my $head = $revisions[0];
++
++my $gitweb = File::Spec->catfile('..','..','gitweb','gitweb.cgi');
++# The following two lines of code are a workaround for a bug in
++# Test::WWW::Mechanize::CGI::cgi_application version up to 0.3
++# (http://rt.cpan.org/Ticket/Display.html?id=36654) for pathnames with
++# spaces (because of "trash directory")
++$gitweb = File::Spec->rel2abs($gitweb);
++$gitweb = Cwd::abs_path($gitweb);
++
++my $mech = new Test::WWW::Mechanize::CGI;
++$mech->cgi_application($gitweb);
++# On some systems(?) it's necessary to have %ENV here, otherwise the
++# CGI process won't get *any* of the current environment variables
++# (not even PATH, etc.)
++$mech->env(%ENV, GITWEB_CONFIG => $ENV{'GITWEB_CONFIG'}, $mech->env);
++
++# import config, predeclaring config variables
++my $site_name = '';
++require_ok($ENV{'GITWEB_CONFIG'})
++	or diag('Could not load gitweb config; some tests would fail');
++
++my %checked_pages;
++# Validate and spider the current page, if --long-tests (-l) is given.
++sub check_page {
++	my $uri = $mech->uri;
++	if (not $checked_pages{$uri}) {
++		$mech->html_lint_ok('validate') or return 0 if $long_tests && $use_lint;
++		$mech->page_links_ok("check links on $uri") if $long_tests;
++		$checked_pages{$uri} = 1;
++	}
++	return 1
++}
++
++my $baseurl = "http://localhost";
++my ($params, $url, $pagedesc, $status);
++
++# test_page ( <params>, <page_description>, <expected_status> )
++# Example:
++# if (test_page('?p=.git;a=summary', 'repository summary')) {
++#     $mech->...;
++#     $mech->...;
++# }
++#
++# Test that the page can be opened (and if --long-tests is given that
++# it validates and has valid links), and return true if it does.  Also
++# set the global variables $params, $pagedesc, and $url for use in the
++# if block.  Optionally pass a third parameter $status to test the
++# HTTP status code of the page (useful for error pages).
++sub test_page {
++	($params, $pagedesc, $status) = @_;
++	$url = "$baseurl$params";
++	if($status) {
++		$mech->get($url);
++	} else {
++		$mech->get_ok($url, "GET \"$params\" -- $pagedesc") or return 0;
++	}
++	check_page or return 0;
++	if($status) {
++		return is($mech->status, $status, "GET \"$params\" -- $pagedesc -- yields $status");
++	} else {
++		return 1;
++	}
++}
++
++if (test_page '', 'project list (implicit)') {
++	$mech->title_like(qr!$site_name!,
++		"title contains $site_name");
++	$mech->content_contains('./t9503-gitweb-Mechanize.sh test repository', 
++		'lists test repository (by description)');
++}
++
++# Test repository summary: implicit, implicit with pathinfo, explicit.
++for my $sumparams ('?p=.git', '/.git', '?p=.git;a=summary') {
++	if (test_page $sumparams, 'repository summary') {
++		$mech->title_like(qr!$site_name.*\.git/summary!,
++				  "title contains $site_name and \".git/summary\"");
++	}
++}
++
++# Search form (on summary page).
++$mech->get_ok('?p=.git', 'get repository summary');
++if ($mech->submit_form_ok( { form_number => 1,
++			     fields => { 's' => 'Initial' }
++			   }, "submit search form (default)")) {
++	check_page;
++	$mech->content_contains('Initial commit',
++				'content contains searched commit');
++}
++
++test_page('?p=non-existent.git', 'non-existent project', 404);
++test_page('?p=.git;a=commit;h=non-existent', 'non-existent commit', 404);
++
++# Summary page.
++
++# Check short log.  To do: Extract into separate test_short_log
++# function since the short log occurs on several pages.
++$mech->get_ok('?p=.git', 'get repository summary');
++for my $revision (@revisions[0..2]) {
++	for my $link_text qw( commit commitdiff tree snapshot ) {
++		ok($mech->find_link(url_abs_regex => qr/h=$revision/, text => $link_text), "$link_text link for $revision");
++	}
++}
++
++
++1;
++__END__
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.5.6.80.g3141.dirty
