@@ -1,59 +1,59 @@
-From: Adam Doeler <adam@releod.com>
-Subject: git-svn show-ignore error
-Date: Thu, 19 Jun 2008 23:27:51 -0400
-Message-ID: <C277E555-5732-46FC-BB37-FD01FC0AA25C@releod.com>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH 3/3] Make rebase--interactive use OPTIONS_SPEC
+Date: Fri, 20 Jun 2008 07:48:10 +0200
+Message-ID: <20080620054810.GB7369@leksak.fem-net>
+References: <1213929935-15093-1-git-send-email-s-beyer@gmx.net> <1213929935-15093-2-git-send-email-s-beyer@gmx.net> <1213929935-15093-3-git-send-email-s-beyer@gmx.net> <1213929935-15093-4-git-send-email-s-beyer@gmx.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 06:27:33 2008
+X-From: git-owner@vger.kernel.org Fri Jun 20 07:49:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9YDd-0000y8-2g
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 06:27:25 +0200
+	id 1K9ZUn-00034T-OH
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 07:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbYFTE0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 00:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbYFTE0O
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 00:26:14 -0400
-Received: from cl32.gs01.gridserver.com ([64.13.192.41]:56499 "EHLO
-	cl32.gs01.gridserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbYFTE0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 00:26:13 -0400
-X-Greylist: delayed 3495 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jun 2008 00:26:13 EDT
-Received: from cpe0016cbc4bda4-cm001ac31586e8.cpe.net.cable.rogers.com ([72.141.5.82]:41781 helo=[192.168.1.196])
-	by cl40.gs01.gridserver.com with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.63)
-	(envelope-from <adam@releod.com>)
-	id 1K9XI2-0001F6-WT
-	for git@vger.kernel.org; Thu, 19 Jun 2008 20:27:54 -0700
-X-Mailer: Apple Mail (2.924)
+	id S1751163AbYFTFsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 01:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbYFTFsR
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 01:48:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39883 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751135AbYFTFsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 01:48:16 -0400
+Received: (qmail invoked by alias); 20 Jun 2008 05:48:14 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp054) with SMTP; 20 Jun 2008 07:48:14 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18VO4JflbMVV4S103QtzqyIgRJas/pB7GmzSgdwB8
+	xnTkqRcTFAfWgT
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1K9ZTm-0003dA-Sc; Fri, 20 Jun 2008 07:48:10 +0200
+Content-Disposition: inline
+In-Reply-To: <1213929935-15093-4-git-send-email-s-beyer@gmx.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85596>
 
-Hello - can anyone help me figure out what is causing the error below,  
-and how to get past it..
+Ouch, here is a little mistake:
+> +OPTIONS_SPEC='
+> +git-rebase -i [options] <upstream> [<branch>]
 
-I started by running:
+Must be:
+	OPTIONS_SPEC='git-rebase -i [options] <upstream> [<branch>]
+...or the usage string will be empty.
 
-% git-svn clone -s svn+ssh://path/to/repo local_dir
-% cd local_dir
-% git-svn show-ignore
-Filesystem has no item: File not found: revision 175, path '/build'  
-at /opt/local/bin/git-svn line 1879
+Are there other reasons for a v2?
 
-The repository layout in the trunk is:
-/build
-/website
+Regards,
+  Stephan
 
-build has another directory, which has files, and directories, etc.
-website the application files, framework, more directories, files, etc.
-
-Any help with this would be awesome, I have not done anything beyond  
-the commands listed above.
--Adam
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
