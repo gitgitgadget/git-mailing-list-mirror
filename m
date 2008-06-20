@@ -1,70 +1,66 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
-Date: Fri, 20 Jun 2008 15:04:49 +0200
-Message-ID: <237967ef0806200604s469a844l4d33301a60789c1@mail.gmail.com>
-References: <20080620082034.GA24913@elte.hu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Are C++ contributions welcome?
+Date: Fri, 20 Jun 2008 14:03:16 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806201400550.6439@racer>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Ingo Molnar" <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Jun 20 15:06:17 2008
+To: jose maria gomez vergara <josemaria@jmgv.org>
+X-From: git-owner@vger.kernel.org Fri Jun 20 15:06:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9gJL-0003ip-Vk
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 15:05:52 +0200
+	id 1K9gJL-0003ip-7w
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 15:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312AbYFTNE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 09:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753617AbYFTNE5
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 09:04:57 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:48747 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094AbYFTNE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 09:04:56 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so749634ywe.1
-        for <git@vger.kernel.org>; Fri, 20 Jun 2008 06:04:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=PfQXLma3qYxYyWOMTU03C8i3WkR62KaCpqadA6PbE1Y=;
-        b=AHiwGE8HZ8a+9kHdOcypZQQ/CS1TTIioyMxsg9oDTntnhJhQ8OtcVXb88hijG/2JAJ
-         mAJ7D/w3qZqBPDgcFbf7bktRYa1SeYAIg5bXHEtPosGffUY89N6y/bMrWSndR3Epj+Wm
-         1mgtXvAWok/eVOWENR5xMa/S+iEUC8VL/3tY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fWOT0uIo8G/FO9zM8WPybTpt1dBzaWuiD22tCfmrxM0JcVafSdoQ3+DzaFn/4i1DU/
-         fSlbsUi+sJJSoFKw5s7eIerDQWuWL0iom56kReuHyxGqPrB67m5mKtUT7R6yEGnZrSyT
-         fVq23HS8R9D7gD4YZ0mO+G9QEgCeEU1tCNVsM=
-Received: by 10.141.177.2 with SMTP id e2mr7456068rvp.268.1213967089808;
-        Fri, 20 Jun 2008 06:04:49 -0700 (PDT)
-Received: by 10.141.153.6 with HTTP; Fri, 20 Jun 2008 06:04:49 -0700 (PDT)
-In-Reply-To: <20080620082034.GA24913@elte.hu>
-Content-Disposition: inline
+	id S1753788AbYFTNEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 09:04:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753666AbYFTNEw
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 09:04:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34102 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753094AbYFTNEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 09:04:52 -0400
+Received: (qmail invoked by alias); 20 Jun 2008 13:04:50 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp040) with SMTP; 20 Jun 2008 15:04:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HuZ1k+byHmcf0ESPKMCGkydNW5HVdV/HicBKGsE
+	3oo6LznY12WkuG
+X-X-Sender: gene099@racer
+In-Reply-To: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85639>
 
-2008/6/20 Ingo Molnar <mingo@elte.hu>:
->
-> A couple of stupid Git questions (using git-1.5.4.3-2.fc8).
->
-> Sometimes i want to see the reverse diff of a particular commit.
->
-> If i want to see the normal diff i do:
->
->   git-log -1 -p 7def2be1
+Hi,
 
-git show 7def2b1 is a bit easier to type.
+On Fri, 20 Jun 2008, jose maria gomez vergara wrote:
 
--- 
-Mikael Magnusson
+> I know that C++ code was not welcome sometime ago, but I don't know if 
+> this have changed.
+
+You probably mean
+
+	http://article.gmane.org/gmane.comp.version-control.git/58929
+
+but I cannot help but wonder why anything should have changed since then.
+
+> I don't feel comfortable programing in C and I prefer C++ only because I 
+> have more experience using this one. May I contribute to this project in 
+> that language?.
+
+Of course, you can try to contribute something in C++, but that will 
+probably only trigger someone rewriting your stuff in (portable) C and 
+take all your credit.
+
+Heck, I might do it myself ;-)
+
+Ciao,
+Dscho
