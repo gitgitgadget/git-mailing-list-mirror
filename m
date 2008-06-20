@@ -1,66 +1,54 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
-Date: Fri, 20 Jun 2008 13:30:01 +0200
-Message-ID: <vpqiqw42vk6.fsf@bauges.imag.fr>
-References: <20080620082034.GA24913@elte.hu>
+From: Fredrik Skolmli <fredrik@frsk.net>
+Subject: git svn --add-author-from implies --use-log-author
+Date: Fri, 20 Jun 2008 13:31:47 +0200
+Message-ID: <20080620113147.GC27940@frsk.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Jun 20 13:32:23 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 20 13:32:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9eqr-00024J-Bv
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 13:32:21 +0200
+	id 1K9erK-0002GO-TC
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 13:32:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbYFTLbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 07:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbYFTLbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 07:31:13 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:59816 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752397AbYFTLbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 07:31:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5KBU7KM008105;
-	Fri, 20 Jun 2008 13:30:07 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1K9eob-0003Dg-Cw; Fri, 20 Jun 2008 13:30:01 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1K9eob-0004WM-Ai; Fri, 20 Jun 2008 13:30:01 +0200
-In-Reply-To: <20080620082034.GA24913@elte.hu> (Ingo Molnar's message of "Fri\, 20 Jun 2008 10\:20\:34 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 20 Jun 2008 13:30:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753306AbYFTLbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 07:31:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbYFTLbu
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 07:31:50 -0400
+Received: from cassarossa.samfundet.no ([129.241.93.19]:41406 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089AbYFTLbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 07:31:50 -0400
+Received: from asterix.samfundet.no ([2001:700:300:1800::f] ident=postfix)
+	by cassarossa.samfundet.no with esmtp (Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1K9eqK-0007k6-2R
+	for git@vger.kernel.org; Fri, 20 Jun 2008 13:31:48 +0200
+Received: by asterix.samfundet.no (Postfix, from userid 1000)
+	id 05136A6039D; Fri, 20 Jun 2008 13:31:47 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85621>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Hi,
 
-> 1) the SHA1 is duplicated above, is there a way to avoid it? Initially i 
->    tried the obvious extension:
->
->       git-diff --reverse 7def2be1..^
->
->    But Git didnt recognize that as a valid commit range.
+when running git svn dcommit --add-author-from on a git-svn repository,
+--use-log-author is not implied by itself. This causes the rewritten history
+to not show the author in the way most users would expect it to be, "Name
+<email@domain.tld>", but instead "<user@uuid>".
 
-Git may not know how to do it, but since you can omit the .. here,
-your shell knows:
+Instead of forcing people to write "svn dcommit --add-author-from
+--use-log-author", is it a bad move to imply the last argument, making the
+history look more user-friendly to start with?
 
-  git diff whatever{,^}
-
-(BTW, git-foo is being obsoleted in favor of "git foo")
+Any thoughts?
 
 -- 
-Matthieu
+Regards,
+Fredrik Skolmli
