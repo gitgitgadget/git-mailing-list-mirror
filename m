@@ -1,51 +1,78 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] completion: add --graph to log command completion
-Date: Fri, 20 Jun 2008 09:31:04 +0300
-Message-ID: <20080620063104.GA3307@mithlond.arda.local>
-References: <1213910153-10679-1-git-send-email-dpmcgee@gmail.com> <20080619215842.GL11793@spearce.org> <20080619224012.GA6705@mithlond.arda.local> <20080619225552.GQ11793@spearce.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/3] rebase-i: slight internal improvements
+Date: Fri, 20 Jun 2008 09:16:43 +0200
+Message-ID: <485B595B.80608@viscovery.net>
+References: <1213929935-15093-1-git-send-email-s-beyer@gmx.net> <1213929935-15093-2-git-send-email-s-beyer@gmx.net> <1213929935-15093-3-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 20 08:32:18 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 20 09:17:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9aAU-0005sN-6h
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 08:32:18 +0200
+	id 1K9asR-0003fd-6y
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 09:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbYFTGbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 02:31:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYFTGbP
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 02:31:15 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:46804 "EHLO
-	kirsi2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750986AbYFTGbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 02:31:15 -0400
-Received: from mithlond.arda.local (80.220.180.140) by kirsi2.rokki.sonera.fi (8.5.014)
-        id 4858893A00195005; Fri, 20 Jun 2008 09:31:05 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1K9a9I-0000uE-7u; Fri, 20 Jun 2008 09:31:04 +0300
-Content-Disposition: inline
-In-Reply-To: <20080619225552.GQ11793@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751351AbYFTHQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 03:16:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbYFTHQq
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 03:16:46 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:33888 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229AbYFTHQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 03:16:46 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1K9arT-0000dT-RR; Fri, 20 Jun 2008 09:16:44 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7FC644FB; Fri, 20 Jun 2008 09:16:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1213929935-15093-3-git-send-email-s-beyer@gmx.net>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85599>
 
-Shawn O. Pearce wrote (2008-06-19 18:55 -0400):
+Stephan Beyer schrieb:
+> Add commit_message function to get the commit message
+> from a commit and other slight internal improvements.
 
-> Teemu Likonen <tlikonen@iki.fi> wrote:
-> > I think I have already sent twice a patch with --graph completion.
-> 
-> I didn't Ack them because at the time --graph wasn't even in next yet
-> I think.  Then I got busy and forgot.  And --graph slipped through
-> into the 1.5.6 release without your bash completion patches. Sorry.
+If by "other slight improvements" you mean ...
 
-No problems. I should have sent a ping to the list after the log --graph
-settled to the master branch. But... I forgot.
+>  mark_action_done () {
+> -	sed -e 1q < "$TODO" >> "$DONE"
+> -	sed -e 1d < "$TODO" >> "$TODO".new
+> -	mv -f "$TODO".new "$TODO"
+> -	count=$(grep -c '^[^#]' < "$DONE")
+> -	total=$(($count+$(grep -c '^[^#]' < "$TODO")))
+> +	sed -e 1q "$TODO" >>"$DONE"
+> +	sed -e 1d "$TODO" >>"$TODO.new"
+> +	mv -f "$TODO.new" "$TODO"
+> +	count="$(grep -c '^[^#]' "$DONE")"
+> +	total="$(expr "$count" + "$(grep -c '^[^#]' "$TODO")")"
+
+... this ...
+
+>  has_action () {
+> -	grep '^[^#]' "$1" >/dev/null
+> +	grep -q '^[^#]' "$1"
+
+... and this, etc, then they are not improvements. They make the script
+less portable: There are 'grep's that don't have -q, others write the file
+name in front of the count, and I _think_ I have encountered 'sed's that
+don't take a file name as argument.
+
+This patch is just code churn for which you give no convincing reason in
+the commit message why it is good.
+
+-- Hannes
