@@ -1,155 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-send-pack: don't consider branch lagging behind as   errors.
-Date: Fri, 20 Jun 2008 11:55:08 +0200
-Message-ID: <20080620095508.GB26765@artemis.madism.org>
-References: <1213872715-11182-1-git-send-email-madcoder@debian.org> <20080619133747.GA31209@sigill.intra.peff.net> <20080619135159.GA19560@artemis.madism.org> <20080619151110.GA31654@sigill.intra.peff.net> <20080619162801.GA2468@artemis.madism.org> <7vhcbpuvfb.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
+Date: Fri, 20 Jun 2008 12:00:38 +0200
+Message-ID: <20080620100038.GB10704@elte.hu>
+References: <20080620082034.GA24913@elte.hu> <7v7icko61g.fsf@gitster.siamese.dyndns.org> <7v3an8o5mm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="1LKvkjL3sHcu1TtY";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 11:56:16 2008
+X-From: git-owner@vger.kernel.org Fri Jun 20 12:02:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9dLm-0002fr-1A
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 11:56:10 +0200
+	id 1K9dRb-0004T8-6y
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 12:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbYFTJzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 05:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbYFTJzN
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 05:55:13 -0400
-Received: from pan.madism.org ([88.191.52.104]:52022 "EHLO hermes.madism.org"
+	id S1751792AbYFTKAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 06:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbYFTKAw
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 06:00:52 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:40088 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751976AbYFTJzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 05:55:11 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id F1458374BA;
-	Fri, 20 Jun 2008 11:55:09 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 914E59AE; Fri, 20 Jun 2008 11:55:08 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+	id S1751641AbYFTKAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 06:00:51 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1K9dQ9-0005Ot-97
+	from <mingo@elte.hu>; Fri, 20 Jun 2008 12:00:50 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 6E3A03E21DD; Fri, 20 Jun 2008 12:00:40 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vhcbpuvfb.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <7v3an8o5mm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0008]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85613>
 
 
---1LKvkjL3sHcu1TtY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* Junio C Hamano <gitster@pobox.com> wrote:
 
-On jeu, jun 19, 2008 at 06:33:12 +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > On Thu, Jun 19, 2008 at 03:11:10PM +0000, Jeff King wrote:
-> >> On Thu, Jun 19, 2008 at 03:52:00PM +0200, Pierre Habouzit wrote:
-> >> > >   - there is a possible danger with "git push -f", in that you for=
-ce
-> >> > >     both rejected branches as well as stale branches. Junio and I
-> >> >   Well afaict this is a separate issue, as we're (with such a patch)
-> >> > only changing what gets printed on the console, not the internal
-> >> > behavior. So solving this second issue should not really be a
-> >> > precondition to the inclusion of such a patch.
-> >>=20
-> >> It is a separate issue, but it is exacerbated by hiding stale refs.
-> >> Imagine:
-> >>=20
-> >> $ git push
-> >> To /path/to/repo
-> >>    ! [rejected]        master -> master (non-fast forward)
-> >>=20
-> >> $ git push -f
-> >> To /path/to/repo
-> >>    + 0abfa88...c1ed93b master -> master (forced update)
-> >>    + 0329485...3498576 stale_branch -> stale_branch (forced update)
-> >>=20
-> >> I think that is a nasty surprise to spring on an unsuspecting user.
-> >> Another solution might be "-f" not pushing rewound branches, but then =
-we
-> >> need a way to specify "no, really, push this rewound branch". Perhaps
-> >> "-f -f"?
-> >
-> >   Well then we could keep the [stalled] lines for now until this issue
-> > is resolved then, despite what the people at the beginning of the other
-> > thread complained about. My real issue is that I have my shell
-> > configured so that my prompt becomes inverted if the last command
-> > failed. So do many people I know, and well, git push for stalled
-> > references should just not generate an error. _this_ is my sole concern
-> > :)
->=20
-> There are two cases the push does not fast forward.  The case where you
-> are truly behind (aka "stale") and you and the pushed-to repository have
-> diverged history.  Reporting success when you did not push due to the
-> latter is unacceptable.  I personally rely on the fast-forward safety in
-> my push-out scripts, but I do not think it is just me.  The exit status f=
-rom
-> commands are designed to be used that way.
+> By the way, not linking --reverse (traverse the history normally and 
+> then show the commits in the reverse order than usual) to -R (show 
+> diff in the opposite way while showing the change each commit 
+> introduces) allows you to even say "log --reverse -R", which did not 
+> come from a conscious design, but being able to say this _is_ a 
+> conscious design:
+> 
+> 	$ git fetch j6t
+> 	$ git log --reverse -p ..j6t/for-junio
+> 
+> When I review a branch somebody else offers me, I may want to view the 
+> commits on them in reverse order (so that they build a bit by bit on 
+> top of my tree), but I _certainly_ do not want to view the patch in 
+> reverse!
 
-  Sure, but when you use `git push` or `git push <remote>` forms of the
-commands, you usually don't mean to push "everything", but rather
-"everything that has new stuff". Stalled branches that you didn't
-fast-forwarded yet should not generate issues IMHO.
+yes, i too do that occasionally (and some of my export/import scripts 
+rely on it in fact), and i was not suggesting to change any existing 
+functionality anyway.
 
-  Of course, for git-push <remote> <branch> this could be different.
-
-> The thing is, the user asked to push certain refs, and some did not get
-> updated.  The user has the right to expect a failure indication from the
-> command.  If you choose to _ignore_ the failure, that is _your_ choice,
-> like:
->=20
-> 	$ git push || :
-
-  I don't want to ignore push failures. It's just that in my
-workflow[0], stalled branches are _not_ a problem, whereas non
-fast-forward are. I cannot rely on the exit status, to know if all was
-fine, and that's annoying, really (Not a _major_ PITA, but an annoyance
-nonetheless).
-
-
-  [0] we have quite a few branches for our different releases and
-      production branches. I rarely do fixes there, but still have
-      tracking branches for those, and when I'm pushing my master, I get
-      errors each time another coworker pushed a production fix, until I
-      git stash, git checkout <stalled-branch>, git merge
-      <origin/stalled-branch>, git checkout back, git stash apply
-      *PHEEEW* all that for git push[1] ? No thanks.
-
-  [1] I know I can `git update-ref refs/heads/<stalled-branch> $(git
-      rev-parse origin/<stalled-branch>)` to fix that in one step but:
-        - it's plumbing ;
-	- if you forget the refs/heads it don't DWIM ;
-	- it's easy to mess things up with such use patterns
-	  (sub-problem of `it's plumbing`).
-      So I don't really think this is the proper answer to my problem.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---1LKvkjL3sHcu1TtY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhbfnwACgkQvGr7W6Hudhzz3QCgmgCuhjuQqZAoy+8SQDcKivy3
-TGYAnRTN8GvMDebDa8q7LWR9DAGH9IBO
-=HWzU
------END PGP SIGNATURE-----
-
---1LKvkjL3sHcu1TtY--
+	Ingo
