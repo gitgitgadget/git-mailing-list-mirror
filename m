@@ -1,89 +1,52 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 2/3] rebase-i: slight internal improvements
-Date: Fri, 20 Jun 2008 20:45:03 +0200
-Message-ID: <20080620184503.GD7369@leksak.fem-net>
-References: <1213929935-15093-1-git-send-email-s-beyer@gmx.net> <1213929935-15093-2-git-send-email-s-beyer@gmx.net> <1213929935-15093-3-git-send-email-s-beyer@gmx.net> <485B595B.80608@viscovery.net> <20080620080153.GC7369@leksak.fem-net> <alpine.DEB.1.00.0806201344180.6439@racer>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/2] t3404: extra checks and s/! git/test_must_fail git/
+Date: Fri, 20 Jun 2008 13:48:32 -0500
+Message-ID: <X-0hXtX7hZGzbL_zS7e4VUMsiMfWiIfABUCFp28XZx0@cipher.nrlssc.navy.mil>
+References: <alpine.DEB.1.00.0806201407230.6439@racer> <1213986614-19536-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 20 20:46:10 2008
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 20 20:49:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9lcf-0000xp-IA
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 20:46:09 +0200
+	id 1K9lfz-00027B-0M
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 20:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbYFTSpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 14:45:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbYFTSpN
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 14:45:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48973 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751145AbYFTSpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 14:45:11 -0400
-Received: (qmail invoked by alias); 20 Jun 2008 18:45:10 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp059) with SMTP; 20 Jun 2008 20:45:10 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18ITxZFjRIIx3G0rsHAjQDTuWEHx9w3eKqqA9okhq
-	5cnkX7NdXOHDgz
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K9lbb-0005C9-4c; Fri, 20 Jun 2008 20:45:03 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806201344180.6439@racer>
-X-Y-GMX-Trusted: 0
+	id S1751469AbYFTSsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 14:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYFTSsj
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 14:48:39 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54908 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290AbYFTSsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 14:48:39 -0400
+Received: by mail.nrlssc.navy.mil id m5KImXYo022143; Fri, 20 Jun 2008 13:48:33 -0500
+In-Reply-To: <1213986614-19536-1-git-send-email-s-beyer@gmx.net>
+X-OriginalArrivalTime: 20 Jun 2008 18:48:33.0027 (UTC) FILETIME=[3D35F530:01C8D306]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85672>
 
-On Fri, Jun 20, 2008 at 01:46:29PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote to Cc git@vger.kernel.org:
-> Hi,
-> 
-> On Fri, 20 Jun 2008, Stephan Beyer wrote:
-> 
-> > Looks like *portable* shell programming is no fun :\
-> 
-> That is right.  That's one of the reasons why I prefer moving scripts to 
-> builtins: prototyping is good and well, but when you need to put it into 
-> production, where people have all kinds of weird setups 
+Stephan Beyer wrote:
 
-Right.
+> @@ -380,7 +397,7 @@ test_expect_success 'interrupted squash works as expected' '
+>  	! FAKE_LINES="1 squash 3 2" git rebase -i HEAD~3 &&
 
-> (just think of dash in Ubuntu!)
+These can be converted to use test_must_fail by using a sub-shell
+as Junio demonstrated:
 
-Well, I'm using dash as /bin/sh in Debian.
-What's so weird about it?  IIRC it allows POSIX + some Berkeley extensions
-and so it is far less weird as the least common demoninator of shell
-portability ;-)
+	(
+		FAKE_LINES="1 squash 3 2" &&
+		export FAKE_LINES &&
+		test_must_fail git rebase -i HEAD~3
+	) &&
 
-Hmm,
-For shell portability it'd be cool to have something like a "badsh" (bad
-shell) with the whole XCU Utilities as builtins without features and
-warnings if features want to be used that are not supported by at least
-95% of the systems.  So that scripts could be checked using badsh and
-then you know, that it is portable.
-I guess nobody ever wrote something like that. ;-)
-
-> Better to use something portable, such as C.
-
-Right.
-
-> So would you not agree that PATCH 2/3 is rather unnecessary?
-
-We wanted to make some upfront patches to am/rebase-i, so that, when the
-git-sequencer prototype swoops in, it's easier to see, what is
-taken from am and what is taken from rebase-i.
-But this seems to be not so easy, so I'm currently thinking that I skip
-that and concentrate on the builtin.
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+-brandon
