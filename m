@@ -1,85 +1,85 @@
-From: Cristian Peraferrer <corellian.c@gmail.com>
-Subject: [PATCH] Added the printing of 'errno' error number when the attempt to open the COMMIT_EDITMSG file is failed
-Date: Fri, 20 Jun 2008 17:55:54 +0200
-Message-ID: <1D8D9EA1-720A-446D-BA32-E83E88155E0A@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Are C++ contributions welcome?
+Date: Fri, 20 Jun 2008 11:59:09 -0400
+Message-ID: <46a038f90806200859r520d0593q367d6625a240595a@mail.gmail.com>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+	 <alpine.DEB.1.00.0806201400550.6439@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 17:57:00 2008
+Cc: "jose maria gomez vergara" <josemaria@jmgv.org>,
+	git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 20 18:00:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9iyw-0007NE-A0
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 17:56:58 +0200
+	id 1K9j22-00005k-Cu
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 18:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756865AbYFTP4C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 11:56:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756819AbYFTP4B
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:56:01 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:21779 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756726AbYFTP4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 11:56:00 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so674104fgg.17
-        for <git@vger.kernel.org>; Fri, 20 Jun 2008 08:55:58 -0700 (PDT)
+	id S1756730AbYFTP7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 11:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbYFTP7L
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:59:11 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:31935 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756695AbYFTP7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 11:59:10 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so994745wfd.4
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 08:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=S+Xo5GFarzclXDB77kbELvoXugadmMuBmk1Vkf7W6cU=;
-        b=CobLcJh+QBaiKje36vcnqQZ3TkklNsY8PlOUbmb9I5gl34gvCEgiq8yiuibN1uUmo9
-         4xLb6FUtVbOmyxnUEgHptnHujbL8/mdEwltVpmBZJM+IzxQ3kq6HxrubSDYM79+HRpRE
-         vWRwqtVDqgzkhwvyUVL0pV2ykeQBCSNdKubi4=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ALQZkfsnTSb0YSQuffq+sXXBTS8hlOmeHI4TUyAZIGw=;
+        b=il0l/xxNac1IKcRGvt71KHd+VHYLqqmc5NyTrQKcGm4pxRUAcdKDvqyMIdNws7RP6Y
+         YMxKdfnZoRGqBZbtGaXGRG3n8gyaOPNO4LGeOhLk4CjASG2JR2Cuv2ArgjVY3LEBV/1C
+         NmVn/BbVUAy3nR1K0M/7fcB4A9gIZh2/9BhLo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=Bqy6iVpfoSP10VeJlsUVa8HdvT3ndxH5hHJ5Oz3IreOW1xycyiSe8wX9jnhKTzXgRc
-         YCdKrmDZre5oQmW9058i1hwR12VwuE+xC/1GtQYiuH/zb1ZlS3XxpPGGO/zYWHbcjcaO
-         9xGFp2JSz33t8R40B3l9yeJeVzpriHLu0lBdA=
-Received: by 10.210.50.6 with SMTP id x6mr3179908ebx.87.1213977358614;
-        Fri, 20 Jun 2008 08:55:58 -0700 (PDT)
-Received: from ?192.168.1.5? ( [80.33.90.183])
-        by mx.google.com with ESMTPS id g9sm3217405gvc.0.2008.06.20.08.55.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Jun 2008 08:55:57 -0700 (PDT)
-X-Mailer: Apple Mail (2.924)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=sX+i/9f7NhAHTr5wEEv1H6Q4vclXZjt6wFLecWVdleiuh1No8npLll8kY726GtPHPn
+         cG4hs+osctNZZxeETXQ0DPerXhjBlEQ95R+z5kehUC6bLxQL48SjO4akb5mqnWWB4pyP
+         WQdrHOE+6qpHYQllL71yeHOta1Flz/tht1K+Q=
+Received: by 10.142.166.20 with SMTP id o20mr1413030wfe.128.1213977549141;
+        Fri, 20 Jun 2008 08:59:09 -0700 (PDT)
+Received: by 10.142.223.21 with HTTP; Fri, 20 Jun 2008 08:59:09 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0806201400550.6439@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85658>
 
-From: Cristian Peraferrer <corellian.c@gmail.com>
-Date: Fri, 20 Jun 2008 17:24:20 +0200
-Subject: [PATCH] Added the printing of 'errno' error number when the  
-attempt to open the COMMIT_EDITMSG file is failed
+On Fri, Jun 20, 2008 at 9:03 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> I don't feel comfortable programing in C and I prefer C++ only because I
+>> have more experience using this one. May I contribute to this project in
+>> that language?.
 
-Now when the COMMIT_EDITMSG cannot be opened, the die message gives
-more information to the user by giving the 'errno' number.
+if you have UI/Win32 experience, a good friendly UI for newcomers to
+GIT is something we are lacking. Johannes got started with git-cheetah
+a while ago, and there is a similar project called TortoiseHg, either
+might be a good starting point.
 
-Signed-off-by: Cristian Peraferrer <corellian.c@gmail.com>
----
-  builtin-commit.c |    3 ++-
-  1 files changed, 2 insertions(+), 1 deletions(-)
+As Jakub noted, C++ is a reasonably good fit for UIs, and we are
+lacking those. We have a fantastic team of people doing C work on the
+core of git, and noone on GUIs. So I'd say yes, C++/UI help is
+something we need 'round here :-)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 90200ed..a33f43a 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -502,7 +502,8 @@ static int prepare_to_commit(const char  
-*index_file, const char *prefix)
+cheers,
 
-  	fp = fopen(git_path(commit_editmsg), "w");
-  	if (fp == NULL)
--		die("could not open %s", git_path(commit_editmsg));
-+		die("could not open %s: %s",
-+		    git_path(commit_editmsg), strerror(errno));
 
-  	if (cleanup_mode != CLEANUP_NONE)
-  		stripspace(&sb, 0);
+
+m
 -- 
-1.5.5
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
