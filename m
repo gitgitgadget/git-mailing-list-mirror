@@ -1,81 +1,85 @@
-From: Jose =?iso-8859-1?q?Mar=EDa_G=F3mez_Vergara?= <josemaria@jmgv.org>
-Subject: Re: Are C++ contributions welcome?
-Date: Fri, 20 Jun 2008 17:54:56 +0200
-Organization: JmGV Research
-Message-ID: <200806201754.56806.josemaria@jmgv.org>
-References: <4c88165dd0077363a30b4f98fed16c2f@localhost> <bd6139dc0806200830h633c954bn6dbfc87ada90756b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Cristian Peraferrer <corellian.c@gmail.com>
+Subject: [PATCH] Added the printing of 'errno' error number when the attempt to open the COMMIT_EDITMSG file is failed
+Date: Fri, 20 Jun 2008 17:55:54 +0200
+Message-ID: <1D8D9EA1-720A-446D-BA32-E83E88155E0A@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Jun 20 17:56:02 2008
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 20 17:57:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9ixy-0006yu-5b
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 17:55:58 +0200
+	id 1K9iyw-0007NE-A0
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 17:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756309AbYFTPzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 11:55:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756794AbYFTPzB
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:55:01 -0400
-Received: from laura.centrologic.com ([212.34.136.105]:48680 "EHLO
-	laura.centrologic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756309AbYFTPzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 11:55:00 -0400
-Received: from [84.76.236.140] (helo=neura.local)
-	by laura.centrologic.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1K9ix0-0004Lg-Cm; Fri, 20 Jun 2008 17:54:58 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <bd6139dc0806200830h633c954bn6dbfc87ada90756b@mail.gmail.com>
-Content-Disposition: inline
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+	id S1756865AbYFTP4C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 11:56:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756819AbYFTP4B
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:56:01 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:21779 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756726AbYFTP4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 11:56:00 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so674104fgg.17
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 08:55:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=S+Xo5GFarzclXDB77kbELvoXugadmMuBmk1Vkf7W6cU=;
+        b=CobLcJh+QBaiKje36vcnqQZ3TkklNsY8PlOUbmb9I5gl34gvCEgiq8yiuibN1uUmo9
+         4xLb6FUtVbOmyxnUEgHptnHujbL8/mdEwltVpmBZJM+IzxQ3kq6HxrubSDYM79+HRpRE
+         vWRwqtVDqgzkhwvyUVL0pV2ykeQBCSNdKubi4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=Bqy6iVpfoSP10VeJlsUVa8HdvT3ndxH5hHJ5Oz3IreOW1xycyiSe8wX9jnhKTzXgRc
+         YCdKrmDZre5oQmW9058i1hwR12VwuE+xC/1GtQYiuH/zb1ZlS3XxpPGGO/zYWHbcjcaO
+         9xGFp2JSz33t8R40B3l9yeJeVzpriHLu0lBdA=
+Received: by 10.210.50.6 with SMTP id x6mr3179908ebx.87.1213977358614;
+        Fri, 20 Jun 2008 08:55:58 -0700 (PDT)
+Received: from ?192.168.1.5? ( [80.33.90.183])
+        by mx.google.com with ESMTPS id g9sm3217405gvc.0.2008.06.20.08.55.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Jun 2008 08:55:57 -0700 (PDT)
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85657>
 
-To be honest, I like a lot projects made in C. I have been working with Qt and 
-with Gtk and I must say that it is easy for me to understand Gtk that is in C 
-than Qt that is in C++. Something I feel like if C++ design do unnecessary 
-abstration. The thing is that due to my job, I am more familiar with C++ 
-since the project in which I work at my job is a really big monster that 
-seems to be easier to manage using an a litter high level language as C++ 
-instead C.
+From: Cristian Peraferrer <corellian.c@gmail.com>
+Date: Fri, 20 Jun 2008 17:24:20 +0200
+Subject: [PATCH] Added the printing of 'errno' error number when the  
+attempt to open the COMMIT_EDITMSG file is failed
 
-I would like to learn more C, but sometime I think I should focus in one 
-language and learn as much as possible about it.
+Now when the COMMIT_EDITMSG cannot be opened, the die message gives
+more information to the user by giving the 'errno' number.
 
-Sometime ago I had to decide between C and C++. Looking around my city, it was 
-easy to find a good job working for a big mega-application that for a small 
-system application. It doesn't mean I like more working in high-level but C++ 
-seems to have the best of both worlds. 
+Signed-off-by: Cristian Peraferrer <corellian.c@gmail.com>
+---
+  builtin-commit.c |    3 ++-
+  1 files changed, 2 insertions(+), 1 deletions(-)
 
-I will try to do things in C... 
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 90200ed..a33f43a 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -502,7 +502,8 @@ static int prepare_to_commit(const char  
+*index_file, const char *prefix)
 
-Btw, more than strings I miss STL containers and algorithmits, but, if I want 
-to join to contribute I know I must adapt myself to the rules. So, i will try 
-to do thing in C.
+  	fp = fopen(git_path(commit_editmsg), "w");
+  	if (fp == NULL)
+-		die("could not open %s", git_path(commit_editmsg));
++		die("could not open %s: %s",
++		    git_path(commit_editmsg), strerror(errno));
 
-Thanks
-
-On Friday 20 June 2008 17:30:31 Sverre Rabbelier wrote:
-> On Fri, Jun 20, 2008 at 2:23 PM, jose maria gomez vergara
->
-> <josemaria@jmgv.org> wrote:
-> > I don't feel comfortable programing in C and I prefer C++ only because I
-> > have more experience using this one. May I contribute to this project in
-> > that language?.
->
-> Any programmer can learn a new language as long as they have enough
-> programming skills; it's not the language you are proficient in, it is
-> the programming you are proficient in. If you would like to contribute
-> to git, consider polishing up your C, really it is not all that hard
-> ;). The main thing you will probably stumble into is the lack of
-> std::string, but there are plenty examples in the git codebase to
-> learn how git handles string.
+  	if (cleanup_mode != CLEANUP_NONE)
+  		stripspace(&sb, 0);
+-- 
+1.5.5
