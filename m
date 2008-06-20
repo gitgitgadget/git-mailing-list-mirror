@@ -1,91 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
-Date: Fri, 20 Jun 2008 07:23:54 -0700 (PDT)
-Message-ID: <m34p7ombie.fsf@localhost.localdomain>
-References: <20080620082034.GA24913@elte.hu> <vpqiqw42vk6.fsf@bauges.imag.fr>
-	<20080620135004.GB8135@elte.hu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Jun 20 16:25:23 2008
+From: Richard Quirk <richard.quirk@gmail.com>
+Subject: [PATCH] git-gui: Fix accidental staged state toggle when clicking top pixel row
+Date: Fri, 20 Jun 2008 16:58:15 +0200
+Message-ID: <1213973895-10264-1-git-send-email-richard.quirk@gmail.com>
+Cc: spearce@spearce.org, Richard Quirk <richard.quirk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 20 16:59:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9hYA-0002CR-DW
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 16:25:14 +0200
+	id 1K9i5C-0007lw-MB
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 16:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756736AbYFTOYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 10:24:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbYFTOYE
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 10:24:04 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:53092 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756562AbYFTOYC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 10:24:02 -0400
-Received: by an-out-0708.google.com with SMTP id d40so290347and.103
-        for <git@vger.kernel.org>; Fri, 20 Jun 2008 07:23:59 -0700 (PDT)
+	id S1755834AbYFTO6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 10:58:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755624AbYFTO6Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 10:58:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:19060 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755368AbYFTO6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 10:58:24 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so6308ugf.16
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 07:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=JY0n+OWD+L/BuggTGQJxvkwNytff/z3rFNkyfrcYbg0=;
-        b=mBT9ZDF0dykMZsj2U5lKMuxfq+NxVAxsSBJDo1LP7gIalQwJHha89+hh1vc7M07zDg
-         5Mn/0rsyh7tGoRXcPwZSxtcM4GHJex0FPQDLZ1JHIwMAYKxjt7KVe3V19A3hn0XWT1I5
-         3EVExMZd0wYbhqNNav8oCzjARBUYPNtBF7Wv8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bGTml4xfATQSRY3jQTY2Waf/xx+kgxKUHy/WX9raPp0=;
+        b=xOWETv5yMpLo/SRS+wk8LMzRb6uzIs8truZxdwUmYF52CLlRWj8mOCuFCdpNt1nRkx
+         /ve2lCwJDsFDRz58KPwaJb3Vpu6SShHnJ9d/ZYGDcsrsv6kCkql1MZV7m7EvOXkKPkJl
+         yqJVD29X8VfmkdxNV9ZGGh7zW63F73rJY8FsQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=YcPEt9ekDqvxDBpodQHeE63HXmedS5zF/ZwNpoO/XU0ya7PIx0QeD5pLk1MWyH0NZB
-         kcXZ6znsRo9Ez0talhoP/EUHpIWr9W7QrFjV5WJElIFUffXQy9akzcoy/KOwuY7WQiOp
-         KFrtBakdc1GFJRcaxPvx86g8QDXC1ckN1+BTU=
-Received: by 10.100.166.10 with SMTP id o10mr5603734ane.0.1213971835546;
-        Fri, 20 Jun 2008 07:23:55 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.208.51])
-        by mx.google.com with ESMTPS id o61sm1486839hsc.17.2008.06.20.07.23.48
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=IFikRjw3OTCW0P3viebCU8PWCd8UDtTMZp9YjvdqA9d46HOwUFAvc6OF+eJaD7yqz6
+         wgqmtukxvepMGj9oBc5BrnVkQl+tlhXUad+pb0dB8L0z1bbh2E1FdJzrBbhyj2RPF3py
+         Ih6VLp8Mk+4egJy3+HmRYOqWx4pgHEGML62oU=
+Received: by 10.67.29.4 with SMTP id g4mr11469106ugj.84.1213973900271;
+        Fri, 20 Jun 2008 07:58:20 -0700 (PDT)
+Received: from localhost ( [84.77.20.234])
+        by mx.google.com with ESMTPS id m1sm21612005uge.36.2008.06.20.07.58.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Jun 2008 07:23:54 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5KENB88007467;
-	Fri, 20 Jun 2008 16:23:21 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5KEMneT007461;
-	Fri, 20 Jun 2008 16:22:49 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080620135004.GB8135@elte.hu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Fri, 20 Jun 2008 07:58:17 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.9.g26943
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85651>
 
-Ingo Molnar <mingo@elte.hu> writes:
+If a text widget is asked the index at x,y with y == 0 or y == 1 it will
+always return 1.0 as the nearest index, regardless of the x position.
 
-> * Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> 
-> > (BTW, git-foo is being obsoleted in favor of "git foo")
-> 
-> hm, can Bash be taught to do command completion on 'git rer<tab>', like 
-> it is able to do on git-rer<tab> ?
+This means that clicking the top 2 pixels of the Unstaged/Staged Changes
+lists caused the state of the file there to be toggled. This patch
+checks that the pixel clicked is greater than 1, so there is less chance
+of accidentally staging or unstaging changes.
 
-contrib/completion/git-completion.bash in git repository.  
+Signed-off-by: Richard Quirk <richard.quirk@gmail.com>
+---
 
-I don't know if there are some ready packages[1] for contrib stuff, and
-git-completion.bash doesn't seem to get packaged with git.
+To test the unpatched changes, make a change in a git-controlled repo and run
+git-gui. Click the Unstaged Changes list away from the first column, but near
+(within 1 pixel) to the pink header part. The file underneath is staged, rather
+surprisingly. Similarly, for staged files click a pixel or 2 underneath the
+green Staged Changes header and the changes are unstaged, even if the first
+column is not clicked.
 
-[1] RPM packages, because Debian seems to have packaged everything, or
-almist everything, in a itty-bitty-tiny package(lets) :-P
+This change looks like a hack - but I'm pretty sure it's a bug in the Tk text
+widget that's causing the strange behaviour. I couldn't see any other way to
+fix this accidental (un)staging, which seems to get me at least once a day
+lately.
 
-You can always use zsh, which has git completion in package... ;-)
+ git-gui.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 23d7dfe..980dc0b 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1797,7 +1797,7 @@ proc toggle_or_diff {w x y} {
+ 	$ui_index tag remove in_sel 0.0 end
+ 	$ui_workdir tag remove in_sel 0.0 end
  
-> 	Ingo
-
+-	if {$col == 0} {
++	if {$col == 0 && $y > 1} {
+ 		set i [expr {$lno-1}]
+ 		set ll [expr {[llength $file_lists($w)]-1}]
+ 
 -- 
-Jakub Narebski
-
-"My name is Inigo Montoya. You killed my father prepare to die"
-                                           (The Princess Bride)
+1.5.6.9.g26943
