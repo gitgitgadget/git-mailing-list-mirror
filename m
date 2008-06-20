@@ -1,72 +1,66 @@
-From: Fredrik Skolmli <fredrik@frsk.net>
-Subject: Re: git svn --use-log-author misbehavior?
-Date: Fri, 20 Jun 2008 12:57:29 +0200
-Message-ID: <20080620105729.GB27940@frsk.net>
-References: <485AF10B.7060202@mircea.bardac.net> <20080620085618.GA27940@frsk.net> <485B82BD.2000404@mircea.bardac.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
+Date: Fri, 20 Jun 2008 13:30:01 +0200
+Message-ID: <vpqiqw42vk6.fsf@bauges.imag.fr>
+References: <20080620082034.GA24913@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mircea Bardac <dev@mircea.bardac.net>
-X-From: git-owner@vger.kernel.org Fri Jun 20 12:58:37 2008
+Cc: git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Fri Jun 20 13:32:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9eK4-0006TZ-59
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 12:58:28 +0200
+	id 1K9eqr-00024J-Bv
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 13:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089AbYFTK5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 06:57:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYFTK5c
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 06:57:32 -0400
-Received: from cassarossa.samfundet.no ([129.241.93.19]:49871 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751770AbYFTK5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 06:57:32 -0400
-Received: from asterix.samfundet.no ([2001:700:300:1800::f] ident=postfix)
-	by cassarossa.samfundet.no with esmtp (Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1K9eJ7-0004FP-FL; Fri, 20 Jun 2008 12:57:29 +0200
-Received: by asterix.samfundet.no (Postfix, from userid 1000)
-	id 63F5AA6039D; Fri, 20 Jun 2008 12:57:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <485B82BD.2000404@mircea.bardac.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752638AbYFTLbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 07:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbYFTLbN
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 07:31:13 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:59816 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752397AbYFTLbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 07:31:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5KBU7KM008105;
+	Fri, 20 Jun 2008 13:30:07 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1K9eob-0003Dg-Cw; Fri, 20 Jun 2008 13:30:01 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1K9eob-0004WM-Ai; Fri, 20 Jun 2008 13:30:01 +0200
+In-Reply-To: <20080620082034.GA24913@elte.hu> (Ingo Molnar's message of "Fri\, 20 Jun 2008 10\:20\:34 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 20 Jun 2008 13:30:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85620>
 
-On Fri, Jun 20, 2008 at 11:13:17AM +0100, Mircea Bardac wrote:
+Ingo Molnar <mingo@elte.hu> writes:
 
-> I haven't tested this yet but I have a feeling this is not my case, or I 
-> might not be fully understanding the implications of "--add-author-from" 
-> on the functionality of "--use-log-author". Technically, they should be 
-> independent and the options should not depend on each other:
-> * --use-log-author only applies to getting info from the commits
-> * --add-author-from only applies to putting info in the commits
-> 
-> From the documentation, these 2 options can only be used with git svn 
-> init/clone so they should somehow be saved for future use. Maybe this 
-> doesn't happen.
-> 
-> My Git commits (not dcommits) already have "Signed-off-by:" at the end, 
-> added with "git commit -s". When I do a "git svn dcommit" they get 
-> pushed to SVN and the entire commit is rewritten. I have 
-> --add-author-from added on git clone, but nothing else is being added to 
-> the commit except the git-svn-id - from my point of view, according to 
-> the documentation, this is the correct behavior (since there already is 
-> a Signed-off-by line)
- 
-Did you mean "git svn clone" here, not "git clone"? And if --use-log-author
-is to be used to get retrieve info from the commits, it should be used
-instead of --add-author-from when doing a clone. (Which as far as I can see
-behaves correctly.)
+> 1) the SHA1 is duplicated above, is there a way to avoid it? Initially i 
+>    tried the obvious extension:
+>
+>       git-diff --reverse 7def2be1..^
+>
+>    But Git didnt recognize that as a valid commit range.
 
-However, looks like I might have misunderstood your problem, and possibly
-found a bug in the process. I'll look closer into it. :-)
+Git may not know how to do it, but since you can omit the .. here,
+your shell knows:
+
+  git diff whatever{,^}
+
+(BTW, git-foo is being obsoleted in favor of "git foo")
 
 -- 
-Regards,
-Fredrik Skolmli
+Matthieu
