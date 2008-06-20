@@ -1,219 +1,81 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 2/3] rebase-i: slight internal improvements
-Date: Fri, 20 Jun 2008 04:45:34 +0200
-Message-ID: <1213929935-15093-3-git-send-email-s-beyer@gmx.net>
-References: <1213929935-15093-1-git-send-email-s-beyer@gmx.net>
- <1213929935-15093-2-git-send-email-s-beyer@gmx.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 04:46:57 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH -resend] Add a helper script to send patches with Mozilla
+ Thunderbird
+Date: Thu, 19 Jun 2008 19:58:57 -0700
+Message-ID: <7vfxr8q0b2.fsf@gitster.siamese.dyndns.org>
+References: <7vmylhq6lb.fsf@gitster.siamese.dyndns.org>
+ <484D6A40.60002@etek.chalmers.se> <485AE9FD.8050508@etek.chalmers.se>
+ <7vmylhq6lb.fsf@gitster.siamese.dyndns.org>
+ <20080620102212.6117@nanako3.lavabit.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lukas Sandstrm <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
+	<nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jun 20 05:00:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9WeN-0006EA-5z
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 04:46:55 +0200
+	id 1K9WrR-0000AO-5l
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 05:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbYFTCpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2008 22:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751962AbYFTCpt
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 22:45:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44922 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751957AbYFTCpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2008 22:45:41 -0400
-Received: (qmail invoked by alias); 20 Jun 2008 02:45:39 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp063) with SMTP; 20 Jun 2008 04:45:39 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19rIqFNDl5r0tmJSno5WzBxfx7CEQpTBFdrXUSZXh
-	WfbnE0Hg9SN80u
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K9Wd5-0003x1-IE; Fri, 20 Jun 2008 04:45:35 +0200
-X-Mailer: git-send-email 1.5.5.1.561.gd8556
-In-Reply-To: <1213929935-15093-2-git-send-email-s-beyer@gmx.net>
-X-Y-GMX-Trusted: 0
+	id S1752186AbYFTC7a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2008 22:59:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbYFTC7a
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jun 2008 22:59:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59955 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbYFTC73 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2008 22:59:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D2021DBE2;
+	Thu, 19 Jun 2008 22:59:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 652EB1DBD9; Thu, 19 Jun 2008 22:59:07 -0400 (EDT)
+In-Reply-To: <20080620102212.6117@nanako3.lavabit.com> (nanako3@lavabit.com's
+ message of "Fri, 20 Jun 2008 10:22:12 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DEB6A1AA-3E74-11DD-8D26-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85591>
 
-Add commit_message function to get the commit message
-from a commit and other slight internal improvements.
+=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nanak=
+o3@lavabit.com> writes:
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
- git-rebase--interactive.sh |   61 +++++++++++++++++++++++++------------------
- 1 files changed, 35 insertions(+), 26 deletions(-)
+> Quoting Junio C Hamano <gitster@pobox.com>:
+>
+>> Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se> writes:
+>>
+>>> The script appp.sh can be used with the External Editor extension f=
+or
+>>> Mozilla Thunderbird in order to be able to send inline patches in a=
+n
+>>> easy way.
+>>>
+>>> Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+>>> ---
+>>>
+>>> Resending. It would be nice if this ended up in contrib/
+>>>
+>>> /Lukas
+>>>
+>>>  Documentation/SubmittingPatches          |    5 +++
+>>>  contrib/thunderbird-patch-inline/README  |   20 +++++++++++
+>>>  contrib/thunderbird-patch-inline/appp.sh |   55 ++++++++++++++++++=
++++++++++
+>>
+>> A silly question.  What does "appp" stand for?  AppendPatch does not=
+ have
+>> that many P's in it.
+>
+> Silly Junio (^_^).  Count them again.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 3f926d8..e8ac2ae 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -25,6 +25,7 @@ SQUASH_MSG="$DOTEST"/message-squash
- PRESERVE_MERGES=
- STRATEGY=
- VERBOSE=
-+MARK_PREFIX='refs/rebase-marks'
- test -f "$DOTEST"/strategy && STRATEGY="$(cat "$DOTEST"/strategy)"
- test -f "$DOTEST"/verbose && VERBOSE=t
- 
-@@ -33,7 +34,6 @@ mark the corrected paths with 'git add <paths>', and
- run 'git rebase --continue'"
- export GIT_CHERRY_PICK_HELP
- 
--mark_prefix=refs/rebase-marks/
- 
- warn () {
- 	echo "$*" >&2
-@@ -73,13 +73,18 @@ comment_for_reflog () {
- 	esac
- }
- 
-+# Get commit message from commit $1
-+commit_message () {
-+	git cat-file commit "$1" | sed -e '1,/^$/d'
-+}
-+
- last_count=
- mark_action_done () {
--	sed -e 1q < "$TODO" >> "$DONE"
--	sed -e 1d < "$TODO" >> "$TODO".new
--	mv -f "$TODO".new "$TODO"
--	count=$(grep -c '^[^#]' < "$DONE")
--	total=$(($count+$(grep -c '^[^#]' < "$TODO")))
-+	sed -e 1q "$TODO" >>"$DONE"
-+	sed -e 1d "$TODO" >>"$TODO.new"
-+	mv -f "$TODO.new" "$TODO"
-+	count="$(grep -c '^[^#]' "$DONE")"
-+	total="$(expr "$count" + "$(grep -c '^[^#]' "$TODO")")"
- 	if test "$last_count" != "$count"
- 	then
- 		last_count=$count
-@@ -88,16 +93,18 @@ mark_action_done () {
- 	fi
- }
- 
-+# Generate message, patch and author script files
- make_patch () {
- 	parent_sha1=$(git rev-parse --verify "$1"^) ||
- 		die "Cannot get patch for $1^"
- 	git diff-tree -p "$parent_sha1".."$1" > "$DOTEST"/patch
- 	test -f "$DOTEST"/message ||
--		git cat-file commit "$1" | sed "1,/^$/d" > "$DOTEST"/message
-+		commit_message "$1" >"$DOTEST"/message
- 	test -f "$DOTEST"/author-script ||
- 		get_author_ident_from_commit "$1" > "$DOTEST"/author-script
- }
- 
-+# Generate a patch and die
- die_with_patch () {
- 	make_patch "$1"
- 	git rerere
-@@ -105,9 +112,9 @@ die_with_patch () {
- }
- 
- cleanup_before_quit () {
--	for ref in $(git for-each-ref --format='%(refname)' "${mark_prefix%/}")
-+	for ref in $(git for-each-ref --format='%(refname)' "$MARK_PREFIX")
- 	do
--		git update-ref -d "$ref" "$ref" || return 1
-+		git update-ref -d "$ref" "$ref" || return
- 	done
- 	rm -rf "$DOTEST"
- }
-@@ -118,7 +125,7 @@ die_abort () {
- }
- 
- has_action () {
--	grep '^[^#]' "$1" >/dev/null
-+	grep -q '^[^#]' "$1"
- }
- 
- redo_merge () {
-@@ -126,7 +133,7 @@ redo_merge () {
- 	shift
- 
- 	eval "$(get_author_ident_from_commit $rm_sha1)"
--	msg="$(git cat-file commit $rm_sha1 | sed -e '1,/^$/d')"
-+	msg="$(commit_message "$rm_sha1")"
- 
- 	if ! GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
- 		GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
-@@ -167,37 +174,39 @@ nth_string () {
- }
- 
- make_squash_message () {
--	if test -f "$SQUASH_MSG"; then
--		COUNT=$(($(sed -n "s/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p" \
--			< "$SQUASH_MSG" | sed -ne '$p')+1))
-+	if test -f "$SQUASH_MSG"
-+	then
-+		count="$(($(sed -n -e 's/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p' \
-+			"$SQUASH_MSG" | sed -n -e '$p')+1))"
- 		echo "# This is a combination of $COUNT commits."
- 		sed -e 1d -e '2,/^./{
- 			/^$/d
--		}' <"$SQUASH_MSG"
-+		}' "$SQUASH_MSG"
- 	else
- 		COUNT=2
- 		echo "# This is a combination of two commits."
- 		echo "# The first commit's message is:"
- 		echo
--		git cat-file commit HEAD | sed -e '1,/^$/d'
-+		commit_message HEAD
- 	fi
- 	echo
- 	echo "# This is the $(nth_string $COUNT) commit message:"
- 	echo
--	git cat-file commit $1 | sed -e '1,/^$/d'
-+	commit_message "$1"
- }
- 
- peek_next_command () {
--	sed -n "1s/ .*$//p" < "$TODO"
-+	sed -n -e '1s/ .*$//p' "$TODO"
- }
- 
-+# If $1 is a mark, make a ref from it; otherwise keep it
- mark_to_ref () {
--	if expr "$1" : "^:[0-9][0-9]*$" >/dev/null
--	then
--		echo "$mark_prefix$(printf %d ${1#:})"
--	else
--		echo "$1"
--	fi
-+	arg="$1"
-+	ref="$(expr "$arg" : '^:0*\([0-9]\+\)$')"
-+	test -n "$ref" &&
-+		arg="$MARK_PREFIX/$ref"
-+	printf '%s\n' "$arg"
-+	unset arg ref
- }
- 
- do_next () {
-@@ -634,7 +643,7 @@ do
- 		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
- 		test -z "$ONTO" && ONTO=$UPSTREAM
- 
--		if test ! -z "$2"
-+		if test -n "$2"
- 		then
- 			output git show-ref --verify --quiet "refs/heads/$2" ||
- 				die "Invalid branchname: $2"
-@@ -674,7 +683,7 @@ do
- 				create_extended_todo_list
- 		else
- 			git rev-list --no-merges --reverse --pretty=oneline \
--				 $common_rev_list_opts | sed -n "s/^>/pick /p"
-+				 $common_rev_list_opts | sed -n -e 's/^>/pick /p'
- 		fi > "$TODO"
- 
- 		cat >> "$TODO" << EOF
--- 
-1.5.5.1.561.gd8556
+*Blush*  Sorry for the noise.
