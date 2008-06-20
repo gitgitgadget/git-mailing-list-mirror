@@ -1,78 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/3] rebase-i: slight internal improvements
-Date: Fri, 20 Jun 2008 09:16:43 +0200
-Message-ID: <485B595B.80608@viscovery.net>
-References: <1213929935-15093-1-git-send-email-s-beyer@gmx.net> <1213929935-15093-2-git-send-email-s-beyer@gmx.net> <1213929935-15093-3-git-send-email-s-beyer@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] graph.c: make many functions static
+Date: Fri, 20 Jun 2008 00:37:00 -0700
+Message-ID: <7vmylgo8v7.fsf@gitster.siamese.dyndns.org>
+References: <20080619082110.6117@nanako3.lavabit.com>
+ <7vhcbptev8.fsf@gitster.siamese.dyndns.org>
+ <20080620060035.GA22345@adamsimpkins.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jun 20 09:17:43 2008
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
+	<nanako3@lavabit.com>, git@vger.kernel.org
+To: Adam Simpkins <adam@adamsimpkins.net>
+X-From: git-owner@vger.kernel.org Fri Jun 20 09:38:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9asR-0003fd-6y
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 09:17:43 +0200
+	id 1K9bCH-0001t6-Lg
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 09:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351AbYFTHQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 03:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbYFTHQq
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 03:16:46 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:33888 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229AbYFTHQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 03:16:46 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K9arT-0000dT-RR; Fri, 20 Jun 2008 09:16:44 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 7FC644FB; Fri, 20 Jun 2008 09:16:43 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1213929935-15093-3-git-send-email-s-beyer@gmx.net>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1751583AbYFTHhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 03:37:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751556AbYFTHhS
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 03:37:18 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63586 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbYFTHhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 03:37:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 204761E73E;
+	Fri, 20 Jun 2008 03:37:13 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5D4671E73D; Fri, 20 Jun 2008 03:37:08 -0400 (EDT)
+In-Reply-To: <20080620060035.GA22345@adamsimpkins.net> (Adam Simpkins's
+ message of "Thu, 19 Jun 2008 23:00:37 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B2C69628-3E9B-11DD-A7BF-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85600>
 
-Stephan Beyer schrieb:
-> Add commit_message function to get the commit message
-> from a commit and other slight internal improvements.
+Adam Simpkins <adam@adamsimpkins.net> writes:
 
-If by "other slight improvements" you mean ...
+> On Thu, Jun 19, 2008 at 12:16:11PM -0700, Junio C Hamano wrote:
+>> しらいしななこ  <nanako3@lavabit.com> writes:
+> ...
+>> > +/* Internal API */
+>> > + ...
+>> > +static int graph_next_line(struct git_graph *graph, struct strbuf *sb);
+>> > +static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+>> > +static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb);
+>> 
+>> I think these are probably fine, not in the sense that nobody calls these
+>> functions _right now_ but in the sense that I do not foresee a calling
+>> sequence outside the graph.c internal that needs to call these directly,
+>> instead of calling graph_show_*() functions that use these.
+>
+> Documentation/technical/api-history-graph.txt should also be updated
+> to remove the discussion of these functions if they are no longer
+> publicly exposed.
 
->  mark_action_done () {
-> -	sed -e 1q < "$TODO" >> "$DONE"
-> -	sed -e 1d < "$TODO" >> "$TODO".new
-> -	mv -f "$TODO".new "$TODO"
-> -	count=$(grep -c '^[^#]' < "$DONE")
-> -	total=$(($count+$(grep -c '^[^#]' < "$TODO")))
-> +	sed -e 1q "$TODO" >>"$DONE"
-> +	sed -e 1d "$TODO" >>"$TODO.new"
-> +	mv -f "$TODO.new" "$TODO"
-> +	count="$(grep -c '^[^#]' "$DONE")"
-> +	total="$(expr "$count" + "$(grep -c '^[^#]' "$TODO")")"
-
-... this ...
-
->  has_action () {
-> -	grep '^[^#]' "$1" >/dev/null
-> +	grep -q '^[^#]' "$1"
-
-... and this, etc, then they are not improvements. They make the script
-less portable: There are 'grep's that don't have -q, others write the file
-name in front of the count, and I _think_ I have encountered 'sed's that
-don't take a file name as argument.
-
-This patch is just code churn for which you give no convincing reason in
-the commit message why it is good.
-
--- Hannes
+Actually, I was expecting (not necessarily _hoping_) you to defend these
+public API by providing examples that illustrates when calling these from
+outside graph API implementation could be useful.
