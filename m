@@ -1,57 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-gui: Fix accidental staged state toggle when clicking
- top pixel row
-Date: Fri, 20 Jun 2008 17:26:48 +0200
-Message-ID: <485BCC38.1000403@viscovery.net>
-References: <1213973895-10264-1-git-send-email-richard.quirk@gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Are C++ contributions welcome?
+Date: Fri, 20 Jun 2008 17:30:31 +0200
+Message-ID: <bd6139dc0806200830h633c954bn6dbfc87ada90756b@mail.gmail.com>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Richard Quirk <richard.quirk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 17:27:55 2008
+Cc: git@vger.kernel.org
+To: "jose maria gomez vergara" <josemaria@jmgv.org>
+X-From: git-owner@vger.kernel.org Fri Jun 20 17:31:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9iWi-0003uC-9A
-	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 17:27:48 +0200
+	id 1K9iaG-0005EU-PY
+	for gcvg-git-2@gmane.org; Fri, 20 Jun 2008 17:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756156AbYFTP0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 11:26:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755972AbYFTP0v
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:26:51 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:65411 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754887AbYFTP0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 11:26:50 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1K9iVl-0001yL-4b; Fri, 20 Jun 2008 17:26:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C44934FB; Fri, 20 Jun 2008 17:26:48 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1213973895-10264-1-git-send-email-richard.quirk@gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1758114AbYFTPad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 11:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756739AbYFTPad
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 11:30:33 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:60839 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756715AbYFTPac (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 11:30:32 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so986228wfd.4
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 08:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fRZGISgStnfXzhKVBw9hot+XgyiHdH0AxMisxyUSfZQ=;
+        b=BulSLu/FFmCFjbHxDrZ0P3/w1qBtMyC7UzLnqFlkfc1Nr8FHo8zOFP8GcOi7w+QpgQ
+         rxn4DufWk8tes8AvJzeiYxRDxorv/dAlUveIE1EswZ/Yetc0bD2fghDiA9AawmFFe+Mc
+         wDgKGoPv9k2eoBnD7d9rSmzCUJH1oW3HQHE+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=KJTS/9c8XLkUyWToeKwDbN30rDsbuCnz7K2+guk+4ZEHaJ4GEOzjOKOjliQCM1CmOp
+         Wa6fQPQCZViPf+AWYmrZoKS7RXEfRBaozQKHzZjCPEccxiRjt7t7O68T6L3Ji8X/OcXr
+         VUWI4S5tu07bSo7cF+nzoaiFyc0FZqZk/rT/c=
+Received: by 10.142.153.8 with SMTP id a8mr1358920wfe.316.1213975831338;
+        Fri, 20 Jun 2008 08:30:31 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Fri, 20 Jun 2008 08:30:31 -0700 (PDT)
+In-Reply-To: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85653>
 
-Richard Quirk schrieb:
-> If a text widget is asked the index at x,y with y == 0 or y == 1 it will
-> always return 1.0 as the nearest index, regardless of the x position.
-> 
-> This means that clicking the top 2 pixels of the Unstaged/Staged Changes
-> lists caused the state of the file there to be toggled. This patch
-> checks that the pixel clicked is greater than 1, so there is less chance
-> of accidentally staging or unstaging changes.
+On Fri, Jun 20, 2008 at 2:23 PM, jose maria gomez vergara
+<josemaria@jmgv.org> wrote:
+> I don't feel comfortable programing in C and I prefer C++ only because I
+> have more experience using this one. May I contribute to this project in
+> that language?.
 
-Ah, that would explain why it sometimes happened that a file was staged
-even though the mouse pointer was no where near the icon!
+Any programmer can learn a new language as long as they have enough
+programming skills; it's not the language you are proficient in, it is
+the programming you are proficient in. If you would like to contribute
+to git, consider polishing up your C, really it is not all that hard
+;). The main thing you will probably stumble into is the lack of
+std::string, but there are plenty examples in the git codebase to
+learn how git handles string.
 
--- Hannes
+-- 
+Cheers,
+
+Sverre Rabbelier
