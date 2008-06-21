@@ -1,86 +1,71 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sat, 21 Jun 2008 14:14:29 +0200
-Message-ID: <20080621121429.GI29404@genesis.frugalware.org>
-References: <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Are C++ contributions welcome?
+Date: Sat, 21 Jun 2008 14:42:24 +0200
+Organization: Organization?!?
+Message-ID: <85y74z9cy7.fsf@lola.goethe.zz>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+	<bd6139dc0806200830h633c954bn6dbfc87ada90756b@mail.gmail.com>
+	<200806201754.56806.josemaria@jmgv.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="y4wTDtQbf4Kuwqym"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 14:15:45 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 21 14:43:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA20I-0002rB-Ec
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 14:15:38 +0200
+	id 1KA2RK-0002UM-Rj
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 14:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbYFUMOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 08:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbYFUMOc
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 08:14:32 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:43595 "EHLO virgo.iok.hu"
+	id S1751063AbYFUMmk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Jun 2008 08:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYFUMmj
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 08:42:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:51335 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751037AbYFUMOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 08:14:31 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 149281B256B;
-	Sat, 21 Jun 2008 14:14:30 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 9A70044698;
-	Sat, 21 Jun 2008 13:51:19 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 9CCAF1190AD9; Sat, 21 Jun 2008 14:14:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vwskjazql.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1750800AbYFUMmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 08:42:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KA2QK-0004Jd-CK
+	for git@vger.kernel.org; Sat, 21 Jun 2008 12:42:32 +0000
+Received: from dslb-084-061-093-090.pools.arcor-ip.net ([84.61.93.90])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Jun 2008 12:42:32 +0000
+Received: from dak by dslb-084-061-093-090.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Jun 2008 12:42:32 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-093-090.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:SgR+gZSnuRBFCAErzWZBHtAk2Xg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85706>
 
+Jose Mar=EDa G=F3mez Vergara <josemaria@jmgv.org> writes:
 
---y4wTDtQbf4Kuwqym
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> To be honest, I like a lot projects made in C. I have been working
+> with Qt and with Gtk and I must say that it is easy for me to
+> understand Gtk that is in C than Qt that is in C++. Something I feel
+> like if C++ design do unnecessary abstration. The thing is that due t=
+o
+> my job, I am more familiar with C++ since the project in which I work
+> at my job is a really big monster that seems to be easier to manage
+> using an a litter high level language as C++ instead C.
+>
+> I would like to learn more C, but sometime I think I should focus in
+> one language and learn as much as possible about it.
 
-On Sat, Jun 21, 2008 at 02:44:50AM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> * nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
->  + Move all dashed-form commands to libexecdir
->=20
-> Scheduled for 1.6.0.
->=20
-> * jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
->  - Prepare execv_git_cmd() for removal of builtins from the
->    filesystem
->  - git-shell: accept "git foo" form
->=20
-> We do not plan to remove git-foo form completely from the filesystem at
-> this point, but git-shell may need to be updated.
+This is sort of like discussing the most suitable alphabet for writing
+poetry.
 
-I may be wrong, but given that git-upload-pack/receive-pack is now not
-in PATH, I think it will be problematic to do a pull/push in case the
-server runs next, the client is 1.5.6 and the user has git-shell as
-shell, for example.
-
-Or have I missed something?
-
-Thanks
-
---y4wTDtQbf4Kuwqym
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhc8KUACgkQe81tAgORUJYnjQCgoAqR/+jIMWY8mFacE4knp0/D
-Rm8An0pjmgDmrR0X7wdIalTdwFWygLvi
-=z8tX
------END PGP SIGNATURE-----
-
---y4wTDtQbf4Kuwqym--
+--=20
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
