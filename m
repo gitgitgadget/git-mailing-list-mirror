@@ -1,63 +1,86 @@
-From: Marc Zonzon <marc.zonzon+git@gmail.com>
-Subject: git-relink status (or bug?)
-Date: Sat, 21 Jun 2008 12:36:36 +0200
-Message-ID: <20080621103636.GA696@kernoel.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 21 Jun 2008 14:14:29 +0200
+Message-ID: <20080621121429.GI29404@genesis.frugalware.org>
+References: <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 21 12:38:07 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="y4wTDtQbf4Kuwqym"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 14:15:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA0Tu-0001Z4-ON
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 12:38:07 +0200
+	id 1KA20I-0002rB-Ec
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 14:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270AbYFUKgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 06:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbYFUKgj
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 06:36:39 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:33228 "EHLO smtp3-g19.free.fr"
+	id S1752638AbYFUMOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 08:14:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbYFUMOc
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 08:14:32 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:43595 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751225AbYFUKgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 06:36:38 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 63CC817B562;
-	Sat, 21 Jun 2008 12:36:37 +0200 (CEST)
-Received: from kernoel.kernoel.fr (lns-bzn-47f-81-56-187-30.adsl.proxad.net [81.56.187.30])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 38D1917B553;
-	Sat, 21 Jun 2008 12:36:37 +0200 (CEST)
-Received: by kernoel.kernoel.fr (Postfix, from userid 206)
-	id C07B1300DD; Sat, 21 Jun 2008 12:36:36 +0200 (CEST)
+	id S1751037AbYFUMOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 08:14:31 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 149281B256B;
+	Sat, 21 Jun 2008 14:14:30 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9A70044698;
+	Sat, 21 Jun 2008 13:51:19 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9CCAF1190AD9; Sat, 21 Jun 2008 14:14:29 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85705>
 
-When trying to use git-relink, I found it quite disappointing when
-going over packs. Git relink seem to make the assumption that there is
-a unique mapping from object name to object identity, which is of
-course acceptable for loose objects that are named with their sha-1
-but false for .pack and .idx, to pack objects with the same name have
-contains the same objects but may be not packed in the same order, or
-compression.
-Moreover .idx files can not be considered alone, but depends on the
-associated .pack.
 
-When it happen that you have two different packs with the same name
-but of different sizes, git relink does not hard link the .packs
-because the size differ, and hard link the idx. And your repository is
-corrupted.
+--y4wTDtQbf4Kuwqym
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It happen when you clone a repository, repack the clone and relink the
-clone to the original one.
+On Sat, Jun 21, 2008 at 02:44:50AM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> * nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+>  + Move all dashed-form commands to libexecdir
+>=20
+> Scheduled for 1.6.0.
+>=20
+> * jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+>  - Prepare execv_git_cmd() for removal of builtins from the
+>    filesystem
+>  - git-shell: accept "git foo" form
+>=20
+> We do not plan to remove git-foo form completely from the filesystem at
+> this point, but git-shell may need to be updated.
 
-I found very few information about git relink, but as it appears in
-changelog of v1.5.4 I suppose it is not obsoleted.
+I may be wrong, but given that git-upload-pack/receive-pack is now not
+in PATH, I think it will be problematic to do a pull/push in case the
+server runs next, the client is 1.5.6 and the user has git-shell as
+shell, for example.
 
-What about the use of this script?
+Or have I missed something?
 
-Marc
+Thanks
+
+--y4wTDtQbf4Kuwqym
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhc8KUACgkQe81tAgORUJYnjQCgoAqR/+jIMWY8mFacE4knp0/D
+Rm8An0pjmgDmrR0X7wdIalTdwFWygLvi
+=z8tX
+-----END PGP SIGNATURE-----
+
+--y4wTDtQbf4Kuwqym--
