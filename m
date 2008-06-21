@@ -1,90 +1,136 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@lavabit.com>
-Subject: Re: [PATCH 1/2] t3404: extra checks and s/! git/test_must_fail git/
-Date: Sat, 21 Jun 2008 07:18:12 +0900
-Message-ID: <20080621071812.6117@nanako3.lavabit.com>
-References: <20080620190037.GE7369@leksak.fem-net>
-	<alpine.DEB.1.00.0806201407230.6439@racer>
-	<1213986614-19536-1-git-send-email-s-beyer@gmx.net>
-	<X-0hXtX7hZGzbL_zS7e4VUMsiMfWiIfABUCFp28XZx0@cipher.nrlssc.navy.mil>
-	<20080620190037.GE7369@leksak.fem-net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Jun 21 01:06:44 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Introduce filter_independent() in commit.c
+Date: Sat, 21 Jun 2008 02:23:04 +0200
+Message-ID: <1214007784-4801-1-git-send-email-vmiklos@frugalware.org>
+References: <7vabhgq02p.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 02:24:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9pgq-0006Dj-3y
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 01:06:44 +0200
+	id 1K9qtw-0007Tc-Fg
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 02:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664AbYFTXFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 19:05:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754647AbYFTXFc
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 19:05:32 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:40386 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754663AbYFTXFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 19:05:31 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 06482C79F8;
-	Fri, 20 Jun 2008 18:05:23 -0500 (CDT)
-Received: from nanako3.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id AZHG37X0PEU4; Fri, 20 Jun 2008 18:05:30 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=imOE/UiBHou25aaLJ+71ev5tKNNEsBLqHA1e50faSOM1boZzOutqL8SfJXnJ9dXDjNqKKMVd6Gy/45Kh2/jf5//wgEjFrQ98MuxeXxI7BrOqX3R07OR1CngQvQX37XPPxtoWWh5ncC9ozucNwQCVwZomzSjrTagBDAeaZU26Ji8=;
-  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Stephan Beyer <s-beyer@gmx.net>;
-In-Reply-To: <20080620190037.GE7369@leksak.fem-net>
+	id S1754021AbYFUAXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 20:23:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752385AbYFUAXY
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 20:23:24 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:56292 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719AbYFUAXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 20:23:23 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id 389161DDC5B;
+	Sat, 21 Jun 2008 02:23:16 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 747DC18E0E5; Sat, 21 Jun 2008 02:23:04 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6
+In-Reply-To: <7vabhgq02p.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85682>
 
-Quoting Stephan Beyer <s-beyer@gmx.net>:
+This is similar to git-show-branch --independent: It filters out commits
+which are reachable from any other item from the input list.
 
-> Hi,
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+
+On Thu, Jun 19, 2008 at 08:03:58PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > +   for (i = heads; i; i = i->next)
+> > +           if (!(i->item->object.flags & RESULT))
+> > +                   pptr = &commit_list_insert(i->item, pptr)->next;
 >
->> > @@ -380,7 +397,7 @@ test_expect_success 'interrupted squash works as expected' '
->> >  	! FAKE_LINES="1 squash 3 2" git rebase -i HEAD~3 &&
->> 
->> These can be converted to use test_must_fail by using a sub-shell
->> as Junio demonstrated:
->> 
->> 	(
->> 		FAKE_LINES="1 squash 3 2" &&
->> 		export FAKE_LINES &&
->> 		test_must_fail git rebase -i HEAD~3
->> 	) &&
->
-> Perhaps I'm not consequent, but I thought that it's not worth it ;-)
+> Hmm.  How well was this function tested?
 
-Doesn't that logic make the other s/!/test_must_fail/ changes
-also not worth it?  What is the reason behind the change?
+As Dscho pointed out in an other mail there was no testcase for it, I
+wrote one and it pointed out what you said: it was buggy.
 
-I think your subject line and the message is worse than your
-previous one.  You are saying *HOW* you changed it, without
-saying *WHY* nor *WHAT FOR*.
+> Because RESULT is an implementation detail of merge_bases(), I do not
+> think we would want to expose it outside of it.
 
-I may have written your log message like this:
+The new version does not have this problem, either.
 
-	Subject: t3404: tighten git-rebase tests
+> More worryingly, the flag is supposed to be cleaned from the objects
+> after get_merge_bases() returns.  I am not sure what you'll learn by
+> looking at the flag here.
 
-	In preparation for rewriting git-rebase in C, replace the way a
-	failure is currently detected with "! git" to use test_must_fail
-	so that we do not confuse a broken rebase that dumps core with a
-	correctly failing one.
+Yes, you are right. In fact the idea to use get_octopus_merge_bases()
+was wrong, since it does not do what we need.
 
-although I do not know if you are rewriting git-rebase in C
-(^_^).  The point I learned from this project is to say why it
-is done that way, not how you did it.  The latter can be seen in
-the diff.
+Here is an example:
 
+	A - B
+	  \ C
+	  \ D
+	  \ E - F
+
+In this case get_octopus_merge_bases() will return only A, which is what
+it should do, but we need E in filter_indepenent() as well.
+
+Below is what I pushed to my working branch.
+
+This version now passes the test that was failed for the previous one.
+
+ commit.c |   32 ++++++++++++++++++++++++++++++++
+ commit.h |    1 +
+ 2 files changed, 33 insertions(+), 0 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 6052ca3..17e18d7 100644
+--- a/commit.c
++++ b/commit.c
+@@ -705,3 +705,35 @@ int in_merge_bases(struct commit *commit, struct commit **reference, int num)
+ 	free_commit_list(bases);
+ 	return ret;
+ }
++
++struct commit_list *filter_independent(unsigned char *head,
++	struct commit_list *heads)
++{
++	struct commit_list *b, *i, *j, *k, *bases = NULL, *ret = NULL;
++	struct commit_list **pptr = &ret;
++
++	commit_list_insert(lookup_commit(head), &heads);
++
++	for (i = heads; i; i = i->next) {
++		for (j = heads; j; j = j->next) {
++			if (i == j)
++				continue;
++			b = get_merge_bases(i->item, j->item, 1);
++			for (k = b; k; k = k->next)
++				commit_list_insert(k->item, &bases);
++		}
++	}
++
++	for (i = heads; i; i = i->next) {
++		int found = 0;
++		for (b = bases; b; b = b->next) {
++			if (!hashcmp(i->item->object.sha1, b->item->object.sha1)) {
++				found = 1;
++				break;
++			}
++		}
++		if (!found)
++			pptr = &commit_list_insert(i->item, pptr)->next;
++	}
++	return ret;
++}
+diff --git a/commit.h b/commit.h
+index dcec7fb..0aef7e4 100644
+--- a/commit.h
++++ b/commit.h
+@@ -131,6 +131,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 		int depth, int shallow_flag, int not_shallow_flag);
+ 
+ int in_merge_bases(struct commit *, struct commit **, int);
++struct commit_list *filter_independent(unsigned char *head, struct commit_list *heads);
+ 
+ extern int interactive_add(int argc, const char **argv, const char *prefix);
+ extern int rerere(void);
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.5.6
