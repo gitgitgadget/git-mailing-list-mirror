@@ -1,121 +1,75 @@
-From: "Jim Raden" <james.raden@gmail.com>
-Subject: Re: MinGW port pull request
-Date: Sat, 21 Jun 2008 17:21:47 -0400
-Message-ID: <5fc54b450806211421m64eee6e5l3622243e65f633a2@mail.gmail.com>
-References: <485B6510.3080201@viscovery.net> <7vskv79l37.fsf@gitster.siamese.dyndns.org> <200806212318.47745.johannes.sixt@telecom.at>
-Reply-To: james.raden@gmail.com
+From: "Vegard Nossum" <vegard.nossum@gmail.com>
+Subject: Re: about c8af1de9 (git status uses pager)
+Date: Sat, 21 Jun 2008 23:30:54 +0200
+Message-ID: <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com>
+References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: multipart/alternative;  boundary="----=_Part_13256_25410209.1214083307807"
-Cc: "Junio C Hamano" <gitster@pobox.com>, msysGit <msysgit@googlegroups.com>,  "Git Mailing List" <git@vger.kernel.org>
-To: johannes.sixt@telecom.at
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Jun 21 23:22:48 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.26])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Bart Trojanowski" <bart@jukie.net>, git@vger.kernel.org
+To: "Jan Engelhardt" <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Sat Jun 21 23:32:22 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAAXn-0000kX-Au
-	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2008 23:22:47 +0200
-Received: by yw-out-2122.google.com with SMTP id 8so6576970yws.63
-        for <gcvm-msysgit@m.gmane.org>; Sat, 21 Jun 2008 14:21:55 -0700 (PDT)
+	id 1KAAh3-0002fa-R4
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 23:32:22 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752867AbYFUVaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 17:30:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbYFUVaz
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 17:30:55 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:19997 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586AbYFUVay (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 17:30:54 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so6274524rvb.1
+        for <git@vger.kernel.org>; Sat, 21 Jun 2008 14:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:received:received:message-id
-         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
-         :references:reply-to:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
-        bh=6wONJqxNjebLT2P7doMIia0kJgiJ5DDKwvQW4c8iI3g=;
-        b=dujc4lpWNnHoLD/Pw0D0XdnJwmtw1XIE/4seBffPeUaUHWtjHNTQ8zyXBK1cHV1LX0
-         bTo36tB2XoUMDl4MjB4qqbYaP9YrtYzD99JnqUySiZm17Y5tEUM7tlYXMzbn7scap3y0
-         DBhQK18s36gug7AfsiTTMV3c7unz/HrvClLHI=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=F5Bxy1t2MSA7aK0LIoZdizcu4PO9fDT06qz5brZwCQw=;
+        b=HmaxoeJe20DM2NQbgMP1F3jR+PRJHnpGUiGkGqcuSaAhgE6PXmuYV+/mc/NOnO4Ijv
+         KlZfkYDpRFYp4UQu4h10MhfV0r0vhqzNHHOQghNG15MiM4f+5TphLkfurhg87tPlC9B6
+         NkEkM/QqhJ+KpzRiP3dlj+MRAx6J/ef9tcNWU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
-         :cc:in-reply-to:mime-version:content-type:references:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=Qxs5kC7ZxfQ8tA+q1GtqGQMlysQbuct71smnMNR5GfhLZt6PYQV+CHOZGp7vMVPR4E
-         9hZg+qdjo/IdojLClXl4j2eGmimlJE4LBNh4wIT2kmd0KbrAhJjpGr9rUTc7arkX9Ocb
-         VeRgqnu4x7yf7+9+5DgHzocouZNjVZiZNoONM=
-Received: by 10.141.137.3 with SMTP id p3mr884983rvn.17.1214083309402;
-        Sat, 21 Jun 2008 14:21:49 -0700 (PDT)
-Received: by 10.107.117.4 with SMTP id u4gr2404prm.0;
-	Sat, 21 Jun 2008 14:21:49 -0700 (PDT)
-X-Sender: james.raden@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.90.120.14 with SMTP id s14mr5736466agc.3.1214083308871; Sat, 21 Jun 2008 14:21:48 -0700 (PDT)
-Received: from rv-out-0506.google.com (rv-out-0506.google.com [209.85.198.235]) by mx.google.com with ESMTP id z53si4331485pyg.1.2008.06.21.14.21.48; Sat, 21 Jun 2008 14:21:48 -0700 (PDT)
-Received-SPF: pass (google.com: domain of james.raden@gmail.com designates 209.85.198.235 as permitted sender) client-ip=209.85.198.235;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of james.raden@gmail.com designates 209.85.198.235 as permitted sender) smtp.mail=james.raden@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by rv-out-0506.google.com with SMTP id f6so7852589rvb.51 for <msysgit@googlegroups.com>; Sat, 21 Jun 2008 14:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type:references; bh=voG9QfgLiFpye4M8ZH8AaUDvNcpTKtEC9nqzvBsh5w8=; b=iG8LlpUm2F1cCbIjG3njrnvzMEqMTAsYKQHU1+Ci/qlX/API8LNhJEQ9PmkfKX80Yb Wik5bjsouc39JkOiHGeyIQHs3+gKMGNIcFzT5Ysii8/tcBqMdB+p4GQcQ5we4Z2HG/GJ f8DmauxRxlS1Dn8cZXfG6WCBKcWXqSICJZDuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:references; b=MOpcV0/gdfRmJoHpfLTlQFyvmVe2pEJu6qnvoyWhEokJP/zw+59sd5aw43J/Se5yg8 FE4edafILLQv3f+FflRD2NnrZnhJvVpueLZGLSubWkgTI07ITuimwNSKFvwjjzzX25AD W+LFxYU9U27XDxv3eA9BkmGJyqqYEdr+OxhVM=
-Received: by 10.141.62.15 with SMTP id p15mr9979270rvk.144.1214083307855; Sat, 21 Jun 2008 14:21:47 -0700 (PDT)
-Received: by 10.151.103.10 with HTTP; Sat, 21 Jun 2008 14:21:47 -0700 (PDT)
-In-Reply-To: <200806212318.47745.johannes.sixt@telecom.at>
-Sender: msysgit@googlegroups.com
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=irGilEEwgCU7HhlFOY0u5XaomoC0l7QhsH0sGBy8V3QvmPLA1goxH3KZTYabWCf+qb
+         OOSk72OcA37O6DHjEKnVU/BbFm5S8N9XX48wkiKqZw9Bnd0yBNoPDM0YybXUIf0Q6hyK
+         WctACJiCAc8qZovXsFZ5CiNg0w60cKBf3vGjE=
+Received: by 10.140.128.3 with SMTP id a3mr5559171rvd.195.1214083854308;
+        Sat, 21 Jun 2008 14:30:54 -0700 (PDT)
+Received: by 10.140.136.1 with HTTP; Sat, 21 Jun 2008 14:30:54 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85726>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85727>
 
-
-------=_Part_13256_25410209.1214083307807
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-On Sat, Jun 21, 2008 at 5:18 PM, Johannes Sixt <johannes.sixt@telecom.at>
-wrote:
-
+On Sat, Jun 21, 2008 at 11:21 PM, Jan Engelhardt <jengelh@medozas.de> wrote:
 >
-> >  * There are still too many ifdefs.  I am wondering if the changes to
-> >    pager and process stuff is easier to manage in the longer term if they
-> >    are made into completely separate files (i.e. instead of linking
-> >    pager.o you would link mingw-pager.o).  I dunno.
->
-> I think that would not be helpful. Both parts need to be maintained,
-> whether
-> they are in the same file or in different files. If they are in one file,
-> and
-> someone needs to make a change, then there is a chance that a corresponding
-> change is made in the MINGW32 arm. If not then there is another chance that
-> the person would at least say "I don't know how to do it for MINGW32". But
-> if
-> you separate the implementations completely, then both chances are missed
-> much easier.
->
-> I quite agree!!
+> Since git 1.5.6, `git status` always invokes a pager, which is really
+> annoying when the output is less than the number of terminal rows
+> available. Can I turn that off somehow or do I need to send a reverting
+> patch?
 
-------=_Part_13256_25410209.1214083307807
-Content-Type: text/html; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+I think it would work to set PAGER="less -F" (a.k.a. --quit-if-one-screen)?
 
-On Sat, Jun 21, 2008 at 5:18 PM, Johannes Sixt &lt;<a href="mailto:johannes.sixt@telecom.at">johannes.sixt@telecom.at</a>&gt; wrote:<br><div class="gmail_quote"><blockquote class="gmail_quote" style="border-left: 1px solid rgb(204, 204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;">
-<div class="Ih2E3d"><br>
-</div><div class="Ih2E3d">&gt; &nbsp;* There are still too many ifdefs. &nbsp;I am wondering if the changes to<br>
-&gt; &nbsp; &nbsp;pager and process stuff is easier to manage in the longer term if they<br>
-&gt; &nbsp; &nbsp;are made into completely separate files (i.e. instead of linking<br>
-&gt; &nbsp; &nbsp;pager.o you would link mingw-pager.o). &nbsp;I dunno.<br>
-<br>
-</div>I think that would not be helpful. Both parts need to be maintained, whether<br>
-they are in the same file or in different files. If they are in one file, and<br>
-someone needs to make a change, then there is a chance that a corresponding<br>
-change is made in the MINGW32 arm. If not then there is another chance that<br>
-the person would at least say &quot;I don&#39;t know how to do it for MINGW32&quot;. But if<br>
-you separate the implementations completely, then both chances are missed<br>
-much easier.<br>
-<br>
-</blockquote></div>I quite agree!!<br>
+There's also GIT_PAGER variable, core.pager git setting, etc.
 
-------=_Part_13256_25410209.1214083307807--
+
+Vegard
+
+-- 
+"The animistic metaphor of the bug that maliciously sneaked in while
+the programmer was not looking is intellectually dishonest as it
+disguises that the error is the programmer's own creation."
+	-- E. W. Dijkstra, EWD1036
