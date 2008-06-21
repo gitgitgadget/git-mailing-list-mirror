@@ -1,57 +1,91 @@
-From: Alam Arias <Alam.GBC@gmail.com>
-Subject: Re: Is git-imap-send able to use SSL?
-Date: Sat, 21 Jun 2008 01:16:22 -0400
-Message-ID: <20080621011622.39fd1625@gmail.com>
-References: <D3F1364D-68DC-457D-AC54-AE4B70B1B5AB@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 21 07:21:04 2008
+From: shire <shire@tekrat.com>
+Subject: Re: [PATCH] Move deletion of configure generated files to distclean
+Date: Sat, 21 Jun 2008 00:33:26 -0700
+Message-ID: <AC4B20A5-396B-462D-9ACA-4E140B0876E2@tekrat.com>
+References: <D4D1BF84-3D3F-4DEC-87C0-F926228E0BF5@tekrat.com> <20080621013547.GF7369@leksak.fem-net>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: multipart/mixed; boundary=Apple-Mail-4--496794295
+Cc: git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Jun 21 09:34:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9vX5-0003pT-0h
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 07:21:03 +0200
+	id 1K9xc9-0004zK-HS
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 09:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbYFUFUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 01:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbYFUFUF
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 01:20:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:42383 "EHLO ciao.gmane.org"
+	id S1751063AbYFUHda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 03:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbYFUHd3
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 03:33:29 -0400
+Received: from sizzo.org ([69.63.177.213]:51938 "EHLO sizzo.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750824AbYFUFUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 01:20:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1K9vW6-0006F3-W3
-	for git@vger.kernel.org; Sat, 21 Jun 2008 05:20:02 +0000
-Received: from c-24-128-54-225.hsd1.ma.comcast.net ([24.128.54.225])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 05:20:02 +0000
-Received: from Alam.GBC by c-24-128-54-225.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 05:20:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-128-54-225.hsd1.ma.comcast.net
-X-Newsreader: Claws Mail 3.4.0 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1751032AbYFUHd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 03:33:29 -0400
+Received: from [10.0.1.200] (dsl092-189-079.sfo1.dsl.speakeasy.net [66.92.189.79])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sizzo.org (Postfix) with ESMTPSA id 8152A4F765C;
+	Sat, 21 Jun 2008 00:33:28 -0700 (PDT)
+In-Reply-To: <20080621013547.GF7369@leksak.fem-net>
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85694>
 
-On Fri, 20 Jun 2008 18:08:42 +0200
-Cristian Peraferrer <corellian.c@gmail.com> wrote:
 
-> I am trying to use git-imap-send to send a Draft to my GMail account  
-> which uses SSL to connect, I have put the correct port (993 in that  
-> case) in the config file but it seems it doesn't work. I figure that  
-> git-imap-send is not able to connect using SSL.
-> 
- well, there a patch by for SSL support for git-imap-send by Rob
-Shearman "robertshearman@gmail.com" over two weeks ago but it did not
-apply cleanly on master at the time, well, maybe I can send
-my version of this patch? or do I need to ask Rob Shearman?
+--Apple-Mail-4--496794295
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	delsp=yes;
+	format=flowed
+
+On Jun 20, 2008, at 6:35 PM, Stephan Beyer wrote:
+
+> Hi,
+>
+> whitespace and linebreaks are broken in your patch.
+> (Just noticed because I needed a quick patch to test something and I
+> took yours.)
+>
+
+Doh, thanks!  It appears there's no good simple way around the email  
+body being munged in os x's mail.app, and I was mislead in my initial  
+test email to myself.  I'll either fix mail.app in the future or send  
+via some other mailer, I apologize for the obvious mistake despite  
+all the guidelines in the patches file.  I've gone ahead and just  
+attached the patch to this email that should apply cleanly with git-am.
+
+
+--Apple-Mail-4--496794295
+Content-Transfer-Encoding: quoted-printable
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name=0001-Move-deletion-of-configure-generated-files-to-distcl.patch
+Content-Disposition: attachment;
+	filename=0001-Move-deletion-of-configure-generated-files-to-distcl.patch
+
+=46rom=206c3ec53f54ca346f7fff38ee4ef748cac3c0f488=20Mon=20Sep=2017=20=
+00:00:00=202001=0AFrom:=20Brian=20Shire=20=
+<shire@99-204-10-66.area1.spcsdns.net>=0ADate:=20Fri,=2020=20Jun=202008=20=
+17:53:51=20-0700=0ASubject:=20[PATCH]=20Move=20deletion=20of=20configure=20=
+generated=20files=20to=20distclean=0A=0A---=0A=20Makefile=20|=20=20=20=20=
+2=20+-=0A=201=20files=20changed,=201=20insertions(+),=201=20deletions(-)=0A=
+=0Adiff=20--git=20a/Makefile=20b/Makefile=0Aindex=20b003e3e..f868b0b=20=
+100644=0A---=20a/Makefile=0A+++=20b/Makefile=0A@@=20-1346,6=20+1346,7=20=
+@@=20dist-doc:=0A=20###=20Cleaning=20rules=0A=20=0A=20distclean:=20clean=0A=
++=09$(RM)=20config.log=20config.mak.autogen=20config.mak.append=20=
+config.status=20config.cache=0A=20=09$(RM)=20configure=0A=20=0A=20clean:=0A=
+@@=20-1355,7=20+1356,6=20@@=20clean:=0A=20=09$(RM)=20$(TEST_PROGRAMS)=0A=20=
+=09$(RM)=20*.spec=20*.pyc=20*.pyo=20*/*.pyc=20*/*.pyo=20common-cmds.h=20=
+TAGS=20tags=20cscope*=0A=20=09$(RM)=20-r=20autom4te.cache=0A-=09$(RM)=20=
+config.log=20config.mak.autogen=20config.mak.append=20config.status=20=
+config.cache=0A=20=09$(RM)=20-r=20$(GIT_TARNAME)=20.doc-tmp-dir=0A=20=09=
+$(RM)=20$(GIT_TARNAME).tar.gz=20git-core_$(GIT_VERSION)-*.tar.gz=0A=20=09=
+$(RM)=20$(htmldocs).tar.gz=20$(manpages).tar.gz=0A--=20=0A1.5.6.dirty=0A=0A=
+
+--Apple-Mail-4--496794295--
