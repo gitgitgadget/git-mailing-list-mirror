@@ -1,134 +1,191 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: Date parsing
-Date: Sat, 21 Jun 2008 23:52:40 +0200
-Message-ID: <20080621215240.GD15111@leksak.fem-net>
-References: <bd6139dc0806100758xb41d08dh18e3051088b707e5@mail.gmail.com> <Zx2uvEYSssjj9E0HrmUL8wYASyWX9L9w8LkR-gGRAmnD9isjoEeyKg@cipher.nrlssc.navy.mil> <bd6139dc0806100831y7a00a0f4sbc8dee9df7a8c16a@mail.gmail.com> <alpine.LFD.1.10.0806100942500.3101@woody.linux-foundation.org>
+From: Nikolaj Schumacher <n_schumacher@web.de>
+Subject: [PATCH] git.el: Don't reset HEAD in git-amend-file.
+Date: Sun, 22 Jun 2008 00:27:04 +0200
+Message-ID: <m2myle77bb.fsf@nschum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sverre@rabbelier.nl, Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jun 21 23:54:06 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 22 00:28:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAB24-0008Lg-QI
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 23:54:05 +0200
+	id 1KABZa-0007FR-0O
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 00:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbYFUVxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 17:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbYFUVxH
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 17:53:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39471 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751950AbYFUVxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 17:53:06 -0400
-Received: (qmail invoked by alias); 21 Jun 2008 21:52:54 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp029) with SMTP; 21 Jun 2008 23:52:54 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+/uwojDc6/J9OjvgRmQcQVU+Xh6ySI0IBHiHQwYf
-	WfxyGTccF4zPrz
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KAB0i-0001QS-E8; Sat, 21 Jun 2008 23:52:40 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0806100942500.3101@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1751139AbYFUW1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 18:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYFUW1J
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 18:27:09 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:46484 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751122AbYFUW1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 18:27:08 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 1BE4CE2B4180
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 00:27:05 +0200 (CEST)
+Received: from [77.135.41.81] (helo=thursday)
+	by smtp05.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1KABY0-0007OG-00
+	for git@vger.kernel.org; Sun, 22 Jun 2008 00:27:04 +0200
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2.50 (darwin)
+X-Sender: n_schumacher@web.de
+X-Provags-ID: V01U2FsdGVkX18Mfht5mmNYd8EHTCX4S08sLF5bLhwLwsQSfyN1
+	9yws2iWeCvE8tODYjmO2X2FTgg0k4nR2gpvEyGlAEHQh1FhrrD
+	kU+GXQBcYc6YgrUJH4RQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85733>
 
-Hi,
+--=-=-=
 
-> > On Tue, Jun 10, 2008 at 5:10 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> > > Take a look at match_multi_number in date.c
-> > > European ordering is preferred when the separator is '.'
-> > 
-> > Ok, then I'll use . in the future, that's nice :).
-> 
-> Well, there are safer ways to give the date.
-> 
-> If you do it in strict rfc822 format, you'll never have any confusion 
-> what-so-ever. The "approxidate()" thing tries to parse any random input, 
-> but it *is* meant to be excessively liberal.
+Hello.
 
-Today I've been playing around with approxidate(), too, and I think I
-found some bug in date parsing. I let copy&paste speak...
+The current implementation of git-amend-file is a little dangerous.
+While git --amend is atomic, git-amend-file is not.
 
-Correct:
+If the user calls it, but doesn't go through with the commit (due to
+error or choice), git --reset HEAD^ has been called anyway.
 
-$ ./test-date "2008-07-01 23:59:59 +0200"
-2008-07-01 23:59:59 +0200 -> 1214949599 +0200 -> Tue Jul  1 23:59:59 2008
-2008-07-01 23:59:59 +0200 -> Tue Jul  1 23:59:59 2008
-
-And even:
-
-$ ./test-date "2008-07-01 24:00:00 +0200"
-2008-07-01 24:00:00 +0200 -> 1214949600 +0200 -> Wed Jul  2 00:00:00 2008
-2008-07-01 24:00:00 +0200 -> Wed Jul  2 00:00:00 2008
-
-But then there's a jump in time:
-
-$ ./test-date "2008-07-02 00:00:00 +0200"
-2008-07-02 00:00:00 +0200 -> 1202335200 +0200 -> Wed Feb  6 23:00:00 2008
-2008-07-02 00:00:00 +0200 -> Wed Feb  6 23:00:00 2008
-
-$ ./test-date "2008-07-02 01:00:00 +0200"
-2008-07-02 01:00:00 +0200 -> 1202338800 +0200 -> Thu Feb  7 00:00:00 2008
-2008-07-02 01:00:00 +0200 -> Thu Feb  7 00:00:00 2008
+With this patch it doesn't reset the HEAD till the actual commit.
 
 
-If we let test-date just print the timestamp...
+regards,
+Nikolaj Schumacher
 
-diff --git a/test-date.c b/test-date.c
-index 62e8f23..18d53c1 100644
---- a/test-date.c
-+++ b/test-date.c
-@@ -11,10 +11,10 @@ int main(int argc, char **argv)
- 		memcpy(result, "bad", 4);
- 		parse_date(argv[i], result, sizeof(result));
- 		t = strtoul(result, NULL, 0);
--		printf("%s -> %s -> %s", argv[i], result, ctime(&t));
-+		printf("%s -> %lu\n", argv[i], t);
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: inline; filename=git_git.el_amend.patch
+Content-Description: patch
+
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 4fa853f..1360cb0 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -400,16 +400,17 @@ and returns the process output as a string, or nil if the git failed."
+   (git-get-string-sha1
+    (git-call-process-env-string (and index-file `(("GIT_INDEX_FILE" . ,index-file))) "write-tree")))
  
- 		t = approxidate(argv[i]);
--		printf("%s -> %s\n", argv[i], ctime(&t));
-+		printf("%s -> %lu\n", argv[i], t);
- 	}
- 	return 0;
- }
--- -- -- --
+-(defun git-commit-tree (buffer tree head)
++(defun git-commit-tree (buffer tree parent &optional head)
+   "Call git-commit-tree with buffer as input and return the resulting commit SHA1."
++  (unless head (setq head parent))
+   (let ((author-name (git-get-committer-name))
+         (author-email (git-get-committer-email))
+         (subject "commit (initial): ")
+         author-date log-start log-end args coding-system-for-write)
+-    (when head
++    (when parent
+       (setq subject "commit: ")
+       (push "-p" args)
+-      (push head args))
++      (push parent args))
+     (with-current-buffer buffer
+       (goto-char (point-min))
+       (if
+@@ -425,7 +426,7 @@ and returns the process output as a string, or nil if the git failed."
+               (setq author-date (match-string 1)))
+             (goto-char (point-min))
+             (while (re-search-forward "^Parent: +\\([0-9a-f]+\\)" nil t)
+-              (unless (string-equal head (match-string 1))
++              (unless (string-equal parent (match-string 1))
+                 (setq subject "commit (merge): ")
+                 (push "-p" args)
+                 (push (match-string 1) args))))
+@@ -852,7 +853,7 @@ Return the list of files that haven't been handled."
+               (git-run-hook "pre-commit" `(("GIT_INDEX_FILE" . ,index-file))))
+           (delete-file index-file))))))
+ 
+-(defun git-do-commit ()
++(defun git-do-commit (&optional amend)
+   "Perform the actual commit using the current buffer as log message."
+   (interactive)
+   (let ((buffer (current-buffer))
+@@ -862,10 +863,11 @@ Return the list of files that haven't been handled."
+           (message "You cannot commit unmerged files, resolve them first.")
+         (unwind-protect
+             (let ((files (git-marked-files-state 'added 'deleted 'modified))
+-                  head head-tree)
++                  head parent head-tree)
+               (unless (git-empty-db-p)
+                 (setq head (git-rev-parse "HEAD")
+-                      head-tree (git-rev-parse "HEAD^{tree}")))
++                      parent (if amend (git-rev-parse "HEAD^") head)
++                      head-tree (git-rev-parse (concat "HEAD^{tree}"))))
+               (if files
+                   (progn
+                     (message "Running git commit...")
+@@ -875,7 +877,7 @@ Return the list of files that haven't been handled."
+                     (let ((tree (git-write-tree index-file)))
+                       (if (or (not (string-equal tree head-tree))
+                               (yes-or-no-p "The tree was not modified, do you really want to perform an empty commit? "))
+-                          (let ((commit (git-commit-tree buffer tree head)))
++                          (let ((commit (git-commit-tree buffer tree parent head)))
+                             (when commit
+                               (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
+                               (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
+@@ -1263,13 +1265,22 @@ Return the list of files that haven't been handled."
+       (when sign-off (git-append-sign-off committer-name committer-email)))
+     buffer))
+ 
+-(defun git-commit-file ()
+-  "Commit the marked file(s), asking for a commit message."
+-  (interactive)
++(defun git-commit-file (&optional amend)
++  "Commit the marked file(s), asking for a commit message.
++With optional argument, amend HEAD."
++  (interactive "P")
+   (unless git-status (error "Not in git-status buffer."))
++  (and amend (git-empty-db-p) (error "No commit to amend."))
+   (when (git-run-pre-commit-hook)
+     (let ((buffer (get-buffer-create "*git-commit*"))
+           (coding-system (git-get-commits-coding-system))
++          (action (if amend
++                      `(lambda () (interactive) (git-do-commit t))
++                    'git-do-commit))
++          (env (if (boundp 'log-edit-diff-function)
++                   '((log-edit-listfun . git-log-edit-files)
++                     (log-edit-diff-function . git-log-edit-diff))
++                 'git-log-edit-files))
+           author-name author-email subject date)
+       (when (eq 0 (buffer-size buffer))
+         (when (file-readable-p ".dotest/info")
+@@ -1286,10 +1297,8 @@ Return the list of files that haven't been handled."
+             (when (re-search-forward "^Date: \\(.*\\)$" nil t)
+               (setq date (match-string 1)))))
+         (git-setup-log-buffer buffer author-name author-email subject date))
+-      (if (boundp 'log-edit-diff-function)
+-	  (log-edit 'git-do-commit nil '((log-edit-listfun . git-log-edit-files)
+-					 (log-edit-diff-function . git-log-edit-diff)) buffer)
+-	(log-edit 'git-do-commit nil 'git-log-edit-files buffer))
++      (when amend (git-setup-commit-buffer "HEAD"))
++      (log-edit action nil env buffer)
+       (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
+       (setq buffer-file-coding-system coding-system)
+       (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))))
+@@ -1326,19 +1335,9 @@ Return the list of files that haven't been handled."
+     files))
+ 
+ (defun git-amend-commit ()
+-  "Undo the last commit on HEAD, and set things up to commit an
+-amended version of it."
++  "Call `git-commit-file' and have it amend HEAD."
+   (interactive)
+-  (unless git-status (error "Not in git-status buffer."))
+-  (when (git-empty-db-p) (error "No commit to amend."))
+-  (let* ((commit (git-rev-parse "HEAD"))
+-         (files (git-get-commit-files commit)))
+-    (when (git-call-process-display-error "reset" "--soft" "HEAD^")
+-      (git-update-status-files (copy-sequence files) 'uptodate)
+-      (git-mark-files git-status files)
+-      (git-refresh-files)
+-      (git-setup-commit-buffer commit)
+-      (git-commit-file))))
++  (git-commit-file t))
+ 
+ (defun git-find-file ()
+   "Visit the current file in its own buffer."
 
-... then we get:
-
-$ ./test-date "2008-07-01 23:59:59 +0200"
-2008-07-01 23:59:59 +0200 -> 1214949599
-2008-07-01 23:59:59 +0200 -> 1214949599
-
-$ ./test-date "2008-07-02 00:00:00 +0200"
-2008-07-02 00:00:00 +0200 -> 1202335200
-2008-07-02 00:00:00 +0200 -> 1202335200
-
-Also, with another timezone, we get:
-
-$ ./test-date "2008-07-01 23:59:59 +0000"
-2008-07-01 23:59:59 +0000 -> 1214956799
-2008-07-01 23:59:59 +0000 -> 1214956799
-
-$ ./test-date "2008-07-02 00:00:00 +0000"
-2008-07-02 00:00:00 +0000 -> 1202342400
-2008-07-02 00:00:00 +0000 -> 1202342400
-
-Is something wrong in my format or is there a bug?
-
-Providing timestamps works, of course ;-)
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+--=-=-=--
