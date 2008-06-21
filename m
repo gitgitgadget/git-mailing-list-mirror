@@ -1,89 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Extend project_index file format by project description
-Date: Sat, 21 Jun 2008 18:09:07 +0200
-Message-ID: <200806211809.07763.jnareb@gmail.com>
-References: <200806211540.58929.jnareb@gmail.com> <485D1E76.6090709@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-merge-recursive-{ours,theirs}
+Date: Sat, 21 Jun 2008 17:29:24 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806211728090.6439@racer>
+References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com> <20080616092554.GB29404@genesis.frugalware.org> <48563D6C.8060704@viscovery.net> <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com> <93c3eada0806161545m5c6e1073q5522ce31f72be9f0@mail.gmail.com>
+ <7vve076d6t.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806181618070.6439@racer> <alpine.DEB.1.00.0806181627260.6439@racer> <7viqw6zovi.fsf@gitster.siamese.dyndns.org> <7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org> <7vbq1wo8ck.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806201351370.6439@racer> <7vy74z9l3l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 18:10:16 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: geoffrey.russell@gmail.com, sverre@rabbelier.nl,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 18:32:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA5fL-0003ad-Me
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 18:10:16 +0200
+	id 1KA60e-0001Ur-Mw
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 18:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228AbYFUQJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 12:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbYFUQJU
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 12:09:20 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:5884 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751132AbYFUQJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 12:09:19 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so186524ugf.16
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 09:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=iTmzX39xB7/btqstEVEmE5tV0Ikoy6yno6P4sHBEL8o=;
-        b=rI7EiNLn/sEK5Jh/GYlMwfNlCUHaAWkOtUu40q8lWyatmxqYRlZfG+QJofY8mrl9fs
-         SSqXPwSPB7y/I7uz6Nj6ZVQsK0gwg7DVu6XpN3scOU/Fj+7xZq2sOZqQ5SpfgVsECErp
-         lohGiZGd7G0mCBE90RxvJNFFWMC8zAZu5gn0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=PUWp3Pn/K1UCyq47MxsMwUMusvt3w1MX9zmhwbGKxI2Czpnlqr+57whcugXsQvO68v
-         Ov4m198vegh5ld3kMCGZYR21+BuUO/DckvEP0WS51PurbR4ZsNU/0vFz4rtJ6ykDgMam
-         8/PwLBbBf+B6dCa5/yz82dzrLNGF1GIJaVSrQ=
-Received: by 10.67.19.13 with SMTP id w13mr698782ugi.84.1214064556992;
-        Sat, 21 Jun 2008 09:09:16 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.245.230])
-        by mx.google.com with ESMTPS id 31sm24602107ugg.25.2008.06.21.09.09.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Jun 2008 09:09:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <485D1E76.6090709@gmail.com>
-Content-Disposition: inline
+	id S1750979AbYFUQbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 12:31:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbYFUQbA
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 12:31:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49856 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750880AbYFUQa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 12:30:59 -0400
+Received: (qmail invoked by alias); 21 Jun 2008 16:30:57 -0000
+Received: from 87.114.2.237.plusnet.thn-ag3.dyn.plus.net (EHLO racer.local) [87.114.2.237]
+  by mail.gmx.net (mp017) with SMTP; 21 Jun 2008 18:30:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1//h1wZVIj/l5H1CeRTY/HA3Vkv4yJ6lQo3POZBlZ
+	eob3aP/vMuhTwU
+X-X-Sender: gene099@racer
+In-Reply-To: <7vy74z9l3l.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85713>
 
-Lea Wiemann wrote:
-> Jakub Narebski wrote:
->> 
->> The goal is to first, improve performance; and second, to be possible
->> to have single place for all info (well, amost all info) needed to
->> generate projects list.
+Hi,
+
+On Sat, 21 Jun 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> I'm not sure if I understand your objective correctly.  If this is 
-> exclusively about performance, may I suggest you wait with this till I 
-> have implemented caching?  Regenerating the project list might end up 
-> being fast enough that it won't matter at all; so no reason to 
-> complicate the code.
+> >> @@ -1379,11 +1401,18 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+> >>  	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+> >>  	int index_fd;
+> >>  
+> >> +	merge_recursive_variants = 0;
+> >>  	if (argv[0]) {
+> >>  		int namelen = strlen(argv[0]);
+> >>  		if (8 < namelen &&
+> >>  		    !strcmp(argv[0] + namelen - 8, "-subtree"))
+> >> -			subtree_merge = 1;
+> >> +			merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
+> >> +		else if (5 < namelen &&
+> >> +			 !strcmp(argv[0] + namelen - 5, "-ours"))
+> >> +			merge_recursive_variants = MERGE_RECURSIVE_OURS;
+> >> +		else if (7 < namelen &&
+> >> +			 !strcmp(argv[0] + namelen - 7, "-theirs"))
+> >> +			merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
+> >
+> > This just cries out loud for a new function suffixcmp().
 > 
-> If it's about the convenience of maintaining project descriptions in a 
-> central place, sure, that's fine.
+> Actually, I think "git-merge-recursive-theirs" is a mistake.  We should
+> bite the bullet and give "git-merge" an ability to pass backend specific
+> parameters to "git-merge-recursive".
 
-It is about both, but I think mainly about convenience of maintaining 
-(having) all static data about project in one place (well, almost all: 
-there is README.html, but it is not visible in projects list page).
+Fair enough.
 
-What we gain in performance generating projects list (when caching is 
-disabled for some reason, like limited quota or/and not installed 
-memcached), we might lose when generating project pages (with project 
-description).
+> The new convention could be that anything that begins with -X is passed 
+> to the backend.
+> 
+> E.g.
+> 
+> 	git merge -Xfavor=theirs foo
+>         git merge -Xsubtree=/=gitk-git paulus
+> 
+> As you noticed already, subtree is just a funny optional behaviour
+> attached to recursive, so are theirs and ours.  The above two would invoke
+> git-merge-recursive like so:
+> 
+> 	git merge-recursive -Xfavor=theirs <base> -- HEAD MERGE_HEAD
+> 	git merge-recursive -Xsubtree=/=gitk-git <base> -- HEAD MERGE_HEAD
+> 
+> We could even mix these two if we are ambitious.
 
--- 
-Jakub Narebski
-Poland
+Looks fine to me.  And much cleaner than the hardlinking.
+
+Ciao,
+Dscho
