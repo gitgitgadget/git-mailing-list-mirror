@@ -1,99 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] git-merge-recursive-{ours,theirs}
-Date: Sat, 21 Jun 2008 09:56:45 -0700 (PDT)
-Message-ID: <m3zlpeloah.fsf@localhost.localdomain>
-References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
-	<20080616092554.GB29404@genesis.frugalware.org>
-	<48563D6C.8060704@viscovery.net>
-	<bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
-	<93c3eada0806161545m5c6e1073q5522ce31f72be9f0@mail.gmail.com>
-	<7vve076d6t.fsf@gitster.siamese.dyndns.org>
-	<alpine.DEB.1.00.0806181618070.6439@racer>
-	<alpine.DEB.1.00.0806181627260.6439@racer>
-	<7viqw6zovi.fsf@gitster.siamese.dyndns.org>
-	<7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org>
-	<7vbq1wo8ck.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.DEB.1.00.0806201351370.6439@racer>
-	<7vy74z9l3l.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	geoffrey.russell@gmail.com, sverre@rabbelier.nl,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 13/13] Add new test case to ensure git-merge filters for independent parents
+Date: Sat, 21 Jun 2008 19:00:50 +0200
+Message-ID: <67668993d3fc7ea52c9c191178f3e1dea7bb4282.1214066799.git.vmiklos@frugalware.org>
+References: <cover.1214066798.git.vmiklos@frugalware.org>
+ <0b7ea424b3d5ea18a5a8660c6aead51adcc6a40f.1214066799.git.vmiklos@frugalware.org>
+ <57d8a308fae0012174ed4388baccf1bde8515f2f.1214066799.git.vmiklos@frugalware.org>
+ <5cae08d3bf2852a8bbd8dc8cdf741cb4bdfa237e.1214066799.git.vmiklos@frugalware.org>
+ <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 18:57:54 2008
+X-From: git-owner@vger.kernel.org Sat Jun 21 19:02:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA6PP-0007vK-By
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 18:57:51 +0200
+	id 1KA6TQ-0000Zo-D6
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 19:02:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbYFUQ4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 12:56:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbYFUQ4z
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 12:56:55 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:32235 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751472AbYFUQ4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 12:56:54 -0400
-Received: by an-out-0708.google.com with SMTP id d40so402394and.103
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 09:56:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=fOiYE7vcI07e770sRvR/es1vmsX/P8IeqO46W8uKOaQ=;
-        b=tB/OdQKIo7B89S/6F0HODVJ1OvRNcmZs9/UqYgNjgG0akQD9KVtdDRa3L7//pTftyp
-         7f9nKOim5CUk3sNbX8AR/whArynM0uMrbxlIHnUpDmw5r69DSEfUIEnkpA1XwaGSRKsi
-         CBiEUAjHd0Ar/5LE3tXgRICZFds7jS42MqtEA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=UEBN65RYCYKdiQBnwk5TFc4aRL59a3ds551ebJu2ShrM5Qo64f52VmcVqH4QDdNmdh
-         +YHdumI8lDxDrjYbn7/1nVpsy9tVU2+vmw9jzEm9zpx1Ic6HBUYylw/rhEATfNGUnq9n
-         TpWFniuSSGZsjJXX0a8OoGxeKqbvw2jkakR2k=
-Received: by 10.100.197.7 with SMTP id u7mr8412414anf.27.1214067406252;
-        Sat, 21 Jun 2008 09:56:46 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.245.230])
-        by mx.google.com with ESMTPS id b7sm6848054ana.35.2008.06.21.09.56.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Jun 2008 09:56:45 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5LGufmk017109;
-	Sat, 21 Jun 2008 18:56:42 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5LGucGK017104;
-	Sat, 21 Jun 2008 18:56:38 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vy74z9l3l.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751650AbYFURAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 13:00:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbYFURAx
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 13:00:53 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:33725 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751374AbYFURAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 13:00:52 -0400
+Received: from vmobile.example.net (dsl5402CEE1.pool.t-online.hu [84.2.206.225])
+	by yugo.frugalware.org (Postfix) with ESMTP id 956D91DDC5F;
+	Sat, 21 Jun 2008 19:00:49 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 4EBCE18E0E9; Sat, 21 Jun 2008 19:00:51 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6
+In-Reply-To: <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1214066798.git.vmiklos@frugalware.org>
+References: <cover.1214066798.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85715>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The old shell version used show-branch --independent to filter for the
+ones that cannot be reached from any other reference.
 
-> Actually, I think "git-merge-recursive-theirs" is a mistake.  We should
-> bite the bullet and give "git-merge" an ability to pass backend specific
-> parameters to "git-merge-recursive".  The new convention could be that
-> anything that begins with -X is passed to the backend.
-> 
-> E.g.
-> 
-> 	git merge -Xfavor=theirs foo
->       git merge -Xsubtree=/=gitk-git paulus
+The new C version uses filter_independent() from commit.c for this, so
+add test to ensure it works as expected.
 
-Gaaah... only after reading it for third time I see that it isn't
-some funky "=/=" symbol, but subtree with grafing '/' in one side
-to 'gitk-git' subdirectory in other side.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ t/t7603-merge-filter-independent.sh |   63 +++++++++++++++++++++++++++++++++++
+ 1 files changed, 63 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7603-merge-filter-independent.sh
 
+diff --git a/t/t7603-merge-filter-independent.sh b/t/t7603-merge-filter-independent.sh
+new file mode 100755
+index 0000000..e9249cd
+--- /dev/null
++++ b/t/t7603-merge-filter-independent.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Testing octopus merge when filtering independent branches.'
++
++. ./test-lib.sh
++
++# 0 - 1
++#   \ 2
++#   \ 3
++#   \ 4 - 5
++#
++# So 1, 2, 3 and 5 should be kept, 4 should be filtered.
++
++test_expect_success 'setup' '
++	echo c0 > c0.c &&
++	git add c0.c &&
++	git commit -m c0 &&
++	git tag c0 &&
++	echo c1 > c1.c &&
++	git add c1.c &&
++	git commit -m c1 &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	echo c2 > c2.c &&
++	git add c2.c &&
++	git commit -m c2 &&
++	git tag c2 &&
++	git reset --hard c0 &&
++	echo c3 > c3.c &&
++	git add c3.c &&
++	git commit -m c3 &&
++	git tag c3 &&
++	git reset --hard c0 &&
++	echo c4 > c4.c &&
++	git add c4.c &&
++	git commit -m c4 &&
++	git tag c4 &&
++	echo c5 > c5.c &&
++	git add c5.c &&
++	git commit -m c5 &&
++	git tag c5
++'
++
++test_expect_success 'merge c1 with c2, c3, c4, c5' '
++	git reset --hard c1 &&
++	git merge c2 c3 c4 c5 &&
++	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
++	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
++	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
++	test "$(git rev-parse c5)" = "$(git rev-parse HEAD^4)" &&
++	git diff --exit-code &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test -f c2.c &&
++	test -f c3.c &&
++	test -f c4.c &&
++	test -f c5.c
++'
++
++test_done
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.6
