@@ -1,71 +1,92 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Are C++ contributions welcome?
-Date: Sat, 21 Jun 2008 14:42:24 +0200
-Organization: Organization?!?
-Message-ID: <85y74z9cy7.fsf@lola.goethe.zz>
-References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
-	<bd6139dc0806200830h633c954bn6dbfc87ada90756b@mail.gmail.com>
-	<200806201754.56806.josemaria@jmgv.org>
+From: "James Sadler" <freshtonic@gmail.com>
+Subject: avoiding committing personal cruft
+Date: Sat, 21 Jun 2008 23:20:06 +1000
+Message-ID: <e5e204700806210620m35fce27eh8eddaf7cb68f1986@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 21 14:43:35 2008
+X-From: git-owner@vger.kernel.org Sat Jun 21 15:21:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA2RK-0002UM-Rj
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 14:43:35 +0200
+	id 1KA32D-0004Sp-02
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 15:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751063AbYFUMmk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Jun 2008 08:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYFUMmj
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 08:42:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:51335 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750800AbYFUMmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 08:42:39 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KA2QK-0004Jd-CK
-	for git@vger.kernel.org; Sat, 21 Jun 2008 12:42:32 +0000
-Received: from dslb-084-061-093-090.pools.arcor-ip.net ([84.61.93.90])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 12:42:32 +0000
-Received: from dak by dslb-084-061-093-090.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jun 2008 12:42:32 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-084-061-093-090.pools.arcor-ip.net
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:SgR+gZSnuRBFCAErzWZBHtAk2Xg=
+	id S1750948AbYFUNUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 09:20:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbYFUNUJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 09:20:09 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:2509 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750880AbYFUNUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 09:20:07 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1281343wri.5
+        for <git@vger.kernel.org>; Sat, 21 Jun 2008 06:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=Lb4Xays4DUVH9G6z3IRAA5ZXLhTf3wtVWDeRH+QeNgM=;
+        b=vFLOIGNW8eZWCuwCyNyMreLCx9dnsdWJxHsbBNb9CwAaVaILNY0iGGlzReb9iTX25t
+         NwxVr1ZVgsY62XQAbjy5LHq9SHvjqrTXH+EMEIzKqea/+nYhZbQpw8OkXGVm8Tpcm5aH
+         j7IskujBM4v+ioQFfCC8ZnoNDwqrJZlHDGebQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=rI1e0KzhDE9SlvA7shUDq+JLFc7zZHzvpmIw4yTccS2F7J4EYVL3E3RGFz+ynB9RyB
+         Wn+JQZhhPguHdeBqZErwJbXtXiCknU9lqEOZC0rqsgZMm+SdxBHhJHWDb/8Uj5ysOH4c
+         Tq2vx6jAuSI60uoQ4dNVuOUKtBTchFgqZqJyw=
+Received: by 10.90.29.17 with SMTP id c17mr6417819agc.9.1214054406714;
+        Sat, 21 Jun 2008 06:20:06 -0700 (PDT)
+Received: by 10.90.114.9 with HTTP; Sat, 21 Jun 2008 06:20:06 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85707>
 
-Jose Mar=EDa G=F3mez Vergara <josemaria@jmgv.org> writes:
+I couldn't think of a better subject, so bear with me while I explain.
 
-> To be honest, I like a lot projects made in C. I have been working
-> with Qt and with Gtk and I must say that it is easy for me to
-> understand Gtk that is in C than Qt that is in C++. Something I feel
-> like if C++ design do unnecessary abstration. The thing is that due t=
-o
-> my job, I am more familiar with C++ since the project in which I work
-> at my job is a really big monster that seems to be easier to manage
-> using an a litter high level language as C++ instead C.
->
-> I would like to learn more C, but sometime I think I should focus in
-> one language and learn as much as possible about it.
+Let's say I am contributing to some upstream project, and I am hacking on it
+inside my local repo's master branch.  Let's also say that I enjoy
+using my favourite IDE
+which creates its own project files and whatnot, and I don't want to
+commit that stuff with the
+rest of the project code.  It has no place being accidentally
+pushed/pulled upstream.  It's
+my personal cruft, hence the subject line.
 
-This is sort of like discussing the most suitable alphabet for writing
-poetry.
+However, I *do* want to version control my personal cruft, and I can
+do that on a separate
+branch.  But I want the content of that other branch to exist in the
+working tree alongside my
+checkout of master.
 
---=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+My current solution basically involves versioning the IDE files on
+another branch (named ide-branch),
+and using 'git checkout ide-branch .' to overlay the files on top of
+the currently checked-out branch (master).
+
+The ide-branch has nothing in it except the cruft from the IDE and the
+paths leading up to that cruft.
+The master branch has a .gitignore that ignores the IDE files so I
+won't end up polluting master by accident.
+
+It's a manageable solution for now.  I tend to think of it
+conceptually as 'layering' two branches: I want the
+content of both present in the working tree.
+
+I was just wondering if anyone else has tried something similar.
+
+
+ James.
+
+
+
+-- 
+Calvin Coolidge  - "I have never been hurt by what I have not said."
