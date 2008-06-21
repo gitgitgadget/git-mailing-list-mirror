@@ -1,191 +1,64 @@
-From: Nikolaj Schumacher <n_schumacher@web.de>
-Subject: [PATCH] git.el: Don't reset HEAD in git-amend-file.
-Date: Sun, 22 Jun 2008 00:27:04 +0200
-Message-ID: <m2myle77bb.fsf@nschum.de>
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: about c8af1de9 (git status uses pager)
+Date: Sat, 21 Jun 2008 23:42:41 +0200
+Message-ID: <20080621214241.GA3839@dualtron.vpn.rwth-aachen.de>
+References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr>
+Reply-To: Johannes Gilger <heipei@hackvalue.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
+Content-Type: text/plain; charset=iso-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 00:28:49 2008
+X-From: git-owner@vger.kernel.org Sun Jun 22 00:29:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KABZa-0007FR-0O
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 00:28:42 +0200
+	id 1KABa3-0007K8-JA
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 00:29:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751139AbYFUW1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 18:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYFUW1J
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 18:27:09 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:46484 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122AbYFUW1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 18:27:08 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 1BE4CE2B4180
-	for <git@vger.kernel.org>; Sun, 22 Jun 2008 00:27:05 +0200 (CEST)
-Received: from [77.135.41.81] (helo=thursday)
-	by smtp05.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1KABY0-0007OG-00
-	for git@vger.kernel.org; Sun, 22 Jun 2008 00:27:04 +0200
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2.50 (darwin)
-X-Sender: n_schumacher@web.de
-X-Provags-ID: V01U2FsdGVkX18Mfht5mmNYd8EHTCX4S08sLF5bLhwLwsQSfyN1
-	9yws2iWeCvE8tODYjmO2X2FTgg0k4nR2gpvEyGlAEHQh1FhrrD
-	kU+GXQBcYc6YgrUJH4RQ==
+	id S1751145AbYFUW2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 18:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbYFUW2Q
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 18:28:16 -0400
+Received: from avalon.gnuzifer.de ([85.10.199.84]:46351 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751142AbYFUW2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 18:28:15 -0400
+X-Greylist: delayed 2730 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Jun 2008 18:28:15 EDT
+Received: from u-5-074.vpn.rwth-aachen.de ([137.226.101.74]:40886 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1KAAr5-0003j5-Hz
+	for git@vger.kernel.org; Sat, 21 Jun 2008 23:42:43 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-SA-Exim-Connect-IP: 137.226.101.74
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85734>
 
---=-=-=
+On 21/06/08 23:21, Jan Engelhardt wrote:
+> 
+> Since git 1.5.6, `git status` always invokes a pager, which is really 
+> annoying when the output is less than the number of terminal rows 
+> available. Can I turn that off somehow or do I need to send a reverting 
+> patch?
+> 
 
-Hello.
+Wow, I just noticed it myself. Why was that changed? I don't know about 
+your status lines, but I for one find it really annoying. Anything 
+that's in a pager isn't visible in my console afterwards. What's next? 
+git branch in a pager too?
 
-The current implementation of git-amend-file is a little dangerous.
-While git --amend is atomic, git-amend-file is not.
+Regards,
+Jojo
 
-If the user calls it, but doesn't go through with the commit (due to
-error or choice), git --reset HEAD^ has been called anyway.
-
-With this patch it doesn't reset the HEAD till the actual commit.
-
-
-regards,
-Nikolaj Schumacher
-
---=-=-=
-Content-Type: text/x-patch
-Content-Disposition: inline; filename=git_git.el_amend.patch
-Content-Description: patch
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 4fa853f..1360cb0 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -400,16 +400,17 @@ and returns the process output as a string, or nil if the git failed."
-   (git-get-string-sha1
-    (git-call-process-env-string (and index-file `(("GIT_INDEX_FILE" . ,index-file))) "write-tree")))
- 
--(defun git-commit-tree (buffer tree head)
-+(defun git-commit-tree (buffer tree parent &optional head)
-   "Call git-commit-tree with buffer as input and return the resulting commit SHA1."
-+  (unless head (setq head parent))
-   (let ((author-name (git-get-committer-name))
-         (author-email (git-get-committer-email))
-         (subject "commit (initial): ")
-         author-date log-start log-end args coding-system-for-write)
--    (when head
-+    (when parent
-       (setq subject "commit: ")
-       (push "-p" args)
--      (push head args))
-+      (push parent args))
-     (with-current-buffer buffer
-       (goto-char (point-min))
-       (if
-@@ -425,7 +426,7 @@ and returns the process output as a string, or nil if the git failed."
-               (setq author-date (match-string 1)))
-             (goto-char (point-min))
-             (while (re-search-forward "^Parent: +\\([0-9a-f]+\\)" nil t)
--              (unless (string-equal head (match-string 1))
-+              (unless (string-equal parent (match-string 1))
-                 (setq subject "commit (merge): ")
-                 (push "-p" args)
-                 (push (match-string 1) args))))
-@@ -852,7 +853,7 @@ Return the list of files that haven't been handled."
-               (git-run-hook "pre-commit" `(("GIT_INDEX_FILE" . ,index-file))))
-           (delete-file index-file))))))
- 
--(defun git-do-commit ()
-+(defun git-do-commit (&optional amend)
-   "Perform the actual commit using the current buffer as log message."
-   (interactive)
-   (let ((buffer (current-buffer))
-@@ -862,10 +863,11 @@ Return the list of files that haven't been handled."
-           (message "You cannot commit unmerged files, resolve them first.")
-         (unwind-protect
-             (let ((files (git-marked-files-state 'added 'deleted 'modified))
--                  head head-tree)
-+                  head parent head-tree)
-               (unless (git-empty-db-p)
-                 (setq head (git-rev-parse "HEAD")
--                      head-tree (git-rev-parse "HEAD^{tree}")))
-+                      parent (if amend (git-rev-parse "HEAD^") head)
-+                      head-tree (git-rev-parse (concat "HEAD^{tree}"))))
-               (if files
-                   (progn
-                     (message "Running git commit...")
-@@ -875,7 +877,7 @@ Return the list of files that haven't been handled."
-                     (let ((tree (git-write-tree index-file)))
-                       (if (or (not (string-equal tree head-tree))
-                               (yes-or-no-p "The tree was not modified, do you really want to perform an empty commit? "))
--                          (let ((commit (git-commit-tree buffer tree head)))
-+                          (let ((commit (git-commit-tree buffer tree parent head)))
-                             (when commit
-                               (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
-                               (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
-@@ -1263,13 +1265,22 @@ Return the list of files that haven't been handled."
-       (when sign-off (git-append-sign-off committer-name committer-email)))
-     buffer))
- 
--(defun git-commit-file ()
--  "Commit the marked file(s), asking for a commit message."
--  (interactive)
-+(defun git-commit-file (&optional amend)
-+  "Commit the marked file(s), asking for a commit message.
-+With optional argument, amend HEAD."
-+  (interactive "P")
-   (unless git-status (error "Not in git-status buffer."))
-+  (and amend (git-empty-db-p) (error "No commit to amend."))
-   (when (git-run-pre-commit-hook)
-     (let ((buffer (get-buffer-create "*git-commit*"))
-           (coding-system (git-get-commits-coding-system))
-+          (action (if amend
-+                      `(lambda () (interactive) (git-do-commit t))
-+                    'git-do-commit))
-+          (env (if (boundp 'log-edit-diff-function)
-+                   '((log-edit-listfun . git-log-edit-files)
-+                     (log-edit-diff-function . git-log-edit-diff))
-+                 'git-log-edit-files))
-           author-name author-email subject date)
-       (when (eq 0 (buffer-size buffer))
-         (when (file-readable-p ".dotest/info")
-@@ -1286,10 +1297,8 @@ Return the list of files that haven't been handled."
-             (when (re-search-forward "^Date: \\(.*\\)$" nil t)
-               (setq date (match-string 1)))))
-         (git-setup-log-buffer buffer author-name author-email subject date))
--      (if (boundp 'log-edit-diff-function)
--	  (log-edit 'git-do-commit nil '((log-edit-listfun . git-log-edit-files)
--					 (log-edit-diff-function . git-log-edit-diff)) buffer)
--	(log-edit 'git-do-commit nil 'git-log-edit-files buffer))
-+      (when amend (git-setup-commit-buffer "HEAD"))
-+      (log-edit action nil env buffer)
-       (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
-       (setq buffer-file-coding-system coding-system)
-       (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))))
-@@ -1326,19 +1335,9 @@ Return the list of files that haven't been handled."
-     files))
- 
- (defun git-amend-commit ()
--  "Undo the last commit on HEAD, and set things up to commit an
--amended version of it."
-+  "Call `git-commit-file' and have it amend HEAD."
-   (interactive)
--  (unless git-status (error "Not in git-status buffer."))
--  (when (git-empty-db-p) (error "No commit to amend."))
--  (let* ((commit (git-rev-parse "HEAD"))
--         (files (git-get-commit-files commit)))
--    (when (git-call-process-display-error "reset" "--soft" "HEAD^")
--      (git-update-status-files (copy-sequence files) 'uptodate)
--      (git-mark-files git-status files)
--      (git-refresh-files)
--      (git-setup-commit-buffer commit)
--      (git-commit-file))))
-+  (git-commit-file t))
- 
- (defun git-find-file ()
-   "Visit the current file in its own buffer."
-
---=-=-=--
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
