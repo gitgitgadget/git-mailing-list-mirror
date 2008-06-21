@@ -1,36 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Fix accidental staged state toggle when clicking top pixel row
-Date: Fri, 20 Jun 2008 23:21:32 -0400
-Message-ID: <20080621032132.GW11793@spearce.org>
-References: <1213973895-10264-1-git-send-email-richard.quirk@gmail.com>
+Subject: [PATCH] Correct documentation for git-push --mirror
+Date: Fri, 20 Jun 2008 23:25:25 -0400
+Message-ID: <20080621032525.GA10020@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Richard Quirk <richard.quirk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 05:23:07 2008
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 05:26:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9tgw-00018g-CI
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 05:23:06 +0200
+	id 1K9tk8-0001dk-UD
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 05:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410AbYFUDVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 23:21:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbYFUDVg
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 23:21:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35137 "EHLO
+	id S1754130AbYFUDZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 23:25:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYFUDZa
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 23:25:30 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35715 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbYFUDVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 23:21:35 -0400
+	with ESMTP id S1754044AbYFUDZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 23:25:29 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.69)
 	(envelope-from <spearce@spearce.org>)
-	id 1K9tfF-00053u-QE; Fri, 20 Jun 2008 23:21:21 -0400
+	id 1K9tj0-0005F7-Eu; Fri, 20 Jun 2008 23:25:14 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 80C2A20FBAE; Fri, 20 Jun 2008 23:21:32 -0400 (EDT)
+	id 423B620FBAE; Fri, 20 Jun 2008 23:25:25 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1213973895-10264-1-git-send-email-richard.quirk@gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,18 +39,37 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85690>
 
-Richard Quirk <richard.quirk@gmail.com> wrote:
-> If a text widget is asked the index at x,y with y == 0 or y == 1 it will
-> always return 1.0 as the nearest index, regardless of the x position.
-> 
-> This means that clicking the top 2 pixels of the Unstaged/Staged Changes
-> lists caused the state of the file there to be toggled. This patch
-> checks that the pixel clicked is greater than 1, so there is less chance
-> of accidentally staging or unstaging changes.
+This option behaves more like:
 
-Thanks.  Its in my master branch now.
+  git push $url +refs/*:refs/*
 
+then it does like:
+
+  git push $url +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
+
+so we should document it to be more clear about that.
+
+Suggested-by: Marek Zawirski <marek.zawirski@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/git-push.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 89e0049..f3d5d88 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -67,7 +67,8 @@ nor in any Push line of the corresponding remotes file---see below).
+ 
+ --mirror::
+ 	Instead of naming each ref to push, specifies that all
+-	refs under `$GIT_DIR/refs/heads/` and `$GIT_DIR/refs/tags/`
++	refs under `$GIT_DIR/refs/` (which includes but is not
++	limited to `refs/heads/`, `refs/remotes/`, and `refs/tags/`)
+ 	be mirrored to the remote repository.  Newly created local
+ 	refs will be pushed to the remote end, locally updated refs
+ 	will be force updated on the remote end, and deleted refs
 -- 
-Shawn.
+1.5.6.153.g07215
