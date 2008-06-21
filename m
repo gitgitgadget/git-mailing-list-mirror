@@ -1,88 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH 00/11] Build in merge
-Date: Sat, 21 Jun 2008 02:32:43 +0200
-Message-ID: <20080621003243.GF29404@genesis.frugalware.org>
-References: <cover.1213917600.git.vmiklos@frugalware.org> <7v4p7oq029.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4QouUtKuvByFBvSj"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 02:33:56 2008
+From: shire <shire@tekrat.com>
+Subject: [PATCH] Move deletion of configure generated files to distclean
+Date: Fri, 20 Jun 2008 17:57:45 -0700
+Message-ID: <D4D1BF84-3D3F-4DEC-87C0-F926228E0BF5@tekrat.com>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 21 03:06:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9r3D-0000yo-LV
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 02:33:56 +0200
+	id 1K9rYc-0007DJ-SB
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 03:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118AbYFUAcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 20:32:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbYFUAcq
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 20:32:46 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:42056 "EHLO virgo.iok.hu"
+	id S1752540AbYFUBF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 21:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbYFUBF1
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 21:05:27 -0400
+Received: from sizzo.org ([69.63.177.213]:42120 "EHLO sizzo.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754289AbYFUAcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 20:32:45 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 24DD91B2544;
-	Sat, 21 Jun 2008 02:32:44 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2DF1A44699;
-	Sat, 21 Jun 2008 02:09:49 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 87BA61190AD9; Sat, 21 Jun 2008 02:32:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v4p7oq029.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752254AbYFUBF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 21:05:26 -0400
+X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jun 2008 21:05:26 EDT
+Received: from [99.204.10.66] (99-204-10-66.area1.spcsdns.net [99.204.10.66])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sizzo.org (Postfix) with ESMTPSA id 71F754F7651
+	for <git@vger.kernel.org>; Fri, 20 Jun 2008 17:57:48 -0700 (PDT)
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85684>
 
 
---4QouUtKuvByFBvSj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Running "make clean" also requires a run of "./configure ..." again  
+because it deletes auto-generated files, which I found a little  
+unexpected.  I figured I'd mention it as I'm not sure if this is  
+confusing for other users or intended functionality of "make clean"  
+vs. "make distclean", I would assume that the first would not revert  
+configuration changes.
 
-On Thu, Jun 19, 2008 at 08:04:14PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > As usual, comments are welcome. :-)
->=20
-> Thanks.
->=20
-> I take that last line of comment to mean "this is still RFC and not for
-> inclusion yet" ;-) I think the series is fine up to eighth patch (get
-> octopus merge base).
+Signed-off-by: Brian Shire <shire@tekrat.com>
 
-In fact only the version that had "WIP" in the subject was sent not for
-inclusion. ;-)
+---
+  Makefile |    2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
 
-> I'll queue the whole thing (still strictly as "test merge" basis) to 'pu';
-> I've fixed 3 "old-style C function definition" issues you have in the
-> tenth patch (build in merge), and I have some other issues with the ninth
-> one (filter independent).
+diff --git a/Makefile b/Makefile
+index b003e3e..f868b0b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1346,6 +1346,7 @@ dist-doc:
+  ### Cleaning rules
 
-Thanks. I'm using the kernel's scripts/checkpatch.pl, but it does not
-have such a check, and I missed it.
+  distclean: clean
++	$(RM) config.log config.mak.autogen config.mak.append config.status  
+config.cache
+  	$(RM) configure
 
-Currently I have 12 patches in my branch; if there will be no objections
-to the new "filter independent" one, then I will resend the series
-excluding the first 8 to avoid unnecessary traffic, if that is OK to
-you.
-
---4QouUtKuvByFBvSj
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhcTCsACgkQe81tAgORUJaVJQCeIzpO57HWk6DK9jCV5zTkewK5
-jkkAoI1qBXrLw9GPG8ZY8N3JbkhUJ1hA
-=bJo4
------END PGP SIGNATURE-----
-
---4QouUtKuvByFBvSj--
+  clean:
+@@ -1355,7 +1356,6 @@ clean:
+  	$(RM) $(TEST_PROGRAMS)
+  	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags  
+cscope*
+  	$(RM) -r autom4te.cache
+-	$(RM) config.log config.mak.autogen config.mak.append config.status  
+config.cache
+  	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+  	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+  	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+-- 
+1.5.6.dirty
