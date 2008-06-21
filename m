@@ -1,93 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-merge-recursive-{ours,theirs}
-Date: Sat, 21 Jun 2008 02:46:22 -0700
-Message-ID: <7vy74z9l3l.fsf@gitster.siamese.dyndns.org>
-References: <93c3eada0806152116v2cef4035u272dc1a26005661a@mail.gmail.com>
- <20080616092554.GB29404@genesis.frugalware.org>
- <48563D6C.8060704@viscovery.net>
- <bd6139dc0806161521p3667a44ble8573be1569986a0@mail.gmail.com>
- <93c3eada0806161545m5c6e1073q5522ce31f72be9f0@mail.gmail.com>
- <7vve076d6t.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806181618070.6439@racer>
- <alpine.DEB.1.00.0806181627260.6439@racer>
- <7viqw6zovi.fsf@gitster.siamese.dyndns.org>
- <7vfxr8o8sx.fsf_-_@gitster.siamese.dyndns.org>
- <7vbq1wo8ck.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806201351370.6439@racer>
+Subject: Re: MinGW port pull request
+Date: Sat, 21 Jun 2008 02:46:36 -0700
+Message-ID: <7vskv79l37.fsf@gitster.siamese.dyndns.org>
+References: <485B6510.3080201@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: geoffrey.russell@gmail.com, sverre@rabbelier.nl,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 21 11:47:39 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sat Jun 21 11:47:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9zh4-0006R4-ID
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 11:47:38 +0200
+	id 1K9zhH-0006Un-0c
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 11:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbYFUJqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 05:46:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752781AbYFUJqk
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 05:46:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39017 "EHLO
+	id S1752960AbYFUJqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 05:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbYFUJqt
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 05:46:49 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39050 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752760AbYFUJqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 05:46:39 -0400
+	with ESMTP id S1752781AbYFUJqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 05:46:48 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6DBC7A710;
-	Sat, 21 Jun 2008 05:46:37 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B43B9A712;
+	Sat, 21 Jun 2008 05:46:45 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 66EFCA70F; Sat, 21 Jun 2008 05:46:29 -0400 (EDT)
+ ESMTPSA id E1C6AA711; Sat, 21 Jun 2008 05:46:38 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F1151A18-3F76-11DD-9769-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: F605F98E-3F76-11DD-95E3-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85702>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
->> @@ -1379,11 +1401,18 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
->>  	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
->>  	int index_fd;
->>  
->> +	merge_recursive_variants = 0;
->>  	if (argv[0]) {
->>  		int namelen = strlen(argv[0]);
->>  		if (8 < namelen &&
->>  		    !strcmp(argv[0] + namelen - 8, "-subtree"))
->> -			subtree_merge = 1;
->> +			merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
->> +		else if (5 < namelen &&
->> +			 !strcmp(argv[0] + namelen - 5, "-ours"))
->> +			merge_recursive_variants = MERGE_RECURSIVE_OURS;
->> +		else if (7 < namelen &&
->> +			 !strcmp(argv[0] + namelen - 7, "-theirs"))
->> +			merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
+> please pull the MinGW (Windows) port patch series from
 >
-> This just cries out loud for a new function suffixcmp().
+> git://repo.or.cz/git/mingw/j6t.git for-junio
 
-Actually, I think "git-merge-recursive-theirs" is a mistake.  We should
-bite the bullet and give "git-merge" an ability to pass backend specific
-parameters to "git-merge-recursive".  The new convention could be that
-anything that begins with -X is passed to the backend.
+Took a look.  A quick impression.
 
-E.g.
+ * Too many whitespace breakages in borrowed compat/regex.[ch] are very
+   distracting.
 
-	git merge -Xfavor=theirs foo
-        git merge -Xsubtree=/=gitk-git paulus
+ * It is a very nice touch to rename sample templates to make sure they
+   are not executable (after all they are just samples).
 
-As you noticed already, subtree is just a funny optional behaviour
-attached to recursive, so are theirs and ours.  The above two would invoke
-git-merge-recursive like so:
+ * Shouldn't my_mktime() if exported out of date.c be named a bit better?
 
-	git merge-recursive -Xfavor=theirs <base> -- HEAD MERGE_HEAD
-	git merge-recursive -Xsubtree=/=gitk-git <base> -- HEAD MERGE_HEAD
+ * The ifdef block in git.c::main() introduces decl-after-stmt which we
+   tend to avoid, but it is much worse to solve it by adding another ifdef
+   block just to enclose decl of char *bslash at the beginning of the
+   function.  Perhaps enclose it in an extra block?
 
-We could even mix these two if we are ambitious.
+ * In sanitary_path_copy(), you left "break;" after /* (1) */ but now that
+   "break" is not inside a switch() anymore, so you are breaking out of
+   something else, aren't you?  -- Ah, the clean-up phase will be no-op in
+   that case because src points at '\0'.  Tricky but looks correct ;-)
+
+ * There seem to be an unrelated general fix in upload-pack.c
+
+ * There are still too many ifdefs.  I am wondering if the changes to
+   pager and process stuff is easier to manage in the longer term if they
+   are made into completely separate files (i.e. instead of linking
+   pager.o you would link mingw-pager.o).  I dunno.
+
+ * There is an interaction with dr/ceiling topic that is already in 'next'
+   that needs to be resolved before we merge this in 'next'.
+
+Parked in 'pu' for now but with a broken merge resolution.
