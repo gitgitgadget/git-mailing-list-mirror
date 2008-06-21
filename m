@@ -1,127 +1,131 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 13/13] Add new test case to ensure git-merge reduces octopus parents when possible
-Date: Sat, 21 Jun 2008 19:15:35 +0200
-Message-ID: <1214068535-18418-1-git-send-email-vmiklos@frugalware.org>
-References: <67668993d3fc7ea52c9c191178f3e1dea7bb4282.1214066799.git.vmiklos@frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-relink status (or bug?)
+Date: Sat, 21 Jun 2008 12:22:09 -0700
+Message-ID: <7v4p7ma90e.fsf@gitster.siamese.dyndns.org>
+References: <20080621103636.GA696@kernoel.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 19:17:05 2008
+To: Marc Zonzon <marc.zonzon+git@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 21:23:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KA6hz-0004NO-1c
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 19:17:03 +0200
+	id 1KA8gc-0005pZ-6e
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 21:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbYFURPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 13:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbYFURPg
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 13:15:36 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:59231 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001AbYFURPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 13:15:35 -0400
-Received: from vmobile.example.net (dsl5402CEE1.pool.t-online.hu [84.2.206.225])
-	by yugo.frugalware.org (Postfix) with ESMTP id 9DE9A1DDC5B;
-	Sat, 21 Jun 2008 19:15:33 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 7340A18E0E5; Sat, 21 Jun 2008 19:15:35 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6
-In-Reply-To: <67668993d3fc7ea52c9c191178f3e1dea7bb4282.1214066799.git.vmiklos@frugalware.org>
+	id S1753913AbYFUTW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 15:22:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753711AbYFUTW1
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 15:22:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48383 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753656AbYFUTWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 15:22:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4749ECC17;
+	Sat, 21 Jun 2008 15:22:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 46AF1CC16; Sat, 21 Jun 2008 15:22:18 -0400 (EDT)
+In-Reply-To: <20080621103636.GA696@kernoel.dyndns.org> (Marc Zonzon's message
+ of "Sat, 21 Jun 2008 12:36:36 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 60026D9A-3FC7-11DD-9AF0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85722>
 
-The old shell version used show-branch --independent to filter for the
-ones that cannot be reached from any other reference.
+Marc Zonzon <marc.zonzon+git@gmail.com> writes:
 
-The new C version uses reduce_heads() from commit.c for this, so
-add test to ensure it works as expected.
+> I found very few information about git relink, but as it appears in
+> changelog of v1.5.4 I suppose it is not obsoleted.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+I do not think anybody uses it these days.  Instead either they clone with
+reference (or -s), or perhaps use new-workdir.
 
-On Sat, Jun 21, 2008 at 07:00:50PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> The new C version uses filter_independent() from commit.c for this, so
-> add test to ensure it works as expected.
+Here is a totally untested fix.
 
-Ouch, this info is now outdated. I updated the commit message and
-renamed the test, no functional changes.
+The "careful" part can be made much more clever and efficient by learning
+implementation details about the .idx file (it has the checksum for itself
+and the checksum for its .pack file at the end) but I did not bother.
 
- t/t7603-merge-reduce-heads.sh |   63 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 63 insertions(+), 0 deletions(-)
- create mode 100755 t/t7603-merge-reduce-heads.sh
+I do not think this in its current shape is committable, without
+improvements and success reports from the list.  Hint, hint...
 
-diff --git a/t/t7603-merge-reduce-heads.sh b/t/t7603-merge-reduce-heads.sh
-new file mode 100755
-index 0000000..17b19dc
---- /dev/null
-+++ b/t/t7603-merge-reduce-heads.sh
-@@ -0,0 +1,63 @@
-+#!/bin/sh
-+
-+test_description='git-merge
-+
-+Testing octopus merge when reducing parents to independent branches.'
-+
-+. ./test-lib.sh
-+
-+# 0 - 1
-+#   \ 2
-+#   \ 3
-+#   \ 4 - 5
-+#
-+# So 1, 2, 3 and 5 should be kept, 4 should be avoided.
-+
-+test_expect_success 'setup' '
-+	echo c0 > c0.c &&
-+	git add c0.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	echo c1 > c1.c &&
-+	git add c1.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	echo c2 > c2.c &&
-+	git add c2.c &&
-+	git commit -m c2 &&
-+	git tag c2 &&
-+	git reset --hard c0 &&
-+	echo c3 > c3.c &&
-+	git add c3.c &&
-+	git commit -m c3 &&
-+	git tag c3 &&
-+	git reset --hard c0 &&
-+	echo c4 > c4.c &&
-+	git add c4.c &&
-+	git commit -m c4 &&
-+	git tag c4 &&
-+	echo c5 > c5.c &&
-+	git add c5.c &&
-+	git commit -m c5 &&
-+	git tag c5
-+'
-+
-+test_expect_success 'merge c1 with c2, c3, c4, c5' '
-+	git reset --hard c1 &&
-+	git merge c2 c3 c4 c5 &&
-+	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
-+	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
-+	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
-+	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
-+	test "$(git rev-parse c5)" = "$(git rev-parse HEAD^4)" &&
-+	git diff --exit-code &&
-+	test -f c0.c &&
-+	test -f c1.c &&
-+	test -f c2.c &&
-+	test -f c3.c &&
-+	test -f c4.c &&
-+	test -f c5.c
-+'
-+
-+test_done
--- 
-1.5.6
+
+ git-relink.perl |   26 ++++++++++++++++++--------
+ 1 files changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/git-relink.perl b/git-relink.perl
+index 15fb932..68e0f0e 100755
+--- a/git-relink.perl
++++ b/git-relink.perl
+@@ -10,10 +10,11 @@ use 5.006;
+ use strict;
+ use warnings;
+ use Getopt::Long;
++use File::Compare;
+ 
+ sub get_canonical_form($);
+ sub do_scan_directory($$$);
+-sub compare_two_files($$);
++sub compare_and_link($$$);
+ sub usage();
+ sub link_two_files($$);
+ 
+@@ -67,6 +68,7 @@ sub do_scan_directory($$$) {
+ 
+ 	my $sfulldir = sprintf("%sobjects/%s/",$srcdir,$subdir);
+ 	my $dfulldir = sprintf("%sobjects/%s/",$dstdir,$subdir);
++	my $careful = ($subdir eq 'pack');
+ 
+ 	opendir(S,$sfulldir)
+ 		or die "Failed to opendir $sfulldir: $!";
+@@ -75,14 +77,14 @@ sub do_scan_directory($$$) {
+ 		my $sfilename = $sfulldir . $file;
+ 		my $dfilename = $dfulldir . $file;
+ 
+-		compare_two_files($sfilename,$dfilename);
++		compare_and_link($sfilename, $dfilename, $careful);
+ 
+ 	}
+ 	closedir(S);
+ }
+ 
+-sub compare_two_files($$) {
+-	my ($sfilename, $dfilename) = @_;
++sub compare_and_link($$$) {
++	my ($sfilename, $dfilename, $careful) = @_;
+ 
+ 	# Perl's stat returns relevant information as follows:
+ 	# 0 = dev number
+@@ -100,12 +102,20 @@ sub compare_two_files($$) {
+ 
+ 	if ( ($sstatinfo[0] == $dstatinfo[0]) &&
+ 	     ($sstatinfo[1] != $dstatinfo[1])) {
+-		if ($sstatinfo[7] == $dstatinfo[7]) {
++		my $differs = undef;
++		if ($sstatinfo[7] != $dstatinfo[7]) {
++			$differs = "size";
++		}
++		if (!$differs && $careful) {
++			if (File::Compare::compare($sfilename, $dfilename)) {
++				$differs = "contents";
++			}
++		}
++		if (!$differs) {
+ 			link_two_files($sfilename, $dfilename);
+-
+ 		} else {
+-			my $err = sprintf("ERROR: File sizes are not the same, cannot relink %s to %s.\n",
+-				$sfilename, $dfilename);
++			my $err = sprintf("ERROR: File differs (%s), cannot relink %s to %s.\n",
++					  $differs, $sfilename, $dfilename);
+ 			if ($fail_on_different_sizes) {
+ 				die $err;
+ 			} else {
