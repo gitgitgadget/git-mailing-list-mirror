@@ -1,63 +1,69 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Sat, 21 Jun 2008 23:45:46 +0200 (CEST)
-Message-ID: <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [msysGit] Re: MinGW port pull request
+Date: Sat, 21 Jun 2008 14:47:05 -0700
+Message-ID: <7vve028nqe.fsf@gitster.siamese.dyndns.org>
+References: <485B6510.3080201@viscovery.net>
+ <7vskv79l37.fsf@gitster.siamese.dyndns.org>
+ <200806212318.47745.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Vegard Nossum <vegard.nossum@gmail.com>,
-	Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 23:46:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Jun 21 23:48:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAAux-0005xn-52
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 23:46:43 +0200
+	id 1KAAwO-0006PE-5p
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 23:48:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753238AbYFUVps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jun 2008 17:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbYFUVps
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 17:45:48 -0400
-Received: from sovereign.computergmbh.de ([85.214.69.204]:49135 "EHLO
-	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbYFUVpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jun 2008 17:45:47 -0400
-Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id C9F3618036065; Sat, 21 Jun 2008 23:45:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id B1DBE1C01214F;
-	Sat, 21 Jun 2008 23:45:46 +0200 (CEST)
-In-Reply-To: <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+	id S1753972AbYFUVrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2008 17:47:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbYFUVrR
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jun 2008 17:47:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:32988 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837AbYFUVrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2008 17:47:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D06B2D4CB;
+	Sat, 21 Jun 2008 17:47:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 29E90D4C5; Sat, 21 Jun 2008 17:47:11 -0400 (EDT)
+In-Reply-To: <200806212318.47745.johannes.sixt@telecom.at> (Johannes Sixt's
+ message of "Sat, 21 Jun 2008 23:18:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9C956406-3FDB-11DD-993B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85731>
 
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-On Saturday 2008-06-21 23:42, Junio C Hamano wrote:
-
->"Vegard Nossum" <vegard.nossum@gmail.com> writes:
+> * The #ifdef in setup.c, prefix_filename() could easily be removed by using 
+> the MINGW32 arm everywhere. This would penalize non-Windows, however, 
+> prefix_filename() is not performance critical.
 >
->> On Sat, Jun 21, 2008 at 11:21 PM, Jan Engelhardt <jengelh@medozas.de> wrote:
->>>
->>> Since git 1.5.6, `git status` always invokes a pager, which is really
->>> annoying when the output is less than the number of terminal rows
->>> available. Can I turn that off somehow or do I need to send a reverting
->>> patch?
->>
->> I think it would work to set PAGER="less -F" (a.k.a. --quit-if-one-screen)?
+>>  * There is an interaction with dr/ceiling topic that is already in 'next'
+>>    that needs to be resolved before we merge this in 'next'.
 >
->Probably better with LESS=FRSX, which is what git uses as a sane default
->if nothing is set.
->
-I went with Vegard's suggestion to change the pager command in
-~/.gitconfig, since I have the $LESS environment variable already
-defined as "-MSi", and I do not want to change that; because if I am
-going to run less (often at the end of a pipe), I certainly do not
-want it to just quit on me. So -F in $LESS is a no-no.
+> How do you want me to proceed? Rebase on top of dr/ceiling? Wait until 
+> dr/ceiling is in master and rebase again? Merge it into my series? (I would 
+> make the merge the last commit in my series.) I'm asking because support of 
+> dr/ceiling was not overwhelming.
 
-Since I need "-MRSi" for git anyhow, tweaking ~/.gitconfig was easy.
+I personally feel MinGW branch is more important than ceiling work, not
+just because it targets far wider audience but because it affects a lot
+wider area.  j6t/mingw _will_ eventually graduate to master in some form
+(possibly after fixups that is needed to keep things working on non
+Windows environment), and dr/ceil may or may not.
+
+So my preference would be to merge j6t/mingw into dr/ceil branch soon,
+resolve conflicts there, and merge the result to 'next' when j6t/mingw is
+merged to 'next' at the same time.  And you can help with that merge when
+it happens.
