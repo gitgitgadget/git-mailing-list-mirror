@@ -1,85 +1,72 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 1/2] t3404: extra checks and s/! git/test_must_fail git/
-Date: Sat, 21 Jun 2008 03:46:36 +0200
-Message-ID: <20080621014636.GG7369@leksak.fem-net>
-References: <20080620190037.GE7369@leksak.fem-net> <alpine.DEB.1.00.0806201407230.6439@racer> <1213986614-19536-1-git-send-email-s-beyer@gmx.net> <X-0hXtX7hZGzbL_zS7e4VUMsiMfWiIfABUCFp28XZx0@cipher.nrlssc.navy.mil> <20080620190037.GE7369@leksak.fem-net> <20080621071812.6117@nanako3.lavabit.com>
+From: "David Aguilar" <davvid@gmail.com>
+Subject: Are C++ contributions welcome?
+Date: Fri, 20 Jun 2008 18:57:33 -0700
+Message-ID: <402731c90806201857h23134f17y4189df9d6aa4585c@mail.gmail.com>
+References: <4c88165dd0077363a30b4f98fed16c2f@localhost>
+	 <46a038f90806200859r520d0593q367d6625a240595a@mail.gmail.com>
+	 <200806201811.01444.josemaria@jmgv.org>
+	 <200806201820.54585.josemaria@jmgv.org>
+	 <86skv81356.fsf@lola.quinscape.zz>
+	 <402731c90806201853x1c57ec5fib39bd92810072611@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: nanako3@lavabit.com
-X-From: git-owner@vger.kernel.org Sat Jun 21 03:48:09 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 21 03:58:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1K9sD3-0007FZ-47
-	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 03:48:09 +0200
+	id 1K9sN7-0000xR-6d
+	for gcvg-git-2@gmane.org; Sat, 21 Jun 2008 03:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751956AbYFUBqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2008 21:46:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbYFUBqr
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 21:46:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54962 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751238AbYFUBqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2008 21:46:46 -0400
-Received: (qmail invoked by alias); 21 Jun 2008 01:46:45 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp061) with SMTP; 21 Jun 2008 03:46:45 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/wqghb6PLwzv/MbqLpBXvyaGBFjMvvK6w1jkt+BI
-	HVktatPcjPjc3q
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1K9sBY-00022K-4w; Sat, 21 Jun 2008 03:46:36 +0200
+	id S1753516AbYFUB5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2008 21:57:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbYFUB5g
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jun 2008 21:57:36 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:45004 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752542AbYFUB5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2008 21:57:35 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so100118ugf.16
+        for <git@vger.kernel.org>; Fri, 20 Jun 2008 18:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ktEXIHHcKi/kUjogoSxxSXIqBy0UcyYgrboMWrcOhOw=;
+        b=FhHOn+3e3tR7gGffy7fYxfBGrDpQqC7sUCNYmzL11O8N0JhWe8rUW8NAP5t60wGq9V
+         183gQ47v85eSR7C019mdQF+JycE4Ce5Uo2zQ5hJ304FO2/9OcP8CQuVK8xhG0qprcq/d
+         UnIfJLlLn5ez6GGpr62YkR7r2u5qrrUvaFA6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=T3kyMkXX8uBqHXiI7KNUmFrPKFeM2OxqR5vb/2Jo0SvE+8vDu9yY7mpwAfrFMBDuvr
+         i6KBaUcCYpo+b/u95DTnTeJo75l3A72JUvJAejreZHfGaePs3ZNh8F4rDqu4QwRvB+PB
+         APmWmXU9tVhIrXBWUHmzatE1U/266R05XAixg=
+Received: by 10.67.29.4 with SMTP id g4mr238526ugj.73.1214013453500;
+        Fri, 20 Jun 2008 18:57:33 -0700 (PDT)
+Received: by 10.67.89.14 with HTTP; Fri, 20 Jun 2008 18:57:33 -0700 (PDT)
+In-Reply-To: <402731c90806201853x1c57ec5fib39bd92810072611@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080621071812.6117@nanako3.lavabit.com>
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85688>
 
-Hi,
-
-> > Perhaps I'm not consequent, but I thought that it's not worth it ;-)
-> 
-> Doesn't that logic make the other s/!/test_must_fail/ changes
-> also not worth it?  What is the reason behind the change?
-
-The s/!/test_must_fail/ is just an "extra" like
- "Hey, you're currently standing, can you bring me some tea?"
-
-In this case:
- "Oh, I'm currently adding some tests, so I can s/!/test_must_fail/"
-
-> I think your subject line and the message is worse than your
-> previous one.  You are saying *HOW* you changed it,
-
-Not exactly.
-In the previous one I said, what my patch does: improve t3404.
-The latter one said it, too, but a little more specific.
-
-> without saying *WHY* nor *WHAT FOR*.
-
-That's right.
-
-The s/!/test_must_fail/ is, as I said, just an "extra".
-And one that does no harm at all.
-
-The others are tests that were useful during git sequencer prototype
-development, because once a test in the middle of the test suite failed
-because the branch was not correctly reset in one of the invocations of
-rebase-i in the first tests.
-
-Well, but I wonder if a long explanation is always necessary.
-It is on feature patches and bugfix patches.  But here?
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+T24gRnJpLCBKdW4gMjAsIDIwMDggYXQgOToyOSBBTSwgRGF2aWQgS2FzdHJ1cCA8ZGFrQGdudS5v
+cmc+IHdyb3RlOgo+IEpvc2UgTWFyw61hIEfDs21leiBWZXJnYXJhIDxqb3NlbWFyaWFAam1ndi5v
+cmc+IHdyaXRlczoKPgo+PiBCZWZvcmUgc3RhcnRpbmcsIGRvIHlvdSBoYXZlIGFueSBwcmVmZXJl
+bmNlIGZvciBRdCBvciBHdGsgaW4gR2l0LiBJIGZlZWwgcXVpdGUKPj4gY29uZm9ydGFibGUgd2l0
+aCBib3RoIG9mIHRoZW0uCj4+Cj4+IFF0IC4gQysrIEdQTAo+PiBHdGsrLiBDIC0gTEdQTAo+Pgo+
+PiBUaGUgcXVhbGl0eSBpcyBnb29kIGZvciBib3RoIG9mIHRoZW0KPgo+IFBsZWFzZSB0YWtlIGEg
+bG9vayBhdAo+IDxVUkw6aHR0cDovL2RldmVsb3Blci5pbWVuZGlvLmNvbS9wcm9qZWN0cy9naWdn
+bGU+LiAgSXQgbWlnaHQgYmUKPiB3b3J0aHdoaWxlIG5vdCB0byBzdGFydCBmcm9tIHNjcmF0Y2gg
+aGVyZS4KPgo+IC0tCj4gRGF2aWQgS2FzdHJ1cAoKCkFuZCBpZiB5b3UgZG9uJ3QgbWluZCBQeXRo
+b24sIFF0LCBMR1BMLi4uCgpodHRwOi8vY29sYS50dXhmYW1pbHkub3JnLwpodHRwOi8vZ2l0b3Jp
+b3VzLm9yZy9wcm9qZWN0cy9naXQtY29sYS8KCmVuam95LAoKLS0KIERhdmlkCgoKCi0tIAogRGF2
+aWQK
