@@ -1,60 +1,66 @@
-From: Stefan Richter <stefanr@s5r6.in-berlin.de>
-Subject: Re: "git-pull --no-commit" should imply --no-ff...?
-Date: Sun, 22 Jun 2008 16:01:59 +0200
-Message-ID: <485E5B57.5000307@s5r6.in-berlin.de>
-References: <tkrat.5aa5af8e9968819c@s5r6.in-berlin.de> <20080622133606.GA21828@endor.mknod.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: Exec format error when using gitweb
+Date: Sun, 22 Jun 2008 16:04:06 +0200
+Message-ID: <485E5BD6.6060105@gmail.com>
+References: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 16:03:22 2008
+Cc: git@vger.kernel.org
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 22 16:06:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAQA3-0006zz-9H
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:03:19 +0200
+	id 1KAQBn-0007MH-Ue
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbYFVOCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 10:02:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbYFVOCY
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:02:24 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34281 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447AbYFVOCX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 10:02:23 -0400
-X-Envelope-From: stefanr@s5r6.in-berlin.de
-Received: from [192.168.0.42] ([83.221.231.7])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m5ME2E5U008073
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 22 Jun 2008 16:02:19 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080614 SeaMonkey/1.1.9
-In-Reply-To: <20080622133606.GA21828@endor.mknod.org>
-X-Enigmail-Version: 0.95.6
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752462AbYFVOEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 10:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYFVOEM
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:04:12 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:43305 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404AbYFVOEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 10:04:11 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so960303fgg.17
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 07:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=JdUJWkLbBxxAtCkUYjOeuYU+oNwxnptqp4tbmm1pH8w=;
+        b=iBx1l4czE9XGF+w+33u7YMHvrYxDfSHNbvH71Nd3j+3e5e1ckMm2gzAExgGxStOzfT
+         TCDxtio3pkI9RM03/M27LZEA/pB2nPi18D0iKb4l5ECJaiXIXHLWPkJxAJj2I9hcFUn8
+         MjeR3/R14BwTTOARgxJOutwmil1VM+ngABnEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=iuKCOdAddzi32B/6LRrmL2YnKZG5zoRawsgQHYMQFJQL2sM+wKt4OBZqtNSu2POyU7
+         AvY32aVO9+OANyBqTyDzcNXT41pycmaHbfVjeHi925ManSujlZc+S/TNSivrvE080Smv
+         1tYncZRMDVUb+qqeHtsIwGqeLMsKLVk5Mq6SA=
+Received: by 10.86.80.17 with SMTP id d17mr7000156fgb.24.1214143450098;
+        Sun, 22 Jun 2008 07:04:10 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.209.241])
+        by mx.google.com with ESMTPS id 3sm8729414fge.3.2008.06.22.07.04.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 22 Jun 2008 07:04:09 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85774>
 
-Graham Wilson wrote:
-> On Sat, Jun 21, 2008 at 04:08:51PM +0200, Stefan Richter wrote:
->> trying "git pull --no-commit . foo" for the first time, I was confused
->> that --no-commit was a no-op when the pull resulted in a fast-forward.
->> I.e. HEAD advanced the whole chain of commits to foo.  I expected it to
->> apply the diff of HEAD..foo but not commit them.
-> 
-> --no-commit to me seems to mean don't commit a merge commit. Maybe what
-> you want is something like:
-> 
->  git-diff HEAD foo | git-apply
-> 
+Erez Zilber wrote:
+> [Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] (8)Exec format
+> error: exec of '/var/www/cgi-bin/gitweb/gitweb.css' failed, referer:
 
-Yes, I obviously got the wrong idea about git-pull --no-commit.
-git-diff + git-apply indeed accomplishes what I wanted to do.  Thanks,
--- 
-Stefan Richter
--=====-==--- -==- =-==-
-http://arcgraph.de/sr/
+Random guess: Did you make the data files (.css, .png) executable by 
+accident, so your server is trying to execute them?
+
+-- Lea
