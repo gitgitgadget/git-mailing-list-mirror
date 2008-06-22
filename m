@@ -1,82 +1,96 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [ANNOUNCE] GIT 1.5.6
-Date: Sun, 22 Jun 2008 18:54:58 +0200
-Message-ID: <2305738E-573B-4058-9327-B50B89FA7A96@zib.de>
-References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org>
-Reply-To: prohaska@zib.de
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Jun 22 18:55:54 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.27])
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for  further processing
+Date: Sun, 22 Jun 2008 19:07:33 +0200
+Message-ID: <20080622170733.GA16252@artemis.madism.org>
+References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com> <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com> <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org> <20080618033010.GA19657@sigill.intra.peff.net> <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="J/dobhs11T7y2rNN";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Jeff King <peff@peff.net>, Shawn Bohrer <shawn.bohrer@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 22 19:08:51 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KASr3-0003UP-Nf
-	for gcvm-msysgit@m.gmane.org; Sun, 22 Jun 2008 18:55:54 +0200
-Received: by yw-out-2122.google.com with SMTP id 8so6922518yws.63
-        for <gcvm-msysgit@m.gmane.org>; Sun, 22 Jun 2008 09:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:from:to:in-reply-to:subject:references:message-id
-         :content-type:content-transfer-encoding:mime-version:date:cc
-         :x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
-        bh=M2x1x3RVTwK3Nzul1XBpUOuHOZHMemQmBm+IcCLyrLo=;
-        b=IRdasgm6r+VQg/6a1BLZhu8ISr8fzqmgO/oa4evthKgODLbjKC2pbierfzk676mM86
-         iYTHjoNftJ4Sy77OqHovnhC2eiLmFK7sGynammOLroP2dMP5QQ5jry9Z4g/RICAlgPEx
-         oziuYz3wDPt8OYwKpYBrJi2WYcoqhicc55B/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from
-         :to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mailer:reply-to
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere;
-        b=YWixGUGz0Ul/iceyemkXjrnbIjWuB8TelDMEzFjvTvdxRDGQHsd4mnT1xa2wu2L1B7
-         okAeUZ4qN2oyaOxS4STrUwkYr7bEK3rS8IFW1+AFIhUAFQwpm2ezuG9Bguj6zOSfJIcd
-         6yL5pFtZDojjMdwTD3YL9lXmrOB+8Z8jz9vpE=
-Received: by 10.142.126.17 with SMTP id y17mr162397wfc.22.1214153696139;
-        Sun, 22 Jun 2008 09:54:56 -0700 (PDT)
-Received: by 10.107.113.4 with SMTP id q4gr2406prm.0;
-	Sun, 22 Jun 2008 09:54:56 -0700 (PDT)
-X-Sender: prohaska@zib.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.100.213.4 with SMTP id l4mr4722388ang.15.1214153695246; Sun, 22 Jun 2008 09:54:55 -0700 (PDT)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id 7si4463585yxg.1.2008.06.22.09.54.54; Sun, 22 Jun 2008 09:54:55 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m5MGshkB006992; Sun, 22 Jun 2008 18:54:53 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db83dcc.pool.einsundeins.de [77.184.61.204]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m5MGsVYW001106 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Sun, 22 Jun 2008 18:54:35 +0200 (MEST)
-In-Reply-To: <7vmylixr6h.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
-Sender: msysgit@googlegroups.com
+	id 1KAT3a-0006kz-M3
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 19:08:51 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752726AbYFVRHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 13:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbYFVRHj
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 13:07:39 -0400
+Received: from pan.madism.org ([88.191.52.104]:56394 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751671AbYFVRHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 13:07:38 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id D432E3669D;
+	Sun, 22 Jun 2008 19:07:34 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8DA5D8D4E; Sun, 22 Jun 2008 19:07:33 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85787>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85788>
 
 
+--J/dobhs11T7y2rNN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Jun 19, 2008, at 1:24 AM, Junio C Hamano wrote:
+On Wed, Jun 18, 2008 at 05:13:02AM +0000, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>=20
+> > I think the only right way to accomplish this is to convert the revision
+> > and diff parameters into a parseopt-understandable format.
+>=20
+> Not necessarily.  You could structure individual option parsers like how
+> diff option parsers are done.  You iterate over argv[], feed diff option
+> parser the current index into argv[] and ask if it is an option diff
+> understands, have diff eat the option (and possibly its parameter) to
+> advance the index, or allow diff option to say "I do not understand this",
+> and then handle it yourself or hand it to other parsers.
 
-> The latest feature release GIT 1.5.6 is available at the usual
-> places:
+  If you do that, you need to relocate pars option structures, and we
+decided some time ago that it wasn't a good idea. Note that "recursing"
+is not really trivial, because with flags aggregation and stuff like
+that, things that look like an option can also be a value in the context
+of an other option parser.
 
+  That's why we settled for the other way Dscho pointed. But for that, I
+need to work on it more than what I really have time to nowadays, and
+moreover, it needs some things (the setup_revisions split and the log
+traversal bits change) to be merged.
 
-The msysgit Windows installer is available at
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-    http://code.google.com/p/msysgit/downloads
+--J/dobhs11T7y2rNN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	Steffen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkhehtMACgkQvGr7W6HudhxQ8QCgnw9BflEXJlCJ059Bhs5kFrQv
+hpsAoJeH29iByqXiuqkQ1YdkMYgb20XQ
+=dHC6
+-----END PGP SIGNATURE-----
+
+--J/dobhs11T7y2rNN--
