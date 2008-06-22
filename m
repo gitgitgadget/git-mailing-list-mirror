@@ -1,76 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: git log --follow <filename> doesn't follow across 'subtree strategy' merge
-Date: Sun, 22 Jun 2008 14:51:49 +0200
-Message-ID: <200806221451.50624.jnareb@gmail.com>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: Re: linux-x86-tip: pilot error?
+Date: Sun, 22 Jun 2008 14:48:35 +0200
+Message-ID: <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com>
+References: <20080622123620.GA9328@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 14:49:23 2008
+Cc: mingo@elte.hu, git@vger.kernel.org
+To: paulmck@linux.vnet.ibm.com
+X-From: git-owner@vger.kernel.org Sun Jun 22 14:49:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAP0Q-0002FB-In
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 14:49:19 +0200
+	id 1KAP0e-0002JD-De
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 14:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbYFVMsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 08:48:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYFVMsX
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 08:48:23 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:61232 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751739AbYFVMsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 08:48:22 -0400
-Received: by an-out-0708.google.com with SMTP id d40so485551and.103
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 05:48:21 -0700 (PDT)
+	id S1751762AbYFVMsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 08:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbYFVMsh
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 08:48:37 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:48006 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbYFVMsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 08:48:36 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so6500342rvb.1
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=tAcBX7AoaGl4MdFzwE28KAhgOfkKtRW4Y9krSdtwbTE=;
-        b=dXOkRphEuBlXnmA71SJa8uEdxhcwjSMbZKNEaTo7ok2mPz3hmBZSTtEswR1vBB6VL6
-         xoGenLmc5PitnCuH7H36iHiJGBi1ZnRKwHhcHdfDacykeJDbGXmd7/i8hlBiDWzs87Au
-         w45NN76pWBF0hOnTT8CcWcSE0hmPJr9IdV+T4=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8V5b7vRyYqD65fbav5l8oRD4dQdz+JAQdU0l2my8K/I=;
+        b=shDYiH06wlDh0+tKNxf3o5OyhOeg6S0UpXipZUoA1jntU+XWk+q5oE5T8EaZmYiL2M
+         Z4nFEi4F7dMN2AVoeq7jiwtb6Kvb26+ul4yb23TYDoZFBA30zsReaTsjNICsKnlXPYYM
+         0P9RII1+EUzCGSIsWsCnieQJqs6EYFjGiaxPE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=VzJTOMaimYLgpfExkROxwP7g9Z8/BHheQAOqyv/O5JfFyqISWLbJ9qy5tILdAY75g6
-         OgA6U1mcJrbjD6WZ2rgMWhQKSDkvfg+JxqzSWlWL8zu46D0j7BInz77HR+H3wWGegsWF
-         w5oQS5CcCnygqgNQa7+taOXY4uDlo2J7WZwnE=
-Received: by 10.101.67.11 with SMTP id u11mr10503291ank.118.1214138901703;
-        Sun, 22 Jun 2008 05:48:21 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.226.228])
-        by mx.google.com with ESMTPS id c30sm8530376ana.27.2008.06.22.05.48.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Jun 2008 05:48:20 -0700 (PDT)
-User-Agent: KMail/1.9.3
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Z3AQT8pWrZ4yfqtxjkTDjqRbduByRnS4yTjmvybwY7IfRMi3y+pNXCxNaaVCPuJyE8
+         V3KB542NVYVnpB9Ktl5CtkiVto/Wg+udtUAm8nRSHqbC5VRk1jTzdSQ+j63i9mmo1geT
+         kS4RzwKDU5y/hKDwVs28PWp8eyrWC/mgI3Eqs=
+Received: by 10.141.34.12 with SMTP id m12mr10848837rvj.26.1214138915880;
+        Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
+Received: by 10.141.153.6 with HTTP; Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
+In-Reply-To: <20080622123620.GA9328@linux.vnet.ibm.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85767>
 
-When trying to see all history of gitweb using
+2008/6/22 Paul E. McKenney <paulmck@linux.vnet.ibm.com>:
+> Hello, Ingo,
+>
+> I took the precaution of rebuilding my linux-2.6-tip from scratch as follows:
+>
+>  544  mkdir linux-2.6-tip
+>  545  cd linux-2.6-tip
+>  546  git-init-db
+>  547  git-remote add linus git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>  548  git-remote add tip git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git
+>  549  git-remote update
+>  550  git-checkout tip-core-rcu-2008-06-16_09.23_Mon
 
-  $ git log -C -C --raw --abbrev --follow gitweb/gitweb.perl
+When checking out remote branches, you have to specify the remote:
+git checkout tip/tip-blabla
+(it'll warn about detaching HEAD, this is normal).
 
-I have noticed that while it correctly detects renaming 
-gitweb/gitweb.cgi to gitweb/gitweb.perl, and follows this rename, it 
-cannot get past merge commit 0a8f4f0020cb35095005852c0797f0b90e9ebb74
-and follow moving gitweb.cgi to gitweb/gitweb.cgi.
-
-To get full history I have to use
-
-  $ git log -C -C --raw -- gitweb/gitweb.perl gitweb/gitweb.cgi \
-                           gitweb.cgi
-
-Adding '--full-history' doesn't help...
 -- 
-Jakub Narebski
-Thorn, Poland
-ShadeHawk on #git
+Mikael Magnusson
