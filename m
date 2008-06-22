@@ -1,83 +1,76 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 1/2] api-parse-options.txt: Introduce documentation for
-	parse options API
-Date: Sun, 22 Jun 2008 15:45:50 +0200
-Message-ID: <20080622134550.GA5279@leksak.fem-net>
-References: <1214092802-8175-1-git-send-email-s-beyer@gmx.net> <200806221449.08307.barra_cuda@katamail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: "git-pull --no-commit" should imply --no-ff...?
+Date: Sun, 22 Jun 2008 15:49:46 +0200
+Message-ID: <20080622134946.GL29404@genesis.frugalware.org>
+References: <tkrat.5aa5af8e9968819c@s5r6.in-berlin.de> <20080622133606.GA21828@endor.mknod.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 15:46:50 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="KVMjFyEluGnEcJ9s"
+To: Stefan Richter <stefanr@s5r6.in-berlin.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 22 15:50:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAPu5-0002pc-CE
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 15:46:49 +0200
+	id 1KAPxu-0003rf-HS
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 15:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751762AbYFVNpx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 09:45:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752025AbYFVNpx
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 09:45:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39590 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751745AbYFVNpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 09:45:53 -0400
-Received: (qmail invoked by alias); 22 Jun 2008 13:45:50 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp006) with SMTP; 22 Jun 2008 15:45:51 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/Y4jZn+hPYWupUfc44qfE3GvBfulCKeBLRQbYuha
-	00mf1KPnChJSAy
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KAPt8-0002j7-5p; Sun, 22 Jun 2008 15:45:50 +0200
+	id S1752328AbYFVNts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 09:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYFVNts
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 09:49:48 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:47264 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752010AbYFVNts (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 09:49:48 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C06D11B24F0;
+	Sun, 22 Jun 2008 15:49:46 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 5B25E44668;
+	Sun, 22 Jun 2008 15:26:00 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 724C11190AD9; Sun, 22 Jun 2008 15:49:46 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200806221449.08307.barra_cuda@katamail.com>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20080622133606.GA21828@endor.mknod.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85771>
 
-> > +`PARSE_OPT_KEEP_DASHDASH`::
-> > +=A0=A0=A0=A0=A0=A0=A0Usually long options (`\--long-opt`) are boil=
-ed down to their
-> > +=A0=A0=A0=A0=A0=A0=A0short option equivalent, if available.
-> > +=A0=A0=A0=A0=A0=A0=A0Using this flag, long options are kept.
+
+--KVMjFyEluGnEcJ9s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Jun 22, 2008 at 08:36:06AM -0500, Graham Wilson <graham@mknod.org> =
+wrote:
+> On Sat, Jun 21, 2008 at 04:08:51PM +0200, Stefan Richter wrote:
+> > trying "git pull --no-commit . foo" for the first time, I was confused
+> > that --no-commit was a no-op when the pull resulted in a fast-forward.
+> > I.e. HEAD advanced the whole chain of commits to foo.  I expected it to
+> > apply the diff of HEAD..foo but not commit them.
 >=20
-> No: PARSE_OPT_KEEP_DASHDASH keeps the "--" that usually separates opt=
-ions
-> from files, as in
-
-Eh, right, of course!  What I wrote doesn't make any sense. ;-)
-
-> > +`OPT__ABBREV(&int_var)`::
-> > +       Add `\--abbrev [<n>]`.
+> --no-commit to me seems to mean don't commit a merge commit. Maybe what
+> you want is something like:
 >=20
-> better:
-> +       Add `\--abbrev[=3D<n>]`.
->=20
-> since the <n> is optional.
+>  git-diff HEAD foo | git-apply
 
-That's right and I also expected that print_usage_with_options() would
-do so, since the other variant is ambiguous, BUT:
+Or git merge --no-commit --squash?
 
-$ ./test-parse-options -h 2>&1 | grep abbrev
-    --abbrev [<n>]        use <n> digits to display SHA-1s
+--KVMjFyEluGnEcJ9s
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-And I didn't want to change parse-options.c ;-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
+iEYEARECAAYFAkheWHoACgkQe81tAgORUJZExgCfU30E1jTMp+Yky5X7QTO3f2qY
+S7sAn0m0CLuwKpQK9veAZPxCeVeQZO5b
+=0Q5h
+-----END PGP SIGNATURE-----
 
-Any other comments?
-
-Regards,
-  Stephan
-
---=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+--KVMjFyEluGnEcJ9s--
