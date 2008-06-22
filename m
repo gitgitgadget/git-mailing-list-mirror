@@ -1,75 +1,98 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
+From: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
 Subject: Re: linux-x86-tip: pilot error?
-Date: Sun, 22 Jun 2008 14:48:35 +0200
-Message-ID: <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com>
-References: <20080622123620.GA9328@linux.vnet.ibm.com>
+Date: Sun, 22 Jun 2008 06:21:05 -0700
+Message-ID: <20080622132105.GD22569@linux.vnet.ibm.com>
+References: <20080622123620.GA9328@linux.vnet.ibm.com> <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com>
+Reply-To: paulmck@linux.vnet.ibm.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: mingo@elte.hu, git@vger.kernel.org
-To: paulmck@linux.vnet.ibm.com
-X-From: git-owner@vger.kernel.org Sun Jun 22 14:49:33 2008
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 22 15:22:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAP0e-0002JD-De
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 14:49:32 +0200
+	id 1KAPWF-0003ny-9F
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 15:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751762AbYFVMsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 08:48:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbYFVMsh
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 08:48:37 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:48006 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751759AbYFVMsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 08:48:36 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so6500342rvb.1
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=8V5b7vRyYqD65fbav5l8oRD4dQdz+JAQdU0l2my8K/I=;
-        b=shDYiH06wlDh0+tKNxf3o5OyhOeg6S0UpXipZUoA1jntU+XWk+q5oE5T8EaZmYiL2M
-         Z4nFEi4F7dMN2AVoeq7jiwtb6Kvb26+ul4yb23TYDoZFBA30zsReaTsjNICsKnlXPYYM
-         0P9RII1+EUzCGSIsWsCnieQJqs6EYFjGiaxPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Z3AQT8pWrZ4yfqtxjkTDjqRbduByRnS4yTjmvybwY7IfRMi3y+pNXCxNaaVCPuJyE8
-         V3KB542NVYVnpB9Ktl5CtkiVto/Wg+udtUAm8nRSHqbC5VRk1jTzdSQ+j63i9mmo1geT
-         kS4RzwKDU5y/hKDwVs28PWp8eyrWC/mgI3Eqs=
-Received: by 10.141.34.12 with SMTP id m12mr10848837rvj.26.1214138915880;
-        Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
-Received: by 10.141.153.6 with HTTP; Sun, 22 Jun 2008 05:48:35 -0700 (PDT)
-In-Reply-To: <20080622123620.GA9328@linux.vnet.ibm.com>
+	id S1751816AbYFVNVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 09:21:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbYFVNVM
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 09:21:12 -0400
+Received: from E23SMTP06.au.ibm.com ([202.81.18.175]:38741 "EHLO
+	e23smtp06.au.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751816AbYFVNVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 09:21:11 -0400
+Received: from d23relay03.au.ibm.com (d23relay03.au.ibm.com [202.81.18.234])
+	by e23smtp06.au.ibm.com (8.13.1/8.13.1) with ESMTP id m5MDKaEP014790
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 23:20:36 +1000
+Received: from d23av02.au.ibm.com (d23av02.au.ibm.com [9.190.235.138])
+	by d23relay03.au.ibm.com (8.13.8/8.13.8/NCO v9.0) with ESMTP id m5MDKiEq4673578
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 23:20:46 +1000
+Received: from d23av02.au.ibm.com (loopback [127.0.0.1])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id m5MDL6vr000395
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 23:21:06 +1000
+Received: from paulmck-laptop.localdomain (wecm-9-67-149-169.wecm.ibm.com [9.67.149.169])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id m5MDL5rF000392;
+	Sun, 22 Jun 2008 23:21:06 +1000
+Received: by paulmck-laptop.localdomain (Postfix, from userid 1000)
+	id B500C13E9DA; Sun, 22 Jun 2008 06:21:05 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85768>
 
-2008/6/22 Paul E. McKenney <paulmck@linux.vnet.ibm.com>:
-> Hello, Ingo,
->
-> I took the precaution of rebuilding my linux-2.6-tip from scratch as follows:
->
->  544  mkdir linux-2.6-tip
->  545  cd linux-2.6-tip
->  546  git-init-db
->  547  git-remote add linus git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
->  548  git-remote add tip git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git
->  549  git-remote update
->  550  git-checkout tip-core-rcu-2008-06-16_09.23_Mon
+On Sun, Jun 22, 2008 at 02:48:35PM +0200, Mikael Magnusson wrote:
+> 2008/6/22 Paul E. McKenney <paulmck@linux.vnet.ibm.com>:
+> > Hello, Ingo,
+> >
+> > I took the precaution of rebuilding my linux-2.6-tip from scratch as follows:
+> >
+> >  544  mkdir linux-2.6-tip
+> >  545  cd linux-2.6-tip
+> >  546  git-init-db
+> >  547  git-remote add linus git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> >  548  git-remote add tip git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git
+> >  549  git-remote update
+> >  550  git-checkout tip-core-rcu-2008-06-16_09.23_Mon
+> 
+> When checking out remote branches, you have to specify the remote:
+> git checkout tip/tip-blabla
+> (it'll warn about detaching HEAD, this is normal).
 
-When checking out remote branches, you have to specify the remote:
-git checkout tip/tip-blabla
-(it'll warn about detaching HEAD, this is normal).
+Thank you, Mikael!
 
--- 
-Mikael Magnusson
+But when I try "git-checkout tip/tip-core-rcu-2008-06-16_09.23_Mon",
+it says:
+
+	error: pathspec 'tip/tip-core-rcu-2008-06-16_09.23_Mon' did not match any file(s) known to git.
+	Did you forget to 'git add'?
+
+Trying "git-checkout tip/tip-core-rcu" gets me:
+
+	error: pathspec 'tip/tip-core-rcu' did not match any file(s) known to git.
+	Did you forget to 'git add'?
+
+Trying "git-checkout -b tip-core-rcu tip/tip-core-rcu" gets me:
+
+	git checkout: updating paths is incompatible with switching branches/forcing
+	Did you intend to checkout 'tip/tip-core-rcu' which can not be resolved as commit?
+
+Trying "git-checkout -b tip-core-rcu tip/tip-core-rcu-2008-06-16_09.23_Mon"
+gets me:
+
+	git checkout: updating paths is incompatible with switching branches/forcing
+	Did you intend to checkout 'tip/tip-core-rcu-2008-06-16_09.23_Mon' which can not be resolved as commit?
+
+Trying "git-checkout -b tip-core-rcu tip-core-rcu-2008-06-16_09.23_Mon"
+acts like it is doing something useful, but doesn't find the recent updates,
+which I believe happened -before- June 16 2008.
+
+Help???
+
+							Thanx, Paul
