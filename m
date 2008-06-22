@@ -1,66 +1,95 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: Exec format error when using gitweb
-Date: Sun, 22 Jun 2008 16:04:06 +0200
-Message-ID: <485E5BD6.6060105@gmail.com>
-References: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 16:06:33 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] git-rebase.sh: Add check if rebase is in progress
+Date: Sun, 22 Jun 2008 16:07:02 +0200
+Message-ID: <1214143622-28897-1-git-send-email-s-beyer@gmx.net>
+References: <485DC551.9020807@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 22 16:08:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAQBn-0007MH-Ue
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:05:28 +0200
+	id 1KAQEb-0008FS-6T
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbYFVOEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 10:04:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYFVOEM
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:04:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:43305 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404AbYFVOEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 10:04:11 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so960303fgg.17
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 07:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=JdUJWkLbBxxAtCkUYjOeuYU+oNwxnptqp4tbmm1pH8w=;
-        b=iBx1l4czE9XGF+w+33u7YMHvrYxDfSHNbvH71Nd3j+3e5e1ckMm2gzAExgGxStOzfT
-         TCDxtio3pkI9RM03/M27LZEA/pB2nPi18D0iKb4l5ECJaiXIXHLWPkJxAJj2I9hcFUn8
-         MjeR3/R14BwTTOARgxJOutwmil1VM+ngABnEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=iuKCOdAddzi32B/6LRrmL2YnKZG5zoRawsgQHYMQFJQL2sM+wKt4OBZqtNSu2POyU7
-         AvY32aVO9+OANyBqTyDzcNXT41pycmaHbfVjeHi925ManSujlZc+S/TNSivrvE080Smv
-         1tYncZRMDVUb+qqeHtsIwGqeLMsKLVk5Mq6SA=
-Received: by 10.86.80.17 with SMTP id d17mr7000156fgb.24.1214143450098;
-        Sun, 22 Jun 2008 07:04:10 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.209.241])
-        by mx.google.com with ESMTPS id 3sm8729414fge.3.2008.06.22.07.04.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 22 Jun 2008 07:04:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>
+	id S1752610AbYFVOHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 10:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbYFVOHF
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:07:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36107 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752587AbYFVOHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 10:07:04 -0400
+Received: (qmail invoked by alias); 22 Jun 2008 14:07:03 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp043) with SMTP; 22 Jun 2008 16:07:03 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+Zn4Z8UreZy9+0ObgoYiurcRRTlr14HDesxKt86G
+	4iN9I3tZxmVRJw
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KAQDe-0007WS-6w; Sun, 22 Jun 2008 16:07:02 +0200
+X-Mailer: git-send-email 1.5.6.310.g344d
+In-Reply-To: <485DC551.9020807@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85775>
 
-Erez Zilber wrote:
-> [Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] (8)Exec format
-> error: exec of '/var/www/cgi-bin/gitweb/gitweb.css' failed, referer:
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ git-rebase.sh |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
 
-Random guess: Did you make the data files (.css, .png) executable by 
-accident, so your server is trying to execute them?
-
--- Lea
+diff --git a/git-rebase.sh b/git-rebase.sh
+index dd7dfe1..74f9c25 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -150,6 +150,9 @@ while test $# != 0
+ do
+ 	case "$1" in
+ 	--continue)
++		test -d "$dotest" -o -d .dotest ||
++			die "No rebase in progress?"
++		
+ 		git diff-files --quiet --ignore-submodules || {
+ 			echo "You must edit all merge conflicts and then"
+ 			echo "mark them as resolved using git add"
+@@ -178,6 +181,9 @@ do
+ 		exit
+ 		;;
+ 	--skip)
++		test -d "$dotest" -o -d .dotest ||
++			die "No rebase in progress?"
++		
+ 		git reset --hard HEAD || exit $?
+ 		if test -d "$dotest"
+ 		then
+@@ -203,16 +209,16 @@ do
+ 		exit
+ 		;;
+ 	--abort)
++		test -d "$dotest" -o -d .dotest ||
++			die "No rebase in progress?"
++		
+ 		git rerere clear
+ 		if test -d "$dotest"
+ 		then
+ 			move_to_original_branch
+-		elif test -d .dotest
+-		then
++		else
+ 			dotest=.dotest
+ 			move_to_original_branch
+-		else
+-			die "No rebase in progress?"
+ 		fi
+ 		git reset --hard $(cat "$dotest/orig-head")
+ 		rm -r "$dotest"
+-- 
+1.5.6.310.g344d
