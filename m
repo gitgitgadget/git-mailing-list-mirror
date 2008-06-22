@@ -1,76 +1,73 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: "git-pull --no-commit" should imply --no-ff...?
-Date: Sun, 22 Jun 2008 15:49:46 +0200
-Message-ID: <20080622134946.GL29404@genesis.frugalware.org>
-References: <tkrat.5aa5af8e9968819c@s5r6.in-berlin.de> <20080622133606.GA21828@endor.mknod.org>
+From: "Erez Zilber" <erezzi.list@gmail.com>
+Subject: Exec format error when using gitweb
+Date: Sun, 22 Jun 2008 16:51:52 +0300
+Message-ID: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="KVMjFyEluGnEcJ9s"
-To: Stefan Richter <stefanr@s5r6.in-berlin.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 15:50:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 22 15:52:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAPxu-0003rf-HS
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 15:50:46 +0200
+	id 1KAPzt-0004LU-CZ
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 15:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752328AbYFVNts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 09:49:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYFVNts
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 09:49:48 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:47264 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752010AbYFVNts (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 09:49:48 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C06D11B24F0;
-	Sun, 22 Jun 2008 15:49:46 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 5B25E44668;
-	Sun, 22 Jun 2008 15:26:00 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 724C11190AD9; Sun, 22 Jun 2008 15:49:46 +0200 (CEST)
+	id S1752242AbYFVNvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 09:51:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbYFVNvx
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 09:51:53 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:22008 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752025AbYFVNvx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 09:51:53 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so6521298rvb.1
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 06:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=9THTFutKhwiG9sY14C0eeGaxzILQJ6xTLMjvWnt4Gww=;
+        b=BhDPam25u8u+xQqaTCrlt/umWbuUL/Yafgz0IUqpcj9sAQUn+fdUb5rKkzHcRhHXTb
+         zvCmhxLnPdDzA2PDQN2e0R4azT6ALNhN1JXs0sBeBon8mTYqI38JFORp4NaIIKRwrqda
+         pseW+riPjXA9hC3xr1IXMeNz+U6SVRWksUwr0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=U4w8DX6EYUpzs+P4FoKqttRUxrVpTzuVwGUXbXuuJBMfGtyDFKbdc1b1zpjeF5IALE
+         3PNLxHKRrgnuKSyh3zfNlN734pUIxP4/CH3pgV9eQNl/3wx/NSi33f3XXJKal+j3AFdh
+         ZbKb4+4uOYUlwEEgd2qCGUWlKf8wEV/LUl34E=
+Received: by 10.140.140.3 with SMTP id n3mr10852950rvd.299.1214142712300;
+        Sun, 22 Jun 2008 06:51:52 -0700 (PDT)
+Received: by 10.141.195.7 with HTTP; Sun, 22 Jun 2008 06:51:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080622133606.GA21828@endor.mknod.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85772>
 
+Hi,
 
---KVMjFyEluGnEcJ9s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm trying to config gitweb using v1.5.5.3. I'm able to see my
+repositories (through gitweb) but I see the following errors in
+/var/log/httpd/error_log. Can anyone help?
 
-On Sun, Jun 22, 2008 at 08:36:06AM -0500, Graham Wilson <graham@mknod.org> =
-wrote:
-> On Sat, Jun 21, 2008 at 04:08:51PM +0200, Stefan Richter wrote:
-> > trying "git pull --no-commit . foo" for the first time, I was confused
-> > that --no-commit was a no-op when the pull resulted in a fast-forward.
-> > I.e. HEAD advanced the whole chain of commits to foo.  I expected it to
-> > apply the diff of HEAD..foo but not commit them.
->=20
-> --no-commit to me seems to mean don't commit a merge commit. Maybe what
-> you want is something like:
->=20
->  git-diff HEAD foo | git-apply
+[Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] (8)Exec format
+error: exec of '/var/www/cgi-bin/gitweb/gitweb.css' failed, referer:
+http://kites/cgi-bin/gitweb/gitweb.cgi
+[Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] Premature end
+of script headers: gitweb.css, referer:
+http://kites/cgi-bin/gitweb/gitweb.cgi
+[Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] (8)Exec format
+error: exec of '/var/www/cgi-bin/gitweb/git-logo.png' failed, referer:
+http://kites/cgi-bin/gitweb/gitweb.cgi
+[Sun Jun 22 16:33:53 2008] [error] [client 172.16.0.7] Premature end
+of script headers: git-logo.png, referer:
+http://kites/cgi-bin/gitweb/gitweb.cgi
 
-Or git merge --no-commit --squash?
-
---KVMjFyEluGnEcJ9s
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkheWHoACgkQe81tAgORUJZExgCfU30E1jTMp+Yky5X7QTO3f2qY
-S7sAn0m0CLuwKpQK9veAZPxCeVeQZO5b
-=0Q5h
------END PGP SIGNATURE-----
-
---KVMjFyEluGnEcJ9s--
+Thanks,
+Erez
