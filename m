@@ -1,100 +1,67 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH 3/4] Convert git_id() to the new id format
-Date: Sun, 22 Jun 2008 17:48:54 +0200
-Message-ID: <20080622154854.GC4468@diana.vm.bytemark.co.uk>
-References: <20080619214023.27794.97039.stgit@localhost.localdomain> <20080619214222.27794.74083.stgit@localhost.localdomain>
+Subject: Re: [StGIT PATCH 4/4] Remove the applied/unapplied commands
+Date: Sun, 22 Jun 2008 18:13:41 +0200
+Message-ID: <20080622161341.GD4468@diana.vm.bytemark.co.uk>
+References: <20080619214023.27794.97039.stgit@localhost.localdomain> <20080619214233.27794.98487.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 17:50:06 2008
+X-From: git-owner@vger.kernel.org Sun Jun 22 18:15:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KARpN-00033d-2F
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 17:50:05 +0200
+	id 1KASDk-00017h-6z
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 18:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbYFVPtE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 11:49:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbYFVPtD
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 11:49:03 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2282 "EHLO
+	id S1751926AbYFVQNt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 12:13:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbYFVQNt
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 12:13:49 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1568 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752328AbYFVPtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 11:49:01 -0400
+	with ESMTP id S1751742AbYFVQNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 12:13:48 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KARoE-0001KC-00; Sun, 22 Jun 2008 16:48:54 +0100
+	id 1KASCD-0001Oj-00; Sun, 22 Jun 2008 17:13:41 +0100
 Content-Disposition: inline
-In-Reply-To: <20080619214222.27794.74083.stgit@localhost.localdomain>
+In-Reply-To: <20080619214233.27794.98487.stgit@localhost.localdomain>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85786>
 
-On 2008-06-19 22:42:22 +0100, Catalin Marinas wrote:
+On 2008-06-19 22:42:33 +0100, Catalin Marinas wrote:
 
-> The patch rewrites git_id() to use the new id format and coverts the
-> commands using this function. The git_id() will be removed once all
-> the commands are converted to the new infrastructure where
-> git_commit() will be used instead.
+> This patch moves the applied/unapplied functionality to the 'series'
+> command via the corresponding options.
 
-Looks good. And the code volume reduction is significant.
+Nice.
 
->      if not rev:
-> +        # backwards compatibility
->          return None
+>             make_option('-a', '--all',
+>                         help =3D 'show all patches, including the hid=
+den ones',
+>                         action =3D 'store_true'),
+> +           make_option('--applied',
+> +                       help =3D 'show the applied patches only',
+> +                       action =3D 'store_true'),
+> +           make_option('--unapplied',
+> +                       help =3D 'show the unapplied patches only',
+> +                       action =3D 'store_true'),
+>             make_option('--hidden',
+>                         help =3D 'show the hidden patches only',
+>                         action =3D 'store_true'),
 
-Could you expand this comment a bit? It's not enough of a clue for me.
-:-/
+Maybe some logic to prohibit the use of more than one of these at
+once? The current logic is kind of arbitrary.
 
-> -def git_commit(name, repository, branch =3D None):
-> +def git_commit(name, repository, branch_name =3D None):
-
-Very nice parameter rename here, now that we have Branch objects (and
-use a crappy language with no type system).
-
-> -rev =3D '([patch][//[bottom | top]]) | <tree-ish> | base'
-> -
-> -If neither bottom nor top are given but a '//' is present, the comma=
-nd
-> -shows the specified patch (defaulting to the current one)."""
-> +rev =3D '([branch:]patch) | <tree-ish> | base'
-
-You can remove the parentheses now; they were only needed because they
-used to enclose a complicated expression. Besides, shouldn't it be
-[branch:]{base} instead of base? So something like
-
-  rev =3D [<branch>:]<patch> | [<branch>:]{base} | <tree-ish>
-
->  help =3D 'show the files modified by a patch (or the current patch)'
-> -usage =3D """%prog [options] [<patch>]
-> +usage =3D """%prog [options] [[<branch>:]<patch>]
-
-Unrelated to this patch: I realized last week that it's silly for stg
-files to not accept a patch range.
-
->      if len(args) =3D=3D 0:
-> -        patch =3D ''
-> +        patch =3D 'HEAD'
-
-Ah, so this is the backwards compatibility thing -- we used to pass
-the empty string when we meant HEAD.
-
-> -        (refpatchname, refbranchname, refpatchid) =3D parse_rev(patc=
-hname)
-> -        if refpatchname and not refpatchid and \
-> -               (not refpatchid or refpatchid =3D=3D 'top'):
-> -            # FIXME: should also support picking //top.old
-> +        refbranchname, refpatchname =3D parse_rev(patchname)
-> +        if refpatchname:
-
-The corresponding TODO comment now would be that pick should be able
-to pick patches from the past, from the stack log.
+Also, we should perhaps invent good single-letter abbreviations for
+these presumably rather common flags. -a is taken; -A and -U perhaps?
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
