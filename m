@@ -1,75 +1,128 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: Exec format error when using gitweb
-Date: Sun, 22 Jun 2008 16:17:03 +0200
-Message-ID: <485E5EDF.1030002@gmail.com>
-References: <ce513bcc0806220651g5cf59516w3fc30a68d7f09e79@mail.gmail.com>	 <485E5BD6.6060105@gmail.com> <ce513bcc0806220711k5e8c5085qfa330b017d736142@mail.gmail.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] parse-options.c: fix documentation syntax of optional arguments
+Date: Sun, 22 Jun 2008 16:39:04 +0200
+Message-ID: <200806221639.04811.barra_cuda@katamail.com>
+References: <1214092802-8175-1-git-send-email-s-beyer@gmx.net> <200806221449.08307.barra_cuda@katamail.com> <20080622134550.GA5279@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 16:18:09 2008
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 22 16:35:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAQOM-0002KW-1n
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:18:06 +0200
+	id 1KAQer-0006bu-Q8
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 16:35:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbYFVORK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 10:17:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbYFVORJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:17:09 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:61644 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751745AbYFVORI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 10:17:08 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1951765fkq.5
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 07:17:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=8uOAM+cAeawoNBisRlT2rQmw/wu/usFSsu0r2e+kUHM=;
-        b=Y891x9UiE6V0MHL+Ls+jyRVNsfEK/6Nxw/mvgiRY6GIorFnmDYWorciuv6U86+4uSD
-         73SCvK44wp/ZEN0BapN6VxNfe8G0WR1pSkOfSEcTUo+JClO1UXYzQMhivl490FBah6aI
-         VX/X+MvO9WhZtcEcJ0rybF4W4WGc7Npu42jdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=F1Zq8qM732XXX7mdD01DcwXFeAKA0NdOgP/gnAsjt5N4L+RrSG+rHbeaC0oORWfjPk
-         L0rHddAkmhRSaS+/10lctXG5bfSCplf7Ki//noFlKyCUlPo/Wb82rJmqQRCs15EoJAg3
-         /vMwrHIZGo5pzl+Rnk9v1qP5XYUHWAfl4Pjyg=
-Received: by 10.78.144.11 with SMTP id r11mr2302517hud.78.1214144227123;
-        Sun, 22 Jun 2008 07:17:07 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.209.241])
-        by mx.google.com with ESMTPS id 36sm6019005hub.59.2008.06.22.07.17.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 22 Jun 2008 07:17:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <ce513bcc0806220711k5e8c5085qfa330b017d736142@mail.gmail.com>
+	id S1752710AbYFVOeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 10:34:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbYFVOeM
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 10:34:12 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:39161 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752003AbYFVOeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 10:34:12 -0400
+Received: (qmail 17251 invoked by uid 89); 22 Jun 2008 14:33:41 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host158-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.158)
+  by smtp2-pc with SMTP; 22 Jun 2008 14:33:40 -0000
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080622134550.GA5279@leksak.fem-net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85778>
 
-Erez Zilber wrote:
-> -rw-r--r-- 1 apache root   7112 Jun 19 13:57 gitweb.css
+When an argument for an option is optional, short options don't need a
+space between the option and the argument, and long options need a "=".
+Otherwise, arguments are misinterpreted.
+
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+
+On Sunday 22 June 2008, Stephan Beyer wrote:
+> > > +`OPT__ABBREV(&int_var)`::
+> > > +       Add `\--abbrev [<n>]`.
+> > 
+> > better:
+> > +       Add `\--abbrev[=<n>]`.
+> > 
+> > since the <n> is optional.
 > 
-> [Sun Jun 22 17:06:08 2008] [error] [client 172.16.0.7] (13)Permission
-> denied: exec of '/var/www/cgi-bin/gitweb/gitweb.css' failed, referer:
+> That's right and I also expected that print_usage_with_options() would
+> do so, since the other variant is ambiguous, BUT:
+> 
+> $ ./test-parse-options -h 2>&1 | grep abbrev
+>     --abbrev [<n>]        use <n> digits to display SHA-1s
+> 
+> And I didn't want to change parse-options.c ;-)
 
-Apparently your web server is trying to execute gitweb.css even though 
-its executable bit isn't set -- perhaps because it's located in the 
-cgi-bin directory.  I suggest you open 
-http://.../cgi-bin/gitweb/gitweb.css and try to get it to display the 
-CSS file in your browser; this is a problem with your web server, not 
-with gitweb.
+Here it is.
 
-(By the way, git-favicon.png and gitweb_config.perl shouldn't have their 
-executable bits set either, since they're not CGI scripts.)
+ parse-options.c               |   15 ++++++++++++---
+ t/t1502-rev-parse-parseopt.sh |    2 +-
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
--- Lea
+diff --git a/parse-options.c b/parse-options.c
+index acf3fe3..f8d52e2 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -344,7 +344,10 @@ void usage_with_options_internal(const char * const *usagestr,
+ 			break;
+ 		case OPTION_INTEGER:
+ 			if (opts->flags & PARSE_OPT_OPTARG)
+-				pos += fprintf(stderr, "[<n>]");
++				if (opts->long_name)
++					pos += fprintf(stderr, "[=<n>]");
++				else
++					pos += fprintf(stderr, "[<n>]");
+ 			else
+ 				pos += fprintf(stderr, " <n>");
+ 			break;
+@@ -355,12 +358,18 @@ void usage_with_options_internal(const char * const *usagestr,
+ 		case OPTION_STRING:
+ 			if (opts->argh) {
+ 				if (opts->flags & PARSE_OPT_OPTARG)
+-					pos += fprintf(stderr, " [<%s>]", opts->argh);
++					if (opts->long_name)
++						pos += fprintf(stderr, "[=<%s>]", opts->argh);
++					else
++						pos += fprintf(stderr, "[<%s>]", opts->argh);
+ 				else
+ 					pos += fprintf(stderr, " <%s>", opts->argh);
+ 			} else {
+ 				if (opts->flags & PARSE_OPT_OPTARG)
+-					pos += fprintf(stderr, " [...]");
++					if (opts->long_name)
++						pos += fprintf(stderr, "[=...]");
++					else
++						pos += fprintf(stderr, "[...]");
+ 				else
+ 					pos += fprintf(stderr, " ...");
+ 			}
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index d24a47d..3508d0a 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -13,7 +13,7 @@ usage: some-command [options] <args>...
+     --bar ...             some cool option --bar with an argument
+ 
+ An option group Header
+-    -C [...]              option C with an optional argument
++    -C[...]               option C with an optional argument
+ 
+ Extras
+     --extra1              line above used to cause a segfault but no longer does
+-- 
+1.5.6
