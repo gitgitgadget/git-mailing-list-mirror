@@ -1,88 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [jgit PATCH] Paper bag fix quoting for SSH transport commands
-Date: Sun, 22 Jun 2008 18:15:45 -0400
-Message-ID: <20080622221545.GF11793@spearce.org>
-References: <20080622013640.GA18629@spearce.org> <200806221954.08919.robin.rosenberg.lists@dewire.com>
+From: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
+Subject: Re: linux-x86-tip: pilot error?
+Date: Sun, 22 Jun 2008 15:21:38 -0700
+Message-ID: <20080622222138.GG22569@linux.vnet.ibm.com>
+References: <20080622123620.GA9328@linux.vnet.ibm.com> <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com> <20080622132105.GD22569@linux.vnet.ibm.com> <20080622214202.GA15311@atjola.homenet>
+Reply-To: paulmck@linux.vnet.ibm.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 00:17:05 2008
+Cc: Mikael Magnusson <mikachu@gmail.com>, mingo@elte.hu,
+	git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 23 00:22:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAXrs-0005af-GK
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 00:17:04 +0200
+	id 1KAXxK-0006wE-C4
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 00:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbYFVWPv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 18:15:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbYFVWPv
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 18:15:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38021 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753582AbYFVWPu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jun 2008 18:15:50 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KAXqU-0003gj-Bp; Sun, 22 Jun 2008 18:15:38 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2C4B820FBAE; Sun, 22 Jun 2008 18:15:45 -0400 (EDT)
+	id S1758058AbYFVWVp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 18:21:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758062AbYFVWVo
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 18:21:44 -0400
+Received: from E23SMTP04.au.ibm.com ([202.81.18.173]:56540 "EHLO
+	e23smtp04.au.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757721AbYFVWVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 18:21:43 -0400
+Received: from sd0109e.au.ibm.com (d23rh905.au.ibm.com [202.81.18.225])
+	by e23smtp04.au.ibm.com (8.13.1/8.13.1) with ESMTP id m5MMKp5Q015233
+	for <git@vger.kernel.org>; Mon, 23 Jun 2008 08:20:51 +1000
+Received: from d23av02.au.ibm.com (d23av02.au.ibm.com [9.190.235.138])
+	by sd0109e.au.ibm.com (8.13.8/8.13.8/NCO v9.0) with ESMTP id m5MMLeQI254312
+	for <git@vger.kernel.org>; Mon, 23 Jun 2008 08:21:40 +1000
+Received: from d23av02.au.ibm.com (loopback [127.0.0.1])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id m5MMLdmE028304
+	for <git@vger.kernel.org>; Mon, 23 Jun 2008 08:21:40 +1000
+Received: from paulmck-laptop.localdomain (wecm-9-67-149-169.wecm.ibm.com [9.67.149.169])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id m5MMLcpH028298;
+	Mon, 23 Jun 2008 08:21:39 +1000
+Received: by paulmck-laptop.localdomain (Postfix, from userid 1000)
+	id 2EBF513E9DA; Sun, 22 Jun 2008 15:21:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200806221954.08919.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080622214202.GA15311@atjola.homenet>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85809>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> s=C3=B6ndagen den 22 juni 2008 03.36.40 skrev Shawn O. Pearce:
-> >=20
-> > Testing concludes that git-shell requires the command name to never
-> > be quoted, and the argument name to always be single quoted.  As
-> > this is a long-standing behavior in the wild jgit needs to conform,
-> > as git-shell and all git-shell work-a-likes such as gitosis may be
-> > following the same convention.
+On Sun, Jun 22, 2008 at 11:42:02PM +0200, Bj=F6rn Steinbrink wrote:
+> On 2008.06.22 06:21:05 -0700, Paul E. McKenney wrote:
+> > Trying "git-checkout -b tip-core-rcu tip-core-rcu-2008-06-16_09.23_=
+Mon"
+> > acts like it is doing something useful, but doesn't find the recent=
+ updates,
+> > which I believe happened -before- June 16 2008.
 >=20
-> Seems ok and works here. Error handling still has a paperbagish feel.=
- See
-> follow up patches.
+> Do you mean these?
+> rcu: make rcutorture more vicious: reinstate boot-time testing
+> rcu: make rcutorture more vicious: add stutter feature
 
-Well, I wasn't trying to clean up error handling, I was just trying
-to make `jgit fetch` work against repo.or.cz.  But I agree, the
-error handling and feedback in the transport code could be improved.
+Indeed those are the ones that I am looking for!
 
-> Maybe we should have a patch for git too so it will actually work
-> with spaces in file names. What do people on Windows do? (those that
-> actually get an SSH server up and running and sleep well overe it
-> on that platform).
+> I just fetched tip, and here, those two were committed on June 18 200=
+8.
+> They're in tip/core/rcu, but not in the tag you mentioned.
+>=20
+> JFYI, I found those by using "git log --grep=3Dstutter --all", and th=
+en
+> passing the commit hash to "git describe":
+>=20
+> $ git describe --contains --all 31a72bce0bd6f3e0114009288bccbc96376ee=
+eca
+> remotes/tip/core/rcu
 
-The issue only happens with the command name, which most people
-use just git-upload-pack/git-receive-pack as they have git in their
-$PATH on the remote side, or are running git-shell.  I suspect that
-Windows users just don't run Git over SSH with paths that contain
-spaces to access git-upload-pack remotely.
+Thank you -- that does find those commits for me as well.  <scratches
+head>
 
-I'd patch Git to use the same rule as jgit and only quote the command
-when really necessary, but its not high on my list of things to do
-this month.  :-)
-
-> As for pushing and signing. One way is for you (Shawn) and me is
-> to sign-off and push each other's patches. I pushed this one.
-
-Given that repo.or.cz doesn't show reflogs, I take it this is only
-a way to make sure at least someone has reviewed the patch before
-it goes into the main tree, since we both have write access?  I
-can live with that.
-
---=20
-Shawn.
+							Thanx, Paul
