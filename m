@@ -1,74 +1,151 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT RFC PATCH] Add a stdio prompt for SSH connection information.
-Date: Sun, 22 Jun 2008 19:13:55 -0400
-Message-ID: <20080622231355.GH11793@spearce.org>
-References: <200806222306.25434.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 01:15:07 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH 1/2] Create a fnmatch-style pattern TreeFilter
+Date: Mon, 23 Jun 2008 01:25:44 +0200
+Message-ID: <1214177145-18963-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	Florian Koeberle <florianskarten@web.de>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 01:30:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAYlz-0002Sh-Rd
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 01:15:04 +0200
+	id 1KAZ13-0005Kj-1k
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 01:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755044AbYFVXOB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 19:14:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755266AbYFVXOA
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 19:14:00 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58144 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754907AbYFVXOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 19:14:00 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KAYkl-0002HM-VK; Sun, 22 Jun 2008 19:13:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7A67120FBAE; Sun, 22 Jun 2008 19:13:55 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200806222306.25434.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1755919AbYFVX3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 19:29:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755907AbYFVX3j
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 19:29:39 -0400
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:37391 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753582AbYFVX3i (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jun 2008 19:29:38 -0400
+Received: from localhost.localdomain (213.67.100.250) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
+        id 47A979500284CF05; Mon, 23 Jun 2008 01:29:37 +0200
+X-Mailer: git-send-email 1.5.5.1.178.g1f811
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85815>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> Starting a command line utility like jgit and getting a graphical prompt is almost
-> an insult. The problem here is that Java 5, which we support, does not have a
-> portable way of disabling echoing of characters. Java 6 (and anythung newr)
-> does. There are several solutions involving non-portable tricks. Should we 
-> support an insecure practice of echoing passwords, or as I do here, only support
-> it if one is using Java 6. A downside of supporting it at all is that one needs a
-> JavaSE 6 compiler to build the thing.
+This uses Florian's pattern matcher to perform the matching.
 
-We really shouldn't support insecure entry of the password.  But I'm
-also not ready to give up on Java 5 support either.  I wonder if
-we shouldn't hide the console reading/writing into a class in our
-util package and use reflection to access it, like we do for the
-executable flag of java.io.File.
- 
-> btw, does anyone know if console() yields null when runnings as a Windows
-> service? I tentatively assume that it does without explicily setting the headless
-> property.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../jgit/revwalk/filter/WildCardTreeFilter.java    |  101 ++++++++++++++++++++
+ 1 files changed, 101 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/revwalk/filter/WildCardTreeFilter.java
 
-I think that services on Windows have no console, and also can't
-talk to the desktop UI, so its both headless and without a console.
-
-> I'm also a little unsure about how to invoke the promptKeyboardInteractive method.
-
-I think you implemented this method correctly.  Its a confusing API,
-but it does seem to make sense.
- 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/filter/WildCardTreeFilter.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/filter/WildCardTreeFilter.java
+new file mode 100644
+index 0000000..fd75458
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/filter/WildCardTreeFilter.java
+@@ -0,0 +1,101 @@
++/*
++ * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.revwalk.filter;
++
++import java.io.IOException;
++
++import org.spearce.jgit.errors.IncorrectObjectTypeException;
++import org.spearce.jgit.errors.InvalidPatternException;
++import org.spearce.jgit.errors.MissingObjectException;
++import org.spearce.jgit.fnmatch.FileNameMatcher;
++import org.spearce.jgit.treewalk.TreeWalk;
++import org.spearce.jgit.treewalk.filter.TreeFilter;
++
++/**
++ * This class implements a TreeeFilter that uses the wildcard style pattern
++ * matching like of Posix fnmatch function.
++ */
++public class WildCardTreeFilter extends TreeFilter {
++
++	private final FileNameMatcher matcher;
++
++	private final String pattern;
++
++	protected WildCardTreeFilter(final String pattern) {
++		try {
++			this.pattern = pattern;
++			matcher = new FileNameMatcher(pattern, null);
++		} catch (InvalidPatternException e) {
++			throw new IllegalArgumentException(e);
++		}
++	}
++
++	@Override
++	public TreeFilter clone() {
++		return new WildCardTreeFilter(pattern);
++	}
++
++	@Override
++	public boolean include(TreeWalk walker) throws MissingObjectException,
++			IncorrectObjectTypeException, IOException {
++		matcher.reset();
++		matcher.append(walker.getPathString());
++		if (matcher.isMatch())
++			return true;
++		return false;
++	}
++
++	@Override
++	public boolean shouldBeRecursive() {
++		return true;
++	}
++
++	/**
++	 * Construct a WildCardmatcher like POSIX fnmatch.
++	 * 
++	 * @param pattern
++	 *            A POSIX wildcard pattern
++	 * @return a {@link TreeFilter} that matches pattern
++	 * @throws IllegalArgumentException
++	 *             if the pattern is malformed
++	 */
++	public static TreeFilter create(final String pattern) {
++		return new WildCardTreeFilter(pattern);
++	}
++
++}
 -- 
-Shawn.
+1.5.5.1.178.g1f811
