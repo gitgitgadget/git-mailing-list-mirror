@@ -1,179 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-imap-send: Add support for SSL.
-Date: Sun, 22 Jun 2008 13:41:52 -0700
-Message-ID: <7vej6pmcbz.fsf@gitster.siamese.dyndns.org>
-References: <1096648c0806010829n71de92dcmc19ddb87da19931d@mail.gmail.com>
- <20080622152747.77a0baee@gmail.com>
+From: John Locke <mail@freelock.com>
+Subject: Usage with Subversion, externals
+Date: Sun, 22 Jun 2008 14:03:01 -0700
+Message-ID: <485EBE05.6070402@freelock.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alam Arias <Alam.GBC@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 22:42:59 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 22 23:10:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAWOl-0007sY-UO
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 22:42:56 +0200
+	id 1KAWot-0005jp-Us
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 23:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbYFVUmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 16:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754062AbYFVUmA
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 16:42:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36893 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754015AbYFVUl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 16:41:59 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 381034083;
-	Sun, 22 Jun 2008 16:41:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BD0964080; Sun, 22 Jun 2008 16:41:54 -0400 (EDT)
-In-Reply-To: <20080622152747.77a0baee@gmail.com> (Alam Arias's message of
- "Sun, 22 Jun 2008 15:27:47 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A881BF24-409B-11DD-8415-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755883AbYFVVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 17:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755888AbYFVVJA
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 17:09:00 -0400
+Received: from logan.freelock.com ([216.231.62.127]:39789 "EHLO
+	logan.freelock.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755700AbYFVVI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 17:08:59 -0400
+X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Jun 2008 17:08:59 EDT
+Received: from localhost (foraker.freelock.com [127.0.0.1])
+	by logan.freelock.com (Postfix) with ESMTP id DF316A0456
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 14:03:03 -0700 (PDT)
+Received: from logan.freelock.com ([127.0.0.1])
+ by localhost (foraker.freelock.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 30946-05 for <git@vger.kernel.org>;
+ Sun, 22 Jun 2008 14:03:03 -0700 (PDT)
+Received: from [192.168.9.243] (router.freelock.lan [192.168.9.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by logan.freelock.com (Postfix) with ESMTP id BF924A0448
+	for <git@vger.kernel.org>; Sun, 22 Jun 2008 14:03:01 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+X-Virus-Scanned: by amavisd-new at freelock.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85801>
 
-Alam Arias <Alam.GBC@gmail.com> writes:
+Hi,
 
-> Allow SSL to be used when a new config setting, imap.ssl, is set to
-> true.
+Brand new git user, trying to get my head around how to use this after 
+years of Subversion usage.
+
+I have a project that uses svn:externals to load a dependent library. 
+The external repository, dojo toolkit, has a different layout for trunk 
+than the tagged versions. Right now, I've got these svn externals defined:
+
+> john@shasta:/opt/www/auriga$ svn pg svn:externals public_html/
+> dojo http://svn.dojotoolkit.org/src/tags/release-1.1.1/
 >
-> Also, automatically use TLS when imap.ssl is not set by using the IMAP
-> STARTTLS command, if the server supports it.
->
-> Tested with Courier and Gimap IMAP servers.
->
-> Signed-off-by: Robert Shearman <robertshearman@gmail.com>
-> ---
->  Documentation/git-imap-send.txt |    1 +
->  Makefile                        |    4 +-
->  imap-send.c                     |  163
-> +++++++++++++++++++++++++++++++++++---- 3 files changed, 152
-> insertions(+), 16 deletions(-)
->
+> john@shasta:/opt/www/auriga$ svn pg svn:externals public_html/dojo-trunk/
+> dojo http://svn.dojotoolkit.org/src/dojo/trunk/
+> dijit http://svn.dojotoolkit.org/src/dijit/trunk/
+> dojox http://svn.dojotoolkit.org/src/dojox/trunk/
+public_html/dojo contains dojo, dijit, dojox, and util directories, 
+tagged to the specific version. The dojo svn repository stores trunk 
+versions for each of these modules in src/<module>/trunk.
 
-Next time please do _not_ attach *.diff but follow the style of patch
-submission other people do (see recent patch from Linus for example).
+The problem I'm trying to solve by switching to git is that there are 
+some API changes to Dojo that break the current production version of my 
+application. So I'd like to branch my application and develop it against 
+the Dojo trunk, while still being able to make changes to the mainline 
+code using the stable Dojo tagged version.
 
-> diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-> index f4fdc24..ecf2958 100644
-> --- a/Documentation/git-imap-send.txt
-> +++ b/Documentation/git-imap-send.txt
-> @@ -41,6 +41,7 @@ configuration file (shown with examples):
->      User = bob
->      Pass = pwd
->      Port = 143
-> +    Ssl  = false
->  ..........................
 
-This is "start talking plain imap to the standard imap port and then say
-STARTTLS to start SSL", not "imap over ssl (aka imaps = 993/tcp)", right?
+I've used git svn clone to copy my main application, and I'm also 
+pulling down the dojo svn repository (would be happy to post this 
+somewhere when it's done).
 
-Is support for the latter (1) widely needed, and/or (2) easy to add on top
-of this?  I presume the latter would use imaps:// URL scheme (in which
-case the user does not need an extra config)?
 
-> diff --git a/Makefile b/Makefile
-> index 6a31c9f..0bd18fa 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1157,7 +1157,9 @@ endif
->  git-%$X: %.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
->  
-> -git-imap-send$X: imap-send.o $(LIB_FILE)
-> +git-imap-send$X: imap-send.o $(GITLIBS)
-> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> +		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+So: Question 1: how do I get public_html/dojo in my working copy to 
+contain dojo/trunk, dijit/trunk, and dojox/trunk from my external git 
+repository? I'm assuming I use a submodule for this, and git submodule, 
+but I'm wondering how I point git submodule to a particular path in the 
+other repository.
 
-This looks enough to make it link both with and without NO_OPENSSL, but
-has it actually been tested with both configurations?
+... and question 2: How do I set up a different git submodule path (in 
+the same external git repository) when I work on a different branch?
 
-> diff --git a/imap-send.c b/imap-send.c
-> index 1ec1310..7c95c5c 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -225,19 +235,104 @@ static const char *Flags[] = {
->  	"Deleted",
->  };
->  
-> +#ifndef NO_OPENSSL
-> +static void
-> +ssl_socket_perror( const char *func )
-> +{
-> +	fprintf( stderr, "%s: %s\n", func, ERR_error_string(ERR_get_error(), 0));
-> +}
-> +#endif
 
-The original code has tons of style violations like this, but please do
-not introduce more of them.  I'd even like a follow-up patch after this
-one to clean up the style of existing code (you can choose to do the other
-way around, first clean up the style of existing code without adding
-anything new, and then this patch without the style violations).
+I'd like to be able to git checkout the development branch and have it 
+switch the dojo submodule to contain dojo/trunk (aliased as dojo), 
+dijit/trunk (aliased as dijit), and dojox/trunk (aliased as dojox). And 
+then when I git checkout the main branch have it switch back to 
+tags/release-1.1.1 (which contains dojo, dijit, and dojox without a 
+trunk subdirectory).
 
- * function name in definition does not start a new line, but follows its
-   return type on the same line;
+Any thoughts?
 
- * open and close parentheses for function parameter list and argument
-   list are not followed/preceded by any space;
-
->  static void
->  socket_perror( const char *func, Socket_t *sock, int ret )
->  {
-> -	if (ret < 0)
-> -		perror( func );
-> +#ifndef NO_OPENSSL
-> +	if (sock->ssl) {
-> +		int sslerr = SSL_get_error( sock->ssl, ret );
-> +		switch (sslerr) {
-> +			case SSL_ERROR_NONE:
-> +				break;
-> +			case SSL_ERROR_SYSCALL:
-> +				perror( "SSL_connect" );
-> +				break;
-> +			default:
-> +				ssl_socket_perror( "SSL_connect" );
-> +				break;
-> +		}
-
- * "case" arms of switch statement align with "switch" without extra
-   indentation;
-
-> +	/* FIXME! Add a config option for this */
-> +	if (0)
-> +		SSL_CTX_set_verify( ctx, SSL_VERIFY_PEER, NULL );
-
-Indeed ;-).
-
-> +	if (!SSL_CTX_set_default_verify_paths( ctx )) {
-> +		ssl_socket_perror( "SSL_CTX_set_default_verify_paths" );
-> +		return 1;
-> +	}
-> +	sock->ssl = SSL_new( ctx );
-> +	if (!sock->ssl) {
-> +		ssl_socket_perror( "SSL_new" );
-> +		return 1;
-> +	}
-
- * We usually signal error by returning negative (e.g. -1) unless there
-   otherwise a reason not to.
-
-> @@ -1014,7 +1142,10 @@ imap_open_store( imap_server_conf_t *srvc )
->  			fprintf( stderr, "Skipping account %s@%s, server forbids LOGIN\n", srvc->user, srvc->host );
->  			goto bail;
->  		}
-> -		imap_warn( "*** IMAP Warning *** Password is being sent in the clear\n" );
-> +#ifndef NO_OPENSSL
-> +		if (!imap->buf.sock.ssl)
-> +#endif
-
-Hmm.  If NO_OPENSSL compilation had ".ssl" member that is a dummy "int" or
-something, you can use this ifndef and it might make it easier to read.
+-- 
+John Locke
+"Open Source Solutions for Small Business Problems"
+published by Charles River Media, June 2004
+http://www.freelock.com
