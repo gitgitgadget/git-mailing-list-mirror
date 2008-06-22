@@ -1,81 +1,72 @@
-From: "Reini Urban" <rurban@x-ray.at>
-Subject: Re: shared lib+symlinks patch for cygwin
-Date: Sun, 22 Jun 2008 10:19:19 +0200
-Message-ID: <6910a60806220119g2a515f44qdfd664459923fc70@mail.gmail.com>
-References: <6910a60806220056i1dda7f4elb4e5c69cdeea3cf9@mail.gmail.com>
-	 <485E08F7.ADE2290C@dessent.net>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Re: about c8af1de9 (git status uses pager)
+Date: Sun, 22 Jun 2008 11:09:33 +0200 (CEST)
+Message-ID: <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr>
+References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 10:20:32 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Vegard Nossum <vegard.nossum@gmail.com>,
+	Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 22 11:11:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAKoJ-0007Dr-Ln
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 10:20:32 +0200
+	id 1KALbP-0004Ku-D3
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 11:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbYFVITi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 04:19:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYFVITi
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 04:19:38 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:52554 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673AbYFVITV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 04:19:21 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1875737fkq.5
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 01:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=PBexh6uxebo0JIe+UfBmOXDNHk8lg+vO1zuEneTGoB4=;
-        b=MDLwC5uGyY91uIdPgolT7ADFeRehw6RXqfkj70tSDq80zuPFaWwbIoTy6ewJezOiLC
-         8Xw9O9wKE0LfKjV20s5YyQTizQ6dXggtRWp55Cki6ofLmCl50/KyAUZSgVR6v4OjpCbd
-         2IKd89cAJOdoevF/tJ0YnQNfvYTVF6FawoKIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=l5nvO6WnRas88QtWqEKxLPu1bFesZAR1HJ/e5p50GGirxKijrNwKqGHKUF2jD4ekH4
-         R+0Q4UTlE41MB6we0H+gzTSnEx5CKdxNdK6lwYtDIjzfUhlwjerAlzsrZq253omGXfsv
-         G69MsVGmrDz31pQ5fCCbDQmlIXmO/yOf5FDNU=
-Received: by 10.82.124.10 with SMTP id w10mr331113buc.18.1214122759332;
-        Sun, 22 Jun 2008 01:19:19 -0700 (PDT)
-Received: by 10.82.179.17 with HTTP; Sun, 22 Jun 2008 01:19:19 -0700 (PDT)
-In-Reply-To: <485E08F7.ADE2290C@dessent.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: c49408002b456837
+	id S1752914AbYFVJKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 05:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbYFVJKI
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 05:10:08 -0400
+Received: from sovereign.computergmbh.de ([85.214.69.204]:54373 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752895AbYFVJJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 05:09:34 -0400
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 8DA581803BE41; Sun, 22 Jun 2008 11:09:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 8570F1C01214F;
+	Sun, 22 Jun 2008 11:09:33 +0200 (CEST)
+In-Reply-To: <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85755>
 
-2008/6/22 Brian Dessent <brian@dessent.net>:
-> Reini Urban wrote:
+
+On Saturday 2008-06-21 23:45, Jan Engelhardt wrote:
+>On Saturday 2008-06-21 23:42, Junio C Hamano wrote:
+>>"Vegard Nossum" <vegard.nossum@gmail.com> writes:
+>>
+>>> On Sat, Jun 21, 2008 at 11:21 PM, Jan Engelhardt <jengelh@medozas.de> wrote:
+>>>>
+>>>> Since git 1.5.6, `git status` always invokes a pager, which is really
+>>>> annoying when the output is less than the number of terminal rows
+>>>> available. Can I turn that off somehow or do I need to send a reverting
+>>>> patch?
+>>>
+>>> I think it would work to set PAGER="less -F" (a.k.a. --quit-if-one-screen)?
+>>
+>>Probably better with LESS=FRSX, which is what git uses as a sane default
+>>if nothing is set.
+>>
+>I went with Vegard's suggestion to change the pager command in
+>~/.gitconfig, since I have the $LESS environment variable already
+>defined as "-MSi", and I do not want to change that; because if I am
+>going to run less (often at the end of a pipe), I certainly do not
+>want it to just quit on me. So -F in $LESS is a no-no.
 >
->> esp. on cygwin where file hardlinks do not work as on linux.
->> old bindir 5.8MB, new 2.7MB
+>Since I need "-MRSi" for git anyhow, tweaking ~/.gitconfig was easy.
 >
-> Hard links work just fine on Cygwin, assuming the underlying volume is
-> NTFS.
-
-And you have Administrator rights, yes. On cygwin you can install packages
-without having root perms.
-
-> What you probably mean to say is that the Cygwin setup.exe
-> program won't create hardlinks from the tarball when installing binary
-> packages.  But this could be worked around by creating the links with
-> 'ln' in a postinstall script.  Then NTFS users would get the space
-> savings and FAT users would get copies.
-
-Good. So just postinstall.sh has to be fixed.
-Anyway, I like the symlink approach to be fixed also.
--- 
-Reini Urban
-http://phpwiki.org/              http://murbreak.at/
+I've played with `less -F` for a while now, and there is an inherent
+problem with that. Or should I say, xterm.
+When less quits, the xterm "screen" blits back to the shell output
+that was previously visible, so
+	git status
+with less -F as a pager displays practically *nothing*.
+I am aware that this is a less / xterm issue, but I wanted to let
+you know.
