@@ -1,101 +1,180 @@
-From: John Locke <mail@freelock.com>
-Subject: Usage with Subversion, externals
-Date: Sun, 22 Jun 2008 14:03:01 -0700
-Message-ID: <485EBE05.6070402@freelock.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: [JGIT RFC PATCH] Add a stdio prompt for SSH connection information.
+Date: Sun, 22 Jun 2008 23:06:25 +0200
+Message-ID: <200806222306.25434.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 22 23:10:01 2008
+Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jun 22 23:11:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAWot-0005jp-Us
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 23:09:56 +0200
+	id 1KAWqA-00065X-RM
+	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 23:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755883AbYFVVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 17:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755888AbYFVVJA
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 17:09:00 -0400
-Received: from logan.freelock.com ([216.231.62.127]:39789 "EHLO
-	logan.freelock.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755700AbYFVVI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 17:08:59 -0400
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Jun 2008 17:08:59 EDT
-Received: from localhost (foraker.freelock.com [127.0.0.1])
-	by logan.freelock.com (Postfix) with ESMTP id DF316A0456
-	for <git@vger.kernel.org>; Sun, 22 Jun 2008 14:03:03 -0700 (PDT)
-Received: from logan.freelock.com ([127.0.0.1])
- by localhost (foraker.freelock.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 30946-05 for <git@vger.kernel.org>;
- Sun, 22 Jun 2008 14:03:03 -0700 (PDT)
-Received: from [192.168.9.243] (router.freelock.lan [192.168.9.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by logan.freelock.com (Postfix) with ESMTP id BF924A0448
-	for <git@vger.kernel.org>; Sun, 22 Jun 2008 14:03:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-X-Virus-Scanned: by amavisd-new at freelock.com
+	id S1755894AbYFVVKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 17:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755764AbYFVVKT
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 17:10:19 -0400
+Received: from av9-2-sn3.vrr.skanova.net ([81.228.9.186]:37697 "EHLO
+	av9-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755817AbYFVVKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 17:10:18 -0400
+Received: by av9-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id CA5FC38266; Sun, 22 Jun 2008 23:10:16 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av9-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id A5306381F2; Sun, 22 Jun 2008 23:10:16 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 5DDF737E54;
+	Sun, 22 Jun 2008 23:10:16 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85802>
 
-Hi,
+With Java6 there is support for echo-less input of information
+like passwords from the console.
 
-Brand new git user, trying to get my head around how to use this after 
-years of Subversion usage.
+Windows users must set the system headless promperty java.awt.headless
+to true (-Djava.awt.headless=true) manually. Only unix system headless
+operation is detected automatically via the DISPLAY environment variable.
 
-I have a project that uses svn:externals to load a dependent library. 
-The external repository, dojo toolkit, has a different layout for trunk 
-than the tagged versions. Right now, I've got these svn externals defined:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-> john@shasta:/opt/www/auriga$ svn pg svn:externals public_html/
-> dojo http://svn.dojotoolkit.org/src/tags/release-1.1.1/
->
-> john@shasta:/opt/www/auriga$ svn pg svn:externals public_html/dojo-trunk/
-> dojo http://svn.dojotoolkit.org/src/dojo/trunk/
-> dijit http://svn.dojotoolkit.org/src/dijit/trunk/
-> dojox http://svn.dojotoolkit.org/src/dojox/trunk/
-public_html/dojo contains dojo, dijit, dojox, and util directories, 
-tagged to the specific version. The dojo svn repository stores trunk 
-versions for each of these modules in src/<module>/trunk.
+Starting a command line utility like jgit and getting a graphical prompt is almost
+an insult. The problem here is that Java 5, which we support, does not have a
+portable way of disabling echoing of characters. Java 6 (and anythung newr)
+does. There are several solutions involving non-portable tricks. Should we 
+support an insecure practice of echoing passwords, or as I do here, only support
+it if one is using Java 6. A downside of supporting it at all is that one needs a
+JavaSE 6 compiler to build the thing.
 
-The problem I'm trying to solve by switching to git is that there are 
-some API changes to Dojo that break the current production version of my 
-application. So I'd like to branch my application and develop it against 
-the Dojo trunk, while still being able to make changes to the mainline 
-code using the stable Dojo tagged version.
+btw, does anyone know if console() yields null when runnings as a Windows
+service? I tentatively assume that it does without explicily setting the headless
+property.
 
+I'm also a little unsure about how to invoke the promptKeyboardInteractive method.
 
-I've used git svn clone to copy my main application, and I'm also 
-pulling down the dojo svn repository (would be happy to post this 
-somewhere when it's done).
+ .../jgit/transport/DefaultSshSessionFactory.java   |   86 +++++++++++++++++++-
+ 1 files changed, 84 insertions(+), 2 deletions(-)
 
-
-So: Question 1: how do I get public_html/dojo in my working copy to 
-contain dojo/trunk, dijit/trunk, and dojox/trunk from my external git 
-repository? I'm assuming I use a submodule for this, and git submodule, 
-but I'm wondering how I point git submodule to a particular path in the 
-other repository.
-
-... and question 2: How do I set up a different git submodule path (in 
-the same external git repository) when I work on a different branch?
-
-
-I'd like to be able to git checkout the development branch and have it 
-switch the dojo submodule to contain dojo/trunk (aliased as dojo), 
-dijit/trunk (aliased as dijit), and dojox/trunk (aliased as dojox). And 
-then when I git checkout the main branch have it switch back to 
-tags/release-1.1.1 (which contains dojo, dijit, and dojox without a 
-trunk subdirectory).
-
-Any thoughts?
-
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+index 8a59904..c895988 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+@@ -39,6 +39,7 @@
+ package org.spearce.jgit.transport;
+ 
+ import java.awt.Container;
++import java.awt.GraphicsEnvironment;
+ import java.awt.GridBagConstraints;
+ import java.awt.GridBagLayout;
+ import java.awt.Insets;
+@@ -90,8 +91,18 @@ class DefaultSshSessionFactory extends SshSessionFactory {
+ 		final Session session = getUserJSch().getSession(user, host, port);
+ 		if (pass != null)
+ 			session.setPassword(pass);
+-		else
+-			session.setUserInfo(new AWT_UserInfo());
++		UserInfo userInfo = null;
++		try {
++			System.class.getMethod("console");
++			if (GraphicsEnvironment.isHeadless() || System.console() == null)
++				userInfo = new StdioUserInfo();
++		} catch (NoSuchMethodException e) {
++			throw new IllegalStateException(
++					"You will need JavaSE 6 for stdio based password prompts");
++		}
++		if (userInfo == null)
++			userInfo = new AWT_UserInfo();
++		session.setUserInfo(userInfo);
+ 		return session;
+ 	}
+ 
+@@ -249,4 +260,75 @@ class DefaultSshSessionFactory extends SshSessionFactory {
+ 			return null; // cancel
+ 		}
+ 	}
++
++	static class StdioUserInfo implements UserInfo, UIKeyboardInteractive {
++
++		String password;
++
++		String passphrase;
++
++		public String getPassphrase() {
++			return passphrase;
++		}
++
++		public String getPassword() {
++			return password;
++		}
++
++		public boolean promptPassphrase(String msg) {
++			passphrase = null;
++			char[] readPassword = System.console().readPassword("Passphrase: ");
++			if (readPassword == null)
++				return false;
++			passphrase = new String(readPassword);
++			return true;
++		}
++
++		public boolean promptPassword(String msg) {
++			password = null;
++			char[] readPassword = System.console().readPassword("Password: ");
++			if (readPassword == null)
++				return false;
++			password = new String(readPassword);
++			return true;
++		}
++
++		public boolean promptYesNo(String msg) {
++			String readLine = System.console().readLine("%s [Y/n]: ", msg);
++			if (readLine == null)
++				return false;
++			if (readLine.indexOf("yY") > 0)
++				return true;
++			return false;
++		}
++
++		public void showMessage(String msg) {
++			System.console().format("%s\n", msg);
++		}
++
++		public String[] promptKeyboardInteractive(final String destination,
++				final String name, final String instruction,
++				final String[] prompt, final boolean[] echo) {
++			System.console().printf("%s\n", instruction);
++			System.console().printf("Information for %s@%s required.\n", name,
++					destination);
++			String[] ret = new String[prompt.length];
++			for (int i = 0; i < ret.length; ++i) {
++				String s;
++				if (echo[i])
++					s = System.console().readLine("%s :", prompt[i]);
++				else {
++					char[] cha = System.console().readPassword("%s :",
++							prompt[i]);
++					if (cha == null)
++						s = null;
++					else
++						s = new String(cha);
++				}
++				ret[i] = s;
++			}
++			return ret;
++		}
++
++	}
+ }
 -- 
-John Locke
-"Open Source Solutions for Small Business Problems"
-published by Charles River Media, June 2004
-http://www.freelock.com
+1.5.5.1.178.g1f811
