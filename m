@@ -1,65 +1,80 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: linux-x86-tip: pilot error?
-Date: Sun, 22 Jun 2008 23:42:02 +0200
-Message-ID: <20080622214202.GA15311@atjola.homenet>
-References: <20080622123620.GA9328@linux.vnet.ibm.com> <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com> <20080622132105.GD22569@linux.vnet.ibm.com>
+From: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+Subject: core.autocrlf and merge conflict output
+Date: Sun, 22 Jun 2008 18:08:59 -0400
+Message-ID: <g3miho$se5$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mikael Magnusson <mikachu@gmail.com>, mingo@elte.hu,
-	git@vger.kernel.org
-To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-X-From: git-owner@vger.kernel.org Sun Jun 22 23:43:05 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 00:11:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAXKy-0005Pc-Ag
-	for gcvg-git-2@gmane.org; Sun, 22 Jun 2008 23:43:04 +0200
+	id 1KAXmH-0004Dk-2K
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 00:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754714AbYFVVmJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2008 17:42:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbYFVVmI
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 17:42:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54969 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754041AbYFVVmH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 17:42:07 -0400
-Received: (qmail invoked by alias); 22 Jun 2008 21:42:04 -0000
-Received: from i577BA657.versanet.de (EHLO atjola.local) [87.123.166.87]
-  by mail.gmx.net (mp033) with SMTP; 22 Jun 2008 23:42:04 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/HkCER+0nHrAwg4mKiTJxs2o9HQpA1niq7O9Q414
-	iredA8VK6kSh1X
-Content-Disposition: inline
-In-Reply-To: <20080622132105.GD22569@linux.vnet.ibm.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
+	id S1756923AbYFVWKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 18:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756183AbYFVWKI
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 18:10:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:37607 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755919AbYFVWKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 18:10:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KAXl5-0005Lx-0z
+	for git@vger.kernel.org; Sun, 22 Jun 2008 22:10:03 +0000
+Received: from ool-18e45099.dyn.optonline.net ([24.228.80.153])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 22:10:03 +0000
+Received: from edwardzyang by ool-18e45099.dyn.optonline.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 22:10:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ool-18e45099.dyn.optonline.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041206 Thunderbird/1.0 Mnenhy/0.6.0.104
+X-Enigmail-Version: 0.95.6
+OpenPGP: id=869C48DA;
+	url=http://www.thewritingpot.com/gpgpubkey.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85807>
 
-On 2008.06.22 06:21:05 -0700, Paul E. McKenney wrote:
-> Trying "git-checkout -b tip-core-rcu tip-core-rcu-2008-06-16_09.23_Mo=
-n"
-> acts like it is doing something useful, but doesn't find the recent u=
-pdates,
-> which I believe happened -before- June 16 2008.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Do you mean these?
-rcu: make rcutorture more vicious: reinstate boot-time testing
-rcu: make rcutorture more vicious: add stutter feature
+Apparently, the conflict information Git writes to the working copy
+during merge doesn't respect core.autocrlf, magically converting files
+to LF and causing problems when you try to commit the files, when
+core.safecrlf is on.
 
-I just fetched tip, and here, those two were committed on June 18 2008.
-They're in tip/core/rcu, but not in the tag you mentioned.
+I'm in the process of making a patch, but I'm having difficulty getting
+builtin-merge-file.c and convert.c to play together. Part of the problem
+is the lack of documentation in convert.c, which I'd also like to fix
+(but in a different patch).
 
-JFYI, I found those by using "git log --grep=3Dstutter --all", and then
-passing the commit hash to "git describe":
+So, here's an appeal to the Git gods:
 
-$ git describe --contains --all 31a72bce0bd6f3e0114009288bccbc96376eeec=
-a
-remotes/tip/core/rcu
+* Should I even bother trying to document this? While good docs are
+always a definite plus, poor documentation can hurt code.
 
-Bj=F6rn
+* Would crlf_to_worktree (apparently an internal function) or
+convert_to_working_tree be more appropriate for this task?
+
+* Where can I get a sensible value for *path in convert.c from
+builtin-merge-file.c?
+
+Thanks!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFIXs17qTO+fYacSNoRAuAEAJ9LekfdUzU8WjbYxdhDOLaUfN67HACgg6gR
+3kpT/5CbV3X7bbfkwJFDpAI=
+=lega
+-----END PGP SIGNATURE-----
