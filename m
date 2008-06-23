@@ -1,101 +1,85 @@
-From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
-Subject: Re: [PATCH 1/2] Create a fnmatch-style pattern TreeFilter
-Date: Mon, 23 Jun 2008 19:32:50 +0200
-Message-ID: <485FDE42.1060106@web.de>
-References: <1214177145-18963-1-git-send-email-robin.rosenberg@dewire.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
+Date: Mon, 23 Jun 2008 10:32:21 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <20080623164917.GA25474@sigill.intra.peff.net>
+ <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org> <20080623171505.GB27265@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 19:33:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 23 19:34:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KApvQ-0004J4-Ie
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:33:56 +0200
+	id 1KApvs-0004RV-Nz
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759565AbYFWRc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 13:32:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759037AbYFWRc7
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:32:59 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:42225 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755748AbYFWRc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 13:32:57 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id BBF95E10A05B;
-	Mon, 23 Jun 2008 19:32:55 +0200 (CEST)
-Received: from [84.150.93.234] (helo=[192.168.1.50])
-	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1KApuQ-0002D0-00; Mon, 23 Jun 2008 19:32:54 +0200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
-In-Reply-To: <1214177145-18963-1-git-send-email-robin.rosenberg@dewire.com>
-X-Enigmail-Version: 0.95.6
-X-Sender: FloriansKarten@web.de
-X-Provags-ID: V01U2FsdGVkX190BDW9mF8dXSuomZZzc1IETTv3bEyg40mjTp2i
-	H4ST36su3nTtrgi6kWWgVjTCVfiiZ0PKMUHrZIl/3v4YnwHt3j
-	rCRRcmQL7ZMgvbYwYtdQ==
+	id S1760193AbYFWRdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 13:33:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760185AbYFWRdZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:33:25 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50759 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754685AbYFWRdY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 13:33:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NHWLmu019568
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 23 Jun 2008 10:32:22 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NHWLEQ007673;
+	Mon, 23 Jun 2008 10:32:21 -0700
+In-Reply-To: <20080623171505.GB27265@sigill.intra.peff.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.845 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85893>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi Robin,
 
-thank you for accepting my first patch :D.
+On Mon, 23 Jun 2008, Jeff King wrote:
+> 
+> How can that be correct, if you don't know whether "-b" takes an
+> argument?
 
-| +/**
-| + * This class implements a TreeeFilter that uses the wildcard style
-pattern
-| + * matching like of Posix fnmatch function.
-| + */
-Typo: One 'e' to much in TreeeFilter.
+Did you read my post or not?
 
-It would be more efficient to
-| +	@Override
-| +	public TreeFilter clone() {
-| +		return new WildCardTreeFilter(pattern);
-| +	}
+If you have that case, then use STOP_ON_UNKNOWN.
 
-One way to create a clone of the FileNameMatcher is to call:
-originalMatcher.reset()
-FileNameMatcher clone = originalMatcher.createMatcherForSuffix()
+> That is the only thing that makes sense to me, since the command line
+> has to be parsed left-to-right (because the syntactic function of an
+> element relies on the semantics of the element to its left).
 
-I will send a patch which implements a copy constructor for FileNameMatcher.
+Umm. Helloo, reality.. There are actually very few options that take a 
+flag for their arguments. In particular, the option parsing we really 
+_care_ about (revision parsing - see builtin-blame.c which is exactly 
+where I wanted to convert things) very much DOES NOT.
 
-First I wanted to implement a clone() method, but found this page and
-decided then to implement a copy constructor:
-http://www.javapractices.com/topic/TopicAction.do?Id=71
+And that CONTINUE_ON_UNKNOWN behaviour is not some kind of theoretical 
+flag. It's the flag that builtin-blame.c *wants*. It's the flag that 
+describes hat builtin-blame.c does right now in the current git master 
+branch.
 
-A Implementor of a super class could imply that clone() of object gets
-called, as stated in the javadoc of clone():
+Try just looking at the code!
 
-quote (javadoc ob Object#clone()):
-- -----------
-By convention, the returned object should be obtained by calling super.clone
-- -----------
+So I'm really not interested in arguing about "theoretical issues", when 
+we have a real-life *practical* issue to solve.
 
-I think this is a bad convention, as one should not rely on
-Object#clone() to do the copy job for one. If you really need a clone
-method then I would do it the same way you did, by calling a constructor
-which does the job.
+Solve builtin-blame.c for me. I sent out a patch yesterday, but in the 
+description of that patch I also described exactly why I want 
+CONTINUE_ON_UNKNOWN.
 
-Best regards,
-Florian
+So can we please stop the clusterfuck now?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFIX94k59ca4mzhfxMRAgDjAJ9S76L8I5Lqed4lKfgTf+2cp2IQ9gCfQNVh
-z72+NGvmIy3H0gwveKRfn+w=
-=wnpy
------END PGP SIGNATURE-----
+		Linus
