@@ -1,69 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 09:11:50 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806230908500.2926@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] t9301-fast-export.sh: Remove debug line
+Date: Mon, 23 Jun 2008 18:19:23 +0200
+Message-ID: <200806231819.24040.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Jun 23 18:13:52 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 18:16:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAofQ-0006xn-MP
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 18:13:21 +0200
+	id 1KAohp-00080W-Ia
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 18:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760192AbYFWQM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 12:12:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760186AbYFWQM1
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 12:12:27 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60992 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760180AbYFWQMY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 12:12:24 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NGBobt012426
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Jun 2008 09:11:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NGBocW004540;
-	Mon, 23 Jun 2008 09:11:50 -0700
-In-Reply-To: <20080623082223.GA12130@artemis.madism.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.845 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756500AbYFWQO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 12:14:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbYFWQO0
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 12:14:26 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:41260 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1755225AbYFWQO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 12:14:26 -0400
+Received: (qmail 24602 invoked by uid 89); 23 Jun 2008 16:14:18 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host45-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.45)
+  by smtp2-pc with SMTP; 23 Jun 2008 16:14:17 -0000
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85880>
 
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+ t/t9301-fast-export.sh |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-
-On Mon, 23 Jun 2008, Pierre Habouzit wrote:
-> 
-> You can't, mainly because of option aggregation: if the parser1 knows
-> about -a and -b, parser2 about -c, then, this kind of things is
-> problematic: -acb because you need to go to the parser '2' to know about
-> -c, and you can't filter the arguments and keep -c and give -b to
-> parser1 again, *BECAUSE* 'b' could also be -c argument.
-
-Sure you can. You just rewrite the arguments themselves.
-
-That said, anybody who doesn't use parse_options() right now won't be 
-accepting something like "-abc" *anyway*, and people currently need to use 
-"-a -b -c".
-
-> int (*parse_opt_unknown_cb)(int shortopt, const char *longopt,
->                             const char *value, void *priv);
-
-This doesn't really change anything. It just makes it harder to write a 
-simple partial parser. Just passing in "IGNORE_UNKNOWN" (and probably 
-"STOP_AT_UNKNOWN") is the simplest way to have multiple passes.
-
-		Linus
+diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
+index 60b5ee3..f1bc5ce 100755
+--- a/t/t9301-fast-export.sh
++++ b/t/t9301-fast-export.sh
+@@ -83,7 +83,6 @@ test_expect_success 'import/export-marks' '
+ 	git checkout -b marks master &&
+ 	git fast-export --export-marks=tmp-marks HEAD &&
+ 	test -s tmp-marks &&
+-	cp tmp-marks ~ &&
+ 	test $(wc -l < tmp-marks) -eq 3 &&
+ 	test $(
+ 		git fast-export --import-marks=tmp-marks\
+-- 
+1.5.6
