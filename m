@@ -1,75 +1,93 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH v6] gitweb: add test suite with Test::WWW::Mechanize::CGI
-Date: Mon, 23 Jun 2008 09:00:35 +0200
-Message-ID: <485F4A13.2060904@gmail.com>
-References: <1214181904-30265-1-git-send-email-LeWiemann@gmail.com> <1214183688-8544-1-git-send-email-LeWiemann@gmail.com> <7vd4m8khmb.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: linux-x86-tip: pilot error?
+Date: Mon, 23 Jun 2008 09:14:41 +0200
+Message-ID: <20080623071441.GA28887@elte.hu>
+References: <20080622123620.GA9328@linux.vnet.ibm.com> <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com> <20080622132105.GD22569@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 09:02:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>
+To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 09:16:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAg3u-0002i7-Vm
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 09:02:03 +0200
+	id 1KAgHR-0005nP-I6
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 09:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbYFWHAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 03:00:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbYFWHAo
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 03:00:44 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:35060 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755662AbYFWHAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 03:00:35 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1714991wri.5
-        for <git@vger.kernel.org>; Mon, 23 Jun 2008 00:00:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=mwUolN9XWdEMOTFtB7z6BV03k2G4/9T1FTM6K20Qfog=;
-        b=Lkxp8VZDAqcQpT1g13T36kND0popIAyac1x6jhFMmYhnyaHR+cm9nUTxvbaQwWRrFA
-         w8oGG9WjWxb2b7PaTLXwr+ptbZTFJBS3Z2VBxw93y87bnEwH9YAtVDB+EZyRv+7CG56t
-         N/QTA8OwlD9OiZ335h6E9nXc5V3jo0mkan8mA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=XB1i9hV3yzx7nFExd1OoAdB03cedexiRNoACQHXmobP4sYeGMSWgNk+pXi2AH38+qf
-         R5x8ki6CRZOA1YqBtms+W7jYIgMsceTkHJqmiIt8+91wFdrHgueg+HGV4UktBBVSl1f9
-         bqFD9t9N4VK7qfI09EYWFdB2W93mLvSUHTTkA=
-Received: by 10.90.65.5 with SMTP id n5mr9493321aga.110.1214204434013;
-        Mon, 23 Jun 2008 00:00:34 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.209.241])
-        by mx.google.com with ESMTPS id 44sm3757537hsa.9.2008.06.23.00.00.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 23 Jun 2008 00:00:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7vd4m8khmb.fsf@gitster.siamese.dyndns.org>
+	id S1752146AbYFWHPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 03:15:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYFWHPF
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 03:15:05 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:35376 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752040AbYFWHPD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 03:15:03 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KAgGF-0002qq-7L
+	from <mingo@elte.hu>; Mon, 23 Jun 2008 09:14:55 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id E00B63E21DD; Mon, 23 Jun 2008 09:14:40 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080622132105.GD22569@linux.vnet.ibm.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85841>
 
-Junio C Hamano wrote:
-> My Perl must be getting rusty.  I had to look up this tricky syntax in
-> perlfunc.pod,
 
-I looked in up in #perl. ;-)
+* Paul E. McKenney <paulmck@linux.vnet.ibm.com> wrote:
 
->> +# Copyright (c) 2008 Jakub Narebski
->> +# Copyright (c) 2008 Lea Wiemann
-> 
-> If you mean by this that originally Jakub started and then Lea continued
-> extending the work, probably the order of Sign-off should match that order
-> to express the patch flow trail better.
+> Trying "git-checkout -b tip-core-rcu 
+> tip-core-rcu-2008-06-16_09.23_Mon" acts like it is doing something 
+> useful, but doesn't find the recent updates, which I believe happened 
+> -before- June 16 2008.
 
-Sure; I'll change it if I post another version, or feel free to change 
-it when you apply the patch.
+finding the rcu topic branch in -tip can be done the following way:
 
--- Lea
+ $ git-branch -a | grep rcu
+   tip/core/rcu
+
+and doing a "git-log tip/core/rcu..linus/master" will show you the 
+commits that are in the tip/core/rcu topic branch.
+
+if you check out that branch for your own use, you should also do:
+
+ $ git-merge linus/master
+
+To bring it up to latest upstream. That merge, even if tip/core/rcu 
+looks "old" will always be conflict-free, due to scripting we do:
+
+tip-core-rcu-2008-06-16_09.23_Mon is not a snapshot of the rcu topic - 
+it is "technical" tag of the upstream Linus -git tree against which the 
+rcu topic is based.
+
+We have to track the 'base' of every topic separately because otherwise 
+we'd pollute the topic branches with the frequent merges to Linus's 
+tree. (occasionally we merge to Linus's tree several times a day, that 
+would lead to tons of merge commits that pollute the tree)
+
+So instead we do "on-demand virtual merges": we have scripting which do 
+the following: in each iteration step they merge to latest Linus, check 
+whether there's any files touched by the merge that are changed by the 
+topic branch too - if yes then the merge is made permanent and the "this 
+is this topic's latest upstream" tag is updated. If the merge was 
+conflict-free, we roll back the merge.
+
+Is there a Git way of finding the common ancestor of a topic branch, 
+when compared to upstream?
+
+	Ingo
