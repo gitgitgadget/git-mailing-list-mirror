@@ -1,64 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Mon, 23 Jun 2008 11:23:10 -0400
-Message-ID: <20080623152309.GA24101@sigill.intra.peff.net>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-rerere observations and feature suggestions
+Date: Mon, 23 Jun 2008 17:22:48 +0200
+Message-ID: <20080623152248.GB28394@elte.hu>
+References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080623094906.GA8284@elte.hu> <20080623151201.GB20902@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jan Engelhardt <jengelh@medozas.de>,
-	Vegard Nossum <vegard.nossum@gmail.com>,
-	Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 17:24:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Chris Mason <chris.mason@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 23 17:25:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAntw-0005GY-NL
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:24:17 +0200
+	id 1KAnuT-0005Wa-9u
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754917AbYFWPXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 11:23:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755127AbYFWPXN
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:23:13 -0400
-Received: from peff.net ([208.65.91.99]:4317 "EHLO peff.net"
+	id S1756017AbYFWPXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 11:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756021AbYFWPXp
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:23:45 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:43967 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754917AbYFWPXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 11:23:13 -0400
-Received: (qmail 26797 invoked by uid 111); 23 Jun 2008 15:23:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 23 Jun 2008 11:23:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 11:23:10 -0400
+	id S1755543AbYFWPXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 11:23:44 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KAnsZ-0004gI-E2
+	from <mingo@elte.hu>; Mon, 23 Jun 2008 17:23:00 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 5DB4F3E21DD; Mon, 23 Jun 2008 17:22:49 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vtzfln5zw.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080623151201.GB20902@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85872>
 
-On Sun, Jun 22, 2008 at 03:01:07AM -0700, Junio C Hamano wrote:
 
-> Jeff had a patch to allow boolean configuration variable "pager.<command>"
-> to override the built-in pager settings during 1.5.6 cycle, and I think it
-> was a reasonable approach to take.  People who want to page output from
-> git-status can then set "pager.status = true" in their configuration (and
-> then we can revert c8af1de (make git-status use a pager, 2008-04-23)).
-> Alternatively we could keep the current status-quo for the default, and
-> people can say "pager.status = false" in their configuration.
+* Jeff King <peff@peff.net> wrote:
 
-I have been running with the patch for a month or two, and it works fine
-for controlling the pager. Unfortunately, there is a nasty interaction
-in the git wrapper with reading the config file early, and we end up not
-calculating the GIT_DIR and worktree in the same way. I think this is
-part of a larger problem which needs solving, but everytime I look at
-it, my eyes start bleeding (and I have to admit, since the patch does
-work, I have forgotten how annoyed I was at the paging behavior in the
-first place, and I don't have as much motivation to work on it).
+> > ( and if i could configure git-commit to outright reject a commit like 
+> >   that - i never want to commit lines with <<<<<< or >>>>> markers)
+> 
+> The right place for this is in a pre-commit hook, which can look at 
+> what you are about to commit and decide if it is OK. In fact, the 
+> default pre-commit hook that ships with git performs this exact check. 
+> You just need to turn it on with:
+> 
+>   chmod +x .git/hooks/pre-commit
 
-I think this is deeply related to the "git config alias.st status && cd
-.git && git st" problem, which is also on my long-term todo. So I'll see
-if I can do something about it during this release cycle.
+cool, thanks :-)
 
--Peff
+	Ingo
