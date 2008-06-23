@@ -1,82 +1,63 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: Shrink the git binary a bit by avoiding unnecessary inline functions
-Date: Mon, 23 Jun 2008 07:26:04 +0200
-Message-ID: <46d6db660806222226k73a2e66kd83c5d28b957c61d@mail.gmail.com>
-References: <alpine.LFD.1.10.0806221159140.2926@woody.linux-foundation.org>
-	 <46d6db660806221432m6a6e2f3egf78faa1510f8d643@mail.gmail.com>
-	 <46d6db660806221801j7207e6b0sdf91c2243fad5349@mail.gmail.com>
-	 <alpine.LFD.1.10.0806222150180.2926@woody.linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT RFC PATCH] Add a stdio prompt for SSH connection information.
+Date: Mon, 23 Jun 2008 08:23:20 +0200
+Message-ID: <200806230823.20534.robin.rosenberg.lists@dewire.com>
+References: <200806222306.25434.robin.rosenberg.lists@dewire.com> <20080622231355.GH11793@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jun 23 07:27:38 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 08:28:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAeaV-0007rE-0A
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 07:27:35 +0200
+	id 1KAfXc-0003eM-Vc
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 08:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbYFWF0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 01:26:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbYFWF0H
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 01:26:07 -0400
-Received: from rv-out-0506.google.com ([209.85.198.235]:12423 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208AbYFWF0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 01:26:05 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so6869652rvb.1
-        for <git@vger.kernel.org>; Sun, 22 Jun 2008 22:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=UYYH/UbDfxkJtlgQptWpr8K/5/1/Gg3sZhg99lFa3QM=;
-        b=OxGpGj+EahAW0Ayzuqnizoxb/SyHnNyi0kr/nApk5jvzKZ5paNfYHqrhJMiekAZbnH
-         0/xd6RyvWmjmrmb0RloqX1h5SKQvrp68dVguQ1HCFqtL29Gvt7EV0J1RoXzfLYsdpXvQ
-         VACvwM8GPoJR+SzU/QbRBF3yP1sshHxqhNABw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=mTBNFLHnlBlH73RUkTvVMg6uwGcfj+YdPD6jLO2uh/yfJ1z0wcQDbiRL+7LquIIzT+
-         VieaCZ+Np17H5N9eK473SjLyh3dLB66GxZNRP5uVfM7QtwqiD2O64YBsEErrm7AllbOo
-         fmcx06fOU0y52NQfCfFTZ3NLYvSn42rA11seU=
-Received: by 10.141.115.6 with SMTP id s6mr12082168rvm.51.1214198764296;
-        Sun, 22 Jun 2008 22:26:04 -0700 (PDT)
-Received: by 10.115.16.17 with HTTP; Sun, 22 Jun 2008 22:26:04 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0806222150180.2926@woody.linux-foundation.org>
+	id S1750971AbYFWG1S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2008 02:27:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYFWG1S
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 02:27:18 -0400
+Received: from av7-2-sn3.vrr.skanova.net ([81.228.9.182]:59270 "EHLO
+	av7-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924AbYFWG1Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 02:27:16 -0400
+Received: by av7-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id E50D338287; Mon, 23 Jun 2008 08:16:12 +0200 (CEST)
+Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
+	by av7-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id BB227381F4; Mon, 23 Jun 2008 08:16:12 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id D8E2037E48;
+	Mon, 23 Jun 2008 08:27:13 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080622231355.GH11793@spearce.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85836>
 
-On Mon, Jun 23, 2008 at 6:54 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> gcc version 4.3.0 20080428 (Red Hat 4.3.0-8) (GCC)
->
-> Also notice that this is x86-64, maybe you're 32-bit?
+m=C3=A5ndagen den 23 juni 2008 01.13.55 skrev Shawn O. Pearce:
+> I think that services on Windows have no console, and also can't
+> talk to the desktop UI, so its both headless and without a console.
 
-it is an AMD 64, but the ubuntu and detaolb are indeed 32 bits distros.
+On Windows a service in Java throws up dialogs in void. Your programs w=
+ill just hang. You have to tell awt that you are headless or your servi=
+ces may just hang. There is an option on services that makes it show wi=
+ndows on the console, but it's not the default and seems to have no eff=
+ect on the headless property. As for the console() returning null or no=
+t I haven't tried it yet.
 
->
-> You also have much smaller size difference (616606 -> 591554 is just over
-> 16kB), but if my version of gcc bloats things up more, then I'm not
-> surprised that the difference is bigger too.
->
+> > I'm also a little unsure about how to invoke the promptKeyboardInte=
+ractive method.
+>=20
+> I think you implemented this method correctly.  Its a confusing API,
+> but it does seem to make sense.
 
-I guess I should compare results between compiler versions too...
+No idea on how to make JSch inoke it?
 
-Thanks for the explainations.
-
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+-- robin
