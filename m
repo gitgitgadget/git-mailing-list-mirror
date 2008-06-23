@@ -1,68 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for
- further processing
-Date: Mon, 23 Jun 2008 13:17:16 -0700
-Message-ID: <7vwskfhpo3.fsf@gitster.siamese.dyndns.org>
-References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com>
- <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com>
- <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org>
- <20080618033010.GA19657@sigill.intra.peff.net>
- <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806181709300.6439@racer>
- <7v8wx2zibp.fsf@gitster.siamese.dyndns.org>
- <20080619142527.GA8429@mediacenter>
- <alpine.DEB.1.00.0806221953470.6439@racer>
- <7v4p7khqp7.fsf@gitster.siamese.dyndns.org>
- <20080623195906.GC29569@sigill.intra.peff.net>
+From: "VIP Casino Club" <zyaqqa@spot.net.il>
+Subject: (unknown)
+Date: Mon, 23 Jun 2008 12:54:46 -0800
+Message-ID: <B5A12454.DB86A599@spot.net.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
-	madcoder@debian.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 23 22:19:14 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 22:26:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAsUb-0003mY-Is
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 22:18:25 +0200
+	id 1KAsc2-00073E-5x
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 22:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756110AbYFWUR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 16:17:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755304AbYFWUR2
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 16:17:28 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44226 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756110AbYFWUR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 16:17:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 146304FE1;
-	Mon, 23 Jun 2008 16:17:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 122254FD7; Mon, 23 Jun 2008 16:17:18 -0400 (EDT)
-In-Reply-To: <20080623195906.GC29569@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 23 Jun 2008 15:59:07 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 64DB537C-4161-11DD-A769-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755901AbYFWUYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 16:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756014AbYFWUYq
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 16:24:46 -0400
+Received: from smtp1.spot.net.il ([193.37.130.26]:49482 "EHLO mail.spot.net.il"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755321AbYFWUYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 16:24:45 -0400
+X-Greylist: delayed 545 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Jun 2008 16:24:45 EDT
+Received: from spot.net.il (unknown [193.37.128.213])
+	by mail.spot.net.il (Postfix) with SMTP id 09CC669D972
+	for <git@vger.kernel.org>; Mon, 23 Jun 2008 23:02:54 +0300 (IDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC; en-US; rv:1.0.2) Gecko/20030208 Netscape/7.02
+X-Accept-Language: en-us
+Subject: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85917>
+X-Spam-Report: 8.4 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  68]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: webtopjackpot.net]
+ *  1.2 MISSING_SUBJECT Missing Subject: header
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85918>
 
-Jeff King <peff@peff.net> writes:
+Enjoy all the action of Las Vegas with 24 hour customer services, great
+offers and promotions 
+and reliable payments from your armchair with ClubVIP: 
 
-> Now I'm confused: my understanding is that the diff option parser just
-> leaves unrecognized stuff in argv. But isn't that what a
-> PARSE_OPTIONS_IGNORE_UNKNOWN flag would do, and isn't that wrong?
+***Download and install our free software 
+***Register your account 
+***Purchase chips and get playing! 
 
-I was thinking more about the way how the lower level diff_opt_parse()
-works by letting the caller to handle things that it itself does not know
-how.
+See you at the tables! 
 
-But I say this because I am not interested in "-a -b -c <=> -abc" and
-haven't thought about how you would go about parsing something like that
-sanely with partial knowledge.
+http://www.webtopjackpot.net
+
+
+
+
+
+
+
+hewruhxycu lyyj bdihiabda
+
+mauugema bu
+
+siaocwenrvumip bfyxuu mueglofaeu
+oereqyxlebjier k koopwanusohuc
+znhiqs x
+tivequwexe sju jeozenov
