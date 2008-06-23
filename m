@@ -1,55 +1,54 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git clone behaviour change in 1.5.6 (vs 1.5.5.1)
-Date: Mon, 23 Jun 2008 15:56:41 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806231554380.19665@iabervon.org>
-References: <177e83dd0806231251u223717e4s2149f69313787ead@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] git-add--interactive: manual hunk editing mode
+Date: Mon, 23 Jun 2008 15:57:19 -0400
+Message-ID: <20080623195719.GB29569@sigill.intra.peff.net>
+References: <200805232221.45406.trast@student.ethz.ch> <200806120855.26847.trast@student.ethz.ch> <20080612071311.GA32491@sigill.intra.peff.net> <200806131748.44867.trast@student.ethz.ch> <20080623183840.GA28887@sigill.intra.peff.net> <alpine.DEB.1.00.0806231952360.6440@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: zuh@iki.fi
-X-From: git-owner@vger.kernel.org Mon Jun 23 21:57:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 23 21:58:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAsAX-00058Q-Sh
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 21:57:42 +0200
+	id 1KAsBP-0005VE-FT
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 21:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763645AbYFWT4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 15:56:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755101AbYFWT4o
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 15:56:44 -0400
-Received: from iabervon.org ([66.92.72.58]:54315 "EHLO iabervon.org"
+	id S1755101AbYFWT5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 15:57:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755243AbYFWT5W
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 15:57:22 -0400
+Received: from peff.net ([208.65.91.99]:2323 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763645AbYFWT4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 15:56:43 -0400
-Received: (qmail 1487 invoked by uid 1000); 23 Jun 2008 19:56:41 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Jun 2008 19:56:41 -0000
-In-Reply-To: <177e83dd0806231251u223717e4s2149f69313787ead@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755094AbYFWT5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 15:57:22 -0400
+Received: (qmail 28800 invoked by uid 111); 23 Jun 2008 19:57:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 23 Jun 2008 15:57:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 15:57:20 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806231952360.6440@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85912>
 
-On Mon, 23 Jun 2008, Kalle Vahlman wrote:
+On Mon, Jun 23, 2008 at 07:54:29PM +0100, Johannes Schindelin wrote:
 
-> Hi!
-> 
-> Switching to the 1.5.6 release from 1.5.5.1, I found out that the
-> rewritten git-clone command changed its behaviour wrt cloning to a
-> non-existing destination directory structure. In the shell version the
-> destination (work tree) is created with 'mkdir -p' but in the C
-> version with just the mkdir() call which doesn't create the parent
-> directories.
-> 
-> I can't find any indication that this would be intended in the repo
-> history nor in the mailing list, so I'm left thinking that this is an
-> unwanted regression. Could someone confirm this?
+> I am not sure when I will have time for that (particularly given that I 
+> got sidetracked with the OPTION_OPTIONS patch, when I should have worked 
+> on something completely different).
 
-It wasn't an intentional change, anyway.
+Heh, I know the feeling. ;)
 
-	-Daniel
-*This .sig left intentionally blank*
+> In the meantime, feel free to submit in my name.
+
+Do you remember off the top of your head whether more work was needed?
+They looked good to me, but then I seem to recall you saying in another
+thread that Junio pointed out some flaw with your approach (but I never
+quite understood what the flaw was).
+
+-Peff
