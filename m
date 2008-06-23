@@ -1,106 +1,99 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 09:25:10 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer>
+Date: Mon, 23 Jun 2008 17:25:52 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806231709540.6440@racer>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <20080623155315.GA18593@artemis.madism.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>,
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 23 18:27:55 2008
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 18:29:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAotC-0004Ra-L6
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 18:27:35 +0200
+	id 1KAouP-0004rs-Us
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 18:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345AbYFWQ0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 12:26:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754541AbYFWQ0b
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 12:26:31 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:45318 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753725AbYFWQ0b (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 12:26:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NGPBEw013728
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Jun 2008 09:25:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NGPADV005163;
-	Mon, 23 Jun 2008 09:25:10 -0700
-In-Reply-To: <alpine.DEB.1.00.0806231312130.6440@racer>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.845 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755035AbYFWQ1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 12:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754923AbYFWQ1x
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 12:27:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46417 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754846AbYFWQ1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 12:27:53 -0400
+Received: (qmail invoked by alias); 23 Jun 2008 16:27:51 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp017) with SMTP; 23 Jun 2008 18:27:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX181gZgE0qs1xfyVej5XV7dGWaEOlD6XzA6FKbU20p
+	rngooElQODIHrR
+X-X-Sender: gene099@racer
+In-Reply-To: <20080623155315.GA18593@artemis.madism.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85883>
 
+Hi,
 
+On Mon, 23 Jun 2008, Pierre Habouzit wrote:
 
-On Mon, 23 Jun 2008, Johannes Schindelin wrote:
+> On Mon, Jun 23, 2008 at 12:26:41PM +0000, Johannes Schindelin wrote:
 > 
-> Thinking about the recursive approach again, I came up with this POC:
+> > On Mon, 23 Jun 2008, Pierre Habouzit wrote:
+> > 
+> > > This "PARSE_OPT_IGNORE_UNRECOGNIZED" thing has been discussed many 
+> > > times in the past, but it just doesn't fly.
+> > > 
+> > > Though to help migrations we can probably introduce a new parse 
+> > > option construct that would be a callback that is responsible for 
+> > > dealing with "things" the upper level parser doesn't know about, 
+> > > something where the callback could be:
+> > > 
+> > > enum {
+> > >     FLAG_ERROR = -1,
+> > >     FLAG_NOT_FOR_ME,
+> > >     FLAG_IS_FOR_ME,
+> > >     FLAG_AND_VALUE_ARE_FOR_ME,
+> > > }
+> > > 
+> > > int (*parse_opt_unknown_cb)(int shortopt, const char *longopt,
+> > >                             const char *value, void *priv);
+> > 
+> > I believe that this is what Junio was talking about when he mentioned 
+> > callbacks.
+> > 
+> > However, I think it buys us more trouble than it saves us.
+> > 
+> > Thinking about the recursive approach again, I came up with this POC:
+> 
+>   Well I proposed something like that in the past, and we believed it to
+> be too cumbersome.
 
-"recursive" is pointless.
+IIRC your solution was a bit involved, while I think that mine is at least 
+small enough to be simple.
 
-The problem with the current "parse_options()" is not that it's recursive 
-(although that has been claimed multiple times!.
+Note: it is a bit wasteful, allocating space for a new option table 
+in every case, even if there are no OPTION_OPTIONS, but I think that is 
+okay.
 
-The problem with parse_options() is that it's currently impossible to 
-write something that handles _partial_ cases.
+> I can live with it well fwiw, but it doesn't solve the issue of 
+> migrating a very complex option parsing chain to parse-options well 
+> IMHO. THe big problem with diff and rev opt parsing is that one you want 
+> to migrate _any_ of the commands, you have to migrate _all_ of them, 
+> which is huge.
 
-Let me explain.
-
-Look at cmd_apply() in builtin-apply.c. Notice how it currently absolutely 
-CANNOT sanely be turned into using "parse_options()", not because it needs 
-any "recursive" handling, but simply because it wants to do *incremental* 
-handling.
-
-It should be perfectly possible to change that argument loop from
-
-	for (i = 1; i < argc; i++) {
-		const char *arg = argv[i];
-		if (strcmp(arg, "-")) {
-			.. handle <stdin> ..
-			continue;
-		}
-		...
-
-to doing something like this:
-
-	for (;;) {
-		const char *arg;
-		argc = parse_options(argc, argv,
-			options, usage, PARSE_OPT_STOP_AT_UNKNOWN);
-		if (!argc)
-			break;
-		arg = argv[1];
-		argv++;
-		argc--;
-		if (strcmp(arg, "-")) {
-			.. handle <stdin> ..
-			continue;
-		}
-		...	
-
-or whatever. See?
-
-Could you handle that with callbacks? Of course. "You can solve any 
-problem in computer science with an added level of indirection". But would 
-it be simpler to convert existing users? Hell no. 
-
-Could you handle the "recursive" use of parse_options() in builtin-blame.c 
-by teaching it about recursion? Yes. But again, it's just _simpler_ to 
-just teach parse_options() to parse the things it knows about, and leave 
-the other things in place.
-
-			Linus
+I don't think you have to migrate all of them in one go.  To the contrary, 
+if we have both "diff_opt_parse()" as well as a "struct options 
+*diff__options", it can be done one by one.  During that time, though, 
+people would have to add new diff options to both places.
+ 
+Ciao,
+Dscho
