@@ -1,104 +1,375 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 03/14] Write to a stack log when stack is modified
-Date: Mon, 23 Jun 2008 14:36:31 +0200
-Message-ID: <20080623123631.GA18347@diana.vm.bytemark.co.uk>
-References: <20080617123138.GA6932@diana.vm.bytemark.co.uk> <b0943d9e0806170711w6da8e841p3ac83a59a81f6577@mail.gmail.com> <20080617153247.GA12520@diana.vm.bytemark.co.uk> <b0943d9e0806180603h59187f7epc5014f36d070cec7@mail.gmail.com> <20080618143633.GB30540@diana.vm.bytemark.co.uk> <b0943d9e0806180916m4af3970ck347408661e95663@mail.gmail.com> <20080618173246.GA1155@diana.vm.bytemark.co.uk> <b0943d9e0806190224v1b6434fesd3a54443422edaeb@mail.gmail.com> <20080619100722.GB14415@diana.vm.bytemark.co.uk> <b0943d9e0806200214j77aef272sc5cfb98b002cae22@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 14:37:40 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 2/2] git-merge-recursive-{ours,theirs}
+Date: Mon, 23 Jun 2008 14:45:27 +0200
+Message-ID: <e0243ced5ebe387a18c33da236b7310b4e5d0e82.1214224424.git.vmiklos@frugalware.org>
+References: <cover.1214224424.git.vmiklos@frugalware.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 14:46:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAlIe-0007T9-AX
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 14:37:36 +0200
+	id 1KAlRV-0001zm-SW
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 14:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbYFWMgk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2008 08:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbYFWMgk
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 08:36:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1806 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752681AbYFWMgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 08:36:39 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KAlHb-0005Aq-00; Mon, 23 Jun 2008 13:36:31 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0806200214j77aef272sc5cfb98b002cae22@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753681AbYFWMpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 08:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbYFWMpc
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 08:45:32 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:48110 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753107AbYFWMp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 08:45:28 -0400
+Received: from vmobile.example.net (dsl5401C3C5.pool.t-online.hu [84.1.195.197])
+	by yugo.frugalware.org (Postfix) with ESMTP id 74EA11DDC5B;
+	Mon, 23 Jun 2008 14:45:25 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 707DE18E0E4; Mon, 23 Jun 2008 14:45:27 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6
+In-Reply-To: <cover.1214224424.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1214224424.git.vmiklos@frugalware.org>
+References: <cover.1214224424.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85859>
 
-On 2008-06-20 10:14:29 +0100, Catalin Marinas wrote:
+From: Junio C Hamano <gitster@pobox.com>
 
-> 2008/6/19 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > If we ever want to be able to undo "stg repair", we have to be
-> > able to represent an inconsistent state where head !=3D top.
->
-> I wouldn't bother with this feature. Why would one want to break the
-> stack again after repairing? If they merge patches and git commits,
-> they either repair the stack or commit all the patches and continue
-> with using Git only.
+This uses the low-level mechanism for "ours" and "theirs" autoresolution
+introduced by the previous commit to introduce two additional merge
+strategies, merge-recursive-ours and merge-recursive-theirs.
 
-Sometimes, stg repair isn't what you want. Say e.g. that you've done
-git merge. stg repair will in this case stop reading your history once
-it sees the merge commit, and consider all your patches unapplied. But
-what you really want is to undo the git merge. Or that you've done git
-rebase -- in that case, stg repair will realize that your patches are
-unapplied, which is correct but probably not what you want.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-=46or those of us who know what stg repair does, realizing when not to
-run it and what to do instead is easy. But for very little extra
-effort in the stack log, we can make the generic "stg undo" able to
-fix these mistakes automatically. _And_ give the user assurance that
-whatever she does with stg reset and stg undo, it can be undone.
+The patch is the same, but I removed modifications to git-merge.sh and
+added them to builtin-merge.c.
 
-> > I'd actually say the opposite: until we have a good visualizer
-> > that doesn't need the simplified log, we need to have the
-> > simplified log. If I actually have to look at the diffs in the
-> > log, I find gitk indispensible.
->
-> And what would the simplified log contain if we decide to go with a
-> new scheme? In your proposal, it points to the tree of main log and
-> you get the diff of diffs (which also means that the diffs must be
-> generated for every modification of a patch). Would this be the
-> same? Again, I worry a bit about the overhead to generate the patch
-> diff for every push (with refresh I'm OK). It can be optimised as in
-> the stable branch where we try git-apply followed by a three-way
-> merge (which, BTW, I'd like added before 0.15). If git-apply
-> succeeds, there is no need to re-generate the diff.
+ Makefile                     |    3 ++
+ builtin-merge-recursive.c    |   37 ++++++++++++++++++++++++---
+ builtin-merge.c              |    2 +
+ git.c                        |    2 +
+ ll-merge.c                   |   24 +++++++++++------
+ ll-merge.h                   |    4 ++-
+ t/t6034-merge-ours-theirs.sh |   56 ++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 114 insertions(+), 14 deletions(-)
+ create mode 100755 t/t6034-merge-ours-theirs.sh
 
-Yes, I was imagining a simplified log precisely like the one I've
-currently implemented (a tree with one blob per patch, which contains
-the message, the diff, and some other odds and ends such as the
-author). Two optimizations would hopefully make it fast:
-
-  1. If the patch's sha1 hasn't changed, we don't have to regenerate
-     the diff.
-
-  2. If the patch's sha1 has changed, but git apply was sufficient
-     during the merge stage, we can just reuse that patch. We do have
-     to write it to a blob, but we have already generated the diff and
-     don't need to do so again. (I've shamelessly stolen your idea
-     here.)
-
-In most cases, (1) would make sure that only a small handful of
-patches would need to be considered. In the cases where a lot of
-patches are touched, such as rebase, (2) would provide a good speedup
-(except for the cases where we had to call merge-recursive, and those
-are slow anyway).
-
-( By the way: Yes, I agree that we want to try git apply before
-  merge-recursive. It's on my TODO list. )
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/Makefile b/Makefile
+index 3d8c3d2..4e354fc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -303,6 +303,8 @@ BUILT_INS += git-format-patch$X
+ BUILT_INS += git-fsck-objects$X
+ BUILT_INS += git-get-tar-commit-id$X
+ BUILT_INS += git-init$X
++BUILT_INS += git-merge-recursive-ours$X
++BUILT_INS += git-merge-recursive-theirs$X
+ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+@@ -1381,6 +1383,7 @@ check-docs::
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
++		git-merge-recursive-ours | git-merge-recursive-theirs | \
+ 		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
+ 		git-fsck-objects | git-init-db | \
+ 		git-?*--?* ) continue ;; \
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index 98b09fb..c535596 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -20,7 +20,11 @@
+ #include "attr.h"
+ #include "merge-recursive.h"
+ 
+-static int subtree_merge;
++static enum {
++	MERGE_RECURSIVE_SUBTREE = 1,
++	MERGE_RECURSIVE_OURS,
++	MERGE_RECURSIVE_THEIRS,
++} merge_recursive_variants;
+ 
+ static struct tree *shift_tree_object(struct tree *one, struct tree *two)
+ {
+@@ -634,6 +638,7 @@ static int merge_3way(mmbuffer_t *result_buf,
+ 	mmfile_t orig, src1, src2;
+ 	char *name1, *name2;
+ 	int merge_status;
++	int flag, favor;
+ 
+ 	name1 = xstrdup(mkpath("%s:%s", branch1, a->path));
+ 	name2 = xstrdup(mkpath("%s:%s", branch2, b->path));
+@@ -642,9 +647,26 @@ static int merge_3way(mmbuffer_t *result_buf,
+ 	fill_mm(a->sha1, &src1);
+ 	fill_mm(b->sha1, &src2);
+ 
++	if (index_only)
++		favor = 0;
++	else {
++		switch (merge_recursive_variants) {
++		case MERGE_RECURSIVE_OURS:
++			favor = XDL_MERGE_FAVOR_OURS;
++			break;
++		case MERGE_RECURSIVE_THEIRS:
++			favor = XDL_MERGE_FAVOR_THEIRS;
++			break;
++		default:
++			favor = 0;
++			break;
++		}
++	}
++	flag = LL_MERGE_FLAGS(index_only, favor);
++
+ 	merge_status = ll_merge(result_buf, a->path, &orig,
+ 				&src1, name1, &src2, name2,
+-				index_only);
++				flag);
+ 
+ 	free(name1);
+ 	free(name2);
+@@ -1163,7 +1185,7 @@ int merge_trees(struct tree *head,
+ {
+ 	int code, clean;
+ 
+-	if (subtree_merge) {
++	if (merge_recursive_variants == MERGE_RECURSIVE_SUBTREE) {
+ 		merge = shift_tree_object(head, merge);
+ 		common = shift_tree_object(head, common);
+ 	}
+@@ -1371,11 +1393,18 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 	int index_fd;
+ 
++	merge_recursive_variants = 0;
+ 	if (argv[0]) {
+ 		int namelen = strlen(argv[0]);
+ 		if (8 < namelen &&
+ 		    !strcmp(argv[0] + namelen - 8, "-subtree"))
+-			subtree_merge = 1;
++			merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
++		else if (5 < namelen &&
++			 !strcmp(argv[0] + namelen - 5, "-ours"))
++			merge_recursive_variants = MERGE_RECURSIVE_OURS;
++		else if (7 < namelen &&
++			 !strcmp(argv[0] + namelen - 7, "-theirs"))
++			merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
+ 	}
+ 
+ 	git_config(merge_config, NULL);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index dadde80..b7b1b71 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -52,6 +52,8 @@ static struct path_list_item strategy_items[] = {
+ 	{ "stupid",     (void *)0 },
+ 	{ "ours",       (void *)(NO_FAST_FORWARD | NO_TRIVIAL) },
+ 	{ "subtree",    (void *)(NO_FAST_FORWARD | NO_TRIVIAL) },
++	{ "recursive-ours", (void *)NO_TRIVIAL },
++	{ "recursive-theirs", (void *)NO_TRIVIAL },
+ };
+ static struct path_list strategies = { strategy_items,
+ 	ARRAY_SIZE(strategy_items), 0, 0 };
+diff --git a/git.c b/git.c
+index 770aadd..f2a8ce5 100644
+--- a/git.c
++++ b/git.c
+@@ -276,6 +276,8 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "merge-file", cmd_merge_file },
+ 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+ 		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
++		{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
++		{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "name-rev", cmd_name_rev, RUN_SETUP },
+diff --git a/ll-merge.c b/ll-merge.c
+index 9837c84..c6a05bf 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -19,7 +19,7 @@ typedef int (*ll_merge_fn)(const struct ll_merge_driver *,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+-			   int virtual_ancestor);
++			   int flag);
+ 
+ struct ll_merge_driver {
+ 	const char *name;
+@@ -39,13 +39,15 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+-			   int virtual_ancestor)
++			   int flag)
+ {
+ 	/*
+ 	 * The tentative merge result is "ours" for the final round,
+ 	 * or common ancestor for an internal merge.  Still return
+ 	 * "conflicted merge" status.
+ 	 */
++	int virtual_ancestor = flag & 01;
++
+ 	mmfile_t *stolen = virtual_ancestor ? orig : src1;
+ 
+ 	result->ptr = stolen->ptr;
+@@ -60,9 +62,10 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+-			int virtual_ancestor)
++			int flag)
+ {
+ 	xpparam_t xpp;
++	int favor = ((flag)>>1) & 03;
+ 
+ 	if (buffer_is_binary(orig->ptr, orig->size) ||
+ 	    buffer_is_binary(src1->ptr, src1->size) ||
+@@ -73,14 +76,15 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 				       path_unused,
+ 				       orig, src1, name1,
+ 				       src2, name2,
+-				       virtual_ancestor);
++				       flag);
+ 	}
+ 
+ 	memset(&xpp, 0, sizeof(xpp));
+ 	return xdl_merge(orig,
+ 			 src1, name1,
+ 			 src2, name2,
+-			 &xpp, XDL_MERGE_ZEALOUS,
++			 &xpp,
++			 XDL_MERGE_FLAGS(XDL_MERGE_ZEALOUS, favor),
+ 			 result);
+ }
+ 
+@@ -90,11 +94,12 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 			  mmfile_t *orig,
+ 			  mmfile_t *src1, const char *name1,
+ 			  mmfile_t *src2, const char *name2,
+-			  int virtual_ancestor)
++			  int flag)
+ {
+ 	char *src, *dst;
+ 	long size;
+ 	const int marker_size = 7;
++	int virtual_ancestor = flag & 01;
+ 
+ 	int status = ll_xdl_merge(drv_unused, result, path_unused,
+ 				  orig, src1, NULL, src2, NULL,
+@@ -158,7 +163,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+-			int virtual_ancestor)
++			int flag)
+ {
+ 	char temp[3][50];
+ 	char cmdbuf[2048];
+@@ -362,10 +367,11 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	     mmfile_t *ancestor,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
+-	     int virtual_ancestor)
++	     int flag)
+ {
+ 	const char *ll_driver_name;
+ 	const struct ll_merge_driver *driver;
++	int virtual_ancestor = flag & 01;
+ 
+ 	ll_driver_name = git_path_check_merge(path);
+ 	driver = find_ll_merge_driver(ll_driver_name);
+@@ -375,5 +381,5 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	return driver->fn(driver, result_buf, path,
+ 			  ancestor,
+ 			  ours, our_label,
+-			  theirs, their_label, virtual_ancestor);
++			  theirs, their_label, flag);
+ }
+diff --git a/ll-merge.h b/ll-merge.h
+index 5388422..5daef58 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -5,11 +5,13 @@
+ #ifndef LL_MERGE_H
+ #define LL_MERGE_H
+ 
++#define LL_MERGE_FLAGS(virtual_ancestor,favor) ((!!(virtual_ancestor)) | ((favor)<<1))
++
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
+-	     int virtual_ancestor);
++	     int flag);
+ 
+ #endif
+diff --git a/t/t6034-merge-ours-theirs.sh b/t/t6034-merge-ours-theirs.sh
+new file mode 100755
+index 0000000..56a9247
+--- /dev/null
++++ b/t/t6034-merge-ours-theirs.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='Merge-recursive ours and theirs variants'
++. ./test-lib.sh
++
++test_expect_success setup '
++	for i in 1 2 3 4 5 6 7 8 9
++	do
++		echo "$i"
++	done >file &&
++	git add file &&
++	cp file elif &&
++	git commit -m initial &&
++
++	sed -e "s/1/one/" -e "s/9/nine/" >file <elif &&
++	git commit -a -m ours &&
++
++	git checkout -b side HEAD^ &&
++
++	sed -e "s/9/nueve/" >file <elif &&
++	git commit -a -m theirs &&
++
++	git checkout master^0
++'
++
++test_expect_success 'plain recursive - should conflict' '
++	git reset --hard master &&
++	test_must_fail git merge -s recursive side &&
++	grep nine file &&
++	grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_expect_success 'recursive favouring theirs' '
++	git reset --hard master &&
++	git merge -s recursive-theirs side &&
++	! grep nine file &&
++	grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_expect_success 'recursive favouring ours' '
++	git reset --hard master &&
++	git merge -s recursive-ours side &&
++	grep nine file &&
++	! grep nueve file &&
++	! grep 9 file &&
++	grep one file &&
++	! grep 1 file
++'
++
++test_done
+-- 
+1.5.6
