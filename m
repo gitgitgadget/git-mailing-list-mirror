@@ -1,66 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] parse_options: Add flag to prevent errors for further
- processing
-Date: Mon, 23 Jun 2008 21:24:38 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806232124130.6440@racer>
-References: <1213758236-979-1-git-send-email-shawn.bohrer@gmail.com> <1213758236-979-2-git-send-email-shawn.bohrer@gmail.com> <7v1w2v2zsh.fsf@gitster.siamese.dyndns.org> <20080618033010.GA19657@sigill.intra.peff.net> <7vwskn1g2p.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0806181709300.6439@racer> <7v8wx2zibp.fsf@gitster.siamese.dyndns.org> <20080619142527.GA8429@mediacenter> <alpine.DEB.1.00.0806221953470.6439@racer> <7v4p7khqp7.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Code Formatting vs Trailing Whitespaces
+Date: Mon, 23 Jun 2008 22:31:38 +0200
+Message-ID: <200806232231.38391.robin.rosenberg.lists@dewire.com>
+References: <485FE856.1080808@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, madcoder@debian.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 22:27:39 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Florian =?iso-8859-1?q?K=F6berle?= <FloriansKarten@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 23 22:36:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAsdU-0007dn-S6
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 22:27:37 +0200
+	id 1KAsm8-00025j-N0
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 22:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813AbYFWU0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 16:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754585AbYFWU0j
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 16:26:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34022 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753333AbYFWU0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 16:26:39 -0400
-Received: (qmail invoked by alias); 23 Jun 2008 20:26:36 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp053) with SMTP; 23 Jun 2008 22:26:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WqbteCygWwXQaOPlBWqy4bTMrWybi0lCH14XKyn
-	smLAe7YzP0n3I+
-X-X-Sender: gene099@racer
-In-Reply-To: <7v4p7khqp7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754061AbYFWUfg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2008 16:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754001AbYFWUfg
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 16:35:36 -0400
+Received: from av8-1-sn3.vrr.skanova.net ([81.228.9.183]:47278 "EHLO
+	av8-1-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932AbYFWUff convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 16:35:35 -0400
+Received: by av8-1-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id 04CFD38086; Mon, 23 Jun 2008 22:35:34 +0200 (CEST)
+Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
+	by av8-1-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id D36D737E4C; Mon, 23 Jun 2008 22:35:33 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 6161E37E48;
+	Mon, 23 Jun 2008 22:35:33 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <485FE856.1080808@web.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85920>
 
-Hi,
+m=E5ndagen den 23 juni 2008 20.15.50 skrev Florian K=F6berle:
+> Hi
+>=20
+> I noticed that Robin removed trailing whitespaces from my patch(thank=
+s).
+> It appears that if you enable code formatting and the removement of
+> trailing whitespaces in the save actions option that the formatting
+> option will win.
+> It will add a space at the second line of a javadoc comment:
+> /**
+> ~ * <----
+>=20
+> I think this is a bug in eclipse, did any of you create a bug report =
+for
+> that? Or a feature request for an "no whitespace after javadoc" optio=
+n
+> in the code formatter page?
 
-On Mon, 23 Jun 2008, Junio C Hamano wrote:
+This one matches: https://bugs.eclipse.org/bugs/show_bug.cgi?id=3D49619
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Thu, 19 Jun 2008, Shawn Bohrer wrote:
-> >
-> >> On Wed, Jun 18, 2008 at 11:52:42AM -0700, Junio C Hamano wrote:
-> >
-> > I believe not.  I think that Junio prefers some callback that can 
-> > handle a whole bunch of options (as opposed to the callback we can 
-> > have now, to handle arguments for a specific option).
-> 
-> Sorry, no.  I do not want callbacks.  I've been saying that parser 
-> cascading is easier if you use an incremental interface like diff option 
-> parser does.
+> I want to have both options active, because I don't want to commit wr=
+ong
+> formatted patches.
 
-Sorry, I misunderstood.  At least you clarified it for me now.
+When I have both options active, it adds the whitespace when formatting=
+, but
+removes it when saving in (version 3.3.2).
 
-Thanks,
-Dscho
+-- robin
