@@ -1,76 +1,78 @@
-From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
-Subject: Code Formatting vs Trailing Whitespaces
-Date: Mon, 23 Jun 2008 20:15:50 +0200
-Message-ID: <485FE856.1080808@web.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
+Date: Mon, 23 Jun 2008 11:20:46 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806231114180.2926@woody.linux-foundation.org>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <20080623164917.GA25474@sigill.intra.peff.net>
+ <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org> <20080623171505.GB27265@sigill.intra.peff.net> <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 23 20:18:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 23 20:28:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAqcu-00044N-A2
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 20:18:52 +0200
+	id 1KAqm7-0007VB-2N
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 20:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759382AbYFWSQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 14:16:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYFWSQe
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 14:16:34 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:41528 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172AbYFWSQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 14:16:33 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 4D2C3E2DCE96;
-	Mon, 23 Jun 2008 20:15:53 +0200 (CEST)
-Received: from [84.150.93.234] (helo=[192.168.1.50])
-	by smtp07.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1KAqa0-0000bH-00; Mon, 23 Jun 2008 20:15:52 +0200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
-X-Enigmail-Version: 0.95.6
-X-Sender: FloriansKarten@web.de
-X-Provags-ID: V01U2FsdGVkX19hMgDSoHqKYy7PN1oz6e2vsPqQj0g3nEaK7OTF
-	EF8F74B/eO4o/oRhM55j7iZ4jdKEYlNd7BTg3D6xobMEcvsApz
-	U3BwGG9OVJri6eHSo5Dw==
+	id S1756139AbYFWS1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 14:27:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756167AbYFWS1Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 14:27:25 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35259 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755594AbYFWS1Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 14:27:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NIPxv2025669
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 23 Jun 2008 11:26:00 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5NIKkC2009724;
+	Mon, 23 Jun 2008 11:20:47 -0700
+In-Reply-To: <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.845 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85898>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi
 
-I noticed that Robin removed trailing whitespaces from my patch(thanks).
-It appears that if you enable code formatting and the removement of
-trailing whitespaces in the save actions option that the formatting
-option will win.
-It will add a space at the second line of a javadoc comment:
-/**
-~ * <----
+On Mon, 23 Jun 2008, Linus Torvalds wrote:
+> 
+> Umm. Helloo, reality.. There are actually very few options that take a 
+> flag for their arguments. In particular, the option parsing we really 
+> _care_ about (revision parsing - see builtin-blame.c which is exactly 
+> where I wanted to convert things) very much DOES NOT.
 
-I think this is a bug in eclipse, did any of you create a bug report for
-that? Or a feature request for an "no whitespace after javadoc" option
-in the code formatter page?
+Actually, I guess "--default" does, but if you try to mix that up with (a) 
+a default head that starts with a dash and (b) git-blame, you're doing 
+something pretty odd.
 
-I want to have both options active, because I don't want to commit wrong
-formatted patches.
+And yes, "-n" does too, but if you pass it negative numbers you get what 
+you deserve.
 
-Best regards,
-Florian
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+The point being, we really _do_ have a real-life existing case for 
+PARSE_OPT_CONTINUE_ON_UNKNOWN, which is hard to handle any other way. 
+Currently you can literally do
 
-iD8DBQFIX+hW59ca4mzhfxMRApU4AKCbYzwRFqVcBCr11zc9lk6jqick2ACeMBhW
-nXOoN4nIsTjzWWhQzDOxiz4=
-=bm+i
------END PGP SIGNATURE-----
+	git blame --since=April -b Makefile
+
+and while it's a totally made-up example, it's one I've picked to show 
+exactly what does *not* work with my patch that started this whole thread.
+
+And guess what you need to fix it?
+
+If you guessed PARSE_OPT_CONTINUE_ON_UNKNOWN, you win a prize. 
+
+		Linus
