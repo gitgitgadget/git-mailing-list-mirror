@@ -1,87 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 14:15:17 -0400
-Message-ID: <20080623181517.GA28527@sigill.intra.peff.net>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <20080623164917.GA25474@sigill.intra.peff.net> <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org> <20080623171505.GB27265@sigill.intra.peff.net> <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
+From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
+Subject: Code Formatting vs Trailing Whitespaces
+Date: Mon, 23 Jun 2008 20:15:50 +0200
+Message-ID: <485FE856.1080808@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jun 23 20:17:10 2008
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 20:18:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAqbF-0003Q5-9u
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 20:17:09 +0200
+	id 1KAqcu-00044N-A2
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 20:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761813AbYFWSPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 14:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761802AbYFWSPW
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 14:15:22 -0400
-Received: from peff.net ([208.65.91.99]:1213 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761727AbYFWSPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 14:15:20 -0400
-Received: (qmail 27949 invoked by uid 111); 23 Jun 2008 18:15:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 23 Jun 2008 14:15:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 14:15:17 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
+	id S1759382AbYFWSQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 14:16:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYFWSQe
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 14:16:34 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:41528 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172AbYFWSQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 14:16:33 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 4D2C3E2DCE96;
+	Mon, 23 Jun 2008 20:15:53 +0200 (CEST)
+Received: from [84.150.93.234] (helo=[192.168.1.50])
+	by smtp07.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1KAqa0-0000bH-00; Mon, 23 Jun 2008 20:15:52 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
+X-Enigmail-Version: 0.95.6
+X-Sender: FloriansKarten@web.de
+X-Provags-ID: V01U2FsdGVkX19hMgDSoHqKYy7PN1oz6e2vsPqQj0g3nEaK7OTF
+	EF8F74B/eO4o/oRhM55j7iZ4jdKEYlNd7BTg3D6xobMEcvsApz
+	U3BwGG9OVJri6eHSo5Dw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85897>
 
-On Mon, Jun 23, 2008 at 10:32:21AM -0700, Linus Torvalds wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > How can that be correct, if you don't know whether "-b" takes an
-> > argument?
-> 
-> Did you read my post or not?
-> 
-> If you have that case, then use STOP_ON_UNKNOWN.
+Hi
 
-How do you know that is the case, unless you know what the other option
-parsers are going to do? Or are you suggesting that I check every other
-downstream option parser to make sure that it's OK in this particular
-instance, use IGNORE_UNKNOWN, and then laugh maniacally when somebody
-adds such an option to the diff option parser later?
+I noticed that Robin removed trailing whitespaces from my patch(thanks).
+It appears that if you enable code formatting and the removement of
+trailing whitespaces in the save actions option that the formatting
+option will win.
+It will add a space at the second line of a javadoc comment:
+/**
+~ * <----
 
-> Umm. Helloo, reality.. There are actually very few options that take a 
-> flag for their arguments. In particular, the option parsing we really 
-> _care_ about (revision parsing - see builtin-blame.c which is exactly 
-> where I wanted to convert things) very much DOES NOT.
+I think this is a bug in eclipse, did any of you create a bug report for
+that? Or a feature request for an "no whitespace after javadoc" option
+in the code formatter page?
 
-Reality: revision.c, lines 1008-1012. "-n" takes an argument.
-Reality: revision.c, lines 1075-1080. "--default" takes an argument.
+I want to have both options active, because I don't want to commit wrong
+formatted patches.
 
-> Try just looking at the code!
+Best regards,
+Florian
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-I did. Or maybe you missed the thread where this exact feature was
-mentioned, and I already looked at the code and mentioned those two
-spots. It's right here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/85354/focus=85355
-
-> So I'm really not interested in arguing about "theoretical issues", when 
-> we have a real-life *practical* issue to solve.
-> 
-> Solve builtin-blame.c for me. I sent out a patch yesterday, but in the 
-> description of that patch I also described exactly why I want 
-> CONTINUE_ON_UNKNOWN.
-
-There is already a discussion underway about the proper solution. This
-isn't just a git-blame issue, but rather an issue with all commands that
-have their own options and take revision parameters. So I think rather
-than doing a halfway fix that happens to work with git-blame, it is more
-useful to focus on a solution that works everywhere and fix _all_ of the
-problems.
-
--Peff
+iD8DBQFIX+hW59ca4mzhfxMRApU4AKCbYzwRFqVcBCr11zc9lk6jqick2ACeMBhW
+nXOoN4nIsTjzWWhQzDOxiz4=
+=bm+i
+-----END PGP SIGNATURE-----
