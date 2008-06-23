@@ -1,62 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT RFC PATCH] Add a stdio prompt for SSH connection information.
-Date: Mon, 23 Jun 2008 02:34:30 -0400
-Message-ID: <20080623063430.GO11793@spearce.org>
-References: <200806222306.25434.robin.rosenberg.lists@dewire.com> <20080622231355.GH11793@spearce.org> <200806230823.20534.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Convert 'git blame' to parse_options()
+Date: Sun, 22 Jun 2008 23:35:02 -0700
+Message-ID: <7vr6aoirqh.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 08:36:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 08:36:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAfes-00058N-Nc
+	id 1KAfet-00058N-Bs
 	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 08:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbYFWGeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 02:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbYFWGeh
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 02:34:37 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39056 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924AbYFWGeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 02:34:36 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KAfdI-0004T8-C0; Mon, 23 Jun 2008 02:34:32 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C8A1A20FBAE; Mon, 23 Jun 2008 02:34:30 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200806230823.20534.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751051AbYFWGfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 02:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbYFWGfR
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 02:35:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751051AbYFWGfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 02:35:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 439E420402;
+	Mon, 23 Jun 2008 02:35:13 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id AD3D820400; Mon, 23 Jun 2008 02:35:09 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Sun, 22 Jun 2008 22:15:41 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 88CEEBFE-40EE-11DD-9AA5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85838>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> 
-> > > I'm also a little unsure about how to invoke the promptKeyboardInteractive method.
-> > 
-> > I think you implemented this method correctly.  Its a confusing API,
-> > but it does seem to make sense.
-> 
-> No idea on how to make JSch inoke it?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Might require a server that has a token cards for authentication.
-Server can ask for a user password and also give you a code to
-enter into the card, which gives you the response to enter back in.
-I have never worked with such a configuration so I have never seen
-that sort of multi-input prompt come up in any SSH client before.
+> That builtin-blame option parsing is really ugly,...
 
--- 
-Shawn.
+Yeah, but wasn't it because it needed to be compatible with both annotate
+syntax and rev-list style "range" notation at the same time?
+
+> +static int blame_bottomtop_callback(const struct option *option, const char *arg, int unset)
+> +{
+> +	const char **bottomtop = option->value;
+> +	if (!arg)
+> +		return -1;
+> +	if (*bottomtop)
+> +		die("More than one '-L n,m' option given");
+> +	*bottomtop = arg;
+> +	return 0;
+> +}
+
+Hmmmm.  I actually wanted to eventually allow more than one -L so that we
+can blame two functions inside a file, for example.  Would this make it
+even harder, I have to wonder...
