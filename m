@@ -1,39 +1,38 @@
 From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: git-rerere observations and feature suggestions
-Date: Mon, 23 Jun 2008 17:22:48 +0200
-Message-ID: <20080623152248.GB28394@elte.hu>
-References: <20080616110113.GA22945@elte.hu> <7vej6xb4lr.fsf@gitster.siamese.dyndns.org> <20080623094906.GA8284@elte.hu> <20080623151201.GB20902@sigill.intra.peff.net>
+Subject: Re: linux-x86-tip: pilot error?
+Date: Mon, 23 Jun 2008 17:31:59 +0200
+Message-ID: <20080623153159.GC28394@elte.hu>
+References: <20080622123620.GA9328@linux.vnet.ibm.com> <237967ef0806220548t3fd73211v354071efe2db22e4@mail.gmail.com> <20080622132105.GD22569@linux.vnet.ibm.com> <20080623071441.GA28887@elte.hu> <20080623151257.GC20902@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Chris Mason <chris.mason@oracle.com>,
+Cc: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>,
+	Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org,
 	Thomas Gleixner <tglx@linutronix.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 23 17:25:11 2008
+X-From: git-owner@vger.kernel.org Mon Jun 23 17:33:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAnuT-0005Wa-9u
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:24:49 +0200
+	id 1KAo2w-0000zH-Fb
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756017AbYFWPXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 11:23:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756021AbYFWPXp
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:23:45 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:43967 "EHLO mx3.mail.elte.hu"
+	id S1754279AbYFWPca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 11:32:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755454AbYFWPc3
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:32:29 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:58654 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755543AbYFWPXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 11:23:44 -0400
+	id S1753637AbYFWPc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 11:32:29 -0400
 Received: from elvis.elte.hu ([157.181.1.14])
 	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1KAnsZ-0004gI-E2
-	from <mingo@elte.hu>; Mon, 23 Jun 2008 17:23:00 +0200
+	id 1KAo1R-0005dT-TY
+	from <mingo@elte.hu>; Mon, 23 Jun 2008 17:32:11 +0200
 Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 5DB4F3E21DD; Mon, 23 Jun 2008 17:22:49 +0200 (CEST)
+	id 8F5323E21DD; Mon, 23 Jun 2008 17:32:00 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080623151201.GB20902@sigill.intra.peff.net>
+In-Reply-To: <20080623151257.GC20902@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
 X-ELTE-VirusStatus: clean
@@ -48,21 +47,32 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85873>
 
 
 * Jeff King <peff@peff.net> wrote:
 
-> > ( and if i could configure git-commit to outright reject a commit like 
-> >   that - i never want to commit lines with <<<<<< or >>>>> markers)
+> On Mon, Jun 23, 2008 at 09:14:41AM +0200, Ingo Molnar wrote:
 > 
-> The right place for this is in a pre-commit hook, which can look at 
-> what you are about to commit and decide if it is OK. In fact, the 
-> default pre-commit hook that ships with git performs this exact check. 
-> You just need to turn it on with:
+> > Is there a Git way of finding the common ancestor of a topic branch, 
+> > when compared to upstream?
 > 
->   chmod +x .git/hooks/pre-commit
+> Try:
+> 
+>   git merge-base topic upstream
 
-cool, thanks :-)
+turns out we already use that as a fallback:
+
+    if [ -z "$TREF" ]
+    then
+        echo "No topic reference found. Using git-merge-base"
+        MBASE=`git-merge-base linus HEAD`
+        TD=`get_date_for_tag`
+        TB=`echo $B | sed "s@/@-@"`
+        git-tag "tip-"$TB"-"$TD $MBASE
+        TREF="tip-"$TB"-"$TD
+    [...]
+
+i guess we could use that unconditionally.
 
 	Ingo
