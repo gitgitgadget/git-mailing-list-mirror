@@ -1,306 +1,138 @@
-From: Nikolaj Schumacher <n_schumacher@web.de>
-Subject: [PATCH v2/RFC] git.el: Commands for committing patches
-Date: Mon, 23 Jun 2008 09:41:37 +0200
-Message-ID: <m263s0vbri.fsf_-_@nschum.de>
-References: <m2prq9ujpa.fsf@nschum.de> <485F0388.4080907@thewritingpot.com>
-	<m2abhcvcil.fsf@nschum.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [RFC] Re: Convert 'git blame' to parse_options()
+Date: Mon, 23 Jun 2008 10:22:23 +0200
+Message-ID: <20080623082223.GA12130@artemis.madism.org>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexandre Julliard <julliard@winehq.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 23 09:42:39 2008
+Content-Type: multipart/signed; boundary="qDbXVdCdHGoSgWSk";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 10:23:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAghB-0003UU-8T
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 09:42:37 +0200
+	id 1KAhKe-0005OW-V8
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 10:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbYFWHlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 03:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752200AbYFWHlk
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 03:41:40 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:53051 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751953AbYFWHlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 03:41:39 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 6A1A7E51F604;
-	Mon, 23 Jun 2008 09:41:38 +0200 (CEST)
-Received: from [93.132.129.42] (helo=thursday)
-	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1KAggE-0002Qy-00; Mon, 23 Jun 2008 09:41:38 +0200
-In-Reply-To: <m2abhcvcil.fsf@nschum.de> (Nikolaj Schumacher's message of "Mon\, 23 Jun 2008 09\:25\:22 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2.50 (darwin)
-X-Sender: n_schumacher@web.de
-X-Provags-ID: V01U2FsdGVkX198JeuwS863nQHgltvcuV1Tei6y0yBcA9rruM5E
-	KCXv630LHKDDadJG1pX+RTJwuRY1qC9RyoxVgXOFvqDXY172SA
-	s7D5uMxwzbcN91Tg19ag==
+	id S1752518AbYFWIW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 04:22:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752642AbYFWIW2
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 04:22:28 -0400
+Received: from pan.madism.org ([88.191.52.104]:52894 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752235AbYFWIW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 04:22:26 -0400
+Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 0892437BC6;
+	Mon, 23 Jun 2008 10:22:24 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 7AB2A2D030D; Mon, 23 Jun 2008 10:22:23 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85846>
 
->From 609f6fca6c70919036d41e1e4034b6e4de2e7ea2 Mon Sep 17 00:00:00 2001
-From: Nikolaj Schumacher <git@nschum.de>
-Date: Mon, 23 Jun 2008 09:34:14 +0200
-Subject: [PATCH] git.el: Added command for committing patches.
 
-This adds commands for committing patches from files, buffers and email
-buffers.
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In order to minimize code duplication, git-start-log-edit and
-git-prepare-log-buffer have been extracted from git-commit-file.
+On Mon, Jun 23, 2008 at 05:15:41AM +0000, Linus Torvalds wrote:
+> I think I'll want to add a PARSE_OPT_IGNORE_UNRECOGNIZED flag, and also=
+=20
+> make it not write the resulting array into argv[0..] but back into=20
+> argv[1..] (so that you can use parse_options() as a _filter_ for options=
+=20
+> parsing and make it easier to do partial conversions), but in the meantim=
+e=20
+> this mostly works.
 
-Signed-off-by: Nikolaj Schumacher <git@nschum.de>
----
- contrib/emacs/git.el |  200 +++++++++++++++++++++++++++++++++++++++++++------
- 1 files changed, 175 insertions(+), 25 deletions(-)
+You can't, mainly because of option aggregation: if the parser1 knows
+about -a and -b, parser2 about -c, then, this kind of things is
+problematic: -acb because you need to go to the parser '2' to know about
+-c, and you can't filter the arguments and keep -c and give -b to
+parser1 again, *BECAUSE* 'b' could also be -c argument.
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 4fa853f..a6c776d 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -189,6 +189,13 @@ if there is already one that displays the same directory."
-                                      process-environment)))
-     (apply #'call-process "git" nil buffer nil args)))
- 
-+(defun git-call-process-env-on-region (buffer env beg end &rest args)
-+  "Wrapper for `call-process-region' that sets environment strings."
-+  (let ((process-environment (append (git-get-env-strings env)
-+                                     process-environment)))
-+    (buffer-string)
-+    (apply #'call-process-region beg end "git" nil buffer nil args)))
-+
- (defun git-call-process-display-error (&rest args)
-   "Wrapper for call-process that displays error messages."
-   (let* ((dir default-directory)
-@@ -315,6 +322,42 @@ and returns the process output as a string, or nil if the git failed."
-               "\"")
-     name))
- 
-+(defun git-parse-email-address (email-address)
-+  "Split the EMAIL-ADDRESS string into a cons of address and name."
-+  (if (string-match "\\`\"?\\([^\n<,\"]+\\)\"?[ \t]<\\([^ @]+@[^ \n\t]+\\)>\\'"
-+                    email-address)
-+      (cons (match-string-no-properties 2 email-address)
-+            (match-string-no-properties 1 email-address))
-+    (when (string-match
-+           "\\`\\([^ \t\n@]+@[^ \t\n,]+\\)\\([ \t](\\([^)]*\\))\\)?"
-+           email-address)
-+      (cons (match-string-no-properties 1 email-address)
-+            (match-string-no-properties 3 email-address)))))
-+
-+(defun git-find-patch (&optional start)
-+  "Find the patch start in the current buffer."
-+  (save-excursion
-+    (goto-char (or start (point-min)))
-+    (when (re-search-forward "^\\(---$\\|diff -\\|Index: \\)" nil t)
-+      (match-beginning 0))))
-+
-+(defun git-find-message ()
-+  "Find the start of the commit message in an email buffer."
-+  (require 'message)
-+  (save-excursion
-+    (message-goto-body)
-+    (search-forward-regexp "[^:]+:\\([^\n]\\|\n[ \t]\\)+\n\n" nil t)
-+    (point)))
-+
-+(defun git-fetch-header (header limit)
-+  (save-excursion
-+    (goto-char limit)
-+    (let ((case-fold-search t))
-+      (when (re-search-backward (concat "^" (regexp-quote header)
-+                                        "[ \t]*:[ \t]*")
-+                                nil t)
-+        (buffer-substring-no-properties (match-end 0) (point-at-eol))))))
-+
- (defun git-success-message (text files)
-   "Print a success message after having handled FILES."
-   (let ((n (length files)))
-@@ -891,6 +934,58 @@ Return the list of files that haven't been handled."
-                 (message "No files to commit.")))
-           (delete-file index-file))))))
- 
-+(defun git-apply-patch-to-index (index-file patch &optional beg end)
-+  "Run git-apply on a patch."
-+  (with-temp-buffer
-+    (let ((env (and index-file `(("GIT_INDEX_FILE" . ,index-file))))
-+          (temp-buffer (current-buffer))
-+          res)
-+      (if (stringp patch)
-+          (if (file-exists-p patch)
-+              (setq res (git-call-process-env temp-buffer env "apply"
-+                                              "--cached"
-+                                              (expand-file-name patch)))
-+            (error "Patch file disappeared"))
-+        (if (buffer-live-p patch)
-+            (setq res (with-current-buffer patch
-+                        (git-call-process-env-on-region
-+                         temp-buffer env (or beg (point-min))
-+                         (or end (point-max)) "apply" "--cached" "-")))
-+          (error "Patch buffer disappeared")))
-+      (unless (= 0 res)
-+        (error "Applying patch failed:\n%s" (buffer-string))))))
-+
-+(defun git-do-commit-patch (patch &optional beg end)
-+  "Actually commit the patch using the current buffer as log message."
-+  (interactive)
-+  (let ((buffer (current-buffer))
-+        (index-file (make-temp-file "gitidx")))
-+    (with-current-buffer log-edit-parent-buffer
-+      (unwind-protect
-+          (let (head parent head-tree)
-+            (unless (git-empty-db-p)
-+              (setq head (git-rev-parse "HEAD")
-+                    head-tree (git-rev-parse "HEAD^{tree}")))
-+            (message "Running git commit...")
-+            (git-read-tree head-tree index-file)
-+            ;; Update both the default index and the temporary one.
-+            (git-apply-patch-to-index index-file patch beg end)
-+            (git-apply-patch-to-index nil patch beg end)
-+            (let* ((tree (git-write-tree index-file))
-+                   (commit (git-commit-tree buffer tree head)))
-+              (when commit
-+                (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil)
-+                (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
-+                (with-current-buffer buffer (erase-buffer))
-+                (git-call-process-env nil nil "rerere")
-+                (git-call-process-env nil nil "gc" "--auto")
-+                (git-refresh-status)
-+                (git-refresh-ewoc-hf git-status)
-+                (message "Committed %s." commit)
-+                (git-run-hook "post-commit" nil)))
-+            t)
-+        (delete-file index-file)
-+        nil)))))
- 
- ;;;; Interactive functions
- ;;;; ------------------------------------------------------------
-@@ -1263,36 +1358,41 @@ Return the list of files that haven't been handled."
-       (when sign-off (git-append-sign-off committer-name committer-email)))
-     buffer))
- 
-+(defun git-start-log-edit (buffer action)
-+  (if (boundp 'log-edit-diff-function)
-+      (log-edit action nil '((log-edit-listfun . git-log-edit-files)
-+                             (log-edit-diff-function . git-log-edit-diff)) buffer)
-+    (log-edit action nil 'git-log-edit-files buffer))
-+  (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
-+  (setq buffer-file-coding-system (git-get-commits-coding-system))
-+  (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))
-+
-+(defun git-prepare-log-buffer ()
-+  (let ((buffer (get-buffer-create "*git-commit*"))
-+        author-name author-email subject date)
-+    (when (eq 0 (buffer-size buffer))
-+      (when (file-readable-p ".dotest/info")
-+        (with-temp-buffer
-+          (insert-file-contents ".dotest/info")
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Author: \\(.*\\)\nEmail: \\(.*\\)$" nil t)
-+            (setq author-name (match-string 1))
-+            (setq author-email (match-string 2)))
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Subject: \\(.*\\)$" nil t)
-+            (setq subject (match-string 1)))
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Date: \\(.*\\)$" nil t)
-+            (setq date (match-string 1)))))
-+      (git-setup-log-buffer buffer author-name author-email subject date))
-+    buffer))
-+
- (defun git-commit-file ()
-   "Commit the marked file(s), asking for a commit message."
-   (interactive)
-   (unless git-status (error "Not in git-status buffer."))
-   (when (git-run-pre-commit-hook)
--    (let ((buffer (get-buffer-create "*git-commit*"))
--          (coding-system (git-get-commits-coding-system))
--          author-name author-email subject date)
--      (when (eq 0 (buffer-size buffer))
--        (when (file-readable-p ".dotest/info")
--          (with-temp-buffer
--            (insert-file-contents ".dotest/info")
--            (goto-char (point-min))
--            (when (re-search-forward "^Author: \\(.*\\)\nEmail: \\(.*\\)$" nil t)
--              (setq author-name (match-string 1))
--              (setq author-email (match-string 2)))
--            (goto-char (point-min))
--            (when (re-search-forward "^Subject: \\(.*\\)$" nil t)
--              (setq subject (match-string 1)))
--            (goto-char (point-min))
--            (when (re-search-forward "^Date: \\(.*\\)$" nil t)
--              (setq date (match-string 1)))))
--        (git-setup-log-buffer buffer author-name author-email subject date))
--      (if (boundp 'log-edit-diff-function)
--	  (log-edit 'git-do-commit nil '((log-edit-listfun . git-log-edit-files)
--					 (log-edit-diff-function . git-log-edit-diff)) buffer)
--	(log-edit 'git-do-commit nil 'git-log-edit-files buffer))
--      (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
--      (setq buffer-file-coding-system coding-system)
--      (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))))
-+    (git-start-log-edit (git-prepare-log-buffer) 'git-do-commit)))
- 
- (defun git-setup-commit-buffer (commit)
-   "Setup the commit buffer with the contents of COMMIT."
-@@ -1340,6 +1440,56 @@ amended version of it."
-       (git-setup-commit-buffer commit)
-       (git-commit-file))))
- 
-+(defun git-commit-patch (patch)
-+  "Commit the patch in file PATCH, asking for a commit message."
-+  (interactive "fPatch file: ")
-+  (unless git-status (error "Not in git-status buffer."))
-+  (when (git-run-pre-commit-hook)
-+    (git-start-log-edit (git-prepare-log-buffer)
-+                        `(lambda ()
-+                           (interactive)
-+                           (git-do-commit-patch ,patch)))))
-+
-+(defun git-commit-patch-buffer (patch)
-+  "Commit the patch in buffer PATCH, asking for a commit message."
-+  (interactive "bPatch buffer")
-+  (when (stringp patch)
-+    (setq patch (get-buffer patch)))
-+  (unless git-status (error "Not in git-status buffer."))
-+  (when (git-run-pre-commit-hook)
-+    (git-start-log-edit (git-prepare-log-buffer)
-+                        `(lambda ()
-+                           (interactive)
-+                           (git-do-commit-patch ,patch)))))
-+
-+(defun git-commit-email-patch (email)
-+  "Commit the patch in the email in buffer EMAIL."
-+  (interactive "bEmail buffer")
-+  (when (stringp email)
-+    (setq email (get-buffer email)))
-+  (let ((buffer (get-buffer-create "*git-commit-patch*"))
-+        author-name author-email email-subject subject date
-+        body-start patch-start)
-+    (with-current-buffer email
-+      (setq body-start (git-find-message)
-+            patch-start (git-find-patch body-start))
-+      (let ((address (git-parse-email-address
-+                      (git-fetch-header "From" patch-start)))
-+            (email-subject (git-fetch-header "Subject" patch-start)))
-+        (setq author-name (car address)
-+              author-email (cdr address)
-+              subject (when (string-match "\\`\\[PATCH[^]]*\\]\s *"
-+                                          email-subject)
-+                        (substring email-subject (match-end 0)))
-+              date (git-fetch-header "Date" patch-start)
-+              msg (buffer-substring body-start patch-start))))
-+    (when (git-run-pre-commit-hook)
-+      (git-setup-log-buffer buffer author-name author-email subject date msg)
-+      (git-start-log-edit buffer
-+                          `(lambda ()
-+                             (interactive)
-+                             (git-do-commit-patch ,email ,patch-start))))))
-+
- (defun git-find-file ()
-   "Visit the current file in its own buffer."
-   (interactive)
--- 
-1.5.5.3
+This "PARSE_OPT_IGNORE_UNRECOGNIZED" thing has been discussed many times
+in the past, but it just doesn't fly.
+
+Though to help migrations we can probably introduce a new parse option
+construct that would be a callback that is responsible for dealing with
+"things" the upper level parser doesn't know about, something where the
+callback could be:
+
+enum {
+    FLAG_ERROR =3D -1,
+    FLAG_NOT_FOR_ME,
+    FLAG_IS_FOR_ME,
+    FLAG_AND_VALUE_ARE_FOR_ME,
+}
+
+int (*parse_opt_unknown_cb)(int shortopt, const char *longopt,
+                            const char *value, void *priv);
+
+Where the callback is supposed to work that way:
+we pass to it either a shortopt ('\0' else) or a longopt (NULL else) but
+never both, and what the parser could find as a possible value in value
+(NULL if no value found). Then the parser does what it has to, and
+returns one of the previous enum values. ERROR would be a fatal error
+(-1 chosen so that one can return error(...)), NOT_FOR_ME if it didn't
+want the flag after all, IS_FOR_ME if it took only the flag, without the
+value, the last one being if it consumed both the option flag _and_ the
+value.
+
+Of course for things like --long-opt=3Dvalue if the callback doesn't eat
+the value, then parse_options would have to barf loudly.
+
+
+The major drawback of this method is that parse_options won't generate
+the nice usage help for the things that recurse in such a function. But
+at least it eases migration to parseoptions, because I believe rev_parse
+and diff_opt_parse to be _way_ easier to migrate to such a callback
+_and_ with the old API together (I really believe that the old big
+consuming loops could use such a callback directly e.g.) so that
+commands using diff and revision options can be migrated to parse-opt
+*slowly* rather than all at a time (which is a no-go and is such a big
+amount of work that I avoided it in despair).
+
+If people believe it's a sane approach I can do it. I absolutely don't
+know why no one thought of that before, but I don't see any major
+drawback (except for the "help" bits, but like I said, it's a "code
+upgrade path" and not meant to be the final state).
+
+
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkhfXT4ACgkQvGr7W6HudhyFCgCePCsHkG/sLNuIpDn/bVDgaDO8
+8QIAn3HJBuvez+KFJhNuplpQMzF4lg7E
+=8S1n
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
