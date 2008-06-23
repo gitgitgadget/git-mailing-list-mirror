@@ -1,49 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: core.autocrlf and merge conflict output
-Date: Sun, 22 Jun 2008 17:45:35 -0700
-Message-ID: <7vy74xj7ww.fsf@gitster.siamese.dyndns.org>
-References: <g3miho$se5$1@ger.gmane.org>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: Shrink the git binary a bit by avoiding unnecessary inline functions
+Date: Mon, 23 Jun 2008 01:01:46 +0000
+Message-ID: <46d6db660806221801j7207e6b0sdf91c2243fad5349@mail.gmail.com>
+References: <alpine.LFD.1.10.0806221159140.2926@woody.linux-foundation.org>
+	 <46d6db660806221432m6a6e2f3egf78faa1510f8d643@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 02:46:42 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 03:03:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAaCe-000149-Dz
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 02:46:40 +0200
+	id 1KAaSb-0003zd-FQ
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 03:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174AbYFWApo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2008 20:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752123AbYFWApo
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 20:45:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60401 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037AbYFWApo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2008 20:45:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 435951F26E;
-	Sun, 22 Jun 2008 20:45:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 67A141F26C; Sun, 22 Jun 2008 20:45:38 -0400 (EDT)
-In-Reply-To: <g3miho$se5$1@ger.gmane.org> (Edward Z. Yang's message of "Sun,
- 22 Jun 2008 18:08:59 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B4859576-40BD-11DD-8BD7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752270AbYFWBBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jun 2008 21:01:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbYFWBBs
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jun 2008 21:01:48 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:40190 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752044AbYFWBBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2008 21:01:47 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so6769102rvb.1
+        for <git@vger.kernel.org>; Sun, 22 Jun 2008 18:01:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=DjVm816aj2NIN2SdKMFVR3OIaUQw8lw+V17QI5Zb7FU=;
+        b=PJNhZ9jFDqTVbqcNQHI5afb5jazZJXk+oJA2Abb+n2uJDmBJ/7Lhd89yPPLcbvzcVw
+         y0VHYOUdW1yC06WtG3Cr84jcnlWGi3L7wzHj8RLYXuk856FKlgk5OFmz4V3J4+08EaNB
+         XWy2sM/3BV38PZVBCXJLloPUHDG18aSDGGhtc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=BNvVuHLgIHNlq47J7UDAc3qNckjIBIdPfJZTbztcTOPaSnPQSKePr5YhuAzI8mii6y
+         agUUxCRU3+H8z5SvfEbpX/twALc5YKUmd+PY+RWhi/zvM1jsqYHvV+GyHMW5pmHcZN8O
+         5EEXWLEIT6H4yc4YT/ythuXyAOjET5SInBFJ8=
+Received: by 10.141.23.7 with SMTP id a7mr11765384rvj.58.1214182906078;
+        Sun, 22 Jun 2008 18:01:46 -0700 (PDT)
+Received: by 10.115.16.17 with HTTP; Sun, 22 Jun 2008 18:01:46 -0700 (PDT)
+In-Reply-To: <46d6db660806221432m6a6e2f3egf78faa1510f8d643@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85821>
 
-"Edward Z. Yang" <edwardzyang@thewritingpot.com> writes:
+On Sun, Jun 22, 2008 at 9:32 PM, Christian MICHON
+<christian.michon@gmail.com> wrote:
+> using gcc-3.4.6 and uclibc-0.9.29 (not exactly everyone's
+> configuration of course...)
+> I get different numbers with CFLAGS=-Os and NO_CURL, NO_ICONV on plain
+> git-1.5.6:
+>
+> sh-3.2# ls -lh git
+> -rwxr-xr-x    3 root     root       699.7k Jun 22 23:26 git
+>
+> sh-3.2# size git
+>   text    data     bss     dec     hex filename
+>  616544   10960  272272  899776   dbac0 git
+>
+> after I use your patch, it goes to:
+>
+> sh-3.2# ls -lh git
+> -rwxr-xr-x    1 root     root       652.6k Jun 22 23:30 git
+>
+> sh-3.2# size git
+>   text    data     bss     dec     hex filename
+>  568124   10960  272272  851356   cfd9c git
+>
+> So your patch obviously works here too but I get quite smaller figures too.
+>
+> curl and iconv are not available on my distro detaolb, maybe it's a
+> big difference too...
+>
+> Could your figures come from recent gcc/glibc versions ?
+>
 
-> Apparently, the conflict information Git writes to the working copy
-> during merge doesn't respect core.autocrlf,...
+Linus,
 
-Is this an old news before 249c61a (merge-recursive: respect core.autocrlf
-when writing out the result, 2008-06-09) happened?
+I've put my hands on a usb stick with ubuntu (gcc-4.2.3 and
+glibc-2.7), containing all packages needed for a pristine compilation
+of git-1.5.6.
+
+I only changed CFLAGS to -Os, no debug info compiled.
+
+ubuntu@ubuntu:~/Desktop/git-1.5.6$ ls -lh git
+-rwxr-xr-x 1 ubuntu ubuntu 718K 2008-06-23 00:47 git
+
+ubuntu@ubuntu:~/Desktop/git-1.5.6$ size git
+   text	   data	    bss	    dec	    hex	filename
+ 616606	   9876	 270812	 897294	  db10e	git
+
+There's more than 80k difference with your figures (I have not even
+applied your patch yet).
+May I ask which version of gcc you're using ? The numbers you provided
+were really with -Os ?
+
+Once your patch is applied, these are the final figures:
+
+ubuntu@ubuntu:~/Desktop/git-1.5.6$ ls -lh git
+-rwxr-xr-x 1 ubuntu ubuntu 692K 2008-06-23 00:59 git
+
+ubuntu@ubuntu:~/Desktop/git-1.5.6$ size git
+   text	   data	    bss	    dec	    hex	filename
+ 591554	   9876	 270812	 872242	  d4f32	git
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
