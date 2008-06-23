@@ -1,119 +1,56 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 17:53:15 +0200
-Message-ID: <20080623155315.GA18593@artemis.madism.org>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer>
+From: Ian Hilt <Ian.Hilt@gmx.com>
+Subject: Re: git blame for a commit
+Date: Mon, 23 Jun 2008 11:55:59 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806231149470.27742@sys-0.hiltweb.site>
+References: <485ED2E5.3070906@mircea.bardac.net> <alpine.LFD.1.10.0806222300410.23258@sys-0.hiltweb.site> <485F6710.1080300@mircea.bardac.net> <m3ve00lbby.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="mP3DRpeJDSE+ciuQ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 23 17:54:23 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mircea Bardac <dev@bardac.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 17:57:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAoN0-0008Pg-Fu
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:54:18 +0200
+	id 1KAoPh-0000u0-84
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 17:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754867AbYFWPxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 11:53:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbYFWPxX
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:53:23 -0400
-Received: from pan.madism.org ([88.191.52.104]:49116 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754732AbYFWPxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 11:53:22 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id B49DC37DBD;
-	Mon, 23 Jun 2008 17:53:16 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 961CF357734; Mon, 23 Jun 2008 17:53:15 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806231312130.6440@racer>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754783AbYFWP4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 11:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754038AbYFWP4H
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 11:56:07 -0400
+Received: from mail.gmx.com ([74.208.5.67]:45888 "HELO mail.gmx.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753461AbYFWP4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 11:56:06 -0400
+Received: (qmail invoked by alias); 23 Jun 2008 15:56:03 -0000
+Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
+  by mail.gmx.com (mp-us001) with SMTP; 23 Jun 2008 11:56:03 -0400
+X-Authenticated: #47758715
+X-Provags-ID: V01U2FsdGVkX18T5IhkzjYTHE3T50+JLWebqhVi7aNbuEYGhNACA6
+	26WvM5w+rtOWxQ
+In-Reply-To: <m3ve00lbby.fsf@localhost.localdomain>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85877>
+
+On Mon, 23 Jun 2008 at 3:01am -0700, Jakub Narebski wrote:
+
+> I think you could script it using "git diff", and "git blame -L m,n",
+> where line ranges would be calculated from git diff header for
+> post-image, or both pre-image and post-image (in the case of deletions).
+
+Maybe I'm missing something, but I thought git-blame only worked with
+the files in the Git working directory.  Therefore, if a file had been
+deleted it would not be reachable with git-blame, whether you diff'ed
+the pre- and post-image or not.
 
 
---mP3DRpeJDSE+ciuQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 23, 2008 at 12:26:41PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Mon, 23 Jun 2008, Pierre Habouzit wrote:
->=20
-> > This "PARSE_OPT_IGNORE_UNRECOGNIZED" thing has been discussed many time=
-s=20
-> > in the past, but it just doesn't fly.
-> >=20
-> > Though to help migrations we can probably introduce a new parse option
-> > construct that would be a callback that is responsible for dealing with
-> > "things" the upper level parser doesn't know about, something where the
-> > callback could be:
-> >=20
-> > enum {
-> >     FLAG_ERROR =3D -1,
-> >     FLAG_NOT_FOR_ME,
-> >     FLAG_IS_FOR_ME,
-> >     FLAG_AND_VALUE_ARE_FOR_ME,
-> > }
-> >=20
-> > int (*parse_opt_unknown_cb)(int shortopt, const char *longopt,
-> >                             const char *value, void *priv);
->=20
-> I believe that this is what Junio was talking about when he mentioned=20
-> callbacks.
->=20
-> However, I think it buys us more trouble than it saves us.
->=20
-> Thinking about the recursive approach again, I came up with this POC:
-
-  Well I proposed something like that in the past, and we believed it to
-be too cumbersome. I can live with it well fwiw, but it doesn't solve
-the issue of migrating a very complex option parsing chain to
-parse-options well IMHO. THe big problem with diff and rev opt parsing
-is that one you want to migrate _any_ of the commands, you have to
-migrate _all_ of them, which is huge.
-
-  I believe the callback proposal as an _intermediate_ step allows a
-better "upgrade" path. We can then converge to this proposal, or a big
-fat macro, I don't care what we do in the end, but as one guy that
-migrated quite a few commands, I care about the work being doable in an
-incremental way.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---mP3DRpeJDSE+ciuQ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhfxukACgkQvGr7W6Hudhwf2ACfeLPG6gsqt5lBdapeelmoTojU
-oXwAoICVCJNGCWty/imdQ97v2485p8Al
-=TlAT
------END PGP SIGNATURE-----
-
---mP3DRpeJDSE+ciuQ--
+--
+Ian Hilt
+Ian.Hilt (at) gmx.com
+GnuPG key: 0x4AFC1EE3
