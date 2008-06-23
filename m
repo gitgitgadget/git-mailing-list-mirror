@@ -1,60 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 13:15:05 -0400
-Message-ID: <20080623171505.GB27265@sigill.intra.peff.net>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <20080623164917.GA25474@sigill.intra.peff.net> <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: Incorrect default for git stash?
+Date: Mon, 23 Jun 2008 19:14:50 +0200
+Message-ID: <87tzfk9iph.fsf@lysator.liu.se>
+References: <loom.20080617T220852-922@post.gmane.org> <911589C97062424796D53B625CEC0025E46170@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jun 23 19:16:03 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 19:16:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KApe6-0006JK-5z
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:16:02 +0200
+	id 1KApe5-0006JK-Hg
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891AbYFWRPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 13:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756908AbYFWRPJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:15:09 -0400
-Received: from peff.net ([208.65.91.99]:3014 "EHLO peff.net"
+	id S1754660AbYFWRPE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2008 13:15:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754824AbYFWRPD
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:15:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:59710 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755891AbYFWRPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 13:15:08 -0400
-Received: (qmail 27502 invoked by uid 111); 23 Jun 2008 17:15:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 23 Jun 2008 13:15:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 13:15:05 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org>
+	id S1752985AbYFWRPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 13:15:01 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KApd7-0005Tf-03
+	for git@vger.kernel.org; Mon, 23 Jun 2008 17:15:01 +0000
+Received: from 80.251.192.3 ([80.251.192.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jun 2008 17:15:00 +0000
+Received: from davidk by 80.251.192.3 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jun 2008 17:15:00 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80.251.192.3
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:d06mVRPKzt5i+vEVLeHQEcDsA78=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85889>
 
-On Mon, Jun 23, 2008 at 10:06:52AM -0700, Linus Torvalds wrote:
+<Patrick.Higgins@cexp.com> writes:
 
-> You'd start off with argv[] looking like [ "foo" "-b" "-a" ] and then 
-> after calling parse_options with that, depending on whether it has 
-> PARSE_OPT_CONTINUE_ON_UNKNOWN or not, you'd either end up with the "-a" 
-> handled (and argv[] now being just [ "foo" "-b" ]), or if you have 
+> Eric Raible wrote:
+>
+>> git branch -> list branches
+>> git tag    -> list tags
+>> git stash  -> create a stash
+>
+> git commit -> list commits?
+> git checkout -> list checkouts?
+> git prune -> list prunes?
+> git pull -> list pullables?
+>
+> Why would you expect stash to behave like branch and tag?
 
-How can that be correct, if you don't know whether "-b" takes an
-argument?
+Because is kindof does.
 
-> PARSE_OPT_STOP_ON_UNKNOWN then parse_options() would return without having 
-> done anything, and expecting you to handle the unknown option first and 
-> then restarting the argument parsing.
+I would prefer to have two simple commands
 
-That is the only thing that makes sense to me, since the command line
-has to be parsed left-to-right (because the syntactic function of an
-element relies on the semantics of the element to its left).
+  git stash
+  git unstash
 
--Peff
+and not bother with named stashes etc (for that I use stgit or normal
+branches). You'd need a way to clear the stash as well.
+
+--=20
+David K=C3=A5gedal
