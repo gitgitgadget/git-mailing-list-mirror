@@ -1,70 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 13:26:12 -0400
-Message-ID: <20080623172612.GD27265@sigill.intra.peff.net>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <20080623082223.GA12130@artemis.madism.org> <alpine.DEB.1.00.0806231312130.6440@racer> <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <alpine.DEB.1.00.0806231756340.6440@racer>
+From: =?ISO-8859-1?Q?Florian_K=F6berle?= <FloriansKarten@web.de>
+Subject: Re: [PATCH 1/2] Create a fnmatch-style pattern TreeFilter
+Date: Mon, 23 Jun 2008 19:32:50 +0200
+Message-ID: <485FDE42.1060106@web.de>
+References: <1214177145-18963-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 23 19:27:19 2008
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 19:33:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KApot-00021l-8z
-	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:27:11 +0200
+	id 1KApvQ-0004J4-Ie
+	for gcvg-git-2@gmane.org; Mon, 23 Jun 2008 19:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbYFWR0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 13:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbYFWR0P
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:26:15 -0400
-Received: from peff.net ([208.65.91.99]:1127 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751241AbYFWR0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 13:26:14 -0400
-Received: (qmail 27595 invoked by uid 111); 23 Jun 2008 17:26:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 23 Jun 2008 13:26:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 13:26:12 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806231756340.6440@racer>
+	id S1759565AbYFWRc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 13:32:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759037AbYFWRc7
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 13:32:59 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:42225 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755748AbYFWRc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 13:32:57 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id BBF95E10A05B;
+	Mon, 23 Jun 2008 19:32:55 +0200 (CEST)
+Received: from [84.150.93.234] (helo=[192.168.1.50])
+	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1KApuQ-0002D0-00; Mon, 23 Jun 2008 19:32:54 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
+In-Reply-To: <1214177145-18963-1-git-send-email-robin.rosenberg@dewire.com>
+X-Enigmail-Version: 0.95.6
+X-Sender: FloriansKarten@web.de
+X-Provags-ID: V01U2FsdGVkX190BDW9mF8dXSuomZZzc1IETTv3bEyg40mjTp2i
+	H4ST36su3nTtrgi6kWWgVjTCVfiiZ0PKMUHrZIl/3v4YnwHt3j
+	rCRRcmQL7ZMgvbYwYtdQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85892>
 
-On Mon, Jun 23, 2008 at 06:04:48PM +0100, Johannes Schindelin wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > > Thinking about the recursive approach again, I came up with this POC:
-> > 
-> > "recursive" is pointless.
-> 
-> Nope, it is not.
+Hi Robin,
 
-AIUI, one difference between your approach and Pierre's is that he is
-suggesting (and I have suggested this in the past, too) a big
-DIFF_OPTIONS macro that you stick in the options table for each command.
-Whereas you are allowing for subtables accessible via pointers.
+thank you for accepting my first patch :D.
 
-Your approach should yield a much leaner text size (which was what
-started this whole thing) since we don't end up with the same repeated
-subsets of options tables, and in particular the one-liner help text
-(yes, compilers can sometimes point share the string literal components,
-but most of our options tables are declared as static, so unless the
-linker is very smart, I think we will end up with duplicates).
+| +/**
+| + * This class implements a TreeeFilter that uses the wildcard style
+pattern
+| + * matching like of Posix fnmatch function.
+| + */
+Typo: One 'e' to much in TreeeFilter.
 
-> Heck, we could just as easily introduce PARSE_OPT_IGNORE_UNKNOWN.
+It would be more efficient to
+| +	@Override
+| +	public TreeFilter clone() {
+| +		return new WildCardTreeFilter(pattern);
+| +	}
 
-We could even send it to the list with message-id
+One way to create a clone of the FileNameMatcher is to call:
+originalMatcher.reset()
+FileNameMatcher clone = originalMatcher.createMatcherForSuffix()
 
-  http://mid.gmane.org/1213758236-979-2-git-send-email-shawn.bohrer@gmail.com
+I will send a patch which implements a copy constructor for FileNameMatcher.
 
-and then Junio and I could complain that the concept is broken.
+First I wanted to implement a clone() method, but found this page and
+decided then to implement a copy constructor:
+http://www.javapractices.com/topic/TopicAction.do?Id=71
 
--Peff
+A Implementor of a super class could imply that clone() of object gets
+called, as stated in the javadoc of clone():
+
+quote (javadoc ob Object#clone()):
+- -----------
+By convention, the returned object should be obtained by calling super.clone
+- -----------
+
+I think this is a bad convention, as one should not rely on
+Object#clone() to do the copy job for one. If you really need a clone
+method then I would do it the same way you did, by calling a constructor
+which does the job.
+
+Best regards,
+Florian
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFIX94k59ca4mzhfxMRAgDjAJ9S76L8I5Lqed4lKfgTf+2cp2IQ9gCfQNVh
+z72+NGvmIy3H0gwveKRfn+w=
+=wnpy
+-----END PGP SIGNATURE-----
