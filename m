@@ -1,66 +1,70 @@
-From: Ian Hilt <Ian.Hilt@gmx.com>
-Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
-Date: Tue, 24 Jun 2008 15:54:49 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806241548140.32759@sys-0.hiltweb.site>
-References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com> <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site> <m363rylknc.fsf@localhost.localdomain>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [NON-TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
+Date: Tue, 24 Jun 2008 21:59:07 +0200
+Message-ID: <20080624195907.GI8421@neumann>
+References: <alpine.DEB.1.00.0806241515460.9925@racer>
+	<20080624163810.GA4654@sigill.intra.peff.net>
+	<alpine.DEB.1.00.0806241750030.9925@racer>
+	<alpine.DEB.1.00.0806241808400.9925@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ian Hilt <Ian.Hilt@gmx.com>, Christian Holtje <docwhat@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 21:55:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 24 22:00:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBEc8-0002Xa-Ia
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:55:40 +0200
+	id 1KBEgZ-00040j-E9
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286AbYFXTyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 15:54:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbYFXTyp
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:54:45 -0400
-Received: from mail.gmx.com ([74.208.5.67]:48372 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752222AbYFXTyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 15:54:44 -0400
-Received: (qmail invoked by alias); 24 Jun 2008 19:54:43 -0000
-Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
-  by mail.gmx.com (mp-us001) with SMTP; 24 Jun 2008 15:54:43 -0400
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX1/HoQE3/qLHWeOzk0zOxWS1iu/8IFlzXdSqSE1/e5
-	K/Et7W+iCJYJeO
-In-Reply-To: <m363rylknc.fsf@localhost.localdomain>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Y-GMX-Trusted: 0
+	id S1752962AbYFXT7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 15:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYFXT7T
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:59:19 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:56313 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752946AbYFXT7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 15:59:19 -0400
+Received: from [127.0.1.1] (p5B133023.dip0.t-ipconnect.de [91.19.48.35])
+	by mrelayeu.kundenserver.de (node=mrelayeu7) with ESMTP (Nemesis)
+	id 0ML2xA-1KBEfT1j39-0007kd; Tue, 24 Jun 2008 21:59:08 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806241808400.9925@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX18PSeZEIczq97lGJilYrBEfqTA+V7uLKUcBFVN
+ nbznNTy0FPxVPaJf5sKqSLhKAq2bAl29LVM3Jl/Yg8OufXPMzA
+ aJajIwB1HLpelPFZapJ4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86131>
 
-On Tue, 24 Jun 2008 at 12:05pm -0700, Jakub Narebski wrote:
-
-> I don't think so, because you want next to test for whitespace
-> where it _doesn't_ end in \r, i.e. this condition is here
-> because of the 'else' clause.  IIRC.
-
-What I'm suggesting is this,
-
-	if (/\s\r$/) {
-		bad_line("trailing whitespace", $_);
-	} else {
-		if (/\s$/) {
-			bad_line("trailing whitespace", $_);
-		}
-	}
-
-Why only test for \r when all you want to know is whether there is
-whitespace before \r ?  If there isn't whitespace and \r at the end of a
-line, then only test for whitespace at the end of a line.
+On Tue, Jun 24, 2008 at 06:09:28PM +0100, Johannes Schindelin wrote:
+> So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
+And maybe this one squashed on it, to add completion support for the
+new subcommands.
 
 
+---
+ contrib/completion/git-completion.bash |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ebf7cde..014adab 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -511,7 +511,9 @@ _git_add ()
+ 
+ _git_bisect ()
+ {
+-	local subcommands="start bad good reset visualize replay log"
++	local subcommands="
++		start bad good reset visualize replay log fixed unfixed
++		"
+ 	local subcommand="$(__git_find_subcommand "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__gitcomp "$subcommands"
 -- 
-Ian Hilt
-Ian.Hilt (at) gmx.com
-GnuPG key: 0x4AFC1EE3
+1.5.6.64.g7dc1df
