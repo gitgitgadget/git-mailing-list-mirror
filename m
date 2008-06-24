@@ -1,64 +1,71 @@
-From: Robert Haines <rhaines@manchester.ac.uk>
-Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 13:35:26 +0100
-Message-ID: <A3460448-8007-4E02-AC20-85C1A8C85786@manchester.ac.uk>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com> <1214306517.6441.10.camel@localhost> <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Matthias Kestenholz" <mk@spinlock.ch>, git@vger.kernel.org
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 14:36:54 2008
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 14:35:27 +0200
+Message-ID: <20080624123527.GA6149@dualtron.vpn.rwth-aachen.de>
+References: <200806241322.14224.jnareb@gmail.com> <28156.2147582465$1214307807@news.gmane.org> <4860E63B.6040709@dawes.za.net>
+Reply-To: Johannes Gilger <heipei@hackvalue.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Cc: David Jeske <jeske@google.com>, Jakub Narebski <jnareb@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Tue Jun 24 14:37:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB7l7-0000MQ-Gg
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:36:29 +0200
+	id 1KB7l8-0000MQ-4q
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbYFXMfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 08:35:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbYFXMfd
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:35:33 -0400
-Received: from serenity.mcc.ac.uk ([130.88.200.93]:49429 "EHLO
-	serenity.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbYFXMfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 08:35:32 -0400
-Received: from gomwe.mcc.ac.uk ([10.2.18.2])
-	by serenity.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1KB7k6-000DgV-Ai; Tue, 24 Jun 2008 13:35:26 +0100
-Received: from leela.rcs.manchester.ac.uk ([130.88.1.66]:51635)
-	by gomwe.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1KB7k6-000GTw-7f; Tue, 24 Jun 2008 13:35:26 +0100
-In-Reply-To: <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
-X-Mailer: Apple Mail (2.924)
-X-Authenticated-Sender: Robert Haines from leela.rcs.manchester.ac.uk [130.88.1.66]:51635
-X-Authenticated-From: Robert.Haines@manchester.ac.uk
-X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
+	id S1752064AbYFXMfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 08:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbYFXMfg
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:35:36 -0400
+Received: from avalon.gnuzifer.de ([85.10.199.84]:48914 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446AbYFXMff (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 08:35:35 -0400
+Received: from u-6-107.vpn.rwth-aachen.de ([137.226.102.107]:34776 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1KB7k8-0003y4-4I; Tue, 24 Jun 2008 14:35:28 +0200
+Content-Disposition: inline
+In-Reply-To: <4860E63B.6040709@dawes.za.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-SA-Exim-Connect-IP: 137.226.102.107
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86047>
 
-> I ran git-daemon on the server side like this:
->
-> sudo git-daemon --base-path=/pub/git/ --export-all --listen=kites
+On 24/06/08 14:19, Rogan Dawes wrote:
+> One thing that I haven't seen addressed in this thread is the fact that if 
+> you have a dirty working directory, and you "git reset --hard", whatever 
+> was dirty (not yet in the index, or committed) will be blown away, and no 
+> amount of reflog archeology will help you get it back.
 
-So your clone address for git:// is wrong, you don't need the /pub/git:
-git clone git://erez.zilber@kites/erez.zilber/my_test.git
-As you've moved the root of the filesystem as far as git-daemon is  
-concerned to /pub/git with the --base-path option. I suspect a similar  
-problem for http[s] depending on how you've mapped /pub/git into your  
-webserver.
+I think the name of the command "reset" itself is a name which should 
+prompt everyone to read a manpage before using it. I could understand 
+that if "status" did something destructive people would get upset.
+Other than that, git reset itself doesn't do anything destructive. Yeah, 
+git reset --hard does, but hello, this is *reset* and *hard*, someone 
+using this must really want what's about to happen. Nobody complaines 
+about rm --force or anything.
 
-rather than:
-git clone ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
-for ssh which does start at the root of the filesystem.
+As for putting safety-measure everywhere, I think that any further 
+restricting of commands would be nonsense and just hindering the 
+workflow. git is not something with a GUI and a recycle-bin. And it 
+still is really hard to accidentaly lose anything in git.
 
-Cheers,
-Rob
+Regards,
+Jojo
+
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
