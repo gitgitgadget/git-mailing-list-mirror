@@ -1,101 +1,50 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
-Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 13:21:57 +0200
-Message-ID: <1214306517.6441.10.camel@localhost>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
+From: "David Jeske" <jeske@google.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 11:29:43 -0000
+Message-ID: <28156.2147582465$1214307807@news.gmane.org>
+References: <200806241322.14224.jnareb@gmail.com>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5p7eVFEDjCZRD>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 13:23:15 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Avery Pennarun" <apenwarr@gmail.com>,
+	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 13:43:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB6by-0000YQ-7U
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 13:22:58 +0200
+	id 1KB6vf-0007Y8-L2
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 13:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123AbYFXLWB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jun 2008 07:22:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbYFXLWB
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 07:22:01 -0400
-Received: from hu-out-0506.google.com ([72.14.214.236]:47624 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751768AbYFXLWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 07:22:00 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so13117061hub.21
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 04:21:59 -0700 (PDT)
-Received: by 10.86.98.14 with SMTP id v14mr8816840fgb.74.1214306518677;
-        Tue, 24 Jun 2008 04:21:58 -0700 (PDT)
-Received: from ?192.168.11.104? ( [129.132.78.250])
-        by mx.google.com with ESMTPS id e20sm11917189fga.1.2008.06.24.04.21.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 04:21:58 -0700 (PDT)
-In-Reply-To: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
-X-Mailer: Evolution 2.22.2 
+	id S1759705AbYFXLmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 07:42:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759655AbYFXLmV
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 07:42:21 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60122 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1759620AbYFXLmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 07:42:20 -0400
+Received: (qmail 12644 invoked by uid 90); 24 Jun 2008 11:42:18 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 11:29:43 -0000
+In-Reply-To: <200806241322.14224.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86036>
 
-On Tue, 2008-06-24 at 14:15 +0300, Erez Zilber wrote:
-> Hi,
->=20
-> I'm able to git-clone a tree using ssh:
->=20
-> [root@kd001 t]# git-clone
-> ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
-> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_t=
-est/.git/
-> erez.zilber@kites's password:
-> remote: Counting objects: 9, done.
-> remote: Compressing objects: 100% (5/5), done.
-> remote: Total 9 (delta 0), reused 0 (delta 0)
-> Receiving objects: 100% (9/9), done.
->=20
-> However, it doesn't work with http/https/git:
->=20
-> [root@kd001 t]# git-clone http://kites/pub/git/erez.zilber/my_test.gi=
-t
-> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_t=
-est/.git/
-> Cannot get remote repository information.
-> Perhaps git-update-server-info needs to be run there?
->=20
+-- Jakub Narebski wrote:
+> If they are using '-f', i.e. force, they should know and be sure what
+> they are doing; it is not much different from 'rm -f *'.
 
-Maybe you should run git-update-server-info in the repository on the
-server?
+Sure, no problem. I don't want the ability to "rm -f *". I'm raising my hand
+and saying "I don't want the power to do these things, so just turn off all the
+git commands that could be destructive and give me an alternate way to do the
+workflows I need to do". Just like a normal user on a unix machine doesn't run
+around with the power to rm -f /etc all the time, even though they may be able
+to su to root.
 
-> [root@kd001 t]# git-clone https://kites/pub/git/erez.zilber/my_test.g=
-it
-> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_t=
-est/.git/
-> Cannot get remote repository information.
-> Perhaps git-update-server-info needs to be run there?
-
-
-=EF=BB=BFMaybe you should run git-update-server-info in the repository =
-on the
-server?
-
-By the way, try enabling the post-update hook -- it runs
-update-server-info for you automatically after pushing to your server
-(make the script $GIT_DIR/hooks/post-update executable)
-
-> [root@kd001 t]# git-clone git://kites/pub/git/erez.zilber/my_test.git
-> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_t=
-est/.git/
-> kites[0: 172.16.1.11]: errno=3DConnection refused
-> fatal: unable to connect a socket (Connection refused)
-> fetch-pack from 'git://kites/pub/git/erez.zilber/my_test.git' failed.
->=20
-
-Is the git daemon running on your server? You need to configure inetd o=
-r
-git-daemon yourself, that is not done automatically for you.
-
-
---=20
-http://spinlock.ch/blog/
+Let me guess, you're always running euid==0. :)
