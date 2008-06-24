@@ -1,89 +1,96 @@
-From: "David Jeske" <jeske@google.com>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 07:31:31 -0000
-Message-ID: <26121.2761899971$1214294979@news.gmane.org>
-References: <20080624072455.GF19224@sigill.intra.peff.net>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l5jmMuFEDjChvB>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] Created git-basis and modified git-bundle to accept --stdin.
+Date: Tue, 24 Jun 2008 01:09:10 -0700 (PDT)
+Message-ID: <m3iqvzl091.fsf@localhost.localdomain>
+References: <1214273297-8257-1-git-send-email-adambrewster@gmail.com>
+	<1214273297-8257-2-git-send-email-adambrewster@gmail.com>
+	<c376da900806231921y2d822been9cd573d509fbf78a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "Avery Pennarun" <apenwarr@gmail.com>,
-	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 24 10:09:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Adam Brewster" <adam@adambrewster.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 10:10:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB3ag-0001e0-A3
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:09:26 +0200
+	id 1KB3bQ-0001sL-HO
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306AbYFXIIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 04:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756940AbYFXIIV
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:08:21 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60053 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757247AbYFXIIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:08:17 -0400
-Received: (qmail 10103 invoked by uid 90); 24 Jun 2008 08:07:54 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Tue, 24 Jun 2008 07:31:31 -0000
-In-Reply-To: <20080624072455.GF19224@sigill.intra.peff.net>
+	id S1758122AbYFXIJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 04:09:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758195AbYFXIJS
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:09:18 -0400
+Received: from ik-out-1112.google.com ([66.249.90.176]:34003 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758122AbYFXIJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 04:09:13 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so1460098ika.5
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 01:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=zRyobtRTtQIh/rrwhKm7FWdA2zA5Z8SBMYxhyKTrlY4=;
+        b=Z2TpFEPCWU8LAR3mooCl8/OrOA8OS8+xPRHoOARpuVDoR+1bYgfU2Gbpi7QiZVLXXI
+         EhvAcRPhWatpak0/2+ZMvBmxEB87MYX9JffnZC95P0Lm10Sgtl4B0flOmfZADbZTT86l
+         juH1hNw00vYOWgtP4+H4nAEEmY/VSfbzOPMUI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=kxAmdlI2rq/HEQqD82dnjJF1PUOrF+ICZGQEeTZ0o5fHUl/8cIeEipZx7VT93e9AGb
+         IDyj8zE5MeB+lfaBlaOmBcTg9CPKiIlFLZLrNbEsOSN/GlgKJo9x0bb6vZSyg0NQf4d+
+         cr84MY9NlC1ZF+EOkCL6hDBF8gEQiU89jawzU=
+Received: by 10.210.72.19 with SMTP id u19mr70965eba.71.1214294951896;
+        Tue, 24 Jun 2008 01:09:11 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.195.249])
+        by mx.google.com with ESMTPS id y37sm9879033iky.8.2008.06.24.01.09.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 01:09:10 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5O8Ch8Y005603;
+	Tue, 24 Jun 2008 10:12:43 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5O8Chlc005600;
+	Tue, 24 Jun 2008 10:12:43 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <c376da900806231921y2d822been9cd573d509fbf78a@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86009>
 
--- Jeff King wrote:
-> I think you are confusing two aspects of history.
->
-> There is the commit DAG, which says "at some time T, the files were at
-> some state S, and the commit message by author A was M". And those
-> commits form a chain so you can see how the state of the files
-> progressed. And anything that is reachable through that history will
+"Adam Brewster" <adam@adambrewster.com> writes:
 
-okay.
+> Git-basis is a perl script that remembers bases for use by git-bundle.
+> Code from rev-parse was borrowed to allow git-bundle to handle --stdin.
 
-> always be kept by git, and you can always go back to any point.
+I'd rather you follow git-pack-objects, and use `--revs` for the name
+of this option (or even '--not --revs').  The name `--stdin` might
+imply that you are providing objects names on stdin of git-bundle.
 
-..are you saying that if I reset --hard, or delete a branch ref, or do a
-rebase, and then do a GC beyond the GC timeout, that git will NEVER throw away
-any of those DAGs? (the actual source diffs committed)
+But perhaps I am worrying over nothing.
+ 
+[...]
+> Then you can add the objects in the bundle to the basis, so they won't
+> get included in the next pack like this:
+> 
+>  $ git-basis --update my-basis < my-bundle
 
-> And the ref history is what gets garbage collected. Most people are fine
-> with that, because they care about the actual commit history, and the
-> reflog is just a convenient way of saying "oops, what was happening
-> yesterday?" But if you really care, then by all means, set the reflog
-> expiration much higher.
+Why not use "$(git ls-remote my-bundle)" somewhere in the invocation
+creating new bundle instead?
+ 
+> I'm sure that my implementation is crap, but I think this is a useful
+> idea.  Anybody agree?  Disagree?
 
-My (possibly flawed) understanding was that it drops any DAG sections that are
-not referenced by valid refs which are older than the GC timeout.
+Documentation, please?  Especially that it looks like '--stdin' option
+is a bit tricky...
 
-It came from wording like this in the docs:
-
-"The optional configuration variable gc.reflogExpireUnreachable
-can be set to indicate how long historical reflog entries which
-are not part of the current branch should remain available in
-this repository. These types of entries are generally created
-as a result of using git commit --amend or git rebase and are the
-commits prior to the amend or rebase occurring. Since
-these changes are not part of the current project most users
-^^^^^^^^^^^^^
-will want to expire them sooner. This option defaults to 30 days."
-
-In the above, I resolve "these changes" to "commits prior to the amend" in the
-previous sentence.
-
-"git-gc tries very hard to be safe about the garbage it collects.
-In particular, it will keep not only objects referenced by your
-current set of branches and tags, but also objects referenced by
-the index, remote tracking branches, refs saved by
-git-filter-branch(1) in refs/original/, or reflogs (which may
-references commits in branches that were later amended or rewound)."
-
-In the above, I resolve "keep .. only objects referenced by your current set of
-branches and tags [and some other stuff]" to "commmits in the DAG pointed to by
-refs [and other stuff]".
-Are you saying this GC process will never collect source diffs in the DAG?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
