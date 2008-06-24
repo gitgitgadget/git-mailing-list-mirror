@@ -1,182 +1,100 @@
-From: Ian Hilt <Ian.Hilt@gmx.com>
-Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
-Date: Tue, 24 Jun 2008 14:26:17 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site>
-References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com>
+From: John Locke <mail@freelock.com>
+Subject: git svn clone a non-standard repository
+Date: Tue, 24 Jun 2008 11:32:37 -0700
+Message-ID: <48613DC5.2000506@freelock.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-332828461-1214331985=:32759"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Christian Holtje <docwhat@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 20:27:26 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 20:33:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBDEd-0005vS-11
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 20:27:19 +0200
+	id 1KBDKu-0007zP-0z
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 20:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847AbYFXS0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 14:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754824AbYFXS0U
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 14:26:20 -0400
-Received: from mail.gmx.com ([74.208.5.67]:39413 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753231AbYFXS0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 14:26:19 -0400
-Received: (qmail invoked by alias); 24 Jun 2008 18:26:17 -0000
-Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
-  by mail.gmx.com (mp-us004) with SMTP; 24 Jun 2008 14:26:17 -0400
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX1+uz7gzfGOuK9VrdbCmCT2bk7uytgcIOGM0CwYCBo
-	Zk/2leS0xbjHcl
-In-Reply-To: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Y-GMX-Trusted: 0
+	id S1751709AbYFXSch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 14:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYFXSch
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 14:32:37 -0400
+Received: from logan.freelock.com ([216.231.62.127]:33561 "EHLO
+	logan.freelock.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498AbYFXScg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 14:32:36 -0400
+Received: from localhost (foraker.freelock.com [127.0.0.1])
+	by logan.freelock.com (Postfix) with ESMTP id A088FA0456
+	for <git@vger.kernel.org>; Tue, 24 Jun 2008 11:32:35 -0700 (PDT)
+Received: from logan.freelock.com ([127.0.0.1])
+ by localhost (foraker.freelock.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 25663-04 for <git@vger.kernel.org>;
+ Tue, 24 Jun 2008 11:32:35 -0700 (PDT)
+Received: from [192.168.9.243] (router.freelock.lan [192.168.9.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by logan.freelock.com (Postfix) with ESMTP id 7CC56A0448
+	for <git@vger.kernel.org>; Tue, 24 Jun 2008 11:32:35 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+X-Virus-Scanned: by amavisd-new at freelock.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86102>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-332828461-1214331985=:32759
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I'm trying to create a git repo of the Dojo Toolkit, which has a quite 
+non-standard layout. There are 4 modules to the current Dojo project 
+that I care about (and some others in the repo that I'm not interested 
+in). The problem is, the trunk code is split out into 
+<modulename>/trunk, while tags are in tags/<tagname>/<modulename> and 
+branches are in branches/<branchname>/<modulename>. e.g:
 
-On Tue, 24 Jun 2008 at 12:23pm -0400, Christian Holtje wrote:
+moduleA/trunk <- contains trunk development of moduleA
+moduleA/tags   <- empty
+moduleA/branches <- empty
+moduleB/trunk
+moduleB/tags
+moduleB/branches
+moduleC/trunk
+moduleC/tags
+moduleC/branches
+moduleD/trunk
+moduleD/tags
+moduleD/branches
+moduleE/trunk <- I don't care about this one...
+trunk/   <- contains ancient version, not actual trunk
+tags/1.0.0/moduleA <- contains tagged version of moduleA
+tags/1.0.0/moduleB <- contains tagged version of moduleB
+tags/1.0.0/moduleC <- contains tagged version of moduleC
+tags/1.0.0/moduleD <- contains tagged version of moduleD
+tags/1.0.1/moduleA
+tags/1.0.1/moduleB
+...
 
-> When commit files that use DOS style CRLF end-of-lines, the pre-commit
-> hook would raise an error.  When combined with the fact that the hooks
-> get activated by default on windows, it makes life difficult for
-> people working with DOS files.
-> 
-> This patch causes the pre-commit hook to deal with crlf files
-> correctly.
-> 
-> Signed-off-by: Christian H√∂ltje <docwhat@gmail.com>
-> ---
-> t/t7503-template-hook--pre-commit.sh |   75 ++++++++++++++++++++++++++++++++++
-> templates/hooks--pre-commit          |   10 ++++-
-> 2 files changed, 83 insertions(+), 2 deletions(-)
-> create mode 100755 t/t7503-template-hook--pre-commit.sh
-> 
-> diff --git a/t/t7503-template-hook--pre-commit.sh
-> b/t/t7503-template-hook--pre-commit.sh
-> new file mode 100755
-> index 0000000..8f0c3c9
-> --- /dev/null
-> +++ b/t/t7503-template-hook--pre-commit.sh
-> @@ -0,0 +1,75 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2008 Christian H√∂ltje
-> +#
-> +
-> +test_description='t7503 templates-hooks--pre-commit
-> +
-> +This test verifies that the pre-commit hook shipped with
-> +git by default works correctly.
-> +'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'verify that autocrlf is unset' '
-> +   if git config core.autocrlf
-> +   then
-> +     false
-> +   else
-> +     test $? -eq 1
-> +   fi
-> +'
-> +
-> +test_expect_success 'lf without hook' '
-> +
-> +	echo "foo" > lf.txt &&
-> +	git add lf.txt &&
-> +	git commit -m "lf without hook" lf.txt
-> +
-> +'
-> +
-> +test_expect_success 'crlf without hook' '
-> +
-> +	echo "foo\r" > crlf.txt &&
+So I'd like to set up a git repo that tracks this SVN repository, and 
+allows me to see:
+moduleA/
+moduleB/
+moduleC/
+moduleD/
+... in my checkout, whether I'm on trunk or a tag.
 
-Perhaps you want to use printf "foo\r" instead?  echo "foo\r" does not
-produce a CR on my system.
+What's the best way to set this up?
 
-> +	git add crlf.txt &&
-> +	git commit -m "crlf without hook" crlf.txt
-> +
-> +'
-> +
-> +# Set up the pre-commit hook.
-> +HOOKDIR="$(git rev-parse --git-dir)/hooks"
-> +mkdir -p "${HOOKDIR}"
-> +cp -r "${HOOKDIR}-disabled/pre-commit" "${HOOKDIR}/pre-commit"
-> +chmod +x "${HOOKDIR}/pre-commit"
-> +
-> +test_expect_success 'lf with hook' '
-> +
-> +	echo "bar" >> lf.txt &&
-> +	git add lf.txt &&
-> +	git commit -m "lf with hook" lf.txt
-> +
-> +'
-> +test_expect_success 'crlf with hook' '
-> +
-> +	echo "bar\r" >> crlf.txt &&
-> +	git add crlf.txt &&
-> +	git commit -m "crlf with hook" crlf.txt
-> +
-> +'
-> +
-> +test_expect_success 'lf with hook white-space failure' '
-> +
-> +	echo "bar " >> lf.txt &&
-> +	git add lf.txt &&
-> +	! git commit -m "lf with hook" lf.txt
-> +
-> +'
-> +test_expect_success 'crlf with hook white-space failure' '
-> +
-> +	echo "bar \r" >> crlf.txt &&
-> +	git add crlf.txt &&
-> +	! git commit -m "crlf with hook" crlf.txt
-> +
-> +'
-> +
-> +test_done
-> diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
-> index b25dce6..335ca09 100644
-> --- a/templates/hooks--pre-commit
-> +++ b/templates/hooks--pre-commit
-> @@ -55,8 +55,14 @@ perl -e '
-> 	if (s/^\+//) {
-> 	    $lineno++;
-> 	    chomp;
-> -	    if (/\s$/) {
-> -		bad_line("trailing whitespace", $_);
-> +	    if (/\r$/) {
+I've started with "git svn clone http://path/to/svn -T moduleA/trunk -t 
+tags -b branches", and it's been sucking down branches for a couple days 
+now, still not done. Can I set up moduleB/moduleC/moduleD as additional 
+remotes in this same repository, and end up with the desired result? Was 
+thinking I would add additional svn sections to .git/config, and then 
+git svn fetch -- will this work, or is there a better way?
 
-Wouldn't it be less redundant to do a test for \s\r$ here instead of
-testing for \r$ and then \s\r$?
 
-> +		if (/\s\r$/) {
-> +		    bad_line("trailing whitespace", $_);
-> +		}
-> +	    } else {
-> +		if (/\s$/) {
-> +		    bad_line("trailing whitespace", $_);
-> +		}
-> 	    }
-> 	    if (/^\s* \t/) {
-> 		bad_line("indent SP followed by a TAB", $_);
-> 
+Thanks,
 
 -- 
-Ian Hilt
-Ian.Hilt (at) gmx.com
-GnuPG key: 0x4AFC1EE3
---8323328-332828461-1214331985=:32759--
+John Locke
+"Open Source Solutions for Small Business Problems"
+published by Charles River Media, June 2004
+http://www.freelock.com
