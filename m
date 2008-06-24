@@ -1,65 +1,52 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 04:16:02 -0400
-Message-ID: <20080624081601.GA2692@sigill.intra.peff.net>
-References: <20080624072455.GF19224@sigill.intra.peff.net> <willow-jeske-01l5kbGzFEDjCX3J>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 10:17:08 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 24 Jun 2008 10:16:15 +0200
+Message-ID: <FCE18242-EE46-4D2E-B916-E1E98568AB60@ai.rug.nl>
+References: <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 10:17:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB3i5-0003pR-Iy
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:17:06 +0200
+	id 1KB3iN-0003ue-4Q
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbYFXIQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 04:16:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbYFXIQJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:16:09 -0400
-Received: from peff.net ([208.65.91.99]:1645 "EHLO peff.net"
+	id S1755625AbYFXIQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 04:16:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbYFXIQZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:16:25 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:33223 "EHLO smtp-4.orange.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752364AbYFXIQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:16:07 -0400
-Received: (qmail 1024 invoked by uid 111); 24 Jun 2008 08:16:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 04:16:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jun 2008 04:16:02 -0400
-Content-Disposition: inline
-In-Reply-To: <willow-jeske-01l5kbGzFEDjCX3J>
+	id S1754434AbYFXIQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 04:16:23 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 9323A700008A;
+	Tue, 24 Jun 2008 10:16:22 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 3533B700009B;
+	Tue, 24 Jun 2008 10:16:16 +0200 (CEST)
+X-ME-UUID: 20080624081622218.3533B700009B@mwinf6302.orange.nl
+In-Reply-To: <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86013>
 
-On Tue, Jun 24, 2008 at 07:31:31AM -0000, David Jeske wrote:
 
-> ..are you saying that if I reset --hard, or delete a branch ref, or do a
-> rebase, and then do a GC beyond the GC timeout, that git will NEVER throw away
-> any of those DAGs? (the actual source diffs committed)
+On 24 jun 2008, at 10:12, Pieter de Bie wrote:
 
-No. Git keeps the reachable DAG. So if the DAG is part of development
-that is merged into one of your long running branches, or if you keep
-around the branch that points to it, it will never go away.
+> I think that is what Miklos meant. Also, I think the client sends  
+> the command to execute on the remote side. At least for v1.5.5  
+> clients and before, that is "git-upload-pack". As this is not in  
+> PATH, that command will fail on any server that runs v1.5.6 and has  
+> the libexec dir.
 
-> My (possibly flawed) understanding was that it drops any DAG sections
-> that are not referenced by valid refs which are older than the GC
-> timeout.
-
-Yes. So the way to "forget" about some history is to stop referencing
-it. And then, after a grace period, it will be removed.
-
-> Are you saying this GC process will never collect source diffs in the
-> DAG?
-
-No, but it will only remove unreferenced things. And things only become
-unreferenced through explicit user action. So you don't have to worry
-about git GCing your work unexpectedly. You do have to worry about git
-GCing things you have explicitly told it to delete.
-
--Peff
+That is supposed to be "v1.5.6" and "v1.6.0" respectively.
