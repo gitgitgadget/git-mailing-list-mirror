@@ -1,95 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] Introduce leaky().
-Date: Tue, 24 Jun 2008 14:28:30 -0700 (PDT)
-Message-ID: <m3skv2jzey.fsf@localhost.localdomain>
-References: <1214338474-16822-1-git-send-email-madcoder@debian.org>
-	<1214338474-16822-2-git-send-email-madcoder@debian.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 16:42:49 -0500
+Message-ID: <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil>
+References: <m31w2mlki4.fsf@localhost.localdomain>	<willow-jeske-01l5PFjPFEDjCfzf-01l5zrLdFEDjCV3U> <willow-jeske-01l61=64jMFEDjCiBE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jun 24 23:29:30 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: David Jeske <jeske@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 23:44:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBG4w-0001q7-1f
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 23:29:30 +0200
+	id 1KBGJ3-0006iE-2V
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 23:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752995AbYFXV2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 17:28:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbYFXV2e
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 17:28:34 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:60179 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293AbYFXV2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 17:28:33 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so66181nfc.21
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 14:28:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=zOZpJCHWyK69UKKKHsWbzg3zswznne9mjgT2+h8hCw8=;
-        b=mg9oCKgrIzcYLQbDWj6+uSqKRXCrx1384qTBK2pDZUkMQT/tGgtDqL8E/5HGp/oNvh
-         d5+DPRWD/2SU1gg8kVbEAbbjxfyUd1lAbafZKlYiubmUymvQL+pVEzJ8rp35v5IYJM+A
-         OT8Ik43FC42RFn+fhvSzGww3fHugrMJuomvIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=VXx50J3hPZTWlWrW7nk7FsicG+IdGJ4M9Dw5X3Ons4jzpMlKPhWEhqYr/pb8KonwpF
-         8SNZm9Hlzy/kjJk6CYfkiSxsrqLREPrm5f2J9pelyx/i/zYml80qwLrScvogJkHL23fe
-         wCv0Mazr9zU4ClCxXFImDBSfgCixKmK2RiN48=
-Received: by 10.210.115.15 with SMTP id n15mr776284ebc.28.1214342911676;
-        Tue, 24 Jun 2008 14:28:31 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.223.44])
-        by mx.google.com with ESMTPS id d2sm1138207nfc.31.2008.06.24.14.28.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 14:28:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5OLSQeN011286;
-	Tue, 24 Jun 2008 23:28:27 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5OLSLtv011281;
-	Tue, 24 Jun 2008 23:28:21 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1214338474-16822-2-git-send-email-madcoder@debian.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754217AbYFXVnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 17:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbYFXVnH
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 17:43:07 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34470 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752353AbYFXVnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 17:43:06 -0400
+Received: by mail.nrlssc.navy.mil id m5OLgoCs022925; Tue, 24 Jun 2008 16:42:50 -0500
+In-Reply-To: <willow-jeske-01l61=64jMFEDjCiBE>
+X-OriginalArrivalTime: 24 Jun 2008 21:42:50.0309 (UTC) FILETIME=[3FE38F50:01C8D643]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86153>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+David Jeske wrote:
+>> -- David Jeske wrote:
+>>> - improve the man page description of "reset --hard"
+>>> - standardize all the potentially destructive operations
+>>> (after gc) on "-f/--force" to override
+>> The thing is 'force' is not always the most descriptive word
+>> for the behavior that you propose enabling with --force.
+> I'm not talking about switching "git reset --hard" to "git reset -f". I'm
+> talking about requiring a "-f" option to "git reset --hard" when it would
+> destroy or dangle information.
 
-> diff --git a/Makefile b/Makefile
+I only have the same advice I gave to Boaz. I think you should try to adjust
+your workflow so that 'git reset' is not necessary. It seems that for the
+functions you're trying to perform, 'checkout' and 'branch' should be used rather
+than 'reset'.
 
-> +#
-> +# Define COLLECT_LEAKS_AT_EXIT if you want memory marked as leaky() at exit.
+Again, as I mentioned to Boaz, there is really no benefit to reusing a single
+branch name if that is what you are trying to do. The cost of branching in git
+is 41 bytes i.e. nil. The cost of updating the working directory which happens
+during the 'reset --hard' is exactly the same whether I do
+'reset --hard <some_branch>' or 'checkout -b new_branch <some_branch>'.
 
-I think s/at exit/to be freed &/;
+In nearly every case where I, personally, have used 'reset --hard', I was using
+it because I didn't care what the current state of the working directory or the
+index were. They were wrong and I was resetting to the right state. I believe
+this was the intended use for the command.
 
+I'm not sure why you want to use reset so often. If there is something in the
+documentation that led you to want to use reset maybe it can be changed so that
+other users are not led in the same way.
 
-> diff --git a/cache.h b/cache.h
+About the reflog..
+The reflog is not a storage area. It's just a log, like /var/log/messages. It is
+there to provide a way to recover from mistakes. Mistakes are usually recognized
+fairly quickly. If you have not realized that you have made a mistake after 30
+days, it may be pretty hard to recover from since people have imperfect memories.
+If we did not garbage collect the reflog it would just continue to grow appending
+useless piece of information after useless piece of information.
 
-Hmmm... cache?
-
->  /* alloc.c */
-> +#ifdef COLLECT_LEAKS_AT_EXIT
-> +extern void *leaky(void *);
-> +#else
-> +# define leaky(x) x
-> +#endif
-
-Not 
-
-+# define leaky(x) (x)
-
-to be careful?
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-brandon
