@@ -1,68 +1,69 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 25 Jun 2008 01:32:36 +0200
-Message-ID: <20080624233236.GI29404@genesis.frugalware.org>
-References: <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl> <20080624160224.GA29404@genesis.frugalware.org> <alpine.DEB.1.00.0806241709330.9925@racer> <20080624185403.GB29404@genesis.frugalware.org> <alpine.DEB.1.00.0806242007150.9925@racer> <7vskv2d0lp.fsf@gitster.siamese.dyndns.org> <20080624221049.GE29404@genesis.frugalware.org> <7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Windows symlinks
+Date: Wed, 25 Jun 2008 01:29:56 +0200
+Message-ID: <200806250129.56271.robin.rosenberg.lists@dewire.com>
+References: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="V6qYWcDlug0uTDDM"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:33:42 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Patrick.Higgins@cexp.com
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:35:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBI14-00027u-6B
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:33:38 +0200
+	id 1KBI2G-0002UV-Q6
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbYFXXcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 19:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYFXXcm
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:32:42 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:56095 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751097AbYFXXcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 19:32:42 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 252E71B24FA;
-	Wed, 25 Jun 2008 01:32:41 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id E2FB344697;
-	Wed, 25 Jun 2008 01:07:28 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 4D6171770070; Wed, 25 Jun 2008 01:32:36 +0200 (CEST)
+	id S1751847AbYFXXd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:33:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYFXXd5
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:33:57 -0400
+Received: from av9-2-sn2.hy.skanova.net ([81.228.8.180]:57957 "EHLO
+	av9-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbYFXXd4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 19:33:56 -0400
+Received: by av9-2-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 4DE9C38026; Wed, 25 Jun 2008 01:33:55 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av9-2-sn2.hy.skanova.net (Postfix) with ESMTP
+	id 2780437E70; Wed, 25 Jun 2008 01:33:55 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id DB56837E45;
+	Wed, 25 Jun 2008 01:33:54 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
 Content-Disposition: inline
-In-Reply-To: <7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86182>
 
+onsdagen den 25 juni 2008 00.42.49 skrev Patrick.Higgins@cexp.com:
+> It looks like one of the bigger (biggest?) hurdles for git adoption at my company is going to be handling symlinks on Windows. We may be able to sidestep the issue entirely by having developers run Linux in a virtual machine (or better yet, Windows in a VM) because we deploy to Linux and thus can make a very strong argument that developers should develop on Linux, too. That run into an image problem where people might start blaming git for needing to have an extra operating system around just for revision control.
 
---V6qYWcDlug0uTDDM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Right, they could use only Linux and not have an extra OS for email..
+> 
+> We currently use Clearcase snapshot views on Windows and it has some kind of magic to be able to deal with symlinks. I haven't actually used the Windows version of Clearcase so I don't know how it does it, but my understanding is that it handles them with copies, and I guess it somehow knows to update all the copies when a change is made.
 
-On Tue, Jun 24, 2008 at 04:16:36PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> It most likely makes sense to do (3) anyway.  upload-pack, receive-pack,
-> anything else?
+It is one of the few sane things clearcase does. msysgit's approach is just unusable. I've not come up with the patches yet. Clearcase makes copies
+instead of the symlinks and updates them on checkout/checkin and update.
+Git could do one step better by updating copies when index is updated, avoiding an unnecessary commit (which is pretty annoying in CC).
+Invalid symlinks, i.e. pointing at non-existent objects or outside then VOB (repository in Git parlance, don't show up at all in snapshot views. Git could do the same thereby making the workdir usable
+when it contains and depends on symlinks.
 
-I think that's all.
+> Has anyone thought about a way for git to handle symlinks? Vista seems to have added native symlinks, but you need have elevated privilege to create
+> them. NTFS junction points seem helpful for older versions of Windows, but don't work for anything except directories, and seem to be dangerous to use with tools that do recursive deletes. Neither junction points nor native symlinks sound like great options. 
+Obviously one could make this a switchable feature and enable it when the
+file system supports it. As for junction points i'd say no too. What little testing I did on symlinks in vista they seem capable of most sane uses.
 
---V6qYWcDlug0uTDDM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Cygwin's clever symlink trick seems to work pretty well in practice. I'm not exactly sure what it's doing, but it seems to create a shortcut that it's own programs understand. Some other non-Cygwin programs seem to understand them, too, but Java does not which is a big problem for me.
+> 
+> I just don't see any good solutions here. Does anyone have any better ideas?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+No, copies. If you have a patch I can test it and then implement it for jgit, which doesn't have symlinks either.
 
-iEYEARECAAYFAkhhhBQACgkQe81tAgORUJa6zQCglPJMmN7Xj1CDnwJIW5OIVBtz
-ekgAnj2PClgutER/Ji6VkgHEzAuXXOuY
-=6Wwc
------END PGP SIGNATURE-----
-
---V6qYWcDlug0uTDDM--
+-- robin
