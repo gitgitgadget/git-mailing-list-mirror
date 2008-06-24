@@ -1,315 +1,75 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/3] git-add: introduce --edit (to edit the diff vs. the index)
-Date: Tue, 24 Jun 2008 20:08:22 +0100
-Message-ID: <200806242108.24207.trast@student.ethz.ch>
-References: <20080624050901.GA19224@sigill.intra.peff.net>
-Mime-Version: 1.0
+From: Christian Holtje <docwhat@gmail.com>
+Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
+Date: Tue, 24 Jun 2008 15:16:07 -0400
+Message-ID: <39C2861E-F800-40AE-8C15-4FC3BB51EF16@gmail.com>
+References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com> <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 24 21:12:46 2008
+Cc: git@vger.kernel.org
+To: Ian Hilt <Ian.Hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 21:17:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBDwS-0004MQ-1a
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:12:36 +0200
+	id 1KBE0u-0005vv-PZ
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbYFXTL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 15:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbYFXTL1
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:11:27 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:52328 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752359AbYFXTLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 15:11:25 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 24 Jun 2008 21:11:19 +0200
-Received: from [192.168.0.2] ([84.75.156.10]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 24 Jun 2008 21:11:18 +0200
-In-Reply-To: <20080624050901.GA19224@sigill.intra.peff.net>
-Content-Disposition: inline
-X-OriginalArrivalTime: 24 Jun 2008 19:11:18.0869 (UTC) FILETIME=[14F7E850:01C8D62E]
+	id S1751793AbYFXTQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 15:16:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbYFXTQR
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:16:17 -0400
+Received: from wr-out-0506.google.com ([64.233.184.230]:22230 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751649AbYFXTQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 15:16:16 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so2273081wri.5
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 12:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=86+qGxgSXFLyDIE2AsFih6Pj6zY8yoURzyH6nhtfbkc=;
+        b=nxz1GTKSmT72+q9nMm0KY+T8P+H2Hi2Ze0ydl2Ifis6JYXTu8GU0m5C63vfIrTg6EA
+         FxjrWdhqIBdE+ht+EjFz6grjMD0jizIaOS2Uu2e3pTONdNEkcbQHL+QgHp3fMCB2fN/t
+         DVV9XOIxgNFnzinBV99Sg/QjgQSnQ0r9k7GxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=iifc1QPu+gFmPCPfxqlb1+zfxN1L/JdcbSqWNjvVwmSv8djGO+WKQCQirENuTld4gK
+         V7QcQ3jLAom3eRJB4mrxOHGAZQ98QBIkABzKS24R1YnX/RJpDcHOYYDkdsA2W/Hrby4a
+         g8nfMHfCZXirulxUCpabeZ0N2TirOHOjOFqqI=
+Received: by 10.90.56.5 with SMTP id e5mr3335208aga.21.1214334975091;
+        Tue, 24 Jun 2008 12:16:15 -0700 (PDT)
+Received: from ?192.168.0.161? ( [206.210.75.84])
+        by mx.google.com with ESMTPS id f45sm139217pyh.24.2008.06.24.12.16.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 12:16:13 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86115>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Jun 24, 2008, at 2:26 PM, Ian Hilt wrote:
+> Perhaps you want to use printf "foo\r" instead?  echo "foo\r" does not
+> produce a CR on my system.
 
-With "git add -e [<files>]", Git will fire up an editor with the current
-diff relative to the index (i.e. what you would get with "git diff
-[<files>]").
+...
 
-Now you can edit the patch as much as you like, including adding/removing
-lines, editing the text, whatever.  Make sure, though, that the first
-character of the hunk lines is still a space, a plus or a minus.
+> Wouldn't it be less redundant to do a test for \s\r$ here instead of
+> testing for \r$ and then \s\r$?
 
-After you closed the editor, Git will adjust the line counts of the
-hunks if necessary, thanks to the --fixup-line-counts option of apply,
-and commit the patch.  Except if you deleted everything, in which case
-nothing happens (for obvious reasons).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- Documentation/git-add.txt |   12 ++++-
- builtin-add.c             |   55 +++++++++++++++++++-
- t/t3702-add-edit.sh       |  126 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 191 insertions(+), 2 deletions(-)
- create mode 100755 t/t3702-add-edit.sh
+The code is checking for \r$ and then doing a different space check  
+depending on that, not one after another.
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index b8e3fa6..c6de028 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git-add' [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
--	  [--update | -u] [--refresh] [--ignore-errors] [--]
-+	  [--edit | -e] [--update | -u] [--refresh] [--ignore-errors] [--]
- 	  <filepattern>...
- 
- DESCRIPTION
-@@ -76,6 +76,16 @@ OPTIONS
- 	bypassed and the 'patch' subcommand is invoked using each of
- 	the specified filepatterns before exiting.
- 
-+-e::
-+--edit::
-+	Open the diff vs. the index in an editor and let the user
-+	edit it.  After the editor was closed, adjust the hunk headers
-+	and apply the patch to the index.
-++
-+*NOTE*: Obviously, if you change anything else than the first character
-+on lines beginning with a space or a minus, the patch will no longer
-+apply.
-+
- -u::
- --update::
- 	Update only files that git already knows about, staging modified
-diff --git a/builtin-add.c b/builtin-add.c
-index 9930cf5..b9e9a17 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -19,7 +19,7 @@ static const char * const builtin_add_usage[] = {
- 	"git-add [options] [--] <filepattern>...",
- 	NULL
- };
--static int patch_interactive = 0, add_interactive = 0;
-+static int patch_interactive = 0, add_interactive = 0, edit_interactive = 0;
- static int take_worktree_changes;
- 
- static void prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
-@@ -186,6 +186,56 @@ int interactive_add(int argc, const char **argv, const char *prefix)
- 	return status;
- }
- 
-+int edit_patch(int argc, const char **argv, const char *prefix)
-+{
-+	char *file = xstrdup(git_path("ADD_EDIT.patch"));
-+	const char *apply_argv[] = { "apply", "--recount", "--cached",
-+		file, NULL };
-+	struct child_process child;
-+	int result = 0, ac;
-+	struct stat st;
-+
-+	memset(&child, 0, sizeof(child));
-+	child.argv = xcalloc(sizeof(const char *), (argc + 5));
-+	ac = 0;
-+	child.git_cmd = 1;
-+	child.argv[ac++] = "diff-files";
-+	child.argv[ac++] = "--no-color";
-+	child.argv[ac++] = "-p";
-+	child.argv[ac++] = "--";
-+	if (argc) {
-+		const char **pathspec = validate_pathspec(argc, argv, prefix);
-+		if (!pathspec)
-+			return -1;
-+		memcpy(&(child.argv[ac]), pathspec, sizeof(*argv) * argc);
-+		ac += argc;
-+	}
-+	child.argv[ac] = NULL;
-+	child.out = open(file, O_CREAT | O_WRONLY, 0644);
-+	result = child.out < 0 && error("Could not write to '%s'", file);
-+
-+	if (!result)
-+		result = run_command(&child);
-+	free(child.argv);
-+
-+	launch_editor(file, NULL, NULL);
-+
-+	if (!result)
-+		result = stat(file, &st) && error("Could not stat '%s'", file);
-+	if (!result && !st.st_size)
-+		result = error("Empty patch. Aborted.");
-+
-+	memset(&child, 0, sizeof(child));
-+	child.git_cmd = 1;
-+	child.argv = apply_argv;
-+	if (!result)
-+		result = run_command(&child) &&
-+			error("Could not apply '%s'", file);
-+	if (!result)
-+		unlink(file);
-+	return result;
-+}
-+
- static struct lock_file lock_file;
- 
- static const char ignore_error[] =
-@@ -202,6 +252,7 @@ static struct option builtin_add_options[] = {
- 	OPT_BOOLEAN('p', "patch", &patch_interactive, "interactive patching"),
- 	OPT_BOOLEAN('f', "force", &ignored_too, "allow adding otherwise ignored files"),
- 	OPT_BOOLEAN('u', "update", &take_worktree_changes, "update tracked files"),
-+	OPT_BOOLEAN('e', "edit", &edit_interactive, "super-interactive patching"),
- 	OPT_BOOLEAN( 0 , "refresh", &refresh_only, "don't add, only refresh the index"),
- 	OPT_BOOLEAN( 0 , "ignore-errors", &ignore_add_errors, "just skip files which cannot be added because of errors"),
- 	OPT_END(),
-@@ -226,6 +277,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, builtin_add_options,
- 			  builtin_add_usage, 0);
-+	if (edit_interactive)
-+		return(edit_patch(argc, argv, prefix));
- 	if (patch_interactive)
- 		add_interactive = 1;
- 	if (add_interactive)
-diff --git a/t/t3702-add-edit.sh b/t/t3702-add-edit.sh
-new file mode 100755
-index 0000000..decf727
---- /dev/null
-+++ b/t/t3702-add-edit.sh
-@@ -0,0 +1,126 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes E. Schindelin
-+#
-+
-+test_description='add -e basic tests'
-+. ./test-lib.sh
-+
-+
-+cat > file << EOF
-+LO, praise of the prowess of people-kings
-+of spear-armed Danes, in days long sped,
-+we have heard, and what honor the athelings won!
-+Oft Scyld the Scefing from squadroned foes,
-+from many a tribe, the mead-bench tore,
-+awing the earls. Since erst he lay
-+friendless, a foundling, fate repaid him:
-+for he waxed under welkin, in wealth he throve,
-+till before him the folk, both far and near,
-+who house by the whale-path, heard his mandate,
-+gave him gifts:  a good king he!
-+EOF
-+
-+test_expect_success 'setup' '
-+
-+	git add file &&
-+	test_tick &&
-+	git commit -m initial file
-+
-+'
-+
-+cat > patch << EOF
-+diff --git a/file b/file
-+index b9834b5..ef6e94c 100644
-+--- a/file
-++++ b/file
-+@@ -3,1 +3,333 @@ of spear-armed Danes, in days long sped,
-+ we have heard, and what honor the athelings won!
-++
-+ Oft Scyld the Scefing from squadroned foes,
-+@@ -2,7 +1,5 @@ awing the earls. Since erst he lay
-+ friendless, a foundling, fate repaid him:
-++
-+ for he waxed under welkin, in wealth he throve,
-+EOF
-+
-+cat > expected << EOF
-+diff --git a/file b/file
-+index b9834b5..ef6e94c 100644
-+--- a/file
-++++ b/file
-+@@ -1,10 +1,12 @@
-+ LO, praise of the prowess of people-kings
-+ of spear-armed Danes, in days long sped,
-+ we have heard, and what honor the athelings won!
-++
-+ Oft Scyld the Scefing from squadroned foes,
-+ from many a tribe, the mead-bench tore,
-+ awing the earls. Since erst he lay
-+ friendless, a foundling, fate repaid him:
-++
-+ for he waxed under welkin, in wealth he throve,
-+ till before him the folk, both far and near,
-+ who house by the whale-path, heard his mandate,
-+EOF
-+
-+echo "#!$SHELL_PATH" >fake-editor.sh
-+cat >> fake-editor.sh <<\EOF
-+mv -f "$1" orig-patch &&
-+mv -f patch "$1"
-+EOF
-+
-+test_set_editor "$(pwd)/fake-editor.sh"
-+chmod a+x fake-editor.sh
-+
-+test_expect_success 'add -e' '
-+
-+	cp fake-editor.sh file &&
-+	git add -e &&
-+	test_cmp fake-editor.sh file &&
-+	git diff --cached > out &&
-+	test_cmp out expected
-+
-+'
-+
-+cat > patch << EOF
-+diff --git a/file b/file
-+--- a/file
-++++ b/file
-+@@ -1,1 +1,1 @@
-+ gave him gifts:  a good king he!
-++
-+EOF
-+
-+test_expect_success 'add -e adds to the end of the file' '
-+
-+	test_tick &&
-+	git commit -m update &&
-+	git checkout &&
-+	git add -e &&
-+	git diff --cached > out &&
-+	test "" = "$(git show :file | tail -n 1)"
-+
-+'
-+
-+cat > patch << EOF
-+diff --git a/file b/file
-+--- a/file
-++++ b/file
-+@@ -1,1 +1,1 @@
-++
-+ LO, praise of the prowess of people-kings
-+EOF
-+
-+test_expect_success 'add -e adds to the beginning of the file' '
-+
-+	test_tick &&
-+	git commit -m update &&
-+	git checkout &&
-+	git add -e &&
-+	git diff --cached > out &&
-+	test "" = "$(git show :file | head -n 1)"
-+
-+'
-+
-+test_done
--- 
-1.5.6.84.ge5c1
+Thanks for the feedback. I'll put up v2 in a second.
+
+Ciao!
