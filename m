@@ -1,102 +1,93 @@
-From: "Adam Brewster" <adam@adambrewster.com>
-Subject: Re: [PATCH/RFC] Created git-basis and modified git-bundle to accept --stdin.
-Date: Tue, 24 Jun 2008 11:30:38 -0400
-Message-ID: <c376da900806240830p2a48aff0uaf6f22372fead5ef@mail.gmail.com>
-References: <1214273297-8257-1-git-send-email-adambrewster@gmail.com>
-	 <1214273297-8257-2-git-send-email-adambrewster@gmail.com>
-	 <c376da900806231921y2d822been9cd573d509fbf78a@mail.gmail.com>
-	 <m3iqvzl091.fsf@localhost.localdomain>
+From: "Klas Lindberg" <klas.lindberg@gmail.com>
+Subject: Re: git-fetch remote tag to local branch fails
+Date: Tue, 24 Jun 2008 17:31:49 +0200
+Message-ID: <33f4f4d70806240831q14caacddp66645e1bcfb6d14b@mail.gmail.com>
+References: <33f4f4d70806240517h5e3ae420h263dd0c2d6bae459@mail.gmail.com>
+	 <8aa486160806240638o221b01d2i2f46cc8f0f3760a3@mail.gmail.com>
+	 <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
+	 <8aa486160806240727r6fc6de6doec8300700293a3a7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 17:31:40 2008
+To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 17:32:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBAUd-0003NP-Jz
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:31:40 +0200
+	id 1KBAVj-0003mU-2S
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755771AbYFXPao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 11:30:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755597AbYFXPao
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:30:44 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:33125 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755471AbYFXPam (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 11:30:42 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so539259yxl.1
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 08:30:39 -0700 (PDT)
+	id S1755728AbYFXPbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 11:31:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbYFXPbv
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:31:51 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:5213 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753961AbYFXPbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 11:31:50 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1196485fgg.17
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 08:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=IMIESM2mM0H9FwiOG96FuPiLeiHQJC+ixERla999BPo=;
-        b=RsKUERqZMApbWR6tr41f80toOxuG4wxDu042nayrZkygy5SXoj8POjcsW2i+EUMk0G
-         8res2pg6yFSOslsPhQy9ghK4V4V++p4l1bKqx7TJST8P4TuDpIR1ASfBixKq1LV6V+xy
-         c+k3DedjCoOE+/I7n4zI/swwhUYqPiPjFKaPI=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=/kZzs/bL1PWtbiKmqrycKfGsN1xqJ1TtmshvJAetSJA=;
+        b=Ij1AxS5lgfYACkpkNlXrkIjEAhOZqrfOWnIv0snGLrQjc5UCCxw7jcolQVcY/mRGAz
+         S8Xu8lImfg3d/KAQxSfWD8jzgfCAu2ZzPxBwnpzu/6i4kTeXdhMDDUzHHToRF6gsUyyE
+         oZ+jAGgOjigPevFi4W+sUyymW2zSlA4xt8xOQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=Eb0G11sgG/vPZuF0qKQNLsoo0PnAYoOfvTucuwpNNp7Rckcs6siCpPO3W1GpdgtCBK
-         JV8hDsSv7Gis7DHQCkcd02+fA1Bx/bL53V3AvLv8xOLq9xxeAXe28j++G4m8ULpsB6Z0
-         kIZGEORMXfBoAp82LQBizNeQ8SK2+nYscp3B0=
-Received: by 10.125.136.9 with SMTP id o9mr1310444mkn.38.1214321438056;
-        Tue, 24 Jun 2008 08:30:38 -0700 (PDT)
-Received: by 10.150.205.18 with HTTP; Tue, 24 Jun 2008 08:30:38 -0700 (PDT)
-In-Reply-To: <m3iqvzl091.fsf@localhost.localdomain>
+         :references;
+        b=MT/yWxe1F+yl2By698xI99uuxyzWQYiCkve1pwBpdjQVeCl6AorjxUeko8C71vuZtb
+         Vchq8OjxH3JaeX3u7/SXJOWdQTCnj2di6ds/fx8UIfPJoizPANRcGIX5izfb1X/A2WII
+         7GO2Z8kNnKXZ31mMHyUSiIZFsI5JpcMXEmRZc=
+Received: by 10.86.89.1 with SMTP id m1mr9116733fgb.45.1214321509110;
+        Tue, 24 Jun 2008 08:31:49 -0700 (PDT)
+Received: by 10.86.68.16 with HTTP; Tue, 24 Jun 2008 08:31:49 -0700 (PDT)
+In-Reply-To: <8aa486160806240727r6fc6de6doec8300700293a3a7@mail.gmail.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: aef4028baf62177b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86074>
 
->> Git-basis is a perl script that remembers bases for use by git-bundle.
->> Code from rev-parse was borrowed to allow git-bundle to handle --stdin.
+>>> git branch -a
+>>>
 >
-> I'd rather you follow git-pack-objects, and use `--revs` for the name
-> of this option (or even '--not --revs').  The name `--stdin` might
-> imply that you are providing objects names on stdin of git-bundle.
->
-> But perhaps I am worrying over nothing.
->
+> empty?
 
-This seems like a fine idea.
+Sorry, my mistake. It lists "master"
 
-> [...]
->> Then you can add the objects in the bundle to the basis, so they won't
->> get included in the next pack like this:
+>>> git-pull bogustree refs/tags/foo_tag:refs/heads/b
 >>
->>  $ git-basis --update my-basis < my-bundle
+>> actually does update branch "b". I find the behaviour quite inconsistent.
 >
-> Why not use "$(git ls-remote my-bundle)" somewhere in the invocation
-> creating new bundle instead?
->
+> You asked explicitly to update branch b with :refs/heads/b.
 
-You could use "git ls-remote my-bundle | git-basis --update my-basis"
-to do the same thing as the command I gave above.
+I'm not sure what you mean. I asked it to update local branch "b"
+against remote tag "foo_tag" and it did just that. I find it
+inconsistent that pull can do this, but fetch can't.
 
->> I'm sure that my implementation is crap, but I think this is a useful
->> idea.  Anybody agree?  Disagree?
->
-> Documentation, please?  Especially that it looks like '--stdin' option
-> is a bit tricky...
->
+> Can you explain why you have to do it this way? Or the whole workflow?
 
-I wanted to test the waters and make sure that someone was at least
-vaguely interested in this (no need to document code that is never
-going to leave my machine).
+I am looking into the possibility of writing a tool that handles
+configurations of trees. For instance, I want the tool to be able to
+consume some version of a configuration and create, update or reset
+branches in other trees accordingly.
+The main stumbling block is actually that a lot of git commands have
+side effects on the working tree (usually because they do something
+with a "current" branch). In my mind, the user should be able to
+select a configuration that effectively fast forwards branches in some
+trees and resets branches in others -- all of it without touching any
+working trees (unless there is an explicit checkout).
+The example in this case is that fetching tags to update a branch
+isn't possible. Pulling *is* possible, but would also update the
+current branch and the working tree.
 
-I'll prepare another patch with documentation and changing --stdin to
---revs when I get a chance.
-
-Thank you,
-Adam Brewster
+/Klas
