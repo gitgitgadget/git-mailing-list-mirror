@@ -1,100 +1,156 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Tue, 24 Jun 2008 21:43:46 +0200
-Message-ID: <20080624194346.GD9189@artemis.madism.org>
-References: <alpine.LFD.1.10.0806230912230.2926@woody.linux-foundation.org> <20080623164917.GA25474@sigill.intra.peff.net> <alpine.LFD.1.10.0806230953550.2926@woody.linux-foundation.org> <20080623171505.GB27265@sigill.intra.peff.net> <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org> <alpine.LFD.1.10.0806231114180.2926@woody.linux-foundation.org> <7vzlpbeksn.fsf@gitster.siamese.dyndns.org> <20080624082447.GB24357@artemis.madism.org> <alpine.LFD.1.10.0806241001140.2926@woody.linux-foundation.org> <20080624193028.GC9189@artemis.madism.org>
+Date: Tue, 24 Jun 2008 15:46:18 -0400
+Message-ID: <20080624194617.GA11862@sigill.intra.peff.net>
+References: <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org> <alpine.LFD.1.10.0806231114180.2926@woody.linux-foundation.org> <20080623183358.GA28941@sigill.intra.peff.net> <alpine.LFD.1.10.0806231137070.2926@woody.linux-foundation.org> <20080623195314.GA29569@sigill.intra.peff.net> <alpine.LFD.1.10.0806231307070.2926@woody.linux-foundation.org> <20080624053504.GB19224@sigill.intra.peff.net> <alpine.LFD.1.10.0806240954150.2926@woody.linux-foundation.org> <20080624173428.GA9500@sigill.intra.peff.net> <alpine.LFD.1.10.0806241036560.2926@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="4zI0WCX1RcnW9Hbu";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git
-X-From: git-owner@vger.kernel.org Tue Jun 24 21:45:19 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jun 24 21:47:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBERx-00075F-RK
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:45:10 +0200
+	id 1KBEU2-0007rx-Fa
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbYFXTnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 15:43:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYFXTnz
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:43:55 -0400
-Received: from pan.madism.org ([88.191.52.104]:37991 "EHLO hermes.madism.org"
+	id S1753153AbYFXTqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 15:46:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752962AbYFXTqW
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:46:22 -0400
+Received: from peff.net ([208.65.91.99]:1118 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750708AbYFXTny (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 15:43:54 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9CA93374CD;
-	Tue, 24 Jun 2008 21:43:47 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 3404A46DEE2; Tue, 24 Jun 2008 21:43:46 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1752704AbYFXTqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 15:46:20 -0400
+Received: (qmail 6585 invoked by uid 111); 24 Jun 2008 19:46:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 15:46:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jun 2008 15:46:18 -0400
 Content-Disposition: inline
-In-Reply-To: <20080624193028.GC9189@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <alpine.LFD.1.10.0806241036560.2926@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86128>
 
+On Tue, Jun 24, 2008 at 10:44:24AM -0700, Linus Torvalds wrote:
 
---4zI0WCX1RcnW9Hbu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> And to solve that _single_ problem, I wanted parse_options() to be able 
+> to:
+> 
+>  - stop at unknown options (so that I could hand-parse them)
+> 
+>  - ignore unknown options (so that I could parse all the ones I knew 
+>    about, and then either hand-parse the rest, or just pass them on to 
+>    _another_ function that used some arbitrary model to parse the parts it 
+>    knew about)
+> 
+> See? Single issue.
 
-On Tue, Jun 24, 2008 at 07:30:28PM +0000, Pierre Habouzit wrote:
->   Though for the win32 port where fork is replaced with threads, well,
-> it may cause some issues, so I was reluctant wrt them. Of course it's
-> unlikely that it will cause problems, but one never knows ;)
+OK, fair enough. You are working towards a single goal. But I think
+there is a flaw with that one sub-part of your goal (specifically your
+second bullet point). I don't care about the other parts, and in fact I
+even said "this is a fine way of doing that".
 
-  OTOH if it's really a problem, we could easily use a custom allocator
-in parse-options that registers a pthread_cleanup_push (or whichever
-atexit() like pthread use, I'm not really into threads) that would
-cleanup this[0]. So maybe just leaking is the simplest way.
+> And I even sent out a single patch for it. That single patch, btw, was 
+> even rather small. 
+> 
+> Did you ever look at that patch? Did you ever look at the code I was 
+> trying to have use parse_options()? No.
 
-  As a consequence it makes the restriction about not keeping pointers
-to argv during the parse go away, and I frankly don't like this
-restriction, it's counterintuitive and very error prone, which arguably
-means it's a really bad design.
+How can you even say something so ridiculous? Were you sitting at my
+computer all day yesterday, making sure I didn't read your patch? No?
+Funnily enough, I was there. And guess what I saw? Yes, it was me
+READING YOUR PATCH (in a mirror, of course).
 
+But I don't expect you to have a camera installed over my shoulder. So I
+guess you would have had to just content yourself with THE EMAILS WHERE I
+MENTION YOUR PATCH AND ITS EFFECTS.
 
-  [0] In fact we may even want to have some kind of
-      xmalloc_that_is_freed_at_exit that could be used where we
-      purposely leak things, and cleanse that on atexit() for POSIX
-      platforms and whatever win32 people like to use in their threads.
-      It has the nice property to avoid lots of false positives when you
-      are using valgrind and other memory checkers.
+> You constantly try to change the discussion to be about SOMETHIGN ELSE.
+> 
+> For example, you keep on bringing up this TOTAL RED HERRING:
+> 
+> >   - It is impossible for that mechanism to be correct in all cases, due
+> >     to the syntactic rules for command lines. IOW, you cannot parse an
+> >     element until you know the function of the element to the left.
+> 
+> NOBODY F*CKIGN CARES!
 
+I care. Apparently Junio cared in the thread that I pointed out earlier.
+Other commands that parse the options will care, if we are to ever port
+them to parse_options. I understand that you don't care about those
+things, and you only want git-blame to work.  I am merely trying to help
+amortize work that goes into fixing git-blame into helping to fix other
+commands. To do that, I pointed out a flaw that might prevent the same
+solution being used again.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I understand that you are interested in incremental change, and that
+doing something now in git-blame is better than doing nothing while we
+wait for a longer, more complete solution to arrive. But did I say "No,
+we shouldn't apply this patch from Linus because it's not the optimal
+solution?" No. Instead, I said "In the meantime, your patch does not
+make this particular problem any worse."
 
---4zI0WCX1RcnW9Hbu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Because what builtin-blame.c *already* does is exactly that.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I KNOW AND I EVEN SAID THAT. But here it is in case you are hard of
+hearing:
 
-iEYEABECAAYFAkhhTnIACgkQvGr7W6Hudhy+0wCZAUoZEec7XQjC8/+F3R/4stO7
-lzUAmwbg8lxxaUTvzDQZHXSoS2R6dkLI
-=B4c7
------END PGP SIGNATURE-----
+  From 20080623195314.GA29569@sigill.intra.peff.net:
 
---4zI0WCX1RcnW9Hbu--
+    "In the meantime, I don't think your patch makes anything _worse_,
+    since we already have these sorts of bugs in the current parsing
+    code."
+
+  From 20080623183358.GA28941@sigill.intra.peff.net:
+
+    "It's worse than that...Try (with current git-blame...
+
+     $ git blame -n 1 git.gc
+     fatal: bad revision '1'
+
+> This is what I'm complaining about with your totally IDIOTIC mails. You're 
+> ignoring reality, and talking about how things "ought to work", and never 
+> ever apparently looked at how things *do* work.
+
+Again, how in the world can you say that I didn't look at how things do
+work WHEN I CUT AND PASTED A SAMPLE TRANSCRIPT SHOWING HOW THEY DO WORK?
+
+BTW, this is the third time you have mentioned the phrase "ought to
+work" in a way that is totally disingenuous about what I actually said.
+I can understand that perhaps I was not clear in the initial statement.
+But I would have thought the other two times I explained it further
+would have made it clear. So did you truly not understand my point, or
+are you just being intentionally rude?
+
+> The fact is, the one program I wanted to convert already does exactly what 
+> you claim is "impossible to be correct in all cases".
+
+And it's not correct as it is now. And we have lived with it. Which is
+why I didn't say "your proposal makes things worse." In fact, I said the
+opposite.
+
+> So either shut up, or send a patch to fix what you consider a bug. I'm 
+> waiting.
+
+I already volunteered to work on it. I'm sorry that the patch didn't
+materialize immediately, but I was working on other parts of git, just
+as I mentioned when I said I would work on it.
+
+In the meantime, I think Pierre has proposed an alternate approach that
+also has promise, so I think it makes sense to see how he progresses
+with that rather than potentially duplicate work.
+
+And I will shut up now, because this is obviously getting nowhere. I
+just find your responses so rude and misinformed not about technical
+matters, but about my statements and my intent that I feel the need to
+publicly defend myself.
+
+-Peff
