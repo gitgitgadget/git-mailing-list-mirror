@@ -1,58 +1,86 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Mon, 23 Jun 2008 22:17:41 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806232213360.2979@xanadu.home>
-References: <jeske@willow=01l5V7waFEDjChmh>
- <willow-jeske-01l5PFjPFEDjCfzf-01l5V7wbFEDjCX7V@videotron.ca>
- <willow-jeske-01l5cKsCFEDjC=91MX@videotron.ca>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH v2] git-svn: make rebuild respect rewriteRoot option
+Date: Mon, 23 Jun 2008 22:11:26 -0400
+Message-ID: <20080624021126.GA31093@kodama.kitenet.net>
+References: <20080624021736.2d272d9c@neuron>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 04:19:05 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 24 04:20:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAy7Z-000725-Ct
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 04:19:01 +0200
+	id 1KAy8l-0007IA-VD
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 04:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbYFXCRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 22:17:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbYFXCRn
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 22:17:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35978 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751364AbYFXCRm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 22:17:42 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2Y00EWM3PHD260@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 23 Jun 2008 22:17:42 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <willow-jeske-01l5cKsCFEDjC=91MX@videotron.ca>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1753785AbYFXCTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 22:19:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754074AbYFXCTK
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 22:19:10 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:46755 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753754AbYFXCTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 22:19:07 -0400
+X-Greylist: delayed 453 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Jun 2008 22:19:07 EDT
+Received: from kodama.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 787EE3142F7
+	for <git@vger.kernel.org>; Mon, 23 Jun 2008 22:11:29 -0400 (EDT)
+Received: by kodama.kitenet.net (Postfix, from userid 1000)
+	id 978E811439D; Mon, 23 Jun 2008 22:11:26 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20080624021736.2d272d9c@neuron>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93/7081/Fri May  9 11:52:50 2008 on wren.kitenet.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85979>
-
-On Tue, 24 Jun 2008, David Jeske wrote:
-
-> I've heard from a couple users that the solution to these problems is to "go
-> dig what you need out of the log, it's still in there". However, it's only in
-> there until the log is garbage collected. This either means they are
-> destructive operations, or we expect "running without ever collecting the log"
-> to be a valid mode of operation... which I doubt is the case.
-
-Why not?
-
-> Question: How about assuring ALL operations can be done non-destructivly by
-> default?
-
-	git config --global gc.reflogexpire "2 years"
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85980>
 
 
-Nicolas
+--/9DWx/yDrRhgMJTb
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Jan Kr=FCger wrote:
+> Suppose someone fetches git-svn-ified commits from another repo and then
+> attempts to use 'git-svn init --rewrite-root=3Dfoo bar'. Using git svn re=
+base
+> after that will fail badly:
+>=20
+>  * For each commit tried by working_head_info, rebuild is called indirect=
+ly.
+>  * rebuild will iterate over all commits and skip all of them because the
+>    URL does not match. Because of that no rev_map file is generated at al=
+l.
+>  * Thus, rebuild will run once for every commit. This takes ages.
+>  * In the end there still isn't any rev_map file and thus working_head_in=
+fo
+>    fails.
+
+Very timely, I had just been beating my head against this problem.
+Your patch works great for me.
+
+--=20
+see shy jo
+
+--/9DWx/yDrRhgMJTb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFIYFfDd8HHehbQuO8RAl8CAKCq1fGDITYTkpwPwwSCwecX+Ljq8QCgrith
+EqmallVrT85njIvD4u+DEy4=
+=wbmH
+-----END PGP SIGNATURE-----
+
+--/9DWx/yDrRhgMJTb--
