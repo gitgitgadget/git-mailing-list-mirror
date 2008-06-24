@@ -1,58 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
-Date: Tue, 24 Jun 2008 15:31:31 -0700
-Message-ID: <7vwskea2ik.fsf@gitster.siamese.dyndns.org>
-References: <20080624222105.GA24549@dervierte>
- <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com>
+From: <Patrick.Higgins@cexp.com>
+Subject: Windows symlinks
+Date: Tue, 24 Jun 2008 16:42:49 -0600
+Message-ID: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jeske@google.com
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 00:33:06 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 00:45:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBH4T-0002ys-LW
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:33:06 +0200
+	id 1KBHGE-0006BF-Ry
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773AbYFXWbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 18:31:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754724AbYFXWbv
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:31:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38171 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753336AbYFXWbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 18:31:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 61C028C3C;
-	Tue, 24 Jun 2008 18:31:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B95B78C39; Tue, 24 Jun 2008 18:31:36 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 51CDFFB4-423D-11DD-81C2-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752741AbYFXWoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 18:44:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbYFXWoU
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:44:20 -0400
+Received: from mx02.cexp.com ([170.131.136.83]:17800 "EHLO mx02.cexp.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752741AbYFXWnt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 18:43:49 -0400
+Received: from uscobrmfa-se-05 (uscobrmfa-se-05.cexp.com [170.131.144.36])
+	by mx02.cexp.com (Postfix) with ESMTP id C393D416D55
+	for <git@vger.kernel.org>; Tue, 24 Jun 2008 16:43:48 -0600 (MDT)
+Received: from USCOBRMFA-SE-70.northamerica.cexp.com ([10.128.26.36]) by USCOBRMFA-SE-52.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 24 Jun 2008 16:43:48 -0600
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Windows symlinks
+Thread-Index: AcjWS6EKqcEXYDfEEd2H9gASPzin7A==
+X-OriginalArrivalTime: 24 Jun 2008 22:43:48.0171 (UTC) FILETIME=[C42501B0:01C8D64B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86163>
 
-Steven Walter <stevenrwalter@gmail.com> writes:
+It looks like one of the bigger (biggest?) hurdles for git adoption at my company is going to be handling symlinks on Windows. We may be able to sidestep the issue entirely by having developers run Linux in a virtual machine (or better yet, Windows in a VM) because we deploy to Linux and thus can make a very strong argument that developers should develop on Linux, too. That run into an image problem where people might start blaming git for needing to have an extra operating system around just for revision control.
 
-> @@ -225,6 +243,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->  	if (reset_type == HARD && is_bare_repository())
->  		die("hard reset makes no sense in a bare repository");
->  
-> +        if (reset_type == HARD && !force && index_is_dirty()) {
-> +                die("Uncommitted changes; re-run with -f to trash them");
-> +        }
-> +
+We currently use Clearcase snapshot views on Windows and it has some kind of magic to be able to deal with symlinks. I haven't actually used the Windows version of Clearcase so I don't know how it does it, but my understanding is that it handles them with copies, and I guess it somehow knows to update all the copies when a change is made.
 
-Please don't.  With your change, does the testsuite even pass?
+Has anyone thought about a way for git to handle symlinks? Vista seems to have added native symlinks, but you need have elevated privilege to create them. NTFS junction points seem helpful for older versions of Windows, but don't work for anything except directories, and seem to be dangerous to use with tools that do recursive deletes. Neither junction points nor native symlinks sound like great options.
 
-"reset --hard" has *ALWAYS* meant to be destructive --- discarding
-potential local cruft is the whole point of the operation.
+Cygwin's clever symlink trick seems to work pretty well in practice. I'm not exactly sure what it's doing, but it seems to create a shortcut that it's own programs understand. Some other non-Cygwin programs seem to understand them, too, but Java does not which is a big problem for me.
 
-Learn the lingo, and get over it.
+I just don't see any good solutions here. Does anyone have any better ideas?
+
+Thanks,
+Patrick
