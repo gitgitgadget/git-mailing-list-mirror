@@ -1,64 +1,154 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] clone: create intermediate directories of destination
- repo
-Date: Tue, 24 Jun 2008 11:20:07 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806241113360.19665@iabervon.org>
-References: <177e83dd0806231251u223717e4s2149f69313787ead@mail.gmail.com> <alpine.LNX.1.00.0806231554380.19665@iabervon.org> <20080623203835.GA8105@sigill.intra.peff.net> <0YbSdnKH0_SP30-YMV0Y1aH4SO46yc6x_2EA1VGwPtV_CltGk-7wdg@cipher.nrlssc.navy.mil>
- <20080624055022.GC19224@sigill.intra.peff.net> <7v3an3e0xv.fsf@gitster.siamese.dyndns.org> <20080624080437.GA2581@sigill.intra.peff.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 10:29:08 -0500
+Message-ID: <U-ySqQANiPRpld4kgzdXbovGgsj6LfOEdRmtTDU2yyvITSG3LnZAsQ@cipher.nrlssc.navy.mil>
+References: <willow-jeske-01l5oEsvFEDjCjRW>	<willow-jeske-01l5PFjPFEDjCfzf-01l5oEswFEDjCZBN> <willow-jeske-01l5oJ=64=91FEDjCgQT>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, zuh@iki.fi,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 24 17:21:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Jeske <jeske@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 17:30:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBAKT-0007mo-RW
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:21:10 +0200
+	id 1KBATC-0002pw-AL
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbYFXPUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 11:20:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757791AbYFXPUN
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:20:13 -0400
-Received: from iabervon.org ([66.92.72.58]:47922 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755886AbYFXPUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 11:20:11 -0400
-Received: (qmail 7988 invoked by uid 1000); 24 Jun 2008 15:20:07 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Jun 2008 15:20:07 -0000
-In-Reply-To: <20080624080437.GA2581@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755213AbYFXP3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 11:29:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbYFXP3O
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:29:14 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58582 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753717AbYFXP3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 11:29:13 -0400
+Received: by mail.nrlssc.navy.mil id m5OFT96o009472; Tue, 24 Jun 2008 10:29:09 -0500
+In-Reply-To: <willow-jeske-01l5oJ=64=91FEDjCgQT>
+X-OriginalArrivalTime: 24 Jun 2008 15:29:08.0839 (UTC) FILETIME=[0BA6BF70:01C8D60F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86072>
 
-On Tue, 24 Jun 2008, Jeff King wrote:
-
-> On Tue, Jun 24, 2008 at 12:39:40AM -0700, Junio C Hamano wrote:
+David Jeske wrote:
+> As a more practical question, how do I do this workflow illustrated below?
 > 
-> > > The shell version used to use "mkdir -p" to create the repo path, but
-> > > the C version just calls "mkdir". Let's replicate the old behavior. In
-> > > this case we can simply create the directories leading up to the git
-> > > dir. If it's a bare repo, then that is everything that init_db wants
-> > > ahead of time. If it isn't bare, then the worktree contains the git dir,
-> > > so we create the worktree.
-> > 
-> > Clever ;-)
+> It's sort of similar to the workflow that "git stash" is trying to support,
+> except that I have a bunch of commits instead of a bunch of
+> uncommitted-changes.
 > 
-> I am worried that it is too clever. I didn't see an obvious way for
-> work_tree and git_dir to not have that property, but I think it is still
-> worth somebody double-checking.
+> I pull a repository that looks like this:
+> 
+> .  a<--b<--c  <--master
 
-I think you can specify git_dir and work_tree on the command line, and set 
-them to whatever you want, although I now don't remember whether they're 
-actually both followed for clone (I tried to match the shell version, 
-whose behavior didn't make too much sense to me).
+git clone <master_repo>
+cd master_repo
 
-	-Daniel
-*This .sig left intentionally blank*
+> 
+> Then I hack away to this, and then throw my own branch on the end, along with
+> master:
+> 
+> .  a<--b<--c<--d<--e<--f<--g  <--master (jeske)
+> .                             <--feature1 (jeske)
+
+hack hack hack
+git commit -a -m 'd'
+hack hack hack
+git commit -a -m 'e'
+hack hack hack
+git commit -a -m 'f'
+hack hack hack
+git commit -a -m 'g'
+git branch feature1
+
+
+> 
+> While the server looks like this:
+> 
+> .  a<--b<--c<--1<--2<--3  <--master (server)
+
+git fetch
+
+> I want to get my repository to look something like this:
+> 
+> .  a<--b<--c<--1<--2<--3  <--master (jeske)
+> .           \
+> .            d<--e<--f<--g   <-- feature1 (jeske)
+
+git reset --hard origin/master
+
+Side Note: you probably should have been developing on 'feature1' branch
+from the start. 'reset --hard' is a special case. If feature1 is a private
+branch for developing in, you may want to rebase it ontop of master and retest
+before merging into master and pushing so that you can maintain a nice linear
+history when possible. Or you can just merge into master and then push.
+
+> So I can then do this:
+> 
+> .  a<--b<--c<--1<--2<--3<--zz  <--master (jeske)
+> .           \
+> .            d<--e<--f<--g   <-- feature1 (jeske)
+
+hack hack hack
+git commit -a -m 'zz'
+
+> 
+> ..and then push zz onto the server after 3.
+
+git push
+
+> ..and I want to do it with safe commands that won't leave any dangling
+> references. (say if I forget to put the feature1 branch on)
+
+_Don't_ forget. 'reset --hard' is named that way for a reason. If you do
+forget, git makes it _easy_ to recover from.
+
+Let's say you _did_ forget. You did the 'reset --hard' on master and then
+you committed the 'zz' change without creating the 'feature1' branch.
+You can still create the feature1 branch since git saved the previous state
+in the reflog. It is two changes back.
+
+git branch feature1 master@{2}
+
+If you didn't know it was two changes back, then you can look through the
+reflog using 'git log -g master'. The commit message is there along with a
+reflog message describing what action was performed.
+
+
+
+After saying all of that, here is how I think you _should_ have done things.
+Notice I _did_not_ use 'reset --hard'.
+
+git clone <master_repo>
+cd master_repo
+git checkout -b feature1   # we create our feature branch immediately since
+                           # creating branches is so effortless in git. A
+                           # private feature branch should _always_ be created
+                           # and used for development.
+hack hack hack
+git commit -a -m 'd'       # Make our 4 commits on the feature branch
+hack hack hack
+git commit -a -m 'e'
+hack hack hack
+git commit -a -m 'f'
+hack hack hack
+git commit -a -m 'g'
+git checkout master         # Let's go back to master
+git pull                    # Fetch and merge the changes from the server
+git checkout -b 'master_zz' # Create a branch for developing the zz feature
+hack hack hack
+git commit -a -m 'zz'       # Commit the zz feature
+git checkout master         # Go back to master
+git merge master_zz         # Merge zz
+git push                    # And push master out
+git branch -d master_zz     # Now we're done with master_zz since it's all merged in
+
+Now you're in the same place you were above, you can continue developing your feature
+on feature1 branch by checking it out. This is also were rebase comes in handy, since
+you may want to rebase feature1 on top of the new current master. Once it is done and
+retested, you merge it into master and push it out.
+
+-brandon
