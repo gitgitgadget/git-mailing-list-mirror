@@ -1,72 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 00:03:52 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806232356340.2979@xanadu.home>
-References: <alpine.LFD.1.10.0806232213360.2979@xanadu.home>
- <willow-jeske-01l5PFjPFEDjCfzf-01l5ciVtFEDjCaD9@videotron.ca>
- <willow-jeske-01l5e9cgFEDjCh3F@videotron.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Mon, 23 Jun 2008 21:20:19 -0700
+Message-ID: <7vtzfjea64.fsf@gitster.siamese.dyndns.org>
+References: <1214181904-30265-1-git-send-email-LeWiemann@gmail.com>
+ <1214183688-8544-1-git-send-email-LeWiemann@gmail.com>
+ <200806231531.13082.jnareb@gmail.com> <485FE3F7.4040102@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 06:06:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 06:21:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAzmm-0001YP-QE
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 06:05:50 +0200
+	id 1KB025-0004pS-Aw
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 06:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750937AbYFXEDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 00:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbYFXEDy
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 00:03:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25930 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbYFXEDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 00:03:53 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2Y00HW38MGA8E0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 24 Jun 2008 00:03:53 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <willow-jeske-01l5e9cgFEDjCh3F@videotron.ca>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1751738AbYFXEUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 00:20:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751814AbYFXEUd
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 00:20:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751600AbYFXEUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 00:20:32 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 648D212329;
+	Tue, 24 Jun 2008 00:20:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6BE2612328; Tue, 24 Jun 2008 00:20:27 -0400 (EDT)
+In-Reply-To: <485FE3F7.4040102@gmail.com> (Lea Wiemann's message of "Mon, 23
+ Jun 2008 19:57:11 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E20E0A2C-41A4-11DD-B2D8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85986>
 
-On Tue, 24 Jun 2008, David Jeske wrote:
+Lea Wiemann <lewiemann@gmail.com> writes:
 
-> -- Nicolas Pitre wrote:
-> >> or we expect "running without ever collecting the log"
-> >> to be a valid mode of operation... which I doubt is the case.
-> >
-> > Why not?
-> 
-> Is see the hole I left in my logic, so let me restate.
-> 
-> ... or we expect "human parsing of the the log" is a valid common
-> user-interface for non-git developers.
+>> How it is different from PERL_PATH?
+>
+> Right, I didn't think of that.  PERL_PATH isn't available in the tests
+> though, it's only used internally by the Makefile to generate (among
+> other things) gitweb.cgi.  This means that while we can control under
+> which Perl version gitweb.cgi runs, we cannot control under which Perl
+> version the test suite runs (at least without $PATH trickery).  Does
+> this bother us?
+>
+> If yes, I'd suggest we keep GITPERL but rename it to GIT_TEST_PERL,
+> because that's what it's about.  If not, I'll rip it out and simply
+> call 'perl' in the test shell script, whatever version it may be.
 
-The reflog is one of the primary user interface for all git users. 
-Please just try:
+That sounds wrong, as the point of tests would be to make sure the stuff
+you are going to install would work with what you thought will be used
+from the system.
 
-	git reflog
+If "isn't available in the tests" is the problem, is it possible to make
+it available?  We are passing down SHELL_PATH from primary Makefile to t/
+and you should be able to do the same for Perl path...
 
-and see for yourself.
-
-And if you want more details, then just try:
-
-	git log -g
-
-You may even try any combination of flags in addition to -g with
-'git log'.
-
-I hope you'll feel much safer then.
-
-
-Nicolas
+About the Test::WWW:Mechanize::CGI thing, how widely available is it?  I
+do not think it is packaged for Debian nor Ubuntu, for example.
