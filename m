@@ -1,78 +1,93 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
+From: Robert Haines <rhaines@manchester.ac.uk>
 Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 16:02:33 +0200
-Message-ID: <1214316153.6441.24.camel@localhost>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
-	 <1214306517.6441.10.camel@localhost>
-	 <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
-	 <alpine.DEB.1.00.0806241246500.9925@racer>
-	 <ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
-	 <m3abhbkoe2.fsf@localhost.localdomain>
-	 <ce513bcc0806240642g56ca5450t4edd24fd88ce79c7@mail.gmail.com>
-	 <20080624135429.GA6905@atn.sw.ru>  <20080624135911.GB6905@atn.sw.ru>
-Mime-Version: 1.0
-Content-Type: text/plain
+Date: Tue, 24 Jun 2008 15:08:16 +0100
+Message-ID: <BC8F2A2A-9817-401B-BAC3-F36ED42976E5@manchester.ac.uk>
+References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com> <1214306517.6441.10.camel@localhost> <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com> <A3460448-8007-4E02-AC20-85C1A8C85786@manchester.ac.uk> <ce513bcc0806240653i45044297t3b963940c5b3daf0@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Erez Zilber <erezzi.list@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Anton Gladkov <agladkov@parallels.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 16:04:15 2008
+Cc: "Matthias Kestenholz" <mk@spinlock.ch>, git@vger.kernel.org
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 16:09:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB97p-0001HC-08
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:04:01 +0200
+	id 1KB9Cv-0003a0-6O
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755041AbYFXOCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 10:02:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbYFXOCg
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:02:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:58038 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753017AbYFXOCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 10:02:35 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1178998fgg.17
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 07:02:34 -0700 (PDT)
-Received: by 10.86.92.7 with SMTP id p7mr8970064fgb.72.1214316154054;
-        Tue, 24 Jun 2008 07:02:34 -0700 (PDT)
-Received: from ?192.168.11.104? ( [129.132.78.250])
-        by mx.google.com with ESMTPS id l19sm12160890fgb.7.2008.06.24.07.02.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 07:02:33 -0700 (PDT)
-In-Reply-To: <20080624135911.GB6905@atn.sw.ru>
-X-Mailer: Evolution 2.22.2 
+	id S1757503AbYFXOIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 10:08:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756517AbYFXOIT
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:08:19 -0400
+Received: from tranquility.mcc.ac.uk ([130.88.200.145]:64316 "EHLO
+	tranquility.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756171AbYFXOIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 10:08:18 -0400
+Received: from gomwe.mcc.ac.uk ([10.2.18.2])
+	by tranquility.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <rhaines@manchester.ac.uk>)
+	id 1KB9Bx-000DY3-0s; Tue, 24 Jun 2008 15:08:17 +0100
+Received: from leela.rcs.manchester.ac.uk ([130.88.1.66]:52077)
+	by gomwe.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <rhaines@manchester.ac.uk>)
+	id 1KB9Bw-000IIs-R6; Tue, 24 Jun 2008 15:08:16 +0100
+In-Reply-To: <ce513bcc0806240653i45044297t3b963940c5b3daf0@mail.gmail.com>
+X-Mailer: Apple Mail (2.924)
+X-Authenticated-Sender: Robert Haines from leela.rcs.manchester.ac.uk [130.88.1.66]:52077
+X-Authenticated-From: Robert.Haines@manchester.ac.uk
+X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86060>
 
-On Tue, 2008-06-24 at 17:59 +0400, Anton Gladkov wrote:
-> On Tue, Jun 24, 2008 at 05:54:29PM +0400, Anton Gladkov wrote:
-> > On Tue, Jun 24, 2008 at 05:42:14PM +0400, Erez Zilber wrote:
-> > > I guess that the problem is that no proper mapping exists. That's why
-> > > I see the following in /var/log/httpd/error_log:
-> > >
-> > > [Tue Jun 24 16:31:52 2008] [error] [client 172.16.0.7] File does not
-> > > exist: /var/www/html/pub
-> > >
-> > > What do I need to add in /etc/httpd/conf.d/ in order to set the
-> > > mapping to /pub/git instead of /var/www/html/pub ? Is there an example
-> > > that shows how to map?
-> > 
-> > IMO the simplest way is to create a symlink 'pub' in /var/www/html directory
-> > pointing to /pub and to add 'Options FollowSymLinks' to <Directory /> in httpd.conf.
-> 
-> But, I think it will not help you.
-> AFAIK you need a gitweb.
-> 
+>> So your clone address for git:// is wrong, you don't need the /pub/ 
+>> git:
+>> git clone git://erez.zilber@kites/erez.zilber/my_test.git
+>> As you've moved the root of the filesystem as far as git-daemon is  
+>> concerned
+>> to /pub/git with the --base-path option.
+>
+> I understand. However, when I try to run it according to your  
+> suggestion:
+>
+> [root@kd001 t]# git clone git://erez.zilber@kites/erez.zilber/ 
+> my_test.git
+> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/ 
+> my_test/.git/
+> fatal: Unable to look up erez.zilber@kites (port 9418) (Name or
+> service not known)
+> fetch-pack from 'git://erez.zilber@kites/erez.zilber/my_test.git'  
+> failed.
 
-To be able to use the HTTP git transport? No. If you use the HTTP
-transport to clone a repository, gitweb is not used in any way.
+That error is saying that the name of the service is wrong, so you're  
+right to do it without the "erez.zilber@" bit.
+
+> I also tried to run it without "erez.zilber@":
+>
+> [root@kd001 t]# git clone git://kites/erez.zilber/my_test.git
+> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/ 
+> my_test/.git/
+> kites[0: 172.16.1.11]: errno=Connection refused
+> fatal: unable to connect a socket (Connection refused)
+> fetch-pack from 'git://kites/erez.zilber/my_test.git' failed.
+
+This looks like that either there is nothing listening (if you're  
+running though xinetd have you restarted it? And have you added the  
+right bits to /etc/services?) or there's a firewall in the way... git  
+defaults to 9418 so check that it's open.
+
+> Is there any log file on the server that can help me trace this
+> problem (something like /var/log/httpd/error_log but for the git
+> protocol)?
 
 
--- 
-http://spinlock.ch/blog/
+on my machine (running via xinetd) it goes straight into /var/log/ 
+messages. A grep -i git on that file should produce something.
+
+Cheers,
+Rob
