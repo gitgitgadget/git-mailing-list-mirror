@@ -1,124 +1,109 @@
-From: Christian Holtje <docwhat@gmail.com>
-Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
-Date: Tue, 24 Jun 2008 19:25:40 -0400
-Message-ID: <930163B6-4A7E-49C7-B9D5-F7B37699C2A9@gmail.com>
-References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com> <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site> <39C2861E-F800-40AE-8C15-4FC3BB51EF16@gmail.com> <7v3an2bh3b.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Windows symlinks
+Date: Tue, 24 Jun 2008 16:28:22 -0700 (PDT)
+Message-ID: <m3od5qjtv1.fsf@localhost.localdomain>
+References: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:26:54 2008
+To: "Patrick Higgins" <Patrick.Higgins@cexp.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:29:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBHuO-00008I-GT
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:26:44 +0200
+	id 1KBHwy-0000zK-IN
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbYFXXZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 19:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbYFXXZr
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:25:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:37045 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567AbYFXXZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 19:25:46 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2349465wri.5
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 16:25:43 -0700 (PDT)
+	id S1758061AbYFXX23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:28:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751693AbYFXX23
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:28:29 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:1601 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758061AbYFXX21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 19:28:27 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so78510nfc.21
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 16:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=eUB6/jPlmzugzkr1veKOsa+x+n+ZGeTnagUy8F4S8XU=;
-        b=ePg8cBi48ljTHzhsBuaLCYSn3jISQ8Z4pb28LmEzWvBTh+uBWWP9iqsUIQvdmP4p6Y
-         wFVzv/c8Rm5haEaSM9M3r1/k0JC+xigrQeLicYnf5Lt2WbfOZoKuxRyEwSld2AQOZ5mg
-         e4KCSPDVv6rHUnY2IzgjZl15yO7M+d+BSVqGc=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=6WaZIv9C3tiwEZXrMu8Ipkr+fsZ7z9Cwks0iFGCrtJE=;
+        b=H6G3SV6BcJYz0mntHlKxH7t9tLAur2vvv++VNAlqWoK6J27dCQSLchRRDOVJHn8N5o
+         p4N3auv+g52f06EhBFEQ2m29yy2F3JRr0pvZCvmt9HCEKRc/ge4ysEWkxH5shy70dcp7
+         t6KmhFv65y98IotdveP9hUywmjAx1n+6wYXpo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=yGhBl1i/sloIFUZstrUQNNbe+NETxMOigRAqaaIfwuK/iXuK3JZUIPSpiGVqk3721+
-         ZvivOhyj0xLhkFJvyW5yQvGMLQFPXWfEtNht+OGRDc+Y484LwKiI5tbZ/HXnkcwFWK1s
-         sJWNQ+ziP//WYbsslhkM/3RGTzmhe6BFmzhV0=
-Received: by 10.90.92.14 with SMTP id p14mr12607111agb.28.1214349943438;
-        Tue, 24 Jun 2008 16:25:43 -0700 (PDT)
-Received: from quicksilver-wifi.gerf.org ( [69.17.59.111])
-        by mx.google.com with ESMTPS id p60sm6312841hsa.14.2008.06.24.16.25.41
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Wyuu8g83bDlZeOsbH+z7t8JDJAGcyugrUVMHShwEOVC+L7jDOkwGEU5fpFsyXeWCfx
+         gxALmGGhUoYL9hazaddbmyWBSAcUVghRJNP8CVv3b3yX29XbG3RCcFN9HgzN29ozR/tD
+         Gvu2c2Y5vIUo8ywIQSzFbOQ//qpK+YBxEUcaY=
+Received: by 10.210.117.1 with SMTP id p1mr1036399ebc.4.1214350103859;
+        Tue, 24 Jun 2008 16:28:23 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.223.44])
+        by mx.google.com with ESMTPS id d27sm1230463nfh.12.2008.06.24.16.28.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 16:25:42 -0700 (PDT)
-In-Reply-To: <7v3an2bh3b.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+        Tue, 24 Jun 2008 16:28:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5ONSK0a011958;
+	Wed, 25 Jun 2008 01:28:20 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5ONSJBN011955;
+	Wed, 25 Jun 2008 01:28:19 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86180>
 
+Patrick Higgins <Patrick.Higgins@cexp.com> writes:
 
-On Jun 24, 2008, at 6:31 PM, Junio C Hamano wrote:
+> It looks like one of the bigger (biggest?) hurdles for git adoption
+> at my company is going to be handling symlinks on Windows. We may be
+> able to sidestep the issue [...] by [...] run[ning] Linux
+> in a virtual machine [...]
 
-> Christian Holtje <docwhat@gmail.com> writes:
->
->> The code is checking for \r$ and then doing a different space check
->> depending on that, not one after another.
->>
->> Thanks for the feedback. I'll put up v2 in a second.
->
-> Please don't.
->
-> It's an ancient sample hook that is not be enabled by default.  I do  
-> not
-> want people to be wasting too much time on the relic
+If only MS Windows supported other filesystems which have symlinks...
 
-Part of the reason I'm fixing this is because it *is* enabled by  
-default in windows.  I don't know why, but cygwin always marks it with  
-executable.
+> Has anyone thought about a way for git to handle symlinks? Vista
+> seems to have added native symlinks, but you need have elevated
+> privilege to create them. NTFS junction points seem helpful for
+> older versions of Windows, but don't work for anything except
+> directories, and seem to be dangerous to use with tools that do
+> recursive deletes. Neither junction points nor native symlinks sound
+> like great options.
+> 
+> Cygwin's clever symlink trick seems to work pretty well in
+> practice. I'm not exactly sure what it's doing, but it seems to
+> create a shortcut that it's own programs understand. Some other
+> non-Cygwin programs seem to understand them, too, but Java does not
+> which is a big problem for me.
 
-> However, if this sample is to be changed at all, please do it right.
->
-> If somebody suddenly adds CR at the end of an existing file that  
-> ought to
-> have LF line endings, we _DO_ want to catch that as a breakage.  So  
-> the
-> title of the commit "should ignore carriage returns at EOL" is  
-> WRONG.  It
-> shouldn't, in general.
->
-> One thing the hook could and probably should do these days is if the  
-> file
-> type says you _ought to_ have CRLF line endings, actively make sure  
-> your
-> lines do end with CRLF (this is a much stronger and better check than
-> blindly ignoring CR before LF for such files).  And on the other  
-> hand, if
-> the file should end with LF, do make sure it does not have CR before  
-> it.
->
-> The person who did the sample hook you are looking at couldn't do so
-> because there weren't autocrlf nor gitattributes(5) facility back  
-> then.
-> But you can use them now to rewrite this properly.
+First, I think that both "git on Windows" solutions, namely Cygwin and
+msysGit port, don't use symlinks either in installed programs, nor in
+repository layout.
 
-How can I detect if a file should have CRLF vs. LF?  I didn't do a  
-better check because I didn't know how.
+Second, the problem there can be _only_ if your repository contains
+(or contained) symlinks, and then it is your own damn fault.  I don't
+know how Cygwin, or msysGit deals with symlinks in a wirking
+directory, but you can work around symlinks (although in a bit
+unwieldy way) by using `core.symlinks' configuration variable;
+see git-config(1):
 
-> I wonder if "git diff --check" can be used for most if not all of the
-> checking, without the big Perl script you are touching in your patch.
-> That facility did not exist when the current sample hook was written,
-> either.
+ core.symlinks::
+        If false, symbolic links are checked out as small plain files
+        that contain the link text. git-update-index(1) and git-add(1)
+        will not change the recorded type to regular file. Useful on
+        filesystems like FAT that do not support symbolic links. True
+        by default.
 
-I like that better.  Ditching the whole perl script in a shell script  
-seems better.
-
-I wrote a test case for what you describe above (a crlf file with an  
-lf line or a lf file with a crlf) but "git diff --check" doesn't catch  
-that.
-
-Based on the information about core.whitespace doesn't git do this  
-already?  Maybe we should just delete the pre-commit hook or make it  
-empty with a note saying what you can do with it?
-
-Ciao!
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
