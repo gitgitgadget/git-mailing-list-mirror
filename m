@@ -1,84 +1,90 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: git status bug problem.
-Date: Tue, 24 Jun 2008 03:49:15 +0200
-Message-ID: <237967ef0806231849k2aa0c1ebt9f4dee45e2b40896@mail.gmail.com>
-References: <970bc7c80806230619i6c060c4eld329729ec7eef1da@mail.gmail.com>
-	 <970bc7c80806230622x326c5cd3mbce57949255a067b@mail.gmail.com>
-	 <m3r6aol0u8.fsf@localhost.localdomain>
-	 <970bc7c80806231837j19458b80x81063745a2ef40c4@mail.gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH v6] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Tue, 24 Jun 2008 04:01:19 +0200
+Message-ID: <4860556F.5060206@gmail.com>
+References: <1214181904-30265-1-git-send-email-LeWiemann@gmail.com> <200806231531.13082.jnareb@gmail.com> <485FE3F7.4040102@gmail.com> <200806240018.20820.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Ben Bennett" <benbennett@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 03:50:16 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 04:02:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAxfk-0001HM-0T
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 03:50:16 +0200
+	id 1KAxrR-0003wj-Lo
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 04:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbYFXBtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 21:49:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbYFXBtU
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 21:49:20 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:34165 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153AbYFXBtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 21:49:19 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so986746ywe.1
-        for <git@vger.kernel.org>; Mon, 23 Jun 2008 18:49:16 -0700 (PDT)
+	id S1752491AbYFXCB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 22:01:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbYFXCB0
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 22:01:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:35405 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752025AbYFXCBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 22:01:25 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1095642fgg.17
+        for <git@vger.kernel.org>; Mon, 23 Jun 2008 19:01:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=gL9/P9BMY4K9vMKxvVAlXD/S2hJIqEOj/de8KWbQxdQ=;
-        b=a2JEQ27XDVSBu1JBWKNflczk2A++rPLs/OIaCTyNAw++On/YvEno+WDYVzuwZWnM6k
-         +j7bYj/qWi6KIHe8szek3ycHtJsGak56wGM0Z+//PG6jCVX5ZOAMrAmwAxFO2V1wN09u
-         bal33WRx7+Uclw6mcYrg7fFmdCgBBmpIW+BiA=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=3RB0/iGKFIPI8laLAnXj5uEXtVyMAX445lEib3gIoRM=;
+        b=LQ+d8+dsHmEka6kTGxwhYN/p2DZYNJ/m3h7XiFIIuluqWdzX4P4/NIJhIppS7Qjbm8
+         hmubySJRkNuwM0YqISDJrV8pFGJly+4kzvxrZVE0reT7rBbyict4JXQTePdrfm0b+jYw
+         WnCOvo9UbW5wKG0qwafSCMRHvEzJgnpswl50M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ckvNBwPQHafuQ4XykeSpm4azoyv5rn94FjPsWehp5YsMDUa6L8Rfv4S//XNWvBm76c
-         4vj5ShF05V8CFFXLrmMHLu/RCAGk3oPipS9+dex75EnjJ4nWOQgasrQaGs0/Ihn/6Ww8
-         1KoPizwoedpxN93IBGAH3W21KI2PPOGCC2bd0=
-Received: by 10.141.68.12 with SMTP id v12mr13797314rvk.111.1214272155747;
-        Mon, 23 Jun 2008 18:49:15 -0700 (PDT)
-Received: by 10.141.153.6 with HTTP; Mon, 23 Jun 2008 18:49:15 -0700 (PDT)
-In-Reply-To: <970bc7c80806231837j19458b80x81063745a2ef40c4@mail.gmail.com>
-Content-Disposition: inline
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=XY/kYiIYwLDqTBCtj/OAatxTLztSjgMXfzYAwvCRVkiJs5Xx80xl5ZUdSfS0JumEHR
+         QyR7ZAJOoCaJQB61K8wbeezmhGsp9Rb7ebClD08WbV/YY0280nua9EpiRGUkGB0dxkz4
+         nhAHk90nbhfDXed1cg9QpZQOdQpNsDryzNiJE=
+Received: by 10.86.23.17 with SMTP id 17mr8242444fgw.32.1214272883446;
+        Mon, 23 Jun 2008 19:01:23 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.198.167])
+        by mx.google.com with ESMTPS id l12sm10081172fgb.6.2008.06.23.19.01.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 23 Jun 2008 19:01:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200806240018.20820.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85965>
 
-2008/6/24 Ben Bennett <benbennett@gmail.com>:
-> I made the initial commit.  git-gui doesn't return anything either.
-> Something tells me it isn't getting the cwd. Add git status *  it will
-> work correctly , but git-gui doesn't give anything.
->
-> somewhere@something:~/git_test$ git status
-> # On branch master
-> nothing to commit (working directory clean)
->
-> somewhere@something:~/git_test$ git status *
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #       modified:   test/test2.txt
-> #
-> Thanks,
-> Ben
+Jakub Narebski wrote:
+> Although I guess it would be nice to have link to the ticket to the bug
+> (report) in WWW::Mechanize::CGI, so we could use cgi_application()
+> "again" if it gets fixed...
 
-The file isn't by chance matched by a git ignore rule somewhere? An easy
-way to check is to try and git add the file, it will say you have to use
--f if it does.
+Sure, I've added a link to 
+http://rt.cpan.org/Ticket/Display.html?id=36654 for completeness, though 
+we won't be able to use it if it gets fixed, since we can't break 
+compatibility to older versions.  Btw, you may want to add a reply to 
+the bug report (if that's possible -- haven't used CPAN's ticket system 
+before) that "system $application $application" would be a better 
+solution, since it doesn't suffer from quoting issues.
 
--- 
-Mikael Magnusson
+>> Right -- here's my new version (which still fails if the feeds die or 
+>> are not well-formed XML -- I'll want that when I change gitweb):
+>>
+>> [snip code]
+> 
+> Does it make t9503-gitweb.Mechanize.sh fail?
+
+No, my point was that it will fail *in case* it breaks (which is good). 
+  Putting everything into a TODO block would silently ignore issues with 
+the feeds.
+
+>>>> +GITPERL=${GITPERL:-perl}
+>>>> +export GITPERL
+
+Breaking the indecisiveness, I've ripped it out. ;-)  We can still test 
+gitweb under different Perl versions by make'ing it with different 
+PERL_PATHs, so I think it'll be fine.
+
+-- Lea
