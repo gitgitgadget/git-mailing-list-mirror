@@ -1,79 +1,218 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 24 Jun 2008 20:08:56 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806242007150.9925@racer>
-References: <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org>
- <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl> <20080624160224.GA29404@genesis.frugalware.org> <alpine.DEB.1.00.0806241709330.9925@racer> <20080624185403.GB29404@genesis.frugalware.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 1/3] Allow git-apply to ignore the hunk headers (AKA recountdiff)
+Date: Tue, 24 Jun 2008 20:08:15 +0100
+Message-ID: <200806242108.16379.trast@student.ethz.ch>
+References: <20080624050901.GA19224@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jun 24 21:12:10 2008
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 21:12:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBDvo-00044b-8s
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:11:56 +0200
+	id 1KBDwA-0004ER-8A
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 21:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbYFXTLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 15:11:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbYFXTLA
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:11:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48812 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751778AbYFXTK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 15:10:59 -0400
-Received: (qmail invoked by alias); 24 Jun 2008 19:10:56 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp065) with SMTP; 24 Jun 2008 21:10:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+AR5dXny2AzxQyB5diYGHBFexzY7wb5LLnKyowzM
-	/RZg5TRTBirI1i
-X-X-Sender: gene099@racer
-In-Reply-To: <20080624185403.GB29404@genesis.frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752394AbYFXTLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 15:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbYFXTLY
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:11:24 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:52328 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752112AbYFXTLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 15:11:21 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 24 Jun 2008 21:11:18 +0200
+Received: from [192.168.0.2] ([84.75.156.10]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 24 Jun 2008 21:11:18 +0200
+In-Reply-To: <20080624050901.GA19224@sigill.intra.peff.net>
+Content-Disposition: inline
+X-OriginalArrivalTime: 24 Jun 2008 19:11:18.0697 (UTC) FILETIME=[14DDA990:01C8D62E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86111>
 
-Hi,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Tue, 24 Jun 2008, Miklos Vajna wrote:
+Sometimes, the easiest way to fix up a patch is to edit it directly, even
+adding or deleting lines.  Now, many people are not as divine as certain
+benevolent dictators as to update the hunk headers correctly at the first
+try.
 
-> On Tue, Jun 24, 2008 at 05:25:57PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > Vienna:bin pieter$ git --version
-> > > > git version 1.5.6.129.g274ea
-> > > > Vienna:bin pieter$ git clone localhost:project/bonnenteller
-> > > > Initialize bonnenteller/.git
-> > > > Initialized empty Git repository in /opt/git/bin/bonnenteller/.git/
-> > > > Password:
-> > > > bash: git-upload-pack: command not found
-> > > > fatal: The remote end hung up unexpectedly
-> > > > 
-> > > > I think that is what Miklos meant.
-> > > 
-> > > Exactly. Thanks for the good description.
-> > 
-> > AFAICT these are fixed with ed99a225(Merge branch 'jc/dashless' into 
-> > next).
-> 
-> Using fc48199 ("Merge branch 'master' into next", which includes
-> ed99a225) on the server, v1.5.6 on the client, I get: 
-> 
-> $ git clone server:/home/vmiklos/git/test next
-> Initialize next/.git
-> Initialized empty Git repository in /home/vmiklos/scm/git/next/.git/
-> vmiklos@server's password:
-> bash: git-upload-pack: command not found
-> fatal: The remote end hung up unexpectedly
+So teach the tool to do it for us.
 
-Hmm.  Probably the client needs to be newer, too.  This is going to be 
-painful.  Junio?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ Documentation/git-apply.txt |    7 ++++-
+ builtin-apply.c             |   64 ++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 66 insertions(+), 5 deletions(-)
 
-Sorry for the noise,
-Dscho
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index c834763..b8ab6ed 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git-apply' [--stat] [--numstat] [--summary] [--check] [--index]
+ 	  [--apply] [--no-add] [--build-fake-ancestor <file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+-	  [-pNUM] [-CNUM] [--inaccurate-eof] [--cached]
++	  [-pNUM] [-CNUM] [--inaccurate-eof] [--recount] [--cached]
+ 	  [--whitespace=<nowarn|warn|fix|error|error-all>]
+ 	  [--exclude=PATH] [--verbose] [<patch>...]
+ 
+@@ -171,6 +171,11 @@ behavior:
+ 	correctly. This option adds support for applying such patches by
+ 	working around this bug.
+ 
++--recount::
++	Do not trust the line counts in the hunk headers, but infer them
++	by inspecting the patch (e.g. after editing the patch without
++	adjusting the hunk headers appropriately).
++
+ -v::
+ --verbose::
+ 	Report progress to stderr. By default, only a message about the
+diff --git a/builtin-apply.c b/builtin-apply.c
+index c497889..34c220f 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -153,6 +153,7 @@ struct patch {
+ 	unsigned int is_binary:1;
+ 	unsigned int is_copy:1;
+ 	unsigned int is_rename:1;
++	unsigned int recount:1;
+ 	struct fragment *fragments;
+ 	char *result;
+ 	size_t resultsize;
+@@ -882,6 +883,50 @@ static int parse_range(const char *line, int len, int offset, const char *expect
+ 	return offset + ex;
+ }
+ 
++static int recount_diff(char *line, int size, struct fragment *fragment)
++{
++	int line_nr = 0;
++
++	if (size < 1)
++		return -1;
++
++	fragment->oldpos = 2;
++	fragment->oldlines = fragment->newlines = 0;
++
++	for (;;) {
++		int len = linelen(line, size);
++		size -= len;
++		line += len;
++
++		if (size < 1)
++			return 0;
++
++		switch (*line) {
++		case ' ': case '\n':
++			fragment->newlines++;
++			/* fall through */
++		case '-':
++			fragment->oldlines++;
++			break;
++		case '+':
++			fragment->newlines++;
++			if (line_nr == 0) {
++				fragment->leading = 1;
++				fragment->oldpos = 1;
++			}
++			fragment->trailing = 1;
++			break;
++		case '@':
++			return size < 3 || prefixcmp(line, "@@ ");
++		case 'd':
++			return size < 5 || prefixcmp(line, "diff ");
++		default:
++			return -1;
++		}
++		line_nr++;
++	}
++}
++
+ /*
+  * Parse a unified diff fragment header of the
+  * form "@@ -a,b +c,d @@"
+@@ -1013,6 +1058,9 @@ static int parse_fragment(char *line, unsigned long size,
+ 	offset = parse_fragment_header(line, len, fragment);
+ 	if (offset < 0)
+ 		return -1;
++	if (offset > 0 && patch->recount &&
++			recount_diff(line + offset, size - offset, fragment))
++		return -1;
+ 	oldlines = fragment->oldlines;
+ 	newlines = fragment->newlines;
+ 	leading = 0;
+@@ -2912,7 +2960,8 @@ static void prefix_patches(struct patch *p)
+ 	}
+ }
+ 
+-static int apply_patch(int fd, const char *filename, int inaccurate_eof)
++static int apply_patch(int fd, const char *filename, int inaccurate_eof,
++		int recount)
+ {
+ 	size_t offset;
+ 	struct strbuf buf;
+@@ -2929,6 +2978,7 @@ static int apply_patch(int fd, const char *filename, int inaccurate_eof)
+ 
+ 		patch = xcalloc(1, sizeof(*patch));
+ 		patch->inaccurate_eof = inaccurate_eof;
++		patch->recount = recount;
+ 		nr = parse_chunk(buf.buf + offset, buf.len - offset, patch);
+ 		if (nr < 0)
+ 			break;
+@@ -2998,6 +3048,7 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 	int i;
+ 	int read_stdin = 1;
+ 	int inaccurate_eof = 0;
++	int recount = 0;
+ 	int errs = 0;
+ 	int is_not_gitdir;
+ 
+@@ -3015,7 +3066,8 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 		int fd;
+ 
+ 		if (!strcmp(arg, "-")) {
+-			errs |= apply_patch(0, "<stdin>", inaccurate_eof);
++			errs |= apply_patch(0, "<stdin>", inaccurate_eof,
++					recount);
+ 			read_stdin = 0;
+ 			continue;
+ 		}
+@@ -3118,6 +3170,10 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			inaccurate_eof = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--recount")) {
++			recount = 1;
++			continue;
++		}
+ 		if (0 < prefix_length)
+ 			arg = prefix_filename(prefix, prefix_length, arg);
+ 
+@@ -3126,12 +3182,12 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			die("can't open patch '%s': %s", arg, strerror(errno));
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(whitespace_option);
+-		errs |= apply_patch(fd, arg, inaccurate_eof);
++		errs |= apply_patch(fd, arg, inaccurate_eof, recount);
+ 		close(fd);
+ 	}
+ 	set_default_whitespace_mode(whitespace_option);
+ 	if (read_stdin)
+-		errs |= apply_patch(0, "<stdin>", inaccurate_eof);
++		errs |= apply_patch(0, "<stdin>", inaccurate_eof, recount);
+ 	if (whitespace_error) {
+ 		if (squelch_whitespace_errors &&
+ 		    squelch_whitespace_errors < whitespace_error) {
+-- 
+1.5.6.84.ge5c1
