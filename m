@@ -1,99 +1,83 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [JGIT PATCH 4/4] LsTree: Enable pattern matching in LsTree
-Date: Tue, 24 Jun 2008 23:20:27 +0200
-Message-ID: <1214342427-2077-4-git-send-email-robin.rosenberg@dewire.com>
-References: <20080622233525.GJ11793@spearce.org>
- <1214342427-2077-1-git-send-email-robin.rosenberg@dewire.com>
- <1214342427-2077-2-git-send-email-robin.rosenberg@dewire.com>
- <1214342427-2077-3-git-send-email-robin.rosenberg@dewire.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	Florian Koeberle <florianskarten@web.de>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 24 23:25:33 2008
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Segmentation fault on http clone, post-1.5.6
+Date: Tue, 24 Jun 2008 17:24:49 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806241720440.2979@xanadu.home>
+References: <20080624130457.GB13696@mithlond.arda.local>
+ <20080624164034.GB4654@sigill.intra.peff.net>
+ <20080624185723.GA3368@mithlond.arda.local>
+ <alpine.LFD.1.10.0806241524480.2979@xanadu.home>
+ <20080624205556.GA3565@mithlond.arda.local>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jun 24 23:25:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBG11-0000NM-5H
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 23:25:27 +0200
+	id 1KBG1N-0000WP-Ki
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 23:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbYFXVYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 17:24:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbYFXVYc
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 17:24:32 -0400
-Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:34098 "EHLO
-	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753780AbYFXVY1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 17:24:27 -0400
-Received: from localhost.localdomain (213.67.100.250) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
-        id 47A97950028D2DB4; Tue, 24 Jun 2008 23:24:26 +0200
-X-Mailer: git-send-email 1.5.5.1.178.g1f811
-In-Reply-To: <1214342427-2077-3-git-send-email-robin.rosenberg@dewire.com>
+	id S1754439AbYFXVYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 17:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbYFXVYv
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 17:24:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:51269 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754121AbYFXVYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 17:24:50 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K2Z00MV1KTD7JN0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 24 Jun 2008 17:24:50 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080624205556.GA3565@mithlond.arda.local>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86151>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../src/org/spearce/jgit/pgm/LsTree.java           |   14 +++++++++++++-
- .../jgit/treewalk/filter/WildCardTreeFilter.java   |    2 +-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+On Tue, 24 Jun 2008, Teemu Likonen wrote:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/LsTree.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/LsTree.java
-index 05ec8c3..87a003d 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/pgm/LsTree.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/LsTree.java
-@@ -43,8 +43,11 @@ import org.spearce.jgit.lib.Constants;
- import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.treewalk.FileTreeIterator;
- import org.spearce.jgit.treewalk.TreeWalk;
-+import org.spearce.jgit.treewalk.filter.TreeFilter;
-+import org.spearce.jgit.treewalk.filter.WildCardTreeFilter;
+> Nicolas Pitre wrote (2008-06-24 15:34 -0400):
+> 
+> > I'm trying to reproduce your segfault with current master
+> > (v1.5.6-56-g29b0d01) but I just can't.
+> > 
+> > Can you provide a gdb backtrace of the segfault?
+> 
+> Let's hope I'm doing this right. Just installed gdb for the first time.
+> I started with "gdb git" and then typed "run clone http://...".
+> Eventually it gave this:
+
+Excellent!
+
+The problem is probably fixed with this:
+
+diff --git a/sha1_file.c b/sha1_file.c
+index a92f023..b7d1a82 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -844,6 +844,8 @@ struct packed_git *parse_pack_index(unsigned char *sha1)
  
- class LsTree extends TextBuiltin {
-+
- 	@Override
- 	void execute(final String[] args) throws Exception {
- 		final TreeWalk walk = new TreeWalk(db);
-@@ -66,12 +69,21 @@ class LsTree extends TextBuiltin {
- 			throw die("too many arguments");
- 
- 		walk.reset(); // drop the first empty tree, which we do not need here
--		final String n = args[argi];
-+		final String n = args[argi++];
- 		if (is_WorkDir(n))
- 			walk.addTree(new FileTreeIterator(new File(n)));
- 		else
- 			walk.addTree(resolve(n));
- 
-+		if (argi == args.length - 1) {
-+			TreeFilter filter = WildCardTreeFilter.create(args[argi++]);
-+			walk.setFilter(filter);
-+		}
-+		if (argi + 1 == args.length)
-+			throw die("usage: [-r] treename [pattern]");
-+		else if (argi + 1 < args.length)
-+			throw die("too many arguments");
-+
- 		while (walk.next()) {
- 			final FileMode mode = walk.getFileMode(0);
- 			if (mode == FileMode.TREE)
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
-index dc3faf9..645d52d 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
-@@ -74,7 +74,7 @@ public class WildCardTreeFilter extends TreeFilter {
- 	public boolean include(TreeWalk walker) throws MissingObjectException,
- 			IncorrectObjectTypeException, IOException {
- 		matcher.reset();
--		matcher.append(walker.getPathString());
-+		matcher.append(walker.getName());
- 		if (matcher.isMatch())
- 			return true;
- 		return false;
--- 
-1.5.5.1.178.g1f811
+ 	strcpy(p->pack_name, path);
+ 	p->pack_size = 0;
++	p->num_bad_objects = 0;
++	p->bad_object_sha1 = NULL;
+ 	p->next = NULL;
+ 	p->windows = NULL;
+ 	p->pack_fd = -1;
+
+Could you confirm it?
+
+However I just don't like the fact that pack structures are allocated 
+and initialized in two places, which makes it error prone as 
+demonstrated here.  So I'll cook up a better patch that fixes the 
+duplication issue.
+
+
+Nicolas
