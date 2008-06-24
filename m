@@ -1,84 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 14:41:38 +0200
-Message-ID: <4860EB82.8030504@viscovery.net>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>	 <1214306517.6441.10.camel@localhost>	 <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>	 <alpine.DEB.1.00.0806241246500.9925@racer> <ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 14:46:57 +0200
+Message-ID: <4860ECC1.9020608@dawes.za.net>
+References: <200806241322.14224.jnareb@gmail.com> <28156.2147582465$1214307807@news.gmane.org> <4860E63B.6040709@dawes.za.net> <20080624123527.GA6149@dualtron.vpn.rwth-aachen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias Kestenholz <mk@spinlock.ch>, git@vger.kernel.org
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 14:43:00 2008
+Cc: David Jeske <jeske@google.com>, Jakub Narebski <jnareb@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Tue Jun 24 14:49:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB7rI-0003Ii-LF
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:42:53 +0200
+	id 1KB7wu-0005WD-3H
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752440AbYFXMln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 08:41:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYFXMln
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:41:43 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:42665 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751939AbYFXMlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 08:41:42 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KB7q6-0003vx-HI; Tue, 24 Jun 2008 14:41:38 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 42A9569F; Tue, 24 Jun 2008 14:41:38 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751097AbYFXMrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 08:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbYFXMrn
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:47:43 -0400
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:45133 "EHLO
+	spunkymail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751061AbYFXMrm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 08:47:42 -0400
+X-Greylist: delayed 1671 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 08:47:42 EDT
+Received: from [192.168.201.100] (unknown [41.247.117.167])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a20.g.dreamhost.com (Postfix) with ESMTP id B3DD7E2501;
+	Tue, 24 Jun 2008 05:47:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <20080624123527.GA6149@dualtron.vpn.rwth-aachen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86049>
 
-Erez Zilber schrieb:
-> [root@kd001 my_test.git]# git-push --all
-> ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
-> erez.zilber@kites's password:
-> Counting objects: 9, done.
-> Compressing objects: 100% (5/5), done.
-> Writing objects: 100% (9/9), 740 bytes, done.
-> Total 9 (delta 0), reused 0 (delta 0)
-> To ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
->  * [new branch]      master -> master
+Johannes Gilger wrote:
+> On 24/06/08 14:19, Rogan Dawes wrote:
+>> One thing that I haven't seen addressed in this thread is the fact that if 
+>> you have a dirty working directory, and you "git reset --hard", whatever 
+>> was dirty (not yet in the index, or committed) will be blown away, and no 
+>> amount of reflog archeology will help you get it back.
 > 
-> Now, on the server side:
+> I think the name of the command "reset" itself is a name which should 
+> prompt everyone to read a manpage before using it. I could understand 
+> that if "status" did something destructive people would get upset.
+> Other than that, git reset itself doesn't do anything destructive. Yeah, 
+> git reset --hard does, but hello, this is *reset* and *hard*, someone 
+> using this must really want what's about to happen. Nobody complaines 
+> about rm --force or anything.
 > 
-> -sh-3.1$ cd my_test.git/
-> -sh-3.1$ ls info/
-> exclude
-> -sh-3.1$ git-update-server-info
-> -sh-3.1$ ls info/
-> exclude  refs
+> As for putting safety-measure everywhere, I think that any further 
+> restricting of commands would be nonsense and just hindering the 
+> workflow. git is not something with a GUI and a recycle-bin. And it 
+> still is really hard to accidentaly lose anything in git.
 > 
-> looks like git-update-server-info did some work (added the refs file).
+> Regards,
+> Jojo
 > 
-> Back to the client:
-> 
-> [root@kd001 t]# git-clone http://kites/pub/git/erez.zilber/my_test.git
-> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_test/.git/
-> Cannot get remote repository information.
-> Perhaps git-update-server-info needs to be run there?
-> 
-> The path is the same path that was used for pushing the repository.
 
-No, it's not. You pushed via ssh, but you clone via http.
+Right. I was simply pointing out to the original poster that for all the 
+talk about reflogs, if you use "reset --hard", all bets are off. I was 
+not complaining about the existence of that option, or its name . . .
 
-When you point your web browser to
+I agree that adding nanny-guards to git would be counter productive.
 
- http://kites/pub/git/erez.zilber/my_test.git
-
-what do you see? Error 404 or a directory listing?
-
--- Hannes
+Rogan
