@@ -1,8 +1,8 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 14:13:23 +0200
-Message-ID: <200806241413.24111.jnareb@gmail.com>
-References: <m3mylbl0xb.fsf@localhost.localdomain> <willow-jeske-01l5kwGPFEDjCc7b> <200806241322.14224.jnareb@gmail.com>
+Date: Tue, 24 Jun 2008 14:21:17 +0200
+Message-ID: <200806241421.17670.jnareb@gmail.com>
+References: <200806241322.14224.jnareb@gmail.com> <willow-jeske-01l5PFjPFEDjCfzf-01l5p7eVFEDjCZRD> <willow-jeske-01l5pWdEFEDjCjLX>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
@@ -10,92 +10,92 @@ Content-Transfer-Encoding: 7bit
 Cc: "Avery Pennarun" <apenwarr@gmail.com>,
 	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
 To: "David Jeske" <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 14:10:51 2008
+X-From: git-owner@vger.kernel.org Tue Jun 24 14:19:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB7MH-0008Qr-ST
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:10:50 +0200
+	id 1KB7UV-0002rX-OV
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:19:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbYFXMJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 08:09:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755173AbYFXMJy
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:09:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:28318 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753358AbYFXMJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 08:09:53 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so705439ugf.16
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 05:09:51 -0700 (PDT)
+	id S1759517AbYFXMRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 08:17:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757840AbYFXMRx
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:17:53 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:12933 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755979AbYFXMRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 08:17:52 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so2812nfc.21
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 05:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=eHILWNvXXkcYu9g6Nz0P2Lh19GC+7U96SS2UUh+0nfw=;
-        b=qam/3qv5zHRcrSJrfQ5TsToei+wQbPPd4FijPfdRTFO0v9toBVwraWoiopcqbMHMwR
-         3LKv6qTe8GuC+sG/yMZtnA8Kjzj2wKfXiCJ1DyClo5AG69OisaIIw7ncPO6A2JDSmRk/
-         gBmaQg9XP8xLBy0SFB4dubojsBXpEuWjNLK8E=
+        bh=L1urInBXzStm0NP8QmjWnnTpVhN1EmY7gnUg4Xv5vxs=;
+        b=LQxKoZ8+XNZC3rqT2tTOqw98MFNkexPj77xd4ikc681HgkQvWh+dkfRlRngGuUqhrQ
+         8Fk3yfsAZR3J7LxWPZsh95rvVYmyIEUNtCbwKWWjdxejuGd8U4r9DcrsK0gyPtKNwk3h
+         2cN7nXPdvXI0X4tp6XIRxcLFyZw9pO6mULP3Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=kMrssGY3iBrfC17lbCDVyLhcAXiL+K9FzOf2V8yZTTsWD+HZ+qRRQhgglzMrOmBCO7
-         zR7294w0tw97ad62/eeR9hkYnapv3WcOwNTHQr8wn8Y8QBmrzsWR+68ffsXPm2x3Cgfe
-         J83Ml2dmKEQuamm48S3kBP9Ja79uqanUjcEbg=
-Received: by 10.66.232.9 with SMTP id e9mr3255395ugh.17.1214309391141;
-        Tue, 24 Jun 2008 05:09:51 -0700 (PDT)
+        b=nswcqg39U2ZGpewRaBrZW208fBEm2yeG2B4OViJq35+zYw3urlpRDOjAL5tpI7b+Ig
+         yLXmufo5yaLxLsdR7NzyFmg6rwQIQflYlm45irVZaRvyRWfaKOUifBHHJK2poRBRR6yO
+         IGNwobLdHE5tbT1fmekXwxlHg6aT/Zr+buNtY=
+Received: by 10.210.87.14 with SMTP id k14mr113819ebb.60.1214309870122;
+        Tue, 24 Jun 2008 05:17:50 -0700 (PDT)
 Received: from ?192.168.1.11? ( [83.8.195.249])
-        by mx.google.com with ESMTPS id a1sm33089356ugf.74.2008.06.24.05.09.48
+        by mx.google.com with ESMTPS id d23sm43944985nfh.11.2008.06.24.05.17.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 05:09:50 -0700 (PDT)
+        Tue, 24 Jun 2008 05:17:48 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <200806241322.14224.jnareb@gmail.com>
+In-Reply-To: <willow-jeske-01l5pWdEFEDjCjLX>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86041>
 
-Jakub Narebski wrote:
-> David Jeske wrote:
+David Jeske wrote:
+> -- Jakub Narebski wrote:
+>>
+>> If they are using '-f', i.e. force, they should know and be sure what
+>> they are doing; it is not much different from 'rm -f *'.
 
-> > Now, five years down the road, [...] someone does:
-> > 
-> >  $ git-branch -f customer_A_branch ZZZ
-> 
-> If they are using '-f', i.e. force, they should know and be sure what
-> they are doing; it is not much different from 'rm -f *'.
-> 
-> If reflog for 'customer_A_branch' expired it would be hard to go back
-> to old 'customer_A_branch', and impossible after garbage collector
-> pruned history.
+By the way, reflog (even if expired) would protect you in this
+situation; I have checked wrongly that it does not (chronological
+vs. reverse chronological order, and not paying attention to
+timestamps).
 
-Actually it is not true.  In the case of "git branch -f <branch>", which
-is the case which wouldn't be covered by protecting reflogs when
-deleting branches (saving them to some kind of "attic") git _saves_
-old branch pointer to reflog, so "git log -g <branch>" would work
-as expected.
+> Sure, no problem. I don't want the ability to "rm -f *". [...]
 
-The reflog entry looks like the following:
+It is very useful command when deleting larger number of files;
+I have "alias rm='rm -i'", and confirming every single file quickly
+gets annoying.
 
-   0c52414d... 80b4c7e5.. A U Thor <author@example.com> 1214306246 +0200 \
-	branch: Reset from ZZZ
+> Just like a normal user on a unix machine doesn't run 
+> around with the power to rm -f /etc all the time, even though they may be able
+> to su to root.
 
-(where of course there are full SHA-1 of commits, instead of shortened
-ones, and everything is in single line, without line continuation.)
+Example was about "rm -f *", i.e. removing contents of current directory;
+you should be careful when doing it, for example if you are in currect
+repository.
  
-> What you _should do_, if you want to preserve old 'customer_A_branch'
-> pointer is to *tag* it, e.g. something like 'Attic/customer_A_branch';
-> if you use annotated tags you can even state why do you want to keep
-> old work, and why old work wasn't merged into long-lived branch, and
-> why the work was abandoned.
+Some older versions of UNIX supposedly could hose every hidden file you own
+upwards if you did "rm -rf .*", as they matched '..' (parent directory)
+against '.*'.
 
-This of course is still valid.
+> Let me guess, you're always running euid==0. :)
 
+No.  I almost never login as root, using 'sudo', 'sudo su -', or relying
+on applications asking for root credentials if required (for example when
+installing new version of git).
+
+Let me guess: no sharp knives in kitchen? ;-P
 -- 
 Jakub Narebski
 Poland
