@@ -1,106 +1,94 @@
-From: "Erez Zilber" <erezzi.list@gmail.com>
-Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 17:45:07 +0300
-Message-ID: <ce513bcc0806240745l365b2d22ga007deb01a93e4b6@mail.gmail.com>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
-	 <1214306517.6441.10.camel@localhost>
-	 <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
-	 <A3460448-8007-4E02-AC20-85C1A8C85786@manchester.ac.uk>
-	 <ce513bcc0806240653i45044297t3b963940c5b3daf0@mail.gmail.com>
-	 <BC8F2A2A-9817-401B-BAC3-F36ED42976E5@manchester.ac.uk>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: git-fetch remote tag to local branch fails
+Date: Tue, 24 Jun 2008 16:57:02 +0200
+Message-ID: <g3r1vv$7dr$1@ger.gmane.org>
+References: <33f4f4d70806240517h5e3ae420h263dd0c2d6bae459@mail.gmail.com>	 <8aa486160806240638o221b01d2i2f46cc8f0f3760a3@mail.gmail.com> <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Matthias Kestenholz" <mk@spinlock.ch>, git@vger.kernel.org
-To: "Robert Haines" <rhaines@manchester.ac.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 24 16:47:03 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 16:58:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB9nQ-0002XV-2d
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:47:00 +0200
+	id 1KB9yP-0006vg-Rw
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758959AbYFXOpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 10:45:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759126AbYFXOpN
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:45:13 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:39366 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758080AbYFXOpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 10:45:11 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so7688103rvb.1
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 07:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=L5+3kyIvhgUoX6EROFesZygEsc94Xg9qCOukzgMX+kE=;
-        b=Xo0xZ//3WTM4vOf8Vy2WlTv3Ew+a/hhFR3vewcfvQygNLtRQSJJ9sPgcda4h+jWgne
-         dZW1n8HTY/5tS8GoExXDsEtCQ+aQcZ1vgb2xcrSe76XRsp/tG2DxbAvzIRaEsle8XARE
-         RqWPpRSfVKfRAdI6H0Ae1wNgCz3bnX/QcBXf8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ah8/JCr+Tm1NrbpeZTHJji7ksG2IQPcimyZZOHWowFb51wG0GhCTJBEFB1mhq/NuRv
-         tiZh+j9kIh/Mppa1IyA/KjF8Tto6hfuUsq3Aj4yUBBVs4sraQUznCVyazictki40UxP9
-         ST2BYYCWL5lICCiRLj47kBpygQKGty5qgoEs4=
-Received: by 10.141.42.10 with SMTP id u10mr3072379rvj.292.1214318707063;
-        Tue, 24 Jun 2008 07:45:07 -0700 (PDT)
-Received: by 10.141.195.7 with HTTP; Tue, 24 Jun 2008 07:45:07 -0700 (PDT)
-In-Reply-To: <BC8F2A2A-9817-401B-BAC3-F36ED42976E5@manchester.ac.uk>
-Content-Disposition: inline
+	id S1760408AbYFXO5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 10:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760385AbYFXO5V
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:57:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:43309 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760329AbYFXO5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 10:57:20 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KB9xM-0004Wy-4s
+	for git@vger.kernel.org; Tue, 24 Jun 2008 14:57:16 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 14:57:16 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 14:57:16 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86067>
 
-On Tue, Jun 24, 2008 at 5:08 PM, Robert Haines <rhaines@manchester.ac.uk> wrote:
->>> So your clone address for git:// is wrong, you don't need the /pub/git:
->>> git clone git://erez.zilber@kites/erez.zilber/my_test.git
->>> As you've moved the root of the filesystem as far as git-daemon is
->>> concerned
->>> to /pub/git with the --base-path option.
+Klas Lindberg venit, vidit, dixit 24.06.2008 16:01:
+> Hello
+> 
+>> git tag -l
+> foo_tag
+> test_tag
+> 
+>> git branch -a
 >>
->> I understand. However, when I try to run it according to your suggestion:
->>
->> [root@kd001 t]# git clone git://erez.zilber@kites/erez.zilber/my_test.git
->> Initialized empty Git repository in
->> /home/erez.zilber/work/tmp/t/my_test/.git/
->> fatal: Unable to look up erez.zilber@kites (port 9418) (Name or
->> service not known)
->> fetch-pack from 'git://erez.zilber@kites/erez.zilber/my_test.git' failed.
->
-> That error is saying that the name of the service is wrong, so you're right
-> to do it without the "erez.zilber@" bit.
->
->> I also tried to run it without "erez.zilber@":
->>
->> [root@kd001 t]# git clone git://kites/erez.zilber/my_test.git
->> Initialized empty Git repository in
->> /home/erez.zilber/work/tmp/t/my_test/.git/
->> kites[0: 172.16.1.11]: errno=Connection refused
->> fatal: unable to connect a socket (Connection refused)
->> fetch-pack from 'git://kites/erez.zilber/my_test.git' failed.
->
-> This looks like that either there is nothing listening (if you're running
-> though xinetd have you restarted it? And have you added the right bits to
-> /etc/services?) or there's a firewall in the way... git defaults to 9418 so
-> check that it's open.
+> 
+> At this point, I can create the branch "b" from "foo_tag", so the
+> fetch did get me a remote tag. It just didn't update a local branch
+> with the contents (or create a new one).
+> 
+> Something that also confuses me is that if branch "b" already exists, then
+> 
+>> git-pull bogustree refs/tags/foo_tag:refs/heads/b
+> 
+> actually does update branch "b". I find the behaviour quite inconsistent.
 
-The problem was that it listened to requests coming from the local
-machine. Now (after fixing that), everything seems to work. Thanks for
-the help.
+You tell git to fetch everything up to the tag you specify, to store 
+those refs into branch b, and then to merge into the current branch. 
+This is what git did (assuming you see the merge in the current branch; 
+if it's b then it has been fast forwarded already).
 
-BTW - I'm currently running git-daemon in the following way:
+> Unfortunately it isn't a solution for me to fetch tags and then create
+> branches from the tags. I need to be able to update existing branches,
+> and I have to do that without first making such a branch the current
+> branch.
 
-sudo git-daemon --base-path=/pub/git/ --export-all
+If I try what you described (using git 1.5.6) in a fresh repo (with one 
+empty commit) I get:
 
-Is there any advantage to run it through xinetd? How do you run it?
+git fetch ../fromrepo refs/tags/testtag:refs/heads/newbranch
+warning: no common commits
+remote: Counting objects: 18, done.
+remote: Compressing objects: 100% (18/18), done.
+remote: Total 18 (delta 9), reused 0 (delta 0)
+Unpacking objects: 100% (18/18), done.
+ From ../fromrepo
+  * [new branch]      testtag    -> newbranch
+  * [new tag]         testtag    -> testtag
 
-Thanks,
-Erez
+I see a new branch, disconnected from master (no common commits), and a 
+new tag pointing to the head of newbranch. All is well here. Maybe you 
+can set-up a minimal example or share a repo which exposes your problem?
+
+Michael
