@@ -1,90 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
-Date: Tue, 24 Jun 2008 22:09:06 +0200
-Message-ID: <200806242209.07135.jnareb@gmail.com>
-References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com> <m363rylknc.fsf@localhost.localdomain> <alpine.LFD.1.10.0806241548140.32759@sys-0.hiltweb.site>
+From: "David Jeske" <jeske@google.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 20:04:30 -0000
+Message-ID: <26999.3299422369$1214338338@news.gmane.org>
+References: <m31w2mlki4.fsf@localhost.localdomain>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5zrLdFEDjCV3U>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Ian Hilt <Ian.Hilt@gmx.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 22:10:16 2008
+Cc: "Boaz Harrosh" <bharrosh@panasas.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 22:12:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBEqA-000882-7j
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:10:10 +0200
+	id 1KBEs2-0000GF-6Y
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbYFXUJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 16:09:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbYFXUJN
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:09:13 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:36067 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751653AbYFXUJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 16:09:13 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so15940ugf.16
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 13:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Us6k732tNwTGtskiFK1+1FlK8vEZi49LVPC2hkewEhI=;
-        b=cJlt2Acx7Unt8D2JUFtvZ3iRaQ4Wg/Ub5M9YKyDyHt73sCsGioZZU0Cu0wXPDlkzuD
-         pBynh2AIqNq1WmvQHQtth0W+7ievtdTOdWnJc3Id6x1BBPfNcuc5Xkiko1glxtlKJeIx
-         oSq6JF/apQcJh6CFjCaR8MTp4Vn2CnTxhijRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ZxCM0WZ4BtLLAIL+KdLJbr2maygA5lN4upnRDBBMdJlvLqX7hn6Fq3pe2aaVnuPXOE
-         wmJkGPt+9UVTcp5odhntnprkeaD6nhzcjkFyE3/uTYrX8W56SIep8FXRugOa99mn0jfp
-         7GYtUsAlRzqRZAyeNcCOfYm7uzRsjpsIvJ0FQ=
-Received: by 10.210.91.7 with SMTP id o7mr691408ebb.197.1214338151452;
-        Tue, 24 Jun 2008 13:09:11 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.223.44])
-        by mx.google.com with ESMTPS id z40sm10888382ikz.7.2008.06.24.13.09.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 13:09:09 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.1.10.0806241548140.32759@sys-0.hiltweb.site>
-Content-Disposition: inline
+	id S1753294AbYFXULK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 16:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYFXULJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:11:09 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60244 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751810AbYFXULI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 16:11:08 -0400
+Received: (qmail 17675 invoked by uid 90); 24 Jun 2008 20:11:02 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 20:04:30 -0000
+In-Reply-To: <m31w2mlki4.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86135>
 
-On Tue, 24 Jun 2008, Ian Hilt wrote:
-> On Tue, 24 Jun 2008 at 12:05pm -0700, Jakub Narebski wrote:
-> 
-> > I don't think so, because you want next to test for whitespace
-> > where it _doesn't_ end in \r, i.e. this condition is here
-> > because of the 'else' clause.  IIRC.
-> 
-> What I'm suggesting is this,
-> 
-> 	if (/\s\r$/) {
-> 		bad_line("trailing whitespace", $_);
-> 	} else {
-> 		if (/\s$/) {
-> 			bad_line("trailing whitespace", $_);
-> 		}
-> 	}
-> 
-> Why only test for \r when all you want to know is whether there is
-> whitespace before \r ?  If there isn't whitespace and \r at the end
-> of a line, then only test for whitespace at the end of a line.
+> -- David Jeske wrote:
+>> - improve the man page description of "reset --hard"
+>> - standardize all the potentially destructive operations
+>> (after gc) on "-f/--force" to override
+>
+> The thing is 'force' is not always the most descriptive word
+> for the behavior that you propose enabling with --force.
+I'm not talking about switching "git reset --hard" to "git reset -f". I'm
+talking about requiring a "-f" option to "git reset --hard" when it would
+destroy or dangle information.
 
-Unfortunately \r matches \s (is whitespace), so if line ends with CR LF
-("\r\n") it wouldn't match first regexp, so it would go to 'else' 
-clause, where it would match /\s$/ and it shouldn't.
+(a) If you have a clean working directory which is fully checked in and has
+another branch tag other than the current branch tag, then "git reset --hard
+<commitish>" is non-destructive, and would complete happily.
 
--- 
-Jakub Narebski
-Poland
+(b) If you have local modifications to working files it would complain "hey,
+your working files are dirty, 'reset --hard' will blow them away, either revert
+them or use -f". This is what Boaz asked for, and I doubt it would change along
+would alter workflow much for people who are using "git reset --hard" to toss
+attempted patches (since they were fully committed anyhow), or even undo a
+clone or pull operation. If people use it as a combo "revert and reset", they
+would notice.
+
+(c) If the current location is only pointed to by the current branch (which you
+are going to move with 'reset --hard') tell the user that those changes will be
+dangling and will be eligible for garbage collection if they move the branch.
+What to do in this case seems more controversial. I would prefer for this to
+error with "either label these changes with 'branch', or use 'reset --hard -f'
+to force us to leave these in the reflog unnamed".  --- Some here say that
+being in the reflog is enough, and the -f is overkill here. If we define
+destructive as dropping code-commits, then that's true. If we define
+destructive as leaving code-commits unreferenced, then -f is warranted.
+Personally, I'd rather git help me avoid dropping the NAMES to tips, because
+even with GC-never, I don't really want to find myself crawling through SHA1
+hashes and visualization trees to find them later, when git could have reminded
+me to name a branch that would conveniently show up in 'git branch'. It's easy
+enough to avoid dropping the names, or force git to not care with '-f'. I
+personally would like to avoid dealing with reflog or SHA1 hashes 99% of the
+time.
+
+> 'gc' is another command that has been mentioned along
+> with its '--aggressive' option.
+
+This was an accident. When I made my "mv --aggressive" joke I was NOT intending
+to reference "gc --aggressive", that is just a coincidence. I was trying to
+make up another 'semi-dangerous sounding name that might or not might be
+destructive". It's comical that it's in use for gc. I don't see any
+relationship between "gc --aggressive" and destructive behavior.
+
+However, there IS a situation to require a "-f" on a, because again, "-f" would
+be required for operations which destroy commits. If we think commits being in
+the reflog is good enough to hold onto them, and users are thinking that items
+being in the reflog are 'safe', then a GC where reflog entry expiration is
+going to cause DAG entries to be removed could print an error like:
+
+error: the following entries are beyond the expiration time,
+...<base branchname>/<commit-ish>: 17 commits, 78 lines, 3 authors
+...use diff <commit-ish> , to see the changes
+...use gc -f, to cause them to be deleted
+
+This wouldn't happen very often, and would make "gc" a safe operation even on
+trees with shorter expiration time. In fact, if this were the way it worked, I
+might set my GC back from never to "30 days", because this would not only allow
+me to safely cleanup junk, but it would also allow me to catch unnamed and
+dangling references before they became so old I didn't remember what to name
+them.
+
+This would make a "non forced gc" safe from throwing away commits, but still
+make it really easy to do so for people who want to. Likewise, we could make
+any "auto-gc" that happens not forced by default.
