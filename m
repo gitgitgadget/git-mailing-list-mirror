@@ -1,60 +1,53 @@
-From: "David Jeske" <jeske@google.com>
+From: Teemu Likonen <tlikonen@iki.fi>
 Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 04:40:16 -0000
-Message-ID: <31555.0678795718$1214283260@news.gmane.org>
-References: <alpine.LFD.1.10.0806232356340.2979@xanadu.home>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l5fAcTFEDjCWA4>
+Date: Tue, 24 Jun 2008 07:59:37 +0300
+Message-ID: <20080624045937.GA3125@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jun 24 06:54:13 2008
+To: David Jeske <jeske@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 07:02:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB0Xi-0002JB-En
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 06:54:10 +0200
+	id 1KB0f6-0003kJ-8A
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 07:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900AbYFXExP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 00:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbYFXExP
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 00:53:15 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60006 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750751AbYFXExP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 00:53:15 -0400
-Received: (qmail 8118 invoked by uid 90); 24 Jun 2008 04:52:53 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Tue, 24 Jun 2008 04:40:16 -0000
-In-Reply-To: <alpine.LFD.1.10.0806232356340.2979@xanadu.home>
+	id S1754112AbYFXFAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 01:00:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbYFXFAX
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 01:00:23 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:59097 "EHLO
+	jenni2.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754112AbYFXE7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 00:59:44 -0400
+Received: from mithlond.arda.local (80.220.180.140) by jenni2.rokki.sonera.fi (8.5.014)
+        id 483E832F012D46DE; Tue, 24 Jun 2008 07:59:39 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1KB0cz-000109-Pv; Tue, 24 Jun 2008 07:59:37 +0300
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85989>
 
--- Nicolas Pitre wrote:
-> I hope you'll feel much safer then.
+David Jeske wrote (2008-06-24 01:47 -0000):
 
-I moved a branch around and then deleted it, and I don't see any record in the
-reflog of where it was, or that it ever was.
+> As a new user, I'm finding git difficult to trust, because there are
+> operations which are destructive by default and capable of
+> inadvertently throwing hours or days of work into the bit bucket.
 
-Am I missing something about how branches are used? I see some language in "git
-tag" about how attempts are made to assure that others can't move around
-semi-immutable tags during push, but I don't see any such language about
-branches. What prevents someone from accidentally deleting an old branch that
-nobody is watching, but is important to the history and then not noticing as gc
-silently deletes the old deltas?
+I'm also quite new and I actually feel safe using git, and it's because
+of reflog. No matter what I do (except manual reflog expire) I can see
+where I was before with command
 
-I've had need to pull out versions several years old multiple times in my
-career, so this is the kind of thing I'm thinking about.
+  git log --walk-reflogs
 
-git config --global gc.reflogexpire            "10 years"'
-git config --global gc.reflogexpireunreachable "10 years"
+and get everything back. I have needed it a couple of times. So the
+safety net is there, one just has to learn to trust it. :-)
 
-Makes me feel safer that the data will be in there, but even with the reflog
-and access to the repository, I doubt I could FIND the place an old branch was
-supposed to be if it was inadvertently deleted in a 2-million line source tree.
-Am I just looking in the wrong places?
+Git is much safer than the standard Unix tools like rm, mv and cp.
