@@ -1,76 +1,99 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 14:19:07 +0200
-Message-ID: <4860E63B.6040709@dawes.za.net>
-References: <200806241322.14224.jnareb@gmail.com>	<willow-jeske-01l5PFjPFEDjCfzf-01l5p7eVFEDjCZRD> <28156.2147582465$1214307807@news.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-clone works with ssh but not with http/https/git
+Date: Tue, 24 Jun 2008 05:25:22 -0700 (PDT)
+Message-ID: <m3abhbkoe2.fsf@localhost.localdomain>
+References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
+	<1214306517.6441.10.camel@localhost>
+	<ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
+	<alpine.DEB.1.00.0806241246500.9925@racer>
+	<ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 14:21:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Matthias Kestenholz" <mk@spinlock.ch>, git@vger.kernel.org
+To: "Erez Zilber" <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 14:26:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB7Wv-0003ks-N4
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:21:50 +0200
+	id 1KB7bO-0005M1-V3
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbYFXMUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 08:20:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbYFXMUx
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:20:53 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:56908 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751321AbYFXMUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 08:20:52 -0400
-Received: from spunkymail-a8.g.dreamhost.com (sd-green-bigip-207.dreamhost.com [208.97.132.207])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id CD30617A1D7
-	for <git@vger.kernel.org>; Tue, 24 Jun 2008 05:20:51 -0700 (PDT)
-Received: from [192.168.201.100] (unknown [41.247.117.167])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by spunkymail-a8.g.dreamhost.com (Postfix) with ESMTP id 6D42C10BD91;
-	Tue, 24 Jun 2008 05:19:48 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <28156.2147582465$1214307807@news.gmane.org>
+	id S1760336AbYFXMZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 08:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760323AbYFXMZ2
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:25:28 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:13347 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760216AbYFXMZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 08:25:27 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so3516nfc.21
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 05:25:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=skdCK7Yd5yQlOUyXmGM/7G9LTJEuFpMRJYYd+WmUZuE=;
+        b=kK4tWcZUP0kOKeNsu0l2oAXQ/0Q8kZYndfzeo0qkNRsespUG/Kc4CnekAlDAD7SS+m
+         InP/ZV00lPV50JmK3InocWy/Bd9dW5K0ZcPJeEB5SA9Yb8PWsRUjuQQTeNE7IjZYBdw1
+         1JEooeU4vV7rI0w9bY42qKkMLngB+6i/1+ICM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=jbZ0vVLDF0tMcMzqf3mFsHr8YmhvJdEY1SSf8fBPUMnq9zL4wl341Jn+usnZkES0RW
+         K0UxFJCl0JkKGeWYHka7GNQYh527iRuw78k/Uaruc3X3nhGayQcixCstD+/ccPXjhyOT
+         HCjG2UX1Sx32rWc+7dVlYgfxt6kq0imYo15HA=
+Received: by 10.210.34.2 with SMTP id h2mr126491ebh.122.1214310323746;
+        Tue, 24 Jun 2008 05:25:23 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.195.249])
+        by mx.google.com with ESMTPS id b33sm10332520ika.2.2008.06.24.05.25.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 05:25:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5OCStgZ007479;
+	Tue, 24 Jun 2008 14:28:56 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5OCSrXi007475;
+	Tue, 24 Jun 2008 14:28:53 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86044>
 
-David Jeske wrote:
-> -- Jakub Narebski wrote:
->> If they are using '-f', i.e. force, they should know and be sure what
->> they are doing; it is not much different from 'rm -f *'.
+"Erez Zilber" <erezzi.list@gmail.com> writes:
+
+> I think that I'm using the right repository for git-clone because it's
+> the same path that I used for git push:
 > 
-> Sure, no problem. I don't want the ability to "rm -f *". I'm raising my hand
-> and saying "I don't want the power to do these things, so just turn off all the
-> git commands that could be destructive and give me an alternate way to do the
-> workflows I need to do". Just like a normal user on a unix machine doesn't run
-> around with the power to rm -f /etc all the time, even though they may be able
-> to su to root.
+> [root@kd001 my_test.git]# git-push --all
+> ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
+
+[...]
+> looks like git-update-server-info did some work (added the refs file).
 > 
-> Let me guess, you're always running euid==0. :)
+> Back to the client:
+> 
+> [root@kd001 t]# git-clone http://kites/pub/git/erez.zilber/my_test.git
+> Initialized empty Git repository in /home/erez.zilber/work/tmp/t/my_test/.git/
+> Cannot get remote repository information.
+> Perhaps git-update-server-info needs to be run there?
+> 
+> The path is the same path that was used for pushing the repository.
+> What did I miss here?
 
-Do you also ask the gnu coreutils folks to remove the -f option from 
-their utilities?
+First, obvious question: do you have web server enabled?
 
-There is a basic assumption that folks that are using tools have at 
-least made an attempt to understand what it is that they are doing, 
-before e.g. waving a chainsaw around.
+Second, less obvious: how this server maps pathname information from
+URL into path in the filesystem?
 
-One thing that I haven't seen addressed in this thread is the fact that 
-if you have a dirty working directory, and you "git reset --hard", 
-whatever was dirty (not yet in the index, or committed) will be blown 
-away, and no amount of reflog archeology will help you get it back.
-
-Any changes that had been staged in the index WILL exist in the object 
-directories as dangling objects, and can be retrieved through judicious 
-use of "git fsck" and "git show", but will certainly be a painful 
-exercise if there was an extensive set of changes.
-
-Rogan
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
