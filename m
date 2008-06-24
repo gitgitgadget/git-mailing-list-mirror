@@ -1,84 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 24 Jun 2008 16:16:36 -0700
-Message-ID: <7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
-References: <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
- <7vwskjazql.fsf@gitster.siamese.dyndns.org>
- <20080621121429.GI29404@genesis.frugalware.org>
- <7vwskfclfs.fsf@gitster.siamese.dyndns.org>
- <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
- <20080624160224.GA29404@genesis.frugalware.org>
- <alpine.DEB.1.00.0806241709330.9925@racer>
- <20080624185403.GB29404@genesis.frugalware.org>
- <alpine.DEB.1.00.0806242007150.9925@racer>
- <7vskv2d0lp.fsf@gitster.siamese.dyndns.org>
- <20080624221049.GE29404@genesis.frugalware.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Windows symlinks
+Date: Tue, 24 Jun 2008 19:18:07 -0400
+Message-ID: <32541b130806241618p69f6167dycb09cdec1af8ba0@mail.gmail.com>
+References: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:17:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Patrick.Higgins@cexp.com" <Patrick.Higgins@cexp.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:19:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBHli-0006Wg-EG
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:17:46 +0200
+	id 1KBHn0-0006oR-NX
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167AbYFXXQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 19:16:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbYFXXQu
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:16:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45618 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751426AbYFXXQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 19:16:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A179D94D8;
-	Tue, 24 Jun 2008 19:16:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C900794D1; Tue, 24 Jun 2008 19:16:43 -0400 (EDT)
-In-Reply-To: <20080624221049.GE29404@genesis.frugalware.org> (Miklos Vajna's
- message of "Wed, 25 Jun 2008 00:10:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9EDCAD68-4243-11DD-833E-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753359AbYFXXSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:18:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbYFXXSK
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:18:10 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:52346 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbYFXXSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 19:18:09 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so2979792fkq.5
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 16:18:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3GobWLlv7BDqTroGwarbUj8ljn/J+vkHVNR8Ug6eoP4=;
+        b=VlMbNGFSttmNGSif3PtCYV8KNcQEGlLlah+r/KWhAwFL+eNb1P08dBxxeRS7ExzP/G
+         FVdcGkoAeMcebLWTeAnLINraZppa39TE0Bnh/T3W1LEGkVteWcnU6bZKr7BNsD8zzlfn
+         IV9u06aHvaU9z+4U+jPBmkqAxX/ejoFX0Vx04=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=LMXyQTQ/bTI5yRkpQDc7LmOBsOxGtU8LmtIvBgRVlRvk6tVNP8k73A7Vk/cFLnw3qU
+         5niIxZQ+EyAqH0KcogwyEsQ5Vb2zB4oi0NT7KGMU7gRfi+mtd3qJZUZO51mSLKIDZQKc
+         RW+vLYoCQzcEfq+mzfKV2tVUtRimCfW40pT18=
+Received: by 10.82.146.10 with SMTP id t10mr607092bud.31.1214349487843;
+        Tue, 24 Jun 2008 16:18:07 -0700 (PDT)
+Received: by 10.82.100.5 with HTTP; Tue, 24 Jun 2008 16:18:07 -0700 (PDT)
+In-Reply-To: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86178>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+On 6/24/08, Patrick.Higgins@cexp.com <Patrick.Higgins@cexp.com> wrote:
+>  Cygwin's clever symlink trick seems to work pretty well in practice. I'm not exactly sure what
+> it's doing, but it seems to create a shortcut that it's own programs understand. Some other
+> non-Cygwin programs seem to understand them, too, but Java does not which is a big
+> problem for me.
 
-> On Tue, Jun 24, 2008 at 01:44:34PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->> >> bash: git-upload-pack: command not found
->> >> fatal: The remote end hung up unexpectedly
->> >
->> > Hmm.  Probably the client needs to be newer, too.  This is going to be 
->> > painful.  Junio?
->> 
->> Even with maint client accessing an account with next git-shell as its
->> login shell, I do not get the above failure.
->> 
->> Is git-shell installed and configured correctly at all in Miklos's setup?
->> Why does the other side say "bash: git-upload-pack" when login shell is
->> git-shell and not bash?
->
-> Sorry for the confusion, this is not about git-shell at all. I have
-> bash as the shell on the server, obviously.
->
-> So, in case the server runs next, the client runs master, and I try to
-> clone via ssh, I get the above error.
+It seems somewhat odd that your developers are relying on an operating
+system feature that doesn't even exist.  I might suggest one of:
 
-Ah, there is not much we can do in that case then.  git-upload-pack is
-what the client asks you to run, and if you do not have it in the path,
-you can (1) either make sure it is on the path, (2) have the client be
-more explicit when asking for git-upload-pack (--upload-pack=$where), or
-(3) leave the minimum git-* binaries that can remotely be launched
-directly in the usual $PATH.
+- add an abstraction layer to your Java applet that understands
+cygwin-style symlinks
 
-It most likely makes sense to do (3) anyway.  upload-pack, receive-pack,
-anything else?
+- actually just check in the file multiple times; git will store it
+efficiently anyway
+
+- improve your Makefile to automatically copy the files and/or create
+symlinks at build time rather than storing the symlinks in revision
+control.
+
+My understanding of Clearcase is that it actually loads a virtual
+filesystem driver in Windows and does all kinds of insane magic -
+slowly and inefficiently, too - behind the scenes.  Something tells me
+git (and every other VCS :)) really doesn't want to go there.
+
+Have fun,
+
+Avery
