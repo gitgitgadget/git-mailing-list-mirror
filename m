@@ -1,86 +1,95 @@
-From: David Jeske <jeske@google.com>
+From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
 Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 03:24:00 -0700
-Message-ID: <e80d075a0806240324j79f872d3t1db9dfb87dc2d37c@mail.gmail.com>
+Date: Tue, 24 Jun 2008 14:01:18 +0400 (Russian Standard Time)
+Message-ID: <alpine.WNT.1.10.0806241343170.3824@theodor>
 References: <20080624081601.GA2692@sigill.intra.peff.net>
-	 <willow-jeske-01l5PFjPFEDjCfzf-01l5kv6TFEDjCj8S@brm-avmta-1.central.sun.com>
-	 <willow-jeske-01l5lTEoFEDjCVta@brm-avmta-1.central.sun.com>
-	 <alpine.WNT.1.10.0806241343170.3824@theodor>
+ <willow-jeske-01l5PFjPFEDjCfzf-01l5kv6TFEDjCj8S@brm-avmta-1.central.sun.com>
+ <willow-jeske-01l5lTEoFEDjCVta@brm-avmta-1.central.sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Fedor Sergeev <Fedor.Sergeev@sun.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 12:25:08 2008
+To: David Jeske <jeske@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 12:48:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB5hy-0005og-9A
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 12:25:06 +0200
+	id 1KB64B-0005HS-5M
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 12:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752186AbYFXKYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 06:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbYFXKYI
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 06:24:08 -0400
-Received: from smtp-out.google.com ([216.239.33.17]:14657 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbYFXKYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 06:24:07 -0400
-Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
-	by smtp-out.google.com with ESMTP id m5OAO2SH011110
-	for <git@vger.kernel.org>; Tue, 24 Jun 2008 11:24:02 +0100
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1214303043; bh=bv0QAeDLUq5lOJkDx1/HV6dN6pY=;
-	h=DomainKey-Signature:MIME-Version:In-Reply-To:References:Date:
-	 Message-ID:Subject:From:To:Cc:Content-Type:
-	 Content-Transfer-Encoding; b=UUtfMll3kIC768afovxn2f/2mw3FjNMKpg+BN
-	r0Bgsug5ndAE76j8JnpYwcT49VcpEV+ryAWx1LYbCMwxTATNQ==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:mime-version:in-reply-to:references:date:
-	message-id:subject:from:to:cc:content-type:content-transfer-encoding;
-	b=uoCOenwaLiN8ECOgZWJlP10tWastID6Si2gEerLrqhJObZ+ib3WbLnMeut/c1qQBV
-	tFf9NrmKAMxGwKhLpMfPQ==
-Received: from an-out-0708.google.com (andd30.prod.google.com [10.100.30.30])
-	by zps75.corp.google.com with ESMTP id m5OAO1mY014121
-	for <git@vger.kernel.org>; Tue, 24 Jun 2008 03:24:01 -0700
-Received: by an-out-0708.google.com with SMTP id d30so707084and.94
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 03:24:01 -0700 (PDT)
-Received: by 10.100.110.16 with SMTP id i16mr15598194anc.40.1214303040931; 
-	Tue, 24 Jun 2008 03:24:00 -0700 (PDT)
-In-Reply-To: <alpine.WNT.1.10.0806241343170.3824@theodor>
+	id S1752812AbYFXKrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 06:47:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbYFXKrF
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 06:47:05 -0400
+Received: from brmea-mail-4.Sun.COM ([192.18.98.36]:34445 "EHLO
+	brmea-mail-4.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752479AbYFXKrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 06:47:04 -0400
+X-Greylist: delayed 2503 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 06:47:04 EDT
+Received: from fe-amer-10.sun.com ([192.18.109.80])
+	by brmea-mail-4.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m5OA5J8S009594
+	for <git@vger.kernel.org>; Tue, 24 Jun 2008 10:05:19 GMT
+Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0K2Y00101PBQIP00@mail-amer.sun.com>
+ (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Tue,
+ 24 Jun 2008 04:05:19 -0600 (MDT)
+Received: from localhost ([92.255.85.22])
+ by mail-amer.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
+ 2007)) with ESMTPSA id <0K2Y007VCPCINW60@mail-amer.sun.com>; Tue,
+ 24 Jun 2008 04:05:19 -0600 (MDT)
+In-reply-to: <willow-jeske-01l5lTEoFEDjCVta@brm-avmta-1.central.sun.com>
+X-X-Sender: fs77888@mail-amer.sun.com
+User-Agent: Alpine 1.10 (WNT 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86031>
 
-On Tue, Jun 24, 2008 at 3:01 AM, Fedor Sergeev <Fedor.Sergeev@sun.com> wrote:
-> It looks like you are severely restricting your own way of thinking about
-> a source code management as a source code backup system only.
->
-> While this might be a valid mindset for a gatekeeper on a public repository
-> it way way restrictive for a developer that wants to have a system that
-> helps him doing a job.
 
-Odd. I've never been a gatekeeper. I'm just a developer who has burned
-himself enough times that I want a tool (i.e. source control) to help
-prevent me from ever destroying anything I create. I like that git is
-doing nicer things with merge tracking than older systems, and that
-it's easier for distributed teams to move changes around in more
-interesting ways than "up to the server" and "down from the server".
-However, I also want it to provide the guarantee that "if I don't
-touch the files in .git, it'll never lose my commits", which sadly
-isn't true by default. I'm glad I can easily change the GC policy, but
-I question why this isn't the default.
+On Tue, 24 Jun 2008, David Jeske wrote:
+> This is mostly moot since I've understood that it's easy to set git to never
+> GC. I guess I'm curious about why those GC fields would ever be set to anything
+> other than never?
 
-In another discussion about this, one of my coworkers pointed out that
-making the GC default "never" would be much safer for new users, and
-new users don't really need to worry about collecting things until
-their repositories get bigger anyhow.
+On Tue, 24 Jun 2008, David Jeske wrote:
+> My philosophy is simple, I never never
+> never want to throw away changes, you shouldn't either. Disks are cheaper than
+> programmer hours. I can understand wanting to keep things tidy, so I can
+> understand ways to correct the 'easily visible changes', and also avoid pushing
+> them to other trees, but I don't understand why git needs to delete things.
 
-I also think that it would be simpler to understand for everyone if
-every operation which can cause a dangling graph node require the
-exact same override method (i.e. -f is fine, the capitalization as in
--d -> -D is fine, some --force or --hard is fine, but currently the
-system is using three different methods in three different places)
+It looks like you are severely restricting your own way of thinking about
+a source code management as a source code backup system only.
+
+While this might be a valid mindset for a gatekeeper on a public 
+repository it way way restrictive for a developer that wants to have a 
+system that helps him doing a job.
+And, say, for me, for my own job, ability to experiment *safely* and 
+effectively, ability to try out different histories is the most valuable
+asset that git brings to the world of SCMs.
+
+My collegues that were forced to use Mercurial for their job are really 
+unhappy about Mercurial's habbit of not modifying history at all.
+After a certain amount of time just looking at the history of an actively 
+developed project causes a headache.
+
+
+When you speak about allowing/disallowing destructive actions you actually
+speak about policies.
+Different organizations, different repositories have different policies.
+And git is very flexible in allowing you to implement all those different
+policies as you wish it.
+
+And whether default policy should allow people to experiment freely or not
+is a very delicate question, which I would not really have enough courage
+to speculate on.
+
+regards,
+   Fedor.
+
+P.S. Saying all that, I would really like to have an easy way to tie non-default
+policies to repositories so it propagates on clones. It is really helpful
+in big organizations. But thats another story.
