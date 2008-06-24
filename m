@@ -1,121 +1,94 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] factorize pack structure allocation
-Date: Tue, 24 Jun 2008 18:58:06 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806241851420.2979@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 16:07:57 -0700
+Message-ID: <7vod5qa0tu.fsf@gitster.siamese.dyndns.org>
+References: <m31w2mlki4.fsf@localhost.localdomain>
+ <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil> <20080624225442.GA20361@mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 00:59:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	David Jeske <jeske@google.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:09:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBHTe-00024u-9f
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:59:06 +0200
+	id 1KBHdJ-0004YI-Jy
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbYFXW6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 18:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755011AbYFXW6I
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:58:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46495 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754961AbYFXW6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 18:58:07 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2Z00C5YP4UJKG0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 24 Jun 2008 18:58:06 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752807AbYFXXIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbYFXXIM
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:08:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43985 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbYFXXIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 19:08:11 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C71C6938E;
+	Tue, 24 Jun 2008 19:08:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D559F938D; Tue, 24 Jun 2008 19:07:59 -0400 (EDT)
+In-Reply-To: <20080624225442.GA20361@mit.edu> (Theodore Tso's message of
+ "Tue, 24 Jun 2008 18:54:42 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 699AFF0C-4242-11DD-BCB7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86175>
 
-New pack structures are currently allocated in 2 different places
-and all members have to be initialized explicitly.  This is prone
-to errors leading to segmentation faults as found by Teemu Likonen.
+Theodore Tso <tytso@mit.edu> writes:
 
-Let's have a common place where this structure is allocated, and have 
-all members implicitly initialized to zero.
+> The main reason that I find for reusing a branch name is for my
+> integration branch.  I have a script which basically does:
+>
+> git checkout integration
+> git reset --hard origin
+> git merge branch-A
+> git merge branch-B
+> git merge branch-C
+> git merge branch-D
+>
+> I suppose I could have avoided the use of git reset with something
+> like this:
+>
+> git update-index --refresh --unmerged > /dev/null
+> if git diff-index --name-only HEAD | read dummy; then
+> 	echo "There are local changes; refusing to build integration branch!"
+> 	exit 1
+> fi
+> git update-ref refs/heads/integration origin
+> git checkout integration
+> git merge branch-A
+> git merge branch-B
+> git merge branch-C
+> git merge branch-D
+>
+> Instead, I've just learned to be careful and my use of git reset
+> --hard is mainly for historical reasons.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
-diff --git a/sha1_file.c b/sha1_file.c
-index a92f023..c56f674 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -792,18 +792,28 @@ unsigned char* use_pack(struct packed_git *p,
- 	return win->base + offset;
- }
- 
-+static struct packed_git *alloc_packed_git(int extra)
-+{
-+	struct packed_git *p = xmalloc(sizeof(*p) + extra);
-+	memset(p, 0, sizeof(*p));
-+	p->pack_fd = -1;
-+	return p;
-+}
-+
- struct packed_git *add_packed_git(const char *path, int path_len, int local)
- {
- 	struct stat st;
--	struct packed_git *p = xmalloc(sizeof(*p) + path_len + 2);
-+	struct packed_git *p = alloc_packed_git(path_len + 2);
- 
- 	/*
- 	 * Make sure a corresponding .pack file exists and that
- 	 * the index looks sane.
- 	 */
- 	path_len -= strlen(".idx");
--	if (path_len < 1)
-+	if (path_len < 1) {
-+		free(p);
- 		return NULL;
-+	}
- 	memcpy(p->pack_name, path, path_len);
- 	strcpy(p->pack_name + path_len, ".pack");
- 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
-@@ -814,16 +824,7 @@ struct packed_git *add_packed_git(const char *path, int path_len, int local)
- 	/* ok, it looks sane as far as we can check without
- 	 * actually mapping the pack file.
- 	 */
--	p->index_version = 0;
--	p->index_data = NULL;
--	p->index_size = 0;
--	p->num_objects = 0;
--	p->num_bad_objects = 0;
--	p->bad_object_sha1 = NULL;
- 	p->pack_size = st.st_size;
--	p->next = NULL;
--	p->windows = NULL;
--	p->pack_fd = -1;
- 	p->pack_local = local;
- 	p->mtime = st.st_mtime;
- 	if (path_len < 40 || get_sha1_hex(path + path_len - 40, p->sha1))
-@@ -835,19 +836,15 @@ struct packed_git *parse_pack_index(unsigned char *sha1)
- {
- 	const char *idx_path = sha1_pack_index_name(sha1);
- 	const char *path = sha1_pack_name(sha1);
--	struct packed_git *p = xmalloc(sizeof(*p) + strlen(path) + 2);
-+	struct packed_git *p = alloc_packed_git(strlen(path) + 1);
- 
-+	strcpy(p->pack_name, path);
-+	hashcpy(p->sha1, sha1);
- 	if (check_packed_git_idx(idx_path, p)) {
- 		free(p);
- 		return NULL;
- 	}
- 
--	strcpy(p->pack_name, path);
--	p->pack_size = 0;
--	p->next = NULL;
--	p->windows = NULL;
--	p->pack_fd = -1;
--	hashcpy(p->sha1, sha1);
- 	return p;
- }
- 
+This makes it sound as if avoiding "reset --hard" is a good thing, but I
+do not understand why.
+
+The reason you have the diff-index check in the second sequence is because
+update-ref does not have the "local changes" check either.  You could have
+used the same diff-index check in front of "reset --hard".
+
+Moreover, in your original sequence above, doesn't "git checkout
+integration" list your local changes when you have any, and wouldn't that
+be a clue enough that the next "reset --hard origin" would discard them?
+
+> ...  But the point is, I can very
+> easily think of workflows where it makes sense to reuse a branch name,
+> most of them having to do with creating integration branches which are
+> basically throwaways after I am done testing or building that combined
+> tree.
+
+Absolutely.
