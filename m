@@ -1,100 +1,79 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] help: check early if we have a command, if not try a
- documentation topic
-Date: Tue, 24 Jun 2008 08:46:53 +0200
-Message-ID: <20080624084653.8b181a0a.chriscool@tuxfamily.org>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Importing non-version controlled bits and pieces to Git
+Date: Tue, 24 Jun 2008 07:46:14 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0806240742240.5039@ds9.cixit.se>
+References: <Pine.LNX.4.64.0806201036440.24013@ds9.cixit.se>
+ <20080620115102.GW29404@genesis.frugalware.org> <alpine.DEB.1.00.0806201323390.6439@racer>
+ <Pine.LNX.4.64.0806201339330.4004@ds9.cixit.se> <alpine.DEB.1.00.0806201359320.6439@racer>
+ <Pine.LNX.4.64.0806230732120.31319@ds9.cixit.se> <Pine.LNX.4.64.0806231543580.31319@ds9.cixit.se>
+ <20080624051204.GA1760@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>, Pieter de Bie <pdebie@ai.rug.nl>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 08:43:46 2008
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 08:47:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB2Fl-0001hN-HB
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 08:43:45 +0200
+	id 1KB2J9-0002Zo-J7
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 08:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbYFXGmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 02:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751592AbYFXGmu
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 02:42:50 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:37707 "EHLO smtp1-g19.free.fr"
+	id S1754048AbYFXGqU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jun 2008 02:46:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754001AbYFXGqU
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 02:46:20 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:54434 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751495AbYFXGmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 02:42:49 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 3F7011AB302;
-	Tue, 24 Jun 2008 08:42:47 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id DB4331AB308;
-	Tue, 24 Jun 2008 08:42:46 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1753820AbYFXGqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 02:46:18 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m5O6kF5e009122
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 24 Jun 2008 08:46:15 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m5O6kFRp009117;
+	Tue, 24 Jun 2008 08:46:15 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20080624051204.GA1760@diana.vm.bytemark.co.uk>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 24 Jun 2008 08:46:15 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85999>
 
-Before this patch, something like "git help tutorial" did not work,
-people had to use "git help gittutorial" which is not very intuitive.
+Karl Hasselstr=F6m:
 
-This patch uses the "is_git_command" function to test early if the
-argument passed to "git help" is a git command, and if this is not the
-case then we prefix the argument with "git" instead of "git-".
+> A bit too late now, but ...
 
-This way, things like "git help tutorial" or "git help glossary" will
-work fine.
+Not really, I'm on to the next project to import :-)
 
-The little downside of this patch is that the "is_git_command" is a
-little bit slow.
+> another thing you could have done is make a straight linear import =E0
+> la import-tars, and then modified the parentage with grafts until it
+> looked good; and then finally use filter-branch to make the grafts
+> part of the "real" history.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- help.c |   23 +++++++++++++++--------
- 1 files changed, 15 insertions(+), 8 deletions(-)
+Yeah, I was considering this approach, but then I was half-way
+designing the script in my head, plus that the import is so quick that
+it was easy enough to re-write the configuration file and re-import to
+try something else. I love that aspect of Git -- the preparing of the
+file to import takes longer than the actual git-fast-import call...
 
-diff --git a/help.c b/help.c
-index 8aff94c..ef2e6b7 100644
---- a/help.c
-+++ b/help.c
-@@ -527,20 +527,27 @@ static int is_git_command(const char *s)
- 		is_in_cmdlist(&other_cmds, s);
- }
- 
-+static const char *add_prefix(const char *prefix, const char *cmd)
-+{
-+	size_t pre_len = strlen(prefix);
-+	size_t cmd_len = strlen(cmd);
-+	char *p = xmalloc(pre_len + cmd_len + 1);
-+	strcpy(p, prefix);
-+	strcpy(p + pre_len, cmd);
-+	p[pre_len + cmd_len] = 0;
-+	return p;
-+}
-+
- static const char *cmd_to_page(const char *git_cmd)
- {
- 	if (!git_cmd)
- 		return "git";
- 	else if (!prefixcmp(git_cmd, "git"))
- 		return git_cmd;
--	else {
--		int page_len = strlen(git_cmd) + 4;
--		char *p = xmalloc(page_len + 1);
--		strcpy(p, "git-");
--		strcpy(p + 4, git_cmd);
--		p[page_len] = 0;
--		return p;
--	}
-+	else if (is_git_command(git_cmd))
-+		return add_prefix("git-", git_cmd);
-+	else
-+		return add_prefix("git", git_cmd);
- }
- 
- static void setup_man_path(void)
--- 
-1.5.6.109.g4f927.dirty
+> The advantage of this approach is that you can edit the parentage
+> almost interactively, which should be the best approach given that
+> you have a small number of commits and have to guess their
+> relationships.
+
+"Almost" being the magic word :-) I achieved more or less the same by
+re-importing. Plus that the job of preparing tarballs of everything
+would have been some work as well, since I had to choose which files to
+import from each directory (and do CRLF transform).
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
