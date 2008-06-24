@@ -1,246 +1,51 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 3/3] test case for pack resilience against corruptions
-Date: Mon, 23 Jun 2008 21:24:28 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806232123420.2979@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
+Date: Mon, 23 Jun 2008 21:27:11 -0400
+Message-ID: <20080624012711.GA3816@sigio.intra.peff.net>
+References: <alpine.LFD.1.10.0806231114180.2926@woody.linux-foundation.org> <20080623183358.GA28941@sigill.intra.peff.net> <alpine.LFD.1.10.0806231137070.2926@woody.linux-foundation.org> <alpine.LFD.1.10.0806231158340.2926@woody.linux-foundation.org> <20080623210935.GC13395@artemis.madism.org> <alpine.LFD.1.10.0806231425270.2926@woody.linux-foundation.org> <7v3an3hke8.fsf@gitster.siamese.dyndns.org> <20080623222404.GM13395@artemis.madism.org> <7vmylbg4ks.fsf@gitster.siamese.dyndns.org> <20080623233146.GP13395@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 03:25:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Jun 24 03:27:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAxHj-0004WT-2t
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 03:25:27 +0200
+	id 1KAxJk-00052V-Gg
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 03:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbYFXBYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 21:24:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYFXBYa
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 21:24:30 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:53300 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751745AbYFXBY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 21:24:29 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K2Y008H11859240@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 23 Jun 2008 21:24:05 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1751930AbYFXB0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2008 21:26:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbYFXB0g
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 21:26:36 -0400
+Received: from peff.net ([208.65.91.99]:2128 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751321AbYFXB0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2008 21:26:36 -0400
+Received: (qmail 31561 invoked by uid 111); 24 Jun 2008 01:26:34 -0000
+Received: from sigio.intra.peff.net (HELO sigio.intra.peff.net) (10.0.0.10)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 23 Jun 2008 21:26:34 -0400
+Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2008 21:27:11 -0400
+Content-Disposition: inline
+In-Reply-To: <20080623233146.GP13395@artemis.madism.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85961>
 
+On Tue, Jun 24, 2008 at 01:31:46AM +0200, Pierre Habouzit wrote:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- t/t5303-pack-corruption-resilience.sh |  194 +++++++++++++++++++++++++++++++++
- 1 files changed, 194 insertions(+), 0 deletions(-)
- create mode 100755 t/t5303-pack-corruption-resilience.sh
+>   Are we sure argv[argc] is NULL when those are main() arguments ? If
+> yes there is no issue, and I should read posix more carefully, but I was
+> under the impression that POSIX wasn't enforcing that.
 
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-new file mode 100755
-index 0000000..b0f5693
---- /dev/null
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -0,0 +1,194 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Nicolas Pitre
-+#
-+
-+test_description='resilience to pack corruptions with redundant objects'
-+. ./test-lib.sh
-+
-+# Note: the test objects are created with knowledge of their pack encoding
-+# to ensure good code path coverage, and to facilitate direct alteration
-+# later on.  The assumed characteristics are:
-+#
-+# 1) blob_2 is a delta with blob_1 for base and blob_3 is a delta with blob2
-+#    for base, such that blob_3 delta depth is 2;
-+#
-+# 2) the bulk of object data is uncompressible so the text part remains
-+#    visible;
-+#
-+# 3) object header is always 2 bytes.
-+
-+create_test_files() {
-+    test-genrandom "foo" 2000 > file_1 &&
-+    test-genrandom "foo" 1800 > file_2 &&
-+    test-genrandom "foo" 1800 > file_3 &&
-+    echo " base " >> file_1 &&
-+    echo " delta1 " >> file_2 &&
-+    echo " delta delta2 " >> file_3 &&
-+    test-genrandom "bar" 150 >> file_2 &&
-+    test-genrandom "baz" 100 >> file_3
-+}
-+
-+create_new_pack() {
-+    rm -rf .git &&
-+    git init &&
-+    blob_1=`git hash-object -t blob -w file_1` &&
-+    blob_2=`git hash-object -t blob -w file_2` &&
-+    blob_3=`git hash-object -t blob -w file_3` &&
-+    pack=`printf "$blob_1\n$blob_2\n$blob_3\n" |
-+          git pack-objects $@ .git/objects/pack/pack` &&
-+    pack=".git/objects/pack/pack-${pack}" &&
-+    git verify-pack -v ${pack}.pack
-+}
-+
-+do_corrupt_object() {
-+    ofs=`git show-index < ${pack}.idx | grep $1 | cut -f1 -d" "` &&
-+    ofs=$(($ofs + $2)) &&
-+    chmod +w ${pack}.pack &&
-+    dd if=/dev/zero of=${pack}.pack count=1 bs=1 conv=notrunc seek=$ofs &&
-+    test_must_fail git verify-pack ${pack}.pack
-+}
-+
-+test_expect_success \
-+    'initial setup validation' \
-+    'create_test_files &&
-+     create_new_pack &&
-+     git prune-packed &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'create corruption in header of first object' \
-+    'do_corrupt_object $blob_1 0 &&
-+     test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... but having a loose copy allows for full recovery' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_1 &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... and loose copy of first delta allows for partial recovery' \
-+    'git prune-packed &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_2 &&
-+     mv tmp ${pack}.idx &&
-+     test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'create corruption in data of first object' \
-+    'create_new_pack &&
-+     git prune-packed &&
-+     chmod +w ${pack}.pack &&
-+     perl -i -pe "s/ base /abcdef/" ${pack}.pack &&
-+     test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... but having a loose copy allows for full recovery' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_1 &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... and loose copy of second object allows for partial recovery' \
-+    'git prune-packed &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_2 &&
-+     mv tmp ${pack}.idx &&
-+     test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'create corruption in header of first delta' \
-+    'create_new_pack &&
-+     git prune-packed &&
-+     do_corrupt_object $blob_2 0 &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... but having a loose copy allows for full recovery' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_2 &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'create corruption in data of first delta' \
-+    'create_new_pack &&
-+     git prune-packed &&
-+     chmod +w ${pack}.pack &&
-+     perl -i -pe "s/ delta1 /abcdefgh/" ${pack}.pack &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... but having a loose copy allows for full recovery' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_2 &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'corruption in delta base reference of first delta (OBJ_REF_DELTA)' \
-+    'create_new_pack &&
-+     git prune-packed &&
-+     do_corrupt_object $blob_2 2 &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... but having a loose copy allows for full recovery' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_2 &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    'corruption in delta base reference of first delta (OBJ_OFS_DELTA)' \
-+    'create_new_pack --delta-base-offset &&
-+     git prune-packed &&
-+     do_corrupt_object $blob_2 2 &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+
-+test_expect_success \
-+    '... and a redundant pack allows for full recovery too' \
-+    'mv ${pack}.idx tmp &&
-+     git hash-object -t blob -w file_1 &&
-+     git hash-object -t blob -w file_2 &&
-+     printf "$blob_1\n$blob_2\n" | git pack-objects .git/objects/pack/pack &&
-+     git prune-packed &&
-+     mv tmp ${pack}.idx &&
-+     git cat-file blob $blob_1 > /dev/null &&
-+     git cat-file blob $blob_2 > /dev/null &&
-+     git cat-file blob $blob_3 > /dev/null'
-+
-+test_done
--- 
-1.5.6.GIT
+It's not POSIX; it's actually in the C standard. 5.1.2.2.1, paragraph 2:
+
+  "argv[argc] shall be a null pointer"
+
+-Peff
