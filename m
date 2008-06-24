@@ -1,69 +1,70 @@
-From: "David Jeske" <jeske@google.com>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 22:13:13 -0000
-Message-ID: <31710.7249437415$1214347705@news.gmane.org>
-References: <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l63P33FEDjCVQ0>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [NON-TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
+Date: Wed, 25 Jun 2008 00:48:40 +0200
+Message-ID: <486179C8.2000704@gmail.com>
+References: <alpine.DEB.1.00.0806241515460.9925@racer> <20080624163810.GA4654@sigill.intra.peff.net> <alpine.DEB.1.00.0806241750030.9925@racer> <alpine.DEB.1.00.0806241808400.9925@racer> <486153DB.3070502@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Boaz Harrosh" <bharrosh@panasas.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jun 25 00:48:17 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 25 00:49:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBHJ0-0007FJ-VX
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:48:07 +0200
+	id 1KBHKY-0007sy-5J
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752827AbYFXWrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 18:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYFXWrL
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:47:11 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60281 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751281AbYFXWrK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 18:47:10 -0400
-Received: (qmail 21857 invoked by uid 90); 24 Jun 2008 22:47:03 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Tue, 24 Jun 2008 22:13:13 -0000
-In-Reply-To: <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil>
+	id S1751621AbYFXWsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 18:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYFXWsr
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:48:47 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:52418 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751273AbYFXWsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 18:48:46 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1270253fgg.17
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 15:48:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=o5/ZHWaR27aDle/uVTpS5f76y50/FGl7AgRZUEtIJIY=;
+        b=Qifu/lCGN/Vl7RcxkcVJ8UcVSzula2gYJzc1lE0ewr0FMMsWsdl1QtW2cX1UhOzzge
+         T/Ox/O2aeBvcq2vWqwVgUMzCOSVB70pLez2OpEG6ydTnpgrwhSCi/8ZGr5bHTsb1M31J
+         /oQxznPxTz0uQXfo2DXbIRXt0ZRhk1ENTffU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=g7ukudRCLZsk+Uvg1K4Px3vaWiU0zhw5/rFe2Ra+ZWKK/0kLJ9zxBXpji3CNuykeMJ
+         wpD8sqrwJHn+A1NKS4tL6QZtAJ8CEARCOTYAmAnLJeyuWnTegntHwhm+yoUkWU+jz8jT
+         bw8UoA/6ZOddumKkiVGzp1kXOFuKExV9N3a9g=
+Received: by 10.86.98.10 with SMTP id v10mr9442278fgb.46.1214347722265;
+        Tue, 24 Jun 2008 15:48:42 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.195.174])
+        by mx.google.com with ESMTPS id 4sm11773746fgg.9.2008.06.24.15.48.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 15:48:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <486153DB.3070502@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86166>
 
--- Brandon Casey wrote:
-> I only have the same advice I gave to Boaz. I think you should try to adjust
-> your workflow so that 'git reset' is not necessary. It seems that for the
-> functions you're trying to perform, 'checkout' and 'branch' should be used
-> rather than 'reset'.
+Michael Haggerty wrote:
+> Therefore it should be easy to teach git-bisect to locate either kind of
+> transition, "bad" -> "good" or "good" -> "bad", depending only on where
+> the user places the original "good" and "bad" tags.
 
-Even when I change my workflow to avoid 'reset', I believe that the
-user-interface of git will be stronger if it is a simpler expression of the
-same functionality. One way to simplify it is to use convention that is
-standardized across a set of tools so we don't have to learn every little
-nuance of every little feature independently.
+I think this is a good suggestion (though I haven't thought things 
+through).  Another idea is to add "old" and "new" (or something like 
+that) as aliases to "good" and "bad", since that's the only semantics 
+that the bisect labels actually seem to have.
 
-Two things I'd like to make it easy for users to never do are:
-- delete data
-- cause refs to be dangling
-
-Therefore, I'd like a simple convention I can apply across all commands, so
-that if users never do them, they'll never do either of the above things. I'm
-not alone.
-
-I think some of the impedance mismatch between my suggestions, and current
-usage, has to do with where I'd like to be next. This is a meaty topic, I'll
-start another thread on "policy and mechanism for less-connected clients".
-
-> I'm not sure why you want to use reset so often. If there is something in the
-> documentation that led you to want to use reset maybe it can be changed so
-that
-> other users are not led in the same way.
-
-Yes, it's a problem in the git-gui and the "reset --hard" documentation. I'm
-working on a patch.
+-- Lea
