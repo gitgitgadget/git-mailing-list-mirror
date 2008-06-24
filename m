@@ -7,105 +7,67 @@ X-Spam-Status: No, score=2.6 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,MSGID_NOFQDN1,PLING_QUERY,RP_MATCHES_RCVD,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
-Received: (qmail 6883 invoked by uid 111); 24 Jun 2008 20:11:20 -0000
+Received: (qmail 8157 invoked by uid 111); 24 Jun 2008 22:47:22 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 16:11:13 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 18:47:14 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294AbYFXULK (ORCPT <rfc822;peff@peff.net>);
-	Tue, 24 Jun 2008 16:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYFXULJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:11:09 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60244 "HELO
+	id S1752827AbYFXWrM (ORCPT <rfc822;peff@peff.net>);
+	Tue, 24 Jun 2008 18:47:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYFXWrL
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:47:11 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60281 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751810AbYFXULI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 16:11:08 -0400
-Received: (qmail 17675 invoked by uid 90); 24 Jun 2008 20:11:02 -0000
+	with SMTP id S1751281AbYFXWrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 18:47:10 -0400
+Received: (qmail 21857 invoked by uid 90); 24 Jun 2008 22:47:03 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From:	"David Jeske" <jeske@google.com>
-To:	Jakub Narebski <jnareb@gmail.com>
-Cc:	"Boaz Harrosh" <bharrosh@panasas.com>, git@vger.kernel.org
+To:	Brandon Casey <casey@nrlssc.navy.mil>
+Cc:	"Jakub Narebski" <jnareb@gmail.com>,
+	"Boaz Harrosh" <bharrosh@panasas.com>, git@vger.kernel.org
 Subject: Re: why is git destructive by default? (i suggest it not be!)
 X-Mailer: Willow v0.02
-Date:	Tue, 24 Jun 2008 20:04:30 -0000
-Message-ID: <willow-jeske-01l61=64jMFEDjCiBE>
-Received: from 67.188.42.104 at Tue, 24 Jun 2008 20:04:30 -0000
-References: <m31w2mlki4.fsf@localhost.localdomain>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l5zrLdFEDjCV3U>
-In-Reply-To: <m31w2mlki4.fsf@localhost.localdomain>
+Date:	Tue, 24 Jun 2008 22:13:13 -0000
+Message-ID: <willow-jeske-01l64jJSFEDjCc0Q>
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 22:13:13 -0000
+References: <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l63P33FEDjCVQ0>
+In-Reply-To: <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-> -- David Jeske wrote:
->> - improve the man page description of "reset --hard"
->> - standardize all the potentially destructive operations
->> (after gc) on "-f/--force" to override
->
-> The thing is 'force' is not always the most descriptive word
-> for the behavior that you propose enabling with --force.
-I'm not talking about switching "git reset --hard" to "git reset -f". I'm
-talking about requiring a "-f" option to "git reset --hard" when it would
-destroy or dangle information.
+-- Brandon Casey wrote:
+> I only have the same advice I gave to Boaz. I think you should try to adjust
+> your workflow so that 'git reset' is not necessary. It seems that for the
+> functions you're trying to perform, 'checkout' and 'branch' should be used
+> rather than 'reset'.
 
-(a) If you have a clean working directory which is fully checked in and has
-another branch tag other than the current branch tag, then "git reset --hard
-<commitish>" is non-destructive, and would complete happily.
+Even when I change my workflow to avoid 'reset', I believe that the
+user-interface of git will be stronger if it is a simpler expression of the
+same functionality. One way to simplify it is to use convention that is
+standardized across a set of tools so we don't have to learn every little
+nuance of every little feature independently.
 
-(b) If you have local modifications to working files it would complain "hey,
-your working files are dirty, 'reset --hard' will blow them away, either revert
-them or use -f". This is what Boaz asked for, and I doubt it would change along
-would alter workflow much for people who are using "git reset --hard" to toss
-attempted patches (since they were fully committed anyhow), or even undo a
-clone or pull operation. If people use it as a combo "revert and reset", they
-would notice.
+Two things I'd like to make it easy for users to never do are:
+- delete data
+- cause refs to be dangling
 
-(c) If the current location is only pointed to by the current branch (which you
-are going to move with 'reset --hard') tell the user that those changes will be
-dangling and will be eligible for garbage collection if they move the branch.
-What to do in this case seems more controversial. I would prefer for this to
-error with "either label these changes with 'branch', or use 'reset --hard -f'
-to force us to leave these in the reflog unnamed".  --- Some here say that
-being in the reflog is enough, and the -f is overkill here. If we define
-destructive as dropping code-commits, then that's true. If we define
-destructive as leaving code-commits unreferenced, then -f is warranted.
-Personally, I'd rather git help me avoid dropping the NAMES to tips, because
-even with GC-never, I don't really want to find myself crawling through SHA1
-hashes and visualization trees to find them later, when git could have reminded
-me to name a branch that would conveniently show up in 'git branch'. It's easy
-enough to avoid dropping the names, or force git to not care with '-f'. I
-personally would like to avoid dealing with reflog or SHA1 hashes 99% of the
-time.
+Therefore, I'd like a simple convention I can apply across all commands, so
+that if users never do them, they'll never do either of the above things. I'm
+not alone.
 
-> 'gc' is another command that has been mentioned along
-> with its '--aggressive' option.
+I think some of the impedance mismatch between my suggestions, and current
+usage, has to do with where I'd like to be next. This is a meaty topic, I'll
+start another thread on "policy and mechanism for less-connected clients".
 
-This was an accident. When I made my "mv --aggressive" joke I was NOT intending
-to reference "gc --aggressive", that is just a coincidence. I was trying to
-make up another 'semi-dangerous sounding name that might or not might be
-destructive". It's comical that it's in use for gc. I don't see any
-relationship between "gc --aggressive" and destructive behavior.
+> I'm not sure why you want to use reset so often. If there is something in the
+> documentation that led you to want to use reset maybe it can be changed so
+that
+> other users are not led in the same way.
 
-However, there IS a situation to require a "-f" on a, because again, "-f" would
-be required for operations which destroy commits. If we think commits being in
-the reflog is good enough to hold onto them, and users are thinking that items
-being in the reflog are 'safe', then a GC where reflog entry expiration is
-going to cause DAG entries to be removed could print an error like:
-
-error: the following entries are beyond the expiration time,
-...<base branchname>/<commit-ish>: 17 commits, 78 lines, 3 authors
-...use diff <commit-ish> , to see the changes
-...use gc -f, to cause them to be deleted
-
-This wouldn't happen very often, and would make "gc" a safe operation even on
-trees with shorter expiration time. In fact, if this were the way it worked, I
-might set my GC back from never to "30 days", because this would not only allow
-me to safely cleanup junk, but it would also allow me to catch unnamed and
-dangling references before they became so old I didn't remember what to name
-them.
-
-This would make a "non forced gc" safe from throwing away commits, but still
-make it really easy to do so for people who want to. Likewise, we could make
-any "auto-gc" that happens not forced by default.
+Yes, it's a problem in the git-gui and the "reset --hard" documentation. I'm
+working on a patch.
