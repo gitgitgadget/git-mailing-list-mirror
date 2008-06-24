@@ -1,72 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
-Date: Tue, 24 Jun 2008 15:17:18 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806241515460.9925@racer>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: git-fetch remote tag to local branch fails
+Date: Tue, 24 Jun 2008 16:27:49 +0200
+Message-ID: <8aa486160806240727r6fc6de6doec8300700293a3a7@mail.gmail.com>
+References: <33f4f4d70806240517h5e3ae420h263dd0c2d6bae459@mail.gmail.com>
+	 <8aa486160806240638o221b01d2i2f46cc8f0f3760a3@mail.gmail.com>
+	 <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 24 16:22:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Klas Lindberg" <klas.lindberg@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 16:30:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB9Ow-000054-6S
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:21:42 +0200
+	id 1KB9WU-0003KU-Oh
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012AbYFXOTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 10:19:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754115AbYFXOTW
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:19:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45637 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753806AbYFXOTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 10:19:21 -0400
-Received: (qmail invoked by alias); 24 Jun 2008 14:19:19 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp006) with SMTP; 24 Jun 2008 16:19:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+pGTkrsn6pvc1RgIM6hBhEmQvaPIVKygZ+5I1qHv
-	Ut7XurqQbVXtVk
-X-X-Sender: gene099@racer
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755633AbYFXO1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 10:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755599AbYFXO1x
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:27:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:45863 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755578AbYFXO1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 10:27:52 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so725762ugf.16
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 07:27:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2yF6XaoQinoz3dp0P4/dyDddDgH6RGjhKutJxLdbHTg=;
+        b=Ux23s2WzXqasdyJN/3ZATIBZq9EDA0zhAJ+QDUAHEzv5bm6qLo1Rn2P7hFdj4di5SA
+         E1KP0Lw+KwNR8EHeSUcmwER/9dRahTnNLhbzNzTRs1EttJYtGXZzvV0VqMBw4E9N/JdM
+         9G07GhbOKOJaq1mV74NACgDmvrvaZqmbGNHlA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Npo8eFPhNbfp8sqvj2ghbYYMN0xx6VPhICvwCqj/aqto4AV622E4z+wmh+aIcHWpBs
+         UXQx6uEkOd451qF7LBQ7OXv0Av0/Sz+DUD1xk9nWKmCfK6GJFgO/ttqO8+pW27UAhNIs
+         lO9ciqSsPzwQTaRe1g8C5erji1aHqttztq7v8=
+Received: by 10.67.97.15 with SMTP id z15mr3374828ugl.27.1214317669844;
+        Tue, 24 Jun 2008 07:27:49 -0700 (PDT)
+Received: by 10.150.152.19 with HTTP; Tue, 24 Jun 2008 07:27:49 -0700 (PDT)
+In-Reply-To: <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86064>
 
+On Tue, Jun 24, 2008 at 16:01, Klas Lindberg <klas.lindberg@gmail.com> wrote:
+> Hello
+>
+>> git tag -l
+> foo_tag
+> test_tag
+>>
+>
+>> git branch -a
+>>
 
-When you look for a fix instead of a regression, it can be quite hard
-to twist your brain into choosing the correct bisect command between
-'git bisect bad' and 'git bisect good'.
+empty?
 
-So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
+>
+> At this point, I can create the branch "b" from "foo_tag", so the
+> fetch did get me a remote tag. It just didn't update a local branch
+> with the contents (or create a new one).
+>
+> Something that also confuses me is that if branch "b" already exists, then
+>
+>> git-pull bogustree refs/tags/foo_tag:refs/heads/b
+>
+> actually does update branch "b". I find the behaviour quite inconsistent.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+You asked explicitly to update branch b with :refs/heads/b.
 
-	When Randal talked about this on IRC, I laughed.  But I just had 
-	the case where it took me _three_ attempts at a bisection, only
-	to give up and write this patchlet.
+>
+> Unfortunately it isn't a solution for me to fetch tags and then create
+> branches from the tags. I need to be able to update existing branches,
+> and I have to do that without first making such a branch the current
+> branch.
+>
 
-	May it help someone else, too.
+If you have to update existing branches from remote branches you can:
 
- git-bisect.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+git fetch <remote> refs/heads/<remotebranch>:refs/heads/<localbranch>
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 8b11107..d833e21 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -501,6 +501,8 @@ case "$#" in
- *)
-     cmd="$1"
-     shift
-+    test $cmd = fixed && cmd=bad
-+    test $cmd = unfixed && cmd=good
-     case "$cmd" in
-     help)
-         git bisect -h ;;
--- 
-1.5.6.127.g3fb9f
+But normally you have some remote tracking branches, such as how the
+"origin" remote repository is configured.
+
+Updating from remote tags is not normal, since tags are not supposed to change.
+
+Can you explain why you have to do it this way? Or the whole workflow?
+
+Santi
+
+P.D.: Please, do not toppost.
