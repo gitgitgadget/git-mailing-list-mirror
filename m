@@ -1,56 +1,64 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
-Date: Tue, 24 Jun 2008 17:16:30 +0200
-Message-ID: <20080624151630.GH5528@leksak.fem-net>
-References: <alpine.DEB.1.00.0806241515460.9925@racer> <20080624144254.GG5528@leksak.fem-net> <alpine.DEB.1.00.0806241555300.9925@racer>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] clone: create intermediate directories of destination
+ repo
+Date: Tue, 24 Jun 2008 11:20:07 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806241113360.19665@iabervon.org>
+References: <177e83dd0806231251u223717e4s2149f69313787ead@mail.gmail.com> <alpine.LNX.1.00.0806231554380.19665@iabervon.org> <20080623203835.GA8105@sigill.intra.peff.net> <0YbSdnKH0_SP30-YMV0Y1aH4SO46yc6x_2EA1VGwPtV_CltGk-7wdg@cipher.nrlssc.navy.mil>
+ <20080624055022.GC19224@sigill.intra.peff.net> <7v3an3e0xv.fsf@gitster.siamese.dyndns.org> <20080624080437.GA2581@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 24 17:18:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>, zuh@iki.fi,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 24 17:21:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBAHk-0006e3-D0
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:18:20 +0200
+	id 1KBAKT-0007mo-RW
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 17:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762874AbYFXPQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 11:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762865AbYFXPQm
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:16:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59668 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762809AbYFXPQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 11:16:41 -0400
-Received: (qmail invoked by alias); 24 Jun 2008 15:16:32 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp058) with SMTP; 24 Jun 2008 17:16:32 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/RO1Nw7xXR03FjZ+1ch2ud6Y78xiC6sviV5GLcRQ
-	bNJvgrQwGASaoU
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KBAFy-0001Ic-2U; Tue, 24 Jun 2008 17:16:30 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806241555300.9925@racer>
-X-Y-GMX-Trusted: 0
+	id S1755170AbYFXPUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 11:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757791AbYFXPUN
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 11:20:13 -0400
+Received: from iabervon.org ([66.92.72.58]:47922 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755886AbYFXPUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 11:20:11 -0400
+Received: (qmail 7988 invoked by uid 1000); 24 Jun 2008 15:20:07 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Jun 2008 15:20:07 -0000
+In-Reply-To: <20080624080437.GA2581@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86071>
 
-> > > So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
-> > 
-> > Are they intentionally undocumented to not raise confusion?
+On Tue, 24 Jun 2008, Jeff King wrote:
+
+> On Tue, Jun 24, 2008 at 12:39:40AM -0700, Junio C Hamano wrote:
 > 
-> Umm.  Which part of "TOY" is unclear?
+> > > The shell version used to use "mkdir -p" to create the repo path, but
+> > > the C version just calls "mkdir". Let's replicate the old behavior. In
+> > > this case we can simply create the directories leading up to the git
+> > > dir. If it's a bare repo, then that is everything that init_db wants
+> > > ahead of time. If it isn't bare, then the worktree contains the git dir,
+> > > so we create the worktree.
+> > 
+> > Clever ;-)
+> 
+> I am worried that it is too clever. I didn't see an obvious way for
+> work_tree and git_dir to not have that property, but I think it is still
+> worth somebody double-checking.
 
-The T, O and Y.
-No; after searching for "TOY PATCH" on gmane: none :)
+I think you can specify git_dir and work_tree on the command line, and set 
+them to whatever you want, although I now don't remember whether they're 
+actually both followed for clone (I tried to match the shell version, 
+whose behavior didn't make too much sense to me).
 
-Regards.
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+	-Daniel
+*This .sig left intentionally blank*
