@@ -1,38 +1,157 @@
 From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: oops, resend
-Date: Tue, 24 Jun 2008 23:36:28 +0200
-Message-ID: <1214343392-5341-1-git-send-email-robin.rosenberg@dewire.com>
+Subject: [JGIT PATCH 2/4] Create a fnmatch-style pattern TreeFilter
+Date: Tue, 24 Jun 2008 23:36:30 +0200
+Message-ID: <1214343392-5341-3-git-send-email-robin.rosenberg@dewire.com>
 References: <20080622233525.GJ11793@spearce.org>
+ <1214343392-5341-1-git-send-email-robin.rosenberg@dewire.com>
+ <1214343392-5341-2-git-send-email-robin.rosenberg@dewire.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Marek Zawirski <marek.zawirski@gmail.com>,
-	Florian Koeberle <florianskarten@web.de>
+	Florian Koeberle <florianskarten@web.de>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 00:51:05 2008
+X-From: git-owner@vger.kernel.org Wed Jun 25 00:51:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBHLm-0008Ea-4w
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:50:58 +0200
+	id 1KBHM8-0008Lh-6J
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbYFXWuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 18:50:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbYFXWuA
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:50:00 -0400
-Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:55704 "EHLO
+	id S1752954AbYFXWuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 18:50:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbYFXWuG
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:50:06 -0400
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:55701 "EHLO
 	pne-smtpout1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752954AbYFXWt7 (ORCPT
+	by vger.kernel.org with ESMTP id S1753336AbYFXWt7 (ORCPT
 	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 18:49:59 -0400
 Received: from localhost.localdomain (213.67.100.250) by pne-smtpout1-sn2.hy.skanova.net (7.3.129)
-        id 483EBD680054AA41; Tue, 24 Jun 2008 23:40:30 +0200
+        id 483EBD680054AA43; Tue, 24 Jun 2008 23:40:31 +0200
 X-Mailer: git-send-email 1.5.5.1.178.g1f811
-In-Reply-To: <20080622233525.GJ11793@spearce.org>
+In-Reply-To: <1214343392-5341-2-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86169>
 
-I f*d the first series. 1 2 3 testing.. :(
+This uses Florian's pattern matcher to perform the matching.
 
--- robin
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../jgit/treewalk/filter/WildCardTreeFilter.java   |  103 ++++++++++++++++++++
+ 1 files changed, 103 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
+new file mode 100644
+index 0000000..ce6da5e
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/filter/WildCardTreeFilter.java
+@@ -0,0 +1,103 @@
++/*
++ * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.treewalk.filter;
++
++import java.io.IOException;
++
++import org.spearce.jgit.errors.IncorrectObjectTypeException;
++import org.spearce.jgit.errors.InvalidPatternException;
++import org.spearce.jgit.errors.MissingObjectException;
++import org.spearce.jgit.fnmatch.FileNameMatcher;
++import org.spearce.jgit.treewalk.TreeWalk;
++import org.spearce.jgit.treewalk.filter.TreeFilter;
++
++/**
++ * This class implements a TreeeFilter that uses the wildcard style pattern
++ * matching like of Posix fnmatch function.
++ */
++public class WildCardTreeFilter extends TreeFilter {
++
++	private final FileNameMatcher matcher;
++
++	private final String pattern;
++
++	protected WildCardTreeFilter(final String pattern) {
++		try {
++			this.pattern = pattern;
++			matcher = new FileNameMatcher(pattern, null);
++		} catch (InvalidPatternException e) {
++			throw new IllegalArgumentException(e);
++		}
++	}
++
++	@Override
++	public TreeFilter clone() {
++		return new WildCardTreeFilter(pattern);
++	}
++
++	@Override
++	public boolean include(TreeWalk walker) throws MissingObjectException,
++			IncorrectObjectTypeException, IOException {
++		if (walker.isRecursive() && walker.isSubtree())
++			return true;
++		matcher.reset();
++		matcher.append(walker.getPathString());
++		if (matcher.isMatch())
++			return true;
++		return false;
++	}
++
++	@Override
++	public boolean shouldBeRecursive() {
++		return true;
++	}
++
++	/**
++	 * Construct a WildCardmatcher like POSIX fnmatch.
++	 *
++	 * @param pattern
++	 *            A POSIX wildcard pattern
++	 * @return a {@link TreeFilter} that matches pattern
++	 * @throws IllegalArgumentException
++	 *             if the pattern is malformed
++	 */
++	public static TreeFilter create(final String pattern) {
++		return new WildCardTreeFilter(pattern);
++	}
++
++}
+-- 
+1.5.5.1.178.g1f811
