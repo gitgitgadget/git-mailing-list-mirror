@@ -1,96 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] Created git-basis and modified git-bundle to accept --stdin.
-Date: Tue, 24 Jun 2008 01:09:10 -0700 (PDT)
-Message-ID: <m3iqvzl091.fsf@localhost.localdomain>
-References: <1214273297-8257-1-git-send-email-adambrewster@gmail.com>
-	<1214273297-8257-2-git-send-email-adambrewster@gmail.com>
-	<c376da900806231921y2d822been9cd573d509fbf78a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Adam Brewster" <adam@adambrewster.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 10:10:15 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 24 Jun 2008 10:12:28 +0200
+Message-ID: <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
+References: <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 10:13:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB3bQ-0001sL-HO
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:10:12 +0200
+	id 1KB3ec-0002pq-I7
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758122AbYFXIJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 04:09:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758195AbYFXIJS
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:09:18 -0400
-Received: from ik-out-1112.google.com ([66.249.90.176]:34003 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758122AbYFXIJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:09:13 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so1460098ika.5
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 01:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=zRyobtRTtQIh/rrwhKm7FWdA2zA5Z8SBMYxhyKTrlY4=;
-        b=Z2TpFEPCWU8LAR3mooCl8/OrOA8OS8+xPRHoOARpuVDoR+1bYgfU2Gbpi7QiZVLXXI
-         EhvAcRPhWatpak0/2+ZMvBmxEB87MYX9JffnZC95P0Lm10Sgtl4B0flOmfZADbZTT86l
-         juH1hNw00vYOWgtP4+H4nAEEmY/VSfbzOPMUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=kxAmdlI2rq/HEQqD82dnjJF1PUOrF+ICZGQEeTZ0o5fHUl/8cIeEipZx7VT93e9AGb
-         IDyj8zE5MeB+lfaBlaOmBcTg9CPKiIlFLZLrNbEsOSN/GlgKJo9x0bb6vZSyg0NQf4d+
-         cr84MY9NlC1ZF+EOkCL6hDBF8gEQiU89jawzU=
-Received: by 10.210.72.19 with SMTP id u19mr70965eba.71.1214294951896;
-        Tue, 24 Jun 2008 01:09:11 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.195.249])
-        by mx.google.com with ESMTPS id y37sm9879033iky.8.2008.06.24.01.09.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 01:09:10 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5O8Ch8Y005603;
-	Tue, 24 Jun 2008 10:12:43 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5O8Chlc005600;
-	Tue, 24 Jun 2008 10:12:43 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <c376da900806231921y2d822been9cd573d509fbf78a@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751830AbYFXIMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 04:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbYFXIMc
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:12:32 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:30964 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132AbYFXIMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 04:12:31 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6303.orange.nl (SMTP Server) with ESMTP id 731B27000091;
+	Tue, 24 Jun 2008 10:12:29 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6303.orange.nl (SMTP Server) with ESMTP id 1C9977000081;
+	Tue, 24 Jun 2008 10:12:29 +0200 (CEST)
+X-ME-UUID: 20080624081229117.1C9977000081@mwinf6303.orange.nl
+In-Reply-To: <7vwskfclfs.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86010>
 
-"Adam Brewster" <adam@adambrewster.com> writes:
 
-> Git-basis is a perl script that remembers bases for use by git-bundle.
-> Code from rev-parse was borrowed to allow git-bundle to handle --stdin.
+On 24 jun 2008, at 09:59, Junio C Hamano wrote:
 
-I'd rather you follow git-pack-objects, and use `--revs` for the name
-of this option (or even '--not --revs').  The name `--stdin` might
-imply that you are providing objects names on stdin of git-bundle.
+> The idea of the "shell: accept 'git foo' form" patch is that as long  
+> as
+> the server end consistently use the same version (i.e. git-shell is  
+> from
+> 'next' and it knows where the rest of git is installed), things should
+> work fine.  I've merged them to 'next' and pushed it out so that you  
+> can
+> try it.
 
-But perhaps I am worrying over nothing.
- 
-[...]
-> Then you can add the objects in the bundle to the basis, so they won't
-> get included in the next pack like this:
-> 
->  $ git-basis --update my-basis < my-bundle
+Any clone / push operation fails if you use current next:
 
-Why not use "$(git ls-remote my-bundle)" somewhere in the invocation
-creating new bundle instead?
- 
-> I'm sure that my implementation is crap, but I think this is a useful
-> idea.  Anybody agree?  Disagree?
+Vienna:bin pieter$ git --version
+git version 1.5.6.129.g274ea
+Vienna:bin pieter$ git clone localhost:project/bonnenteller
+Initialize bonnenteller/.git
+Initialized empty Git repository in /opt/git/bin/bonnenteller/.git/
+Password:
+bash: git-upload-pack: command not found
+fatal: The remote end hung up unexpectedly
 
-Documentation, please?  Especially that it looks like '--stdin' option
-is a bit tricky...
+I think that is what Miklos meant. Also, I think the client sends the  
+command to execute on the remote side. At least for v1.5.5 clients and  
+before, that is "git-upload-pack". As this is not in PATH, that  
+command will fail on any server that runs v1.5.6 and has the libexec  
+dir.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+- Pieter
