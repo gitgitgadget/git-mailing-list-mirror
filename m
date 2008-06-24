@@ -1,77 +1,83 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH v6] gitweb: add test suite with Test::WWW::Mechanize::CGI
-Date: Tue, 24 Jun 2008 10:37:41 +0200
-Message-ID: <4860B255.7010909@gmail.com>
-References: <1214181904-30265-1-git-send-email-LeWiemann@gmail.com> <1214183688-8544-1-git-send-email-LeWiemann@gmail.com> <200806231531.13082.jnareb@gmail.com> <485FE3F7.4040102@gmail.com> <7vtzfjea64.fsf@gitster.siamese.dyndns.org>
+From: "David Jeske" <jeske@google.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 08:30:41 -0000
+Message-ID: <15381.9593288519$1214297235@news.gmane.org>
+References: <20080624081601.GA2692@sigill.intra.peff.net>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5kv6TFEDjCj8S>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 10:38:44 2008
+Cc: "Avery Pennarun" <apenwarr@gmail.com>,
+	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 24 10:47:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB42y-0002n3-LR
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:38:41 +0200
+	id 1KB4Af-0006GM-Lx
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752806AbYFXIhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 04:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbYFXIho
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:37:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:44718 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752063AbYFXIhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:37:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1134851fgg.17
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 01:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=svIXSHCx2MtGFh4d4Tym1uCuA4Jy9b1Ui4py3KAnPe0=;
-        b=ano9eTV6MFzLc3Yzup1RSyoDVGzOBKYt9AvPE/b6a9PUv8vw6kAEdoMVEatzcqTZuO
-         iC8fLI/KBL3W4Q/2E+Kdj8Rh/zj1Rf/r4aL+xuXKhvEnbiJUhcVl+wvZQZsGvoUuFkx1
-         iaBfCaRI5qbdY7qkhOPjZ+pvU//glVz9RMnec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=HJ5TKoeG/qw7Pjkt7cmnr6zwp5Yhn/xlAmE65Dah9H0/BQ9crHE95u44I4RM8BPxZr
-         1nhTXTcsQh3P1dJHrrUfoOe4MKsVvcJjYXPUrCZdAGKeh96T5OxSJL5tUo+jeLgS3X01
-         Bo5vw8uKibVs7Usv7aAl9AeNNcLHcv/GQJxuE=
-Received: by 10.86.1.11 with SMTP id 11mr8699749fga.27.1214296662082;
-        Tue, 24 Jun 2008 01:37:42 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.198.167])
-        by mx.google.com with ESMTPS id e11sm10763806fga.4.2008.06.24.01.37.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 01:37:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7vtzfjea64.fsf@gitster.siamese.dyndns.org>
+	id S1752674AbYFXIpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 04:45:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbYFXIpi
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:45:38 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60072 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751426AbYFXIph (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 04:45:37 -0400
+Received: (qmail 10641 invoked by uid 90); 24 Jun 2008 08:45:14 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 08:30:41 -0000
+In-Reply-To: <20080624081601.GA2692@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86018>
 
-Junio C Hamano wrote:
-> We are passing down SHELL_PATH from primary Makefile to t/
-> and you should be able to do the same for Perl path...
+This is mostly moot since I've understood that it's easy to set git to never
+GC. I guess I'm curious about why those GC fields would ever be set to anything
+other than never?
 
-I see; that'll work, thanks!  Will send v8 soon.
+-- Jeff King wrote:
+> No. Git keeps the reachable DAG. So if the DAG is part of development
+> that is merged into one of your long running branches, or if you keep
+> around the branch that points to it, it will never go away.
 
-> About the Test::WWW:Mechanize::CGI thing, how widely available is it?
+Right, that's what I thought.
 
-Not very, you basically have to install it from CPAN.  If it's not 
-installed, the only message you get from the test is:
+I'm not primarily concerned with what developers can do to their local git
+repositories. I'm concerned with what the default sync operations can let them
+do to the crown-jewels in the 'central organization repositories' which
+everyone is periodically pushing to.
 
-ok 1: skipping gitweb tests, Test::WWW::Mechanize::CGI not found
+I like that deleting a branch in your repo does not cause it to be deleted in
+other repos. Presumably in an  organization we could prevent the central repo
+from ever accepting branch deletes from developers. (without some kind of
+authorization)
 
-Should optional test dependencies like Test::WWW::Mechnanize::CGI be 
-documented in INSTALL?
+Does it have the same protection for all operations that can cause DAGs to be
+dangling? For example, if they branch -f" and push the branch?
 
-Best,
+---
 
-     Lea
+Again it's simple enough for me to just set the GC times to "never" on the
+server, and I find git pretty pleasing because I'm a
+short-attention-span-comitter. On a perforce or cvs repository, I frequently
+tar up subtrees between commits, so i don't lose my work -- git is light-years
+ahead of this.
+
+Quite a bit of my fear of losing data came from some issues in the git-gui. I'm
+trying out git on a windows project, and windows-shells just don't work right,
+so I'm using the "Git Gui". It turns out right-clicking on a history entry in
+the gui has no checkout option, and the only option it does have which will let
+you move the tree to that place is "reset --hard".. since this was the easiest
+thing to find in the GUI, I assumed it was the right way to do it, and then all
+my more recent changes disappeared. It doesn't seem to have reflog
+functionality, so I couldn't find any way to get back all my changes. I ended
+up having an old history window that I did another reset --head in back to the
+latest change, but I got scared about what git was doing underneath. The docs
+clearly explained that it will garbage collect dangling refs, and frankly the
+information about how often this happens is buried so deep I had no idea what
+the frequency was.
