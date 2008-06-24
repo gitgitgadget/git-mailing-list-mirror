@@ -1,59 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
-Date: Tue, 24 Jun 2008 16:39:46 -0700
-Message-ID: <7vbq1q9zct.fsf@gitster.siamese.dyndns.org>
-References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com>
- <alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site>
- <39C2861E-F800-40AE-8C15-4FC3BB51EF16@gmail.com>
- <7v3an2bh3b.fsf@gitster.siamese.dyndns.org>
- <930163B6-4A7E-49C7-B9D5-F7B37699C2A9@gmail.com>
- <m3k5gejtkp.fsf@localhost.localdomain>
+From: <Patrick.Higgins@cexp.com>
+Subject: RE: Windows symlinks
+Date: Tue, 24 Jun 2008 17:42:05 -0600
+Message-ID: <911589C97062424796D53B625CEC0025E46193@USCOBRMFA-SE-70.northamerica.cexp.com>
+References: <m3od5qjtv1.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:40:58 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: <git@vger.kernel.org>
+To: <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:49:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBI86-0004Zt-Mx
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:40:55 +0200
+	id 1KBIFk-00073U-Gd
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776AbYFXXj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 19:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbYFXXj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:39:58 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49547 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751921AbYFXXj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 19:39:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F057E99FF;
-	Tue, 24 Jun 2008 19:39:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4658899FE; Tue, 24 Jun 2008 19:39:49 -0400 (EDT)
-In-Reply-To: <m3k5gejtkp.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Tue, 24 Jun 2008 16:34:35 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D8941930-4246-11DD-A789-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751692AbYFXXr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbYFXXr2
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:47:28 -0400
+Received: from mx02.cexp.com ([170.131.136.83]:32438 "EHLO mx02.cexp.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751680AbYFXXr2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 19:47:28 -0400
+Received: from uscobrmfa-se-05 (uscobrmfa-se-05.cexp.com [170.131.144.36])
+	by mx02.cexp.com (Postfix) with ESMTP id 944AB417A4A
+	for <git@vger.kernel.org>; Tue, 24 Jun 2008 17:42:59 -0600 (MDT)
+Received: from USCOBRMFA-SE-70.northamerica.cexp.com ([10.128.26.36]) by USCOBRMFA-SE-51.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 24 Jun 2008 17:42:59 -0600
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <m3od5qjtv1.fsf@localhost.localdomain>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Windows symlinks
+Thread-Index: AcjWUgJMiA+PpobuSMqA+M5oq5gufAAAHSYA
+X-OriginalArrivalTime: 24 Jun 2008 23:42:59.0466 (UTC) FILETIME=[08E19EA0:01C8D654]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86186>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> 
+> Patrick Higgins <Patrick.Higgins@cexp.com> writes:
+> 
+> Second, the problem there can be _only_ if your repository contains
+> (or contained) symlinks, and then it is your own damn fault.
 
-> Christian Holtje <docwhat@gmail.com> writes:
->
->> Based on the information about core.whitespace doesn't git do this
->> already?  Maybe we should just delete the pre-commit hook or make it
->> empty with a note saying what you can do with it?
->
-> pre-commit hook also detects unresolved merge conflicts, which
-> core.whitespace doesn't (and probably shouldn't).
+Agreed. The first thing we started working on was getting symlinks out of our repositories. Unfortunately, we chose to use them because we are using broken development tools that don't support proper modularity. We found the best way to get the IDE's compilation to work was to symlink shared code into each project. It's a nasty solution, but it was the only one that worked. Clearcase made this solution possible. As powerful and flexible as git is, it would have left us out in the cold in this situation.
 
-But perhaps "diff --check" should.
+
+> I don't know how Cygwin, or msysGit deals with symlinks in a wirking
+> directory
+
+msysGit just created a file with the target of the symlink as it's contents, but its tools didn't know how to make use of it. I think Cygwin did the same thing, but ls, cat, and all the other Cygwin tools were able to make use of it. I tried to run the Java compiler over a symlinked file and it didn't work, though.
+
+Copying files at build time is an interesting idea, but since the point was to get an IDE's build system to work, I don't I'll have the level of control I would need to make this work.
