@@ -1,69 +1,81 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Windows symlinks
-Date: Wed, 25 Jun 2008 01:29:56 +0200
-Message-ID: <200806250129.56271.robin.rosenberg.lists@dewire.com>
-References: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] pre-commit hook should ignore carriage returns at EOL
+Date: Tue, 24 Jun 2008 16:34:35 -0700 (PDT)
+Message-ID: <m3k5gejtkp.fsf@localhost.localdomain>
+References: <53A5AFCF-94C7-465E-A181-1DA69F251F5B@gmail.com>
+	<alpine.LFD.1.10.0806241418360.32759@sys-0.hiltweb.site>
+	<39C2861E-F800-40AE-8C15-4FC3BB51EF16@gmail.com>
+	<7v3an2bh3b.fsf@gitster.siamese.dyndns.org>
+	<930163B6-4A7E-49C7-B9D5-F7B37699C2A9@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Patrick.Higgins@cexp.com
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:35:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Holtje <docwhat@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:35:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBI2G-0002UV-Q6
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:34:53 +0200
+	id 1KBI2w-0002gh-Il
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 01:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847AbYFXXd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 19:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYFXXd5
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:33:57 -0400
-Received: from av9-2-sn2.hy.skanova.net ([81.228.8.180]:57957 "EHLO
-	av9-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbYFXXd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 19:33:56 -0400
-Received: by av9-2-sn2.hy.skanova.net (Postfix, from userid 502)
-	id 4DE9C38026; Wed, 25 Jun 2008 01:33:55 +0200 (CEST)
-Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
-	by av9-2-sn2.hy.skanova.net (Postfix) with ESMTP
-	id 2780437E70; Wed, 25 Jun 2008 01:33:55 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id DB56837E45;
-	Wed, 25 Jun 2008 01:33:54 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
-Content-Disposition: inline
+	id S1751693AbYFXXej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 19:34:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbYFXXej
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 19:34:39 -0400
+Received: from ik-out-1112.google.com ([66.249.90.176]:40298 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbYFXXei (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 19:34:38 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so1611281ika.5
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 16:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=jkm0vdJYUp2HYyj7/5RVtoDgDubHOjvybC02rHzZpZw=;
+        b=ODyXip2t+NgOeLK+HWIKd0wt8RDw+A6bR3TkFF6yJJJeiECR31S910yHpTRV6PYu4L
+         vUEpIgeDdHeqr7N13r3/R2AhHGpMXTwHBszhNoMh7PtL9A4U3o0ihhUOOwAbtFE54E9P
+         7lCWrILoU1ZUAaF71wDU4GBP76qonj/eATZDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=xQBN85jXJO59nPy9it2ULmSshapOoQnJUtCYy1WTBB04N6Dcu35Z2g4atoZKwd5314
+         uKEAYg9zmKui6/Dy4GYu3GtQLW48oPB6qId95f+dhduV/SwKYDGPwu+N9PSZtqovLqqf
+         R8wB/cE8DtLutSBgPr3RrPSekRuYh3HvCmqf0=
+Received: by 10.210.46.14 with SMTP id t14mr1072748ebt.124.1214350477031;
+        Tue, 24 Jun 2008 16:34:37 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.223.44])
+        by mx.google.com with ESMTPS id z34sm11025133ikz.9.2008.06.24.16.34.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 16:34:35 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5ONYXlC012019;
+	Wed, 25 Jun 2008 01:34:33 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5ONYUY8012016;
+	Wed, 25 Jun 2008 01:34:31 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <930163B6-4A7E-49C7-B9D5-F7B37699C2A9@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86183>
 
-onsdagen den 25 juni 2008 00.42.49 skrev Patrick.Higgins@cexp.com:
-> It looks like one of the bigger (biggest?) hurdles for git adoption at my company is going to be handling symlinks on Windows. We may be able to sidestep the issue entirely by having developers run Linux in a virtual machine (or better yet, Windows in a VM) because we deploy to Linux and thus can make a very strong argument that developers should develop on Linux, too. That run into an image problem where people might start blaming git for needing to have an extra operating system around just for revision control.
+Christian Holtje <docwhat@gmail.com> writes:
 
-Right, they could use only Linux and not have an extra OS for email..
-> 
-> We currently use Clearcase snapshot views on Windows and it has some kind of magic to be able to deal with symlinks. I haven't actually used the Windows version of Clearcase so I don't know how it does it, but my understanding is that it handles them with copies, and I guess it somehow knows to update all the copies when a change is made.
+> Based on the information about core.whitespace doesn't git do this
+> already?  Maybe we should just delete the pre-commit hook or make it
+> empty with a note saying what you can do with it?
 
-It is one of the few sane things clearcase does. msysgit's approach is just unusable. I've not come up with the patches yet. Clearcase makes copies
-instead of the symlinks and updates them on checkout/checkin and update.
-Git could do one step better by updating copies when index is updated, avoiding an unnecessary commit (which is pretty annoying in CC).
-Invalid symlinks, i.e. pointing at non-existent objects or outside then VOB (repository in Git parlance, don't show up at all in snapshot views. Git could do the same thereby making the workdir usable
-when it contains and depends on symlinks.
+pre-commit hook also detects unresolved merge conflicts, which
+core.whitespace doesn't (and probably shouldn't).
 
-> Has anyone thought about a way for git to handle symlinks? Vista seems to have added native symlinks, but you need have elevated privilege to create
-> them. NTFS junction points seem helpful for older versions of Windows, but don't work for anything except directories, and seem to be dangerous to use with tools that do recursive deletes. Neither junction points nor native symlinks sound like great options. 
-Obviously one could make this a switchable feature and enable it when the
-file system supports it. As for junction points i'd say no too. What little testing I did on symlinks in vista they seem capable of most sane uses.
-
-> Cygwin's clever symlink trick seems to work pretty well in practice. I'm not exactly sure what it's doing, but it seems to create a shortcut that it's own programs understand. Some other non-Cygwin programs seem to understand them, too, but Java does not which is a big problem for me.
-> 
-> I just don't see any good solutions here. Does anyone have any better ideas?
-
-No, copies. If you have a patch I can test it and then implement it for jgit, which doesn't have symlinks either.
-
--- robin
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
