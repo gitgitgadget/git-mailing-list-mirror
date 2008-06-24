@@ -1,95 +1,74 @@
-From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
+From: "David Jeske" <jeske@google.com>
 Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 14:01:18 +0400 (Russian Standard Time)
-Message-ID: <alpine.WNT.1.10.0806241343170.3824@theodor>
-References: <20080624081601.GA2692@sigill.intra.peff.net>
- <willow-jeske-01l5PFjPFEDjCfzf-01l5kv6TFEDjCj8S@brm-avmta-1.central.sun.com>
- <willow-jeske-01l5lTEoFEDjCVta@brm-avmta-1.central.sun.com>
+Date: Tue, 24 Jun 2008 10:42:04 -0000
+Message-ID: <21109.6734311015$1214304662@news.gmane.org>
+References: <willow-jeske-01l5oEsvFEDjCjRW>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5oEswFEDjCZBN>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 12:48:17 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 12:50:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB64B-0005HS-5M
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 12:48:03 +0200
+	id 1KB66u-0006JJ-Vk
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 12:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbYFXKrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 06:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbYFXKrF
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 06:47:05 -0400
-Received: from brmea-mail-4.Sun.COM ([192.18.98.36]:34445 "EHLO
-	brmea-mail-4.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479AbYFXKrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 06:47:04 -0400
-X-Greylist: delayed 2503 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 06:47:04 EDT
-Received: from fe-amer-10.sun.com ([192.18.109.80])
-	by brmea-mail-4.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m5OA5J8S009594
-	for <git@vger.kernel.org>; Tue, 24 Jun 2008 10:05:19 GMT
-Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- id <0K2Y00101PBQIP00@mail-amer.sun.com>
- (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Tue,
- 24 Jun 2008 04:05:19 -0600 (MDT)
-Received: from localhost ([92.255.85.22])
- by mail-amer.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
- 2007)) with ESMTPSA id <0K2Y007VCPCINW60@mail-amer.sun.com>; Tue,
- 24 Jun 2008 04:05:19 -0600 (MDT)
-In-reply-to: <willow-jeske-01l5lTEoFEDjCVta@brm-avmta-1.central.sun.com>
-X-X-Sender: fs77888@mail-amer.sun.com
-User-Agent: Alpine 1.10 (WNT 962 2008-03-14)
+	id S1759457AbYFXKuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 06:50:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759412AbYFXKuA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 06:50:00 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60104 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1759413AbYFXKt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 06:49:59 -0400
+Received: (qmail 11957 invoked by uid 90); 24 Jun 2008 10:49:35 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 10:42:04 -0000
+In-Reply-To: <willow-jeske-01l5oEsvFEDjCjRW>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86032>
 
+As a more practical question, how do I do this workflow illustrated below?
 
-On Tue, 24 Jun 2008, David Jeske wrote:
-> This is mostly moot since I've understood that it's easy to set git to never
-> GC. I guess I'm curious about why those GC fields would ever be set to anything
-> other than never?
+It's sort of similar to the workflow that "git stash" is trying to support,
+except that I have a bunch of commits instead of a bunch of
+uncommitted-changes.
 
-On Tue, 24 Jun 2008, David Jeske wrote:
-> My philosophy is simple, I never never
-> never want to throw away changes, you shouldn't either. Disks are cheaper than
-> programmer hours. I can understand wanting to keep things tidy, so I can
-> understand ways to correct the 'easily visible changes', and also avoid pushing
-> them to other trees, but I don't understand why git needs to delete things.
+I pull a repository that looks like this:
 
-It looks like you are severely restricting your own way of thinking about
-a source code management as a source code backup system only.
+.  a<--b<--c  <--master
 
-While this might be a valid mindset for a gatekeeper on a public 
-repository it way way restrictive for a developer that wants to have a 
-system that helps him doing a job.
-And, say, for me, for my own job, ability to experiment *safely* and 
-effectively, ability to try out different histories is the most valuable
-asset that git brings to the world of SCMs.
+Then I hack away to this, and then throw my own branch on the end, along with
+master:
 
-My collegues that were forced to use Mercurial for their job are really 
-unhappy about Mercurial's habbit of not modifying history at all.
-After a certain amount of time just looking at the history of an actively 
-developed project causes a headache.
+.  a<--b<--c<--d<--e<--f<--g  <--master (jeske)
+.                             <--feature1 (jeske)
 
+While the server looks like this:
 
-When you speak about allowing/disallowing destructive actions you actually
-speak about policies.
-Different organizations, different repositories have different policies.
-And git is very flexible in allowing you to implement all those different
-policies as you wish it.
+.  a<--b<--c<--1<--2<--3  <--master (server)
 
-And whether default policy should allow people to experiment freely or not
-is a very delicate question, which I would not really have enough courage
-to speculate on.
+I want to get my repository to look something like this:
 
-regards,
-   Fedor.
+.  a<--b<--c<--1<--2<--3  <--master (jeske)
+.           \
+.            d<--e<--f<--g   <-- feature1 (jeske)
 
-P.S. Saying all that, I would really like to have an easy way to tie non-default
-policies to repositories so it propagates on clones. It is really helpful
-in big organizations. But thats another story.
+So I can then do this:
+
+.  a<--b<--c<--1<--2<--3<--zz  <--master (jeske)
+.           \
+.            d<--e<--f<--g   <-- feature1 (jeske)
+
+..and then push zz onto the server after 3.
+
+..and I want to do it with safe commands that won't leave any dangling
+references. (say if I forget to put the feature1 branch on)
+
+How do I do that?
