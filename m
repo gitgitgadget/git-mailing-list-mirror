@@ -1,79 +1,107 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Importing non-version controlled bits and pieces to Git
-Date: Tue, 24 Jun 2008 07:46:14 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0806240742240.5039@ds9.cixit.se>
-References: <Pine.LNX.4.64.0806201036440.24013@ds9.cixit.se>
- <20080620115102.GW29404@genesis.frugalware.org> <alpine.DEB.1.00.0806201323390.6439@racer>
- <Pine.LNX.4.64.0806201339330.4004@ds9.cixit.se> <alpine.DEB.1.00.0806201359320.6439@racer>
- <Pine.LNX.4.64.0806230732120.31319@ds9.cixit.se> <Pine.LNX.4.64.0806231543580.31319@ds9.cixit.se>
- <20080624051204.GA1760@diana.vm.bytemark.co.uk>
+From: "David Jeske" <jeske@google.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 06:35:16 -0000
+Message-ID: <30722.0091614456$1214290702@news.gmane.org>
+References: <32541b130806232220r292d691cn5bf5f9976126aa29@mail.gmail.com>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5gtQ7FEDjCWCC>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 08:47:19 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 08:58:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB2J9-0002Zo-J7
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 08:47:16 +0200
+	id 1KB2Tk-0005E7-P1
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 08:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048AbYFXGqU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jun 2008 02:46:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754001AbYFXGqU
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 02:46:20 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:54434 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753820AbYFXGqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 02:46:18 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m5O6kF5e009122
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 24 Jun 2008 08:46:15 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m5O6kFRp009117;
-	Tue, 24 Jun 2008 08:46:15 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20080624051204.GA1760@diana.vm.bytemark.co.uk>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 24 Jun 2008 08:46:15 +0200 (CEST)
+	id S1751321AbYFXG5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 02:57:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYFXG5R
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 02:57:17 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60033 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750936AbYFXG5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 02:57:16 -0400
+Received: (qmail 9263 invoked by uid 90); 24 Jun 2008 06:56:54 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 06:35:16 -0000
+In-Reply-To: <32541b130806232220r292d691cn5bf5f9976126aa29@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86000>
 
-Karl Hasselstr=F6m:
+Thanks for all the helpful responses...
 
-> A bit too late now, but ...
+-- Avery Pennarun wrote:
+> git's philosophy is different. Branches are really just "temporary
+> tags". A merge operation doesn't just copy data from one branch to
+> another: it actually joins the two histories together, so you can then
+> trace back through the exact history of the merged branches, commit by
+> commit. "git log" will show each checkin to *either* branch
+> individually, instead of just one big "merge" checkin.
 
-Not really, I'm on to the next project to import :-)
+If branches are "temporary tags" how do I see the actual code they had working
+in their branch before they merged it?
 
-> another thing you could have done is make a straight linear import =E0
-> la import-tars, and then modified the parentage with grafts until it
-> looked good; and then finally use filter-branch to make the grafts
-> part of the "real" history.
+I'm reading about rebase, and it sounds like something I would want to forever
+disallow on my git repository, because it looks like it rewrites history and
+makes it impossible to get to the state of the tree they actually had working
+before the merge. However, something you say below both clarifies and confuses
+this.
 
-Yeah, I was considering this approach, but then I was half-way
-designing the script in my head, plus that the import is so quick that
-it was easy enough to re-write the configuration file and re-import to
-try something else. I love that aspect of Git -- the preparing of the
-file to import takes longer than the actual git-fast-import call...
+Am I understanding this wrong?
 
-> The advantage of this approach is that you can edit the parentage
-> almost interactively, which should be the best approach given that
-> you have a small number of commits and have to guess their
-> relationships.
+> The end result is that even if you delete the source branch after
+> doing a merge, nothing is actually lost.
 
-"Almost" being the magic word :-) I achieved more or less the same by
-re-importing. Plus that the job of preparing tarballs of everything
-would have been some work as well, since I had to choose which files to
-import from each directory (and do CRLF transform).
+..and what if you never merge? That branch-pointer points to useful information
+about a development attempt, but it was never merged. (imagine a different
+development path was taken) They never created a tag because it's not clear
+when that work was "done" (unlike a release, which is much more well
+understood). What prevents someone from deleting the branch-pointer or moving
+it to a different part of the tree, causing that set of changes to be a
+dangling ref lost in a sea of refs. Later when someone goes back looking for
+it, how would they ever find it in a sea of tens of thousands of checkins?
 
---=20
-\\// Peter - http://www.softwolves.pp.se/
+> Thus, there's no reason for git to try to make branches impossible
+> to lose, as they are in svn.
+
+Before I set the GC times to "100 years", there was a HUGE reason for git to
+make those branch-pointers impossible to lose, because by default if you lose
+them git actually garbage collects them and throws the diffs away after 90
+days!
+
+> Another way to think of it is that svn's concept of a "branch" is
+> actually the "reflog" in git. (svn records which data a particular
+> branch name points to over time, just like git's reflog does.) git
+> branches are something else entirely; a git branch always points at
+> only a single commit, and has no history of its own.
+
+That's sort of helpful, and sort of confusing. I think of git's branches as
+"branch pointers to the head of a linked-list of states of the tree".
+
+As long as you keep those refs without deleting them, and you keep that branch
+pointer to the head, you can walk back through the history of that branch. If
+multiple developers are working in the branch (and not using rebase, and not
+garbage collecting), can't you even go track down the working state of their
+local clients while they were working before they merged?
+
+If I'm understanding all that right, it's exactly the kind of functionality I
+want -- the ability to reproduce the state of all working history, exactly as
+it was when the code was actually working in someone's client a long time ago,
+before they merged it to the mainline. Except the standard model seems to be to
+let the system "garbage collect" all that history, and toss it away as
+unimportant -- and in some cases it seems to even provide developers with ways
+to more aggressively assure garbage collection makes it disappear.
+
+Am I expecting too much out of git? It doesn't really feel like a source
+control system for an organization that wants to save everything, forever, even
+when those people and trees and home directories disappear. It feels like a
+distributed patch manager that is much more automatic than sending around
+diffs, but isn't overly concerned with providing access to old history. (which,
+duh, is no surprise given that's what I expect it's doing for linux kernel)
