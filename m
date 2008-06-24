@@ -1,64 +1,64 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 14:21:22 +0200
-Message-ID: <20080624122122.GA57848@dspnet.fr.eu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 14:32:30 2008
+From: Robert Haines <rhaines@manchester.ac.uk>
+Subject: Re: git-clone works with ssh but not with http/https/git
+Date: Tue, 24 Jun 2008 13:35:26 +0100
+Message-ID: <A3460448-8007-4E02-AC20-85C1A8C85786@manchester.ac.uk>
+References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com> <1214306517.6441.10.camel@localhost> <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Matthias Kestenholz" <mk@spinlock.ch>, git@vger.kernel.org
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 14:36:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB7hE-0007MV-JK
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:32:29 +0200
+	id 1KB7l7-0000MQ-Gg
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 14:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbYFXMbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 08:31:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYFXMbb
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:31:31 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:1192 "EHLO dspnet.fr.eu.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750766AbYFXMba (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 08:31:30 -0400
-X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 08:31:30 EDT
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id E1009A4656; Tue, 24 Jun 2008 14:21:22 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
+	id S1750942AbYFXMfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 08:35:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbYFXMfd
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 08:35:33 -0400
+Received: from serenity.mcc.ac.uk ([130.88.200.93]:49429 "EHLO
+	serenity.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935AbYFXMfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 08:35:32 -0400
+Received: from gomwe.mcc.ac.uk ([10.2.18.2])
+	by serenity.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <rhaines@manchester.ac.uk>)
+	id 1KB7k6-000DgV-Ai; Tue, 24 Jun 2008 13:35:26 +0100
+Received: from leela.rcs.manchester.ac.uk ([130.88.1.66]:51635)
+	by gomwe.mcc.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <rhaines@manchester.ac.uk>)
+	id 1KB7k6-000GTw-7f; Tue, 24 Jun 2008 13:35:26 +0100
+In-Reply-To: <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
+X-Mailer: Apple Mail (2.924)
+X-Authenticated-Sender: Robert Haines from leela.rcs.manchester.ac.uk [130.88.1.66]:51635
+X-Authenticated-From: Robert.Haines@manchester.ac.uk
+X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86046>
 
-On Tue, Jun 24, 2008 at 11:29:43AM -0000, David Jeske wrote:
-> -- Jakub Narebski wrote:
-> > If they are using '-f', i.e. force, they should know and be sure what
-> > they are doing; it is not much different from 'rm -f *'.
-> 
-> Sure, no problem. I don't want the ability to "rm -f *". I'm raising my hand
-> and saying "I don't want the power to do these things, so just turn off all the
-> git commands that could be destructive and give me an alternate way to do the
-> workflows I need to do". Just like a normal user on a unix machine doesn't run
-> around with the power to rm -f /etc all the time, even though they may be able
-> to su to root.
+> I ran git-daemon on the server side like this:
+>
+> sudo git-daemon --base-path=/pub/git/ --export-all --listen=kites
 
-But you still have the power to /bin/rm -rf ~, which tends to have
-worse results.  The root/user separation just tries to protect the
-system's integrity from the user.  This is similar to git, whch tries
-to protect the repository's integrity, which is not the same thing as
-the contents.
+So your clone address for git:// is wrong, you don't need the /pub/git:
+git clone git://erez.zilber@kites/erez.zilber/my_test.git
+As you've moved the root of the filesystem as far as git-daemon is  
+concerned to /pub/git with the --base-path option. I suspect a similar  
+problem for http[s] depending on how you've mapped /pub/git into your  
+webserver.
 
---force exists because it is sometimes useful.  It you block it behind
-some config setting, whoever is concerned will just change the config
-when he needs the command and never change it back.  And windows, fsck
-and other things of the kind pretty much ruined the efficiency of
-confirmations before dangerous/destructive operations.  So there isn't
-much left beside engaging your brain before using --force on a
-command.
+rather than:
+git clone ssh://erez.zilber@kites/pub/git/erez.zilber/my_test.git
+for ssh which does start at the root of the filesystem.
 
-  OG.
+Cheers,
+Rob
