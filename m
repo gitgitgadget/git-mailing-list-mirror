@@ -1,106 +1,71 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 1/2] Introduce leaky().
-Date: Wed, 25 Jun 2008 00:10:48 +0200
-Message-ID: <20080624221048.GI9189@artemis.madism.org>
-References: <1214338474-16822-1-git-send-email-madcoder@debian.org> <1214338474-16822-2-git-send-email-madcoder@debian.org> <m3skv2jzey.fsf@localhost.localdomain>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 18:21:05 -0400
+Message-ID: <20080624222105.GA24549@dervierte>
+References: <m31w2mlki4.fsf@localhost.localdomain> <willow-jeske-01l61=64jMFEDjCiBE>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="tcC6YSqBgqqkz7Sb";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 00:12:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: David Jeske <jeske@google.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 00:22:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBGkD-00065f-7M
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:12:09 +0200
+	id 1KBGu6-0000IY-Sf
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 00:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756867AbYFXWKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 18:10:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756284AbYFXWKv
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:10:51 -0400
-Received: from pan.madism.org ([88.191.52.104]:38439 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756573AbYFXWKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 18:10:51 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id E51222DCB5;
-	Wed, 25 Jun 2008 00:10:49 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id C0C58CDB3; Wed, 25 Jun 2008 00:10:48 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
+	id S1752521AbYFXWVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 18:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbYFXWVJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 18:21:09 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:17869 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981AbYFXWVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 18:21:08 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2643202wfd.4
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 15:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=HYqW0Nx/l6LBZzQP1Q9xEUAZmx+BuiCmY87jPTApIcE=;
+        b=Ag7S7Wy0Rk5VElqw9pR94VmU/4hLBANbbZb29ALN36L62Q3/7PBfaAlE4k0ZMYAV2n
+         X5Yl3sh1G5RCFvkAkxafO9nr+xUg+Sv9o+Uin4v5Yqg7bkYH+qK9Od88ENxSfni2OuM9
+         rCuXglLZ6A836LVOE/rzM1af86Kp0V+0nGk+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=L17L8EdMGyt5Z4wL8TxxjYrUvKDIsav2wo0G+u2lNX7e5nCUi0JKse9ldKRE12I5Sc
+         rfxFK6iXeifLw2LodXTj+C/DIOMn+wkZZKQOOsLnE+e4SYqh91QpTZ4guqMDzda65igX
+         Wd5rVX0M95SAfwqWNPYB4E61uXkJe35ZFdJlA=
+Received: by 10.142.218.6 with SMTP id q6mr6401581wfg.186.1214346068042;
+        Tue, 24 Jun 2008 15:21:08 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [76.177.32.143])
+        by mx.google.com with ESMTPS id 4sm8932282yxq.8.2008.06.24.15.21.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 15:21:07 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 3B83C11A68; Tue, 24 Jun 2008 18:21:05 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <m3skv2jzey.fsf@localhost.localdomain>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <willow-jeske-01l61=64jMFEDjCiBE>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86157>
 
+On Tue, Jun 24, 2008 at 08:04:30PM -0000, David Jeske wrote:
+> I'm not talking about switching "git reset --hard" to "git reset -f". I'm
+> talking about requiring a "-f" option to "git reset --hard" when it would
+> destroy or dangle information.
 
---tcC6YSqBgqqkz7Sb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jun 24, 2008 at 09:28:30PM +0000, Jakub Narebski wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > diff --git a/Makefile b/Makefile
->=20
-> > +#
-> > +# Define COLLECT_LEAKS_AT_EXIT if you want memory marked as leaky() at=
- exit.
->=20
-> I think s/at exit/to be freed &/;
-
-  err obviously.
-
-> > diff --git a/cache.h b/cache.h
->=20
-> Hmmm... cache?
-
-  well cache.h has the prototypes for alloc.c that feels like the proper
-place, but I don't care much :)
-
-> >  /* alloc.c */
-> > +#ifdef COLLECT_LEAKS_AT_EXIT
-> > +extern void *leaky(void *);
-> > +#else
-> > +# define leaky(x) x
-> > +#endif
->=20
-> Not=20
->=20
-> +# define leaky(x) (x)
->=20
-> to be careful?
-
-ack.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---tcC6YSqBgqqkz7Sb
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhhcOgACgkQvGr7W6HudhytgwCgjcDrzM+6BEj+GvIZUJ75B3LW
-r0gAn0jcbtvNO2qtMYJx/nd6xDSZmwZh
-=GruA
------END PGP SIGNATURE-----
-
---tcC6YSqBgqqkz7Sb--
+I think you're asking for something like the following...
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 = 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
