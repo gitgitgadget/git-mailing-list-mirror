@@ -1,70 +1,85 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [NON-TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
-Date: Tue, 24 Jun 2008 21:59:07 +0200
-Message-ID: <20080624195907.GI8421@neumann>
-References: <alpine.DEB.1.00.0806241515460.9925@racer>
-	<20080624163810.GA4654@sigill.intra.peff.net>
-	<alpine.DEB.1.00.0806241750030.9925@racer>
-	<alpine.DEB.1.00.0806241808400.9925@racer>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 24 Jun 2008 22:06:11 +0200
+Message-ID: <200806242206.12291.jnareb@gmail.com>
+References: <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <m3wskek4wt.fsf@localhost.localdomain> <alpine.DEB.1.00.0806242033570.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 24 22:00:16 2008
+X-From: git-owner@vger.kernel.org Tue Jun 24 22:07:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBEgZ-00040j-E9
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:00:15 +0200
+	id 1KBEnV-0006yj-U1
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962AbYFXT7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 15:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYFXT7T
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 15:59:19 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:56313 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752946AbYFXT7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 15:59:19 -0400
-Received: from [127.0.1.1] (p5B133023.dip0.t-ipconnect.de [91.19.48.35])
-	by mrelayeu.kundenserver.de (node=mrelayeu7) with ESMTP (Nemesis)
-	id 0ML2xA-1KBEfT1j39-0007kd; Tue, 24 Jun 2008 21:59:08 +0200
+	id S1755714AbYFXUG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 16:06:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbYFXUG1
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:06:27 -0400
+Received: from ik-out-1112.google.com ([66.249.90.182]:56683 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755237AbYFXUG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 16:06:26 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so1584194ika.5
+        for <git@vger.kernel.org>; Tue, 24 Jun 2008 13:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=hYKQZNyOpSEBCf59ALVNiWdv37qfGIkGp++GyCOJulE=;
+        b=IeRsfNdfX8hDcMecRI1ftiy4HiuQ+lEhMrgNIGLn87zoRlU27YgFhnB23h/WZ32/gl
+         lM8g5QYDeYvFfxXg13CrRQFBgApET5kZ30wzGEAFYuMS3TkpzLLFlAhq5QxB5Ip2JDaV
+         7qq84OimxdmNhpCU4htIgnB2lrQJnMwLdloUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=o0CRA7YBQOWHhk5I8nxil3jBjA0EokeWyfkRmtBczRSnfVkU4FsTYaN35aVD09iRtl
+         9eH7uIgDOTeiHw7S21RpqJDp0NHrYA4LFP1B+RYHZ+ueugfgMM1+7M9Ru1V5m+t44Ego
+         Vh0YgGoc5fJbx66RlKksCeuz1QGxaKmGYOMRU=
+Received: by 10.210.25.19 with SMTP id 19mr707417eby.141.1214337982034;
+        Tue, 24 Jun 2008 13:06:22 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.223.44])
+        by mx.google.com with ESMTPS id c22sm10869543ika.1.2008.06.24.13.06.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Jun 2008 13:06:20 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0806242033570.9925@racer>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0806241808400.9925@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX18PSeZEIczq97lGJilYrBEfqTA+V7uLKUcBFVN
- nbznNTy0FPxVPaJf5sKqSLhKAq2bAl29LVM3Jl/Yg8OufXPMzA
- aJajIwB1HLpelPFZapJ4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86132>
 
-On Tue, Jun 24, 2008 at 06:09:28PM +0100, Johannes Schindelin wrote:
-> So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
-And maybe this one squashed on it, to add completion support for the
-new subcommands.
+Hello!
 
+Johannes Schindelin wrote:
+> On Tue, 24 Jun 2008, Jakub Narebski wrote:
+> 
+> > git-shell hackery won't solve problem, because not everybody is using 
+> > git-shell.
+> 
+> The problem is not git-shell vs git potty.
+> 
+> The problem is that not everybody magically updates their clients to ask 
+> for dash-less form.
 
----
- contrib/completion/git-completion.bash |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+What I meant here by "git-shell hackery" was for git-shell to
+automagically redirect request for "git-receive-pack" to "git receive-pack"
+(or "$GIT_EXEC_PATH/git-receive-pack").
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ebf7cde..014adab 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -511,7 +511,9 @@ _git_add ()
- 
- _git_bisect ()
- {
--	local subcommands="start bad good reset visualize replay log"
-+	local subcommands="
-+		start bad good reset visualize replay log fixed unfixed
-+		"
- 	local subcommand="$(__git_find_subcommand "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
+But, as I said, it isn't complete solution.  Leaving git-*-pack in $PATH
+for the time being (what I said) is.
 -- 
-1.5.6.64.g7dc1df
+Jakub Narebski
+Poland
