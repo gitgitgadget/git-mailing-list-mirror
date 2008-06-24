@@ -1,92 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Re: Convert 'git blame' to parse_options()
-Date: Mon, 23 Jun 2008 16:51:52 -0700
-Message-ID: <7v8wwvg15z.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.10.0806231027210.2926@woody.linux-foundation.org>
- <alpine.LFD.1.10.0806231114180.2926@woody.linux-foundation.org>
- <20080623183358.GA28941@sigill.intra.peff.net>
- <alpine.LFD.1.10.0806231137070.2926@woody.linux-foundation.org>
- <alpine.LFD.1.10.0806231158340.2926@woody.linux-foundation.org>
- <20080623210935.GC13395@artemis.madism.org>
- <alpine.LFD.1.10.0806231425270.2926@woody.linux-foundation.org>
- <7v3an3hke8.fsf@gitster.siamese.dyndns.org>
- <20080623222404.GM13395@artemis.madism.org>
- <7vmylbg4ks.fsf@gitster.siamese.dyndns.org>
- <20080623233146.GP13395@artemis.madism.org>
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: [PATCH v2] git-svn: make rebuild respect rewriteRoot option
+Date: Tue, 24 Jun 2008 02:17:36 +0200
+Message-ID: <20080624021736.2d272d9c@neuron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jun 24 01:53:13 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git mailing list <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 02:19:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KAvqS-0001Lx-5r
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 01:53:12 +0200
+	id 1KAwFP-0007D0-PI
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 02:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659AbYFWXwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2008 19:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754574AbYFWXwJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 19:52:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50266 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752518AbYFWXwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2008 19:52:08 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9213C10E98;
-	Mon, 23 Jun 2008 19:52:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9B49710E94; Mon, 23 Jun 2008 19:52:00 -0400 (EDT)
-In-Reply-To: <20080623233146.GP13395@artemis.madism.org> (Pierre Habouzit's
- message of "Tue, 24 Jun 2008 01:31:46 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 62D61B20-417F-11DD-A22C-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753906AbYFXARu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2008 20:17:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbYFXARu
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jun 2008 20:17:50 -0400
+Received: from zoidberg.org ([213.133.99.5]:33314 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528AbYFXARt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2008 20:17:49 -0400
+Received: from neuron (xdsl-87-78-93-226.netcologne.de [::ffff:87.78.93.226])
+  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Tue, 24 Jun 2008 02:17:38 +0200
+  id 00181C7F.48603D23.000079C5
+X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85956>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Suppose someone fetches git-svn-ified commits from another repo and the=
+n
+attempts to use 'git-svn init --rewrite-root=3Dfoo bar'. Using git svn =
+rebase
+after that will fail badly:
 
->   Unrelated but worth to note: many parse_options users just don't care
-> about argv[0] and having it kept each time would rather be a pain for
-> them (they would need to call argv++, argc-- themselves).
+ * For each commit tried by working_head_info, rebuild is called indire=
+ctly.
+ * rebuild will iterate over all commits and skip all of them because t=
+he
+   URL does not match. Because of that no rev_map file is generated at =
+all.
+ * Thus, rebuild will run once for every commit. This takes ages.
+ * In the end there still isn't any rev_map file and thus working_head_=
+info
+   fails.
 
-Not necessarily.  If they were parsing by hand, they were written to deal
-with the fact that argv[0] is not the program argument (iow, they start
-counting from one).  And before and after calling parse_options(), they
-need to change that assumption anyway, because parse_options() makes
-argv[0] disappear.
+Addressing this behaviour fixes an apparently not too uncommon problem =
+with
+providing git-svn mirrors of Subversion repositories. Some repositories=
+ are
+accessed using different URLs depending on whether the user has push
+privileges or not. In the latter case, an anonymous URL is often used t=
+hat
+differs from the push URL. Providing a mirror that is usable in both ca=
+ses
+becomes a lot more possible with this change.
 
-See for example these:
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+=46or reference, the previous version of this patch at
+<http://thread.gmane.org/gmane.comp.version-control.git/85551> was
+acked by Eric Wong (see that thread); the only change here is the added
+test case as suggested by Eric.
 
- * 5eee6b2 (Make builtin-reset.c use parse_options., 2008-03-04)
-	The caller used to start counting from 1, after the conversion it
-	has to count from 0.
+The test doesn't exactly reproduce the original situation but it does
+trigger the rebuild process to ensure it works correctly despite
+'rewriteRoot' being set to something not equal to 'url', which is what
+we are after in the first place.
 
- * 8320199 (Rewrite builtin-fetch option parsing to use parse_options()., 2007-12-04)
- * 3968658 (Make builtin-tag.c use parse_options., 2007-11-09)
-	The caller used to say (i==argc) is "no param" case, now it has to
-	say "!argc" is the equivalent condition.
+ git-svn.perl                                |    6 ++--
+ t/t9123-git-svn-rebuild-with-rewriteroot.sh |   32 +++++++++++++++++++=
+++++++++
+ 2 files changed, 35 insertions(+), 3 deletions(-)
+ create mode 100755 t/t9123-git-svn-rebuild-with-rewriteroot.sh
 
-I am not saying that forcing these callers to change their loop invariants
-in order to use parse_options() was bad.  I am saying that your "would
-rather be a pain for them" is a bogus argument --- they needed to pay that
-price when converting to parse_options() that munges argv[0] anyway.
-
-But this argv[0] munging exactly is why parse_options() hurts users who
-want to cascade option parsing.
-
-Didn't one of the recent series have an option to tell parse_options() to
-start parsing from argv[0] (persumably because it got an argument array
-from somebody who munges it to drop argv[0])?  I think it was merge-in-C
-from Miklos, but the approach feels very much backwards.  The caller
-should be (at least) able to choose to say KEEP_ARGV0 like one of your
-patch does.
+diff --git a/git-svn.perl b/git-svn.perl
+index a54979d..4c9c59b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2577,8 +2577,8 @@ sub rebuild {
+ 	my ($log, $ctx) =3D
+ 	    command_output_pipe(qw/rev-list --pretty=3Draw --no-color --rever=
+se/,
+ 	                        $self->refname, '--');
+-	my $full_url =3D $self->full_url;
+-	remove_username($full_url);
++	my $metadata_url =3D $self->metadata_url;
++	remove_username($metadata_url);
+ 	my $svn_uuid =3D $self->ra_uuid;
+ 	my $c;
+ 	while (<$log>) {
+@@ -2596,7 +2596,7 @@ sub rebuild {
+ 		# if we merged or otherwise started elsewhere, this is
+ 		# how we break out of it
+ 		if (($uuid ne $svn_uuid) ||
+-		    ($full_url && $url && ($url ne $full_url))) {
++		    ($metadata_url && $url && ($url ne $metadata_url))) {
+ 			next;
+ 		}
+=20
+diff --git a/t/t9123-git-svn-rebuild-with-rewriteroot.sh b/t/t9123-git-=
+svn-rebuild-with-rewriteroot.sh
+new file mode 100755
+index 0000000..cf3f64d
+--- /dev/null
++++ b/t/t9123-git-svn-rebuild-with-rewriteroot.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Jan Kr=C3=BCger
++#
++
++test_description=3D'git-svn respects rewriteRoot during rebuild'
++
++. ./lib-git-svn.sh
++
++mkdir import
++cd import
++	touch foo
++	svn import -m 'import for git-svn' . "$svnrepo" >/dev/null
++cd ..
++rm -rf import
++
++test_expect_success 'init, fetch and checkout repository' '
++	git svn init --rewrite-root=3Dhttp://invalid.invalid/ "$svnrepo" &&
++	git svn fetch
++	git checkout -b mybranch remotes/git-svn
++	'
++
++test_expect_success 'remove rev_map' '
++	rm "$GIT_SVN_DIR"/.rev_map.*
++	'
++
++test_expect_success 'rebuild rev_map' '
++	git svn rebase >/dev/null
++	'
++
++test_done
++
+--=20
+1.5.6.2.g4316
