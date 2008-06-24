@@ -1,85 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 24 Jun 2008 22:06:11 +0200
-Message-ID: <200806242206.12291.jnareb@gmail.com>
-References: <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <m3wskek4wt.fsf@localhost.localdomain> <alpine.DEB.1.00.0806242033570.9925@racer>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [NON-TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
+Date: Tue, 24 Jun 2008 22:06:51 +0200
+Message-ID: <486153DB.3070502@alum.mit.edu>
+References: <alpine.DEB.1.00.0806241515460.9925@racer> <20080624163810.GA4654@sigill.intra.peff.net> <alpine.DEB.1.00.0806241750030.9925@racer> <alpine.DEB.1.00.0806241808400.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 24 22:07:51 2008
+X-From: git-owner@vger.kernel.org Tue Jun 24 22:08:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBEnV-0006yj-U1
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:07:26 +0200
+	id 1KBEoU-0007UA-JW
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 22:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755714AbYFXUG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 16:06:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbYFXUG1
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:06:27 -0400
-Received: from ik-out-1112.google.com ([66.249.90.182]:56683 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755237AbYFXUG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 16:06:26 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so1584194ika.5
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 13:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=hYKQZNyOpSEBCf59ALVNiWdv37qfGIkGp++GyCOJulE=;
-        b=IeRsfNdfX8hDcMecRI1ftiy4HiuQ+lEhMrgNIGLn87zoRlU27YgFhnB23h/WZ32/gl
-         lM8g5QYDeYvFfxXg13CrRQFBgApET5kZ30wzGEAFYuMS3TkpzLLFlAhq5QxB5Ip2JDaV
-         7qq84OimxdmNhpCU4htIgnB2lrQJnMwLdloUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=o0CRA7YBQOWHhk5I8nxil3jBjA0EokeWyfkRmtBczRSnfVkU4FsTYaN35aVD09iRtl
-         9eH7uIgDOTeiHw7S21RpqJDp0NHrYA4LFP1B+RYHZ+ueugfgMM1+7M9Ru1V5m+t44Ego
-         Vh0YgGoc5fJbx66RlKksCeuz1QGxaKmGYOMRU=
-Received: by 10.210.25.19 with SMTP id 19mr707417eby.141.1214337982034;
-        Tue, 24 Jun 2008 13:06:22 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.223.44])
-        by mx.google.com with ESMTPS id c22sm10869543ika.1.2008.06.24.13.06.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Jun 2008 13:06:20 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.00.0806242033570.9925@racer>
-Content-Disposition: inline
+	id S1753559AbYFXUHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 16:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753365AbYFXUHG
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 16:07:06 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:53887 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753268AbYFXUHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 16:07:05 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m5OK6pVT031138
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 24 Jun 2008 22:06:51 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080505 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <alpine.DEB.1.00.0806241808400.9925@racer>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86132>
-
-Hello!
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86133>
 
 Johannes Schindelin wrote:
-> On Tue, 24 Jun 2008, Jakub Narebski wrote:
+> When you look for a fix instead of a regression, it can be quite hard
+> to twist your brain into choosing the correct bisect command between
+> 'git bisect bad' and 'git bisect good'.
 > 
-> > git-shell hackery won't solve problem, because not everybody is using 
-> > git-shell.
-> 
-> The problem is not git-shell vs git potty.
-> 
-> The problem is that not everybody magically updates their clients to ask 
-> for dash-less form.
+> So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
 
-What I meant here by "git-shell hackery" was for git-shell to
-automagically redirect request for "git-receive-pack" to "git receive-pack"
-(or "$GIT_EXEC_PATH/git-receive-pack").
+It seems to me that your problem is that git-bisect requires the "good"
+revision to be older than the "bad" one.  If this requirement were
+removed, would there still be a need for "fixed" vs. "unfixed"?
 
-But, as I said, it isn't complete solution.  Leaving git-*-pack in $PATH
-for the time being (what I said) is.
--- 
-Jakub Narebski
-Poland
+A bisection search doesn't care what labels are applied to the two
+endpoints, as it only looks for transitions between the labels.
+Therefore it should be easy to teach git-bisect to locate either kind of
+transition, "bad" -> "good" or "good" -> "bad", depending only on where
+the user places the original "good" and "bad" tags.
+
+Michael
