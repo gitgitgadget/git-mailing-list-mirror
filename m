@@ -1,85 +1,72 @@
-From: "Erez Zilber" <erezzi.list@gmail.com>
-Subject: Re: git-clone works with ssh but not with http/https/git
-Date: Tue, 24 Jun 2008 17:16:50 +0300
-Message-ID: <ce513bcc0806240716o2556a187wef877fc51ebe9606@mail.gmail.com>
-References: <ce513bcc0806240415h669d1725uf7b6e495995ab459@mail.gmail.com>
-	 <1214306517.6441.10.camel@localhost>
-	 <ce513bcc0806240445x6d00323g303f218504d2df53@mail.gmail.com>
-	 <alpine.DEB.1.00.0806241246500.9925@racer>
-	 <ce513bcc0806240507q58c2a3y5fe8f0e8033353ad@mail.gmail.com>
-	 <m3abhbkoe2.fsf@localhost.localdomain>
-	 <ce513bcc0806240642g56ca5450t4edd24fd88ce79c7@mail.gmail.com>
-	 <20080624135429.GA6905@atn.sw.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
+Date: Tue, 24 Jun 2008 15:17:18 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806241515460.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Matthias Kestenholz" <mk@spinlock.ch>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Anton Gladkov" <agladkov@parallels.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 16:19:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 16:22:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB9MK-0007Td-NP
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:19:01 +0200
+	id 1KB9Ow-000054-6S
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 16:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760630AbYFXOQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 10:16:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760621AbYFXOQw
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:16:52 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:20989 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760608AbYFXOQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 10:16:51 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so7677495rvb.1
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 07:16:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Zg9FqaLaKq23Iz+6383KjilVIyJO0oN1NwVJC7kTYIQ=;
-        b=Qsb4LVnCFRHCq4nDE6mpQ70m7H06ZX5k6+t02atlwAooCNNY56RB5a5yTPtz/s7n1A
-         UTCPleXOlFut7Mt1V61qkVEAYE5LtNJqc8rtLmdZgLEaF7hNuhHiY1YpLt0c3uJSY8R1
-         kFLYA0t7BnQqtBoZYG4vmD62KocMKNIr69MpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ftG04i6RoQWSqQGkCxxMw2TNwnP8MXV5PU0ZPx9LNT6u6XknjW7zQrfja3Zd6JsebO
-         VTVZwx8zW+LKvr8tEVgSIuh7aREzlCzzEAnll8XTmY45Jax+QFDkB3Q4d3kgL3PYCOTB
-         StAcx9AxjLLx9Avd0zACVM8dW12Y5TJLiz4bU=
-Received: by 10.141.22.1 with SMTP id z1mr14813628rvi.277.1214317010715;
-        Tue, 24 Jun 2008 07:16:50 -0700 (PDT)
-Received: by 10.141.195.7 with HTTP; Tue, 24 Jun 2008 07:16:50 -0700 (PDT)
-In-Reply-To: <20080624135429.GA6905@atn.sw.ru>
-Content-Disposition: inline
+	id S1755012AbYFXOTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 10:19:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754115AbYFXOTW
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 10:19:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45637 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753806AbYFXOTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 10:19:21 -0400
+Received: (qmail invoked by alias); 24 Jun 2008 14:19:19 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp006) with SMTP; 24 Jun 2008 16:19:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+pGTkrsn6pvc1RgIM6hBhEmQvaPIVKygZ+5I1qHv
+	Ut7XurqQbVXtVk
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86063>
 
-On Tue, Jun 24, 2008 at 4:54 PM, Anton Gladkov <agladkov@parallels.com> wrote:
-> On Tue, Jun 24, 2008 at 05:42:14PM +0400, Erez Zilber wrote:
->> I guess that the problem is that no proper mapping exists. That's why
->> I see the following in /var/log/httpd/error_log:
->>
->> [Tue Jun 24 16:31:52 2008] [error] [client 172.16.0.7] File does not
->> exist: /var/www/html/pub
->>
->> What do I need to add in /etc/httpd/conf.d/ in order to set the
->> mapping to /pub/git instead of /var/www/html/pub ? Is there an example
->> that shows how to map?
->
-> IMO the simplest way is to create a symlink 'pub' in /var/www/html directory
-> pointing to /pub and to add 'Options FollowSymLinks' to <Directory /> in httpd.conf.
 
-Adding the symlink solved the cloning with http problem.
+When you look for a fix instead of a regression, it can be quite hard
+to twist your brain into choosing the correct bisect command between
+'git bisect bad' and 'git bisect good'.
 
-Thanks,
-Erez
+So introduce the commands 'git bisect fixed' and 'git bisect unfixed'.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	When Randal talked about this on IRC, I laughed.  But I just had 
+	the case where it took me _three_ attempts at a bisection, only
+	to give up and write this patchlet.
+
+	May it help someone else, too.
+
+ git-bisect.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 8b11107..d833e21 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -501,6 +501,8 @@ case "$#" in
+ *)
+     cmd="$1"
+     shift
++    test $cmd = fixed && cmd=bad
++    test $cmd = unfixed && cmd=good
+     case "$cmd" in
+     help)
+         git bisect -h ;;
+-- 
+1.5.6.127.g3fb9f
