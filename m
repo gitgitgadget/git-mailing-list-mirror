@@ -1,77 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 24 Jun 2008 18:02:24 +0200
-Message-ID: <20080624160224.GA29404@genesis.frugalware.org>
-References: <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kTnqsHSSB/4vva3w"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Tue Jun 24 18:03:37 2008
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: [PATCH] git-svn docs: mention svn.addAuthorFrom and svn.useLogAuthor config options.
+Date: Tue, 24 Jun 2008 12:02:41 -0400
+Message-ID: <1214323361-13136-1-git-send-email-apenwarr@gmail.com>
+References: <20080624073707.GA6495@frsk.net>
+Cc: Avery Pennarun <apenwarr@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jun 24 18:11:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBAzM-0007Tj-CD
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 18:03:24 +0200
+	id 1KBB7G-0002KE-E9
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 18:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbYFXQC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 12:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbYFXQC1
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 12:02:27 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:54773 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752281AbYFXQC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 12:02:26 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A324C1B2548;
-	Tue, 24 Jun 2008 18:02:24 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 430174465E;
-	Tue, 24 Jun 2008 17:37:27 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 379541770051; Tue, 24 Jun 2008 18:02:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753359AbYFXQKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 12:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYFXQKi
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 12:10:38 -0400
+Received: from static-216-18-85-234.gtcust.grouptelecom.net ([216.18.85.234]:40081
+	"EHLO mailhost.pwcorp.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751153AbYFXQKh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2008 12:10:37 -0400
+X-Greylist: delayed 933 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 12:10:37 EDT
+Received: from weaver.open.versabanq.com ([10.65.1.2]) by mailhost.pwcorp.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 24 Jun 2008 12:02:48 -0400
+Received: (qmail 32640 invoked from network); 24 Jun 2008 16:02:43 -0000
+Received: from unknown (HELO averyp-server.pwcorp.com) (10.65.1.129)
+  by weaver.open.versabanq.com with SMTP; 24 Jun 2008 16:02:43 -0000
+Received: by averyp-server.pwcorp.com (Postfix, from userid 1000)
+	id 17EB68C882; Tue, 24 Jun 2008 12:02:41 -0400 (EDT)
+X-Mailer: git-send-email 1.5.6.56.g29b0d
+In-Reply-To: <20080624073707.GA6495@frsk.net>
+X-OriginalArrivalTime: 24 Jun 2008 16:02:48.0685 (UTC) FILETIME=[BF92C9D0:01C8D613]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86077>
 
+At least one person got confused because they thought it was necessary to
+provide these on the command line every time.
 
---kTnqsHSSB/4vva3w
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
+---
+ Documentation/git-svn.txt |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-On Tue, Jun 24, 2008 at 10:12:28AM +0200, Pieter de Bie <pdebie@ai.rug.nl> =
-wrote:
-> Vienna:bin pieter$ git --version
-> git version 1.5.6.129.g274ea
-> Vienna:bin pieter$ git clone localhost:project/bonnenteller
-> Initialize bonnenteller/.git
-> Initialized empty Git repository in /opt/git/bin/bonnenteller/.git/
-> Password:
-> bash: git-upload-pack: command not found
-> fatal: The remote end hung up unexpectedly
->=20
-> I think that is what Miklos meant.
-
-Exactly. Thanks for the good description.
-
---kTnqsHSSB/4vva3w
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhhGpAACgkQe81tAgORUJbP5gCgnBnPCsdz8PuiRFrlbylFgXm5
-NKcAn3kYNDXSU0R98c540+UNMM/KqVfz
-=RiZU
------END PGP SIGNATURE-----
-
---kTnqsHSSB/4vva3w--
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 97bed54..e8200ce 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -64,13 +64,16 @@ COMMANDS
+ --use-log-author;;
+ 	When retrieving svn commits into git (as part of fetch, rebase, or
+ 	dcommit operations), look for the first From: or Signed-off-by: line
+-	in the log message and use that as the author string.
++	in the log message and use that as the author string. (To enable
++	this permanently, use git config svn.useLogAuthor)
+ --add-author-from;;
+ 	When committing to svn from git (as part of commit or dcommit
+ 	operations), if the existing log message doesn't already have a
+ 	From: or Signed-off-by: line, append a From: line based on the
+-	git commit's author string.  If you use this, then --use-log-author
+-	will retrieve a valid author string for all commits.
++	git commit's author string.  If you use this, then if you enable
++	--use-log-author it will retrieve a valid author string for all
++	commits. (To enable this option permanently, use git config
++	svn.addAuthorFrom)
+ --username=<USER>;;
+ 	For transports that SVN handles authentication for (http,
+ 	https, and plain svn), specify the username.  For other
+-- 
+1.5.6.56.g29b0d
