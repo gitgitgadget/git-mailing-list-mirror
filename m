@@ -1,52 +1,78 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 24 Jun 2008 10:16:15 +0200
-Message-ID: <FCE18242-EE46-4D2E-B916-E1E98568AB60@ai.rug.nl>
-References: <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "David Jeske" <jeske@google.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Tue, 24 Jun 2008 08:08:13 -0000
+Message-ID: <47013.6552271017$1214295841@news.gmane.org>
+References: <m3mylbl0xb.fsf@localhost.localdomain>
+	<willow-jeske-01l5PFjPFEDjCfzf-01l5kQf4FEDjCXUa>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 10:17:30 2008
+Cc: "Avery Pennarun" <apenwarr@gmail.com>,
+	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 10:23:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KB3iN-0003ue-4Q
-	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:17:23 +0200
+	id 1KB3oc-0006Je-Uh
+	for gcvg-git-2@gmane.org; Tue, 24 Jun 2008 10:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755625AbYFXIQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 04:16:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbYFXIQZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:16:25 -0400
-Received: from smtp-4.orange.nl ([193.252.22.249]:33223 "EHLO smtp-4.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754434AbYFXIQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:16:23 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 9323A700008A;
-	Tue, 24 Jun 2008 10:16:22 +0200 (CEST)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6302.orange.nl (SMTP Server) with ESMTP id 3533B700009B;
-	Tue, 24 Jun 2008 10:16:16 +0200 (CEST)
-X-ME-UUID: 20080624081622218.3533B700009B@mwinf6302.orange.nl
-In-Reply-To: <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
-X-Mailer: Apple Mail (2.924)
+	id S1758056AbYFXIWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 04:22:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755804AbYFXIWk
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:22:40 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60064 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754012AbYFXIWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 04:22:37 -0400
+Received: (qmail 10349 invoked by uid 90); 24 Jun 2008 08:22:14 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Tue, 24 Jun 2008 08:08:13 -0000
+In-Reply-To: <m3mylbl0xb.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86014>
+
+To re-ask the same question I asked in my last post, using your ascii
+pictures...
 
 
-On 24 jun 2008, at 10:12, Pieter de Bie wrote:
+Let's assume we're here..
 
-> I think that is what Miklos meant. Also, I think the client sends  
-> the command to execute on the remote side. At least for v1.5.5  
-> clients and before, that is "git-upload-pack". As this is not in  
-> PATH, that command will fail on any server that runs v1.5.6 and has  
-> the libexec dir.
+.<---.<---.<---A<---X<---Y    <--- master
+\
+\--B<---C    <--- customer_A_branch <=== HEAD
 
-That is supposed to be "v1.5.6" and "v1.6.0" respectively.
+
+And this person and everyone else moves their head pointers back to master
+without merging:
+
+
+.<---.<---.<---A<---X<---Y    <--- master              <=== HEAD
+\
+\--B<---C    <--- customer_A_branch
+
+
+Now, five years down the road, our tree looks like:
+
+
+.<---A<---X<---Y<---.<--.<--.(3 years of changes)<---ZZZ<--- master  <=== HEAD
+\
+\--B<---C   <--- customer_A_branch
+
+And someone does:
+
+git-branch -f customer_A_branch ZZZ
+
+To bring us to:
+
+.<---A<---X<---Y<---.<--.(3 years of changes)<---ZZZ<--- master  <=== HEAD
+\                                           \
+\--B<---C                                   \-- customer_A_branch
+
+
+..at this point, will a GC keep "B<--C", or garbage collect the commits and
+throw them away?
