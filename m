@@ -1,73 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH] Keep some git-* programs in $(bindir)
-Date: Wed, 25 Jun 2008 00:17:47 -0400
-Message-ID: <20080625041747.GC11793@spearce.org>
-References: <alpine.DEB.1.00.0806241709330.9925@racer> <20080624185403.GB29404@genesis.frugalware.org> <alpine.DEB.1.00.0806242007150.9925@racer> <7vskv2d0lp.fsf@gitster.siamese.dyndns.org> <20080624221049.GE29404@genesis.frugalware.org> <7vk5gea0ff.fsf@gitster.siamese.dyndns.org> <20080624233236.GI29404@genesis.frugalware.org> <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org> <20080625120832.6117@nanako3.lavabit.com> <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 25 Jun 2008 00:19:49 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806250015580.19665@iabervon.org>
+References: <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org> <20080621121429.GI29404@genesis.frugalware.org> <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl> <20080624160224.GA29404@genesis.frugalware.org>
+ <alpine.DEB.1.00.0806241709330.9925@racer> <20080624185403.GB29404@genesis.frugalware.org> <alpine.DEB.1.00.0806242007150.9925@racer> <7vskv2d0lp.fsf@gitster.siamese.dyndns.org> <20080624221049.GE29404@genesis.frugalware.org> <7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
+ <20080624233236.GI29404@genesis.frugalware.org> <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org> <20080625120832.6117@nanako3.lavabit.com> <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= <nanako3@lavabit.com>,
 	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 06:19:17 2008
+X-From: git-owner@vger.kernel.org Wed Jun 25 06:20:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBMTU-0005rw-UJ
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:19:17 +0200
+	id 1KBMUx-00068n-9s
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755031AbYFYESH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 00:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbYFYESG
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:18:06 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38967 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbYFYESF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2008 00:18:05 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KBMS5-0005KA-9G; Wed, 25 Jun 2008 00:17:49 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7B21120FBAE; Wed, 25 Jun 2008 00:17:47 -0400 (EDT)
-Content-Disposition: inline
+	id S1751524AbYFYETv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 00:19:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbYFYETv
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:19:51 -0400
+Received: from iabervon.org ([66.92.72.58]:58045 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750741AbYFYETv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 00:19:51 -0400
+Received: (qmail 15066 invoked by uid 1000); 25 Jun 2008 04:19:49 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jun 2008 04:19:49 -0000
 In-Reply-To: <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86216>
 
-Junio C Hamano <gitster@pobox.com> wrote:
->  * =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 <n=
-anako3@lavabit.com> writes:
->  > Doesn't "git archive --remote=3D<repo>" also execute git program o=
-n a remote machine?
->=20
-> diff --git a/Makefile b/Makefile
-> index 929136b..742e7d3 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1268,7 +1268,7 @@ install: all
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
->  	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
-> -	$(INSTALL) git$X '$(DESTDIR_SQ)$(bindir_SQ)'
-> +	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-archive$X=
- '$(DESTDIR_SQ)$(bindir_SQ)'
+On Tue, 24 Jun 2008, Junio C Hamano wrote:
 
-I think you mean git-upload-archive, given what daemon.c says.
-Or line 34 of builtin-archive.c, which calls git-upload-archive
-by way of git_connect().
+> Otherwise remote executions directly over ssh won't find them as they used
+> to.  --upload-pack and --receive-pack options _could_ be used on the
+> client side, but things should keep working out-of-box for older clients.
+> 
+> Later versions of clients (fetch-pack and send-pack) probably could start
+> asking for these programs with dashless form, but that is a different
+> topic.
 
---=20
-Shawn.
+Should they use "git upload-pack" or should they look for their helper 
+programs in a libexec dir? I don't think that either of these programs is 
+useful to run independantly, but I don't know if finding a program that 
+doesn't go in $PATH on a remote machine is going to be any fun.
+
+	-Daniel
+*This .sig lefti ntentionally blank*
