@@ -1,36 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 00/10] Support writing pack index version 2
-Date: Tue, 24 Jun 2008 23:54:09 -0400
-Message-ID: <20080625035409.GY11793@spearce.org>
-References: <1214273408-70793-1-git-send-email-spearce@spearce.org> <200806250048.29892.robin.rosenberg.lists@dewire.com>
+Subject: [JGIT PATCH 06/10 v2] Reuse the magic tOc constant for pack index headers
+Date: Wed, 25 Jun 2008 00:01:48 -0400
+Message-ID: <20080625040148.GZ11793@spearce.org>
+References: <1214273408-70793-1-git-send-email-spearce@spearce.org> <1214273408-70793-2-git-send-email-spearce@spearce.org> <1214273408-70793-3-git-send-email-spearce@spearce.org> <1214273408-70793-4-git-send-email-spearce@spearce.org> <1214273408-70793-5-git-send-email-spearce@spearce.org> <1214273408-70793-6-git-send-email-spearce@spearce.org> <1214273408-70793-7-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 05:55:14 2008
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 06:03:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBM6A-0000ql-Jm
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 05:55:11 +0200
+	id 1KBMDv-0002Rz-Sn
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752379AbYFYDyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 23:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYFYDyO
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 23:54:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34683 "EHLO
+	id S1750812AbYFYEBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 00:01:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbYFYEBy
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:01:54 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35929 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752115AbYFYDyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 23:54:13 -0400
+	with ESMTP id S1750758AbYFYEBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 00:01:53 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.69)
 	(envelope-from <spearce@spearce.org>)
-	id 1KBM50-0003Wj-AC; Tue, 24 Jun 2008 23:53:58 -0400
+	id 1KBMCP-0003wX-9H; Wed, 25 Jun 2008 00:01:37 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5F6DD20FBAE; Tue, 24 Jun 2008 23:54:09 -0400 (EDT)
+	id 6EE1320FBAE; Wed, 25 Jun 2008 00:01:48 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <200806250048.29892.robin.rosenberg.lists@dewire.com>
+In-Reply-To: <1214273408-70793-7-git-send-email-spearce@spearce.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,36 +42,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86213>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> 
-> Ocular review looks fine, but nevertheless some tests break.
+We need this constant to detect version 2 index files at read time,
+but we also need it to create version 2 index files.
 
-Dammit.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+
+ Fixed isTOC test to return true when h.length == 8, which
+ is always the case as it has both the TOC and the version.
+
+ Also rebased into my branch:
  
-> org.spearce.jgit.lib.PackIndexV2Test
-> testIteratorMethodsContract(org.spearce.jgit.lib.PackIndexV2Test)
-> java.io.IOException: Unreadable pack index: /home/me/SW/EGIT.contrib/org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2
-> 	at org.spearce.jgit.lib.PackIndex.open(PackIndex.java:95)
-...
-> 	at org.spearce.jgit.lib.PackIndexV1.<init>(PackIndexV1.java:75)
+   repo.or.cz:/srv/git/egit/spearce.git index-v2
 
-Yea, OK, I know what that is.  I busted PackIndex.isTOC.
+ With this patch in the series all tests pass again.
 
-I asked it to compare a 4 byte array (TOC only) to an 8 byte array
-(TOC + version) and of course 4 != 8 so it fails.  Thus all V2
-index files look like V1 files.  Only they aren't; and then all
-hell breaks loose when we start treating parts of the V2 index as
-different sections of the V1 index.
+ .../src/org/spearce/jgit/lib/PackIndex.java        |    6 +++++-
+ .../src/org/spearce/jgit/lib/PackIndexWriter.java  |    3 +++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
 
-I'll post a replacement patch in a minute.
-
-> Together with Marek's packwrite patches the list gets even longer (his patches alone are "green"). I'm
-> not including them here.
-
-That's because Marek's branch includes additional tests for features
-he added to PackIndexV2.  But all PackIndexV2 reading is busted.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndex.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndex.java
+index 3935d4f..c5718fa 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndex.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndex.java
+@@ -104,7 +104,11 @@ public abstract class PackIndex implements Iterable<PackIndex.MutableEntry> {
+ 	}
+ 
+ 	private static boolean isTOC(final byte[] h) {
+-		return h[0] == -1 && h[1] == 't' && h[2] == 'O' && h[3] == 'c';
++		final byte[] toc = PackIndexWriter.TOC;
++		for (int i = 0; i < toc.length; i++)
++			if (h[i] != toc[i])
++				return false;
++		return true;
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexWriter.java
+index 473e6cf..c9b27d2 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexWriter.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexWriter.java
+@@ -55,6 +55,9 @@ import org.spearce.jgit.util.NB;
+  * to the byte offset within the pack where the object's data can be read.
+  */
+ public abstract class PackIndexWriter {
++	/** Magic constant indicating post-version 1 format. */
++	protected static final byte[] TOC = { -1, 't', 'O', 'c' };
++
+ 	/**
+ 	 * Create a new writer for the oldest (most widely understood) format.
+ 	 * <p>
+-- 
+1.5.6.74.g8a5e
 
 -- 
 Shawn.
