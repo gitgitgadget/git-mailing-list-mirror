@@ -1,63 +1,61 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: update-index --assume-unchanged doesn't make things go fast
-Date: Wed, 25 Jun 2008 19:38:19 +0200
-Message-ID: <g3tvqd$2jj$1@ger.gmane.org>
-References: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Fix t5303 (the test case for pack corruptions) on Windows
+Date: Wed, 25 Jun 2008 10:42:07 -0700
+Message-ID: <7vskv11keo.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0806232123420.2979@xanadu.home>
+ <20080625164438.GA4039@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 19:39:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 19:43:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBYxx-0004Zt-LP
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:39:34 +0200
+	id 1KBZ1U-00069i-DW
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbYFYRii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 13:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbYFYRii
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:38:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:34066 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752124AbYFYRih (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 13:38:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KBYwx-00081s-NZ
-	for git@vger.kernel.org; Wed, 25 Jun 2008 17:38:32 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 17:38:31 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 17:38:31 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
+	id S1752603AbYFYRmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 13:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752226AbYFYRmR
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:42:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55310 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401AbYFYRmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 13:42:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0D5C51AF57;
+	Wed, 25 Jun 2008 13:42:15 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 50DDA1AF54; Wed, 25 Jun 2008 13:42:11 -0400 (EDT)
+In-Reply-To: <20080625164438.GA4039@steel.home> (Alex Riesen's message of
+ "Wed, 25 Jun 2008 18:44:38 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0C790F70-42DE-11DD-A0CB-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86308>
 
-Avery Pennarun venit, vidit, dixit 25.06.2008 18:44:
-...
-> 4) My idea is to eventually --assume-unchanged my whole repository,
-> then write a cheesy daemon that uses the Win32 dnotify-equivalent to
-> watch for files that get updated and then selectively
-> --no-assume-unchanged files that it gets notified about.  That would
-> avoid the need to ever synchronously scan the whole repo for changes,
-> thus making my git-Win32 experience much faster and more enjoyable.
-> (This daemon ought to be possible to run on Linux as well, for similar
-> improvements on gigantic repositories.  Also note that TortoiseSVN for
-> Windows does something similar to track file status updates, so this
-> isn't *just* me being crazy.)
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Looks like users on slow NFS would profit, too. Hate to say it, but hg 
-feels faster on (slow) NFS than git. Yet I use git, for other reasons ;)
+> The perldiag(1) has following to say about this:
+>
+>     "Can't do inplace edit without backup"
+>
+> 	(F) You're on a system such as MS-DOS that gets confused if
+> 	you try reading from a deleted (but still opened) file. You
+> 	have to say -i.bak, or some such.
 
-Michael
+Thanks.  By the way, there are others.
+
+t/t9106-git-svn-dcommit-clobber-series.sh:23:		perl -i -p -e "s/^58$/5588/" file &&
+t/t9106-git-svn-dcommit-clobber-series.sh:24:		perl -i -p -e "s/^61$/6611/" file &&
+t/t9106-git-svn-dcommit-clobber-series.sh:43:	perl -i -p -e 's/^4\$/4444/' file &&
+t/t9106-git-svn-dcommit-clobber-series.sh:44:	perl -i -p -e 's/^7\$/7777/' file &&
+templates/hooks--prepare-commit-msg.sample:25:    perl -i -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
+templates/hooks--prepare-commit-msg.sample:28:#   perl -i -pe '
