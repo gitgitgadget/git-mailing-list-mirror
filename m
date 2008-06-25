@@ -1,94 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 25 Jun 2008 02:34:17 -0700
-Message-ID: <7vabh93lk6.fsf@gitster.siamese.dyndns.org>
-References: <7vtzibbjxn.fsf@gitster.siamese.dyndns.org>
- <7vwsn75pmv.fsf@gitster.siamese.dyndns.org>
- <7vy77gapkl.fsf@gitster.siamese.dyndns.org>
- <7vmynqfeab.fsf@gitster.siamese.dyndns.org>
- <7vwsmjj0js.fsf@gitster.siamese.dyndns.org>
- <7vhcdchr80.fsf@gitster.siamese.dyndns.org>
- <7vhcd0jyyp.fsf@gitster.siamese.dyndns.org>
- <7vod6wpjvr.fsf@gitster.siamese.dyndns.org>
- <7vod6nikuw.fsf@gitster.siamese.dyndns.org>
- <7viqws6zaz.fsf@gitster.siamese.dyndns.org>
- <7vfxrhwspw.fsf@gitster.siamese.dyndns.org>
- <7vwsknyz9m.fsf@gitster.siamese.dyndns.org>
- <7vlk0z9k5f.fsf@gitster.siamese.dyndns.org>
- <7vej6oipea.fsf@gitster.siamese.dyndns.org>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told
+ to
+Date: Wed, 25 Jun 2008 12:59:59 +0300
+Message-ID: <4862171F.6070505@panasas.com>
+References: <20080624222105.GA24549@dervierte> <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com> <7vwskea2ik.fsf@gitster.siamese.dyndns.org> <48620C1A.6000509@panasas.com> <7vr6al3m24.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 11:35:26 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
+	jeske@google.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 12:02:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBRPQ-0002L6-Ht
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 11:35:24 +0200
+	id 1KBRp0-0003th-J9
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 12:01:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753617AbYFYJe2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 05:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753679AbYFYJe2
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 05:34:28 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52581 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753568AbYFYJe1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2008 05:34:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75FBE18280;
-	Wed, 25 Jun 2008 05:34:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A3AD61827E; Wed, 25 Jun 2008 05:34:20 -0400 (EDT)
-X-maint-at: 74b1e1235781bbe5c90b802c1551446a5f5d69f1
-X-master-at: 85fe23ed2a5d88463f5362a3e4fdd6f45a0555fd
-In-Reply-To: <7vej6oipea.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 23 Jun 2008 00:25:33 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E70B8842-4299-11DD-8670-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754433AbYFYKAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 06:00:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754439AbYFYKAb
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 06:00:31 -0400
+Received: from gw-colo-pa.panasas.com ([66.238.117.130]:1721 "EHLO
+	natasha.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753673AbYFYKAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 06:00:30 -0400
+Received: from daytona.int.panasas.com (daytona.int.panasas.com [172.17.28.41])
+	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id m5PA0IcX023920;
+	Wed, 25 Jun 2008 06:00:19 -0400
+Received: from bh-buildlin2.bhalevy.com ([172.17.28.123]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 25 Jun 2008 06:00:02 -0400
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <7vr6al3m24.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 25 Jun 2008 10:00:02.0926 (UTC) FILETIME=[3C9548E0:01C8D6AA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86265>
 
-We'd need a maint release soon to push out the mkstemp() breakage but n=
-ot
-tonight.  There are a handful changes that are in 'master' and 'next' t=
-hat
-need backport/backmerge before 1.5.6.1 happens.
+Junio C Hamano wrote:
+> Boaz Harrosh <bharrosh@panasas.com> writes:
+> 
+>> Junio C Hamano wrote:
+>>
+>>> "reset --hard" has *ALWAYS* meant to be destructive --- discarding
+>>> potential local cruft is the whole point of the operation.
+>> I was under the impression that --hard means working-directory-also
+>> as opposed to tree-and-index-only. Nothing to do with 
+>> destructive-discarding.
+> 
+> Then you should revise your impression, as it is simply *WRONG*.  When
+> I say something about history of git, I know what I am talking about ;-)
+> 
+> Reset has been about nuking local changes from the very beginning.  That
+> is why it removes MERGE_HEAD, rr-cache/MERGE_RR as well as removing
+> conflicted stages in the index and reverts local changes from the worktree.
+> 
+> It is "my worktree state is a mess, and I cannot even describe nor care
+> which paths are dirty --- just get rid of the local changes so that I can
+> start working cleanly from a checkout of HEAD".
 
-* The 'maint' branch has these fixes since the last announcement.
+OK Thanks, I see.
 
-Jan Kr=C3=BCger (1):
-  git-svn: make rebuild respect rewriteRoot option
+I have made myself that git-move-head script that uses checkouts and
+renames so I guess I'm happy. I used to use the --hard as a shortcut.
 
-Patrick Higgins (1):
-  Workaround for AIX mkstemp()
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Jeff King (1):
-  clone: create intermediate directories of destination repo
-
-Junio C Hamano (2):
-  pre-rebase hook update
-  Ship sample hooks with .sample suffix
-
-Michele Ballabio (1):
-  t9301-fast-export.sh: Remove debug line
-
-Nicolas Pitre (8):
-  call init_pack_revindex() lazily
-  implement some resilience against pack corruptions
-  test case for pack resilience against corruptions
-  refactor pack structure allocation
-  optimize verify-pack a bit
-  move show_pack_info() where it belongs
-  verify-pack: check packed object CRC when using index version 2
-  verify-pack: test for detection of index v2 object CRC mismatch
+Boaz
