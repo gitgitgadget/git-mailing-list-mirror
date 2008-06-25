@@ -1,68 +1,57 @@
-From: "David Jeske" <jeske@willowmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: policy and mechanism for less-connected clients
-Date: Wed, 25 Jun 2008 21:34:16 -0000
-Message-ID: <1784.50359167091$1214430241@news.gmane.org>
-References: <willow-jeske-01l6XqjOFEDjC=91jv>
-	<willow-jeske-01l6@3PlFEDjCVAh-01l6XqjPFEDjCY6P>
+Date: Thu, 26 Jun 2008 00:10:18 +0200
+Organization: At home
+Message-ID: <g3ufoa$ps3$1@ger.gmane.org>
+References: <willow-jeske-01l6@3PlFEDjCVAh-01l6XqjPFEDjCY6P> <1784.50359167091$1214430241@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "Theodore Tso" <tytso@mit.edu>, git@vger.kernel.org
-To: "David Jeske" <jeske@willowmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 23:43:54 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 26 00:11:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBcm3-0001sx-Vv
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 23:43:32 +0200
+	id 1KBdDV-0002UZ-QI
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 00:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbYFYVm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 17:42:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYFYVm1
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 17:42:27 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60627 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752770AbYFYVm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 17:42:27 -0400
-Received: (qmail 4325 invoked by uid 90); 25 Jun 2008 21:42:21 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Wed, 25 Jun 2008 21:34:16 -0000
-In-Reply-To: <willow-jeske-01l6XqjOFEDjC=91jv>
+	id S1754276AbYFYWKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 18:10:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754243AbYFYWK2
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 18:10:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:33736 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753026AbYFYWK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 18:10:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KBdC6-0001fU-5F
+	for git@vger.kernel.org; Wed, 25 Jun 2008 22:10:26 +0000
+Received: from abvw164.neoplus.adsl.tpnet.pl ([83.8.220.164])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 22:10:26 +0000
+Received: from jnareb by abvw164.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 22:10:26 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvw164.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86357>
 
-Some answers thanks to Jakub...
+David Jeske wrote:
 
--- David Jeske wrote:
-> : "ncvs up" ->
-> :
-> : git stash; git pull; git apply;
-> : git diff --stat <baseof:current branch> - un-pushed filenames
-> : git-show-branch <current branch> - un-pushed comments
->
-> Question: when I say "baseof:current branch", I mean "the common-ancestor
-> between my local-repo tracking branch and the remote-repo branch it's
-> tracking". How do I find that out?
+> Question: How do I create a branch on a remote repo when I'm on
+> my local machine, without sshing to it?
 
-I'm told I need...
-
-git diff --stat `git-merge-base HEAD ORIG_HEAD`
-
-> : "ncvs commit" -> "git commit; git push <only this branch>;"
->
-> Question: how do I only push the branch I'm on? "eg" says it does this, but
-> from a quick look at the code, it wasn't obvious to me how.
-
-and...
-
-git push HEAD
-
-
-which just leaves this one....
-
-Question: How do I create a branch on a remote repo when I'm on
-my local machine, without sshing to it?
+Push into it.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
