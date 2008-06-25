@@ -2,24 +2,23 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=2.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
 	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
-Received: (qmail 10413 invoked by uid 111); 25 Jun 2008 05:32:27 -0000
+Received: (qmail 17414 invoked by uid 111); 25 Jun 2008 20:43:20 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 01:32:20 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 16:43:13 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbYFYFcQ (ORCPT <rfc822;peff@peff.net>);
-	Wed, 25 Jun 2008 01:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbYFYFcQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 01:32:16 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60377 "HELO
+	id S1752216AbYFYUnK (ORCPT <rfc822;peff@peff.net>);
+	Wed, 25 Jun 2008 16:43:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752226AbYFYUnJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 16:43:09 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60610 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753256AbYFYFcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 01:32:15 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jun 2008 01:32:15 EDT
-Received: (qmail 26322 invoked by uid 90); 25 Jun 2008 05:25:24 -0000
+	with SMTP id S1752211AbYFYUnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 16:43:08 -0400
+Received: (qmail 3442 invoked by uid 90); 25 Jun 2008 20:43:01 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -28,117 +27,225 @@ To:	Theodore Tso <tytso@mit.edu>
 Cc:	git@vger.kernel.org
 Subject: Re: policy and mechanism for less-connected clients
 X-Mailer: Willow v0.02
-Date:	Wed, 25 Jun 2008 05:20:49 -0000
-Message-ID: <willow-jeske-01l6Cy0dFEDjCVqc>
-Received: from 67.188.42.104 at Wed, 25 Jun 2008 05:20:49 -0000
-References: <20080625023352.GC20361@mit.edu>
-	<willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
-In-Reply-To: <20080625023352.GC20361@mit.edu>
+Date:	Wed, 25 Jun 2008 19:37:55 -0000
+Message-ID: <willow-jeske-01l6XqjOFEDjC=91jv>
+Received: from 67.188.42.104 at Wed, 25 Jun 2008 19:37:55 -0000
+References: <20080625133458.GE20361@mit.edu>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6OB5yFEDjCYe3>
+In-Reply-To: <20080625133458.GE20361@mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Thanks for the info about shared object storage for shared repositories. That's
+great, and looks like a good implementation method.
+
+Previously I was thinking in terms of making a different server to change
+behavior. However, I think the comments I've read are shifting my mindset
+towards making a client-wrapper. I want to provide a system [wrapper] without
+the user-burden of thinking about three repositories (local, my-public,
+shared-public). Doing this as a wrapper has other benefits, like the fact that
+users can treat services like repo.or.cz as the "networked filesystem of their
+version control system", so I like it.
+
+I have a model for the operations of this wrapper below.
+
 -- Theodore Tso wrote:
-> Up to here, you can do this all with repo.or.cz, and/or github; you
-> just give each developer their own repository, which they are allowed
-> to push to, and no once else. Within their own repository they can
-> make changes to their branches, so that all works just fine.
+> [snip] sharing in-progress work is highly overrated.
 
-Yup. That's one of the reasons git is so attractive. There is some good stuff
-under "here" though....
+_Seeing_ unfinished changes is overrated. However, so is managing multiple
+repositories and managing which data is shared.
 
-> > (a) safely "share" every DAG, branch, and tag data in their
-> > repository to a well-connected server, into an established
-> > namespace, while only changing branches and tags in their
-> > namespace. This will allow all users to see the changes of other
-> > users, without needing direct access to their trees (which are
-> > inaccessible behind firewalls). [1]
->
-> Right, so thats github and/or git.or.cz. Each user gets his/her own
-> repository, but thats a very minor change. Not a big deal.
+I think my new wrapper approach below eliminates this overly-aggressive sharing
+while still reducing complexity for the average user.
 
-...most notably, all their DAGs in a single repository to save space is
-important. Thousands of copies of thousands of repositories adds up. Especially
-when most of the users who want to commit something probably commit <1-10k of
-unique stuff. Seems pretty easy to change though. git.or.cz and github will
-both be wanting this eventually.
+> So the way I would do things is to simply encourage people to do start
+> their work by branching off of an up-to-date master branch, but *not*
+> do any git pulls or git pushes.
 
-The other big one is ACLs in 'well named' repositories, so multiple people can
-safely be allowed to add changes to them, without giving them ability to blow
-away the repository. I can see this isn't the way all git users work, but at
-least a few users working this way now with shared push repositories. This is
-just making it 'safer'. Also seems pretty easy to do.
+You confused me here. If their repo.or.cz private repository is their only way
+of sharing (because their home directory is inaccessible and emailing patches
+is cumbersome), how do they exchange their own changes without pushing? Even in
+a short time on git mailing list I see mini-unfinished-patches being posted.
 
-> > (b) fetch selected DAG, branch, and tag data of others to their tree, to
-see
-> > the changes of others (whether merged with head or not) while disconnected
-or
-> > remote.
->
-> This is also easy; you just establish remote tracking branches. I
-> have a single shell scripted command, git-get-all, which pulls from
-> all of the repositories I am interested in into various remote
-> tracking branches so while I am disconnected, I can see what other
-> folks have done on their trees.
+> [ description of commit rewriting, rebase, push ]
 
-Yes, so I'd have the same thing, except instead of a remote repository, it
-would be a pattern of the branch namespace, such as /origin/users/jeske/*. It
-doesn't seem like the current remote tracking branch stuff can do this, but it
-would be easy to provide a client wrapper that would. Users who tracked the
-whole repository would just get everything, which is also fine. Maybe a client
-patch to make this better would be accepted.
+The method you describe is burdening all users with learning a bunch of new
+concepts to do things that are unnecessary micromanagement for their needs. I'd
+prefer to give my users many of the benefits of DVCS/git with a
+command/argument set 1/20th the size and a much simpler mental model.
 
-> > (c) grant and enforce permission for certain users to submit _merges
-> > only_ onto certain sub-portions of the "well-named branches"
->
-> This is the wierd one. *** Why ***? There is nothing magical about
-> merges; all a merge is a commit that contains more than one parent.
-> You can put anything into a merge, and in theory the result of a merge
-> could have nothing to do with either parent. It would be a very
-> perverse merge, but it's certainly possible. So what's the point of
-> trying to enforce rules about "merges only"?
+Most of the software we're all using was developed while working with
+centralized source control, where people just hack and commit and those commits
+are not even known-working. They don't bother with patch/commit rewriting and
+management, and it works out just fine. I can see how that finer granularity
+may be valuable for linux kernel coordinators. However, most projects don't
+need to bother with all that, and even in the ones that do, most of their
+contributors don't.
 
-I'll explain why I wrote this, but I admit it's a strange roundabout way to get
-what I was hoping for. I hope there is a better way. One better way is to just
-change the client, but I was hoping not to have to do that. let me explain..
+Despite the success of centralized revision control, distributed source control
+revision models have some very attractive features which can add efficiency to
+a shared-central-repo model without straying far from the familiar (cvs up;
+hack; hack; cvs up; cvs commit;) workflow. I read some commentary from Linus
+that compared git to a 'filesystem', and that's what I see.. a really awesome
+underlying set of mechanisms for implementing SCM.. I'm trying to understand
+how to layer an easy to use SCM system on top if it.
 
-Think about using CVS. user does "cvs up; hack hack hack; cvs commit (to
-server)". In git, this workflow is "git pull; hack; commit; hack; commit; git
-push (to server)". I want those interum "commits" to share the changes with the
-server. I want to change this to "git pull; hack; commit-and-share; hack;
-commit-and-share; git-push (to shared branch tag)"
+Some 'git' users might say the right thing to do is do a different project, but
+I think, just like with the filesystem-analogy, there is significant benefit to
+sharing a single repository model so a simple source control system can then be
+used in powerful ways by powerful users. This is similar to the direction "eg"
+(easy git) is heading, but more extreme and extending to the server.
 
-It would be nice if "commit-and-share" could just use "git-push". However,
-because users are going to do this habitually every commit, probably through a
-script or merged command, I didn't want users who are accidentally working
-directly in the master to accidentally fast-forward origin/master. (everyone
-seems to discourage working on master anyhow). I was hoping to enforce this
-only with server policy, so any git client works. That leaves me with the
-challenge of figuring out which commits on origin/master are actually intended
-to move the pointer, and which are accidents because someone forgot to branch
-before hacking in their client. One simple way to do this is to require any
-origin/master commit to have two children, one on the master, one somewhere
-else. If you have a commit that is directly hanging off of master in this
-design, you are doing the wrong thing. The server would tell you to "git
-checkout master; git branch -b mymaster; git reset origin/master; git push".
-This would put their local changes onto their private branch where they should
-be. When they wanted to do the equivilant of "cvs commit;" or current "git
-push;", they would do a merge to the master, and push again. The server would
-allow it, because it sees the merge.
+In fact, it seems like we might be better off if all of these source control
+user-interfaces (cvs, perforce, git, eg, mercurial, etc. etc.) could be written
+on top of a version-control-api that they shared. Witness the similar
+implementation strategies of this modern rash of DVCS systems.
 
-I recognize this is a bit strange. I'd love to have a better solution, but this
-is the solution I can think of which only involves server enforcement. Other
-solutions I thought of would all require client changes that would change
-everyone's behavior. The candidate I liked best was: disallowing changes to
-tracking branches, including master, probably by implicitly creating a branch
-on commit to a tracking branch... However, I don't get the impression this will
-fit into current git very well, because users would need to turn their current
-"git push", into a "git merge master;git push"
+--------------------------------------------------------------
 
-I'm interested in other ideas to address this.
+I'll try to explain my wrapper model in terms of an example... Imagine I'm
+going to deliver a "cvs drop in replacement", ncvs, that mostly keeps the cvs
+mental model, but is implemented underneath using git and just works better
+than cvs (yet is simpler than git). I'll use the exact cvs command parameters
+for illustration, but I wouldn't plan to do this. Notice how each ncvs command
+uses many git commands. It's possible these things should be done in terms of
+plumbing instead of porcelain to reduce dependence on git changes, but it's
+more concise to express them as porcelain.
 
-I know that all of what I wrote above seems strange if you don't buy into the
-design assumptions. That it's critical to share a single server-repository,
-that it's critical to have a shared 'well known' branch that only trusts
-clients to add new changes to, etc.. However, these are important.
+>From the earlier feedback, there are now two repositories, one is considered
+the "shared-root" while the other is the "user" repository.
+
+(1) make "cvs update" safe, make it easy to see granular comments for things
+you have not pushed
+
+CVS users do potentially destructive merges all the time. Despite the way we
+use terminology, working files ARE a branch, and "cvs up" IS a merge. That
+merge can require edits to resolve, and after those edits are complete, the
+previous state is NOT recoverable. There is no reason for this. We can easily
+save the delta by just making "cvs up" equal "git commit; git pull;", or
+alternately, "git stash; git pull; git apply;".
+
+: "ncvs up" ->
+:
+: git stash; git pull; git apply;
+: git diff --stat <baseof:current branch> - un-pushed filenames
+: git-show-branch <current branch> - un-pushed comments
+
+Question: when I say "baseof:current branch", I mean "the common-ancestor
+between my local-repo tracking branch and the remote-repo branch it's
+tracking". How do I find that out?
+
+Adding "git diff --stat <baseof:current branch>" helps keep us aware of what
+changes are in our local repo. Any files not pushed up to the branch head on
+the server are seen. Likewise with "git-show-branch <current branch>" (which
+somehow is not the same as git-show-branch --current).
+
+(2) make "planned ahead of time" branches cheap to make
+
+"cvs up" is the easiest merge in cvs, therefore, separate sets of checked out
+working files become the most common form of branching in cvs. They are
+basically personal work branches that you can't commit on, and can't
+collaborate on. I've seen developers with cvs working directories weeks or
+months old because that's an easier way to work on different ideas than
+creating a branch and checking them in. DVCS fixes this, by making branches
+cheap to make, and by making all branch merges closer to the simplicity of
+cvs's easy branch merge "cvs up". However, I don't need to burden the user with
+the extra complexity and workload of the default being local branches, which
+they then need to do more work to share. I want branches to be shared by
+default.
+
+: "ncvs tag -b --shared $branch" ->
+:
+: [ create a branch on the "shared root" repo, pointing
+:   to where I am in my local tree, if I have permission ]
+:  git branch --track $branch origin/$branch
+
+: "ncvs tag -b mybranch
+:
+: [ create a branch on my "user" repo, pointing to where I am
+in my local tree, if I have permission ]
+: git branch --track $mybranch my-origin/$branch
+
+Question: I'm not sure what commands to use above. How do I create a branch on
+a remote repo when I'm on my local machine, without sshing to it?
+
+The advantages of git's repository over cvs's repository in this use-case are
+not created because the branch is on the local machine. In fact, we also
+created it on the server. The benefit comes from the git revision storage model
+being faster and BETTER.
+
+Then to switch our working pointer to this branch, we might do:
+
+: "ncvs up -r mybranch" ->
+:
+: git stash; git checkout mybranch; git pull;
+: git stash show --relevant --recent;
+
+Our "safe update" automatically saved away any local directory changes before
+switching off to the branch (if there were any). Our "stash show" is there
+always to show us if any stashes hang off a recent parent of the tree we just
+switched to, but it only shows them if they are hanging off this tree, and only
+if they are recent. If there is, we might want to look at or grab it, or we
+might just ignore it and not care.
+
+(3) allow users to commit their 'final' changes to others (only on the branch
+they are on)
+
+: "ncvs commit" -> "git commit; git push <only this branch>;"
+
+Question: how do I only push the branch I'm on? "eg" says it does this, but
+from a quick look at the code, it wasn't obvious to me how.
+
+Developers who are plenty happy with their existing model of never saving local
+changes, can continue doing what they are doing. This makes the ability to save
+local changes an added benefit to the users like me that want to do it, instead
+of an extra burden to the other users. It also simplifies the issue of which
+changes are pushed to the server and which are not, because pushing is managed
+by "git push <only this branch>", not by creating and managing local and remote
+branch names separately. (easy git took the same approach with push)
+
+(4) Allow users to save interim changes, without ahead of time planning, ahead
+of time nameing, and hopefully, without naming at all.
+
+Saving interim changes in a cvs working tree before merging with head is not
+cheap. Making my own branch tag isn't too hard, but it takes a long time on a
+big tree. Ironically, perforce made branching mechanism faster while making the
+cognitive load of branch hing much higher.
+
+: "ncvs save" -> "git commit -a"
+:
+: "ncvs stash [$name]" ->
+:
+: $currentbranch = `git branch`
+: $base-ish = '<baseof: current branch>'
+: git stash;
+: git branch -m $currentbranch $name;
+: git checkout $baseish;
+: git branch $currentbranch
+
+This "ncvs stash" is acknowledging the value of the "git stash" idea, while
+also recognizing that when I'm using "git commit" regularly, I don't have
+anything in the working set! I really want to stash the changes made since
+"origin/<branchname>" and return there with my local <branchname>. This is
+really after the fact branch creation. If no $name is supplied, then it can
+auto-generate one like stash does.
+
+(5) make it obvious there is a difference between local and remote changes, but
+make it easy to diff against remote before "ncvs commit;"
+
+: "ncvs diff" ->
+:
+: echo -n "since commit(-C): "  \
+:   `git diff --shortstat <baseof:current branch>`; \
+:   echo
+: echo -n "since save(-S): " \
+:   `git diff`; echo
+:
+: "ncvs diff -S" -> "git diff"
+: "ncvs diff -C" -> "git diff <baseof:current branch>
+--------------------------------------------------------------
+
+I'm primarily trying to understand how to map my model to git.
+Continued thanks for the discussion and help.
