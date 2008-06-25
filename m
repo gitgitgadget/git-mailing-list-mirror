@@ -1,60 +1,79 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told
-	to
-Date: Wed, 25 Jun 2008 12:24:58 +0200
-Message-ID: <1214389498.6634.10.camel@localhost>
-References: <20080624222105.GA24549@dervierte>
-	 <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com>
-	 <7vwskea2ik.fsf@gitster.siamese.dyndns.org> <48620C1A.6000509@panasas.com>
-	 <alpine.DEB.1.00.0806251109380.9925@racer>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] git-gui: Don't select the wrong file if the last listed file is staged.
+Date: Wed, 25 Jun 2008 16:06:50 +0530
+Message-ID: <20080625103650.GA20492@toroid.org>
+References: <1213308730-12707-1-git-send-email-ams@toroid.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Boaz Harrosh <bharrosh@panasas.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
-	jeske@google.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 25 12:26:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 25 12:37:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBSCz-0003w0-BZ
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 12:26:37 +0200
+	id 1KBSNq-0008Hw-Qo
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 12:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754707AbYFYKZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 06:25:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754083AbYFYKZf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 06:25:35 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:43436 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754547AbYFYKZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 06:25:02 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1126408ywe.1
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 03:25:00 -0700 (PDT)
-Received: by 10.125.149.3 with SMTP id b3mr1733956mko.81.1214389499573;
-        Wed, 25 Jun 2008 03:24:59 -0700 (PDT)
-Received: from ?192.168.1.15? ( [213.3.44.95])
-        by mx.google.com with ESMTPS id k29sm4231624fkk.2.2008.06.25.03.24.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 03:24:59 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0806251109380.9925@racer>
-X-Mailer: Evolution 2.22.2 
+	id S1754247AbYFYKgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 06:36:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754113AbYFYKgx
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 06:36:53 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:43164 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754109AbYFYKgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 06:36:53 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 918DA55869A;
+	Wed, 25 Jun 2008 12:36:51 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id B0DC0ADC0DD; Wed, 25 Jun 2008 16:06:50 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <1213308730-12707-1-git-send-email-ams@toroid.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86268>
 
-On Wed, 2008-06-25 at 11:16 +0100, Johannes Schindelin wrote:
-> Incidentally, a friend just told me that "checkout" is everything but 
-> intuitive, and he would have preferred "git branch switch <branch>", but 
-> then settled for my proposed "git branch --switch <branch>", which I did 
-> not have time to implement yet, unfortunately.
+Johannes Sixt noticed that if the last file in the list was staged, my
+earlier patch would display the diff for the penultimate file, but show
+the file _before_ that as being selected.
 
-But why? I don't want to 'branch', I want to 'checkout' another branch,
-which incidentally matches the git command I need to use to achieve
-that.
+This was due to my misunderstanding the lno argument to show_diff.
 
-Matthias
+This patch fixes the problem: lno is not decremented in the special case
+to handle the last item in the list (though we still need to use $lno-1
+to find the right path for the next diff).
+
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
+ git-gui/git-gui.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 23d7dfe..fe4a4c2 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1806,14 +1806,16 @@ proc toggle_or_diff {w x y} {
+ 		} else {
+ 			global next_diff_p next_diff_w next_diff_i
+ 
++			set next_diff_w $w
++
+ 			if {$i < $ll} {
+ 				set i [expr {$i + 1}]
++				set next_diff_i $i
+ 			} else {
++				set next_diff_i $i
+ 				set i [expr {$i - 1}]
+ 			}
+ 
+-			set next_diff_i $i
+-			set next_diff_w $w
+ 			set next_diff_p [lindex $file_lists($w) $i]
+ 
+ 			if {$next_diff_p ne {} && $current_diff_path ne {}} {
+-- 
+1.5.6
