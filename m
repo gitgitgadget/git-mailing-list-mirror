@@ -1,113 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pre-commit hook should ignore carriage returns at EOL
-Date: Wed, 25 Jun 2008 12:14:41 -0700
-Message-ID: <7vhcbh1g4e.fsf@gitster.siamese.dyndns.org>
-References: <3BA781AD-4C44-4F43-902A-07580B6CA075@gmail.com>
- <20080625181422.GC4039@steel.home>
- <5B163827-204D-4F76-88C9-8F0C93E60AF3@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 15:17:29 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806251421520.19665@iabervon.org>
+References: <20080625023352.GC20361@mit.edu> <willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO> <willow-jeske-01l6Cy0dFEDjCVqc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Christian Holtje <docwhat@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 21:15:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: David Jeske <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 21:18:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBaT8-0000fj-Kh
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 21:15:51 +0200
+	id 1KBaVg-0001Za-6z
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 21:18:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbYFYTOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 15:14:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbYFYTOz
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 15:14:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034AbYFYTOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 15:14:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 946401BB35;
-	Wed, 25 Jun 2008 15:14:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8AEC41BB32; Wed, 25 Jun 2008 15:14:46 -0400 (EDT)
-In-Reply-To: <5B163827-204D-4F76-88C9-8F0C93E60AF3@gmail.com> (Christian
- Holtje's message of "Wed, 25 Jun 2008 14:47:58 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FBD730D6-42EA-11DD-BCB6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753171AbYFYTRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 15:17:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYFYTRc
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 15:17:32 -0400
+Received: from iabervon.org ([66.92.72.58]:54595 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752591AbYFYTRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 15:17:31 -0400
+Received: (qmail 2544 invoked by uid 1000); 25 Jun 2008 19:17:29 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jun 2008 19:17:29 -0000
+In-Reply-To: <willow-jeske-01l6Cy0dFEDjCVqc>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86325>
 
-Christian Holtje <docwhat@gmail.com> writes:
+On Wed, 25 Jun 2008, David Jeske wrote:
 
-> On Jun 25, 2008, at 2:14 PM, Alex Riesen wrote:
->> Christian Holtje, Tue, Jun 24, 2008 21:21:22 +0200:
->>> diff --git a/t/t7503-template-hook--pre-commit.sh b/t/t7503-template-
->>> hook--pre-commit.sh
->>
->> Your patch has long lines wrapped.
->>
->>> diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-
->>> commit
->>> index b25dce6..335ca09 100644
->>> --- a/templates/hooks--pre-commit
->>> +++ b/templates/hooks--pre-commit
->>> @@ -55,8 +55,14 @@ perl -e '
->>> 	if (s/^\+//) {
->>> 	    $lineno++;
->>> 	    chomp;
->>> -	    if (/\s$/) {
->>> -		bad_line("trailing whitespace", $_);
->>> +	    if (/\r$/) {
->>> +		if (/\s\r$/) {
->>> +		    bad_line("trailing whitespace", $_);
->>> +		}
->>> +	    } else {
->>> +		if (/\s$/) {
->>> +		    bad_line("trailing whitespace", $_);
->>> +		}
->>
->> You coud just strip the trailing (cr)lf, instead of chomp:
->>
->>  	if (s/^\+//) {
->>  	    $lineno++;
->> - 	    chomp;
->> +	    s/\r?\n$//so;
->> 	    if (/\s$/) {
->> 		bad_line("trailing whitespace", $_);
->>
->> Makes for a shorter patch and less code.
->
-> That's a good idea!  However, this patch is not going anyplace, I
-> think.  Junio submitted a different patch to disable the pre-commit
-> example.
->
-> Junio, do you want me to make this change anyway?  It does make sense.
-> The unittests for the pre-commit hook may or may not still be  useful.
+> Yes, so I'd have the same thing, except instead of a remote repository, it
+> would be a pattern of the branch namespace, such as /origin/users/jeske/*. It
+> doesn't seem like the current remote tracking branch stuff can do this, but it
+> would be easy to provide a client wrapper that would. Users who tracked the
+> whole repository would just get everything, which is also fine. Maybe a client
+> patch to make this better would be accepted.
 
-"disable" is not an issue.  The intention has always been that these are
-samples, and it was an accident that some packaging shipped them enabled
-by mistake.  The patch was to make that mistake harder to make.
+Git actually has good support for large numbers of repositories sharing 
+the same object storage. It's actually more efficient (in terms of 
+server load) to have thousands of repositories with the same contents than 
+one repository with thousands of branches.
 
-The issue now is about keeping the example hooks _relevant_.  The one we
-have does not work well with projects that want to check in files with
-CRLF line endings (iow, without using autocrlf to attempt to make the
-project files cross-platform), so it is irrelevant for such projects with
-Windows origin.
+> > > (c) grant and enforce permission for certain users to submit _merges
+> > > only_ onto certain sub-portions of the "well-named branches"
+> >
+> > This is the wierd one. *** Why ***? There is nothing magical about
+> > merges; all a merge is a commit that contains more than one parent.
+> > You can put anything into a merge, and in theory the result of a merge
+> > could have nothing to do with either parent. It would be a very
+> > perverse merge, but it's certainly possible. So what's the point of
+> > trying to enforce rules about "merges only"?
+> 
+> I'll explain why I wrote this, but I admit it's a strange roundabout way to get
+> what I was hoping for. I hope there is a better way. One better way is to just
+> change the client, but I was hoping not to have to do that. let me explain..
+> 
+> Think about using CVS. user does "cvs up; hack hack hack; cvs commit (to
+> server)". In git, this workflow is "git pull; hack; commit; hack; commit; git
+> push (to server)". I want those interum "commits" to share the changes with the
+> server. I want to change this to "git pull; hack; commit-and-share; hack;
+> commit-and-share; git-push (to shared branch tag)"
+> 
+> It would be nice if "commit-and-share" could just use "git-push". However,
+> because users are going to do this habitually every commit, probably through a
+> script or merged command, I didn't want users who are accidentally working
+> directly in the master to accidentally fast-forward origin/master. (everyone
+> seems to discourage working on master anyhow). I was hoping to enforce this
+> only with server policy, so any git client works. That leaves me with the
+> challenge of figuring out which commits on origin/master are actually intended
+> to move the pointer, and which are accidents because someone forgot to branch
+> before hacking in their client. One simple way to do this is to require any
+> origin/master commit to have two children, one on the master, one somewhere
+> else. If you have a commit that is directly hanging off of master in this
+> design, you are doing the wrong thing. The server would tell you to "git
+> checkout master; git branch -b mymaster; git reset origin/master; git push".
+> This would put their local changes onto their private branch where they should
+> be. When they wanted to do the equivilant of "cvs commit;" or current "git
+> push;", they would do a merge to the master, and push again. The server would
+> allow it, because it sees the merge.
 
-The "solution" you are proposing to strip out \r makes the check less
-useful for projects that want to keep files with LF line endings in the
-commited history, because your patch would stop catching such a mistake of
-adding an CR before LF.  It is robbing from Peter to pay Paul, and I am
-afraid it would make the sample even more irrelevant in the end.  I do not
-think we would want to go there.
+You have a fundamental misconception about git's data model. A commit 
+doesn't have a particular branch it is on. There is only the DAG, where 
+each node is a commit that is structured identically to all of the other 
+commits. Branches pick out particular nodes in the DAG at particular 
+times.
 
-I suggested using "diff --check" (and possibly teaching "diff --check"
-other things the scripted example checks, such as conflict markers),
-which would know to honor the line endings specified per path via
-gitattributes(5), instead of building on top of the big Perl script, and I
-had an impression that you agreed to the approach.
+You can even think of there being a single theoretical universal DAG, 
+independant of the actual development that gets done, and developers work 
+to find the interesting portions, which are ones that contain trees that 
+contain working code and useful messages and history that is informative. 
+And they use branches to hold references to worthwhile parts of the DAG, 
+and not (as in systems like SVN) to partition the DAG, which makes no 
+reference to branches.
+
+It therefore doesn't make any sense to ask if a commit is directly hanging 
+off of master. If your local branch is up to date, and you commit, your 
+commit's parent is the current master. If you now check out master and 
+merge your local branch, master gets the same (non-merge) commit.
+
+> I recognize this is a bit strange. I'd love to have a better solution, but this
+> is the solution I can think of which only involves server enforcement.
+
+You fundamentally can't do what you want with only server enforcement, 
+because git doesn't provide the history of what local operations were used 
+to prepare to ask the server to change something. It fundamentally can't, 
+because there's no room in its data model of changes to hold that, and 
+because its design is to allow flexibility in this preparation.
+
+> Other solutions I thought of would all require client changes that would 
+> change everyone's behavior. The candidate I liked best was: disallowing 
+> changes to tracking branches, including master, probably by implicitly 
+> creating a branch on commit to a tracking branch... However, I don't get 
+> the impression this will fit into current git very well, because users 
+> would need to turn their current "git push", into a "git merge 
+> master;git push"
+
+Git prevents you from committing to tracking branches at all. Any branch 
+you can commit to is inherently a local branch, because that's what it 
+means for a branch to be local. The "push" operation updates a remote 
+branch from a local branch.
+
+Now, what might be good would be to introduce a type of ref that you can 
+update with "merge" but not with "commit". Of course, this has to be 
+client-side, because the final state doesn't depend on whether you commit 
+in a temporary branch and merge into a publishing branch or commit 
+directory in the publishing branch.
+
+	-Daniel
+*This .sig left intentionally blank*
