@@ -1,95 +1,73 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/2] New refresh tests
-Date: Wed, 25 Jun 2008 06:30:33 +0200
-Message-ID: <20080625043026.6044.72652.stgit@yoghurt>
-References: <20080625042337.6044.53357.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Ask for "git program" when asking for "git-program" over
+ SSH connection
+Date: Tue, 24 Jun 2008 21:32:19 -0700
+Message-ID: <7vk5ge6soc.fsf@gitster.siamese.dyndns.org>
+References: <20080624185403.GB29404@genesis.frugalware.org>
+ <alpine.DEB.1.00.0806242007150.9925@racer>
+ <7vskv2d0lp.fsf@gitster.siamese.dyndns.org>
+ <20080624221049.GE29404@genesis.frugalware.org>
+ <7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
+ <20080624233236.GI29404@genesis.frugalware.org>
+ <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org>
+ <20080625120832.6117@nanako3.lavabit.com>
+ <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org>
+ <7vprq66vqd.fsf_-_@gitster.siamese.dyndns.org>
+ <20080625034538.GW11793@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 06:31:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
+	<nanako3@lavabit.com>, Miklos Vajna <vmiklos@frugalware.org>,
+	pclouds@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 06:33:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBMfU-0000Hd-D4
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:31:40 +0200
+	id 1KBMhF-0000eu-CD
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752036AbYFYEag convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 00:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbYFYEag
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:30:36 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3571 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893AbYFYEaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 00:30:35 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KBMeO-0006KA-00; Wed, 25 Jun 2008 05:30:32 +0100
-In-Reply-To: <20080625042337.6044.53357.stgit@yoghurt>
-User-Agent: StGIT/0.14.2.171.g5c0d
+	id S1751700AbYFYEce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 00:32:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbYFYEce
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:32:34 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36061 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751590AbYFYEcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 00:32:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BE3E417067;
+	Wed, 25 Jun 2008 00:32:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C21BD1705F; Wed, 25 Jun 2008 00:32:21 -0400 (EDT)
+In-Reply-To: <20080625034538.GW11793@spearce.org> (Shawn O. Pearce's message
+ of "Tue, 24 Jun 2008 23:45:38 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B9D6F106-426F-11DD-98A4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86221>
 
-Test stg refresh more extensively -- including some things it only
-recently learned to do.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+> Sorry, but I think this change needs to go higher up, to the default
+> values that --upload-pack and remote.$name.uploadpack override,
+> so the user can at least work around it when we break her ability
+> to use github, gitosis, or anything like it.
 
----
+Well, the thing is, "higher up" would not have enough clue to see if it
+needs to give dashed form (for git-daemon) or space form (for ssh), so
+that suggestion won't help much.
 
- t/t2300-refresh-subdir.sh |   29 ++++++++++++++++++++++++++++-
- 1 files changed, 28 insertions(+), 1 deletions(-)
+I do not care too much about closed source service, but gitosis should be
+able to update the pattern to allow "git[ -]upload-pack" reasonably
+easily.
 
-
-diff --git a/t/t2300-refresh-subdir.sh b/t/t2300-refresh-subdir.sh
-index 92c1cc8..d731a11 100755
---- a/t/t2300-refresh-subdir.sh
-+++ b/t/t2300-refresh-subdir.sh
-@@ -4,7 +4,7 @@ test_description=3D'Test the refresh command from a sub=
-directory'
- stg init
-=20
- test_expect_success 'Refresh from a subdirectory' '
--    stg new foo -m foo &&
-+    stg new p0 -m p0 &&
-     echo foo >> foo.txt &&
-     mkdir bar &&
-     echo bar >> bar/bar.txt &&
-@@ -45,4 +45,31 @@ test_expect_success 'Refresh subdirectories recursiv=
-ely' '
-     [ "$(stg status)" =3D "" ]
- '
-=20
-+test_expect_success 'refresh -u' '
-+    echo baz >> bar/baz.txt &&
-+    stg new p1 -m p1 &&
-+    git add bar/baz.txt &&
-+    stg refresh --index &&
-+    echo xyzzy >> foo.txt &&
-+    echo xyzzy >> bar/bar.txt &&
-+    echo xyzzy >> bar/baz.txt &&
-+    stg refresh -u &&
-+    test "$(echo $(stg status))" =3D "M bar/bar.txt M foo.txt"
-+'
-+
-+test_expect_success 'refresh -u -p <subdir>' '
-+    echo xyzzy >> bar/baz.txt &&
-+    stg refresh -p p0 -u bar &&
-+    test "$(echo $(stg status))" =3D "M bar/baz.txt M foo.txt"
-+'
-+
-+test_expect_success 'refresh an unapplied patch' '
-+    stg refresh -u &&
-+    stg goto p0 &&
-+    test "$(stg status)" =3D "M foo.txt" &&
-+    stg refresh -p p1 &&
-+    test "$(stg status)" =3D "" &&
-+    test "$(echo $(stg files p1))" =3D "A bar/baz.txt M foo.txt"
-+'
-+
- test_done
+Any other suggestions that is workable?
