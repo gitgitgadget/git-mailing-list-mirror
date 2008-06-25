@@ -1,80 +1,81 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Wed, 25 Jun 2008 13:56:47 -0400
-Message-ID: <20080625135647.wiohgih5hc0scgw0@intranet.digizenstudio.com>
-References: <U-ySqQANiPRpld4kgzdXbovGgsj6LfOEdRmtTDU2yyvITSG3LnZAsQ@cipher.nrlssc.navy.mil>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l5uqS9FEDjCcuF>
-	<willow-jeske-01l5xqJDFEDjCftd>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: update-index --assume-unchanged doesn't make things go fast
+Date: Wed, 25 Jun 2008 14:02:04 -0400
+Message-ID: <32541b130806251102l6e71a050o82fbd4f272d1d23f@mail.gmail.com>
+References: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
+	 <g3tvqd$2jj$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: David Jeske <jeske@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 19:58:05 2008
+To: "Michael J Gruber" <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Wed Jun 25 20:03:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBZFs-000342-Hb
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:58:04 +0200
+	id 1KBZKj-0004y3-LL
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 20:03:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYFYR5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 13:57:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198AbYFYR5I
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:57:08 -0400
-Received: from k2smtpout02-01.prod.mesa1.secureserver.net ([64.202.189.90]:53095
-	"HELO k2smtpout02-01.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752189AbYFYR5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 13:57:07 -0400
-Received: (qmail 7043 invoked from network); 25 Jun 2008 17:56:49 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout02-01.prod.mesa1.secureserver.net (64.202.189.90) with ESMTP; 25 Jun 2008 17:56:48 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 5245010008B;
-	Wed, 25 Jun 2008 17:56:48 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id INqktRjV62gN; Wed, 25 Jun 2008 13:56:47 -0400 (EDT)
-Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
-	id A0FBF100A22; Wed, 25 Jun 2008 13:56:47 -0400 (EDT)
-Received: from mailrelay1.private.geico.com (mailrelay1.private.geico.com
-	[205.143.204.206]) by intranet.digizenstudio.com (Horde MIME library) with
-	HTTP; Wed, 25 Jun 2008 13:56:47 -0400
-In-Reply-To: <willow-jeske-01l5xqJDFEDjCftd>
+	id S1752591AbYFYSCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 14:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYFYSCI
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 14:02:08 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:5598 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbYFYSCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 14:02:06 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so3324067fkq.5
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 11:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=tJUDPDQgwmmliDWdV26SH9bca+dlKVbYKnLZaptEmtU=;
+        b=AJ6ah4Tu32Ug3B7u/Zm5d2YUNrrajnLPPC/tJBEyUFf49ckqM0uQEu7Y0ASf3hraXE
+         kk8LI9pJEvB59N5UCKZp68fFvXSJz6ywifQC5dTuSX672SM1rnfGxq9kr7alJBs8atLn
+         XSDDZEVOJwCDi87jcLFxXaYZM7feaVSkedqPo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Kim6HAuY1YnExBXkyNUPv8cDPZkBJhoKEGRaJLwbUxq+7K3ZHCH4Uuo0vFG26XkBOY
+         UrBDcsLWWrPjO+z5vG4X8ZFk5Hmo+Bc2zNWQYLeJ1jSkv2QExVNu9YRilfolflf1LuNB
+         C2TjHBup1KzLdsrrvPCckR7veJG5SGG4G/F4Q=
+Received: by 10.82.135.7 with SMTP id i7mr657349bud.42.1214416924972;
+        Wed, 25 Jun 2008 11:02:04 -0700 (PDT)
+Received: by 10.82.175.10 with HTTP; Wed, 25 Jun 2008 11:02:04 -0700 (PDT)
+In-Reply-To: <g3tvqd$2jj$1@ger.gmane.org>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86313>
 
+On 6/25/08, Michael J Gruber <michaeljgruber+gmane@fastmail.fm> wrote:
+> > 4) My idea is to eventually --assume-unchanged my whole repository,
+> > then write a cheesy daemon that uses the Win32 dnotify-equivalent to
+> > watch for files that get updated and then selectively
+> > --no-assume-unchanged files that it gets notified about.  That would
+> > avoid the need to ever synchronously scan the whole repo for changes,
+> > thus making my git-Win32 experience much faster and more enjoyable.
+> > (This daemon ought to be possible to run on Linux as well, for similar
+> > improvements on gigantic repositories.  Also note that TortoiseSVN for
+> > Windows does something similar to track file status updates, so this
+> > isn't *just* me being crazy.)
+>
+>  Looks like users on slow NFS would profit, too. Hate to say it, but hg
+> feels faster on (slow) NFS than git. Yet I use git, for other reasons ;)
 
+Hmm, can you do dnotify over NFS?
 
-Quoting David Jeske <jeske@google.com>:
+I'd like to know how hg goes any faster.  As far as I can see, git is
+going as fast as can be without some kind of daemon or other magic.
+(Except for my point #3, which seems relatively minor.)
 
-> - add "checkout" to the git-gui history right-click menu, and make the
-> danger of
-> "reset --hard" more obvious and require a confirmation dialog (the gui
-> equivilant of -f)
+Thanks,
 
-Is that really necessary?  The way it works now, when I choose "reset  
-foo branch to here", a dialog prompts me to pick from the three reset  
-modes, with 'Mixed' being the default. So I'd have to explicitly pick  
-'Hard', which has a message "discards ALL local changes" right next to  
-it.  If people are so conditioned to ignore that, I doubt it'll take  
-very long for them to be conditioned to just automatically confirm the  
-confirmation dialog.
-
-The same applies to the command line as well I guess - if having to  
-manually type "--hard" does not make one stop and think about what  
-they are doing, I can hardly see how "--hard --force" would do any  
-better.
-
-Cheers.
--- 
-Jing Xue
+Avery
