@@ -1,90 +1,90 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@lavabit.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 25 Jun 2008 12:08:32 +0900
-Message-ID: <20080625120832.6117@nanako3.lavabit.com>
-References: <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org>
-	<20080621121429.GI29404@genesis.frugalware.org>
-	<7vwskfclfs.fsf@gitster.siamese.dyndns.org>
-	<9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl>
-	<20080624160224.GA29404@genesis.frugalware.org>
-	<alpine.DEB.1.00.0806241709330.9925@racer>
-	<20080624185403.GB29404@genesis.frugalware.org>
-	<alpine.DEB.1.00.0806242007150.9925@racer>
-	<7vskv2d0lp.fsf@gitster.siamese.dyndns.org>
-	<20080624221049.GE29404@genesis.frugalware.org>
-	<7vk5gea0ff.fsf@gitster.siamese.dyndns.org>
-	<20080624233236.GI29404@genesis.frugalware.org>
-	<7vk5ge8bm5.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 1/4] optimize verify-pack a bit
+Date: Tue, 24 Jun 2008 23:17:12 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806242315570.2979@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 05:11:49 2008
+X-From: git-owner@vger.kernel.org Wed Jun 25 05:18:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBLQB-0000aD-8e
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 05:11:47 +0200
+	id 1KBLWM-0001j3-Pu
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 05:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478AbYFYDKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 23:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754445AbYFYDKt
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 23:10:49 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:48198 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754344AbYFYDKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 23:10:48 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 5E861C843F;
-	Tue, 24 Jun 2008 22:10:39 -0500 (CDT)
-Received: from nanako3.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 8JMJFFOXIO5H; Tue, 24 Jun 2008 22:10:47 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=nGUgBA6E0h6qh5GgQSFqCqNvPe21MJPkH33SUOxMId/93Q0PhtqSFR/C3Q8XA7EBhAq/m1wTig2HpIMmhm/C6e37ZDruLx+MTi6K6K69Hm5Nd2cmELAqXXETO/cDQK5wGfgeln8BYnKk0AW9ULVkN1egzDVcX3nI3uuYBNOoG8M=;
-  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
-In-Reply-To: <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org>
+	id S1752439AbYFYDRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 23:17:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbYFYDRO
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 23:17:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:22194 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750708AbYFYDRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 23:17:14 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K30002Z314OBQ20@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 24 Jun 2008 23:17:13 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86201>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
 
-> Miklos Vajna <vmiklos@frugalware.org> writes:
->
->> On Tue, Jun 24, 2008 at 04:16:36PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->>> It most likely makes sense to do (3) anyway.  upload-pack, receive-pack,
->>> anything else?
->>
->> I think that's all.
->
-> Then that would be this patch on top of nd/dashless topic.
->
->  Makefile |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 929136b..babf16b 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1268,7 +1268,7 @@ install: all
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
->  	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
-> -	$(INSTALL) git$X '$(DESTDIR_SQ)$(bindir_SQ)'
-> +	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X '$(DESTDIR_SQ)$(bindir_SQ)'
->  	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
->  	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
->  ifndef NO_TCLTK
+Using find_pack_entry_one() to get object offsets is rather suboptimal
+when nth_packed_object_offset() can be used directly.
 
-Doesn't "git archive --remote=<repo>" also execute git program on a remote machine?
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ cache.h      |    1 +
+ pack-check.c |    4 +---
+ sha1_file.c  |    2 +-
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index a68866c..16222a3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -711,6 +711,7 @@ extern void close_pack_windows(struct packed_git *);
+ extern void unuse_pack(struct pack_window **);
+ extern struct packed_git *add_packed_git(const char *, int, int);
+ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t);
++extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t);
+ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+ extern unsigned long unpack_object_header_gently(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+diff --git a/pack-check.c b/pack-check.c
+index b99a917..d6dbd4b 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -67,9 +67,7 @@ static int verify_packfile(struct packed_git *p,
+ 		entries[i].sha1 = nth_packed_object_sha1(p, i);
+ 		if (!entries[i].sha1)
+ 			die("internal error pack-check nth-packed-object");
+-		entries[i].offset = find_pack_entry_one(entries[i].sha1, p);
+-		if (!entries[i].offset)
+-			die("internal error pack-check find-pack-entry-one");
++		entries[i].offset = nth_packed_object_offset(p, i);
+ 	}
+ 	qsort(entries, nr_objects, sizeof(*entries), compare_entries);
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 9330bc4..a92f023 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1708,7 +1708,7 @@ const unsigned char *nth_packed_object_sha1(struct packed_git *p,
+ 	}
+ }
+ 
+-static off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
++off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+ {
+ 	const unsigned char *index = p->index_data;
+ 	index += 4 * 256;
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.5.6.56.g29b0d
