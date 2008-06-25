@@ -1,68 +1,68 @@
-From: Ian Hilt <Ian.Hilt@gmx.com>
+From: "Rhodes, Kate" <masukomi@gmail.com>
 Subject: Re: how to list all files that will be comitted
-Date: Wed, 25 Jun 2008 11:57:11 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site>
-References: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Date: Wed, 25 Jun 2008 12:01:49 -0400
+Message-ID: <17C0F998-66C0-4DFC-90EB-B85FF6E07844@gmail.com>
+References: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com> <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 17:58:26 2008
+To: Ian Hilt <Ian.Hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 18:03:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBXNo-0005EJ-3F
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:58:08 +0200
+	id 1KBXSU-0007DK-7V
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbYFYP5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 11:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbYFYP5J
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:57:09 -0400
-Received: from mail.gmx.com ([74.208.5.67]:47353 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751628AbYFYP5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 11:57:09 -0400
-Received: (qmail invoked by alias); 25 Jun 2008 15:57:07 -0000
-Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
-  by mail.gmx.com (mp-us004) with SMTP; 25 Jun 2008 11:57:07 -0400
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX18TCFAKDqMTxKtCtaEvAel4j4Ubj25SMKKDvZ+BcV
-	5ZRXGeCxwaEu+I
-In-Reply-To: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Y-GMX-Trusted: 0
+	id S1759657AbYFYQBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 12:01:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758679AbYFYQBy
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:01:54 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:23180 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759657AbYFYQBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 12:01:53 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so8259648rvb.1
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 09:01:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=gmYbxXZXHpOAXddlFtU0fFroItUIzn7oZW8pnrRh/n8=;
+        b=bi6o2d1PLcn72qO3h2H/T7fVdPNR+9BLPxWCnW0+PtB4oh10uQclIckxc6dTXqms/E
+         6qfZHaDC7c61xtX0Sb1Sf+m2eB/h9RGFKq+F7CNlpsQxSzQNYCGrSZaYnkfDFhFInP2u
+         RZjdrh6WqcGSe2BlsISH4VgvkxFdoByaVGyNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=xSsEXKTJZvnHzfZ3MznoN9JqdkZng50pK6renG/sbdVIYhC0W9jhglyL1pz5/ROlJZ
+         i9/IJbNgeFzLO/RtPMOYU0qDjhs6262d5REUXY1KYM1TErAY00gQlNNSbQWDpOGCoDZF
+         MlBrIsbKikCidtHkKvOVaNK0mQyH/vS8tmz3Q=
+Received: by 10.141.49.18 with SMTP id b18mr6376349rvk.92.1214409713169;
+        Wed, 25 Jun 2008 09:01:53 -0700 (PDT)
+Received: from ?172.30.0.244? ( [80.67.64.10])
+        by mx.google.com with ESMTPS id 43sm14514283wri.27.2008.06.25.09.01.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Jun 2008 09:01:52 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86293>
 
-On Wed, 25 Jun 2008 at 11:31am -0400, Rhodes, Kate wrote:
+yeah, but i was hoping for plumbing, not porcelain, that showed just  
+what i wanted so that i didn't have to parse status' output.
 
-> I know ls-files is the tool I need but I haven't been able to figure out what
-> combination of options will give me the files that have been added to the
-> index.
-> 
-> -Kate
+-Kate
 
-Have you tried "git status" ?  It will output something similar to the
-following:
+On Jun 25, 2008, at 11:57 AM, Ian Hilt wrote:
 
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	modified:   somefile
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#	modified:   anotherfile
-#
-
-
--- 
-Ian Hilt
-Ian.Hilt (at) gmx.com
-GnuPG key: 0x4AFC1EE3
+> Have you tried "git status" ?  It will output something similar to the
+> following:
