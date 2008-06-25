@@ -1,112 +1,87 @@
-From: "Klas Lindberg" <klas.lindberg@gmail.com>
-Subject: Re: git-fetch remote tag to local branch fails
-Date: Wed, 25 Jun 2008 10:50:06 +0200
-Message-ID: <33f4f4d70806250150q41f09764m4ae0cc1cd6e15e30@mail.gmail.com>
-References: <33f4f4d70806240517h5e3ae420h263dd0c2d6bae459@mail.gmail.com>
-	 <8aa486160806240638o221b01d2i2f46cc8f0f3760a3@mail.gmail.com>
-	 <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
-	 <8aa486160806240727r6fc6de6doec8300700293a3a7@mail.gmail.com>
-	 <33f4f4d70806240831q14caacddp66645e1bcfb6d14b@mail.gmail.com>
-	 <8aa486160806240911p49d7bcb8q82a8d68c51206543@mail.gmail.com>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: why is git destructive by default? (i suggest it not be!)
+Date: Wed, 25 Jun 2008 11:57:59 +0300
+Message-ID: <48620897.5040708@panasas.com>
+References: <jeske@willow=01l5V7waFEDjChmh>	<willow-jeske-01l5PFjPFEDjCfzf-01l5V7wbFEDjCX7V>	<willow-jeske-01l5cKsCFEDjC=91MX> <48612ABE.6000104@panasas.com>	<48612CB0.2070303@panasas.com> <m31w2mlki4.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 10:51:14 2008
+Cc: David Jeske <jeske@google.com>, git@vger.kernel.org,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 11:00:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBQiZ-0004U1-R3
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 10:51:08 +0200
+	id 1KBQrG-0007as-RA
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 11:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753906AbYFYIuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 04:50:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbYFYIuK
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 04:50:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:64518 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753884AbYFYIuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 04:50:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1331636fgg.17
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=vsbzy3nJFtnV3z9fQajWTS/Y/Lmb2t1sQY9Zu3KGI38=;
-        b=Y+n6nm04T4U0qL3OaL3fM6RlbZYn305oYHPkLUj/0CcuN5y4vLec5BsfKId9tF9s3q
-         WgvJy+aPQwnhwKqloJb4qrKihl90MBesGzkfovXthiSZvuO9KpjQt7SM8mW3qmG1uTXV
-         wyB2PjC1DThf7vjUT0jrVj36WFhpnv1qS0Jpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=pcAiDhyR9dvvQKiKxusj7zY42cgAm1It5mTfWPDH1XtVSRRoqPvuIPgKUuTDdRrBeN
-         3sdLNxSTxzPIx0H49YWyyP3vybs9XjDsp6x4ixJ/8oUJJfB/+bRbzKfq/HyAyPUErPjK
-         osUOr1PKf8BDXppYbWixG8x+hcXEk+dnEBM8s=
-Received: by 10.86.80.5 with SMTP id d5mr10085601fgb.11.1214383806806;
-        Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
-Received: by 10.86.68.16 with HTTP; Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
-In-Reply-To: <8aa486160806240911p49d7bcb8q82a8d68c51206543@mail.gmail.com>
-Content-Disposition: inline
+	id S1754093AbYFYI7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 04:59:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754059AbYFYI7N
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 04:59:13 -0400
+Received: from gw-colo-pa.panasas.com ([66.238.117.130]:6814 "EHLO
+	natasha.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753947AbYFYI7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 04:59:11 -0400
+Received: from daytona.int.panasas.com (daytona.int.panasas.com [172.17.28.41])
+	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id m5P8wKSI023538;
+	Wed, 25 Jun 2008 04:58:21 -0400
+Received: from bh-buildlin2.bhalevy.com ([172.17.28.123]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 25 Jun 2008 04:58:05 -0400
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <m31w2mlki4.fsf@localhost.localdomain>
+X-OriginalArrivalTime: 25 Jun 2008 08:58:05.0800 (UTC) FILETIME=[9500DE80:01C8D6A1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86256>
 
->> I am looking into the possibility of writing a tool that handles
->> configurations of trees.
->
-> Maybe you should be using the plumbing commands.
+Jakub Narebski wrote:
+> Boaz Harrosh <bharrosh@panasas.com> writes:
+> 
+> 
+>> Sorry
+>> git-reset --clean -f/-n for removing local changes
+>> git reset --hard for moving HEAD on a clean tree only
+> 
+> Wouldn't "git reset <commit-ish>" be enough then?  It modifies where
+> current branch points to (as opposed to git-checkout modifying what is
+> the current branch), and it modifies index.  What it doesn't modify is
+> working directory, but it is clean already.
+> 
 
-Yes. It looks like it.
+Does not work. only --hard will do the job. The working directory is not
+touched and if you'll do a git-diff you'll see the diff between old-head
+to new-head. But what I want is to start-hack or merge on new-head.
 
->> For instance, I want the tool to be able to
->> consume some version of a configuration and create, update or reset
->> branches in other trees accordingly.
->
-> What are the "other trees"?
+> So the solution is: don't use `--hard'.
+> 
 
-One tree tracks a configuration file that just contains specs for
-other trees. The idea is something like this: Given a refspec on the
-configuration tree, git-view the configuration file and use the
-contained refspecs to clone/pull/fetch/reset/whatever a bunch of other
-trees.
+the closest to git reset --hard that I can think of is:
 
-Note that I'm not trying to solve the problem addressed by the
-submodules system in git; I need configuration management.
+Lets say I have
+$ git-branch -a
+* mybranch
+remote/master
 
-> Maybe you want to keep your local branches up to date with respect
-> their tracking branch?
+I can
+$ git reset --hard remote/master
+Or I can
+$ git-checkout -b temp_mybranch remote/master
+$ git-branch -M temp_mybranch mybranch
 
-Well yes, but that is only half of it. One of the scenarios I'm
-pondering is this: A user wants to take an old configuration based on
-tags and try some use case that breaks a newer configuration. After
-the checkout, the working trees will not be "on" any branches (what's
-the word for that?). Unfortunately, most people seem to think that
-everything in a VCS happens on a branch. A lot of people will
-incorrectly assume that they are still on their "working branch"
-because they didn't check out a different branch! They checked out a
-tag and, like myself, have muddy ideas about what that actually means
-in relation to branches. I'd prefer to not have to tell them to try
-git-lost-found on a 40 different trees to recover commits that they
-made on non-branches.
+The second will complain if I have local changes.
+I have just written 2 scripts. One "git-reset" that
+will filter out --hard before calling the original.
+Second "git-reset--hard" that will do the above.
 
-I'll have to think more about this. It's not a functionality
-shortcoming, but a UI one.
+Stupid me no more. It will not happen to me again.
+Just those poor new users out there, I guess you have to
+fall off your bike at least once.
 
-> I don't see the point updating a branch with a tag, but you can make a
-> tool to update a branch with a tag, see for example
-> contrib/examples/git-fetch.sh.
-
-Thank you. I'll have a look at that, but after our conversation I
-think I was mentally stuck in the land of some other VCS. I know
-perfectly well that a tag is not just a marker along some branch, but
-I realize now that I was thinking of it as if it was.
-
-/Klas
+Boaz
