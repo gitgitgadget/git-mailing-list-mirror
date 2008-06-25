@@ -1,71 +1,83 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] pack.indexversion config option now defaults to 2
-Date: Wed, 25 Jun 2008 08:14:53 +0200
-Organization: glandium.org
-Message-ID: <20080625061453.GA32178@glandium.org>
-References: <alpine.LFD.1.10.0806250025130.2979@xanadu.home> <alpine.LFD.1.10.0806242130450.22069@hp.linux-foundation.org> <7vd4m66rfp.fsf@gitster.siamese.dyndns.org> <20080625055605.GD28563@glandium.org> <7viqvy59qr.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/RFC] git-svn: sanitize_remote_name should accept underscores.
+Date: Tue, 24 Jun 2008 23:44:35 -0700
+Message-ID: <20080625064435.GL21299@hand.yhbt.net>
+References: <1214322898-9272-1-git-send-email-apenwarr@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 08:16:07 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 08:45:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBOIX-00062O-Fm
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 08:16:05 +0200
+	id 1KBOlN-0005Gt-QF
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 08:45:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753007AbYFYGPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 02:15:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYFYGPJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 02:15:09 -0400
-Received: from vuizook.err.no ([194.24.252.247]:35191 "EHLO vuizook.err.no"
+	id S1750976AbYFYGoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 02:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbYFYGoh
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 02:44:37 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:39384 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752988AbYFYGPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 02:15:08 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KBOHO-0008Jq-K1; Wed, 25 Jun 2008 08:15:01 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KBOHN-0008PF-Oj; Wed, 25 Jun 2008 08:14:53 +0200
+	id S1750812AbYFYGog (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 02:44:36 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id DBCBC2DC095;
+	Tue, 24 Jun 2008 23:44:35 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7viqvy59qr.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+In-Reply-To: <1214322898-9272-1-git-send-email-apenwarr@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86243>
 
-On Tue, Jun 24, 2008 at 11:06:36PM -0700, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
+Avery Pennarun <apenwarr@gmail.com> wrote:
+> Without this patch, git-svn failed with the error:
+>  config --get svn-remote.D2007.Win32.url: command returned error: 1
 > 
-> > Wouldn't it be a good idea to add a warning in git update-server-info
-> > when it detects pack.indexVersion is not 1, too ?
+> ...upon trying to automatically follow a link from a child branch back to
+> its parent branch D2007_Win32 (note the underscore, not dot, separating the
+> two words).
 > 
-> Can you describe how that warning will help whom in the bigger picture?
+> Note that I have each of my branches defined (by hand) as separate
+> svn-remote entries in .git/config since my svn repository layout is
+> nonstandard.
 > 
-> The way as I understand everybody runs "git update-server-info" is:
-> 
->  * "git push" pushes into a publishing repository, then
->  * "post-receive" (or "post-update") hook triggers "update-server-info".
-> 
-> If you spit out a warning from update-server-info, it will be shown to the
-> pusher over sideband, but this will not necessarily help the pusher, who
-> may or may not have shell access to the repository.
+> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
 
-There are also those that get the message to run update-server-info when
-trying to clone over dumb protocol when the info/refs file is not
-there... I actually didn't think about the post-receive hook.
+Thanks,
 
-Well, then, update-server-info could output the warning only if stderr
-is a tty.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-Mike
+> ---
+> I'm not sure why sanitize_remote_name is so picky about allowed characters,
+> but underscore should certainly be allowed.  I'm worried that this has
+> revealed a more serious problem, since presumably sanitizing the name
+> shouldn't break anything in any case.
+
+Weird.  It looks like a stupid bug on my part.  I'm surprised
+it took this long to find, since underscore is pretty common...
+
+> ---
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 4c9c59b..263d66c 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1465,7 +1465,7 @@ sub verify_remotes_sanity {
+>  # we allow more chars than remotes2config.sh...
+>  sub sanitize_remote_name {
+>  	my ($name) = @_;
+> -	$name =~ tr{A-Za-z0-9:,/+-}{.}c;
+> +	$name =~ tr{A-Za-z0-9:,_/+-}{.}c;
+>  	$name;
+>  }
+>  
+> -- 
+> 1.5.6.56.g29b0d
