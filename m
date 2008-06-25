@@ -1,141 +1,125 @@
-From: "David Jeske" <jeske@willowmail.com>
-Subject: Re: policy and mechanism for less-connected clients
-Date: Wed, 25 Jun 2008 05:20:49 -0000
-Message-ID: <10634.0258535512$1214372002@news.gmane.org>
-References: <20080625023352.GC20361@mit.edu>
-	<willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Ask for "git program" when asking for "git-program" over SSH connection
+Date: Wed, 25 Jun 2008 01:34:52 -0400
+Message-ID: <20080625053452.GI11793@spearce.org>
+References: <20080624233236.GI29404@genesis.frugalware.org> <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org> <20080625120832.6117@nanako3.lavabit.com> <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org> <7vprq66vqd.fsf_-_@gitster.siamese.dyndns.org> <20080625034538.GW11793@spearce.org> <7vk5ge6soc.fsf@gitster.siamese.dyndns.org> <20080625044409.GE11793@spearce.org> <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org> <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 25 07:33:16 2008
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 07:36:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBNd2-0005Pr-Bb
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 07:33:12 +0200
+	id 1KBNfr-0005yU-4o
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 07:36:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbYFYFcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 01:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbYFYFcQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 01:32:16 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60377 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753256AbYFYFcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 01:32:15 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jun 2008 01:32:15 EDT
-Received: (qmail 26322 invoked by uid 90); 25 Jun 2008 05:25:24 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Wed, 25 Jun 2008 05:20:49 -0000
-In-Reply-To: <20080625023352.GC20361@mit.edu>
+	id S1753909AbYFYFfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 01:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbYFYFfL
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 01:35:11 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50042 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753357AbYFYFfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 01:35:09 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KBNeg-0000lh-Cp; Wed, 25 Jun 2008 01:34:54 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0E01B20FBAE; Wed, 25 Jun 2008 01:34:52 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86233>
 
--- Theodore Tso wrote:
-> Up to here, you can do this all with repo.or.cz, and/or github; you
-> just give each developer their own repository, which they are allowed
-> to push to, and no once else. Within their own repository they can
-> make changes to their branches, so that all works just fine.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > "Shawn O. Pearce" <spearce@spearce.org> writes:
+> >
+> >>> Any other suggestions that is workable?
+> >>
+> >> diff --git a/builtin-clone.c b/builtin-clone.c
+> >> index 5c5acb4..98d0f0f 100644
+> >> --- a/builtin-clone.c
+> >> +++ b/builtin-clone.c
+> >> @@ -37,7 +37,7 @@ static int option_quiet, option_no_checkout, option_bare;
+> >
+> > << a patch to conditionally change "git-program" default to "git program"
+> > snipped >>
 
-Yup. That's one of the reasons git is so attractive. There is some good stuff
-under "here" though....
+Shouldn't "git upload-pack" work on the server side as far back as
+0.99.9k?  That's back really old.  And my patch fixed "git " to be
+"git-" when talking to git-daemon, thus keeping clients compatible
+with all current git:// servers.
 
-> > (a) safely "share" every DAG, branch, and tag data in their
-> > repository to a well-connected server, into an established
-> > namespace, while only changing branches and tags in their
-> > namespace. This will allow all users to see the changes of other
-> > users, without needing direct access to their trees (which are
-> > inaccessible behind firewalls). [1]
->
-> Right, so thats github and/or git.or.cz. Each user gets his/her own
-> repository, but thats a very minor change. Not a big deal.
+For SSH servers that can't handle "git upload-pack" the user can
+change it to --upload-pack=git-upload-pack and get back to the
+old behavior, until the server operator can upgrade.
 
-...most notably, all their DAGs in a single repository to save space is
-important. Thousands of copies of thousands of repositories adds up. Especially
-when most of the users who want to commit something probably commit <1-10k of
-unique stuff. Seems pretty easy to change though. git.or.cz and github will
-both be wanting this eventually.
+Your patch doesn't offer that work around on the client side.
+ 
+> Typofix: s/cond/uncond/;
+> 
+> > How would that help client that talk with git-daemon, unlike what I sent
+> > earlier?
 
-The other big one is ACLs in 'well named' repositories, so multiple people can
-safely be allowed to add changes to them, without giving them ability to blow
-away the repository. I can see this isn't the way all git users work, but at
-least a few users working this way now with shared push repositories. This is
-just making it 'safer'. Also seems pretty easy to do.
+Check my change in git_connect again:
 
-> > (b) fetch selected DAG, branch, and tag data of others to their tree, to
-see
-> > the changes of others (whether merged with head or not) while disconnected
-or
-> > remote.
->
-> This is also easy; you just establish remote tracking branches. I
-> have a single shell scripted command, git-get-all, which pulls from
-> all of the repositories I am interested in into various remote
-> tracking branches so while I am disconnected, I can see what other
-> folks have done on their trees.
+diff --git a/connect.c b/connect.c
+index e92af29..dbabd93 100644
+--- a/connect.c
++++ b/connect.c
+@@ -576,8 +576,8 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 		 * from extended components with a NUL byte.
+ 		 */
+ 		packet_write(fd[1],
+-			     "%s %s%chost=%s%c",
+-			     prog, path, 0,
++			     "git-%s %s%chost=%s%c",
++			     prog + 4, path, 0,
+ 			     target_host, 0);
+ 		free(target_host);
+ 		free(url);
 
-Yes, so I'd have the same thing, except instead of a remote repository, it
-would be a pattern of the branch namespace, such as /origin/users/jeske/*. It
-doesn't seem like the current remote tracking branch stuff can do this, but it
-would be easy to provide a client wrapper that would. Users who tracked the
-whole repository would just get everything, which is also fine. Maybe a client
-patch to make this better would be accepted.
+Its buggy if the user tried to do "git ls-remote --upload-pack=crp git://"
+but if this is the direction we want to go we can obviously work out a
+better method of forcing "git " to be "git-" when talking to git-daemon.
 
-> > (c) grant and enforce permission for certain users to submit _merges
-> > only_ onto certain sub-portions of the "well-named branches"
->
-> This is the wierd one. *** Why ***? There is nothing magical about
-> merges; all a merge is a commit that contains more than one parent.
-> You can put anything into a merge, and in theory the result of a merge
-> could have nothing to do with either parent. It would be a very
-> perverse merge, but it's certainly possible. So what's the point of
-> trying to enforce rules about "merges only"?
+> If we force --upload-pack workaround to _everybody_ we are already lost.
+> 
+> Also I think the previous one still lets you work it around by giving a
+> full path, like "/usr/local/bin/git-upload-pack", because "/usr" does not
+> match "git-" ;-)
 
-I'll explain why I wrote this, but I admit it's a strange roundabout way to get
-what I was hoping for. I hope there is a better way. One better way is to just
-change the client, but I was hoping not to have to do that. let me explain..
+Please tell me, where is git-upload-pack on repo.or.cz?
 
-Think about using CVS. user does "cvs up; hack hack hack; cvs commit (to
-server)". In git, this workflow is "git pull; hack; commit; hack; commit; git
-push (to server)". I want those interum "commits" to share the changes with the
-server. I want to change this to "git pull; hack; commit-and-share; hack;
-commit-and-share; git-push (to shared branch tag)"
+$ ssh repo.or.cz which git-upload-pack
+fatal: unrecognized command 'which git-upload-pack'
 
-It would be nice if "commit-and-share" could just use "git-push". However,
-because users are going to do this habitually every commit, probably through a
-script or merged command, I didn't want users who are accidentally working
-directly in the master to accidentally fast-forward origin/master. (everyone
-seems to discourage working on master anyhow). I was hoping to enforce this
-only with server policy, so any git client works. That leaves me with the
-challenge of figuring out which commits on origin/master are actually intended
-to move the pointer, and which are accidents because someone forgot to branch
-before hacking in their client. One simple way to do this is to require any
-origin/master commit to have two children, one on the master, one somewhere
-else. If you have a commit that is directly hanging off of master in this
-design, you are doing the wrong thing. The server would tell you to "git
-checkout master; git branch -b mymaster; git reset origin/master; git push".
-This would put their local changes onto their private branch where they should
-be. When they wanted to do the equivilant of "cvs commit;" or current "git
-push;", they would do a merge to the master, and push again. The server would
-allow it, because it sees the merge.
+I doubt I can pass it '/usr/local/bin/git-upload-pack' and get it
+to work too.  So I don't think this is a good work around.
 
-I recognize this is a bit strange. I'd love to have a better solution, but this
-is the solution I can think of which only involves server enforcement. Other
-solutions I thought of would all require client changes that would change
-everyone's behavior. The candidate I liked best was: disallowing changes to
-tracking branches, including master, probably by implicitly creating a branch
-on commit to a tracking branch... However, I don't get the impression this will
-fit into current git very well, because users would need to turn their current
-"git push", into a "git merge master;git push"
+Obviously pasky will fix repo.or.cz to accept both at some point
+in the near future, likely before 1.6.0 releases, because he's cool
+like that.  Not everyone is.
 
-I'm interested in other ideas to address this.
+Please don't make 1.6.0 unavailable to end-users because their
+server operator can't currently accept "git upload-pack" without
+giving them a workaround to force "git-upload-pack" over SSH.
 
-I know that all of what I wrote above seems strange if you don't buy into the
-design assumptions. That it's critical to share a single server-repository,
-that it's critical to have a shared 'well known' branch that only trusts
-clients to add new changes to, etc.. However, these are important.
+-- 
+Shawn.
