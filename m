@@ -1,63 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] pack.indexversion config option now defaults to 2
-Date: Tue, 24 Jun 2008 21:32:49 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0806242130450.22069@hp.linux-foundation.org>
-References: <alpine.LFD.1.10.0806250025130.2979@xanadu.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Keep some git-* programs in $(bindir)
+Date: Wed, 25 Jun 2008 00:37:41 -0400
+Message-ID: <20080625043741.GD11793@spearce.org>
+References: <20080624185403.GB29404@genesis.frugalware.org> <alpine.DEB.1.00.0806242007150.9925@racer> <7vskv2d0lp.fsf@gitster.siamese.dyndns.org> <20080624221049.GE29404@genesis.frugalware.org> <7vk5gea0ff.fsf@gitster.siamese.dyndns.org> <20080624233236.GI29404@genesis.frugalware.org> <7vk5ge8bm5.fsf@gitster.siamese.dyndns.org> <20080625120832.6117@nanako3.lavabit.com> <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806250015580.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jun 25 06:34:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 06:39:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBMhp-0000ms-7O
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:34:05 +0200
+	id 1KBMmr-0002G1-HB
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 06:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbYFYEdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 00:33:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752137AbYFYEdI
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:33:08 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56294 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752081AbYFYEdH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2008 00:33:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5P4Wn1I029824
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 24 Jun 2008 21:32:50 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5P4WnGI022722;
-	Tue, 24 Jun 2008 21:32:49 -0700
-In-Reply-To: <alpine.LFD.1.10.0806250025130.2979@xanadu.home>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-5.351 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753492AbYFYEiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 00:38:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbYFYEiA
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 00:38:00 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42485 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757168AbYFYEh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 00:37:59 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KBMlL-0006VW-CM; Wed, 25 Jun 2008 00:37:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B1ADD20FBAE; Wed, 25 Jun 2008 00:37:41 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0806250015580.19665@iabervon.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86223>
 
-
-
-On Wed, 25 Jun 2008, Nicolas Pitre wrote:
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Tue, 24 Jun 2008, Junio C Hamano wrote:
 > 
-> Git older than version 1.5.2 (or any other git version with this option
-> set to 1) may revert to version 1 of the pack index by manually deleting
-> all .idx files and recreating them using 'git index-pack'.  Communication
-> over the git native protocol is unaffected since the pack index is never
-> transferred.
+> > Otherwise remote executions directly over ssh won't find them as they used
+> > to.  --upload-pack and --receive-pack options _could_ be used on the
+> > client side, but things should keep working out-of-box for older clients.
+> > 
+> > Later versions of clients (fetch-pack and send-pack) probably could start
+> > asking for these programs with dashless form, but that is a different
+> > topic.
+> 
+> Should they use "git upload-pack" or should they look for their helper 
+> programs in a libexec dir? I don't think that either of these programs is 
+> useful to run independantly, but I don't know if finding a program that 
+> doesn't go in $PATH on a remote machine is going to be any fun.
 
-Rather than talk about when it does _not_ matter, wouldn't it be better to 
-talk about when it _can_ matter?
+IMHO they should in the future use "git upload-pack".
 
-Namely when using dumb protocols, either http or rsync, with the other end 
-being some ancient git thing (and it is worth mentioning version of what 
-counts as 'ancient' too, I can't remember, probably means that pretty much 
-nobody else can either).
+But this may not work with all servers, especially those that
+use $SSH_ORIGINAL_COMMAND to dispatch to the correct command,
+or abort if the user tries to request something dangerous.
+Gitosis comes to mind.
 
-		Linus
+I'm not sure we can get away with doing this in 1.6.0 as it is
+effectively a network protocol breakage.  We have thus far never
+caused a newer client to fail talking to an older server.  I'm
+not sure we should start doing that in 1.6.0.
+
+My vote is we keep the dashed form of these 3 commands in the
+$PATH during 1.6 and remove them in 1.7, but when we do it we
+must ensure there is a way to still request dashed form found
+through $PATH when passing --upload-pack as an argument.
+
+-- 
+Shawn.
