@@ -1,76 +1,75 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Git aliases executed from wrong dir
-Date: Wed, 25 Jun 2008 16:49:47 -0700
-Message-ID: <E9A68D2F-10AD-4779-AACB-6152A38D37C5@sb.org>
-References: <9777229F-27FD-4CB2-A5C7-6CA15733B8D2@sb.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:50:46 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Ask for "git program" even against git-daemon
+Date: Wed, 25 Jun 2008 19:57:24 -0400
+Message-ID: <20080625235724.GV11793@spearce.org>
+References: <20080625044409.GE11793@spearce.org> <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org> <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org> <7vy74u5bkk.fsf@gitster.siamese.dyndns.org> <20080625053848.GJ11793@spearce.org> <7v4p7hxhbd.fsf@gitster.siamese.dyndns.org> <7vvdzxw2eo.fsf_-_@gitster.siamese.dyndns.org> <7vr6alw28s.fsf_-_@gitster.siamese.dyndns.org> <20080625232727.GU11793@spearce.org> <7viqvxw0i7.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:58:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBelB-0005Fn-Ak
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 01:50:45 +0200
+	id 1KBeso-0007U7-58
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 01:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbYFYXtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 19:49:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753092AbYFYXtt
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 19:49:49 -0400
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:45134 "EHLO
-	randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751358AbYFYXts (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2008 19:49:48 -0400
-Received: from [10.100.18.129] (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 46880AF94F
-	for <git@vger.kernel.org>; Wed, 25 Jun 2008 16:49:48 -0700 (PDT)
-In-Reply-To: <9777229F-27FD-4CB2-A5C7-6CA15733B8D2@sb.org>
-X-Mailer: Apple Mail (2.924)
+	id S1755049AbYFYX5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 19:57:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755127AbYFYX5k
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 19:57:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53901 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751873AbYFYX5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 19:57:39 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KBerU-0005DR-Bj; Wed, 25 Jun 2008 19:57:16 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 25CAD20FBAE; Wed, 25 Jun 2008 19:57:25 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7viqvxw0i7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86377>
 
-To clarify, this only appears to affect shell aliases (i.e. ones that  
-start with !).
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> >
+> > But I wonder if this patch is even worth it at some later point
+> > in time.  Are we also going to change git-daemon to stop accepting
+> > "git-" form?  Is it a worthwhile change?
+> 
+> This was merely responding to...
+> 
+>     From: "Shawn O. Pearce" <spearce@spearce.org>
+>     Subject: Re: [PATCH] Keep some git-* programs in $(bindir)
+>     Date: Wed, 25 Jun 2008 00:37:41 -0400
+>     Message-ID: <20080625043741.GD11793@spearce.org>
+> 
+>     Daniel Barkalow <barkalow@iabervon.org> wrote:
+>     > ...
+>     > Should they use "git upload-pack" [...]
+> 
+>     IMHO they should in the future use "git upload-pack".
 
-   git config alias.foo 'ls-files'
-
-Works fine from a subdir
-
-   git config alias.foo '!git ls-files'
-
-Doesn't behave right from a subdir.
-
--Kevin Ballard
-
-On Jun 25, 2008, at 4:44 PM, Kevin Ballard wrote:
-
-> If I create an alias with `git config alias.foo '!pwd'` and then run  
-> it from a subdirectory of my repo, it prints out the root of my  
-> repo. This prevents the ability to create aliases that take  
-> filenames, as they simply won't work if you try and reference a file  
-> from a subdirectory.
->
-> -- 
-> Kevin Ballard
-> http://kevin.sb.org
-> kevin@sb.org
-> http://www.tildesoft.com
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Sorry I wasn't clear. I was talking about the SSH transport only.
+For git:// we could just always send git-upload-pack, like your
+transitional patch does.  Then we stay compatible with even very
+old git:// servers.
 
 -- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+Shawn.
