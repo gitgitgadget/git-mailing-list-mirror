@@ -1,88 +1,106 @@
-From: Raimund Bauer <ray007@gmx.net>
-Subject: Re: policy and mechanism for less-connected clients
-Date: Wed, 25 Jun 2008 22:12:54 +0200
-Message-ID: <1214424774.6570.21.camel@doriath>
-References: <20080625023352.GC20361@mit.edu>
-	 <willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
-	 <willow-jeske-01l6Cy0dFEDjCVqc>
-	 <alpine.LNX.1.00.0806251421520.19665@iabervon.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
+Date: Wed, 25 Jun 2008 16:22:29 -0400
+Message-ID: <32541b130806251322l478faa87gc9f2016254689022@mail.gmail.com>
+References: <20080624222105.GA24549@dervierte> <48620C1A.6000509@panasas.com>
+	 <alpine.DEB.1.00.0806251109380.9925@racer>
+	 <486220CE.3070103@viscovery.net>
+	 <alpine.DEB.1.00.0806251334060.9925@racer>
+	 <20080625135100.GF20361@mit.edu>
+	 <7v63rx2zwf.fsf@gitster.siamese.dyndns.org>
+	 <20080625195003.GB15077@mit.edu>
+	 <32541b130806251304u39c8ffdenc52904391aebd089@mail.gmail.com>
+	 <7vlk0tz33n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Jeske <jeske@willowmail.com>, Theodore Tso <tytso@mit.edu>,
-	git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Jun 25 22:14:00 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Theodore Tso" <tytso@mit.edu>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Boaz Harrosh" <bharrosh@panasas.com>,
+	"Steven Walter" <stevenrwalter@gmail.com>, git@vger.kernel.org,
+	jeske@google.com
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 22:23:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBbNM-0005Sd-0a
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 22:13:56 +0200
+	id 1KBbWs-0000a2-SD
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 22:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962AbYFYUM6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 16:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751762AbYFYUM6
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 16:12:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52457 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751867AbYFYUM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 16:12:57 -0400
-Received: (qmail invoked by alias); 25 Jun 2008 20:12:56 -0000
-Received: from chello084112102232.8.11.vie.surfer.at (EHLO [192.168.1.100]) [84.112.102.232]
-  by mail.gmx.net (mp054) with SMTP; 25 Jun 2008 22:12:56 +0200
-X-Authenticated: #20693823
-X-Provags-ID: V01U2FsdGVkX1/m2ix4R/Pmtn1mvDEwCl+EOe3GzZBkPapxSQRCAj
-	DSU0ijvppi68Hl
-In-Reply-To: <alpine.LNX.1.00.0806251421520.19665@iabervon.org>
-X-Mailer: Evolution 2.22.2 
-X-Y-GMX-Trusted: 0
+	id S1754263AbYFYUWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 16:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754299AbYFYUWc
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 16:22:32 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:25649 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591AbYFYUWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 16:22:31 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so3373400fkq.5
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 13:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=J2fB4VpGKHNH1jy4T8C8hAeeqtbghGdgOEtytUQrFpk=;
+        b=qQ1qo57f92hx1Hd0Es+V9ErEz3L5nVJhlxnX+qbJALVZNicVglW1Xfsnj5EHG1HOdp
+         0sQVn6kw1qhU07jdY76wh1pobJt/6elxrORMIdyCAGxXB7FobdwEKbhcib2eV4l7/JVr
+         eHBOcL2lXurmivRrfajbO72/SSG7L08yiI5cQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=RXj8P59dxK76o5LXmWZ5RRqKm4zWZKSDt04ACbB3Q9ouL9PLQhiXn0/M9esY/LyaOQ
+         qc/3qHbpXrYagg2RqyVRdrXo6S9qOgaKHiEVBOC94Mwz/DavW/6kpC27viEzxd0UnpIa
+         9Y8H5bVJhbdp/cAICyZ3foPW88Npq8cYjbZ7U=
+Received: by 10.82.146.10 with SMTP id t10mr666600bud.51.1214425349559;
+        Wed, 25 Jun 2008 13:22:29 -0700 (PDT)
+Received: by 10.82.175.10 with HTTP; Wed, 25 Jun 2008 13:22:29 -0700 (PDT)
+In-Reply-To: <7vlk0tz33n.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86339>
 
-On Wed, 2008-06-25 at 15:17 -0400, Daniel Barkalow wrote:
+On 6/25/08, Junio C Hamano <gitster@pobox.com> wrote:
+> "Avery Pennarun" <apenwarr@gmail.com> writes:
+>
+>  > How about making "git checkout" default to HEAD if no revision is
+>  > supplied?  There's precedent for this in, say, git-diff (and I think a
+>  > few others).
+>
+> Won't fly.  'git checkout -- "$@"' is to revert to the last staged
+>  version.
 
-> You have a fundamental misconception about git's data model. A commit=
-=20
-> doesn't have a particular branch it is on. There is only the DAG, whe=
-re=20
-> each node is a commit that is structured identically to all of the ot=
-her=20
-> commits. Branches pick out particular nodes in the DAG at particular=20
-> times.
+Ah, I didn't catch the difference between HEAD and index there.
 
-But a branch in repository also has a local history. The ref-log.
-And git could use that to produce a distributed branch-history.
+>   * You say "git checkout -- file" when you want to "check out the file
+>    from the index";
 
-<wishful thinking>
+The real question here is the --.  Is it strictly needed?  It's
+optional in things like git-diff, which just do their best to guess
+what you mean if you don't use the --.
 
-A developer prepares a series of commits in a local branch to push to
-the server.
-On the server the ref-log of a branch gets updated with a new entry for
-each push, and other developers pulling from the server get the servers
-ref-log as ref-log of their remote tracking branch and can see the
-push-points there.
+If reset and checkout made the -- optional, then you could do:
 
-Those push-points seem to be somehow more important than other commits =
--
-there was a reason for the first developer to push right this branch
-tip, right?
-Seems like valuable (optional) information to me.
+git reset filename         # undo an accidental "add"
+git checkout filename  # undo accidental modifications that haven't been added
 
-=EF=BB=BF</wishful thinking>
+...and save git reset --hard for people willing to take that risk.
+(The fact that git-gui includes git reset --hard as a really
+easy-to-click GUI command scared me the first time I saw it, too.)
 
-> It therefore doesn't make any sense to ask if a commit is directly ha=
-nging=20
-> off of master. If your local branch is up to date, and you commit, yo=
-ur=20
-> commit's parent is the current master. If you now check out master an=
-d=20
-> merge your local branch, master gets the same (non-merge) commit.
+I think simplifying the syntax might help to make the role of the
+index less mysterious in the whole "revert" operation.  It's not
+obvious to me at all whether a revert-file ought to get the one from
+HEAD or the one from the index.  But I can easily understand and
+explain checkout (copy index to working copy) and reset (undo an add).
 
-Check if the commit is in master's ref-log?
+Thanks,
 
-regards,
-Ray
+Avery
