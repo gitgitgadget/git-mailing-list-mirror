@@ -1,67 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
-Date: Wed, 25 Jun 2008 14:35:46 -0700
-Message-ID: <7vod5pxknh.fsf@gitster.siamese.dyndns.org>
-References: <48620C1A.6000509@panasas.com>
- <alpine.DEB.1.00.0806251109380.9925@racer> <486220CE.3070103@viscovery.net>
- <alpine.DEB.1.00.0806251334060.9925@racer> <20080625135100.GF20361@mit.edu>
- <7v63rx2zwf.fsf@gitster.siamese.dyndns.org> <20080625195003.GB15077@mit.edu>
- <32541b130806251304u39c8ffdenc52904391aebd089@mail.gmail.com>
- <20080625203822.GA7827@mit.edu> <7v8wwtz1c1.fsf@gitster.siamese.dyndns.org>
- <20080625210535.GA8610@mit.edu>
+From: "David Jeske" <jeske@willowmail.com>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 21:34:16 -0000
+Message-ID: <1784.50359167091$1214430241@news.gmane.org>
+References: <willow-jeske-01l6XqjOFEDjC=91jv>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6XqjPFEDjCY6P>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Boaz Harrosh <bharrosh@panasas.com>,
-	Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
-	jeske@google.com
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 25 23:37:00 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Theodore Tso" <tytso@mit.edu>, git@vger.kernel.org
+To: "David Jeske" <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 23:43:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBcfk-0008Gt-51
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 23:37:00 +0200
+	id 1KBcm3-0001sx-Vv
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 23:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbYFYVgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 17:36:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYFYVgD
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 17:36:03 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51611 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673AbYFYVgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 17:36:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 011628430;
-	Wed, 25 Jun 2008 17:35:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0B6B3842C; Wed, 25 Jun 2008 17:35:47 -0400 (EDT)
-In-Reply-To: <20080625210535.GA8610@mit.edu> (Theodore Tso's message of "Wed,
- 25 Jun 2008 17:05:35 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B2CD9BA0-42FE-11DD-A843-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752828AbYFYVm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 17:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYFYVm1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 17:42:27 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60627 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752770AbYFYVm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 17:42:27 -0400
+Received: (qmail 4325 invoked by uid 90); 25 Jun 2008 21:42:21 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Wed, 25 Jun 2008 21:34:16 -0000
+In-Reply-To: <willow-jeske-01l6XqjOFEDjC=91jv>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86356>
 
-Theodore Tso <tytso@mit.edu> writes:
+Some answers thanks to Jakub...
 
-> On Wed, Jun 25, 2008 at 01:50:06PM -0700, Junio C Hamano wrote:
->> I just replied to Avery about that.  -- is always the way to disambiguate
->> between refs (that come before --) and paths (that come after --), not
->> limited to "git checkout" but with other commands such as "git log", "git
->> diff", etc.
+-- David Jeske wrote:
+> : "ncvs up" ->
+> :
+> : git stash; git pull; git apply;
+> : git diff --stat <baseof:current branch> - un-pushed filenames
+> : git-show-branch <current branch> - un-pushed comments
 >
-> Stupid quesiton --- where is this documented?  I don't see this
-> documented either in the man page for git or git-checkout.
+> Question: when I say "baseof:current branch", I mean "the common-ancestor
+> between my local-repo tracking branch and the remote-repo branch it's
+> tracking". How do I find that out?
 
-You are asking a wrong person.  My git knowledge mostly comes from
-yearlong reading of the mailing list articles, and doing a bit myself also
-helps ;-).
+I'm told I need...
+
+git diff --stat `git-merge-base HEAD ORIG_HEAD`
+
+> : "ncvs commit" -> "git commit; git push <only this branch>;"
+>
+> Question: how do I only push the branch I'm on? "eg" says it does this, but
+> from a quick look at the code, it wasn't obvious to me how.
+
+and...
+
+git push HEAD
+
+
+which just leaves this one....
+
+Question: How do I create a branch on a remote repo when I'm on
+my local machine, without sshing to it?
