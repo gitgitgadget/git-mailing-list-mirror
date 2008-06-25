@@ -1,126 +1,126 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] Created git-basis and modified git-bundle to accept --stdin.
-Date: Wed, 25 Jun 2008 02:21:44 +0200
-Message-ID: <8fe92b430806241721j43f9443eu80e16dcd64b8d143@mail.gmail.com>
-References: <1214273297-8257-1-git-send-email-adambrewster@gmail.com>
-	 <m3iqvzl091.fsf@localhost.localdomain>
-	 <c376da900806240830p2a48aff0uaf6f22372fead5ef@mail.gmail.com>
-	 <200806242055.53776.jnareb@gmail.com>
-	 <c376da900806241655q85fc1d9r5bf67096a7930f94@mail.gmail.com>
+From: "David Jeske" <jeske@willowmail.com>
+Subject: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 00:36:03 -0000
+Message-ID: <12376.6951416203$1214355120@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Adam Brewster" <adam@adambrewster.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 02:22:42 2008
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 02:51:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBImX-0006Uw-V1
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 02:22:42 +0200
+	id 1KBJEm-00047N-SU
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 02:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857AbYFYAVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 20:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbYFYAVq
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 20:21:46 -0400
-Received: from rv-out-0506.google.com ([209.85.198.228]:6529 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752112AbYFYAVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 20:21:45 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so7903005rvb.1
-        for <git@vger.kernel.org>; Tue, 24 Jun 2008 17:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fAHBZbd7jzrAa5EfmlO+1ZavKiY8AGzb2DSlnleyBvQ=;
-        b=hRg/NMFMlUTzz8rKZOn4LoqGj7XlWCNSssUReqJ7rA5kWFbbdV/8n/WfpW+arLgxYx
-         YB4IBDjLxR9Iaux2sj5YebvCmsEPzbTUPeuBzt2/VmpWNwjB4K1DQYb/UT8M2yi72bO6
-         wzPGm7zGYv+4ybsZ8Ms1xxYkduK2EddawYFCU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=wTjz/eoMD9mWFoLS7OJm8OwMsKm0afAEUTWHu7M97dRXHmv277rofUa4VKmafH3JpS
-         e/qXjh1XVAxT4uFo4rCrBSRPVOo7bdpHkaKxTdYwiHVhaoo0w4YHRVKk0NZ/n34KD0Rw
-         OgrnebEuttwX/Kid3YUKNphI0rfj9pK5piC00=
-Received: by 10.141.20.7 with SMTP id x7mr15665888rvi.183.1214353304757;
-        Tue, 24 Jun 2008 17:21:44 -0700 (PDT)
-Received: by 10.141.45.15 with HTTP; Tue, 24 Jun 2008 17:21:44 -0700 (PDT)
-In-Reply-To: <c376da900806241655q85fc1d9r5bf67096a7930f94@mail.gmail.com>
-Content-Disposition: inline
+	id S1752541AbYFYAud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 20:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbYFYAud
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 20:50:33 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60311 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752424AbYFYAud (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 20:50:33 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 20:50:32 EDT
+Received: (qmail 23555 invoked by uid 90); 25 Jun 2008 00:43:44 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Wed, 25 Jun 2008 00:36:03 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86193>
 
-On 6/25/08, Adam Brewster <adam@adambrewster.com> wrote:
->>
->> I was thinking about
->>
->>  $ git bundle create my-bundle --all --not $(git ls-remote my-bundle | cut -f1)
->
-> Not a bad idea, but it seems like I might be close to the maximum
->  length for a command line (about 3200 objects) in a couple of cases
->  (git-svn creates lots of branches).
+I'd like to hear feedback and ideas about a different mechanism than is being
+used with git-pull or git-push.
 
-Ah, sorry, I have forgot about that. This is definitely, both in the
-case of revisions
-packed in bundle, and basis (cutoff) of bundle, case for some kind of --stdin.
+The purpose of this mechanism is to host a distributed source repository in a
+world where most most developer contributors are behind firewalls and do not
+have access to, or do not want to configure a unix server, ftp, or ssh to
+possibly contribute to a project. The model of allowing less-authoritative
+developers to make their changes available for more-authoritative users to pull
+is accepted as superior. However, no users are assumed to be authoritative over
+each-other, or an entire tree, and many users should have authority only to
+supply new deltas to their own branches. The ability to handle emailed patches
+is an asset, but is deemed too manual for this need.
 
->  This also means that I have to remember where I save the old bundles.
+I believe git's design is strong; that many of the mechanisms are already
+built; that new mechanisms to build this can be simple; and that with such
+mechanisms, many more developers would have access to git's decentralized
+development style. Further, it would address drawbacks in today's git relative
+to public central version control systems, making this system closer to a 'best
+of both worlds'.
 
-That's what second solution was to save only bases in some file.
+design assumptions:
 
->> Or even
->>
->>  $ git ls-remote my-bundle | cut -f1 > my-bases
->>  [...]
->>  $ git bundle create my-bundle --all --not $(cat my-bases)
->>
->
->
-> That's basically all the perl script does, except it will also create
->  an intersection of several bases (I don't want to remember the options
->  to comm).
+- all developers are firewalled and can not be "pulled" from directly.
+- there can be one or more well-connected servers which all users can access.
+- .. but which they cannot have ssh, ftp, or other dangerous access to
+- .. and whose protocol should be layered on http(s)
+- there is a shared namespace for branches, and tags
+- .. users are not-trusted to change the branches or tags of other users
+- .. only certain users are trusted to change the shared origin branches
+- .. also allow directory ACLS on shared branch commits
+- all their DAGs should be in a single repository for space efficiency
+- users generally want to follow well-named branches
+- .. will be free to follow any branch, and pull changes from any branch
 
-Does it prefix bases with ^, i.e. ^basis (negative revision)?
-I think it should, then there would be no need for strange --stdin
-semantic, or implementing --stdin in such way that --not--stdin
-works as expected.
+I would like to make it easy for users to:
 
->  Now that you mention it, a --basis option in setup_revisions would be
->  handy, but if I can't sell this, then I probably can't sell that
->  either.
+(a) safely "share" every DAG, branch, and tag data in their repository to a
+well-connected server, into an established namespace, while only changing
+branches and tags in their namespace. This will allow all users to see the
+changes of other users, without needing direct access to their trees (which are
+inaccessible behind firewalls). [1]
 
-I think that --stdin would be better idea, as it can be used to enumerate
-all refs to send, even if they are too many or they have too long names  to
-use arguments.
+(b) fetch selected DAG, branch, and tag data of others to their tree, to see
+the changes of others (whether merged with head or not) while disconnected or
+remote.
 
-[...]
->>> I'll prepare another patch with documentation and changing --stdin to
->>> --revs when I get a chance.
->>
->> I'm not sure if another name, like --bases=<filename / basename> wouldn't
->> be better.  Perhaps --stdin is a good name...
->
-> On second thought I'm going to defend my choice of --stdin now that I
->  remember why I chose it.
->
->  The docs for git-bundle specify the syntax is "git-bundle create
->  <file> <git-rev-list args>", where <git-rev-list args> is defined as
->  "A list of arguments, acceptable to git-rev-parse and git-rev-list,
->  that specify the specific objects and references to transport. ..."
->  Git-rev-list takes --stdin, so it seems reasonable to expect that
->  git-bundle will as well.
+(c) grant and enforce permission for certain users to submit _merges only_ onto
+certain sub-portions of the "well-named branches"
 
-Ahh... git-rev-list... well, I though about git-pack-objects and its different
---stin semantic (which might make no sense for git-bundle).
+There are many many benefits of git's mechanisms for this topology, and I
+expect you know them so I'll skip them. I see the following challenges from the
+current git implementation. Please tell me where I'm mistaken.. this is all
+AFAIK, some from tests, some from docs.
 
-[Sorry for bad wrapping, I'm sending it from GMail Web interface]
--- 
-Jakub Narebski
+(1) A server will need to support the required permissions and isolation
+enforcement. Namely, permissions for portions of the branch/tag namespace,
+assurance that DAGs are valid, and directory permissions.
+
+(2) a "share" client command will need to be implemented which transmits-up
+local changes to only my DAGs, branches, and tags without affecting the shared
+origin namespace pointers on the server. It will share all these changes
+regardless of what the user's "active" branch is. Local branches might be
+mapped to a branch on the server such as origin/users/(username)/(branchname).
+Branches which are supposed to stay local might be named "local/branch", and be
+ignored by the "share". [1]
+
+(3) a mechanism for controlling permissions (possibly based on checking out and
+editing a special subtree, ala cvs)
+
+(4) A mechanism to be sure "share" does not cause users who have permission to
+inadvertently move the origin/master branch pointer, even if they are working
+on their local master branch. For example, their changes would be named by
+origin/users/(username)/master. This is necessary because "share"  is the only
+way for the firewalled user to make their changes available to others. As a
+result, it is imperative that this be separate from a decision to promote their
+changes onto the shared origin branch. Currently git-push implies both of these
+together. git-share would be to git-push what git-fetch is git-pull. git-push
+would continue to be used to tell the system you wish to promote your change to
+origin/master. [2]
+
+
+[1] - "share" permissions can be considered two ways. In the strictly client
+server model, the server will only allow the client to change branch pointers
+that it owns in the namespace. However, if clients establish their own PGP-keys
+or other hash-identity keys with the server, then branch changes may be signed
+by clients, and propagate between clients in any direction and order, until
+they fully propagate. It's not clear if this additional complexity is worth it.
+
+[2] - it might be reasonable to build a mechanism to allow a local "intent to
+promote" preceed a git-share, in which case git-share could safetly
+fast-forward the head. However, it's unclear what benefit this has over
+git-fetch.
