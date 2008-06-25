@@ -1,62 +1,66 @@
-From: <Patrick.Higgins@cexp.com>
-Subject: RE: Windows symlinks
-Date: Wed, 25 Jun 2008 11:50:03 -0600
-Message-ID: <911589C97062424796D53B625CEC0025E46196@USCOBRMFA-SE-70.northamerica.cexp.com>
-References: <32541b130806241704y3befda90j78329af2f30d95d2@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Errors building git-1.5.6 from source on Mac OS X 10.4.11
+Date: Wed, 25 Jun 2008 19:53:11 +0200
+Message-ID: <20080625175311.GB4039@steel.home>
+References: <2eb980790806250620t73ae0ff7heedb65780a66ad00@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <jnareb@gmail.com>, <git@vger.kernel.org>
-To: <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 19:52:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ifejinelo Onyiah <nelo.onyiah@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 19:54:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBZAs-0001I4-W0
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:52:55 +0200
+	id 1KBZC7-0001fi-FX
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbYFYRv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 13:51:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbYFYRv7
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:51:59 -0400
-Received: from mx02.cexp.com ([170.131.136.83]:18238 "EHLO mx02.cexp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751250AbYFYRv6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2008 13:51:58 -0400
-Received: from mailgate2.cexp.com (uscobrmfa-se-07.cexp.com [170.131.144.37])
-	by mx02.cexp.com (Postfix) with ESMTP id D8F1F1E71BC
-	for <git@vger.kernel.org>; Wed, 25 Jun 2008 11:50:57 -0600 (MDT)
-Received: from USCOBRMFA-SE-70.northamerica.cexp.com ([10.128.26.36]) by USCOBRMFA-SE-52.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 25 Jun 2008 11:50:57 -0600
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <32541b130806241704y3befda90j78329af2f30d95d2@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Windows symlinks
-Thread-Index: AcjWVxcWUouvCH6vRj6yzJopXWPq7gAkrfEg
-X-OriginalArrivalTime: 25 Jun 2008 17:50:57.0529 (UTC) FILETIME=[05A38E90:01C8D6EC]
+	id S1752095AbYFYRxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 13:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbYFYRxP
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:53:15 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:34017 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281AbYFYRxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 13:53:14 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf4EbVSQ==
+Received: from tigra.home (Fad8f.f.strato-dslnet.de [195.4.173.143])
+	by post.webmailer.de (fruni mo57) (RZmta 16.45)
+	with ESMTP id w06404k5PHouZo ; Wed, 25 Jun 2008 19:53:12 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3CA23277BD;
+	Wed, 25 Jun 2008 19:53:12 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id EBAA456D2A; Wed, 25 Jun 2008 19:53:11 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <2eb980790806250620t73ae0ff7heedb65780a66ad00@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86311>
 
-> From: Avery Pennarun [mailto:apenwarr@gmail.com]
->
-> > Agreed. The first thing we started working on was getting 
-> symlinks out of our repositories.
-> > Unfortunately, we chose to use them because we are using 
-> broken development tools that
-> > don't support proper modularity. We found the best way to 
+Ifejinelo Onyiah, Wed, Jun 25, 2008 15:20:39 +0200:
 > 
-> Perhaps git-submodule would do what you're looking for.
+> They all run fine but when I issue the make test command, it dies at
+> the following:
+> 
+> % make test
+> 
+> ... TRUNCATED OUTPUT ...
+> 
+> *** t2004-checkout-cache-temp.sh ***
+> * FAIL 1: preparation
+> 
 
-We might be able to get by with them, but submodules appear to be significantly more complex than symlinks, and we sometimes symlink just a file or two if that's all we need. Splitting up submodules to that level of granularity would be hard to manage.
+If you don't mind helping the investigation a bit, could you please go
+into the t/ directory and run
 
-My understanding of the submodule workflow is:
+    bash -x t2004-checkout-cache-temp.sh -d -v -i
 
-Projects A, B, and C (we actually have about 17 of these) all share common code in project Common. Then, each of A, B, and C adds Common as a submodule. While working on project A, the need arises to modify Common, so the developer changes it there, commits, pushes the change to Common, then commits and pushes the change to A. To update B and C, they would have to change to each of those projects, run a git pull, then git submodule update, and compile and test.
-
-Is that correct? If so, it's a lot more work than letting a symlink propagate the change to all the other projects. Of course, since Windows doesn't have symlinks...
+and post the output here? This diagnostics are much more useful
+(well, essential, in this case). Are running the tests on HFS+, BTW?
