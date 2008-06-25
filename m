@@ -1,117 +1,60 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: git svn clone a non-standard repository
-Date: Wed, 25 Jun 2008 17:25:15 +0200
-Message-ID: <g3to0t$35n$1@ger.gmane.org>
-References: <48613DC5.2000506@freelock.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: "Rhodes, Kate" <masukomi@gmail.com>
+Subject: how to list all files that will be comitted
+Date: Wed, 25 Jun 2008 11:31:31 -0400
+Message-ID: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 17:27:22 2008
+X-From: git-owner@vger.kernel.org Wed Jun 25 17:32:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBWtz-0001IV-4z
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:27:19 +0200
+	id 1KBWz6-0003Qm-0s
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758997AbYFYPZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 11:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbYFYPZp
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:25:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:58162 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758956AbYFYPZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 11:25:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KBWs9-0002SQ-Tp
-	for git@vger.kernel.org; Wed, 25 Jun 2008 15:25:25 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 15:25:25 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 15:25:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <48613DC5.2000506@freelock.com>
+	id S1754421AbYFYPbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 11:31:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYFYPbj
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:31:39 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:3642 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750944AbYFYPbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 11:31:38 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so8246398rvb.1
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 08:31:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=aLSSz13VuqqrbgMZ/biNtZVNT1jNCU8gtxXbc7Rby+E=;
+        b=oKjlTOQ2O/UPfY1rNwJzQZ0lt+Yqaav9sHdxbBy6Avd0+/WHNtEqkS33DA1jYdlZjh
+         wfxihlPdMC2KsDtCjD+a8OKzaTvLUbb9aMuB2GxuQjF1NaOKuOOhHZzmLFmrqk6JwUZM
+         hWJRoiLi9vjMupJ9GPIjKaaHTFS7xTiJanQMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=iCHHVw2Uqxrs0mN8bpUpTQkWabKtDVb2DndpTY5dOoBPpeUBKXPjav6dHY2QlKW0WV
+         /nw8Nq2NXV9pKgg0lnKT3r/t8JztydhaBtTvpip8G/ofMr3jwhiOW68byHtgEnWBoCBD
+         g9fQAjC1HT13vHqP/+KiqCugQmmkGMDRYepLw=
+Received: by 10.140.171.18 with SMTP id t18mr16453281rve.249.1214407896175;
+        Wed, 25 Jun 2008 08:31:36 -0700 (PDT)
+Received: from ?172.30.0.244? ( [80.67.64.10])
+        by mx.google.com with ESMTPS id 74sm2115196wra.12.2008.06.25.08.31.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Jun 2008 08:31:35 -0700 (PDT)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86290>
 
-John Locke venit, vidit, dixit 24.06.2008 20:32:
-> Hi,
-> 
-> I'm trying to create a git repo of the Dojo Toolkit, which has a quite 
-> non-standard layout. There are 4 modules to the current Dojo project 
-> that I care about (and some others in the repo that I'm not interested 
-> in). The problem is, the trunk code is split out into 
-> <modulename>/trunk, while tags are in tags/<tagname>/<modulename> and 
-> branches are in branches/<branchname>/<modulename>. e.g:
-> 
-> moduleA/trunk <- contains trunk development of moduleA
-> moduleA/tags   <- empty
-> moduleA/branches <- empty
-> moduleB/trunk
-> moduleB/tags
-> moduleB/branches
-> moduleC/trunk
-> moduleC/tags
-> moduleC/branches
-> moduleD/trunk
-> moduleD/tags
-> moduleD/branches
+I know ls-files is the tool I need but I haven't been able to figure  
+out what combination of options will give me the files that have been  
+added to the index.
 
-All of those module?/{tags,branches} are empty, right? I assume branches 
-follow the pattern below for tags.
-
-> moduleE/trunk <- I don't care about this one...
-> trunk/   <- contains ancient version, not actual trunk
-> tags/1.0.0/moduleA <- contains tagged version of moduleA
-> tags/1.0.0/moduleB <- contains tagged version of moduleB
-> tags/1.0.0/moduleC <- contains tagged version of moduleC
-> tags/1.0.0/moduleD <- contains tagged version of moduleD
-> tags/1.0.1/moduleA
-> tags/1.0.1/moduleB
-> ...
-> 
-> So I'd like to set up a git repo that tracks this SVN repository, and 
-> allows me to see:
-> moduleA/
-> moduleB/
-> moduleC/
-> moduleD/
-> ... in my checkout, whether I'm on trunk or a tag.
-
-So you want one git repo, reflecting the modules simply by different 
-subdirs? I'm afraid that raises similar problems like those I asked 
-about in my (yet unanswered) post
-
-http://permalink.gmane.org/gmane.comp.version-control.git/85861
-
-> I've started with "git svn clone http://path/to/svn -T moduleA/trunk -t 
-> tags -b branches", and it's been sucking down branches for a couple days 
-
-This should give you all "modules" (as subsdirs) for all branches and 
-tags already. svn branch "branchname" becomes git remote branch 
-"branchname", svn tag "tagname" becomes git remote branch "tags/tagname".
-Note that your new git branch trunk will contain the contents of 
-"moduleA" only.
-
-> now, still not done. Can I set up moduleB/moduleC/moduleD as additional 
-> remotes in this same repository, and end up with the desired result? Was 
-> thinking I would add additional svn sections to .git/config, and then 
-> git svn fetch -- will this work, or is there a better way?
-
-If I understand your layout (and "desires") correctly then trunk will be 
-your only problem: you want to map "module?/trunk" to subdir "module?" 
-of branch "trunk". This is more or less the problem I'm facing. Regular 
-expressions (other than the ones for branches and tags) in git svn 
-config would solve this.
-
-Michael
+-Kate
