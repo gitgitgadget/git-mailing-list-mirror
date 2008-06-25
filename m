@@ -1,69 +1,52 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
-Date: Wed, 25 Jun 2008 10:22:08 -0700
-Message-ID: <7v63rx2zwf.fsf@gitster.siamese.dyndns.org>
-References: <20080624222105.GA24549@dervierte>
- <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com>
- <7vwskea2ik.fsf@gitster.siamese.dyndns.org> <48620C1A.6000509@panasas.com>
- <alpine.DEB.1.00.0806251109380.9925@racer> <486220CE.3070103@viscovery.net>
- <alpine.DEB.1.00.0806251334060.9925@racer> <20080625135100.GF20361@mit.edu>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 10:34:36 -0700
+Message-ID: <7vwskd1kr7.fsf@gitster.siamese.dyndns.org>
+References: <20080625133458.GE20361@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Boaz Harrosh <bharrosh@panasas.com>,
-	Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
-	jeske@google.com
+Cc: David Jeske <jeske@willowmail.com>, git@vger.kernel.org
 To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 25 19:23:25 2008
+X-From: git-owner@vger.kernel.org Wed Jun 25 19:36:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBYiL-0005QG-7E
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:23:25 +0200
+	id 1KBYuE-0002ak-3N
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 19:35:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbYFYRW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 13:22:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbYFYRW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:22:28 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50047 "EHLO
+	id S1751092AbYFYRep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 13:34:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbYFYRep
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 13:34:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53176 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095AbYFYRW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 13:22:28 -0400
+	with ESMTP id S1751072AbYFYRep (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 13:34:45 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7878F1AD4E;
-	Wed, 25 Jun 2008 13:22:25 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BB68F1AE8A;
+	Wed, 25 Jun 2008 13:34:42 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 741A61AD48; Wed, 25 Jun 2008 13:22:17 -0400 (EDT)
-In-Reply-To: <20080625135100.GF20361@mit.edu> (Theodore Tso's message of
- "Wed, 25 Jun 2008 09:51:00 -0400")
+ ESMTPSA id 2030A1AE86; Wed, 25 Jun 2008 13:34:38 -0400 (EDT)
+In-Reply-To: <20080625133458.GE20361@mit.edu> (Theodore Tso's message of
+ "Wed, 25 Jun 2008 09:34:58 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 47707C92-42DB-11DD-9BA1-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: FEE3A574-42DC-11DD-A0CB-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86306>
 
 Theodore Tso <tytso@mit.edu> writes:
 
-> I used to argue for this, but gave up, because no one seemed to agree
-> with me.  So now I just have the following in
-> /home/tytso/bin/git-revert-file and I am very happy:
->
-> #!/bin/sh
-> #
-> prefix=$(git rev-parse --show-prefix)
->
-> for i in $*
-> do
->         git show HEAD:$prefix$i > $i
-> done
+> And when you have shared push repositories, as long as users don't use
+> the '+', in practice they can only add new changes.  And if you don't
+> trust them not to use the '+' character in refspecs, are you really
+> going to trust them not to introduce either bone-headed mistakes into
+> the code?
 
-Isn't that this?
-
-        #!/bin/sh
-        exec git checkout HEAD -- "$@"
+Well, if you do not trust them, just set receive.denynonfastforwards
+and they won't be able to.
