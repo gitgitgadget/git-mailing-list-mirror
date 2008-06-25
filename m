@@ -1,132 +1,112 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 2/2] update-hook-example: optionally allow non-fast-forward
-Date: Wed, 25 Jun 2008 12:26:56 +0400
-Message-ID: <1214382416-6687-2-git-send-email-dpotapov@gmail.com>
-References: <1214382416-6687-1-git-send-email-dpotapov@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 10:28:14 2008
+From: "Klas Lindberg" <klas.lindberg@gmail.com>
+Subject: Re: git-fetch remote tag to local branch fails
+Date: Wed, 25 Jun 2008 10:50:06 +0200
+Message-ID: <33f4f4d70806250150q41f09764m4ae0cc1cd6e15e30@mail.gmail.com>
+References: <33f4f4d70806240517h5e3ae420h263dd0c2d6bae459@mail.gmail.com>
+	 <8aa486160806240638o221b01d2i2f46cc8f0f3760a3@mail.gmail.com>
+	 <33f4f4d70806240701o1c00cef2g688a188970964b0f@mail.gmail.com>
+	 <8aa486160806240727r6fc6de6doec8300700293a3a7@mail.gmail.com>
+	 <33f4f4d70806240831q14caacddp66645e1bcfb6d14b@mail.gmail.com>
+	 <8aa486160806240911p49d7bcb8q82a8d68c51206543@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 10:51:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBQMF-0004aS-QR
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 10:28:04 +0200
+	id 1KBQiZ-0004U1-R3
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 10:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990AbYFYI1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 04:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753208AbYFYI1J
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 04:27:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:35078 "EHLO
+	id S1753906AbYFYIuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 04:50:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbYFYIuK
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 04:50:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:64518 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752990AbYFYI1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 04:27:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1328698fgg.17
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 01:27:04 -0700 (PDT)
+	with ESMTP id S1753884AbYFYIuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 04:50:09 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1331636fgg.17
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=UICG6tm34cAp02mmV7mqrPQE7tKviHySLfPUrpheuEw=;
-        b=l0WkUP2dtl2VUR0o5XmmuOv8n4brd1AOXrQeqdrgp5uky83i9bN1XZwDES9IvqVWQK
-         9cURoSG9VtvAyA2hXsvS5oJv2r6CkmMevltF4Wic3aTwZE+mVhpi4caT4q+HaZ0HLpX3
-         qQOk3Vhc1xX+bYjC86SDvrq0XWuBG+uhwGGoc=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=vsbzy3nJFtnV3z9fQajWTS/Y/Lmb2t1sQY9Zu3KGI38=;
+        b=Y+n6nm04T4U0qL3OaL3fM6RlbZYn305oYHPkLUj/0CcuN5y4vLec5BsfKId9tF9s3q
+         WgvJy+aPQwnhwKqloJb4qrKihl90MBesGzkfovXthiSZvuO9KpjQt7SM8mW3qmG1uTXV
+         wyB2PjC1DThf7vjUT0jrVj36WFhpnv1qS0Jpg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tAqY2jqLLCFDyIaywPO7RW4rife0jbMBrzojj9pIZUHmbAV20dznn6+aVhx9mrCzXe
-         1/a7TqC9t5GSwbqVqCcgun7gPbnkk2pvpbanFCFv/JjK0b1ARXQAZ8j7D19mVotW3CVT
-         mNFjA9twkzQ3KJe+wy2pgQIHsmKHP6Kt4N1po=
-Received: by 10.86.82.6 with SMTP id f6mr10026051fgb.73.1214382424565;
-        Wed, 25 Jun 2008 01:27:04 -0700 (PDT)
-Received: from localhost ( [85.140.171.249])
-        by mx.google.com with ESMTPS id d6sm13665328fga.2.2008.06.25.01.27.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 01:27:03 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6
-In-Reply-To: <1214382416-6687-1-git-send-email-dpotapov@gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=pcAiDhyR9dvvQKiKxusj7zY42cgAm1It5mTfWPDH1XtVSRRoqPvuIPgKUuTDdRrBeN
+         3sdLNxSTxzPIx0H49YWyyP3vybs9XjDsp6x4ixJ/8oUJJfB/+bRbzKfq/HyAyPUErPjK
+         osUOr1PKf8BDXppYbWixG8x+hcXEk+dnEBM8s=
+Received: by 10.86.80.5 with SMTP id d5mr10085601fgb.11.1214383806806;
+        Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
+Received: by 10.86.68.16 with HTTP; Wed, 25 Jun 2008 01:50:06 -0700 (PDT)
+In-Reply-To: <8aa486160806240911p49d7bcb8q82a8d68c51206543@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86255>
 
-Sometimes it is desirable to have non-fast-forward branches in a
-shared repository. A typical example of that is the 'pu' branch.
-This patch extends the format of allowed-users and allow-groups
-files by using the '+' sign at the beginning as the mark that
-non-fast-forward pushes are permitted to the branch.
+>> I am looking into the possibility of writing a tool that handles
+>> configurations of trees.
+>
+> Maybe you should be using the plumbing commands.
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- Documentation/howto/update-hook-example.txt |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
+Yes. It looks like it.
 
-diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
-index a8d3bae..e1e2889 100644
---- a/Documentation/howto/update-hook-example.txt
-+++ b/Documentation/howto/update-hook-example.txt
-@@ -65,7 +65,7 @@ function info {
- 
- # Implement generic branch and tag policies.
- # - Tags should not be updated once created.
--# - Branches should only be fast-forwarded.
-+# - Branches should only be fast-forwarded unless their pattern starts with '+'
- case "$1" in
-   refs/tags/*)
-     git rev-parse --verify -q "$1" &&
-@@ -80,7 +80,7 @@ case "$1" in
-       mb=$(git-merge-base "$2" "$3")
-       case "$mb,$2" in
-         "$2,$mb") info "Update is fast-forward" ;;
--        *)        deny >/dev/null  "This is not a fast-forward update." ;;
-+        *)        noff=y; info "This is not a fast-forward update.";;
-       esac
-     fi
-     ;;
-@@ -98,8 +98,9 @@ info "The user is: '$username'"
- if [ -f "$allowed_users_file" ]; then
-   rc=$(cat $allowed_users_file | grep -v '^#' | grep -v '^$' |
-     while read head_pattern user_patterns; do
--      matchlen=$(expr "$1" : "$head_pattern")
--      if [ "$matchlen" == "${#1}" ]; then
-+      matchlen=$(expr "$1" : "${head_pattern#+}")
-+      allow_noff=$(expr substr "$head_pattern" 1 1)
-+      if [ "$matchlen" = "${#1}" -a \( -z "$noff" -o "$allow_noff" = '+' \) ]; then
-         info "Found matching head pattern: '$head_pattern'"
-         for user_pattern in $user_patterns; do
-           info "Checking user: '$username' against pattern: '$user_pattern'"
-@@ -127,8 +128,9 @@ info "'$groups'"
- if [ -f "$allowed_groups_file" ]; then
-   rc=$(cat $allowed_groups_file | grep -v '^#' | grep -v '^$' |
-     while read head_pattern group_patterns; do
--      matchlen=$(expr "$1" : "$head_pattern")
--      if [ "$matchlen" == "${#1}" ]; then
-+      matchlen=$(expr "$1" : "${head_pattern#+}")
-+      allow_noff=$(expr substr "$head_pattern" 1 1)
-+      if [ "$matchlen" = "${#1}" -a \( -z "$noff" -o "$allow_noff" = '+' \) ]; then
-         info "Found matching head pattern: '$head_pattern'"
-         for group_pattern in $group_patterns; do
-           for groupname in $groups; do
-@@ -159,6 +161,7 @@ allowed-groups, to describe which heads can be pushed into by
- whom.  The format of each file would look like this:
- 
-         refs/heads/master	junio
-+        +refs/heads/pu		junio
-         refs/heads/cogito$	pasky
-         refs/heads/bw/.*	linus
-         refs/heads/tmp/.*	.*
-@@ -166,7 +169,8 @@ whom.  The format of each file would look like this:
- 
- With this, Linus can push or create "bw/penguin" or "bw/zebra"
- or "bw/panda" branches, Pasky can do only "cogito", and JC can
--do master branch and make versioned tags.  And anybody can do
--tmp/blah branches.
-+do master and pu branches and make versioned tags.  And anybody
-+can do tmp/blah branches. The '+' sign at the pu record means
-+that JC can make non-fast-forward pushes on it.
- 
- ------------
--- 
-1.5.6
+>> For instance, I want the tool to be able to
+>> consume some version of a configuration and create, update or reset
+>> branches in other trees accordingly.
+>
+> What are the "other trees"?
+
+One tree tracks a configuration file that just contains specs for
+other trees. The idea is something like this: Given a refspec on the
+configuration tree, git-view the configuration file and use the
+contained refspecs to clone/pull/fetch/reset/whatever a bunch of other
+trees.
+
+Note that I'm not trying to solve the problem addressed by the
+submodules system in git; I need configuration management.
+
+> Maybe you want to keep your local branches up to date with respect
+> their tracking branch?
+
+Well yes, but that is only half of it. One of the scenarios I'm
+pondering is this: A user wants to take an old configuration based on
+tags and try some use case that breaks a newer configuration. After
+the checkout, the working trees will not be "on" any branches (what's
+the word for that?). Unfortunately, most people seem to think that
+everything in a VCS happens on a branch. A lot of people will
+incorrectly assume that they are still on their "working branch"
+because they didn't check out a different branch! They checked out a
+tag and, like myself, have muddy ideas about what that actually means
+in relation to branches. I'd prefer to not have to tell them to try
+git-lost-found on a 40 different trees to recover commits that they
+made on non-branches.
+
+I'll have to think more about this. It's not a functionality
+shortcoming, but a UI one.
+
+> I don't see the point updating a branch with a tag, but you can make a
+> tool to update a branch with a tag, see for example
+> contrib/examples/git-fetch.sh.
+
+Thank you. I'll have a look at that, but after our conversation I
+think I was mentally stuck in the land of some other VCS. I know
+perfectly well that a tag is not just a marker along some branch, but
+I realize now that I was thinking of it as if it was.
+
+/Klas
