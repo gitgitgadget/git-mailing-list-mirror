@@ -1,59 +1,91 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: how to list all files that will be comitted
-Date: Wed, 25 Jun 2008 18:19:13 +0200
-Message-ID: <g3tr63$fqn$1@ger.gmane.org>
-References: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 12/13] Build in merge
+Date: Wed, 25 Jun 2008 18:22:45 +0200
+Message-ID: <486270D5.5050204@free.fr>
+References: <cover.1214066798.git.vmiklos@frugalware.org> <0b7ea424b3d5ea18a5a8660c6aead51adcc6a40f.1214066799.git.vmiklos@frugalware.org> <57d8a308fae0012174ed4388baccf1bde8515f2f.1214066799.git.vmiklos@frugalware.org> <5cae08d3bf2852a8bbd8dc8cdf741cb4bdfa237e.1214066799.git.vmiklos@frugalware.org> <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 18:20:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 18:23:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBXjZ-0005zR-2Y
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:20:37 +0200
+	id 1KBXmY-000799-TD
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:23:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977AbYFYQTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 12:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbYFYQTb
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:19:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:45520 "EHLO ciao.gmane.org"
+	id S1759487AbYFYQWj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 12:22:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759383AbYFYQWi
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:22:38 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:43702 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752217AbYFYQTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 12:19:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KBXiO-0004lq-RH
-	for git@vger.kernel.org; Wed, 25 Jun 2008 16:19:24 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 16:19:24 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 16:19:24 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com>
+	id S1759265AbYFYQWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 12:22:37 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id D22D612B6C3;
+	Wed, 25 Jun 2008 18:22:35 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 392EC12B6BC;
+	Wed, 25 Jun 2008 18:22:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86300>
 
-Rhodes, Kate venit, vidit, dixit 25.06.2008 17:31:
-> I know ls-files is the tool I need but I haven't been able to figure  
-> out what combination of options will give me the files that have been  
-> added to the index.
+Hi,
 
-I don't think git ls-files does that, but
+I did not read your patches yet but I noticed the two following bugs wh=
+ile testing
+current pu.
 
-git diff --cached --name-only
+Miklos Vajna a =E9crit :
+>
+> +static void finish(const unsigned char *new_head, const char *msg)
+> +{
 
-will.
+[...]
 
-Cheers,
-Michael
+> +	if (new_head && show_diffstat) {
+> +		diff_setup(&opts);
+> +		opts.output_format |=3D
+> +			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+> +		opts.detect_rename =3D DIFF_DETECT_RENAME;
+
+You probably want to add DIFF_OPT_SET(&opts, COLOR_DIFF) to have a nice=
+ colored diff
+like the original script.
+
+> +		diff_tree_sha1(head, new_head, "", &opts);
+> +		diffcore_std(&opts);
+> +		diff_flush(&opts);
+> +	}
+
+[...]
+
+> +int cmd_merge(int argc, const char **argv, const char *prefix)
+> +{
+
+[...]
+
+> +	} else if (allow_fast_forward && !remoteheads->next &&
+> +		!hashcmp(common->item->object.sha1, head)) {
+> +		/* Again the most common case of merging one remote. */
+> +		struct strbuf msg;
+> +		struct object *o;
+> +
+> +		printf("Updating %s..%s\n",
+> +			find_unique_abbrev(head, DEFAULT_ABBREV),
+> +			find_unique_abbrev(remoteheads->item->object.sha1,
+> +			DEFAULT_ABBREV));
+
+Here, the second call to find_unique_abbrev() will overwrite the previo=
+us returned
+value because this function return a pointer to a static buffer.
+
+Olivier.
