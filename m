@@ -6,66 +6,110 @@ X-Spam-Status: No, score=2.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
 	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
-Received: (qmail 17841 invoked by uid 111); 25 Jun 2008 21:42:47 -0000
+Received: (qmail 18341 invoked by uid 111); 25 Jun 2008 23:06:00 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 17:42:40 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 19:05:52 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbYFYVm1 (ORCPT <rfc822;peff@peff.net>);
-	Wed, 25 Jun 2008 17:42:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYFYVm1
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 17:42:27 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60627 "HELO
+	id S1751328AbYFYXFt (ORCPT <rfc822;peff@peff.net>);
+	Wed, 25 Jun 2008 19:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbYFYXFt
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 19:05:49 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60650 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752770AbYFYVm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 17:42:27 -0400
-Received: (qmail 4325 invoked by uid 90); 25 Jun 2008 21:42:21 -0000
+	with SMTP id S1750923AbYFYXFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 19:05:48 -0400
+Received: (qmail 5775 invoked by uid 90); 25 Jun 2008 23:05:41 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From:	"David Jeske" <jeske@willowmail.com>
-To:	"David Jeske" <jeske@willowmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
 Cc:	"Theodore Tso" <tytso@mit.edu>, git@vger.kernel.org
 Subject: Re: policy and mechanism for less-connected clients
 X-Mailer: Willow v0.02
-Date:	Wed, 25 Jun 2008 21:34:16 -0000
-Message-ID: <willow-jeske-01l6ZD0vFEDjCXou>
-Received: from 67.188.42.104 at Wed, 25 Jun 2008 21:34:16 -0000
-References: <willow-jeske-01l6XqjOFEDjC=91jv>
-	<willow-jeske-01l6@3PlFEDjCVAh-01l6XqjPFEDjCY6P>
-In-Reply-To: <willow-jeske-01l6XqjOFEDjC=91jv>
+Date:	Wed, 25 Jun 2008 23:03:02 -0000
+Message-ID: <willow-jeske-01l6aDyTFEDjCfcn>
+Received: from 67.188.42.104 at Wed, 25 Jun 2008 23:03:02 -0000
+References: <7viqvxxix0.fsf@gitster.siamese.dyndns.org>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6[3InFEDjC[dy>
+In-Reply-To: <7viqvxxix0.fsf@gitster.siamese.dyndns.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Some answers thanks to Jakub...
-
--- David Jeske wrote:
-> : "ncvs up" ->
-> :
-> : git stash; git pull; git apply;
-> : git diff --stat <baseof:current branch> - un-pushed filenames
-> : git-show-branch <current branch> - un-pushed comments
+-- Junio C Hamano wrote:
+> >> : "ncvs up" ->
+> >> :
+> >> : git stash; git pull; git apply;
 >
-> Question: when I say "baseof:current branch", I mean "the common-ancestor
-> between my local-repo tracking branch and the remote-repo branch it's
-> tracking". How do I find that out?
+> First of all, if you are in CVS mindset, you may not want to necessarily
+> do "git pull", but "git fetch" followed by "git rebase".
 
-I'm told I need...
+I don't want to replicate CVS behavior, just the workflow. I've considered
+rebase, but the diagrams on the documentation page look scarry. I want to keep
+the dag-nodes made by their local git commit;. At those commits the code worked
+and tested in their tree. rebase looks like it tosses those dag-nodes when it
+rewrites the diffs -- who knows if the tests actually pass for every point
+along that new rebase. That's no good.
 
-git diff --stat `git-merge-base HEAD ORIG_HEAD`
+I can see the use of rebase when your job is to "author an understandable
+public source tree", but I'm working on SCM, where the goal is to be able to
+reproduce the state of past successes reliably.
 
-> : "ncvs commit" -> "git commit; git push <only this branch>;"
+I want someone to be able to checkout what was actually in the user's local
+client as they were working. Which means I think I want "fetch and merge" which
+is pull. Did I get that wrong?
+
+> I suspect the last one in the above sequence of yours is "git stash pop".
+> Definitely not "git apply" without any argument which is a no-op.
+
+I meant to type "git stash apply", but I think you're right, pop is what I
+wanted.
+
+> >> : git diff --stat <baseof:current branch> - un-pushed filenames
 >
-> Question: how do I only push the branch I'm on? "eg" says it does this, but
-> from a quick look at the code, it wasn't obvious to me how.
+> "git diff [--options] origin..." (three-dots) is often used. This is a
+> shorthand for:
+>
+> git diff [--options] $(git merge-base origin HEAD) HEAD
+>
+> that is, "show me what I did since I forked from origin".
 
-and...
+I'm still a little foggy on the remote referenecs, but remember I have two
+remotes (shared) and (personal). Something in the docs led me to believe
+'origin' was repository wide, not private to each branch. Is "origin" a magic
+name for the current branch's target?
 
+> >> : git-show-branch <current branch> - un-pushed comments
+>
+> This would be useful if you are using "fetch + rebase", but in any case
+>
+> git log --graph --pretty=oneline origin..
+
+Ahh, yes, Thanks!. How does this interact with the "pull" I just did?
+
+What I want is "show me the commit messages (and sha1 keys) for changes in my
+local branch that are not yet submitted to it's remote tracking location"
+
+Will that command above include the commit lines that came down in my pull
+(fetch/merge)? If so, how do I not include them?
+
+> > Question: How do I create a branch on a remote repo when I'm on
+> > my local machine, without sshing to it?
+>
+> I hope that the question is not "How do I do anything on a remote without
+> having any network connection to it" as its answer cannot be anything but
+> "telepathy".
+
+Funny. I'm asking how I can run a command locally, that during the next "git
+push HEAD" will cause a branch to be created on a remote repository, without
+assuming that is the same repository that my current branch is pointing to.
+Will this do the trick?
+
+git branch --track mynewbranch git://myserver/path/foo.git
+# hack hack
+git commit
 git push HEAD
 
-
-which just leaves this one....
-
-Question: How do I create a branch on a remote repo when I'm on
-my local machine, without sshing to it?
+- David
