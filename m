@@ -1,40 +1,34 @@
 From: Theodore Tso <tytso@mit.edu>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Tue, 24 Jun 2008 22:26:10 -0400
-Message-ID: <20080625022610.GB20361@mit.edu>
-References: <m31w2mlki4.fsf@localhost.localdomain> <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil> <20080624225442.GA20361@mit.edu> <7vod5qa0tu.fsf@gitster.siamese.dyndns.org>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Tue, 24 Jun 2008 22:33:53 -0400
+Message-ID: <20080625023352.GC20361@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	David Jeske <jeske@google.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 04:27:48 2008
+Cc: git@vger.kernel.org
+To: David Jeske <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 04:34:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBKjW-00086c-4l
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 04:27:42 +0200
+	id 1KBKqW-0001Mv-Uk
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 04:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754208AbYFYC0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2008 22:26:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754530AbYFYC0q
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 22:26:46 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:60013 "EHLO
+	id S1752726AbYFYCeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2008 22:34:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbYFYCeB
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 22:34:01 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:54609 "EHLO
 	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752355AbYFYC0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 22:26:45 -0400
+	with ESMTP id S1752286AbYFYCeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2008 22:34:00 -0400
 Received: from root (helo=closure.thunk.org)
 	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KBKi6-00009l-CZ; Tue, 24 Jun 2008 22:26:14 -0400
+	id 1KBKpW-0000AV-Qf; Tue, 24 Jun 2008 22:33:55 -0400
 Received: from tytso by closure.thunk.org with local (Exim 4.69)
 	(envelope-from <tytso@mit.edu>)
-	id 1KBKi2-0005nS-Ku; Tue, 24 Jun 2008 22:26:10 -0400
+	id 1KBKpV-0005nt-1d; Tue, 24 Jun 2008 22:33:53 -0400
 Content-Disposition: inline
-In-Reply-To: <7vod5qa0tu.fsf@gitster.siamese.dyndns.org>
-1;1613;0cFrom: Theodore Tso <tytso@mit.edu>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 X-SA-Exim-Connect-IP: <locally generated>
 X-SA-Exim-Mail-From: tytso@mit.edu
@@ -43,56 +37,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86197>
 
-On Tue, Jun 24, 2008 at 04:07:57PM -0700, Junio C Hamano wrote:
-> > Instead, I've just learned to be careful and my use of git reset
-> > --hard is mainly for historical reasons.
+On Wed, Jun 25, 2008 at 12:36:03AM -0000, David Jeske wrote:
+> The purpose of this mechanism is to host a distributed source
+> repository in a world where most most developer contributors are
+> behind firewalls and do not have access to, or do not want to
+> configure a unix server, ftp, or ssh to possibly contribute to a
+> project. 
+
+> design assumptions:
 > 
-> This makes it sound as if avoiding "reset --hard" is a good thing, but I
-> do not understand why.
+> - all developers are firewalled and can not be "pulled" from directly.
+> - there can be one or more well-connected servers which all users can access.
+> - .. but which they cannot have ssh, ftp, or other dangerous access to
+> - .. and whose protocol should be layered on http(s)
+> - there is a shared namespace for branches, and tags
+> - .. users are not-trusted to change the branches or tags of other users
 
-Well, it was Brandon Casey who was asserting that git reset --hard was
-evil, which I generally don't agree with.  I do use workflows that use
-it a fair amount, usually because its more convenient to type "git
-checkout <foo>; git reset --hard <baz>" than something involving "git
-update-ref refs/heads/<foo> <baz>".  The former has more characters
-than the latter, and involves more disk I/O since it mutates the
-working directory; but it's something about needing to type
-"refs/heads/" such that I generally tend to type "git checkout....
-git reset".  I can't explain why; maybe it's just psychological.
+Up to here, you can do this all with repo.or.cz, and/or github; you
+just give each developer their own repository, which they are allowed
+to push to, and no once else.  Within their own repository they can
+make changes to their branches, so that all works just fine.
 
-The reason why I've been thinking that I should change my shell script
-from:
+> (a) safely "share" every DAG, branch, and tag data in their
+> repository to a well-connected server, into an established
+> namespace, while only changing branches and tags in their
+> namespace. This will allow all users to see the changes of other
+> users, without needing direct access to their trees (which are
+> inaccessible behind firewalls). [1]
 
-	git checkout integration
-	git reset --hard <foo>
+Right, so thats github and/or git.or.cz.  Each user gets his/her own
+> repository, but thats a very minor change.  Not a big deal.
 
-to:
+> (b) fetch selected DAG, branch, and tag data of others to their tree, to see
+> the changes of others (whether merged with head or not) while disconnected or
+> remote.
 
-	git update-ref ref/heads/integration HEAD
-	git checkout integration
+This is also easy; you just establish remote tracking branches.  I
+have a single shell scripted command, git-get-all, which pulls from
+all of the repositories I am interested in into various remote
+tracking branches so while I am disconnected, I can see what other
+folks have done on their trees.
 
-Is actually because the first tends to touch more files in the working
-directory than the second (because if the integration branch is a week
-or two old, the git checkout unwinds the global state by two weeks,
-and then the git reset --hard has to bring the state back up to
-recentcy; the second generally involves a smaller set of files
-changing).  That's a very minor point, granted.
+> (c) grant and enforce permission for certain users to submit _merges
+> only_ onto certain sub-portions of the "well-named branches"
 
-> The reason you have the diff-index check in the second sequence is because
-> update-ref does not have the "local changes" check either.  You could have
-> used the same diff-index check in front of "reset --hard".
+This is the wierd one.  *** Why ***?  There is nothing magical about
+merges; all a merge is a commit that contains more than one parent.
+You can put anything into a merge, and in theory the result of a merge
+could have nothing to do with either parent.  It would be a very
+perverse merge, but it's certainly possible.  So what's the point of
+trying to enforce rules about "merges only"?
 
-Definitely true.  The reason why I don't have this check is because
-I'm generally careful and I run a "git stat" to make sure there are no
-local changes in the tree before I run the script.
-
-> Moreover, in your original sequence above, doesn't "git checkout
-> integration" list your local changes when you have any, and wouldn't that
-> be a clue enough that the next "reset --hard origin" would discard them?
-
-... because it's in a shell script; being fundamentally lazy, instead
-of typing that sequence over and over again, I've scripted it.  :-)
-
-	     	  	 	     	   - Ted
+					- Ted
