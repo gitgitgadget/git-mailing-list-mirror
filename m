@@ -1,103 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Where does gitweb take the owner name from?
-Date: Wed, 25 Jun 2008 13:12:31 -0700 (PDT)
-Message-ID: <m3y74ti89i.fsf@localhost.localdomain>
-References: <ce513bcc0806250741q3821e925uf8b6439b12062ba2@mail.gmail.com>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 22:12:54 +0200
+Message-ID: <1214424774.6570.21.camel@doriath>
+References: <20080625023352.GC20361@mit.edu>
+	 <willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
+	 <willow-jeske-01l6Cy0dFEDjCVqc>
+	 <alpine.LNX.1.00.0806251421520.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Erez Zilber" <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 22:13:34 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Jeske <jeske@willowmail.com>, Theodore Tso <tytso@mit.edu>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 22:14:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBbMx-0005Jp-RU
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 22:13:32 +0200
+	id 1KBbNM-0005Sd-0a
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 22:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751611AbYFYUMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 16:12:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYFYUMf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 16:12:35 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:7613 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538AbYFYUMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 16:12:34 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so171218nfc.21
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 13:12:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=ilUmlij8tEtKjS2dngMjWJ4p9Ja+zdVJXqh2X2Vt3bs=;
-        b=WetIh5ka0BkK7EbYUklkAS8OB+g5UymOueKJcInbjrxMa06yahtF0/B26hfeOAXoJ8
-         mrHTEQ7ji4B0/k+EH6ovZcPZHwXnL/n5mIB2BSkanqxvUp7AtEjIGc8lnuOzNOnJ3F+u
-         QIS2+5jemNgJnY5lhePkkKVCIrOJWWAScORo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=cNUifH5naltuaYsdsFTwkwG8gI2VanqxTGJGS0WXtnN7N2WwWGNDAcu/w1dLAm9Uf7
-         zCsS8RX0izMuAu4fQ28hd79GTwWdu7z1MMDAvtSrpeoTeYyYAAQPPCpA1WlbYMS94lyy
-         fdSh/nnTvU5TnbNlKwHNFGmW1Pq5QMsABrRCw=
-Received: by 10.210.16.10 with SMTP id 10mr2009702ebp.118.1214424753210;
-        Wed, 25 Jun 2008 13:12:33 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.220.164])
-        by mx.google.com with ESMTPS id f6sm11493928nfh.37.2008.06.25.13.12.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 13:12:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5PKCRZt017502;
-	Wed, 25 Jun 2008 22:12:27 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5PKCQ2g017499;
-	Wed, 25 Jun 2008 22:12:26 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <ce513bcc0806250741q3821e925uf8b6439b12062ba2@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752962AbYFYUM6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 16:12:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751762AbYFYUM6
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 16:12:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52457 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751867AbYFYUM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 16:12:57 -0400
+Received: (qmail invoked by alias); 25 Jun 2008 20:12:56 -0000
+Received: from chello084112102232.8.11.vie.surfer.at (EHLO [192.168.1.100]) [84.112.102.232]
+  by mail.gmx.net (mp054) with SMTP; 25 Jun 2008 22:12:56 +0200
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX1/m2ix4R/Pmtn1mvDEwCl+EOe3GzZBkPapxSQRCAj
+	DSU0ijvppi68Hl
+In-Reply-To: <alpine.LNX.1.00.0806251421520.19665@iabervon.org>
+X-Mailer: Evolution 2.22.2 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86338>
 
-"Erez Zilber" <erezzi.list@gmail.com> writes:
+On Wed, 2008-06-25 at 15:17 -0400, Daniel Barkalow wrote:
 
-> On the main page of gitweb (the one that lists all projects), there's
-> an "Owner" column. On my gitweb, it is empty for all projects. Where
-> is this information taken from?
-> 
-> Here is how it looks on the server when I run 'ls -l':
-> 
-> drwxr-xr-x 7 erez.zilber linux 4096 Jun 25 17:36 my_test.git
+> You have a fundamental misconception about git's data model. A commit=
+=20
+> doesn't have a particular branch it is on. There is only the DAG, whe=
+re=20
+> each node is a commit that is structured identically to all of the ot=
+her=20
+> commits. Branches pick out particular nodes in the DAG at particular=20
+> times.
 
-Unfortunately it is not stated explicitely neither in gitweb/README,
-not gitweb/INSTALL.
+But a branch in repository also has a local history. The ref-log.
+And git could use that to produce a distributed branch-history.
 
-Nevertheless when you grep for 'owner' in gitweb/README you can find
-the following fragments:
+<wishful thinking>
 
- * $projects_list
-   Source of projects list, either directory to scan, or text file
-   with list of repositories (in the "<URI-encoded repository path> SPC
-   <URI-encoded repository owner>" line format, [...]).
-   Set to $GITWEB_LIST during installation.  If empty, $projectroot is
-   used to scan for repositories.
+A developer prepares a series of commits in a local branch to push to
+the server.
+On the server the ref-log of a branch gets updated with a new entry for
+each push, and other developers pulling from the server get the servers
+ref-log as ref-log of their remote tracking branch and can see the
+push-points there.
 
- [...]
+Those push-points seem to be somehow more important than other commits =
+-
+there was a reason for the first developer to push right this branch
+tip, right?
+Seems like valuable (optional) information to me.
 
- * gitweb.owner
-   You can use the gitweb.owner repository configuration variable to set
-   repository's owner. It is displayed in the project list and summary
-   page. If it's not set, filesystem directory's owner is used
-   (via GECOS field / real name field from getpwiud(3)).
+=EF=BB=BF</wishful thinking>
 
-(This might be present only in 'pu' branch, as it was part of my
-patch adding support for optional 'description' field in $projects_list
-file).
+> It therefore doesn't make any sense to ask if a commit is directly ha=
+nging=20
+> off of master. If your local branch is up to date, and you commit, yo=
+ur=20
+> commit's parent is the current master. If you now check out master an=
+d=20
+> merge your local branch, master gets the same (non-merge) commit.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Check if the commit is in master's ref-log?
+
+regards,
+Ray
