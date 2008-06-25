@@ -1,83 +1,67 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH/RFC] git-svn: sanitize_remote_name should accept underscores.
-Date: Wed, 25 Jun 2008 11:01:11 -0400
-Message-ID: <32541b130806250801p1508d15axc610f335b8d235ef@mail.gmail.com>
-References: <1214322898-9272-1-git-send-email-apenwarr@gmail.com>
-	 <20080625064435.GL21299@hand.yhbt.net>
-	 <20080625065556.GM21299@hand.yhbt.net>
-	 <7vfxr23s6m.fsf@gitster.siamese.dyndns.org>
-	 <20080625074548.GA8984@hand.yhbt.net>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: [Bug] for-each-ref: %(object) and %(type) unimplemented
+Date: Wed, 25 Jun 2008 17:01:01 +0200
+Message-ID: <48625DAD.5040404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 25 17:02:12 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 17:02:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBWVc-0007iv-Q0
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:02:09 +0200
+	id 1KBWVc-0007iv-5a
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbYFYPBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 11:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbYFYPBP
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:01:15 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:6132 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034AbYFYPBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 11:01:13 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so3261979fkq.5
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 08:01:11 -0700 (PDT)
+	id S1751995AbYFYPBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 11:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbYFYPBK
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:01:10 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:56930 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbYFYPBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 11:01:09 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1141337ywe.1
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 08:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GmTRlXHrhUkUQvZ92QsW3J9l3j/Bapdmt3OQEBg00Xs=;
-        b=ichsUIrxJl2N4/wFmlviib6gMkCkD+W8pHD1muBQcZiP4metZpSLrjWM3xA7dD1fhz
-         XBkOhTwf7Wy19coolUgxXcIyEa9pK0XPIxUV3/v3zQISUdd7W+dh5P2dJcM+6hT+YSL8
-         /XnegRkCbzjmeP+caG9BJIRYQBquMqPOtkOcE=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:subject:content-type:content-transfer-encoding:from;
+        bh=EQcS7T9k30zfvZ6vpCKTBo0Nobwr+zna8MccqoVqkq0=;
+        b=c6MEx34dBqxfWhWb1JIuY2+OM9WhBwvZ+9GB4AcAM9ojybpOjx1+Oa+Mcgthw3COYG
+         winXNqGKRlIwwS4iUmH3tpjimc8qFio4GfVco0RXFOPTpMksJdgx4y3D0ae119Ph0O6R
+         DfRypwUn+PA8rQNAPOJEafTQWuZmJQwcb3z8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=CnIC4JGUGQPAqTUQqpXf2FL9mlIHLrbW/5udBVgQif51QgHmJzo8X++0eEKGpUv3SK
-         wmr3PYmQCGl5OAFCdGsX2LC+NVTLd+VN6+NAOR3FrnI5MBO2r/tL4+/1PHapzBbeW6wL
-         LdJ2gGVd2WgPgx9HeCrJNyONOfSO3IdbUnXOU=
-Received: by 10.82.113.6 with SMTP id l6mr648728buc.88.1214406071654;
-        Wed, 25 Jun 2008 08:01:11 -0700 (PDT)
-Received: by 10.82.175.10 with HTTP; Wed, 25 Jun 2008 08:01:11 -0700 (PDT)
-In-Reply-To: <20080625074548.GA8984@hand.yhbt.net>
-Content-Disposition: inline
+        h=message-id:date:user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding:from;
+        b=TpolG2N0PNDL3ZJJ86SBpJiYxe0/chwUpM4OWZABSt08sEHy8juZBli4dnJHM7PAKO
+         CLcNt+P0oicDg8rwJ3Z9DgFijlRPu3s43mOkJRwH21X33rsoBWO5F+0Xa7M5K48jGHc8
+         9YoKING0PChqoHcNpCU5LaLRFKCBCCxeDPToo=
+Received: by 10.125.107.3 with SMTP id j3mr1810570mkm.90.1214406062883;
+        Wed, 25 Jun 2008 08:01:02 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.201.65])
+        by mx.google.com with ESMTPS id d13sm5235123fka.3.2008.06.25.08.01.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 25 Jun 2008 08:01:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86286>
 
-On 6/25/08, Eric Wong <normalperson@yhbt.net> wrote:
-> No, nothing to do with DNS hostnames in the remote names.  I think I
->  just looked at remotes2config.sh one day and used it as a reference :x
->
->  It's late and I've had a rough few days, but shouldn't
->  sanitize_remote_name() just escape . and "?  Right now it's converting
->  stuff to . which has me very confused...
+Try the following on a repository with tag objects in it:
 
-I think there might be higher-level problems here: what is it
-sanitizing anyway, and why?  If it found my D2007_Win32 svn-remote
-entry in the config (as it seems to have done when trying to locate
-its parent branch during fetch), and *then* it sanitized it to
-D2007.Win32, that doesn't even make any sense.  Clearly something
-straight from the config file doesn't need to be sanitized.
+git for-each-ref --format='%(object)'
+git for-each-ref --format='%(type)'
 
-However, I don't understand the code well enough to be able to say a)
-whether that's exactly what happened, or b) other places where
-sanitize_remote_name() *is* important, or c) whether
-sanitize_remote_name() is even correct.
+Each command prints only newlines.  The %(type) and %(object) options 
+are not rejected with an error message (like "%(doesnotexist)"), but 
+they don't seem to be implemented.  "%(tag)" works though.
 
-Have fun,
+Anyone care to implement the missing options?  Or should they rather be 
+removed from the documentation?
 
-Avery
+-- Lea
