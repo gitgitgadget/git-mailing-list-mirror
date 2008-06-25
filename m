@@ -2,128 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
 	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
-Received: (qmail 9042 invoked by uid 111); 25 Jun 2008 00:51:07 -0000
+Received: (qmail 10413 invoked by uid 111); 25 Jun 2008 05:32:27 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 20:51:00 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 01:32:20 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541AbYFYAud (ORCPT <rfc822;peff@peff.net>);
-	Tue, 24 Jun 2008 20:50:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbYFYAud
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 20:50:33 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60311 "HELO
+	id S1754093AbYFYFcQ (ORCPT <rfc822;peff@peff.net>);
+	Wed, 25 Jun 2008 01:32:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbYFYFcQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 01:32:16 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60377 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752424AbYFYAud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 20:50:33 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2008 20:50:32 EDT
-Received: (qmail 23555 invoked by uid 90); 25 Jun 2008 00:43:44 -0000
+	with SMTP id S1753256AbYFYFcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 01:32:15 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jun 2008 01:32:15 EDT
+Received: (qmail 26322 invoked by uid 90); 25 Jun 2008 05:25:24 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From:	"David Jeske" <jeske@willowmail.com>
-To:	<git@vger.kernel.org>
-Subject: policy and mechanism for less-connected clients
+To:	Theodore Tso <tytso@mit.edu>
+Cc:	git@vger.kernel.org
+Subject: Re: policy and mechanism for less-connected clients
 X-Mailer: Willow v0.02
-Date:	Wed, 25 Jun 2008 00:36:03 -0000
-Message-ID: <willow-jeske-01l67VSgFEDjChUQ>
-Received: from 67.188.42.104 at Wed, 25 Jun 2008 00:36:03 -0000
+Date:	Wed, 25 Jun 2008 05:20:49 -0000
+Message-ID: <willow-jeske-01l6Cy0dFEDjCVqc>
+Received: from 67.188.42.104 at Wed, 25 Jun 2008 05:20:49 -0000
+References: <20080625023352.GC20361@mit.edu>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
+In-Reply-To: <20080625023352.GC20361@mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I'd like to hear feedback and ideas about a different mechanism than is being
-used with git-pull or git-push.
+-- Theodore Tso wrote:
+> Up to here, you can do this all with repo.or.cz, and/or github; you
+> just give each developer their own repository, which they are allowed
+> to push to, and no once else. Within their own repository they can
+> make changes to their branches, so that all works just fine.
 
-The purpose of this mechanism is to host a distributed source repository in a
-world where most most developer contributors are behind firewalls and do not
-have access to, or do not want to configure a unix server, ftp, or ssh to
-possibly contribute to a project. The model of allowing less-authoritative
-developers to make their changes available for more-authoritative users to pull
-is accepted as superior. However, no users are assumed to be authoritative over
-each-other, or an entire tree, and many users should have authority only to
-supply new deltas to their own branches. The ability to handle emailed patches
-is an asset, but is deemed too manual for this need.
+Yup. That's one of the reasons git is so attractive. There is some good stuff
+under "here" though....
 
-I believe git's design is strong; that many of the mechanisms are already
-built; that new mechanisms to build this can be simple; and that with such
-mechanisms, many more developers would have access to git's decentralized
-development style. Further, it would address drawbacks in today's git relative
-to public central version control systems, making this system closer to a 'best
-of both worlds'.
+> > (a) safely "share" every DAG, branch, and tag data in their
+> > repository to a well-connected server, into an established
+> > namespace, while only changing branches and tags in their
+> > namespace. This will allow all users to see the changes of other
+> > users, without needing direct access to their trees (which are
+> > inaccessible behind firewalls). [1]
+>
+> Right, so thats github and/or git.or.cz. Each user gets his/her own
+> repository, but thats a very minor change. Not a big deal.
 
-design assumptions:
+...most notably, all their DAGs in a single repository to save space is
+important. Thousands of copies of thousands of repositories adds up. Especially
+when most of the users who want to commit something probably commit <1-10k of
+unique stuff. Seems pretty easy to change though. git.or.cz and github will
+both be wanting this eventually.
 
-- all developers are firewalled and can not be "pulled" from directly.
-- there can be one or more well-connected servers which all users can access.
-- .. but which they cannot have ssh, ftp, or other dangerous access to
-- .. and whose protocol should be layered on http(s)
-- there is a shared namespace for branches, and tags
-- .. users are not-trusted to change the branches or tags of other users
-- .. only certain users are trusted to change the shared origin branches
-- .. also allow directory ACLS on shared branch commits
-- all their DAGs should be in a single repository for space efficiency
-- users generally want to follow well-named branches
-- .. will be free to follow any branch, and pull changes from any branch
+The other big one is ACLs in 'well named' repositories, so multiple people can
+safely be allowed to add changes to them, without giving them ability to blow
+away the repository. I can see this isn't the way all git users work, but at
+least a few users working this way now with shared push repositories. This is
+just making it 'safer'. Also seems pretty easy to do.
 
-I would like to make it easy for users to:
+> > (b) fetch selected DAG, branch, and tag data of others to their tree, to
+see
+> > the changes of others (whether merged with head or not) while disconnected
+or
+> > remote.
+>
+> This is also easy; you just establish remote tracking branches. I
+> have a single shell scripted command, git-get-all, which pulls from
+> all of the repositories I am interested in into various remote
+> tracking branches so while I am disconnected, I can see what other
+> folks have done on their trees.
 
-(a) safely "share" every DAG, branch, and tag data in their repository to a
-well-connected server, into an established namespace, while only changing
-branches and tags in their namespace. This will allow all users to see the
-changes of other users, without needing direct access to their trees (which are
-inaccessible behind firewalls). [1]
+Yes, so I'd have the same thing, except instead of a remote repository, it
+would be a pattern of the branch namespace, such as /origin/users/jeske/*. It
+doesn't seem like the current remote tracking branch stuff can do this, but it
+would be easy to provide a client wrapper that would. Users who tracked the
+whole repository would just get everything, which is also fine. Maybe a client
+patch to make this better would be accepted.
 
-(b) fetch selected DAG, branch, and tag data of others to their tree, to see
-the changes of others (whether merged with head or not) while disconnected or
-remote.
+> > (c) grant and enforce permission for certain users to submit _merges
+> > only_ onto certain sub-portions of the "well-named branches"
+>
+> This is the wierd one. *** Why ***? There is nothing magical about
+> merges; all a merge is a commit that contains more than one parent.
+> You can put anything into a merge, and in theory the result of a merge
+> could have nothing to do with either parent. It would be a very
+> perverse merge, but it's certainly possible. So what's the point of
+> trying to enforce rules about "merges only"?
 
-(c) grant and enforce permission for certain users to submit _merges only_ onto
-certain sub-portions of the "well-named branches"
+I'll explain why I wrote this, but I admit it's a strange roundabout way to get
+what I was hoping for. I hope there is a better way. One better way is to just
+change the client, but I was hoping not to have to do that. let me explain..
 
-There are many many benefits of git's mechanisms for this topology, and I
-expect you know them so I'll skip them. I see the following challenges from the
-current git implementation. Please tell me where I'm mistaken.. this is all
-AFAIK, some from tests, some from docs.
+Think about using CVS. user does "cvs up; hack hack hack; cvs commit (to
+server)". In git, this workflow is "git pull; hack; commit; hack; commit; git
+push (to server)". I want those interum "commits" to share the changes with the
+server. I want to change this to "git pull; hack; commit-and-share; hack;
+commit-and-share; git-push (to shared branch tag)"
 
-(1) A server will need to support the required permissions and isolation
-enforcement. Namely, permissions for portions of the branch/tag namespace,
-assurance that DAGs are valid, and directory permissions.
+It would be nice if "commit-and-share" could just use "git-push". However,
+because users are going to do this habitually every commit, probably through a
+script or merged command, I didn't want users who are accidentally working
+directly in the master to accidentally fast-forward origin/master. (everyone
+seems to discourage working on master anyhow). I was hoping to enforce this
+only with server policy, so any git client works. That leaves me with the
+challenge of figuring out which commits on origin/master are actually intended
+to move the pointer, and which are accidents because someone forgot to branch
+before hacking in their client. One simple way to do this is to require any
+origin/master commit to have two children, one on the master, one somewhere
+else. If you have a commit that is directly hanging off of master in this
+design, you are doing the wrong thing. The server would tell you to "git
+checkout master; git branch -b mymaster; git reset origin/master; git push".
+This would put their local changes onto their private branch where they should
+be. When they wanted to do the equivilant of "cvs commit;" or current "git
+push;", they would do a merge to the master, and push again. The server would
+allow it, because it sees the merge.
 
-(2) a "share" client command will need to be implemented which transmits-up
-local changes to only my DAGs, branches, and tags without affecting the shared
-origin namespace pointers on the server. It will share all these changes
-regardless of what the user's "active" branch is. Local branches might be
-mapped to a branch on the server such as origin/users/(username)/(branchname).
-Branches which are supposed to stay local might be named "local/branch", and be
-ignored by the "share". [1]
+I recognize this is a bit strange. I'd love to have a better solution, but this
+is the solution I can think of which only involves server enforcement. Other
+solutions I thought of would all require client changes that would change
+everyone's behavior. The candidate I liked best was: disallowing changes to
+tracking branches, including master, probably by implicitly creating a branch
+on commit to a tracking branch... However, I don't get the impression this will
+fit into current git very well, because users would need to turn their current
+"git push", into a "git merge master;git push"
 
-(3) a mechanism for controlling permissions (possibly based on checking out and
-editing a special subtree, ala cvs)
+I'm interested in other ideas to address this.
 
-(4) A mechanism to be sure "share" does not cause users who have permission to
-inadvertently move the origin/master branch pointer, even if they are working
-on their local master branch. For example, their changes would be named by
-origin/users/(username)/master. This is necessary because "share"  is the only
-way for the firewalled user to make their changes available to others. As a
-result, it is imperative that this be separate from a decision to promote their
-changes onto the shared origin branch. Currently git-push implies both of these
-together. git-share would be to git-push what git-fetch is git-pull. git-push
-would continue to be used to tell the system you wish to promote your change to
-origin/master. [2]
-
-
-[1] - "share" permissions can be considered two ways. In the strictly client
-server model, the server will only allow the client to change branch pointers
-that it owns in the namespace. However, if clients establish their own PGP-keys
-or other hash-identity keys with the server, then branch changes may be signed
-by clients, and propagate between clients in any direction and order, until
-they fully propagate. It's not clear if this additional complexity is worth it.
-
-[2] - it might be reasonable to build a mechanism to allow a local "intent to
-promote" preceed a git-share, in which case git-share could safetly
-fast-forward the head. However, it's unclear what benefit this has over
-git-fetch.
+I know that all of what I wrote above seems strange if you don't buy into the
+design assumptions. That it's critical to share a single server-repository,
+that it's critical to have a shared 'well known' branch that only trusts
+clients to add new changes to, etc.. However, these are important.
