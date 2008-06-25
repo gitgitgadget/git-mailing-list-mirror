@@ -1,61 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [NON-TOY PATCH] git bisect: introduce 'fixed' and 'unfixed'
-Date: Wed, 25 Jun 2008 09:27:33 +0200
-Message-ID: <20080625072733.GA26605@diana.vm.bytemark.co.uk>
-References: <alpine.DEB.1.00.0806241515460.9925@racer> <20080624163810.GA4654@sigill.intra.peff.net> <alpine.DEB.1.00.0806241750030.9925@racer> <alpine.DEB.1.00.0806241808400.9925@racer> <486153DB.3070502@alum.mit.edu> <486179C8.2000704@gmail.com> <486188E3.10803@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 25 Jun 2008 09:29:09 +0200
+Message-ID: <20080625072909.GJ29404@genesis.frugalware.org>
+References: <7vwskfclfs.fsf@gitster.siamese.dyndns.org> <9B8F0B10-F48D-475B-BF59-CEE94222B6E8@ai.rug.nl> <20080624160224.GA29404@genesis.frugalware.org> <alpine.DEB.1.00.0806241709330.9925@racer> <20080624185403.GB29404@genesis.frugalware.org> <alpine.DEB.1.00.0806242007150.9925@racer> <7vskv2d0lp.fsf@gitster.siamese.dyndns.org> <20080624221049.GE29404@genesis.frugalware.org> <7vk5gea0ff.fsf@gitster.siamese.dyndns.org> <m3fxr2jruy.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lea Wiemann <lewiemann@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="wR5ltk+7XKQetEfC"
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 09:29:25 2008
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 09:30:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBPRS-0000cN-SO
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 09:29:23 +0200
+	id 1KBPSB-0000r9-KU
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 09:30:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbYFYH20 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2008 03:28:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbYFYH20
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 03:28:26 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2494 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbYFYH20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 03:28:26 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KBPPh-00070P-00; Wed, 25 Jun 2008 08:27:33 +0100
+	id S1752290AbYFYH3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 03:29:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYFYH3M
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 03:29:12 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:57271 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751966AbYFYH3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 03:29:11 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 4F2CC1B2542;
+	Wed, 25 Jun 2008 09:29:10 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 3A4B844697;
+	Wed, 25 Jun 2008 09:03:51 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id F33661770070; Wed, 25 Jun 2008 09:29:09 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <486188E3.10803@gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <m3fxr2jruy.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86250>
 
-On 2008-06-24 19:53:07 -0400, A Large Angry SCM wrote:
 
-> Lea Wiemann wrote:
->
-> > I think this is a good suggestion (though I haven't thought things
-> > through). Another idea is to add "old" and "new" (or something
-> > like that) as aliases to "good" and "bad", since that's the only
-> > semantics that the bisect labels actually seem to have.
->
-> "Before" and "After" the "Change" maybe?
+--wR5ltk+7XKQetEfC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ha. It would not be hard to make it accept any two tags the user
-happens to use. fast/slow, works/broken, fina-fisken/totalkvaddad, ...
-it even comes with built-in internationalization!
+On Tue, Jun 24, 2008 at 05:11:44PM -0700, Jakub Narebski <jnareb@gmail.com>=
+ wrote:
+> What does "git ls-remote server:/home/vmiklos/git/test" invoke on server?=
+=20
 
-/me ducks.
+$ git ls-remote server:/home/vmiklos/git/test
+bash: git-upload-pack: command not found
+fatal: The remote end hung up unexpectedly
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+--wR5ltk+7XKQetEfC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhh88UACgkQe81tAgORUJbOcQCdF+LAhQ3nhGDwK5Y8d1X3BIoX
+IGoAn0CHZxgRElHxRKz5rjfM8xSMPg7P
+=Q8ND
+-----END PGP SIGNATURE-----
+
+--wR5ltk+7XKQetEfC--
