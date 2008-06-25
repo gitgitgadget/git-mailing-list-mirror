@@ -1,67 +1,83 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [Bug] for-each-ref: %(object) and %(type) unimplemented
-Date: Wed, 25 Jun 2008 17:01:01 +0200
-Message-ID: <48625DAD.5040404@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 5/7] parse-opt: fake short strings for callers to believe
+  in.
+Date: Wed, 25 Jun 2008 17:07:35 +0200
+Message-ID: <48625F37.8030808@op5.se>
+References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <1214298732-6247-1-git-send-email-madcoder@debian.org> <1214298732-6247-2-git-send-email-madcoder@debian.org> <1214298732-6247-3-git-send-email-madcoder@debian.org> <1214298732-6247-4-git-send-email-madcoder@debian.org> <1214298732-6247-5-git-send-email-madcoder@debian.org> <1214298732-6247-6-git-send-email-madcoder@debian.org> <alpine.LFD.1.10.0806241019370.2926@woody.linux-foundation.org> <20080624192634.GA9189@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 25 17:02:20 2008
+To: Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+	Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Wed Jun 25 17:09:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBWVc-0007iv-5a
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:02:08 +0200
+	id 1KBWbw-0001sU-Qc
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 17:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751995AbYFYPBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 11:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbYFYPBK
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:01:10 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:56930 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628AbYFYPBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 11:01:09 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1141337ywe.1
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 08:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:subject:content-type:content-transfer-encoding:from;
-        bh=EQcS7T9k30zfvZ6vpCKTBo0Nobwr+zna8MccqoVqkq0=;
-        b=c6MEx34dBqxfWhWb1JIuY2+OM9WhBwvZ+9GB4AcAM9ojybpOjx1+Oa+Mcgthw3COYG
-         winXNqGKRlIwwS4iUmH3tpjimc8qFio4GfVco0RXFOPTpMksJdgx4y3D0ae119Ph0O6R
-         DfRypwUn+PA8rQNAPOJEafTQWuZmJQwcb3z8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding:from;
-        b=TpolG2N0PNDL3ZJJ86SBpJiYxe0/chwUpM4OWZABSt08sEHy8juZBli4dnJHM7PAKO
-         CLcNt+P0oicDg8rwJ3Z9DgFijlRPu3s43mOkJRwH21X33rsoBWO5F+0Xa7M5K48jGHc8
-         9YoKING0PChqoHcNpCU5LaLRFKCBCCxeDPToo=
-Received: by 10.125.107.3 with SMTP id j3mr1810570mkm.90.1214406062883;
-        Wed, 25 Jun 2008 08:01:02 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.201.65])
-        by mx.google.com with ESMTPS id d13sm5235123fka.3.2008.06.25.08.01.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 08:01:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+	id S1751293AbYFYPHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 11:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbYFYPHk
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 11:07:40 -0400
+Received: from mail.op5.se ([193.201.96.20]:39345 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750708AbYFYPHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 11:07:39 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A4B551B800A3;
+	Wed, 25 Jun 2008 17:05:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id MRW0J0BS6ToB; Wed, 25 Jun 2008 17:05:34 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id AC1271B80082;
+	Wed, 25 Jun 2008 17:05:33 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080624192634.GA9189@artemis.madism.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86287>
 
-Try the following on a repository with tag objects in it:
+Pierre Habouzit wrote:
+> On Tue, Jun 24, 2008 at 05:20:28PM +0000, Linus Torvalds wrote:
+>>
+>> On Tue, 24 Jun 2008, Pierre Habouzit wrote:
+>>> If we begin to parse -abc and that the parser knew about -a and -b, it
+>>> will fake a -c switch for the caller to deal with.
+>>>
+>>> Of course in the case of -acb (supposing -c is not taking an argument) the
+>>> caller will have to be especially clever to do the same thing. We could
+>>> think about exposing an API to do so if it's really needed, but oh well...
+>> Well, if the other parser is _also_ parse_options() (ie you just cascade 
+>> them incrementally in a loop), then the other parser should get it right 
+>> automatically. No?
+> 
+>   Exactly. There are minor glitches wrt the help generation to deal
+> with, but for pure parsing issues yes, it will work.
+> 
 
-git for-each-ref --format='%(object)'
-git for-each-ref --format='%(type)'
+Why not just provide some api-functions to return a strbuf of the short
+and long options each?
 
-Each command prints only newlines.  The %(type) and %(object) options 
-are not rejected with an error message (like "%(doesnotexist)"), but 
-they don't seem to be implemented.  "%(tag)" works though.
+parse_opt_short_help(strbuf *sb, options...);
+parse_opt_long_help(strbuf *sb_long, options...);
 
-Anyone care to implement the missing options?  Or should they rather be 
-removed from the documentation?
+That way multi-parseopt programs can get their help-texts done right
+with very little extra work.
 
--- Lea
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
