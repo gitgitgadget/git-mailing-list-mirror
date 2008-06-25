@@ -1,66 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
-Date: Wed, 25 Jun 2008 02:23:31 -0700
-Message-ID: <7vr6al3m24.fsf@gitster.siamese.dyndns.org>
-References: <20080624222105.GA24549@dervierte>
- <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com>
- <7vwskea2ik.fsf@gitster.siamese.dyndns.org> <48620C1A.6000509@panasas.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Wed, 25 Jun 2008 02:30:09 -0700 (PDT)
+Message-ID: <m37icdkgkl.fsf@localhost.localdomain>
+References: <20080625023352.GC20361@mit.edu>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6@3N@FEDjCXZO>
+	<10634.0258535512$1214372002@news.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
-	jeske@google.com
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 11:25:10 2008
+Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: "David Jeske" <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 11:31:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBRFR-0007Z0-Vd
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 11:25:06 +0200
+	id 1KBRLL-0000y2-G5
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 11:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbYFYJXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 05:23:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbYFYJXx
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 05:23:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51174 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359AbYFYJXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 05:23:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A0D1C181DF;
-	Wed, 25 Jun 2008 05:23:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B8367181DD; Wed, 25 Jun 2008 05:23:41 -0400 (EDT)
-In-Reply-To: <48620C1A.6000509@panasas.com> (Boaz Harrosh's message of "Wed,
- 25 Jun 2008 12:12:58 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6CA8EC9E-4298-11DD-8670-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752985AbYFYJaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 05:30:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbYFYJaO
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 05:30:14 -0400
+Received: from hu-out-0506.google.com ([72.14.214.236]:6453 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbYFYJaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 05:30:12 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so14118478hub.21
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 02:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=+DI6Lv5mS2VcnIhPlIgtkcovcnO1HopBPxaANNo6o2c=;
+        b=Cvvw2/oFxBlPgkgTT79aEDRIXj1CXZmbCOjFwN19jCbNGSPsPD0GcRiXpoBIrRhOFM
+         GrgLSW74HuzgF9zBtyu/95dlnI3UeIsemzL6oVJpXyJ8d8DwXh7tWGlp0F1M15XZM3DV
+         2LDEbr9MOMbcn9e54tcqFzD5RThV2JXwdoMg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Q7sYUNYRelPAb/HVNir5qRsZaJaDyBUiVP8v/pYHoYWbjJUVIoLzv+RiewwLuaStFR
+         4RSWaeJx1BU61F29ipueegRGAkxOPRbNa8D27V/LK8ZKXfHj13yDhWhZBvaRUPo02mQT
+         zlojjmPa5GyTGOVZhaYY1Y/kuHG4j70Dn9IoI=
+Received: by 10.86.66.19 with SMTP id o19mr10096611fga.62.1214386210507;
+        Wed, 25 Jun 2008 02:30:10 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.223.44])
+        by mx.google.com with ESMTPS id e11sm12731983fga.4.2008.06.25.02.30.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Jun 2008 02:30:09 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5P9U480014401;
+	Wed, 25 Jun 2008 11:30:04 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5P9U3cO014398;
+	Wed, 25 Jun 2008 11:30:03 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <10634.0258535512$1214372002@news.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86262>
 
-Boaz Harrosh <bharrosh@panasas.com> writes:
-
-> Junio C Hamano wrote:
+"David Jeske" <jeske@willowmail.com> writes:
+> -- Theodore Tso wrote:
+> > ???
+> > > 
+> > > (a) safely "share" every DAG, branch, and tag data in their
+> > > repository to a well-connected server, into an established
+> > > namespace, while only changing branches and tags in their
+> > > namespace. This will allow all users to see the changes of other
+> > > users, without needing direct access to their trees (which are
+> > > inaccessible behind firewalls). [1]
+> >
+> > Right, so thats github and/or git.or.cz. Each user gets his/her own
+> > repository, but thats a very minor change. Not a big deal.
 > 
->> "reset --hard" has *ALWAYS* meant to be destructive --- discarding
->> potential local cruft is the whole point of the operation.
->
-> I was under the impression that --hard means working-directory-also
-> as opposed to tree-and-index-only. Nothing to do with 
-> destructive-discarding.
+> ...most notably, all their DAGs in a single repository to save space
+> is important. Thousands of copies of thousands of repositories adds
+> up. Especially when most of the users who want to commit something
+> probably commit <1-10k of unique stuff. Seems pretty easy to change
+> though. git.or.cz and github will both be wanting this eventually.
 
-Then you should revise your impression, as it is simply *WRONG*.  When
-I say something about history of git, I know what I am talking about ;-)
+repo.or.cz has support for forks, i.e. sharing object database (for
+old objects) via alternates, although it is not "common object
+database" (as in, for example, $GIT_DIR/objects symlinked to single
+common parent repository)
 
-Reset has been about nuking local changes from the very beginning.  That
-is why it removes MERGE_HEAD, rr-cache/MERGE_RR as well as removing
-conflicted stages in the index and reverts local changes from the worktree.
+GitHub has also some support for "forks", but as it is closed source I
+don't think anybody knows how it is done.
 
-It is "my worktree state is a mess, and I cannot even describe nor care
-which paths are dirty --- just get rid of the local changes so that I can
-start working cleanly from a checkout of HEAD".
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
