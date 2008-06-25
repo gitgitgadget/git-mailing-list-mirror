@@ -1,54 +1,61 @@
-From: Ian Hilt <Ian.Hilt@gmx.com>
-Subject: Re: how to list all files that will be comitted
-Date: Wed, 25 Jun 2008 12:24:27 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806251219480.5755@sys-0.hiltweb.site>
-References: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com> <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site> <17C0F998-66C0-4DFC-90EB-B85FF6E07844@gmail.com>
+From: M <mrohrmoser@gmx.de>
+Subject: gitwiki/EclipsePlugin
+Date: Wed, 25 Jun 2008 18:34:06 +0200
+Message-ID: <4862737E.6010502@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Rhodes, Kate" <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 18:25:18 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 25 18:35:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBXo4-0007iU-3M
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:25:16 +0200
+	id 1KBXxZ-0003sm-6p
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbYFYQYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 12:24:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYFYQYU
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:24:20 -0400
-Received: from mail.gmx.com ([74.208.5.67]:39535 "HELO mail.gmx.com"
+	id S1752385AbYFYQeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 12:34:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752291AbYFYQeH
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:34:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55878 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751250AbYFYQYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 12:24:19 -0400
-Received: (qmail invoked by alias); 25 Jun 2008 16:24:18 -0000
-Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
-  by mail.gmx.com (mp-us003) with SMTP; 25 Jun 2008 12:24:18 -0400
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX18o4TdxOegoZYc3SYxV2vn2ifypQZtDwy10/DCqpy
-	goJdXFWVFOmeVW
-In-Reply-To: <17C0F998-66C0-4DFC-90EB-B85FF6E07844@gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752043AbYFYQeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 12:34:06 -0400
+Received: (qmail invoked by alias); 25 Jun 2008 16:34:04 -0000
+Received: from p5496FE59.dip.t-dialin.net (EHLO [192.168.0.3]) [84.150.254.89]
+  by mail.gmx.net (mp005) with SMTP; 25 Jun 2008 18:34:04 +0200
+X-Authenticated: #955365
+X-Provags-ID: V01U2FsdGVkX1/6uDhwi976hBSPWManfSZHm4I4g7w9eDh5KNUbh4
+	suakSkQ1nkKYWH
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+X-Enigmail-Version: 0.95.6
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86302>
 
-On Wed, 25 Jun 2008 at 12:01pm -0400, Rhodes, Kate wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> yeah, but i was hoping for plumbing, not porcelain, that showed just what i
-> wanted so that i didn't have to parse status' output.
+Hi list,
+I felt quite helpless when trying to get egit running as neither
+http://git.or.cz/gitwiki/EclipsePlugin nor the README/INSTALL aren't
+overly verbose.
 
-I wasn't able to make "git ls-files" do what you want.  However, "git
-diff --name-only --cached" did.  It's still porcelain, but it does what
-you want :)
+I put the idiot-proof recipe on
+http://wiki.jcurl.org/index.php5?title=GitSvn#Eclipse_Plugin - maybe you
+can weave it into either wiki or INSTALL?
 
+Greetings,
+	M
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
--- 
-Ian Hilt
-Ian.Hilt (at) gmx.com
-GnuPG key: 0x4AFC1EE3
+iEYEARECAAYFAkhic34ACgkQO26gbdBiJqZiCwCeMFLgBKVR1Gl6U7WDDMHr/ogN
+H3YAnApFMSrY56+9bT4bJOb99kjZuv0P
+=Xz9D
+-----END PGP SIGNATURE-----
