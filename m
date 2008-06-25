@@ -1,74 +1,61 @@
-From: Mike Hommey <mh@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] pack.indexversion config option now defaults to 2
-Date: Wed, 25 Jun 2008 07:56:05 +0200
-Organization: glandium.org
-Message-ID: <20080625055605.GD28563@glandium.org>
-References: <alpine.LFD.1.10.0806250025130.2979@xanadu.home> <alpine.LFD.1.10.0806242130450.22069@hp.linux-foundation.org> <7vd4m66rfp.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 24 Jun 2008 23:06:36 -0700
+Message-ID: <7viqvy59qr.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0806250025130.2979@xanadu.home>
+ <alpine.LFD.1.10.0806242130450.22069@hp.linux-foundation.org>
+ <7vd4m66rfp.fsf@gitster.siamese.dyndns.org>
+ <20080625055605.GD28563@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 07:57:35 2008
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jun 25 08:07:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBO0c-00029K-Nl
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 07:57:35 +0200
+	id 1KBOAR-0004HX-Kv
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 08:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbYFYF4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 01:56:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbYFYF4j
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 01:56:39 -0400
-Received: from vuizook.err.no ([194.24.252.247]:58672 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752113AbYFYF4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 01:56:38 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KBNzN-00075R-Qa; Wed, 25 Jun 2008 07:56:24 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KBNzB-0007uT-Gq; Wed, 25 Jun 2008 07:56:05 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd4m66rfp.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751885AbYFYGGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 02:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbYFYGGq
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 02:06:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49643 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750923AbYFYGGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 02:06:46 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C50FF176FC;
+	Wed, 25 Jun 2008 02:06:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 12AAB176FB; Wed, 25 Jun 2008 02:06:38 -0400 (EDT)
+In-Reply-To: <20080625055605.GD28563@glandium.org> (Mike Hommey's message of
+ "Wed, 25 Jun 2008 07:56:05 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E2B60730-427C-11DD-B22F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86239>
 
-On Tue, Jun 24, 2008 at 09:59:06PM -0700, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > On Wed, 25 Jun 2008, Nicolas Pitre wrote:
-> >> 
-> >> Git older than version 1.5.2 (or any other git version with this option
-> >> set to 1) may revert to version 1 of the pack index by manually deleting
-> >> all .idx files and recreating them using 'git index-pack'.  Communication
-> >> over the git native protocol is unaffected since the pack index is never
-> >> transferred.
-> >
-> > Rather than talk about when it does _not_ matter, wouldn't it be better to 
-> > talk about when it _can_ matter?
-> >
-> > Namely when using dumb protocols, either http or rsync, with the other end 
-> > being some ancient git thing (and it is worth mentioning version of what 
-> > counts as 'ancient' too, I can't remember, probably means that pretty much 
-> > nobody else can either).
-> 
-> I agree with you that the description of the change (in the commit log)
-> and the instruction (in the documentation) could be more helpful and
-> explicit.
-(...)
+Mike Hommey <mh@glandium.org> writes:
 
-Wouldn't it be a good idea to add a warning in git update-server-info
-when it detects pack.indexVersion is not 1, too ?
+> Wouldn't it be a good idea to add a warning in git update-server-info
+> when it detects pack.indexVersion is not 1, too ?
 
-Mike
+Can you describe how that warning will help whom in the bigger picture?
+
+The way as I understand everybody runs "git update-server-info" is:
+
+ * "git push" pushes into a publishing repository, then
+ * "post-receive" (or "post-update") hook triggers "update-server-info".
+
+If you spit out a warning from update-server-info, it will be shown to the
+pusher over sideband, but this will not necessarily help the pusher, who
+may or may not have shell access to the repository.
