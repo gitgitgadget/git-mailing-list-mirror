@@ -1,68 +1,94 @@
-From: "Rhodes, Kate" <masukomi@gmail.com>
-Subject: Re: how to list all files that will be comitted
-Date: Wed, 25 Jun 2008 12:01:49 -0400
-Message-ID: <17C0F998-66C0-4DFC-90EB-B85FF6E07844@gmail.com>
-References: <644094BE-2835-41EF-B1B4-615B8A4BD509@gmail.com> <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ian Hilt <Ian.Hilt@gmx.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 18:03:00 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: [Bug] for-each-ref: %(object) and %(type) unimplemented
+Date: Wed, 25 Jun 2008 12:08:15 -0400
+Message-ID: <20080625160814.GA3321@sigill.intra.peff.net>
+References: <48625DAD.5040404@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 18:09:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBXSU-0007DK-7V
-	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:02:58 +0200
+	id 1KBXYq-0001TL-1F
+	for gcvg-git-2@gmane.org; Wed, 25 Jun 2008 18:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759657AbYFYQBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 12:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758679AbYFYQBy
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:01:54 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:23180 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759657AbYFYQBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 12:01:53 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so8259648rvb.1
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 09:01:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=gmYbxXZXHpOAXddlFtU0fFroItUIzn7oZW8pnrRh/n8=;
-        b=bi6o2d1PLcn72qO3h2H/T7fVdPNR+9BLPxWCnW0+PtB4oh10uQclIckxc6dTXqms/E
-         6qfZHaDC7c61xtX0Sb1Sf+m2eB/h9RGFKq+F7CNlpsQxSzQNYCGrSZaYnkfDFhFInP2u
-         RZjdrh6WqcGSe2BlsISH4VgvkxFdoByaVGyNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=xSsEXKTJZvnHzfZ3MznoN9JqdkZng50pK6renG/sbdVIYhC0W9jhglyL1pz5/ROlJZ
-         i9/IJbNgeFzLO/RtPMOYU0qDjhs6262d5REUXY1KYM1TErAY00gQlNNSbQWDpOGCoDZF
-         MlBrIsbKikCidtHkKvOVaNK0mQyH/vS8tmz3Q=
-Received: by 10.141.49.18 with SMTP id b18mr6376349rvk.92.1214409713169;
-        Wed, 25 Jun 2008 09:01:53 -0700 (PDT)
-Received: from ?172.30.0.244? ( [80.67.64.10])
-        by mx.google.com with ESMTPS id 43sm14514283wri.27.2008.06.25.09.01.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 09:01:52 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0806251154180.5755@sys-0.hiltweb.site>
-X-Mailer: Apple Mail (2.915)
+	id S1755700AbYFYQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 12:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755264AbYFYQIS
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 12:08:18 -0400
+Received: from peff.net ([208.65.91.99]:3438 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752591AbYFYQIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 12:08:17 -0400
+Received: (qmail 15379 invoked by uid 111); 25 Jun 2008 16:08:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 25 Jun 2008 12:08:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2008 12:08:15 -0400
+Content-Disposition: inline
+In-Reply-To: <48625DAD.5040404@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86294>
 
-yeah, but i was hoping for plumbing, not porcelain, that showed just  
-what i wanted so that i didn't have to parse status' output.
+On Wed, Jun 25, 2008 at 05:01:01PM +0200, Lea Wiemann wrote:
 
--Kate
+> Try the following on a repository with tag objects in it:
+>
+> git for-each-ref --format='%(object)'
+> git for-each-ref --format='%(type)'
+>
+> Each command prints only newlines.  The %(type) and %(object) options are 
+> not rejected with an error message (like "%(doesnotexist)"), but they 
+> don't seem to be implemented.  "%(tag)" works though.
+>
+> Anyone care to implement the missing options?  Or should they rather be  
+> removed from the documentation?
 
-On Jun 25, 2008, at 11:57 AM, Ian Hilt wrote:
+Looks like they were part of the original set of atoms, but they just
+never ended up implemented. Clearly nobody has actually cared in the
+intervening time, but it is easy enough to add them. See below.
 
-> Have you tried "git status" ?  It will output something similar to the
-> following:
+Since you seem to be testing for-each-ref, maybe it would make sense to
+put together a test script that exercises each of the atoms?
+
+-- >8 --
+for-each-ref: implement missing tag values
+
+The "type" and "object" fields for tags were accepted as
+valid atoms, but never implemented. Consequently, they
+simply returned the empty string, even for valid tags.
+
+Noticed by Lea Wiemann.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-for-each-ref.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 07d9c57..fef93d7 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -234,6 +234,13 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
+ 			name++;
+ 		if (!strcmp(name, "tag"))
+ 			v->s = tag->tag;
++		else if (!strcmp(name, "type") && tag->tagged)
++			v->s = typename(tag->tagged->type);
++		else if (!strcmp(name, "object") && tag->tagged) {
++			char *s = xmalloc(41);
++			strcpy(s, sha1_to_hex(tag->tagged->sha1));
++			v->s = s;
++		}
+ 	}
+ }
+ 
+-- 
+1.5.6.129.g8dea5.dirty
