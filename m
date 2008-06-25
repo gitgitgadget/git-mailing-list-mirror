@@ -1,86 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] daemon: accept "git program" as well
-Date: Wed, 25 Jun 2008 16:26:46 -0700
-Message-ID: <7vmyl9w0y1.fsf@gitster.siamese.dyndns.org>
-References: <7v1w2m8ahi.fsf@gitster.siamese.dyndns.org>
- <7vprq66vqd.fsf_-_@gitster.siamese.dyndns.org>
- <20080625034538.GW11793@spearce.org>
- <7vk5ge6soc.fsf@gitster.siamese.dyndns.org>
- <20080625044409.GE11793@spearce.org>
- <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org>
- <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org>
- <7vy74u5bkk.fsf@gitster.siamese.dyndns.org>
- <20080625053848.GJ11793@spearce.org>
- <7v4p7hxhbd.fsf@gitster.siamese.dyndns.org>
- <20080625230228.GR11793@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Ask for "git program" even against git-daemon
+Date: Wed, 25 Jun 2008 19:27:27 -0400
+Message-ID: <20080625232727.GU11793@spearce.org>
+References: <20080625034538.GW11793@spearce.org> <7vk5ge6soc.fsf@gitster.siamese.dyndns.org> <20080625044409.GE11793@spearce.org> <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org> <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org> <7vy74u5bkk.fsf@gitster.siamese.dyndns.org> <20080625053848.GJ11793@spearce.org> <7v4p7hxhbd.fsf@gitster.siamese.dyndns.org> <7vvdzxw2eo.fsf_-_@gitster.siamese.dyndns.org> <7vr6alw28s.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: tv@eagain.net,
-	=?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@lavabit.com>, Miklos Vajna <vmiklos@frugalware.org>,
-	pclouds@gmail.com,
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:28:39 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:28:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBePj-0007sM-WA
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 01:28:36 +0200
+	id 1KBeQ0-0007wm-IS
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 01:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753347AbYFYX1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 19:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbYFYX1N
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 19:27:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44925 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753151AbYFYX1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 19:27:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 22695AD2B;
-	Wed, 25 Jun 2008 19:27:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B07ADAD1F; Wed, 25 Jun 2008 19:26:55 -0400 (EDT)
-In-Reply-To: <20080625230228.GR11793@spearce.org> (Shawn O. Pearce's message
- of "Wed, 25 Jun 2008 19:02:28 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3B1C19BE-430E-11DD-BE3B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753445AbYFYX1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 19:27:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbYFYX1o
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 19:27:44 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:36651 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753293AbYFYX1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 19:27:43 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KBeOV-0008Pj-JQ; Wed, 25 Jun 2008 19:27:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3220E20FBAE; Wed, 25 Jun 2008 19:27:28 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vr6alw28s.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86371>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> This drops backward compatibility support to ask for "git-program"
+> form when talking to git-daemon.  Now all git native requests use
+> "git program" form over ssh, local and git transports.
+> 
+> This needs to be held back until everybody runs git-daemon from 1.5.6.1 or
+> 1.6.0 or newer.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * According to the roadmap we exchanged earlier, this should happen in a
+>    major release (that increments the second dewey-decimal digit from the
+>    left) that ships at least 6 months after 1.5.6.1 and 1.6.0 (which will
+>    have the "git daemon preparation" patch included) are released.
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> This is a step to futureproof git-daemon to accept clients that
->> ask for "git upload-pack" and friends, instead of using the more
->> traditional dash-form "git-upload-pack".  By allowing both, it
->> makes the client side easier to handle, as it makes "git" the only
->> thing necessary to be on $PATH when invoking the remote command
->> directly via ssh.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Obviously correct.  Ack.  Thanks Junio.
+Agreed about holding back.
 
-By the way I looked at gitosis (Tommi CC'ed).
+But I wonder if this patch is even worth it at some later point
+in time.  Are we also going to change git-daemon to stop accepting
+"git-" form?  Is it a worthwhile change?
 
-    http://repo.or.cz/w/gitosis.git?a=blob;f=gitosis/serve.py;h=c0b7135bf45305ee1079b0dcab3b4ed1ce988aab;hb=38561aa6a51a2ef6cc04aa119481df62d213ffa4
-
-In gitosis/serve.py, there are COMMANDS_READONLY and COMMANDS_WRITE array
-that holds 'git-upload-pack' and 'git-receive-pack' commands, and they are
-compared with user commands after doing:
-
-	verb, args = command.split(None, 1)
-
-(and "verb" is looked up in the set of valid commands).  It should not be
-too involved to notice verb is 'git' and then re-split the args part to
-see if they are upload-pack/receive-pack, which would be the equivalent
-change to this patch.  It needs to be done before the clients are
-updated.
+-- 
+Shawn.
