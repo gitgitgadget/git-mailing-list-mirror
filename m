@@ -1,128 +1,88 @@
-From: "=?UTF-8?Q?Jo=C3=A3o_Abecasis?=" <joao@abecasis.name>
-Subject: [PATCH] git-svn: follow revisions of svm-mirrored repositories
-Date: Thu, 26 Jun 2008 11:24:12 -0500
-Message-ID: <7bf6f1d20806260924r68a8ac89i95fad1d5f0c685de@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+From: Christian Holtje <docwhat@gmail.com>
+Subject: pread() over NFS (again) [1.5.5.4]
+Date: Thu, 26 Jun 2008 12:40:27 -0400
+Message-ID: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:25:23 2008
+X-From: git-owner@vger.kernel.org Thu Jun 26 19:40:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBuHa-0006PJ-Lc
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 18:25:15 +0200
+	id 1KBvSD-0001Ka-2d
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 19:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384AbYFZQYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 12:24:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYFZQYP
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 12:24:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:51142 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970AbYFZQYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 12:24:14 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so259998ugf.16
-        for <git@vger.kernel.org>; Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
+	id S1751067AbYFZRjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 13:39:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbYFZRjN
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 13:39:13 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:6465 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874AbYFZRjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 13:39:12 -0400
+Received: by py-out-1112.google.com with SMTP id p76so8919pyb.10
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 10:39:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=6GYyN1IjF0Sgz4a9mf+zQiOHhMF1iTQd2EHxFYUCebM=;
-        b=a4F4OJCtlNQ8QNY5A2yopp0ZSMCLqLgpIsAxD1G6M8SrTPxeQXL6VcRU1a3daKxrtv
-         pRzMCWOZhr2icWZ5xVt/YGmxpA1BEa3UCG0PLw2g/hK09xk1mh+cyxgf2EPCAkHZkN3Y
-         PzWkCkJeSHYno9ycRf+HWsvnjxE66s7V04eO0=
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=mVTtUkQoHaY70t/LLu52m0WoCBUXkHl9FS4V7tvrVuk=;
+        b=QqMBtqlJSz33OYzX4QqNUyC0gy4rxJOKsu+BHddEkd78q/QHjEp86UrjnyyFavgKIb
+         Wm5SwqqwHCyHBt63F8kf6shbHLPa21QAYqiLlHL2oZb+L2tEewJLC0QcnEuWDf4vEaxJ
+         lQHAQHu/tjjNFOQ7CGdbZ0dTD5Xi5ZKSu6Lrw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=DV2j+Fh9UpHKfDf+6Bt7eEinWdS0TTTXoOUoWD1lrfYyE1LqR4GZEpJsAeQuCP8S0b
-         DCz5ZpUrhfoxdYbggB+aILRC7D/dcOZ+adx00gsATYHBCn+3FvdHrBZmvQxdXufN69S5
-         CzlHQnfLuvuWC/UVzapZh3pykw4v8Avwo69AA=
-Received: by 10.66.243.2 with SMTP id q2mr1344125ugh.16.1214497452307;
-        Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
-Received: by 10.67.94.6 with HTTP; Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: 5dd3ce868e0b705a
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=xZRqnCOzuozMGvNRfjDO/V6UJdyrdsiMTtOc0gliZDxFaiMi5hXPs3yidT+Wbd7DD4
+         fipHJP92aaEPbKfYraDl+r6hxKUVeGVvr+7jrRNEsnj6s97htv0iyVCybXUmx18obPL9
+         xmt64HsMoSBzy50t8fHmVQpUMDni3E3vf9jqE=
+Received: by 10.114.177.1 with SMTP id z1mr206026wae.37.1214498429423;
+        Thu, 26 Jun 2008 09:40:29 -0700 (PDT)
+Received: from ?192.168.0.161? ( [206.210.75.84])
+        by mx.google.com with ESMTPS id i18sm465778wxd.16.2008.06.26.09.40.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Jun 2008 09:40:28 -0700 (PDT)
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86463>
 
-RnJvbSBhNGNkMDkyY2QxYWVhZTk1NDM3ODAzOGQyNGY5M2FmOTMwNjEwY2M4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P3V0Zi04P3E/Sm89QzM9QTNvPTIwQWJlY2FzaXM/PSA8am9h
-b0BhYmVjYXNpcy5uYW1lPgpEYXRlOiBGcmksIDEzIEp1biAyMDA4IDIwOjMyOjU3IC0wNTAwClN1
-YmplY3Q6IFtQQVRDSF0gZ2l0LXN2bjogZm9sbG93IHJldmlzaW9ucyBvZiBzdm0tbWlycm9yZWQg
-cmVwb3NpdG9yaWVzCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsg
-Y2hhcnNldD11dGYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0CgpBbHRob3VnaCBn
-aXQtc3ZuIGtlZXBzIHRyYWNrIG9mIHNvdXJjZSByZXZpc2lvbnMgaW4gc3ZtLW1pcnJvcmVkCnJl
-cG9zaXRvcmllcywgaXQgZG9lc24ndCB1c2UgdGhhdCBpbmZvcm1hdGlvbiBpbiBhbGwgcGxhY2Vz
-LgoKVGhpcyBmaXhlcyB3b3JraW5nX2hlYWRfaW5mbyBhbmQgR2l0OjpTVk46OmZpbmRfYnlfdXJs
-IHRvIHdvcmsgd2l0aAptaXJyb3JlZCByZXBvc2l0b3JpZXMgd2hlbiB1c2VTdm1Qcm9wcyBpcyBz
-ZXQuIEF0IGxlYXN0IHRoZSBjb21tYW5kcwpmaW5kLXJldiBhbmQgcmViYXNlLCB3aGljaCBkaWRu
-J3Qgd29yayBmb3IgbWUgd2l0aCBzdm0tbWlycm9yZWQKcmVwb3NpdG9yaWVzLCBhcmUgbm93IHdv
-cmtpbmcuCgpTaWduZWQtb2ZmLWJ5OiBKb8OjbyBBYmVjYXNpcyA8am9hb0BhYmVjYXNpcy5uYW1l
-PgotLS0KIGdpdC1zdm4ucGVybCAgICAgICAgICAgICAgICAgICAgIHwgICAzNiArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKy0tLS0KIHQvdDkxMTAtZ2l0LXN2bi11c2Utc3ZtLXByb3Bz
-LnNoIHwgICAgOSArKysrKysrKysKIDIgZmlsZXMgY2hhbmdlZCwgNDEgaW5zZXJ0aW9ucygrKSwg
-NCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9naXQtc3ZuLnBlcmwgYi9naXQtc3ZuLnBlcmwK
-aW5kZXggNGM5YzU5Yi4uNGRmNmM3MSAxMDA3NTUKLS0tIGEvZ2l0LXN2bi5wZXJsCisrKyBiL2dp
-dC1zdm4ucGVybApAQCAtNTM3LDEzICs1MzcsMTMgQEAgc3ViIGNtZF9maW5kX3JldiB7CiAJCW15
-ICRoZWFkID0gc2hpZnQ7CiAJCSRoZWFkIHx8PSAnSEVBRCc7CiAJCW15IEByZWZzOwotCQlteSAo
-dW5kZWYsIHVuZGVmLCB1bmRlZiwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZvKCRoZWFkLCBcQHJl
-ZnMpOworCQlteSAodW5kZWYsIHVuZGVmLCAkdXVpZCwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZv
-KCRoZWFkLCBcQHJlZnMpOwogCQl1bmxlc3MgKCRncykgewogCQkJZGllICJVbmFibGUgdG8gZGV0
-ZXJtaW5lIHVwc3RyZWFtIFNWTiBpbmZvcm1hdGlvbiBmcm9tICIsCiAJCQkgICAgIiRoZWFkIGhp
-c3RvcnlcbiI7CiAJCX0KIAkJbXkgJGRlc2lyZWRfcmV2aXNpb24gPSBzdWJzdHIoJHJldmlzaW9u
-X29yX2hhc2gsIDEpOwotCQkkcmVzdWx0ID0gJGdzLT5yZXZfbWFwX2dldCgkZGVzaXJlZF9yZXZp
-c2lvbik7CisJCSRyZXN1bHQgPSAkZ3MtPnJldl9tYXBfZ2V0KCRkZXNpcmVkX3JldmlzaW9uLCAk
-dXVpZCk7CiAJfSBlbHNlIHsKIAkJbXkgKHVuZGVmLCAkcmV2LCB1bmRlZikgPSBjbXRfbWV0YWRh
-dGEoJHJldmlzaW9uX29yX2hhc2gpOwogCQkkcmVzdWx0ID0gJHJldjsKQEAgLTExNjAsNyArMTE2
-MCw3IEBAIHN1YiB3b3JraW5nX2hlYWRfaW5mbyB7CiAJCWlmIChkZWZpbmVkICR1cmwgJiYgZGVm
-aW5lZCAkcmV2KSB7CiAJCQluZXh0IGlmICRtYXh7JHVybH0gYW5kICRtYXh7JHVybH0gPCAkcmV2
-OwogCQkJaWYgKG15ICRncyA9IEdpdDo6U1ZOLT5maW5kX2J5X3VybCgkdXJsKSkgewotCQkJCW15
-ICRjID0gJGdzLT5yZXZfbWFwX2dldCgkcmV2KTsKKwkJCQlteSAkYyA9ICRncy0+cmV2X21hcF9n
-ZXQoJHJldiwgJHV1aWQpOwogCQkJCWlmICgkYyAmJiAkYyBlcSAkaGFzaCkgewogCQkJCQljbG9z
-ZSAkZmg7ICMgYnJlYWsgdGhlIHBpcGUKIAkJCQkJcmV0dXJuICgkdXJsLCAkcmV2LCAkdXVpZCwg
-JGdzKTsKQEAgLTE0MTQsMTEgKzE0MTQsMTYgQEAgc3ViIGZldGNoX2FsbCB7Cgogc3ViIHJlYWRf
-YWxsX3JlbW90ZXMgewogCW15ICRyID0ge307CisgICAgICAgIG15ICR1c2Vzdm1wcm9wcyA9IGV2
-YWwgeworCQljb21tYW5kX29uZWxpbmUocXcvY29uZmlnIC0tYm9vbCBzdm4udXNlU3ZtUHJvcHMv
-KSB9IGVxICd0cnVlJzsKIAlmb3JlYWNoIChncmVwIHsgcy9ec3ZuLXJlbW90ZVwuLy8gfSBjb21t
-YW5kKHF3L2NvbmZpZyAtbC8pKSB7CiAJCWlmIChtIV4oLispXC5mZXRjaD1ccyooLiopXHMqOlxz
-KnJlZnMvcmVtb3Rlcy8oLispXHMqJCEpIHsKIAkJCW15ICgkcmVtb3RlLCAkbG9jYWxfcmVmLCAk
-cmVtb3RlX3JlZikgPSAoJDEsICQyLCAkMyk7CiAJCQkkbG9jYWxfcmVmID1+IHN7Xi99e307CiAJ
-CQkkci0+eyRyZW1vdGV9LT57ZmV0Y2h9LT57JGxvY2FsX3JlZn0gPSAkcmVtb3RlX3JlZjsKKwkJ
-CSRyLT57JHJlbW90ZX0tPntzdm19ID0ge30gaWYgJHVzZXN2bXByb3BzOworCQl9IGVsc2lmICht
-IV4oLispXC51c2Vzdm1wcm9wcz1ccyooLiopXHMqJCEpIHsKKwkJCSRyLT57JDF9LT57c3ZtfSA9
-IHt9OwogCQl9IGVsc2lmIChtIV4oLispXC51cmw9XHMqKC4qKVxzKiQhKSB7CiAJCQkkci0+eyQx
-fS0+e3VybH0gPSAkMjsKIAkJfSBlbHNpZiAobSFeKC4rKVwuKGJyYW5jaGVzfHRhZ3MpPQpAQCAt
-MTQzNSw2ICsxNDQwLDIxIEBAIHN1YiByZWFkX2FsbF9yZW1vdGVzIHsKIAkJCX0KIAkJfQogCX0K
-KworCW1hcCB7CisJCWlmIChkZWZpbmVkICRyLT57JF99LT57c3ZtfSkgeworCQkJbXkgJHN2bTsK
-KwkJCWV2YWwgeworCQkJCW15ICRzZWN0aW9uID0gInN2bi1yZW1vdGUuJF8iOworCQkJCSRzdm0g
-PSB7CisJCQkJCXNvdXJjZSA9PiB0bXBfY29uZmlnKCctLWdldCcsICIkc2VjdGlvbi5zdm0tc291
-cmNlIiksCisJCQkJCXJlcGxhY2UgPT4gdG1wX2NvbmZpZygnLS1nZXQnLCAiJHNlY3Rpb24uc3Zt
-LXJlcGxhY2UiKSwKKwkJCQl9CisJCQl9OworCQkJJHItPnskX30tPntzdm19ID0gJHN2bTsKKwkJ
-fQorCX0ga2V5cyAlJHI7CisKIAkkcjsKIH0KCkBAIC0xNTY4LDEzICsxNTg4LDIxIEBAIHN1YiBm
-aW5kX2J5X3VybCB7ICMgcmVwb3Nfcm9vdCBhbmQsIHBhdGggYXJlIG9wdGlvbmFsCiAJCX0KIAkJ
-bXkgJHAgPSAkcGF0aDsKIAkJbXkgJHJ3ciA9IHJld3JpdGVfcm9vdCh7cmVwb19pZCA9PiAkcmVw
-b19pZH0pOworCQlteSAkc3ZtID0gJHJlbW90ZXMtPnskcmVwb19pZH0tPntzdm19CisJCQlpZiBk
-ZWZpbmVkICRyZW1vdGVzLT57JHJlcG9faWR9LT57c3ZtfTsKIAkJdW5sZXNzIChkZWZpbmVkICRw
-KSB7CiAJCQkkcCA9ICRmdWxsX3VybDsKIAkJCW15ICR6ID0gJHU7CisJCQlteSAkcHJlZml4ID0g
-Jyc7CiAJCQlpZiAoJHJ3cikgewogCQkJCSR6ID0gJHJ3cjsKKwkJCX0gZWxzaWYgKGRlZmluZWQg
-JHN2bSkgeworCQkJCSR6ID0gJHN2bS0+e3NvdXJjZX07CisJCQkJJHByZWZpeCA9ICRzdm0tPnty
-ZXBsYWNlfTsKKwkJCQkkcHJlZml4ID1+IHMjXlxRJHVcRSg/Oi98JCkjIzsKKwkJCQkkcHJlZml4
-ID1+IHMjLyQjIzsKIAkJCX0KLQkJCSRwID1+IHMjXlxRJHpcRSg/Oi98JCkjIyBvciBuZXh0Owor
-CQkJJHAgPX4gcyNeXFEkelxFKD89L3wkKSMkcHJlZml4IyBvciBuZXh0OwogCQl9CiAJCWZvcmVh
-Y2ggbXkgJGYgKGtleXMgJSRmZXRjaCkgewogCQkJbmV4dCBpZiAkZiBuZSAkcDsKZGlmZiAtLWdp
-dCBhL3QvdDkxMTAtZ2l0LXN2bi11c2Utc3ZtLXByb3BzLnNoIGIvdC90OTExMC1naXQtc3ZuLXVz
-ZS1zdm0tcHJvcHMuc2gKaW5kZXggMDQ3NjU5Zi4uMDRkMmE2NSAxMDA3NTUKLS0tIGEvdC90OTEx
-MC1naXQtc3ZuLXVzZS1zdm0tcHJvcHMuc2gKKysrIGIvdC90OTExMC1naXQtc3ZuLXVzZS1zdm0t
-cHJvcHMuc2gKQEAgLTQ5LDQgKzQ5LDEzIEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3ZlcmlmeSBt
-ZXRhZGF0YSBmb3IgL2RpcicgIgogCSAgIGdyZXAgJ15naXQtc3ZuLWlkOiAkZGlyX3VybEAxICR1
-dWlkJCcKIAkiCgordGVzdF9leHBlY3Rfc3VjY2VzcyAnZmluZCBjb21taXQgYmFzZWQgb24gU1ZO
-IHJldmlzaW9uIG51bWJlcicgIgorICAgICAgICBnaXQtc3ZuIGZpbmQtcmV2IHIxMiB8CisJICAg
-IGdyZXAgYGdpdCByZXYtcGFyc2UgSEVBRGAKKyAgICAgICAgIgorCit0ZXN0X2V4cGVjdF9zdWNj
-ZXNzICdlbXB0eSByZWJhc2UnICIKKwlnaXQtc3ZuIHJlYmFzZQorCSIKKwogdGVzdF9kb25lCi0t
-IAoxLjUuNS4xCg==
+I have read all the threads on git having trouble with pread() and I  
+didn't see anything to help.
+
+Situation:
+   git commands run on system "dev2" which is Linux 2.6.9-42.0.8.ELsmp  
+on an NFS mounted directory.
+   The NFS server is "dev1" which is Linux 2.4.28
+
+I get the following output from git when doing a fetch:
+   remote: Counting objects: 406, done.
+   remote: Compressing objects: 100% (198/198), done.
+   remote: Total 253 (delta 127), reused 150 (delta 55)
+   Receiving objects: 100% (253/253), 5.27 MiB | 9136 KiB/s, done.
+   fatal: cannot pread pack file: No such file or directory
+   fatal: index-pack failed
+
+The end of the strace looks like so:
+pread(3, "", 205, 1373)                 = 0
+write(2, "fatal: cannot pread pack file: N"..., 57) = 57
+
+I have ran strace -o /somedir/q -ff git fetch and have the straces  
+available at:
+http://docwhat.gerf.org/files/tmp/git-strace-20080626.tgz
+
+I have worked around the problem by running the fetch from the nfs  
+server.
+
+It looks like I can recreate this at will and I'm willing to help  
+figure this out.
+
+Thanks!
+
+Ciao!
