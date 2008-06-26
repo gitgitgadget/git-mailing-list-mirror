@@ -1,66 +1,75 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: git rebase interactive: usability issue
-Date: Thu, 26 Jun 2008 08:13:03 -0400
-Message-ID: <20080626121303.GF8610@mit.edu>
-References: <20080625233208.GE5737@dpotapov.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: how do I merge completely unrelated repositories ?
+Date: Thu, 26 Jun 2008 14:19:23 +0200
+Message-ID: <20080626121923.GE29404@genesis.frugalware.org>
+References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com> <20080626094522.GA29404@genesis.frugalware.org> <alpine.DEB.1.00.0806261224020.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 14:14:07 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="R1inc2+vggRY7BTn"
+Cc: Christian MICHON <christian.michon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 26 14:20:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBqMX-0000yH-LO
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 14:14:06 +0200
+	id 1KBqSc-00034F-NJ
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 14:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbYFZMNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 08:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbYFZMNJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 08:13:09 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:52268 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750997AbYFZMNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 08:13:08 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KBqLa-0002QC-9y; Thu, 26 Jun 2008 08:13:06 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KBqLX-0005B8-NM; Thu, 26 Jun 2008 08:13:03 -0400
+	id S1751824AbYFZMT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 08:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYFZMT1
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 08:19:27 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:33330 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751282AbYFZMT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 08:19:26 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 3CBE81B250F;
+	Thu, 26 Jun 2008 14:19:23 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B173E44698;
+	Thu, 26 Jun 2008 13:53:23 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 16D45177001C; Thu, 26 Jun 2008 14:19:23 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080625233208.GE5737@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <alpine.DEB.1.00.0806261224020.9925@racer>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86445>
 
-On Thu, Jun 26, 2008 at 03:32:08AM +0400, Dmitry Potapov wrote:
-> Though the user realized his mistake after my explanation of how git
-> rebase works, I still believe it is a serious usability issue, because
-> the same command: "git commit --amend" produces drastically different
-> results depends on whether the rebase process stopped due to conflict
-> or on the "edit" mark. Moreover, the commit message of second patch is
-> getting lost as result of using "git commit --amend" in the former case.
 
-This is true whether it a conflict is getting addressed during a
-git-rebase or a git-merge.  The observation I would make is that git
-has stopped a rebase or a merge with a conflict that the user needs to
-fix up, a "git commit --amend" is almost always the wrong thing.  So I
-could imagine a safety where after git discovers a merge conflict, it
-sets a flag (probably a file in the .git directory) which causes "git
-commit --amend" stop withan error message "this probably wasn't what
-you wanted", and telling the user to use a --force command if this is
-what they wanted.  This flag would be cleared on the next "git commit"
-or "git reset".
+--R1inc2+vggRY7BTn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In fact, we do this already for git-merge.  Why not just do the same
-thing in the middle of a merge conflict with git-rebase?
+On Thu, Jun 26, 2008 at 12:25:54PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> FWIW this is how gitk got into git.git... See 5569bf9b(Do a cross-project=
+=20
+> merge of Paul Mackerras' gitk visualizer).  This also was often referred=
+=20
+> to as the "coolest merge ever".
 
-      	     	       	       		- Ted
+If we are at it, that's not unique, there are other root commits as
+well: 2744b23 - git-tools, 161332a - gitweb, cb07fc2 - git-gui, 16d6b8a
+- p4-fast-export. ;-)
+
+--R1inc2+vggRY7BTn
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEUEARECAAYFAkhjiUoACgkQe81tAgORUJbHmACYiLYXu3cF0astyDPTynVdSo6G
+7wCeMlVx/f610a1B3AjWqsDbJyX6H6Q=
+=FXEO
+-----END PGP SIGNATURE-----
+
+--R1inc2+vggRY7BTn--
