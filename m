@@ -1,82 +1,92 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: commit 'git-send-email: add support for TLS via Net::SMTP::SSL' causes warnings
-Date: Thu, 26 Jun 2008 23:03:21 +0200
-Message-ID: <200806262303.23269.trast@student.ethz.ch>
-References: <DF091369-1771-4405-8705-BDBC59C7E48A@sb.org> <200806262248.02866.trast@student.ethz.ch>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: pread() over NFS (again) [1.5.5.4]
+Date: Thu, 26 Jun 2008 17:05:56 -0400
+Message-ID: <20080626210556.GZ11793@spearce.org>
+References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com> <20080626204606.GX11793@spearce.org> <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Kevin Ballard <Kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 23:04:16 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 23:07:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBydT-00080T-8X
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 23:04:07 +0200
+	id 1KBygI-0000YP-7n
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 23:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbYFZVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 17:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754675AbYFZVDJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 17:03:09 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:30139 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752359AbYFZVDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 17:03:08 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 26 Jun 2008 23:03:06 +0200
-Received: from [192.168.0.2] ([84.75.156.10]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 26 Jun 2008 23:03:05 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <200806262248.02866.trast@student.ethz.ch>
+	id S1753465AbYFZVGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 17:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755907AbYFZVGC
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 17:06:02 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42414 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbYFZVGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 17:06:00 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KByf6-0006Ba-EB; Thu, 26 Jun 2008 17:05:48 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3A80F20FBAE; Thu, 26 Jun 2008 17:05:56 -0400 (EDT)
 Content-Disposition: inline
-X-OriginalArrivalTime: 26 Jun 2008 21:03:06.0074 (UTC) FILETIME=[0799ABA0:01C8D7D0]
+In-Reply-To: <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86488>
 
-I wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > Christian Holtje <docwhat@gmail.com> wrote:
+> >> I have read all the threads on git having trouble with pread() and I  
+> >> didn't see anything to help.
+> > ...
+> >>   Receiving objects: 100% (253/253), 5.27 MiB | 9136 KiB/s, done.
+> >>   fatal: cannot pread pack file: No such file or directory
+> >>   fatal: index-pack failed
+> >> 
+> >> The end of the strace looks like so:
+> >> pread(3, "", 205, 1373)                 = 0
+> >> write(2, "fatal: cannot pread pack file: N"..., 57) = 57
+> >
+> > Hmmph.  So pread for a length of 205 can return 0 on NFS?  Is this
+> > a transient error?  If so, perhaps a patch like this might help:
+...
+> > The file shouldn't be short unless someone truncated it, or there
+> > is a bug in index-pack.  Neither is very likely, but I don't think
+> > we would want to retry pread'ing the same block forever.
 > 
-> and thanks for the fix
+> I don't think we would want to retry even once.  Return value of 0 from
+> pread is defined to be an EOF, isn't it?
 
-Well, actually at second glance your fix is wrong.  Putting it in
-read_config() means it will be executed the first time around already,
-when we read the identity's settings.  So with the patch,
-$smtp_encryption is set to '' during identity parsing, and any value
-set in the global [sendemail] section never takes effect.
+Indeed, it is defined to be EOF, but EOF here makes no sense.
 
-Let's do the following instead.  Sorry for all the noise.
+We have a file position we saw once before as the start of a delta.
+We wrote it down to disk.  We want to go back and open it up, as
+we have the base decompressed and in memory and need to compute
+the SHA-1 of the object that resides at this offset.
 
--- 8< --
-git-send-email: prevent undefined variable warnings if no encryption is set
+And *wham* we get an EOF.  Where there should be data.  Where we
+know there is data.
 
-With the previous patch, not configuring any encryption (either on or
-off) would leave $smtp_encryption undefined.  We simply set it to the
-empty string in that case.
+I'm open to the idea that index-pack has a bug, but I doubt it.
+We shovel hundreds of megabytes through that on a daily basis
+across all of the git users, and nobody ever sees it crash out
+with an EOF in the middle of an object it knows to be present.
+Except poor Christian on NFS.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- git-send-email.perl |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Actually, I think the last time someone reported something like this
+in Git it turned out to be an NFS kernel bug.  I didn't quote it
+in my reply to him, but I think he did say this was a linux client,
+linux server.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 7630720..edb12c2 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -313,6 +313,9 @@ foreach my $setting (values %config_bool_settings) {
- 	${$setting->[0]} = $setting->[1] unless (defined (${$setting->[0]}));
- }
- 
-+# 'default' encryption is none -- this only prevents a warning
-+$smtp_encryption = '' unless (defined $smtp_encryption);
-+
- # Set CC suppressions
- my(%suppress_cc);
- if (@suppress_cc) {
 -- 
-1.5.6.1.187.g35a8
+Shawn.
