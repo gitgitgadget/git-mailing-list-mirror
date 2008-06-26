@@ -1,44 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add 'git-p4.allowSubmit' to git-p4
-Date: Thu, 26 Jun 2008 12:10:49 -0700
-Message-ID: <7v7iccqafa.fsf@gitster.siamese.dyndns.org>
-References: <20080622181239.GA1855@jabba.hq.digizenstudio.com>
- <200806262042.13121.simon@lst.de>
+From: Nikolaj Schumacher <n_schumacher@web.de>
+Subject: Re: [PATCH] git.el: Don't reset HEAD in git-amend-file.
+Date: Thu, 26 Jun 2008 22:17:16 +0200
+Message-ID: <m2y74symr7.fsf@nschum.de>
+References: <m2myle77bb.fsf@nschum.de> <87tzfg7gd5.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jing Xue <jingxue@digizenstudio.com>, git <git@vger.kernel.org>
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Thu Jun 26 21:12:12 2008
+Cc: git@vger.kernel.org
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 22:18:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBwsy-0001hV-Dx
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 21:12:00 +0200
+	id 1KBxvB-0000BD-4x
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 22:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754185AbYFZTK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 15:10:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbYFZTK7
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 15:10:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43458 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359AbYFZTK6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 15:10:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 083091E444;
-	Thu, 26 Jun 2008 15:10:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6F9F71E440; Thu, 26 Jun 2008 15:10:52 -0400 (EDT)
-In-Reply-To: <200806262042.13121.simon@lst.de> (Simon Hausmann's message of
- "Thu, 26 Jun 2008 20:42:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9B085234-43B3-11DD-B14A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756708AbYFZURV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 16:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756608AbYFZURU
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 16:17:20 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:59320 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756256AbYFZURT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 16:17:19 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id CB296E34AE8B;
+	Thu, 26 Jun 2008 22:17:17 +0200 (CEST)
+Received: from [77.135.68.198] (helo=thursday)
+	by smtp05.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1KBxu9-00059U-00; Thu, 26 Jun 2008 22:17:17 +0200
+In-Reply-To: <87tzfg7gd5.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Thu\, 26 Jun 2008 10\:25\:10 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2.50 (darwin)
+X-Sender: n_schumacher@web.de
+X-Provags-ID: V01U2FsdGVkX1/6Lt3ohS3eIuvxVQ/yk2JXDBhX6vkPl5MWT97e
+	Z+VvVN+ixhNVxnc3pdAG8k0VDrZvXw/fQPrcA6IbHkW8ACRhks
+	1cV5NLkn6whBzc7HdrXw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86479>
 
-Thanks, both.
+Alexandre Julliard <julliard@winehq.org> wrote:
+
+> Nikolaj Schumacher <n_schumacher@web.de> writes:
+>
+>> The current implementation of git-amend-file is a little dangerous.
+>> While git --amend is atomic, git-amend-file is not.
+>>
+>> If the user calls it, but doesn't go through with the commit (due to
+>> error or choice), git --reset HEAD^ has been called anyway.
+>
+> That's a feature, even if it's a little dangerous. You have to reset
+> HEAD to be able to properly do diffs, refreshes, etc.  Maybe there should
+> be an easier way to redo the commit if you change your mind, but the
+> command would be much less useful without the reset.
+
+You're right, it would be less powerful.  But I still think it maps
+better to what "git commit --amend" does, i.e. do a few changes and
+amend them.  No need for diffing against the old head, or even showing
+it in the summary.  For doing something more complicated I would reset
+head, too.  So, yes, the command should exist as well.  But I'm not
+so sure about the name...
+
+As an aside, the current method doesn't work on the initial commit.
+
+
+regards,
+Nikolaj Schumacher
