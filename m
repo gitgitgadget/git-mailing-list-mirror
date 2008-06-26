@@ -1,98 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [REPLACEMENT PATCH] parse-opt: fake short strings for callers to  believe in.
-Date: Thu, 26 Jun 2008 11:37:32 +0200
-Message-ID: <20080626093732.GC7237@artemis.madism.org>
-References: <alpine.LFD.1.10.0806222207220.2926@woody.linux-foundation.org> <1214298732-6247-1-git-send-email-madcoder@debian.org> <1214298732-6247-2-git-send-email-madcoder@debian.org> <1214298732-6247-3-git-send-email-madcoder@debian.org> <1214298732-6247-4-git-send-email-madcoder@debian.org> <1214298732-6247-5-git-send-email-madcoder@debian.org> <1214298732-6247-6-git-send-email-madcoder@debian.org> <20080624205801.GG9189@artemis.madism.org> <20080626083506.GA7237@artemis.madism.org> <7v7iccsi6n.fsf@gitster.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
+Date: Thu, 26 Jun 2008 11:37:26 +0200
+Message-ID: <20080626093726.GA24577@elte.hu>
+References: <20080620082034.GA24913@elte.hu> <vpqiqw42vk6.fsf@bauges.imag.fr> <20080620135004.GB8135@elte.hu> <m34p7ombie.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="A6N2fC+uXW/VQSAv";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 11:40:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 11:40:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBnw0-0003in-55
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 11:38:32 +0200
+	id 1KBnw0-0003in-Pd
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 11:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475AbYFZJhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 05:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754931AbYFZJhg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 05:37:36 -0400
-Received: from pan.madism.org ([88.191.52.104]:33835 "EHLO hermes.madism.org"
+	id S1755058AbYFZJhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 05:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755035AbYFZJhi
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 05:37:38 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:43485 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754376AbYFZJhf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 05:37:35 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 09CCB3884C;
-	Thu, 26 Jun 2008 11:37:33 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 9B9E2A54F; Thu, 26 Jun 2008 11:37:32 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1754931AbYFZJhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 05:37:37 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1KBnuy-0006D9-TR
+	from <mingo@elte.hu>; Thu, 26 Jun 2008 11:37:34 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 6F4D53E21DD; Thu, 26 Jun 2008 11:37:23 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7v7iccsi6n.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <m34p7ombie.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86422>
 
 
---A6N2fC+uXW/VQSAv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* Jakub Narebski <jnareb@gmail.com> wrote:
 
-On Thu, Jun 26, 2008 at 08:40:16AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   I saw that you merged this series into pu, for which I'm really glad,
->=20
-> Heh, you shouldn't be glad to have "landed" on 'pu', as being in 'pu' is
-> just a sign of "undecided" ;-)
->=20
-> And thanks for a reminder.  Every bit of help to make integration smoother
-> really helps.
+> Ingo Molnar <mingo@elte.hu> writes:
+> 
+> > * Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> > 
+> > > (BTW, git-foo is being obsoleted in favor of "git foo")
+> > 
+> > hm, can Bash be taught to do command completion on 'git rer<tab>', like 
+> > it is able to do on git-rer<tab> ?
+> 
+> contrib/completion/git-completion.bash in git repository.  
 
-  You're welcome.
+btw., i had to turn this off - it made certain types of file completions 
+almost unusable, by adding a 2-3 seconds delay (during which bash would 
+just spin around burning CPU time calculating its completion guesses).
 
-> I've been swamped and I still have your "revisions: refactor
-> init_revisions and setup_revisions" sitting in my inbox.
+and that was on a 3 GHz dual-core box ...
 
-  Well I'll resubmit it probably in some kind of improved way that mixes
-better within the parse-options stuff. Trust me for not forgetting about
-it. IOW the refactor will remain, but it will probably become some kind
-of series with a second refactor where parse_revisions has a
-'eat-one-option-at-a-time' behavior as well.
+so please do not remove the git-* commands, they are really useful.
 
-  Though I believe the current stuff I point you to, to be quite ready
-(except for the builtin-blame proof of concept that is .. a PoC, not
-really meant for next), and once it'll be ready for next, I'll try to
-work on the options in git again, because it can be done in an
-incremental way now :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---A6N2fC+uXW/VQSAv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkhjY1wACgkQvGr7W6HudhwIlgCgkQ6q1FvWvFegbxXa/VEpmyXn
-dfUAn1b8rcjWdZgnozeOWCPGnq+w5n98
-=etMy
------END PGP SIGNATURE-----
-
---A6N2fC+uXW/VQSAv--
+	Ingo
