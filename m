@@ -1,126 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.6.1
-Date: Wed, 25 Jun 2008 23:21:36 -0700
-Message-ID: <7v3an0u367.fsf@gitster.siamese.dyndns.org>
-References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Windows symlinks
+Date: Thu, 26 Jun 2008 08:33:28 +0200
+Message-ID: <48633838.6060502@op5.se>
+References: <911589C97062424796D53B625CEC0025E46196@USCOBRMFA-SE-70.northamerica.cexp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 08:22:53 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: apenwarr@gmail.com, jnareb@gmail.com, git@vger.kernel.org
+To: Patrick.Higgins@cexp.com
+X-From: git-owner@vger.kernel.org Thu Jun 26 08:34:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBkse-0004sl-AE
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 08:22:52 +0200
+	id 1KBl3x-0007we-QS
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 08:34:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbYFZGV4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 02:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752160AbYFZGV4
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 02:21:56 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65507 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbYFZGVz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2008 02:21:55 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B7AC8E9A3;
-	Thu, 26 Jun 2008 02:21:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2AF97E9A2; Thu, 26 Jun 2008 02:21:46 -0400 (EDT)
-In-Reply-To: <7vmylixr6h.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 18 Jun 2008 16:24:22 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2AE5D60E-4348-11DD-84A6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752615AbYFZGdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 02:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbYFZGdh
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 02:33:37 -0400
+Received: from mail.op5.se ([193.201.96.20]:51477 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750865AbYFZGdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 02:33:36 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 5779624B0AE6;
+	Thu, 26 Jun 2008 08:31:35 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6h29gr8jvBU9; Thu, 26 Jun 2008 08:31:32 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 200531B8037B;
+	Thu, 26 Jun 2008 08:31:31 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <911589C97062424796D53B625CEC0025E46196@USCOBRMFA-SE-70.northamerica.cexp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86404>
 
-The latest maintenance release GIT 1.5.6.1 is available at the
-usual places:
+Patrick.Higgins@cexp.com wrote:
+>> From: Avery Pennarun [mailto:apenwarr@gmail.com]
+>> 
+>>> Agreed. The first thing we started working on was getting
+>> symlinks out of our repositories.
+>>> Unfortunately, we chose to use them because we are using
+>> broken development tools that
+>>> don't support proper modularity. We found the best way to
+>> Perhaps git-submodule would do what you're looking for.
+> 
+> We might be able to get by with them, but submodules appear to be
+> significantly more complex than symlinks, and we sometimes symlink
+> just a file or two if that's all we need. Splitting up submodules to
+> that level of granularity would be hard to manage.
+> 
+> My understanding of the submodule workflow is:
+> 
+> Projects A, B, and C (we actually have about 17 of these) all share
+> common code in project Common. Then, each of A, B, and C adds Common
+> as a submodule. While working on project A, the need arises to modify
+> Common, so the developer changes it there, commits, pushes the change
+> to Common, then commits and pushes the change to A. To update B and
+> C, they would have to change to each of those projects, run a git
+> pull, then git submodule update, and compile and test.
+> 
+> Is that correct? If so, it's a lot more work than letting a symlink
+> propagate the change to all the other projects. Of course, since
+> Windows doesn't have symlinks...
 
-  http://www.kernel.org/pub/software/scm/git/
+That is correct, but you only need to do the change if the projects
+B, C, D, n... actually requires the new feature/bugfix introduced in
+Common. Otherwise you can just leave it as-is.
 
-  git-1.5.6.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.6.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.6.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.6.1-1.$arch.rpm	(RPM)
+Besides, when an important bugfix is added to Common, you probably
+want to cut new releases from B, C, D, n... anyway, so it still
+means doing stuff to those repositories.
 
-GIT v1.5.6.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-
-=46ixes since v1.5.6
-------------------
-
-* Last minute change broke loose object creation on AIX.
-
-* (performance fix) We used to make $GIT_DIR absolute path early in the
-  programs but keeping it relative to the current directory internally
-  gives 1-3 per-cent performance boost.
-
-* bash completion knows the new --graph option to git-log family.
-
-
-* git-diff -c/--cc showed unnecessary "deletion" lines at the context
-  boundary.
-
-* git-for-each-ref ignored %(object) and %(type) requests for tag
-  objects.
-
-* git-merge usage had a typo.
-
-* Rebuilding of git-svn metainfo database did not take rewriteRoot
-  option into account.
-
-* Running "git-rebase --continue/--skip/--abort" before starting a
-  rebase gave nonsense error messages.
-
-----------------------------------------------------------------
-
-Changes since v1.5.6 are as follows:
-
-Brandon Casey (2):
-      git-merge.sh: fix typo in usage message: sucesses --> succeeds
-      t7502-commit.sh: test_must_fail doesn't work with inline environm=
-ent variables
-
-Dan McGee (1):
-      completion: add --graph to log command completion
-
-Dmitry Potapov (1):
-      fix update-hook-example to work with packed tag references
-
-Jan Kr=C3=BCger (2):
-      Documentation: fix formatting in git-svn
-      git-svn: make rebuild respect rewriteRoot option
-
-Jeff King (2):
-      for-each-ref: implement missing tag values
-      clone: create intermediate directories of destination repo
-
-Junio C Hamano (2):
-      diff -c/--cc: do not include uninteresting deletion before leadin=
-g context
-      GIT 1.5.6.1
-
-Linus Torvalds (1):
-      Make git_dir a path relative to work_tree in setup_work_tree()
-
-Michele Ballabio (1):
-      parse-options.c: fix documentation syntax of optional arguments
-
-Patrick Higgins (1):
-      Workaround for AIX mkstemp()
-
-Stephan Beyer (4):
-      git-rebase.sh: Add check if rebase is in progress
-      api-builtin.txt: update and fix typo
-      api-parse-options.txt: Introduce documentation for parse options =
-API
-      Extend parse-options test suite
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
