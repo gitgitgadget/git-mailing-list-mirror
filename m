@@ -1,73 +1,100 @@
-From: John Locke <mail@freelock.com>
-Subject: Re: git svn clone a non-standard repository
-Date: Thu, 26 Jun 2008 11:39:29 -0700
-Message-ID: <4863E261.8040508@freelock.com>
-References: <48613DC5.2000506@freelock.com> <g3to0t$35n$1@ger.gmane.org> <4863E01E.9050108@freelock.com>
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: RE: how do I merge completely unrelated repositories ?
+Date: Thu, 26 Jun 2008 13:42:08 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794302389CAA@emailmn.mqsoftware.com>
+References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com> <20080626094522.GA29404@genesis.frugalware.org> <alpine.DEB.1.00.0806261224020.9925@racer> <20080626161941.GX20723@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Jun 26 20:40:27 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "Oliver Kullmann" <O.Kullmann@swansea.ac.uk>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 20:43:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBwOJ-0006za-7j
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 20:40:19 +0200
+	id 1KBwR5-0007zM-L9
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 20:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbYFZSjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 14:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbYFZSjW
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 14:39:22 -0400
-Received: from logan.freelock.com ([216.231.62.127]:58623 "EHLO
-	logan.freelock.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbYFZSjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 14:39:21 -0400
-Received: from localhost (foraker.freelock.com [127.0.0.1])
-	by logan.freelock.com (Postfix) with ESMTP id 1616CA0456;
-	Thu, 26 Jun 2008 11:39:21 -0700 (PDT)
-Received: from logan.freelock.com ([127.0.0.1])
- by localhost (foraker.freelock.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 05191-06; Thu, 26 Jun 2008 11:39:20 -0700 (PDT)
-Received: from [192.168.9.243] (router.freelock.lan [192.168.9.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by logan.freelock.com (Postfix) with ESMTP id E2F66A0448;
-	Thu, 26 Jun 2008 11:39:20 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <4863E01E.9050108@freelock.com>
-X-Virus-Scanned: by amavisd-new at freelock.com
+	id S1751467AbYFZSmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 14:42:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbYFZSmN
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 14:42:13 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:45225 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbYFZSmM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2008 14:42:12 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <20080626161941.GX20723@cs-wsok.swansea.ac.uk>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: how do I merge completely unrelated repositories ?
+Thread-Index: AcjXuu10phevFfnURvuFgn3tFF6EwQAAMO3w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86472>
 
-Sorry to respond to my own post, but this section looks wrong:
 
-John Locke wrote:
->
->
-> Now the tricky part: I checked out a new "work" branch, and deleted 
-> everything in the working copy. Then, 4 steps out of the howto, 
-> adjusted to pull the particular branch from the current repository 
-> (instead of an outside one):
->
-> git remote add -t dojo -f dojo ./
-> git merge -s ours --no-commit dojo-trunk
-> git read-tree --prefix=dojo/ -u dojo-trunk
-> git commit -m "merge dojo into subdirectory"
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Oliver Kullmann
+> Sent: Thursday, June 26, 2008 11:20 AM
+> To: git@vger.kernel.org
+> Subject: Re: how do I merge completely unrelated repositories ?
+> 
+> Hi,
+> 
+> since a similar question burdens my soul for quite some
+> time, I would like to take the opportunity to extend
+> the question a bit:
+> 
+> I have around 10 CVS repositories, each with around 5 modules.
+> This has developed over time, and now I want to combine them
+> all into a single Git repository, with a new directory
+> structure introduced.
+> 
+> One possibility would be to convert these 50 CVS modules
+> into git repositories, then for each of these git repositories
+> introduce the new tree structure (that is, what is relevant
+> for this part), move all files to their new location (via
+> "git mv"), and finally pull everything in into the common
+> repository.
+> 
+> This is all fine, except of the inability to follow the history
+> nicely (for example, via gitk I will only see the history
+> from the point on where in those temporary git-repositories
+> the files have been moved to their new place).
+> 
+> To avoid this break in the history, it would be great if
+> cvsimport could already move the files to the right place
+> in the directory hierarchy, that is, if an additional
+> parameter P could be given, the initial path, and files
+> will be imported as P/file. Then I could import everything right away
+> into
+> the final git repository, without problems with clashes.
+> I can't find something like that in the documentation.
+> 
+> Is there perhaps some other possibility?
+> It seems easiest to me to do this little bit of surgery
+> at the time of the import, before git gets into his
+> troubles with hash-values.
+> 
+> thanks!
+> 
+> Oliver
+> 
+> 
+Oliver,
+  I wrote a little (314 line) perl script to blend multiple cvsps output
+streams together before handing them to git-cvsimport, it seems to work
+fine.  It should (but I haven't tested it) even still allow the
+incremental approach.
 
-... since I added the remotes as svn-remote sections directly in 
-git-config, I skipped that first line.
+Not sure if I should just attach it here (it's not that big, but still),
+but if you need/want a copy of "cvsps_blender.pl", just send me an email
+and I'll send it out....
 
-I'm going to write this all up on my blog when I get it working correctly...
-
-Cheers,
-
--- 
-John Locke
-"Open Source Solutions for Small Business Problems"
-published by Charles River Media, June 2004
-http://www.freelock.com
+-Kelly
