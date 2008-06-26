@@ -1,143 +1,63 @@
-From: Christian Holtje <docwhat@gmail.com>
-Subject: Re: [PATCH v2] pre-commit hook should ignore carriage returns at EOL
-Date: Wed, 25 Jun 2008 22:41:12 -0400
-Message-ID: <635350D7-2CC0-4FA6-BB74-CE9ED930ECE8@gmail.com>
-References: <3BA781AD-4C44-4F43-902A-07580B6CA075@gmail.com> <20080625181422.GC4039@steel.home> <5B163827-204D-4F76-88C9-8F0C93E60AF3@gmail.com> <7vhcbh1g4e.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 04:42:23 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rebase interactive: usability issue
+Date: Wed, 25 Jun 2008 20:32:04 -0700
+Message-ID: <7vbq1ovpl7.fsf@gitster.siamese.dyndns.org>
+References: <20080625233208.GE5737@dpotapov.dyndns.org>
+ <alpine.DEB.1.00.0806260416410.4503@eeepc-johanness>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 26 05:33:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBhRF-0001BX-Ke
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 04:42:22 +0200
+	id 1KBiF9-0001uW-9Y
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 05:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753076AbYFZClX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 22:41:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbYFZClW
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 22:41:22 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:59358 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753223AbYFZClV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 22:41:21 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1228449ywe.1
-        for <git@vger.kernel.org>; Wed, 25 Jun 2008 19:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=CMexgpOjkx+zUzgisHFL/UWfpOID2HYttEt7zKLW44U=;
-        b=fmDkG0rROwpt4CNi1Bwb5sOoncmzGKNNsceRPWoxQdbeLEXMKiyWrZS6UIsvGTOpWu
-         8++vj0+EBAydgwgm0l5vxHIjT7i3pKu39sUVI3cdO0aSCXV1gCB2BvfJ7G4kXFUc+6Bw
-         utls1W6HtTkTfWHzLj7pr31QA8r1DokayYq+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=mDO+uY6SlWCzWNoeOeEaa4ti4igGIm9mrMR39Mq+uhwM0cya9QcSSK0gRH/I3j+m2e
-         N3EatafSQ/RKhAO7L6ZT5Ga6avMu31fcVvmFk3ai2sOAHF/t6IhiK+ZawEiN6HuoWX5F
-         ThTRY8tFmG6Bm1vcGteY2VliXsSl6lmLdP0hI=
-Received: by 10.150.182.15 with SMTP id e15mr903588ybf.72.1214448075142;
-        Wed, 25 Jun 2008 19:41:15 -0700 (PDT)
-Received: from quicksilver-wifi.gerf.org ( [69.17.59.111])
-        by mx.google.com with ESMTPS id 5sm557620ywd.2.2008.06.25.19.41.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Jun 2008 19:41:13 -0700 (PDT)
-In-Reply-To: <7vhcbh1g4e.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1752578AbYFZDcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 23:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752258AbYFZDcX
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 23:32:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999AbYFZDcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 23:32:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6E695D7BE;
+	Wed, 25 Jun 2008 23:32:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8FCE1D7BC; Wed, 25 Jun 2008 23:32:12 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0806260416410.4503@eeepc-johanness> (Johannes
+ Schindelin's message of "Thu, 26 Jun 2008 04:17:55 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7A8A53B4-4330-11DD-A7DA-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86388>
 
-On Jun 25, 2008, at 3:14 PM, Junio C Hamano wrote:
-> Christian Holtje <docwhat@gmail.com> writes:
->>
->> Junio, do you want me to make this change anyway?  It does make  
->> sense.
->> The unittests for the pre-commit hook may or may not still be   
->> useful.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> NACK.
 >
-> "disable" is not an issue.  The intention has always been that these  
-> are
-> samples, and it was an accident that some packaging shipped them  
-> enabled
-> by mistake.  The patch was to make that mistake harder to make.
->
-> The issue now is about keeping the example hooks _relevant_.  The  
-> one we
-> have does not work well with projects that want to check in files with
-> CRLF line endings (iow, without using autocrlf to attempt to make the
-> project files cross-platform), so it is irrelevant for such projects  
-> with
-> Windows origin.
->
-> The "solution" you are proposing to strip out \r makes the check less
-> useful for projects that want to keep files with LF line endings in  
-> the
-> commited history, because your patch would stop catching such a  
-> mistake of
-> adding an CR before LF.  It is robbing from Peter to pay Paul, and I  
-> am
-> afraid it would make the sample even more irrelevant in the end.  I  
-> do not
-> think we would want to go there.
->
-> I suggested using "diff --check" (and possibly teaching "diff --check"
-> other things the scripted example checks, such as conflict markers),
-> which would know to honor the line endings specified per path via
-> gitattributes(5), instead of building on top of the big Perl script,  
-> and I
-> had an impression that you agreed to the approach.
+> You just broke the 'edit' command.
 
-I'm completely confused how gitattributes and core.autocrlf interact,  
-etc.
+Really?  I thought it would be Ok for "edit" command.
 
-I'm expecting the default behavior is that git will leave my files  
-alone.  This seems to be the case.
+The patch checks the presense of /amend and complains only if it does not
+exist, while you create /amend when you respond to "edit" insn.
 
-In order for the crlf stuff to work, does it need to have  
-core.autocrlf set to true?  If so, that seems wrong.  gitattributes(5)  
-is supposed to let you have fine grain control over files.  In  
-addition, .git/config isn't passed around via clone so .gitattributes  
-works differently depending on who clones it and their settings.
+I was relunctant about the patch not because of "edit", but because I am
+not convinced that it will _never_ make sense to be able to amend while
+the sequence stops with a conflict (as the patch does not give us any way
+to override this rather heavy-handed denial to continue).
 
-Furthermore, how would 'git diff --check' know what the line endings  
-are for a file?  I may have a mostly unix repository but I may have a  
-few crlf text files I need to have checked out as crlf on windows (but  
-not unix).
-
-Shouldn't the crlf stuff be something like:
-.gitattributes:
-   eol=crlf -- dos files. no conversion, but diff --check will know  
-what is what.
-   eol=lf -- unix (otherwise same)
-   eol=convert -- stores internally as lf, converts on the fly to lf  
-or crlf on filesystem based on system preference. diff --check won't  
-worry about new lines matching system-eol if they don't match the eol  
-in the file.
-   eol=binary -- binary
-
-core.eol=crlf -- ony files with all crlf endings are text.
-core.eol=lf -- only files with all lf (no crlf) endings are text.
-core.eol=convert -- crlf changes will be converted to lf as per system- 
-eol
-core.eol=false -- do nothing (default) (binary)
-
-core.system-eol=crlf -- pretend the system is windows
-core.system-eol=lf -- pretend the system is unix
-core.system-eol=auto -- determine from the system (default)
-
-Otherwise, I have no clue what's going on.  Once someone writes this  
-in english, I'll try to write unittests and I'll submit them.  Then  
-someone who knows what he/she is doing can write the actual code to  
-make the tests pass.  Or maybe I'll try, who knows.
-
-Ciao!
+I also was hoping that with enough hooks git-commit already calls, this
+could have been experimented and implemented with hooks without touching C
+layer at least initially, while people can convince themselves that the
+approach is sane (i.e. it _never_ makes sense to do amend upon conflict).
