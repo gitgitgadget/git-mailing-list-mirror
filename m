@@ -1,64 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how do I merge completely unrelated repositories ?
-Date: Thu, 26 Jun 2008 12:25:54 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806261224020.9925@racer>
-References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com> <20080626094522.GA29404@genesis.frugalware.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git rebase interactive: usability issue
+Date: Thu, 26 Jun 2008 15:35:50 +0400
+Message-ID: <20080626113549.GF5737@dpotapov.dyndns.org>
+References: <20080625233208.GE5737@dpotapov.dyndns.org> <alpine.DEB.1.00.0806260416410.4503@eeepc-johanness> <7vbq1ovpl7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian MICHON <christian.michon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 13:29:49 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 13:36:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBpem-0001fO-Qa
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 13:28:53 +0200
+	id 1KBpmV-0004oT-Q3
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 13:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498AbYFZL14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 07:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbYFZL14
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 07:27:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42617 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753818AbYFZL1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 07:27:55 -0400
-Received: (qmail invoked by alias); 26 Jun 2008 11:27:54 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp062) with SMTP; 26 Jun 2008 13:27:54 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+kzgJ24UmkCnwVTxDCQGyh4YMbta+lVUkx2DTxkf
-	Og2a5PU7ZMKXl2
-X-X-Sender: gene099@racer
-In-Reply-To: <20080626094522.GA29404@genesis.frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755078AbYFZLf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 07:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755017AbYFZLf4
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 07:35:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:44495 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754845AbYFZLfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 07:35:55 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1547599fgg.17
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 04:35:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=XFxWOaUxqnkEyEI0VpFlNzSVpgvVF/9s9R8S4z4eZGQ=;
+        b=LwHzYoGnGsC1la1P5lubO7LWd8yMp8I4z4Xy0YrEI8vwuEOgPl9fcpCUzgdgQA4WZR
+         TnGW42RybG1udO+z1HoHTKhda98kzMsjnBH6xwmaaYM3RX63GPyACtSFAfqM0PDbg9Aw
+         hO0RShTO2rzj0M74HByO3i9ee791gApKS/zAs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fyPYEyHv1a6wIOPCN7TWDehrvvMscgaMtzeg6fkNczn+CLPo3bqnbSGGPgjVD2ka48
+         61/6blPgw0AiM4wIxv5Rz5PZ7iW2NY+r+WSnHNXzWn49dxnbUQS4IuJiV0XLX4rzLKZJ
+         c0yagpDjsyFR3s7T1Nk8UESzIstsvfQtnVXa4=
+Received: by 10.86.33.19 with SMTP id g19mr12148051fgg.4.1214480153822;
+        Thu, 26 Jun 2008 04:35:53 -0700 (PDT)
+Received: from localhost ( [85.141.151.43])
+        by mx.google.com with ESMTPS id 4sm15545169fge.5.2008.06.26.04.35.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Jun 2008 04:35:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vbq1ovpl7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86435>
 
-Hi,
+Hi Junio,
 
-On Thu, 26 Jun 2008, Miklos Vajna wrote:
+Please, do not apply my previous patch. I just realized that it will
+break the following sequence of commands when you are stopped on a
+conflicting commit during rebase:
 
-> On Thu, Jun 26, 2008 at 11:39:37AM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
-> > How would you do it, since merge will not merge if it cannot find a
-> > common ancestor ?
-> 
-> Did you try so?
-> 
-> If there are no conflicting paths then a simple
-> 
-> git pull /path/to/other/repo.git master
-> 
-> or similar should work.
+$ edit file
+$ git add file
+$ git commit
+$ git commit --amend
 
-FWIW this is how gitk got into git.git... See 5569bf9b(Do a cross-project 
-merge of Paul Mackerras' gitk visualizer).  This also was often referred 
-to as the "coolest merge ever".
+I don't see a good solution right now. Perhaps, the better approach
+will be to remove the suggestion of using "git commit --amend" and
+instead to recommend to use "git add" to add your changes and then
+run "git rebase --continue". This works regardless whether you stop
+on the "edit" mark or conflict. The only problem with that is what
+if the user actually wanted to edit the commit message. Currently,
+saying just "git rebase --continue" without adding anything will
+not allow you to edit the commit message.
 
-Ciao,
-Dscho
+After studying git-rebase script, I noticed that it always commit
+with the --no-verify option. It makes sense for those commits that
+were just "pick" but IMHO those commits that were edited by users
+probably should be commited in the normal way, so the pre-commit
+hook can ensure that your changes are okay.
+
+
+Dmitry
