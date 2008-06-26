@@ -1,47 +1,64 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: update-index --assume-unchanged doesn't make things go fast
-Date: Thu, 26 Jun 2008 13:22:33 +0200
-Message-ID: <20080626112233.GA17625@cuci.nl>
-References: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: how do I merge completely unrelated repositories ?
+Date: Thu, 26 Jun 2008 12:25:54 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806261224020.9925@racer>
+References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com> <20080626094522.GA29404@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 13:23:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian MICHON <christian.michon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 13:29:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBpZd-0007zd-0a
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 13:23:33 +0200
+	id 1KBpem-0001fO-Qa
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 13:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755474AbYFZLWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 07:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755434AbYFZLWg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 07:22:36 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:46068 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755384AbYFZLWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 07:22:35 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id F1F47545E; Thu, 26 Jun 2008 13:22:33 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754498AbYFZL14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 07:27:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbYFZL14
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 07:27:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42617 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753818AbYFZL1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 07:27:55 -0400
+Received: (qmail invoked by alias); 26 Jun 2008 11:27:54 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp062) with SMTP; 26 Jun 2008 13:27:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+kzgJ24UmkCnwVTxDCQGyh4YMbta+lVUkx2DTxkf
+	Og2a5PU7ZMKXl2
+X-X-Sender: gene099@racer
+In-Reply-To: <20080626094522.GA29404@genesis.frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86434>
 
-Avery Pennarun wrote:
->1) What's a sensible way to tell git to *not* opendir() specific
->directories to look for unexpected files in "git status"?  (I don't
->think I know enough to implement this myself.)
+Hi,
 
-Would checking the mtime on the directory itself help?
--- 
-Sincerely,
-           Stephen R. van den Berg.
+On Thu, 26 Jun 2008, Miklos Vajna wrote:
 
-If mind over matter is a matter of course, does it matter if nobody minds?
+> On Thu, Jun 26, 2008 at 11:39:37AM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
+> > How would you do it, since merge will not merge if it cannot find a
+> > common ancestor ?
+> 
+> Did you try so?
+> 
+> If there are no conflicting paths then a simple
+> 
+> git pull /path/to/other/repo.git master
+> 
+> or similar should work.
+
+FWIW this is how gitk got into git.git... See 5569bf9b(Do a cross-project 
+merge of Paul Mackerras' gitk visualizer).  This also was often referred 
+to as the "coolest merge ever".
+
+Ciao,
+Dscho
