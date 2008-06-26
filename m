@@ -1,88 +1,71 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Errors building git-1.5.6 from source on Mac OS X 10.4.11
-Date: Thu, 26 Jun 2008 20:42:31 +0200
-Message-ID: <81b0412b0806261142r37f84187qf5ff043e1913b4fb@mail.gmail.com>
-References: <2eb980790806250620t73ae0ff7heedb65780a66ad00@mail.gmail.com>
-	 <20080625175311.GB4039@steel.home>
-	 <2eb980790806260148p7713a546k641d96a956e9b0fa@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Introduce leaky().
+Date: Thu, 26 Jun 2008 11:46:43 -0700
+Message-ID: <7vbq1oqbjg.fsf@gitster.siamese.dyndns.org>
+References: <1214338474-16822-1-git-send-email-madcoder@debian.org>
+ <1214338474-16822-2-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Ifejinelo Onyiah" <nelo.onyiah@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 20:43:30 2008
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 20:48:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBwRL-00084m-9O
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 20:43:27 +0200
+	id 1KBwVg-00018U-7X
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 20:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741AbYFZSme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 14:42:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbYFZSme
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 14:42:34 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:59423 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752709AbYFZSmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 14:42:32 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so140916fkq.5
-        for <git@vger.kernel.org>; Thu, 26 Jun 2008 11:42:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0qmQNpJoXZxVFKHMDfp8Sz+OdtAizbVzAmO8XCX1QEk=;
-        b=FGiCy9zqvwIySxauZ/hP6psCIf8WpQiS2BxFrM0tERwyuSGphpFBhl1fuZ2Tq0bUyj
-         D2kUXSsrjFau/Z12hD8O6RPlPc0gwR6o1NHekcBZav9/qHc/a+6cCYxoLOvJDO1QmD8j
-         FJcYzCG6XAJ/6RQYcFwXAnw9DSuz5LwOejLqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=hidyc9K8Xur6fMHzmWJSYMoKzI83EvRBzTn5qSnMo5Phckhdgpd4P7HuObpslwIT9D
-         w55dlym2aT4W1NaivBPgGb9vw0EAGen+1xLmuyfN0plXFE5uG8fVmvJdcY7iUXf8NPBL
-         z37GD9tp47OYnE3a1MP4ZAa905WLrBuX5QMjc=
-Received: by 10.78.146.13 with SMTP id t13mr146227hud.101.1214505751064;
-        Thu, 26 Jun 2008 11:42:31 -0700 (PDT)
-Received: by 10.78.97.4 with HTTP; Thu, 26 Jun 2008 11:42:31 -0700 (PDT)
-In-Reply-To: <2eb980790806260148p7713a546k641d96a956e9b0fa@mail.gmail.com>
-Content-Disposition: inline
+	id S1753624AbYFZSq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 14:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYFZSq7
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 14:46:59 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37200 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbYFZSq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 14:46:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C428D1E1AF;
+	Thu, 26 Jun 2008 14:46:56 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 16BE61E1AD; Thu, 26 Jun 2008 14:46:50 -0400 (EDT)
+In-Reply-To: <1214338474-16822-2-git-send-email-madcoder@debian.org> (Pierre
+ Habouzit's message of "Tue, 24 Jun 2008 22:14:33 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4096A948-43B0-11DD-B418-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86475>
 
-2008/6/26 Ifejinelo Onyiah <nelo.onyiah@googlemail.com>:
-> 2008/6/25 Alex Riesen <raa.lkml@gmail.com>:
->> Ifejinelo Onyiah, Wed, Jun 25, 2008 15:20:39 +0200:
->>>
->>> They all run fine but when I issue the make test command, it dies at
->>> the following:
->>>
->>> % make test
->>>
->>> ... TRUNCATED OUTPUT ...
->>>
->>> *** t2004-checkout-cache-temp.sh ***
->>> * FAIL 1: preparation
->>>
->>
->> If you don't mind helping the investigation a bit, could you please go
->> into the t/ directory and run
->>
->>    bash -x t2004-checkout-cache-temp.sh -d -v -i
->>
->> and post the output here?
->
-> I ran that command and it seemed to run with no problems. I have
-> provided the output in 2 attached text files. I hope that is ok.
+I looked at the patch (and your updated parseopt series that depends on
+this that is queued at madism.org) again, but I have to say I do not like
+it, not because I do not want leaks, nor because I do not want explicit
+markings.  The issue of helping valgrind sessions is worth addressing.
 
-could you try the command _without_ "bash -x"?
-Like this:
+However.
 
-    cd t
-    ./t2004-checkout-cache-temp.sh -d -v -i
+First of all, it is unclear what the semantics of leaky() is.  Do you want
+to mark all things that will be unreacheable from anywhere in the program
+at the end, or do you want to mark all things that we have obtained from
+malloc(3) and friends but have not free(3)ed?  Without a clear semantics
+to use as the guiding principle, it would be hard for people to use this
+macro properly to help debugging leaks.
+
+Specifically, how would you envision to handle allocations of objects that
+will be reachable from object.c::obj_hash at the program end?  We do not
+have to (and we should not) mark them using the former semantics, but we
+should with the latter semantics.
+
+The user would also need to worry about not freeing the original
+allocation pointer when something is realloc(3)ed, which means either
+finding the last realloc(3) of the object (that is logically the same, but
+just being extended) and mark the pointer as leaky() after that realloc,
+or unregister the original pointer from leaks before calling realloc and
+register what comes back.  It will easily get messy.
+
+By the way, the series queued in your repository still has "s/pring/print/"
+typo in 4/7 and "argv not NULL terminated" comment in 6/7.
