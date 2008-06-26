@@ -1,71 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Introduce leaky().
-Date: Thu, 26 Jun 2008 11:46:43 -0700
-Message-ID: <7vbq1oqbjg.fsf@gitster.siamese.dyndns.org>
-References: <1214338474-16822-1-git-send-email-madcoder@debian.org>
- <1214338474-16822-2-git-send-email-madcoder@debian.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-svn branches creation question
+Date: Thu, 26 Jun 2008 21:05:22 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4863E872.4070904@obry.net>
+References: <4863BBFB.8010305@obry.net> <32541b130806260908m7ca2060bub071da52aa7a33ce@mail.gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 20:48:05 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing-List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 21:06:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBwVg-00018U-7X
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 20:47:56 +0200
+	id 1KBwne-0007vw-Dh
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 21:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753624AbYFZSq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 14:46:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYFZSq7
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 14:46:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37200 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbYFZSq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 14:46:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C428D1E1AF;
-	Thu, 26 Jun 2008 14:46:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 16BE61E1AD; Thu, 26 Jun 2008 14:46:50 -0400 (EDT)
-In-Reply-To: <1214338474-16822-2-git-send-email-madcoder@debian.org> (Pierre
- Habouzit's message of "Tue, 24 Jun 2008 22:14:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4096A948-43B0-11DD-B418-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754961AbYFZTFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 15:05:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbYFZTFd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 15:05:33 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:8903 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754247AbYFZTFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 15:05:32 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so35839ywe.1
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 12:05:28 -0700 (PDT)
+Received: by 10.103.170.13 with SMTP id x13mr164150muo.52.1214507127678;
+        Thu, 26 Jun 2008 12:05:27 -0700 (PDT)
+Received: from ?192.168.0.100? ( [86.217.126.114])
+        by mx.google.com with ESMTPS id y6sm2234938mug.15.2008.06.26.12.05.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Jun 2008 12:05:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <32541b130806260908m7ca2060bub071da52aa7a33ce@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86476>
 
-I looked at the patch (and your updated parseopt series that depends on
-this that is queued at madism.org) again, but I have to say I do not like
-it, not because I do not want leaks, nor because I do not want explicit
-markings.  The issue of helping valgrind sessions is worth addressing.
+Avery,
 
-However.
+> And creating branches in svn is a single command, even if you don't
+> have an svn checkout:
+> 
+>    svn cp $SVN/trunk $SVN/branches/whatever
 
-First of all, it is unclear what the semantics of leaky() is.  Do you want
-to mark all things that will be unreacheable from anywhere in the program
-at the end, or do you want to mark all things that we have obtained from
-malloc(3) and friends but have not free(3)ed?  Without a clear semantics
-to use as the guiding principle, it would be hard for people to use this
-macro properly to help debugging leaks.
+That's what I'm doing as I said in my message.
 
-Specifically, how would you envision to handle allocations of objects that
-will be reachable from object.c::obj_hash at the program end?  We do not
-have to (and we should not) mark them using the former semantics, but we
-should with the latter semantics.
+> So it seems unnecessary to duplicate this feature in git.
 
-The user would also need to worry about not freeing the original
-allocation pointer when something is realloc(3)ed, which means either
-finding the last realloc(3) of the object (that is logically the same, but
-just being extended) and mark the pointer as leaky() after that realloc,
-or unregister the original pointer from leaks before calling realloc and
-register what comes back.  It will easily get messy.
+Well it would be quite handy to work on Git directly (eventually 
+off-line) and doing the final "git svn dcommit" to update the subversion 
+repository and creating the branches if necessary.
 
-By the way, the series queued in your repository still has "s/pring/print/"
-typo in 4/7 and "argv not NULL terminated" comment in 6/7.
+Pascal.
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
