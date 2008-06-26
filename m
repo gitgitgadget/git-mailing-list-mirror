@@ -1,63 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rebase interactive: usability issue
-Date: Wed, 25 Jun 2008 20:32:04 -0700
-Message-ID: <7vbq1ovpl7.fsf@gitster.siamese.dyndns.org>
-References: <20080625233208.GE5737@dpotapov.dyndns.org>
- <alpine.DEB.1.00.0806260416410.4503@eeepc-johanness>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: Windows symlinks
+Date: Wed, 25 Jun 2008 23:50:19 -0400
+Message-ID: <76718490806252050q372519bjcca1ca7637b48d97@mail.gmail.com>
+References: <911589C97062424796D53B625CEC0025E4618F@USCOBRMFA-SE-70.northamerica.cexp.com>
+	 <32541b130806241618p69f6167dycb09cdec1af8ba0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 26 05:33:57 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Patrick.Higgins@cexp.com" <Patrick.Higgins@cexp.com>,
+	git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 05:51:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBiF9-0001uW-9Y
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 05:33:55 +0200
+	id 1KBiVx-00053I-Q3
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 05:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752578AbYFZDcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 23:32:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752258AbYFZDcX
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 23:32:23 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64934 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999AbYFZDcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 23:32:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6E695D7BE;
-	Wed, 25 Jun 2008 23:32:18 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8FCE1D7BC; Wed, 25 Jun 2008 23:32:12 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0806260416410.4503@eeepc-johanness> (Johannes
- Schindelin's message of "Thu, 26 Jun 2008 04:17:55 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7A8A53B4-4330-11DD-A7DA-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753733AbYFZDuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 23:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYFZDuV
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 23:50:21 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:45130 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709AbYFZDuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 23:50:20 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1274732waf.23
+        for <git@vger.kernel.org>; Wed, 25 Jun 2008 20:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=/iRvleRNNAwGY1Y3OhIYe+VFIhXGWGxfGeaTibZT3rA=;
+        b=ilI1VlvnvUvpTjTxgov6GhfcXsqAETgMGH+yskPpDlrXaHoNC89hDlB5F9sKlgx9Zx
+         sYq762343e/Saz+MNoDp+SoObp0GaLlvogajvBd1P0Y2qXS8WLN/ppTZTez++RKMUpGa
+         OqiuEXBvMO3fGfY6rbpYtymIohjyMzBBaoid8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=KzL/xoUKKRU39iEo114xSLM+Cf8BQmMkgC4rKMw32hg3G2UHuLOWgDZXVdwVoLbYsY
+         26iyTb2fF5GUGVMj/PBm8DCfxiGErpYH2TSZlQNvzUijO0aiiA6L6iKozsWeBWeEQEVg
+         5RZo+EUfuDf4IX5mcHsQZmp2hXrdLoQcKJeXA=
+Received: by 10.114.181.6 with SMTP id d6mr6731094waf.50.1214452219424;
+        Wed, 25 Jun 2008 20:50:19 -0700 (PDT)
+Received: by 10.115.78.6 with HTTP; Wed, 25 Jun 2008 20:50:19 -0700 (PDT)
+In-Reply-To: <32541b130806241618p69f6167dycb09cdec1af8ba0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86389>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jun 24, 2008 at 7:18 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
+> My understanding of Clearcase is that it actually loads a virtual
+> filesystem driver in Windows and does all kinds of insane magic -
 
-> NACK.
->
-> You just broke the 'edit' command.
+Just FYI, this is only the case if you're using so-called dynamic
+views, which require the MVFS
+driver, as you say. The OP said he was using snapshot views -- these
+don't use MVFS and instead just checkout to the OS's native
+filesystem.
 
-Really?  I thought it would be Ok for "edit" command.
-
-The patch checks the presense of /amend and complains only if it does not
-exist, while you create /amend when you respond to "edit" insn.
-
-I was relunctant about the patch not because of "edit", but because I am
-not convinced that it will _never_ make sense to be able to amend while
-the sequence stops with a conflict (as the patch does not give us any way
-to override this rather heavy-handed denial to continue).
-
-I also was hoping that with enough hooks git-commit already calls, this
-could have been experimented and implemented with hooks without touching C
-layer at least initially, while people can convince themselves that the
-approach is sane (i.e. it _never_ makes sense to do amend upon conflict).
+j.
