@@ -1,58 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told
- to
-Date: Thu, 26 Jun 2008 13:09:10 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806261308420.9925@racer>
-References: <20080624222105.GA24549@dervierte> <1214346098-24584-1-git-send-email-stevenrwalter@gmail.com> <7vwskea2ik.fsf@gitster.siamese.dyndns.org> <48620C1A.6000509@panasas.com> <alpine.DEB.1.00.0806251109380.9925@racer> <486220CE.3070103@viscovery.net>
- <alpine.DEB.1.00.0806251334060.9925@racer> <20080625135100.GF20361@mit.edu> <vpqy74scsln.fsf@bauges.imag.fr>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: git rebase interactive: usability issue
+Date: Thu, 26 Jun 2008 08:13:03 -0400
+Message-ID: <20080626121303.GF8610@mit.edu>
+References: <20080625233208.GE5737@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 26 14:12:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 14:14:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBqKe-0000G5-7I
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 14:12:08 +0200
+	id 1KBqMX-0000yH-LO
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 14:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbYFZMLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 08:11:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbYFZMLM
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 08:11:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58454 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751458AbYFZMLL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 08:11:11 -0400
-Received: (qmail invoked by alias); 26 Jun 2008 12:11:09 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp009) with SMTP; 26 Jun 2008 14:11:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1802dtIoCg0hQnfLo6w08oG56uYe5L0HUr+6w8cTj
-	UfUGV7QyNx4mGo
-X-X-Sender: gene099@racer
-In-Reply-To: <vpqy74scsln.fsf@bauges.imag.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751245AbYFZMNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 08:13:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbYFZMNJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 08:13:09 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:52268 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750997AbYFZMNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 08:13:08 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KBqLa-0002QC-9y; Thu, 26 Jun 2008 08:13:06 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KBqLX-0005B8-NM; Thu, 26 Jun 2008 08:13:03 -0400
+Content-Disposition: inline
+In-Reply-To: <20080625233208.GE5737@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86444>
 
-Hi,
+On Thu, Jun 26, 2008 at 03:32:08AM +0400, Dmitry Potapov wrote:
+> Though the user realized his mistake after my explanation of how git
+> rebase works, I still believe it is a serious usability issue, because
+> the same command: "git commit --amend" produces drastically different
+> results depends on whether the rebase process stopped due to conflict
+> or on the "edit" mark. Moreover, the commit message of second patch is
+> getting lost as result of using "git commit --amend" in the former case.
 
-On Thu, 26 Jun 2008, Matthieu Moy wrote:
+This is true whether it a conflict is getting addressed during a
+git-rebase or a git-merge.  The observation I would make is that git
+has stopped a rebase or a merge with a conflict that the user needs to
+fix up, a "git commit --amend" is almost always the wrong thing.  So I
+could imagine a safety where after git discovers a merge conflict, it
+sets a flag (probably a file in the .git directory) which causes "git
+commit --amend" stop withan error message "this probably wasn't what
+you wanted", and telling the user to use a --force command if this is
+what they wanted.  This flag would be cleared on the next "git commit"
+or "git reset".
 
-> Theodore Tso <tytso@mit.edu> writes:
-> 
-> > for i in $*
-> 
-> Detail: you meant "$@", your version isn't whitespace-robust.
+In fact, we do this already for git-merge.  Why not just do the same
+thing in the middle of a merge conflict with git-rebase?
 
-In that case, you'd have to quote the variables in "$prefix$i" and "> $i", 
-too.
-
-Ciao,
-Dscho
+      	     	       	       		- Ted
