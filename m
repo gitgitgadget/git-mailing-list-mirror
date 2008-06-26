@@ -6,19 +6,19 @@ X-Spam-Status: No, score=2.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
 	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
-Received: (qmail 24351 invoked by uid 111); 26 Jun 2008 06:17:45 -0000
+Received: (qmail 28074 invoked by uid 111); 26 Jun 2008 17:43:02 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 26 Jun 2008 02:17:38 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 26 Jun 2008 13:42:55 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbYFZGRQ (ORCPT <rfc822;peff@peff.net>);
-	Thu, 26 Jun 2008 02:17:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYFZGRQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 02:17:16 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60752 "HELO
+	id S1757459AbYFZRmo (ORCPT <rfc822;peff@peff.net>);
+	Thu, 26 Jun 2008 13:42:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757409AbYFZRmn
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 13:42:43 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60925 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751513AbYFZGRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 02:17:13 -0400
-Received: (qmail 10482 invoked by uid 90); 26 Jun 2008 06:17:02 -0000
+	with SMTP id S1753020AbYFZRmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 13:42:42 -0400
+Received: (qmail 15872 invoked by uid 90); 26 Jun 2008 17:42:38 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -27,74 +27,113 @@ To:	Theodore Tso <tytso@mit.edu>
 Cc:	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: policy and mechanism for less-connected clients
 X-Mailer: Willow v0.02
-Date:	Thu, 26 Jun 2008 06:08:55 -0000
-Message-ID: <willow-jeske-01l6jzyMFEDjCXvz>
-Received: from 67.188.42.104 at Thu, 26 Jun 2008 06:08:55 -0000
-References: <20080626052310.GC8610@mit.edu>
-	<willow-jeske-01l6@3PlFEDjCVAh-01l6it3ZFEDjCd5X>
-In-Reply-To: <20080626052310.GC8610@mit.edu>
+Date:	Thu, 26 Jun 2008 16:21:20 -0000
+Message-ID: <willow-jeske-01l6zg4eFEDjCdFw>
+Received: from 67.188.42.104 at Thu, 26 Jun 2008 16:21:20 -0000
+References: <20080626113710.GD8610@mit.edu>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6rSE7FEDjCYv6>
+In-Reply-To: <20080626113710.GD8610@mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+
+Thanks for pointing out the issue with automatically committing and bisect.
+You're right, if I'm going to automatically commit under the covers I should
+use stash instead. However, I don't want users to keep a dirty tree, and now
+they don't have to.
+
+To use your two-months-without-checkins example.. one of the big problems I
+have with cvs/p4 is this notion that I'm not supposed to record my work every
+5-50 minutes. I checkin every time my code does something new and the tests
+pass. In my own startup projects/companies this is fine, because it's my tree.
+As soon as the group policy stops me from checking in every 5-50 minutes, I
+painfully make my own branch so I can checkin on my schedule. I'm starting to
+witness some users solving this problem in a very libertarian way, by using git
+to manage their local changes even though they work in a code-review restricted
+cvs/p4 environment.
+
 -- Theodore Tso wrote:
-> If you are going to preserve the workflow of CVS, then you're
-> also going to preserve all of the downsides of CVS.
+> I'd suggest that you try using git straight for a bit longer, before
+> you start drawing these conclusions. Trust me, the concepts of git
+> really aren't that hard to explain to people; that's not what you need
+> to hide from people coming from the CVS world.  The hard part is the
+> fact that git's UI has all sorts of non-linearities and that git's
+> documentation and introductory tutorials are not as good as it should
+> be.  (Although it's gotten a LOT better than just a year or two ago.)
 
-I don't agree with this, and I don't see you proposing any logic that proves it
-to be true. Of course I plan to make small changes. However, in my previous
-message I proposed 3 same-workflow improvements, and 2 small-workflow-extension
-improvements. I have more in mind..
+I agree 100%. I am using git straight. I think I have read more git
+documentation and definitely read more git source-code in trying to use it over
+a couple months, than I have read of cvs/p4 in decades - just to try to
+understand which of the 3 ways to get from here-to-there is correct, and then
+when I pull back the red curtain a little further I realize I was totally
+wrong.
 
-http://marc.info/?l=git&m=121442660332114&w=2
+This started as a "cheat sheet" file with the combination of git commands I had
+to execute to perform each task. However, they are only valid in the context of
+a git-repo that's configured in certain ways. I realized it would be simpler
+(even for just me) if I had something that grouped commands and did 'lint'
+sanity checks, with helpful tutorial responses. Thus the wrapper.
 
-Maybe it was too confusing or too long to read. Just consider the first simple
-example.
+> Exactly.  So what I would ask you to consider is that you may find it
+> personally useful to design this system,
 
-Currently "cvs up" in a dirty tree is a destructive operation. If you merge
-badly, you can't get back to your local working files before the "up". I've
-been burned by this in cvs/perforce enough that now when there are complicated
-update-conflicts I tar up the tree before trying to fix them. I still can't
-really get back to the pre-up state.
+I see where you're going with this, and I agree...
 
-I can be better than cvs with the EXACT same workflow, by checking in their
-local changes (git checkin;) and then doing the "up" (git pull;). If they
-decide they botched their merge, they can get back to where they were before
-the UP because I'm using a richer underlying mechanism to implement their
-workflow.
+> but afterwards, before you inflict it on projects, and deal
+> with some of the attendent side effects (like all of these trash
+> commits causing "git bisect" to go down the drain), that you
+> consider whether *now* that you understand how git works and
+> why it does some of the things it does, and what the
+> shortcomings of the git porcelain are from a UI perspective, whether
+> CVS refugees really would be best served by this system you are
+> designing, or whether a few wrapper scripts to hide some of the more
+> pointy spikes in git's CLI, plus some better tutorials, might in the
+> long run be much better for these CVS developers that you are trying
+> to serve.
 
-Do you think that's not an improvement? or not the same workflow? It sure seems
-like a same-workflow improvement to me.
+Absolutly. I hope that you can understand my goal of an 'interactive command
+line/tutorial linear path from cvs/p4 to git'. One where they don't get stuck
+and turn back, but also where they work in ways which are 'fairly reasonable'
+in the git community. I also hope you'll help me evaluate whether I've succeed
+or just made another confusing set of compromises that are no good. There is no
+need for more of the latter.
 
-----
+I also have a group that's been using git and wants to switch back to cvs/p4.
+They are willing to give up tracking their local changes (or do it with private
+gits) in order to get a simpler model for 'shared head of tree' development. I
+think they are a good test-case as well.
 
-git's mechanisms are really great for making a hybrid central/distributed
-system which has the simplicity of cvs/perforce and several of the benefits of
-git. The git interface is just too complicated to be used for this.
-Fortunately, building on git means that power users will still be able to use
-git directly and people can distribute the repositories as much as they want.
+------
 
-> how much change are you willing to make them deviate from
-> the CVS workflow, and how much smarts are you willing to assume that
-> they have?
+So far, 1/2 of the lines of my script merely transitional documentation from
+p4/cvs to git. As I write more of this prose, I realize that it may be helpful
+as transition documentation webpages. However, it is much more than passive
+documentation, because if there are 3 steps from here to there, I can look at
+the repository and see where the user is, and tell them what they need to do
+next.
 
-Good question. I'm working on a command-line wrapper for git that does it.
-Digging into the "plumbling" is making it more obvious why I find git's
-porcelain operations hard to understand. I think I can make a 2-repository
-setup (personal-inaccessible, origin) work like cvs/perforce with local
-checkins, and I can make a 3-repository setup (personal-inaccessible,
-personal-accessible, origin) work nearly the same as cvs while allowing
-distributed collaboration. I think I will need a tiny bit of custom server
-support (to create the personal-accessible repositories automatically).
+As one example, I have a command "pending" (like p4 pending) which shows local
+changes in my branch (on my inaccessible firewalled machine) which are not on
+my origin repo(s). Except that in order for this concept to even make sense, it
+first:
 
-Right now it looks like I'll be a simple hybrid of cvs/perforce, with a couple
-git concepts peppered in. (but just a couple) It seems simple so far, it's just
-taking me a while to dig through git-plumbing to understand it.
+- checks if I have an 'origin' for a public repo
+- checks that my current branch is tracking an [some]origin
+- if it is mapped to a 'myorigin' personal published repo
+(because I'm firewalled), it checks that the name of the
+branch matches the myorigin/branchname (because it's easier
+to think straight if myorigin is a literal copy of my local
+repo)
+- shows what changes I have which are not submitted to myorigin
+and/or origin
 
-Also remember, this isn't built to handle what linux-kernel folks do with git.
-It's designed to provide a familiar environment for cvs/perforce style users
-that is just as simple but a whole lot better. Even if it eventually gets lots
-of git concepts, they won't HAVE to understand them to use it. They can learn
-them as they go.  This is obviously something that people want, as cogito and
-easy-git show.
+If at any step along that path something doesn't check out, it explains what
+didn't check out, and has a helpful help-page about ways that I might configure
+it so 'pending' can do something useful. Think of it like "git lint" and some
+documentation.
+
+That said, it's trickier than I thought, because git is capable of working in
+so many ways. (all that complexity isn't there for nothing) Time will tell if I
+can strike a useful balance.
