@@ -1,73 +1,92 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: how do I merge completely unrelated repositories ?
-Date: Thu, 26 Jun 2008 11:45:22 +0200
-Message-ID: <20080626094522.GA29404@genesis.frugalware.org>
-References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com>
+From: "Flavio Poletti" <flavio@polettix.it>
+Subject: git-diff/git-format-patch safe for GNU (or POSIX) patch?
+Date: Thu, 26 Jun 2008 12:27:39 +0200 (CEST)
+Message-ID: <58230.213.203.159.164.1214476059.squirrel@upmail.polettix.it>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vPBVJJIgwluSVH2g"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 11:46:28 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 26 12:15:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBo3Z-00078I-Av
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 11:46:21 +0200
+	id 1KBoVN-0008RR-VY
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:15:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbYFZJpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 05:45:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYFZJpZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 05:45:25 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:33022 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751661AbYFZJpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 05:45:24 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 454391B2518;
-	Thu, 26 Jun 2008 11:45:23 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 50D9144697;
-	Thu, 26 Jun 2008 11:19:27 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 0C919177001C; Thu, 26 Jun 2008 11:45:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752800AbYFZKOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 06:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752600AbYFZKOG
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:14:06 -0400
+Received: from [195.130.249.251] ([195.130.249.251]:43454 "HELO desantix.it"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with SMTP
+	id S1752784AbYFZKOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 06:14:04 -0400
+Received: (qmail 26724 invoked by uid 511); 26 Jun 2008 10:27:39 -0000
+Received: from localhost (HELO upmail.polettix.it) (127.0.0.1)
+  by localhost with SMTP; 26 Jun 2008 10:27:39 -0000
+Received: from 213.203.159.164
+        (SquirrelMail authenticated user flavio@polettix.it)
+        by upmail.polettix.it with HTTP;
+        Thu, 26 Jun 2008 12:27:39 +0200 (CEST)
+User-Agent: SquirrelMail/1.4.6
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86425>
 
+Hi,
 
---vPBVJJIgwluSVH2g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+   I had to dig a problem in Glib ("base" library for GTK) in Debian Etch
+recently and I decided to manage changes/diffs with git. It's just so
+easy to use and avoids all the usual copy-the-tree-then-diff that I
+used before.
 
-On Thu, Jun 26, 2008 at 11:39:37AM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
-> How would you do it, since merge will not merge if it cannot find a
-> common ancestor ?
+When I was happy with the modifications, I used git-format-patch to
+produce the message and the patch to send. I then saw that the format is a
+little different with respect to what diff -u produces; in particular, I
+noticed that there was an added line between the "diff --git..." line and
+the one stating the "origin" file:
 
-Did you try so?
+                   diff --git a/glib/gstrfuncs.c b/glib/gstrfuncs.c
+*** this one ***   index 61d11ed..7786f10 100644
+                   --- a/glib/gstrfuncs.c
+                   +++ b/glib/gstrfuncs.c
 
-If there are no conflicting paths then a simple
+Moreover, each chunk's header contained added stuff, like the
+"g_ascii_strtoll..." stuff in the following example line:
 
-git pull /path/to/other/repo.git master
+    @@ -813,6 +813,8 @@ g_ascii_strtoll (const gchar *nptr,
 
-or similar should work.
+Before sending the patch, I tried to "reverse" these "deviations" from the
+normal diff output, but I was quite sure there was no need to do this. I
+then tried to use GNU patch with the unaltered message, and it seemed
+quite happy with all the extra stuff.
 
---vPBVJJIgwluSVH2g
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Just to be on the safe side, I tried to look for:
+1. the "official" unified diff spec
+2. a description of what patch is willing to consider valid input
+3. some notes about how git-diff copes with patch compatibility
+4. some hints to use git for working on projects that do not use any other
+VCS, or for which one only wants to produce and send a quick patch
+starting from a tarball.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I had no luck with the first two attempts, and a moderate luck with the
+third: there is more than one email from Junio C. Hamano either stating
+that git-diff strives to be nice with patch, or containing patches to
+address possible conformance issues. I was also quite unluck with the
+fourth attempt, even if this is surely due to my poor websurfing-fu.
 
-iEYEARECAAYFAkhjZTIACgkQe81tAgORUJbQ8gCfVmn+KP6pevYZHgiZpYPRwa9V
-Di4AniUpnTFEYilm22BDalTlIPUQN8ag
-=3S+D
------END PGP SIGNATURE-----
+Anyway, the messages from Mr. Hamano kind-of answer the question in the
+subject, but in a somehow "implicit" way rather than explicitly. In
+particular, I wonder if there is any document about how a "valid" unified
+diff should look like (including optional valid extensions) that was used
+as input and reference for git-diff development. Or had you just to figure
+it out from diff/patch sources?
 
---vPBVJJIgwluSVH2g--
+Thank you,
+
+   Flavio.
