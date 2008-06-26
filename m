@@ -1,87 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Ask for "git program" even against git-daemon
-Date: Wed, 25 Jun 2008 17:07:51 -0700
-Message-ID: <7vd4m5vz1k.fsf@gitster.siamese.dyndns.org>
-References: <20080625044409.GE11793@spearce.org>
- <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org>
- <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org>
- <7vy74u5bkk.fsf@gitster.siamese.dyndns.org>
- <20080625053848.GJ11793@spearce.org>
- <7v4p7hxhbd.fsf@gitster.siamese.dyndns.org>
- <7vvdzxw2eo.fsf_-_@gitster.siamese.dyndns.org>
- <7vr6alw28s.fsf_-_@gitster.siamese.dyndns.org>
- <20080625232727.GU11793@spearce.org>
- <7viqvxw0i7.fsf@gitster.siamese.dyndns.org>
- <20080625235724.GV11793@spearce.org>
+From: M <mrohrmoser@gmx.de>
+Subject: Re: gitwiki/EclipsePlugin
+Date: Thu, 26 Jun 2008 02:27:11 +0200
+Message-ID: <4862E25F.20806@gmx.de>
+References: <4862737E.6010502@gmx.de> <200806252055.46132.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@lavabit.com>, Miklos Vajna <vmiklos@frugalware.org>,
-	pclouds@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 02:09:07 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 02:29:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBf2v-0001Sa-Fa
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 02:09:05 +0200
+	id 1KBfMf-0006XW-12
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 02:29:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbYFZAII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2008 20:08:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbYFZAIH
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 20:08:07 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54232 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbYFZAIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2008 20:08:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4AB8CB443;
-	Wed, 25 Jun 2008 20:08:04 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 12D5EB442; Wed, 25 Jun 2008 20:07:55 -0400 (EDT)
-In-Reply-To: <20080625235724.GV11793@spearce.org> (Shawn O. Pearce's message
- of "Wed, 25 Jun 2008 19:57:24 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F2803838-4313-11DD-942D-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755295AbYFZA15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2008 20:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753946AbYFZA14
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jun 2008 20:27:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51031 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755295AbYFZA1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2008 20:27:15 -0400
+Received: (qmail invoked by alias); 26 Jun 2008 00:27:13 -0000
+Received: from p5496FE59.dip.t-dialin.net (EHLO [192.168.0.3]) [84.150.254.89]
+  by mail.gmx.net (mp015) with SMTP; 26 Jun 2008 02:27:13 +0200
+X-Authenticated: #955365
+X-Provags-ID: V01U2FsdGVkX1+K7K8xdHKKfGx1e3HXSfk64I5+4khWwmN2SkHyka
+	gEgwQf1Ku3A9Uu
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <200806252055.46132.robin.rosenberg.lists@dewire.com>
+X-Enigmail-Version: 0.95.6
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86379>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> >
->> > But I wonder if this patch is even worth it at some later point
->> > in time.  Are we also going to change git-daemon to stop accepting
->> > "git-" form?  Is it a worthwhile change?
->> 
->> This was merely responding to...
->> 
->>     From: "Shawn O. Pearce" <spearce@spearce.org>
->>     Subject: Re: [PATCH] Keep some git-* programs in $(bindir)
->>     Date: Wed, 25 Jun 2008 00:37:41 -0400
->>     Message-ID: <20080625043741.GD11793@spearce.org>
->> 
->>     Daniel Barkalow <barkalow@iabervon.org> wrote:
->>     > ...
->>     > Should they use "git upload-pack" [...]
->> 
->>     IMHO they should in the future use "git upload-pack".
->
-> Sorry I wasn't clear. I was talking about the SSH transport only.
-> For git:// we could just always send git-upload-pack, like your
-> transitional patch does.  Then we stay compatible with even very
-> old git:// servers.
+Hi Robin,
+first of all thanks for opening git to the eclipse users.
 
-Ok, if that is the plan, then we wouldn't even need to futureproof
-git-daemon at all.
+Robin Rosenberg schrieb:
+| onsdagen den 25 juni 2008 18.34.06 skrev M:
+|> Hi list,
+|> I felt quite helpless when trying to get egit running as neither
+|> http://git.or.cz/gitwiki/EclipsePlugin nor the README/INSTALL aren't
+|> overly verbose.
+|>
+|> I put the idiot-proof recipe on
+|> http://wiki.jcurl.org/index.php5?title=GitSvn#Eclipse_Plugin - maybe you
+|> can weave it into either wiki or INSTALL?
+|
+| You mean they *are* overly verbose?
 
-Not having to change anything is good ;-).
+No, that's in fact a typo of mine. They are not overly verbose.
+
+| Our INSTALL has a lot more details than your wiki,
+
+Yes, surely. I didn't aim to best your wiki page (as it's THE opening
+reference within my notes).
+
+| so I'm not sure I understand your problem.
+
+As I had never compiled or packaged an eclipse plugin before, I had my
+trouble finding the relevant export and options. (Right-click, bla, and
+so on).
+
+Felt like a complete idiot at first glance. Which bothers neither you
+nor me, but I almost dropped it. And that would have bothered me, so I
+scratched that itch further and just recorded the successful "scratch" -
+the recipe.
+
+| ) 7: uncheck all *.test projects
+| 	not important
+
+the better.
+
+| ) 10: restart eclipse with parameter -clean
+| 	probably a good idea, though I have never needed it
+
+fine if it does without -clean.
+
+| We're going to set up an official update site in the not too distant
+future.
+
+That's great!
+
+If you find the recipe (except steps 7 and 10) useful, put it into
+INSTALL or the wiki page, otherwise forget about it.
+
+Greetings,
+	Marcus
+
+P.S.: Thanks for the lightning-fast reply.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iEYEARECAAYFAkhi4l8ACgkQO26gbdBiJqZaVQCfWNE3zzug+0tWEr4+86aIcYAj
+zWAAnRuK+Uk0zhag7wt8AD+LZXXCRgzo
+=3TJV
+-----END PGP SIGNATURE-----
