@@ -1,88 +1,111 @@
-From: logank@sent.com
-Subject: Re: pread() over NFS (again) [1.5.5.4]
-Date: Thu, 26 Jun 2008 16:36:27 -0700
-Message-ID: <65688C06-BB6A-4E95-A4B9-A1A7C206BE2E@sent.com>
-References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com> <20080626204606.GX11793@spearce.org> <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 01:37:31 2008
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH] daemon: accept "git program" as well
+Date: Fri, 27 Jun 2008 01:38:20 +0200
+Message-ID: <4864286C.80609@free.fr>
+References: <20080625034538.GW11793@spearce.org> <7vk5ge6soc.fsf@gitster.siamese.dyndns.org> <20080625044409.GE11793@spearce.org> <7v8wwu6qxr.fsf@gitster.siamese.dyndns.org> <7v4p7i6qs1.fsf@gitster.siamese.dyndns.org> <7vy74u5bkk.fsf@gitster.siamese.dyndns.org> <20080625053848.GJ11793@spearce.org> <7v4p7hxhbd.fsf@gitster.siamese.dyndns.org> <20080625230228.GR11793@spearce.org> <7vmyl9w0y1.fsf@gitster.siamese.dyndns.org> <20080626082013.GT22344@eagain.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@lavabit.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, pclouds@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Tommi Virtanen <tv@eagain.net>
+X-From: git-owner@vger.kernel.org Fri Jun 27 01:39:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC11s-0002gV-Re
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 01:37:29 +0200
+	id 1KC13O-0002zL-MG
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 01:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbYFZXgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 19:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYFZXgc
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 19:36:32 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54774 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753673AbYFZXgb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2008 19:36:31 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id BF5D412F630;
-	Thu, 26 Jun 2008 19:36:29 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 26 Jun 2008 19:36:29 -0400
-X-Sasl-enc: wxjlBvgJ1dr3PQ9wu/jSunm3PgRG6/3ahYjekG1YpIyP 1214523389
-Received: from [172.16.9.26] (unknown [199.0.156.239])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 02B92332AE;
-	Thu, 26 Jun 2008 19:36:28 -0400 (EDT)
-In-Reply-To: <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1754505AbYFZXiJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 19:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754414AbYFZXiI
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 19:38:08 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:53945 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754440AbYFZXiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 19:38:05 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id A24BB12B6CA;
+	Fri, 27 Jun 2008 01:38:02 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id D2C9F12B6C5;
+	Fri, 27 Jun 2008 01:38:01 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <20080626082013.GT22344@eagain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86503>
 
-On Jun 26, 2008, at 1:56 PM, Junio C Hamano wrote:
+Hi,
 
->> "The file shouldn't be short unless someone truncated it, or there
->> is a bug in index-pack.  Neither is very likely, but I don't think
->> we would want to retry pread'ing the same block forever.
->
-> I don't think we would want to retry even once.  Return value of 0  
-> from
-> pread is defined to be an EOF, isn't it?
+Tommi Virtanen a =C3=A9crit :
+> On Wed, Jun 25, 2008 at 04:26:46PM -0700, Junio C Hamano wrote:
+>>
+>> In gitosis/serve.py, there are COMMANDS_READONLY and COMMANDS_WRITE =
+array
+>> that holds 'git-upload-pack' and 'git-receive-pack' commands, and th=
+ey are
+>> compared with user commands after doing:
+>=20
+> Yeah, that's pretty much a trivial change, doing it now to future-pro=
+of
+> gitosis.
+>=20
 
-No, it seems to be a simple error-out in this case. We have 2.4.20  
-systems with nfs-utils 0.3.3 and used to frequently get the same error  
-while pushing. I made a similar change back in February and haven't  
-had a problem since:
+This just happened to me with a dashless client, so I tried your patch =
+but it
+does not work. The problem comes from git-shell that do not support das=
+hless
+argument, yet (IOW: git shell -c 'git upload-pack ...' give an error).
 
-diff --git a/index-pack.c b/index-pack.c
-index 5ac91ba..85c8bdb 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -313,7 +313,14 @@ static void *get_data_from_pack(struct  
-object_entry *obj)
-	src = xmalloc(len);
-	data = src;
-	do {
-+		// It appears that if multiple threads read across NFS, the
-+		// second read will fail. I know this is awful, but we wait for
-+		// a little bit and try again.
-		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
-+		if (n <= 0) {
-+			sleep(1);
-+			n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
-+		}
-		if (n <= 0)
-			die("cannot pread pack file: %s", strerror(errno));
-		rdy += n;
+The following patch on top of yours fix the problem. The s/git-shell/gi=
+t shell/
+part is not really necessary, but why not?
 
-I use a sleep request since it seems less likely that the other thread  
-will have an outstanding request after a second of waiting.
+diff --git a/gitosis/serve.py b/gitosis/serve.py
+index 9a91fcb..5aac355 100644
+--- a/gitosis/serve.py
++++ b/gitosis/serve.py
+@@ -21,12 +21,10 @@ ALLOW_RE =3D re.compile("^'/*(?P<path>[a-zA-Z0-9][a=
+-zA-Z0-9@._-]*(/[a-zA-Z0-9][a-z
+=20
+ COMMANDS_READONLY =3D [
+     'git-upload-pack',
+-    'git upload-pack',
+     ]
+=20
+ COMMANDS_WRITE =3D [
+     'git-receive-pack',
+-    'git receive-pack',
+     ]
+=20
+ class ServingError(Exception):
+@@ -75,7 +73,7 @@ def serve(
+             # all known "git foo" commands take one argument; improve
+             # if/when needed
+             raise UnknownCommandError()
+-        verb =3D '%s %s' % (verb, subverb)
++        verb =3D '%s-%s' % (verb, subverb)
+=20
+     if (verb not in COMMANDS_WRITE
+         and verb not in COMMANDS_READONLY):
+@@ -201,6 +199,6 @@ class Main(app.App):
+             sys.exit(1)
+=20
+         main_log.debug('Serving %s', newcmd)
+-        os.execvp('git-shell', ['git-shell', '-c', newcmd])
+-        main_log.error('Cannot execute git-shell.')
++        os.execvp('git', ['git', 'shell', '-c', newcmd])
++        main_log.error('Cannot execute git.')
+         sys.exit(1)
 
--- 
-                                                         Logan Kennelly
-       ,,,
-      (. .)
---ooO-(_)-Ooo--
+
+Olivier.
