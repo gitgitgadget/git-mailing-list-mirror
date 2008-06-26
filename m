@@ -1,103 +1,128 @@
-From: Ted Percival <ted@midg3t.net>
-Subject: [PATCH] Don't use dash commands (git-foo) in tutorial-2
-Date: Thu, 26 Jun 2008 23:22:19 +1000
-Message-ID: <4863980B.3090300@midg3t.net>
+From: "=?UTF-8?Q?Jo=C3=A3o_Abecasis?=" <joao@abecasis.name>
+Subject: [PATCH] git-svn: follow revisions of svm-mirrored repositories
+Date: Thu, 26 Jun 2008 11:24:12 -0500
+Message-ID: <7bf6f1d20806260924r68a8ac89i95fad1d5f0c685de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:21:39 2008
+X-From: git-owner@vger.kernel.org Thu Jun 26 18:25:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBuDz-00059U-Av
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 18:21:31 +0200
+	id 1KBuHa-0006PJ-Lc
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 18:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbYFZQUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 12:20:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbYFZQUe
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 12:20:34 -0400
-Received: from nschwqsrv02p.mx.bigpond.com ([61.9.189.234]:30598 "EHLO
-	nschwqsrv02p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753660AbYFZQUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2008 12:20:33 -0400
-X-Greylist: delayed 10680 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jun 2008 12:20:32 EDT
-Received: from nschwotgx01p.mx.bigpond.com ([121.210.210.178])
-          by nschwmtas04p.mx.bigpond.com with ESMTP
-          id <20080626132227.DEDU21542.nschwmtas04p.mx.bigpond.com@nschwotgx01p.mx.bigpond.com>
-          for <git@vger.kernel.org>; Thu, 26 Jun 2008 13:22:27 +0000
-Received: from erwin.midg3t.net ([121.210.210.178])
-          by nschwotgx01p.mx.bigpond.com with ESMTP
-          id <20080626132226.HMBN5002.nschwotgx01p.mx.bigpond.com@erwin.midg3t.net>
-          for <git@vger.kernel.org>; Thu, 26 Jun 2008 13:22:26 +0000
-Received: from tohno.local ([10.0.0.147])
-	by erwin.midg3t.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <ted@midg3t.net>)
-	id 1KBrQf-0005J7-Ei
-	for git@vger.kernel.org; Thu, 26 Jun 2008 23:22:25 +1000
-User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
-X-SA-Exim-Connect-IP: 10.0.0.147
-X-SA-Exim-Mail-From: ted@midg3t.net
-X-SA-Exim-Scanned: No (on erwin.midg3t.net); SAEximRunCond expanded to false
-X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150202.48639812.0092,ss=1,fgs=0
+	id S1751384AbYFZQYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 12:24:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYFZQYP
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 12:24:15 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:51142 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970AbYFZQYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 12:24:14 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so259998ugf.16
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=6GYyN1IjF0Sgz4a9mf+zQiOHhMF1iTQd2EHxFYUCebM=;
+        b=a4F4OJCtlNQ8QNY5A2yopp0ZSMCLqLgpIsAxD1G6M8SrTPxeQXL6VcRU1a3daKxrtv
+         pRzMCWOZhr2icWZ5xVt/YGmxpA1BEa3UCG0PLw2g/hK09xk1mh+cyxgf2EPCAkHZkN3Y
+         PzWkCkJeSHYno9ycRf+HWsvnjxE66s7V04eO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=DV2j+Fh9UpHKfDf+6Bt7eEinWdS0TTTXoOUoWD1lrfYyE1LqR4GZEpJsAeQuCP8S0b
+         DCz5ZpUrhfoxdYbggB+aILRC7D/dcOZ+adx00gsATYHBCn+3FvdHrBZmvQxdXufN69S5
+         CzlHQnfLuvuWC/UVzapZh3pykw4v8Avwo69AA=
+Received: by 10.66.243.2 with SMTP id q2mr1344125ugh.16.1214497452307;
+        Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
+Received: by 10.67.94.6 with HTTP; Thu, 26 Jun 2008 09:24:12 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 5dd3ce868e0b705a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86462>
 
-Signed-off-by: Ted Percival <ted@midg3t.net>
----
- Documentation/gittutorial-2.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/gittutorial-2.txt
-b/Documentation/gittutorial-2.txt
-index e3d5c1f..31e8a23 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -61,9 +61,9 @@ from your own version. Note that you can shorten it to
-only a few
- characters to save yourself typing all 40 hex digits:
-
- ------------------------------------------------
--$ git-cat-file -t 54196cc2
-+$ git cat-file -t 54196cc2
- commit
--$ git-cat-file commit 54196cc2
-+$ git cat-file commit 54196cc2
- tree 92b8b694ffb1675e5975148e1121810081dbdffe
- author J. Bruce Fields <bfields@puzzle.fieldses.org> 1143414668 -0500
- committer J. Bruce Fields <bfields@puzzle.fieldses.org> 1143414668 -0500
-@@ -166,7 +166,7 @@ hello world!
- and the "parent" object refers to the previous commit:
-
- ------------------------------------------------
--$ git-cat-file commit 54196cc2
-+$ git cat-file commit 54196cc2
- tree 92b8b694ffb1675e5975148e1121810081dbdffe
- author J. Bruce Fields <bfields@puzzle.fieldses.org> 1143414668 -0500
- committer J. Bruce Fields <bfields@puzzle.fieldses.org> 1143414668 -0500
-@@ -246,7 +246,7 @@ The last diff is empty, but no new commits have been
-made, and the
- head still doesn't contain the new line:
-
- ------------------------------------------------
--$ git-diff HEAD
-+$ git diff HEAD
- diff --git a/file.txt b/file.txt
- index a042389..513feba 100644
- --- a/file.txt
-@@ -273,7 +273,7 @@ hello world, again
-
- So what our "git add" did was store a new blob and then put
- a reference to it in the index file.  If we modify the file again,
--we'll see that the new modifications are reflected in the "git-diff"
-+we'll see that the new modifications are reflected in the "git diff"
- output:
-
- ------------------------------------------------
--- 
-1.5.5.4
+RnJvbSBhNGNkMDkyY2QxYWVhZTk1NDM3ODAzOGQyNGY5M2FmOTMwNjEwY2M4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiA9P3V0Zi04P3E/Sm89QzM9QTNvPTIwQWJlY2FzaXM/PSA8am9h
+b0BhYmVjYXNpcy5uYW1lPgpEYXRlOiBGcmksIDEzIEp1biAyMDA4IDIwOjMyOjU3IC0wNTAwClN1
+YmplY3Q6IFtQQVRDSF0gZ2l0LXN2bjogZm9sbG93IHJldmlzaW9ucyBvZiBzdm0tbWlycm9yZWQg
+cmVwb3NpdG9yaWVzCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsg
+Y2hhcnNldD11dGYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0CgpBbHRob3VnaCBn
+aXQtc3ZuIGtlZXBzIHRyYWNrIG9mIHNvdXJjZSByZXZpc2lvbnMgaW4gc3ZtLW1pcnJvcmVkCnJl
+cG9zaXRvcmllcywgaXQgZG9lc24ndCB1c2UgdGhhdCBpbmZvcm1hdGlvbiBpbiBhbGwgcGxhY2Vz
+LgoKVGhpcyBmaXhlcyB3b3JraW5nX2hlYWRfaW5mbyBhbmQgR2l0OjpTVk46OmZpbmRfYnlfdXJs
+IHRvIHdvcmsgd2l0aAptaXJyb3JlZCByZXBvc2l0b3JpZXMgd2hlbiB1c2VTdm1Qcm9wcyBpcyBz
+ZXQuIEF0IGxlYXN0IHRoZSBjb21tYW5kcwpmaW5kLXJldiBhbmQgcmViYXNlLCB3aGljaCBkaWRu
+J3Qgd29yayBmb3IgbWUgd2l0aCBzdm0tbWlycm9yZWQKcmVwb3NpdG9yaWVzLCBhcmUgbm93IHdv
+cmtpbmcuCgpTaWduZWQtb2ZmLWJ5OiBKb8OjbyBBYmVjYXNpcyA8am9hb0BhYmVjYXNpcy5uYW1l
+PgotLS0KIGdpdC1zdm4ucGVybCAgICAgICAgICAgICAgICAgICAgIHwgICAzNiArKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKy0tLS0KIHQvdDkxMTAtZ2l0LXN2bi11c2Utc3ZtLXByb3Bz
+LnNoIHwgICAgOSArKysrKysrKysKIDIgZmlsZXMgY2hhbmdlZCwgNDEgaW5zZXJ0aW9ucygrKSwg
+NCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9naXQtc3ZuLnBlcmwgYi9naXQtc3ZuLnBlcmwK
+aW5kZXggNGM5YzU5Yi4uNGRmNmM3MSAxMDA3NTUKLS0tIGEvZ2l0LXN2bi5wZXJsCisrKyBiL2dp
+dC1zdm4ucGVybApAQCAtNTM3LDEzICs1MzcsMTMgQEAgc3ViIGNtZF9maW5kX3JldiB7CiAJCW15
+ICRoZWFkID0gc2hpZnQ7CiAJCSRoZWFkIHx8PSAnSEVBRCc7CiAJCW15IEByZWZzOwotCQlteSAo
+dW5kZWYsIHVuZGVmLCB1bmRlZiwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZvKCRoZWFkLCBcQHJl
+ZnMpOworCQlteSAodW5kZWYsIHVuZGVmLCAkdXVpZCwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZv
+KCRoZWFkLCBcQHJlZnMpOwogCQl1bmxlc3MgKCRncykgewogCQkJZGllICJVbmFibGUgdG8gZGV0
+ZXJtaW5lIHVwc3RyZWFtIFNWTiBpbmZvcm1hdGlvbiBmcm9tICIsCiAJCQkgICAgIiRoZWFkIGhp
+c3RvcnlcbiI7CiAJCX0KIAkJbXkgJGRlc2lyZWRfcmV2aXNpb24gPSBzdWJzdHIoJHJldmlzaW9u
+X29yX2hhc2gsIDEpOwotCQkkcmVzdWx0ID0gJGdzLT5yZXZfbWFwX2dldCgkZGVzaXJlZF9yZXZp
+c2lvbik7CisJCSRyZXN1bHQgPSAkZ3MtPnJldl9tYXBfZ2V0KCRkZXNpcmVkX3JldmlzaW9uLCAk
+dXVpZCk7CiAJfSBlbHNlIHsKIAkJbXkgKHVuZGVmLCAkcmV2LCB1bmRlZikgPSBjbXRfbWV0YWRh
+dGEoJHJldmlzaW9uX29yX2hhc2gpOwogCQkkcmVzdWx0ID0gJHJldjsKQEAgLTExNjAsNyArMTE2
+MCw3IEBAIHN1YiB3b3JraW5nX2hlYWRfaW5mbyB7CiAJCWlmIChkZWZpbmVkICR1cmwgJiYgZGVm
+aW5lZCAkcmV2KSB7CiAJCQluZXh0IGlmICRtYXh7JHVybH0gYW5kICRtYXh7JHVybH0gPCAkcmV2
+OwogCQkJaWYgKG15ICRncyA9IEdpdDo6U1ZOLT5maW5kX2J5X3VybCgkdXJsKSkgewotCQkJCW15
+ICRjID0gJGdzLT5yZXZfbWFwX2dldCgkcmV2KTsKKwkJCQlteSAkYyA9ICRncy0+cmV2X21hcF9n
+ZXQoJHJldiwgJHV1aWQpOwogCQkJCWlmICgkYyAmJiAkYyBlcSAkaGFzaCkgewogCQkJCQljbG9z
+ZSAkZmg7ICMgYnJlYWsgdGhlIHBpcGUKIAkJCQkJcmV0dXJuICgkdXJsLCAkcmV2LCAkdXVpZCwg
+JGdzKTsKQEAgLTE0MTQsMTEgKzE0MTQsMTYgQEAgc3ViIGZldGNoX2FsbCB7Cgogc3ViIHJlYWRf
+YWxsX3JlbW90ZXMgewogCW15ICRyID0ge307CisgICAgICAgIG15ICR1c2Vzdm1wcm9wcyA9IGV2
+YWwgeworCQljb21tYW5kX29uZWxpbmUocXcvY29uZmlnIC0tYm9vbCBzdm4udXNlU3ZtUHJvcHMv
+KSB9IGVxICd0cnVlJzsKIAlmb3JlYWNoIChncmVwIHsgcy9ec3ZuLXJlbW90ZVwuLy8gfSBjb21t
+YW5kKHF3L2NvbmZpZyAtbC8pKSB7CiAJCWlmIChtIV4oLispXC5mZXRjaD1ccyooLiopXHMqOlxz
+KnJlZnMvcmVtb3Rlcy8oLispXHMqJCEpIHsKIAkJCW15ICgkcmVtb3RlLCAkbG9jYWxfcmVmLCAk
+cmVtb3RlX3JlZikgPSAoJDEsICQyLCAkMyk7CiAJCQkkbG9jYWxfcmVmID1+IHN7Xi99e307CiAJ
+CQkkci0+eyRyZW1vdGV9LT57ZmV0Y2h9LT57JGxvY2FsX3JlZn0gPSAkcmVtb3RlX3JlZjsKKwkJ
+CSRyLT57JHJlbW90ZX0tPntzdm19ID0ge30gaWYgJHVzZXN2bXByb3BzOworCQl9IGVsc2lmICht
+IV4oLispXC51c2Vzdm1wcm9wcz1ccyooLiopXHMqJCEpIHsKKwkJCSRyLT57JDF9LT57c3ZtfSA9
+IHt9OwogCQl9IGVsc2lmIChtIV4oLispXC51cmw9XHMqKC4qKVxzKiQhKSB7CiAJCQkkci0+eyQx
+fS0+e3VybH0gPSAkMjsKIAkJfSBlbHNpZiAobSFeKC4rKVwuKGJyYW5jaGVzfHRhZ3MpPQpAQCAt
+MTQzNSw2ICsxNDQwLDIxIEBAIHN1YiByZWFkX2FsbF9yZW1vdGVzIHsKIAkJCX0KIAkJfQogCX0K
+KworCW1hcCB7CisJCWlmIChkZWZpbmVkICRyLT57JF99LT57c3ZtfSkgeworCQkJbXkgJHN2bTsK
+KwkJCWV2YWwgeworCQkJCW15ICRzZWN0aW9uID0gInN2bi1yZW1vdGUuJF8iOworCQkJCSRzdm0g
+PSB7CisJCQkJCXNvdXJjZSA9PiB0bXBfY29uZmlnKCctLWdldCcsICIkc2VjdGlvbi5zdm0tc291
+cmNlIiksCisJCQkJCXJlcGxhY2UgPT4gdG1wX2NvbmZpZygnLS1nZXQnLCAiJHNlY3Rpb24uc3Zt
+LXJlcGxhY2UiKSwKKwkJCQl9CisJCQl9OworCQkJJHItPnskX30tPntzdm19ID0gJHN2bTsKKwkJ
+fQorCX0ga2V5cyAlJHI7CisKIAkkcjsKIH0KCkBAIC0xNTY4LDEzICsxNTg4LDIxIEBAIHN1YiBm
+aW5kX2J5X3VybCB7ICMgcmVwb3Nfcm9vdCBhbmQsIHBhdGggYXJlIG9wdGlvbmFsCiAJCX0KIAkJ
+bXkgJHAgPSAkcGF0aDsKIAkJbXkgJHJ3ciA9IHJld3JpdGVfcm9vdCh7cmVwb19pZCA9PiAkcmVw
+b19pZH0pOworCQlteSAkc3ZtID0gJHJlbW90ZXMtPnskcmVwb19pZH0tPntzdm19CisJCQlpZiBk
+ZWZpbmVkICRyZW1vdGVzLT57JHJlcG9faWR9LT57c3ZtfTsKIAkJdW5sZXNzIChkZWZpbmVkICRw
+KSB7CiAJCQkkcCA9ICRmdWxsX3VybDsKIAkJCW15ICR6ID0gJHU7CisJCQlteSAkcHJlZml4ID0g
+Jyc7CiAJCQlpZiAoJHJ3cikgewogCQkJCSR6ID0gJHJ3cjsKKwkJCX0gZWxzaWYgKGRlZmluZWQg
+JHN2bSkgeworCQkJCSR6ID0gJHN2bS0+e3NvdXJjZX07CisJCQkJJHByZWZpeCA9ICRzdm0tPnty
+ZXBsYWNlfTsKKwkJCQkkcHJlZml4ID1+IHMjXlxRJHVcRSg/Oi98JCkjIzsKKwkJCQkkcHJlZml4
+ID1+IHMjLyQjIzsKIAkJCX0KLQkJCSRwID1+IHMjXlxRJHpcRSg/Oi98JCkjIyBvciBuZXh0Owor
+CQkJJHAgPX4gcyNeXFEkelxFKD89L3wkKSMkcHJlZml4IyBvciBuZXh0OwogCQl9CiAJCWZvcmVh
+Y2ggbXkgJGYgKGtleXMgJSRmZXRjaCkgewogCQkJbmV4dCBpZiAkZiBuZSAkcDsKZGlmZiAtLWdp
+dCBhL3QvdDkxMTAtZ2l0LXN2bi11c2Utc3ZtLXByb3BzLnNoIGIvdC90OTExMC1naXQtc3ZuLXVz
+ZS1zdm0tcHJvcHMuc2gKaW5kZXggMDQ3NjU5Zi4uMDRkMmE2NSAxMDA3NTUKLS0tIGEvdC90OTEx
+MC1naXQtc3ZuLXVzZS1zdm0tcHJvcHMuc2gKKysrIGIvdC90OTExMC1naXQtc3ZuLXVzZS1zdm0t
+cHJvcHMuc2gKQEAgLTQ5LDQgKzQ5LDEzIEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3ZlcmlmeSBt
+ZXRhZGF0YSBmb3IgL2RpcicgIgogCSAgIGdyZXAgJ15naXQtc3ZuLWlkOiAkZGlyX3VybEAxICR1
+dWlkJCcKIAkiCgordGVzdF9leHBlY3Rfc3VjY2VzcyAnZmluZCBjb21taXQgYmFzZWQgb24gU1ZO
+IHJldmlzaW9uIG51bWJlcicgIgorICAgICAgICBnaXQtc3ZuIGZpbmQtcmV2IHIxMiB8CisJICAg
+IGdyZXAgYGdpdCByZXYtcGFyc2UgSEVBRGAKKyAgICAgICAgIgorCit0ZXN0X2V4cGVjdF9zdWNj
+ZXNzICdlbXB0eSByZWJhc2UnICIKKwlnaXQtc3ZuIHJlYmFzZQorCSIKKwogdGVzdF9kb25lCi0t
+IAoxLjUuNS4xCg==
