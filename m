@@ -1,77 +1,88 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git-diff/git-format-patch safe for GNU (or POSIX) patch?
-Date: Thu, 26 Jun 2008 12:36:07 +0200
-Message-ID: <20080626103607.GA16525@diana.vm.bytemark.co.uk>
-References: <58230.213.203.159.164.1214476059.squirrel@upmail.polettix.it>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: how do I merge completely unrelated repositories ?
+Date: Thu, 26 Jun 2008 12:51:58 +0200
+Message-ID: <46d6db660806260351w6082b5f9q6db3ef62552fafc4@mail.gmail.com>
+References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com>
+	 <20080626094522.GA29404@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Flavio Poletti <flavio@polettix.it>
-X-From: git-owner@vger.kernel.org Thu Jun 26 12:37:44 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 12:52:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBoqw-0008Sm-0f
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:37:22 +0200
+	id 1KBp5z-0005ic-MK
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754027AbYFZKgZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 06:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYFZKgZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:36:25 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1626 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751265AbYFZKgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 06:36:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KBopk-0004LF-00; Thu, 26 Jun 2008 11:36:08 +0100
+	id S1754376AbYFZKv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 06:51:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754494AbYFZKv7
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:51:59 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:37997 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754294AbYFZKv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 06:51:58 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1361577waf.23
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=zBlw4ITEpjqg3Dii0bHQKHHN1NU8cgHem/ydhZLhtHg=;
+        b=K15lNSDCcQ3MEGISlMNtj/CIU4Dzb/J90haOTNDs4eBI52KZpUG1syatm+3xYcORJ6
+         a6HCQWfu4WKRLieD/7VlHDbMMQ2X94N5BgPKv1JtzGeQLSHZCtHG3kYU5PHK/E9YPUPs
+         9/ESVR711MQBbUbz4Wjg66W8SOoyckMlqH+EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Ur3SJCdM1Ln470EQFDyb3gLBvEmyonZvqxuMCrXBk80MFr7kqk8BTkTTOpwZlYb2cj
+         /hCb5AkOCb2NXw8Nts8c9bSKl3jUGxo6lE3MsTid4VvGmg530BUKQgvMCQlHoxqTwcWa
+         HmcQpwqUxbgMQilzvuUdOBgrDJqOAS4p4ggKc=
+Received: by 10.114.184.7 with SMTP id h7mr6955225waf.183.1214477518177;
+        Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
+Received: by 10.115.16.17 with HTTP; Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
+In-Reply-To: <20080626094522.GA29404@genesis.frugalware.org>
 Content-Disposition: inline
-In-Reply-To: <58230.213.203.159.164.1214476059.squirrel@upmail.polettix.it>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86428>
 
-On 2008-06-26 12:27:39 +0200, Flavio Poletti wrote:
-
-> When I was happy with the modifications, I used git-format-patch to
-> produce the message and the patch to send. I then saw that the
-> format is a little different with respect to what diff -u produces;
-> in particular, I noticed that there was an added line between the
-> "diff --git..." line and the one stating the "origin" file:
+On Thu, Jun 26, 2008 at 11:45 AM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Thu, Jun 26, 2008 at 11:39:37AM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
+>> How would you do it, since merge will not merge if it cannot find a
+>> common ancestor ?
 >
->                    diff --git a/glib/gstrfuncs.c b/glib/gstrfuncs.c
-> *** this one ***   index 61d11ed..7786f10 100644
->                    --- a/glib/gstrfuncs.c
->                    +++ b/glib/gstrfuncs.c
+> Did you try so?
 
-patch ignores any junk it doesn't understand, including this line.
+yes I did. it was failing.
 
-> Moreover, each chunk's header contained added stuff, like the
-> "g_ascii_strtoll..." stuff in the following example line:
 >
->     @@ -813,6 +813,8 @@ g_ascii_strtoll (const gchar *nptr,
+> If there are no conflicting paths then a simple
+>
+> git pull /path/to/other/repo.git master
 
-You get this by giving the -p flag to GNU diff; git diff just does it
-by default, is all.
+pull = fetch + merge
 
-> 4. some hints to use git for working on projects that do not use any
-> other VCS, or for which one only wants to produce and send a quick
-> patch starting from a tarball.
+maybe I was not fetching the objects properly.
 
-You can use git/contrib/fast-import/import-tars.perl to import the
-last few releases into git (possibly just the last release, if you
-don't need the history) and then just build on that, and send patches
-back to the project when you're done.
+>
+> or similar should work.
+>
 
-When the project makes another release, use import-tars to import the
-new tarball, and then rebase if you have any patches they haven't
-accepted yet.
+your hint works fine. thanks!
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I was starting considering rebasing the 2 repos on a common empty
+commit (that would have been desperate)...
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
