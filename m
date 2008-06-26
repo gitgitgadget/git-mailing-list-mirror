@@ -1,62 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 26 Jun 2008 08:04:22 +0200
-Message-ID: <vpq1w2klok9.fsf@bauges.imag.fr>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr>
-	<20080621214241.GA3839@dualtron.vpn.rwth-aachen.de>
-	<20080622072420.GA5161@dualtron.vpn.rwth-aachen.de>
-	<g3v3s1$bok$1@ger.gmane.org>
+From: "David Jeske" <jeske@willowmail.com>
+Subject: Re: policy and mechanism for less-connected clients
+Date: Thu, 26 Jun 2008 06:08:55 -0000
+Message-ID: <32645.6224699088$1214461121@news.gmane.org>
+References: <20080626052310.GC8610@mit.edu>
+	<willow-jeske-01l6@3PlFEDjCVAh-01l6it3ZFEDjCd5X>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 08:06:56 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 26 08:18:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBkdB-0000bj-Je
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 08:06:54 +0200
+	id 1KBkoQ-0003Wq-Pq
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 08:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561AbYFZGF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 02:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbYFZGF6
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 02:05:58 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:56776 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751290AbYFZGF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 02:05:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5Q64nDZ008124;
-	Thu, 26 Jun 2008 08:04:49 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KBkak-0003qp-Vs; Thu, 26 Jun 2008 08:04:23 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KBkak-0005qw-Sp; Thu, 26 Jun 2008 08:04:22 +0200
-In-Reply-To: <g3v3s1$bok$1@ger.gmane.org> (Dan McGee's message of "Wed\, 25 Jun 2008 22\:53\:36 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 26 Jun 2008 08:04:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751935AbYFZGRQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 02:17:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYFZGRQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 02:17:16 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:60752 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751513AbYFZGRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 02:17:13 -0400
+Received: (qmail 10482 invoked by uid 90); 26 Jun 2008 06:17:02 -0000
+X-Mailer: Willow v0.02
+Received: from 67.188.42.104 at Thu, 26 Jun 2008 06:08:55 -0000
+In-Reply-To: <20080626052310.GC8610@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86402>
 
-Dan McGee <dpmcgee@gmail.com> writes:
+-- Theodore Tso wrote:
+> If you are going to preserve the workflow of CVS, then you're
+> also going to preserve all of the downsides of CVS.
 
-> That became impossible with 1.5.6 out of the box,
+I don't agree with this, and I don't see you proposing any logic that proves it
+to be true. Of course I plan to make small changes. However, in my previous
+message I proposed 3 same-workflow improvements, and 2 small-workflow-extension
+improvements. I have more in mind..
 
-Actually, by default it does. It does not for you because you've set
-$LESS. That said, I argee that a config option to enable/disable the
-pager per-command would have been better that the change we're talking
-about.
+http://marc.info/?l=git&m=121442660332114&w=2
 
--- 
-Matthieu
+Maybe it was too confusing or too long to read. Just consider the first simple
+example.
+
+Currently "cvs up" in a dirty tree is a destructive operation. If you merge
+badly, you can't get back to your local working files before the "up". I've
+been burned by this in cvs/perforce enough that now when there are complicated
+update-conflicts I tar up the tree before trying to fix them. I still can't
+really get back to the pre-up state.
+
+I can be better than cvs with the EXACT same workflow, by checking in their
+local changes (git checkin;) and then doing the "up" (git pull;). If they
+decide they botched their merge, they can get back to where they were before
+the UP because I'm using a richer underlying mechanism to implement their
+workflow.
+
+Do you think that's not an improvement? or not the same workflow? It sure seems
+like a same-workflow improvement to me.
+
+----
+
+git's mechanisms are really great for making a hybrid central/distributed
+system which has the simplicity of cvs/perforce and several of the benefits of
+git. The git interface is just too complicated to be used for this.
+Fortunately, building on git means that power users will still be able to use
+git directly and people can distribute the repositories as much as they want.
+
+> how much change are you willing to make them deviate from
+> the CVS workflow, and how much smarts are you willing to assume that
+> they have?
+
+Good question. I'm working on a command-line wrapper for git that does it.
+Digging into the "plumbling" is making it more obvious why I find git's
+porcelain operations hard to understand. I think I can make a 2-repository
+setup (personal-inaccessible, origin) work like cvs/perforce with local
+checkins, and I can make a 3-repository setup (personal-inaccessible,
+personal-accessible, origin) work nearly the same as cvs while allowing
+distributed collaboration. I think I will need a tiny bit of custom server
+support (to create the personal-accessible repositories automatically).
+
+Right now it looks like I'll be a simple hybrid of cvs/perforce, with a couple
+git concepts peppered in. (but just a couple) It seems simple so far, it's just
+taking me a while to dig through git-plumbing to understand it.
+
+Also remember, this isn't built to handle what linux-kernel folks do with git.
+It's designed to provide a familiar environment for cvs/perforce style users
+that is just as simple but a whole lot better. Even if it eventually gets lots
+of git concepts, they won't HAVE to understand them to use it. They can learn
+them as they go.  This is obviously something that people want, as cogito and
+easy-git show.
