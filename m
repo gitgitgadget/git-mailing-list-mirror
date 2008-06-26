@@ -1,59 +1,83 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-Date: Thu, 26 Jun 2008 10:13:27 -0500
-Message-ID: <K8mYvOxbzHDUUveNqGY1qxKxQCRRn4fCJly5l1F_bU9bM2LdvpAD1g@cipher.nrlssc.navy.mil>
-References: <m31w2mlki4.fsf@localhost.localdomain> <FmVFerrNVumRho9GZZwRiHrXV_hb12J_P_hSYUBnFhcCFiMGdtdCrg@cipher.nrlssc.navy.mil> <20080624225442.GA20361@mit.edu> <7vod5qa0tu.fsf@gitster.siamese.dyndns.org> <20080625022610.GB20361@mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 26 Jun 2008 17:41:33 +0200
+Message-ID: <200806261741.36187.jnareb@gmail.com>
+References: <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <m3wskek4wt.fsf@localhost.localdomain> <alpine.DEB.1.00.0806242033570.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, David Jeske <jeske@google.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 26 17:18:23 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 26 17:43:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBtDj-0003Rr-G9
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 17:17:11 +0200
+	id 1KBtck-0005gF-HC
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 17:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355AbYFZPQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 11:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754922AbYFZPQE
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 11:16:04 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33156 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754814AbYFZPQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 11:16:01 -0400
-Received: by mail.nrlssc.navy.mil id m5QFDRIX020654; Thu, 26 Jun 2008 10:13:27 -0500
-In-Reply-To: <20080625022610.GB20361@mit.edu>
-X-OriginalArrivalTime: 26 Jun 2008 15:13:27.0435 (UTC) FILETIME=[2F5B65B0:01C8D79F]
+	id S1753078AbYFZPlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 11:41:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYFZPlv
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 11:41:51 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:45985 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398AbYFZPlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 11:41:50 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so255327ugf.16
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 08:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=XEATxxMdZai7pFtHuD1h2WFHl68F8Ud8W+RkNYN32aM=;
+        b=rl1omdqsrnJaoYk0rml6d0oHt6sN+bn1zO8oHd98auGW2R8/Q8YLcrnSvVwzoHfcYX
+         z81K9MNwMUPuahZAL3pIcBWLiENmCbUaX2M06ROKLayhflTZ0h+hHuZ5xxNy1fp4UeZz
+         3oHkY+2nVg10hpsZmpGTMvMzju7VECL76PPbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VzXAcocpiEP4ntEhLmI7fAPAoeRzk/cvC18X4jBoBmRGvQFxastflwrV4Batsi0MRv
+         bpqY3u7VD7f7vyBY5r0/lAuiMaas3peXWirbc6tCZAVWud0sduhjDJGup+iqvtNWhMLw
+         K9DgsQq1bfUJinECs8ER9ZymqFCMP1860xQws=
+Received: by 10.67.115.2 with SMTP id s2mr1299034ugm.49.1214494908575;
+        Thu, 26 Jun 2008 08:41:48 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.235.33])
+        by mx.google.com with ESMTPS id e1sm4810231ugf.19.2008.06.26.08.41.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Jun 2008 08:41:46 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0806242033570.9925@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86457>
 
-Theodore Tso wrote:
-> On Tue, Jun 24, 2008 at 04:07:57PM -0700, Junio C Hamano wrote:
->>> Instead, I've just learned to be careful and my use of git reset
->>> --hard is mainly for historical reasons.
->> This makes it sound as if avoiding "reset --hard" is a good thing, but I
->> do not understand why.
+On Tue, 24 Jun 2008, Johannes Schindelin wrote:
+> Hi,
 > 
-> Well, it was Brandon Casey who was asserting that git reset --hard was
-> evil, which I generally don't agree with.
+> On Tue, 24 Jun 2008, Jakub Narebski wrote:
+> 
+> > git-shell hackery won't solve problem, because not everybody is using 
+> > git-shell.
+> 
+> The problem is not git-shell vs git potty.
+> 
+> The problem is that not everybody magically updates their clients to ask 
+> for dash-less form.
 
-I definitely don't think 'reset --hard' is evil. I _do_ think it is somewhat
-of an advanced command. It should be used where it is appropriate. I think
-it is a misuse of the command if it is used in place of checkout, which I got
-the impression might be the case.
+With git-shell even if client uses dashed form it can find git commands
+("hackery" is too strong a word for having git-shell search $GIT_EXEC_PATH).
+But if one uses only SSH, server must have dashed form in a $PATH
 
-You described resetting an integration branch, Junio does a similar thing
-with pu and these are both valid uses. This is what I was talking about
-when I said that usually when I use reset I don't care about the state of
-the branch I am resetting. I also agree there are many other valid uses for
-'git reset --hard'.
-
--brandon
+-- 
+Jakub Narebski
+Poland
