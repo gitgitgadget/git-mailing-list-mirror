@@ -1,57 +1,77 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 26 Jun 2008 12:17:53 +0200
-Message-ID: <43234A8B-3201-4F4F-A9A8-3756FC95A422@wincent.com>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <20080621214241.GA3839@dualtron.vpn.rwth-aachen.de> <20080622072420.GA5161@dualtron.vpn.rwth-aachen.de> <g3v3s1$bok$1@ger.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git-diff/git-format-patch safe for GNU (or POSIX) patch?
+Date: Thu, 26 Jun 2008 12:36:07 +0200
+Message-ID: <20080626103607.GA16525@diana.vm.bytemark.co.uk>
+References: <58230.213.203.159.164.1214476059.squirrel@upmail.polettix.it>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 12:19:02 2008
+To: Flavio Poletti <flavio@polettix.it>
+X-From: git-owner@vger.kernel.org Thu Jun 26 12:37:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBoZ5-00017b-GG
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:18:55 +0200
+	id 1KBoqw-0008Sm-0f
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbYFZKR7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 06:17:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753031AbYFZKR7
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:17:59 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:56069 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784AbYFZKR6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2008 06:17:58 -0400
-Received: from cuzco.lan (109.pool85-53-31.dynamic.orange.es [85.53.31.109])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m5QAHs1a019022
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 26 Jun 2008 06:17:56 -0400
-In-Reply-To: <g3v3s1$bok$1@ger.gmane.org>
-X-Mailer: Apple Mail (2.924)
+	id S1754027AbYFZKgZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 06:36:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYFZKgZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:36:25 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1626 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265AbYFZKgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 06:36:24 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KBopk-0004LF-00; Thu, 26 Jun 2008 11:36:08 +0100
+Content-Disposition: inline
+In-Reply-To: <58230.213.203.159.164.1214476059.squirrel@upmail.polettix.it>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86427>
 
-El 26/6/2008, a las 5:53, Dan McGee escribi=F3:
+On 2008-06-26 12:27:39 +0200, Flavio Poletti wrote:
 
-> Why did this patch get pulled in with so little discussion? Didn't =20
-> someone think that there must be a reason git-status didn't use a =20
-> pager before?
+> When I was happy with the modifications, I used git-format-patch to
+> produce the message and the patch to send. I then saw that the
+> format is a little different with respect to what diff -u produces;
+> in particular, I noticed that there was an added line between the
+> "diff --git..." line and the one stating the "origin" file:
+>
+>                    diff --git a/glib/gstrfuncs.c b/glib/gstrfuncs.c
+> *** this one ***   index 61d11ed..7786f10 100644
+>                    --- a/glib/gstrfuncs.c
+>                    +++ b/glib/gstrfuncs.c
 
-I believe it was discussed in at least a couple of threads back then:
+patch ignores any junk it doesn't understand, including this line.
 
-Original patch in late April, 3 messages:
+> Moreover, each chunk's header contained added stuff, like the
+> "g_ascii_strtoll..." stuff in the following example line:
+>
+>     @@ -813,6 +813,8 @@ g_ascii_strtoll (const gchar *nptr,
 
-   http://article.gmane.org/gmane.comp.version-control.git/80279/
+You get this by giving the -p flag to GNU diff; git diff just does it
+by default, is all.
 
-=46ollow-up discussion in early May, 31 messages:
+> 4. some hints to use git for working on projects that do not use any
+> other VCS, or for which one only wants to produce and send a quick
+> patch starting from a tarball.
 
-   http://article.gmane.org/gmane.comp.version-control.git/80957/
+You can use git/contrib/fast-import/import-tars.perl to import the
+last few releases into git (possibly just the last release, if you
+don't need the history) and then just build on that, and send patches
+back to the project when you're done.
 
-Wincent
+When the project makes another release, use import-tars to import the
+new tarball, and then rebase if you have any patches they haven't
+accepted yet.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
