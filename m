@@ -1,59 +1,59 @@
 From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH] gitweb: add test suite with Test::WWW::Mechanize::CGI
-Date: Thu, 26 Jun 2008 15:47:51 +0200
-Message-ID: <1214488071-6721-1-git-send-email-LeWiemann@gmail.com>
+Subject: [PATCH v8] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Thu, 26 Jun 2008 15:48:46 +0200
+Message-ID: <1214488126-6783-1-git-send-email-LeWiemann@gmail.com>
 References: <1214273933-3925-1-git-send-email-LeWiemann@gmail.com>
 Cc: Lea Wiemann <LeWiemann@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 15:49:04 2008
+X-From: git-owner@vger.kernel.org Thu Jun 26 15:50:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBrqP-0007Sy-9m
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 15:49:02 +0200
+	id 1KBrrs-00085O-2k
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 15:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948AbYFZNsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 09:48:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbYFZNsA
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 09:48:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:55584 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449AbYFZNr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 09:47:57 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so17286fgg.17
-        for <git@vger.kernel.org>; Thu, 26 Jun 2008 06:47:55 -0700 (PDT)
+	id S1756239AbYFZNt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 09:49:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755504AbYFZNt3
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 09:49:29 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:11305 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754070AbYFZNt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 09:49:27 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so8256ywe.1
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 06:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:from;
-        bh=PjMZbSBrUdnF0xPOuNF9ZxK57WTnAFVL3kF1qx2LysA=;
-        b=p95AyXCSZZPdJzzQKMYIqZJwToPtNWilBBlkU5XDjaNNxakd1b6X7CL+bO+scBOsOt
-         zma+jsJKsxOdkruPPI6JRzd8q67whHMl0juBlzFHrQl04S1nkiuv+VcsCt1n0ITWgZhT
-         fX7UjCIai8/ap1nHXvr52Q8QnRnL9d7v1HLGs=
+        bh=4xxbe2FRyRXTZp8eG4ip0JExz+q4LWqr9ZB9qP3GBKk=;
+        b=Imh0yU6qb+vv3g8PcyEnHExxKI2gOtkV+KaoA50I8qkqgbrKDX8P6/DTBz181bDJeH
+         bWPqKVpgBWzJZZ8njZ0dyIkXjn2ft/JkL7Gn6Vm3mntcU2WaIGmA4KuEZ8MnsFWF7Aww
+         VYZuDFZacDUqisHFVXSBEl/UIST9fAz6jPXKI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=BgJT4qmxtbWXWb3l+pWk2wElkDdUYgb8+tvFuaJjOIVSBVXKPLMnhFcL02oJkyhOiO
-         mTM4CjOkMGV0WP27Q6LWFp+64yuwGv6PsglWJzPFyStBsh12fIMnm/2IMUyytayC3lwE
-         Ire6QsAFguwEXfQJpimtWth0HdHantKL8lhcw=
-Received: by 10.86.68.20 with SMTP id q20mr183299fga.2.1214488074952;
-        Thu, 26 Jun 2008 06:47:54 -0700 (PDT)
+        b=RcwuCX+rtq3Pv/gbrXfRr0jsWwzZjsRSRPsQvCNz4mS8fw8wjI1Dx7JaKeRHVV964J
+         ZcPD3N5+2zSDnf2AXj3hmLJDUN7/kUyqSVReMltQ/RsCEzBKiFthcihuwg0bVoMhTRLd
+         5tz2kYAb9Tgwb34ouH/tjsbMzdW+Fa6n2U/jU=
+Received: by 10.125.156.13 with SMTP id i13mr2151843mko.15.1214488129469;
+        Thu, 26 Jun 2008 06:48:49 -0700 (PDT)
 Received: from fly ( [91.33.220.151])
-        by mx.google.com with ESMTPS id 12sm218344fgg.0.2008.06.26.06.47.52
+        by mx.google.com with ESMTPS id k29sm278542fkk.2.2008.06.26.06.48.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Jun 2008 06:47:54 -0700 (PDT)
+        Thu, 26 Jun 2008 06:48:48 -0700 (PDT)
 Received: from lea by fly with local (Exim 4.69)
 	(envelope-from <lea@fly>)
-	id 1KBrpH-0001kt-Vu; Thu, 26 Jun 2008 15:47:52 +0200
+	id 1KBrqA-0001lm-Mk; Thu, 26 Jun 2008 15:48:46 +0200
 X-Mailer: git-send-email 1.5.6.109.g33ded.dirty
 In-Reply-To: <1214273933-3925-1-git-send-email-LeWiemann@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86453>
 
 This test uses Test::WWW::Mechanize::CGI to check gitweb's output.  It
 also uses HTML::Lint, XML::Parser, and Archive::Tar (if present, each)
@@ -63,6 +63,8 @@ tested pages if --long-tests is given.
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
 ---
+[Resent with correct subject.]
+
 This patch applies on next.
 
 Changes since v7:
