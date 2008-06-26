@@ -1,80 +1,93 @@
-From: Simon Holm =?ISO-8859-1?Q?Th=F8gersen?= <odie@cs.aau.dk>
-Subject: bug related to branches using / in name
-Date: Thu, 26 Jun 2008 21:42:30 +0200
-Message-ID: <1214509350.28344.31.camel@odie.local>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: pread() over NFS (again) [1.5.5.4]
+Date: Thu, 26 Jun 2008 16:46:06 -0400
+Message-ID: <20080626204606.GX11793@spearce.org>
+References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ingo Molnar <mingo@elte.hu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 22:39:50 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Christian Holtje <docwhat@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 22:47:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KByFx-0007pP-Ay
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 22:39:49 +0200
+	id 1KByNJ-00029g-Lk
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 22:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759933AbYFZUic convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2008 16:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761075AbYFZUic
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 16:38:32 -0400
-Received: from smtp.cs.aau.dk ([130.225.194.6]:36156 "EHLO smtp.cs.aau.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761073AbYFZUib (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 16:38:31 -0400
-X-Greylist: delayed 3388 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jun 2008 16:38:30 EDT
-Received: from [10.0.0.2] (port939.ds1-abc.adsl.cybercity.dk [212.242.156.194])
-	(authenticated bits=0)
-	by smtp.cs.aau.dk (8.14.1/8.14.1) with ESMTP id m5QJfiRw015916
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jun 2008 21:41:46 +0200
-X-Mailer: Evolution 2.22.2 
-X-Spam-Level: () 0.263
-X-Scanned-By: MIMEDefang 2.62 on 130.225.194.6
+	id S1757367AbYFZUqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 16:46:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756794AbYFZUqN
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 16:46:13 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59810 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756179AbYFZUqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 16:46:10 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KByLv-0002Ht-Jd; Thu, 26 Jun 2008 16:45:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 088D720FBAE; Thu, 26 Jun 2008 16:46:07 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86484>
 
-Hi git community
+Christian Holtje <docwhat@gmail.com> wrote:
+> I have read all the threads on git having trouble with pread() and I  
+> didn't see anything to help.
+...
+>   Receiving objects: 100% (253/253), 5.27 MiB | 9136 KiB/s, done.
+>   fatal: cannot pread pack file: No such file or directory
+>   fatal: index-pack failed
+> 
+> The end of the strace looks like so:
+> pread(3, "", 205, 1373)                 = 0
+> write(2, "fatal: cannot pread pack file: N"..., 57) = 57
 
-I have a bug report I think is most easily explained by a list of
-commands that illustrates the bug.
+Hmmph.  So pread for a length of 205 can return 0 on NFS?  Is this
+a transient error?  If so, perhaps a patch like this might help:
 
-cd /tmp
-mkdir git-bug
-cd git-bug
-git init
-touch foo
-git add foo
-git commit -a -m '...'
-git branch sched
-git clone file:///tmp/git-bug /tmp/git-bug-clone
-git branch -d sched
-git branch sched/urgent
-git branch sched/devel
-cd /tmp/git-bug-clone
-git pull
-
-The last command does not succeed, but produces the following output
-
-error: unable to resolve reference refs/remotes/origin/sched/devel: Not
-a directory
->From file:///tmp/git-bug
- * [new branch]      sched/devel -> origin/sched/devel
-error: unable to resolve reference refs/remotes/origin/sched/urgent: No=
-t
-a directory
- * [new branch]      sched/urgent -> origin/sched/urgent
-
-I can work around it by
-rm /tmp/git-bug-clone/.git/{,logs/}refs/remotes/origin/sched
-
-but git should take care of this automatically, right?
-
-I'm on git version 1.5.6.
+diff --git a/index-pack.c b/index-pack.c
+index 5ac91ba..737f757 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -309,14 +309,19 @@ static void *get_data_from_pack(struct object_entry *obj)
+ 	unsigned char *src, *data;
+ 	z_stream stream;
+ 	int st;
++	int attempts = 0;
+ 
+ 	src = xmalloc(len);
+ 	data = src;
+ 	do {
+ 		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+-		if (n <= 0)
++		if (n <= 0) {
++			if (n == 0 && ++attempts < 10)
++				continue;
+ 			die("cannot pread pack file: %s", strerror(errno));
++		}
+ 		rdy += n;
++		attempts = 0;
+ 	} while (rdy < len);
+ 	data = xmalloc(obj->size);
+ 	memset(&stream, 0, sizeof(stream));
 
 
-=EF=BB=BFSimon Holm Th=C3=B8gersen
+The file shouldn't be short unless someone truncated it, or there
+is a bug in index-pack.  Neither is very likely, but I don't think
+we would want to retry pread'ing the same block forever.
+
+-- 
+Shawn.
