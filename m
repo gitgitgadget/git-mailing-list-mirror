@@ -1,88 +1,106 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: how do I merge completely unrelated repositories ?
-Date: Thu, 26 Jun 2008 12:51:58 +0200
-Message-ID: <46d6db660806260351w6082b5f9q6db3ef62552fafc4@mail.gmail.com>
-References: <46d6db660806260239xc57ffaag6469967ae2257cb1@mail.gmail.com>
-	 <20080626094522.GA29404@genesis.frugalware.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
+Date: Thu, 26 Jun 2008 13:02:02 +0200
+Message-ID: <200806261302.03952.jnareb@gmail.com>
+References: <20080620082034.GA24913@elte.hu> <m34p7ombie.fsf@localhost.localdomain> <20080626093726.GA24577@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 12:52:56 2008
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Thu Jun 26 13:03:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBp5z-0005ic-MK
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 12:52:56 +0200
+	id 1KBpG2-0000ZJ-Bx
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 13:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376AbYFZKv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 06:51:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754494AbYFZKv7
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 06:51:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:37997 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754294AbYFZKv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 06:51:58 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so1361577waf.23
-        for <git@vger.kernel.org>; Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
+	id S1755035AbYFZLCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 07:02:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754896AbYFZLCN
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 07:02:13 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:49646 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389AbYFZLCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 07:02:10 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so235972nfc.21
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 04:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=zBlw4ITEpjqg3Dii0bHQKHHN1NU8cgHem/ydhZLhtHg=;
-        b=K15lNSDCcQ3MEGISlMNtj/CIU4Dzb/J90haOTNDs4eBI52KZpUG1syatm+3xYcORJ6
-         a6HCQWfu4WKRLieD/7VlHDbMMQ2X94N5BgPKv1JtzGeQLSHZCtHG3kYU5PHK/E9YPUPs
-         9/ESVR711MQBbUbz4Wjg66W8SOoyckMlqH+EQ=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=COV+4cxDQIFxIAwqM/pL+zHEGgxDvHMESFEx2Qg8iI4=;
+        b=cRI0Xipp8vl2UREiMKOerh9zi3h4a0WAf4OQICWfV1/f5WEnZSGCjy2hu7x1EeCkZP
+         r2K79VRGWDBhYrcBTZw8Ip6WciffS+wfzzYWWpAXww2sfQWDvll1ynq6LZwIqU2wbFMH
+         ZXuM6AhTjWb4p4hjAxf0wwkomzNVRTvXbMjgc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ur3SJCdM1Ln470EQFDyb3gLBvEmyonZvqxuMCrXBk80MFr7kqk8BTkTTOpwZlYb2cj
-         /hCb5AkOCb2NXw8Nts8c9bSKl3jUGxo6lE3MsTid4VvGmg530BUKQgvMCQlHoxqTwcWa
-         HmcQpwqUxbgMQilzvuUdOBgrDJqOAS4p4ggKc=
-Received: by 10.114.184.7 with SMTP id h7mr6955225waf.183.1214477518177;
-        Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
-Received: by 10.115.16.17 with HTTP; Thu, 26 Jun 2008 03:51:58 -0700 (PDT)
-In-Reply-To: <20080626094522.GA29404@genesis.frugalware.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=gvshZkfWkPLEEleFtBo9J/XYKM76FM5PArsUbQEg9gXVSIWtTWlMvETagZxHBf7N1P
+         xnHJ/h1gnfU2vy1Hfwre5yz53+qIKxGW3/6dIOXBNbOnmw0pjf8wWeEI5ndrhB0yuYUf
+         nqMkK/2iul0GirllZV0nCtya68BeSOv/7gu8g=
+Received: by 10.210.125.7 with SMTP id x7mr2638430ebc.45.1214478129343;
+        Thu, 26 Jun 2008 04:02:09 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.220.164])
+        by mx.google.com with ESMTPS id g12sm2516061nfb.28.2008.06.26.04.02.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Jun 2008 04:02:08 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080626093726.GA24577@elte.hu>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86429>
 
-On Thu, Jun 26, 2008 at 11:45 AM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Jun 26, 2008 at 11:39:37AM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
->> How would you do it, since merge will not merge if it cannot find a
->> common ancestor ?
->
-> Did you try so?
+On Thu, 26. Jun 2008, Ingo Molnar wrote:
+> * Jakub Narebski <jnareb@gmail.com> wrote:
+>> Ingo Molnar <mingo@elte.hu> writes:
+>>> * Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>>> 
+>>>> (BTW, git-foo is being obsoleted in favor of "git foo")
+>>> 
+>>> hm, can Bash be taught to do command completion on 'git rer<tab>', like 
+>>> it is able to do on git-rer<tab> ?
+>> 
+>> contrib/completion/git-completion.bash in git repository.  
+> 
+> btw., i had to turn this off - it made certain types of file completions 
+> almost unusable, by adding a 2-3 seconds delay (during which bash would 
+> just spin around burning CPU time calculating its completion guesses).
 
-yes I did. it was failing.
+Perhaps it would be better when "ceiling dir" feature in git, and
+configured, so git don't waste time searching for git repositories
+where there aren't any.
 
->
-> If there are no conflicting paths then a simple
->
-> git pull /path/to/other/repo.git master
+> and that was on a 3 GHz dual-core box ...
 
-pull = fetch + merge
+I think this might depend more on filesystem used, and file hierarchy.
+And also probably on the number of branches... 
 
-maybe I was not fetching the objects properly.
+That said, I'm not fully happy with git bash completion[*1*] either:
+one of complaints is that when completing "filename." on filename with
+extension (for example to "filename.h") it sometimes treats "filename."
+as beiginning of "<rev1>..<rev2>", and completes to "filename..", 
+even if there no 'filename' ref in repository.
 
->
-> or similar should work.
->
+> so please do not remove the git-* commands, they are really useful.
 
-your hint works fine. thanks!
+Well, they are not removed, just moved aside (to address complaints
+of cluttering $PATH with 130+ programs), and I think that you can
+always install everything into /usr/bin/, as usual.  Although it would
+be nice to be able to move aside only internal (*--*) commands, or
+perhaps even internal and plumbing.
 
-I was starting considering rebasing the 2 repos on a common empty
-commit (that would have been desperate)...
-
+Footnotes:
+==========
+[*1*] I wonder how zsh git completion fares in comparison.
 -- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+Jakub Narebski
+Poland
