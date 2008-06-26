@@ -1,70 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told
- to
-Date: Thu, 26 Jun 2008 18:49:33 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806261848230.9925@racer>
-References: <20080624222105.GA24549@dervierte>  <7vwskea2ik.fsf@gitster.siamese.dyndns.org>  <48620C1A.6000509@panasas.com>  <alpine.DEB.1.00.0806251109380.9925@racer>  <486220CE.3070103@viscovery.net>  <alpine.DEB.1.00.0806251334060.9925@racer> 
- <20080625135100.GF20361@mit.edu>  <7v63rx2zwf.fsf@gitster.siamese.dyndns.org>  <20080626115550.GA23058@atjola.homenet>  <alpine.DEB.1.00.0806261306060.9925@racer> <32541b130806260855o691d444bpc0843e5f51639430@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: about c8af1de9 (git status uses pager)
+Date: Thu, 26 Jun 2008 13:51:24 -0400
+Message-ID: <20080626175124.GA3300@sigill.intra.peff.net>
+References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <20080621214241.GA3839@dualtron.vpn.rwth-aachen.de> <20080622072420.GA5161@dualtron.vpn.rwth-aachen.de> <g3v3s1$bok$1@ger.gmane.org> <43234A8B-3201-4F4F-A9A8-3756FC95A422@wincent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Boaz Harrosh <bharrosh@panasas.com>,
-	Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
-	jeske@google.com
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 19:53:12 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 19:53:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KBveb-0006Wr-1C
-	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 19:53:05 +0200
+	id 1KBvea-0006Wr-CI
+	for gcvg-git-2@gmane.org; Thu, 26 Jun 2008 19:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758886AbYFZRvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 13:51:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758818AbYFZRvh
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 13:51:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55590 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754617AbYFZRvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 13:51:35 -0400
-Received: (qmail invoked by alias); 26 Jun 2008 17:51:32 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp011) with SMTP; 26 Jun 2008 19:51:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18tCHR+U7QtND0+slZh2PTp53iwu5izL9ZzZpZjQX
-	3i6YvN6BO21Nxt
-X-X-Sender: gene099@racer
-In-Reply-To: <32541b130806260855o691d444bpc0843e5f51639430@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752831AbYFZRv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2008 13:51:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754360AbYFZRv2
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 13:51:28 -0400
+Received: from peff.net ([208.65.91.99]:2776 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752831AbYFZRv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2008 13:51:27 -0400
+Received: (qmail 28135 invoked by uid 111); 26 Jun 2008 17:51:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 26 Jun 2008 13:51:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jun 2008 13:51:24 -0400
+Content-Disposition: inline
+In-Reply-To: <43234A8B-3201-4F4F-A9A8-3756FC95A422@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86466>
 
-Hi,
+On Thu, Jun 26, 2008 at 12:17:53PM +0200, Wincent Colaiuta wrote:
 
-On Thu, 26 Jun 2008, Avery Pennarun wrote:
+> Follow-up discussion in early May, 31 messages:
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/80957/
 
-> On 6/26/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > While we are nit-picking: Ted's version does not respect autocrlf, 
-> > while Junio's does.
-> 
-> Is it intentional that git-show doesn't respect autocrlf, or just an 
-> oversight?
+And I posted several patches in that thread to make paging configuration
+more fine-grained, but they got caught up in some setup_git_* bermuda
+triangle. Dan (and others who dislike the new change), I would be very
+happy if you wanted to take a look at them and see if you can address
+some of the issues I raised.
 
-Funny.  I seem to have answered exactly the same question a few days ago.
-
-"git show" is meant to show the contents of an object.  It does not 
-operate on a working directory.  It does not even _need_ a working 
-directory.
-
-So, no, it is _not_ an oversight.
-
-Hth,
-Dscho
+-Peff
