@@ -1,64 +1,83 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Ramifications of a git-sh-setup outside the
- PATH
-Date: Fri, 27 Jun 2008 14:00:27 -0500 (CDT)
-Message-ID: <20080627140027.BIA12244@m4500-01.uchicago.edu>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: 'next' will be rewound shortly
+Date: Fri, 27 Jun 2008 21:28:19 +0200
+Message-ID: <20080627192819.GC2058@genesis.frugalware.org>
+References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org> <7vbq1xx4y8.fsf@gitster.siamese.dyndns.org> <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org> <20080627161220.GB6201@leksak.fem-net> <20080627163411.GA2058@genesis.frugalware.org> <20080627171948.GC6201@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 27 21:08:50 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yVhtmJPUSI46BTXb"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 27 21:29:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCJJR-0007uz-AI
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 21:08:49 +0200
+	id 1KCJdI-0006u1-NN
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 21:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786AbYF0THx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 15:07:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755482AbYF0THx
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 15:07:53 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:40567 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752866AbYF0THw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 15:07:52 -0400
-X-Greylist: delayed 444 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jun 2008 15:07:52 EDT
-Received: from m4500-01.uchicago.edu (m4500-01.uchicago.edu [128.135.249.211])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m5RJ0UmZ029266
-	for <git@vger.kernel.org>; Fri, 27 Jun 2008 14:00:31 -0500
-Received: (from m4500-01.uchicago.edu [128.135.249.215])
-	by m4500-01.uchicago.edu (MOS 3.8.5-GA)
-	with HTTP/1.1 id BIA12244 (AUTH jrnieder@uchicago.edu);
-	Fri, 27 Jun 2008 14:00:27 -0500 (CDT)
-X-Mailer: Mirapoint Webmail Direct 3.8.5-GA
+	id S1757504AbYF0T2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 15:28:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755354AbYF0T2X
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 15:28:23 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:36690 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757321AbYF0T2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 15:28:22 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id AAB911B250E;
+	Fri, 27 Jun 2008 21:28:21 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id E55B744697;
+	Fri, 27 Jun 2008 21:01:35 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3CD081778012; Fri, 27 Jun 2008 21:28:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080627171948.GC6201@leksak.fem-net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86626>
 
-Hi gitsters,
 
-I noticed in the release notes to Git 1.6.0 that dashed-form commands
-are moving to a libexecdir outside the PATH. I have been using Git
-with nd/dashless applied for about a month, and it does work well
-(thanks!). There was one little glitch: to use hg-fast-export.sh from
-fast-export.git (of repo.or.cz), I had to put git-sh-setup in the PATH.
+--yVhtmJPUSI46BTXb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I wanted to just change the ". git-sh-setup" line to ". git sh-setup",
-but of course that will not work. Am I missing something?
+On Fri, Jun 27, 2008 at 07:19:48PM +0200, Stephan Beyer <s-beyer@gmx.net> w=
+rote:
+> -m <msg>::
+> 	The commit message to be used for the merge commit (in case
+> 	it is created). The `git-fmt-merge-msg` script can be used
+> 	to give a good default for automated `git-merge` invocations.
+>=20
+> So it is not mentioned that a standard message is appended, and thus the
+> original behavior is somehow "buggy" :)
 
-hg-fast-export uses git-sh-setup to handle --help, to provide the
-cd_to_toplevel function, and to set GIT_DIR. It would not take much
-work to avoid using git-sh-setup, although for my needs it was easier
-to put git-sh-setup in the PATH. But really, the use of git-sh-setup
-does not seem strange to me at all. Is use of git-sh-setup in scripts
-outside Git core discouraged?
+Ah, OK. Then the code and the documentation differs and that's a bug,
+sure.
 
-The location of git-sh-setup was discussed before in the thread
-<http://thread.gmane.org/gmane.comp.version-control.git/33708>.
-Thanks for your time, and thank you for Git!
+=46rom git-merge.sh:
 
-Sincerely,
-Jonathan
+# All the rest are the commits being merged; prepare
+# the standard merge summary message to be appended to
+# the given message.
+
+I did builtin-merge based on git-merge.sh, not the manpage. ;-)
+
+--yVhtmJPUSI46BTXb
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhlP1MACgkQe81tAgORUJadnACfcq+L5iiZao8Bq1ivZXbL4SYl
+MmAAoKqVYbKWNZ+DrXVx1Tkx5tiPCdRb
+=Zyi5
+-----END PGP SIGNATURE-----
+
+--yVhtmJPUSI46BTXb--
