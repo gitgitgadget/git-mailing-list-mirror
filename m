@@ -1,93 +1,80 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: 'next' will be rewound shortly
-Date: Fri, 27 Jun 2008 19:19:48 +0200
-Message-ID: <20080627171948.GC6201@leksak.fem-net>
-References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org> <7vbq1xx4y8.fsf@gitster.siamese.dyndns.org> <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org> <20080627161220.GB6201@leksak.fem-net> <20080627163411.GA2058@genesis.frugalware.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: An alternate model for preparing partial commits
+Date: Fri, 27 Jun 2008 19:27:01 +0200
+Message-ID: <20080627172701.GB15359@atjola.homenet>
+References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com> <20080627071014.GA12344@atjola.homenet> <9af502e50806270954q613087efub0eb05c25f2eefb9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 19:20:55 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Robert Anderson <rwa000@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 19:28:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCHcw-0001Xj-AD
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 19:20:50 +0200
+	id 1KCHjv-00041d-Oo
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 19:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713AbYF0RTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 13:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755024AbYF0RTx
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 13:19:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56117 "HELO mail.gmx.net"
+	id S1754116AbYF0R1I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 13:27:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbYF0R1H
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 13:27:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49447 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754528AbYF0RTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 13:19:52 -0400
-Received: (qmail invoked by alias); 27 Jun 2008 17:19:50 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp035) with SMTP; 27 Jun 2008 19:19:50 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19G9h0PDUtGUqeAAx5QIO8lVorhGsUZGkgKfeeomu
-	uZ+199eig4i2Sy
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KCHbw-0006wi-PO; Fri, 27 Jun 2008 19:19:48 +0200
+	id S1752017AbYF0R1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 13:27:04 -0400
+Received: (qmail invoked by alias); 27 Jun 2008 17:27:02 -0000
+Received: from i577B854A.versanet.de (EHLO atjola.local) [87.123.133.74]
+  by mail.gmx.net (mp007) with SMTP; 27 Jun 2008 19:27:02 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX190hmd5fbx0JksrBqvpjNkSd/xjE2zVX5nU0dGFfJ
+	UuLb9OPsXPUVzX
 Content-Disposition: inline
-In-Reply-To: <20080627163411.GA2058@genesis.frugalware.org>
+In-Reply-To: <9af502e50806270954q613087efub0eb05c25f2eefb9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86606>
 
+On 2008.06.27 09:54:43 -0700, Robert Anderson wrote:
+> On Fri, Jun 27, 2008 at 12:10 AM, Bj=F6rn Steinbrink <B.Steinbrink@gm=
+x.de> wrote:
+> > Hm, I use "stash" for that purpose, which leads to kind of the reve=
+rse
+> > of your approach. So I do sth. like this:
+> >  - hack hack hack
+> >  - Notice that I want to make two commits out of what I have in my
+> >   working tree
+> >  - git add -p -- stage what I want in the first commit
+> >  - git commit -m tmp -- temporary commit
+>=20
+> This is a guess at the first commit?  I don't like it, but I'm still
+> listening.
 
---AqsLC8rIMeq19msA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It's rather a work-around to stash away only the changes that are not i=
+n
+the index. See the other reply to my mail for a patch that adds an
+option to stash to do that without the commit/reset hack.
 
-Hi,
+> >  - git stash -- stash away what doesn't belong in the first commit
+> >  - git reset HEAD^ -- drop the temporary commit, with the changes k=
+ept
+> >   in the working tree
+>=20
+> Now I have my guess at the first commit as my tree state, correct?
+> What happens when I decide I need a couple of hunks from another file
+> which I missed in my first guess, and is now in the stashed state?
+> How do I get those out of the stash and into the working tree?  If
+> there is no convenient way to do that, then this method is not
+> sufficient to cover the use case I am talking about.
 
-I just looked how you solved that and wanted to start a discussion but
-you've swooped in first, find. ;-)
+git stash pop
+eventually fix conflicts if you changed the working tree in the meantim=
+e
+go back to the "git add -p" step
 
-> I think it its current form that is not a bugfix. The user may want to
-> prepend a custom message and may want to replace the original message
-> with a custom one, and I would not consider either of them as "buggy".
-
-Well, when I do -m <msg>, I expect that my commit message is exactly
-<msg>, and not <msg> with appended stuff.
-Of course, it doesn't matter what I expect, but I think what the
-documentation says matters.
-This is (in "master" and in "builtin-merge" of vmiklos.git):
-
--m <msg>::
-	The commit message to be used for the merge commit (in case
-	it is created). The `git-fmt-merge-msg` script can be used
-	to give a good default for automated `git-merge` invocations.
-
-So it is not mentioned that a standard message is appended, and thus the
-original behavior is somehow "buggy" :)
-
-Regards,
-  Stephan
-
---=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
-
---AqsLC8rIMeq19msA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFIZSE0bt3SB/zFBA8RApVhAJ9WDnH3WeWe02Rqw5Bt5APbTXYWJwCg1Lq1
-lyERs20FayLoiUIsr3Q5CaY=
-=VbsD
------END PGP SIGNATURE-----
-
---AqsLC8rIMeq19msA--
+Bj=F6rn
