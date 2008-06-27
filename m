@@ -1,109 +1,101 @@
-From: "Stephen Sinclair" <radarsat1@gmail.com>
+From: "David Jeske" <jeske@willowmail.com>
 Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 16:31:06 -0400
-Message-ID: <9b3e2dc20806271331l2870ef94o4cd413ee40ab0d39@mail.gmail.com>
+Date: Fri, 27 Jun 2008 20:29:15 -0000
+Message-ID: <16460.6618382551$1214599182@news.gmane.org>
 References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-	 <alpine.DEB.1.00.0806271408290.9925@racer>
-	 <9af502e50806271014l661dcfc9o4f61ee2b54677bd6@mail.gmail.com>
+	<willow-jeske-01l7H4tHFEDjCgPV-01l7H4sOFEDjCbyi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 22:32:07 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Robert Anderson" <rwa000@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 22:39:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCKc2-0004N8-Dg
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 22:32:06 +0200
+	id 1KCKj1-0006V6-KC
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 22:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762658AbYF0UbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 16:31:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762072AbYF0UbI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 16:31:08 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:9140 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762009AbYF0UbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 16:31:06 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so726267rvb.1
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 13:31:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=WhshP0jN+vr3Lexb+Ut6ghtAdWe4gXYDTGViSF7nxM4=;
-        b=e9CQiickqb6vW+2DwQQR0ZgeF6maJJguVtX167KF+nxJBvdJg+MGX9M+lI2u2siagt
-         4ktMGs8hxIDZPDejgGuIbhrDhhIsA5SpWpvlY3rzi/p6irMZ3OfzYogTSveqMxPWnN8p
-         nnN7Ik29/1h5oioM+8ONzXHupDNocCLJSk5Dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Q+ANSvwxRIAdleBAsdfb1nibxr07hTVEfuTT/z1Cpye9YjhCFwNFgz6zSt4G4di1Mn
-         Sk2hSJ3dH5pstMJMytFmLGjxYs4BBI0/qQqZ+GNv37bdmc2gYBk11xPIn+kfauV5tN1u
-         PWmYkwC8zrni3PjwtdS6+y/a5Mefbqe2nvlXw=
-Received: by 10.141.29.21 with SMTP id g21mr1024567rvj.225.1214598666103;
-        Fri, 27 Jun 2008 13:31:06 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Fri, 27 Jun 2008 13:31:06 -0700 (PDT)
-In-Reply-To: <9af502e50806271014l661dcfc9o4f61ee2b54677bd6@mail.gmail.com>
-Content-Disposition: inline
+	id S1758154AbYF0UiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 16:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYF0UiX
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 16:38:23 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:33082 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1756953AbYF0UiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 16:38:22 -0400
+Received: (qmail 28138 invoked by uid 90); 27 Jun 2008 20:38:17 -0000
+X-Mailer: Willow v0.02
+Received: from 72.14.229.81 at Fri, 27 Jun 2008 20:29:15 -0000
+In-Reply-To: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86629>
 
-Hello,
+Robert, I'm new to git, but I understand where you are going.
 
-On Fri, Jun 27, 2008 at 1:14 PM, Robert Anderson <rwa000@gmail.com> wrote:
-> On Fri, Jun 27, 2008 at 6:33 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Now, this is not necessarily what everybody wants, which is why many
->> people are fine with the index.
->
-> But it is something they should want, and should have, if they care
-> about the quality of their commits.  Especially in the common case of
-> a project with development lines which have some sort of policy about
-> build/test requirements.  How do you ensure your commits obey that
-> policy if you cannot verify it?  That is why the index is not a
-> sufficient mechanism for preparing partial commits.  It's fine for
-> quick and dirty operation when the factorization of the conflated
-> changes is obvious and trivial.  It is not sufficient otherwise.
+Why limit it only to working tree changes? For me, the stash machinery is of no
+help here, because I commit super-often. What I end up with is 30 commits in a
+topic branch, but where not every point passes 100% of tests. I want to go back
+through and order them properly, and decide which points are sensible as
+upstream committs. (especially as I read more about bisect).
 
-I just thought I'd throw in my $0.02 here.  There's something
-fundamental I think I'm not getting about this argument: it seems to
-be based on the premise that partial commits allow untested tree
-states to enter the repository.  However, having gotten used to the
-git way of things, I personally don't see the problem with allowing
-bad commits, as long as they are not pushed to public.
+git has all the concepts I want except one. However, it makes the process
+pretty manual. Here is an idea about automating it. I'll talk about that one
+new concept at the bottom.
 
-That is, I use the git add -p command all the time when I realize I've
-just done two things that should be committed separately.  Then I'll
-git commit everything else, and go back and test, like so:
+I think of this as reorder/merge/split...
 
-git checkout master
-[hack hack..]
-git add -p
-git commit
-git commit -a
-[test..]
-git checkout master^
-[test..]
-git checkout master
+reorder: Picture that a list of commits on this branch opens in an editor. You
+are free to rearrange the lines in any order you want, but you have to keep all
+the lines. When you are done reordering the lines, the tool creates a new topic
+branch and applies the changes (probably with cherrypick) to the new topic
+branch. If there are no conflicts, you're done.
 
-See? All tested.  If I find a problem during testing, I'll probably
-commit it and then rebase master off my new commit, fixing any
-conflicts I just introduced.
+merge: Picture now that in your editor you can create groupings of those
+individual commits that should make up separate topic-branches. The operation
+can still be performed automatically, and at the end, it can compose those
+topic branches into a single branch just like your original. At this point, you
+can "isolate" any one of those topic branches and test/push that topic branch.
 
-Frankly I hardly even use the stash; since history can be edited, I
-feel like commits are all I need when working with git.  Anything I do
-doesn't matter until I push to public anyways.  So it's up to me to
-make sure I test everything before pushing, but otherwise I'm very
-happy with the ability to commit half-baked ideas and then go back to
-make sure they are usable (and tested!) before pushing.  This is what
-local branches are for, isn't it?
+split: Picture now that you can list the same commit in more than one of the
+topic-branches. This is a little more tricky, and there is no way to do it
+automatically.. It drops you into an editor and asks you to select the lines of
+the diff for the first topic. The remaining lines are put in the next topic.
+This can continue for multiple topics.
 
+This seems like something that could be assembled pretty easily on top of the
+current git mechanisms, except for one thing.
 
-Steve
+If you use merge, the history will be a mess. If you use rebase, anyone else
+who pulled your topic branch will be in a world of hurt.
+
+I've been thinking about a solution for this I think of as "supercede".
+
+Once you have completed the above reorder/merge/split, your new topic branch
+should be EXACTLY the same as your old topic branch. (if it's not, it needs to
+be trued up to be so). At that point, it is safe to ask for that new line of
+commits to supercede the old line. Other people who have pulled in your older
+ordered topic branch would then be able to pull/rebase/etc, and the merge
+machinery would be able to back out their set of changes, and supercede them
+with your new ordering.
+
+This mechanism is intended to combine the benefits of rebase-clean-history and
+the benefits of the dag-links for merging. I find it convenient to think of it
+as stack push/pop for portions of the dag. Because of the supercede - the
+history knows it can avoid showing you all the superceded dag nodes, however,
+because those nodes are there, it can still use them to compute merges.
+
+If this behaves the way I think, this has another powerful effect. You can pull
+in a set of draft changes; you can build off them; you can periodically rebase
+them, and if those draft changes end up in the mainline, because the
+merge-history is still there, git can 'do the right thing' and remove those
+changes from your topic branch. In fact, because of the SHA1 strong naming, it
+doesn't even matter where you got them from. You could apply a patch from the
+mailing list and as long as everyone applies that patch as only a single
+commit, when the string of supercedes shows up on the main branch git will just
+'do-the right thing' to remove them from your topic branch when you rebase (or
+skip them during a merge down to your topic branch).
