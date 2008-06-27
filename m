@@ -1,74 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] clone: respect url.insteadOf setting in global configs
-Date: Fri, 27 Jun 2008 13:56:05 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806271355520.9925@racer>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: possible 'git cp'/how does git detect copies
+Date: Fri, 27 Jun 2008 15:00:06 +0200
+Message-ID: <20080627130006.GC17898@artemis.madism.org>
+References: <4864DFB6.3050204@mircea.bardac.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Fri Jun 27 14:59:34 2008
+Content-Type: multipart/signed; boundary="v9Ux+11Zm5mwPlX6";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Mircea Bardac <dev@mircea.bardac.net>
+X-From: git-owner@vger.kernel.org Fri Jun 27 15:01:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCDY2-00041E-6k
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 14:59:30 +0200
+	id 1KCDZe-0004Vx-Sh
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 15:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600AbYF0M6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 08:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754537AbYF0M6I
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 08:58:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55807 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754660AbYF0M6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 08:58:07 -0400
-Received: (qmail invoked by alias); 27 Jun 2008 12:58:05 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp014) with SMTP; 27 Jun 2008 14:58:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+YqAglII+YsE1sNxLmK72eilja7D4UGokrgIa8+9
-	4Uxq6oLReaacYV
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0806271353350.9925@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751628AbYF0NAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 09:00:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbYF0NAL
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 09:00:11 -0400
+Received: from pan.madism.org ([88.191.52.104]:56807 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751573AbYF0NAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 09:00:10 -0400
+Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 6E2E338C22;
+	Fri, 27 Jun 2008 15:00:08 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id EE63345E7; Fri, 27 Jun 2008 15:00:06 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Mircea Bardac <dev@mircea.bardac.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4864DFB6.3050204@mircea.bardac.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86550>
 
 
-When we call "git clone" with a url that has a rewrite rule in either
-$HOME/.gitconfig or /etc/gitconfig, the URL can be different from
-what the command line expects it to be.
+--v9Ux+11Zm5mwPlX6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So, let's use the URL as the remote structure has it, not the literal
-string from the command line.
+On Fri, Jun 27, 2008 at 12:40:22PM +0000, Mircea Bardac wrote:
+> I was looking today at duplicating a file but, I soon realized that there=
+=20
+> is no 'git cp' command (this was the "deductive approach to git=20
+> commands", starting from git mv/rm/...). How does "git diff -C" detect=20
+> copies (-C is used for this, according to the documentation)?
 
-Noticed by Pieter de Bie.
+  By comparing if files (blobs) are alike. It has some heuristics to
+guess which files have good changes to be copies or renames of each
+others. But it recomputes the information each time.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin-clone.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> On a very simple test, I couldn't see this working. I just copied one=20
+> file, added it, committed the change, ran "git diff -C HEAD^!". There is=
+=20
+> no place saying that it's contents is copied from some other file (both=
+=20
+> files are in the repository now).
+>=20
+> "git blame -C new_copied_file" also doesn't show the commits for the=20
+> original file.
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 965b5fc..8dda52a 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -463,7 +463,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		refs = clone_local(path, git_dir);
- 	else {
- 		struct remote *remote = remote_get(argv[0]);
--		struct transport *transport = transport_get(remote, argv[0]);
-+		struct transport *transport =
-+			transport_get(remote, remote->url[0]);
- 
- 		if (!transport->get_refs_list || !transport->fetch)
- 			die("Don't know how to clone %s", transport->url);
--- 
-1.5.6.173.gde14c
+  You probably want to use -C -C -M actually.
+
+> I found this older thread [1] on "git cp" but the discussion appears to=
+=20
+> have stalled at some point. If there is indeed no use of a "git cp"=20
+> command, I would like at least some info on how content copies are being=
+=20
+> detected, since I haven't seen this working.
+
+  If you really need it, you can and an alias alias.cp=3D!cp and be done
+with it ;P
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--v9Ux+11Zm5mwPlX6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkhk5FYACgkQvGr7W6Hudhw9VwCdHbmEfB6lvMQVqjqgLAQ1mYQq
+1jwAoI1rTuPlscYF/UoHbu2J5kKbRu4H
+=00AM
+-----END PGP SIGNATURE-----
+
+--v9Ux+11Zm5mwPlX6--
