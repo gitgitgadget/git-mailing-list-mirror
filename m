@@ -1,7 +1,7 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 11/23] Add BasePackPushConnection implementing git-send-pack protocol
-Date: Sat, 28 Jun 2008 00:06:35 +0200
-Message-ID: <1214604407-30572-12-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 13/23] Add PushProcess class implementing git-send-pack logic
+Date: Sat, 28 Jun 2008 00:06:37 +0200
+Message-ID: <1214604407-30572-14-git-send-email-marek.zawirski@gmail.com>
 References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-2-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-3-git-send-email-marek.zawirski@gmail.com>
@@ -13,73 +13,74 @@ References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-9-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-10-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-11-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-12-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-13-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:09:01 2008
+X-From: git-owner@vger.kernel.org Sat Jun 28 00:09:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCM7i-0000rw-BD
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:54 +0200
+	id 1KCM7k-0000rw-PY
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757593AbYF0WHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:07:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757492AbYF0WHt
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:49 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:36995 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757347AbYF0WHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:07:44 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so182348nfc.21
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:43 -0700 (PDT)
+	id S1758492AbYF0WIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:08:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758135AbYF0WH7
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:59 -0400
+Received: from ik-out-1112.google.com ([66.249.90.183]:45496 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757712AbYF0WHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:07:55 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so252883ika.5
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=1/UzXSjFRnV+90YKI+PyHIbOMjhC3BVgNIQZoOCa+cI=;
-        b=VFmtqHDrc+jw6wwp5vETwWwIX2C90c7vrLUgX6Nd3f8IT97RlKNl7JCT5JnNAv07tR
-         NDkZq3YK0UhPbS+ztvZV9DWkDrXlwz828h919Dl0IrpKh5h8duH+ifTEOHTkuTWZsV/6
-         8zfdn0PX/5bQeTjiF3+AgJDBMKX7kUDiUn0p4=
+        bh=OWEWA2A8RFyohb9bRXn5MpHOpfXV9axoTq93Y0KlYsg=;
+        b=Qc0fpFiyQF+Wb4H/zpQfSOkIBJk1RSOj8pwWB8tXUjiQosUIIWm1971FoOFuq/xXtg
+         /lQWbsZJDLYNNeHwVt7GWXibsDT3/ltXHpd86J0KJJEsfeWzyuRTUztRfA5uP/u9R8yN
+         tgcUmlW69eMmyjt4RXIinuKaWkWc0c8aiBoW0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nFXtz9nAk3gDqjcBGMxFcMJZv+2F55AHiVST8LDsAnA/Jbgb6nKriL6tb2pMx7iHp3
-         qeYtDWpRnYjLRKRkiK61FaxbC7cSwfcwFVDI5QdFC2/UlBxU9QOrLLvQWm6hxCC9RuLW
-         UJqGAlZpLU8QGXvYWi76ZtFjU/SnO+O6CvoAg=
-Received: by 10.210.66.13 with SMTP id o13mr1570739eba.193.1214604463875;
-        Fri, 27 Jun 2008 15:07:43 -0700 (PDT)
+        b=ZJ/6y/plmIaavh0DJPYEz1FsZplc09pLM5uU9CtsUbAc3i8eEdV4N5nF4TPg6kYbgq
+         64wWk0ybXGPI2ncBzUpSYyd1E8c/py8FpSuv4ufTkC3EY2BcHj1886T4+fVq7RkVB2n5
+         jegBwyTSDHHncxUMnzD59JsxxsVkyOLMc0sSk=
+Received: by 10.210.13.17 with SMTP id 17mr1630236ebm.1.1214604473515;
+        Fri, 27 Jun 2008 15:07:53 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id z33sm2455281ikz.0.2008.06.27.15.07.40
+        by mx.google.com with ESMTPS id b36sm2441604ika.5.2008.06.27.15.07.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 15:07:42 -0700 (PDT)
+        Fri, 27 Jun 2008 15:07:50 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.4
-In-Reply-To: <1214604407-30572-11-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1214604407-30572-13-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86651>
 
-Implementation realies extensively on RemoteRefUpdate as input.
-
-It supports report-status capability, and honors delete-refs one.
+This class perform analogous operations as FetchProcess. It processes
+refs advertised by connection, updates RemoteRefUpdates and
+local tracking branches - TrackingRefUpdates.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../jgit/transport/BasePackPushConnection.java     |  226 ++++++++++++++++++++
- 1 files changed, 226 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+ .../org/spearce/jgit/transport/PushProcess.java    |  224 ++++++++++++++++++++
+ 1 files changed, 224 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
 new file mode 100644
-index 0000000..159e331
+index 0000000..f742949
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
-@@ -0,0 +1,226 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
+@@ -0,0 +1,224 @@
 +/*
 + * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
-+ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
 + * 
 + * All rights reserved.
 + *
@@ -118,189 +119,188 @@ index 0000000..159e331
 +package org.spearce.jgit.transport;
 +
 +import java.io.IOException;
-+import java.util.ArrayList;
 +import java.util.Collection;
++import java.util.HashMap;
 +import java.util.Map;
 +
-+import org.spearce.jgit.errors.PackProtocolException;
++import org.spearce.jgit.errors.MissingObjectException;
++import org.spearce.jgit.errors.NotSupportedException;
 +import org.spearce.jgit.errors.TransportException;
 +import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.PackWriter;
 +import org.spearce.jgit.lib.ProgressMonitor;
 +import org.spearce.jgit.lib.Ref;
++import org.spearce.jgit.revwalk.RevCommit;
++import org.spearce.jgit.revwalk.RevObject;
++import org.spearce.jgit.revwalk.RevWalk;
 +import org.spearce.jgit.transport.RemoteRefUpdate.Status;
 +
 +/**
-+ * Push implementation using the native Git pack transfer service.
-+ * <p>
-+ * This is the canonical implementation for transferring objects to the remote
-+ * repository from the local repository by talking to the 'git-receive-pack'
-+ * service. Objects are packed on the local side into a pack file and then sent
-+ * to the remote repository.
-+ * <p>
-+ * This connection requires only a bi-directional pipe or socket, and thus is
-+ * easily wrapped up into a local process pipe, anonymous TCP socket, or a
-+ * command executed through an SSH tunnel.
-+ * <p>
-+ * This implementation honors {@link Transport#isPushThin()} option.
-+ * <p>
-+ * Concrete implementations should just call
-+ * {@link #init(java.io.InputStream, java.io.OutputStream)} and
-+ * {@link #readAdvertisedRefs()} methods in constructor or before any use. They
-+ * should also handle resources releasing in {@link #close()} method if needed.
++ * Class performing push operation on remote repository.
++ * 
++ * @see Transport#push(ProgressMonitor, Collection)
 + */
-+class BasePackPushConnection extends BasePackConnection implements
-+		PushConnection {
-+	static final String CAPABILITY_REPORT_STATUS = "report-status";
++class PushProcess {
++	/** Task name for {@link ProgressMonitor} used during opening connection. */
++	static final String PROGRESS_OPENING_CONNECTION = "Opening connection";
 +
-+	static final String CAPABILITY_DELETE_REFS = "delete-refs";
++	/** Transport used to perform this operation. */
++	private final Transport transport;
 +
-+	private final boolean thinPack;
++	/** Push operation connection created to perform this operation */
++	private PushConnection connection;
 +
-+	private boolean capableDeleteRefs;
++	/** Refs to update on remote side. */
++	private final Map<String, RemoteRefUpdate> toPush;
 +
-+	private boolean capableReport;
++	/** Revision walker for checking some updates properties. */
++	private final RevWalk walker;
 +
-+	private boolean sentCommand;
-+
-+	private boolean writePack;
-+
-+	BasePackPushConnection(final PackTransport transport) {
-+		super(transport);
-+		thinPack = transport.isPushThin();
-+	}
-+
-+	public void push(final ProgressMonitor monitor,
-+			final Map<String, RemoteRefUpdate> refUpdates)
-+			throws TransportException {
-+		markStartedOperation();
-+		doPush(monitor, refUpdates);
-+	}
-+
-+	protected void doPush(final ProgressMonitor monitor,
-+			final Map<String, RemoteRefUpdate> refUpdates)
-+			throws TransportException {
-+		try {
-+			writeCommands(refUpdates.values(), monitor);
-+			if (writePack)
-+				writePack(refUpdates, monitor);
-+			if (sentCommand && capableReport)
-+				readStatusReport(refUpdates);
-+		} catch (TransportException e) {
-+			throw e;
-+		} catch (Exception e) {
-+			throw new TransportException(uri + ": " + e.getMessage(), e);
-+		} finally {
-+			close();
++	/**
++	 * Create process for specified transport and refs updates specification.
++	 * 
++	 * @param transport
++	 *            transport between remote and local repository, used to create
++	 *            connection.
++	 * @param toPush
++	 *            specification of refs updates (and local tracking branches).
++	 * @throws TransportException
++	 */
++	PushProcess(final Transport transport,
++			final Collection<RemoteRefUpdate> toPush) throws TransportException {
++		this.walker = new RevWalk(transport.local);
++		this.transport = transport;
++		this.toPush = new HashMap<String, RemoteRefUpdate>();
++		for (final RemoteRefUpdate rru : toPush) {
++			if (this.toPush.put(rru.getRemoteName(), rru) != null)
++				throw new TransportException(
++						"Duplicate remote ref update is illegal. Affected remote name: "
++								+ rru.getRemoteName());
 +		}
 +	}
 +
-+	private void writeCommands(final Collection<RemoteRefUpdate> refUpdates,
-+			final ProgressMonitor monitor) throws IOException {
-+		final String capabilties = enableCapabilties();
-+		for (final RemoteRefUpdate rru : refUpdates) {
-+			if (!capableDeleteRefs && rru.isDelete()) {
-+				rru.setStatus(Status.REJECTED_NODELETE);
++	/**
++	 * Perform push operation between local and remote repository - set remote
++	 * refs appropriately, send needed objects and update local tracking refs.
++	 * 
++	 * @param monitor
++	 *            progress monitor used for feedback about operation.
++	 * @return result of push operation with complete status description.
++	 * @throws NotSupportedException
++	 *             when push operation is not supported by provided transport.
++	 * @throws TransportException
++	 *             when some error occurred during operation, like I/O, protocol
++	 *             error, or local database consistency error.
++	 */
++	PushResult execute(final ProgressMonitor monitor)
++			throws NotSupportedException, TransportException {
++		monitor.beginTask(PROGRESS_OPENING_CONNECTION, ProgressMonitor.UNKNOWN);
++		connection = transport.openPush();
++		try {
++			monitor.endTask();
++
++			final Map<String, RemoteRefUpdate> preprocessed = prepareRemoteUpdates();
++			if (!preprocessed.isEmpty())
++				connection.push(monitor, preprocessed);
++		} finally {
++			connection.close();
++		}
++		updateTrackingRefs();
++		return prepareOperationResult();
++	}
++
++	private Map<String, RemoteRefUpdate> prepareRemoteUpdates()
++			throws TransportException {
++		final Map<String, RemoteRefUpdate> result = new HashMap<String, RemoteRefUpdate>();
++		for (final RemoteRefUpdate rru : toPush.values()) {
++			final Ref advertisedRef = connection.getRef(rru.getRemoteName());
++			final ObjectId advertisedOld = (advertisedRef == null ? ObjectId
++					.zeroId() : advertisedRef.getObjectId());
++
++			if (rru.getNewObjectId().equals(advertisedOld)) {
++				if (rru.isDelete()) {
++					// ref does exist neither locally nor remotely
++					rru.setStatus(Status.NON_EXISTING);
++				} else {
++					// same object - nothing to do
++					rru.setStatus(Status.UP_TO_DATE);
++				}
 +				continue;
 +			}
 +
-+			final StringBuilder sb = new StringBuilder();
-+			final Ref advertisedRef = getRef(rru.getRemoteName());
-+			final ObjectId oldId = (advertisedRef == null ? ObjectId.zeroId()
-+					: advertisedRef.getObjectId());
-+			sb.append(oldId);
-+			sb.append(' ');
-+			sb.append(rru.getNewObjectId());
-+			sb.append(' ');
-+			sb.append(rru.getRemoteName());
-+			if (!sentCommand) {
-+				sentCommand = true;
-+				sb.append(capabilties);
++			// caller has explicitly specified expected old object id, while it
++			// has been changed in the mean time - reject
++			if (rru.isExpectingOldObjectId()
++					&& !rru.getExpectedOldObjectId().equals(advertisedOld)) {
++				rru.setStatus(Status.REJECTED_REMOTE_CHANGED);
++				continue;
 +			}
 +
-+			pckOut.writeString(sb.toString());
-+			rru.setStatus(sentCommand ? Status.AWAITING_REPORT : Status.OK);
-+			if (!rru.isDelete())
-+				writePack = true;
-+		}
-+
-+		if (monitor.isCancelled())
-+			throw new TransportException(uri + ": push cancelled");
-+		pckOut.end();
-+	}
-+
-+	private String enableCapabilties() {
-+		final StringBuilder line = new StringBuilder();
-+		capableReport = wantCapability(line, CAPABILITY_REPORT_STATUS);
-+		capableDeleteRefs = wantCapability(line, CAPABILITY_DELETE_REFS);
-+		if (line.length() > 0)
-+			line.insert(0, '\0');
-+		return line.toString();
-+	}
-+
-+	private void writePack(final Map<String, RemoteRefUpdate> refUpdates,
-+			final ProgressMonitor monitor) throws IOException {
-+		final PackWriter writer = new PackWriter(local, out, monitor);
-+		final ArrayList<ObjectId> remoteObjects = new ArrayList<ObjectId>(
-+				getRefs().size());
-+		final ArrayList<ObjectId> newObjects = new ArrayList<ObjectId>(
-+				refUpdates.size());
-+
-+		for (final Ref r : getRefs())
-+			remoteObjects.add(r.getObjectId());
-+		for (final RemoteRefUpdate r : refUpdates.values())
-+			newObjects.add(r.getNewObjectId());
-+
-+		writer.writePack(newObjects, remoteObjects, thinPack, true);
-+	}
-+
-+	private void readStatusReport(final Map<String, RemoteRefUpdate> refUpdates)
-+			throws IOException {
-+		final String unpackLine = pckIn.readString();
-+		if (!unpackLine.startsWith("unpack "))
-+			throw new PackProtocolException(uri + ": unexpected report line: "
-+					+ unpackLine);
-+		final String unpackStatus = unpackLine.substring("unpack ".length());
-+		if (!unpackStatus.equals("ok"))
-+			throw new TransportException(uri
-+					+ ": error occurred during unpacking on the remote end: "
-+					+ unpackStatus);
-+
-+		String refLine;
-+		while ((refLine = pckIn.readString()).length() > 0) {
-+			boolean ok = false;
-+			int refNameEnd = -1;
-+			if (refLine.startsWith("ok ")) {
-+				ok = true;
-+				refNameEnd = refLine.length();
-+			} else if (refLine.startsWith("ng ")) {
-+				ok = false;
-+				refNameEnd = refLine.indexOf(" ", 3);
++			// create ref (hasn't existed on remote side) and delete ref
++			// are always fast-forward commands, feasible at this level
++			if (advertisedOld.equals(ObjectId.zeroId()) || rru.isDelete()) {
++				rru.setFastForward(true);
++				result.put(rru.getRemoteName(), rru);
++				continue;
 +			}
-+			if (refNameEnd == -1)
-+				throw new PackProtocolException(uri
-+						+ ": unexpected report line: " + refLine);
-+			final String refName = refLine.substring(3, refNameEnd);
-+			final String message = (ok ? null : refLine
-+					.substring(refNameEnd + 1));
 +
-+			final RemoteRefUpdate rru = refUpdates.get(refName);
-+			if (rru == null)
-+				throw new PackProtocolException(uri
-+						+ ": unexpected ref report: " + refName);
-+			if (ok) {
-+				rru.setStatus(Status.OK);
-+			} else {
-+				rru.setStatus(Status.REJECTED_OTHER_REASON);
-+				rru.setMessage(message);
++			// check for fast-forward:
++			// - both old and new ref must point to commits, AND
++			// - both of them must be known for us, exist in repository, AND
++			// - old commit must be ancestor of new commit
++			boolean fastForward = true;
++			try {
++				RevObject oldRev = walker.parseAny(advertisedOld);
++				final RevObject newRev = walker.parseAny(rru.getNewObjectId());
++				if (!(oldRev instanceof RevCommit)
++						|| !(newRev instanceof RevCommit)
++						|| !walker.isMergedInto((RevCommit) oldRev,
++								(RevCommit) newRev))
++					fastForward = false;
++			} catch (MissingObjectException x) {
++				fastForward = false;
++			} catch (Exception x) {
++				throw new TransportException(transport.getURI()
++						+ ": reading objects from local repository failed: "
++						+ x.getMessage(), x);
++			}
++			rru.setFastForward(fastForward);
++			if (!fastForward && !rru.isForceUpdate())
++				rru.setStatus(Status.REJECTED_NONFASTFORWARD);
++			else
++				result.put(rru.getRemoteName(), rru);
++		}
++		return result;
++	}
++
++	private void updateTrackingRefs() {
++		for (final RemoteRefUpdate rru : toPush.values()) {
++			final Status status = rru.getStatus();
++			if (rru.hasTrackingRefUpdate()
++					&& (status == Status.UP_TO_DATE || status == Status.OK)) {
++				// update local tracking branch only when there is a chance that
++				// it has changed; this is possible for:
++				// -updated (OK) status,
++				// -up to date (UP_TO_DATE) status
++				try {
++					rru.updateTrackingRef(walker);
++				} catch (IOException e) {
++					// ignore as RefUpdate has stored I/O error status
++				}
 +			}
 +		}
-+		for (final RemoteRefUpdate rru : refUpdates.values()) {
-+			if (rru.getStatus() == Status.AWAITING_REPORT)
-+				throw new PackProtocolException(uri
-+						+ ": expected report for ref " + rru.getRemoteName()
-+						+ " not received");
++	}
++
++	private PushResult prepareOperationResult() {
++		final PushResult result = new PushResult();
++		result.setAdvertisedRefs(connection.getRefsMap());
++		result.setRemoteUpdates(toPush);
++
++		for (final RemoteRefUpdate rru : toPush.values()) {
++			final TrackingRefUpdate tru = rru.getTrackingRefUpdate();
++			if (tru != null)
++				result.add(tru);
 +		}
++		return result;
 +	}
 +}
 -- 
