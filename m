@@ -1,138 +1,119 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] fetch: report local storage errors in status table
-Date: Thu, 26 Jun 2008 23:59:50 -0400
-Message-ID: <20080627035950.GA21382@sigill.intra.peff.net>
+Subject: [PATCH 2/2] fetch: give a hint to the user when local refs fail to
+	update
+Date: Fri, 27 Jun 2008 00:01:41 -0400
+Message-ID: <20080627040140.GB21382@sigill.intra.peff.net>
 References: <1214509350.28344.31.camel@odie.local> <20080627030245.GA7144@sigill.intra.peff.net> <20080627035747.GC7144@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Ingo Molnar <mingo@elte.hu>
 To: Simon Holm =?utf-8?Q?Th=C3=B8gersen?= <odie@cs.aau.dk>
-X-From: git-owner@vger.kernel.org Fri Jun 27 06:00:51 2008
+X-From: git-owner@vger.kernel.org Fri Jun 27 06:02:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC58i-0007n9-T0
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 06:00:49 +0200
+	id 1KC5AW-00088r-LC
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 06:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752440AbYF0D7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2008 23:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbYF0D7x
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 23:59:53 -0400
-Received: from peff.net ([208.65.91.99]:4545 "EHLO peff.net"
+	id S1750781AbYF0EBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 00:01:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750723AbYF0EBo
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 00:01:44 -0400
+Received: from peff.net ([208.65.91.99]:4551 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752348AbYF0D7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 23:59:52 -0400
-Received: (qmail 31500 invoked by uid 111); 27 Jun 2008 03:59:51 -0000
+	id S1750704AbYF0EBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 00:01:43 -0400
+Received: (qmail 31528 invoked by uid 111); 27 Jun 2008 04:01:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 26 Jun 2008 23:59:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jun 2008 23:59:50 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 27 Jun 2008 00:01:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jun 2008 00:01:41 -0400
 Content-Disposition: inline
 In-Reply-To: <20080627035747.GC7144@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86521>
 
-Previously, if there was an error while storing a local
-tracking ref, the low-level functions would report an error,
-but fetch's status output wouldn't indicate any problem.
-E.g., imagine you have an old "refs/remotes/origin/foo/bar" but
-upstream has deleted "foo/bar" in favor of a new branch
-"foo". You would get output like this:
+There are basically two categories of update failures for
+local refs:
 
-  error: there are still refs under 'refs/remotes/origin/foo'
-  From $url_of_repo
-   * [new branch]      foo        -> origin/foo
+  1. problems outside of git, like disk full, bad
+     permissions, etc.
 
-With this patch, the output takes into account the status of
-updating the local ref:
+  2. D/F conflicts on tracking branch ref names
 
-  error: there are still refs under 'refs/remotes/origin/foo'
-  From $url_of_repo
-   ! [new branch]      foo        -> origin/foo  (unable to update local ref)
+In either case, there should already have been an error
+message. In case '1', hopefully enough information has
+already been given that the user can fix it. In the case of
+'2', we can hint that the user can clean up their tracking
+branch area by using 'git remote prune'.
+
+Note that we don't actually know _which_ case we have, so
+the user will receive the hint in case 1, as well. In this
+case the suggestion won't do any good, but hopefully the
+user is smart enough to figure out that it's just a hint.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin-fetch.c |   36 ++++++++++++++++++++++++------------
- 1 files changed, 24 insertions(+), 12 deletions(-)
+Actually, I think there might be a third category, "bad ref format".
+But that would only come from a malicious remote trying to send you a
+badly formatted ref, so I think that is rare enough not to worry about
+showing the extra hint there.
+
+ builtin-fetch.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/builtin-fetch.c b/builtin-fetch.c
-index e81ee2d..7c16d38 100644
+index 7c16d38..97fdc51 100644
 --- a/builtin-fetch.c
 +++ b/builtin-fetch.c
-@@ -233,10 +233,12 @@ static int update_local_ref(struct ref *ref,
+@@ -181,9 +181,9 @@ static int s_update_ref(const char *action,
+ 	lock = lock_any_ref_for_update(ref->name,
+ 				       check_old ? ref->old_sha1 : NULL, 0);
+ 	if (!lock)
+-		return 1;
++		return 2;
+ 	if (write_ref_sha1(lock, ref->new_sha1, msg) < 0)
+-		return 1;
++		return 2;
+ 	return 0;
+ }
  
- 	if (!is_null_sha1(ref->old_sha1) &&
- 	    !prefixcmp(ref->name, "refs/tags/")) {
--		sprintf(display, "- %-*s %-*s -> %s",
-+		int r;
-+		r = s_update_ref("updating tag", ref, 0);
-+		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '-',
- 			SUMMARY_WIDTH, "[tag update]", REFCOL_WIDTH, remote,
--			pretty_ref);
--		return s_update_ref("updating tag", ref, 0);
-+			pretty_ref, r ? "  (unable to update local ref)" : "");
-+		return r;
+@@ -294,7 +294,8 @@ static int update_local_ref(struct ref *ref,
  	}
+ }
  
- 	current = lookup_commit_reference_gently(ref->old_sha1, 1);
-@@ -244,6 +246,7 @@ static int update_local_ref(struct ref *ref,
- 	if (!current || !updated) {
- 		const char *msg;
- 		const char *what;
-+		int r;
- 		if (!strncmp(ref->name, "refs/tags/", 10)) {
- 			msg = "storing tag";
- 			what = "[new tag]";
-@@ -253,27 +256,36 @@ static int update_local_ref(struct ref *ref,
- 			what = "[new branch]";
+-static int store_updated_refs(const char *url, struct ref *ref_map)
++static int store_updated_refs(const char *url, const char *remote_name,
++		struct ref *ref_map)
+ {
+ 	FILE *fp;
+ 	struct commit *commit;
+@@ -380,6 +381,10 @@ static int store_updated_refs(const char *url, struct ref *ref_map)
  		}
- 
--		sprintf(display, "* %-*s %-*s -> %s", SUMMARY_WIDTH, what,
--			REFCOL_WIDTH, remote, pretty_ref);
--		return s_update_ref(msg, ref, 0);
-+		r = s_update_ref(msg, ref, 0);
-+		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '*',
-+			SUMMARY_WIDTH, what, REFCOL_WIDTH, remote, pretty_ref,
-+			r ? "  (unable to update local ref)" : "");
-+		return r;
  	}
+ 	fclose(fp);
++	if (rc & 2)
++		error("some local refs could not be updated; try running\n"
++		      " 'git remote prune %s' to remove any old, conflicting "
++		      "branches", remote_name);
+ 	return rc;
+ }
  
- 	if (in_merge_bases(current, &updated, 1)) {
- 		char quickref[83];
-+		int r;
- 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
- 		strcat(quickref, "..");
- 		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
--		sprintf(display, "  %-*s %-*s -> %s", SUMMARY_WIDTH, quickref,
--			REFCOL_WIDTH, remote, pretty_ref);
--		return s_update_ref("fast forward", ref, 1);
-+		r = s_update_ref("fast forward", ref, 1);
-+		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : ' ',
-+			SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
-+			pretty_ref, r ? "  (unable to update local ref)" : "");
-+		return r;
- 	} else if (force || ref->force) {
- 		char quickref[84];
-+		int r;
- 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
- 		strcat(quickref, "...");
- 		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
--		sprintf(display, "+ %-*s %-*s -> %s  (forced update)",
--			SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote, pretty_ref);
--		return s_update_ref("forced-update", ref, 1);
-+		r = s_update_ref("forced-update", ref, 1);
-+		sprintf(display, "%c %-*s %-*s -> %s  (%s)", r ? '!' : '+',
-+			SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
-+			pretty_ref,
-+			r ? "unable to update local ref" : "forced update");
-+		return r;
- 	} else {
- 		sprintf(display, "! %-*s %-*s -> %s  (non fast forward)",
- 			SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
+@@ -450,7 +455,9 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+ 	if (ret)
+ 		ret = transport_fetch_refs(transport, ref_map);
+ 	if (!ret)
+-		ret |= store_updated_refs(transport->url, ref_map);
++		ret |= store_updated_refs(transport->url,
++				transport->remote->name,
++				ref_map);
+ 	transport_unlock_pack(transport);
+ 	return ret;
+ }
 -- 
 1.5.6.1.79.g7b3a7.dirty
