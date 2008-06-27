@@ -1,134 +1,182 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 10/15] Introduce reduce_heads()
-Date: Fri, 27 Jun 2008 18:22:03 +0200
-Message-ID: <67035c91a933887c7cc97fa6d3dda9462594d611.1214581610.git.vmiklos@frugalware.org>
+Subject: [PATCH 03/15] Move parse-options's skip_prefix() to git-compat-util.h
+Date: Fri, 27 Jun 2008 18:21:56 +0200
+Message-ID: <876e733753999f116bfd975d9a262a5c1b3855a1.1214581610.git.vmiklos@frugalware.org>
 References: <cover.1214581610.git.vmiklos@frugalware.org>
  <58b2c36de6a6f51a562da303695482bea567f4bf.1214581610.git.vmiklos@frugalware.org>
  <4a9a3a34d8c42b60f002acb20083cb9e187c262f.1214581610.git.vmiklos@frugalware.org>
- <876e733753999f116bfd975d9a262a5c1b3855a1.1214581610.git.vmiklos@frugalware.org>
- <99b931de28ab3017269d15c334c83e242d025489.1214581610.git.vmiklos@frugalware.org>
- <5c33ca94d6edb203bd2fbbb949f834b3771470ed.1214581610.git.vmiklos@frugalware.org>
- <25a8ffde9783638080d2b998d8f2579e6ed6c8e7.1214581610.git.vmiklos@frugalware.org>
- <715117f89992568500bd26b1a4e1357c0a570c4a.1214581610.git.vmiklos@frugalware.org>
- <d600b25cb1d8f3b6bce12b2a479d4b68b1935dfd.1214581610.git.vmiklos@frugalware.org>
- <a01223ac1d530522b383fc3e9590ac1a2a5d66ed.1214581610.git.vmiklos@frugalware.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Olivier Marin <dkr@freesurf.fr>,
 	Junio C Hamano <gitster@pobox.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 18:24:16 2008
+X-From: git-owner@vger.kernel.org Fri Jun 27 18:24:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCGk5-0004E3-Vi
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 18:24:10 +0200
+	id 1KCGk4-0004E3-1b
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 18:24:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760570AbYF0QWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 12:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759830AbYF0QW3
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 12:22:29 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:45344 "EHLO
+	id S1756209AbYF0QWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 12:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755128AbYF0QWS
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 12:22:18 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:45323 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760327AbYF0QWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 12:22:12 -0400
+	with ESMTP id S1759744AbYF0QWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 12:22:09 -0400
 Received: from vmobile.example.net (dsl5401C209.pool.t-online.hu [84.1.194.9])
-	by yugo.frugalware.org (Postfix) with ESMTP id AD8D81DDC63;
-	Fri, 27 Jun 2008 18:22:06 +0200 (CEST)
+	by yugo.frugalware.org (Postfix) with ESMTP id BE6561DDC5B;
+	Fri, 27 Jun 2008 18:22:05 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 4F98E18E82C; Fri, 27 Jun 2008 18:22:09 +0200 (CEST)
+	id B3E9818E825; Fri, 27 Jun 2008 18:22:08 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6
-In-Reply-To: <a01223ac1d530522b383fc3e9590ac1a2a5d66ed.1214581610.git.vmiklos@frugalware.org>
+In-Reply-To: <4a9a3a34d8c42b60f002acb20083cb9e187c262f.1214581610.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1214581610.git.vmiklos@frugalware.org>
 References: <cover.1214581610.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86582>
 
-From: Junio C Hamano <gitster@pobox.com>
+builtin-remote.c and parse-options.c both have a skip_prefix() function,
+for the same purpose. Move parse-options's one to git-compat-util.h and
+let builtin-remote use it as well.
 
-The new function reduce_heads() is given a list of commits, and removes
-ones that can be reached from other commits in the list.  It is useful for
-reducing the commits randomly thrown at the git-merge command and remove
-redundant commits that the user shouldn't have given to it.
-
-The implementation uses the get_merge_bases_many() introduced in the
-previous commit.  If the merge base between one commit taken from the list
-and the remaining commits is the commit itself, that means the commit is
-reachable from some of the other commits.
-
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- commit.c |   45 +++++++++++++++++++++++++++++++++++++++++++++
- commit.h |    2 ++
- 2 files changed, 47 insertions(+), 0 deletions(-)
+ builtin-remote.c  |   39 ++++++++++++++++++++++++++-------------
+ git-compat-util.h |    6 ++++++
+ parse-options.c   |    6 ------
+ 3 files changed, 32 insertions(+), 19 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index cafed26..d20b14e 100644
---- a/commit.c
-+++ b/commit.c
-@@ -725,3 +725,48 @@ int in_merge_bases(struct commit *commit, struct commit **reference, int num)
- 	free_commit_list(bases);
- 	return ret;
- }
-+
-+struct commit_list *reduce_heads(struct commit_list *heads)
-+{
-+	struct commit_list *p;
-+	struct commit_list *result = NULL, **tail = &result;
-+	struct commit **other;
-+	size_t num_head, num_other;
-+
-+	if (!heads)
-+		return NULL;
-+
-+	/* Avoid unnecessary reallocations */
-+	for (p = heads, num_head = 0; p; p = p->next)
-+		num_head++;
-+	other = xcalloc(sizeof(*other), num_head);
-+
-+	/* For each commit, see if it can be reached by others */
-+	for (p = heads; p; p = p->next) {
-+		struct commit_list *q, *base;
-+
-+		num_other = 0;
-+		for (q = heads; q; q = q->next) {
-+			if (p == q)
-+				continue;
-+			other[num_other++] = q->item;
-+		}
-+		if (num_other) {
-+			base = get_merge_bases_many(p->item, num_other, other, 1);
-+		} else
-+			base = NULL;
-+		/*
-+		 * If p->item does not have anything common with other
-+		 * commits, there won't be any merge base.  If it is
-+		 * reachable from some of the others, p->item will be
-+		 * the merge base.  If its history is connected with
-+		 * others, but p->item is not reachable by others, we
-+		 * will get something other than p->item back.
-+		 */
-+		if (!base || (base->item != p->item))
-+			tail = &(commit_list_insert(p->item, tail)->next);
-+		free_commit_list(base);
-+	}
-+	free(other);
-+	return result;
-+}
-diff --git a/commit.h b/commit.h
-index dcec7fb..2acfc79 100644
---- a/commit.h
-+++ b/commit.h
-@@ -140,4 +140,6 @@ static inline int single_parent(struct commit *commit)
- 	return commit->parents && !commit->parents->next;
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 145dd85..1491354 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -29,12 +29,6 @@ static inline int postfixcmp(const char *string, const char *postfix)
+ 	return strcmp(string + len1 - len2, postfix);
  }
  
-+struct commit_list *reduce_heads(struct commit_list *heads);
+-static inline const char *skip_prefix(const char *name, const char *prefix)
+-{
+-	return !name ? "" :
+-		prefixcmp(name, prefix) ?  name : name + strlen(prefix);
+-}
+-
+ static int opt_parse_track(const struct option *opt, const char *arg, int not)
+ {
+ 	struct path_list *list = opt->value;
+@@ -182,12 +176,18 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 			info->remote = xstrdup(value);
+ 		} else {
+ 			char *space = strchr(value, ' ');
+-			value = skip_prefix(value, "refs/heads/");
++			const char *ptr = skip_prefix(value, "refs/heads/");
++			if (ptr)
++				value = ptr;
+ 			while (space) {
+ 				char *merge;
+ 				merge = xstrndup(value, space - value);
+ 				path_list_append(merge, &info->merge);
+-				value = skip_prefix(space + 1, "refs/heads/");
++				ptr = skip_prefix(space + 1, "refs/heads/");
++				if (ptr)
++					value = ptr;
++				else
++					value = space + 1;
+ 				space = strchr(value, ' ');
+ 			}
+ 			path_list_append(xstrdup(value), &info->merge);
+@@ -219,7 +219,12 @@ static int handle_one_branch(const char *refname,
+ 	refspec.dst = (char *)refname;
+ 	if (!remote_find_tracking(states->remote, &refspec)) {
+ 		struct path_list_item *item;
+-		const char *name = skip_prefix(refspec.src, "refs/heads/");
++		const char *name, *ptr;
++		ptr = skip_prefix(refspec.src, "refs/heads/");
++		if (ptr)
++			name = ptr;
++		else
++			name = refspec.src;
+ 		/* symbolic refs pointing nowhere were handled already */
+ 		if ((flags & REF_ISSYMREF) ||
+ 				unsorted_path_list_has_path(&states->tracked,
+@@ -248,6 +253,7 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
+ 		struct path_list *target = &states->tracked;
+ 		unsigned char sha1[20];
+ 		void *util = NULL;
++		const char *ptr;
+ 
+ 		if (!ref->peer_ref || read_ref(ref->peer_ref->name, sha1))
+ 			target = &states->new;
+@@ -256,8 +262,10 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
+ 			if (hashcmp(sha1, ref->new_sha1))
+ 				util = &states;
+ 		}
+-		path_list_append(skip_prefix(ref->name, "refs/heads/"),
+-				target)->util = util;
++		ptr = skip_prefix(ref->name, "refs/heads/");
++		if (!ptr)
++			ptr = ref->name;
++		path_list_append(ptr, target)->util = util;
+ 	}
+ 	free_refs(fetch_map);
+ 
+@@ -522,10 +530,15 @@ static int show(int argc, const char **argv)
+ 					"es" : "");
+ 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
+ 				struct refspec *spec = states.remote->push + i;
++				const char *p = "", *q = "";
++				if (spec->src)
++					p = skip_prefix(spec->src, "refs/heads/");
++				if (spec->dst)
++					q = skip_prefix(spec->dst, "refs/heads/");
+ 				printf(" %s%s%s%s", spec->force ? "+" : "",
+-					skip_prefix(spec->src, "refs/heads/"),
++					p ? p : spec->src,
+ 					spec->dst ? ":" : "",
+-					skip_prefix(spec->dst, "refs/heads/"));
++					q ? q : spec->dst);
+ 			}
+ 			printf("\n");
+ 		}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 6f94a81..31edc98 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -127,6 +127,12 @@ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
+ 
+ extern int prefixcmp(const char *str, const char *prefix);
+ 
++static inline const char *skip_prefix(const char *str, const char *prefix)
++{
++	size_t len = strlen(prefix);
++	return strncmp(str, prefix, len) ? NULL : str + len;
++}
 +
- #endif /* COMMIT_H */
+ #ifdef NO_MMAP
+ 
+ #ifndef PROT_READ
+diff --git a/parse-options.c b/parse-options.c
+index b8bde2b..bbc3ca4 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -22,12 +22,6 @@ static inline const char *get_arg(struct optparse_t *p)
+ 	return *++p->argv;
+ }
+ 
+-static inline const char *skip_prefix(const char *str, const char *prefix)
+-{
+-	size_t len = strlen(prefix);
+-	return strncmp(str, prefix, len) ? NULL : str + len;
+-}
+-
+ static int opterror(const struct option *opt, const char *reason, int flags)
+ {
+ 	if (flags & OPT_SHORT)
 -- 
 1.5.6
