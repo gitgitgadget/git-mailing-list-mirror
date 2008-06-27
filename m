@@ -1,213 +1,125 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-gui: Implement "Stage/Unstage Line"
-Date: Fri, 27 Jun 2008 09:22:01 +0200
-Message-ID: <48649519.1010307@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: is rebase the same as merging every commit?
+Date: Fri, 27 Jun 2008 09:34:15 +0200
+Message-ID: <vpqd4m349hk.fsf@bauges.imag.fr>
+References: <7vvdzvn0ql.fsf@gitster.siamese.dyndns.org>
+	<willow-jeske-01l79c1jFEDjCWw6-01l7@0yvFEDjCjEl>
+	<willow-jeske-01l7GhRWFEDjChtB>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 09:23:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "David Jeske" <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 09:37:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC8IU-0006Mc-EY
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 09:23:06 +0200
+	id 1KC8Vu-0002Mc-CW
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 09:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbYF0HWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 03:22:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbYF0HWI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 03:22:08 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:35269 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbYF0HWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 03:22:06 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KC8HR-00037G-Oj; Fri, 27 Jun 2008 09:22:02 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5F51954D; Fri, 27 Jun 2008 09:22:01 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753876AbYF0Hfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 03:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753398AbYF0Hfl
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 03:35:41 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:44113 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752001AbYF0Hfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 03:35:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5R7YGdu005810;
+	Fri, 27 Jun 2008 09:34:16 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KC8TI-0000A4-2U; Fri, 27 Jun 2008 09:34:16 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KC8TI-0004lN-03; Fri, 27 Jun 2008 09:34:16 +0200
+In-Reply-To: <willow-jeske-01l7GhRWFEDjChtB> (David Jeske's message of "Fri\, 27 Jun 2008 06\:24\:23 -0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 27 Jun 2008 09:34:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86530>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+"David Jeske" <jeske@willowmail.com> writes:
 
-This adds a context menu entry below "Stage/Unstage Hunk" that stages or
-unstages just the line under the mouse pointer.
+> However, when considering an SCM perspective, I don't understand why I have to
+> make a tradeoff between personal reproducibility (which I get from the original
+> changes), and upstream readability (which the community gets from my rebase).
 
-This is by itself useful, for example, if there are unrelated changes in
-the same hunk and the hunk cannot be split by reducing the context.
+Well, look at the [PATCH] messages on this list, and how they evolve.
+Patch series give a clean way to go from a point to another. That's
+what you want to see in upstream history.
 
-The feature can also be used to split a hunk by staging a number of
-additions (or unstaging a number of removals) until there are enough
-context lines that the hunk gets split.
+Then, patch series usually get reviewed, and the patches themselves
+are modified. There's a kind of meta-history: the changes you make to
+your own changes.
 
-The implementation reads the complete hunk that the line lives in, and
-constructs a new hunk by picking existing context lines, removing unneeded
-change lines and transforming other change lines to context lines. The
-resulting hunk is fed through 'git apply' just like in the "Stage/Unstage
-Hunk" case.
+Suppose I send a patch containing
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
-	Disclaimer: I'm Tcl/Tk illiterate. Feel free to munge the patch
-	to your taste.
++	int * x = malloc(sizeof(char));
 
-	The 'do_rescan' is probably a bit heavy-weight. But editing the
-	diff window like we do in "Stage Hunk" would be a bit complex, and
-	just redisplaying the diff is easier.
+and someone notices how wrong it is. I send another patch with
 
-	Furthermore, I don't know why I have to do the loop until
-	"end - 1 chars". If it goes until "end", then the hunk contains
-	an extra line, so that the patch in general does not apply.
-	Is there an extra newline in the diff view that is not in the
-	git diff output?
++	int * x = malloc(sizeof(int));
 
-	-- Hannes
+The first version was basicaly a mistake, and if it hasn't been
+released, no one want to bother with it longer that the time to resend
+the patch. No one want to be hit by the bug while using bisect later
+on the upstream repository. And no one wants to see both patches when
+reviewing or "git blame"-ing.
 
- git-gui.sh   |    8 +++++
- lib/diff.tcl |   87 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+), 0 deletions(-)
+Things you rebase in Git are just like things for which you don't make
+intermediate commits in SVN.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 1bbae15..d89f156 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2666,6 +2666,11 @@ $ctxm add command \
- 	-command {apply_hunk $cursorX $cursorY}
- set ui_diff_applyhunk [$ctxm index last]
- lappend diff_actions [list $ctxm entryconf $ui_diff_applyhunk -state]
-+$ctxm add command \
-+	-label [mc "Apply/Reverse Line"] \
-+	-command {apply_line $cursorX $cursorY; do_rescan}
-+set ui_diff_applyline [$ctxm index last]
-+lappend diff_actions [list $ctxm entryconf $ui_diff_applyline -state]
- $ctxm add separator
- $ctxm add command \
- 	-label [mc "Show Less Context"] \
-@@ -2714,8 +2719,10 @@ proc popup_diff_menu {ctxm x y X Y} {
- 	set ::cursorY $y
- 	if {$::ui_index eq $::current_diff_side} {
- 		set l [mc "Unstage Hunk From Commit"]
-+		set t [mc "Unstage Line From Commit"]
- 	} else {
- 		set l [mc "Stage Hunk For Commit"]
-+		set t [mc "Stage Line For Commit"]
- 	}
- 	if {$::is_3way_diff
- 		|| $current_diff_path eq {}
-@@ -2726,6 +2733,7 @@ proc popup_diff_menu {ctxm x y X Y} {
- 		set s normal
- 	}
- 	$ctxm entryconf $::ui_diff_applyhunk -state $s -label $l
-+	$ctxm entryconf $::ui_diff_applyline -state $s -label $t
- 	tk_popup $ctxm $X $Y
- }
- bind_button3 $ui_diff [list popup_diff_menu $ctxm %x %y %X %Y]
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index d04f6db..96ba949 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -362,3 +362,90 @@ proc apply_hunk {x y} {
- 		set current_diff_path $current_diff_path
- 	}
- }
-+
-+proc apply_line {x y} {
-+	global current_diff_path current_diff_header current_diff_side
-+	global ui_diff ui_index file_states
-+
-+	if {$current_diff_path eq {} || $current_diff_header eq {}} return
-+	if {![lock_index apply_hunk]} return
-+
-+	set apply_cmd {apply --cached --whitespace=nowarn}
-+	set mi [lindex $file_states($current_diff_path) 0]
-+	if {$current_diff_side eq $ui_index} {
-+		set failed_msg [mc "Failed to unstage selected line."]
-+		set to_context {+}
-+		lappend apply_cmd --reverse
-+		if {[string index $mi 0] ne {M}} {
-+			unlock_index
-+			return
-+		}
-+	} else {
-+		set failed_msg [mc "Failed to stage selected line."]
-+		set to_context {-}
-+		if {[string index $mi 1] ne {M}} {
-+			unlock_index
-+			return
-+		}
-+	}
-+
-+	set the_l [$ui_diff index @$x,$y]
-+
-+	# operate only on change lines
-+	set c1 [$ui_diff get "$the_l linestart"]
-+	if {$c1 ne {+} && $c1 ne {-}} {
-+		unlock_index
-+		return
-+	}
-+	set sign $c1
-+
-+	set i_l [$ui_diff search -backwards -regexp ^@@ $the_l 0.0]
-+	if {$i_l eq {}} {
-+		unlock_index
-+		return
-+	}
-+	# $i_l is now at the beginning of a line
-+
-+	# pick start line number from hunk header
-+	set hh [$ui_diff get $i_l "$i_l + 1 lines"]
-+	set hh [lindex [split $hh ,] 0]
-+	set hln [lindex [split $hh -] 1]
-+
-+	set n 0
-+	set i_l [$ui_diff index "$i_l + 1 lines"]
-+	set patch {}
-+	while {[$ui_diff compare $i_l < "end - 1 chars"] &&
-+	       [$ui_diff get $i_l "$i_l + 2 chars"] ne {@@}} {
-+		set next_l [$ui_diff index "$i_l + 1 lines"]
-+		set c1 [$ui_diff get $i_l]
-+		if {[$ui_diff compare $i_l <= $the_l] &&
-+		    [$ui_diff compare $the_l < $next_l]} {
-+			# the line to stage/unstage
-+			set ln [$ui_diff get $i_l $next_l]
-+			set patch "$patch$ln"
-+		} elseif {$c1 ne {-} && $c1 ne {+}} {
-+			# context line
-+			set ln [$ui_diff get $i_l $next_l]
-+			set patch "$patch$ln"
-+			set n [expr $n+1]
-+		} elseif {$c1 eq $to_context} {
-+			# turn change line into context line
-+			set ln [$ui_diff get "$i_l + 1 chars" $next_l]
-+			set patch "$patch $ln"
-+			set n [expr $n+1]
-+		}
-+		set i_l $next_l
-+	}
-+	set patch "@@ -$hln,$n +$hln,[eval expr $n $sign 1] @@\n$patch"
-+
-+	if {[catch {
-+		set p [eval git_write $apply_cmd]
-+		fconfigure $p -translation binary -encoding binary
-+		puts -nonewline $p $current_diff_header
-+		puts -nonewline $p $patch
-+		close $p} err]} {
-+		error_popup [append $failed_msg "\n\n$err"]
-+	}
-+
-+	unlock_index
-+}
+>>From all I've read about rebase, bisect, and the big tree management, it seems
+> like the three steps are Reorder, combine, rebase.  (In a more complicated
+> situation, i'd want to split a commit into pieces)
+>
+> (1'')
+> 0' - feature A
+> 1' - bugfix a
+> 2' - bugfix a2
+> (2'')
+> 3' - feature b
+> 4' - bugfix b
+> (3'')
+> 5' - feature c (split)
+> (4'')
+> 6' - feature d (split)
+>
+> Frankly, I'm super impressed, because I can imagine how I might do
+> this in git.
+
+git rebase -i will help you to do that painlessly.
+
+> I want to mess around and try this stuff out, but I'm scared of doing bad
+> things to the tree and them being unrecoverable
+
+They won't. The reflog is still there. Try it, an cancel it if you
+don't like.
+
+The huge difference between the reflog and the history is that the
+reflog is local, it's your own mess, other people won't get disturbed
+by how messy it can be.
+
+> (other than the fact that the current dag
+> link propagation model would force others to get these changes if
+> they remained connected together. Something easily remidied by out
+> of band metadata, or different link types)
+
+No. One fundamental principle of Git is that objects are immutable. If
+your objects have a link, of whatever kind, then the same object moved
+in another repository have the same link.
+
+But what's wrong with the reflog?
+
 -- 
-1.5.6.918.g8a69
+Matthieu
