@@ -1,55 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] commit-tree: lift completely arbitrary limit of 16 parents
-Date: Fri, 27 Jun 2008 15:00:34 +0200
-Message-ID: <4864E472.3070301@viscovery.net>
-References: <alpine.LFD.1.10.0806262243130.2988@localhost.localdomain> <alpine.DEB.1.00.0806271259440.9925@racer> <alpine.DEB.1.00.0806271324010.9925@racer>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 12/13] Build in merge
+Date: Fri, 27 Jun 2008 15:01:48 +0200
+Message-ID: <20080627130148.GL29404@genesis.frugalware.org>
+References: <cover.1214066798.git.vmiklos@frugalware.org> <0b7ea424b3d5ea18a5a8660c6aead51adcc6a40f.1214066799.git.vmiklos@frugalware.org> <57d8a308fae0012174ed4388baccf1bde8515f2f.1214066799.git.vmiklos@frugalware.org> <5cae08d3bf2852a8bbd8dc8cdf741cb4bdfa237e.1214066799.git.vmiklos@frugalware.org> <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org> <486270D5.5050204@free.fr> <20080627010609.GJ29404@genesis.frugalware.org> <alpine.DEB.1.00.0806271255240.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Len Brown <lenb@kernel.org>, git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gOA5A3xDLQTKni8K"
+Cc: Olivier Marin <dkr+ml.git@free.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 27 15:01:45 2008
+X-From: git-owner@vger.kernel.org Fri Jun 27 15:03:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCDa2-0004e7-Jm
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 15:01:35 +0200
+	id 1KCDbR-0005Dv-KL
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 15:03:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161AbYF0NAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 09:00:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652AbYF0NAh
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 09:00:37 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:57142 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422AbYF0NAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 09:00:36 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KCDZ4-0006mF-NT; Fri, 27 Jun 2008 15:00:34 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 6E9C054D; Fri, 27 Jun 2008 15:00:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0806271324010.9925@racer>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1754000AbYF0NBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 09:01:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753682AbYF0NBv
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 09:01:51 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:36042 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753609AbYF0NBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 09:01:50 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 26E4C1B250E;
+	Fri, 27 Jun 2008 15:01:49 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id BB13244668;
+	Fri, 27 Jun 2008 14:35:14 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 00A861778012; Fri, 27 Jun 2008 15:01:48 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806271255240.9925@racer>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86552>
 
-Johannes Schindelin schrieb:
-> @@ -69,18 +63,16 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
->  
->  	check_valid(tree_sha1, OBJ_TREE);
->  	for (i = 2; i < argc; i += 2) {
-> +		unsigned char sha1[40];
 
-		unsigned char sha1[20];
+--gOA5A3xDLQTKni8K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-is sufficient here, /me thinks.
+On Fri, Jun 27, 2008 at 12:56:02PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> > +		char hex[41];
+> > +
+> > +		memcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV), 41);
+>=20
+> Maybe strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV)) would be more=
+=20
+> intuitive?
 
--- Hannes
+Ah yes. Changed.
+
+Thanks.
+
+--gOA5A3xDLQTKni8K
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhk5LwACgkQe81tAgORUJZpWgCcCqjVqqBVKp6TmAt09Rkd44oL
+SicAnicDsqzw8G3bpuai7IbTe+NjcM8a
+=QWf6
+-----END PGP SIGNATURE-----
+
+--gOA5A3xDLQTKni8K--
