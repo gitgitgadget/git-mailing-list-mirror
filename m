@@ -1,132 +1,213 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 09:10:14 +0200
-Message-ID: <20080627071014.GA12344@atjola.homenet>
-References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-gui: Implement "Stage/Unstage Line"
+Date: Fri, 27 Jun 2008 09:22:01 +0200
+Message-ID: <48649519.1010307@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Robert Anderson <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 09:11:30 2008
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 09:23:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC872-0002j7-Rw
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 09:11:17 +0200
+	id 1KC8IU-0006Mc-EY
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 09:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbYF0HKT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 03:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbYF0HKT
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 03:10:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60714 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754496AbYF0HKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 03:10:18 -0400
-Received: (qmail invoked by alias); 27 Jun 2008 07:10:16 -0000
-Received: from i577B854A.versanet.de (EHLO atjola.local) [87.123.133.74]
-  by mail.gmx.net (mp008) with SMTP; 27 Jun 2008 09:10:16 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+QVpN3F0CQJql3JZ72J2sMZEwXwV3B1FA4zoaeBm
-	bjnizkqNnibjCO
-Content-Disposition: inline
-In-Reply-To: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
+	id S1753518AbYF0HWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 03:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbYF0HWI
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 03:22:08 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:35269 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751429AbYF0HWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 03:22:06 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KC8HR-00037G-Oj; Fri, 27 Jun 2008 09:22:02 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5F51954D; Fri, 27 Jun 2008 09:22:01 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86529>
 
-On 2008.06.26 23:50:06 -0700, Robert Anderson wrote:
-> Seems to me the concept of the "index" is a half-baked version of wha=
-t
-> I really want, which is the ability to factor a working tree's change=
-s
-> into its constituent parts in preparation for committing them.  The
-> index provides some very nice facilities to factor out changes in a
-> working tree into a "staging area", but the fundamental flaw of this
-> in my view is that this "staging area" is not instantiated as a tree,
-> so it cannot be compiled and/or tested before committing.
->=20
-> Consider a facility where the state you want to commit next is built
-> up in the current working directory, and the original set of changes
-> exists in some proto-space like the index currently inhabits, where
-> you can query and manipulate that state, but it isn't instantiated in
-> your working tree.
->=20
-> Imagine a session like this:
->=20
-> You've got a couple of conflated changes in your working tree, that
-> you think you can break up into two orthogonal changes, each of which
-> will compile and pass a set of tests you've got.  You think.  You'd
-> like to verify the build and test before you commit each piece.
->=20
-> git prep
->=20
-> where "prep" means "prepare commit".  Don't get hung up on command or
-> option names I'm using as placeholders, I just made that up without
-> much deep thought about what to call it.
->=20
-> Now my tree appears clean (and git diff returns nothing).  I can now
-> start adding the changes I had in my working tree that I want to
-> include in the next commit, using git add (which would know I am in
-> the "prep" mode).  I can examine those original working dir changes I
-> am choosing from with:
->=20
-> git diff --prep
->=20
-> which, at this point, shows the same output that "git diff" did befor=
-e
-> I ran "git prep."  Now I want to add some subset of my original
-> changes:
->=20
-> git add newfile.c
-> git add -i
-> <add a couple of hunks of the changes from file modfile.c>
->=20
-> Now I have a working tree state that I think I want to commit.  I can
-> examine it with:
->=20
-> git diff
->=20
-> and I can compile and test it.  Yep, it works and passes my test suit=
-e
-> (an option I did not have if I had added these changes to the index).
-> So now I want to commit:
->=20
-> git commit -a -m "made change A"
->=20
-> I think the commit should probably "pop" the rest of the changes I di=
-d
-> not commit back into the working directory.  If I want to pull anothe=
-r
-> subset of changes again, I can repeat the process with another "git
-> prep".
->=20
-> Does this idea resonate with anyone else?
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-Hm, I use "stash" for that purpose, which leads to kind of the reverse
-of your approach. So I do sth. like this:
+This adds a context menu entry below "Stage/Unstage Hunk" that stages or
+unstages just the line under the mouse pointer.
 
- - hack hack hack
- - Notice that I want to make two commits out of what I have in my
-   working tree
- - git add -p -- stage what I want in the first commit
- - git commit -m tmp -- temporary commit
- - git stash -- stash away what doesn't belong in the first commit
- - git reset HEAD^ -- drop the temporary commit, with the changes kept
-   in the working tree
- - test, fix bugs, read the diff, whatever
- - git commit -- this time for good
- - git stash apply -- get back the changes for the second commit
+This is by itself useful, for example, if there are unrelated changes in
+the same hunk and the hunk cannot be split by reducing the context.
 
-Instead of using reset, you could also use "commit --amend" (I actually
-used to do that), but that needs you to do "git diff HEAD^" to see the
-full changes, and (IMHO) makes it a harder sometimes to review your
-stuff, because you now have three places where the changes for one
-commit might reside (HEAD, index and working tree).
+The feature can also be used to split a hunk by staging a number of
+additions (or unstaging a number of removals) until there are enough
+context lines that the hunk gets split.
 
-Bj=F6rn
+The implementation reads the complete hunk that the line lives in, and
+constructs a new hunk by picking existing context lines, removing unneeded
+change lines and transforming other change lines to context lines. The
+resulting hunk is fed through 'git apply' just like in the "Stage/Unstage
+Hunk" case.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+	Disclaimer: I'm Tcl/Tk illiterate. Feel free to munge the patch
+	to your taste.
+
+	The 'do_rescan' is probably a bit heavy-weight. But editing the
+	diff window like we do in "Stage Hunk" would be a bit complex, and
+	just redisplaying the diff is easier.
+
+	Furthermore, I don't know why I have to do the loop until
+	"end - 1 chars". If it goes until "end", then the hunk contains
+	an extra line, so that the patch in general does not apply.
+	Is there an extra newline in the diff view that is not in the
+	git diff output?
+
+	-- Hannes
+
+ git-gui.sh   |    8 +++++
+ lib/diff.tcl |   87 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+), 0 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 1bbae15..d89f156 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2666,6 +2666,11 @@ $ctxm add command \
+ 	-command {apply_hunk $cursorX $cursorY}
+ set ui_diff_applyhunk [$ctxm index last]
+ lappend diff_actions [list $ctxm entryconf $ui_diff_applyhunk -state]
++$ctxm add command \
++	-label [mc "Apply/Reverse Line"] \
++	-command {apply_line $cursorX $cursorY; do_rescan}
++set ui_diff_applyline [$ctxm index last]
++lappend diff_actions [list $ctxm entryconf $ui_diff_applyline -state]
+ $ctxm add separator
+ $ctxm add command \
+ 	-label [mc "Show Less Context"] \
+@@ -2714,8 +2719,10 @@ proc popup_diff_menu {ctxm x y X Y} {
+ 	set ::cursorY $y
+ 	if {$::ui_index eq $::current_diff_side} {
+ 		set l [mc "Unstage Hunk From Commit"]
++		set t [mc "Unstage Line From Commit"]
+ 	} else {
+ 		set l [mc "Stage Hunk For Commit"]
++		set t [mc "Stage Line For Commit"]
+ 	}
+ 	if {$::is_3way_diff
+ 		|| $current_diff_path eq {}
+@@ -2726,6 +2733,7 @@ proc popup_diff_menu {ctxm x y X Y} {
+ 		set s normal
+ 	}
+ 	$ctxm entryconf $::ui_diff_applyhunk -state $s -label $l
++	$ctxm entryconf $::ui_diff_applyline -state $s -label $t
+ 	tk_popup $ctxm $X $Y
+ }
+ bind_button3 $ui_diff [list popup_diff_menu $ctxm %x %y %X %Y]
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index d04f6db..96ba949 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -362,3 +362,90 @@ proc apply_hunk {x y} {
+ 		set current_diff_path $current_diff_path
+ 	}
+ }
++
++proc apply_line {x y} {
++	global current_diff_path current_diff_header current_diff_side
++	global ui_diff ui_index file_states
++
++	if {$current_diff_path eq {} || $current_diff_header eq {}} return
++	if {![lock_index apply_hunk]} return
++
++	set apply_cmd {apply --cached --whitespace=nowarn}
++	set mi [lindex $file_states($current_diff_path) 0]
++	if {$current_diff_side eq $ui_index} {
++		set failed_msg [mc "Failed to unstage selected line."]
++		set to_context {+}
++		lappend apply_cmd --reverse
++		if {[string index $mi 0] ne {M}} {
++			unlock_index
++			return
++		}
++	} else {
++		set failed_msg [mc "Failed to stage selected line."]
++		set to_context {-}
++		if {[string index $mi 1] ne {M}} {
++			unlock_index
++			return
++		}
++	}
++
++	set the_l [$ui_diff index @$x,$y]
++
++	# operate only on change lines
++	set c1 [$ui_diff get "$the_l linestart"]
++	if {$c1 ne {+} && $c1 ne {-}} {
++		unlock_index
++		return
++	}
++	set sign $c1
++
++	set i_l [$ui_diff search -backwards -regexp ^@@ $the_l 0.0]
++	if {$i_l eq {}} {
++		unlock_index
++		return
++	}
++	# $i_l is now at the beginning of a line
++
++	# pick start line number from hunk header
++	set hh [$ui_diff get $i_l "$i_l + 1 lines"]
++	set hh [lindex [split $hh ,] 0]
++	set hln [lindex [split $hh -] 1]
++
++	set n 0
++	set i_l [$ui_diff index "$i_l + 1 lines"]
++	set patch {}
++	while {[$ui_diff compare $i_l < "end - 1 chars"] &&
++	       [$ui_diff get $i_l "$i_l + 2 chars"] ne {@@}} {
++		set next_l [$ui_diff index "$i_l + 1 lines"]
++		set c1 [$ui_diff get $i_l]
++		if {[$ui_diff compare $i_l <= $the_l] &&
++		    [$ui_diff compare $the_l < $next_l]} {
++			# the line to stage/unstage
++			set ln [$ui_diff get $i_l $next_l]
++			set patch "$patch$ln"
++		} elseif {$c1 ne {-} && $c1 ne {+}} {
++			# context line
++			set ln [$ui_diff get $i_l $next_l]
++			set patch "$patch$ln"
++			set n [expr $n+1]
++		} elseif {$c1 eq $to_context} {
++			# turn change line into context line
++			set ln [$ui_diff get "$i_l + 1 chars" $next_l]
++			set patch "$patch $ln"
++			set n [expr $n+1]
++		}
++		set i_l $next_l
++	}
++	set patch "@@ -$hln,$n +$hln,[eval expr $n $sign 1] @@\n$patch"
++
++	if {[catch {
++		set p [eval git_write $apply_cmd]
++		fconfigure $p -translation binary -encoding binary
++		puts -nonewline $p $current_diff_header
++		puts -nonewline $p $patch
++		close $p} err]} {
++		error_popup [append $failed_msg "\n\n$err"]
++	}
++
++	unlock_index
++}
+-- 
+1.5.6.918.g8a69
