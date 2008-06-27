@@ -1,98 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: BUG (v1.5.6.1): ./configure missing check for zlib.h
-Date: Fri, 27 Jun 2008 07:46:50 -0700 (PDT)
-Message-ID: <m3prq3hr6n.fsf@localhost.localdomain>
-References: <4864DD65.1080402@mircea.bardac.net>
+From: Trond Myklebust <Trond.Myklebust@netapp.com>
+Subject: Re: pread() over NFS (again) [1.5.5.4]
+Date: Fri, 27 Jun 2008 10:50:29 -0400
+Organization: NetApp
+Message-ID: <1214578229.7437.14.camel@localhost>
+References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com>
+	 <20080626204606.GX11793@spearce.org>
+	 <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
+	 <65688C06-BB6A-4E95-A4B9-A1A7C206BE2E@sent.com>
+	 <7vhcbfojgf.fsf@gitster.siamese.dyndns.org>
+	 <20080627025715.GB19568@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mircea Bardac <dev@bardac.net>
-X-From: git-owner@vger.kernel.org Fri Jun 27 16:48:09 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, logank@sent.com,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org,
+	Trond Myklebust <trond@netapp.com>
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 16:52:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCFEt-0003pd-Rl
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 16:47:52 +0200
+	id 1KCFJc-0005o0-RD
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 16:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755661AbYF0Oqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 10:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbYF0Oqy
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 10:46:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:29897 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755661AbYF0Oqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 10:46:53 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so387482ugf.16
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 07:46:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=bPSHotRSO49f2PK1VOfxHVanwgR0vw5mfOYf0i6Ca00=;
-        b=BlnOA1bGSZp5VY6zkW14naJzVXS1jByGBXELcOrf3U2lqDXjgQ6GKa4AogQafdIpYT
-         KrBLOO0fWVnjy78mpVQ0PddtNpU6OrVnpexLssomuz6gQBssN3dX1/+y+sXw+QHsf/gg
-         uYSztmBv7+Vm0lUlLu2GmOez/t6j8LBbHW1EQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=gdIikQVnGyEBHppcNZ/o0nENqQuwJ+7H6kcdl2eruZzAPyM9KpChvbFl+LBLP2oDeM
-         aBwe5KEivPOqrCuGl+PEGmncDUtj7tfOqwdFnqrRB3qZUAdAzIR/zEFnEv9kCCqRF/E6
-         NKrbj2NIdHrf3GLMQJl9hX+fcfJ6EuqVPuLx8=
-Received: by 10.67.24.18 with SMTP id b18mr2122317ugj.11.1214578011548;
-        Fri, 27 Jun 2008 07:46:51 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.205.161])
-        by mx.google.com with ESMTPS id e1sm193068ugf.19.2008.06.27.07.46.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 07:46:50 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5REkFhK030428;
-	Fri, 27 Jun 2008 16:46:26 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5REjrhh030422;
-	Fri, 27 Jun 2008 16:45:53 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4864DD65.1080402@mircea.bardac.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756382AbYF0Ovi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 10:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756612AbYF0Ovi
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 10:51:38 -0400
+Received: from mx2.netapp.com ([216.240.18.37]:7683 "EHLO mx2.netapp.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756474AbYF0Ovg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 10:51:36 -0400
+X-IronPort-AV: E=Sophos;i="4.27,715,1204531200"; 
+   d="scan'208";a="948375"
+Received: from smtp1.corp.netapp.com ([10.57.156.124])
+  by mx2-out.netapp.com with ESMTP; 27 Jun 2008 07:51:26 -0700
+Received: from svlexrs01.hq.netapp.com (svlexrs01.corp.netapp.com [10.57.156.158])
+	by smtp1.corp.netapp.com (8.13.1/8.13.1/NTAP-1.6) with ESMTP id m5REpPLY018536;
+	Fri, 27 Jun 2008 07:51:26 -0700 (PDT)
+Received: from sacrsexc1-prd.hq.netapp.com ([10.99.115.27]) by svlexrs01.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 27 Jun 2008 07:51:25 -0700
+Received: from SACMVEXC2-PRD.hq.netapp.com ([10.99.115.17]) by sacrsexc1-prd.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 27 Jun 2008 07:51:24 -0700
+Received: from 10.58.52.120 ([10.58.52.120]) by SACMVEXC2-PRD.hq.netapp.com ([10.99.115.16]) with Microsoft Exchange Server HTTP-DAV ;
+ Fri, 27 Jun 2008 14:50:29 +0000
+Received: from heimdal.trondhjem.org by SACMVEXC2-PRD.hq.netapp.com; 27 Jun 2008 10:50:29 -0400
+In-Reply-To: <20080627025715.GB19568@fieldses.org>
+X-Mailer: Evolution 2.22.2 
+X-OriginalArrivalTime: 27 Jun 2008 14:51:24.0735 (UTC) FILETIME=[456124F0:01C8D865]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86569>
 
-Mircea Bardac <dev@mircea.bardac.net> writes:
-
-> $ ./configure
-[...]
-> configure: CHECKS for header files
-
-Here ./configure check for existence of heder files, but only those
-that can be skipped by defining some macro...
-
-> configure: CHECKS for site configuration
-
-...and here is check for --with-zlib=<path to zlib>
-
-> configure: creating ./config.status
-> config.status: creating config.mak.autogen
+On Thu, 2008-06-26 at 22:57 -0400, J. Bruce Fields wrote:
+> On Thu, Jun 26, 2008 at 04:38:40PM -0700, Junio C Hamano wrote:
+> > logank@sent.com writes:
+> > 
+> > > On Jun 26, 2008, at 1:56 PM, Junio C Hamano wrote:
+> > >
+> > >>> "The file shouldn't be short unless someone truncated it, or there
+> > >>> is a bug in index-pack.  Neither is very likely, but I don't think
+> > >>> we would want to retry pread'ing the same block forever.
+> > >>
+> > >> I don't think we would want to retry even once.  Return value of 0
+> > >> from
+> > >> pread is defined to be an EOF, isn't it?
+> > >
+> > > No, it seems to be a simple error-out in this case. We have 2.4.20
+> > > systems with nfs-utils 0.3.3 and used to frequently get the same error
+> > > while pushing. I made a similar change back in February and haven't
+> > > had a problem since:
+> > >
+> > > diff --git a/index-pack.c b/index-pack.c
+> > > index 5ac91ba..85c8bdb 100644
+> > > --- a/index-pack.c
+> > > +++ b/index-pack.c
+> > > @@ -313,7 +313,14 @@ static void *get_data_from_pack(struct
+> > > object_entry *obj)
+> > > 	src = xmalloc(len);
+> > > 	data = src;
+> > > 	do {
+> > > +		// It appears that if multiple threads read across NFS, the
+> > > +		// second read will fail. I know this is awful, but we wait for
+> > > +		// a little bit and try again.
+> > > 		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+> > > +		if (n <= 0) {
+> > > +			sleep(1);
+> > > +			n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+> > > +		}
+> > > 		if (n <= 0)
+> > > 			die("cannot pread pack file: %s", strerror(errno));
+> > > 		rdy += n;
+> > >
+> > > I use a sleep request since it seems less likely that the other thread
+> > > will have an outstanding request after a second of waiting.
+> > 
+> > Gaah.  Don't we have NFS experts in house?  Bruce, perhaps?
 > 
-> $ make
-> GIT_VERSION = 1.5.6.1
->      * new build flags or prefix
->      CC daemon.o
-> In file included from daemon.c:1:
-> cache.h:9:18: error: zlib.h: No such file or directory
-> make: *** [daemon.o] Error 1
+> Trond, you don't have any idea why a 2.6.9-42.0.8.ELsmp client (2.4.28
+> server) might be returning spurious 0's from pread()?
 > 
-> (installing zlib1g-dev on Ubuntu 7.10 fixed the problem)
+> Seems like everything is happening from that one client--the file isn't
+> being simultaneously accessed from the server or from another client.
 
-What should ./configure do (what ./configure for other programs
-or packages do)?
+Is the file only being read, or could there be a simultaneous write to
+the same file? I'm surmising this could be an effect resulting from
+simultaneous cache invalidations: prior to Linux 2.6.20 or so, we
+weren't rigorously following the VFS/VM rules for page locking, and so
+page cache invalidation in particular could have some curious
+side-effects.
 
-You cannot compile git without zlib!
+Cheers
+  Trond
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Trond Myklebust
+Linux NFS client maintainer
+
+NetApp
+Trond.Myklebust@netapp.com
+www.netapp.com
