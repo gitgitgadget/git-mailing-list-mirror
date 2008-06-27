@@ -1,7 +1,7 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 22/23] Add new handy constructors to TransportException, PackProtocolException
-Date: Sat, 28 Jun 2008 00:06:46 +0200
-Message-ID: <1214604407-30572-23-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 23/23] Use new TransportException constructors
+Date: Sat, 28 Jun 2008 00:06:47 +0200
+Message-ID: <1214604407-30572-24-git-send-email-marek.zawirski@gmail.com>
 References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-2-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-3-git-send-email-marek.zawirski@gmail.com>
@@ -24,160 +24,305 @@ References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-20-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-21-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-22-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-23-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:10:25 2008
+X-From: git-owner@vger.kernel.org Sat Jun 28 00:10:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCM9A-0001Lw-Ap
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:10:24 +0200
+	id 1KCM9A-0001Lw-V8
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762717AbYF0WIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761172AbYF0WIk
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:08:40 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:36995 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763192AbYF0WIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:08:36 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so182348nfc.21
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:08:35 -0700 (PDT)
+	id S1761255AbYF0WIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761264AbYF0WIs
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:08:48 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:34645 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761125AbYF0WIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:08:44 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so330267fgg.17
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=qOuied1yNCt7T/1bNb/m3z64uhAdIpp/O/lw3ZvV54s=;
-        b=tGpP1OczGmtp/jVN3T37ADoN8zmVqQ8MeqrusFGOtHrsBN5ZL3I8sLLP1uQqEF5/3e
-         jPSCQIugJ825OJok+y5vYgsmoqtVM45prEeFmgpkeycUi2KbyA8HBlLkNhbwOI3u56eh
-         KWREUWSJIs4KQcMUglYxrX3RESLeavJ2l5w+4=
+        bh=lfCG8RzC4jIBTQHy7JO+EORvlVAUNKX6HNbdOi52eNs=;
+        b=vxSdOn8ph81nWRB5SBIem0YaDtAC3zvO7EfCIVH/6tz+TMz9Yl6hSPQLS52WFdXje3
+         pzaZMubgLawxw2V4YIPwbpya4fQ1fTz3m5qEbotw08q+e5j37uBpSm/7BndxBKFO0YH0
+         qT1MnT5nnE73Jud90xkaUPX/JAzptTIfiCIPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=rHGG9sat0FILcJEL7Kxwmr2RLv2lQnGWVPT0DwmQc/qbBoL24feJPs9CjYiX5lbHP7
-         iunMcmdpgzPLLxY8COY1zNyug05Ac5I3U8BNaWSiXRudpIBgTsc81Zg8R219CxnRlV1J
-         sZDKrB6GYn/Pd+x/f0hy/70BlOKcICVSb1OVw=
-Received: by 10.210.87.14 with SMTP id k14mr1611763ebb.60.1214604514977;
-        Fri, 27 Jun 2008 15:08:34 -0700 (PDT)
+        b=SdBx9vLKFtc1cEjVD0/ZwWocuBtaPZQyWjB9jkf2DGZw46t7gdIrs6xUSeJ/BSZSMV
+         Ilaj95nqg84ExpmeiEFVK2C804QK/dVnvM4V1V4HUBQHLqLSTkKwkSAiAQwEn8uN4IG6
+         hmh98c7d0Ymcm/3dP+K8dXf4h2ZPCtO7cxxo4=
+Received: by 10.86.52.6 with SMTP id z6mr2535733fgz.18.1214604519965;
+        Fri, 27 Jun 2008 15:08:39 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id z40sm2449519ikz.7.2008.06.27.15.08.32
+        by mx.google.com with ESMTPS id l19sm3760309fgb.7.2008.06.27.15.08.37
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 15:08:33 -0700 (PDT)
+        Fri, 27 Jun 2008 15:08:38 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.4
-In-Reply-To: <1214604407-30572-22-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1214604407-30572-23-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86661>
 
-Constructor takes additionally URI argument, to add prefix: uri + ": "
-before real message. Now we don't have to remember about ugly (uri + ":
-") prefix in each thrown message;
+Modify existing TransportException constructor calls to new ones with
+URI as argument.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../spearce/jgit/errors/PackProtocolException.java |   30 +++++++++++++++++++
- .../spearce/jgit/errors/TransportException.java    |   31 ++++++++++++++++++++
- 2 files changed, 61 insertions(+), 0 deletions(-)
+ .../spearce/jgit/transport/BasePackConnection.java |    6 +++---
+ .../jgit/transport/BasePackPushConnection.java     |   12 ++++++------
+ .../org/spearce/jgit/transport/PushProcess.java    |    6 +++---
+ .../spearce/jgit/transport/TransportGitAnon.java   |   15 +++++++--------
+ .../spearce/jgit/transport/TransportGitSsh.java    |   18 ++++++++----------
+ .../org/spearce/jgit/transport/TransportLocal.java |    3 +--
+ .../org/spearce/jgit/transport/TransportSftp.java  |   12 +++++-------
+ 7 files changed, 33 insertions(+), 39 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/PackProtocolException.java b/org.spearce.jgit/src/org/spearce/jgit/errors/PackProtocolException.java
-index 525496a..7b5b4f6 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/errors/PackProtocolException.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/errors/PackProtocolException.java
-@@ -38,6 +38,7 @@
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+index d119672..9b39ebc 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+@@ -125,7 +125,7 @@ abstract class BasePackConnection extends BaseConnection {
+ 				line = pckIn.readString();
+ 			} catch (EOFException eof) {
+ 				if (avail.isEmpty())
+-					throw new TransportException(uri + " not found.");
++					throw new TransportException(uri, "not found.");
+ 				throw eof;
+ 			}
  
- package org.spearce.jgit.errors;
+@@ -155,7 +155,7 @@ abstract class BasePackConnection extends BaseConnection {
+ 				name = name.substring(0, name.length() - 3);
+ 				final Ref prior = avail.get(name);
+ 				if (prior == null)
+-					throw new PackProtocolException(uri + ": advertisement of "
++					throw new PackProtocolException(uri, "advertisement of "
+ 							+ name + "^{} came before " + name);
  
-+import org.spearce.jgit.transport.URIish;
+ 				if (prior.getPeeledObjectId() != null)
+@@ -185,7 +185,7 @@ abstract class BasePackConnection extends BaseConnection {
+ 	}
  
- /**
-  * Indicates a protocol error has occurred while fetching/pushing objects.
-@@ -46,6 +47,35 @@ public class PackProtocolException extends TransportException {
- 	private static final long serialVersionUID = 1L;
+ 	private PackProtocolException duplicateAdvertisement(final String name) {
+-		return new PackProtocolException(uri + ": duplicate advertisements of "
++		return new PackProtocolException(uri, "duplicate advertisements of "
+ 				+ name);
+ 	}
  
- 	/**
-+	 * Constructs an PackProtocolException with the specified detail message
-+	 * prefixed with provided URI.
-+	 * 
-+	 * @param uri
-+	 *            URI used for transport
-+	 * @param s
-+	 *            message
-+	 */
-+	public PackProtocolException(final URIish uri, final String s) {
-+		super(uri + ": " + s);
-+	}
-+
-+	/**
-+	 * Constructs an PackProtocolException with the specified detail message
-+	 * prefixed with provided URI.
-+	 * 
-+	 * @param uri
-+	 *            URI used for transport
-+	 * @param s
-+	 *            message
-+	 * @param cause
-+	 *            root cause exception
-+	 */
-+	public PackProtocolException(final URIish uri, final String s,
-+			final Throwable cause) {
-+		this(uri + ": " + s, cause);
-+	}
-+
-+	/**
- 	 * Constructs an PackProtocolException with the specified detail message.
- 	 * 
- 	 * @param s
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/TransportException.java b/org.spearce.jgit/src/org/spearce/jgit/errors/TransportException.java
-index 7b378db..13c7a28 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/errors/TransportException.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/errors/TransportException.java
-@@ -40,6 +40,8 @@ package org.spearce.jgit.errors;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+index 159e331..c56605a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+@@ -110,7 +110,7 @@ class BasePackPushConnection extends BasePackConnection implements
+ 		} catch (TransportException e) {
+ 			throw e;
+ 		} catch (Exception e) {
+-			throw new TransportException(uri + ": " + e.getMessage(), e);
++			throw new TransportException(uri, e.getMessage(), e);
+ 		} finally {
+ 			close();
+ 		}
+@@ -146,7 +146,7 @@ class BasePackPushConnection extends BasePackConnection implements
+ 		}
  
- import java.io.IOException;
+ 		if (monitor.isCancelled())
+-			throw new TransportException(uri + ": push cancelled");
++			throw new TransportException(uri, "push cancelled");
+ 		pckOut.end();
+ 	}
  
-+import org.spearce.jgit.transport.URIish;
-+
- /**
-  * Indicates a protocol error has occurred while fetching/pushing objects.
-  */
-@@ -47,6 +49,35 @@ public class TransportException extends IOException {
- 	private static final long serialVersionUID = 1L;
+@@ -179,13 +179,13 @@ class BasePackPushConnection extends BasePackConnection implements
+ 			throws IOException {
+ 		final String unpackLine = pckIn.readString();
+ 		if (!unpackLine.startsWith("unpack "))
+-			throw new PackProtocolException(uri + ": unexpected report line: "
++			throw new PackProtocolException(uri, "unexpected report line: "
+ 					+ unpackLine);
+ 		final String unpackStatus = unpackLine.substring("unpack ".length());
+ 		if (!unpackStatus.equals("ok"))
+-			throw new TransportException(uri
+-					+ ": error occurred during unpacking on the remote end: "
+-					+ unpackStatus);
++			throw new TransportException(uri,
++					"error occurred during unpacking on the remote end: "
++							+ unpackStatus);
  
- 	/**
-+	 * Constructs an TransportException with the specified detail message
-+	 * prefixed with provided URI.
-+	 * 
-+	 * @param uri
-+	 *            URI used for transport
-+	 * @param s
-+	 *            message
-+	 */
-+	public TransportException(final URIish uri, final String s) {
-+		super(uri + ": " + s);
-+	}
-+
-+	/**
-+	 * Constructs an TransportException with the specified detail message
-+	 * prefixed with provided URI.
-+	 * 
-+	 * @param uri
-+	 *            URI used for transport
-+	 * @param s
-+	 *            message
-+	 * @param cause
-+	 *            root cause exception
-+	 */
-+	public TransportException(final URIish uri, final String s,
-+			final Throwable cause) {
-+		this(uri + ": " + s, cause);
-+	}
-+
-+	/**
- 	 * Constructs an TransportException with the specified detail message.
- 	 * 
- 	 * @param s
+ 		String refLine;
+ 		while ((refLine = pckIn.readString()).length() > 0) {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
+index f742949..1b5f9c6 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PushProcess.java
+@@ -178,9 +178,9 @@ class PushProcess {
+ 			} catch (MissingObjectException x) {
+ 				fastForward = false;
+ 			} catch (Exception x) {
+-				throw new TransportException(transport.getURI()
+-						+ ": reading objects from local repository failed: "
+-						+ x.getMessage(), x);
++				throw new TransportException(transport.getURI(),
++						"reading objects from local repository failed: "
++								+ x.getMessage(), x);
+ 			}
+ 			rru.setFastForward(fastForward);
+ 			if (!fastForward && !rru.isForceUpdate())
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
+index 6e49083..8a78099 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
+@@ -82,12 +82,11 @@ class TransportGitAnon extends PackTransport {
+ 		try {
+ 			return new Socket(InetAddress.getByName(uri.getHost()), port);
+ 		} catch (IOException c) {
+-			final String us = uri.toString();
+ 			if (c instanceof UnknownHostException)
+-				throw new TransportException(us + ": Unknown host");
++				throw new TransportException(uri, "unknown host");
+ 			if (c instanceof ConnectException)
+-				throw new TransportException(us + ": " + c.getMessage());
+-			throw new TransportException(us + ": " + c.getMessage(), c);
++				throw new TransportException(uri, c.getMessage());
++			throw new TransportException(uri, c.getMessage(), c);
+ 		}
+ 	}
+ 
+@@ -116,8 +115,8 @@ class TransportGitAnon extends PackTransport {
+ 				service("git-upload-pack", pckOut);
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(uri.toString()
+-						+ ": remote hung up unexpectedly", err);
++				throw new TransportException(uri,
++						"remote hung up unexpectedly", err);
+ 			}
+ 			readAdvertisedRefs();
+ 		}
+@@ -149,8 +148,8 @@ class TransportGitAnon extends PackTransport {
+ 				service("git-receive-pack", pckOut);
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(uri.toString()
+-						+ ": remote hung up unexpectedly", err);
++				throw new TransportException(uri,
++						"remote hung up unexpectedly", err);
+ 			}
+ 			readAdvertisedRefs();
+ 		}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+index 55be4f6..46c60c3 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+@@ -162,13 +162,12 @@ class TransportGitSsh extends PackTransport {
+ 				session.connect();
+ 			return session;
+ 		} catch (JSchException je) {
+-			final String us = uri.toString();
+ 			final Throwable c = je.getCause();
+ 			if (c instanceof UnknownHostException)
+-				throw new TransportException(us + ": Unknown host");
++				throw new TransportException(uri, "unknown host");
+ 			if (c instanceof ConnectException)
+-				throw new TransportException(us + ": " + c.getMessage());
+-			throw new TransportException(us + ": " + je.getMessage(), je);
++				throw new TransportException(uri, c.getMessage());
++			throw new TransportException(uri, je.getMessage(), je);
+ 		}
+ 	}
+ 
+@@ -189,8 +188,7 @@ class TransportGitSsh extends PackTransport {
+ 			channel.connect();
+ 			return channel;
+ 		} catch (JSchException je) {
+-			throw new TransportException(uri.toString() + ": "
+-					+ je.getMessage(), je);
++			throw new TransportException(uri, je.getMessage(), je);
+ 		}
+ 	}
+ 
+@@ -210,8 +208,8 @@ class TransportGitSsh extends PackTransport {
+ 				throw err;
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(uri.toString()
+-						+ ": remote hung up unexpectedly", err);
++				throw new TransportException(uri,
++						"remote hung up unexpectedly", err);
+ 			}
+ 			readAdvertisedRefs();
+ 		}
+@@ -255,8 +253,8 @@ class TransportGitSsh extends PackTransport {
+ 				throw err;
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(uri.toString()
+-						+ ": remote hung up unexpectedly", err);
++				throw new TransportException(uri,
++						"remote hung up unexpectedly", err);
+ 			}
+ 			readAdvertisedRefs();
+ 		}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
+index f48dc6d..761d1b8 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
+@@ -99,8 +99,7 @@ class TransportLocal extends PackTransport {
+ 			new StreamRewritingThread(proc.getErrorStream()).start();
+ 			return proc;
+ 		} catch (IOException err) {
+-			throw new TransportException(uri.toString() + ": "
+-					+ err.getMessage(), err);
++			throw new TransportException(uri, err.getMessage(), err);
+ 		}
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
+index cfe22c1..21657ef 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
+@@ -111,13 +111,12 @@ class TransportSftp extends WalkTransport {
+ 				session.connect();
+ 			return session;
+ 		} catch (JSchException je) {
+-			final String us = uri.toString();
+ 			final Throwable c = je.getCause();
+ 			if (c instanceof UnknownHostException)
+-				throw new TransportException(us + ": Unknown host");
++				throw new TransportException(uri, "unknown host");
+ 			if (c instanceof ConnectException)
+-				throw new TransportException(us + ": " + c.getMessage());
+-			throw new TransportException(us + ": " + je.getMessage(), je);
++				throw new TransportException(uri, c.getMessage());
++			throw new TransportException(uri, je.getMessage(), je);
+ 		}
+ 	}
+ 
+@@ -127,8 +126,7 @@ class TransportSftp extends WalkTransport {
+ 			channel.connect();
+ 			return (ChannelSftp) channel;
+ 		} catch (JSchException je) {
+-			throw new TransportException(uri.toString() + ": "
+-					+ je.getMessage(), je);
++			throw new TransportException(uri, je.getMessage(), je);
+ 		}
+ 	}
+ 
+@@ -259,7 +257,7 @@ class TransportSftp extends WalkTransport {
+ 			} catch (FileNotFoundException notPacked) {
+ 				// Perhaps it wasn't worthwhile, or is just an older repository.
+ 			} catch (IOException e) {
+-				throw new TransportException(uri + ": error in packed-refs", e);
++				throw new TransportException(uri, "error in packed-refs", e);
+ 			}
+ 			readRef(avail, "../HEAD", "HEAD");
+ 			readLooseRefs(avail, "../refs", "refs/");
 -- 
 1.5.5.3
