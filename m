@@ -1,88 +1,71 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@lavabit.com>
-Subject: Re: is rebase the same as merging every commit?
-Date: Fri, 27 Jun 2008 19:33:28 +0900
-Message-ID: <20080627193328.6117@nanako3.lavabit.com>
-References: <7vzlp7n1j4.fsf@gitster.siamese.dyndns.org>
-    <1006.35704952783$1214525911@news.gmane.org>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 12/13] Build in merge
+Date: Fri, 27 Jun 2008 13:03:20 +0200
+Message-ID: <4864C8F8.9020501@free.fr>
+References: <cover.1214066798.git.vmiklos@frugalware.org> <0b7ea424b3d5ea18a5a8660c6aead51adcc6a40f.1214066799.git.vmiklos@frugalware.org> <57d8a308fae0012174ed4388baccf1bde8515f2f.1214066799.git.vmiklos@frugalware.org> <5cae08d3bf2852a8bbd8dc8cdf741cb4bdfa237e.1214066799.git.vmiklos@frugalware.org> <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org> <486270D5.5050204@free.fr> <20080627010609.GJ29404@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "David Jeske" <jeske@willowmail.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 12:35:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 13:04:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCBIK-0003dD-Ji
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 12:35:09 +0200
+	id 1KCBkI-0004sb-2T
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 13:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751598AbYF0KeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 06:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751284AbYF0KeK
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 06:34:10 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:52154 "EHLO karen.lavabit.com"
+	id S1753046AbYF0LDC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 07:03:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753092AbYF0LDB
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 07:03:01 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:55558 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751128AbYF0KeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 06:34:09 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 728B5C843A;
-	Fri, 27 Jun 2008 05:33:59 -0500 (CDT)
-Received: from nanako3.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id U6Z2LS1G49VZ; Fri, 27 Jun 2008 05:34:07 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=CHd5UkWVxHyfXJwPEFY+g4ftnq1twR+uXfoCAXKiYJJPFVZfDOAb4rxGOmRbkn6hgyZEHvOTrt6YltDVIFMEnes+y0FheboAoCSUjkvXXaYZ91Z9Fg17YwQ6JEfZDkGVF+VzCYE8pzxfS8D3dt+MiNvOmiDHsv19iO/vNrTklU8=;
-  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
-In-Reply-To: <7vzlp7n1j4.fsf@gitster.siamese.dyndns.org>
+	id S1752866AbYF0LDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 07:03:00 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id AD2E412B6FD;
+	Fri, 27 Jun 2008 13:02:59 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 5174D12B6FB;
+	Fri, 27 Jun 2008 13:02:59 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <20080627010609.GJ29404@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86539>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Miklos Vajna a =E9crit :
+>=20
+> This should respect diff.color:
 
-> "David Jeske" <jeske@willowmail.com> writes:
->
->> If I understand it right (and that's a BIG if), it's the same as doing a merge
->> of C into G where every individual commit in the C-line is individually
->> committed into the new C' line.
->>
->> ...........-------------A---B---C
->> ........../            /   /   /
->> ........./        /---A'--B'--C'  topic
->> ......../        /
->> ....D---E---F---G - master
->>
->>
->> (1) Is the above model a valid explanation?
->
-> I would presume that the resulting trees A' in the second picture and in
-> the first picture would be the same, so are B' and C'.  But that is only
-> true when commits between A and C do not have any duplicate with the
-> development that happened between E and G.
+Absolutely. And also color.ui. The following patch should do the trick:
 
-Sorry, but I think you are wrong, Junio.
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 98adca5..cf557f7 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -7,6 +7,7 @@
+  */
+=20
+ #include "cache.h"
++#include "color.h"
+ #include "parse-options.h"
+ #include "builtin.h"
+ #include "run-command.h"
+@@ -712,6 +713,9 @@ int cmd_merge(int argc, const char **argv, const ch=
+ar *prefix)
+        git_config(git_merge_config, NULL);
+        git_config(git_diff_ui_config, NULL);
+=20
++       if (diff_use_color_default =3D=3D -1)
++               diff_use_color_default =3D git_use_color_default;
++
+        argc =3D parse_options(argc, argv, builtin_merge_options,
+                        builtin_merge_usage, 0);
+=20
 
-Rebase can be used to backport changes, not just porting your changes forward, using --onto option:
-
-..........maint
-............1-------A'--B'--C'   
-.........../       .   .   . <-- ???
-........../.......A---B---C
-........./......./
-......../......./
-.......0--...--D---E---F---G - master
-
-Here, A, B, C that are based on D (that is way ahead of the top of the maintenance branch 1) is rebased to the maintenance branch.
-
-But in this case, A' is *not* a merge between 1 and A.  For A' to be a merge between 1 and A, it *must* contain all the development that happened up to 1 and all the development that happened up to A since these two branches were forked (that is 0 in the above picture).
-
-Instead, the difference to go from 1 to A' is similar to the difference to go from D to A. It does not and must not include anything that happened between 0 and D.  That is not a merge.
-
-I agree that your explanation why A is not recorded as a parent of A' is right for the philosophical reason (the purpose of rebasing to create A' is so that you do not have to record them).  But from the point-of-view of correctness of commit history, I think A must not be recorded as a parent of A', either.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Olivier.
