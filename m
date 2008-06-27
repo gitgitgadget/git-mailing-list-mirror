@@ -1,389 +1,185 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 05/23] Add RemoteRefUpdate class
-Date: Sat, 28 Jun 2008 00:06:29 +0200
-Message-ID: <1214604407-30572-6-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 08/23] Support for fetchThin and pushThin options in Transport
+Date: Sat, 28 Jun 2008 00:06:32 +0200
+Message-ID: <1214604407-30572-9-git-send-email-marek.zawirski@gmail.com>
 References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-2-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-3-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-4-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-5-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-6-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-7-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-8-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:08:52 2008
+X-From: git-owner@vger.kernel.org Sat Jun 28 00:08:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCM7d-0000rw-8G
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:50 +0200
+	id 1KCM7f-0000rw-Oy
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756753AbYF0WHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:07:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756638AbYF0WHS
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:18 -0400
-Received: from ik-out-1112.google.com ([66.249.90.176]:45022 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756538AbYF0WHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:07:14 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so252786ika.5
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:11 -0700 (PDT)
+	id S1757124AbYF0WHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:07:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757052AbYF0WHc
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:31033 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756666AbYF0WH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:07:29 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so330044fgg.17
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=theve1SOdiHmDpK3l0TAT5XYaQ6W+04BHnyAzVb3kDg=;
-        b=iFqKm/KKKyrnNd01Rfwrv5t1j+VzhPN6XOX/4z4GZ+3Mti+YXQ8StKvacovY4PGNOg
-         U8uPdJnDVbICU6BbdhYWpQqb6mPH9WWSUt/zBRIBl3jQiXmzeNkD9AFHHBxdYyirLsOe
-         nTSy/z8w/UoHT7Ldzld/TRoKmEfMNVHjT9iLw=
+        bh=Ez3YCVKfegjk+etF3C+7C4M2iEFf9hsMLogFxx36fKQ=;
+        b=ADItgLkIxZXMHNf+ytXNyBkziLjwY9TwdByQhyOm1T6nSADacccAn2harOOx+Vvd0b
+         65JahWpxljpzo+XDtsxzd+IsG2/qgorXn/apV2HYwulYwA+XBAdTbfGL3vXVKV53C5n6
+         jRRVMOaYJJbjzO2VBAxBjowWk7f5adImVmAX4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KMOkMo2fnEHnVgAAoY+F7T0a0ZmpvFR6PUpxfvtU9+iVm/M1cGvG8EMV0tZaInp2VQ
-         DF4cuJITkDgbcM3A4E8o9GUqPBJOqaBR8X8g2bgRRCnhTlWjmxpXaA2iEaFJHdghaVVS
-         wKKB1kWWrL0iBvuCovhkmi7EghxSsLcQXJMYc=
-Received: by 10.210.27.20 with SMTP id a20mr1607175eba.89.1214604431344;
-        Fri, 27 Jun 2008 15:07:11 -0700 (PDT)
+        b=Gv4myWiNhXivov7HwJfysKcLeWXY1fz3gglRoBJQFXCU2htoB714jo9FHddYeTUlOd
+         iGJ226/nLEMSeH7PZfD04r/71CRWWnWkc/R09FjwLHCyax8aPNDNdnh5PYPrg7GQHoZC
+         b4bDMJv1UxFNoTLDgTfEqfNMudXReTFdOfLuk=
+Received: by 10.86.90.13 with SMTP id n13mr2558921fgb.3.1214604444090;
+        Fri, 27 Jun 2008 15:07:24 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id z33sm2443001ikz.0.2008.06.27.15.07.08
+        by mx.google.com with ESMTPS id d4sm3427086fga.8.2008.06.27.15.07.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 15:07:09 -0700 (PDT)
+        Fri, 27 Jun 2008 15:07:22 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.4
-In-Reply-To: <1214604407-30572-5-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1214604407-30572-8-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86646>
 
-This class holds specification and status of remote ref update during
-push operation.
+This option determines whether we should use thin pack when possible
+during fetching from or pushing to a remote repo.
+
+For fetching the default is to produce a thin pack when remote side
+supports it, while for pushing the default setting is to not produce a
+thin pack.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../spearce/jgit/transport/RemoteRefUpdate.java    |  315 ++++++++++++++++++++
- 1 files changed, 315 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
+ .../jgit/transport/PackFetchConnection.java        |    4 +-
+ .../src/org/spearce/jgit/transport/Transport.java  |   63 ++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 1 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
-new file mode 100644
-index 0000000..3737c7a
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
-@@ -0,0 +1,315 @@
-+/*
-+ * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the remoteName of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.transport;
-+
-+import java.io.IOException;
-+
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.revwalk.RevWalk;
-+
-+/**
-+ * Represent request and status of a remote ref update. Specification is
-+ * provided by client, while status is handled by {@link PushProcess} class,
-+ * being read-only for client.
-+ * <p>
-+ * Client can create instances of this class directly, basing on user
-+ * specification and advertised refs ({@link Connection} or through
-+ * {@link Transport} helper methods. Apply this specification on remote
-+ * repository using
-+ * {@link Transport#push(org.spearce.jgit.lib.ProgressMonitor, java.util.Collection)}
-+ * method.
-+ * </p>
-+ * 
-+ */
-+public class RemoteRefUpdate {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PackFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PackFetchConnection.java
+index 5f15a8d..6209030 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/PackFetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PackFetchConnection.java
+@@ -150,6 +150,7 @@ abstract class PackFetchConnection extends FetchConnection {
+ 		local = packTransport.local;
+ 		uri = packTransport.uri;
+ 		includeTags = packTransport.getTagOpt() != TagOpt.NO_TAGS;
++		thinPack = packTransport.isFetchThin();
+ 
+ 		walk = new RevWalk(local);
+ 		reachableCommits = new RevCommitList<RevCommit>();
+@@ -363,7 +364,8 @@ abstract class PackFetchConnection extends FetchConnection {
+ 			includeTags = wantCapability(line, OPTION_INCLUDE_TAG);
+ 		wantCapability(line, OPTION_OFS_DELTA);
+ 		multiAck = wantCapability(line, OPTION_MULTI_ACK);
+-		thinPack = wantCapability(line, OPTION_THIN_PACK);
++		if (thinPack)
++			thinPack = wantCapability(line, OPTION_THIN_PACK);
+ 		if (wantCapability(line, OPTION_SIDE_BAND_64K))
+ 			sideband = true;
+ 		else if (wantCapability(line, OPTION_SIDE_BAND))
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
+index 6cc38ec..c4b71eb 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
+@@ -142,6 +142,16 @@ public abstract class Transport {
+ 		throw new NotSupportedException("URI not supported: " + remote);
+ 	}
+ 
 +	/**
-+	 * Represent current status of a remote ref update.
++	 * Default setting for {@link #fetchThin} option.
 +	 */
-+	public static enum Status {
-+		/**
-+		 * Push process hasn't yet attempted to update this ref. This is the
-+		 * default status, prior to push process execution.
-+		 */
-+		NOT_ATTEMPTED,
-+
-+		/**
-+		 * Remote ref was up to date, there was no need to update anything.
-+		 */
-+		UP_TO_DATE,
-+
-+		/**
-+		 * Remote ref update was rejected, as it would cause non fast-forward
-+		 * update.
-+		 */
-+		REJECTED_NONFASTFORWARD,
-+
-+		/**
-+		 * Remote ref update was rejected, because remote side doesn't
-+		 * support/allow deleting refs.
-+		 */
-+		REJECTED_NODELETE,
-+
-+		/**
-+		 * Remote ref update was rejected, because old object id on remote
-+		 * repository wasn't the same as defined expected old object.
-+		 */
-+		REJECTED_REMOTE_CHANGED,
-+
-+		/**
-+		 * Remote ref update was rejected for other reason, possibly described
-+		 * in {@link RemoteRefUpdate#getMessage()}.
-+		 */
-+		REJECTED_OTHER_REASON,
-+
-+		/**
-+		 * Remote ref didn't exist. Can occur on delete request of a non
-+		 * existing ref.
-+		 */
-+		NON_EXISTING,
-+
-+		/**
-+		 * Push process is awaiting update report from remote repository. This
-+		 * is a temporary state or state after critical error in push process.
-+		 */
-+		AWAITING_REPORT,
-+
-+		/**
-+		 * Remote ref was successfully updated.
-+		 */
-+		OK;
-+	}
-+
-+	private final ObjectId expectedOldObjectId;
-+
-+	private final ObjectId newObjectId;
-+
-+	private final String remoteName;
-+
-+	private final TrackingRefUpdate trackingRefUpdate;
-+
-+	private String srcRef;
-+
-+	private final boolean forceUpdate;
-+
-+	private Status status;
-+
-+	private boolean fastForward;
-+
-+	private String message;
++	public static final boolean DEFAULT_FETCH_THIN = true;
 +
 +	/**
-+	 * Construct remote ref update request by providing an update specification.
-+	 * Object is created with default {@link Status#NOT_ATTEMPTED} status and no
-+	 * message.
++	 * Default setting for {@link #pushThin} option.
++	 */
++	public static final boolean DEFAULT_PUSH_THIN = false;
++
+ 	/** The repository this transport fetches into, or pushes out of. */
+ 	protected final Repository local;
+ 
+@@ -165,6 +175,12 @@ public abstract class Transport {
+ 	 */
+ 	private TagOpt tagopt = TagOpt.NO_TAGS;
+ 
++	/** Should fetch request thin-pack if remote repository can produce it. */
++	private boolean fetchThin = DEFAULT_FETCH_THIN;
++
++	/** Should push produce thin-pack when sending objects to remote repository. */
++	private boolean pushThin = DEFAULT_PUSH_THIN;
++
+ 	/**
+ 	 * Create a new transport instance.
+ 	 * 
+@@ -234,6 +250,53 @@ public abstract class Transport {
+ 	}
+ 
+ 	/**
++	 * Default setting is: {@link #DEFAULT_FETCH_THIN}
 +	 * 
-+	 * @param db
-+	 *            repository to push from.
-+	 * @param srcRef
-+	 *            source revision - any string resolvable by
-+	 *            {@link Repository#resolve(String)}. This resolves to the new
-+	 *            object that the caller want remote ref to be after update. Use
-+	 *            null or {@link ObjectId#zeroId()} string for delete request.
-+	 * @param remoteName
-+	 *            full name of a remote ref to update, e.g. "refs/heads/master"
-+	 *            (no wildcard, no short name).
-+	 * @param forceUpdate
-+	 *            true when caller want remote ref to be updated regardless
-+	 *            whether it is fast-forward update (old object is ancestor of
-+	 *            new object).
-+	 * @param localName
-+	 *            optional full name of a local stored tracking branch, to
-+	 *            update after push, e.g. "refs/remotes/zawir/dirty" (no
-+	 *            wildcard, no short name); null if no local tracking branch
-+	 *            should be updated.
-+	 * @param expectedOldObjectId
-+	 *            optional object id that caller is expecting, requiring to be
-+	 *            advertised by remote side before update; update will take
-+	 *            place ONLY if remote side advertise exactly this expected id;
-+	 *            null if caller doesn't care what object id remote side
-+	 *            advertise. Use {@link ObjectId#zeroId()} when expecting no
-+	 *            remote ref with this name.
-+	 * @throws IOException
-+	 *             when I/O error occurred during creating
-+	 *             {@link TrackingRefUpdate} for local tracking branch.
-+	 * @throws IllegalArgumentException
-+	 *             if some required parameter was null or srcRef can't be
-+	 *             resolved to any object.
++	 * @return true if fetch should request thin-pack when possible; false
++	 *         otherwise
++	 * @see PackTransport
 +	 */
-+	public RemoteRefUpdate(final Repository db, final String srcRef,
-+			final String remoteName, final boolean forceUpdate,
-+			final String localName, final ObjectId expectedOldObjectId)
-+			throws IOException {
-+		if (remoteName == null)
-+			throw new IllegalArgumentException("remote name can't be null");
-+		this.srcRef = srcRef;
-+		this.newObjectId = (srcRef == null ? ObjectId.zeroId() : db
-+				.resolve(srcRef));
-+		if (newObjectId == null)
-+			throw new IllegalArgumentException(
-+					"source ref doesn't resolve to any object");
-+		this.remoteName = remoteName;
-+		this.forceUpdate = forceUpdate;
-+		if (localName != null && db != null)
-+			trackingRefUpdate = new TrackingRefUpdate(db, localName,
-+					remoteName, forceUpdate, newObjectId, "push");
-+		else
-+			trackingRefUpdate = null;
-+		this.expectedOldObjectId = expectedOldObjectId;
-+		this.status = Status.NOT_ATTEMPTED;
++	public boolean isFetchThin() {
++		return fetchThin;
 +	}
 +
 +	/**
-+	 * @return expectedOldObjectId required to be advertised by remote side, as
-+	 *         set in constructor; may be null.
-+	 */
-+	public ObjectId getExpectedOldObjectId() {
-+		return expectedOldObjectId;
-+	}
-+
-+	/**
-+	 * @return true if some object is required to be advertised by remote side,
-+	 *         as set in constructor; false otherwise.
-+	 */
-+	public boolean isExpectingOldObjectId() {
-+		return expectedOldObjectId != null;
-+	}
-+
-+	/**
-+	 * @return newObjectId for remote ref, as set in constructor.
-+	 */
-+	public ObjectId getNewObjectId() {
-+		return newObjectId;
-+	}
-+
-+	/**
-+	 * @return true if this update is deleting update; false otherwise.
-+	 */
-+	public boolean isDelete() {
-+		return ObjectId.zeroId().equals(newObjectId);
-+	}
-+
-+	/**
-+	 * @return name of remote ref to update, as set in constructor.
-+	 */
-+	public String getRemoteName() {
-+		return remoteName;
-+	}
-+
-+	/**
-+	 * @return local tracking branch update if localName was set in constructor.
-+	 */
-+	public TrackingRefUpdate getTrackingRefUpdate() {
-+		return trackingRefUpdate;
-+	}
-+
-+	/**
-+	 * @return source revision as specified by user (in constructor), could be
-+	 *         any string parseable by {@link Repository#resolve(String)}; can
-+	 *         be null if specified that way in constructor - this stands for
-+	 *         delete request.
-+	 */
-+	public String getSrcRef() {
-+		return srcRef;
-+	}
-+
-+	/**
-+	 * @return true if user specified a local tracking branch for remote update;
-+	 *         false otherwise.
-+	 */
-+	public boolean hasTrackingRefUpdate() {
-+		return trackingRefUpdate != null;
-+	}
-+
-+	/**
-+	 * @return true if this update is forced regardless of old remote ref
-+	 *         object; false otherwise.
-+	 */
-+	public boolean isForceUpdate() {
-+		return forceUpdate;
-+	}
-+
-+	/**
-+	 * @return status of remote ref update operation.
-+	 */
-+	public Status getStatus() {
-+		return status;
-+	}
-+
-+	/**
-+	 * Check whether update was fast-forward. Note that this result is
-+	 * meaningful only after successful update (when status is {@link Status#OK}).
++	 * Set the thin-pack preference for fetch operation. Default setting is:
++	 * {@link #DEFAULT_FETCH_THIN}
 +	 * 
-+	 * @return true if update was fast-forward; false otherwise.
++	 * @param fetchThin
++	 *            true when fetch should request thin-pack when possible; false
++	 *            when it shouldn't
++	 * @see PackTransport
 +	 */
-+	public boolean isFastForward() {
-+		return fastForward;
++	public void setFetchThin(final boolean fetchThin) {
++		this.fetchThin = fetchThin;
 +	}
 +
 +	/**
-+	 * @return message describing reasons of status when needed/possible; may be
-+	 *         null.
-+	 */
-+	public String getMessage() {
-+		return message;
-+	}
-+
-+	protected void setStatus(final Status status) {
-+		this.status = status;
-+	}
-+
-+	protected void setFastForward(boolean fastForward) {
-+		this.fastForward = fastForward;
-+	}
-+
-+	protected void setMessage(final String message) {
-+		this.message = message;
-+	}
-+
-+	/**
-+	 * Update locally stored tracking branch with the new object.
++	 * Default setting is: {@value #DEFAULT_PUSH_THIN}
 +	 * 
-+	 * @param walk
-+	 *            walker used for checking update properties.
-+	 * @throws IOException
-+	 *             when I/O error occurred during update
++	 * @return true if push should produce thin-pack in pack transports
++	 * @see PackTransport
 +	 */
-+	protected void updateTrackingRef(final RevWalk walk) throws IOException {
-+		trackingRefUpdate.update(walk);
++	public boolean isPushThin() {
++		return pushThin;
 +	}
-+}
++
++	/**
++	 * Set thin-pack preference for push operation. Default setting is:
++	 * {@value #DEFAULT_PUSH_THIN}
++	 * 
++	 * @param pushThin
++	 *            true when push should produce thin-pack in pack transports;
++	 *            false when it shouldn't
++	 * @see PackTransport
++	 */
++	public void setPushThin(final boolean pushThin) {
++		this.pushThin = pushThin;
++	}
++
++	/**
+ 	 * Fetch objects and refs from the remote repository to the local one.
+ 	 * <p>
+ 	 * This is a utility function providing standard fetch behavior. Local
 -- 
 1.5.5.3
