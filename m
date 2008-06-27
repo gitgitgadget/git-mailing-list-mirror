@@ -2,122 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 8691 invoked by uid 111); 9 Jun 2008 12:13:04 -0000
+X-Spam-Status: No, score=2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
+	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+Received: (qmail 4258 invoked by uid 111); 27 Jun 2008 20:38:34 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 09 Jun 2008 08:12:57 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 27 Jun 2008 16:38:27 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997AbYFIMMx (ORCPT <rfc822;peff@peff.net>);
-	Mon, 9 Jun 2008 08:12:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbYFIMMx
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jun 2008 08:12:53 -0400
-Received: from hoat.troll.no ([62.70.27.150]:49291 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754917AbYFIMMx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2008 08:12:53 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 9CF6120AFF;
-	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 7F87720AF0;
-	Mon,  9 Jun 2008 14:12:47 +0200 (CEST)
-Date:	Mon, 9 Jun 2008 13:40:32 +0200
-From:	Marius Storm-Olsen <marius@trolltech.com>
-To:	git <git@vger.kernel.org>
-cc:	Junio C Hamano <gitster@pobox.com>
-Message-ID: <"Junio C Hamano .gitster*___internet////////RFC-822/Junio#b#C#b#Hamano#b##060#gitster#a#pobox#f#com#062#////////Junio#b#C#b#Hamano#b##f#gitster"@MHS>
-References: <"Storm-Olsen*"@MHS>
-Subject: [PATCH] Add testcase for merging in a CRLF repo, showing that conflict file is in LF only
+	id S1758154AbYF0UiX (ORCPT <rfc822;peff@peff.net>);
+	Fri, 27 Jun 2008 16:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYF0UiX
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 16:38:23 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:33082 "HELO
+	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1756953AbYF0UiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 16:38:22 -0400
+Received: (qmail 28138 invoked by uid 90); 27 Jun 2008 20:38:17 -0000
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Content-Type:	text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
+From:	"David Jeske" <jeske@willowmail.com>
+To:	"Robert Anderson" <rwa000@gmail.com>
+Cc:	"Git Mailing List" <git@vger.kernel.org>
+Subject: Re: An alternate model for preparing partial commits
+X-Mailer: Willow v0.02
+Date:	Fri, 27 Jun 2008 20:29:15 -0000
+Message-ID: <willow-jeske-01l7Zen6FEDjCbjR>
+Received: from 72.14.229.81 at Fri, 27 Jun 2008 20:29:15 -0000
+References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
+	<willow-jeske-01l7H4tHFEDjCgPV-01l7H4sOFEDjCbyi>
+In-Reply-To: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-An LF only conflict file results in the resolved file being in LF,
-the commit is in LF and a warning saying that LF will be replaced
-by CRLF, and the working dir ends up with a mix of CRLF and LF files.
+Robert, I'm new to git, but I understand where you are going.
 
-Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
----
- (Resend due to "git reset --hard initial" instead of "git reset
- --hard a", in the first testcase)
- 
- Sorry, no patch to actually *fix* the problem.
- Someone who knows the code in question will probably find the solution in a
- fraction of the time that I would.
- Also note that :1:file, :2:file and :3:file all are also in LF format, and not
- CRLF, which you would want if core.autocrlf == true.
+Why limit it only to working tree changes? For me, the stash machinery is of no
+help here, because I commit super-often. What I end up with is 30 commits in a
+topic branch, but where not every point passes 100% of tests. I want to go back
+through and order them properly, and decide which points are sensible as
+upstream committs. (especially as I read more about bisect).
 
- t/t6033-merge-crlf.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 52 insertions(+), 0 deletions(-)
- create mode 100755 t/t6033-merge-crlf.sh
+git has all the concepts I want except one. However, it makes the process
+pretty manual. Here is an idea about automating it. I'll talk about that one
+new concept at the bottom.
 
-diff --git a/t/t6033-merge-crlf.sh b/t/t6033-merge-crlf.sh
-new file mode 100755
-index 0000000..8bff2f4
---- /dev/null
-+++ b/t/t6033-merge-crlf.sh
-@@ -0,0 +1,52 @@
-+#!/bin/sh
-+
-+append_cr () {
-+	sed -e 's/$/Q/' | tr Q '\015'
-+}
-+
-+remove_cr () {
-+	tr '\015' Q | sed -e 's/Q$//'
-+}
-+
-+test_description='merge conflict in crlf repo
-+
-+		b---M
-+	       /   /
-+	initial---a
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	git config core.autocrlf true &&
-+	echo foo | append_cr >file &&
-+	git add file &&
-+	git commit -m "Initial" &&
-+	git tag initial &&
-+	git branch side &&
-+	echo line from a | append_cr >file &&
-+	git commit -m "add line from a" file &&
-+	git tag a &&
-+	git checkout side &&
-+	echo line from b | append_cr >file &&
-+	git commit -m "add line from b" file &&
-+	git tag b &&
-+	git checkout master
-+'
-+
-+test_expect_success 'Check "ours" is CRLF' '
-+	git reset --hard a &&
-+	git merge side -s ours &&
-+	cat file | remove_cr | append_cr >file.temp &&
-+	test_cmp file file.temp
-+'
-+
-+test_expect_success 'Check that conflict file is CRLF' '
-+	git reset --hard a &&
-+	! git merge side &&
-+	cat file | remove_cr | append_cr >file.temp &&
-+	test_cmp file file.temp
-+'
-+
-+test_done
--- 
-1.5.6.rc0.162.gaeac2.dirty
+I think of this as reorder/merge/split...
 
+reorder: Picture that a list of commits on this branch opens in an editor. You
+are free to rearrange the lines in any order you want, but you have to keep all
+the lines. When you are done reordering the lines, the tool creates a new topic
+branch and applies the changes (probably with cherrypick) to the new topic
+branch. If there are no conflicts, you're done.
+
+merge: Picture now that in your editor you can create groupings of those
+individual commits that should make up separate topic-branches. The operation
+can still be performed automatically, and at the end, it can compose those
+topic branches into a single branch just like your original. At this point, you
+can "isolate" any one of those topic branches and test/push that topic branch.
+
+split: Picture now that you can list the same commit in more than one of the
+topic-branches. This is a little more tricky, and there is no way to do it
+automatically.. It drops you into an editor and asks you to select the lines of
+the diff for the first topic. The remaining lines are put in the next topic.
+This can continue for multiple topics.
+
+This seems like something that could be assembled pretty easily on top of the
+current git mechanisms, except for one thing.
+
+If you use merge, the history will be a mess. If you use rebase, anyone else
+who pulled your topic branch will be in a world of hurt.
+
+I've been thinking about a solution for this I think of as "supercede".
+
+Once you have completed the above reorder/merge/split, your new topic branch
+should be EXACTLY the same as your old topic branch. (if it's not, it needs to
+be trued up to be so). At that point, it is safe to ask for that new line of
+commits to supercede the old line. Other people who have pulled in your older
+ordered topic branch would then be able to pull/rebase/etc, and the merge
+machinery would be able to back out their set of changes, and supercede them
+with your new ordering.
+
+This mechanism is intended to combine the benefits of rebase-clean-history and
+the benefits of the dag-links for merging. I find it convenient to think of it
+as stack push/pop for portions of the dag. Because of the supercede - the
+history knows it can avoid showing you all the superceded dag nodes, however,
+because those nodes are there, it can still use them to compute merges.
+
+If this behaves the way I think, this has another powerful effect. You can pull
+in a set of draft changes; you can build off them; you can periodically rebase
+them, and if those draft changes end up in the mainline, because the
+merge-history is still there, git can 'do the right thing' and remove those
+changes from your topic branch. In fact, because of the SHA1 strong naming, it
+doesn't even matter where you got them from. You could apply a patch from the
+mailing list and as long as everyone applies that patch as only a single
+commit, when the string of supercedes shows up on the main branch git will just
+'do-the right thing' to remove them from your topic branch when you rebase (or
+skip them during a merge down to your topic branch).
