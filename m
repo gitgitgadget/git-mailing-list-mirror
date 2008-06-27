@@ -1,84 +1,120 @@
-From: "Robert Anderson" <rwa000@gmail.com>
-Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 15:55:03 -0700
-Message-ID: <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
-References: <g43jlg$54g$1@ger.gmane.org> <-8386235276716376372@unknownmsgid>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: BUG (v1.5.6.1): ./configure missing check for zlib.h
+Date: Sat, 28 Jun 2008 01:03:18 +0200
+Message-ID: <200806280103.19302.jnareb@gmail.com>
+References: <4864DD65.1080402@mircea.bardac.net> <m3prq3hr6n.fsf@localhost.localdomain> <20080627150732.D88F64B4002@artemis.sr.unh.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "David Jeske" <jeske@willowmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:56:08 2008
+Cc: "Tom Fogal" <tfogal@alumni.unh.edu>, git@vger.kernel.org
+To: Mircea Bardac <dev@mircea.bardac.net>
+X-From: git-owner@vger.kernel.org Sat Jun 28 01:04:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCMrP-0004uF-SP
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:56:08 +0200
+	id 1KCMzV-0007AH-Rb
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 01:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760701AbYF0WzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:55:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761000AbYF0WzJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:55:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:41112 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760505AbYF0WzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:55:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so336782fgg.17
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:55:04 -0700 (PDT)
+	id S1764982AbYF0XDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 19:03:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765400AbYF0XDa
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 19:03:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:41857 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760166AbYF0XD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 19:03:28 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so187563nfc.21
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 16:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OAMhtwy11fBDDj8i1VjsRdyQVnk3p5cLSIGFCEzEm5Q=;
-        b=f5AQvkyJEPWqeXSQzHa39Yesnv/ex2gCTbCne15WauIGqh1iaO+w4T9Rik7JVP+5Vl
-         G6r2Z62lB2L36kkrGF4n+/KSxMckWFxpoxBpcx0o4pZQlg+E5JSs9OG6gvSjtBlFtJqM
-         G37z+KJ4nmP0O1KKo+eL/Fh5iNmi1FUQHgzOE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=TkJTATawxyHAgVADCgmOTOQ9E1dWXkK1xQAgyMD4+ds=;
+        b=X7uHYr6YOZ5WWLCT+JkzYTaaTmRHLsc+fgnqX+BjX3XXja1tyxTXTC48hFIj9rT4N2
+         jOv0NAp4pnjUqWsQGHie5NWpeNKkvmdPp1GllRzZTmlgQ85Fy+pbxWqTcLCeUXQpx676
+         fNDexPWgjMQt8yaBITJ670cbbz+WrHd67TBXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=uUjV1pj4HYmeBu/s9n8MnXiweoyJntfZMACpQewlDHHnYOuulDj194W0T0E0A+siWQ
-         uxNOkkGthsmphA1wDxs+GOj0yzNPqhq5x2jmQNQSYJVkRB1cjwmhvBVhoGfJqH6srCND
-         A3nCC+qh/L907cXv/ikLWyYACXH2k7wFY0fiw=
-Received: by 10.86.89.1 with SMTP id m1mr2592871fgb.20.1214607303987;
-        Fri, 27 Jun 2008 15:55:03 -0700 (PDT)
-Received: by 10.86.4.6 with HTTP; Fri, 27 Jun 2008 15:55:03 -0700 (PDT)
-In-Reply-To: <-8386235276716376372@unknownmsgid>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=DyQ6p+QD59tOPREsPlM87wr/cKzhUTDvk281IrniWhsyB5waa8AZI7Fw+FXf/ARZgm
+         4dvcs3x4MBM65XTNkSl3Sek5WfSYPXPmjcdrZ3D8guDl3WIGcPhYjypfA0ZNmFA04Wqr
+         LZjiqbjWoL8w7UF6hpXzhHxxf7qg4n1SOVRtA=
+Received: by 10.210.49.19 with SMTP id w19mr1668845ebw.11.1214607806070;
+        Fri, 27 Jun 2008 16:03:26 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.205.161])
+        by mx.google.com with ESMTPS id h7sm1455671nfh.34.2008.06.27.16.03.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Jun 2008 16:03:25 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080627150732.D88F64B4002@artemis.sr.unh.edu>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86671>
 
-On Fri, Jun 27, 2008 at 1:51 PM, David Jeske <jeske@willowmail.com> wrote:
-> -- Jakub Narebski wrote:
->> git rebase --interactive?
->> Any patch management interface (StGIT, Guilt)?
+On Fri, 27 Jun 2008, tom fogal wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Mircea Bardac <dev@mircea.bardac.net> writes:
+>> 
+>>> $ ./configure
+>> [...]
+>>> configure: CHECKS for header files
+>>> In file included from daemon.c:1:
+>>> cache.h:9:18: error: zlib.h: No such file or directory
+>>> make: *** [daemon.o] Error 1
+>>> 
+>>> (installing zlib1g-dev on Ubuntu 7.10 fixed the problem)
+>> 
+>> What should ./configure do (what ./configure for other programs
+>> or packages do)?
+>> 
+>> You cannot compile git without zlib!
+> 
+> If one can determine during configure time that a required library is
+> not found, it (IMHO) is nice to give an error message and bomb out (via
+> AC_MSG_ERROR).
+> 
+> The AC macro archive has a zlib macro which does this, as an example:
+> 
+>    http://autoconf-archive.cryp.to/check_zlib.html
+> 
+> I should note, however, that I disagree with that macro's logic in that
+> it `searches' for zlib if the user does not specify it.  IMO, if the
+> user does not give a --with option, and it doesn't work `out of the
+> box' (without hacking FLAGS), macros should die with an error rather
+> than retry with changed FLAGS.
+
+On Fri, 27 Jun 2008, Mircea Bardac wrote:
 >
-> Yes, as I said, that set of operations can be performed with git today.
->
-> What git can't do, is let me "supercede" the old DAG-subset, so people I shared
-> them with can get my new changes without hurting their world. Currently git
-> seems to rely on the idea that "if you accept changes into your tree that will
-> be later rebased, it's up to you to figure it out". I don't see why that is the
-> case.
+> Well, as far as I know, if a program depends on any external headers, 
+> they should *all* be checked, not only "those that can be skipped by 
+> defining some macro" (I personally do not know which are these).
 
+In git (not like usually in other projects) ./configure script (autoconf)
+is used *only* to generate Makefile configuration.  It tries to configure
+compile (build) process in such a way that building git is possible even
+if some features are missing or are found not in standard place (and also
+use compat version of functions if they are not in library).  It helps you
+build system.
 
-Possibly a succinct way of moving this conversation forward is to say that:
+I'm not sure if checking if prerequisites exists and failing loudly
+otherwise would be a good feature to have.  Git would fail anyway during
+build process, so it is not some new feature.  The only advantage is that
+required and unavoidable dependency would be found earlier; on the other
+hand there is now disadvantage of build process (./configure process)
+if it misdetects lack of needed header files, i.e. it is possible to
+compile (build) git, but ./configure detects that it is not so.  This
+happened once to me, and is very annoying...
 
-What is desired is a workflow where partial commits can be tested,
-when it is desirable not to change history.
+But as they say, "code speaks louder than words"
 
-There are good reasons for desiring a workflow that does not routinely
-change history as part of the usual workflow.  Maybe there are clones
-of your repo.  Maybe as part of your workflow discipline you do not
-want HEAD states that cannot be pushed to public, because you don't
-want to manually keep track of when it is ok and when it is not ok to
-push HEAD to public, since git cannot tell you this.
-
-Thanks,
-Bob
+-- 
+Jakub Narebski
+Poland
