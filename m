@@ -1,70 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch: report local storage errors in status table
-Date: Fri, 27 Jun 2008 16:37:33 -0700
-Message-ID: <7vprq2moua.fsf@gitster.siamese.dyndns.org>
-References: <1214509350.28344.31.camel@odie.local>
- <20080627030245.GA7144@sigill.intra.peff.net>
- <20080627035747.GC7144@sigill.intra.peff.net>
- <20080627035950.GA21382@sigill.intra.peff.net>
+From: "Stephan Beyer" <s-beyer@gmx.net>
+Subject: Re: 'next' will be rewound shortly
+Date: Sat, 28 Jun 2008 01:41:04 +0200
+Message-ID: <20080627234104.68810@gmx.net>
+References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org>
+ <7vbq1xx4y8.fsf@gitster.siamese.dyndns.org>
+ <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org>
+ <20080627161220.GB6201@leksak.fem-net>
+ <20080627163411.GA2058@genesis.frugalware.org>
+ <20080627171948.GC6201@leksak.fem-net>
+ <20080627192819.GC2058@genesis.frugalware.org>
+ <7vd4m2r2iq.fsf@gitster.siamese.dyndns.org>
+ <20080627213605.GD2058@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Simon Holm =?utf-8?Q?Th=C3=B8gersen?= <odie@cs.aau.dk>,
-	git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 28 01:38:55 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jun 28 01:42:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCNWo-0006m4-DU
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 01:38:54 +0200
+	id 1KCNZt-0007Lv-1g
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 01:42:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760513AbYF0Xhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 19:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759242AbYF0Xhv
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 19:37:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57144 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759987AbYF0Xhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 19:37:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 79912E7C3;
-	Fri, 27 Jun 2008 19:37:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7BAD4E79E; Fri, 27 Jun 2008 19:37:41 -0400 (EDT)
-In-Reply-To: <20080627035950.GA21382@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 Jun 2008 23:59:50 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0D9B7DD2-44A2-11DD-9264-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1759929AbYF0XlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 19:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758897AbYF0XlI
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 19:41:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60445 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756217AbYF0XlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 19:41:07 -0400
+Received: (qmail 5874 invoked by uid 0); 27 Jun 2008 23:41:04 -0000
+Received: from 89.49.11.26 by www048.gmx.net with HTTP;
+ Sat, 28 Jun 2008 01:41:04 +0200 (CEST)
+In-Reply-To: <20080627213605.GD2058@genesis.frugalware.org>
+X-Authenticated: #1499303
+X-Flags: 0001
+X-Mailer: WWW-Mail 6100 (Global Message Exchange)
+X-Priority: 3
+X-Provags-ID: V01U2FsdGVkX18VVdEer48VNeZGPww38MNv9KQ0BqkCylMViuSRnD
+ 9lhBRtMYaA8CFz36jd2cWXemcVOyooSyOmBA== 
+X-GMX-UID: qE1QfJRdTiE+P9SBcWRwCzV9ZUVSRFcB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86680>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Previously, if there was an error while storing a local
-> tracking ref, the low-level functions would report an error,
-> but fetch's status output wouldn't indicate any problem.
-> E.g., imagine you have an old "refs/remotes/origin/foo/bar" but
-> upstream has deleted "foo/bar" in favor of a new branch
-> "foo". You would get output like this:
->
->   error: there are still refs under 'refs/remotes/origin/foo'
->   From $url_of_repo
->    * [new branch]      foo        -> origin/foo
->
-> With this patch, the output takes into account the status of
-> updating the local ref:
->
->   error: there are still refs under 'refs/remotes/origin/foo'
->   From $url_of_repo
->    ! [new branch]      foo        -> origin/foo  (unable to update local ref)
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> <gitster@pobox.com> wrote:
+> > Following git tradition, manpage came after the command's behaviour has
+> > been long established.  It will be a behaviour change, and it is open to
+> > debate if the new behaviour is better or if the proposed change of
+> > behaviour hurts existing users.
+> 
+> If my opinion counts, I like the current ("prepend") one, and I think
+> the best would be to add a new option (and/or make it configurable) for
+> the new ("replace") one.
 
-Makes sense --- thanks.  This is something we can have automated tests,
-isn't it?
+Well, perhaps I am different, but I sometimes have temporary branches
+named like "first-silly-experiment" and I do not expect having a
+    Merge branch 'another-silly-experiment' into 'first-silly-experiment'
+appended, when I do a
+    git merge -m "Merge a lot of useful stuff... blabla" another-silly-experiment.
+
+(btw, I don't *really* name my branches like this..it's just an example.)
+
+Well, I see this from a "sequencer author point of view", where
+     merge silly-experiment
+will invoke an editor,
+     merge --standard silly-experiment
+generates some kind of the typical standard (or default) message,
+and
+     merge --message "Merge blabla" silly-experiment
+does the "obvious". (For me this is the obvious since I've never
+experienced another behavior. All my merges have been using the
+now disappeared commit.)
+
+So I'd vote for a "replace" behavior by default on -m, and an 
+"append standard message" option, but if there is *one* person
+who relies on the prepend feature, I'd also take the "prepend"
+default and would like to vote for an option that does the
+replacement.
+
+For the current state of the art, it seems that I have to merge
+with whatever message and then do a commit -m "..." --amend.
+
+Regards,
+  Stephan Beyer
+
+PS: Currently using webmail. So sorry for any too long lines
+or whatever.
+-- 
+GMX startet ShortView.de. Hier findest Du Leute mit Deinen Interessen!
+Jetzt dabei sein: http://www.shortview.de/wasistshortview.php?mc=sv_ext_mf@gmx
