@@ -1,94 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: update-index --assume-unchanged doesn't make things go fast
-Date: Fri, 27 Jun 2008 10:31:53 -0700 (PDT)
-Message-ID: <m3lk0qiy2i.fsf@localhost.localdomain>
-References: <32541b130806250944x717cf609x7aa520c77a7c6911@mail.gmail.com>
-	<20080626112233.GA17625@cuci.nl>
-	<32541b130806271001t35eb97d2gb841e194b54f214@mail.gmail.com>
+From: "Robert Anderson" <rwa000@gmail.com>
+Subject: Re: An alternate model for preparing partial commits
+Date: Fri, 27 Jun 2008 10:34:25 -0700
+Message-ID: <9af502e50806271034o7be832b2v1e84738befbf5c2b@mail.gmail.com>
+References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
+	 <20080627071014.GA12344@atjola.homenet>
+	 <9af502e50806270954q613087efub0eb05c25f2eefb9@mail.gmail.com>
+	 <20080627172701.GB15359@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 19:33:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 27 19:35:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCHoi-0005rU-3P
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 19:33:00 +0200
+	id 1KCHr4-0006lF-8o
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 19:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758263AbYF0RcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 13:32:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761789AbYF0RcD
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 13:32:03 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:61284 "EHLO
+	id S1752718AbYF0Rea convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 13:34:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbYF0Rea
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 13:34:30 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:63559 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761785AbYF0RcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 13:32:00 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so530044fkq.5
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 10:31:55 -0700 (PDT)
+	with ESMTP id S1752379AbYF0Re3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2008 13:34:29 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so530915fkq.5
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 10:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=aIzt55jez4VbGsyMrIONvzhlhbsQQAZ2lFMSCHL4Xhc=;
-        b=NmBFoK+g8iDVgyhFixtRZWGubYTaO9ETnAvo5mKPr3N0kFo+yNYvj1qMJKddwTV+Xd
-         nqqfsHWTqC1OyTPNM9IdxQXknDRXf9eIoy5iswixfCWdStoQyV78ONJp827Fefv6i6si
-         udnrYMbeVgoGB6S80kx0u7PiLgpFgZ9rlr0eA=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=91n3bYPa1Z3aAXDuX9W9Am4Ehy86wjHpSZ2o1bO2ZrI=;
+        b=fZe7JZLP/VCs8pVoEtbe4MisNCz1024+E8T/sELzgpXVl3t1OYhH2z7DQT2xXyKGVt
+         E6mGFHoshnN6H4frDyiehUeT0M37QQP/vRg9z/uwM3JPdqJ21Dg1efZrcEXfrL3wcCHG
+         JTABFUs6RQVDgZvMFoj4qa/XA93xHo/fpi9YM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=MJN/LCInB1VzQvvSChPCGENHCnhtn4QvkBuyZOGElI9PpXsyXpU5R/oKqMCZiwL0JI
-         jKiT2TOZrip6ejoUViDEP4BMLPPE+tq99vpddT16CYkRwnnJ4s26JX3ITIaXWqbFX+3x
-         W/jT1qwQ8GM5cj+HpLN5GFsfp8DUEmDJ1+hFU=
-Received: by 10.78.192.20 with SMTP id p20mr537864huf.16.1214587914794;
-        Fri, 27 Jun 2008 10:31:54 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.205.161])
-        by mx.google.com with ESMTPS id y1sm729499hua.41.2008.06.27.10.31.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 10:31:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5RHVpZb031519;
-	Fri, 27 Jun 2008 19:31:51 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5RHVoNJ031515;
-	Fri, 27 Jun 2008 19:31:50 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <32541b130806271001t35eb97d2gb841e194b54f214@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=a1pbN2ZZcIGr/5Gv/4q3RleaS3+xE8yOIJJKCSSCS8DP+QQwGMgmKY58+iSFGF4/5F
+         okojWCU3m5RvCO+EUE5knCo7PaDg9ZCoXmB0QLu7yh6NGZDTjfvuKvN518YYikqCuGDg
+         Q8rR1A96fBSP9bfALD+889po7P2BBJDO5BZ04=
+Received: by 10.82.149.8 with SMTP id w8mr69654bud.59.1214588065873;
+        Fri, 27 Jun 2008 10:34:25 -0700 (PDT)
+Received: by 10.82.178.10 with HTTP; Fri, 27 Jun 2008 10:34:25 -0700 (PDT)
+In-Reply-To: <20080627172701.GB15359@atjola.homenet>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86608>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
-> On 6/26/08, Stephen R. van den Berg <srb@cuci.nl> wrote:
->> Avery Pennarun wrote:
->>>
->>> 1) What's a sensible way to tell git to *not* opendir() specific
->>> directories to look for unexpected files in "git status"?  (I don't
->>> think I know enough to implement this myself.)
->>
->> Would checking the mtime on the directory itself help?
-> 
-> I'm guessing it would help somewhat (although not as much as not
-> checking anything at all).  However, we'd still have to check the
-> mtime *against* something, and I don't think the index stores
-> information about directories themselves.
+On Fri, Jun 27, 2008 at 10:27 AM, Bj=F6rn Steinbrink <B.Steinbrink@gmx.=
+de> wrote:
+>> Now I have my guess at the first commit as my tree state, correct?
+>> What happens when I decide I need a couple of hunks from another fil=
+e
+>> which I missed in my first guess, and is now in the stashed state?
+>> How do I get those out of the stash and into the working tree?  If
+>> there is no convenient way to do that, then this method is not
+>> sufficient to cover the use case I am talking about.
+>
+> git stash pop
+> eventually fix conflicts if you changed the working tree in the meant=
+ime
+> go back to the "git add -p" step
+>
+> Bj=F6rn
 
-By the way, from time to time there on this mailing list is idea
-to add entries for directories in the index.  This could help situation
-like yours, tracking emty directories, faster operations when some trees
-are unchanged, subtree <-> subproject changes.
+But that pops the entire stash, right?  Inconvenient at best.
 
-But it always comes back to: 1.) no proposed implementation, 2.) "git
-tracks contents"...
+A good UI here would allow you to move pieces bidirectionally to/from
+the stash at will until the desired, verifiable factorization of
+changes has been achieved.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks,
+Bob
