@@ -1,90 +1,59 @@
-From: "David Jeske" <jeske@willowmail.com>
-Subject: Re: is rebase the same as merging every commit?
-Date: Fri, 27 Jun 2008 06:24:23 -0000
-Message-ID: <5594.86673814735$1214549880@news.gmane.org>
-References: <7vvdzvn0ql.fsf@gitster.siamese.dyndns.org>
-	<willow-jeske-01l79c1jFEDjCWw6-01l7@0yvFEDjCjEl>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: octopus limit
+Date: Fri, 27 Jun 2008 08:33:37 +0200
+Message-ID: <vpqbq1n5qv2.fsf@bauges.imag.fr>
+References: <alpine.LFD.1.10.0806262243130.2988@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 08:57:53 2008
+To: Len Brown <lenb@kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 08:57:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC7u4-00072c-Nl
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 08:57:53 +0200
+	id 1KC7u6-00072c-0w
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 08:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760391AbYF0G4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 02:56:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759561AbYF0G4z
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 02:56:55 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:32892 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753908AbYF0G4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 02:56:53 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jun 2008 02:56:53 EDT
-Received: (qmail 22001 invoked by uid 90); 27 Jun 2008 06:50:01 -0000
-X-Mailer: Willow v0.02
-Received: from 67.160.239.249 at Fri, 27 Jun 2008 06:24:23 -0000
-In-Reply-To: <7vvdzvn0ql.fsf@gitster.siamese.dyndns.org>
+	id S1760201AbYF0G45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 02:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760388AbYF0G44
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 02:56:56 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:36788 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760201AbYF0G4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 02:56:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5R6Xb26022112;
+	Fri, 27 Jun 2008 08:33:37 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KC7Wb-0007vt-Jl; Fri, 27 Jun 2008 08:33:37 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KC7Wb-0004c8-HI; Fri, 27 Jun 2008 08:33:37 +0200
+In-Reply-To: <alpine.LFD.1.10.0806262243130.2988@localhost.localdomain> (Len Brown's message of "Thu\, 26 Jun 2008 22\:44\:23 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 27 Jun 2008 08:33:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86527>
 
-Thanks for the explanation.
+Len Brown <lenb@kernel.org> writes:
 
-However, when considering an SCM perspective, I don't understand why I have to
-make a tradeoff between personal reproducibility (which I get from the original
-changes), and upstream readability (which the community gets from my rebase).
+> it would be nice if a merge of more than 16 branches failed
+> right at the start, rather than chunking along doing merges
+> and then giving up, leaving my repo in an intermediate state.
 
-I could get both of these if the rebase kept both the old and new.
+There's a patch around which should remove this limitation (I think
+it's the builtin-ification of merge).
 
-Is there some reason that losing personal reproducability, and personal/local
-tracking back to those changes of A-B-C is necessary as part of the process?
-
-Further, the rebase machinery seems like it would be great for operations that
-are even more 'dangerous', where I would really really want the history of the
-transitions in case I realized a problem later.
-
-Consider this set of commits on a personal branch
-
-0 - feature a
-1 - feature b
-2 - bugfix a
-3 - feature c / d
-4 - bugfix b
-5 - bugfix a2
-
->From all I've read about rebase, bisect, and the big tree management, it seems
-like the three steps are Reorder, combine, rebase.  (In a more complicated
-situation, i'd want to split a commit into pieces)
-
-(1'')
-0' - feature A
-1' - bugfix a
-2' - bugfix a2
-(2'')
-3' - feature b
-4' - bugfix b
-(3'')
-5' - feature c (split)
-(4'')
-6' - feature d (split)
-
-Frankly, I'm super impressed, because I can imagine how I might do this in git.
-I'm guessing some of you are already doing this. But how do you do it? Can you
-rebase a patch back into it's own history? (such as bugfix a from 2, to 1')
-
-I want to mess around and try this stuff out, but I'm scared of doing bad
-things to the tree and them being unrecoverable because rebase tosses the old
-stuff. I don't understand why I have to lose my original work and/or the
-connection to my original work, in order to reorder/combine/split for public
-consumption. What is the argument for that? (other than the fact that the
-current dag link propagation model would force others to get these changes if
-they remained connected together. Something easily remidied by out of band
-metadata, or different link types)
+-- 
+Matthieu
