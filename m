@@ -1,64 +1,55 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 12/13] Build in merge
-Date: Fri, 27 Jun 2008 12:56:02 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806271255240.9925@racer>
-References: <cover.1214066798.git.vmiklos@frugalware.org> <0b7ea424b3d5ea18a5a8660c6aead51adcc6a40f.1214066799.git.vmiklos@frugalware.org> <57d8a308fae0012174ed4388baccf1bde8515f2f.1214066799.git.vmiklos@frugalware.org>
- <5cae08d3bf2852a8bbd8dc8cdf741cb4bdfa237e.1214066799.git.vmiklos@frugalware.org> <d5d80c5a068c76810edfa9c0c68de500f02780a0.1214066799.git.vmiklos@frugalware.org> <486270D5.5050204@free.fr> <20080627010609.GJ29404@genesis.frugalware.org>
+Subject: Re: octopus limit
+Date: Fri, 27 Jun 2008 13:00:56 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806271259440.9925@racer>
+References: <alpine.LFD.1.10.0806262243130.2988@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Olivier Marin <dkr+ml.git@free.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 13:59:19 2008
+Cc: git@vger.kernel.org
+To: Len Brown <lenb@kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 14:04:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCCbm-0006OC-EH
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 13:59:18 +0200
+	id 1KCCgT-00086l-F5
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 14:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754340AbYF0L6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 07:58:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756628AbYF0L6F
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 07:58:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57008 "HELO mail.gmx.net"
+	id S1759853AbYF0MC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 08:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759835AbYF0MC5
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 08:02:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43588 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756350AbYF0L6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 07:58:03 -0400
-Received: (qmail invoked by alias); 27 Jun 2008 11:58:00 -0000
+	id S1758943AbYF0MC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 08:02:56 -0400
+Received: (qmail invoked by alias); 27 Jun 2008 12:02:54 -0000
 Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp017) with SMTP; 27 Jun 2008 13:58:00 +0200
+  by mail.gmx.net (mp040) with SMTP; 27 Jun 2008 14:02:54 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/2iSlMRy72Rdo4E2yC6hPcvNDVwidrxOi7dSKY35
-	FkC3cOKNUG7zfk
+X-Provags-ID: V01U2FsdGVkX19cfgRoJeZc1kRApuf0U90Py3QYNPqehIWCuyQ8BI
+	qmEDNgvBvdFaJJ
 X-X-Sender: gene099@racer
-In-Reply-To: <20080627010609.GJ29404@genesis.frugalware.org>
+In-Reply-To: <alpine.LFD.1.10.0806262243130.2988@localhost.localdomain>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86541>
 
 Hi,
 
-On Fri, 27 Jun 2008, Miklos Vajna wrote:
+On Thu, 26 Jun 2008, Len Brown wrote:
 
-> diff --git a/builtin-merge.c b/builtin-merge.c
-> index cc04d01..77de9e8 100644
-> --- a/builtin-merge.c
-> +++ b/builtin-merge.c
-> @@ -836,9 +836,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		/* Again the most common case of merging one remote. */
->  		struct strbuf msg;
->  		struct object *o;
-> +		char hex[41];
-> +
-> +		memcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV), 41);
+> it would be nice if a merge of more than 16 branches failed right at the 
+> start, rather than chunking along doing merges and then giving up, 
+> leaving my repo in an intermediate state.
 
-Maybe strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV)) would be more 
-intuitive?
+FWIW I think the rewrite of git-merge as a builtin, which is currently in 
+the works, lifts the limit.  However, this is only true if you do not use 
+a custom script which calls commit-tree.
 
 Ciao,
 Dscho
