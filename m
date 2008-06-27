@@ -1,48 +1,60 @@
-From: "David Jeske" <jeske@willowmail.com>
-Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 20:51:41 -0000
-Message-ID: <3886.93315112523$1214600400@news.gmane.org>
-References: <g43jlg$54g$1@ger.gmane.org>
-	<willow-jeske-01l7H4tHFEDjCgPV-01l7[1OFFEDjCYJV>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: Make test on AIX
+Date: Fri, 27 Jun 2008 16:13:41 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794302389D09@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 22:59:53 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 23:15:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCL2l-0005ta-29
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 22:59:43 +0200
+	id 1KCLHG-00025g-Mg
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 23:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891AbYF0U6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 16:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbYF0U6n
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 16:58:43 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:33090 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751328AbYF0U6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 16:58:42 -0400
-Received: (qmail 28588 invoked by uid 90); 27 Jun 2008 20:58:37 -0000
-X-Mailer: Willow v0.02
-Received: from 72.14.229.81 at Fri, 27 Jun 2008 20:51:41 -0000
-In-Reply-To: <g43jlg$54g$1@ger.gmane.org>
+	id S1756071AbYF0VNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 17:13:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbYF0VNp
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 17:13:45 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:55594 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755143AbYF0VNo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2008 17:13:44 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Make test on AIX
+Thread-Index: AcjYmqyfD3BZ+yD+SFie2zQh5yM9uQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86634>
 
--- Jakub Narebski wrote:
-> git rebase --interactive?
-> Any patch management interface (StGIT, Guilt)?
+Hi all,
 
-Yes, as I said, that set of operations can be performed with git today.
+I just got through a rather painful build and install of 1.5.6.1 on AIX
+and I was wondering if anyone has any clues on how to get the tests to
+run a bit better there.
 
-What git can't do, is let me "supercede" the old DAG-subset, so people I shared
-them with can get my new changes without hurting their world. Currently git
-seems to rely on the idea that "if you accept changes into your tree that will
-be later rebased, it's up to you to figure it out". I don't see why that is the
-case.
+The first thing I encountered was that because the tests all use
+#!/bin/sh the exit code was not what the tests expected.  So I ended up
+running 'make SHELL=`which bash` all' directly in the git/t/ directory.
+That seemed to shake out and work for most of the tests except for
+t/t7502-commit.sh.  Try as I might, I could not get SHELL_PATH set to
+anything but /bin/sh except to hard-code the SHELL_PATH in this script.
+
+Am I missing something?  Is there an easier way to get the test suite to
+work?  If so, I appreciate any advice.  If not, does anyone have any
+ideas on how I might fix this and create a patch for git to submit?  I
+don't claim to be a make or bash expert, so go easy on me if I've missed
+something obvious ;-)
+
+Any help appreciated!
+
+Cheers,
+Craig
