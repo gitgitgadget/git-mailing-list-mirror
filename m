@@ -1,66 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 14:33:33 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806271408290.9925@racer>
-References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Robert Anderson <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 15:36:56 2008
+From: Christian Holtje <docwhat@gmail.com>
+Subject: Re: pread() over NFS (again) [1.5.5.4]
+Date: Fri, 27 Jun 2008 09:44:39 -0400
+Message-ID: <8F75DDC9-AECF-4158-B2DC-9B038936B560@gmail.com>
+References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com> <20080626204606.GX11793@spearce.org> <7vskuzq5ix.fsf@gitster.siamese.dyndns.org> <65688C06-BB6A-4E95-A4B9-A1A7C206BE2E@sent.com> <20080627025413.GA19568@fieldses.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: logank@sent.com, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 15:45:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCE8A-0001ZC-Nx
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 15:36:51 +0200
+	id 1KCEGi-0004xr-3c
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 15:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759043AbYF0Nff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 09:35:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759086AbYF0Nff
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 09:35:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43106 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759043AbYF0Nfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 09:35:34 -0400
-Received: (qmail invoked by alias); 27 Jun 2008 13:35:31 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp004) with SMTP; 27 Jun 2008 15:35:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1++B0NCHiu+/6nTR1uafc1/I+HQzFgF1E9L6+UNFq
-	I06IVAESR/RCFO
-X-X-Sender: gene099@racer
-In-Reply-To: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755232AbYF0Non (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 09:44:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754917AbYF0Non
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 09:44:43 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:58046 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752866AbYF0Non (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 09:44:43 -0400
+Received: by py-out-1112.google.com with SMTP id p76so115923pyb.10
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 06:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=6NkNRmBY1a/RhGaUpbXTGVX6kbbVjhouK9Mk6sQSGXA=;
+        b=ws8ShZq4c75vGa2NuXbCdH9OkRU4PFsYZAzPvA+PUI3LYMPcbF1CHkO6pMGnmuajw/
+         hp40QUKbSh0HQNHiwOukFJUoN6wh0TV+Lpx6NRSWd7yRhGYtNfxiAFnUWzkvB5KQU2C6
+         NvyEzVD3rhPkIJSq0ic61vKyF3bi5iXl3JIss=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=UykATQpiG9tlCDNFjy/51sH0X81A757OdOFot415pfOxmigBM4Eq4PkrQY66lOMTN9
+         5m6zKXBgOmgNzhyqXeN4FqXv9Jq4+J7CAbi2TLq1jUdAQsT1Nzy39ePdMkIgP1zpyCM2
+         /FcnXrvhT7s8ivZyMN00iVXGOQ2OjWOBaqL60=
+Received: by 10.114.75.1 with SMTP id x1mr1397846waa.25.1214574281906;
+        Fri, 27 Jun 2008 06:44:41 -0700 (PDT)
+Received: from ?192.168.0.161? ( [206.210.75.84])
+        by mx.google.com with ESMTPS id 6sm1091291yxg.6.2008.06.27.06.44.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Jun 2008 06:44:41 -0700 (PDT)
+In-Reply-To: <20080627025413.GA19568@fieldses.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86561>
 
-Hi,
+On Jun 26, 2008, at 10:54 PM, J. Bruce Fields wrote:
+> On Thu, Jun 26, 2008 at 04:36:27PM -0700, logank@sent.com wrote:
+>> No, it seems to be a simple error-out in this case. We have 2.4.20
+>> systems
+>
+> That version's for the client or the server?
 
-On Thu, 26 Jun 2008, Robert Anderson wrote:
+For the bug I sent the information is:
+Server:
+Linux dev1 2.4.28 #3 SMP Tue Jan 18 14:59:40 EST 2005 i686 i686 i386  
+GNU/Linux
+Red Hat Linux release 9 (Shrike)
 
-> Seems to me the concept of the "index" is a half-baked version of what
-> I really want, which is the ability to factor a working tree's changes
-> into its constituent parts in preparation for committing them.
+Client:
+Linux dev2 2.6.9-42.0.8.ELsmp #1 SMP Tue Jan 30 12:18:01 EST 2007  
+x86_64 x86_64 x86_64 GNU/Linux
+CentOS release 4.4 (Final)
 
-Half-baked is probably too strong a word.
-
-What you are basically asking for is to have the working directory 
-as staging area, and to be able to stash away changes that are not to be 
-committed.
-
-Now, this is not necessarily what everybody wants, which is why many 
-people are fine with the index.
-
-Having said that, I played with the idea of a "git stash -i", which would 
-allow you to select the changes to stash away.  (And by extension, "git 
-stash -e" using the "git add -e" command.)
-
-Hmm?
-
-Ciao,
-Dscho
+Ciao!
