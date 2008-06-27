@@ -1,130 +1,115 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: is rebase the same as merging every commit?
-Date: Fri, 27 Jun 2008 08:30:56 +0200
-Message-ID: <vpqfxqz5qzj.fsf@bauges.imag.fr>
-References: <willow-jeske-01l78ZaEFEDjCZEG>
+From: "Robert Anderson" <rwa000@gmail.com>
+Subject: An alternate model for preparing partial commits
+Date: Thu, 26 Jun 2008 23:50:06 -0700
+Message-ID: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "David Jeske" <jeske@willowmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 08:32:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 08:51:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC7VB-0000RD-P1
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 08:32:10 +0200
+	id 1KC7np-0005E2-Dp
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 08:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbYF0GbN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 02:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753296AbYF0GbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 02:31:13 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:65330 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751040AbYF0GbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 02:31:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m5R6UuhB021603;
-	Fri, 27 Jun 2008 08:30:57 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KC7U0-0007tG-FG; Fri, 27 Jun 2008 08:30:56 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KC7U0-0004bY-BG; Fri, 27 Jun 2008 08:30:56 +0200
-In-Reply-To: <willow-jeske-01l78ZaEFEDjCZEG> (David Jeske's message of "Thu\, 26 Jun 2008 23\:04\:58 -0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 27 Jun 2008 08:30:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1759076AbYF0GuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 02:50:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759044AbYF0GuK
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 02:50:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:38930 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754547AbYF0GuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 02:50:08 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so181806fgg.17
+        for <git@vger.kernel.org>; Thu, 26 Jun 2008 23:50:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=U3YCnNTiJGRbvZg65IH3aMrcvw3J20mBujQhXVJQTn8=;
+        b=xjerFJEXxkh4jkp7j/xnOryDGO7Ir++5+epkAGQ+5vdvq8M2aRh3o9DC9AjqRwPH9r
+         EZZxBSWhjzarcHV9zn+scPfTB0xZiz0TQdSsZpMfYwZLxMVTu0DZRi2ch5kmigIfD8DL
+         fN2fAZM1HfNWP5smrnw70dwRyJKHNi/ben/eM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=d22i31E6bU2R0S7P8v6CbmYpglEQFnlK8AqpLxUxBm8O68M6r/C7gskfqF9wcN0xMb
+         tFII8xFm6ACJCctaMtthLO7YaIJqmLRzk8dQaZaD+7uj9IhJdtIk1unEKm0M3wtjtVHs
+         TCzdZRlJEIObGPds9UOMDf7dnteNiDj1abhVA=
+Received: by 10.86.36.11 with SMTP id j11mr1360452fgj.7.1214549406641;
+        Thu, 26 Jun 2008 23:50:06 -0700 (PDT)
+Received: by 10.86.4.6 with HTTP; Thu, 26 Jun 2008 23:50:06 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86524>
 
-"David Jeske" <jeske@willowmail.com> writes:
+Seems to me the concept of the "index" is a half-baked version of what
+I really want, which is the ability to factor a working tree's changes
+into its constituent parts in preparation for committing them.  The
+index provides some very nice facilities to factor out changes in a
+working tree into a "staging area", but the fundamental flaw of this
+in my view is that this "staging area" is not instantiated as a tree,
+so it cannot be compiled and/or tested before committing.
 
-> Rebasing is described in the docs I've read as turning this: (sorry f=
-or the
-> dots)
->
-> ..........A---B---C topic
-> ........./
-> ....D---E---F---G master
->
-> Into this:
->
-> ...................A'--B'--C' topic
-> ................../
-> .....D---E---F---G master
->
-> If I understand it right (and that's a BIG if), it's the same as doin=
-g a merge
-> of C into G where every individual commit in the C-line is individual=
-ly
-> committed into the new C' line.
->
-> ...........-------------A---B---C
-> ........../            /   /   /
-> ........./        /---A'--B'--C'  topic
-> ......../        /
-> ....D---E---F---G - master
+Consider a facility where the state you want to commit next is built
+up in the current working directory, and the original set of changes
+exists in some proto-space like the index currently inhabits, where
+you can query and manipulate that state, but it isn't instantiated in
+your working tree.
 
-I'd draw that the other way:
+Imagine a session like this:
 
-  ...........---------A---B---C
-  ........../          \   \   \
-  ........./        /---A'--B'--C'  topic
-  ......../        /
-  ....D---E---F---G - master
+You've got a couple of conflated changes in your working tree, that
+you think you can break up into two orthogonal changes, each of which
+will compile and pass a set of tests you've got.  You think.  You'd
+like to verify the build and test before you commit each piece.
 
-> (1) Is the above model a valid explanation?
+git prep
 
-Sounds correct to me.
+where "prep" means "prepare commit".  Don't get hung up on command or
+option names I'm using as placeholders, I just made that up without
+much deep thought about what to call it.
 
-> (2) From the documentation diagrams, it looks like the rebased A' has=
- only (G)
-> as a parent, not (A,G). If this is the case, why?
+Now my tree appears clean (and git diff returns nothing).  I can now
+start adding the changes I had in my working tree that I want to
+include in the next commit, using git add (which would know I am in
+the "prep" mode).  I can examine those original working dir changes I
+am choosing from with:
 
-Well, one could imagine a "rebase keeping ancestry" command, which
-would keep A and G (indeed, you can do that by hand with multiple
-calls to "merge"). The advantage being that further merges involving
-both A and A' have better chance to succeed.
+git diff --prep
 
-But philosophy of "rebase" is different: the idea is that you usually
-rebase your private branches before submission, and the guys you
-submit to are interested in your changes (i.e. the patch serie
-diff(G,A'), diff(A',B'), ...), not the way you got this patch serie.
+which, at this point, shows the same output that "git diff" did before
+I ran "git prep."  Now I want to add some subset of my original
+changes:
 
-So, discarding this ancestry information is a bit like discarding your
-*~ files (or whatever backup files your editor might create) after
-some time: it has been valuable information, but at some point, it
-becomes noise you don't want to hear.
+git add newfile.c
+git add -i
+<add a couple of hunks of the changes from file modfile.c>
 
-> (i.e. not connecting those nodes throws away useful information)
+Now I have a working tree state that I think I want to commit.  I can
+examine it with:
 
-=46or the use-cases where this information is useful, "rebase" is not
-for you. Indeed, in these cases, a plain "merge" is usually what you
-want.
+git diff
 
-> (3) If it only has (G) as a parent, does the rebase explicitly remove=
- the
-> source A,B,C nodes from the repository?
+and I can compile and test it.  Yep, it works and passes my test suite
+(an option I did not have if I had added these changes to the index).
+So now I want to commit:
 
-Most commands, and this includes rebase, are "add-only". The objects
-will remain unreferenced and will be pruned by the next git gc
---prune. Unreferenced objects do not harm, they just eat your disk
-space.
+git commit -a -m "made change A"
 
-Well, that was a first approximation. Indeed, the reflog still
-references C, see "git reflog". For example, after the rebase, if you
-realize that you actually didn't want this rebase, you can still
-"git=A0reset --hard HEAD@{1}" or something like that.
+I think the commit should probably "pop" the rest of the changes I did
+not commit back into the working directory.  If I want to pull another
+subset of changes again, I can repeat the process with another "git
+prep".
 
---=20
-Matthieu
+Does this idea resonate with anyone else?
+
+Thanks,
+Bob Anderson
