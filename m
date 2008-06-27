@@ -1,13 +1,18 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 06/23] Refactor: extract superclass OperationResult from FetchResult
-Date: Sat, 28 Jun 2008 00:06:30 +0200
-Message-ID: <1214604407-30572-7-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 11/23] Add BasePackPushConnection implementing git-send-pack protocol
+Date: Sat, 28 Jun 2008 00:06:35 +0200
+Message-ID: <1214604407-30572-12-git-send-email-marek.zawirski@gmail.com>
 References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-2-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-3-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-4-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-5-git-send-email-marek.zawirski@gmail.com>
  <1214604407-30572-6-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-7-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-8-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-9-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-10-git-send-email-marek.zawirski@gmail.com>
+ <1214604407-30572-11-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
 X-From: git-owner@vger.kernel.org Sat Jun 28 00:09:01 2008
@@ -15,168 +20,67 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCM7e-0000rw-9e
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:50 +0200
+	id 1KCM7i-0000rw-BD
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756783AbYF0WHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:07:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756666AbYF0WHV
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:21 -0400
+	id S1757593AbYF0WHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:07:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757492AbYF0WHt
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:07:49 -0400
 Received: from nf-out-0910.google.com ([64.233.182.189]:36995 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756571AbYF0WHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:07:16 -0400
+	with ESMTP id S1757347AbYF0WHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:07:44 -0400
 Received: by nf-out-0910.google.com with SMTP id d3so182348nfc.21
-        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:15 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=5XV5H2Od8dTAgVt1US9n+04RubdeI3FAhFtumzpokbo=;
-        b=ICB+qw2SgCjCyWKnha00laYzg5Leq/uXxJreVv23+eU4cqWp+thHoDTLnAY9PxJWRH
-         ylNsxVHmVRGOKyCcw7qAOMzjEt0rJvTcs8FPtbhFZzh+hHOXglqFg6irmawy0eJgAXeJ
-         VDIlouZ2vFhAlbon71MiIDtS2aPme7eSa+2Wg=
+        bh=1/UzXSjFRnV+90YKI+PyHIbOMjhC3BVgNIQZoOCa+cI=;
+        b=VFmtqHDrc+jw6wwp5vETwWwIX2C90c7vrLUgX6Nd3f8IT97RlKNl7JCT5JnNAv07tR
+         NDkZq3YK0UhPbS+ztvZV9DWkDrXlwz828h919Dl0IrpKh5h8duH+ifTEOHTkuTWZsV/6
+         8zfdn0PX/5bQeTjiF3+AgJDBMKX7kUDiUn0p4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cQzxgQGoJzoAT26GF663ymsgd/qDoudMHa1FjJgG2hAJoUe/158UKuMXsy8T2IiYbe
-         p3Pmm4RHiphx8w2TvIbXqdZvFQvWBGAjt2hD9gBDSA+PTvaS1j+INVZ6qh4ASJU/0uFM
-         39/cERrGAsmEpdX6sd/ra1/hkgwI83USLRqNE=
-Received: by 10.210.46.12 with SMTP id t12mr1629455ebt.23.1214604435625;
-        Fri, 27 Jun 2008 15:07:15 -0700 (PDT)
+        b=nFXtz9nAk3gDqjcBGMxFcMJZv+2F55AHiVST8LDsAnA/Jbgb6nKriL6tb2pMx7iHp3
+         qeYtDWpRnYjLRKRkiK61FaxbC7cSwfcwFVDI5QdFC2/UlBxU9QOrLLvQWm6hxCC9RuLW
+         UJqGAlZpLU8QGXvYWi76ZtFjU/SnO+O6CvoAg=
+Received: by 10.210.66.13 with SMTP id o13mr1570739eba.193.1214604463875;
+        Fri, 27 Jun 2008 15:07:43 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id c25sm2437625ika.11.2008.06.27.15.07.13
+        by mx.google.com with ESMTPS id z33sm2455281ikz.0.2008.06.27.15.07.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Jun 2008 15:07:14 -0700 (PDT)
+        Fri, 27 Jun 2008 15:07:42 -0700 (PDT)
 X-Mailer: git-send-email 1.5.5.4
-In-Reply-To: <1214604407-30572-6-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1214604407-30572-11-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86650>
 
-New superclass holds information about advertised refs and updated
-tracking refs, which is all common to fetch and push operations.
+Implementation realies extensively on RemoteRefUpdate as input.
+
+It supports report-status capability, and honors delete-refs one.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../org/spearce/jgit/transport/FetchResult.java    |   74 +------------
- .../spearce/jgit/transport/OperationResult.java    |  119 ++++++++++++++++++++
- 2 files changed, 120 insertions(+), 73 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/OperationResult.java
+ .../jgit/transport/BasePackPushConnection.java     |  226 ++++++++++++++++++++
+ 1 files changed, 226 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchResult.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchResult.java
-index bd94b5f..cc8557f 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchResult.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchResult.java
-@@ -40,94 +40,22 @@ package org.spearce.jgit.transport;
- 
- import java.util.ArrayList;
- import java.util.Collection;
--import java.util.Collections;
- import java.util.List;
--import java.util.Map;
--import java.util.SortedMap;
--import java.util.TreeMap;
--
--import org.spearce.jgit.lib.Ref;
- 
- /**
-  * Final status after a successful fetch from a remote repository.
-  * 
-  * @see Transport#fetch(org.spearce.jgit.lib.ProgressMonitor, Collection)
-  */
--public class FetchResult {
--	private final SortedMap<String, TrackingRefUpdate> updates;
--
-+public class FetchResult extends OperationResult {
- 	private final List<FetchHeadRecord> forMerge;
- 
--	private Map<String, Ref> advertisedRefs;
--
- 	FetchResult() {
--		updates = new TreeMap<String, TrackingRefUpdate>();
- 		forMerge = new ArrayList<FetchHeadRecord>();
--		advertisedRefs = Collections.<String, Ref> emptyMap();
--	}
--
--	void add(final TrackingRefUpdate u) {
--		updates.put(u.getLocalName(), u);
- 	}
- 
- 	void add(final FetchHeadRecord r) {
- 		if (!r.notForMerge)
- 			forMerge.add(r);
- 	}
--
--	void setAdvertisedRefs(final Map<String, Ref> ar) {
--		advertisedRefs = ar;
--	}
--
--	/**
--	 * Get the complete list of refs advertised by the remote.
--	 * <p>
--	 * The returned refs may appear in any order. If the caller needs these to
--	 * be sorted, they should be copied into a new array or List and then sorted
--	 * by the caller as necessary.
--	 * 
--	 * @return available/advertised refs. Never null. Not modifiable. The
--	 *         collection can be empty if the remote side has no refs (it is an
--	 *         empty/newly created repository).
--	 */
--	public Collection<Ref> getAdvertisedRefs() {
--		return advertisedRefs.values();
--	}
--
--	/**
--	 * Get a single advertised ref by name.
--	 * <p>
--	 * The name supplied should be valid ref name. To get a peeled value for a
--	 * ref (aka <code>refs/tags/v1.0^{}</code>) use the base name (without
--	 * the <code>^{}</code> suffix) and look at the peeled object id.
--	 * 
--	 * @param name
--	 *            name of the ref to obtain.
--	 * @return the requested ref; null if the remote did not advertise this ref.
--	 */
--	public final Ref getAdvertisedRef(final String name) {
--		return advertisedRefs.get(name);
--	}
--
--	/**
--	 * Get the status of all local tracking refs that were updated.
--	 * 
--	 * @return unmodifiable collection of local updates. Never null. Empty if
--	 *         there were no local tracking refs updated.
--	 */
--	public Collection<TrackingRefUpdate> getTrackingRefUpdates() {
--		return Collections.unmodifiableCollection(updates.values());
--	}
--
--	/**
--	 * Get the status for a specific local tracking ref update.
--	 * 
--	 * @param localName
--	 *            name of the local ref (e.g. "refs/remotes/origin/master").
--	 * @return status of the local ref; null if this local ref was not touched
--	 *         during this fetch.
--	 */
--	public TrackingRefUpdate getTrackingRefUpdate(final String localName) {
--		return updates.get(localName);
--	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OperationResult.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OperationResult.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
 new file mode 100644
-index 0000000..9b411e1
+index 0000000..159e331
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OperationResult.java
-@@ -0,0 +1,119 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+@@ -0,0 +1,226 @@
 +/*
-+ * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
-+ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
 + * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
-+ *
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ * 
 + * All rights reserved.
 + *
 + * Redistribution and use in source and binary forms, with or
@@ -213,84 +117,191 @@ index 0000000..9b411e1
 +
 +package org.spearce.jgit.transport;
 +
++import java.io.IOException;
++import java.util.ArrayList;
 +import java.util.Collection;
-+import java.util.Collections;
 +import java.util.Map;
-+import java.util.SortedMap;
-+import java.util.TreeMap;
 +
++import org.spearce.jgit.errors.PackProtocolException;
++import org.spearce.jgit.errors.TransportException;
++import org.spearce.jgit.lib.ObjectId;
++import org.spearce.jgit.lib.PackWriter;
++import org.spearce.jgit.lib.ProgressMonitor;
 +import org.spearce.jgit.lib.Ref;
++import org.spearce.jgit.transport.RemoteRefUpdate.Status;
 +
 +/**
-+ * Class holding result of operation on remote repository. This includes refs
-+ * advertised by remote repo and local tracking refs updates.
++ * Push implementation using the native Git pack transfer service.
++ * <p>
++ * This is the canonical implementation for transferring objects to the remote
++ * repository from the local repository by talking to the 'git-receive-pack'
++ * service. Objects are packed on the local side into a pack file and then sent
++ * to the remote repository.
++ * <p>
++ * This connection requires only a bi-directional pipe or socket, and thus is
++ * easily wrapped up into a local process pipe, anonymous TCP socket, or a
++ * command executed through an SSH tunnel.
++ * <p>
++ * This implementation honors {@link Transport#isPushThin()} option.
++ * <p>
++ * Concrete implementations should just call
++ * {@link #init(java.io.InputStream, java.io.OutputStream)} and
++ * {@link #readAdvertisedRefs()} methods in constructor or before any use. They
++ * should also handle resources releasing in {@link #close()} method if needed.
 + */
-+public abstract class OperationResult {
++class BasePackPushConnection extends BasePackConnection implements
++		PushConnection {
++	static final String CAPABILITY_REPORT_STATUS = "report-status";
 +
-+	protected Map<String, Ref> advertisedRefs = Collections.emptyMap();
++	static final String CAPABILITY_DELETE_REFS = "delete-refs";
 +
-+	protected final SortedMap<String, TrackingRefUpdate> updates = new TreeMap<String, TrackingRefUpdate>();
++	private final boolean thinPack;
 +
-+	/**
-+	 * Get the complete list of refs advertised by the remote.
-+	 * <p>
-+	 * The returned refs may appear in any order. If the caller needs these to
-+	 * be sorted, they should be copied into a new array or List and then sorted
-+	 * by the caller as necessary.
-+	 * 
-+	 * @return available/advertised refs. Never null. Not modifiable. The
-+	 *         collection can be empty if the remote side has no refs (it is an
-+	 *         empty/newly created repository).
-+	 */
-+	public Collection<Ref> getAdvertisedRefs() {
-+		return Collections.unmodifiableCollection(advertisedRefs.values());
++	private boolean capableDeleteRefs;
++
++	private boolean capableReport;
++
++	private boolean sentCommand;
++
++	private boolean writePack;
++
++	BasePackPushConnection(final PackTransport transport) {
++		super(transport);
++		thinPack = transport.isPushThin();
 +	}
 +
-+	/**
-+	 * Get a single advertised ref by name.
-+	 * <p>
-+	 * The name supplied should be valid ref name. To get a peeled value for a
-+	 * ref (aka <code>refs/tags/v1.0^{}</code>) use the base name (without
-+	 * the <code>^{}</code> suffix) and look at the peeled object id.
-+	 * 
-+	 * @param name
-+	 *            name of the ref to obtain.
-+	 * @return the requested ref; null if the remote did not advertise this ref.
-+	 */
-+	public final Ref getAdvertisedRef(final String name) {
-+		return advertisedRefs.get(name);
++	public void push(final ProgressMonitor monitor,
++			final Map<String, RemoteRefUpdate> refUpdates)
++			throws TransportException {
++		markStartedOperation();
++		doPush(monitor, refUpdates);
 +	}
 +
-+	/**
-+	 * Get the status of all local tracking refs that were updated.
-+	 * 
-+	 * @return unmodifiable collection of local updates. Never null. Empty if
-+	 *         there were no local tracking refs updated.
-+	 */
-+	public Collection<TrackingRefUpdate> getTrackingRefUpdates() {
-+		return Collections.unmodifiableCollection(updates.values());
++	protected void doPush(final ProgressMonitor monitor,
++			final Map<String, RemoteRefUpdate> refUpdates)
++			throws TransportException {
++		try {
++			writeCommands(refUpdates.values(), monitor);
++			if (writePack)
++				writePack(refUpdates, monitor);
++			if (sentCommand && capableReport)
++				readStatusReport(refUpdates);
++		} catch (TransportException e) {
++			throw e;
++		} catch (Exception e) {
++			throw new TransportException(uri + ": " + e.getMessage(), e);
++		} finally {
++			close();
++		}
 +	}
 +
-+	/**
-+	 * Get the status for a specific local tracking ref update.
-+	 * 
-+	 * @param localName
-+	 *            name of the local ref (e.g. "refs/remotes/origin/master").
-+	 * @return status of the local ref; null if this local ref was not touched
-+	 *         during this operation.
-+	 */
-+	public TrackingRefUpdate getTrackingRefUpdate(final String localName) {
-+		return updates.get(localName);
++	private void writeCommands(final Collection<RemoteRefUpdate> refUpdates,
++			final ProgressMonitor monitor) throws IOException {
++		final String capabilties = enableCapabilties();
++		for (final RemoteRefUpdate rru : refUpdates) {
++			if (!capableDeleteRefs && rru.isDelete()) {
++				rru.setStatus(Status.REJECTED_NODELETE);
++				continue;
++			}
++
++			final StringBuilder sb = new StringBuilder();
++			final Ref advertisedRef = getRef(rru.getRemoteName());
++			final ObjectId oldId = (advertisedRef == null ? ObjectId.zeroId()
++					: advertisedRef.getObjectId());
++			sb.append(oldId);
++			sb.append(' ');
++			sb.append(rru.getNewObjectId());
++			sb.append(' ');
++			sb.append(rru.getRemoteName());
++			if (!sentCommand) {
++				sentCommand = true;
++				sb.append(capabilties);
++			}
++
++			pckOut.writeString(sb.toString());
++			rru.setStatus(sentCommand ? Status.AWAITING_REPORT : Status.OK);
++			if (!rru.isDelete())
++				writePack = true;
++		}
++
++		if (monitor.isCancelled())
++			throw new TransportException(uri + ": push cancelled");
++		pckOut.end();
 +	}
 +
-+	protected void setAdvertisedRefs(final Map<String, Ref> ar) {
-+		advertisedRefs = ar;
++	private String enableCapabilties() {
++		final StringBuilder line = new StringBuilder();
++		capableReport = wantCapability(line, CAPABILITY_REPORT_STATUS);
++		capableDeleteRefs = wantCapability(line, CAPABILITY_DELETE_REFS);
++		if (line.length() > 0)
++			line.insert(0, '\0');
++		return line.toString();
 +	}
 +
-+	protected void add(final TrackingRefUpdate u) {
-+		updates.put(u.getLocalName(), u);
++	private void writePack(final Map<String, RemoteRefUpdate> refUpdates,
++			final ProgressMonitor monitor) throws IOException {
++		final PackWriter writer = new PackWriter(local, out, monitor);
++		final ArrayList<ObjectId> remoteObjects = new ArrayList<ObjectId>(
++				getRefs().size());
++		final ArrayList<ObjectId> newObjects = new ArrayList<ObjectId>(
++				refUpdates.size());
++
++		for (final Ref r : getRefs())
++			remoteObjects.add(r.getObjectId());
++		for (final RemoteRefUpdate r : refUpdates.values())
++			newObjects.add(r.getNewObjectId());
++
++		writer.writePack(newObjects, remoteObjects, thinPack, true);
++	}
++
++	private void readStatusReport(final Map<String, RemoteRefUpdate> refUpdates)
++			throws IOException {
++		final String unpackLine = pckIn.readString();
++		if (!unpackLine.startsWith("unpack "))
++			throw new PackProtocolException(uri + ": unexpected report line: "
++					+ unpackLine);
++		final String unpackStatus = unpackLine.substring("unpack ".length());
++		if (!unpackStatus.equals("ok"))
++			throw new TransportException(uri
++					+ ": error occurred during unpacking on the remote end: "
++					+ unpackStatus);
++
++		String refLine;
++		while ((refLine = pckIn.readString()).length() > 0) {
++			boolean ok = false;
++			int refNameEnd = -1;
++			if (refLine.startsWith("ok ")) {
++				ok = true;
++				refNameEnd = refLine.length();
++			} else if (refLine.startsWith("ng ")) {
++				ok = false;
++				refNameEnd = refLine.indexOf(" ", 3);
++			}
++			if (refNameEnd == -1)
++				throw new PackProtocolException(uri
++						+ ": unexpected report line: " + refLine);
++			final String refName = refLine.substring(3, refNameEnd);
++			final String message = (ok ? null : refLine
++					.substring(refNameEnd + 1));
++
++			final RemoteRefUpdate rru = refUpdates.get(refName);
++			if (rru == null)
++				throw new PackProtocolException(uri
++						+ ": unexpected ref report: " + refName);
++			if (ok) {
++				rru.setStatus(Status.OK);
++			} else {
++				rru.setStatus(Status.REJECTED_OTHER_REASON);
++				rru.setMessage(message);
++			}
++		}
++		for (final RemoteRefUpdate rru : refUpdates.values()) {
++			if (rru.getStatus() == Status.AWAITING_REPORT)
++				throw new PackProtocolException(uri
++						+ ": expected report for ref " + rru.getRemoteName()
++						+ " not received");
++		}
 +	}
 +}
-\ No newline at end of file
 -- 
 1.5.5.3
