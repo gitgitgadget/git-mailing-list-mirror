@@ -1,83 +1,95 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: 'next' will be rewound shortly
-Date: Fri, 27 Jun 2008 21:28:19 +0200
-Message-ID: <20080627192819.GC2058@genesis.frugalware.org>
-References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org> <7vbq1xx4y8.fsf@gitster.siamese.dyndns.org> <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org> <20080627161220.GB6201@leksak.fem-net> <20080627163411.GA2058@genesis.frugalware.org> <20080627171948.GC6201@leksak.fem-net>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [RFC/PATCH] Documentation: Don't assume git-sh-setup
+ and git-parse-remote are in the PATH
+Date: Fri, 27 Jun 2008 15:10:01 -0500 (CDT)
+Message-ID: <20080627151001.BIA19424@m4500-01.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="yVhtmJPUSI46BTXb"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jun 27 21:29:21 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 27 22:11:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCJdI-0006u1-NN
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 21:29:21 +0200
+	id 1KCKHt-0005yB-6n
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 22:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757504AbYF0T2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 15:28:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755354AbYF0T2X
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 15:28:23 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:36690 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757321AbYF0T2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 15:28:22 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id AAB911B250E;
-	Fri, 27 Jun 2008 21:28:21 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id E55B744697;
-	Fri, 27 Jun 2008 21:01:35 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3CD081778012; Fri, 27 Jun 2008 21:28:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080627171948.GC6201@leksak.fem-net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1759788AbYF0UKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 16:10:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759623AbYF0UKG
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 16:10:06 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:36195 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759592AbYF0UKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 16:10:05 -0400
+Received: from m4500-01.uchicago.edu (m4500-01.uchicago.edu [128.135.249.211])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m5RKA4mY008418
+	for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:10:06 -0500
+Received: (from m4500-01.uchicago.edu [128.135.249.215])
+	by m4500-01.uchicago.edu (MOS 3.8.5-GA)
+	with HTTP/1.1 id BIA19424 (AUTH jrnieder@uchicago.edu);
+	Fri, 27 Jun 2008 15:10:01 -0500 (CDT)
+X-Mailer: Mirapoint Webmail Direct 3.8.5-GA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86627>
 
+Starting with Git 1.5.4, use of dashed forms of git commands in
+scripts without "PATH=$(git --exec-path):$PATH" was deprecated. Thus
+we generally advertise the non-dashed forms of commands. git-sh-setup
+and git-parse-remote do not have non-dashed forms because they are
+meant to be sourced from a script using .; thus the only recommended
+way to use them is by updating PATH first. This patch changes the
+documentation accordingly.
 
---yVhtmJPUSI46BTXb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This does not matter as much for releases before 1.6.0, because
+by default the GIT_EXEC_PATH is in the PATH already.
 
-On Fri, Jun 27, 2008 at 07:19:48PM +0200, Stephan Beyer <s-beyer@gmx.net> w=
-rote:
-> -m <msg>::
-> 	The commit message to be used for the merge commit (in case
-> 	it is created). The `git-fmt-merge-msg` script can be used
-> 	to give a good default for automated `git-merge` invocations.
->=20
-> So it is not mentioned that a standard message is appended, and thus the
-> original behavior is somehow "buggy" :)
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+---
 
-Ah, OK. Then the code and the documentation differs and that's a bug,
-sure.
+ I wrote:
 
-=46rom git-merge.sh:
+ > I wanted to just change the ". git-sh-setup" line to ". git sh-setup",
+ > but of course that will not work. Am I missing something?
 
-# All the rest are the commits being merged; prepare
-# the standard merge summary message to be appended to
-# the given message.
+ Yes, I am.
 
-I did builtin-merge based on git-merge.sh, not the manpage. ;-)
+ I do not have asciidoc installed, so this patch is completely untested.
 
---yVhtmJPUSI46BTXb
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+ Documentation/git-parse-remote.txt |    2 ++
+ Documentation/git-sh-setup.txt     |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhlP1MACgkQe81tAgORUJadnACfcq+L5iiZao8Bq1ivZXbL4SYl
-MmAAoKqVYbKWNZ+DrXVx1Tkx5tiPCdRb
-=Zyi5
------END PGP SIGNATURE-----
-
---yVhtmJPUSI46BTXb--
+diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-parse-remote.txt
+index 951dbd6..56d0505 100644
+--- a/Documentation/git-parse-remote.txt
++++ b/Documentation/git-parse-remote.txt
+@@ -8,6 +8,8 @@ git-parse-remote - Routines to help parsing remote repository access
+ 
+ SYNOPSIS
+ --------
++[verse]
++'PATH=$(git --exec-path):$PATH'
+ '. git-parse-remote'
+ 
+ DESCRIPTION
+diff --git a/Documentation/git-sh-setup.txt b/Documentation/git-sh-setup.txt
+index c543170..95b0c13 100644
+--- a/Documentation/git-sh-setup.txt
++++ b/Documentation/git-sh-setup.txt
+@@ -7,7 +7,8 @@ git-sh-setup - Common git shell script setup code
+ 
+ SYNOPSIS
+ --------
+-'git-sh-setup'
++'PATH=$(git --exec-path):$PATH'
++'. git-sh-setup'
+ 
+ DESCRIPTION
+ -----------
+-- 
+1.5.5.GIT
