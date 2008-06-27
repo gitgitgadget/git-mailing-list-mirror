@@ -1,70 +1,93 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=2.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
 	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
-Received: (qmail 30504 invoked by uid 111); 27 Jun 2008 00:17:39 -0000
+Received: (qmail 32068 invoked by uid 111); 27 Jun 2008 06:57:48 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 26 Jun 2008 20:17:32 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 27 Jun 2008 02:57:41 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755147AbYF0AR2 (ORCPT <rfc822;peff@peff.net>);
-	Thu, 26 Jun 2008 20:17:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbYF0AR2
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jun 2008 20:17:28 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:32802 "HELO
+	id S1760391AbYF0G4z (ORCPT <rfc822;peff@peff.net>);
+	Fri, 27 Jun 2008 02:56:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759561AbYF0G4z
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 02:56:55 -0400
+Received: from w2.willowmail.com ([64.243.175.54]:32892 "HELO
 	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754747AbYF0AR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2008 20:17:27 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jun 2008 20:17:27 EDT
-Received: (qmail 19347 invoked by uid 90); 27 Jun 2008 00:10:39 -0000
+	with SMTP id S1753908AbYF0G4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 02:56:53 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jun 2008 02:56:53 EDT
+Received: (qmail 22001 invoked by uid 90); 27 Jun 2008 06:50:01 -0000
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From:	"David Jeske" <jeske@willowmail.com>
-To:	<git@vger.kernel.org>
-Subject: is rebase the same as merging every commit?
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: is rebase the same as merging every commit?
 X-Mailer: Willow v0.02
-Date:	Thu, 26 Jun 2008 23:04:58 -0000
-Message-ID: <willow-jeske-01l78ZaEFEDjCZEG>
-Received: from 72.14.229.81 at Thu, 26 Jun 2008 23:04:58 -0000
+Date:	Fri, 27 Jun 2008 06:24:23 -0000
+Message-ID: <willow-jeske-01l7GhRWFEDjChtB>
+Received: from 67.160.239.249 at Fri, 27 Jun 2008 06:24:23 -0000
+References: <7vvdzvn0ql.fsf@gitster.siamese.dyndns.org>
+	<willow-jeske-01l79c1jFEDjCWw6-01l7@0yvFEDjCjEl>
+In-Reply-To: <7vvdzvn0ql.fsf@gitster.siamese.dyndns.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Rebasing is described in the docs I've read as turning this: (sorry for the
-dots)
+Thanks for the explanation.
 
-..........A---B---C topic
-........./
-....D---E---F---G master
+However, when considering an SCM perspective, I don't understand why I have to
+make a tradeoff between personal reproducibility (which I get from the original
+changes), and upstream readability (which the community gets from my rebase).
 
-Into this:
+I could get both of these if the rebase kept both the old and new.
 
-...................A'--B'--C' topic
-................../
-.....D---E---F---G master
+Is there some reason that losing personal reproducability, and personal/local
+tracking back to those changes of A-B-C is necessary as part of the process?
 
-If I understand it right (and that's a BIG if), it's the same as doing a merge
-of C into G where every individual commit in the C-line is individually
-committed into the new C' line.
+Further, the rebase machinery seems like it would be great for operations that
+are even more 'dangerous', where I would really really want the history of the
+transitions in case I realized a problem later.
 
-...........-------------A---B---C
-........../            /   /   /
-........./        /---A'--B'--C'  topic
-......../        /
-....D---E---F---G - master
+Consider this set of commits on a personal branch
 
+0 - feature a
+1 - feature b
+2 - bugfix a
+3 - feature c / d
+4 - bugfix b
+5 - bugfix a2
 
-(1) Is the above model a valid explanation?
+>From all I've read about rebase, bisect, and the big tree management, it seems
+like the three steps are Reorder, combine, rebase.  (In a more complicated
+situation, i'd want to split a commit into pieces)
 
-(2) From the documentation diagrams, it looks like the rebased A' has only (G)
-as a parent, not (A,G). If this is the case, why?  (i.e. not connecting those
-nodes throws away useful information)
+(1'')
+0' - feature A
+1' - bugfix a
+2' - bugfix a2
+(2'')
+3' - feature b
+4' - bugfix b
+(3'')
+5' - feature c (split)
+(4'')
+6' - feature d (split)
 
-(3) If it only has (G) as a parent, does the rebase explicitly remove the
-source A,B,C nodes from the repository? (the diagrams make it look like it
-does) ..or do they just get cleaned up during GC?
+Frankly, I'm super impressed, because I can imagine how I might do this in git.
+I'm guessing some of you are already doing this. But how do you do it? Can you
+rebase a patch back into it's own history? (such as bugfix a from 2, to 1')
+
+I want to mess around and try this stuff out, but I'm scared of doing bad
+things to the tree and them being unrecoverable because rebase tosses the old
+stuff. I don't understand why I have to lose my original work and/or the
+connection to my original work, in order to reorder/combine/split for public
+consumption. What is the argument for that? (other than the fact that the
+current dag link propagation model would force others to get these changes if
+they remained connected together. Something easily remidied by out of band
+metadata, or different link types)
