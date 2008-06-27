@@ -1,67 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
- /etc/gitconfig
-Date: Fri, 27 Jun 2008 15:40:48 -0700
-Message-ID: <7vvdzuo61b.fsf@gitster.siamese.dyndns.org>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl>
- <alpine.DEB.1.00.0806271353350.9925@racer>
- <alpine.LNX.1.00.0806271149580.19665@iabervon.org>
+From: "Robert Anderson" <rwa000@gmail.com>
+Subject: Re: An alternate model for preparing partial commits
+Date: Fri, 27 Jun 2008 15:55:03 -0700
+Message-ID: <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
+References: <g43jlg$54g$1@ger.gmane.org> <-8386235276716376372@unknownmsgid>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:42:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "David Jeske" <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 28 00:56:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCMdq-0001Ig-LO
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:42:07 +0200
+	id 1KCMrP-0004uF-SP
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573AbYF0WlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 18:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755743AbYF0WlI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:41:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43937 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753597AbYF0WlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 18:41:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B816DB3D;
-	Fri, 27 Jun 2008 18:41:04 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4934ADB3C; Fri, 27 Jun 2008 18:40:58 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0806271149580.19665@iabervon.org> (Daniel
- Barkalow's message of "Fri, 27 Jun 2008 12:05:39 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1FD9CA60-449A-11DD-B092-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1760701AbYF0WzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761000AbYF0WzJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:55:09 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:41112 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760505AbYF0WzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:55:08 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so336782fgg.17
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:55:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OAMhtwy11fBDDj8i1VjsRdyQVnk3p5cLSIGFCEzEm5Q=;
+        b=f5AQvkyJEPWqeXSQzHa39Yesnv/ex2gCTbCne15WauIGqh1iaO+w4T9Rik7JVP+5Vl
+         G6r2Z62lB2L36kkrGF4n+/KSxMckWFxpoxBpcx0o4pZQlg+E5JSs9OG6gvSjtBlFtJqM
+         G37z+KJ4nmP0O1KKo+eL/Fh5iNmi1FUQHgzOE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=uUjV1pj4HYmeBu/s9n8MnXiweoyJntfZMACpQewlDHHnYOuulDj194W0T0E0A+siWQ
+         uxNOkkGthsmphA1wDxs+GOj0yzNPqhq5x2jmQNQSYJVkRB1cjwmhvBVhoGfJqH6srCND
+         A3nCC+qh/L907cXv/ikLWyYACXH2k7wFY0fiw=
+Received: by 10.86.89.1 with SMTP id m1mr2592871fgb.20.1214607303987;
+        Fri, 27 Jun 2008 15:55:03 -0700 (PDT)
+Received: by 10.86.4.6 with HTTP; Fri, 27 Jun 2008 15:55:03 -0700 (PDT)
+In-Reply-To: <-8386235276716376372@unknownmsgid>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86670>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Fri, Jun 27, 2008 at 1:51 PM, David Jeske <jeske@willowmail.com> wrote:
+> -- Jakub Narebski wrote:
+>> git rebase --interactive?
+>> Any patch management interface (StGIT, Guilt)?
+>
+> Yes, as I said, that set of operations can be performed with git today.
+>
+> What git can't do, is let me "supercede" the old DAG-subset, so people I shared
+> them with can get my new changes without hurting their world. Currently git
+> seems to rely on the idea that "if you accept changes into your tree that will
+> be later rebased, it's up to you to figure it out". I don't see why that is the
+> case.
 
-> On Fri, 27 Jun 2008, Johannes Schindelin wrote:
->
->> After initializing the config in the newly-created repository, we
->> need to unset GIT_CONFIG so that the global configs are read again.
->
-> This seems fine to me. OTOH, I'm not sure the environment variable should 
-> be needed in the first place; I think the config stuff should look in 
-> git_path("config") without it, and we set the git dir to the one we're 
-> initializing. So I think the use of the environment variable is just an 
-> artifact of how the shell script did it and how I was originally calling 
-> the init_db stuff.
->
-> Just removing the "setenv()" line survives all of the tests for me, and I 
-> remember some of them failing before I'd gotten some sort of solution for 
-> the config stuff.
 
-Ok, I take that you are Ok with 2/2 but you have a better replacement
-patch coming for this 1/2?
+Possibly a succinct way of moving this conversation forward is to say that:
+
+What is desired is a workflow where partial commits can be tested,
+when it is desirable not to change history.
+
+There are good reasons for desiring a workflow that does not routinely
+change history as part of the usual workflow.  Maybe there are clones
+of your repo.  Maybe as part of your workflow discipline you do not
+want HEAD states that cannot be pushed to public, because you don't
+want to manually keep track of when it is ok and when it is not ok to
+push HEAD to public, since git cannot tell you this.
+
+Thanks,
+Bob
