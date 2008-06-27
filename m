@@ -1,82 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/2] clone: respect url.insteadOf setting in global
- configs
-Date: Fri, 27 Jun 2008 12:08:53 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806271205430.19665@iabervon.org>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.DEB.1.00.0806271355520.9925@racer>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: 'next' will be rewound shortly
+Date: Fri, 27 Jun 2008 18:12:20 +0200
+Message-ID: <20080627161220.GB6201@leksak.fem-net>
+References: <7vmylixr6h.fsf@gitster.siamese.dyndns.org> <7vbq1xx4y8.fsf@gitster.siamese.dyndns.org> <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 27 18:10:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 18:13:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCGWP-0007Ds-R6
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 18:10:02 +0200
+	id 1KCGZd-0008TR-Qt
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 18:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759540AbYF0QI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 12:08:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757498AbYF0QIz
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 12:08:55 -0400
-Received: from iabervon.org ([66.92.72.58]:36370 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757211AbYF0QIy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 12:08:54 -0400
-Received: (qmail 17630 invoked by uid 1000); 27 Jun 2008 16:08:53 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Jun 2008 16:08:53 -0000
-In-Reply-To: <alpine.DEB.1.00.0806271355520.9925@racer>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755310AbYF0QMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 12:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121AbYF0QMZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 12:12:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33384 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753092AbYF0QMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 12:12:23 -0400
+Received: (qmail invoked by alias); 27 Jun 2008 16:12:22 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp037) with SMTP; 27 Jun 2008 18:12:22 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18OTpET/VwOjuWTbdUGZHvCUlUqFrUSanC3L51uGc
+	lZPBpGUB+6DcPr
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KCGYe-0006oh-8B; Fri, 27 Jun 2008 18:12:20 +0200
+Content-Disposition: inline
+In-Reply-To: <7vzlphvl69.fsf_-_@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86578>
 
-On Fri, 27 Jun 2008, Johannes Schindelin wrote:
+Hi Junio,
 
-> When we call "git clone" with a url that has a rewrite rule in either
-> $HOME/.gitconfig or /etc/gitconfig, the URL can be different from
-> what the command line expects it to be.
-> 
-> So, let's use the URL as the remote structure has it, not the literal
-> string from the command line.
+> Following the new tradition we began a few releases ago, I'll rewind the
+> tip of 'next' shortly.  Two topics will be kicked back to 'pu' while we
+> are at it (jc/send-pack-tell-me-more and js/rebase-i-sequencer).
 
-This is how it should be.
+I wonder why the bugfix commit
 
-Maybe I ought to make transport_get() take the index of the URL in the 
-list for the remote, instead of taking the actual URL; any use of a URL 
-that's not from that list is going to be oddly wrong in some way, I think.
+	aec7e9cd	Don't append default merge message to -m message
 
-Thanks for taking care of this.
+has disappeared or why/if this belongs to js/rebase-i-sequencer.
 
-> Noticed by Pieter de Bie.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin-clone.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-clone.c b/builtin-clone.c
-> index 965b5fc..8dda52a 100644
-> --- a/builtin-clone.c
-> +++ b/builtin-clone.c
-> @@ -463,7 +463,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  		refs = clone_local(path, git_dir);
->  	else {
->  		struct remote *remote = remote_get(argv[0]);
-> -		struct transport *transport = transport_get(remote, argv[0]);
-> +		struct transport *transport =
-> +			transport_get(remote, remote->url[0]);
->  
->  		if (!transport->get_refs_list || !transport->fetch)
->  			die("Don't know how to clone %s", transport->url);
-> -- 
-> 1.5.6.173.gde14c
-> 
-> 
-> 
+I noticed this because a test case of sequencer failed during rebasing
+to pure "master"/"next" without js/rebase-i-sequencer.
+
+
+I also have a question:
+my development branch for the sequencer prototype is based on next,
+then:
+	* Merge js/rebase-i-sequencer
+	* ... development ...
+
+The only reason that makes js/rebase-i-sequencer important (besides
+aec7e9cd which is mentioned above), is for the last patch
+("Migrate rebase-i to use sequencer") in the patchset that I want to
+send to the list.  (Otherwise a lot of work of Joerg Sommer would be
+annotated to me.)
+So I wanted to
+ 1. send a patchset based on "master"/"next" without the rebase-i
+    feature extentions of Joerg Sommer, and
+ 2. resend the last patch (the one about rebase-i) based on "pu",
+    where js/rebase-i-sequencer is still merged into.
+Is this sane?
+
+(The other variant could be that I send the "Merge js/rebase-i-sequencer"
+ commit as a patch to the list, but this sounds insane to me.)
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
