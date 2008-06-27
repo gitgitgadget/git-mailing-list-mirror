@@ -1,65 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] shrink git-shell by avoiding redundant dependencies
-Date: Fri, 27 Jun 2008 14:55:32 -0700
-Message-ID: <7vod5mpmp7.fsf@gitster.siamese.dyndns.org>
-References: <1214602538-7888-1-git-send-email-dpotapov@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 23:56:54 2008
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 01/23] Fix: let FetchProcess use fetch() instead of doFetch()
+Date: Sat, 28 Jun 2008 00:06:25 +0200
+Message-ID: <1214604407-30572-2-git-send-email-marek.zawirski@gmail.com>
+References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
+To: robin.rosenberg@dewire.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Jun 28 00:07:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCLw3-0005yv-Un
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 23:56:52 +0200
+	id 1KCM6n-0000cC-1p
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 00:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765416AbYF0Vzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 17:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765536AbYF0Vzq
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 17:55:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65412 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765562AbYF0Vzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 17:55:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CB270D17A;
-	Fri, 27 Jun 2008 17:55:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 19EB2D175; Fri, 27 Jun 2008 17:55:35 -0400 (EDT)
-In-Reply-To: <1214602538-7888-1-git-send-email-dpotapov@gmail.com> (Dmitry
- Potapov's message of "Sat, 28 Jun 2008 01:35:38 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C93EC26A-4493-11DD-A44B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756032AbYF0WG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 18:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753604AbYF0WG6
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 18:06:58 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:36995 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753107AbYF0WGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 18:06:55 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so182348nfc.21
+        for <git@vger.kernel.org>; Fri, 27 Jun 2008 15:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=FzvkPeNQRsVZU/+uUc0X/m1Cq1lfXDytOWGRWjWIDX8=;
+        b=pVVbmT8xu/q/I5tD96FUgmBzLJIIIZ+4iPteGA6C/t5W+9pNCHBaFizQgMRfjpopBj
+         A9z7N/Mgm3s+3CHWkhxrnVGNjygibe76BvDy3yazn9F9UrDm13vra5wkNoTjRiM1Ng7h
+         qOWijdfXmSjR+Kmy4O8Rzjtmkb0McFZUqizYU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=heG2lHu4aaCTfr4wzWwc+A0xtz+lgLY2VRH7QFY5oL5SnzXSDKTJOckKO3zsT1kMQR
+         cf8oMBKtxvf30Y8cifBelopJYoCf+baxD4mDLdPv42pLtoZ9TKr6f+NQkKi2zzQ/iuuJ
+         dSVz1fxjg0wrtgOnjPh4sx6dXDhh0oi8clMJY=
+Received: by 10.210.23.3 with SMTP id 3mr1602867ebw.97.1214604414936;
+        Fri, 27 Jun 2008 15:06:54 -0700 (PDT)
+Received: from localhost ( [62.21.19.93])
+        by mx.google.com with ESMTPS id b33sm2445460ika.2.2008.06.27.15.06.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Jun 2008 15:06:53 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.4
+In-Reply-To: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86640>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+doFetch() call didn't check whether fetch() was already performed
+(it is intended for internal use), while fetch() does.
 
-> diff --git a/abspath.c b/abspath.c
-> new file mode 100644
-> index 0000000..4becedf
-> --- /dev/null
-> +++ b/abspath.c
-> @@ -0,0 +1,80 @@
-> +/*
-> + * I'm tired of doing "vsnprintf()" etc just to open a
-> + * file, so here's a "return static buffer with printf"
-> + * interface for paths.
-> + *
-> + * It's obviously not thread-safe. Sue me. But it's quite
-> + * useful for doing things like
-> + *
-> + *   f = open(mkpath("%s/%s.git", base, name), O_RDONLY);
-> + *
-> + * which is what it's designed for.
-> + */
+Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
+---
+ .../org/spearce/jgit/transport/FetchProcess.java   |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-This is not a comment you would want to move to the resulting file that
-contains only make_absolute_path().
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+index afaf9e2..e33b35b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+@@ -139,7 +139,7 @@ class FetchProcess {
+ 				if (!askFor.isEmpty() && (!includedTags || !askForIsComplete())) {
+ 					reopenConnection();
+ 					if (!askFor.isEmpty())
+-						conn.doFetch(monitor, askFor.values());
++						conn.fetch(monitor, askFor.values());
+ 				}
+ 			}
+ 		} finally {
+-- 
+1.5.5.3
