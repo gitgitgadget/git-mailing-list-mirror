@@ -1,65 +1,85 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: An alternate model for preparing partial commits
-Date: Fri, 27 Jun 2008 10:50:07 +0200
-Message-ID: <20080627085007.GE12567@machine.or.cz>
-References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Robert Anderson <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 10:51:09 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Using url.insteadOf in git-clone
+Date: Fri, 27 Jun 2008 11:35:02 +0200
+Message-ID: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailinglist <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 11:36:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC9fg-0001wa-K2
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 10:51:09 +0200
+	id 1KCANA-0007uE-CT
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 11:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756673AbYF0IuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 04:50:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756658AbYF0IuL
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 04:50:11 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52474 "EHLO machine.or.cz"
+	id S1751040AbYF0JfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 05:35:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbYF0JfH
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 05:35:07 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:4276 "EHLO smtp-4.orange.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756567AbYF0IuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 04:50:10 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 56D45393BAB8; Fri, 27 Jun 2008 10:50:07 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1750979AbYF0JfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 05:35:06 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6306.online.nl (SMTP Server) with ESMTP id 89B0D7000087;
+	Fri, 27 Jun 2008 11:35:04 +0200 (CEST)
+Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6306.online.nl (SMTP Server) with ESMTP id 248667000081;
+	Fri, 27 Jun 2008 11:35:03 +0200 (CEST)
+X-ME-UUID: 20080627093504149.248667000081@mwinf6306.online.nl
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86537>
 
-  Hi,
+Hi,
 
-On Thu, Jun 26, 2008 at 11:50:06PM -0700, Robert Anderson wrote:
-> Seems to me the concept of the "index" is a half-baked version of what
-> I really want, which is the ability to factor a working tree's changes
-> into its constituent parts in preparation for committing them.  The
-> index provides some very nice facilities to factor out changes in a
-> working tree into a "staging area", but the fundamental flaw of this
-> in my view is that this "staging area" is not instantiated as a tree,
-> so it cannot be compiled and/or tested before committing.
-> 
-> Consider a facility where the state you want to commit next is built
-> up in the current working directory, and the original set of changes
-> exists in some proto-space like the index currently inhabits, where
-> you can query and manipulate that state, but it isn't instantiated in
-> your working tree.
+I sometimes use url.insteadOf to create a shortcut to a central  
+repository.
+For example, having something like[*1*]
 
-  I wanted to suggest using commit and commit --amend, but I realized
-that frankly, I don't understand quite what are you wanting to do.
-Through the process, are you preparing a sequence of two commits at
-once, or merely a single commit? With s/--prep/--cached/ and throwing
-git prep away completely, it's not clear to me how would what you
-present be different at all from just using index - could you point out
-what is actually different in your workflow compared to the prep
-workflow you propose?
+[url "git://repo.or.cz/git/"]
+	insteadOf = "repo:"
 
--- 
-				Petr "Pasky" Baudis
-The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
+in my global gitconfig allows me to do a 'git fetch repo:dscho.git'.  
+I'd also
+like to use that with git clone :). Currently if I try that, I get
+
+Vienna:~ pieter$ git clone repo:dscho.git
+Initialize dscho/.git
+Initialized empty Git repository in /Users/pieter/dscho/.git/
+ssh: Error resolving hostname repo: nodename nor servname provided, or  
+not known
+fatal: The remote end hung up unexpectedly
+
+Which I think comes from the fact that the global config isn't read in  
+by
+remote.c when running git clone.
+
+Now, I seem to remember there was a good reason for this (both builtin- 
+clone
+and git-clone.sh have the same behaviour). Also, trying to quickly  
+hack in
+something failed for me, even though it seems like a trivial change to  
+make
+for someone more familiar with the code path.
+
+Is there an easy fix for this?
+
+- Pieter
+
+[1] This is not really true. If I try that, I get an error:
+Vienna:git pieter$ git fetch -v repo:dscho.git
+fatal: I don't handle protocol 'it'
+
+If I change the url to "ggit://.." it does work. It seems there is an  
+off-by-one
+error somewhere? It does work for another url.insteadOf I have in my  
+global
+config though..
