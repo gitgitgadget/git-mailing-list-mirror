@@ -1,81 +1,100 @@
-From: Simon Holm =?ISO-8859-1?Q?Th=F8gersen?= <odie@cs.aau.dk>
-Subject: Re: bug related to branches using / in name
-Date: Fri, 27 Jun 2008 10:32:12 +0200
-Message-ID: <1214555532.10090.18.camel@odie.local>
-References: <1214509350.28344.31.camel@odie.local>
-	 <20080627030245.GA7144@sigill.intra.peff.net>
-	 <20080627030422.GB7144@sigill.intra.peff.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: is rebase the same as merging every commit?
+Date: Fri, 27 Jun 2008 10:34:19 +0200
+Message-ID: <20080627083419.GD12567@machine.or.cz>
+References: <vpqfxqz5qzj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 27 10:33:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Jeske <jeske@willowmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 27 10:35:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KC9Od-0004xk-Cx
-	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 10:33:31 +0200
+	id 1KC9QT-0005Vp-Uj
+	for gcvg-git-2@gmane.org; Fri, 27 Jun 2008 10:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755451AbYF0IcA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2008 04:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755423AbYF0Ib7
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 04:31:59 -0400
-Received: from smtp.cs.aau.dk ([130.225.194.6]:37010 "EHLO smtp.cs.aau.dk"
+	id S1754920AbYF0Ie3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 04:34:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754808AbYF0Ie2
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 04:34:28 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59613 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755340AbYF0Ib5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 04:31:57 -0400
-Received: from [10.0.0.2] (port939.ds1-abc.adsl.cybercity.dk [212.242.156.194])
-	(authenticated bits=0)
-	by smtp.cs.aau.dk (8.14.1/8.14.1) with ESMTP id m5R8VOoa011464
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 Jun 2008 10:31:26 +0200
-In-Reply-To: <20080627030422.GB7144@sigill.intra.peff.net>
-X-Mailer: Evolution 2.22.2 
-X-Spam-Level: () 0.262
-X-Scanned-By: MIMEDefang 2.62 on 130.225.194.6
+	id S1754559AbYF0Ie0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 04:34:26 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 0EC4C393BAB8; Fri, 27 Jun 2008 10:34:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <vpqfxqz5qzj.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86533>
 
-Jeff King wrote:
-> Jeff King wrote:
->=20
-> > So to summarize, the problem is that you have an old tracking branc=
-h
-> > "refs/remotes/sched" that exists on the client, but upstream has si=
-nce
-> > removed it in favor of "sched/devel", which you are now trying to f=
-etch.
-> > And of course there is a conflict, because of the ref naming rules.
-> >=20
-> > This doesn't work seamlessly because git-fetch never removes old
-> > tracking branches, even if they have been deleted upstream. And nor=
-mally
-> > there is no conflict; leaving the old branches means they don't
-> > disappear from under you.
->=20
-Your summary is correct, but I cannot entirely convince myself that
-leaving old branches available is valid in any work flow. But what do I
-know.
+On Fri, Jun 27, 2008 at 08:30:56AM +0200, Matthieu Moy wrote:
+> "David Jeske" <jeske@willowmail.com> writes:
+> 
+> > Rebasing is described in the docs I've read as turning this: (sorry for the
+> > dots)
+> >
+> > ..........A---B---C topic
+> > ........./
+> > ....D---E---F---G master
+> >
+> > Into this:
+> >
+> > ...................A'--B'--C' topic
+> > ................../
+> > .....D---E---F---G master
+> >
+> > If I understand it right (and that's a BIG if), it's the same as doing a merge
+> > of C into G where every individual commit in the C-line is individually
+> > committed into the new C' line.
+> >
+> > ...........-------------A---B---C
+> > ........../            /   /   /
+> > ........./        /---A'--B'--C'  topic
+> > ......../        /
+> > ....D---E---F---G - master
+> 
+> I'd draw that the other way:
+> 
+>   ...........---------A---B---C
+>   ........../          \   \   \
+>   ........./        /---A'--B'--C'  topic
+>   ......../        /
+>   ....D---E---F---G - master
+> 
+> > (1) Is the above model a valid explanation?
+> 
+> Sounds correct to me.
 
-> BTW, you can get the opposite problem, too. If you have
-> "refs/remotes/origin/foo/bar", and then the remote removes "foo/bar" =
-in
-> favor of "foo", you will have a conflict on fetch.
->=20
-Yes, and you can also hit a similar problem using git-push, but I guess
-that the user is a bit more aware about what is going on in that case
-and is able resolve the problem without hints.
+I don't think you can call it correct since it assumes !(2) while (2)
+holds. Drawing the diagram this way is misleading; merging commits
+one-by-one implies preserving the merge information in the history
+graph; nothing like that is done by rebase.
 
-I tested the two patches and they did indeed seem to do what you
-intended them to for my test case. The solution is not exactly pretty,
-but it is better than nothing and it is admittedly a corner case.
+Rebase is more like _cherry-picking_ all the patches on your branch on
+top of the upstream branch. You just essentially take each patch (commit
+message + diff to parent) growing on top of upstream's E and recommit it
+on top of G.
 
-Thank you for your time on this Jeff.
+> > (2) From the documentation diagrams, it looks like the rebased A' has only (G)
+> > as a parent, not (A,G). If this is the case, why?
+..snip..
+> > (i.e. not connecting those nodes throws away useful information)
+> 
+> For the use-cases where this information is useful, "rebase" is not
+> for you. Indeed, in these cases, a plain "merge" is usually what you
+> want.
 
+Indeed, noone forces you into the rebase workflow for your own projects.
+I personally never ever rebase (I do use StGIT though, but it records
+per-patch history and makes sure I'm always in some consistent state).
 
-=EF=BB=BFSimon Holm Th=C3=B8gersen
+-- 
+				Petr "Pasky" Baudis
+The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
