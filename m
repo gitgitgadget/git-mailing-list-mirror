@@ -1,87 +1,74 @@
-From: "Robert Anderson" <rwa000@gmail.com>
-Subject: Re: An alternate model for preparing partial commits
-Date: Sat, 28 Jun 2008 09:30:47 -0700
-Message-ID: <9af502e50806280930u788f81e2j77adf147a0e4d135@mail.gmail.com>
-References: <g43jlg$54g$1@ger.gmane.org> <-8386235276716376372@unknownmsgid>
-	 <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
-	 <7viqvuo4hq.fsf@gitster.siamese.dyndns.org>
-	 <9af502e50806271708p7979ae65k61b71be90efff2c4@mail.gmail.com>
-	 <9b3e2dc20806280734i6ca17cc8i447c2e2db67e8051@mail.gmail.com>
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: [PATCH] shrink git-shell by avoiding redundant dependencies
+Date: Sat, 28 Jun 2008 20:48:54 +0400
+Message-ID: <37fcd2780806280948y143b619p60f05495ca85454b@mail.gmail.com>
+References: <1214602538-7888-1-git-send-email-dpotapov@gmail.com>
+	 <alpine.DEB.1.00.0806281542160.9925@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Stephen Sinclair" <radarsat1@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 28 18:31:47 2008
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 28 18:49:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCdL0-0007BP-Gr
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 18:31:46 +0200
+	id 1KCdcY-00048r-Jm
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 18:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbYF1Qat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 12:30:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYF1Qat
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 12:30:49 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:22012 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776AbYF1Qat (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 12:30:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so461821fgg.17
-        for <git@vger.kernel.org>; Sat, 28 Jun 2008 09:30:47 -0700 (PDT)
+	id S1752860AbYF1Qsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2008 12:48:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287AbYF1Qsz
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 12:48:55 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:31999 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751975AbYF1Qsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2008 12:48:54 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so902959wfd.4
+        for <git@vger.kernel.org>; Sat, 28 Jun 2008 09:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=B6QxUqTFv5hfby4nAJPoqugUSbvH4jzUbP2IOjUWkF8=;
-        b=veTx23nynmSO14e/RvHIxoAD46VLELzPwyCq2b9nkVWp1eBxXnzIVG8eUUVYol4iMw
-         AI2kELId5y9CtX2sMfReJPL8shrSq3imM1J7g161ELwYGb+V7IsZY/NULa5hcz2ItR7v
-         VHUibHJfFqe58BgCC7L7KPdm5esYmXVPIDmJo=
+        bh=iR+H9M1hGwUCEK6/TmCbHBsafliTjNiAL0B9+ZG1B/g=;
+        b=vJknXfQPI6j4k8XC9Z0ovs5Gsdhv8T5y0vEVtjxfkudDt0kLe7az96yV9I96GhMnUI
+         Zgz2Zhp+ksXYZLgNbDEAhvQIKJT0rGI9PuDwZYIKegzpyxicJ+oAsqDEpD69MXeVeAb+
+         9DSSjNzC5nO7StIBruBzUHtWjNDmarYXd2IrY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=cNohviwlr+i5A+Ut1O9JR9xyCG1HY0pPkpz+KSoQloFKq4jTMEZ82ws5R0EnIxNEwN
-         vzHtZ4VOanSFTH9URgYrLfcXU1Y7lj4LQZwI+vVz9MgFuXTh+0IQcFrPHoh+IoxDB61Z
-         RHJVa9FP4Re9tcw8o4DtDQZZUxlJH9775RZKw=
-Received: by 10.86.9.8 with SMTP id 8mr3680627fgi.41.1214670647621;
-        Sat, 28 Jun 2008 09:30:47 -0700 (PDT)
-Received: by 10.86.4.6 with HTTP; Sat, 28 Jun 2008 09:30:47 -0700 (PDT)
-In-Reply-To: <9b3e2dc20806280734i6ca17cc8i447c2e2db67e8051@mail.gmail.com>
+        b=kEMO4w6lvSsIm/1DdhLFA6elJutrUQT7UFzUaQ6872v5gbWVlL6qPHfM/YXvwIuIJB
+         piJU6yOP5t0Wbt7A/Er+rU40WndI+T8RKJce+XphNO8XD67u+532ilvoSqc9du7HdFvZ
+         JWhMfgLP+hrEy7T7GhnePZzVhVBIzGuR3BTYc=
+Received: by 10.142.245.6 with SMTP id s6mr1053254wfh.157.1214671734370;
+        Sat, 28 Jun 2008 09:48:54 -0700 (PDT)
+Received: by 10.143.32.3 with HTTP; Sat, 28 Jun 2008 09:48:54 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0806281542160.9925@racer>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86727>
 
-On Sat, Jun 28, 2008 at 7:34 AM, Stephen Sinclair <radarsat1@gmail.com> wrote:
-> The answer is simple: you should not be making partial commits to a
-> repo that has been cloned.  You should instead be working somewhere
-> else and then pushing to it.  So this whole sentence is just a moot
-> point itself.
+On Sat, Jun 28, 2008 at 6:51 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> /me wonders if "strip git-shell" would not take care of all that.
 
-Let me amplify my objection to this.
+"strip" removes only debug information. It has no affect on text, data, and bss
+sections. You can try to run "size git-shell" before and after
+"strip", and you'll
+see the same numbers.
 
-Who has 100% foresight that what they are doing is going to end up in
-a state where they'd like to make partial commits?  To take a quote
-from a blog post, 'Git means never having to say, "you should have"'.
-And mostly it doesn't, and that's big improvement over other systems.
-But, that is what you are saying here.  I "should have" realized that
-I should have pulled and fiddled with my changes there, and then
-pushed.
+BTW, it is possible to reduce the "text" and "data" size twice more
+using the whole
+program optimization, as it will discard some functions that are not
+actually used,
+but I don't think it is worth pursuing as it will complicate complication.
 
-Well, Dmitri and others will now say, why not just always pull and
-work somewhere else?  And the reason is that because this creates
-extra, unnecessary steps the vast majority of the time when I do
-create a commit that I like and want to keep as-is in the first try.
-Why should I have to pull, commit, hack, and push, when hack and
-commit is all I need to do the vast majority of the time?  It is
-redundant, unnecessary work and complexity that I should not have to
-pay for when I don't need it.
-
-Thanks,
-Bob
+Dmitry
