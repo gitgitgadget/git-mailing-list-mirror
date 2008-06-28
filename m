@@ -1,76 +1,72 @@
 From: "Robert Anderson" <rwa000@gmail.com>
 Subject: Re: An alternate model for preparing partial commits
-Date: Sat, 28 Jun 2008 08:53:04 -0700
-Message-ID: <9af502e50806280853i4c8564daxde2041aedc7fcb8d@mail.gmail.com>
-References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com>
-	 <alpine.DEB.1.00.0806271408290.9925@racer>
-	 <9af502e50806271014l661dcfc9o4f61ee2b54677bd6@mail.gmail.com>
-	 <20080628021444.GI5737@dpotapov.dyndns.org>
-	 <9af502e50806271957o2df9e0abt9dadcb0514dd4173@mail.gmail.com>
-	 <20080628040344.GK5737@dpotapov.dyndns.org>
-	 <9af502e50806272320p23f01e8eo4a67c5f6f4476098@mail.gmail.com>
-	 <20080628123522.GL5737@dpotapov.dyndns.org>
+Date: Sat, 28 Jun 2008 09:00:11 -0700
+Message-ID: <9af502e50806280900m415eb354waee9edac91a70e8d@mail.gmail.com>
+References: <g43jlg$54g$1@ger.gmane.org> <-8386235276716376372@unknownmsgid>
+	 <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
+	 <7viqvuo4hq.fsf@gitster.siamese.dyndns.org>
+	 <9af502e50806271708p7979ae65k61b71be90efff2c4@mail.gmail.com>
+	 <9b3e2dc20806280734i6ca17cc8i447c2e2db67e8051@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "Dmitry Potapov" <dpotapov@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 28 17:55:22 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Stephen Sinclair" <radarsat1@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 28 18:01:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCcld-0004sD-CC
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 17:55:13 +0200
+	id 1KCcrp-0006zj-NF
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 18:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbYF1Pxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 11:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbYF1Pxt
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 11:53:49 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:39398 "EHLO
+	id S1751040AbYF1QAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2008 12:00:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYF1QAO
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 12:00:14 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:49148 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754479AbYF1PxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 11:53:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so457289fgg.17
-        for <git@vger.kernel.org>; Sat, 28 Jun 2008 08:53:04 -0700 (PDT)
+	with ESMTP id S1750928AbYF1QAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2008 12:00:13 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so458115fgg.17
+        for <git@vger.kernel.org>; Sat, 28 Jun 2008 09:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=aIkTTawF+pqgDXE4OhC/BYdm8f0ayd5dQwK/kUqn0/c=;
-        b=Qa1pPLduBP6CD7iajL4J01aylom/34VaawqAUJYIst9ZN709ERiBSA5KRG8ZjNJkMH
-         aQp3wNaBJVbXmI25j3lXDQTVaUM3Xv2XWhFQJf2FPrR+ZfEpCBm/QYEIP79IZiqARduo
-         qkZA+j8Lx/kkLht5m1LaxXSpOL4zgsuMb/17Y=
+        bh=kJXx0dXuDEtZWnKfDhX8TvNj3ob/LyrQQk4Gf/AS2Cc=;
+        b=aJeaJb7XCxdmNyjveai88WsiwmrjbS7OEY9SYBvIuz3X8FQBqaBH8Fi6+htpphXcyL
+         /ssSa55w854U1zsmmvWp9yBmhbMLdoolv/Ddpb9zosBRobQKIPez+yOa96NqhYwoIzJS
+         yFlCuox2QfZ8Etbi63GLSa5TMFAeoaXn68wjs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=evEoR7uDkDem/NqDIhJAHwwyCW4yaEz5mnO+dSUWeekmN4WDPL041rZ6//RJG+5lGH
-         OntPR2nOzlWLYcw6XP51iiBy7GapNavWKHTku1GGAT3UW5DUw1EKNXts75EJ197Zn1A3
-         rkeyB2UmNLqm95Dp/hJdufnzFMk7rFp7/DWUY=
-Received: by 10.86.73.7 with SMTP id v7mr3696318fga.37.1214668384370;
-        Sat, 28 Jun 2008 08:53:04 -0700 (PDT)
-Received: by 10.86.4.6 with HTTP; Sat, 28 Jun 2008 08:53:04 -0700 (PDT)
-In-Reply-To: <20080628123522.GL5737@dpotapov.dyndns.org>
+        b=fTpOHAwAD142RSvcCpqMp/QSKB688lj94HDCm9OqLRCoFKCBBcDCOlXn0BCGL6gOBc
+         DtniZ0gIHVy8578T6AkrHA4pySupegTGHqp6f6fe3tJzktP0wGziVtGJFLf0shsFmHaJ
+         ksXm3NX9SlLQKilMuGaCXDQuRqVamtgPoC32I=
+Received: by 10.86.33.10 with SMTP id g10mr1409827fgg.29.1214668811325;
+        Sat, 28 Jun 2008 09:00:11 -0700 (PDT)
+Received: by 10.86.4.6 with HTTP; Sat, 28 Jun 2008 09:00:11 -0700 (PDT)
+In-Reply-To: <9b3e2dc20806280734i6ca17cc8i447c2e2db67e8051@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86725>
 
-On Sat, Jun 28, 2008 at 5:35 AM, Dmitry Potapov <dpotapov@gmail.com> wrote:
->> Fine, you like doing extra work for no benefit.  Enjoy yourself.
->
-> I don't see where you find this extra work.
+On Sat, Jun 28, 2008 at 7:34 AM, Stephen Sinclair <radarsat1@gmail.com> wrote:
+> The answer is simple: you should not be making partial commits to a
+> repo that has been cloned.  You should instead be working somewhere
+> else and then pushing to it.  So this whole sentence is just a moot
+> point itself.
 
-You aren't trying to.  You're knee-jerk defending the status quo, as
-is the case of 95% of reply mail sent to any SCM mailing list.
-
-I worked in this model for years.  It is inconvenient and creates
-redundant work.  It is a PITA.
+Ah, now you've hit the crux.  Thank you for the "svn style" response
+here.  I "should not" because git has a deficiency.  Absolutely no
+other reason.
 
 Thanks,
 Bob
