@@ -1,45 +1,64 @@
-From: "David Jeske" <jeske@willowmail.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: An alternate model for preparing partial commits
-Date: Sat, 28 Jun 2008 00:22:23 -0000
-Message-ID: <25838.9547271237$1214615417@news.gmane.org>
-References: <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
-	<willow-jeske-01l7H4tHFEDjCgPV-01l7buicFEDjCagd>
+Date: Fri, 27 Jun 2008 21:17:24 -0400
+Message-ID: <20080628011723.GB15463@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Robert Anderson" <rwa000@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 28 03:10:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Anderson <rwa000@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Jeske <jeske@willowmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 28 03:18:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCOx5-0002LP-O4
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 03:10:08 +0200
+	id 1KCP5b-0003zE-7B
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 03:18:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbYF1BJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2008 21:09:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753034AbYF1BJI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 21:09:08 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:33147 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752622AbYF1BJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 21:09:08 -0400
-Received: (qmail 32069 invoked by uid 90); 28 Jun 2008 01:08:58 -0000
-X-Mailer: Willow v0.02
-Received: from 67.188.42.104 at Sat, 28 Jun 2008 00:22:23 -0000
-In-Reply-To: <9af502e50806271555j3cd06ecau122b11217f612217@mail.gmail.com>
+	id S1754038AbYF1BRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2008 21:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbYF1BRk
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 21:17:40 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:33431 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753815AbYF1BRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2008 21:17:35 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KCP48-0001t2-NN; Fri, 27 Jun 2008 21:17:24 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KCP48-0004Cd-8B; Fri, 27 Jun 2008 21:17:24 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86687>
 
--- Robert Anderson wrote:
-> Possibly a succinct way of moving this conversation forward is to say that:
->
-> What is desired is a workflow where partial commits can be tested,
-> when it is desirable not to change history.
+On Fri, Jun 27, 2008 at 08:29:15PM -0000, David Jeske wrote:
+> git has all the concepts I want except one. However, it makes the process
+> pretty manual. Here is an idea about automating it. I'll talk about that one
+> new concept at the bottom.
+> 
+> I think of this as reorder/merge/split...
+> 
+> reorder: Picture that a list of commits on this branch opens in an
+> editor. You are free to rearrange the lines in any order you want,
+> but you have to keep all the lines. When you are done reordering the
+> lines, the tool creates a new topic branch and applies the changes
+> (probably with cherrypick) to the new topic branch. If there are no
+> conflicts, you're done.....
 
-Why don't we just make a model where history changes are handled safetly? Then
-we don't have to be afraid to publish DAGs we may want to change later.
+Read the man page for for "git rebase --interactive".  I think you
+will find that it handles reording and merging (its called squashing)
+already.
+
+Splitting patches is harder to do and probably is one of the things
+you have to do manually.
+
+						- Ted
