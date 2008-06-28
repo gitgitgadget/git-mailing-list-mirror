@@ -1,68 +1,75 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH 20/23] Push command line utility
-Date: Sat, 28 Jun 2008 14:36:21 +0200
-Message-ID: <200806281436.21264.robin.rosenberg.lists@dewire.com>
-References: <1214604407-30572-1-git-send-email-marek.zawirski@gmail.com> <1214604407-30572-20-git-send-email-marek.zawirski@gmail.com> <1214604407-30572-21-git-send-email-marek.zawirski@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH, next version] git bisect: introduce 'fixed' and
+ 'unfixed'
+Date: Sat, 28 Jun 2008 14:48:55 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806281446260.9925@racer>
+References: <alpine.DEB.1.00.0806241515460.9925@racer> <20080624163810.GA4654@sigill.intra.peff.net> <alpine.DEB.1.00.0806241750030.9925@racer> <alpine.DEB.1.00.0806241808400.9925@racer> <20080624174157.GB9500@sigill.intra.peff.net> <7vej6mbh3w.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0806271446180.9925@racer> <7vprq2o4zb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 28 14:41:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 28 15:52:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCZk9-0006CY-F8
-	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 14:41:29 +0200
+	id 1KCaqM-0000BD-J5
+	for gcvg-git-2@gmane.org; Sat, 28 Jun 2008 15:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468AbYF1Mkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 08:40:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbYF1Mkd
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 08:40:33 -0400
-Received: from av9-2-sn2.hy.skanova.net ([81.228.8.180]:42864 "EHLO
-	av9-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028AbYF1Mkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 08:40:32 -0400
-Received: by av9-2-sn2.hy.skanova.net (Postfix, from userid 502)
-	id CF20637FFB; Sat, 28 Jun 2008 14:40:30 +0200 (CEST)
-Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
-	by av9-2-sn2.hy.skanova.net (Postfix) with ESMTP
-	id A67F537EA9; Sat, 28 Jun 2008 14:40:30 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 2A6D337E46;
-	Sat, 28 Jun 2008 14:40:30 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1214604407-30572-21-git-send-email-marek.zawirski@gmail.com>
-Content-Disposition: inline
+	id S1752583AbYF1NvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2008 09:51:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbYF1NvB
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 09:51:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57783 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752202AbYF1NvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2008 09:51:00 -0400
+Received: (qmail invoked by alias); 28 Jun 2008 13:50:54 -0000
+Received: from 87.113.36.200.plusnet.pte-ag1.dyn.plus.net (EHLO racer.local) [87.113.36.200]
+  by mail.gmx.net (mp017) with SMTP; 28 Jun 2008 15:50:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19eVW4oNSteCSROhVWGvH0SX17GgmhR3VEaQ+bUjN
+	m1yMlE8yAOdmhp
+X-X-Sender: gene099@racer
+In-Reply-To: <7vprq2o4zb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86717>
 
-Marek, 
+Hi,
 
-RefSpecs are unmutable classes. I Can squeeze this into the patchset.  
+On Fri, 27 Jun 2008, Junio C Hamano wrote:
 
-Other than that, impressive!
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > When you look for a fix instead of a regression, it can be quite hard 
+> > to twist your brain into choosing the correct bisect command between 
+> > 'git bisect bad' and 'git bisect good'.
+> 
+> Hmm, I do not currently see any differene between master and next version
+> of bisect.  In what way is this 'next' version?
 
--- robin
+It has a "BAD" and a "GOOD" variable that are reset to "fixed" and 
+"unfixed" if the user said "fixed" or "unfixed".
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/Push.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/Push.java
-index 4130bc9..cbdf465 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/pgm/Push.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/Push.java
-@@ -104,9 +104,9 @@ class Push extends TextBuiltin {
-                        transport.setOptionReceivePack(exec);
+> Aside from the 'visualize' issue this does not attempt to address,
 
-                for (; argi < args.length; argi++) {
--                       final RefSpec spec = new RefSpec(args[argi]);
-+                       RefSpec spec = new RefSpec(args[argi]);
-                        if (forceAll)
--                               spec.setForceUpdate(true);
-+                               spec = spec.setForceUpdate(true);
-                        refSpecs.add(spec);
-                }
-                final Collection<RemoteRefUpdate> toPush = transport
+Yes, I forgot about that issue, mainly because I do not use it myself...
+
+> I wonder if it may be a good idea to detect and warn mixed usage as well 
+> (e.g. "You earlier said 'bad' but now you are saying 'fixed' -- are you 
+> sure?"), and if so if it can be implemented easily.
+
+Hmm.  I tried to avoid that, as it would mean a larger patch.  But I guess 
+you could write .git/BISECT_TERMS or some such.
+
+But that, together with the visualize part, would take more time than I am 
+willing to spend on this issue.
+
+Well, I guess I'll leave it then,
+Dscho
