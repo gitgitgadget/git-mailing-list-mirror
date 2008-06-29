@@ -1,94 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cmd_reset: don't trash uncommitted changes unless told to
-Date: Sun, 29 Jun 2008 01:56:38 -0700
-Message-ID: <7vhcbcd3g9.fsf@gitster.siamese.dyndns.org>
-References: <20080628090642.6117@nanako3.lavabit.com>
- <20080629073212.6117@nanako3.lavabit.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 1/2] Convert "stg refresh" to the new infrastructure
+Date: Sun, 29 Jun 2008 10:42:32 +0100
+Message-ID: <b0943d9e0806290242q1bc8aa67qb3523221b3db70e2@mail.gmail.com>
+References: <20080625042337.6044.53357.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 10:57:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 11:44:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCsj8-0003B3-V6
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 10:57:43 +0200
+	id 1KCtS6-0004Vy-Cg
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 11:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbYF2I4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 04:56:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYF2I4q
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 04:56:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53562 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751881AbYF2I4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 04:56:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6CFF229CB;
-	Sun, 29 Jun 2008 04:56:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B407229CA; Sun, 29 Jun 2008 04:56:40 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C6B10D2-45B9-11DD-953F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753106AbYF2Jmd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2008 05:42:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYF2Jmd
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 05:42:33 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:4189 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083AbYF2Jmc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jun 2008 05:42:32 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so841397waf.23
+        for <git@vger.kernel.org>; Sun, 29 Jun 2008 02:42:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ML/Y8FWFrlDPJnahIiRWMUN+NQ0iP6x2XA4Jfhft7kU=;
+        b=nPHkeB3aoLAAaZJUqw1yPlTaciGZ3v5wHKVPUtEnxbdvSVwX7VcVvRz6+vxLfg6K0M
+         0N0ZuUMoNMUulZjbY56Phwh3dmbY0hjdz5oxfjJ3JomFDs0XH4AcsSCwDSAt6BPycBQR
+         PMpIXum0NX83U56TNN6gKOvK80hm2Xi2Runj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qBiGX8zR65NpuXzfV32vg+aZJX7FqeusbFV9wm45igZcCljrgBeiHU8L2+DMpXzDLa
+         lbjagYTTZf4f5vwqprneR7mfs+WnjvHTW5TDXWmQHoHak9fybMaYtJcB5WQXmJsZNk7U
+         9ZFR7GGGTMZit+XJBQ3BujogtVETJFbiy1XB0=
+Received: by 10.114.158.1 with SMTP id g1mr2999825wae.111.1214732552040;
+        Sun, 29 Jun 2008 02:42:32 -0700 (PDT)
+Received: by 10.114.124.9 with HTTP; Sun, 29 Jun 2008 02:42:31 -0700 (PDT)
+In-Reply-To: <20080625042337.6044.53357.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86790>
 
-しらいしななこ <nanako3@lavabit.com> writes:
+2008/6/25 Karl Hasselstr=F6m <kha@treskal.com>:
+> And in the process, make it more powerful: it will now first create a
+> temp patch containing the updates, and then try to merge it into the
+> patch to be updated. If that patch is applied, this is done by
+> popping, pushing, and coalescing; if it is unapplied, it is done with
+> an in-index merge.
 
-> Quoting myself:
->
->>>> Don't you also want to talk about distinction between --cached and
->>>> --index that new people are often confused about?  These options are
->>>> defined consistently across commands but people who do not know it bring
->>>> up discussions to rename --cached to some commands to --index to make it
->>>> inconsistent and waste your time every once in a while.
->...
-> Junio, I haven't heard back from you yet and I take it you mean you are not interested in a vague suggestion but in a concrete patch, so here it is.
+Does it make sense to refresh an unapplied patch? Maybe adding a new
+file to the patch but I don't really see a need for this.
 
-Well, I pretended that I did not notice the original question because I
-wanted to avoid addressing this issue ;-<.
+> Also, whenever path limiting is used, we will now use a temporary
+> index in order to avoid including all staged updates (since they may
+> touch stuff outside the path limiters).
 
-While I think --index/--cached are not particularly good pair of words, as
-one of the old article you pointed at in your documentation update states,
-to describe the distinction, the commands do use them consistently to
-differentiate what are operands to them clearly and consistently.  In that
-sense, your documentation update would probably be a good idea.  At least
-it makes it easier for new people to learn it just once, and once you know
-the distinction and remember which is which, you can reuse the knowledge
-to all the commands.
+I haven't checked but what is the behaviour in subdirectors? It
+currently refreshes everythink unless "." is specified so that it will
+only refresh the current subdirectory.
 
+The patch looks fine otherwise.
 
-Even though I myself freely admit that these are not particularly a good
-pair of words, it is not realistic to expect --index and --cached to ever
-be deprecated.  But every time this comes up on the list, people end up
-wasting time trying to repaint this old bikeshed.  That is the primary
-reason I did not want to talk about it.  It still is possible to introduce
-a pair of synonyms that new people might find more descriptive, perhaps:
-
-	--index-only = --cached
-        --index-also = --index
-
-but I personally do not think it would add much value to the system..
-
-> +NOTES ON FREQUENTLY CONFUSED OPTIONS
-> +------------------------------------
-
-Hmmm.  Is this in anticipation for more "confusing" options described in
-this section?
-
-> +Many commands that can work on files in the working tree
-> +and/or in the index can take `--cached` and/or `--index`
-> +options.  Sometimes people incorrectly think that, because
-> +the index was originally called cache, these two are
-> +synonyms.  They are _not_ --- these two options mean very
-
-In e-mails we use _underscore_ but I do not think it works in AsciiDoc.
-I'll munge this (you have others below) to "*not*".  Also unlike LaTeX,
-long dash is two dashes (--), not three (---).
+--=20
+Catalin
