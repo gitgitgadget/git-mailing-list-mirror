@@ -1,64 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Documentation: Don't assume git-sh-setup and
- git-parse-remote are in the PATH
-Date: Sun, 29 Jun 2008 12:08:53 -0700
-Message-ID: <7vbq1kawje.fsf@gitster.siamese.dyndns.org>
-References: <20080627151001.BIA19424@m4500-01.uchicago.edu>
- <20080628205817.GB3172@steel.home>
- <7vvdztmfrk.fsf@gitster.siamese.dyndns.org>
- <20080629053823.GA8262@sigill.intra.peff.net>
- <Pine.GSO.4.62.0806291026310.8371@harper.uchicago.edu>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: perl t9700 failures?
+Date: Sun, 29 Jun 2008 12:52:00 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0806291241210.27776@hp.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Jeff King <peff@peff.net>
-To: jrnieder@uchicago.edu
-X-From: git-owner@vger.kernel.org Sun Jun 29 21:10:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lea Wiemann <LeWiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 21:53:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD2Hm-0006eb-Ap
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 21:10:06 +0200
+	id 1KD2y0-00018g-Rs
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 21:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756125AbYF2TJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 15:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756071AbYF2TJF
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 15:09:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756014AbYF2TJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 15:09:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3ED53C762;
-	Sun, 29 Jun 2008 15:09:03 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8A79FC761; Sun, 29 Jun 2008 15:08:56 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D674DF42-460E-11DD-B6B4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755294AbYF2Two (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 15:52:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755048AbYF2Two
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 15:52:44 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50964 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754551AbYF2Twn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jun 2008 15:52:43 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5TJq14c029675
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 29 Jun 2008 12:52:02 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m5TJq0BI003866;
+	Sun, 29 Jun 2008 12:52:00 -0700
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.356 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86822>
 
-jrnieder@uchicago.edu writes:
 
-> How about this documentation patch? (This time tested! With hg-fast-export
-> appropriately modified:
->   $ hg clone http://hg.sharesource.org/asciidoc
->   $ mkdir asciidoc-git && cd asciidoc-git
->   $ git init && hg-fast-export.sh -r /path/to/asciidoc --quiet
->   $ git checkout
->   $ sudo ./install.sh
->   $ cd /path/to/git/Documentation && make git-{sh-setup,parse-remote}.html
-> I haven't tried rebuilding manpages, though.)
->
-> Junio: I stole the commit message from you. I hope you don't mind.
+Am I the only one who gets this error:
 
-I don't, but reading the script again, I suspect it is not clear enough
-that the user is also responsible for setting up GIT_DIR appropriately
-before using it, perhaps by sourcing git-sh-setup.  We probably would want
-to add it in a separate patch.
+	*** t9700-perl-git.sh ***
+	*   ok 1: set up test repository
+	*  run 2: Perl API (perl ../t9700/test.pl)
+	* FAIL 2: Perl API
+	        perl ../t9700/test.pl
+	* FAIL 3: no stderr: Perl API
+	        perl ../t9700/test.pl
+	* failed 2 among 3 test(s)
+
+which I have no idea about, since to me perl is a black box, and doing  
+run of the tests with '-i -v' doesn't actually tell any more about which 
+part of the perl script is failing, or why.. Trying to run the perl thing 
+by hand, though, gives me this:
+
+	Can't locate Test/More.pm in @INC (@INC contains: ...)
+
+which is presumably the problem. It looks like it is assuming I have the 
+Test::More perl libs, which I presumably don't have, don't have any clue 
+where they are, nor really any interest in installing.
+
+Wouldn't it be a lot more polite to just not run the test when the 
+Test::More stuff doesn't exist? Rather than failing the testsuite? From a 
+quick "git grep", this test is the only one that uses Test::More..
+
+		Linus
