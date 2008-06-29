@@ -1,102 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] git-svn: avoid filling up the disk with temp files.
-Date: Sat, 28 Jun 2008 19:38:37 -0700
-Message-ID: <20080629023804.GA6768@untitled>
-References: <1214686673-28099-1-git-send-email-apenwarr@gmail.com> <1214696036-8294-1-git-send-email-apenwarr@gmail.com>
+From: Ian Hilt <Ian.Hilt@gmx.com>
+Subject: Re: BUG (v1.5.6.1): ./configure missing check for zlib.h
+Date: Sat, 28 Jun 2008 23:13:55 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0806282311100.3218@sys-0.hiltweb.site>
+References: <4864DD65.1080402@mircea.bardac.net>  <m3prq3hr6n.fsf@localhost.localdomain>  <20080627150732.D88F64B4002@artemis.sr.unh.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
-	Samuel Bronson <naesten@gmail.com>, B.Steinbrink@gmx.de,
-	gitster@pobox.com
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 04:40:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: tom fogal <tfogal@alumni.unh.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 29 05:15:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCmpn-0006MP-3j
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 04:40:11 +0200
+	id 1KCnNo-000350-H3
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 05:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbYF2Cij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 22:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbYF2Cii
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 22:38:38 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:45782 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753267AbYF2Cii (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 22:38:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 487832DC095;
-	Sat, 28 Jun 2008 19:38:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1214696036-8294-1-git-send-email-apenwarr@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753639AbYF2DNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2008 23:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbYF2DNr
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 23:13:47 -0400
+Received: from mail.gmx.com ([74.208.5.67]:39884 "HELO mail.gmx.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753606AbYF2DNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2008 23:13:46 -0400
+Received: (qmail invoked by alias); 29 Jun 2008 03:13:44 -0000
+Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
+  by mail.gmx.com (mp-us003) with SMTP; 28 Jun 2008 23:13:44 -0400
+X-Authenticated: #47758715
+X-Provags-ID: V01U2FsdGVkX1+UnG5q5wyUdMxoy0P29N/WgBTg+yoNzGUyIit6oM
+	+nQanrDD1XbCvE
+In-Reply-To: <20080627150732.D88F64B4002@artemis.sr.unh.edu>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86756>
 
-Avery Pennarun <apenwarr@gmail.com> wrote:
-> Commit ffe256f9bac8a40ff751a9341a5869d98f72c285 ("git-svn: Speed up fetch")
-> introduced changes that create a temporary file for each object fetched by
-> svn.  These files should be deleted automatically, but perl apparently
-> doesn't do this until the process exits (or perhaps when its garbage
-> collector runs).
-> 
-> This means that on a large fetch, especially with lots of branches, we
-> sometimes fill up /tmp completely, which prevents the next temp file from
-> being written completely.  This is aggravated by the fact that a new temp
-> file is created for each updated file, even if that update produces a file
-> identical to one already in git.  Thus, it can happen even if there's lots
-> of disk space to store the finished repository.
-> 
-> We weren't adequately checking for write errors, so this would result in an
-> invalid file getting committed, which caused git-svn to fail later with an
-> invalid checksum.
-> 
-> This patch adds a check to syswrite() so similar problems don't lead to
-> corruption in the future.  It also unlink()'s each temp file explicitly
-> when we're done with it, so the disk doesn't need to fill up.
-> 
-> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
-> ---
- 
-> Please use this in favour of the "Revert "git-svn: Speed up fetch" I sent
-> earlier.  I ended up having a surprise inspiration that led to a real fix :)
+On Fri, 27 Jun 2008 at 11:07am -0000, tom fogal wrote:
 
-Ouch, I didn't noticed these unchecked syscalls :x
-
-Very graciously
-Acked-by: Eric Wong <normalperson@yhbt.net>
-
-Apologies to all users who were bitten by this bug.
-
->  git-svn.perl |    5 ++++-
->  1 files changed, 4 insertions(+), 1 deletions(-)
+> I should note, however, that I disagree with that macro's logic in that
+> it `searches' for zlib if the user does not specify it.  IMO, if the
+> user does not give a --with option, and it doesn't work `out of the
+> box' (without hacking FLAGS), macros should die with an error rather
+> than retry with changed FLAGS.
 > 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 263d66c..0011387 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -3243,7 +3243,9 @@ sub close_file {
->  		my ($tmp_fh, $tmp_filename) = File::Temp::tempfile(UNLINK => 1);
->  		my $result;
->  		while ($result = sysread($fh, my $string, 1024)) {
-> -			syswrite($tmp_fh, $string, $result);
-> +			my $wrote = syswrite($tmp_fh, $string, $result);
-> +			defined($wrote) && $wrote == $result
-> +				or croak("write $tmp_filename: $!\n");
->  		}
->  		defined $result or croak $!;
->  		close $tmp_fh or croak $!;
-> @@ -3251,6 +3253,7 @@ sub close_file {
->  		close $fh or croak $!;
->  
->  		$hash = $::_repository->hash_and_insert_object($tmp_filename);
-> +		unlink($tmp_filename);
->  		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
->  		close $fb->{base} or croak $!;
->  	} else {
-> -- 
-> 1.5.4.3
+> -tom
+
+Or, one could read the INSTALL file included with git,
+
+ - Git is reasonably self-sufficient, but does depend on a few external
+   programs and libraries:
+
+	- "zlib", the compression library. Git won't build without it.
+
+-- 
+Ian Hilt
+Ian.Hilt (at) gmx.com
+GnuPG key: 0x4AFC1EE3
