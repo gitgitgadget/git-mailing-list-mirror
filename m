@@ -1,96 +1,155 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Is there a way to diff between a local repository and a remote one?
-Date: Sun, 29 Jun 2008 05:38:00 -0700 (PDT)
-Message-ID: <m38wwoifi7.fsf@localhost.localdomain>
-References: <ce513bcc0806290429r1982fbf2i4c9a8258bc8db3c@mail.gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 04/15] Add new test to ensure git-merge handles pull.twohead
+ and pull.octopus
+Date: Sun, 29 Jun 2008 15:30:56 +0200
+Message-ID: <48678E90.1030608@free.fr>
+References: <cover.1214581610.git.vmiklos@frugalware.org> <58b2c36de6a6f51a562da303695482bea567f4bf.1214581610.git.vmiklos@frugalware.org> <4a9a3a34d8c42b60f002acb20083cb9e187c262f.1214581610.git.vmiklos@frugalware.org> <876e733753999f116bfd975d9a262a5c1b3855a1.1214581610.git.vmiklos@frugalware.org> <99b931de28ab3017269d15c334c83e242d025489.1214581610.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Erez Zilber" <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 14:39:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr@freesurf.fr>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jun 29 15:31:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCwBK-0001r4-U7
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 14:39:03 +0200
+	id 1KCx0N-00064H-03
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 15:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989AbYF2MiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 08:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbYF2MiF
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 08:38:05 -0400
-Received: from qb-out-0506.google.com ([72.14.204.236]:21845 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbYF2MiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 08:38:03 -0400
-Received: by qb-out-0506.google.com with SMTP id d8so2815182qbc.37
-        for <git@vger.kernel.org>; Sun, 29 Jun 2008 05:38:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=/qwNO6Sj7KGmP6EwAOHlgXgXxdebYFiQmjXav62A59M=;
-        b=pazNxmM0aWlOP/c+txzEFQx7lqvlNpcp+GQ2lHwN+kvvSWFv4D+INNlXB7gD1qU5q1
-         DMrlCB4MzzEgSvI7+/9z+Wd6/96JtsmYT2NDCYYg2YvRvXMQVdm27mwraPfAfOQfgGUX
-         5mCjHSIfQhUKHCEDaib66q3sA7SbSMdBQr9cY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=ZxR5PqkmyXf6iTs++1L3SRvePcS+2qgoNL7mK8w0gDmZy3StwPQPsJlCJZ+n5cnXW3
-         ynz5+DM4D1q5s3wpC34Wy50G5zBPqAcQILCdZzpS8jcvBQhyZETLuLOrKajeEIXakw8F
-         y6pgxdi8ooOAGrRLSL3xTNlAIeJc7FbxWgv5U=
-Received: by 10.67.92.4 with SMTP id u4mr3178187ugl.75.1214743081665;
-        Sun, 29 Jun 2008 05:38:01 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.214.210])
-        by mx.google.com with ESMTPS id 5sm931177ugc.38.2008.06.29.05.37.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Jun 2008 05:38:00 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5TCbWvw010764;
-	Sun, 29 Jun 2008 14:37:42 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5TCbL9r010758;
-	Sun, 29 Jun 2008 14:37:21 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <ce513bcc0806290429r1982fbf2i4c9a8258bc8db3c@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755748AbYF2Naw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2008 09:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755384AbYF2Nav
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 09:30:51 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:41296 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755294AbYF2Nav (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 09:30:51 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id A7F5812B708;
+	Sun, 29 Jun 2008 15:30:49 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 3F3A312B704;
+	Sun, 29 Jun 2008 15:30:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <99b931de28ab3017269d15c334c83e242d025489.1214581610.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86799>
 
-"Erez Zilber" <erezzi.list@gmail.com> writes:
+Miklos Vajna a =E9crit :
+>=20
 
-> Is there a way to diff between a local repository and a remote one?
->
-> I could clone the remote repository and use Linux's diff, but I prefer
-> to do it the right way (if possible).
+[...]
 
-There is no way to do this remotely; you have to download either
-snapshot (tarball) of remote repository (either from gitweb interface
-or other web interface if snapshot feature is enabled, or using 
-"git archive --remote=<repo> <version>" (where <version> might be "HEAD")
-if it is enabled on remote), or fetch / shallow fetch / shallow clone
-of repository.
+> +test_expect_success 'setup' '
+> +	echo c0 >c0.c &&
+> +	git add c0.c &&
+> +	git commit -m c0 &&
+> +	git tag c0 &&
+> +	echo c1 >c1.c &&
+> +	git add c1.c &&
+> +	git commit -m c1 &&
+> +	git tag c1 &&
+> +	git reset --hard c0 &&
+> +	echo c2 >c2.c &&
+> +	git add c2.c &&
+> +	git commit -m c2 &&
+> +	git tag c2
 
-If local repository you want to diff is related to remote repository,
-the simplest way would be to fetch (or shallow fetch) the repository
-you want to compare into your repository, either using
+Missing &&?
 
-  $ git remote add -f <nick> <URL>
-  $ git diff HEAD <nick> #; or <nick>/HEAD, or <nick>/master
+> +	git reset --hard c0 &&
+> +	echo c3 >c3.c &&
+> +	git add c3.c &&
+> +	git commit -m c3 &&
+> +	git tag c3
+> +'
 
-or
+[...]
 
-  $ git fetch --no-tags <URL> <branch> #; you can add --depth=1
-  $ git diff HEAD FETCH_HEAD
+> +test_expect_success 'merge c1 with c2 and c3 (recursive and octopus =
+in pull.octopus)' '
+> +	git reset --hard c1 &&
+> +	git config pull.octopus "recursive octopus" &&
+> +	git merge c2 c3 &&
+> +	test "$(git rev-parse c1)" !=3D "$(git rev-parse HEAD)" &&
+> +	test "$(git rev-parse c1)" =3D "$(git rev-parse HEAD^1)" &&
+> +	test "$(git rev-parse c2)" =3D "$(git rev-parse HEAD^2)" &&
+> +	test "$(git rev-parse c3)" =3D "$(git rev-parse HEAD^3)"
 
-(of course all above being in local repository; you can replace HEAD
-by local revision you want to compare)
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Duplicate the next line?
+
+> +	test "$(git rev-parse c3)" =3D "$(git rev-parse HEAD^3)" &&
+> +	git diff --exit-code &&
+> +	test -f c0.c &&
+> +	test -f c1.c &&
+> +	test -f c2.c &&
+> +	test -f c3.c
+> +'
+> +
+> +conflict_count()
+> +{
+> +	eval $1=3D`{
+> +		git diff-files --name-only
+> +		git ls-files --unmerged
+> +	} | wc -l`
+> +}
+> +
+> +# c4 - c5
+> +#    \ c6
+> +#
+> +# There are two conflicts here:
+> +#
+> +# 1) Because foo.c is renamed to bar.c, recursive will handle this,
+> +# resolve won't.
+> +#
+> +# 2) One in conflict.c and that will always fail.
+> +
+> +test_expect_success 'setup conflicted merge' '
+> +	git reset --hard c0 &&
+> +	echo A >conflict.c &&
+> +	git add conflict.c &&
+> +	echo contents >foo.c &&
+> +	git add foo.c &&
+> +	git commit -m c4 &&
+> +	git tag c4 &&
+> +	echo B >conflict.c &&
+> +	git add conflict.c &&
+> +	git mv foo.c bar.c &&
+> +	git commit -m c5 &&
+> +	git tag c5 &&
+> +	git reset --hard c4 &&
+> +	echo C >conflict.c &&
+> +	git add conflict.c &&
+> +	echo secondline >> foo.c &&
+> +	git add foo.c &&
+> +	git commit -m c6 &&
+> +	git tag c6
+> +'
+> +
+> +# First do the merge with resolve and recursive then verify that
+> +# recusive is choosen.
+> +
+> +test_expect_success 'merge picks up the best result' '
+> +	git config pull.twohead "recursive resolve" &&
+> +	git reset --hard c5 &&
+> +	git merge -s resolve c6
+> +	conflict_count resolve_count &&
+> +	git reset --hard c5 &&
+> +	git merge -s recursive c6
+> +	conflict_count recursive_count &&
+> +	git reset --hard c5 &&
+> +	git merge c6
+> +	conflict_count auto_count &&
+> +	test "$auto_count" =3D "$recursive_count"
+> +'
+
+Should not "$auto_count" !=3D "$resolve_count" also be tested to be
+sure that recursive has been choosen?
+
+Olivier.
