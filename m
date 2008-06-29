@@ -1,63 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
- /etc/gitconfig
-Date: Sun, 29 Jun 2008 22:49:42 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806292248160.9925@racer>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
+Subject: Re: [PATCH 2/2] clone: respect url.insteadOf setting in global
+ configs
+Date: Sun, 29 Jun 2008 22:50:34 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806292250220.9925@racer>
+References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.DEB.1.00.0806271355520.9925@racer> <770C18A6-429E-49C0-BCF3-C2B229AAF5F9@ai.rug.nl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Jun 29 23:52:46 2008
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Sun Jun 29 23:53:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD4pB-0001pV-75
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 23:52:45 +0200
+	id 1KD4ps-0001y5-2y
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 23:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbYF2Vvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 17:51:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbYF2Vvo
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 17:51:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36624 "HELO mail.gmx.net"
+	id S1752216AbYF2Vwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 17:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752180AbYF2Vwb
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 17:52:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36917 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751426AbYF2Vvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 17:51:43 -0400
-Received: (qmail invoked by alias); 29 Jun 2008 21:51:41 -0000
+	id S1752179AbYF2Vwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 17:52:31 -0400
+Received: (qmail invoked by alias); 29 Jun 2008 21:52:29 -0000
 Received: from 87.113.36.200.plusnet.pte-ag1.dyn.plus.net (EHLO racer.local) [87.113.36.200]
-  by mail.gmx.net (mp052) with SMTP; 29 Jun 2008 23:51:41 +0200
+  by mail.gmx.net (mp031) with SMTP; 29 Jun 2008 23:52:29 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18pcqs8cPoppjcAhmcrDeOsE1T+DMpYgiFOmQT8oz
-	Wlc2WK8dSup29M
+X-Provags-ID: V01U2FsdGVkX1+9ZYUPYFy9vVjEOzpOToIvdF/EFhN9139j5e66kn
+	Q3Qk3po3GdqHiD
 X-X-Sender: gene099@racer
-In-Reply-To: <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
+In-Reply-To: <770C18A6-429E-49C0-BCF3-C2B229AAF5F9@ai.rug.nl>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86836>
 
 Hi,
 
-On Sun, 29 Jun 2008, Daniel Barkalow wrote:
+On Sun, 29 Jun 2008, Pieter de Bie wrote:
 
-> Did we even make a commitment on whether:
+> On 27 jun 2008, at 14:56, Johannes Schindelin wrote:
 > 
-> GIT_CONFIG=foo git clone bar
+> > When we call "git clone" with a url that has a rewrite rule in either
+> > $HOME/.gitconfig or /etc/gitconfig, the URL can be different from
+> > what the command line expects it to be.
+> >
+> > So, let's use the URL as the remote structure has it, not the literal
+> > string from the command line.
+> >
+> > Noticed by Pieter de Bie.
 > 
-> must ignore the environment variable, or simply doesn't necessarily obey 
-> it?
+> 
+> This works great, thanks for the quick patch! :)
 
-I'd rather strongly argue that no matter what is the answer to this 
-question, we _HAVE TO_ unsetenv() GIT_CONFIG at some stage, otherwise no 
-.git/config will be written.
-
-So, this is a NACK on your patch.
-
-Ciao,
+Thanks for the quick answer,
 Dscho
