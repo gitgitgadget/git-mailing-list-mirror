@@ -1,131 +1,90 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: don't sanitize remote names in config
-Date: Sat, 28 Jun 2008 20:40:32 -0700
-Message-ID: <20080629034032.GA23492@untitled>
-References: <1214322898-9272-1-git-send-email-apenwarr@gmail.com> <20080625064435.GL21299@hand.yhbt.net> <20080625065556.GM21299@hand.yhbt.net> <7vfxr23s6m.fsf@gitster.siamese.dyndns.org> <20080625074548.GA8984@hand.yhbt.net> <32541b130806250801p1508d15axc610f335b8d235ef@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Adding a 'version' command to the server
+Date: Sun, 29 Jun 2008 00:08:56 -0400
+Message-ID: <20080629040856.GD11793@spearce.org>
+References: <7viqvupm3l.fsf@gitster.siamese.dyndns.org> <486572BC.9070201@gmail.com> <20080628114337.GA3489@steel.home> <48662DB0.3010608@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 05:41:36 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 06:10:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCnn9-0007Vu-QR
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 05:41:32 +0200
+	id 1KCoFF-0003Kt-08
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 06:10:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752937AbYF2Dkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 23:40:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbYF2Dkf
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 23:40:35 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:45874 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752730AbYF2Dkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 23:40:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 234422DC095;
-	Sat, 28 Jun 2008 20:40:33 -0700 (PDT)
+	id S1750719AbYF2EJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 00:09:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbYF2EJE
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 00:09:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55126 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbYF2EJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 00:09:02 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.69)
+	(envelope-from <spearce@spearce.org>)
+	id 1KCoDW-0006uv-0O; Sun, 29 Jun 2008 00:08:46 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5A20020FBAE; Sun, 29 Jun 2008 00:08:57 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <32541b130806250801p1508d15axc610f335b8d235ef@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <48662DB0.3010608@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86759>
 
-The original sanitization code was just taken from the
-remotes2config.sh shell script in contrib.
+Lea Wiemann <lewiemann@gmail.com> wrote:
+> Alex Riesen wrote:
+> >And exactly how are the incompatibility problems avoided? By denying
+> >the service if the versions don't match?
+> 
+> No, by talking to older servers in a way they understand it.  So for 
+> instance it would call "git-upload-pack" instead of "git upload-pack".
+> 
+> (See also the SSH protocol with two versions, and I think Subversion's 
+> svnserve also somehow identifies its own capabilities and/or version.)
 
-Credit to Avery Pennarun for noticing this mistake, and Junio
-for clarifying the rules for config section names:
+We already have both sides of a git native connection select
+functions to be used in the protocol based upon both sides having
+the necessary capabilities.  This is in heavy use today for things
+like thin packs, sideband progress messages and remote deletion of
+branches through git-push.
 
-Junio C Hamano wrote <7vfxr23s6m.fsf@gitster.siamese.dyndns.org>:
-> In
->
-> 	[foo "bar"] baz = value
->
-> foo and baz must be config.c::iskeychar() (and baz must be isalpha()), but
-> "bar" can be almost anything.
+So we're doing what you suggest.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+The problem we are faced with right now is when invoking Git over
+SSH we need to pass some string to the remote shell and expect
+the remote shell to start up the program we need to talk to.
+Without that program running there is nothing to ask the other side
+its version.  :-(
 
-  Avery Pennarun <apenwarr@gmail.com> wrote:
-  > On 6/25/08, Eric Wong <normalperson@yhbt.net> wrote:
-  > > No, nothing to do with DNS hostnames in the remote names.  I think I
-  > >  just looked at remotes2config.sh one day and used it as a reference :x
-  > >
-  > >  It's late and I've had a rough few days, but shouldn't
-  > >  sanitize_remote_name() just escape . and "?  Right now it's converting
-  > >  stuff to . which has me very confused...
-  > 
-  > I think there might be higher-level problems here: what is it
-  > sanitizing anyway, and why?  If it found my D2007_Win32 svn-remote
-  > entry in the config (as it seems to have done when trying to locate
-  > its parent branch during fetch), and *then* it sanitized it to
-  > D2007.Win32, that doesn't even make any sense.  Clearly something
-  > straight from the config file doesn't need to be sanitized.
-  > 
-  > However, I don't understand the code well enough to be able to say a)
-  > whether that's exactly what happened, or b) other places where
-  > sanitize_remote_name() *is* important, or c) whether
-  > sanitize_remote_name() is even correct.
+This should be a one-time transition pain, as the original git
+developers used git-foo-command style, but users today want just
+"git foo-command" style, to reduce the number of commands they
+see with tab completion.  Its the price we/they pay for making
+that sort of change this late in the project.
 
-  Nope.  It's not important anywhere from what I can tell.
+I'm not sure when SVN start supporting "svn serve" over SSH.  It may
+have been quite a while after they were already self-hosting, as
+they started out with HTTP WebDAV as the only protocol.  Thus they
+may have already been heavily into the "svn foo" style of command
+invocation and never made the "misstep" that Git made.
+
+Of course SVN has made _many_ other "missteps" that Git has done
+right since day 1.  Like merge support.  :-)
+
+Nobody is perfect.  Not even the Git developers.
 
 -- 
-
- git-svn.perl |   15 +++------------
- 1 files changed, 3 insertions(+), 12 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 50ace22..f789a6e 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1462,13 +1462,6 @@ sub verify_remotes_sanity {
- 	}
- }
- 
--# we allow more chars than remotes2config.sh...
--sub sanitize_remote_name {
--	my ($name) = @_;
--	$name =~ tr{A-Za-z0-9:,/+-}{.}c;
--	$name;
--}
--
- sub find_existing_remote {
- 	my ($url, $remotes) = @_;
- 	return undef if $no_reuse_existing;
-@@ -2853,7 +2846,7 @@ sub _new {
- 	unless (defined $ref_id && length $ref_id) {
- 		$_[2] = $ref_id = $Git::SVN::default_ref_id;
- 	}
--	$_[1] = $repo_id = sanitize_remote_name($repo_id);
-+	$_[1] = $repo_id;
- 	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
- 	$_[3] = $path = '' unless (defined $path);
- 	mkpath(["$ENV{GIT_DIR}/svn"]);
-@@ -4707,8 +4700,7 @@ sub minimize_connections {
- 
- 		# skip existing cases where we already connect to the root
- 		if (($ra->{url} eq $ra->{repos_root}) ||
--		    (Git::SVN::sanitize_remote_name($ra->{repos_root}) eq
--		     $repo_id)) {
-+		    ($ra->{repos_root} eq $repo_id)) {
- 			$root_repos->{$ra->{url}} = $repo_id;
- 			next;
- 		}
-@@ -4747,8 +4739,7 @@ sub minimize_connections {
- 	foreach my $url (keys %$new_urls) {
- 		# see if we can re-use an existing [svn-remote "repo_id"]
- 		# instead of creating a(n ugly) new section:
--		my $repo_id = $root_repos->{$url} ||
--		              Git::SVN::sanitize_remote_name($url);
-+		my $repo_id = $root_repos->{$url} || $url;
- 
- 		my $fetch = $new_urls->{$url};
- 		foreach my $path (keys %$fetch) {
--- 
-Eric Wong
+Shawn.
