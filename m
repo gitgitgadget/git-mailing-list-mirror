@@ -1,60 +1,63 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 29 Jun 2008 22:15:00 +0200
-Message-ID: <A87D312D-8B65-4D57-84AC-8FC07A27B937@ai.rug.nl>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org> <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <7vk5ggipuw.fsf@gitster.siamese.dyndns.o
- rg> <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0806291127140.21402@hp.linux-foundation.org> <7vk5g89f34.fsf@gitster.siamese.dynd
- ns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 22:16:08 2008
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 11/15] Add strbuf_vaddf(), use it in strbuf_addf(), and
+	add strbuf_initf()
+Date: Sun, 29 Jun 2008 22:17:57 +0200
+Message-ID: <20080629201757.GA27370@steel.home>
+References: <715117f89992568500bd26b1a4e1357c0a570c4a.1214581610.git.vmiklos@frugalware.org> <d600b25cb1d8f3b6bce12b2a479d4b68b1935dfd.1214581610.git.vmiklos@frugalware.org> <a01223ac1d530522b383fc3e9590ac1a2a5d66ed.1214581610.git.vmiklos@frugalware.org> <67035c91a933887c7cc97fa6d3dda9462594d611.1214581610.git.vmiklos@frugalware.org> <cover.1214581610.git.vmiklos@frugalware.org> <7ea320cd49601de0e331777f82528876101fd946.1214581610.git.vmiklos@frugalware.org> <7vk5gal3my.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806281832510.9925@racer> <7vskuwek9w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0806291436520.9925@racer>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org,
+	Olivier Marin <dkr@freesurf.fr>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 29 22:19:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD3Ja-0007wu-08
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 22:16:02 +0200
+	id 1KD3MU-0000J7-H2
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 22:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758159AbYF2UPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 16:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756023AbYF2UPE
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 16:15:04 -0400
-Received: from smtp-3.orange.nl ([193.252.22.243]:43330 "EHLO smtp-3.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754706AbYF2UPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 16:15:02 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6203.online.nl (SMTP Server) with ESMTP id 8FF161C0008E;
-	Sun, 29 Jun 2008 22:15:01 +0200 (CEST)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6203.online.nl (SMTP Server) with ESMTP id 290C11C00088;
-	Sun, 29 Jun 2008 22:15:01 +0200 (CEST)
-X-ME-UUID: 20080629201501168.290C11C00088@mwinf6203.online.nl
-In-Reply-To: <7vk5g89f34.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1760155AbYF2USF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 16:18:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759889AbYF2USD
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 16:18:03 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:18292 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757549AbYF2USB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 16:18:01 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r84gO9V
+Received: from tigra.home (Fa832.f.strato-dslnet.de [195.4.168.50])
+	by post.webmailer.de (fruni mo42) (RZmta 16.45)
+	with ESMTP id J04f73k5THWT0f ; Sun, 29 Jun 2008 22:17:58 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 98AE8277BD;
+	Sun, 29 Jun 2008 22:17:58 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 1E5A256D2A; Sun, 29 Jun 2008 22:17:57 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806291436520.9925@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86826>
 
+Johannes Schindelin, Sun, Jun 29, 2008 15:40:57 +0200:
+> On Sun, 29 Jun 2008, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > Anyway, I'm fine with having them only in my personal fork.
+> > 
+> > It will cost you some "trust point" next time you try to sneak something
+> > in as a part of a largely unrelated topic.  Please don't.
+> 
+> Fine.  Fine!
+> 
 
-On 29 jun 2008, at 22:11, Junio C Hamano wrote:
-
-> use of them from your scripts after adding
->   output from "git --exec-path" to the $PATH will still be supported  
-> in
->   1.6.0, but users are again strongly encouraged to adjust their
->   scripts to use "git xyzzy" form, as we will stop installing
->   "git-xyzzy" hardlinks for built-in commands in later releases.
-
-I think msysgit doesn't (didn't?) install the hardlinks to conserve  
-space,
-as Windows doesn't support hard links. Perhaps we should mention that
-as well?
-
-- Pieter
+See the positive side: you just won a "please review me carefully"
+point. These have no negative side effects, usually.
