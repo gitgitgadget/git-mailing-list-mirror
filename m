@@ -1,69 +1,101 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: Using url.insteadOf in git-clone
-Date: Sun, 29 Jun 2008 20:59:11 +0200
-Message-ID: <70C8B09D-0320-48E8-BEC8-5A75BBBA6364@ai.rug.nl>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <7vbq1msszw.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 21:00:27 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 29 Jun 2008 12:08:38 -0700
+Message-ID: <7vhcbcawjt.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+ <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+ <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+ <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+ <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+ <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+ <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+ <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+ <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+ <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+ <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+ <7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+ <7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+ <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0806291127140.21402@hp.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jun 29 21:10:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD28Q-0004S3-9X
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 21:00:26 +0200
+	id 1KD2Hl-0006eb-J1
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 21:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966AbYF2S7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 14:59:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755642AbYF2S7O
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 14:59:14 -0400
-Received: from smtp-2.orange.nl ([193.252.22.242]:37843 "EHLO smtp-2.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755356AbYF2S7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 14:59:14 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6106.online.nl (SMTP Server) with ESMTP id 6273770000A0;
-	Sun, 29 Jun 2008 20:59:12 +0200 (CEST)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6106.online.nl (SMTP Server) with ESMTP id F304B700009F;
-	Sun, 29 Jun 2008 20:59:11 +0200 (CEST)
-X-ME-UUID: 20080629185911995.F304B700009F@mwinf6106.online.nl
-In-Reply-To: <7vbq1msszw.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1755861AbYF2TIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 15:08:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756014AbYF2TIu
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 15:08:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61841 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755642AbYF2TIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 15:08:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 34FDAC6BF;
+	Sun, 29 Jun 2008 15:08:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6D9E2C6BA; Sun, 29 Jun 2008 15:08:43 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CC4C563A-460E-11DD-9FA6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86819>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On 27 jun 2008, at 19:11, Junio C Hamano wrote:
+> Maybe just say
+>
+>  * Do not install all git subcommands as 'git-xyzzy' files in the user 
+>    path. This avoids unnecessary hardlinks (or copies on systems that do 
+>    not support links), and enforces the 'git xyzzy' syntax.
+>
+>    Subcommands that aren't builtins now get installed in
+>    /usr/libexec/git-core/ or somesuch.
 
-> Pieter de Bie <pdebie@ai.rug.nl> writes:
->
->> [1] This is not really true. If I try that, I get an error:
->> Vienna:git pieter$ git fetch -v repo:dscho.git
->> fatal: I don't handle protocol 'it'
->>
->> If I change the url to "ggit://.." it does work. It seems there is an
->> off-by-one
->> error somewhere? It does work for another url.insteadOf I have in my
->> global
->> config though..
->
-> What version of git is this?
->
-> v1.5.5.1 and later contains 60e3aba (Fix config key miscount in
-> url.*.insteadOf, 2008-04-12).
->
-
-I think I tried this while testing the 1.5.5 clone.sh, so that's  
-probably it.
 Thanks.
 
+> (I haven't looked at the series, but I _assume_ it also avoids installing 
+> the builtin subcommands entirely when not necessary, ie "git-cat-file" 
+> really _is_ gone, but it's not because the "cat-file" command itself is 
+> gone).
 
-- Pieter
+It is actually a fairly long road ahead.
+
+In 1.6.0, most of them will be moved to /usr/libexec/git-core/, so that
+really old scripts end users may have can be more easily kept working by
+simply saying:
+
+	PATH=$(git --exec-path):$PATH
+
+early, without doing "s/git-/git /g".
+
+Current git clients run git-upload-pack and friends in "git-xyzzy" form
+when accessing remote repositories directly over ssh, so in 1.6.0 we will
+have to leave these server side programs in $(bindir) as well.
+
+git-shell and gitosis is being updated to accept "git upload-pack" form as
+well, and after older versions of these programs die out, we can update
+the clients to ask for remote side programs without dash.
+
+None of the server side programs is built-in, so we could start the
+hardlink removal independent from this transition (iow, "Only subcommands
+that aren't builtin will be installed in libexec, builtins are not on the
+disk anywhere" could happen now), but I'd prefer to keep changes in each
+steps small to minimize impacts to the end users' environments.
