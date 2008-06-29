@@ -1,8 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Teach git-merge to pass -X<option> to the backend strategy
- module
-Date: Sun, 29 Jun 2008 01:50:42 -0700
-Message-ID: <7vwsk8d3q5.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Make default expiration period of reflog used for stash
+ infinite
+Date: Sun, 29 Jun 2008 01:50:28 -0700
+Message-ID: <7v3amweiaz.fsf@gitster.siamese.dyndns.org>
 References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
  <7v8x0992hy.fsf@gitster.siamese.dyndns.org>
  <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
@@ -27,191 +27,79 @@ References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 29 10:51:50 2008
+X-From: git-owner@vger.kernel.org Sun Jun 29 10:51:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCsdP-00027i-5m
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 10:51:47 +0200
+	id 1KCsdO-00027i-Ew
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 10:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbYF2Ius (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 04:50:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYF2Ius
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 04:50:48 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52877 "EHLO
+	id S1752072AbYF2Iup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 04:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbYF2Iup
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 04:50:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52869 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751881AbYF2Iuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 04:50:46 -0400
+	with ESMTP id S1751212AbYF2Iuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 04:50:44 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 24659288D;
-	Sun, 29 Jun 2008 04:50:46 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B7A0B288B;
+	Sun, 29 Jun 2008 04:50:41 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0A1E3288C; Sun, 29 Jun 2008 04:50:43 -0400 (EDT)
+ ESMTPSA id D7254288A; Sun, 29 Jun 2008 04:50:39 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 76DB44B4-45B8-11DD-8362-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 74374334-45B8-11DD-953F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86787>
 
-Distinguishing slight variation of modes of operation between the vanilla
-merge-recursive and merge-recursive-ours by the command name may have been
-an easy way to experiment, but we should bite the bullet and allow backend
-specific options to be given by the end user.
+This makes the default expiration period for the reflog that implements
+stash infinite.
+
+The original behaviour to autoexpire old stashes can be restored by using
+the gc.refs/stash.{reflogexpire,reflogexpireunreachable} configration
+variables introduced by the previous commit.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  > [Stalled/Needs more work]
  >
- > * jc/merge-theirs (Fri Jun 20 00:17:59 2008 -0700) 2 commits
- >  - git-merge-recursive-{ours,theirs}
- >  - git-merge-file --ours, --theirs
+ > * jc/reflog-expire (Sun Jun 15 23:48:46 2008 -0700) 1 commit
+ >  - Per-ref reflog expiry configuration
  >
- > Punting a merge by discarding your own work in conflicting parts but still
- > salvaging the parts that are cleanly automerged.  It is likely that this
- > will result in nonsense mishmash, but somehow often people want this, so
- > here they are.  The interface to the backends may need to change, though.
+ > Perhaps a good foundation for optionally unexpirable stash.  As 1.6.0 will
+ > be a good time to make backward incompatible changes, we might make expiry
+ > period of stash 'never' in new repositories.  Needs a concensus.
 
- Makefile                     |    3 ---
- builtin-merge-recursive.c    |   23 +++++++++++++++--------
- git-merge.sh                 |   11 ++++++++---
- t/t6034-merge-ours-theirs.sh |    4 ++--
- 4 files changed, 25 insertions(+), 16 deletions(-)
+ builtin-reflog.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 82d2892..b003e3e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -304,8 +304,6 @@ BUILT_INS += git-format-patch$X
- BUILT_INS += git-fsck-objects$X
- BUILT_INS += git-get-tar-commit-id$X
- BUILT_INS += git-init$X
--BUILT_INS += git-merge-recursive-ours$X
--BUILT_INS += git-merge-recursive-theirs$X
- BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
-@@ -1383,7 +1381,6 @@ check-docs::
- 	do \
- 		case "$$v" in \
- 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
--		git-merge-recursive-ours | git-merge-recursive-theirs | \
- 		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
- 		git-fsck-objects | git-init-db | \
- 		git-?*--?* ) continue ;; \
-diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-index a355e7a..6541e16 100644
---- a/builtin-merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -1407,12 +1407,6 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		if (8 < namelen &&
- 		    !strcmp(argv[0] + namelen - 8, "-subtree"))
- 			merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
--		else if (5 < namelen &&
--			 !strcmp(argv[0] + namelen - 5, "-ours"))
--			merge_recursive_variants = MERGE_RECURSIVE_OURS;
--		else if (7 < namelen &&
--			 !strcmp(argv[0] + namelen - 7, "-theirs"))
--			merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
+diff --git a/builtin-reflog.c b/builtin-reflog.c
+index 0711728..125d455 100644
+--- a/builtin-reflog.c
++++ b/builtin-reflog.c
+@@ -441,6 +441,17 @@ static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, int slot, c
+ 		}
  	}
  
- 	git_config(merge_config, NULL);
-@@ -1423,8 +1417,21 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		die("Usage: %s <base>... -- <head> <remote> ...\n", argv[0]);
- 
- 	for (i = 1; i < argc; ++i) {
--		if (!strcmp(argv[i], "--"))
--			break;
-+		const char *arg = argv[i];
++	/*
++	 * If unconfigured, make stash never expire
++	 */
++	if (!strcmp(ref, "refs/stash")) {
++		if (!(slot & EXPIRE_TOTAL))
++			cb->expire_total = 0;
++		if (!(slot & EXPIRE_UNREACH))
++			cb->expire_unreachable = 0;
++		return;
++	}
 +
-+		if (!prefixcmp(arg, "--")) {
-+			if (!arg[2])
-+				break;
-+			if (!strcmp(arg+2, "ours"))
-+				merge_recursive_variants = MERGE_RECURSIVE_OURS;
-+			else if (!strcmp(arg+2, "theirs"))
-+				merge_recursive_variants = MERGE_RECURSIVE_THEIRS;
-+			else if (!strcmp(arg+2, "subtree"))
-+				merge_recursive_variants = MERGE_RECURSIVE_SUBTREE;
-+			else
-+				die("Unknown option %s", arg);
-+			continue;
-+		}
- 		if (bases_count < sizeof(bases)/sizeof(*bases))
- 			bases[bases_count++] = argv[i];
- 	}
-diff --git a/git-merge.sh b/git-merge.sh
-index 39b5cd9..d475852 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -17,6 +17,7 @@ commit               perform a commit if the merge succeeds (default)
- ff                   allow fast forward (default)
- s,strategy=          merge strategy to use
- m,message=           message to be used for the merge commit (if any)
-+X=                   pass merge strategy specific options
- "
- 
- SUBDIRECTORY_OK=Yes
-@@ -31,12 +32,12 @@ LF='
- '
- 
- all_strategies='recur recursive octopus resolve stupid ours subtree'
--all_strategies="$all_strategies recursive-ours recursive-theirs"
- default_twohead_strategies='recursive'
- default_octopus_strategies='octopus'
- no_fast_forward_strategies='subtree ours'
--no_trivial_strategies='recursive recur subtree ours recursive-ours recursive-theirs'
-+no_trivial_strategies='recursive recur subtree ours'
- use_strategies=
-+backend_option=
- 
- allow_fast_forward=t
- allow_trivial_merge=t
-@@ -187,6 +188,10 @@ parse_config () {
- 			merge_msg="$1"
- 			have_message=t
- 			;;
-+		-X)
-+			shift
-+			backend_option="$backend_option --$1"
-+			;;
- 		--)
- 			shift
- 			break ;;
-@@ -451,7 +456,7 @@ do
-     # Remember which strategy left the state in the working tree
-     wt_strategy=$strategy
- 
--    git-merge-$strategy $common -- "$head_arg" "$@"
-+    git-merge-$strategy $backend_option $common -- "$head_arg" "$@"
-     exit=$?
-     if test "$no_commit" = t && test "$exit" = 0
-     then
-diff --git a/t/t6034-merge-ours-theirs.sh b/t/t6034-merge-ours-theirs.sh
-index 56a9247..91f0f63 100755
---- a/t/t6034-merge-ours-theirs.sh
-+++ b/t/t6034-merge-ours-theirs.sh
-@@ -35,7 +35,7 @@ test_expect_success 'plain recursive - should conflict' '
- 
- test_expect_success 'recursive favouring theirs' '
- 	git reset --hard master &&
--	git merge -s recursive-theirs side &&
-+	git merge -s recursive -Xtheirs side &&
- 	! grep nine file &&
- 	grep nueve file &&
- 	! grep 9 file &&
-@@ -45,7 +45,7 @@ test_expect_success 'recursive favouring theirs' '
- 
- test_expect_success 'recursive favouring ours' '
- 	git reset --hard master &&
--	git merge -s recursive-ours side &&
-+	git merge -s recursive -Xours side &&
- 	grep nine file &&
- 	! grep nueve file &&
- 	! grep 9 file &&
+ 	/* Nothing matched -- use the default value */
+ 	if (!(slot & EXPIRE_TOTAL))
+ 		cb->expire_total = default_reflog_expire;
 -- 
 1.5.6.1.102.g8e69d
