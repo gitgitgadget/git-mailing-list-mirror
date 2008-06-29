@@ -1,61 +1,80 @@
-From: Ian Hilt <Ian.Hilt@gmx.com>
-Subject: Re: BUG (v1.5.6.1): ./configure missing check for zlib.h
-Date: Sat, 28 Jun 2008 23:13:55 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806282311100.3218@sys-0.hiltweb.site>
-References: <4864DD65.1080402@mircea.bardac.net>  <m3prq3hr6n.fsf@localhost.localdomain>  <20080627150732.D88F64B4002@artemis.sr.unh.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git cat-file: Fix memory leak in batch mode
+Date: Sat, 28 Jun 2008 20:36:46 -0700
+Message-ID: <7v1w2gkj3l.fsf@gitster.siamese.dyndns.org>
+References: <20080629005858.GA2036@atjola.homenet>
+ <20080629012125.GA1722@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: tom fogal <tfogal@alumni.unh.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 29 05:15:24 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Adam Roben <aroben@apple.com>,
+	Samuel Bronson <naesten@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 29 05:38:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCnNo-000350-H3
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 05:15:20 +0200
+	id 1KCnk0-00074W-LV
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 05:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753639AbYF2DNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2008 23:13:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbYF2DNr
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 23:13:47 -0400
-Received: from mail.gmx.com ([74.208.5.67]:39884 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753606AbYF2DNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2008 23:13:46 -0400
-Received: (qmail invoked by alias); 29 Jun 2008 03:13:44 -0000
-Received: from cpe-75-185-208-72.woh.res.rr.com (EHLO [192.168.1.1]) [75.185.208.72]
-  by mail.gmx.com (mp-us003) with SMTP; 28 Jun 2008 23:13:44 -0400
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX1+UnG5q5wyUdMxoy0P29N/WgBTg+yoNzGUyIit6oM
-	+nQanrDD1XbCvE
-In-Reply-To: <20080627150732.D88F64B4002@artemis.sr.unh.edu>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Y-GMX-Trusted: 0
+	id S1758225AbYF2DhA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jun 2008 23:37:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758198AbYF2DhA
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jun 2008 23:37:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33881 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751995AbYF2Dg7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Jun 2008 23:36:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B531C1515B;
+	Sat, 28 Jun 2008 23:36:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0D66C1515A; Sat, 28 Jun 2008 23:36:50 -0400 (EDT)
+In-Reply-To: <20080629012125.GA1722@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
+ Steinbrink's message of "Sun, 29 Jun 2008 03:21:25 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A0406E8C-458C-11DD-AB94-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86757>
 
-On Fri, 27 Jun 2008 at 11:07am -0000, tom fogal wrote:
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-> I should note, however, that I disagree with that macro's logic in that
-> it `searches' for zlib if the user does not specify it.  IMO, if the
-> user does not give a --with option, and it doesn't work `out of the
-> box' (without hacking FLAGS), macros should die with an error rather
-> than retry with changed FLAGS.
-> 
-> -tom
+> When run in batch mode, git cat-file never frees the memory for the b=
+lob
+> contents it is printing. This quickly adds up and causes git-svn to b=
+e
+> hardly usable for imports of large svn repos, because it uses cat-fil=
+e in
+> batch mode and cat-file's memory usage easily reaches several hundred=
+ MB
+> without any good reason.
+>
+> Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+> ---
+>  builtin-cat-file.c |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+> index bd343ef..f966dcb 100644
+> --- a/builtin-cat-file.c
+> +++ b/builtin-cat-file.c
+> @@ -183,6 +183,7 @@ static int batch_one_object(const char *obj_name,=
+ int print_contents)
+>  		fflush(stdout);
+>  	}
+> =20
+> +	free(contents);
+>  	return 0;
+>  }
 
-Or, one could read the INSTALL file included with git,
-
- - Git is reasonably self-sufficient, but does depend on a few external
-   programs and libraries:
-
-	- "zlib", the compression library. Git won't build without it.
-
--- 
-Ian Hilt
-Ian.Hilt (at) gmx.com
-GnuPG key: 0x4AFC1EE3
+Thanks, except that it should go inside the "if (print_contents =3D=3D =
+BATCH)"
+block to avoid freeing an uninitialized pointer.
