@@ -1,83 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
 Subject: Re: perl t9700 failures?
-Date: Sun, 29 Jun 2008 15:53:31 -0700 (PDT)
-Message-ID: <m3zlp3hn19.fsf@localhost.localdomain>
-References: <alpine.LFD.1.10.0806291241210.27776@hp.linux-foundation.org>
-	<7vzlp47zy8.fsf@gitster.siamese.dyndns.org>
+Date: Mon, 30 Jun 2008 00:56:15 +0200
+Message-ID: <4868130F.2080600@gmail.com>
+References: <alpine.LFD.1.10.0806291241210.27776@hp.linux-foundation.org> <7vzlp47zy8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Lea Wiemann <LeWiemann@gmail.com>
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 00:55:08 2008
+X-From: git-owner@vger.kernel.org Mon Jun 30 00:57:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD5nW-0006eS-5j
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 00:55:06 +0200
+	id 1KD5pe-00078m-Qr
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 00:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbYF2Wxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 18:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbYF2Wxg
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 18:53:36 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:24795 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751888AbYF2Wxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 18:53:35 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so367625nfc.21
-        for <git@vger.kernel.org>; Sun, 29 Jun 2008 15:53:32 -0700 (PDT)
+	id S1752563AbYF2W4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 18:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbYF2W4U
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 18:56:20 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:42541 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950AbYF2W4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 18:56:20 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so643012fgg.17
+        for <git@vger.kernel.org>; Sun, 29 Jun 2008 15:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=RdNWZLlHQ4tTAd+Nv3RShebPqpyMx2/fm8RRMCOEGAI=;
-        b=viUZaSp9Zzgvoj/g92DdGXvHFJWCDvRw3RyAZnF74mxHiKO/PzjWcuvFZa+3l6Vc2n
-         TPavk16noHKCO1gGSdZTEoeuEI45WkFSrv80MBAe5oXmSSRl8HI+ajMaYNvzwnvaZ6CQ
-         kR7amkGEIpq7tiDUPNrmB4I6Bk5KPmDyKhPsA=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=9tLbEQgf6QPCb/fxfRUh5g3Qo580o7r5xPD+qoqaTiw=;
+        b=aZD3EObyjEsaW6RXBWTPpLbMZFUXhx0YPnx3bZ1GjND3oW+OmJ/RhbvIiIvFVeTwFY
+         FlBUg0AQp0EwTg+wEUBYtnonfiAySGXxhM9VyQnUkNZdZE72QQf4ApkQi2tsrp2SzIRX
+         m7rdUB7fiCfTE/pU33otdQm+yX0mWExSDZyqE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=fhdAhh1z1bpn0DIUa3X1JISzqnTAEV51Ep8a6t8hkGNkcnlQGK6a3zYT+6QJv9sloQ
-         Sw6/FEFy7pusdgxunWhlSwQR7PFH8Gaq5p+WsQLagjU76g24HA3OfrBzrYhU4LOiG7gD
-         QZ8xHEKmhYSN4Tl7K3jzzTDJwDElmKeLZOoDY=
-Received: by 10.210.25.18 with SMTP id 18mr3520143eby.152.1214780012322;
-        Sun, 29 Jun 2008 15:53:32 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.214.210])
-        by mx.google.com with ESMTPS id h1sm2962657nfh.19.2008.06.29.15.53.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Jun 2008 15:53:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5TMqh99014966;
-	Mon, 30 Jun 2008 00:52:53 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5TMqI5a014957;
-	Mon, 30 Jun 2008 00:52:18 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=H1+f3lcM4r9KlBRQaMev7qarlO1CWBzT+7qhpI3WFMOKT3n2FNe2liMbuK/3FXVNO9
+         dPZZg6ioDksdivIPgCBYDlQKzmh7MYM+hTWIH1na0JhnwytApPCkdpJkAvE/JcoO7w9g
+         H3otyOogBV/vCeuhTrk8+TP7Z5O0E7uOb9+m0=
+Received: by 10.86.70.11 with SMTP id s11mr5254065fga.71.1214780178197;
+        Sun, 29 Jun 2008 15:56:18 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.203.119])
+        by mx.google.com with ESMTPS id d4sm7682658fga.8.2008.06.29.15.56.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 29 Jun 2008 15:56:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
 In-Reply-To: <7vzlp47zy8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86847>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+Junio C Hamano wrote:
 > +perl -MTest::More -e 0 2>/dev/null || {
 > +	say skip "Perl Test::More unavailable, skipping test"
-> +	test_done
-> +}
-> +
 
-I think it would be nice to have "test_skip" function in test-lib.sh;
-a few tests beside this one (t9500 gitweb test, git-svn tests) have
-not always filled requirements.
+That looks fine -- the git scripts that use Git.pm are still tested
+separately, so even if this test is skipped, Git.pm can be assumed to
+not be broken.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Jakub Narebski wrote:
+> +perl -MTest::More -e '' >/dev/null 2>&1 || {
+> [...]
+> +perl -e 'use 5.006002;' >/dev/null 2>&1 || {
+
+I don't think checking for 5.6.2 (which is the version in which
+Test::More was added) is actually necessary.  If someone installs
+Test::More on an older Perl version, we might as well run the tests --
+apparently Git.pm works even with older versions, since
+t3701-add-interactive.sh seems to work fine for Linus.
+
+Johannes Schindelin wrote:
+> And given that I _actively_  warned [...] I
+> am actually a little pleased
+
+Johannes, I'd actually be a little pleased if you either
+
+- stop "actively warning" and start actively sending patches, or
+- spare the list (and in particular, my mailbox) your whining.
+
+TIA.
