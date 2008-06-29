@@ -1,76 +1,72 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 1/2] Convert "stg refresh" to the new infrastructure
-Date: Sun, 29 Jun 2008 12:21:47 +0200
-Message-ID: <20080629102147.GA5098@diana.vm.bytemark.co.uk>
-References: <20080625042337.6044.53357.stgit@yoghurt> <b0943d9e0806290242q1bc8aa67qb3523221b3db70e2@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Teach git-merge to pass -X<option> to the backend strategy module
+Date: Sun, 29 Jun 2008 12:32:36 +0200
+Organization: At home
+Message-ID: <g47oc3$q1l$1@ger.gmane.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7v8x0992hy.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org> <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.
+ org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <7vk5ggipuw.fsf@gitster.siamese.dyndns.org> <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vwsk8d3q5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 12:22:58 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 29 12:34:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCu3e-0006mP-5b
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 12:22:58 +0200
+	id 1KCuEc-0000mg-43
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 12:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753668AbYF2KWB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2008 06:22:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788AbYF2KWA
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 06:22:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3432 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604AbYF2KWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 06:22:00 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KCu2W-0001Pa-00; Sun, 29 Jun 2008 11:21:48 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0806290242q1bc8aa67qb3523221b3db70e2@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754085AbYF2Kcp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2008 06:32:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754009AbYF2Kcp
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 06:32:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:39573 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753966AbYF2Kcp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 06:32:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KCuD5-00070k-O0
+	for git@vger.kernel.org; Sun, 29 Jun 2008 10:32:43 +0000
+Received: from abvq210.neoplus.adsl.tpnet.pl ([83.8.214.210])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 29 Jun 2008 10:32:43 +0000
+Received: from jnareb by abvq210.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 29 Jun 2008 10:32:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvq210.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86792>
 
-On 2008-06-29 10:42:32 +0100, Catalin Marinas wrote:
+Junio C Hamano wrote:
 
-> 2008/6/25 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > And in the process, make it more powerful: it will now first
-> > create a temp patch containing the updates, and then try to merge
-> > it into the patch to be updated. If that patch is applied, this is
-> > done by popping, pushing, and coalescing; if it is unapplied, it
-> > is done with an in-index merge.
->
-> Does it make sense to refresh an unapplied patch? Maybe adding a new
-> file to the patch but I don't really see a need for this.
+> diff --git a/git-merge.sh b/git-merge.sh
+> index 39b5cd9..d475852 100755
+> --- a/git-merge.sh
+> +++ b/git-merge.sh
+> @@ -17,6 +17,7 @@ commit =A0 =A0 =A0 =A0 =A0 =A0 =A0 perform a commit=
+ if the merge succeeds (default)
+> =A0ff =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 allow fast forward (default=
+)
+> =A0s,strategy=3D =A0 =A0 =A0 =A0 =A0merge strategy to use
+> =A0m,message=3D =A0 =A0 =A0 =A0 =A0 message to be used for the merge =
+commit (if any)
+> +X=3D =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 pass merge strategy specifi=
+c options
+> =A0"
 
-A change in a different part of the same file should work as well, I
-believe.
-
-But no, I don't have a strong sense that this is super useful. It was
-just easy to allow, so I allowed it.
-
-> > Also, whenever path limiting is used, we will now use a temporary
-> > index in order to avoid including all staged updates (since they
-> > may touch stuff outside the path limiters).
->
-> I haven't checked but what is the behaviour in subdirectors? It
-> currently refreshes everythink unless "." is specified so that it
-> will only refresh the current subdirectory.
-
-That's the new behavior as well. Path limiters are taken to be
-realtive to the current working directory, and without limiters we
-refresh everything.
-
-> The patch looks fine otherwise.
-
-Thanks for the review.
+You have updated usage for git-merge, but didn't update manpages
+(Documentation).
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
