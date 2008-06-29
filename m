@@ -1,57 +1,85 @@
-From: "Erez Zilber" <erezzi.list@gmail.com>
-Subject: Is there a way to diff between a local repository and a remote one?
-Date: Sun, 29 Jun 2008 14:29:34 +0300
-Message-ID: <ce513bcc0806290429r1982fbf2i4c9a8258bc8db3c@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] git cat-file: Fix memory leak in batch mode
+Date: Sun, 29 Jun 2008 13:54:17 +0200
+Message-ID: <20080629115417.GA14806@atjola.homenet>
+References: <20080629005858.GA2036@atjola.homenet> <20080629012125.GA1722@atjola.homenet> <7v1w2gkj3l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 29 13:31:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Adam Roben <aroben@apple.com>,
+	Samuel Bronson <naesten@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 13:55:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCv7i-0001pN-6x
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 13:31:14 +0200
+	id 1KCvVI-00089i-2F
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 13:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586AbYF2L3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 07:29:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbYF2L3f
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 07:29:35 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:59034 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753053AbYF2L3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 07:29:35 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1231638rvb.1
-        for <git@vger.kernel.org>; Sun, 29 Jun 2008 04:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=yEX16/QrC9vD+JSSWQ3j5JxZRVAEGvK78oM+00rgxiY=;
-        b=JuljIgMKyQEURq/cFgU18+ensHMKt86++WWBGqELh0r7DWcoOqSRESM6eTpG30BvSr
-         tCMffasiqR4SDSVfiVyvOjuozHxQOF7cy+RF4YQ+MS8nRcbd1GpI3WS7f1PJ8tM8iqn/
-         yv8avR08scJQwH05g5hIUBfVE8AFCOcj/xwcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=CUoUQVZjZspftV1Y0P289uVO3AUDUR2GjXiJ7KjrXQm0FFjAfjLwPWuVwlQPPpeB1v
-         THt2a1dBCmfLtwSDtJyWfhGG7+XZGc0TR2QAXzMHsnskWD14q6iXoORGsS6LtGLOCExV
-         lHzbrPw1GrHnyzaAjHGfX11hS8JZN9CDjcSlI=
-Received: by 10.141.29.8 with SMTP id g8mr1961210rvj.62.1214738974250;
-        Sun, 29 Jun 2008 04:29:34 -0700 (PDT)
-Received: by 10.140.136.4 with HTTP; Sun, 29 Jun 2008 04:29:34 -0700 (PDT)
+	id S1752180AbYF2LyW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2008 07:54:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbYF2LyW
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 07:54:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50128 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751810AbYF2LyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 07:54:21 -0400
+Received: (qmail invoked by alias); 29 Jun 2008 11:54:19 -0000
+Received: from i577BB248.versanet.de (EHLO atjola.local) [87.123.178.72]
+  by mail.gmx.net (mp068) with SMTP; 29 Jun 2008 13:54:19 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/7lZRVBoX74V+Ljo+sOQcwo/RcxJSNOmYy0RCsQw
+	irCNlBCN/Bhr5X
 Content-Disposition: inline
+In-Reply-To: <7v1w2gkj3l.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86795>
 
-I could clone the remote repository and use Linux's diff, but I prefer
-to do it the right way (if possible).
+On 2008.06.28 20:36:46 -0700, Junio C Hamano wrote:
+> Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+>=20
+> > When run in batch mode, git cat-file never frees the memory for the=
+ blob
+> > contents it is printing. This quickly adds up and causes git-svn to=
+ be
+> > hardly usable for imports of large svn repos, because it uses cat-f=
+ile in
+> > batch mode and cat-file's memory usage easily reaches several hundr=
+ed MB
+> > without any good reason.
+> >
+> > Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+> > ---
+> >  builtin-cat-file.c |    1 +
+> >  1 files changed, 1 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+> > index bd343ef..f966dcb 100644
+> > --- a/builtin-cat-file.c
+> > +++ b/builtin-cat-file.c
+> > @@ -183,6 +183,7 @@ static int batch_one_object(const char *obj_nam=
+e, int print_contents)
+> >  		fflush(stdout);
+> >  	}
+> > =20
+> > +	free(contents);
+> >  	return 0;
+> >  }
+>=20
+> Thanks, except that it should go inside the "if (print_contents =3D=3D=
+ BATCH)"
+> block to avoid freeing an uninitialized pointer.
+
+Ah crap, I even wondered about the kill-a-warning initialization of
+"contents", but my brain was already asleep.
 
 Thanks,
-Erez
+Bj=F6rn
