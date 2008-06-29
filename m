@@ -1,110 +1,215 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 01/15] Move split_cmdline() to alias.c
-Date: Sun, 29 Jun 2008 15:43:54 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806291542070.9925@racer>
-References: <cover.1214581610.git.vmiklos@frugalware.org> <58b2c36de6a6f51a562da303695482bea567f4bf.1214581610.git.vmiklos@frugalware.org> <486796C3.7040304@free.fr> <alpine.DEB.1.00.0806291513450.9925@racer> <48679C44.30702@free.fr>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-453453725-1214750637=:9925"
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Olivier Marin <dkr@freesurf.fr>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add new test to ensure git-merge handles pull.twohead and pull.octopus
+Date: Sun, 29 Jun 2008 16:51:38 +0200
+Message-ID: <1214751098-547-1-git-send-email-vmiklos@frugalware.org>
+References: <48678E90.1030608@free.fr>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 29 16:46:55 2008
+X-From: git-owner@vger.kernel.org Sun Jun 29 16:52:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KCyB3-0002kA-9s
-	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 16:46:53 +0200
+	id 1KCyGY-0004MC-Nm
+	for gcvg-git-2@gmane.org; Sun, 29 Jun 2008 16:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760406AbYF2Opy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 10:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760383AbYF2Opy
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 10:45:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53224 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760269AbYF2Opx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 10:45:53 -0400
-Received: (qmail invoked by alias); 29 Jun 2008 14:45:51 -0000
-Received: from 87.113.36.200.plusnet.pte-ag1.dyn.plus.net (EHLO racer.local) [87.113.36.200]
-  by mail.gmx.net (mp038) with SMTP; 29 Jun 2008 16:45:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18CNSleyiECocq8ibCIjTRyVk5YkZ5ygM5Gy2nKMd
-	VBvdeLeoNNQtxj
-X-X-Sender: gene099@racer
-In-Reply-To: <48679C44.30702@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760388AbYF2Ovi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 10:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760211AbYF2Ovi
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 10:51:38 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:38672 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097AbYF2Ovh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 10:51:37 -0400
+Received: from vmobile.example.net (dsl5401CEBB.pool.t-online.hu [84.1.206.187])
+	by yugo.frugalware.org (Postfix) with ESMTP id D49C41DDC5B;
+	Sun, 29 Jun 2008 16:51:34 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 880261A9909; Sun, 29 Jun 2008 16:51:38 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.1
+In-Reply-To: <48678E90.1030608@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86809>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Test if the given strategies are used and test the case when multiple
+strategies are configured using a space separated list.
 
---8323329-453453725-1214750637=:9925
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Also test if the best strategy is picked if none is specified.  This is
+done by adding a simple test case where recursive detects a rename, but
+resolve does not, and verify that finally merge will pick up the
+previous.
 
-Hi,
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-On Sun, 29 Jun 2008, Olivier Marin wrote:
+On Sun, Jun 29, 2008 at 03:30:56PM +0200, Olivier Marin <dkr+ml.git@free.fr> wrote:
+> > +   git tag c2
+>
+> Missing &&?
 
-> Johannes Schindelin a écrit :
-> > 
-> > As the string comes either from the config (where it is trimmed), or 
-> > from the command line (where the user can be stup^W^Wask for 
-> > whitespace explicitely), I do not see much merit in this patch.
-> 
-> You are right, today it is not a problem because the usage is really 
-> limited but Miklos's intention seems to make the function usable by 
-> everyone. As we do not know how it will be used in the future, I think 
-> it is safer with my patch.
+Fixed.
 
-I am generally not a fan of crossing bridges miles before you reach them.
+> > +   test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)"
+>
+> Duplicate the next line?
+>
+> > +   test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
 
-But if you want to keep running with this, you should add at least a few 
-tests to show what you patch solves, and that it solves it.  Preferably 
-with a "test_expect_failure" patch, and then a patch fixing it and 
-changing that _failure to _success.
+Yes, it was duplicated.
 
-Here's a starter:
+> > +   test "$auto_count" = "$recursive_count"
+> > +'
+>
+> Should not "$auto_count" != "$resolve_count" also be tested to be
+> sure that recursive has been choosen?
 
--- snipsnap --
-diff --git a/Makefile b/Makefile
-index d3e339a..83a9a30 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1229,7 +1229,7 @@ endif
- 
- ### Testing rules
- 
--TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X test-absolute-path$X test-parse-options$X test-strbuf$X
-+TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X test-absolute-path$X test-parse-options$X test-strbuf$X test-cmdline$X
- 
- all:: $(TEST_PROGRAMS)
- 
-diff --git a/test-cmdline.c b/test-cmdline.c
-new file mode 100644
-index 0000000..2f6d9eb
+Sure, changed.
+
+Updated patch below.
+
+ t/t7601-merge-pull-config.sh |  129 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 129 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7601-merge-pull-config.sh
+
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+new file mode 100755
+index 0000000..32585f8
 --- /dev/null
-+++ b/test-cmdline.c
-@@ -0,0 +1,15 @@
-+#include "cache.h"
++++ b/t/t7601-merge-pull-config.sh
+@@ -0,0 +1,129 @@
++#!/bin/sh
 +
-+int main(int argc, char **argv)
++test_description='git-merge
++
++Testing pull.* configuration parsing.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo c0 >c0.c &&
++	git add c0.c &&
++	git commit -m c0 &&
++	git tag c0 &&
++	echo c1 >c1.c &&
++	git add c1.c &&
++	git commit -m c1 &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	echo c2 >c2.c &&
++	git add c2.c &&
++	git commit -m c2 &&
++	git tag c2 &&
++	git reset --hard c0 &&
++	echo c3 >c3.c &&
++	git add c3.c &&
++	git commit -m c3 &&
++	git tag c3
++'
++
++test_expect_success 'merge c1 with c2' '
++	git reset --hard c1 &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test ! -f c2.c &&
++	test ! -f c3.c &&
++	git merge c2 &&
++	test -f c1.c &&
++	test -f c2.c
++'
++
++test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
++	git reset --hard c1 &&
++	git config pull.twohead ours &&
++	git merge c2 &&
++	test -f c1.c &&
++	! test -f c2.c
++'
++
++test_expect_success 'merge c1 with c2 and c3 (recursive in pull.octopus)' '
++	git reset --hard c1 &&
++	git config pull.octopus "recursive" &&
++	test_must_fail git merge c2 c3 &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD)"
++'
++
++test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octopus)' '
++	git reset --hard c1 &&
++	git config pull.octopus "recursive octopus" &&
++	git merge c2 c3 &&
++	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
++	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
++	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
++	git diff --exit-code &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test -f c2.c &&
++	test -f c3.c
++'
++
++conflict_count()
 +{
-+	int i = 0;
-+	const char **new_argv;
-+
-+	if (argc < 2 || (argc = split_cmdline(argv[1], &new_argv)) < 0)
-+		return 1;
-+
-+	while (i < argc)
-+		printf("arg %d: '%s'\n", i++, *new_argv++);
-+
-+	return 0;
++	eval $1=`{
++		git diff-files --name-only
++		git ls-files --unmerged
++	} | wc -l`
 +}
---8323329-453453725-1214750637=:9925--
++
++# c4 - c5
++#    \ c6
++#
++# There are two conflicts here:
++#
++# 1) Because foo.c is renamed to bar.c, recursive will handle this,
++# resolve won't.
++#
++# 2) One in conflict.c and that will always fail.
++
++test_expect_success 'setup conflicted merge' '
++	git reset --hard c0 &&
++	echo A >conflict.c &&
++	git add conflict.c &&
++	echo contents >foo.c &&
++	git add foo.c &&
++	git commit -m c4 &&
++	git tag c4 &&
++	echo B >conflict.c &&
++	git add conflict.c &&
++	git mv foo.c bar.c &&
++	git commit -m c5 &&
++	git tag c5 &&
++	git reset --hard c4 &&
++	echo C >conflict.c &&
++	git add conflict.c &&
++	echo secondline >> foo.c &&
++	git add foo.c &&
++	git commit -m c6 &&
++	git tag c6
++'
++
++# First do the merge with resolve and recursive then verify that
++# recusive is choosen.
++
++test_expect_success 'merge picks up the best result' '
++	git config pull.twohead "recursive resolve" &&
++	git reset --hard c5 &&
++	git merge -s resolve c6
++	conflict_count resolve_count &&
++	git reset --hard c5 &&
++	git merge -s recursive c6
++	conflict_count recursive_count &&
++	git reset --hard c5 &&
++	git merge c6
++	conflict_count auto_count &&
++	test "$auto_count" = "$recursive_count" &&
++	test "$auto_count" != "$resolve_count"
++'
++
++test_done
+-- 
+1.5.6
