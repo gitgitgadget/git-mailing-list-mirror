@@ -1,91 +1,123 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [msysGit] How to reduce remaining differences to 4msysgit? (was What's cooking in git.git (topics))
-Date: Mon, 30 Jun 2008 20:47:56 +0200
-Message-ID: <200806302047.56935.johannes.sixt@telecom.at>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add another fast-import example, this time for .zip files
+Date: Mon, 30 Jun 2008 19:50:44 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806301948130.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: msysGit <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: prohaska@zib.de
-X-From: git-owner@vger.kernel.org Mon Jun 30 20:49:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: spearce@spearce.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 30 20:53:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDOQt-0001Cu-EV
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 20:48:59 +0200
+	id 1KDOVM-0002qN-IW
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 20:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbYF3SsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 14:48:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbYF3SsA
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 14:48:00 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:35581 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753870AbYF3SsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 14:48:00 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 2C31F33B4F;
-	Mon, 30 Jun 2008 20:47:58 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id E398F11195;
-	Mon, 30 Jun 2008 20:47:57 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de>
-Content-Disposition: inline
+	id S1753646AbYF3Swk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 14:52:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752377AbYF3Swj
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 14:52:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55139 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752099AbYF3Swj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 14:52:39 -0400
+Received: (qmail invoked by alias); 30 Jun 2008 18:52:36 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp055) with SMTP; 30 Jun 2008 20:52:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/tKNp74xDtTF25h19sM3Opoh0g5hkUMaRTQDMr68
+	d7talhrKDPLKey
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86929>
 
-On Montag, 30. Juni 2008, Steffen Prohaska wrote:
-> On Jun 30, 2008, at 11:08 AM, Junio C Hamano wrote:
-> > * MinGW will be in.
->
-> If this is done, we should be able to create the msysgit release
-> directly
-> from Junio's master.  Hannes changes alone, however, are not sufficient,
-> because some commits have been parked in 4msysgit.  Now that MinGW is
-> on Junio's next and Junio's next is also on 4msysgit's next, it it easy
-> to see how much is left to do by running:
->
->     git diff --stat junio/next..4msysgit/next
->
-> junio is a remote pointing to git://git.kernel.org/pub/scm/git/git.git.
-> 4msysgit is a remote pointing to git://repo.or.cz/git/mingw/
-> 4msysgit.git.
-> I attached the output below.
->
-> How should we proceed to get rid of the differences?
->
-> Should we prepare and send patches directly to the official git list
-> now?
-> Should we wait until the first MinGW branch is on master?
-> Should we prepare a whole patch series?  Maybe Hannes would maintain
-> this
-> patch series.
 
-Until 1.6.0 is released, a number of _required_ patches will have to be 
-included. There are two sorts of them:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-* Patches that touch generic code, like replacing c == '/' by is_dir_sep(c).
+	I needed that today.
 
-* Patches that are purly Windows specific.
+ contrib/fast-import/import-zip.py |   66 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 66 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/fast-import/import-zip.py
 
-The former I intend to submit to the mailing list directly and as soon as 
-possible (but if I can intervene on newly submitted patches early so that a 
-fixup is not even necessary, then even better). The latter I intend to 
-collect in a branch and submit as a batch. Let's see how this works out.
-
-Then there are the extra patches in 4msysgit. From my POV, they are not 
-_required_ because I can appearently work with git on Windows without them. I 
-think some of them are not necessary. Can we go through them again?
-
-And then there are the patches to the t/ directory. I do not target them for 
-1.6.0, but I do want to prepare another series with them.
-
--- Hannes
+diff --git a/contrib/fast-import/import-zip.py b/contrib/fast-import/import-zip.py
+new file mode 100755
+index 0000000..de677e4
+--- /dev/null
++++ b/contrib/fast-import/import-zip.py
+@@ -0,0 +1,66 @@
++#!/usr/bin/python
++
++## zip archive frontend for git-fast-import
++##
++## For example:
++##
++##  mkdir project; cd project; git init
++##  python import-zips.py *.zip
++##  git log --stat import-zips
++
++from os import popen, path
++from sys import argv, exit
++from time import mktime
++from zipfile import ZipFile
++
++if len(argv) < 2:
++	print 'Usage:', argv[0], '<zipfile>...'
++	exit(1)
++
++branch_ref = 'refs/heads/import-zips'
++committer_name = 'Z Ip Creator'
++committer_email = 'zip@example.com'
++
++fast_import = popen('git fast-import --quiet', 'w')
++def printlines(list):
++	for str in list:
++		fast_import.write(str + "\n")
++
++for zipfile in argv[1:]:
++	commit_time = 0
++	next_mark = 1
++	common_prefix = None
++	mark = dict()
++	
++	zip = ZipFile(zipfile, 'r')
++	for name in zip.namelist():
++		if name.endswith('/'):
++			continue
++		info = zip.getinfo(name)
++
++		if commit_time < info.date_time:
++			commit_time = info.date_time
++
++		mark[name] = ':' + str(next_mark)
++		next_mark += 1
++
++		printlines(('blob', 'mark ' + mark[name], \
++					'data ' + str(info.file_size)))
++		fast_import.write(zip.read(name) + "\n")
++
++	committer = committer_name + ' <' + committer_email + '> %d +0000' % \
++		mktime(commit_time + (0, 0, 0))
++
++	printlines(('commit ' + branch_ref, 'committer ' + committer, \
++		'data <<EOM', 'Imported from ' + zipfile + '.', 'EOM', \
++		'', 'deleteall'))
++
++	for name in mark.keys():
++		fast_import.write('M 100644 ' + mark[name] + ' ' + name + "\n")
++
++	printlines(('',  'tag ' + path.basename(zipfile), \
++		'from ' + branch_ref, 'tagger ' + committer, \
++		'data <<EOM', 'Package ' + zipfile, 'EOM', ''))
++
++if fast_import.close():
++	exit(1)
+-- 
+1.5.6.1.297.g148d9
