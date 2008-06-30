@@ -1,66 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
- /etc/gitconfig
-Date: Sun, 29 Jun 2008 23:25:05 -0700
-Message-ID: <7vskuv30e6.fsf@gitster.siamese.dyndns.org>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl>
- <alpine.DEB.1.00.0806271353350.9925@racer>
- <alpine.LNX.1.00.0806271149580.19665@iabervon.org>
- <7vvdzuo61b.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
- <alpine.DEB.1.00.0806292248160.9925@racer>
- <7vwsk730mm.fsf@gitster.siamese.dyndns.org>
+From: Stefan Richter <stefanr@s5r6.in-berlin.de>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Mon, 30 Jun 2008 08:27:42 +0200
+Message-ID: <48687CDE.5010502@s5r6.in-berlin.de>
+References: <200612241807.kBOI746w008739@laptop13.inf.utfsm.cl> <476E42BF.1010300@garzik.org> <Pine.LNX.4.64.0712310349260.2093@fbirervta.pbzchgretzou.qr> <4778D1CD.4020001@s5r6.in-berlin.de> <48684A46.7040802@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 30 08:26:16 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jan Engelhardt <jengelh@computergmbh.de>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 08:29:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDCq8-0000Pl-7i
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 08:26:16 +0200
+	id 1KDCsl-0000tk-U1
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 08:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541AbYF3GZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 02:25:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744AbYF3GZT
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 02:25:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46445 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752408AbYF3GZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 02:25:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2993211783;
-	Mon, 30 Jun 2008 02:25:17 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 750F511782; Mon, 30 Jun 2008 02:25:12 -0400 (EDT)
-In-Reply-To: <7vwsk730mm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 29 Jun 2008 23:20:01 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4E649F84-466D-11DD-8705-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753239AbYF3G2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 02:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753036AbYF3G2A
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 02:28:00 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:54028 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbYF3G17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 02:27:59 -0400
+X-Envelope-From: stefanr@s5r6.in-berlin.de
+Received: from [192.168.0.42] ([83.221.231.7])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m5U6RmGs021730
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Jun 2008 08:27:48 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.13) Gecko/20080614 SeaMonkey/1.1.9
+In-Reply-To: <48684A46.7040802@garzik.org>
+X-Enigmail-Version: 0.95.6
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86882>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff Garzik wrote:
+> Stefan Richter wrote:
+>> A while ago the default behavior of git pull was changed to fetch all
+>> tags which point to objects that can be reached from any of the tracked
+>> heads.
+> 
+> 
+> This does not work in all cases.  When I retrieve the latest kernel, it 
+> downloads the tags:
+> 
+>     cd /spare/repo/linux-2.6
+>     git pull
+> 
+> but when I pull those changes into another local repo, the tags do -not- 
+> follow the objects:
+> 
+>     cd /spare/repo/misc-2.6
+>     git checkout master
+>     git pull ../linux-2.6
+>     git fetch --tags ../linux-2.6    # still required to this day
 
-> Honestly, GIT_CONFIG is purely for scripts like git-svn that muck with
-> files that are in the config format to have a way to make sure that they
-> access the file they intend to, and being able to use GIT_CONFIG to keep
-> git programs from reading from $HOME/.gitconfig is primarily for giving
-> our test scripts repeatable environment, nothing more.
->
-> I think ignoring end-user GIT_CONFIG like this patch does, instead of
-> doing random nonsense, would be a good bugfix for "git clone".
-
-Of course, that would have downsides as well.  Now git-clone tests cannot
-be sanely written without setting $HOME to somewhere stable; otherwise
-they can be randomly affected by buggy $HOME/.gitconfig files the end user
-may have.
+I guess this is because /spare/repo/misc-2.6 does not have branches of 
+/spare/repo/linux-2.6 configured as remote (tracking) branches.
+-- 
+Stefan Richter
+-=====-==--- -==- ====-
+http://arcgraph.de/sr/
