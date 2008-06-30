@@ -1,137 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
-Date: Mon, 30 Jun 2008 13:26:10 +0200
-Message-ID: <200806301326.12140.jnareb@gmail.com>
-References: <200806301149.18115.J.Wielemaker@uva.nl> <m3r6afgrme.fsf@localhost.localdomain> <200806301230.38980.J.Wielemaker@uva.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
+ /etc/gitconfig
+Date: Mon, 30 Jun 2008 12:37:45 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806301236110.9925@racer>
+References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
+ <alpine.DEB.1.00.0806292248160.9925@racer> <7vwsk730mm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Wielemaker <J.Wielemaker@uva.nl>
-X-From: git-owner@vger.kernel.org Mon Jun 30 13:27:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 13:40:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDHXW-0000et-CM
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 13:27:22 +0200
+	id 1KDHkR-0004WA-Vv
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 13:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756950AbYF3L0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 07:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756919AbYF3L0Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:26:25 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:58556 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756234AbYF3L0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 07:26:24 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so422309nfc.21
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 04:26:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=iGDknMz+//zMbZ6k4kuBQ73RZ2hXiotV+ywwnZDE2jM=;
-        b=Eme8TlodDEyl+9Jbm3C9lO/3xFntON7AdyxqJI4ewqmwMwRlVfyBwZCnGmT2uhF3ab
-         MmN26yhP+N7aH55osn8PxqPOsi8uyDNOamaEp6OtAkZPSdZsuKgbNEuAhAhsc2WK9+Wt
-         lgMoq9BACBjA+fFOOQ0YxOTC5Lp0vVr9/0MJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=pvZhYa6QVEo3lhQALYVDVU6V2R2w7lM3v00rIa+Y6+b4SWWAfz7Lx1zJcgi0nEzwpx
-         zjQm9cg5isbrd5/7dZUdadvdn/h8HxwITxT1yXcB0bxg5gGe1U5BE0Evz+TYcmFqDyM8
-         p+cQWcZ6fC8CW+PSRFpgBu5pM+6cbelmXWrK8=
-Received: by 10.210.87.14 with SMTP id k14mr4070320ebb.60.1214825183051;
-        Mon, 30 Jun 2008 04:26:23 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.210.122])
-        by mx.google.com with ESMTPS id h7sm1250191nfh.34.2008.06.30.04.26.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Jun 2008 04:26:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200806301230.38980.J.Wielemaker@uva.nl>
-Content-Disposition: inline
+	id S1756234AbYF3Ljp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 07:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674AbYF3Ljp
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:39:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49419 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754806AbYF3Ljp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 07:39:45 -0400
+Received: (qmail invoked by alias); 30 Jun 2008 11:39:43 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp029) with SMTP; 30 Jun 2008 13:39:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18COK0yKmkC+Fmc3VW3voQyXyK28NBpas7EkcyEh5
+	HCl0s4n6dVKimH
+X-X-Sender: gene099@racer
+In-Reply-To: <7vwsk730mm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86907>
 
-Jan Wielemaker wrote:
-> On Monday 30 June 2008 12:10, Jakub Narebski wrote:
->> Jan Wielemaker <J.Wielemaker@uva.nl> writes:
->>>
->>> I'm a bit puzzled. I have a bare repository, somehow without any files
->>> in refs/heads.
->>
->> Do you have .git/packed-refs file?
+Hi,
+
+On Sun, 29 Jun 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Its a bare repo, so I'll forget the .git.  Yes, I have that file and
-> it contains nice references,  I checked a few by hand, and they have
-> the same SHA1 as the files I copied.
-
-That is where the refs are instead of being in individual files under
-refs/ - those are so called "packed refs".
-
-  When a ref is  missing from  the traditional $GIT_DIR/refs hierarchy,
-  it is looked up in $GIT_DIR/packed-refs and used if found.
-
-I'm not sure why branches are also packed, because git used to pack
-only tags and refs which were packed already.
-
->> How do you have gc.packrefs set ("git config --get gc.packrefs")?
+> > On Sun, 29 Jun 2008, Daniel Barkalow wrote:
+> >
+> >> Did we even make a commitment on whether:
+> >> 
+> >> GIT_CONFIG=foo git clone bar
+> >> 
+> >> must ignore the environment variable, or simply doesn't necessarily 
+> >> obey it?
+> >
+> > I'd rather strongly argue that no matter what is the answer to this 
+> > question, we _HAVE TO_ unsetenv() GIT_CONFIG at some stage, otherwise 
+> > no .git/config will be written.
+> >
+> > So, this is a NACK on your patch.
 > 
-> This gives no output, so I guess the answer is 'no'.
+> True.  We are creating the config file for the new repository, so the
+> initial setenv() would make sense.  We _could_ save away end user's
+> GIT_CONFIG and restore it where you unsetenv() in your patch,
 
-In git-config(1) you can find the following:
+No.  That would break again, since then,
 
-  gc.packrefs::
-        `git gc` does not run `git pack-refs` in a bare repository by
-        default so that older dumb-transport clients can still fetch
-        from the repository.  Setting this to `true` lets `git
-        gc` to run `git pack-refs`.  Setting this to `false` tells
-        `git gc` never to run `git pack-refs`. The default setting is
-        `notbare`. Enable it only when you know you do not have to
-        support such clients.  The default setting will change to `true`
-        at some stage, and setting this to `false` will continue to
-        prevent `git pack-refs` from being run from `git gc`.
+- $HOME/.gitconfig would be ignored again (which was the single issue my 
+  patch addressed), and
+- the remote information would be written into the wrong file.
 
-Unless something changed (and git Documentation was not updated) git
-should not pack refs by default.
-
->> What are the git version on the
->> clients that have trouble accessing repository, and what protocol
->> (transport method) do they use: "file", http(s)/ftp, git, ssh?
-> 
-> I could reproduce the problem using the same git that maintains the bare
-> repository, which started as git-1.5.3.4 and is now 1.5.6.rc3. It
-> reproduces both using local file access and ssh. Other people have a
-> variety of versions. I know of concrete problems using the stable 1.5.5
-> over ssh.
->
-> The problem that I can't even clone is indeed after running a git-gc.
-
-Hmmm... strange. I know that there can be problems with older clients
-(those which do not understand packed-refs format) accessing
-repositories with packed refs (without loose refs) via "dumb"
-protocols.  Problems with accessing repositories locally and via ssh
-might point to some troubles with permissions and ownership of
-$GIT_DIR and $GIT_DIR/packed-refs.
- 
-git-gc can pack refs, that is what running it causes problems.
-
-> So, now I have all branch head refs double (in packed-refs and in
-> refs/heads). That explains ar least where they come from, but it fails
-> to explain why doing exactly the same using the same git on the same
-> repo as two users yields a different result. Of course, besides the
-> desire to understand how his works, I'm mostly interested in how to fix
-> this :-)
-
-Unfortunately as it is not caused by the issue I thought about I cannot
-help you further...
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
