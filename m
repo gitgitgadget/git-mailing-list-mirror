@@ -1,131 +1,86 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH 13/13] Build in merge
-Date: Tue, 1 Jul 2008 00:48:33 +0200
-Message-ID: <20080630224833.GQ4729@genesis.frugalware.org>
-References: <20080628023355.GH2058@genesis.frugalware.org> <ed4b7f44474d6b9398fb0752740ede264bea25b2.1214620551.git.vmiklos@frugalware.org> <7vprq0fzum.fsf@gitster.siamese.dyndns.org> <20080630013612.GY2058@genesis.frugalware.org> <7vlk0n4h0a.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect: error out when given any good rev that is not an
+ ancestor of the bad rev
+Date: Mon, 30 Jun 2008 15:48:49 -0700
+Message-ID: <7vy74mtu7i.fsf@gitster.siamese.dyndns.org>
+References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org>
+ <7v3amuv8yg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Ll0BBk1HBk/f94B0"
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 00:49:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jul 01 00:50:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDSBi-0006ga-RG
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 00:49:35 +0200
+	id 1KDSC9-0006nN-KX
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 00:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932754AbYF3Wsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 18:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932708AbYF3Wsi
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 18:48:38 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:44886 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932565AbYF3Wsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 18:48:38 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 513801B2543;
-	Tue,  1 Jul 2008 00:48:36 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 045854465E;
-	Tue,  1 Jul 2008 00:20:03 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 943B711901EE; Tue,  1 Jul 2008 00:48:33 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vlk0n4h0a.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S933144AbYF3WtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 18:49:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933088AbYF3WtE
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 18:49:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35977 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933015AbYF3WtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 18:49:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9395018CB9;
+	Mon, 30 Jun 2008 18:48:59 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id A6D1118CB4; Mon, 30 Jun 2008 18:48:51 -0400 (EDT)
+In-Reply-To: <7v3amuv8yg.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 30 Jun 2008 15:44:55 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BA8144AE-46F6-11DD-8855-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86955>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---Ll0BBk1HBk/f94B0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> Before this patch "git bisect" doesn't really work when it is given
+>> some good revs that are siblings of the bad rev.
+>>
+>> For example if there is the following history:
+>>
+>> A-B-C-D
+>>    \E-F
+>>
+>> and we launch "git bisect start D F" then only C and D will be
+>> considered as possible first bad commit. This is wrong because A, B and
+>> E may be bad too if the bug exists everywhere except in F that fixes it.
+>
+> Please don't.
+>
+> bisect is about finding a single regression by partitioning the graph into
+> older good section and newer bad section with a *single* "first bad
+> commit".
+>
+> Your "this could also be possible" scenario is already outside the
+> realm.  You are assuming A, B and F is good, and D is bad.  But if E is
+> bad, then that breakage cannot possibly affect the transition between B
+> and D from good to bad (E cannot break D), so C must *also* be bad.
 
-On Sun, Jun 29, 2008 at 10:40:53PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > Actually reset_hard does not return if an error occures:
->=20
-> I know that; didn't I already say "Luckily no"?  The point was it was not
-> apparent from the above 6 lines alone.
+... which means you are dealing with *two* breakages.  That's outside what
+bisect deals with.
 
-Ah, OK.
+And this does not need to have forked development.  If the graph were like
+this:
 
->=20
-> >> > +	for (i =3D 0; i < use_strategies.nr; i++) {
-> >> > +		if ((unsigned int)use_strategies.items[i].util &
-> >> > +			NO_FAST_FORWARD)
-> >> > +			allow_fast_forward =3D 0;
-> >> > +		if ((unsigned int)use_strategies.items[i].util & NO_TRIVIAL)
-> >> > +			allow_trivial =3D 0;
-> >>=20
-> >> Can we abstract out these ugly casts?  Any code that use path_list to
-> >> store anything but list of paths (i.e. some value keyed with string) t=
-ends
-> >> to have this readability issue.
-> >
-> > If you don't cast, you can't use the & operator. If I change the
-> > path_list_item's util to be an unsigned number then I break fast-export.
-> > I think if we _really_ want to get rid of those casts, we could have
-> > something like:
->=20
-> No, no, no.  That is not what I meant.
->=20
-> The places that use use_strategies in your code knows too much about the
-> internal implementation detail of path_list, while path_list pretends to
-> be a general purpose "table keyed with string" facility.  The fact is that
-> the table is not a very useful general purpose abstraction unless you are
-> pointing at some structures that exist regardless of your use of path_list
-> (e.g. you have some "struct object" and you hold pointers in a path_list).
-> It does not work very well as an abstraction for use case like yours.
->=20
-> With something like:
->=20
->         static inline unsigned nth_strategy_flags(struct path_list *s, in=
-t nth)
->         {
->                 return (unsigned) s->items[nth].util;
->         }
->=20
-> the checks would be more like:
->=20
-> 	if (nth_strategy_flags(&use_strategies, i) & NO_FAST_FORWARD)
-> 		...
->=20
-> or even:
->=20
->         static inline check_nth_strategy_flags(struct path_list_item *i, =
-unsigned flags)
->         {
->         	return !((unsigned) i->util & flags);
->         }
->=20
->         if (check_nth_strategy_flags(&use_strategies,items[i], NO_FAST_FO=
-RWARD)
->         	...=09
->=20
-> either of which would be much easier on the eye.
+  A-B-C-D-E-F
 
-Probably this is subjective, but I think the previous form is easier to
-read, so I choose that one.
-
---Ll0BBk1HBk/f94B0
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhpYsEACgkQe81tAgORUJZ5QwCgiV13lgru/wFpy5M2DaN0VNqg
-QrwAoIdzl/MmxBaims8Xv7SYTHsU3h36
-=QDEj
------END PGP SIGNATURE-----
-
---Ll0BBk1HBk/f94B0--
+and if F is bad and B is good, with your logic, after checking that D is
+already bad, we cannot discount E --- after somehow fixing D, we _might_
+also be introducing another breakage with E.  You cannot even check for
+that anyway, but the logic is the same.
