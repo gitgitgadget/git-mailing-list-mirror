@@ -1,218 +1,102 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH 0/7] Some superficial documentation changes
-Date: Mon, 30 Jun 2008 16:56:56 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v8] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Tue, 1 Jul 2008 00:01:42 +0200
+Message-ID: <200807010001.42373.jnareb@gmail.com>
+References: <1214273933-3925-1-git-send-email-LeWiemann@gmail.com> <200806300047.12224.jnareb@gmail.com> <48681EC8.8000606@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jon Loeliger <jdl@jdl.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 30 23:58:46 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 00:02:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDROX-0001UG-CN
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 23:58:46 +0200
+	id 1KDRSO-0002hZ-1g
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 00:02:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763429AbYF3V5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 17:57:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763066AbYF3V5s
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 17:57:48 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:48774 "EHLO
-	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761325AbYF3V5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 17:57:47 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m5ULuxlX021059;
-	Mon, 30 Jun 2008 16:57:02 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m5ULuus4007405;
-	Mon, 30 Jun 2008 16:56:59 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+	id S1760270AbYF3WBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 18:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbYF3WBr
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 18:01:47 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:34101 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203AbYF3WBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 18:01:45 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so502831nfc.21
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 15:01:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=fxoQb+FCCf110bhkMwF1ZXLBSSkM2zHegEaXtsUDPR8=;
+        b=st/PhuHtHbECxFy+pgnrpyVZE98d6vW9sY5TTlvfdRIFuwm9kS4uX4PhZYvCnTV3cy
+         KqXmsiT0Cd1lvRcGWHwgF6kecG6DO4MjKW2CiGSbfFX63GHqaL7NHlPrtBYilLNe+Bxh
+         3dCm8tUE/N82OdUi+Hw+UglTytHOqMsqkeoBE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=NhT30ilq0WOnt5i6pHjJ9W4lgnd/Tms91grHzYbx6fBUkjrIa0t8Y4ooY3dooQg7ln
+         igIYtK23AjoBn8rumfE2uymnOv9C+6Vu/wzP4MPYoS3AOzSY4nQ7vYxJiinkxvv/Nuhy
+         9ixaxLGQJCBq3v+5Mbwkd5r6zN8J3HN+6gFFc=
+Received: by 10.210.56.10 with SMTP id e10mr4676649eba.20.1214863303795;
+        Mon, 30 Jun 2008 15:01:43 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.210.122])
+        by mx.google.com with ESMTPS id b33sm7336864ika.2.2008.06.30.15.01.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Jun 2008 15:01:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <48681EC8.8000606@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86941>
 
-This patch series is an updated version of a patch I sent this morning.
-The purpose of the patches is to make the absence of git- commands not
-so jarring while reading the manual.  It does this by holding fast to a
-distinction between programs (like git-clone) and command lines (like
-"git clone <repo>").
+[back-to-list]
 
-Issues:
+On Mon, 30 Jun 2008, Lea Wiemann wrote:
+> [off-list]
+[...]
+ 
+> By the way, I found the supercat (spc) colorizer very helpful for the
+> mechanize tests, since the output tends to be long and the lines wrap a
+> lot.  Here are my regexes:
+> 
+> $ cat ~/.spcrc/spcrc-test_more
+> #  HTML COLOR NAME   COL A N T STRING or REGULAR EXPRESSION
+> #################### ### # # # #########################################
+> Black                blk     r (.*)
+> Green                grn b   r (^ok .*)
+> Red                  red b   r (^not ok)
+> Yellow               yel b   r (^not ok .* # TODO.*)
+> Green                grn     r (^ok .*\[auto\].*)
+> Red                  red     r (^not ok .*\[auto\].*)
+> Yellow               yel     r (^not ok .*\[auto\].* # TODO.*)
+> Black                blk     r ( - .*)
+> Green                grn r   r (\* passed all .*)
+> Red                  red r   r (\* failed .*)
+> 
+> Then you can just run
+> 
+> ./t9503-gitweb-Mechanize.sh -v -l 2>&1 | spc -t test_more
+> 
+> Hope it's useful!
 
- - It is a huge patch touching most of the manpages, not made by any
-   automated process
+Hmmm... it would be nice if 'test_external*' functions supported syntax
+highlighting of command output if it follows TAP: Test Anything Protocol
+http://www.perlfoundation.org/perl5/index.cgi?testing#tap_test_anything_protocol
+in a manner similar to coloring native tests (using git_expect_success,
+git_expect_failure etc.).
 
- - Sometimes it is not clear whether a mention of git-diff, say, is
-   referring to the `git-diff` program or the command line `git diff`
-   (without any options). So we guess.
+Test::More as far as I know produces TAP-compatibile output.
 
- - Most non-git man pages use 'italics' for the names of programs, but I
-   stuck to `teletype text` because that is what seems to be most common
-   in the Git docs. If people want to change this, I can send a separate
-   patch to that end.
-
- - There are not enough cross-references (the "see also" sections are
-   too often absent).
-
-But at least I was able to check that patch 6/7 (which redistributes the
-dashes in the world) doesn't touch anything but spaces and hyphens.
-Hopefully that should make this easier to review.
-
-Enjoy...
-
-  Documentation: fix links to tutorials and other new manual pages
-  whitespace fix in Documentation/git-repack.txt
-  Documentation: complicate example of "man git-blah"
-  git-daemon(1): don't assume git-daemon in /usr/bin
-  Documentation: prepare to be consistent about "git-" versus "git "
-  Documentation: be consistent about "git-" versus "git "
-  Documentation formatting and cleanup
-
- Documentation/diff-options.txt           |    2 +-
- Documentation/git-add.txt                |    4 +-
- Documentation/git-am.txt                 |    4 +-
- Documentation/git-annotate.txt           |    2 +-
- Documentation/git-apply.txt              |   14 ++--
- Documentation/git-archimport.txt         |    8 +-
- Documentation/git-archive.txt            |    8 +-
- Documentation/git-bisect.txt             |    8 +-
- Documentation/git-blame.txt              |    6 +-
- Documentation/git-branch.txt             |   16 ++--
- Documentation/git-bundle.txt             |   41 ++++----
- Documentation/git-cat-file.txt           |    4 +-
- Documentation/git-check-attr.txt         |    2 +-
- Documentation/git-check-ref-format.txt   |    4 +-
- Documentation/git-checkout-index.txt     |   22 ++--
- Documentation/git-checkout.txt           |   12 +-
- Documentation/git-cherry-pick.txt        |    4 +-
- Documentation/git-cherry.txt             |   10 +-
- Documentation/git-citool.txt             |    4 +-
- Documentation/git-clean.txt              |    6 +-
- Documentation/git-clone.txt              |   14 ++--
- Documentation/git-commit-tree.txt        |    4 +-
- Documentation/git-commit.txt             |   28 +++---
- Documentation/git-config.txt             |   38 ++++----
- Documentation/git-count-objects.txt      |    4 +-
- Documentation/git-cvsexportcommit.txt    |   13 ++-
- Documentation/git-cvsimport.txt          |   20 ++--
- Documentation/git-cvsserver.txt          |   45 +++++-----
- Documentation/git-daemon.txt             |   34 ++++----
- Documentation/git-describe.txt           |   14 ++--
- Documentation/git-diff-files.txt         |    4 +-
- Documentation/git-diff-index.txt         |   34 ++++----
- Documentation/git-diff-tree.txt          |   18 ++--
- Documentation/git-diff.txt               |   18 ++--
- Documentation/git-fast-export.txt        |   10 +-
- Documentation/git-fast-import.txt        |   24 +++---
- Documentation/git-fetch-pack.txt         |   18 ++--
- Documentation/git-fetch.txt              |    4 +-
- Documentation/git-filter-branch.txt      |   14 ++--
- Documentation/git-fmt-merge-msg.txt      |    4 +-
- Documentation/git-for-each-ref.txt       |    8 +-
- Documentation/git-format-patch.txt       |    6 +-
- Documentation/git-fsck-objects.txt       |    2 +-
- Documentation/git-fsck.txt               |   10 +-
- Documentation/git-gc.txt                 |   16 ++--
- Documentation/git-get-tar-commit-id.txt  |    8 +-
- Documentation/git-grep.txt               |    4 +-
- Documentation/git-gui.txt                |   24 +++---
- Documentation/git-hash-object.txt        |    4 +-
- Documentation/git-help.txt               |    6 +-
- Documentation/git-http-fetch.txt         |    4 +-
- Documentation/git-http-push.txt          |    2 +-
- Documentation/git-imap-send.txt          |    6 +-
- Documentation/git-index-pack.txt         |   12 +-
- Documentation/git-init-db.txt            |    2 +-
- Documentation/git-init.txt               |    6 +-
- Documentation/git-instaweb.txt           |    8 +-
- Documentation/git-log.txt                |    6 +-
- Documentation/git-lost-found.txt         |    2 +-
- Documentation/git-ls-files.txt           |   10 +-
- Documentation/git-ls-remote.txt          |    4 +-
- Documentation/git-ls-tree.txt            |    2 +-
- Documentation/git-mailinfo.txt           |    8 +-
- Documentation/git-mailsplit.txt          |    2 +-
- Documentation/git-merge-base.txt         |   10 +-
- Documentation/git-merge-file.txt         |   14 ++--
- Documentation/git-merge-index.txt        |   20 ++--
- Documentation/git-merge-one-file.txt     |    4 +-
- Documentation/git-merge-tree.txt         |    2 +-
- Documentation/git-merge.txt              |   24 +++--
- Documentation/git-mergetool.txt          |   18 ++--
- Documentation/git-mktag.txt              |    2 +-
- Documentation/git-mktree.txt             |    2 +-
- Documentation/git-mv.txt                 |    6 +-
- Documentation/git-name-rev.txt           |    8 +-
- Documentation/git-pack-objects.txt       |   10 +-
- Documentation/git-pack-redundant.txt     |   10 +-
- Documentation/git-pack-refs.txt          |    4 +-
- Documentation/git-patch-id.txt           |    4 +-
- Documentation/git-peek-remote.txt        |    6 +-
- Documentation/git-prune-packed.txt       |    2 +-
- Documentation/git-prune.txt              |   14 ++--
- Documentation/git-pull.txt               |    5 +-
- Documentation/git-push.txt               |    4 +-
- Documentation/git-quiltimport.txt        |    2 +-
- Documentation/git-read-tree.txt          |   46 +++++-----
- Documentation/git-rebase.txt             |   38 ++++----
- Documentation/git-receive-pack.txt       |   24 +++---
- Documentation/git-relink.txt             |    2 +-
- Documentation/git-remote.txt             |   12 +-
- Documentation/git-repack.txt             |   15 ++--
- Documentation/git-repo-config.txt        |    2 +-
- Documentation/git-request-pull.txt       |    2 +-
- Documentation/git-rerere.txt             |   14 ++--
- Documentation/git-reset.txt              |    2 +-
- Documentation/git-rev-list.txt           |   16 ++--
- Documentation/git-rev-parse.txt          |   18 ++--
- Documentation/git-revert.txt             |    2 +-
- Documentation/git-rm.txt                 |   10 +-
- Documentation/git-send-email.txt         |    2 +-
- Documentation/git-send-pack.txt          |   16 ++--
- Documentation/git-shell.txt              |    2 +-
- Documentation/git-shortlog.txt           |    6 +-
- Documentation/git-show-branch.txt        |    8 +-
- Documentation/git-show-index.txt         |    6 +-
- Documentation/git-show-ref.txt           |   10 +-
- Documentation/git-show.txt               |    8 +-
- Documentation/git-stash.txt              |   22 ++--
- Documentation/git-status.txt             |    6 +-
- Documentation/git-stripspace.txt         |    2 +-
- Documentation/git-submodule.txt          |   14 ++--
- Documentation/git-svn.txt                |  153 +++++++++++++++---------------
- Documentation/git-symbolic-ref.txt       |    4 +-
- Documentation/git-tag.txt                |   18 ++--
- Documentation/git-tar-tree.txt           |    6 +-
- Documentation/git-unpack-file.txt        |    2 +-
- Documentation/git-unpack-objects.txt     |    4 +-
- Documentation/git-update-index.txt       |   26 +++---
- Documentation/git-update-ref.txt         |   10 +-
- Documentation/git-update-server-info.txt |    4 +-
- Documentation/git-upload-archive.txt     |    4 +-
- Documentation/git-upload-pack.txt        |    8 +-
- Documentation/git-var.txt                |    4 +-
- Documentation/git-verify-pack.txt        |    6 +-
- Documentation/git-verify-tag.txt         |    4 +-
- Documentation/git-web--browse.txt        |   10 +-
- Documentation/git-whatchanged.txt        |   10 +-
- Documentation/git-write-tree.txt         |    2 +-
- Documentation/git.txt                    |   30 +++---
- Documentation/gitattributes.txt          |   18 ++--
- Documentation/gitcore-tutorial.txt       |  127 ++++++++++++-------------
- Documentation/gitcvs-migration.txt       |   24 +++---
- Documentation/gitdiffcore.txt            |   34 ++++----
- Documentation/githooks.txt               |   10 +-
- Documentation/gitignore.txt              |    8 +-
- Documentation/gitk.txt                   |    3 +-
- Documentation/gitrepository-layout.txt   |   24 +++---
- Documentation/gittutorial-2.txt          |   40 ++++----
- Documentation/gittutorial.txt            |   66 +++++++-------
- Documentation/user-manual.txt            |   85 ++++++++---------
- 140 files changed, 961 insertions(+), 964 deletions(-)
+-- 
+Jakub Narebski
+Poland
