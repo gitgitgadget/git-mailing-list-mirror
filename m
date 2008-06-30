@@ -1,76 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: error out when given any good rev that is not an
- ancestor of the bad rev
-Date: Mon, 30 Jun 2008 16:52:00 -0700
-Message-ID: <7vej6etra7.fsf@gitster.siamese.dyndns.org>
-References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org>
- <200807010116.30214.chriscool@tuxfamily.org>
- <7vprpyts7j.fsf@gitster.siamese.dyndns.org>
- <200807010146.09206.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jul 01 01:53:21 2008
+From: Patrick Higgins <patrick.higgins@cexp.com>
+Subject: [PATCH/RFC] Emulating symlinks on Windows with file copies
+Date: Mon, 30 Jun 2008 17:54:13 -0600
+Message-ID: <1214870053-11537-1-git-send-email-patrick.higgins@cexp.com>
+Cc: Patrick Higgins <patrick.higgins@cexp.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 01 01:56:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDTBI-0004Vt-Mp
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 01:53:13 +0200
+	id 1KDTET-0005LX-Pz
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 01:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753847AbYF3XwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 19:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753577AbYF3XwQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 19:52:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46283 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753173AbYF3XwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 19:52:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5033D192FD;
-	Mon, 30 Jun 2008 19:52:11 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 62CFE192F9; Mon, 30 Jun 2008 19:52:02 -0400 (EDT)
-In-Reply-To: <200807010146.09206.chriscool@tuxfamily.org> (Christian Couder's
- message of "Tue, 1 Jul 2008 01:46:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8E87DD14-46FF-11DD-8AF5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754968AbYF3Xzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 19:55:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754842AbYF3Xzc
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 19:55:32 -0400
+Received: from mx02.cexp.com ([170.131.136.83]:38244 "EHLO mx02.cexp.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754831AbYF3Xzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 19:55:31 -0400
+Received: from mailgate2.cexp.com (uscobrmfa-se-07.cexp.com [170.131.144.37])
+	by mx02.cexp.com (Postfix) with ESMTP id 0DDBD369E46
+	for <git@vger.kernel.org>; Mon, 30 Jun 2008 17:54:15 -0600 (MDT)
+Received: from localhost.localdomain ([10.128.5.63]) by USCOBRMFA-SE-52.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 30 Jun 2008 17:54:14 -0600
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.1/8.13.1) with ESMTP id m5UNsEvV011560;
+	Mon, 30 Jun 2008 17:54:14 -0600
+Received: (from phiggins@localhost)
+	by localhost.localdomain (8.13.1/8.13.1/Submit) id m5UNsDXE011559;
+	Mon, 30 Jun 2008 17:54:13 -0600
+X-Mailer: git-send-email 1.5.6.dirty
+X-OriginalArrivalTime: 30 Jun 2008 23:54:14.0786 (UTC) FILETIME=[99E1C620:01C8DB0C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86973>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Signed-off-by: Patrick Higgins <patrick.higgins@cexp.com>
+---
 
-> Yes, but the fact is that the user may wrongly think that F is an ancestor 
-> of D or he may not remember/know about the rule that saying "F is good" 
-> means "everything from A to F is good". That's why this patch adds a safety 
-> net by detecting end erroring out in this case.
+This is a very basic script to test out the idea of using copies to emulate
+symlinks on Windows. I don't track any changes in the index yet which seems
+necessary as a next step.
 
-Yeah, sorry about the confusion earlier.
+Symlinks get deleted and replaced with copies. Existing unchanged copies
+are ignored. Copies that have been modified get merged into the target of
+the link.
 
-But I do not think forbidding forked topology very early in bisection
-process is a very good idea.  The user would be at loss when told:
+This might have some messy cases that I haven't considered yet, but it seems
+like a fairly straightforward way to make a repository containing file
+symlinks useful on Windows.
 
-	echo >&2 "Maybe you mistake good and bad revs?"
+I have not yet started on directories. This technique would probably get
+messy with directories. Perhaps junction (reparse) points would be better
+for directories?
 
-Aside from the "test a trial merge" idea I floated in the other message,
-when we detect such a fork, perhaps we can suggest testing the merge base
-version (B in your picture) first?  We would immediately know as the user
-would say "B is bad" if the topology is problematic.
+ git-sync-symlinks.perl |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 44 insertions(+), 0 deletions(-)
+ create mode 100755 git-sync-symlinks.perl
 
-Then, we can suggest the user that breakage at D may not be a regression
-but a longstanding bug that was recently fixed somewhere between B and F.
-
-The user then can decide to bisect to find the fix (so that it can be
-cherry picked on top of D) or merge F into D to propagate the fix forward
-if it is not important to find out which exact commit fixed the issue.
-
-Hmm?
+diff --git a/git-sync-symlinks.perl b/git-sync-symlinks.perl
+new file mode 100755
+index 0000000..223ae83
+--- /dev/null
++++ b/git-sync-symlinks.perl
+@@ -0,0 +1,44 @@
++#!/usr/bin/perl -w
++
++use strict;
++use File::Copy;
++use Fcntl ':mode';
++
++my $filepipe = open(FILELIST, '-|', 'git', 'ls-tree', '-z', '-r', 'HEAD')
++    or die("Cannot call git ls-tree : $!");
++
++local $/ = "\0";
++
++while ( <FILELIST> ) {
++    chomp;
++    if (/^120000 blob ([0-9a-f]{40})\t(.*)$/) {
++        my ($id, $path) = ($1, $2);
++        my $target = `git cat-file blob $id`;
++        chomp($target);
++        my @path_stat = lstat($path);
++        my @target_stat = stat($target);
++        
++        if (S_ISLNK($path_stat[2])) {
++            printf("Copying '%s' to '%s'\n", $target, $path);
++            unlink($path);
++            copy($target, $path);
++        }
++        elsif ($path_stat[7] != $target_stat[7] ||
++               `git hash-object $path` ne `git hash-object $target`)
++        {
++            printf("Merging '%s' to '%s'\n", $path, $target);
++            my @target_parts = split(/\s+/, `git ls-tree HEAD $target`);
++            my $target_id = $target_parts[2];
++            my $original = $target . ".BASE";
++            open(ORIGINAL, '-|', 'git', 'cat-file', 'blob', $target_id);
++            open(ORIGINAL_OUT, '>', $original);
++            while ( <ORIGINAL> ) {
++                print ORIGINAL_OUT $_;
++            }
++            close ORIGINAL_OUT;
++            close ORIGINAL;
++            system('git', 'merge-file', $target, $original, $path);
++        }
++    }
++}
++close FILELIST;
+-- 
+1.5.6.dirty
