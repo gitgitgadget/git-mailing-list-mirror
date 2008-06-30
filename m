@@ -1,162 +1,137 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: How to reduce remaining differences to 4msysgit? (was What's cooking in git.git (topics))
-Date: Mon, 30 Jun 2008 13:19:57 +0200
-Message-ID: <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vd4pf7h9y.fsf@gitster.siamese.dyndns.org> <7vwsnjl21c.fsf@gitster.siamese.dyndns.org> <7vhcehzdeg.fsf@gitster.siamese.dyndns.org> <7vbq4j748l.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org> <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org> <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.o
- rg> <7vk5ggipuw.fsf@gitster.siamese.dyndns.org> <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
+Date: Mon, 30 Jun 2008 13:26:10 +0200
+Message-ID: <200806301326.12140.jnareb@gmail.com>
+References: <200806301149.18115.J.Wielemaker@uva.nl> <m3r6afgrme.fsf@localhost.localdomain> <200806301230.38980.J.Wielemaker@uva.nl>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: msysGit <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Jun 30 13:21:09 2008
+Cc: git@vger.kernel.org
+To: Jan Wielemaker <J.Wielemaker@uva.nl>
+X-From: git-owner@vger.kernel.org Mon Jun 30 13:27:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDHRS-0007Gj-MH
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 13:21:07 +0200
+	id 1KDHXW-0000et-CM
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 13:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717AbYF3LUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 07:20:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756536AbYF3LUJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:20:09 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63761 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752856AbYF3LUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 07:20:08 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m5UBJYNR017296;
-	Mon, 30 Jun 2008 13:19:39 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db83f6c.pool.einsundeins.de [77.184.63.108])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m5UBJXMK009699
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 30 Jun 2008 13:19:33 +0200 (MEST)
-In-Reply-To: <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.924)
+	id S1756950AbYF3L0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 07:26:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756919AbYF3L0Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:26:25 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:58556 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756234AbYF3L0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 07:26:24 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so422309nfc.21
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 04:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=iGDknMz+//zMbZ6k4kuBQ73RZ2hXiotV+ywwnZDE2jM=;
+        b=Eme8TlodDEyl+9Jbm3C9lO/3xFntON7AdyxqJI4ewqmwMwRlVfyBwZCnGmT2uhF3ab
+         MmN26yhP+N7aH55osn8PxqPOsi8uyDNOamaEp6OtAkZPSdZsuKgbNEuAhAhsc2WK9+Wt
+         lgMoq9BACBjA+fFOOQ0YxOTC5Lp0vVr9/0MJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=pvZhYa6QVEo3lhQALYVDVU6V2R2w7lM3v00rIa+Y6+b4SWWAfz7Lx1zJcgi0nEzwpx
+         zjQm9cg5isbrd5/7dZUdadvdn/h8HxwITxT1yXcB0bxg5gGe1U5BE0Evz+TYcmFqDyM8
+         p+cQWcZ6fC8CW+PSRFpgBu5pM+6cbelmXWrK8=
+Received: by 10.210.87.14 with SMTP id k14mr4070320ebb.60.1214825183051;
+        Mon, 30 Jun 2008 04:26:23 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.210.122])
+        by mx.google.com with ESMTPS id h7sm1250191nfh.34.2008.06.30.04.26.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Jun 2008 04:26:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200806301230.38980.J.Wielemaker@uva.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86906>
 
+Jan Wielemaker wrote:
+> On Monday 30 June 2008 12:10, Jakub Narebski wrote:
+>> Jan Wielemaker <J.Wielemaker@uva.nl> writes:
+>>>
+>>> I'm a bit puzzled. I have a bare repository, somehow without any files
+>>> in refs/heads.
+>>
+>> Do you have .git/packed-refs file?
+> 
+> Its a bare repo, so I'll forget the .git.  Yes, I have that file and
+> it contains nice references,  I checked a few by hand, and they have
+> the same SHA1 as the files I copied.
 
-On Jun 30, 2008, at 11:08 AM, Junio C Hamano wrote:
+That is where the refs are instead of being in individual files under
+refs/ - those are so called "packed refs".
 
-> * MinGW will be in.
+  When a ref is  missing from  the traditional $GIT_DIR/refs hierarchy,
+  it is looked up in $GIT_DIR/packed-refs and used if found.
 
+I'm not sure why branches are also packed, because git used to pack
+only tags and refs which were packed already.
 
-If this is done, we should be able to create the msysgit release  
-directly
-from Junio's master.  Hannes changes alone, however, are not sufficient,
-because some commits have been parked in 4msysgit.  Now that MinGW is
-on Junio's next and Junio's next is also on 4msysgit's next, it it easy
-to see how much is left to do by running:
+>> How do you have gc.packrefs set ("git config --get gc.packrefs")?
+> 
+> This gives no output, so I guess the answer is 'no'.
 
-    git diff --stat junio/next..4msysgit/next
+In git-config(1) you can find the following:
 
-junio is a remote pointing to git://git.kernel.org/pub/scm/git/git.git.
-4msysgit is a remote pointing to git://repo.or.cz/git/mingw/ 
-4msysgit.git.
-I attached the output below.
+  gc.packrefs::
+        `git gc` does not run `git pack-refs` in a bare repository by
+        default so that older dumb-transport clients can still fetch
+        from the repository.  Setting this to `true` lets `git
+        gc` to run `git pack-refs`.  Setting this to `false` tells
+        `git gc` never to run `git pack-refs`. The default setting is
+        `notbare`. Enable it only when you know you do not have to
+        support such clients.  The default setting will change to `true`
+        at some stage, and setting this to `false` will continue to
+        prevent `git pack-refs` from being run from `git gc`.
 
-How should we proceed to get rid of the differences?
+Unless something changed (and git Documentation was not updated) git
+should not pack refs by default.
 
-Should we prepare and send patches directly to the official git list  
-now?
-Should we wait until the first MinGW branch is on master?
-Should we prepare a whole patch series?  Maybe Hannes would maintain  
-this
-patch series.
+>> What are the git version on the
+>> clients that have trouble accessing repository, and what protocol
+>> (transport method) do they use: "file", http(s)/ftp, git, ssh?
+> 
+> I could reproduce the problem using the same git that maintains the bare
+> repository, which started as git-1.5.3.4 and is now 1.5.6.rc3. It
+> reproduces both using local file access and ssh. Other people have a
+> variety of versions. I know of concrete problems using the stable 1.5.5
+> over ssh.
+>
+> The problem that I can't even clone is indeed after running a git-gc.
 
-I have not yet looked at the remaining differences in detail.  I expect
-most of them to be trivial.  But some might require discussion on the
-list, so at some point we should send the patches to the official list.
+Hmmm... strange. I know that there can be problems with older clients
+(those which do not understand packed-refs format) accessing
+repositories with packed refs (without loose refs) via "dumb"
+protocols.  Problems with accessing repositories locally and via ssh
+might point to some troubles with permissions and ownership of
+$GIT_DIR and $GIT_DIR/packed-refs.
+ 
+git-gc can pack refs, that is what running it causes problems.
 
-	Steffen
+> So, now I have all branch head refs double (in packed-refs and in
+> refs/heads). That explains ar least where they come from, but it fails
+> to explain why doing exactly the same using the same git on the same
+> repo as two users yields a different result. Of course, besides the
+> desire to understand how his works, I'm mostly interested in how to fix
+> this :-)
 
+Unfortunately as it is not caused by the issue I thought about I cannot
+help you further...
 
-$ git diff --stat junio/next..4msysgit/next
-  Makefile                               |   23 ++-
-  README.MinGW                           |   77 ++++++++
-  RelNotes                               |    1 -
-  builtin-fetch-pack.c                   |    3 +-
-  builtin-tag.c                          |   14 ++
-  builtin-verify-tag.c                   |    2 +
-  cache.h                                |    2 +
-  check-builtins.sh                      |    2 +-
-  compat/mingw.c                         |    4 +-
-  compat/winansi.c                       |  309 +++++++++++++++++++++++ 
-+++++++++
-  connect.c                              |    5 +-
-  convert.c                              |    4 +
-  fast-import.c                          |    2 +
-  git-add--interactive.perl              |    2 +-
-  git-compat-util.h                      |    7 +
-  git-parse-remote.sh                    |    3 +-
-  gitk-git/Makefile                      |    4 +
-  gitk-git/gitk                          |    2 +
-  help.c                                 |   30 +++-
-  path.c                                 |   13 ++
-  read-cache.c                           |    5 +
-  setup.c                                |    7 +-
-  t/t0000-basic.sh                       |   31 +++-
-  t/t0001-init.sh                        |    2 +-
-  t/t0004-unwritable.sh                  |    7 +
-  t/t1002-read-tree-m-u-2way.sh          |    6 +
-  t/t1003-read-tree-prefix.sh            |    4 +
-  t/t1004-read-tree-m-u-wf.sh            |    2 +
-  t/t1300-repo-config.sh                 |    1 +
-  t/t1301-shared-repo.sh                 |    4 +
-  t/t2001-checkout-cache-clash.sh        |    2 +
-  t/t2003-checkout-cache-mkdir.sh        |    4 +
-  t/t2004-checkout-cache-temp.sh         |    2 +
-  t/t2007-checkout-symlink.sh            |    7 +
-  t/t2100-update-cache-badpath.sh        |    2 +
-  t/t2201-add-update-typechange.sh       |   11 +-
-  t/t3000-ls-files-others.sh             |    1 +
-  t/t3010-ls-files-killed-modified.sh    |    7 +
-  t/t3100-ls-tree-restrict.sh            |   12 ++
-  t/t3200-branch.sh                      |    2 +
-  t/t3700-add.sh                         |   10 +
-  t/t3901-i18n-patch.sh                  |    4 +
-  t/t3903-stash.sh                       |   12 +-
-  t/t4004-diff-rename-symlink.sh         |    7 +
-  t/t4008-diff-break-rewrite.sh          |    4 +
-  t/t4011-diff-symlink.sh                |    7 +
-  t/t4023-diff-rename-typechange.sh      |    5 +
-  t/t4109-apply-multifrag.sh             |    4 +
-  t/t4110-apply-scan.sh                  |    4 +
-  t/t4114-apply-typechange.sh            |    5 +
-  t/t4115-apply-symlink.sh               |    7 +
-  t/t4116-apply-reverse.sh               |    3 +-
-  t/t4122-apply-symlink-inside.sh        |    7 +
-  t/t4150-am.sh                          |    6 +-
-  t/t5000-tar-tree.sh                    |    7 +
-  t/t5300-pack-object.sh                 |   62 +++----
-  t/t5502-quickfetch.sh                  |    3 +
-  t/t5503-tagfollow.sh                   |   25 +++-
-  t/t5505-remote.sh                      |    3 +
-  t/t5511-refspec.sh                     |   11 +-
-  t/t5512-ls-remote.sh                   |    3 +
-  t/t5520-pull.sh                        |    1 +
-  t/t5530-upload-pack-error.sh           |    1 +
-  t/t7004-tag.sh                         |    5 +-
-  t/t7005-editor.sh                      |    1 +
-  t/t7201-co.sh                          |    6 +-
-  t/t7401-submodule-summary.sh           |   30 ++--
-  t/t7501-commit.sh                      |    1 +
-  t/t7502-status.sh                      |    4 +
-  t/t7503-pre-commit-hook.sh             |    6 +
-  t/t7504-commit-msg-hook.sh             |    6 +
-  t/t9001-send-email.sh                  |    4 +
-  t/t9200-git-cvsexportcommit.sh         |    4 +
-  t/t9500-gitweb-standalone-no-errors.sh |    3 +
-  t/test-lib.sh                          |   17 ++
-  templates/Makefile                     |    3 +
-  utf8.c                                 |    7 +
-  utf8.h                                 |    4 -
-  78 files changed, 844 insertions(+), 86 deletions(-)
+-- 
+Jakub Narebski
+Poland
