@@ -1,80 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Skip unwritable tests for root
-Date: Mon, 30 Jun 2008 00:39:26 -0700 (PDT)
-Message-ID: <m3vdzrgymx.fsf@localhost.localdomain>
-References: <1214809551-14603-1-git-send-email-ferdy@ferdyx.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [StGit PATCH 1/2] Try "stg sink" without applied patches
+Date: Mon, 30 Jun 2008 09:53:22 +0200
+Message-ID: <bd6139dc0806300053m4325104dx145cd8840c630453@mail.gmail.com>
+References: <20080629224440.9267.3591.stgit@yoghurt>
+	 <20080629224541.9267.19258.stgit@yoghurt>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Fernando J. Pereda" <ferdy@ferdyx.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 09:40:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org,
+	"Erik Sandberg" <mandolaerik@gmail.com>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 09:54:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDE04-0000hX-Db
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:40:36 +0200
+	id 1KDEDM-0004R9-RW
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbYF3Hjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 03:39:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYF3Hjb
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:39:31 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:48365 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364AbYF3Hja (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 03:39:30 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so403937nfc.21
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 00:39:27 -0700 (PDT)
+	id S1752796AbYF3HxY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 03:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbYF3HxX
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:53:23 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:60629 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542AbYF3HxW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 03:53:22 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1433932wfd.4
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=/1c89Rt30Q8jg4fx8j0M/7RCuF6zSH2WzlqRUb8ea4E=;
-        b=Lnv757lKdkMU77N0+KxZGcJ95hruCrXB7OjKHxKFUfzHeSAy8bgVFsH3P9DMLZxGVc
-         99VHPPwdlpZbSdlJBOJYrfjVXk5pxSnTN767XPHiW4IcBhBXg4yDrAXQRIsV39MKmsDL
-         bgE0TTdgXO87gcxsT9gtVNpR8EF6elRR0OFZI=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0ch0/nQ4aqS0tblXAFmTC11bWEHgINAH3XLBVqHGVs8=;
+        b=J9YkQZidsO+7yO+JGqo8wOtBX8M6wsz2ruq7s9pBIteJogQSgsMkQzDHP9l6VlW+Ua
+         qXAE9Bz4ueKGJc+dBksVOANSdg+4eQ5AzYsgzPKxZgoJjnWGr5tfXKArKSN8FcUqreLC
+         4jPyAZB6LuMjwiMhV0xywkKxX2ylNqCavvHwM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=mD319AigXYLUlZVsDgs6id41oqBnx2j4ESdx2H29ro4SreMfQqwuRoBYsCMlU8jIFX
-         sfS1Py4z7I3WEQgHgx0sbTiGRMdVB33ENhd6L42QseAM1gQdsfCM99SggfPTXra1AJtD
-         wGrr0+j0vEb3w91pVtu6zrQfW6dZX1D9Ig7gc=
-Received: by 10.210.39.20 with SMTP id m20mr3857327ebm.49.1214811567115;
-        Mon, 30 Jun 2008 00:39:27 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.210.122])
-        by mx.google.com with ESMTPS id z33sm6130990ikz.0.2008.06.30.00.39.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Jun 2008 00:39:26 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5U7dLSO017282;
-	Mon, 30 Jun 2008 09:39:22 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5U7dIMo017279;
-	Mon, 30 Jun 2008 09:39:18 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1214809551-14603-1-git-send-email-ferdy@ferdyx.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=Gu8J+yrMverZPHeSFWvNyxeWr3f2+TAOhaJcx2WP2+w/9D1sBZhHxgoWNUrqu+Aqb6
+         epVGHKeAvGSHLYaw4sFNMoHOXomPoaaRUBzQkxq15LVkInt/nYNEbBHu7idFsTkntbj+
+         W33kqr4+o/DPI0wXcLYOGyHCHmPQzXtc5fbI8=
+Received: by 10.142.214.11 with SMTP id m11mr1743123wfg.95.1214812402059;
+        Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
+Received: by 10.143.29.11 with HTTP; Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
+In-Reply-To: <20080629224541.9267.19258.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86890>
 
-"Fernando J. Pereda" <ferdy@ferdyx.org> writes:
+On Mon, Jun 30, 2008 at 12:45 AM, Karl Hasselstr=F6m <kha@treskal.com> =
+wrote:
+> (The implicit sink testcase actually passes, but that's just because
+> the test suite can't distinguish between a program bug and an orderly
+> abort.)
 
-> +if test "$(id -u)" -eq 0
-> +then
-> +	test_expect_success 'root writes to unwritable places, skipping test' :
-> +	test_done
-> +	exit
-> +fi
+Yes it can, that's where "test_must_fail" comes in.
 
-Yet another place that would profit from test_skip in test-lib.sh...
-(Junio uses "say skip" instead of "test_expect_success" in the place
-like above here).
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+<snip>
+
+> +test_expect_success 'sink without applied patches' '
+> +    test_must_fail stg sink
+> +'
+> +
+
+Like that.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
