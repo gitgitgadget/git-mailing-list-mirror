@@ -1,129 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: pread() over NFS (again) [1.5.5.4]
-Date: Sun, 29 Jun 2008 20:32:03 -0400
-Message-ID: <20080630003203.GJ11793@spearce.org>
-References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com> <20080626204606.GX11793@spearce.org> <7vskuzq5ix.fsf@gitster.siamese.dyndns.org> <65688C06-BB6A-4E95-A4B9-A1A7C206BE2E@sent.com> <7vhcbfojgf.fsf@gitster.siamese.dyndns.org> <20080627025715.GB19568@fieldses.org> <1214578229.7437.14.camel@localhost>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
+ /etc/gitconfig
+Date: Mon, 30 Jun 2008 01:41:54 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806300134200.9925@racer>
+References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
+ <alpine.DEB.1.00.0806292248160.9925@racer> <alpine.LNX.1.00.0806291821520.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <gitster@pobox.com>, logank@sent.com,
-	Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org,
-	Trond Myklebust <trond@netapp.com>
-To: Trond Myklebust <Trond.Myklebust@netapp.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 02:33:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 02:44:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KD7KS-0007TV-AW
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 02:33:12 +0200
+	id 1KD7Vi-0001md-9E
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 02:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbYF3AcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 20:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbYF3AcP
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 20:32:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36492 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbYF3AcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 20:32:14 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KD7JD-0006jV-3j; Sun, 29 Jun 2008 20:31:55 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 41AEE20FBAE; Sun, 29 Jun 2008 20:32:04 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1214578229.7437.14.camel@localhost>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753182AbYF3Anx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2008 20:43:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYF3Anx
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 20:43:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44527 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751950AbYF3Anw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2008 20:43:52 -0400
+Received: (qmail invoked by alias); 30 Jun 2008 00:43:50 -0000
+Received: from 87.113.36.200.plusnet.pte-ag1.dyn.plus.net (EHLO racer.local) [87.113.36.200]
+  by mail.gmx.net (mp046) with SMTP; 30 Jun 2008 02:43:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19cE8ZfXd1c9xgeBbsaZpIoagFegFy09gznFyhlNc
+	wNvBrs4IEN7xjS
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.LNX.1.00.0806291821520.19665@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86852>
 
-Trond Myklebust <Trond.Myklebust@netapp.com> wrote:
-> On Thu, 2008-06-26 at 22:57 -0400, J. Bruce Fields wrote:
-> > On Thu, Jun 26, 2008 at 04:38:40PM -0700, Junio C Hamano wrote:
-> > > logank@sent.com writes:
-> > > 
-> > > > On Jun 26, 2008, at 1:56 PM, Junio C Hamano wrote:
-> > > >
-> > > >>> "The file shouldn't be short unless someone truncated it, or there
-> > > >>> is a bug in index-pack.  Neither is very likely, but I don't think
-> > > >>> we would want to retry pread'ing the same block forever.
-> > > >>
-> > > >> I don't think we would want to retry even once.  Return value of 0
-> > > >> from
-> > > >> pread is defined to be an EOF, isn't it?
-> > > >
-> > > > No, it seems to be a simple error-out in this case. We have 2.4.20
-> > > > systems with nfs-utils 0.3.3 and used to frequently get the same error
-> > > > while pushing. I made a similar change back in February and haven't
-> > > > had a problem since:
-> > > >
-> > > > diff --git a/index-pack.c b/index-pack.c
-> > > > index 5ac91ba..85c8bdb 100644
-> > > > --- a/index-pack.c
-> > > > +++ b/index-pack.c
-> > > > @@ -313,7 +313,14 @@ static void *get_data_from_pack(struct
-> > > > object_entry *obj)
-> > > > 	src = xmalloc(len);
-> > > > 	data = src;
-> > > > 	do {
-> > > > +		// It appears that if multiple threads read across NFS, the
-> > > > +		// second read will fail. I know this is awful, but we wait for
-> > > > +		// a little bit and try again.
-> > > > 		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
-> > > > +		if (n <= 0) {
-> > > > +			sleep(1);
-> > > > +			n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
-> > > > +		}
-> > > > 		if (n <= 0)
-> > > > 			die("cannot pread pack file: %s", strerror(errno));
-> > > > 		rdy += n;
-> > > >
-> > > > I use a sleep request since it seems less likely that the other thread
-> > > > will have an outstanding request after a second of waiting.
-> > > 
-> > > Gaah.  Don't we have NFS experts in house?  Bruce, perhaps?
-> > 
-> > Trond, you don't have any idea why a 2.6.9-42.0.8.ELsmp client (2.4.28
-> > server) might be returning spurious 0's from pread()?
-> > 
-> > Seems like everything is happening from that one client--the file isn't
-> > being simultaneously accessed from the server or from another client.
+Hi,
+
+On Sun, 29 Jun 2008, Daniel Barkalow wrote:
+
+> On Sun, 29 Jun 2008, Johannes Schindelin wrote:
 > 
-> Is the file only being read, or could there be a simultaneous write to
-> the same file? I'm surmising this could be an effect resulting from
-> simultaneous cache invalidations: prior to Linux 2.6.20 or so, we
-> weren't rigorously following the VFS/VM rules for page locking, and so
-> page cache invalidation in particular could have some curious
-> side-effects.
+> > On Sun, 29 Jun 2008, Daniel Barkalow wrote:
+> > 
+> > > Did we even make a commitment on whether:
+> > > 
+> > > GIT_CONFIG=foo git clone bar
+> > > 
+> > > must ignore the environment variable, or simply doesn't necessarily 
+> > > obey it?
+> > 
+> > I'd rather strongly argue that no matter what is the answer to this 
+> > question, we _HAVE TO_ unsetenv() GIT_CONFIG at some stage, otherwise 
+> > no .git/config will be written.
+> 
+> Why should .git/config get written?
 
-The file was created and opened O_CREAT|O_EXCL|O_RDWR, by this
-process, written linearly using write(2), without any lseeks.
-We kept the file descriptor open and starting issuing pread(2)
-calls for earlier offsets we had alread written.  One of those
-kicks back EOF far too early (and results in this bug report).
+Because the user asked for a clone, where she reasonably expects a git 
+repository with all the [core] and the initial [remote "origin"] settings 
+to be written as it should be, _even if_ setting the config to somewhere 
+else?  Hmm?
 
-Note the only accesses we are using is write(2) and pread(2), and
-once we start reading we don't ever go back to writing.  The pread(2)
-calls are typically issued in ascending offsets, and we read each
-position only once.  This is to try and take advantage of any
-read-ahead the kernel may be able to do.  The pread(2) calls are
-rarely (if ever) on a block/page boundary.
+IMITCNVHO it would be a serious mistake to write the config somewhere else 
+with "clone".
 
-Nobody else should know about this file. Its written to a temporary
-name and no other well behaved processes would attempt to read
-the file until it gets closed and renamed to its final destination.
-We haven't reached that far in the processing when we get this error,
-so there should be only one file descriptor open on the inode, and
-its the same one that wrote the data.
+If that still does not convince you, "git init" also writes to 
+".git/config" regardless of the user's (possibly bogus) GIT_CONFIG.
 
--- 
-Shawn.
+It is just such a basic thing that you must _not_ use GIT_CONFIG for 
+writing with git clone or git init.
+
+Ciao,
+Dscho
