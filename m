@@ -1,223 +1,256 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [RFC/PATCH] Documentation: be consistent about "git-" versus "git
- "
-Date: Mon, 30 Jun 2008 02:30:12 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0806300223030.5848@harper.uchicago.edu>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Only use GIT_CONFIG in "git config", not other programs
+Date: Mon, 30 Jun 2008 03:37:47 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0806300328380.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 30 09:31:13 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 09:38:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDDqy-0006fe-FC
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:31:13 +0200
+	id 1KDDyJ-00008q-65
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751553AbYF3HaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 03:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbYF3HaP
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:30:15 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:46546 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229AbYF3HaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 03:30:14 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m5U7UJxL008075
-	for <git@vger.kernel.org>; Mon, 30 Jun 2008 02:30:19 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m5U7UCjK006354
-	for <git@vger.kernel.org>; Mon, 30 Jun 2008 02:30:12 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+	id S1752408AbYF3Hhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 03:37:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752544AbYF3Hhu
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:37:50 -0400
+Received: from iabervon.org ([66.92.72.58]:43482 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752333AbYF3Hht (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 03:37:49 -0400
+Received: (qmail 24305 invoked by uid 1000); 30 Jun 2008 07:37:47 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Jun 2008 07:37:47 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86888>
 
-I guess this patch is too long (168 KB). You can find it at
-<http://home.uchicago.edu/~jrnieder/20080630-git-documentation-patch.txt>.
+For everything other than using "git config" to read or write a
+git-style config file that isn't the current repo's config file,
+GIT_CONFIG was actively detrimental. Rather than argue over which
+programs are important enough to have work anyway, just fix all of
+them at the root.
 
-In a world where git-* are not in $(bindir), using "git-command
-<parameters>" in examples in the documentation is not a good
-idea. On the other hand, it is convenient for commands to be
-named with one word, not two, the manpages are still called
-"git-command (1)", and the user is not going to be able to escape
-seeing "git-command" in the "wild" from time to time anyway. What
-to do?
+Also removes GIT_LOCAL_CONFIG, which would only be useful for programs
+that do want to use global git-specific config, but not the repo's own
+git-specific config, and want to use some other, presumably
+git-specific config. Despite being documented, I can't find any sign that 
+it was ever used.
 
-This patch keeps the dash when naming an operation, command,
-program, process, or action but tries to be dashless in all
-complete command lines ready to be entered at a shell (i.e.,
-without options omitted).
-
-The changes consist mostly of adding and removing dashes
-accordingly. Other changes:
-
- * "git clone" has been replaced with "git clone <repo>" (rather
-   than "git-clone") in the example at the beginning of
-   user-manual.txt in an attempt to make the switching between
-   dashed and dashless commands a little less confusing.
- * git-merge-one-file has been replaced with $(git
-   --exec-path)/git-merge-one-file in two places
- * /usr/bin/git has been replaced with /usr/bin/git-daemon in the
-   sample inetd.conf lines in git-daemon(1).  The analogous
-   changes in git-cvsserver(1) have *not* been made.
- * Some whitespace changes (spaces changing into dashes
-   disallowed some line breaks; some sequences of spaces have been
-   changed into tabs in the same line as other changes)
-
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
-	I just realized that most of the rest of the man pages
-	(aside from git-{sh-setup,parse-remote} (1)) are not ready
-	for the Git tools to move, either. Here's a start towards
-	less confusing documentation for that situation.
+This passes all of the tests, including the git-svn ones. It seems that, 
+in fact, GIT_CONFIG was only used to control "git config" in scripts and 
+tests are protected with GIT_CONFIG_NOSYSTEM and GIT_CONFIG_NOGLOBAL.
 
-	Sorry for the enormous patch. Hope it gives someone some
-	amusement. It is only an RFC because
+Along with this, my clone patch makes most sense, because the environment 
+variable won't do anything anyway, so we don't have to change it at all.
 
-	1) I am not sure whether the criterion for dashworthiness
-	   I used is the right one. I tried to follow the lead of
-	   good existing documentation, but there is no one
-	   convention used throughout.
-	2) I also want to make the formatting a bit more consistent
-	   (always 'git-command' or always `git-command`) in
-	   another patch if that is appropriate, while I am at it.
-	   So I don't want this commited yet.
-	3) I would be much more comfortable if I could run some
-	   commands to quickly check that this patch only does
-	   what I have claimed it does.
+ Documentation/git-config.txt |    9 --------
+ builtin-config.c             |   15 ++++++-------
+ cache.h                      |    2 +-
+ config.c                     |   47 +++++++++++++++++------------------------
+ 4 files changed, 28 insertions(+), 45 deletions(-)
 
-	Thoughts? Suggestions?
-
- Documentation/git-add.txt                |    2 +-
- Documentation/git-am.txt                 |    4 +-
- Documentation/git-annotate.txt           |    2 +-
- Documentation/git-apply.txt              |    2 +-
- Documentation/git-archimport.txt         |    2 +-
- Documentation/git-archive.txt            |    2 +-
- Documentation/git-blame.txt              |    2 +-
- Documentation/git-branch.txt             |    8 +-
- Documentation/git-bundle.txt             |   14 ++--
- Documentation/git-cat-file.txt           |    4 +-
- Documentation/git-check-attr.txt         |    2 +-
- Documentation/git-check-ref-format.txt   |    4 +-
- Documentation/git-checkout-index.txt     |   20 +++---
- Documentation/git-checkout.txt           |    8 +-
- Documentation/git-cherry-pick.txt        |    2 +-
- Documentation/git-clean.txt              |    2 +-
- Documentation/git-clone.txt              |    2 +-
- Documentation/git-commit-tree.txt        |    2 +-
- Documentation/git-commit.txt             |    4 +-
- Documentation/git-config.txt             |   26 ++++----
- Documentation/git-count-objects.txt      |    4 +-
- Documentation/git-cvsexportcommit.txt    |    9 ++-
- Documentation/git-cvsimport.txt          |    4 +-
- Documentation/git-cvsserver.txt          |    2 +-
- Documentation/git-daemon.txt             |   10 ++--
- Documentation/git-describe.txt           |   10 ++--
- Documentation/git-diff-files.txt         |    2 +-
- Documentation/git-diff-index.txt         |   12 ++--
- Documentation/git-diff-tree.txt          |    8 +-
- Documentation/git-diff.txt               |   18 +++---
- Documentation/git-fast-import.txt        |    8 +-
- Documentation/git-fetch-pack.txt         |    2 +-
- Documentation/git-fetch.txt              |    4 +-
- Documentation/git-filter-branch.txt      |    4 +-
- Documentation/git-fmt-merge-msg.txt      |    4 +-
- Documentation/git-for-each-ref.txt       |    8 +-
- Documentation/git-format-patch.txt       |    2 +-
- Documentation/git-fsck-objects.txt       |    2 +-
- Documentation/git-fsck.txt               |    4 +-
- Documentation/git-gc.txt                 |    4 +-
- Documentation/git-get-tar-commit-id.txt  |    2 +-
- Documentation/git-grep.txt               |    2 +-
- Documentation/git-hash-object.txt        |    2 +-
- Documentation/git-http-fetch.txt         |    2 +-
- Documentation/git-http-push.txt          |    2 +-
- Documentation/git-imap-send.txt          |    4 +-
- Documentation/git-index-pack.txt         |    4 +-
- Documentation/git-init-db.txt            |    2 +-
- Documentation/git-init.txt               |    6 +-
- Documentation/git-instaweb.txt           |    4 +-
- Documentation/git-lost-found.txt         |    2 +-
- Documentation/git-ls-files.txt           |    2 +-
- Documentation/git-ls-remote.txt          |    2 +-
- Documentation/git-ls-tree.txt            |    2 +-
- Documentation/git-mailinfo.txt           |    6 +-
- Documentation/git-mailsplit.txt          |    2 +-
- Documentation/git-merge-base.txt         |    4 +-
- Documentation/git-merge-file.txt         |    4 +-
- Documentation/git-merge-index.txt        |    6 +-
- Documentation/git-merge-tree.txt         |    2 +-
- Documentation/git-merge.txt              |    8 +-
- Documentation/git-mergetool.txt          |   16 +++---
- Documentation/git-mktag.txt              |    2 +-
- Documentation/git-mv.txt                 |    6 +-
- Documentation/git-name-rev.txt           |    2 +-
- Documentation/git-pack-objects.txt       |    2 +-
- Documentation/git-pack-redundant.txt     |    4 +-
- Documentation/git-pack-refs.txt          |    8 +-
- Documentation/git-patch-id.txt           |    2 +-
- Documentation/git-peek-remote.txt        |    2 +-
- Documentation/git-prune-packed.txt       |    2 +-
- Documentation/git-prune.txt              |    2 +-
- Documentation/git-pull.txt               |    2 +-
- Documentation/git-push.txt               |    2 +-
- Documentation/git-quiltimport.txt        |    2 +-
- Documentation/git-read-tree.txt          |   32 +++++-----
- Documentation/git-rebase.txt             |   18 +++---
- Documentation/git-receive-pack.txt       |    6 +-
- Documentation/git-relink.txt             |    2 +-
- Documentation/git-remote.txt             |   12 ++--
- Documentation/git-repack.txt             |   10 ++--
- Documentation/git-repo-config.txt        |    2 +-
- Documentation/git-request-pull.txt       |    2 +-
- Documentation/git-rerere.txt             |    4 +-
- Documentation/git-rev-list.txt           |   10 ++--
- Documentation/git-rev-parse.txt          |    6 +-
- Documentation/git-revert.txt             |    2 +-
- Documentation/git-rm.txt                 |    6 +-
- Documentation/git-send-email.txt         |    2 +-
- Documentation/git-send-pack.txt          |    2 +-
- Documentation/git-shortlog.txt           |    6 +-
- Documentation/git-show-branch.txt        |    4 +-
- Documentation/git-show-index.txt         |    2 +-
- Documentation/git-show-ref.txt           |    6 +-
- Documentation/git-show.txt               |    2 +-
- Documentation/git-stash.txt              |   14 ++--
- Documentation/git-status.txt             |    6 +-
- Documentation/git-stripspace.txt         |    2 +-
- Documentation/git-submodule.txt          |   10 ++--
- Documentation/git-svn.txt                |   34 +++++-----
- Documentation/git-symbolic-ref.txt       |    2 +-
- Documentation/git-tag.txt                |   16 +++---
- Documentation/git-tar-tree.txt           |    2 +-
- Documentation/git-unpack-file.txt        |    2 +-
- Documentation/git-unpack-objects.txt     |    2 +-
- Documentation/git-update-index.txt       |   12 ++--
- Documentation/git-update-ref.txt         |   10 ++--
- Documentation/git-update-server-info.txt |    2 +-
- Documentation/git-upload-archive.txt     |    2 +-
- Documentation/git-upload-pack.txt        |    2 +-
- Documentation/git-var.txt                |    4 +-
- Documentation/git-verify-pack.txt        |    2 +-
- Documentation/git-verify-tag.txt         |    2 +-
- Documentation/git-web--browse.txt        |    2 +-
- Documentation/git-whatchanged.txt        |    6 +-
- Documentation/git-write-tree.txt         |    2 +-
- Documentation/gitattributes.txt          |   14 ++--
- Documentation/gitcore-tutorial.txt       |   94 +++++++++++++++---------------
- Documentation/gitcvs-migration.txt       |    8 +-
- Documentation/gitdiffcore.txt            |    2 +-
- Documentation/githooks.txt               |   10 ++--
- Documentation/gitignore.txt              |    4 +-
- Documentation/gitrepository-layout.txt   |   20 +++---
- Documentation/gittutorial-2.txt          |   18 +++---
- Documentation/gittutorial.txt            |   34 +++++-----
- Documentation/user-manual.txt            |   76 ++++++++++++------------
- 126 files changed, 456 insertions(+), 455 deletions(-)
-
-Patch at
-<http://home.uchicago.edu/~jrnieder/20080630-git-documentation-patch.txt>.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index c90421e..30c8432 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -191,11 +191,6 @@ variables. The '--global' and the '--system' options will limit the file used
+ to the global or system-wide file respectively. The GIT_CONFIG environment
+ variable has a similar effect, but you can specify any filename you want.
+ 
+-The GIT_CONFIG_LOCAL environment variable on the other hand only changes
+-the name used instead of the repository configuration file. The global and
+-the system-wide configuration files will still be read. (For writing options
+-this will obviously result in the same behavior as using GIT_CONFIG.)
+-
+ 
+ ENVIRONMENT
+ -----------
+@@ -205,10 +200,6 @@ GIT_CONFIG::
+ 	Using the "--global" option forces this to ~/.gitconfig. Using the
+ 	"--system" option forces this to $(prefix)/etc/gitconfig.
+ 
+-GIT_CONFIG_LOCAL::
+-	Take the configuration from the given file instead if .git/config.
+-	Still read the global and the system-wide configuration files, though.
+-
+ See also <<FILES>>.
+ 
+ 
+diff --git a/builtin-config.c b/builtin-config.c
+index 3a441ef..39f63d7 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -81,12 +81,10 @@ static int get_value(const char* key_, const char* regex_)
+ 	char *global = NULL, *repo_config = NULL;
+ 	const char *system_wide = NULL, *local;
+ 
+-	local = getenv(CONFIG_ENVIRONMENT);
++	local = config_exclusive_filename;
+ 	if (!local) {
+ 		const char *home = getenv("HOME");
+-		local = getenv(CONFIG_LOCAL_ENVIRONMENT);
+-		if (!local)
+-			local = repo_config = xstrdup(git_path("config"));
++		local = repo_config = xstrdup(git_path("config"));
+ 		if (git_config_global() && home)
+ 			global = xstrdup(mkpath("%s/.gitconfig", home));
+ 		if (git_config_system())
+@@ -289,6 +287,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	char* value;
+ 	const char *file = setup_git_directory_gently(&nongit);
+ 
++	config_exclusive_filename = getenv(CONFIG_ENVIRONMENT);
++
+ 	while (1 < argc) {
+ 		if (!strcmp(argv[1], "--int"))
+ 			type = T_INT;
+@@ -309,14 +309,13 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			char *home = getenv("HOME");
+ 			if (home) {
+ 				char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+-				setenv(CONFIG_ENVIRONMENT, user_config, 1);
+-				free(user_config);
++				config_exclusive_filename = user_config;
+ 			} else {
+ 				die("$HOME not set");
+ 			}
+ 		}
+ 		else if (!strcmp(argv[1], "--system"))
+-			setenv(CONFIG_ENVIRONMENT, git_etc_gitconfig(), 1);
++			config_exclusive_filename = git_etc_gitconfig();
+ 		else if (!strcmp(argv[1], "--file") || !strcmp(argv[1], "-f")) {
+ 			if (argc < 3)
+ 				usage(git_config_set_usage);
+@@ -325,7 +324,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 						       argv[2]);
+ 			else
+ 				file = argv[2];
+-			setenv(CONFIG_ENVIRONMENT, file, 1);
++			config_exclusive_filename = file;
+ 			argc--;
+ 			argv++;
+ 		}
+diff --git a/cache.h b/cache.h
+index 64ef86e..bab0115 100644
+--- a/cache.h
++++ b/cache.h
+@@ -298,7 +298,6 @@ static inline enum object_type object_type(unsigned int mode)
+ #define GRAFT_ENVIRONMENT "GIT_GRAFT_FILE"
+ #define TEMPLATE_DIR_ENVIRONMENT "GIT_TEMPLATE_DIR"
+ #define CONFIG_ENVIRONMENT "GIT_CONFIG"
+-#define CONFIG_LOCAL_ENVIRONMENT "GIT_CONFIG_LOCAL"
+ #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+@@ -743,6 +742,7 @@ extern int check_repository_format_version(const char *var, const char *value, v
+ extern int git_config_system(void);
+ extern int git_config_global(void);
+ extern int config_error_nonbool(const char *);
++extern const char *config_exclusive_filename;
+ 
+ #define MAX_GITNAME (1000)
+ extern char git_default_email[MAX_GITNAME];
+diff --git a/config.c b/config.c
+index 58749bf..2862cc4 100644
+--- a/config.c
++++ b/config.c
+@@ -16,6 +16,8 @@ static int config_linenr;
+ static int config_file_eof;
+ static int zlib_compression_seen;
+ 
++const char *config_exclusive_filename = NULL;
++
+ static int get_next_char(void)
+ {
+ 	int c;
+@@ -611,31 +613,28 @@ int git_config(config_fn_t fn, void *data)
+ {
+ 	int ret = 0;
+ 	char *repo_config = NULL;
+-	const char *home = NULL, *filename;
++	const char *home = NULL;
+ 
+ 	/* $GIT_CONFIG makes git read _only_ the given config file,
+ 	 * $GIT_CONFIG_LOCAL will make it process it in addition to the
+ 	 * global config file, the same way it would the per-repository
+ 	 * config file otherwise. */
+-	filename = getenv(CONFIG_ENVIRONMENT);
+-	if (!filename) {
+-		if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
+-			ret += git_config_from_file(fn, git_etc_gitconfig(),
+-				data);
+-		home = getenv("HOME");
+-		filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
+-		if (!filename)
+-			filename = repo_config = xstrdup(git_path("config"));
+-	}
++	if (config_exclusive_filename)
++		return git_config_from_file(fn, config_exclusive_filename, data);
++	if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
++		ret += git_config_from_file(fn, git_etc_gitconfig(),
++					    data);
+ 
++	home = getenv("HOME");
+ 	if (git_config_global() && home) {
+ 		char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+ 		if (!access(user_config, R_OK))
+-			ret = git_config_from_file(fn, user_config, data);
++			ret += git_config_from_file(fn, user_config, data);
+ 		free(user_config);
+ 	}
+ 
+-	ret += git_config_from_file(fn, filename, data);
++	repo_config = xstrdup(git_path("config"));
++	ret += git_config_from_file(fn, repo_config, data);
+ 	free(repo_config);
+ 	return ret;
+ }
+@@ -873,13 +872,10 @@ int git_config_set_multivar(const char* key, const char* value,
+ 	struct lock_file *lock = NULL;
+ 	const char* last_dot = strrchr(key, '.');
+ 
+-	config_filename = getenv(CONFIG_ENVIRONMENT);
+-	if (!config_filename) {
+-		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
+-		if (!config_filename)
+-			config_filename  = git_path("config");
+-	}
+-	config_filename = xstrdup(config_filename);
++	if (config_exclusive_filename)
++		config_filename = xstrdup(config_exclusive_filename);
++	else
++		config_filename = xstrdup(git_path("config"));
+ 
+ 	/*
+ 	 * Since "key" actually contains the section name and the real
+@@ -1136,13 +1132,10 @@ int git_config_rename_section(const char *old_name, const char *new_name)
+ 	int out_fd;
+ 	char buf[1024];
+ 
+-	config_filename = getenv(CONFIG_ENVIRONMENT);
+-	if (!config_filename) {
+-		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
+-		if (!config_filename)
+-			config_filename  = git_path("config");
+-	}
+-	config_filename = xstrdup(config_filename);
++	if (config_exclusive_filename)
++		config_filename = xstrdup(config_exclusive_filename);
++	else
++		config_filename = xstrdup(git_path("config"));
+ 	out_fd = hold_lock_file_for_update(lock, config_filename, 0);
+ 	if (out_fd < 0) {
+ 		ret = error("could not lock config file %s", config_filename);
+-- 
+1.5.6.1.103.g1c643
