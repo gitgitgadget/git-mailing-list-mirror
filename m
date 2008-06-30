@@ -1,103 +1,91 @@
-From: "Denis Bueno" <dbueno@gmail.com>
-Subject: Git clone fatal when using git-shell account
-Date: Mon, 30 Jun 2008 14:05:13 -0400
-Message-ID: <6dbd4d000806301105x77b853caj404a1001dc4749a7@mail.gmail.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [msysGit] How to reduce remaining differences to 4msysgit? (was What's cooking in git.git (topics))
+Date: Mon, 30 Jun 2008 20:47:56 +0200
+Message-ID: <200806302047.56935.johannes.sixt@telecom.at>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 20:06:31 2008
+Cc: msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: prohaska@zib.de
+X-From: git-owner@vger.kernel.org Mon Jun 30 20:49:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDNlW-000318-Ij
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 20:06:14 +0200
+	id 1KDOQt-0001Cu-EV
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 20:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbYF3SFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 14:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYF3SFR
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 14:05:17 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:38446 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308AbYF3SFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 14:05:15 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so798811fgg.17
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 11:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=fgFYWk2HyznXBHOOfgwBSQFcJBwFXESla1IFHfJVG4o=;
-        b=afYcP7VF7qZTpvojj2+DZZv3G+AIWLAJDzXi5uOzp9ubRZ39iPmvxOIkHyx8Dm5gvz
-         YNXvBwpHcgdpuVgH0JpJRF6sVmDyk2e+eLDIvWiDoxXDMw+q+3+bmYu9JvHavW8/i6Ic
-         jitog8uYEQQ4ivubfA66V+oqZ3bkWN/uoBhJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=FisRFYX6buOM+E9lbGuHnFJlOLk9EOJqymDaDqf0RTl75SdyN7Exv5UpjUdaN6Ge33
-         D66r/AIge+ipFwuLAJgL2dnujAHzhFxCi19IoHnWwJvWKdH0tTB9jRodYuijy3dcBj4l
-         fYVKiXT1rF52KXyyXFNQFgIk2xmVVzoxw2iT8=
-Received: by 10.86.27.19 with SMTP id a19mr6510800fga.56.1214849113516;
-        Mon, 30 Jun 2008 11:05:13 -0700 (PDT)
-Received: by 10.86.30.2 with HTTP; Mon, 30 Jun 2008 11:05:13 -0700 (PDT)
+	id S1754137AbYF3SsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 14:48:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbYF3SsA
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 14:48:00 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:35581 "EHLO
+	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753870AbYF3SsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 14:48:00 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id 2C31F33B4F;
+	Mon, 30 Jun 2008 20:47:58 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id E398F11195;
+	Mon, 30 Jun 2008 20:47:57 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86928>
 
-I have a machine containing a "central" git repo, which I access via
-SSH using an account that uses /bin/bash.  From my laptop, doing a
-clone works.  But when I change the shell on the central machine to
-git-shell (which is listed in /etc/shells), the clone fails.
+On Montag, 30. Juni 2008, Steffen Prohaska wrote:
+> On Jun 30, 2008, at 11:08 AM, Junio C Hamano wrote:
+> > * MinGW will be in.
+>
+> If this is done, we should be able to create the msysgit release
+> directly
+> from Junio's master.  Hannes changes alone, however, are not sufficient,
+> because some commits have been parked in 4msysgit.  Now that MinGW is
+> on Junio's next and Junio's next is also on 4msysgit's next, it it easy
+> to see how much is left to do by running:
+>
+>     git diff --stat junio/next..4msysgit/next
+>
+> junio is a remote pointing to git://git.kernel.org/pub/scm/git/git.git.
+> 4msysgit is a remote pointing to git://repo.or.cz/git/mingw/
+> 4msysgit.git.
+> I attached the output below.
+>
+> How should we proceed to get rid of the differences?
+>
+> Should we prepare and send patches directly to the official git list
+> now?
+> Should we wait until the first MinGW branch is on master?
+> Should we prepare a whole patch series?  Maybe Hannes would maintain
+> this
+> patch series.
 
-Clone using /bin/bash:
+Until 1.6.0 is released, a number of _required_ patches will have to be 
+included. There are two sorts of them:
 
-    tmp[82] > git clone ssh://cameron@churn/Users/Shared/src/jmatch.git
-    Initialize jmatch/.git
-    Initialized empty Git repository in /private/tmp/jmatch/.git/
-    Password:
-    remote: Counting objects: 1690, done.
-    remote: Compressing objremote: ects: 100% (1239/1239), done.
-    remote: Total 1690 (delta 424), reused 1683 (delta 422)
-    Receiving objects: 100% (1690/1690), 3.62 MiB | 2332 KiB/s, done.
-    Resolving deltas: 100% (424/424), done.
+* Patches that touch generic code, like replacing c == '/' by is_dir_sep(c).
 
-Clone using /opt/local/bin/git-shell:
+* Patches that are purly Windows specific.
 
-    tmp[81] > git clone ssh://cameron@churn/Users/Shared/src/jmatch.git
-    Initialize jmatch/.git
-    Initialized empty Git repository in /private/tmp/jmatch/.git/
-    Password:
-    fatal: The remote end hung up unexpectedly
+The former I intend to submit to the mailing list directly and as soon as 
+possible (but if I can intervene on newly submitted patches early so that a 
+fixup is not even necessary, then even better). The latter I intend to 
+collect in a branch and submit as a batch. Let's see how this works out.
 
-Laptop (Tiger OS X 10.4.11):
+Then there are the extra patches in 4msysgit. From my POV, they are not 
+_required_ because I can appearently work with git on Windows without them. I 
+think some of them are not necessary. Can we go through them again?
 
-    git version 1.5.6.1
+And then there are the patches to the t/ directory. I do not target them for 
+1.6.0, but I do want to prepare another series with them.
 
-Central (Leopard OS X 10.5):
-
-    git version 1.5.6.1
-
-Configuration of repository:
-
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = true
-        ignorecase = true
-        sharedrepository = 1
-[receive]
-        denyNonFastforwards = true
-
-
-
-I couldn't find this issue discussed anywhere, so, I post in hope that
-someone has run into it before.
-
--- 
-                              Denis
+-- Hannes
