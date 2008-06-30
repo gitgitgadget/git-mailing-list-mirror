@@ -1,256 +1,80 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Only use GIT_CONFIG in "git config", not other programs
-Date: Mon, 30 Jun 2008 03:37:47 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806300328380.19665@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Skip unwritable tests for root
+Date: Mon, 30 Jun 2008 00:39:26 -0700 (PDT)
+Message-ID: <m3vdzrgymx.fsf@localhost.localdomain>
+References: <1214809551-14603-1-git-send-email-ferdy@ferdyx.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 09:38:49 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Fernando J. Pereda" <ferdy@ferdyx.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 09:40:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDDyJ-00008q-65
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:38:47 +0200
+	id 1KDE04-0000hX-Db
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbYF3Hhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 03:37:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752544AbYF3Hhu
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:37:50 -0400
-Received: from iabervon.org ([66.92.72.58]:43482 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752333AbYF3Hht (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 03:37:49 -0400
-Received: (qmail 24305 invoked by uid 1000); 30 Jun 2008 07:37:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Jun 2008 07:37:47 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752587AbYF3Hjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 03:39:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYF3Hjb
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:39:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:48365 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752364AbYF3Hja (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 03:39:30 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so403937nfc.21
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 00:39:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=/1c89Rt30Q8jg4fx8j0M/7RCuF6zSH2WzlqRUb8ea4E=;
+        b=Lnv757lKdkMU77N0+KxZGcJ95hruCrXB7OjKHxKFUfzHeSAy8bgVFsH3P9DMLZxGVc
+         99VHPPwdlpZbSdlJBOJYrfjVXk5pxSnTN767XPHiW4IcBhBXg4yDrAXQRIsV39MKmsDL
+         bgE0TTdgXO87gcxsT9gtVNpR8EF6elRR0OFZI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=mD319AigXYLUlZVsDgs6id41oqBnx2j4ESdx2H29ro4SreMfQqwuRoBYsCMlU8jIFX
+         sfS1Py4z7I3WEQgHgx0sbTiGRMdVB33ENhd6L42QseAM1gQdsfCM99SggfPTXra1AJtD
+         wGrr0+j0vEb3w91pVtu6zrQfW6dZX1D9Ig7gc=
+Received: by 10.210.39.20 with SMTP id m20mr3857327ebm.49.1214811567115;
+        Mon, 30 Jun 2008 00:39:27 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.210.122])
+        by mx.google.com with ESMTPS id z33sm6130990ikz.0.2008.06.30.00.39.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Jun 2008 00:39:26 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5U7dLSO017282;
+	Mon, 30 Jun 2008 09:39:22 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5U7dIMo017279;
+	Mon, 30 Jun 2008 09:39:18 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1214809551-14603-1-git-send-email-ferdy@ferdyx.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86889>
 
-For everything other than using "git config" to read or write a
-git-style config file that isn't the current repo's config file,
-GIT_CONFIG was actively detrimental. Rather than argue over which
-programs are important enough to have work anyway, just fix all of
-them at the root.
+"Fernando J. Pereda" <ferdy@ferdyx.org> writes:
 
-Also removes GIT_LOCAL_CONFIG, which would only be useful for programs
-that do want to use global git-specific config, but not the repo's own
-git-specific config, and want to use some other, presumably
-git-specific config. Despite being documented, I can't find any sign that 
-it was ever used.
+> +if test "$(id -u)" -eq 0
+> +then
+> +	test_expect_success 'root writes to unwritable places, skipping test' :
+> +	test_done
+> +	exit
+> +fi
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-This passes all of the tests, including the git-svn ones. It seems that, 
-in fact, GIT_CONFIG was only used to control "git config" in scripts and 
-tests are protected with GIT_CONFIG_NOSYSTEM and GIT_CONFIG_NOGLOBAL.
-
-Along with this, my clone patch makes most sense, because the environment 
-variable won't do anything anyway, so we don't have to change it at all.
-
- Documentation/git-config.txt |    9 --------
- builtin-config.c             |   15 ++++++-------
- cache.h                      |    2 +-
- config.c                     |   47 +++++++++++++++++------------------------
- 4 files changed, 28 insertions(+), 45 deletions(-)
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index c90421e..30c8432 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -191,11 +191,6 @@ variables. The '--global' and the '--system' options will limit the file used
- to the global or system-wide file respectively. The GIT_CONFIG environment
- variable has a similar effect, but you can specify any filename you want.
- 
--The GIT_CONFIG_LOCAL environment variable on the other hand only changes
--the name used instead of the repository configuration file. The global and
--the system-wide configuration files will still be read. (For writing options
--this will obviously result in the same behavior as using GIT_CONFIG.)
--
- 
- ENVIRONMENT
- -----------
-@@ -205,10 +200,6 @@ GIT_CONFIG::
- 	Using the "--global" option forces this to ~/.gitconfig. Using the
- 	"--system" option forces this to $(prefix)/etc/gitconfig.
- 
--GIT_CONFIG_LOCAL::
--	Take the configuration from the given file instead if .git/config.
--	Still read the global and the system-wide configuration files, though.
--
- See also <<FILES>>.
- 
- 
-diff --git a/builtin-config.c b/builtin-config.c
-index 3a441ef..39f63d7 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -81,12 +81,10 @@ static int get_value(const char* key_, const char* regex_)
- 	char *global = NULL, *repo_config = NULL;
- 	const char *system_wide = NULL, *local;
- 
--	local = getenv(CONFIG_ENVIRONMENT);
-+	local = config_exclusive_filename;
- 	if (!local) {
- 		const char *home = getenv("HOME");
--		local = getenv(CONFIG_LOCAL_ENVIRONMENT);
--		if (!local)
--			local = repo_config = xstrdup(git_path("config"));
-+		local = repo_config = xstrdup(git_path("config"));
- 		if (git_config_global() && home)
- 			global = xstrdup(mkpath("%s/.gitconfig", home));
- 		if (git_config_system())
-@@ -289,6 +287,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	char* value;
- 	const char *file = setup_git_directory_gently(&nongit);
- 
-+	config_exclusive_filename = getenv(CONFIG_ENVIRONMENT);
-+
- 	while (1 < argc) {
- 		if (!strcmp(argv[1], "--int"))
- 			type = T_INT;
-@@ -309,14 +309,13 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			char *home = getenv("HOME");
- 			if (home) {
- 				char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
--				setenv(CONFIG_ENVIRONMENT, user_config, 1);
--				free(user_config);
-+				config_exclusive_filename = user_config;
- 			} else {
- 				die("$HOME not set");
- 			}
- 		}
- 		else if (!strcmp(argv[1], "--system"))
--			setenv(CONFIG_ENVIRONMENT, git_etc_gitconfig(), 1);
-+			config_exclusive_filename = git_etc_gitconfig();
- 		else if (!strcmp(argv[1], "--file") || !strcmp(argv[1], "-f")) {
- 			if (argc < 3)
- 				usage(git_config_set_usage);
-@@ -325,7 +324,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 						       argv[2]);
- 			else
- 				file = argv[2];
--			setenv(CONFIG_ENVIRONMENT, file, 1);
-+			config_exclusive_filename = file;
- 			argc--;
- 			argv++;
- 		}
-diff --git a/cache.h b/cache.h
-index 64ef86e..bab0115 100644
---- a/cache.h
-+++ b/cache.h
-@@ -298,7 +298,6 @@ static inline enum object_type object_type(unsigned int mode)
- #define GRAFT_ENVIRONMENT "GIT_GRAFT_FILE"
- #define TEMPLATE_DIR_ENVIRONMENT "GIT_TEMPLATE_DIR"
- #define CONFIG_ENVIRONMENT "GIT_CONFIG"
--#define CONFIG_LOCAL_ENVIRONMENT "GIT_CONFIG_LOCAL"
- #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
- #define GITATTRIBUTES_FILE ".gitattributes"
- #define INFOATTRIBUTES_FILE "info/attributes"
-@@ -743,6 +742,7 @@ extern int check_repository_format_version(const char *var, const char *value, v
- extern int git_config_system(void);
- extern int git_config_global(void);
- extern int config_error_nonbool(const char *);
-+extern const char *config_exclusive_filename;
- 
- #define MAX_GITNAME (1000)
- extern char git_default_email[MAX_GITNAME];
-diff --git a/config.c b/config.c
-index 58749bf..2862cc4 100644
---- a/config.c
-+++ b/config.c
-@@ -16,6 +16,8 @@ static int config_linenr;
- static int config_file_eof;
- static int zlib_compression_seen;
- 
-+const char *config_exclusive_filename = NULL;
-+
- static int get_next_char(void)
- {
- 	int c;
-@@ -611,31 +613,28 @@ int git_config(config_fn_t fn, void *data)
- {
- 	int ret = 0;
- 	char *repo_config = NULL;
--	const char *home = NULL, *filename;
-+	const char *home = NULL;
- 
- 	/* $GIT_CONFIG makes git read _only_ the given config file,
- 	 * $GIT_CONFIG_LOCAL will make it process it in addition to the
- 	 * global config file, the same way it would the per-repository
- 	 * config file otherwise. */
--	filename = getenv(CONFIG_ENVIRONMENT);
--	if (!filename) {
--		if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
--			ret += git_config_from_file(fn, git_etc_gitconfig(),
--				data);
--		home = getenv("HOME");
--		filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
--		if (!filename)
--			filename = repo_config = xstrdup(git_path("config"));
--	}
-+	if (config_exclusive_filename)
-+		return git_config_from_file(fn, config_exclusive_filename, data);
-+	if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
-+		ret += git_config_from_file(fn, git_etc_gitconfig(),
-+					    data);
- 
-+	home = getenv("HOME");
- 	if (git_config_global() && home) {
- 		char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
- 		if (!access(user_config, R_OK))
--			ret = git_config_from_file(fn, user_config, data);
-+			ret += git_config_from_file(fn, user_config, data);
- 		free(user_config);
- 	}
- 
--	ret += git_config_from_file(fn, filename, data);
-+	repo_config = xstrdup(git_path("config"));
-+	ret += git_config_from_file(fn, repo_config, data);
- 	free(repo_config);
- 	return ret;
- }
-@@ -873,13 +872,10 @@ int git_config_set_multivar(const char* key, const char* value,
- 	struct lock_file *lock = NULL;
- 	const char* last_dot = strrchr(key, '.');
- 
--	config_filename = getenv(CONFIG_ENVIRONMENT);
--	if (!config_filename) {
--		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
--		if (!config_filename)
--			config_filename  = git_path("config");
--	}
--	config_filename = xstrdup(config_filename);
-+	if (config_exclusive_filename)
-+		config_filename = xstrdup(config_exclusive_filename);
-+	else
-+		config_filename = xstrdup(git_path("config"));
- 
- 	/*
- 	 * Since "key" actually contains the section name and the real
-@@ -1136,13 +1132,10 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 	int out_fd;
- 	char buf[1024];
- 
--	config_filename = getenv(CONFIG_ENVIRONMENT);
--	if (!config_filename) {
--		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
--		if (!config_filename)
--			config_filename  = git_path("config");
--	}
--	config_filename = xstrdup(config_filename);
-+	if (config_exclusive_filename)
-+		config_filename = xstrdup(config_exclusive_filename);
-+	else
-+		config_filename = xstrdup(git_path("config"));
- 	out_fd = hold_lock_file_for_update(lock, config_filename, 0);
- 	if (out_fd < 0) {
- 		ret = error("could not lock config file %s", config_filename);
+Yet another place that would profit from test_skip in test-lib.sh...
+(Junio uses "say skip" instead of "test_expect_success" in the place
+like above here).
 -- 
-1.5.6.1.103.g1c643
+Jakub Narebski
+Poland
+ShadeHawk on #git
