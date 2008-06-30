@@ -1,98 +1,156 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot
-	clone?
-Date: Mon, 30 Jun 2008 13:50:26 +0200
-Message-ID: <20080630115026.GA1336@atjola.homenet>
-References: <200806301149.18115.J.Wielemaker@uva.nl> <m3r6afgrme.fsf@localhost.localdomain> <200806301230.38980.J.Wielemaker@uva.nl> <200806301326.12140.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
+ /etc/gitconfig
+Date: Mon, 30 Jun 2008 12:57:16 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0806301233560.9925@racer>
+References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
+ <alpine.DEB.1.00.0806292248160.9925@racer> <alpine.LNX.1.00.0806291821520.19665@iabervon.org> <7vabh390sc.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806292320300.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Wielemaker <J.Wielemaker@uva.nl>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 13:51:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 14:00:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDHup-0007x6-Ka
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 13:51:28 +0200
+	id 1KDI3G-0001kz-Tu
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 14:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755674AbYF3Lub convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 07:50:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754945AbYF3Lua
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:50:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60812 "HELO mail.gmx.net"
+	id S1757009AbYF3L7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 07:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757101AbYF3L7N
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:59:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50350 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754806AbYF3Lua (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 07:50:30 -0400
-Received: (qmail invoked by alias); 30 Jun 2008 11:50:28 -0000
-Received: from i577B8452.versanet.de (EHLO atjola.local) [87.123.132.82]
-  by mail.gmx.net (mp058) with SMTP; 30 Jun 2008 13:50:28 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/O9Ns8M93OtIgBQXTg13+ls+5ElHNKGqaGbuKGdb
-	1R2DBNuJg3kQe8
-Content-Disposition: inline
-In-Reply-To: <200806301326.12140.jnareb@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756968AbYF3L7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 07:59:12 -0400
+Received: (qmail invoked by alias); 30 Jun 2008 11:59:10 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp005) with SMTP; 30 Jun 2008 13:59:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18xMZoiRaYxtaYUp7dOCIpRrHFGYcfgSZziuhrZl6
+	5S9/rMgV1g1jhY
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.LNX.1.00.0806292320300.19665@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86910>
 
-On 2008.06.30 13:26:10 +0200, Jakub Narebski wrote:
-> Jan Wielemaker wrote:
-> > On Monday 30 June 2008 12:10, Jakub Narebski wrote:
-> >> Jan Wielemaker <J.Wielemaker@uva.nl> writes:
-> >>>
-> >>> I'm a bit puzzled. I have a bare repository, somehow without any =
-files
-> >>> in refs/heads.
-> >>
-> >> Do you have .git/packed-refs file?
-> >=20
-> > Its a bare repo, so I'll forget the .git.  Yes, I have that file an=
-d
-> > it contains nice references,  I checked a few by hand, and they hav=
-e
-> > the same SHA1 as the files I copied.
->=20
-> That is where the refs are instead of being in individual files under
-> refs/ - those are so called "packed refs".
->=20
->   When a ref is  missing from  the traditional $GIT_DIR/refs hierarch=
-y,
->   it is looked up in $GIT_DIR/packed-refs and used if found.
->=20
-> I'm not sure why branches are also packed, because git used to pack
-> only tags and refs which were packed already.
->=20
-> >> How do you have gc.packrefs set ("git config --get gc.packrefs")?
-> >=20
-> > This gives no output, so I guess the answer is 'no'.
->=20
-> In git-config(1) you can find the following:
->=20
->   gc.packrefs::
->         `git gc` does not run `git pack-refs` in a bare repository by
->         default so that older dumb-transport clients can still fetch
->         from the repository.  Setting this to `true` lets `git
->         gc` to run `git pack-refs`.  Setting this to `false` tells
->         `git gc` never to run `git pack-refs`. The default setting is
->         `notbare`. Enable it only when you know you do not have to
->         support such clients.  The default setting will change to `tr=
-ue`
->         at some stage, and setting this to `false` will continue to
->         prevent `git pack-refs` from being run from `git gc`.
->=20
-> Unless something changed (and git Documentation was not updated) git
-> should not pack refs by default.
+Hi,
 
-I had a quick glance over the log for builtin-gc.c, and that changed
-last year in:
+On Sun, 29 Jun 2008, Daniel Barkalow wrote:
 
-56752391 Make "git gc" pack all refs by default
+> Now, clone writes to the config file before reading any configuration, so, 
+> if it's going to write to ".git/config" instead of $GIT_CONFIG, it can't 
+> read from $GIT_CONFIG either. So there's no way (outside of redesigning 
+> config.c) to make GIT_CONFIG useful for "clone" in particular.
 
-Bj=F6rn - who lacks time to provide a doc update patch :-(
+Except you could read the config _before_ writing.
+
+Or you could enhance (not redesign, as you suggest) config.c thusly:
+
+-- snip --
+diff --git a/cache.h b/cache.h
+index 871f6c1..f3ea997 100644
+--- a/cache.h
++++ b/cache.h
+@@ -742,6 +742,7 @@ extern int git_config_bool(const char *, const char *);
+ extern int git_config_string(const char **, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
++extern int git_config_set_multivar_in_file(const char *, const char *, const char *, int, const char *);
+ extern int git_config_rename_section(const char *, const char *);
+ extern const char *git_etc_gitconfig(void);
+ extern int check_repository_format_version(const char *var, const char *value, void *cb);
+diff --git a/config.c b/config.c
+index 58749bf..41a35eb 100644
+--- a/config.c
++++ b/config.c
+@@ -863,23 +863,31 @@ int git_config_set(const char* key, const char* value)
+  * - the config file is removed and the lock file rename()d to it.
+  *
+  */
+-int git_config_set_multivar(const char* key, const char* value,
+-	const char* value_regex, int multi_replace)
++int git_config_set_multivar(const char *key, const char *value,
++	const char *value_regex, int multi_replace)
++{
++	return git_config_set_multivar_in_file(key, value, value_regex,
++		multi_replace, NULL);
++}
++
++int git_config_set_multivar_in_file(const char *key, const char *value,
++	const char *value_regex, int multi_replace, const char *config_filename)
+ {
+ 	int i, dot;
+ 	int fd = -1, in_fd;
+ 	int ret;
+-	char* config_filename;
++	char *filename;
+ 	struct lock_file *lock = NULL;
+ 	const char* last_dot = strrchr(key, '.');
+ 
+-	config_filename = getenv(CONFIG_ENVIRONMENT);
++	if (!config_filename)
++		config_filename = getenv(CONFIG_ENVIRONMENT);
+ 	if (!config_filename) {
+ 		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
+ 		if (!config_filename)
+-			config_filename  = git_path("config");
++			config_filename =
++				filename = xstrdup(git_path("config"));
+ 	}
+-	config_filename = xstrdup(config_filename);
+ 
+ 	/*
+ 	 * Since "key" actually contains the section name and the real
+@@ -1091,7 +1099,8 @@ int git_config_set_multivar(const char* key, const char* value,
+ out_free:
+ 	if (lock)
+ 		rollback_lock_file(lock);
+-	free(config_filename);
++	if (filename)
++		free(filename);
+ 	return ret;
+ 
+ write_err_out:
+-- snap --
+
+... and then have something like
+
+        config_filename = xstrdup(mkpath("%s/config", git_dir));
+
+        if (safe_create_leading_directories_const(git_dir) < 0)
+                die("could not create leading directories of '%s'", git_dir);
+        set_git_dir(make_absolute_path(git_dir));
+
+	[...]
+
+	if (option_bare) {
+                strcpy(branch_top, "refs/heads/");
+
+                git_config_set_multivar_in_file("core.bare", "true",
+			NULL, 0, config_filename);
+
+	[...]
+
+Of course, you would also have to teach init_db() to use this filename.
+
+But frankly, I do not see the use of your "narrow" special case.  And as I 
+stated in another thread, I am pretty opposed to crossing bridges that are 
+miles (or an eternity) away.
+
+So unless you present me with a sensible scenario where your "respect 
+GIT_CONFIG for _reading_ in GIT_CONFIG=... git clone" makes sense, there 
+is nothing to see here, please move along.
+
+Ciao,
+Dscho
