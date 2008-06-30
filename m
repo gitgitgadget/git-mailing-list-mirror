@@ -1,96 +1,91 @@
-From: Swanny Lorenzi <swanny@jfg-networks.net>
-Subject: error: Untracked working tree file '(myfile)' would be overwritten
- by merge. when checking out a more recent branch
-Date: Mon, 30 Jun 2008 12:15:56 +0200
-Message-ID: <4868B25C.1030005@over-blog.com>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
+Date: Mon, 30 Jun 2008 12:30:38 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200806301230.38980.J.Wielemaker@uva.nl>
+References: <200806301149.18115.J.Wielemaker@uva.nl> <m3r6afgrme.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 30 12:17:17 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 12:31:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDGRg-0004cc-JU
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 12:17:17 +0200
+	id 1KDGfh-0000yX-Hd
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 12:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759884AbYF3KQD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 06:16:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759314AbYF3KQB
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 06:16:01 -0400
-Received: from gv-out-0910.google.com ([216.239.58.187]:47818 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755243AbYF3KQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 06:16:00 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so155007gvc.37
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 03:15:58 -0700 (PDT)
-Received: by 10.103.16.16 with SMTP id t16mr2139842mui.131.1214820957822;
-        Mon, 30 Jun 2008 03:15:57 -0700 (PDT)
-Received: from ?192.168.0.110? ( [82.224.249.154])
-        by mx.google.com with ESMTPS id j9sm21447449mue.5.2008.06.30.03.15.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Jun 2008 03:15:56 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+	id S1755296AbYF3Kal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 06:30:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754706AbYF3Kal
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 06:30:41 -0400
+Received: from korteweg.uva.nl ([146.50.98.70]:20082 "EHLO korteweg.uva.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753703AbYF3Kak (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 06:30:40 -0400
+Received: from gollem.science.uva.nl ([146.50.26.20]) by korteweg.uva.nl with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 30 Jun 2008 12:30:39 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <m3r6afgrme.fsf@localhost.localdomain>
+Content-Disposition: inline
+X-OriginalArrivalTime: 30 Jun 2008 10:30:39.0136 (UTC) FILETIME=[571D7200:01C8DA9C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86902>
 
-Hi,
+Hi Jakub,
 
-We got at work a surprising error when trying to checkout a more recent 
-branch :
-error: Untracked working tree file '(file)' would be overwritten by 
-merge. (I replaced the actual file name by 'file' in this mail)
+Thanks for the quick reply.  Info:
 
-The context is :
-- Each developer has its own git repository, and makes all developement 
-work in it
-- We use a "central" git repository to gather all our work, all devs 
-track this common repository's branches to pull and push they work.
-- We don't allow devs to track another dev branch, everything must pass 
-by this central repository.
-- We use git v 1.5.5.4, tig and git gui.
-- Our main branch is called "trunk", and we use several other branches 
-for our work.
+On Monday 30 June 2008 12:10, Jakub Narebski wrote:
+> Jan Wielemaker <J.Wielemaker@uva.nl> writes:
+> > I'm a bit puzzled. I have a bare repository, somehow without any files
+> > in refs/heads.
+>
+> Do you have .git/packed-refs file? How do you have gc.packrefs set
 
+Its a bare repo, so I'll forget the .git.  Yes, I have that file and
+it contains nice references,  I checked a few by hand, and they have
+the same SHA1 as the files I copied.
 
-Last Thursday, I had to replace 6 directories (with files in them) by 
-symbolic links to another directory, in the "trunk" branch.
-I removed them using sh rm -rf, then ln -s to create the links. Problem, 
-git gui failed to stage the changes to a single commit.
-I split the change into 2 operations : the directory removal -> commit, 
-then the symlink creation -> commit.
-I pushed the 2 commits - and other commits after - into our central 
-repository, no error was prompted.
+> ("git config --get gc.packrefs")? What are the git version on the
 
-Then came the issue :
-Each time a dev tried to checkout the trunk branch from an older version 
-(e.g. a branch that has its origin to an older commit of trunk), he got 
-the error message
-error: Untracked working tree file '(file)' would be overwritten by merge.
-=> Checkout failed, etc. Obliged to force the checkout with git checkout -f.
+This gives no output, so I guess the answer is 'no'.  Is that wrong?
+This is indeed the case (config):
 
-- The file listed in the error message is absolutely not affected by any 
-commit in the 2 I mentioned above, nor in the 10 surrounding them. It 
-was not even changed for 2 monthes.
-- The error occur even if we don't have any "modified" file (git status 
-answers nothing to commit, nor any untracked files)
-- After investigations, it seems that the error occurs each time we ask 
-git to run the 2 commits mentioned above in a single checkout command : 
-If I checkout a branch pointing to the 1st commit (dir deletion), then 
-another checkout to the trunk head, the error does not occur.
-- The file mentioned in the error is the first file in the directory 
-that follow the parent dir of the removed dirs (in the order returned by 
-ls):
+----------------------------------------------------------------
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = true
+        sharedrepository = 1
+[gitcvs]
+        enabled = 1
+        logfile = /home/git/pl.git/cvs.log
+        allbinary = 1
+----------------------------------------------------------------
 
-- I failed to reproduce this bug using clean repositories...
+> clients that have trouble accessing repository, and what protocol
+> (transport merhod) do they use: "file", http(s)/ftp, git, ssh?
 
-Has anyone got this error before ?
-Is it a git bug ?
+I could reproduce the problem using the same git that maintains the bare
+repository, which started as git-1.5.3.4 and is now 1.5.6.rc3. It
+reproduces both using local file access and ssh. Other people have a
+variety of versions. I know of concrete problems using the stable 1.5.5
+over ssh.
 
-Thanks for all
+The problem that I can't even clone is indeed after running a git-gc.
 
-Swanny
+So, now I have all branch head refs double (in packed-refs and in
+refs/heads). That explains ar least where they come from, but it fails
+to explain why doing exactly the same using the same git on the same
+repo as two users yields a different result. Of course, besides the
+desire to understand how his works, I'm mostly interested in how to fix
+this :-)
+
+	Thanks --- Jan
