@@ -1,65 +1,78 @@
-From: Nikolaj Schumacher <n_schumacher@web.de>
-Subject: [PATCH] Don't cut off last character of commit descriptions.
-Date: Mon, 30 Jun 2008 12:08:16 +0200
-Message-ID: <m2abh3z14f.fsf@nschum.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
+Date: Mon, 30 Jun 2008 03:10:56 -0700 (PDT)
+Message-ID: <m3r6afgrme.fsf@localhost.localdomain>
+References: <200806301149.18115.J.Wielemaker@uva.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 30 12:09:54 2008
+Cc: git@vger.kernel.org
+To: Jan Wielemaker <J.Wielemaker@uva.nl>
+X-From: git-owner@vger.kernel.org Mon Jun 30 12:12:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDGJv-0001qe-UG
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 12:09:16 +0200
+	id 1KDGMa-00037k-LF
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 12:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167AbYF3KIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 06:08:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755095AbYF3KIT
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 06:08:19 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:58734 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754706AbYF3KIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 06:08:18 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 710A4E1D47F9;
-	Mon, 30 Jun 2008 12:08:17 +0200 (CEST)
-Received: from [77.135.94.229] (helo=thursday)
-	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
-	id 1KDGIz-0003wu-00; Mon, 30 Jun 2008 12:08:17 +0200
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2.50 (darwin)
-X-Sender: n_schumacher@web.de
-X-Provags-ID: V01U2FsdGVkX1+n+YUMV1dJ9P81J2/yhNEebMmo/NLb9ySeRMXH
-	X3vPIeWMqDJmCJkDv/48Tz2PpbGTJIqHFyA5buRg+SpHhCpEsu
-	/pQa2bYFYWIClPY5Ub7Q==
+	id S1755196AbYF3KLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 06:11:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755034AbYF3KLD
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 06:11:03 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:22481 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753709AbYF3KLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 06:11:01 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so218415ugf.16
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 03:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=28RTP7rgFMgwJjM/FHFguEN2deVc3cYXvh4bck/ZKsg=;
+        b=b+tr2VyGm0lMOWYsQHCaiphk8JQBCzWtGT6SndSkMhuzd1PQuGZrdcSSkiDoN0dqJE
+         A4XPSa3s+aHnVs89GCHbAi/h/ImXY9Keg5GLe+NHDSr7VaOpYRwo6UMdkZbS4+fWW2xD
+         S4yu3cbItAnIpi/CJkQeXn24v5OjRowE/UOcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=qByHaXbqxxvixrDEYAfZdxYz8WTsYl1gKJYRdLZj7AV/vlVn158KJSyikGT/v92oDq
+         xCa09/ms9mXbnQhRisLXLj6eOAFqhyEFuvEBUVU8UyYc59DcmY0FRIwXHOae6EH58X5O
+         k5J8kayc9D0zCKfflgFdTiyTMd9Yqln1spTHY=
+Received: by 10.67.116.4 with SMTP id t4mr3681774ugm.54.1214820657476;
+        Mon, 30 Jun 2008 03:10:57 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.210.122])
+        by mx.google.com with ESMTPS id p32sm716990ugc.44.2008.06.30.03.10.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Jun 2008 03:10:56 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5UAAqld018320;
+	Mon, 30 Jun 2008 12:10:52 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5UAAofD018316;
+	Mon, 30 Jun 2008 12:10:50 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200806301149.18115.J.Wielemaker@uva.nl>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86900>
 
->From d485d9c86cba49671b74c7c1571a6ad7ec6d09b6 Mon Sep 17 00:00:00 2001
-From: Nikolaj Schumacher <git@nschum.de>
-Date: Mon, 30 Jun 2008 12:06:01 +0200
-Subject: [PATCH] Don't cut off last character of commit descriptions.
+Jan Wielemaker <J.Wielemaker@uva.nl> writes:
 
----
- contrib/emacs/git-blame.el |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> I'm a bit puzzled. I have a bare repository, somehow without any files
+> in refs/heads.
 
-diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
-index 9f92cd2..4fa70c5 100644
---- a/contrib/emacs/git-blame.el
-+++ b/contrib/emacs/git-blame.el
-@@ -381,7 +381,7 @@ See also function `git-blame-mode'."
-                   "log" "-1"
- 		  (concat "--pretty=" git-blame-log-oneline-format)
-                   hash)
--    (buffer-substring (point-min) (1- (point-max)))))
-+    (buffer-substring (point-min) (point-max))))
- 
- (defvar git-blame-last-identification nil)
- (make-variable-buffer-local 'git-blame-last-identification)
+Do you have .git/packed-refs file? How do you have gc.packrefs set
+("git config --get gc.packrefs")? What are the git version on the
+clients that have trouble accessing repository, and what protocol
+(transport merhod) do they use: "file", http(s)/ftp, git, ssh?
+
 -- 
-1.5.5.3
+Jakub Narebski
+Poland
+ShadeHawk on #git
