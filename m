@@ -1,156 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
- /etc/gitconfig
-Date: Mon, 30 Jun 2008 12:57:16 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0806301233560.9925@racer>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
- <alpine.DEB.1.00.0806292248160.9925@racer> <alpine.LNX.1.00.0806291821520.19665@iabervon.org> <7vabh390sc.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806292320300.19665@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
+Date: Mon, 30 Jun 2008 14:03:57 +0200
+Message-ID: <200806301403.57900.jnareb@gmail.com>
+References: <200806301149.18115.J.Wielemaker@uva.nl> <200806301326.12140.jnareb@gmail.com> <200806301344.09938.J.Wielemaker@uva.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 14:00:13 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jan Wielemaker <J.Wielemaker@uva.nl>
+X-From: git-owner@vger.kernel.org Mon Jun 30 14:05:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDI3G-0001kz-Tu
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 14:00:11 +0200
+	id 1KDI84-0003FZ-FM
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 14:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009AbYF3L7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 07:59:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757101AbYF3L7N
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 07:59:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50350 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756968AbYF3L7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 07:59:12 -0400
-Received: (qmail invoked by alias); 30 Jun 2008 11:59:10 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp005) with SMTP; 30 Jun 2008 13:59:10 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18xMZoiRaYxtaYUp7dOCIpRrHFGYcfgSZziuhrZl6
-	5S9/rMgV1g1jhY
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.LNX.1.00.0806292320300.19665@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1757307AbYF3MEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 08:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757368AbYF3MEK
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 08:04:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:61110 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757213AbYF3MEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 08:04:09 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so425347nfc.21
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 05:04:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=S/kC6z8nsjjbbs3l7cUZ+jPWXucSOneh5ymId6/9Cis=;
+        b=NLdTWyqEvwDBLiQpum/Ki87MKuQoxrJPLkMWZ/mmMi+tPUJpmN6OiReQ/yc3dkws/u
+         MgTeRmhAcVKJNPveOZP0F8GS0l9o86Fw1iMrKuHyS9kYaMPQolgahLJpJtghwYarO5mP
+         iBy61ommUCj3xvqJjEGL/b5zn3aMhkhmLHzDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=KHPDqPSXSIHjHgc2x5OOSwIt3Za/E/wX7FEz2d9xmvZCNymQzFK6xIefyIZ0T5ZpWm
+         +nitCmR5WsarzcHEYqVBqgqYghKbyO3lo+PIgCx4dlb8Gho6KwptH6y5X72AHHpFrJzE
+         KpNzJMRNuG6MQmY9zRcdg6r/DYxP0BGe4jAGE=
+Received: by 10.210.91.17 with SMTP id o17mr4070901ebb.172.1214827447338;
+        Mon, 30 Jun 2008 05:04:07 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.210.122])
+        by mx.google.com with ESMTPS id 33sm3539362nfu.7.2008.06.30.05.04.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Jun 2008 05:04:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200806301344.09938.J.Wielemaker@uva.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86911>
 
-Hi,
+Jan Wielemaker wrote:
 
-On Sun, 29 Jun 2008, Daniel Barkalow wrote:
+> Summarising, I think the conclusion is that git pack-refs has somehow
+> been run on this repository, and being a bare one this is not a
+> particulary good idea right now. I have the impression I should `unpack'
+> them by putting the appriate files in heads (done) and tags (now still)
+> and (re)move packed-refs.
 
-> Now, clone writes to the config file before reading any configuration, so, 
-> if it's going to write to ".git/config" instead of $GIT_CONFIG, it can't 
-> read from $GIT_CONFIG either. So there's no way (outside of redesigning 
-> config.c) to make GIT_CONFIG useful for "clone" in particular.
+If you use new enough git both on server and on clients it should
+not have problems with packed-refs. I would rather check permissions
+of $GIT_DIR and $GIT_DIR/packed-refs.
 
-Except you could read the config _before_ writing.
+If "git show-ref" and "git for-each-ref" works, then 
+"git ls-remote <repo>" should work, and git-fetch/git-clone
+shoulw work too...
 
-Or you could enhance (not redesign, as you suggest) config.c thusly:
-
--- snip --
-diff --git a/cache.h b/cache.h
-index 871f6c1..f3ea997 100644
---- a/cache.h
-+++ b/cache.h
-@@ -742,6 +742,7 @@ extern int git_config_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_set(const char *, const char *);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
-+extern int git_config_set_multivar_in_file(const char *, const char *, const char *, int, const char *);
- extern int git_config_rename_section(const char *, const char *);
- extern const char *git_etc_gitconfig(void);
- extern int check_repository_format_version(const char *var, const char *value, void *cb);
-diff --git a/config.c b/config.c
-index 58749bf..41a35eb 100644
---- a/config.c
-+++ b/config.c
-@@ -863,23 +863,31 @@ int git_config_set(const char* key, const char* value)
-  * - the config file is removed and the lock file rename()d to it.
-  *
-  */
--int git_config_set_multivar(const char* key, const char* value,
--	const char* value_regex, int multi_replace)
-+int git_config_set_multivar(const char *key, const char *value,
-+	const char *value_regex, int multi_replace)
-+{
-+	return git_config_set_multivar_in_file(key, value, value_regex,
-+		multi_replace, NULL);
-+}
-+
-+int git_config_set_multivar_in_file(const char *key, const char *value,
-+	const char *value_regex, int multi_replace, const char *config_filename)
- {
- 	int i, dot;
- 	int fd = -1, in_fd;
- 	int ret;
--	char* config_filename;
-+	char *filename;
- 	struct lock_file *lock = NULL;
- 	const char* last_dot = strrchr(key, '.');
- 
--	config_filename = getenv(CONFIG_ENVIRONMENT);
-+	if (!config_filename)
-+		config_filename = getenv(CONFIG_ENVIRONMENT);
- 	if (!config_filename) {
- 		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
- 		if (!config_filename)
--			config_filename  = git_path("config");
-+			config_filename =
-+				filename = xstrdup(git_path("config"));
- 	}
--	config_filename = xstrdup(config_filename);
- 
- 	/*
- 	 * Since "key" actually contains the section name and the real
-@@ -1091,7 +1099,8 @@ int git_config_set_multivar(const char* key, const char* value,
- out_free:
- 	if (lock)
- 		rollback_lock_file(lock);
--	free(config_filename);
-+	if (filename)
-+		free(filename);
- 	return ret;
- 
- write_err_out:
--- snap --
-
-... and then have something like
-
-        config_filename = xstrdup(mkpath("%s/config", git_dir));
-
-        if (safe_create_leading_directories_const(git_dir) < 0)
-                die("could not create leading directories of '%s'", git_dir);
-        set_git_dir(make_absolute_path(git_dir));
-
-	[...]
-
-	if (option_bare) {
-                strcpy(branch_top, "refs/heads/");
-
-                git_config_set_multivar_in_file("core.bare", "true",
-			NULL, 0, config_filename);
-
-	[...]
-
-Of course, you would also have to teach init_db() to use this filename.
-
-But frankly, I do not see the use of your "narrow" special case.  And as I 
-stated in another thread, I am pretty opposed to crossing bridges that are 
-miles (or an eternity) away.
-
-So unless you present me with a sensible scenario where your "respect 
-GIT_CONFIG for _reading_ in GIT_CONFIG=... git clone" makes sense, there 
-is nothing to see here, please move along.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Poland
