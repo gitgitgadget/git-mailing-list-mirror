@@ -1,84 +1,99 @@
-From: Jan Wielemaker <J.Wielemaker@uva.nl>
-Subject: Re: Corruption: empty refs/heads in otherwise filled repo: cannot clone?
-Date: Mon, 30 Jun 2008 21:46:22 +0200
-Message-ID: <200806302146.23120.J.Wielemaker@uva.nl>
-References: <200806301149.18115.J.Wielemaker@uva.nl> <200806301420.12872.J.Wielemaker@uva.nl> <alpine.LNX.1.00.0806301528500.19665@iabervon.org>
+From: Thomas Koch <thomas@koch.ro>
+Subject: how does git svn work
+Date: Mon, 30 Jun 2008 21:57:32 +0200
+Organization: Young Media Concepts
+Message-ID: <200806302157.32828.thomas@koch.ro>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 21:56:59 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 21:59:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDPUf-0000hN-Po
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 21:56:58 +0200
+	id 1KDPWq-0001Qg-Ak
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 21:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762190AbYF3T4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 15:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762021AbYF3T4A
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 15:56:00 -0400
-Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:2528 "EHLO
-	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752099AbYF3Tz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 15:55:59 -0400
-X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Jun 2008 15:55:59 EDT
-Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
-	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id m5UJkN9m094549;
-	Mon, 30 Jun 2008 21:46:24 +0200 (CEST)
-	(envelope-from J.Wielemaker@uva.nl)
-User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
-In-Reply-To: <alpine.LNX.1.00.0806301528500.19665@iabervon.org>
+	id S932557AbYF3T6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 15:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbYF3T6S
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 15:58:18 -0400
+Received: from koch.ro ([195.34.83.107]:40957 "EHLO
+	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S932528AbYF3T6R (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 15:58:17 -0400
+Received: from 225-18.203-62.cust.bluewin.ch ([62.203.18.225] helo=jona.local)
+	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <thomas@koch.ro>)
+	id 1KDPVP-0006ux-NV
+	for git@vger.kernel.org; Mon, 30 Jun 2008 21:57:45 +0200
 Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
+X-Spam_score: -2.3
+X-Spam_score_int: -22
+X-Spam_bar: --
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86936>
 
-On Monday 30 June 2008 21:33:50 Daniel Barkalow wrote:
-> On Mon, 30 Jun 2008, Jan Wielemaker wrote:
-> > On Monday 30 June 2008 14:03, Jakub Narebski wrote:
-> > > Jan Wielemaker wrote:
-> > > > Summarising, I think the conclusion is that git pack-refs has somehow
-> > > > been run on this repository, and being a bare one this is not a
-> > > > particulary good idea right now. I have the impression I should
-> > > > `unpack' them by putting the appriate files in heads (done) and tags
-> > > > (now still) and (re)move packed-refs.
-> > >
-> > > If you use new enough git both on server and on clients it should
-> > > not have problems with packed-refs. I would rather check permissions
-> > > of $GIT_DIR and $GIT_DIR/packed-refs.
-> >
-> > There is no permission problem, as a I proved by doing a recursive copy
-> > of the whole repo (cp -a, no errors) and the problem prevails on the
-> > copy. A serious scan for permission errors was my first step. Almost
-> > looks like something in the environment, but I can't find anything weird
-> > there either.
->
-> That's a "cp -a" as somebody else, I assume? (If it were as you or root,
-> you'd generate a copy of the repository with any permission problem
-> unchanged, since -a includes -p.)
+Hi,
 
-I'm an old time Unix guy :-).  The failing user has a git-shell.  I did
-(reconstructing from memory):
+is there a document explaining the internals of GIT-SVN? I'd like to
+know, which SVN commands are executed in the background and how git-svn
+recognizes branch creation in SVN.
 
-	% sudo -u failinguser /bin/bash
-	<passwd>
-	% Use whoami to validate I was this user
-	% git clone /home/git/pl.git
-	<failed (no remote branches)>
-	% cp -a /home/git/pl.git tmp.git
-	<ok, no errors>
-	% git clone tmp.git
-	<failed (no remote branches)>
+In particular I want to follow the repository at:
+http://pubsvn.ez.no/nextgen/
 
-Funny enough, as myself I can clone tmp.git!?  I have only one git 
-installation
-in /usr/local/bin.
+The layout is like
+/trunk
+/stable
+  |- 4.0
+  |- 3.9
+  |- 3.8
+  ...
+/releases
+  |- 4.0
+  |- 4.0r1
+  |- 3.9
+  |- 3.9r1
+  |- 3.9r2
 
-	Cheers --- Jan
+
+I do not know, whether git-svn can create branches automatically for
+each directory under /stable and one main branch for trunk or whether I
+need to create one svn-remote definition for every svn directory I want
+to track.
+
+
+Best regards,
+-- 
+Thomas Koch, Software Developer
+http://www.koch.ro
+
+Young Media Concepts GmbH
+Sonnenstr. 4
+CH-8280 Kreuzlingen
+Switzerland
+
+Tel    +41 (0)71 / 508 24 86
+Fax    +41 (0)71 / 560 53 89
+Mobile +49 (0)170 / 753 89 16
+Web    www.ymc.ch
+-- 
+Thomas Koch, Software Developer
+http://www.koch.ro
+
+Young Media Concepts GmbH
+Sonnenstr. 4
+CH-8280 Kreuzlingen
+Switzerland
+
+Tel    +41 (0)71 / 508 24 86
+Fax    +41 (0)71 / 560 53 89
+Mobile +49 (0)170 / 753 89 16
+Web    www.ymc.ch
