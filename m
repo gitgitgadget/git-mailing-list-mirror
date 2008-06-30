@@ -1,107 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 30 Jun 2008 08:58:07 -0700 (PDT)
-Message-ID: <m3myl2hq45.fsf@localhost.localdomain>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
-	<7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
-	<7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
-	<7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
-	<7vbq4j748l.fsf@gitster.siamese.dyndns.org>
-	<7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
-	<7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
-	<7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
-	<7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
-	<7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
-	<7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
-	<7vabijxhk4.fsf@gitster.siamese.dyndns.org>
-	<7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
-	<7vhccfiksy.fsf@gitster.siamese.dyndns.org>
-	<7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
-	<7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
-	<7v3anb19n7.fsf@gitster.siamese.dyndns.org>
-	<7vwskjazql.fsf@gitster.siamese.dyndns.org>
-	<7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
-	<7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
-	<7vod5kd3im.fsf@gitster.siamese.dyndns.org>
-	<7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
-	<1214834970.3382.4.camel@gaara.bos.redhat.com>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: [RFC] Single system account for multiple git users
+Date: Mon, 30 Jun 2008 08:59:56 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0806300858380.25384@alchemy.localdomain>
+References: <20080630151113.GO5737@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-15?q?Kristian_H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 17:59:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 18:01:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDLmZ-0002nt-DO
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 17:59:11 +0200
+	id 1KDLoP-0003Sq-68
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 18:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754442AbYF3P6O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 11:58:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbYF3P6O
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 11:58:14 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:6702 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753917AbYF3P6N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 11:58:13 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so269531ugf.16
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 08:58:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=bxjlkouszicf11diH7hMO85NB+HndJj6QwjP64KozyE=;
-        b=IRGgJdhJhL5N2rBnrTiwNUpfcd1V31Lfrq5VrqU0BntV/mMMrbRHGRCLD32zSthDMO
-         UYg+6v7xC6ucOFfydG8zXbm41XRjfMYhROe/brk/b8pmIiJJYLLY4tKCpNTrjRpV+Av1
-         8ZgKlvVFGZ6v7PLd9JipCNemRE18iZe/DRUxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=EFvan5gcAKAFGuadEaG8HoKGM9RpujiEiV/HScAj9FheJ6yCmwVkIc/kjZ0X+Ggkte
-         iL+SOFffL2kvoyvz+YtqW0t8zYDjevcn9m79VMvxZRHYHyj/5fuABdaYwEwSZXaZsRam
-         3RGsXegynTthAD9TMrwSP0IOnRkPzGl1eV35Q=
-Received: by 10.67.116.9 with SMTP id t9mr3858585ugm.65.1214841489554;
-        Mon, 30 Jun 2008 08:58:09 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.210.122])
-        by mx.google.com with ESMTPS id 32sm363609ugd.53.2008.06.30.08.58.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Jun 2008 08:58:07 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5UFw539020661;
-	Mon, 30 Jun 2008 17:58:06 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5UFw3hj020658;
-	Mon, 30 Jun 2008 17:58:03 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1214834970.3382.4.camel@gaara.bos.redhat.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756468AbYF3QAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 12:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756538AbYF3QAI
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 12:00:08 -0400
+Received: from wide-rose.makesad.us ([203.178.130.147]:36911 "EHLO
+	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756300AbYF3QAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 12:00:07 -0400
+Received: from alchemy (localhost [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rose.makesad.us (Postfix) with ESMTP id 2705DA015A;
+	Mon, 30 Jun 2008 12:00:05 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+	by alchemy (Postfix) with ESMTPS id 45CB36D30D;
+	Mon, 30 Jun 2008 08:59:57 -0700 (PDT)
+X-X-Sender: paulproteus@alchemy.localdomain
+In-Reply-To: <20080630151113.GO5737@dpotapov.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-OpenPGP-Key-ID: 0x70096AD1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86917>
 
-Kristian H=F8gsberg <krh@redhat.com> writes:
+On Mon, 30 Jun 2008, Dmitry Potapov wrote:
 
->=20
-> A small detail I've suggested scheduling for 1.6 before is removing (=
-or
-> rather, stop creating) the empty .git/branches directory.  How does t=
-hat
-> sound?
+> Hi,
+>
+> Using SSH access with restricted git-shell as login shell and using the 
+> script from the update-hook-example.txt works fine, but it requres that 
+> every Git user has a separate system account on the server, which is 
+> often frowned upon by system administrators, who would prefer to have a 
+> single system account for access to Git repo.
+>
+> I have looked on gitosis, but it requires normal shell account for the 
+> git user, which was vetoed by sysadmin. Also, I found its configuration 
+> more complex than necessary and not flexible enough to differentiate 
+> what branches can have non-fast-forward pushes on it and what cannot.
 
-Perhaps also stop creating .git/description (remove
-'templates/this--description' file), now that it is mentioned in
-gitweb/README and/or gitweb/INSTALL?
+I seem to recall that gitosis works with git-shell.  Maybe I'm 
+mis-remembering, though.
 
-(Do you want a patch?)
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-- Asheesh.
+
+-- 
+QOTD:
+ 	Some people have one of those days.  I've had one of those lives.
