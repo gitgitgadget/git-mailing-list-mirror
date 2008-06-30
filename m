@@ -1,80 +1,49 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [StGit PATCH 1/2] Try "stg sink" without applied patches
-Date: Mon, 30 Jun 2008 09:53:22 +0200
-Message-ID: <bd6139dc0806300053m4325104dx145cd8840c630453@mail.gmail.com>
-References: <20080629224440.9267.3591.stgit@yoghurt>
-	 <20080629224541.9267.19258.stgit@yoghurt>
-Reply-To: sverre@rabbelier.nl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Only use GIT_CONFIG in "git config", not other programs
+Date: Mon, 30 Jun 2008 00:57:54 -0700
+Message-ID: <7vskuv1hj1.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0806300328380.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org,
-	"Erik Sandberg" <mandolaerik@gmail.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 09:54:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 09:59:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDEDM-0004R9-RW
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:54:21 +0200
+	id 1KDEI0-00063e-Jk
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 09:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796AbYF3HxY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 03:53:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbYF3HxX
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:53:23 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:60629 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542AbYF3HxW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 03:53:22 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1433932wfd.4
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0ch0/nQ4aqS0tblXAFmTC11bWEHgINAH3XLBVqHGVs8=;
-        b=J9YkQZidsO+7yO+JGqo8wOtBX8M6wsz2ruq7s9pBIteJogQSgsMkQzDHP9l6VlW+Ua
-         qXAE9Bz4ueKGJc+dBksVOANSdg+4eQ5AzYsgzPKxZgoJjnWGr5tfXKArKSN8FcUqreLC
-         4jPyAZB6LuMjwiMhV0xywkKxX2ylNqCavvHwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=Gu8J+yrMverZPHeSFWvNyxeWr3f2+TAOhaJcx2WP2+w/9D1sBZhHxgoWNUrqu+Aqb6
-         epVGHKeAvGSHLYaw4sFNMoHOXomPoaaRUBzQkxq15LVkInt/nYNEbBHu7idFsTkntbj+
-         W33kqr4+o/DPI0wXcLYOGyHCHmPQzXtc5fbI8=
-Received: by 10.142.214.11 with SMTP id m11mr1743123wfg.95.1214812402059;
-        Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
-Received: by 10.143.29.11 with HTTP; Mon, 30 Jun 2008 00:53:22 -0700 (PDT)
-In-Reply-To: <20080629224541.9267.19258.stgit@yoghurt>
-Content-Disposition: inline
+	id S1752896AbYF3H6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 03:58:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754470AbYF3H6G
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 03:58:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61819 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752611AbYF3H6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 03:58:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E8EA941E2;
+	Mon, 30 Jun 2008 03:58:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5211541E1; Mon, 30 Jun 2008 03:57:56 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0806300328380.19665@iabervon.org> (Daniel
+ Barkalow's message of "Mon, 30 Jun 2008 03:37:47 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 43434238-467A-11DD-B974-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86891>
 
-On Mon, Jun 30, 2008 at 12:45 AM, Karl Hasselstr=F6m <kha@treskal.com> =
-wrote:
-> (The implicit sink testcase actually passes, but that's just because
-> the test suite can't distinguish between a program bug and an orderly
-> abort.)
+Hmm, I actually think this is a good thing to do in the sense that it
+vastly simplifies the user experience ;-).  Two less things to explain.
 
-Yes it can, that's where "test_must_fail" comes in.
-
-<snip>
-
-> +test_expect_success 'sink without applied patches' '
-> +    test_must_fail stg sink
-> +'
-> +
-
-Like that.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Care to write up a snippet for 1.6.0 release notes, as this is quite a
+large user visible backward incompatible change, even though it would be
+an improvement?
