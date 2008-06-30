@@ -1,124 +1,114 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/2] clone: respect the settings in $HOME/.gitconfig and
- /etc/gitconfig
-Date: Sun, 29 Jun 2008 23:47:50 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0806292320300.19665@iabervon.org>
-References: <27C25D70-0BFC-4362-A771-C7CAD89BC198@ai.rug.nl> <alpine.DEB.1.00.0806271353350.9925@racer> <alpine.LNX.1.00.0806271149580.19665@iabervon.org> <7vvdzuo61b.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0806291359330.19665@iabervon.org>
- <alpine.DEB.1.00.0806292248160.9925@racer> <alpine.LNX.1.00.0806291821520.19665@iabervon.org> <7vabh390sc.fsf@gitster.siamese.dyndns.org>
+From: Toby Corkindale <toby.corkindale@rea-group.com>
+Subject: Re: diff/Checking out by date specification
+Date: Mon, 30 Jun 2008 14:38:17 +1000
+Organization: REA Group
+Message-ID: <48686339.60205@rea-group.com>
+References: <486843C3.30402@rea-group.com> <20080630032744.GA18930@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 05:48:51 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 30 06:39:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDANk-0006JU-QK
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 05:48:49 +0200
+	id 1KDBAw-0005hR-8j
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 06:39:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbYF3Drw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2008 23:47:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYF3Drw
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jun 2008 23:47:52 -0400
-Received: from iabervon.org ([66.92.72.58]:46379 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751869AbYF3Drv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2008 23:47:51 -0400
-Received: (qmail 32656 invoked by uid 1000); 30 Jun 2008 03:47:50 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Jun 2008 03:47:50 -0000
-In-Reply-To: <7vabh390sc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751124AbYF3Eil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 00:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbYF3Eil
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 00:38:41 -0400
+Received: from mel-nat68.realestate.com.au ([210.50.192.68]:19221 "EHLO
+	mel-nat68.realestate.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750878AbYF3Eil (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 00:38:41 -0400
+Received: from [192.168.52.7] ([192.168.52.7]) by mel-nat68.realestate.com.au with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 30 Jun 2008 14:38:14 +1000
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <20080630032744.GA18930@sigill.intra.peff.net>
+X-OriginalArrivalTime: 30 Jun 2008 04:38:14.0863 (UTC) FILETIME=[1C256DF0:01C8DA6B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86870>
 
-On Sun, 29 Jun 2008, Junio C Hamano wrote:
-
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+Jeff King wrote:
+> On Mon, Jun 30, 2008 at 12:24:03PM +1000, Toby Corkindale wrote:
 > 
-> > ... In any case, I don't think "git clone" is at 
-> > all special with respect to GIT_CONFIG.
+>> `man git-rev-parse` seems to indicate that one can look at the state of  
+>> the repository by date (absolute or relative), and use this for diff or  
+>> checkout, etc.
+>> It includes examples such as "{yesterday}" and "{1979-02-26 18:30:00}".
 > 
-> I think "git init" and "git clone" are very special with respect to
-> GIT_CONFIG.
+> It's a little bit more complex than that. The branch@{time} syntax means
+> "what was in _my_ branch at that time". And if you just cloned, your
+> branch doesn't go back very far.
 > 
->  * When "init" is run to create a new repository and initialize it, the
->    user would want the initial set of configuration populated in the
->    configuration file _for that repository_.  There however may be some
->    customization that affects the way how "init" operates, which might be
->    taken from $HOME/.gitconfig.  The meaning of GIT_CONFIG can get fuzzy
->    here.  Possibilities:
+> If you want to say "find commits that happened before time T", you want
+> --until or --since (or their aliases --before and --after).
 > 
->    (1) Instead of $HOME/.gitconfig (or /etc/gitconfig), the user might
->        want such customizations to be read from the file specified by
->        GIT_CONFIG.  But the user wants to make the resulting new
->        repository usable without any custom GIT_CONFIG set (i.e. its
->        $GIT_DIR/config will be the place the configuration is written).
+> Would the documentation patch below have helped with the confusion?
+
+Ah, I see.
+Thanks, yes, that would have made the issue clearer.
+
+I think it would be good if you could give a couple of examples, such as:
+How would I go about checking out the code at the state it was in at, 
+say, 2008-01-01?
+Or how one can get a diff between 2008-01-01 and 2008-01-08?
+
+(I note that "git-diff --until=2008-01-08 --since=2008-01-01" fails, as 
+does "git-checkout --until=2008-01-08")
+
+thanks for the quick response!
+-Toby
+
+
 > 
->    (2) The user may want to create a new repository that cannot be used
->        with GIT_CONFIG (for some strange reason), i.e. no $GIT_DIR/config
->        for the repository, and GIT_CONFIG is used to specify where that
->        separate configuration file for the new repository is.  The way
->        "init" operates does not come from that configuration file that is
->        to be created but from elsewhere.
+> -- >8 --
+> doc/rev-parse: clarify reflog vs --until for specifying revisions
 > 
->  * When "clone" is run, the same confusion as initializing "init" applies.
->    In addition, custom GIT_CONFIG to read customizations for behaviour of
->    "init" and "fetch" that is done internally by "clone" would play larger
->    role.
+> The rev-parse manpage introduces the branch@{date} syntax,
+> and mentions the reflog specifically. However, new users may
+> not be familiar with the distinction between the reflog and
+> the commit date, so let's help them out with a "you may be
+> interested in --until" pointer.
 > 
->  * When "init" is run to reinitialize an existing repository, it is not
->    special in any way with respect to GIT_CONFIG, compared to other
->    commands.  The GIT_CONFIG names the configuration for that existing
->    repository, so we read from it and write to it.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/git-rev-parse.txt |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
 > 
-> I personally think the case (2) is a very narrow special case that I do
-> not think of any sane reason to even wanting to do so.  IOW, "you _could_
-> interpret the presense of GIT_CONFIG that the user may want to do so, but
-> why?"  (1) is also probably not very sensible but it makes more sense.
-> 
-> I think Dscho's original patch would support the semantics (1) and it is
-> probably much saner than (2) which is your version does (if I am reading
-> the two patches correctly).
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 9e273bc..59e95ad 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -184,7 +184,10 @@ blobs contained in a commit.
+>    second ago\}' or '\{1979-02-26 18:30:00\}') to specify the value
+>    of the ref at a prior point in time.  This suffix may only be
+>    used immediately following a ref name and the ref must have an
+> -  existing log ($GIT_DIR/logs/<ref>).
+> +  existing log ($GIT_DIR/logs/<ref>). Note that this looks up the state
+> +  of your *local* ref at a given time; e.g., what was in your local
+> +  `master` branch last week. If you want to look at commits made during
+> +  certain times, see `--since` and `--until`.
+>  
+>  * A ref followed by the suffix '@' with an ordinal specification
+>    enclosed in a brace pair (e.g. '\{1\}', '\{15\}') to specify
 
-A bit more information on this. There are 3 possible states for 
-GIT_CONFIG:
 
- (1) Not set; things work normally
+-- 
+Toby Corkindale
+Software developer
+w: www.rea-group.com
+REA Group refers to realestate.com.au Ltd (ASX:REA)
 
- (2) Set to ".git/config"; things work normally except that no global or 
-     system config is used
-
- (3) Set to something else; anything expecting to read or write 
-     configuration related to the repo will misbehave
-
-Historically, clone worked entirely in state (2) regardless of what the 
-user asked for. Everything else left it how the user had it. Dscho's patch 
-changes it to initialize the repo in state (2) and fetch in state (1), 
-still ignoring what the user set. My patch changes it to leave it how the 
-user has it.
-
-Now, clone writes to the config file before reading any configuration, so, 
-if it's going to write to ".git/config" instead of $GIT_CONFIG, it can't 
-read from $GIT_CONFIG either. So there's no way (outside of redesigning 
-config.c) to make GIT_CONFIG useful for "clone" in particular. Other 
-commands don't clear it, so they just misbehave if it's set. We can be 
-pretty sure, therefore, that users will put it either in (1) or (if they 
-want GIT_CONFIG_NO_GLOBAL and don't know about it and aren't worried about 
-"clone") in (2). So the practical difference between my patch and Dscho's 
-is that, with mine, ~/.gitconfig would affect the initialization step if 
-it actually used any config settings.
-
-If you want anything more clever to happen, that requires config.c 
-changes of some sort to provide a state where it reads some additional 
-file but writes the repo's usual one, and probably *also* *my* patch, so 
-that clone doesn't blow away the user's setting before config.c gets it.
-
-	-Daniel
-*This .sig left intentionally blank*
+Warning - This e-mail transmission may contain confidential information.
+If you have received this transmission in error, please notify us
+immediately on (61 3) 9897 1121 or by reply email to the sender. You
+must destroy the e-mail immediately and not use, copy, distribute or
+disclose the contents.
