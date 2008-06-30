@@ -1,87 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pread() over NFS (again) [1.5.5.4]
-Date: Mon, 30 Jun 2008 15:09:23 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0806301457590.19095@xanadu.home>
-References: <6F25C1B4-85DE-4559-9471-BCD453FEB174@gmail.com>
- <20080626204606.GX11793@spearce.org>
- <7vskuzq5ix.fsf@gitster.siamese.dyndns.org>
- <65688C06-BB6A-4E95-A4B9-A1A7C206BE2E@sent.com>
- <7vhcbfojgf.fsf@gitster.siamese.dyndns.org>
- <20080627025715.GB19568@fieldses.org> <1214578229.7437.14.camel@localhost>
- <20080630003203.GJ11793@spearce.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Multiple remote.<...>.fetch and .push patterns
+Date: Mon, 30 Jun 2008 14:29:56 -0500
+Message-ID: <48693434.4090402@freescale.com>
+References: <308083c30806301158i1100c84dqe7f50daad417934c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Trond Myklebust <Trond.Myklebust@netapp.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <gitster@pobox.com>, logank@sent.com,
-	Christian Holtje <docwhat@gmail.com>, git@vger.kernel.org,
-	Trond Myklebust <trond@netapp.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 21:10:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Adr3nal D0S <adr3nald0s@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 21:31:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDOlc-0000rM-3v
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 21:10:24 +0200
+	id 1KDP62-0000cn-Dz
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 21:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762046AbYF3TJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 15:09:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758269AbYF3TJ0
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 15:09:26 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:54763 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756005AbYF3TJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 15:09:25 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K3A00MEMIJNV460@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 30 Jun 2008 15:09:24 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080630003203.GJ11793@spearce.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1754280AbYF3TaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 15:30:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763976AbYF3TaR
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 15:30:17 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:33221 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbYF3TaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 15:30:16 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m5UJUCGL018267;
+	Mon, 30 Jun 2008 12:30:12 -0700 (MST)
+Received: from [10.214.73.148] (mvp-10-214-73-148.am.freescale.net [10.214.73.148])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m5UJUBku025089;
+	Mon, 30 Jun 2008 14:30:11 -0500 (CDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <308083c30806301158i1100c84dqe7f50daad417934c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86932>
 
-On Sun, 29 Jun 2008, Shawn O. Pearce wrote:
-
-> Trond Myklebust <Trond.Myklebust@netapp.com> wrote:
-> > Is the file only being read, or could there be a simultaneous write to
-> > the same file? I'm surmising this could be an effect resulting from
-> > simultaneous cache invalidations: prior to Linux 2.6.20 or so, we
-> > weren't rigorously following the VFS/VM rules for page locking, and so
-> > page cache invalidation in particular could have some curious
-> > side-effects.
+Adr3nal D0S wrote:
+> How can I do something like what is shown in Everyday git using git-config?
 > 
-> The file was created and opened O_CREAT|O_EXCL|O_RDWR, by this
-> process, written linearly using write(2), without any lseeks.
-> We kept the file descriptor open and starting issuing pread(2)
-> calls for earlier offsets we had alread written.  One of those
-> kicks back EOF far too early (and results in this bug report).
+> $ cat .git/remotes/ko
+> URL: kernel.org:/pub/scm/git/git.git
+> Pull: master:refs/tags/ko-master
+> Pull: next:refs/tags/ko-next
+> Pull: maint:refs/tags/ko-maint
+> Push: master
+> Push: next
+> Push: +pu
+> Push: maint
 > 
-> Note the only accesses we are using is write(2) and pread(2), and
-> once we start reading we don't ever go back to writing.
+> I know I can do:
+> 
+> git config remote.ko.fetch refs/heads/*:refs/tags/ko-*
+> 
+> but that will get all KO heads.  And I have no clue about the push version.
 
-That's not exact.  With a thin pack, we continue appending data to the 
-file after a bunch of pread() have occurred.  And only after those 
-pread()'s do we know that we actually have a thin pack.
+The file is editable!
 
-> The pread(2)
-> calls are typically issued in ascending offsets, and we read each
-> position only once.  This is to try and take advantage of any
-> read-ahead the kernel may be able to do.
+You can have both Push: and Pull: lines for a remote there.
 
-That's not exact.  The pread() calls are done when resolving deltas, 
-hence a base object is read and every deltas based on it are recursively 
-resolved to find their SHA1 signature.  Then another base is picked up 
-and the same process repeated.  And in practice all those delta chains 
-are all interleaced in the pack file due to the fact that objects are 
-stored so to optimize access to recent commits.  Therefore they're more 
-or less random.
+Or have I misunderstood your question here?
 
-
-Nicolas
+jdl
