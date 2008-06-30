@@ -1,73 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 1 Jul 2008 00:09:15 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807010007010.9925@racer>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7vr6d8apjx.fsf@gitster.siamese.dyndns.org> <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org> <7vabjm1a0q.fsf@gitster.siamese.dyndns.org> <7vr6crj0jk.fsf@gitster.siamese.dyndns.org> <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
- <7vmymsjz6x.fsf@gitster.siamese.dyndns.org> <7vabijxhk4.fsf@gitster.siamese.dyndns.org> <7vwslhg8qe.fsf@gitster.siamese.dyndns.org> <7vhccfiksy.fsf@gitster.siamese.dyndns.org> <7vod6k6zg4.fsf@gitster.siamese.dyndns.org> <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
- <7v3anb19n7.fsf@gitster.siamese.dyndns.org> <7vwskjazql.fsf@gitster.siamese.dyndns.org> <7vk5ggipuw.fsf@gitster.siamese.dyndns.org> <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
- <1214834970.3382.4.camel@gaara.bos.redhat.com> <7vabh2vaav.fsf@gitster.siamese.dyndns.org> <20080630155147.009a24b7.akpm@linux-foundation.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: error out when given any good rev that is not an ancestor of the bad rev
+Date: Tue, 1 Jul 2008 01:16:30 +0200
+Message-ID: <200807010116.30214.chriscool@tuxfamily.org>
+References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org> <7v3amuv8yg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, krh@redhat.com,
-	git@vger.kernel.org, sfr@canb.auug.org.au, pasky@suse.cz
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 01 01:12:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 01:13:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDSXd-00041Y-Od
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 01:12:14 +0200
+	id 1KDSYt-0004JC-FW
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 01:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbYF3XLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 19:11:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbYF3XLL
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 19:11:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47368 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753173AbYF3XLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 19:11:10 -0400
-Received: (qmail invoked by alias); 30 Jun 2008 23:11:08 -0000
-Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
-  by mail.gmx.net (mp039) with SMTP; 01 Jul 2008 01:11:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/PG919W4jPD576bY/L9InvIGUuaImXQo5xOsgv8n
-	aq4fstgtbGQzMv
-X-X-Sender: gene099@racer
-In-Reply-To: <20080630155147.009a24b7.akpm@linux-foundation.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1753960AbYF3XMf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 19:12:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753970AbYF3XMf
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 19:12:35 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:47894 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753577AbYF3XMe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 19:12:34 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 82B401AB2C0;
+	Tue,  1 Jul 2008 01:12:33 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 1C1511AB2AC;
+	Tue,  1 Jul 2008 01:12:32 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v3amuv8yg.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86963>
 
-Hi,
+Le mardi 1 juillet 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Before this patch "git bisect" doesn't really work when it is given
+> > some good revs that are siblings of the bad rev.
+> >
+> > For example if there is the following history:
+> >
+> > A-B-C-D
+> >    \E-F
+> >
+> > and we launch "git bisect start D F" then only C and D will be
+> > considered as possible first bad commit. This is wrong because A, B=
+ and
+> > E may be bad too if the bug exists everywhere except in F that fixe=
+s
+> > it.
+>
+> Please don't.
+>
+> bisect is about finding a single regression by partitioning the graph
+> into older good section and newer bad section with a *single* "first =
+bad
+> commit".
+>
+> For your "this could also be possible" scenario is already outside th=
+e
+> realm.  You are assuming A, B and F is good, and D is bad.
 
-On Mon, 30 Jun 2008, Andrew Morton wrote:
+I am assuming the first bad commit in the graph is A and it is fixed by=
+ F.
 
-> - It's bad to have the same info in two places, and to have to
->   support two different ways of doing the same thing for ever.
+> But if E is=20
+> bad, then that breakage cannot possibly affect the transition between=
+ B
+> and D from good to bad (E cannot break D), so C must *also* be bad.
 
-It is actually worse: we have three places.
+Yes, I assume C is also bad.
 
->   For me the biggest part of migrating would be working out what on
->   earth the format of the new files is.  Maybe it's documented
->   somewhere undiscoverable, dunno.
+> ... which means you are dealing with *two* breakages.  That's outside
+> what bisect deals with.
 
-The easiest way is to
+Sorry, I don't understand why I am assuming 2 breakages.
 
-	git config remote.$NICKNAME.url $URL
+> And this does not need to have forked development.  If the graph were
+> like this:
+>
+>   A-B-C-D-E-F
+>
+> and if F is bad and B is good, with your logic, after checking that D=
+ is
+> already bad, we cannot discount E --- after somehow fixing D, we _mig=
+ht_
+> also be introducing another breakage with E.  You cannot even check f=
+or
+> that anyway, but the logic is the same.
 
-where you said
+I don't think the logic is the same because in your case git bisect wil=
+l=20
+report one first bad commit anyway even if this bad commit has been fix=
+ed=20
+latter.
 
-	echo $URL > .git/branches/$NICKNAME
+In my case above, git bisect currently considers C and D as the only=20
+possible bad commits because when it is told that F is good, it assumes=
+=20
+that all the ancestors or F are good too. And this means that B is=20
+considered good so C will be found as the first bad commit. I think thi=
+s=20
+can be really misleading because there is no good->bad transition betwe=
+en B=20
+and C.
 
-Actually, you might even like this command better:
-
-	git remote add $NICKNAME $URL
-
-Many ways to go to Rome,
-Dscho
+Regards,
+Christian.
