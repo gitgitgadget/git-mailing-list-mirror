@@ -1,108 +1,70 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH 13/13] Build in merge
-Date: Tue, 01 Jul 2008 00:44:23 +0200
-Message-ID: <486961C7.2090603@free.fr>
-References: <e8d1385cc49a06ca3fae28231ebc66a333ce4ffb.1214789764.git.vmiklos@frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect: error out when given any good rev that is not an
+ ancestor of the bad rev
+Date: Mon, 30 Jun 2008 15:44:55 -0700
+Message-ID: <7v3amuv8yg.fsf@gitster.siamese.dyndns.org>
+References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jul 01 00:45:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jul 01 00:46:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDS7k-0005hz-Ke
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 00:45:29 +0200
+	id 1KDS8K-0005oP-8e
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 00:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762584AbYF3WoN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 18:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762700AbYF3WoN
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 18:44:13 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:48253 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762436AbYF3WoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 18:44:12 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 08A4C12B6B2;
-	Tue,  1 Jul 2008 00:44:11 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id A315112B6D2;
-	Tue,  1 Jul 2008 00:44:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <e8d1385cc49a06ca3fae28231ebc66a333ce4ffb.1214789764.git.vmiklos@frugalware.org>
+	id S932254AbYF3WpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 18:45:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932351AbYF3WpH
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 18:45:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34865 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932177AbYF3WpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 18:45:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4AA4D18C7E;
+	Mon, 30 Jun 2008 18:45:05 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6AF6818C7B; Mon, 30 Jun 2008 18:44:57 -0400 (EDT)
+In-Reply-To: <20080701004211.ba9b89c9.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Tue, 1 Jul 2008 00:42:11 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2EDA1CD2-46F6-11DD-8855-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86953>
 
-Miklos Vajna a =E9crit :
->=20
-> +static void finish(const unsigned char *new_head, const char *msg)
-> +{
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-[...]
+> Before this patch "git bisect" doesn't really work when it is given
+> some good revs that are siblings of the bad rev.
+>
+> For example if there is the following history:
+>
+> A-B-C-D
+>    \E-F
+>
+> and we launch "git bisect start D F" then only C and D will be
+> considered as possible first bad commit. This is wrong because A, B and
+> E may be bad too if the bug exists everywhere except in F that fixes it.
 
-> +	if (new_head && show_diffstat) {
-> +		struct diff_options opts;
-> +		diff_setup(&opts);
-> +		opts.output_format |=3D
-> +			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
-> +		opts.detect_rename =3D DIFF_DETECT_RENAME;
-> +		if (diff_use_color_default > 0)
-> +			DIFF_OPT_SET(&opts, COLOR_DIFF);
+Please don't.
 
-Ah, I missed that. You should call diff_setup_done(), to finish diff_se=
-tup()
-and have a recursive diffstat.
+bisect is about finding a single regression by partitioning the graph into
+older good section and newer bad section with a *single* "first bad
+commit".
 
-=46or example:
-
-$ git checkout -b test c0f5c69
-$ git merge 2dce956
-Updating c0f5c69..2dce956
-=46ast forward
- help.c |   22 ++++++++++++++--------
- 1 files changed, 14 insertions(+), 8 deletions(-)
-
-is wrong. Correct diffstat is:
-
-$ git diff --stat c0f5c69..2dce956
- Documentation/gitcli.txt        |   37 +++++++++++++++++++++++++++++++=
-++----
- Documentation/gittutorial-2.txt |   10 +++++-----
- help.c                          |   22 ++++++++++++++--------
- t/test-lib.sh                   |    2 +-
- 4 files changed, 53 insertions(+), 18 deletions(-)
-
-> +		diff_tree_sha1(head, new_head, "", &opts);
-> +		diffcore_std(&opts);
-> +		diff_flush(&opts);
-> +	}
-
-[...]
-
-> +int cmd_merge(int argc, const char **argv, const char *prefix)
-> +{
-
-[...]
-
-> +	git_config(git_merge_config, NULL);
-> +
-> +	/* for color.diff and diff.color */
-> +	git_config(git_diff_ui_config, NULL);
-
-Also, what about doing "return git_diff_ui_config(k, v, cb)" at the end=
- of
-git_merge_config() instead, to avoid parsing config files twice.
-
-> +
-> +	/* for color.ui */
-> +	if (diff_use_color_default =3D=3D -1)
-> +		diff_use_color_default =3D git_use_color_default;
-> +
-
-Olivier.
+For your "this could also be possible" scenario is already outside the
+realm.  You are assuming A, B and F is good, and D is bad.  But if E is
+bad, then that breakage cannot possibly affect the transition between B
+and D from good to bad (E cannot break D), so C must *also* be bad.
