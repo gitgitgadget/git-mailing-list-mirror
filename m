@@ -1,219 +1,107 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [RFC] Single system account for multiple git users
-Date: Mon, 30 Jun 2008 19:11:14 +0400
-Message-ID: <20080630151113.GO5737@dpotapov.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 30 Jun 2008 08:58:07 -0700 (PDT)
+Message-ID: <m3myl2hq45.fsf@localhost.localdomain>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+	<7vd4pf7h9y.fsf@gitster.siamese.dyndns.org>
+	<7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+	<7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+	<7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+	<7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+	<7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+	<7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+	<7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+	<7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+	<7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+	<7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+	<7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+	<7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+	<7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+	<7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+	<7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+	<7vwskjazql.fsf@gitster.siamese.dyndns.org>
+	<7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+	<7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+	<7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+	<7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+	<1214834970.3382.4.camel@gaara.bos.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 17:12:29 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-15?q?Kristian_H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 17:59:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDL3C-0002A2-KA
-	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 17:12:19 +0200
+	id 1KDLmZ-0002nt-DO
+	for gcvg-git-2@gmane.org; Mon, 30 Jun 2008 17:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbYF3PLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 11:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbYF3PLV
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 11:11:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:35773 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751405AbYF3PLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 11:11:20 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so769132fgg.17
-        for <git@vger.kernel.org>; Mon, 30 Jun 2008 08:11:18 -0700 (PDT)
+	id S1754442AbYF3P6O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 11:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbYF3P6O
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 11:58:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:6702 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753917AbYF3P6N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 11:58:13 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so269531ugf.16
+        for <git@vger.kernel.org>; Mon, 30 Jun 2008 08:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=4H3fxgnVlQmj2KikyfmjD1luSQH8+PyuaQmtJSNoVPw=;
-        b=izdStrGmcYeY0OIfdJcm4++IerFKD8qLLTDRaQQAcYcmdlU0sLyQTHoJyHEM/3ZZs4
-         EuAVBjpGAFqQhOAs0QI2a/6bKivRPb/kHaTQHK3gqLfm4e12lEPO8vJgjOJfTN8K83l/
-         HajuMPSn85Yw0w6K5lVTBkJ0BgEUQiHHIRbH8=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        bh=bxjlkouszicf11diH7hMO85NB+HndJj6QwjP64KozyE=;
+        b=IRGgJdhJhL5N2rBnrTiwNUpfcd1V31Lfrq5VrqU0BntV/mMMrbRHGRCLD32zSthDMO
+         UYg+6v7xC6ucOFfydG8zXbm41XRjfMYhROe/brk/b8pmIiJJYLLY4tKCpNTrjRpV+Av1
+         8ZgKlvVFGZ6v7PLd9JipCNemRE18iZe/DRUxo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=PeUhxIyzSAlernpxMOZhdyu28cj3BWxVnv4AQXVPJA+tdlKi66Gv4QRjg1ZCZTq/Dr
-         N2zMicgWfGp45ApUoj7V1UiSF4AtJWdMnjrfG0WYG6Z0ASP+VZYt0yiimqv1UUznE02v
-         RZe5Is++qs/yqcGCiIPMmP/lNAvLIvI9VTYPk=
-Received: by 10.86.33.19 with SMTP id g19mr3207437fgg.30.1214838678528;
-        Mon, 30 Jun 2008 08:11:18 -0700 (PDT)
-Received: from localhost ( [83.237.187.69])
-        by mx.google.com with ESMTPS id l12sm9129441fgb.6.2008.06.30.08.11.16
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        b=EFvan5gcAKAFGuadEaG8HoKGM9RpujiEiV/HScAj9FheJ6yCmwVkIc/kjZ0X+Ggkte
+         iL+SOFffL2kvoyvz+YtqW0t8zYDjevcn9m79VMvxZRHYHyj/5fuABdaYwEwSZXaZsRam
+         3RGsXegynTthAD9TMrwSP0IOnRkPzGl1eV35Q=
+Received: by 10.67.116.9 with SMTP id t9mr3858585ugm.65.1214841489554;
+        Mon, 30 Jun 2008 08:58:09 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.210.122])
+        by mx.google.com with ESMTPS id 32sm363609ugd.53.2008.06.30.08.58.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Jun 2008 08:11:17 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+        Mon, 30 Jun 2008 08:58:07 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m5UFw539020661;
+	Mon, 30 Jun 2008 17:58:06 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m5UFw3hj020658;
+	Mon, 30 Jun 2008 17:58:03 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1214834970.3382.4.camel@gaara.bos.redhat.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86916>
 
-Hi,
+Kristian H=F8gsberg <krh@redhat.com> writes:
 
-Using SSH access with restricted git-shell as login shell and using
-the script from the update-hook-example.txt works fine, but it requres
-that every Git user has a separate system account on the server, which
-is often frowned upon by system administrators, who would prefer to have
-a single system account for access to Git repo.
+>=20
+> A small detail I've suggested scheduling for 1.6 before is removing (=
+or
+> rather, stop creating) the empty .git/branches directory.  How does t=
+hat
+> sound?
 
-I have looked on gitosis, but it requires normal shell account for
-the git user, which was vetoed by sysadmin. Also, I found its
-configuration more complex than necessary and not flexible enough
-to differentiate what branches can have non-fast-forward pushes on
-it and what cannot.
+Perhaps also stop creating .git/description (remove
+'templates/this--description' file), now that it is mentioned in
+gitweb/README and/or gitweb/INSTALL?
 
-In fact, the simple solution for me would be to have authorized_key
-for the git user being like this:
-
-environment="GIT_USER=user1" ssh-rsa USER1-SSH-PUBLIC-KEY
-environment="GIT_USER=user2" ssh-rsa USER2-SSH-PUBLIC-KEY
-...
-
-In this case, with one line change to update-hook-example from
-username=$(id -u -n)
-to
-username="$GIT_USER"
-I would get exactly what I want.
-
-However, the environment option in authorized_key works only if
-PermitUserEnvironment is set in sshd configuration, and this option
-will allow _all_ users to overwrite their environment, which may be
-not desirable in some settings for security reasons.
-
-So, instead, I have to write a simple program, which is placed as
-the login shell and interprets the given command as user name, sets
-GIT_USER to it, and invokes git-shell with SSH_ORIGINAL_COMMAND.
-Thus authorized_key looks like that:
-
-command="git-su user1" ssh-rsa USER1-SSH-PUBLIC-KEY
-command="git-su user2" ssh-rsa USER2-SSH-PUBLIC-KEY
-...
-
-But then I realized that it is simpler and more efficient to add
-some built-in command to git-shell to do that.
-
-You can see my patch below. I hope it will be useful for people
-who wants to user git on server with a single system account for
-all git users.
-
-Dmitry
-
--- 8< --
-From: Dmitry Potapov <dpotapov@gmail.com>
-Date: Wed, 25 Jun 2008 08:14:22 +0400
-Subject: [PATCH] git-shell: add git-su command
-
-git-su interprets the given command as a user name that must be set to the
-GIT_USER environment variable and then executing SSH_ORIGINAL_COMMAND as
-it were the command given to git-shell. This allows to have different
-values for GIT_USER variable for different ssh public keys, which is
-necessary to have a single system for many Git users. With this command
-the typical authorized_key will for git user will be look like this:
-
-command="git-su user1" ssh-rsa USER1-SSH-PUBLIC-KEY
-command="git-su user2" ssh-rsa USER2-SSH-PUBLIC-KEY
-...
-
-The alternative of using the "environment" option in authorized_key may be
-problematic as it requires that the PermitUserEnvironment option was set
-in sshd_config and by default this option is not enabled, because it may
-allow some users to bypass access restrictions.
-
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
-
-I moved command parsing logic from main() to a separate function,
-(which makes the patch a bit bigger than it actually is) and then
-added do_su_cmd(), which reuses this functionality.
-
- shell.c |   51 ++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 34 insertions(+), 17 deletions(-)
-
-diff --git a/shell.c b/shell.c
-index 91ca7de..05bd3cc 100644
---- a/shell.c
-+++ b/shell.c
-@@ -41,6 +41,19 @@ static int do_cvs_cmd(const char *me, char *arg)
- 	return execv_git_cmd(cvsserver_argv);
- }
- 
-+static int exec_cmd(char *prog);
-+
-+static int do_su_cmd(const char *me, char *arg)
-+{
-+	char *cmd = getenv("SSH_ORIGINAL_COMMAND");
-+	if (!cmd)
-+		die("SSH_ORIGINAL_COMMAND is not set");
-+	if (setenv("GIT_USER", arg, 1))
-+		die ("setenv failed: %s", strerror(errno));
-+	if (unsetenv("SSH_ORIGINAL_COMMAND"))
-+		die ("unsetenv failed: %s", strerror(errno));
-+	return exec_cmd(cmd);
-+}
- 
- static struct commands {
- 	const char *name;
-@@ -49,28 +62,14 @@ static struct commands {
- 	{ "git-receive-pack", do_generic_cmd },
- 	{ "git-upload-pack", do_generic_cmd },
- 	{ "cvs", do_cvs_cmd },
-+	{ "git-su", do_su_cmd },
- 	{ NULL },
- };
- 
--int main(int argc, char **argv)
-+static int exec_cmd(char *prog)
- {
--	char *prog;
- 	struct commands *cmd;
- 
--	/*
--	 * Special hack to pretend to be a CVS server
--	 */
--	if (argc == 2 && !strcmp(argv[1], "cvs server"))
--		argv--;
--
--	/*
--	 * We do not accept anything but "-c" followed by "cmd arg",
--	 * where "cmd" is a very limited subset of git commands.
--	 */
--	else if (argc != 3 || strcmp(argv[1], "-c"))
--		die("What do you think I am? A shell?");
--
--	prog = argv[2];
- 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
- 		/* Accept "git foo" as if the caller said "git-foo". */
- 		prog[3] = '-';
-@@ -91,7 +90,25 @@ int main(int argc, char **argv)
- 		default:
- 			continue;
- 		}
--		exit(cmd->exec(cmd->name, arg));
-+		return cmd->exec(cmd->name, arg);
- 	}
- 	die("unrecognized command '%s'", prog);
- }
-+
-+int main(int argc, char **argv)
-+{
-+	/*
-+	 * Special hack to pretend to be a CVS server
-+	 */
-+	if (argc == 2 && !strcmp(argv[1], "cvs server"))
-+		argv--;
-+
-+	/*
-+	 * We do not accept anything but "-c" followed by "cmd arg",
-+	 * where "cmd" is a very limited subset of git commands.
-+	 */
-+	else if (argc != 3 || strcmp(argv[1], "-c"))
-+		die("What do you think I am? A shell?");
-+
-+	return exec_cmd(argv[2]);
-+}
--- 
-1.5.6.1
+(Do you want a patch?)
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
