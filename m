@@ -1,65 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: How do I stop git enumerating my working directory
-Date: Tue, 01 Jul 2008 18:37:47 +0200
-Message-ID: <vpqr6ad5zms.fsf@bauges.imag.fr>
-References: <486A53CC.4020803@glidos.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH?] Fix 'git show' on signed tag of signed tag of commit
+Date: Tue, 1 Jul 2008 18:39:11 +0200 (CEST)
+Message-ID: <alpine.LSU.1.00.0807011836500.32725@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <1214905624-29517-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Gardiner <lists@glidos.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Thomas Rast <trast@student.ethz.ch>
 X-From: git-owner@vger.kernel.org Tue Jul 01 18:40:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDitj-0002TK-Uu
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:40:08 +0200
+	id 1KDitk-0002TK-J2
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751797AbYGAQjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 12:39:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbYGAQjK
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:39:10 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:55209 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751537AbYGAQjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 12:39:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m61Gbqvb014592;
-	Tue, 1 Jul 2008 18:37:52 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KDirT-0003Ha-D8; Tue, 01 Jul 2008 18:37:47 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KDirT-0003N6-Ah; Tue, 01 Jul 2008 18:37:47 +0200
-In-Reply-To: <486A53CC.4020803@glidos.net> (Paul Gardiner's message of "Tue\, 01 Jul 2008 16\:57\:00 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 01 Jul 2008 18:37:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751731AbYGAQjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 12:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbYGAQjO
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:39:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33055 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751660AbYGAQjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 12:39:13 -0400
+Received: (qmail invoked by alias); 01 Jul 2008 16:39:12 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp061) with SMTP; 01 Jul 2008 18:39:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/14VQ/T6X1tab1kAZro+7kbOL9OPJ6uplpLXvsW6
+	9pz81HlGkvOjYE
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <1214905624-29517-1-git-send-email-trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87052>
 
-Paul Gardiner <lists@glidos.net> writes:
+Hi,
 
-> I don't think I can make .gitignore files do the job, because
-> it seems that you can set up to ignore a whole directory,
-> and then partially countermand that by placing a .gitignore
-> file (containing ! commands) inside the directory.
+On Tue, 1 Jul 2008, Thomas Rast wrote:
 
-To me, it seems the opposite ;-).
+> The cmd_show loop resolves tags by showing them, then pointing the
+> object to the 'tagged' member.  However, this object is not fully
+> initialized; it only contains the SHA1.  (This resulted in a segfault
+> if there were two levels of tags.)  We apply parse_object to get a
+> full object.
+> 
+> Noticed by Kalle Olavi Niemitalo on IRC.
+> 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+> 
+> I'm not 100% sure this is the right fix; I just had a quick stab at the 
+> code, made a fix and tested it.  It probably leaks memory too, not sure 
+> if this is a problem.
 
-I just tried to "git init" my $HOME, then "git status" takes forever,
-but "echo '*' > .gitignore; git status" completes immediately.
+AFAICT this is the correct way to solve the problem.
 
-So, an option is to put "*" in your .gitignore, and then "git add -f"
-files explicitely, or to work your .gitignore finer.
+We do not "leak" memory here, since we just assume objects to be 
+singletons (they are immutable, after all).
 
--- 
-Matthieu
+FWIW I had a "release_all_objects()" function in my personal fork for a 
+long time, which was quite painful to write.  But maintaining the "move 
+all builtins into libgit.a and avoid fork()&&exec()ing them" patch was the 
+only user, and since it became way too painful to maintain out of the 
+tree, I dropped both.
+
+Ciao,
+Dscho
