@@ -1,94 +1,181 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [OT] Your branch is ahead of the tracked remote branch 'origin/master' by 50 commits.
-Date: Tue, 01 Jul 2008 05:47:36 -0700 (PDT)
-Message-ID: <m38wwlhinq.fsf@localhost.localdomain>
-References: <20080701091347.GA11817@elte.hu> <80iqvq2bw0.fsf@tiny.isode.net>
-	<20080701101414.GG31309@elte.hu> <20080701114149.GB6662@neumann>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 14/14] Build in merge
+Date: Tue, 1 Jul 2008 14:50:23 +0200
+Message-ID: <20080701125023.GW4729@genesis.frugalware.org>
+References: <cover.1214879690.git.vmiklos@frugalware.org> <9201d4e13e574c10b1674cf1f6da23a44a73f8b2.1214879690.git.vmiklos@frugalware.org> <1b74bb93e518a906b0067d182fb29279baff3b25.1214879690.git.vmiklos@frugalware.org> <5e65b37998d1fdd9d314e48cea2cf67fd73ba8cd.1214879690.git.vmiklos@frugalware.org> <7vtzfaqg16.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ingo Molnar <mingo@elte.hu>,
-	Bruce Stephens <bruce.stephens@isode.com>, git@vger.kernel.org
-To: =?iso-8859-15?q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jul 01 14:48:55 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="MOeiELSuYwpLEKvX"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr@freesurf.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 14:52:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDfHi-00067X-D5
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 14:48:38 +0200
+	id 1KDfKq-0007VZ-Bi
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 14:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989AbYGAMrl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2008 08:47:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753230AbYGAMrk
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 08:47:40 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:33829 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756619AbYGAMrj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jul 2008 08:47:39 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so391775ugf.16
-        for <git@vger.kernel.org>; Tue, 01 Jul 2008 05:47:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=ol1hcRgSZt+WqBXAxNCaEPBlWUkVK3lNYEtxLhLY9Z4=;
-        b=Qu0sQxxbxBS7TBntt6exDG1VORU+MCNYQgJ/zQrRv6gX8S9N3x8Vj5KAQd3MGqe3Ei
-         gdmUA6FPQOSl4zYU5zh+NCCYWYZqbFsyx8s4sGLJ/cVKTE/lz9JaRS4bDGpyrEZsFZhX
-         kYRp4wnBsfW0fxg+q+5kxwNOkARkk4FRsmaeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=tgsu5+N+NCDgPtfW5CCIBKByh/Ik1i3LEhQvmvSRiBb5/OHOwi70nsiRRHYcZ3t78V
-         9i+RvPQXEm09S3DdpTGud/dg8kFrkXYWJ5h30C9xrug4W291f75U5tYRNxYWLemSdr6r
-         UnAUGsmPZIuiSKDgHoE3t8Kk9Pg8oDTXXGCnA=
-Received: by 10.67.96.9 with SMTP id y9mr316998ugl.24.1214916457864;
-        Tue, 01 Jul 2008 05:47:37 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.248.226])
-        by mx.google.com with ESMTPS id p34sm2102857ugc.41.2008.07.01.05.47.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jul 2008 05:47:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m61CpN0K029834;
-	Tue, 1 Jul 2008 14:51:23 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m61CpLj1029830;
-	Tue, 1 Jul 2008 14:51:21 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080701114149.GB6662@neumann>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756818AbYGAMu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 08:50:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754323AbYGAMu3
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 08:50:29 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:47094 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756763AbYGAMuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 08:50:25 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 195991B2545;
+	Tue,  1 Jul 2008 14:50:24 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1EDCC44668;
+	Tue,  1 Jul 2008 14:21:34 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 66C7811901F0; Tue,  1 Jul 2008 14:50:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzfaqg16.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87033>
 
-SZEDER G=E1bor <szeder@ira.uka.de> writes:
 
-> how about displaying the current branch in the command prompt?
+--MOeiELSuYwpLEKvX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jun 30, 2008 at 11:23:17PM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> Miklos Vajna <vmiklos@frugalware.org> writes:
 >=20
-> >From contrib/completion/git-completion.bash:
+> > +static int read_tree_trivial(unsigned char *common, unsigned char *hea=
+d,
+> > +	unsigned char *one)
+> > +{
+> > +	int i, nr_trees =3D 0;
+> > +	struct tree *trees[MAX_UNPACK_TREES];
+> > +	struct tree_desc t[MAX_UNPACK_TREES];
+> > +	struct unpack_trees_options opts;
+> > +
+> > +	memset(&opts, 0, sizeof(opts));
+> > +	opts.head_idx =3D 2;
 >=20
->   #    4) Consider changing your PS1 to also show the current branch:
->   #        PS1=3D'[\u@\h \W$(__git_ps1 " (%s)")]\$ '
->   #
->   #       The argument to __git_ps1 will be displayed only if you
->   #       are currently in a git repository.  The %s token will be
->   #       the name of the current branch.
+> Do you still need this assignment here?
 
-Because I alos use StGit, I have added to my prompt visual
-differentiation if the branch is under StGit control.
+No, it was duplicated.
 
-But I have my own git prompt function, based on git-completion.bash
-but different.  It shows current branch (or "HEAD" if on detached
-HEAD), current repository, and current working directory.  It laso has
-number of command in history, the same as in my ordinary prompt.
+> > +int cmd_merge(int argc, const char **argv, const char *prefix)
+> > +{
+> > +	unsigned char result_tree[20];
+> > +	struct strbuf buf;
+> > +	const char *head_arg;
+> > +	int flag, head_invalid =3D 0, i;
+> > +	int best_cnt =3D -1, merge_was_ok =3D 0, automerge_was_ok =3D 0;
+> > +	struct commit_list *common =3D NULL;
+> > +	struct path_list_item *best_strategy =3D NULL, *wt_strategy =3D NULL;
+> > +	struct commit_list **remotes =3D &remoteheads;
+> > +
+> > +	setup_work_tree();
+> > +	if (unmerged_cache())
+> > +		die("You are in the middle of a conflicted merge.");
+> > +
+> > +	/*
+> > +	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+> > +	 * current branch.
+> > +	 */
+> > +	branch =3D resolve_ref("HEAD", head, 0, &flag);
+> > +	if (branch && flag & REF_ISSYMREF) {
+> > +		const char *ptr =3D skip_prefix(branch, "refs/heads/");
+> > +		if (ptr)
+> > +			branch =3D ptr;
+> > +	} else
+> > +		head_invalid =3D 1;
+>=20
+> Wait a minute...  Are you calling a detached HEAD as head_invalid here?  I
+> am not too much worried about variable naming, but you later do ...
+>=20
+> > +	if (!have_message && is_old_style_invocation(argc, argv)) {
+> > ...
+> > +	} else if (head_invalid) {
+> > +		struct object *remote_head;
+> > +		/*
+> > +		 * If the merged head is a valid one there is no reason
+> > +		 * to forbid "git merge" into a branch yet to be born.
+> > +		 * We do the same for "git pull".
+> > +		 */
+> > +		if (argc !=3D 1)
+> > +			die("Can merge only exactly one commit into "
+> > +				"empty head");
+>=20
+> Which is about HEAD pointing at a branch that isn't born yet.  They are
+> two very different concepts.
+>=20
+> Either the above "else if (head_invalid)" is wrong, or more likely the
+> setting of head_invalid we saw earlier is wrong.
+>=20
+> Probably what you meant was:
+>=20
+> 	- "char *branch" points at either "HEAD" (when detached) or
+>           the name of the branch (e.g. "master" when "refs/heads/master");
+>=20
+> 	- "unsigned char head[]" stores the commit object name of the
+>           current HEAD (or 0{40} if the current branch is unborn);
+>=20
+>         - set head_invalid to true only when the current branch is unborn.
+>=20
+> So perhaps...
+>=20
+> 	branch =3D resolve_ref("HEAD", head, 0, &flag);
+>         if (branch && (flag & REF_ISSYMREF) && !prefixcmp(branch, "refs/h=
+eads/"))
+> 		branch +=3D 11;
+>         head_invalid =3D is_null_sha1(head);
+>=20
+> And probably we can even drop (flag & REF_ISSYMREF) from the above safely.
+> Do we even care if the head is detached in this program?  I doubt it.
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+You are right. I though we care about it, but now I realized such a
+comment was only in git-merge.annotated (in Dscho's fork), not in
+git-merge.sh. And yes, I mixed up head_invalid for two purposes. Thanks
+for clearing the situation.
+
+> > +		strbuf_init(&msg, 0);
+> > +		strbuf_addstr(&msg, "Fast forward");
+> > +		if (have_message)
+> > +			strbuf_addstr(&msg,
+> > +				" (no commit created; -m option ignored)");
+> > +		o =3D peel_to_type(sha1_to_hex(remoteheads->item->object.sha1),
+> > +			0, NULL, OBJ_COMMIT);
+> > +		if (!o)
+> > +			return 1;
+> > +
+> > +		if (checkout_fast_forward(head, remoteheads->item->object.sha1))
+> > +			return 1;
+>=20
+> Not exiting with 0 status from around here upon error is an improvement,
+> but does the user see sensible error messages in addition to the exit
+> status?
+
+Now he/she does. :-)
+
+(I updated my working branch on repo.or.cz, will send a patch soon, as
+well.)
+
+--MOeiELSuYwpLEKvX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhqKA8ACgkQe81tAgORUJZltQCgqsXRjRRqrXB/b0a1vGNQOzzl
+S/YAn33x63U/S4fP57jcnTpcfVocxqhz
+=2loa
+-----END PGP SIGNATURE-----
+
+--MOeiELSuYwpLEKvX--
