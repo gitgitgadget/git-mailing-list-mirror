@@ -1,106 +1,91 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: error out when given any good rev that is not an ancestor of the bad rev
-Date: Tue, 1 Jul 2008 02:20:44 +0200
-Message-ID: <200807010220.44657.chriscool@tuxfamily.org>
-References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org> <200807010146.09206.chriscool@tuxfamily.org> <7vej6etra7.fsf@gitster.siamese.dyndns.org>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 1 Jul 2008 10:57:50 +1000
+Message-ID: <20080701105750.040ccf75.sfr@canb.auug.org.au>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+	<7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+	<7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+	<7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+	<7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+	<7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+	<7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+	<7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+	<7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+	<7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+	<7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+	<7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+	<7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+	<7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+	<7vwskjazql.fsf@gitster.siamese.dyndns.org>
+	<7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+	<7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+	<7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+	<7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+	<1214834970.3382.4.camel@gaara.bos.redhat.com>
+	<7vabh2vaav.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Tue__1_Jul_2008_10_57_50_+1000_JkrCjS7_nxcH3BP8"
+Cc: Kristian =?UTF-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org, akpm@linux-foundation.org, pasky@suse.cz
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 02:17:47 2008
+X-From: git-owner@vger.kernel.org Tue Jul 01 03:00:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDTZ5-0001AA-7b
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 02:17:47 +0200
+	id 1KDUDw-0001U7-NA
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 03:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754415AbYGAAQu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 20:16:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbYGAAQt
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 20:16:49 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36120 "EHLO smtp1-g19.free.fr"
+	id S1754931AbYGAA6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2008 20:58:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754853AbYGAA6H
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 20:58:07 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:58711 "EHLO smtps.tip.net.au"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753789AbYGAAQt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 20:16:49 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 0F43E1AB2C0;
-	Tue,  1 Jul 2008 02:16:48 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9B3681AB2B2;
-	Tue,  1 Jul 2008 02:16:47 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vej6etra7.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754747AbYGAA6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2008 20:58:06 -0400
+Received: from ash.ozlabs.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by smtps.tip.net.au (Postfix) with ESMTP id 776B9368005;
+	Tue,  1 Jul 2008 10:57:59 +1000 (EST)
+In-Reply-To: <7vabh2vaav.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86976>
 
-Le mardi 1 juillet 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > Yes, but the fact is that the user may wrongly think that F is an
-> > ancestor of D or he may not remember/know about the rule that sayin=
-g "F
-> > is good" means "everything from A to F is good". That's why this pa=
-tch
-> > adds a safety net by detecting end erroring out in this case.
+--Signature=_Tue__1_Jul_2008_10_57_50_+1000_JkrCjS7_nxcH3BP8
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, 30 Jun 2008 15:15:52 -0700 Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Yeah, sorry about the confusion earlier.
->
-> But I do not think forbidding forked topology very early in bisection
-> process is a very good idea.  The user would be at loss when told:
->
-> 	echo >&2 "Maybe you mistake good and bad revs?"
+> branches, and Stephen who is also a heavy integrator even though I do not
+> know if he is in branches camp or uses more modern style), but they now
 
-Yeah, perhaps we should then check that it can be a mistake by testing =
-if=20
-bad is an ancestor of good. If bad is indeed an ancestor of good, it's=20
-probably a mistake and we may even ask if the user wants good and bad t=
-o be=20
-swaped (assuming he gave only one good rev of course).
+I use "git remote add" for each new repository and haven't had anything
+in the branches directory of any of my trees for a long time ...
 
-> Aside from the "test a trial merge" idea I floated in the other messa=
-ge,
-> when we detect such a fork, perhaps we can suggest testing the merge =
-base
-> version (B in your picture) first?  We would immediately know as the =
-user
-> would say "B is bad" if the topology is problematic.
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
 
-Yes this can be a good idea, if the user gave only one good rev. It may=
-be=20
-more tricky if he gave many good revs, but in this case we may perhaps =
-drop=20
-siblings good revs as long as one good rev is an ancestor of the bad re=
-v.
+--Signature=_Tue__1_Jul_2008_10_57_50_+1000_JkrCjS7_nxcH3BP8
+Content-Type: application/pgp-signature
 
-> Then, we can suggest the user that breakage at D may not be a regress=
-ion
-> but a longstanding bug that was recently fixed somewhere between B an=
-d F.
->
-> The user then can decide to bisect to find the fix (so that it can be
-> cherry picked on top of D) or merge F into D to propagate the fix for=
-ward
-> if it is not important to find out which exact commit fixed the issue=
-=2E
->
-> Hmm?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Yeah that might be a plan.
+iEYEARECAAYFAkhpgQ4ACgkQjjKRsyhoI8z0nACfVC35HK7THRvWqLTIg47QbtEL
+IEUAnR+IMEM4QjtMZ1XJ/x8ZrcNkT2M6
+=fEqm
+-----END PGP SIGNATURE-----
 
-Another option is to introduce a switch to "git bisect start",=20
-perhaps --strict, to please people who always want to use good revs tha=
-t=20
-are ancestor of the bad revs, so they get a nice error when this is not=
- the=20
-case.
-
-Thanks,
-Christian.
+--Signature=_Tue__1_Jul_2008_10_57_50_+1000_JkrCjS7_nxcH3BP8--
