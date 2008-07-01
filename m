@@ -1,69 +1,104 @@
-From: Paul Gardiner <lists@glidos.net>
-Subject: How do I stop git enumerating my working directory
-Date: Tue, 01 Jul 2008 16:57:00 +0100
-Message-ID: <486A53CC.4020803@glidos.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 3/7] Documentation: complicate example of "man
+	git-command"
+Date: Tue, 1 Jul 2008 12:23:58 -0400
+Message-ID: <20080701162358.GA18305@fieldses.org>
+References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu> <Pine.GSO.4.62.0806301706090.7190@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: lists@glidos.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 01 18:08:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jon Loeliger <jdl@jdl.com>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 01 18:25:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDiOj-00070I-QR
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:08:06 +0200
+	id 1KDif9-0004oj-0C
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754635AbYGAQHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 12:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754637AbYGAQHJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:07:09 -0400
-Received: from mk-outboundfilter-5.mail.uk.tiscali.com ([212.74.114.1]:46962
-	"EHLO mk-outboundfilter-5.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754425AbYGAQHI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jul 2008 12:07:08 -0400
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2008 12:07:07 EDT
-X-Trace: 51953573/mk-outboundfilter-5.mail.uk.tiscali.com/PIPEX/$PIPEX-ACCEPTED/pipex-customers/81.86.57.226
-X-SBRS: None
-X-RemoteIP: 81.86.57.226
-X-IP-MAIL-FROM: lists@glidos.net
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoAAAvwaUhRVjni/2dsb2JhbAAIsjmBew
-X-IronPort-AV: E=Sophos;i="4.27,732,1204502400"; 
-   d="scan'208";a="51953573"
-X-IP-Direction: IN
-Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 01 Jul 2008 16:57:02 +0100
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+	id S1754678AbYGAQYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 12:24:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbYGAQYE
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:24:04 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:33221 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753129AbYGAQYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 12:24:03 -0400
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1KDie6-0004vA-4X; Tue, 01 Jul 2008 12:23:58 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.62.0806301706090.7190@harper.uchicago.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87048>
 
-Hi,
+On Mon, Jun 30, 2008 at 05:10:25PM -0500, Jonathan Nieder wrote:
+> The manual page for the command invoked as "git clone" is named
+> git-clone(1), and similarly for the rest of the git commands.
+> Make sure our first example of this in tutorials makes it clear
+> that it is the first two words of a command line that make up the
+> command's name (that is: for example, the effect of "git svn
+> dcommit" is described in git-svn(1)).
 
-I'm a recent convert to git. I've been swapping over my projects
-from cvs to git. The latest candidate for conversion is the
-config files for my Linux server. I've been using cvs to record
-all the config changes, and - mostly-automatically - to setup
-new servers. Git will do a far better job, I think, but
-I think I'm going to run into a problem: the root directory
-of the server will be the working directory. Only relatively
-few files will be under version control. How do I stop git
-enumerating the whole drive whenever I do things like git-diff?
+Is this confusion really common?
 
-I don't think I can make .gitignore files do the job, because
-it seems that you can set up to ignore a whole directory,
-and then partially countermand that by placing a .gitignore
-file (containing ! commands) inside the directory. That
-makes me think that ignoring doesn't prevent the
-enumeration.
+I can see how it might be possible in the case of a subcommand that
+itself has subcommands, but it seems less likely in the two examples you
+add below (where the third token is an option or a url).  I like your
+"git svn" example better.  Or "git remote" might be good.
 
-Any help most appreciated. I really want to use git for
-this.
+--b.
 
-Cheers,
-	Paul.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+> ---
+> 	If I didn't make this change, consistency would mean
+> 	saying "you can get documentation for a command such
+> 	as `git-diff` with `man git-diff`", which might not be
+> 	very enlightening.
+> 
+>  Documentation/gittutorial.txt |    4 ++--
+>  Documentation/user-manual.txt |    2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+> index 3d16e3d..b833167 100644
+> --- a/Documentation/gittutorial.txt
+> +++ b/Documentation/gittutorial.txt
+> @@ -20,10 +20,10 @@ for example, to test the latest version, you may prefer to start with
+>  the first two chapters of link:user-manual.html[The Git User's Manual].
+>  
+>  First, note that you can get documentation for a command such as "git
+> -diff" with:
+> +log --graph" with:
+>  
+>  ------------------------------------------------
+> -$ man git-diff
+> +$ man git-log
+>  ------------------------------------------------
+>  
+>  It is a good idea to introduce yourself to git with your name and
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index ca4363f..36ab372 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -18,7 +18,7 @@ People needing to do actual development will also want to read
+>  Further chapters cover more specialized topics.
+>  
+>  Comprehensive reference documentation is available through the man
+> -pages.  For a command such as "git clone", just use
+> +pages.  For a command such as "git clone <repo>", just use
+>  
+>  ------------------------------------------------
+>  $ man git-clone
+> -- 
+> 1.5.5.GIT
+> 
+> 
