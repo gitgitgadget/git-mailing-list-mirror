@@ -1,86 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 7/7] Documentation formatting and cleanup
-Date: Tue, 01 Jul 2008 14:34:23 -0700
-Message-ID: <7vej6dmgps.fsf@gitster.siamese.dyndns.org>
-References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
- <Pine.GSO.4.62.0806301730230.7190@harper.uchicago.edu>
- <486A2C8C.5050204@free.fr>
+Subject: Re: [OT] Your branch is ahead of the tracked remote branch
+ 'origin/master' by 50 commits.
+Date: Tue, 01 Jul 2008 16:55:02 -0700
+Message-ID: <7vhcb9kvmx.fsf@gitster.siamese.dyndns.org>
+References: <20080701091347.GA11817@elte.hu>
+ <7vlk0mne5d.fsf@gitster.siamese.dyndns.org> <20080701100725.GE31309@elte.hu>
+ <20080701111601.GT4729@genesis.frugalware.org>
+ <20080701112235.GC11809@elte.hu>
+ <20080701114118.GU4729@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@uchicago.edu>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jon Loeliger <jdl@jdl.com>
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 01 23:35:41 2008
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jul 02 01:56:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDnVd-0003Jq-Bz
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 23:35:33 +0200
+	id 1KDpiF-0001AV-3s
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 01:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbYGAVeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 17:34:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYGAVeg
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 17:34:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50118 "EHLO
+	id S1757280AbYGAXzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 19:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757252AbYGAXzr
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 19:55:47 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50886 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139AbYGAVef (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 17:34:35 -0400
+	with ESMTP id S1754944AbYGAXzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 19:55:15 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6194E250B4;
-	Tue,  1 Jul 2008 17:34:33 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C788E2674C;
+	Tue,  1 Jul 2008 19:55:14 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 51F21250AD; Tue,  1 Jul 2008 17:34:27 -0400 (EDT)
-In-Reply-To: <486A2C8C.5050204@free.fr> (Olivier Marin's message of "Tue, 01
- Jul 2008 15:09:32 +0200")
+ ESMTPSA id E88CA2674B; Tue,  1 Jul 2008 19:55:09 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7ED9770E-47B5-11DD-B430-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 26546170-47C9-11DD-A683-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87067>
 
-Olivier Marin <dkr+ml.git@free.fr> writes:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-> Also, in Documentation/gitdiffcore.txt, you did:
+> On Tue, Jul 01, 2008 at 01:22:35PM +0200, Ingo Molnar <mingo@elte.hu> wrote:
+>> [ Oh, and i could switch between git versions without having to rebuild
+>>   ;-) ]
 >
->> -These are applied in sequence.  The set of filepairs git-diff-\*
->> +These are applied in sequence.  The set of filepairs `git-diff-*`
->
-> but the file does not compile, now.
+> I remember about a mail from Junio where he wrote he has a lot of
+> versions installed under ~/git/git-version. So usually he has git from
+> next as default and he can try ~/git/git-1.5.4/git if he want 1.5.4,
+> etc.
 
-There are other places with the same breakage.
+Yup.
 
-You would need something like this (using the {asterisk} macro I
-wrote for updating the docs for another topic).  The patch shows only a
-single use location but there are others in the same file.
+I have $HOME/git-active/bin on my $PATH and then these:
 
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 10c1a15..40d43b7 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -8,6 +8,7 @@
- # the command.
- 
- [attributes]
-+asterisk=&#42;
- plus=&#43;
- caret=&#94;
- startsb=&#91;
-diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-index 71568ab..7169eee 100644
---- a/Documentation/gitdiffcore.txt
-+++ b/Documentation/gitdiffcore.txt
-@@ -23,7 +23,7 @@ that are easier to understand than the conventional kind.
- The chain of operation
- ----------------------
- 
--The `git-diff-*` family works by first comparing two sets of
-+The `git-diff-{asterisk}` family works by first comparing two sets of
- files:
- 
-  - `git-diff-index` compares contents of a "tree" object and the
+lrwxrwxrwx 1 junio junio   10 2008-05-25 18:13 /home/junio/git-active -> git-master
+drwxr-sr-x 6 junio junio 4096 2007-04-04 02:49 /home/junio/git-maint
+drwxr-sr-x 5 junio junio 4096 2007-12-14 22:46 /home/junio/git-master
+drwxr-sr-x 6 junio junio 4096 2008-06-23 22:02 /home/junio/git-next
+drwxr-sr-x 7 junio junio 4096 2007-12-02 02:52 /home/junio/git-pu
+drwxr-sr-x 4 junio junio 4096 2006-10-14 22:43 /home/junio/git-snap-v1.0.0
+drwxr-sr-x 4 junio junio 4096 2007-01-11 22:27 /home/junio/git-snap-v1.1.0
+drwxr-sr-x 4 junio junio 4096 2007-01-11 22:26 /home/junio/git-snap-v1.2.0
+drwxr-sr-x 4 junio junio 4096 2007-01-11 22:24 /home/junio/git-snap-v1.3.0
+...
+drwxr-sr-x 5 junio junio 4096 2008-06-07 12:11 /home/junio/git-snap-v1.5.5.4
+drwxr-sr-x 5 junio junio 4096 2008-06-26 17:33 /home/junio/git-snap-v1.5.5.5
+drwxr-sr-x 5 junio junio 4096 2008-06-25 14:41 /home/junio/git-test
+
+my "Make" and "Doit" scripts that arrange the $(prefix) for these builds
+are found in my 'todo' branch.
