@@ -1,92 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Multiple remote.<...>.fetch and .push patterns
-Date: Tue, 01 Jul 2008 06:04:29 -0700 (PDT)
-Message-ID: <m3zlp1g3b3.fsf@localhost.localdomain>
-References: <308083c30806301158i1100c84dqe7f50daad417934c@mail.gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [RFC/PATCH 7/7] Documentation formatting and cleanup
+Date: Tue, 01 Jul 2008 15:09:32 +0200
+Message-ID: <486A2C8C.5050204@free.fr>
+References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu> <Pine.GSO.4.62.0806301730230.7190@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Adr3nal D0S" <adr3nald0s@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 15:06:14 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jon Loeliger <jdl@jdl.com>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 01 15:10:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDfYR-0003yz-Uz
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 15:05:56 +0200
+	id 1KDfca-0005gu-S9
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 15:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754158AbYGANEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 09:04:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753926AbYGANEd
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 09:04:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:36781 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753249AbYGANEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 09:04:32 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so393838ugf.16
-        for <git@vger.kernel.org>; Tue, 01 Jul 2008 06:04:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=pxSV4fqQAy42sbuljCj5SLOqFKVACNQK7YqpkmyKu+U=;
-        b=rWMSa8bODb6m2wLH1XCStRFGgzcu4+N5J4VJ2Ujdku1l5wEf4V+pOqrHuXyndqrLVI
-         HqK8bUt8tf9tmVVvqT5tVaqzoxpr73Ee90vKhedgHh37r68807/rhDUJfgaQjamoUe+k
-         Nkcq3LlM0yYKiBPcFE7JmPrzO0Imvr8ISy9Lw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=Du85TeVBho7geDAKjfS8xR7X8Z9RQe+hYJfXWC1bL3BBnln+MF1s/yQ16FdEvVOd/t
-         1OOVRE9iLsdfGAqZH2p3F7JqFX2kFmQTNZibKkAGMLussNSppC5DrpVaDWoVRwnfjjEC
-         HVf4HtZszHWHnHtATaPt0AA5M9N/WH35MPO/I=
-Received: by 10.210.24.7 with SMTP id 7mr5289283ebx.178.1214917470360;
-        Tue, 01 Jul 2008 06:04:30 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.248.226])
-        by mx.google.com with ESMTPS id z40sm8305821ikz.7.2008.07.01.06.04.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jul 2008 06:04:29 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m61D8Gkm029952;
-	Tue, 1 Jul 2008 15:08:16 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m61D8GJm029949;
-	Tue, 1 Jul 2008 15:08:16 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <308083c30806301158i1100c84dqe7f50daad417934c@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754175AbYGANJQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2008 09:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755137AbYGANJQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 09:09:16 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:42022 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753815AbYGANJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 09:09:15 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id D2C4A12B6B4;
+	Tue,  1 Jul 2008 15:09:13 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 3B41012B6CE;
+	Tue,  1 Jul 2008 15:09:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <Pine.GSO.4.62.0806301730230.7190@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87037>
 
-"Adr3nal D0S" <adr3nald0s@gmail.com> writes:
+Jonathan Nieder a =E9crit :
+> [184 KB patch online at
+> <http://home.uchicago.edu/~jrnieder/20080701-git-doc-style.txt>]
+>=20
+> Following what appears to be the predominant style, format
+> names of commands and commandlines both as `teletype text`.
+>=20
+> While we're at it, add articles ("a" and "the") in some
+> places, italicize the name of the command in the manual page
+> synopsis line, and add a comma or two where it seems appropriate.
+>=20
+> Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+>=20
+> 	1) I am using `teletype text` both for command names and
+> 	   for command lines. Probably I should be using italics
+> 	   for the command names.
 
-> How can I do something like what is shown in Everyday git using git-config?
-> 
-> $ cat .git/remotes/ko
-> URL: kernel.org:/pub/scm/git/git.git
-> Pull: master:refs/tags/ko-master
-> Pull: next:refs/tags/ko-next
-> Pull: maint:refs/tags/ko-maint
-> Push: master
-> Push: next
-> Push: +pu
-> Push: maint
-> 
-> I know I can do:
-> 
-> git config remote.ko.fetch refs/heads/*:refs/tags/ko-*
-> 
-> but that will get all KO heads.  And I have no clue about the push version.
+You did a lot of:
 
-remote.<name>.fetch in config is equivalent of "Pull:" line in 
-$GIT_DIR/remotes/<name>, while remote.<name>.push in config is
-eqiovalent of "Push:" line in $GIT_DIR/remotes/<name>.
+> -replaced; you need to use a tool such as linkgit:git-diff[1] or the =
+"pickaxe"
+> +replaced; you need to use a tool such as `git-diff` or the "pickaxe"
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Are those kind of changes really an improvement?
+
+Also, in Documentation/gitdiffcore.txt, you did:
+
+> -These are applied in sequence.  The set of filepairs git-diff-\*
+> +These are applied in sequence.  The set of filepairs `git-diff-*`
+
+but the file does not compile, now.
+
+Olivier.
