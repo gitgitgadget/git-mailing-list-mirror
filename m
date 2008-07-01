@@ -1,131 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/14] Build in merge
-Date: Tue, 01 Jul 2008 00:27:48 -0700
-Message-ID: <7vzlp2oyh7.fsf@gitster.siamese.dyndns.org>
-References: <cover.1214879690.git.vmiklos@frugalware.org>
- <9201d4e13e574c10b1674cf1f6da23a44a73f8b2.1214879690.git.vmiklos@frugalware.org> <1b74bb93e518a906b0067d182fb29279baff3b25.1214879690.git.vmiklos@frugalware.org> <5e65b37998d1fdd9d314e48cea2cf67fd73ba8cd.1214879690.git.vmiklos@frugalware.org>
+Subject: Re: [PATCH] Make default expiration period of reflog used for stash
+ infinite
+Date: Tue, 01 Jul 2008 00:28:06 -0700
+Message-ID: <7vskuuoygp.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
+ <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
+ <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
+ <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+ <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+ <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+ <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+ <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+ <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+ <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+ <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+ <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+ <7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+ <7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+ <7v3amweiaz.fsf@gitster.siamese.dyndns.org> <4869700C.6060803@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jul 01 09:28:57 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 01 09:29:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDaIK-0000R4-69
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 09:28:56 +0200
+	id 1KDaIe-0000Wh-RX
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 09:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbYGAH17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 03:27:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbYGAH17
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 03:27:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56437 "EHLO
+	id S1753956AbYGAH2R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2008 03:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbYGAH2R
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 03:28:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56463 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752412AbYGAH16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 03:27:58 -0400
+	with ESMTP id S1753734AbYGAH2Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jul 2008 03:28:16 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 51D451BF9B;
-	Tue,  1 Jul 2008 03:27:57 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 98C811BF9F;
+	Tue,  1 Jul 2008 03:28:13 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 270D81BF98; Tue,  1 Jul 2008 03:27:49 -0400 (EDT)
+ ESMTPSA id CB3DA1BF9D; Tue,  1 Jul 2008 03:28:10 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3A09F2C8-473F-11DD-A970-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 43BF987C-473F-11DD-8C6A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87006>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Olivier Marin <dkr+ml.git@free.fr> writes:
 
-> +	/* See if remote matches <name>~<number>, or <name>^ */
-> +	ptr = strrchr(remote, '^');
-> +	if (ptr && ptr[1] == '\0') {
-> +		for (len = 0, ptr = remote + strlen(remote);
-> +				remote < ptr && ptr[-1] == '^';
-> +				ptr--)
-> +			len++;
-> +	}
-> +	else {
-> +		ptr = strrchr(remote, '~');
-> +		if (ptr && ptr[1] != '0' && isdigit(ptr[1])) {
-> +			len = ptr-remote;
-> +			ptr++;
-> +			for (ptr++; *ptr; ptr++)
-> +				if (!isdigit(*ptr)) {
-> +					len = 0;
-> +					break;
-> +				}
-> +		}
-> +	}
+> Junio C Hamano a =C3=A9crit :
+>> This makes the default expiration period for the reflog that impleme=
+nts
+>> stash infinite.
+>
+> I did not read the whole thread so maybe I missed something but I tho=
+ugh you
+> wanted to apply Nanako's patch before?
+>
+> The patch: http://article.gmane.org/gmane.comp.version-control.git/85=
+055
 
-I still have problems with the above.  I'd write it this way:
+Thanks for reminding, but I am of two minds about the change.
 
-	int len, early;
-	...
-	/* See if remote matches <name>^^^.. or <name>~<number> */
-	for (len = 0, ptr = remote + strlen(remote);
-	     remote < ptr && ptr[-1] == '^';
-	     ptr--)
-		len++;
-	if (len)
-		early = 1;
-	else {
-		early = 0;
-		ptr = strrchr(remote, '~');
-		if (ptr) {
-			int seen_nonzero = 0;
+ (1) The change would untie the base tree of the stash from the history
+     behind it and allow previously rewound tips of branches that these
+     stashes were built on top of.  Without the patch, these otherwise
+     unreachable commits will never be reclaimed.
 
-			len++; /* count ~ */
-			while (*++ptr && isdigit(*ptr)) {
-				seen_nonzero |= (*ptr != '0');
-				len++;
-			}
-			if (*ptr)
-				len = 0; /* not ...~<number> */
-			else if (seen_nonzero)
-				early = 1;
-			else if (len == 1)
-				early = 1; /* "name~" is "name~1"! */
-		}
-	}
-	if (len) {
-		struct strbuf truname = STRBUF_INIT;
-		strbuf_addstr(&truname, "refs/heads/");
-		strbuf_addstr(&truname, remote);
-		strbuf_setlen(&truname, len+11);
-		if (resolve_ref(truname.buf, buf_sha, 0, 0)) {
-			strbuf_addf(msg,
-				    "%s\t\tbranch '%s'%s of .\n",
-				    sha1_to_hex(remote_head->sha1),
-				    truname.buf,
-				    (early ? " (early part)" : ""));
-			return;
-		}
-	}
+ (2) Today, you can say "git log stash" (note the lack of "-g" option) =
+to
+     view the history behind the stash through two artificial commits t=
+hat
+     stash creates.  This will become impossible with the patch.
 
-
-The first loop is obvious.  If the tail end is ^, we set "len" and see if
-the remainder is a branch name (and if that is the case we are always
-talking about an early part of it of the branch).
-
-Otherwise, we do want to say "early part" if "$name~<number>" is given,
-and another special case is "$name~" which is "$name~1" these days.  As
-long as number is not zero we would want to say "early part".  Otherwise
-we would want to say it is a branch itself, not its early part.
-
-I'll queue the fixed-up result in 'pu', but I have to tend to other topics
-before I can actually publish.  Together with the fix to "head_invalid"
-confusion I mentioned in another message squashed in to this commit, all
-the tests now finally seem to pass on the topic branch.
-
-Oh, by the way, you sent this and the previous round without marking them
-as RFC nor WIP, even though they obviously did not even pass the test
-suite.  For example, without the head_invalid fix, anything that runs
-merge on detached head, most notably "git rebase -i", would not work at
-all.
+Probably I am worrying too much; I do not personally think the second
+point matters in the real life.  If "git log stash" _were_ any useful,
+it means the history behind the stash entries are not useless at all, b=
+ut
+in that case the user would be using regular branches to store them
+anyway.
