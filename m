@@ -1,78 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 3/8] Refuse to create or delete funny ref names over dumb transports
-Date: Mon, 30 Jun 2008 23:04:00 -0400
-Message-ID: <1214881445-3931-4-git-send-email-spearce@spearce.org>
-References: <1214881445-3931-1-git-send-email-spearce@spearce.org>
- <1214881445-3931-2-git-send-email-spearce@spearce.org>
- <1214881445-3931-3-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 05:14:44 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 13/14] git-commit-tree: make it usable from other
+ builtins
+Date: Tue, 1 Jul 2008 06:07:28 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807010606470.9925@racer>
+References: <666ec9b342a0c3254ae8f917d5bd2dea36314f08.1214878711.git.vmiklos@frugalware.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Olivier Marin <dkr@freesurf.fr>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Jul 01 07:10:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDWKB-0003pl-Tk
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 05:14:36 +0200
+	id 1KDY8B-0000DT-GJ
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 07:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836AbYGADNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 23:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbYGADNe
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 23:13:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:58267 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282AbYGADMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 23:12:50 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 9C5FB381FF; Tue,  1 Jul 2008 03:04:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.4 required=4.0 tests=ALL_TRUSTED,AWL autolearn=ham
-	version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 398FB38193;
-	Tue,  1 Jul 2008 03:04:29 +0000 (UTC)
-X-Mailer: git-send-email 1.5.6.74.g8a5e
-In-Reply-To: <1214881445-3931-3-git-send-email-spearce@spearce.org>
+	id S1750976AbYGAFJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 01:09:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbYGAFJW
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 01:09:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33050 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750826AbYGAFJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 01:09:21 -0400
+Received: (qmail invoked by alias); 01 Jul 2008 05:09:19 -0000
+Received: from almond.st-and.ac.uk (EHLO almond.st-and.ac.uk) [138.251.155.241]
+  by mail.gmx.net (mp066) with SMTP; 01 Jul 2008 07:09:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Yv24oKldYywRvJLxExG1tiv8VS3scZHfcWsIETY
+	3t4qQmO9FxICnI
+X-X-Sender: gene099@racer
+In-Reply-To: <666ec9b342a0c3254ae8f917d5bd2dea36314f08.1214878711.git.vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87002>
 
-If the RemoteRefUpdate requests us to create a remote name of just
-"master" (say due to a bug in the push command line tool) we would do
-just that, creating "$project.git/master" on the remote side.  This is
-not a valid ref for Git and confusion ensues when C Git tries to
-operate on the same repository.
+Hi,
 
-Normally these sorts of bad refs are blocked by git-receive-pack
-on the remote side, but here we don't have that so we must do the
-blocking as part of the push connection.
+On Tue, 1 Jul 2008, Miklos Vajna wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../spearce/jgit/transport/WalkPushConnection.java |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+> I did it this way to avoid an unnecessary conflict with Dscho's recent 
+> patch to commit-tree (ef98c5c).
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
-index 5450b84..e11b85a 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
-@@ -129,6 +129,13 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
- 		//
- 		final List<RemoteRefUpdate> updates = new ArrayList<RemoteRefUpdate>();
- 		for (final RemoteRefUpdate u : refUpdates.values()) {
-+			final String n = u.getRemoteName();
-+			if (!n.startsWith("refs/") || !Repository.isValidRefName(n)) {
-+				u.setStatus(Status.REJECTED_OTHER_REASON);
-+				u.setMessage("funny refname");
-+				continue;
-+			}
-+
- 			if (AnyObjectId.equals(ObjectId.zeroId(), u.getNewObjectId()))
- 				deleteCommand(u);
- 			else
--- 
-1.5.6.74.g8a5e
+Oh, sorry!
+
+Funnily enough, I committed and tested this change in my clone of 
+builtin-merge before I realized that I am in the wrong directory ;-)
+
+Ciao,
+Dscho
