@@ -1,84 +1,204 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH 14/14] Build in merge
-Date: Tue, 1 Jul 2008 14:55:18 +0200
-Message-ID: <20080701125518.GX4729@genesis.frugalware.org>
-References: <cover.1214879690.git.vmiklos@frugalware.org> <9201d4e13e574c10b1674cf1f6da23a44a73f8b2.1214879690.git.vmiklos@frugalware.org> <1b74bb93e518a906b0067d182fb29279baff3b25.1214879690.git.vmiklos@frugalware.org> <5e65b37998d1fdd9d314e48cea2cf67fd73ba8cd.1214879690.git.vmiklos@frugalware.org> <7vzlp2oyh7.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/4] Add git-sequencer prototype documentation
+Date: Tue, 01 Jul 2008 06:02:54 -0700 (PDT)
+Message-ID: <m34p79hhy9.fsf@localhost.localdomain>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+	<1214879914-17866-2-git-send-email-s-beyer@gmx.net>
+	<1214879914-17866-3-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="b9dEYEwnDXkv9lSy"
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 14:57:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jul 01 15:04:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDfPk-0000sV-Ky
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 14:56:57 +0200
+	id 1KDfWs-0003bU-9e
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 15:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757444AbYGAMzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 08:55:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757975AbYGAMzY
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 08:55:24 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:47107 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757201AbYGAMzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 08:55:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2F3AA1B254C;
-	Tue,  1 Jul 2008 14:55:19 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 4574244668;
-	Tue,  1 Jul 2008 14:26:29 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CD5CB11901F0; Tue,  1 Jul 2008 14:55:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vzlp2oyh7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1756093AbYGANDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 09:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757944AbYGANC7
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 09:02:59 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:16540 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757901AbYGANC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 09:02:57 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so583581nfc.21
+        for <git@vger.kernel.org>; Tue, 01 Jul 2008 06:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=NDm881FHWc7H9tZYhTZMaTQKnrTsqLtM73ta8WW4uR0=;
+        b=YwXeG4jRI6yjR5uJICbHPSm2R7sMX6YKVNx3pSBrj+Y4O5kE1LedTHLKo5+pDAfjys
+         yrnjAmSSfZt4a0xSa1CxbJ/PZnkJ2a3WbnD7VKlvXZI2Vdup/Od+hxezfVVxqJZ0TCfo
+         +HRPYCqUi0DUlmDfS5ekNG3IHYbXjEsOKIKt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=R1xmWIx5oElU5W48zyLyZGzt7J/h1hnQ36u6XeRyTnwIBRvbEkMxqL3mm4PgWgM7ho
+         eG6/cXcr0jyCj35TbWPfwHyW8QiQ6dfGZ5QLj2Bg98oACL18NbqgSoRviV6ZCUTI46UI
+         sQt7uOTombUIdoIO2J67y8N1aIRR7/fzasnvc=
+Received: by 10.210.142.6 with SMTP id p6mr5315111ebd.102.1214917375861;
+        Tue, 01 Jul 2008 06:02:55 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.248.226])
+        by mx.google.com with ESMTPS id y34sm8289995iky.10.2008.07.01.06.02.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Jul 2008 06:02:54 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m61D6epA029940;
+	Tue, 1 Jul 2008 15:06:41 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m61D6cEn029937;
+	Tue, 1 Jul 2008 15:06:38 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1214879914-17866-3-git-send-email-s-beyer@gmx.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87035>
 
+Stephan Beyer <s-beyer@gmx.net> writes:
 
---b9dEYEwnDXkv9lSy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
 
-On Tue, Jul 01, 2008 at 12:27:48AM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> I'll queue the fixed-up result in 'pu', but I have to tend to other topics
-> before I can actually publish.  Together with the fix to "head_invalid"
-> confusion I mentioned in another message squashed in to this commit, all
-> the tests now finally seem to pass on the topic branch.
->=20
-> Oh, by the way, you sent this and the previous round without marking them
-> as RFC nor WIP, even though they obviously did not even pass the test
-> suite.  For example, without the head_invalid fix, anything that runs
-> merge on detached head, most notably "git rebase -i", would not work at
-> all.
+Cc mentors?
 
-Thanks for pointing that out. I remember I used to run 'make test'
-before sending a patch, but that took a lot of time and then I used to
-run only t*merge*.sh, which - it turns out - was a bad idea, since I
-haven't noticed breaking t3404.
+> +git-sequencer will usually be called by another git porcelain, like
+> +linkgit:git-am[1] or linkgit:git-rebase[1].
 
-I'm now running a full 'make test' before I send the patch.
+I hope that it could be also used by git-cherry-pick and git-revert,
+so it would be possible to pick more than one commit...
 
---b9dEYEwnDXkv9lSy
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> +In case of a conflict or request in the TODO file, git-sequencer will
+> +pause. On conflict you can use git-diff to locate the markers (`<<<<<<<`)
+> +and make edits to resolve the conflict.
+> +
+> +For each file you edit, you need to tell git the changes by doing
+> +
+> +    git add <file>
+> +
+> +After resolving the conflict manually and updating the index with the
+> +desired resolution, you can continue the sequencing process with
+> +
+> +    git sequencer --continue
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Does it run pre-commit hooks, for example checking for merge markers
+(but also whitespace errors), and can those checks be disabled?
 
-iEYEARECAAYFAkhqKTYACgkQe81tAgORUJbZWQCcDxcrRuPz1vg6ZikQyhBVHK1g
-XugAoIpQMAFrtU2K19VxaxDSoAY7lEhU
-=ZokP
------END PGP SIGNATURE-----
+> +-B::
+> +--batch::
+> +	Run in batch mode. If unexpected user intervention is needed
+> +	(e.g. a conflict or the need to run an editor), git-sequencer fails.
+> ++
+> +Note that the sanity check fails, if you use this option
+> +and an instruction like `edit` or `pause`.
 
---b9dEYEwnDXkv9lSy--
+s/.$/ is in the TODO file./
+
+> +--edit::
+> +	Invoke editor to edit the undone rest of the TODO file.
+
+Does it mean that editor will be invoked with only _unprocessed_
+part of the TODO file?  It looks like it, but it might be not
+obvious to some.
+
+> +merge [options] <commit-ish1> <commit-ish2> ... <commit-ishN>::
+> +	Merge commits into HEAD.
+
+Nice.
+
+"HEAD" mean last picked up / created commit, isn't it?
+
+> ++
+> +A commit can also be given by a mark, if prefixed with a colon.
+
+"You can refer to commit by mark", perhaps?
+
+> +	--standard;;
+> +		Generates a commit message like 'Merge ... into HEAD'.
+> +		See also linkgit:git-fmt-merge-msg[1].
+
+Is it short for `--standard-message`?
+
+> +pick [options] <commit>::
+> +	Pick (see linkgit:git-cherry-pick[1]) a commit.
+> +	Sequencer will pause on conflicts.
+> ++
+> +See the following list and 'GENERAL OPTIONS' for values of `options`:
+> +
+> +	-R;;
+> +	--reverse;;
+> +		Revert the changes introduced by pick <commit>.
+> +
+> +	--mainline=<n>;;
+> +		Allows you to pick merge commits by specifying the
+> +		parent number (beginning from 1) to let sequencer
+> +		replay the changes relative to the specified parent.
+> +		+
+> +This option does not work together with `-R`.
+
+Why?  I would have thought that it would work...
+
+> +patch [options] <file>::
+[...]
+> +	-*;;
+> +		Any other dash-prefixed option is passed to
+> +		linkgit:git-apply[1].
+> +		This is especially useful for flags like
+> +		`--reverse`, `-C<n>`, `-p<n>` or `--whitespace=<action>`.
+
+Do all options make sense?  What about `--index' and `--cached',
+or about different no-apply options?
+
+> +ref <ref>::
+> +	Set ref `<ref>` to the current HEAD, see also
+> +	linkgit:git-update-ref[1].
+
+So this functions like "git reset --soft <ref>", isn't it?
+
+> +squash [options] --from <mark>::
+> +	Squash all commits from the given mark into one commit.
+> +	There must not be any `merge` instructions between the
+> +	`mark` instruction and this `squash --from` instruction.
+
+Can you use <commit> instead of <mark> here?
+
+> +	--include-merges;;
+> +		Sanity check does not fail if you have merges
+> +		between HEAD and <mark>.
+
+How do you squash merges?  Creating merge with an union of parents,
+excluding commits which got squashed?
+
+It means
+
+  ...a---b---c---d         ...[abcd]
+            /        ==>        /
+      ...x-/               ..x-/
+
+but
+
+  ...a---b---c---d          ...[abcd]
+      \     /        ==>
+       \-x-/ 
+
+> +RETURN VALUES
+> +-------------
+> +* any other value on error, e.g.
+> +  running git-sequencer on a bare repository.
+
+Don't you enumerate those return values?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
