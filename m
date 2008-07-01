@@ -1,116 +1,103 @@
-From: Patrick Higgins <patrick.higgins@cexp.com>
-Subject: [PATCH/RFC] Emulating symlinks on Windows with file copies
-Date: Mon, 30 Jun 2008 17:54:13 -0600
-Message-ID: <1214870053-11537-1-git-send-email-patrick.higgins@cexp.com>
-Cc: Patrick Higgins <patrick.higgins@cexp.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 01 01:56:42 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: "Clifford Caoile" <piyo@users.sourceforge.net>
+Subject: Re: How to reduce remaining differences to 4msysgit? (was
+ What's cooking in git.git (topics))
+Date: Tue, 1 Jul 2008 09:03:54 +0900
+Message-ID: <1f748ec60806301703g134b8127i1965377adf9f04e5@mail.gmail.com>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de> <200806302047.56935.johannes.sixt@telecom.at>
+Reply-To: piyo@users.sourceforge.net
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: prohaska@zib.de, msysGit <msysgit@googlegroups.com>,  "Junio C Hamano" <gitster@pobox.com>,  "Git Mailing List" <git@vger.kernel.org>
+To: johannes.sixt@telecom.at
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Jul 01 02:04:58 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.251])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDTET-0005LX-Pz
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 01:56:30 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754968AbYF3Xzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2008 19:55:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754842AbYF3Xzc
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 19:55:32 -0400
-Received: from mx02.cexp.com ([170.131.136.83]:38244 "EHLO mx02.cexp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754831AbYF3Xzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2008 19:55:31 -0400
-Received: from mailgate2.cexp.com (uscobrmfa-se-07.cexp.com [170.131.144.37])
-	by mx02.cexp.com (Postfix) with ESMTP id 0DDBD369E46
-	for <git@vger.kernel.org>; Mon, 30 Jun 2008 17:54:15 -0600 (MDT)
-Received: from localhost.localdomain ([10.128.5.63]) by USCOBRMFA-SE-52.northamerica.cexp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 30 Jun 2008 17:54:14 -0600
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.1/8.13.1) with ESMTP id m5UNsEvV011560;
-	Mon, 30 Jun 2008 17:54:14 -0600
-Received: (from phiggins@localhost)
-	by localhost.localdomain (8.13.1/8.13.1/Submit) id m5UNsDXE011559;
-	Mon, 30 Jun 2008 17:54:13 -0600
-X-Mailer: git-send-email 1.5.6.dirty
-X-OriginalArrivalTime: 30 Jun 2008 23:54:14.0786 (UTC) FILETIME=[99E1C620:01C8DB0C]
-Sender: git-owner@vger.kernel.org
+	id 1KDTMd-0006yy-Iq
+	for gcvm-msysgit@m.gmane.org; Tue, 01 Jul 2008 02:04:58 +0200
+Received: by wa-out-0708.google.com with SMTP id n36so5346764wag.21
+        for <gcvm-msysgit@m.gmane.org>; Mon, 30 Jun 2008 17:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :dkim-signature:domainkey-signature:received:received:message-id
+         :date:from:reply-to:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere;
+        bh=n+30X2aMiLvVKt+i7p3wInRj7VGH0D1aUv534FzEDws=;
+        b=gl1bprFYH5QDNGGIX7/6Za48RLgIk8WSfpOEXHMkkEou3jS32rUhQI2rDEEpVJQ4rR
+         QrDFiDkqKTUTMcgOY21hfYzTkzSlqr00XVpEKERY/XMXtG+xayO99fMU7Br/3/S7Yy95
+         06ZyxLfYYPv/ynPNaGB4wx2Vr642kXjetH24c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:message-id:date:from:reply-to:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=t35SCpCpYKwZwskfDVM0chO8YHpBg1JH0IOU3ldR/shgM+T5QOYU9fIngEyEyR9gNS
+         xEpTAtmaJGXDEKWBLzhEp+Oek31tV1YQyrA+UgE+mBw/RjTV8EZGpQg8JPhhlboxZUtk
+         fnsu76ft5b7CLfz1sXb9HqTEv9G1xeiLzAy/0=
+Received: by 10.141.164.4 with SMTP id r4mr369537rvo.1.1214870635959;
+        Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
+Received: by 10.106.234.8 with SMTP id g8gr2530prh.0;
+	Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
+X-Sender: piyokun@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.141.3.17 with SMTP id f17mr160929rvi.24.1214870635443; Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
+Received: from an-out-0708.google.com (an-out-0708.google.com [209.85.132.250]) by mx.google.com with ESMTP id 7si6005859yxg.1.2008.06.30.17.03.54; Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of piyokun@gmail.com designates 209.85.132.250 as permitted sender) client-ip=209.85.132.250;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of piyokun@gmail.com designates 209.85.132.250 as permitted sender) smtp.mail=piyokun@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by an-out-0708.google.com with SMTP id c35so300882anc.44 for <msysgit@googlegroups.com>; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:reply-to :sender:to:subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references :x-google-sender-auth; bh=No7eSG5nPf7SYdx6cCEtYMZlIO9N1kreMHlZiSk7Uss=; b=PbX4sv1yCxkikJ+0c0uQbBFdM5newH2jQnkq8lqC2MgvA/syVGaJl+B3krOPBOWEd0 +c97zIdiFUQg45ZUCsXPdCgyTURP5ZXqHYEFvRBVJabAP5kQJde/6HLxOtHgNOr7iqMn w3eV70LmStCF5/Pd2JzM8hKNnsvIOIpW1jRsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to :mime-version:content-type:content-transfer-encoding :content-disposition:references:x-google-sender-auth; b=xeLyns+hrC43m6hNs40nhjGmzwqgZsAl8LyopJeUs/nOsSoQrNtBa0z+jOKmI/W/tf VpGwSYZq/aserEz4KyeLiY8rUZ/7OlDJPvpzgM4kFhZhGwS+QnwoaJJUCjsVmidLtZmd i2gApXrU5krsLgPXCr8xKsLPhTG8W1gmu1gY0=
+Received: by 10.100.120.6 with SMTP id s6mr5017828anc.72.1214870634252; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
+Received: by 10.100.227.15 with HTTP; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
+In-Reply-To: <200806302047.56935.johannes.sixt@telecom.at>
+Content-Disposition: inline
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86973>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86974>
 
-Signed-off-by: Patrick Higgins <patrick.higgins@cexp.com>
----
 
-This is a very basic script to test out the idea of using copies to emulate
-symlinks on Windows. I don't track any changes in the index yet which seems
-necessary as a next step.
+Hi:
 
-Symlinks get deleted and replaced with copies. Existing unchanged copies
-are ignored. Copies that have been modified get merged into the target of
-the link.
+On Tue, Jul 1, 2008 at 3:47 AM, Johannes Sixt <johannes.sixt@telecom.at> wrote:
+>
+> On Montag, 30. Juni 2008, Steffen Prohaska wrote:
+>> On Jun 30, 2008, at 11:08 AM, Junio C Hamano wrote:
+>> > * MinGW will be in.
+>>
+>> How should we proceed to get rid of the differences?
+> ...
+> Then there are the extra patches in 4msysgit. From my POV, they are not
+> _required_ because I can appearently work with git on Windows without them. I
+> think some of them are not necessary. Can we go through them again?
 
-This might have some messy cases that I haven't considered yet, but it seems
-like a fairly straightforward way to make a repository containing file
-symlinks useful on Windows.
+As one of the extra patches in 4msysgit, there is the cca/git.el
+branch [1] which I contributed [2] previously for Emacs git.el users
+on Windows. However I have not gotten any feedback whatsoever, so
+perhaps parking it in 4msysgit is not appropriate. I plan to
+separately to host these patch(es). Please ignore it or remove it at
+your convenience.
 
-I have not yet started on directories. This technique would probably get
-messy with directories. Perhaps junction (reparse) points would be better
-for directories?
+References:
+[1] http://repo.or.cz/w/git/mingw/4msysgit.git?a=shortlog;h=refs/heads/cca/git.el
+[2] http://thread.gmane.org/gmane.comp.version-control.msysgit/2140
 
- git-sync-symlinks.perl |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 44 insertions(+), 0 deletions(-)
- create mode 100755 git-sync-symlinks.perl
-
-diff --git a/git-sync-symlinks.perl b/git-sync-symlinks.perl
-new file mode 100755
-index 0000000..223ae83
---- /dev/null
-+++ b/git-sync-symlinks.perl
-@@ -0,0 +1,44 @@
-+#!/usr/bin/perl -w
-+
-+use strict;
-+use File::Copy;
-+use Fcntl ':mode';
-+
-+my $filepipe = open(FILELIST, '-|', 'git', 'ls-tree', '-z', '-r', 'HEAD')
-+    or die("Cannot call git ls-tree : $!");
-+
-+local $/ = "\0";
-+
-+while ( <FILELIST> ) {
-+    chomp;
-+    if (/^120000 blob ([0-9a-f]{40})\t(.*)$/) {
-+        my ($id, $path) = ($1, $2);
-+        my $target = `git cat-file blob $id`;
-+        chomp($target);
-+        my @path_stat = lstat($path);
-+        my @target_stat = stat($target);
-+        
-+        if (S_ISLNK($path_stat[2])) {
-+            printf("Copying '%s' to '%s'\n", $target, $path);
-+            unlink($path);
-+            copy($target, $path);
-+        }
-+        elsif ($path_stat[7] != $target_stat[7] ||
-+               `git hash-object $path` ne `git hash-object $target`)
-+        {
-+            printf("Merging '%s' to '%s'\n", $path, $target);
-+            my @target_parts = split(/\s+/, `git ls-tree HEAD $target`);
-+            my $target_id = $target_parts[2];
-+            my $original = $target . ".BASE";
-+            open(ORIGINAL, '-|', 'git', 'cat-file', 'blob', $target_id);
-+            open(ORIGINAL_OUT, '>', $original);
-+            while ( <ORIGINAL> ) {
-+                print ORIGINAL_OUT $_;
-+            }
-+            close ORIGINAL_OUT;
-+            close ORIGINAL;
-+            system('git', 'merge-file', $target, $original, $path);
-+        }
-+    }
-+}
-+close FILELIST;
--- 
-1.5.6.dirty
+Best regards,
+Clifford Caoile
