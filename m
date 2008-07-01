@@ -1,75 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Teach "git apply" to prepend a prefix with "--root=<root>"
-Date: Tue, 01 Jul 2008 09:05:04 -0700
-Message-ID: <486A55B0.9050404@zytor.com>
-References: <alpine.DEB.1.00.0807010043440.9925@racer> <7vvdzqnemk.fsf@gitster.siamese.dyndns.org>
+From: Paul Gardiner <lists@glidos.net>
+Subject: How do I stop git enumerating my working directory
+Date: Tue, 01 Jul 2008 16:57:00 +0100
+Message-ID: <486A53CC.4020803@glidos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 18:07:22 2008
+Cc: lists@glidos.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 01 18:08:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDiNi-0006ZK-0Z
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:07:02 +0200
+	id 1KDiOj-00070I-QR
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:08:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515AbYGAQGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 12:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754447AbYGAQGE
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:06:04 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:57898 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570AbYGAQGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 12:06:02 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m61G56PZ031006
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 1 Jul 2008 09:05:08 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m61G561k015218;
-	Tue, 1 Jul 2008 09:05:06 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m61G544E013697;
-	Tue, 1 Jul 2008 09:05:05 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <7vvdzqnemk.fsf@gitster.siamese.dyndns.org>
-X-Virus-Scanned: ClamAV 0.92.1/7604/Tue Jul  1 08:01:42 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1754635AbYGAQHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 12:07:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754637AbYGAQHJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:07:09 -0400
+Received: from mk-outboundfilter-5.mail.uk.tiscali.com ([212.74.114.1]:46962
+	"EHLO mk-outboundfilter-5.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754425AbYGAQHI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jul 2008 12:07:08 -0400
+X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2008 12:07:07 EDT
+X-Trace: 51953573/mk-outboundfilter-5.mail.uk.tiscali.com/PIPEX/$PIPEX-ACCEPTED/pipex-customers/81.86.57.226
+X-SBRS: None
+X-RemoteIP: 81.86.57.226
+X-IP-MAIL-FROM: lists@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoAAAvwaUhRVjni/2dsb2JhbAAIsjmBew
+X-IronPort-AV: E=Sophos;i="4.27,732,1204502400"; 
+   d="scan'208";a="51953573"
+X-IP-Direction: IN
+Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 01 Jul 2008 16:57:02 +0100
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87047>
 
-Junio C Hamano wrote:
-> 
-> The -p<num> came from patch where it is also called --strip=num.  This new
-> option --root is about the reverse operation and it is about inserting at
-> the beginning --- it is rerooting, in other words, but then --root is good
-> enough and shorter.  mkisofs uses the word "graft" when it allows tree
-> shifting (enabled with --graft-points), but the word "graft" means a
-> totally different thing to us, so we would not want to use that word.
-> 
-> I am not complaining (--root is fine by me), but just thinking aloud,
-> hoping somebody's brainwave is provoked while reading this babbling and
-> comes up with a better wording ;-).
-> 
+Hi,
 
-There is an analogous concept in patch(1), it's just implemented by 
-cd'ing to a subdirectory first.  ;)
+I'm a recent convert to git. I've been swapping over my projects
+from cvs to git. The latest candidate for conversion is the
+config files for my Linux server. I've been using cvs to record
+all the config changes, and - mostly-automatically - to setup
+new servers. Git will do a far better job, I think, but
+I think I'm going to run into a problem: the root directory
+of the server will be the working directory. Only relatively
+few files will be under version control. How do I stop git
+enumerating the whole drive whenever I do things like git-diff?
 
-I think --root makes sense as the root of the patch.  The other 
-alternative would be --add (by analogy with --strip); the biggest 
-advantage there is that -a, as a short option, isn't used for anything 
-either by git-am, git-apply, or patch.
+I don't think I can make .gitignore files do the job, because
+it seems that you can set up to ignore a whole directory,
+and then partially countermand that by placing a .gitignore
+file (containing ! commands) inside the directory. That
+makes me think that ignoring doesn't prevent the
+enumeration.
 
-Incidentally, has anyone talked to the patch(1) maintainers about adding 
-support for the git extensions, like binary patches?  The main reason is 
-that patch(1) is still useful when you have to suffer though fuzzy errors.
+Any help most appreciated. I really want to use git for
+this.
 
-	-hpa
+Cheers,
+	Paul.
