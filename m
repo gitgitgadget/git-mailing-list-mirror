@@ -1,46 +1,43 @@
 From: Sylvain Joyeux <sylvain.joyeux@dfki.de>
 Subject: [PATCH] better git-submodule status output
-Date: Tue, 1 Jul 2008 16:57:01 +0200
-Message-ID: <20080701145701.GC5852@joyeux>
+Date: Tue, 1 Jul 2008 17:01:19 +0200
+Message-ID: <20080701150119.GE5852@joyeux>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="OwLcNYc0lM97+oe1"
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 01 17:03:49 2008
+X-From: git-owner@vger.kernel.org Tue Jul 01 17:08:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDhOL-00078t-7y
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 17:03:37 +0200
+	id 1KDhSq-0000Ws-Rd
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 17:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755594AbYGAPCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 11:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbYGAPCl
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 11:02:41 -0400
-Received: from smtprelay11.ispgateway.de ([80.67.29.28]:37396 "EHLO
-	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754299AbYGAPCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 11:02:40 -0400
-X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2008 11:02:39 EDT
+	id S1758701AbYGAPHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 11:07:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758309AbYGAPHT
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 11:07:19 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:38970 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757916AbYGAPHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 11:07:17 -0400
+X-Greylist: delayed 411 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2008 11:07:17 EDT
 Received: from [134.102.219.50] (helo=joyeux)
-	by smtprelay11.ispgateway.de with esmtps (TLSv1:AES128-SHA:128)
+	by smtprelay02.ispgateway.de with esmtps (TLSv1:AES128-SHA:128)
 	(Exim 4.68)
 	(envelope-from <sylvain.joyeux@dfki.de>)
-	id 1KDhHx-0004ST-5Z
-	for git@vger.kernel.org; Tue, 01 Jul 2008 16:57:01 +0200
+	id 1KDhM7-0006Dc-AD
+	for git@vger.kernel.org; Tue, 01 Jul 2008 17:01:19 +0200
 Content-Disposition: inline
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Df-Sender: [pbs]965142
+X-Df-Sender: [pbs]640670
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87042>
 
-
---OwLcNYc0lM97+oe1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Oups.. sorry for the patch-as-attachment in the previous mail
 
 This patch makes the output of git-submodule more useful to handle the
 management of a repository using multiple submodules. Namely, it
@@ -51,13 +48,8 @@ submodules contain uncommitted changes.
 
 This (among other things) allows to do git-submodule update while
 knowing exactly what will happen.
-
+--
 Sylvain
-
-
---OwLcNYc0lM97+oe1
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-more-information-in-git-submodule-status-output.patch"
 
 >From 16553a9b210a956b0af961d55a9cf06f1b9b8114 Mon Sep 17 00:00:00 2001
 From: Sylvain Joyeux <sylvain.joyeux@dfki.de>
@@ -243,6 +235,3 @@ index 6c7b902..ffaa932 100755
  test_expect_success 'checkout superproject with subproject already present' '
 -- 
 1.5.6
-
-
---OwLcNYc0lM97+oe1--
