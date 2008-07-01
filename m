@@ -1,146 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Tue, 1 Jul 2008 05:51:18 -0400
-Message-ID: <20080701095117.GC5853@sigill.intra.peff.net>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com> <c376da900806301549r6044cd35r5a23baa405570808@mail.gmail.com>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: Multiple remote.<...>.fetch and .push patterns
+Date: Tue, 01 Jul 2008 11:59:43 +0200
+Message-ID: <g4cv6f$g29$1@ger.gmane.org>
+References: <308083c30806301158i1100c84dqe7f50daad417934c@mail.gmail.com> <48693434.4090402@freescale.com> <308083c30806301252l25f072anafbc457f48c6b19e@mail.gmail.com> <g4croa$3eu$1@ger.gmane.org> <7vprpynech.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 11:52:31 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 01 12:00:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDcX4-00059F-28
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 11:52:18 +0200
+	id 1KDcfR-0007rO-9Y
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 12:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbYGAJvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 05:51:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753219AbYGAJvV
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 05:51:21 -0400
-Received: from peff.net ([208.65.91.99]:1857 "EHLO peff.net"
+	id S1752455AbYGAJ77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 05:59:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbYGAJ77
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 05:59:59 -0400
+Received: from main.gmane.org ([80.91.229.2]:39736 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752300AbYGAJvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 05:51:20 -0400
-Received: (qmail 17203 invoked by uid 111); 1 Jul 2008 09:51:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 01 Jul 2008 05:51:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2008 05:51:18 -0400
-Content-Disposition: inline
-In-Reply-To: <c376da900806301549r6044cd35r5a23baa405570808@mail.gmail.com>
+	id S1752300AbYGAJ76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 05:59:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KDceN-0002Ia-Ej
+	for git@vger.kernel.org; Tue, 01 Jul 2008 09:59:51 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Jul 2008 09:59:51 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Jul 2008 09:59:51 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <7vprpynech.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87019>
 
-On Mon, Jun 30, 2008 at 06:49:25PM -0400, Adam Brewster wrote:
-
-> Git-basis is a perl script that remembers bases for use by git-bundle.
-> Code from rev-parse was borrowed to allow git-bundle to handle --stdin.
-
-I don't use bundles myself, so I can't comment on how useful this is for
-a bundle-based workflow. But it seems like a sensible idea in general.
-
-A few comments:
-
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -227,8 +227,26 @@ int create_bundle(struct bundle_header *header,
-> const char *path,
+Junio C Hamano venit, vidit, dixit 01.07.2008 11:27:
+> Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
 > 
->        /* write references */
->        argc = setup_revisions(argc, argv, &revs, NULL);
-> -       if (argc > 1)
-> -               return error("unrecognized argument: %s'", argv[1]);
-> +
-> +       for (i = 1; i < argc; i++) {
-> +               if ( !strcmp(argv[i], "--stdin") ) {
+>> The files under remotes are the old way of configuring remotes (see
+>> git help push). The new are config lines in the remotes section, as
+>> written by "git remote". I don't think "git remote" can write the
+>> lines you want, so I'd suggest:
+>>
+>> git config remote.ko.url kernel.org:/pub/scm/git/git.git
+>> git config remote.ko.fetch refs/heads/master:refs/tags/ko-master
+>> git config --add remote.ko.fetch refs/heads/next:refs/tags/ko-next
+>> git config --add remote.ko.fetch refs/heads/maint:refs/tags/ko-maint
+> 
+> I'd actually suggest:
+> 
+> 	$ edit .git/config
 
-When a new feature depends on other, more generic improvements
-to existing code, it is usually split into two patches. E.g.,
+Sure, it just seemed OP wanted cut-n-paste commands for his co-workers 
+(or ko-workers).
 
-  1/2: add --stdin to git-bundle
-  2/2: add git-basis
+> and create this section:
+> 
+>         [remote "ko"]
+>                 url = master.kernel.org:/pub/scm/git/git.git/
+>                 fetch = +refs/heads/*:refs/remotes/ko/*
 
-with the advantages that:
+I think that's what OP wanted to avoid.
 
- - it is slightly easier to review each change individually
- - it is easier for other features to build on the generic improvement
-   without requiring part 2, especially if part 2 is questionable
+>                 push = heads/master
+>                 push = heads/next
+>                 push = +heads/pu
+>                 push = heads/maint
+> 
+> (I used to say ko-master but these days I say ko/master).
 
-As it happens in this case, I think in this case the change was already
-easy to read, being logically separated by file, so I am nitpicking
-somewhat. But splitting changes is a good habit to get into.
+OK, that would make it ko/workers above ;)
 
-> +                               if (len && line[len - 1] == '\n')
-> +                                       line[--len] = 0;
+Seriously: I found the info about those config keys in "git-push.1"; 
+it's also in "git-{pull,fetch}.1". I would expect that info to be in 
+"git-{remote,config}.1". The latter points to it, the former not really.
 
-Style: we usually spell NUL as '\0'.
-
-> diff --git a/git-basis b/git-basis
-> new file mode 100755
-
-This should be git-basis.perl, with accompanying Makefile changes.
-
-> +if ( ! -d "$d/bases" ) {
-> +    system( "mkdir '$d/bases'" );
-> +}
-
-Yikes. This fails if $d contains an apostrophe. You'd want to use
-quotemeta to properly shell out. But there's no need at all to shell out
-here, since perl has its own mkdir call.
-
-> +if ( $#ARGV == -1 ) {
-> +    print "usage: git-basis [--update] basis1...\n";
-> +    exit;
-
-Usage should probably go to STDERR.
-
-> +    my %new = ();
-> +    while (<STDIN>) {
-> +       if (!/^^?([a-z0-9]{40})/) {next;}
-> +       $new{$1} = 1;
-> +    }
-
-Why make a hash when the only thing we ever do with it is "keys %new"?
-Shouldn't an array suffice?
-
-> +    foreach my $f (@ARGV) {
-> +       my %these = ();
-> +       open F, "<$d/bases/$f" || die "Can't open bases/$f: $!";
-
-Style: I know we are not consistent within git, but it is usually better
-to use local variables for filehandles these days. I.e.,
-
-  open my $fh, "<$d/bases/$f"
-
-> +       open F, ">>$d/bases/$f" || die "Can't open bases/$f: $!";
-
-So the basis just grows forever? That is, each time we do a bundle and
-basis update, we add a line for every changed ref, and we never delete
-any lines. But having a commit implies having all of its ancestors, so
-in the normal case (i.e., no rewind or rebase) we can simply replace old
-objects if we know they are a subset of the new ones (which you can
-discover with git-merge-base). For the rewind/rebase case, probably
-these lists should get pruned eventually for non-existent objects.
-
-But maybe it is not worth worrying about this optimization at first, and
-we can see if people complain. In that case, it is perhaps worth a note
-in the 'Bugs' section (or 'Discussion' section) of the manpage.
-
-> +       print F "\#" . `date`;
-
-I don't think there are any portability issues with 'date' (especially
-since it appears to be just a comment here, so we don't really care
-about the format), but in general I think it is nicer to use perl's date
-functions just for consistency's sake.
-
-> --
-> 1.5.5.1.211.g65ea3.dirty
-
-Notably absent: any tests.
-
--Peff
+Michael
