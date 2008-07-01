@@ -1,94 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make default expiration period of reflog used for stash
- infinite
-Date: Tue, 01 Jul 2008 00:28:06 -0700
-Message-ID: <7vskuuoygp.fsf@gitster.siamese.dyndns.org>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
- <7vwsnjl21c.fsf@gitster.siamese.dyndns.org>
- <7vhcehzdeg.fsf@gitster.siamese.dyndns.org>
- <7vbq4j748l.fsf@gitster.siamese.dyndns.org>
- <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
- <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
- <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
- <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
- <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
- <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
- <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
- <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
- <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
- <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
- <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
- <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
- <7vwskjazql.fsf@gitster.siamese.dyndns.org>
- <7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
- <7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
- <7v3amweiaz.fsf@gitster.siamese.dyndns.org> <4869700C.6060803@free.fr>
+From: Olivier Croquette <ocroquette@free.fr>
+Subject: Re: Patches for qgit on MacOS X
+Date: Tue, 01 Jul 2008 10:05:48 +0200
+Message-ID: <4869E55C.2020608@free.fr>
+References: <48665027.3090406@free.fr> <e5bfff550806300300s2a0c0e60sdaa86453116c531f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 01 09:29:18 2008
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 10:07:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDaIe-0000Wh-RX
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 09:29:17 +0200
+	id 1KDatN-0002uy-Fs
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 10:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956AbYGAH2R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2008 03:28:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbYGAH2R
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 03:28:17 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753734AbYGAH2Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jul 2008 03:28:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 98C811BF9F;
-	Tue,  1 Jul 2008 03:28:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CB3DA1BF9D; Tue,  1 Jul 2008 03:28:10 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 43BF987C-473F-11DD-8C6A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756364AbYGAIFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 04:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756346AbYGAIFz
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 04:05:55 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:52306 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756262AbYGAIFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 04:05:52 -0400
+Received: from [192.168.178.26] (p5498C523.dip.t-dialin.net [84.152.197.35])
+	by mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis)
+	id 0ML21M-1KDas13xJz-000375; Tue, 01 Jul 2008 10:05:50 +0200
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <e5bfff550806300300s2a0c0e60sdaa86453116c531f@mail.gmail.com>
+X-Provags-ID: V01U2FsdGVkX18MzDU0njneciNgSBsiIZFDHdYuuKKA2m7+Csy
+ pWgdTtcQDPfI4zm3RwNm4/Qvih1AYUhJFxqKujONpY24ycXn0B
+ SiGwq/aNL0+sT+gy4FGvA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87007>
 
-Olivier Marin <dkr+ml.git@free.fr> writes:
+Marco Costalba wrote, On 30/06/08 12:00:
+> Thanks for the patches, I'll apply them.
 
-> Junio C Hamano a =C3=A9crit :
->> This makes the default expiration period for the reflog that impleme=
-nts
->> stash infinite.
->
-> I did not read the whole thread so maybe I missed something but I tho=
-ugh you
-> wanted to apply Nanako's patch before?
->
-> The patch: http://article.gmane.org/gmane.comp.version-control.git/85=
-055
+Great!
 
-Thanks for reminding, but I am of two minds about the change.
+> Can I ask why don't you use qgit-2.X series ?
 
- (1) The change would untie the base tree of the stash from the history
-     behind it and allow previously rewound tips of branches that these
-     stashes were built on top of.  Without the patch, these otherwise
-     unreachable commits will never be reclaimed.
+Sure you can, it is just because I overlooked the existence of the
+version 2 :)
 
- (2) Today, you can say "git log stash" (note the lack of "-g" option) =
-to
-     view the history behind the stash through two artificial commits t=
-hat
-     stash creates.  This will become impossible with the patch.
-
-Probably I am worrying too much; I do not personally think the second
-point matters in the real life.  If "git log stash" _were_ any useful,
-it means the history behind the stash entries are not useless at all, b=
-ut
-in that case the user would be using regular branches to store them
-anyway.
+After compiling qt4-mac from source (it took quite some time), I have 
+been able to compile qgit2 too without a hitch, so I guess the patch is 
+irrelevant for qgit2. Are you using a different mechanism to access the 
+environment?
