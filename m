@@ -1,135 +1,76 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [RFC/PATCH 2/4] Add git-sequencer prototype documentation
-Date: Tue, 1 Jul 2008 21:50:33 +0200
-Message-ID: <20080701195033.GD5301@leksak.fem-net>
-References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <m34p79hhy9.fsf@localhost.localdomain> <20080701160322.GC5301@leksak.fem-net> <200807012004.11563.jnareb@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 03/14] Write to a stack log when stack is modified
+Date: Tue, 1 Jul 2008 22:13:55 +0200
+Message-ID: <20080701201355.GA19096@diana.vm.bytemark.co.uk>
+References: <20080612052913.23549.69687.stgit@yoghurt> <20080612053424.23549.64457.stgit@yoghurt> <b0943d9e0806170324j12605a55m41b582ad09925cce@mail.gmail.com> <20080617123138.GA6932@diana.vm.bytemark.co.uk> <b0943d9e0806170711w6da8e841p3ac83a59a81f6577@mail.gmail.com> <20080617153247.GA12520@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 21:52:01 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 22:15:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDltI-0000kt-OH
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 21:51:53 +0200
+	id 1KDmFl-0001WM-QQ
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 22:15:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758632AbYGATuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 15:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753709AbYGATuj
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 15:50:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35203 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752565AbYGATui (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 15:50:38 -0400
-Received: (qmail invoked by alias); 01 Jul 2008 19:50:35 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp010) with SMTP; 01 Jul 2008 21:50:35 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/1cVNhJjD1PesiPaTWsnXDr6Ba6T6slwIp5EpMxe
-	cEZQMPBRnUkZxE
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KDls1-0004pW-R4; Tue, 01 Jul 2008 21:50:33 +0200
+	id S1754517AbYGAUOH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2008 16:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755367AbYGAUOF
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 16:14:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3149 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754355AbYGAUOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 16:14:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KDmEd-0004yP-00; Tue, 01 Jul 2008 21:13:55 +0100
 Content-Disposition: inline
-In-Reply-To: <200807012004.11563.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+In-Reply-To: <20080617153247.GA12520@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87064>
 
-Hi,
+On 2008-06-17 17:32:47 +0200, Karl Hasselstr=F6m wrote:
 
-On Tue, Jul 01, 2008 at 08:04:10PM +0200, Jakub Narebski wrote:
-> On Tue, 1 Jul 2008, Stephan Beyer wrote:
-> > On Tue, Jul 01, 2008 at 06:02:54AM -0700,
-> > Jakub Narebski <jnareb@gmail.com> wrote:
-> >> Stephan Beyer wrote:
-> >>> +merge [options] <commit-ish1> <commit-ish2> ... <commit-ishN>::
-> >>> +	Merge commits into HEAD.
-> >> 
-> >> Nice.
-> >> 
-> >> "HEAD" mean last picked up / created commit, isn't it?
-> > 
-> > Right. This is used throughout the document...
-> > I thought it is clear and better to use than always describing around it
-> > by "last created commit".
-> 
-> O.K.
-
-I don't know.  If something like "last created commit" is better,
-I have no problem to change it :)
-
-> >>> +ref <ref>::
-> >>> +	Set ref `<ref>` to the current HEAD, see also
-> >>> +	linkgit:git-update-ref[1].
-> >> 
-> >> So this functions like "git reset --soft <ref>", isn't it?
-> > 
-> > No. Why do you think that? `ref` is set, and not HEAD.
-> > I think the description makes that clear.
-> 
-> Ah.  I'm sorry.  So it is like "git branch <ref>", isn't it?
-
-No. It is "git-update-ref <ref> HEAD".
-
-> What is important is: does it update reflog (correctly)?
-
-Good question. The reflog is another mistery to me that I haven't really
-cared about, because I haven't used it yet myself.
-At least the reflog test cases for git rebase -i in the test suite pass.
-(Of course, this is only a weak indication that it works as it should.)
-
-> >>> +squash [options] --from <mark>::
-[...]
-> > Here an example why it is useful for user-editing:
-> > 
-> > (on commit f00babe)
-> > 	mark :1
-> > 	pick badcebab
-> > 	patch foo
-> > 	pick dadadada
-> > 	squash -m "Foo the cebab" --signoff --from :1
-> > 
-> > This squashes all between the mark and the squash into one commit,
-> > on top of f00babe.
->  
-> Ah, so squash --from <mark> picks up everything since "mark <mark>",
-> but does not include marked commit!  Clever!  In this case allowing
-> only <mark> is a good idea, IMVHO.
-
-Good, thanks :)
-
-> >>> +	--include-merges;;
-> >>> +		Sanity check does not fail if you have merges
-> >>> +		between HEAD and <mark>.
-> >> 
-> >> How do you squash merges?  Creating merge with an union of parents,
-> >> excluding commits which got squashed?
-> > 
-> > My squashes are realized using git reset --soft ... and then commit.
-> > I think this makes only sense when there are no merges in between,
-> > so I added the check, but if someone wants to squash merges, he should
-> > be able to do it.
+> On 2008-06-17 15:11:42 +0100, Catalin Marinas wrote:
+>
+> > 2008/6/17 Karl Hasselstr=F6m <kha@treskal.com>:
 > >
-> > To somehow answer your question: I do not care what the result is,
-> > because I do not know what the result "should be".
-> 
-> O.K.  I guess that is something left for later, especially that
-> forbidding merges in squashed commit is default (and you can always
-> do without merges, I think).
+> > > On 2008-06-17 11:24:53 +0100, Catalin Marinas wrote:
+> > >
+> > > > 2008/6/12 Karl Hasselstr=F6m <kha@treskal.com>:
+> > > >
+> > > > >  class _Directory(object):
+> > > > > -    def __init__(self, needs_current_series =3D True):
+> > > > > +    def __init__(self, needs_current_series =3D True, log =3D=
+ True):
+> > > >
+> > > > i.e. we make log =3D False here by default.
+> > >
+> > > I might not have understood precisely what you meant; but I
+> > > don't think API backwards compatibilty should be an issue here?
+> > > I simply fix all callers. If log should default to true or false
+> > > is immaterial -- it just means some extra text in one or the
+> > > other of two equally common cases.
+> >
+> > Not an issue, I just favour the existing one when the two cases
+> > are almost equal.
+>
+> Fair enough. I'll change it.
 
-Forbidding merges is default currently. It's just a sanity check. And
-the option bypasses this check.
+I had an even better idea: no default value. Every caller gets to say
+either log =3D True or log =3D False, which makes it immediately obviou=
+s
+to the reader. (That is, every caller still using the old
+infrastructure; with the new infrastructure, we log if and only if a
+transaction is run.)
 
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
