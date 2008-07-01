@@ -1,103 +1,106 @@
-From: "Clifford Caoile" <piyo@users.sourceforge.net>
-Subject: Re: How to reduce remaining differences to 4msysgit? (was
- What's cooking in git.git (topics))
-Date: Tue, 1 Jul 2008 09:03:54 +0900
-Message-ID: <1f748ec60806301703g134b8127i1965377adf9f04e5@mail.gmail.com>
-References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <4CE52307-A2DE-488B-998B-76D60B66E804@zib.de> <200806302047.56935.johannes.sixt@telecom.at>
-Reply-To: piyo@users.sourceforge.net
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: error out when given any good rev that is not an ancestor of the bad rev
+Date: Tue, 1 Jul 2008 02:20:44 +0200
+Message-ID: <200807010220.44657.chriscool@tuxfamily.org>
+References: <20080701004211.ba9b89c9.chriscool@tuxfamily.org> <200807010146.09206.chriscool@tuxfamily.org> <7vej6etra7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: prohaska@zib.de, msysGit <msysgit@googlegroups.com>,  "Junio C Hamano" <gitster@pobox.com>,  "Git Mailing List" <git@vger.kernel.org>
-To: johannes.sixt@telecom.at
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Jul 01 02:04:58 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.251])
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 02:17:47 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDTMd-0006yy-Iq
-	for gcvm-msysgit@m.gmane.org; Tue, 01 Jul 2008 02:04:58 +0200
-Received: by wa-out-0708.google.com with SMTP id n36so5346764wag.21
-        for <gcvm-msysgit@m.gmane.org>; Mon, 30 Jun 2008 17:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:received:received:message-id
-         :date:from:reply-to:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:sender:precedence:x-google-loop:mailing-list:list-id
-         :list-post:list-help:list-unsubscribe:x-beenthere;
-        bh=n+30X2aMiLvVKt+i7p3wInRj7VGH0D1aUv534FzEDws=;
-        b=gl1bprFYH5QDNGGIX7/6Za48RLgIk8WSfpOEXHMkkEou3jS32rUhQI2rDEEpVJQ4rR
-         QrDFiDkqKTUTMcgOY21hfYzTkzSlqr00XVpEKERY/XMXtG+xayO99fMU7Br/3/S7Yy95
-         06ZyxLfYYPv/ynPNaGB4wx2Vr642kXjetH24c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:reply-to:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=t35SCpCpYKwZwskfDVM0chO8YHpBg1JH0IOU3ldR/shgM+T5QOYU9fIngEyEyR9gNS
-         xEpTAtmaJGXDEKWBLzhEp+Oek31tV1YQyrA+UgE+mBw/RjTV8EZGpQg8JPhhlboxZUtk
-         fnsu76ft5b7CLfz1sXb9HqTEv9G1xeiLzAy/0=
-Received: by 10.141.164.4 with SMTP id r4mr369537rvo.1.1214870635959;
-        Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
-Received: by 10.106.234.8 with SMTP id g8gr2530prh.0;
-	Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
-X-Sender: piyokun@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.141.3.17 with SMTP id f17mr160929rvi.24.1214870635443; Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
-Received: from an-out-0708.google.com (an-out-0708.google.com [209.85.132.250]) by mx.google.com with ESMTP id 7si6005859yxg.1.2008.06.30.17.03.54; Mon, 30 Jun 2008 17:03:55 -0700 (PDT)
-Received-SPF: pass (google.com: domain of piyokun@gmail.com designates 209.85.132.250 as permitted sender) client-ip=209.85.132.250;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of piyokun@gmail.com designates 209.85.132.250 as permitted sender) smtp.mail=piyokun@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by an-out-0708.google.com with SMTP id c35so300882anc.44 for <msysgit@googlegroups.com>; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:reply-to :sender:to:subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references :x-google-sender-auth; bh=No7eSG5nPf7SYdx6cCEtYMZlIO9N1kreMHlZiSk7Uss=; b=PbX4sv1yCxkikJ+0c0uQbBFdM5newH2jQnkq8lqC2MgvA/syVGaJl+B3krOPBOWEd0 +c97zIdiFUQg45ZUCsXPdCgyTURP5ZXqHYEFvRBVJabAP5kQJde/6HLxOtHgNOr7iqMn w3eV70LmStCF5/Pd2JzM8hKNnsvIOIpW1jRsE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to :mime-version:content-type:content-transfer-encoding :content-disposition:references:x-google-sender-auth; b=xeLyns+hrC43m6hNs40nhjGmzwqgZsAl8LyopJeUs/nOsSoQrNtBa0z+jOKmI/W/tf VpGwSYZq/aserEz4KyeLiY8rUZ/7OlDJPvpzgM4kFhZhGwS+QnwoaJJUCjsVmidLtZmd i2gApXrU5krsLgPXCr8xKsLPhTG8W1gmu1gY0=
-Received: by 10.100.120.6 with SMTP id s6mr5017828anc.72.1214870634252; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
-Received: by 10.100.227.15 with HTTP; Mon, 30 Jun 2008 17:03:54 -0700 (PDT)
-In-Reply-To: <200806302047.56935.johannes.sixt@telecom.at>
+	id 1KDTZ5-0001AA-7b
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 02:17:47 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754415AbYGAAQu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2008 20:16:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbYGAAQt
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jun 2008 20:16:49 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:36120 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753789AbYGAAQt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jun 2008 20:16:49 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 0F43E1AB2C0;
+	Tue,  1 Jul 2008 02:16:48 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9B3681AB2B2;
+	Tue,  1 Jul 2008 02:16:47 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vej6etra7.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-Sender: msysgit@googlegroups.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86974>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/86975>
 
-
-Hi:
-
-On Tue, Jul 1, 2008 at 3:47 AM, Johannes Sixt <johannes.sixt@telecom.at> wrote:
+Le mardi 1 juillet 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Yes, but the fact is that the user may wrongly think that F is an
+> > ancestor of D or he may not remember/know about the rule that sayin=
+g "F
+> > is good" means "everything from A to F is good". That's why this pa=
+tch
+> > adds a safety net by detecting end erroring out in this case.
 >
-> On Montag, 30. Juni 2008, Steffen Prohaska wrote:
->> On Jun 30, 2008, at 11:08 AM, Junio C Hamano wrote:
->> > * MinGW will be in.
->>
->> How should we proceed to get rid of the differences?
-> ...
-> Then there are the extra patches in 4msysgit. From my POV, they are not
-> _required_ because I can appearently work with git on Windows without them. I
-> think some of them are not necessary. Can we go through them again?
+> Yeah, sorry about the confusion earlier.
+>
+> But I do not think forbidding forked topology very early in bisection
+> process is a very good idea.  The user would be at loss when told:
+>
+> 	echo >&2 "Maybe you mistake good and bad revs?"
 
-As one of the extra patches in 4msysgit, there is the cca/git.el
-branch [1] which I contributed [2] previously for Emacs git.el users
-on Windows. However I have not gotten any feedback whatsoever, so
-perhaps parking it in 4msysgit is not appropriate. I plan to
-separately to host these patch(es). Please ignore it or remove it at
-your convenience.
+Yeah, perhaps we should then check that it can be a mistake by testing =
+if=20
+bad is an ancestor of good. If bad is indeed an ancestor of good, it's=20
+probably a mistake and we may even ask if the user wants good and bad t=
+o be=20
+swaped (assuming he gave only one good rev of course).
 
-References:
-[1] http://repo.or.cz/w/git/mingw/4msysgit.git?a=shortlog;h=refs/heads/cca/git.el
-[2] http://thread.gmane.org/gmane.comp.version-control.msysgit/2140
+> Aside from the "test a trial merge" idea I floated in the other messa=
+ge,
+> when we detect such a fork, perhaps we can suggest testing the merge =
+base
+> version (B in your picture) first?  We would immediately know as the =
+user
+> would say "B is bad" if the topology is problematic.
 
-Best regards,
-Clifford Caoile
+Yes this can be a good idea, if the user gave only one good rev. It may=
+be=20
+more tricky if he gave many good revs, but in this case we may perhaps =
+drop=20
+siblings good revs as long as one good rev is an ancestor of the bad re=
+v.
+
+> Then, we can suggest the user that breakage at D may not be a regress=
+ion
+> but a longstanding bug that was recently fixed somewhere between B an=
+d F.
+>
+> The user then can decide to bisect to find the fix (so that it can be
+> cherry picked on top of D) or merge F into D to propagate the fix for=
+ward
+> if it is not important to find out which exact commit fixed the issue=
+=2E
+>
+> Hmm?
+
+Yeah that might be a plan.
+
+Another option is to introduce a switch to "git bisect start",=20
+perhaps --strict, to please people who always want to use good revs tha=
+t=20
+are ancestor of the bad revs, so they get a nice error when this is not=
+ the=20
+case.
+
+Thanks,
+Christian.
