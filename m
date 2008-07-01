@@ -1,65 +1,70 @@
-From: Melchior FRANZ <melchior.franz@gmail.com>
-Subject: Re: [RFC] Single system account for multiple git users
-Date: Tue, 1 Jul 2008 10:55:50 +0200
-Message-ID: <200807011055.51738@rk-nord.at>
-References: <20080630151113.GO5737@dpotapov.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: [OT] Your branch is ahead of the tracked remote branch
+	'origin/master' by 50 commits.
+Date: Tue, 1 Jul 2008 11:13:47 +0200
+Message-ID: <20080701091347.GA11817@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 01 11:04:02 2008
+X-From: git-owner@vger.kernel.org Tue Jul 01 11:15:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDblw-0005JO-NX
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 11:03:37 +0200
+	id 1KDbwy-0000iR-Bw
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 11:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758060AbYGAJCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 05:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758084AbYGAJCj
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 05:02:39 -0400
-Received: from nat-warsl417-02.aon.at ([195.3.96.120]:13817 "EHLO email.aon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758060AbYGAJCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 05:02:38 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2008 05:02:37 EDT
-Received: (qmail 25468 invoked from network); 1 Jul 2008 08:55:56 -0000
-Received: from unknown (HELO email.aon.at) ([172.18.5.238])
-          (envelope-sender <melchior.franz@gmail.com>)
-          by fallback01.highway.telekom.at (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 1 Jul 2008 08:55:56 -0000
-Received: (qmail 30936 invoked from network); 1 Jul 2008 08:55:53 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
-	WARSBL501.highway.telekom.at
-X-Spam-Level: ****
-Received: from 88-117-78-71.adsl.highway.telekom.at (HELO server.lan) ([88.117.78.71])
-          (envelope-sender <melchior.franz@gmail.com>)
-          by smarthub91.highway.telekom.at (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 1 Jul 2008 08:55:53 -0000
-Received: from localhost (localhost [IPv6:::1])
-	by server.lan (Postfix) with ESMTP id 6E5451607A799
-	for <git@vger.kernel.org>; Tue,  1 Jul 2008 10:55:53 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080630151113.GO5737@dpotapov.dyndns.org>
-X-PGP: http://members.aon.at/mfranz/melchior.franz
+	id S1754364AbYGAJN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 05:13:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754165AbYGAJN6
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 05:13:58 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:42740 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755013AbYGAJN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 05:13:57 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KDbvq-0008QW-Fq
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Tue, 01 Jul 2008 11:13:56 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id B53F93E2205; Tue,  1 Jul 2008 11:13:47 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87012>
 
-* Dmitry Potapov -- Monday 30 June 2008:
-> [...] but it requres that every Git user has a separate system
-> account on the server, which is often frowned upon by system
-> administrators, who would prefer to have a single system account
-> for access to Git repo. 
 
-Indeed. This is AFAIK the main reason why git might not be used
-by a project where I'm contributor. gitosis could help here, but
-I guess that a built-in solution would be preferred. An external
-addon looks a bit like band-aid.  ;-)
+i recently switched to 1.5.6.1.89.gd5446 and i'm getting this:
 
-m.
+  Switched to branch "master"
+  Your branch is ahead of the tracked remote branch 'origin/master' by 50 commits.
+
+it's a very useful detail! It's especially useful when two branches 
+diverge in a non-trivial way.
+
+I used to have ad-hoc scripts to discover this in the past:
+
+ earth4:~/tip> tip-compare-remote
+ master                        : differs from remote (-50 commits)
+ tip                           : differs from remote (-1 commits)
+ x86/ptrace                    : differs from remote (-1 commits)
+ x86/unify-setup               : differs from remote (-2 commits)
+ x86/xen-64bit                 : differs from remote (-1 commits)
+
+but having a reminder at checkout time is even better (and faster as 
+well). Kudos.
+
+	Ingo
