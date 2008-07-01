@@ -1,70 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach "git apply" to prepend a prefix with
- "--root=<root>"
-Date: Tue, 1 Jul 2008 18:36:06 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0807011835090.32725@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <alpine.DEB.1.00.0807010043440.9925@racer> <7vvdzqnemk.fsf@gitster.siamese.dyndns.org> <486A55B0.9050404@zytor.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: How do I stop git enumerating my working directory
+Date: Tue, 01 Jul 2008 18:37:47 +0200
+Message-ID: <vpqr6ad5zms.fsf@bauges.imag.fr>
+References: <486A53CC.4020803@glidos.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 18:37:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Gardiner <lists@glidos.net>
+X-From: git-owner@vger.kernel.org Tue Jul 01 18:40:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDiqq-0001Am-8V
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:37:08 +0200
+	id 1KDitj-0002TK-Uu
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 18:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbYGAQgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 12:36:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbYGAQgK
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:36:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:32794 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751181AbYGAQgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 12:36:09 -0400
-Received: (qmail invoked by alias); 01 Jul 2008 16:36:08 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp017) with SMTP; 01 Jul 2008 18:36:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+WZ9FWNwOWW48/yY73VLbvldTY0MtQ+Q78sbgUJo
-	qBihu3eubohVm/
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <486A55B0.9050404@zytor.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1751797AbYGAQjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 12:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbYGAQjK
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 12:39:10 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:55209 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751537AbYGAQjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 12:39:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m61Gbqvb014592;
+	Tue, 1 Jul 2008 18:37:52 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KDirT-0003Ha-D8; Tue, 01 Jul 2008 18:37:47 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KDirT-0003N6-Ah; Tue, 01 Jul 2008 18:37:47 +0200
+In-Reply-To: <486A53CC.4020803@glidos.net> (Paul Gardiner's message of "Tue\, 01 Jul 2008 16\:57\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 01 Jul 2008 18:37:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87051>
 
-Hi,
+Paul Gardiner <lists@glidos.net> writes:
 
-On Tue, 1 Jul 2008, H. Peter Anvin wrote:
+> I don't think I can make .gitignore files do the job, because
+> it seems that you can set up to ignore a whole directory,
+> and then partially countermand that by placing a .gitignore
+> file (containing ! commands) inside the directory.
 
-> Junio C Hamano wrote:
-> > 
-> > The -p<num> came from patch where it is also called --strip=num.  
-> > This new option --root is about the reverse operation and it is about 
-> > inserting at the beginning --- it is rerooting, in other words, but 
-> > then --root is good enough and shorter.  mkisofs uses the word "graft" 
-> > when it allows tree shifting (enabled with --graft-points), but the 
-> > word "graft" means a totally different thing to us, so we would not 
-> > want to use that word.
-> > 
-> > I am not complaining (--root is fine by me), but just thinking aloud, 
-> > hoping somebody's brainwave is provoked while reading this babbling 
-> > and comes up with a better wording ;-).
-> > 
-> 
-> There is an analogous concept in patch(1), it's just implemented by 
-> cd'ing to a subdirectory first.  ;)
+To me, it seems the opposite ;-).
 
-Hey, "--cd=" is free!  And it would make explaining easier why -p is 
-applied first.
+I just tried to "git init" my $HOME, then "git status" takes forever,
+but "echo '*' > .gitignore; git status" completes immediately.
 
-Ciao,
-Dscho
+So, an option is to put "*" in your .gitignore, and then "git add -f"
+files explicitely, or to work your .gitignore finer.
+
+-- 
+Matthieu
