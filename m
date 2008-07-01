@@ -1,60 +1,86 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Teach "git apply" to prepend a prefix with	"--root=<root>"
-Date: Tue, 01 Jul 2008 13:27:43 -0700
-Message-ID: <486A933F.9090001@zytor.com>
-References: <alpine.DEB.1.00.0807010043440.9925@racer>	 <7vvdzqnemk.fsf@gitster.siamese.dyndns.org> <486A55B0.9050404@zytor.com>	 <alpine.LSU.1.00.0807011835090.32725@wbgn129.biozentrum.uni-wuerzburg.de> <1214935848.6619.1.camel@doriath>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 7/7] Documentation formatting and cleanup
+Date: Tue, 01 Jul 2008 14:34:23 -0700
+Message-ID: <7vej6dmgps.fsf@gitster.siamese.dyndns.org>
+References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
+ <Pine.GSO.4.62.0806301730230.7190@harper.uchicago.edu>
+ <486A2C8C.5050204@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Raimund Bauer <ray007@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Jul 01 22:29:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@uchicago.edu>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jon Loeliger <jdl@jdl.com>
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 01 23:35:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDmTB-00078N-Ph
-	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 22:28:58 +0200
+	id 1KDnVd-0003Jq-Bz
+	for gcvg-git-2@gmane.org; Tue, 01 Jul 2008 23:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757335AbYGAU14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 16:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757707AbYGAU1z
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 16:27:55 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:32777 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756563AbYGAU1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 16:27:54 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m61KRjws027329
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 1 Jul 2008 13:27:46 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m61KRj7Y015817;
-	Tue, 1 Jul 2008 13:27:45 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m61KRhoP016257;
-	Tue, 1 Jul 2008 13:27:44 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <1214935848.6619.1.camel@doriath>
-X-Virus-Scanned: ClamAV 0.92.1/7606/Tue Jul  1 10:33:19 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751805AbYGAVeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 17:34:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYGAVeg
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 17:34:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50118 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbYGAVef (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 17:34:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6194E250B4;
+	Tue,  1 Jul 2008 17:34:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 51F21250AD; Tue,  1 Jul 2008 17:34:27 -0400 (EDT)
+In-Reply-To: <486A2C8C.5050204@free.fr> (Olivier Marin's message of "Tue, 01
+ Jul 2008 15:09:32 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7ED9770E-47B5-11DD-B430-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87066>
 
-Raimund Bauer wrote:
-> On Tue, 2008-07-01 at 18:36 +0200, Johannes Schindelin wrote:
->>> There is an analogous concept in patch(1), it's just implemented by 
->>> cd'ing to a subdirectory first.  ;)
->> Hey, "--cd=" is free!  And it would make explaining easier why -p is 
->> applied first.
-> 
-> patch uses -d or --directory
+Olivier Marin <dkr+ml.git@free.fr> writes:
 
-So it does.
+> Also, in Documentation/gitdiffcore.txt, you did:
+>
+>> -These are applied in sequence.  The set of filepairs git-diff-\*
+>> +These are applied in sequence.  The set of filepairs `git-diff-*`
+>
+> but the file does not compile, now.
 
-	-hpa
+There are other places with the same breakage.
+
+You would need something like this (using the {asterisk} macro I
+wrote for updating the docs for another topic).  The patch shows only a
+single use location but there are others in the same file.
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 10c1a15..40d43b7 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -8,6 +8,7 @@
+ # the command.
+ 
+ [attributes]
++asterisk=&#42;
+ plus=&#43;
+ caret=&#94;
+ startsb=&#91;
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index 71568ab..7169eee 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -23,7 +23,7 @@ that are easier to understand than the conventional kind.
+ The chain of operation
+ ----------------------
+ 
+-The `git-diff-*` family works by first comparing two sets of
++The `git-diff-{asterisk}` family works by first comparing two sets of
+ files:
+ 
+  - `git-diff-index` compares contents of a "tree" object and the
