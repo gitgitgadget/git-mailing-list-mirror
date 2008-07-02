@@ -1,57 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-add--interactive: remove hunk coalescing
-Date: Wed, 02 Jul 2008 15:35:48 -0700
-Message-ID: <7vod5f7w3f.fsf@gitster.siamese.dyndns.org>
-References: <1215035956-26192-1-git-send-email-trast@student.ethz.ch>
- <1215035984-26263-1-git-send-email-trast@student.ethz.ch>
- <7vtzf77wjp.fsf@gitster.siamese.dyndns.org>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: [KORG] Master downtime
+Date: Wed, 02 Jul 2008 16:00:07 -0700
+Message-ID: <486C0877.4070001@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jul 03 00:37:02 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: users@kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	support@osuosl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 03 01:09:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEAwg-0004T0-3J
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 00:37:02 +0200
+	id 1KEBSE-00044Y-71
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 01:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbYGBWgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 18:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbYGBWgE
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 18:36:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50733 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbYGBWgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 18:36:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF04F22D8;
-	Wed,  2 Jul 2008 18:36:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2373622D6; Wed,  2 Jul 2008 18:35:55 -0400 (EDT)
-In-Reply-To: <7vtzf77wjp.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 02 Jul 2008 15:26:02 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3F1E0788-4887-11DD-82E6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755236AbYGBXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 19:08:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbYGBXIm
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 19:08:42 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:47541 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755244AbYGBXIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 19:08:41 -0400
+Received: from [10.255.255.199] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m62N0Efc030604
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 2 Jul 2008 16:00:15 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/7613/Tue Jul  1 20:19:29 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Wed, 02 Jul 2008 16:00:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87204>
 
-Junio C Hamano <gitster@pobox.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Blindly concatenating the above two and feeding them to "git apply" *may*
-> happen to work by accident, not by design.  This very much feels like a
-> hack of "This works most of the time for me, your mileage may vary" kind,
-> which we would want to avoid when we can.
+Afternoon everyone,
 
-Well, I changed my mind.  Let's run with this and see what happens.
+Just a quick heads up we are going to be taking master down for hardware
+and software upgrades tomorrow, Thursday July 3rd 2008 at 15:00 UTC.
+During this time all back-end services, including wiki's, ssh and
+userweb to name a few things.
 
-The patch application is hunk-by-hunk in nature anyway, and if the user
-munges the trailing context of the first half of an originally-single hunk
-and the leading context of the latter half in an inconsistent way, we
-would notice the problem anyway.
+The hardware portion of the upgrade should be complete within an hour,
+and the software upgrades will likely take another hour or two - though
+even when master comes back up expect intermittent service for a few
+hours after that while we deal with things.  Likely ETA for all work
+completed is Friday July 4th 2008 at 00:00 UTC.  If there are
+complications, I will kick another e-mail off with updates.
+
+If you have any questions, comments or concerns please don't hesitate to
+get ahold of me.
+
+- - John 'Warthog9' Hawley
+Chief Kernel.org Admin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+
+iD8DBQFIbAh3/E3kyWU9dicRAhOCAJ46E9rGDXQWwXCV932UEvo+cuqQwgCaAhQm
+aWIIEVf7IFaTErGqHkx0Pag=
+=woIy
+-----END PGP SIGNATURE-----
