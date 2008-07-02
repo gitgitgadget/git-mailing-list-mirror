@@ -1,85 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 02/12] Do not complain about "no common commits"
- in an empty repo
-Date: Wed, 2 Jul 2008 18:07:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807021807150.9925@racer>
-References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <7vskusd5nr.fsf@gitster.siamese.dyndns.org> <FCE9D8BE-BA1A-46D1-AC45-2DC4E419DE8E@zib.de>
-Reply-To: Johannes.Schindelin@gmx.de
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: RFC: grafts generalised
+Date: Wed, 2 Jul 2008 21:19:20 +0400
+Message-ID: <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com>
+References: <20080702143519.GA8391@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junio@pobox.com>, Johannes Sixt <johannes.sixt@telecom.at>,  Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 19:10:25 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.248])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Jul 02 19:20:32 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE5qa-0006uS-4z
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 19:10:24 +0200
-Received: by wa-out-0708.google.com with SMTP id n36so361188wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 10:09:28 -0700 (PDT)
+	id 1KE60J-000264-E6
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 19:20:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752044AbYGBRTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 13:19:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYGBRTa
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 13:19:30 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:49520 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751872AbYGBRTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 13:19:30 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so200348ywe.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2008 10:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        bh=dyCrseuDxk/Ar6GRzptT85q4+dfCvV+VIPYJDtp4XTM=;
-        b=wPKgwrR5q5kFXZLP3ovgYwZLvo5qhYiSCaErOnHrL9A+GLs1KNhytardyApRhMxoKA
-         98Ync4WJ0gg3pfvN7OgDkJP9nWIPC8D2ycD4ovx/FtbFuWTSVNSw6XjQlcMGgld21CPT
-         fzfzBxWfNEQenkwQ8MmJNqRdv6QUkRFDniTmQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=u6qaJDV0dlL4jlsR1q9odF7rkbb/BVxGKnH1/d0NjIM=;
+        b=Dto321oOaZrDW+F//O/XEfKTKlE/eZKBwNih5sGY3Z8ZOz3Yed5CcVt7RZ3gcEYhN7
+         /pI445mYJ/eSgysVjSLHmjFlLrnQlecr9EyaZl8AirBA1JN57g2duvv4O5RV/rxYESaE
+         IvWBulp6FHiE2qo3kH0ikXUl0T192ZsxeglPM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=I5RxA6OHboBH8ncGnpG/BbQVtnmXInrFP2R8LqPKCNPbbbNxjaMYNGl7HGYh5dd6+S
-         NIJJ+0OEDMl9FYqv0OaPdYvOBsWBCVkwlHechx/rl31kRo2EHM7tf+CjvFJX/s7/bff/
-         HoAQSv1kwsLgE8cO0jydmCwXHrjMJiI2iSasw=
-Received: by 10.114.27.19 with SMTP id a19mr576788waa.8.1215018562481;
-        Wed, 02 Jul 2008 10:09:22 -0700 (PDT)
-Received: by 10.106.193.17 with SMTP id q17gr2573prf.0;
-	Wed, 02 Jul 2008 10:09:22 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.140.172.21 with SMTP id u21mr315832rve.14.1215018561999; Wed, 02 Jul 2008 10:09:21 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 22si8424759yxr.2.2008.07.02.10.09.21; Wed, 02 Jul 2008 10:09:21 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 02 Jul 2008 17:09:20 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp046) with SMTP; 02 Jul 2008 19:09:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19DskBOHwND8uBK2RacHgNwZmSQmb+7LbXkToowjh EzhMMTzrWZnNBF
-X-X-Sender: gene099@racer
-In-Reply-To: <FCE9D8BE-BA1A-46D1-AC45-2DC4E419DE8E@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.8
-Sender: msysgit@googlegroups.com
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qTOhn5pxZ9iWu1aiIinN5kt2MNPU0TCnzNLNmN1giI+pIJLG01DZspUDRKjVlNaYIM
+         GmkN0bgQSEK0CGPPBzdJY7T4KggvWiIwcIEIeAseKB7FWQFdsxikkZU4/ACXDjaZTt/i
+         HOGdvcNwdJnTNvm3DFm+egBps/LohKqNzWmcc=
+Received: by 10.143.33.12 with SMTP id l12mr3141696wfj.272.1215019160464;
+        Wed, 02 Jul 2008 10:19:20 -0700 (PDT)
+Received: by 10.143.32.3 with HTTP; Wed, 2 Jul 2008 10:19:20 -0700 (PDT)
+In-Reply-To: <20080702143519.GA8391@cuci.nl>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87163>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87164>
 
+On Wed, Jul 02, 2008 at 04:35:19PM +0200, Stephen R. van den Berg wrote:
+>_
+> - Extend the grafts file format to support something like the following syntax:
+>_
+> commit eb03813cdb999f25628784bb4f07b3f4c8bfe3f6
+> Parent: 7bc72e647d54c2f713160b22e2e08c39d86c7c28
+> Merge: 3b3da24960a82a479b9ad64affab50226df02abe 13b8f53e8ccec3b08eeb6515e6a10a2a
+> Merge: ac719ed37270558f21d89676fce97eab4469b0f1
+> Tree: 32fc99814b97322174dbe97ec320cf32314959e2
+> Author: Foo Bar (FooBar) <foo@bar>
+> AuthorDate: Sat Jun 6 13:50:44 1998 +0000
+> Commit: Foo Bar (FooBar) <foo@bar>
+> CommitDate: Sat Jun 7 13:50:44 1998 +0000
+> Logmessage: First line of logmessage override
+> Logmessage: Second line of logmessage override
+> Logmessage: Etc.
 
-Hi,
+I don't think that the grafts file is the right place for this kind of
+information. Perhaps, it would be better to have a separate file or
+even a directory with files where commit-id identifies a text file with
+a new commit object, which should be placed instead of an old one.  So,
+it will be easy to tell git filter-branch to use this new information.
 
-On Wed, 2 Jul 2008, Steffen Prohaska wrote:
+However, if you want more than just ability to edit commits in a text
+file but also inspect changes using normal git commands and gitk (as it
+is possible with grafts), it will require changes to the git core, which,
+perhaps, not difficult to implement using pretend_sha1_file(), but I am
+not sure that everyone will welcome that...
 
-> Dscho, will you send it?  You are the original author.
-
-Done,
-Dscho
+Dmitry
