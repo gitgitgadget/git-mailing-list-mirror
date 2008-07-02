@@ -1,81 +1,78 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC] Single system account for multiple git users
-Date: Wed, 2 Jul 2008 18:45:36 +0400
-Message-ID: <20080702144536.GA1721@dpotapov.dyndns.org>
-References: <20080630151113.GO5737@dpotapov.dyndns.org> <200807011055.51738@rk-nord.at>
+From: Paul Gardiner <lists@glidos.net>
+Subject: Re: How do I stop git enumerating my working directory
+Date: Wed, 02 Jul 2008 15:47:43 +0100
+Message-ID: <486B950F.2040801@glidos.net>
+References: <486A53CC.4020803@glidos.net> <c9e534200807011002q45ffca7bq8d91cd9b62335796@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Melchior FRANZ <melchior.franz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 16:47:09 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Glenn Griffin <ggriffin.kernel@gmail.com>, git@vger.kernel.org,
+	lists@glidos.net
+X-From: git-owner@vger.kernel.org Wed Jul 02 16:50:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE3bd-0005CZ-VF
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 16:46:50 +0200
+	id 1KE3fP-00072c-3S
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 16:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054AbYGBOpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 10:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYGBOpq
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 10:45:46 -0400
-Received: from mu-out-0910.google.com ([209.85.134.185]:63375 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753110AbYGBOpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 10:45:44 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so111157mue.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2008 07:45:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=z5T7C6AiTfdOVaMwcaw8/GnjwsBFivmvuZxzbrP/HCg=;
-        b=uBlehjak5F9z8689OKPu2d9hYnvjdXd0YTiSS3zfyQLLsajK4LbfmB5oqcRsAG/EGe
-         3G02xo+O4/otpg1paUxLfN5aRXLD6nf40+hHkL2KLZjtAb5jXqwSz1T3hCHiaHoeQmEC
-         kn6qRK8A5NXRTlhelMp58H77p+cslu6em1heA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TJInhJ40OhdoS7+ptuXwsG2fgfO9e9q5YdOsCffHXCPTQNHDgSblj7ZRFrMJLxYX3P
-         CuaqSMtCIOPLIuvyT0WxmYInGUWonYz1NgcVz6RDmKF6XEMrrxj9rPrE+6J7nkWFkeUD
-         VJrzw4NWzFPJ8U7bWZ/2uclLcBF0JpqH+Y6cQ=
-Received: by 10.103.249.7 with SMTP id b7mr3631654mus.51.1215009941577;
-        Wed, 02 Jul 2008 07:45:41 -0700 (PDT)
-Received: from localhost ( [83.237.184.117])
-        by mx.google.com with ESMTPS id y6sm34715751mug.15.2008.07.02.07.45.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Jul 2008 07:45:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200807011055.51738@rk-nord.at>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754690AbYGBOtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 10:49:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754688AbYGBOtq
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 10:49:46 -0400
+Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:57759
+	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753330AbYGBOtp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jul 2008 10:49:45 -0400
+X-Trace: 105980277/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$PIPEX-ACCEPTED/pipex-customers/81.86.57.226
+X-SBRS: None
+X-RemoteIP: 81.86.57.226
+X-IP-MAIL-FROM: lists@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvwAAMUxa0hRVjni/2dsb2JhbAAIsnmBfg
+X-IronPort-AV: E=Sophos;i="4.27,737,1204502400"; 
+   d="scan'208";a="105980277"
+X-IP-Direction: IN
+Received: from 81-86-57-226.dsl.pipex.com (HELO [10.0.0.24]) ([81.86.57.226])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 02 Jul 2008 15:47:44 +0100
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <c9e534200807011002q45ffca7bq8d91cd9b62335796@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87147>
 
-On Tue, Jul 01, 2008 at 10:55:50AM +0200, Melchior FRANZ wrote:
+Glenn Griffin wrote:
+> On Tue, Jul 1, 2008 at 8:57 AM, Paul Gardiner <lists@glidos.net> wrote:
+>> Hi,
+>>
+>> I'm a recent convert to git. I've been swapping over my projects
+>> from cvs to git. The latest candidate for conversion is the
+>> config files for my Linux server. I've been using cvs to record
+>> all the config changes, and - mostly-automatically - to setup
+>> new servers. Git will do a far better job, I think, but
+>> I think I'm going to run into a problem: the root directory
+>> of the server will be the working directory. Only relatively
+>> few files will be under version control. How do I stop git
+>> enumerating the whole drive whenever I do things like git-diff?
 > 
-> Indeed. This is AFAIK the main reason why git might not be used
-> by a project where I'm contributor. gitosis could help here, but
-> I guess that a built-in solution would be preferred. An external
-> addon looks a bit like band-aid.  ;-)
+> I'm doing a similar thing in my home directory where the vast majority of files
+> are not being tracked, but only a select few are.  I've found that git
+> automatically handles this case much better than other SCM's like subversion
+> because of it's concept of the index.  Most of git's commands wont enumerate
+> your directory they will first read the index to see what files it's interested
+> in, and then do an lstat on those files to see which if any have changed.
+> git-diff in particular should do this to my knowledge.  git-status is one of
+> the few commands that will actually enumerate your directory to tell you which
+> files are untracked, so long as you use status with care you will probably find
+> you don't need to do anything special or even setup
+> a .gitignore.
+> 
+> Like I said, that's my experience your's may vary.
 
-Yes, and they impose some its own access control model, which is
-different to what you normally have using git-shell. So, the purpose
-of my patch was to provide the absolutely minimal change to git-shell
-which allows to have a central Git server with multiple Git users under
-one system account. I guess that most Git developers do not use Git in
-this configuration, so they are not very interested in this patch. But
-there are projects where having a central repo is strict requirement
-(usually justified by having centralized place to backup all sources,
-difficult exchanging patches by email especially in great volume, and
-impossibility direct connection due to firewalls, etc...).
+Brilliant! I've now tried it and it does just as you say. I don't
+need git-status so it's just fine. Thanks for the advice.
 
-So, I believe that my patch (or something simple like that) could help
-Git with wider adaptation.
-
-Thanks,
-Dmitry
+P.
