@@ -1,81 +1,123 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Implement "Stage/Unstage Line"
-Date: Wed, 2 Jul 2008 01:23:42 -0400
-Message-ID: <20080702052342.GN11793@spearce.org>
-References: <48649519.1010307@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
+Date: Tue, 01 Jul 2008 22:39:58 -0700
+Message-ID: <7v7ic4hmj5.fsf@gitster.siamese.dyndns.org>
+References: <20080701101114.GA6379@sigill.intra.peff.net>
+ <1214912674-9443-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jul 02 07:24:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jul 02 07:41:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDupm-0007z5-H2
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 07:24:50 +0200
+	id 1KDv6E-0002mG-2W
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 07:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556AbYGBFXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 01:23:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753402AbYGBFXr
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 01:23:47 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55376 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753276AbYGBFXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 01:23:46 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.69)
-	(envelope-from <spearce@spearce.org>)
-	id 1KDuoi-00048P-MI; Wed, 02 Jul 2008 01:23:44 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1063820FBAE; Wed,  2 Jul 2008 01:23:43 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <48649519.1010307@viscovery.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753625AbYGBFkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 01:40:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbYGBFkL
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 01:40:11 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48939 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276AbYGBFkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 01:40:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8254E27DE8;
+	Wed,  2 Jul 2008 01:40:08 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4EC5727DE6; Wed,  2 Jul 2008 01:40:02 -0400 (EDT)
+In-Reply-To: <1214912674-9443-1-git-send-email-trast@student.ethz.ch> (Thomas
+ Rast's message of "Tue, 1 Jul 2008 13:44:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 54BEC020-47F9-11DD-A6DA-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87086>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> From: Johannes Sixt <johannes.sixt@telecom.at>
-> 
-> This adds a context menu entry below "Stage/Unstage Hunk" that stages or
-> unstages just the line under the mouse pointer.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Thanks!  After some brief testing this is in now my tree on repo.or.cz.
- 
-> 	Disclaimer: I'm Tcl/Tk illiterate. Feel free to munge the patch
-> 	to your taste.
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 903953e..6bb117a 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -2,6 +2,7 @@
+>  
+>  use strict;
+>  use Git;
+> +use File::Temp;
 
-I wouldn't say illiterate, given this contribution.  :)
- 
-> 	The 'do_rescan' is probably a bit heavy-weight. But editing the
-> 	diff window like we do in "Stage Hunk" would be a bit complex, and
-> 	just redisplaying the diff is easier.
+People with minimum Perl installation should still be able to use "add -i"
+as long as they do not use 'e' subcommand, shouldn't they?  Shouldn't we
+do something like:
 
-Yea, I see why you are doing a do_rescan at the end.  I was going
-to suggest just calling reshow_diff but that doesn't get the lists
-updated properly when a file is being initially staged as a result
-of the current line being added.
+	my $can_use_temp = eval {
+        	require File::Temp;
+                1;
+	};
 
-Editing the Tk widget is possible, but it can be a pain.
+and disable 'e' subcommand unless $can_use_temp?
 
-> 	Furthermore, I don't know why I have to do the loop until
-> 	"end - 1 chars". If it goes until "end", then the hunk contains
-> 	an extra line, so that the patch in general does not apply.
-> 	Is there an extra newline in the diff view that is not in the
-> 	git diff output?
+> +sub edit_hunk_manually {
+> +	my ($oldtext) = @_;
+> +
+> +	my $t = File::Temp->new(
+> +		TEMPLATE => $repo->repo_path . "/git-hunk-edit.XXXXXX",
+> +		SUFFIX => '.diff'
+> +	);
+> +	print $t "# Manual hunk edit mode -- see bottom for a quick guide\n";
+> +	print $t @$oldtext;
+> +	print $t <<EOF;
+> +# ---
+> +# To remove '-' lines, make them ' ' lines (context).
+> +# To remove '+' lines, delete them.
+> +# Lines starting with # will be removed.
 
-Yup.  Tk text widgets have an extra "\n" at the end of the content
-that was inserted into it.  Thus an empty text widget has a single
-LF as its content.  Weird, I know.
- 
--- 
-Shawn.
+Don't you want to say "Do not touch lines that begin with ' '"?
+
+> +	# Reinsert the first hunk header if the user accidentally deleted it
+> +	if ($newtext[0] !~ /^@/) {
+> +		unshift @newtext, $oldtext->[0];
+> +	}
+
+Hmm, perhaps not even giving the "@@ ... @@" lines to the editor would be
+a more robust solution?
+
+> +sub diff_applies {
+> +	my $fh;
+> +	open $fh, '| git apply --recount --cached --check';
+> +	for my $h (@_) {
+> +		print $fh @{$h->{TEXT}};
+> +	}
+> +	return close $fh;
+
+Have to wonder where the potential error message would go, and if it would
+confuse the end users...
+
+> @@ -1002,7 +1123,8 @@ sub patch_update_file {
+>  	if (@result) {
+>  		my $fh;
+>  
+> -		open $fh, '| git apply --cached';
+> +		open $fh, '| git apply --cached'
+> +			. ($need_recount ? ' --recount' : '');
+>  		for (@{$head->{TEXT}}, @result) {
+>  			print $fh $_;
+>  		}
+
+I recall that the original "add--interactive" carefully counted numbers in
+hunks it reassembles (as it can let you split and then you can choose to
+use both parts, which requires it to merge overlapping hunks back), but if
+you are going to use --recount anyway, perhaps we can discard that logic?
+It may make the patch application less robust, though.  I dunno.
+
+An alternative, and probably more robust, approach would be to recount
+what we have in @{$mode->{TEXT}}, after letting the user edit some of
+them, so that "add--interactive" still knows what it is doing after
+applying your patch without having to rely on "apply --recount".
