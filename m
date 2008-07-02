@@ -1,207 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: grafts generalised
-Date: Wed, 02 Jul 2008 14:49:37 -0700
-Message-ID: <7vej6c7y8e.fsf@gitster.siamese.dyndns.org>
-References: <20080702143519.GA8391@cuci.nl>
- <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com>
- <37fcd2780807021058r5ed820cfmdc98f98f36d5c8ae@mail.gmail.com>
- <20080702181021.GD16235@cuci.nl>
- <37fcd2780807021339u582f340dq2b2014951d5b7f63@mail.gmail.com>
- <7vlk0k7z99.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Dmitry Potapov" <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 23:50:55 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 0/3] git-add--interactive: use --recount, editing
+Date: Wed,  2 Jul 2008 23:58:26 +0200
+Message-ID: <1215035909-26110-1-git-send-email-trast@student.ethz.ch>
+References: <7v7ic4hmj5.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 23:59:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEADy-0007Un-6c
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 23:50:50 +0200
+	id 1KEAM7-0001Z2-Js
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 23:59:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753115AbYGBVtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 17:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753805AbYGBVtv
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 17:49:51 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33419 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753078AbYGBVtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 17:49:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C802D9A01;
-	Wed,  2 Jul 2008 17:49:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 93BAB99F9; Wed,  2 Jul 2008 17:49:42 -0400 (EDT)
-In-Reply-To: <7vlk0k7z99.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 02 Jul 2008 14:27:30 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CAE55228-4880-11DD-A122-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754482AbYGBV6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 17:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbYGBV6S
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 17:58:18 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:19380 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753078AbYGBV6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 17:58:17 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 2 Jul 2008 23:58:15 +0200
+Received: from localhost.localdomain ([84.75.156.10]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 2 Jul 2008 23:58:15 +0200
+X-Mailer: git-send-email 1.5.6.1.276.gde9a
+In-Reply-To: <7v7ic4hmj5.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 02 Jul 2008 21:58:15.0455 (UTC) FILETIME=[BA9FA2F0:01C8DC8E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87197>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> 
+> I recall that the original "add--interactive" carefully counted numbers in
+> hunks it reassembles (as it can let you split and then you can choose to
+> use both parts, which requires it to merge overlapping hunks back), but if
+> you are going to use --recount anyway, perhaps we can discard that logic?
+> It may make the patch application less robust, though.  I dunno.
 
-> "Dmitry Potapov" <dpotapov@gmail.com> writes:
->
->> On Wed, Jul 2, 2008 at 10:10 PM, Stephen R. van den Berg <srb@cuci.nl> wrote:
->>>
->>> In that case, I will stick to extending git fsck to check grafts more
->>> rigorously and fix git clone to *refrain* from looking at grafts.
->>
->> Linus suggested that "git-fsck and repacking should just consider
->> it[grafts] to be an  _additional_ source of parenthood rather than
->> a _replacement_ source."
->>
->> http://article.gmane.org/gmane.comp.version-control.git/84686
->
-> Yeah, thanks for a reminder.
->
->     http://thread.gmane.org/gmane.comp.version-control.git/37744/focus=37866
->
-> is still on my "things to look at" list.
+This series takes it a bit further.  I played around with 'apply', and
+it seems there is no reason to even merge the hunks.  (It would be
+great if someone who knows builtin-apply.c could confirm this.)  So we
+can get rid of all recounting except for the correct splitting
+boundaries.  These are the first two patches.
 
-This shows how the "object transfer ignores grafts" side of the earlier
-suggestion by Linus would look like to get people started.  Totally
-untested.
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > I wonder why bother trying to import things when you do not need them to 
+> > begin with!  I mean, it is _obvious_ that in this case, we want .git/ to 
+> > be writable _anyway_, so why not stick with a fixed name in that?
+> 
+> Good suggestion -- I love that simplicity.  Thomas?
 
-I threw in for_each_commit_graft() in the patch so that updates to the
-reachability walker can add otherwise hidden objects, but otherwise it is
-not used yet.
+Well, changed that back.
 
- builtin-pack-objects.c |    5 +++++
- builtin-send-pack.c    |    3 ++-
- cache.h                |    1 +
- commit.c               |   10 ++++++++++
- commit.h               |    2 ++
- environment.c          |    1 +
- upload-pack.c          |    1 +
- 7 files changed, 22 insertions(+), 1 deletions(-)
+Apart from that, no real changes to 3/3, but the $needs_recount code
+has become unnecessary because 1/3 already forces --recount.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 28207d9..53b0b33 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -30,6 +30,7 @@ git-pack-objects [{ -q | --progress | --all-progress }] \n\
- 	[--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
- 	[--stdout | base-name] [--include-tag] \n\
- 	[--keep-unreachable | --unpack-unreachable] \n\
-+	[--ignore-graft] \n\
- 	[<ref-list | <object-list]";
- 
- struct object_entry {
-@@ -2160,6 +2161,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 				die("bad %s", arg);
- 			continue;
- 		}
-+		if (!strcmp(arg, "--ignore-graft")) {
-+			honor_graft = 0;
-+			continue;
-+		}
- 		usage(pack_usage);
- 	}
- 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index d76260c..d932352 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -27,6 +27,7 @@ static int pack_objects(int fd, struct ref *refs)
- 	 */
- 	const char *argv[] = {
- 		"pack-objects",
-+		"--ignore-graft",
- 		"--all-progress",
- 		"--revs",
- 		"--stdout",
-@@ -36,7 +37,7 @@ static int pack_objects(int fd, struct ref *refs)
- 	struct child_process po;
- 
- 	if (args.use_thin_pack)
--		argv[4] = "--thin";
-+		argv[5] = "--thin";
- 	memset(&po, 0, sizeof(po));
- 	po.argv = argv;
- 	po.in = -1;
-diff --git a/cache.h b/cache.h
-index 188428d..00858f9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -435,6 +435,7 @@ extern size_t packed_git_limit;
- extern size_t delta_base_cache_limit;
- extern int auto_crlf;
- extern int fsync_object_files;
-+extern int honor_graft;
- 
- enum safe_crlf {
- 	SAFE_CRLF_FALSE = 0,
-diff --git a/commit.c b/commit.c
-index e2d8624..62cf104 100644
---- a/commit.c
-+++ b/commit.c
-@@ -101,6 +101,13 @@ static int commit_graft_pos(const unsigned char *sha1)
- 	return -lo - 1;
- }
- 
-+void for_each_commit_graft(void (*fn)(struct commit_graft *))
-+{
-+	int i;
-+	for (i = 0; i < commit_graft_nr; i++)
-+		fn(commit_graft[i]);
-+}
-+
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- {
- 	int pos = commit_graft_pos(graft->sha1);
-@@ -196,7 +203,10 @@ static void prepare_commit_graft(void)
- struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
- {
- 	int pos;
-+
- 	prepare_commit_graft();
-+	if (!honor_graft)
-+		return NULL;
- 	pos = commit_graft_pos(sha1);
- 	if (pos < 0)
- 		return NULL;
-diff --git a/commit.h b/commit.h
-index 2d94d41..8f76dd9 100644
---- a/commit.h
-+++ b/commit.h
-@@ -138,4 +138,6 @@ static inline int single_parent(struct commit *commit)
- 	return commit->parents && !commit->parents->next;
- }
- 
-+void for_each_commit_graft(void (*fn)(struct commit_graft *));
-+
- #endif /* COMMIT_H */
-diff --git a/environment.c b/environment.c
-index 4a88a17..eb8f36d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -41,6 +41,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
-+int honor_graft = 1;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
-diff --git a/upload-pack.c b/upload-pack.c
-index b46dd36..d948d64 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -158,6 +158,7 @@ static void create_pack_file(void)
- 		die("git-upload-pack: unable to fork git-rev-list");
- 
- 	argv[arg++] = "pack-objects";
-+	argv[arg++] = "--ignore-graft";
- 	argv[arg++] = "--stdout";
- 	if (!no_progress)
- 		argv[arg++] = "--progress";
+- Thomas
+
+
+
+ Documentation/git-add.txt  |    1 +
+ git-add--interactive.perl  |  203 ++++++++++++++++++++++---------------------
+ t/t3701-add-interactive.sh |   67 +++++++++++++++
+ 3 files changed, 172 insertions(+), 99 deletions(-)
