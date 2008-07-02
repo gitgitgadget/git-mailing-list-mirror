@@ -1,67 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] prevent checkout from creating branches that start with
- a   dash
-Date: Wed, 02 Jul 2008 17:38:05 +0200
-Message-ID: <486BA0DD.5030608@viscovery.net>
-References: <20080702150128.GH26300@jukie.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] git-branch -v: show the remote tracking statistics
+Date: Wed, 2 Jul 2008 16:44:19 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807021643120.9925@racer>
+References: <20080701091347.GA11817@elte.hu> <80iqvq2bw0.fsf@tiny.isode.net> <20080701101414.GG31309@elte.hu> <7vlk0lmn32.fsf@gitster.siamese.dyndns.org> <7vhcb8en92.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Bart Trojanowski <bart@jukie.net>
-X-From: git-owner@vger.kernel.org Wed Jul 02 17:39:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ingo Molnar <mingo@elte.hu>,
+	Bruce Stephens <bruce.stephens@isode.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 17:47:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE4QG-0002SJ-LR
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 17:39:09 +0200
+	id 1KE4Y3-0005zr-9O
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 17:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649AbYGBPiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 11:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753129AbYGBPiK
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 11:38:10 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:5639 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774AbYGBPiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 11:38:09 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KE4PF-0005mV-QF; Wed, 02 Jul 2008 17:38:06 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8E3C24FB; Wed,  2 Jul 2008 17:38:05 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080702150128.GH26300@jukie.net>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1754054AbYGBPqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 11:46:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753694AbYGBPqO
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 11:46:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41840 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753241AbYGBPqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 11:46:14 -0400
+Received: (qmail invoked by alias); 02 Jul 2008 15:46:12 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp020) with SMTP; 02 Jul 2008 17:46:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19azE8QcyxaYN4fmaJAUiuEsyzwGLsNVx92KiYxmE
+	Qq3qKhJXfNzNpO
+X-X-Sender: gene099@racer
+In-Reply-To: <7vhcb8en92.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87153>
 
-Bart Trojanowski schrieb:
-> It was previously possible to create a -f branch with git-checkout, which
-> could not be used or deleted.
+Hi,
+
+On Wed, 2 Jul 2008, Junio C Hamano wrote:
+
+> This teaches "git branch -v" to insert the remote tracking statistics in
+> the form of [ours/theirs] just before the one-liner commit log message
+> for the branch.
 > 
->         $ git checkout -b -f master
->         Switched to a new branch "-f"
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   ... which means that you would see something like this.
+> 
+>   * jc/report-tracking        41666f7 [3/117] git-branch -v: show the remo...
 
-"-f" *is* a valid branch name and can be used and deleted:
+Actually, I would like to have something like
 
-$ git checkout -b -f next
-Switched to a new branch "-f"
-$ git checkout next
-Switched to branch "next"
-Your branch is ahead of the tracked remote branch 'origin/next' by 2 commits.
-$ git checkout -- -f
-Switched to branch "-f"
-$ git checkout next
-Switched to branch "next"
-Your branch is ahead of the tracked remote branch 'origin/next' by 2 commits.
-$ git branch -d -- -f
-Deleted branch -f.
+$ git branch --explain-relationship master next
 
--- Hannes
+Ciao,
+Dscho
