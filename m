@@ -1,153 +1,95 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [RFC/PATCH 2/4] Add git-sequencer prototype documentation
-Date: Wed, 2 Jul 2008 05:01:35 +0200
-Message-ID: <20080702030135.GF5301@leksak.fem-net>
-References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <200807012004.11563.jnareb@gmail.com> <20080701195033.GD5301@leksak.fem-net> <200807020239.41613.jnareb@gmail.com> <7v4p79hyk0.fsf@gitster.siamese.dyndns.org> <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <200807012004.11563.jnareb@gmail.com> <20080701195033.GD5301@leksak.fem-net> <200807020239.41613.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
+Date: Tue, 1 Jul 2008 23:21:55 -0400
+Message-ID: <20080702032155.GA13581@sigill.intra.peff.net>
+References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com> <c376da900806301549r6044cd35r5a23baa405570808@mail.gmail.com> <20080701095117.GC5853@sigill.intra.peff.net> <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 05:02:44 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 05:22:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDscC-0006m9-59
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 05:02:40 +0200
+	id 1KDsvp-0001w8-9B
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 05:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757484AbYGBDBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2008 23:01:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757981AbYGBDBm
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 23:01:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60028 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754425AbYGBDBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2008 23:01:41 -0400
-Received: (qmail invoked by alias); 02 Jul 2008 03:01:39 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp055) with SMTP; 02 Jul 2008 05:01:39 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19WcYMTzn5W3WvOYS+t2oMsCVW8y6Q9m9SJomVgOr
-	U8iHB5IEcpT9OF
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KDsb9-000697-Ul; Wed, 02 Jul 2008 05:01:35 +0200
+	id S1754393AbYGBDV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2008 23:21:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752623AbYGBDV7
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jul 2008 23:21:59 -0400
+Received: from peff.net ([208.65.91.99]:1437 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752600AbYGBDV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2008 23:21:59 -0400
+Received: (qmail 846 invoked by uid 111); 2 Jul 2008 03:21:57 -0000
+Received: from lawn-128-61-25-46.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.25.46)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 01 Jul 2008 23:21:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2008 23:21:55 -0400
 Content-Disposition: inline
-In-Reply-To: <7v4p79hyk0.fsf@gitster.siamese.dyndns.org> <200807020239.41613.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+In-Reply-To: <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87082>
 
-On Wed, Jul 02, 2008 at 02:39:40AM +0200, Jakub Narebski wrote:
-> On Tue, 1 July 2008, Stephan Beyer wrote:
-> > On Tue, Jul 01, 2008 at 08:04:10PM +0200, Jakub Narebski wrote:
-[...]
-> > No. It is "git-update-ref <ref> HEAD".
+On Tue, Jul 01, 2008 at 09:36:20PM -0400, Adam Brewster wrote:
+
+> Makes sense,  I thought it was small enough for one commit, but I'll
+> split it up when I resubmit.
+
+I think in this instance it is not too big a deal either way.  I am just
+trying to help encourage good habits. :)
+
+> > Style: we usually spell NUL as '\0'.
 > 
-> So what do you envision would this be used for?
+> Okay.  I can also include a third patch for the code I cut-and-pasted.
 
-I think if I had not started on top js/rebase-i-sequencer, I would have
-not necessarily added "ref" (or "tag", as it was before).
-But js/rebase-i-sequencer introduced a nice feature to
-git-rebase-i:
- -t,--preserve-tags ... "update tags to the new commit object"
+Heh. I said "usually", but I guess even Junio makes mistakes (unless I
+am dreaming such a style directive, but ISTR it being mentioned before
+on the list). I wouldn't bother with the style cleanup in rev-list
+(usually for such small things, we just wait until touching that part of
+the code).
 
-I think this is worth the feature ;-)
-
-On Tue, Jul 01, 2008 at 06:20:15PM -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+> > Why make a hash when the only thing we ever do with it is "keys %new"?
+> > Shouldn't an array suffice?
 > 
-> >> No. It is "git-update-ref <ref> HEAD".
-> >
-> > So what do you envision would this be used for?
+> It's probably a non-issue, but using a hash will prevent duplicates.
+
+Ah, true. And there will be duplicates here, if you have multiple refs
+at the same spot in your bundle list. So it should remain as you have
+it.
+
+> If all goes well then you're right, but I thought old objects should
+> be kept around  in case the user has some reason to manually delete
+> them.  As it is, you can go into the basis file and delete everything
+> past a given date line and be back where you were.  If I delete the
+> redundant objects, then that's not always possible.
+
+Hmm, and that might be useful. Probably the best thing would be to leave
+it as-is for now, then, with a note. Then we can decide the best pruning
+strategy if and when it becomes an issue.
+
+> Maybe I'm a idiot, but I can't find any built-in date to string
+> functions that do nice things like print the date the way the user
+> says he likes to look at dates.
 > 
-> A simple answer and a more elaborate one.
-> 
->  * It is the final step of "git rebase" which detaches HEAD while it
->    operates these days.
+> I updated the comment line to be "# <git-date> // `date`" where
+> git-date is as per git-fast-import (seconds since 1969 +/-TZ).  If
+> automatic pruning ever happens, the git-date will be used, so `date`
+> is just for humans.
 
-Ha ;)
-That's a quite obvious truth that I have not implemented.
-Btw: sequencer does the detaching/attaching when using "--onto <base>"
-and <base> is a branch.
-IIRC there was a reason that I also kept the detaching/attaching of
-git-rebase-i itself but I can't remember. (I think I have to look
-over the rebase-i code more carefully later...)
+That sounds reasonable.
 
->  * You can drive sequencer backend from a front-end that rewrite history
->    while rewriting tags, like filter-branch does.
+> > Notably absent: any tests.
+> Working on those.  I'll also include tests for git-bundle.
 
-Yes.
+Great. Glancing over Junio's comments, though, it might make sense to
+integrate this more tightly with git-bundle, in which case the perl
+stuff would go away. So I'll let you work out with him which is the best
+route.
 
-> >>> What is important is: does it update reflog (correctly)?
-> 
-> That is not very important question, as reflog updates would happen as
-> long as you use update-ref automatically.
-> 
-> Much more important question you did not ask is how it would interact with
-> "sequencer --abort".  Ideally it should rewind the ref update (and without
-> relying on the user having reflog on that ref).
-
-Yes, you asked the question in the RFC thread about the spec.
-
-"Rewind the ref update" means:
- - delete new generated refs
- - update overwritten refs to their old commits
-So if I keep a list containing <ref> [<oldcommit>], that behavior
-is easily reached. But this is not suited for the shell prototype ;)
-
-
-Btw, also the --skip case can be arguable:
-
-	pick fa1afe1
-	pick cedefe1	# conflict, will be "--skip"ped
-	ref refs/tags/v1.6.2
-
-Here the question can be, if the "ref" should be skipped, too.
-But I think the just-don't-care-strategy is a good one, so
-that fa1afe1' will be tagged.
-
-> I however personally feel that this "ref" thing is being a bit too
-> ambitious.
-
-I agree that it is no must-have feature but a nice-to-have feature ;)
-Especially for the --preserve-tags feature.
-
-
-Jakub wrote:
-> >>>>> +squash [options] --from <mark>::
-> > [...]
-> >>> Here an example why it is useful for user-editing:
-> >>> 
-> >>> (on commit f00babe)
-> >>> 	mark :1
-> >>> 	pick badcebab
-> >>> 	patch foo
-> >>> 	pick dadadada
-> >>> 	squash -m "Foo the cebab" --signoff --from :1
-> >>> 
-> >>> This squashes all between the mark and the squash into one commit,
-> >>> on top of f00babe.
-> >>  
-> >> Ah, so squash --from <mark> picks up everything since "mark <mark>",
-> >> but does not include marked commit!  Clever!  In this case allowing
-> >> only <mark> is a good idea, IMVHO.
-> > 
-> > Good, thanks :)
-> 
-> Although I guess having example would make it clear from the go...
-
-Yes, I see that the EXAMPLES section is really important and the
-squash --from is important therein.
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+-Peff
