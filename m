@@ -1,49 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Can I remove stg sync --undo ?
-Date: Wed, 2 Jul 2008 09:25:24 +0200
-Message-ID: <20080702072524.GA26805@diana.vm.bytemark.co.uk>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 14/14] Build in merge
+Date: Wed, 2 Jul 2008 09:43:10 +0200
+Message-ID: <20080702074310.GG4729@genesis.frugalware.org>
+References: <0cde1e7c930589364318b2d0344b345453e23586.1214918017.git.vmiklos@frugalware.org> <7v63rpkvme.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 09:39:41 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3cI6DWK3Xt33P8nt"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr@freesurf.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 09:44:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDwwE-0007v2-EH
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 09:39:38 +0200
+	id 1KDx0c-00015k-51
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 09:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760540AbYGBHik convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jul 2008 03:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760214AbYGBHik
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 03:38:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4467 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759970AbYGBHik (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 03:38:40 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KDwiS-0007D6-00; Wed, 02 Jul 2008 08:25:24 +0100
+	id S1756261AbYGBHnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 03:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755631AbYGBHnN
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 03:43:13 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:49413 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752752AbYGBHnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 03:43:12 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id DF98B1B24FA;
+	Wed,  2 Jul 2008 09:43:10 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 2224044697;
+	Wed,  2 Jul 2008 09:13:54 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 59EDA1190498; Wed,  2 Jul 2008 09:43:10 +0200 (CEST)
 Content-Disposition: inline
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7v63rpkvme.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87093>
 
-I'm preparing a patch that removes all the old --undo flags, and
-discovered that stg sync has an --undo flag backed by
-stack.undo_refresh().
 
-Is it OK if I remove it? "stg undo" will allow you to undo the whole
-command, or, in case of conflicts, either the whole command or just
-the last conflicting push. But it does not allow for undoing the last
-refresh (whether it succeeded or not). I don't know how refresh is
-used, so I can't really tell if "stg undo" is currently insufficient.
+--3cI6DWK3Xt33P8nt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+On Tue, Jul 01, 2008 at 04:55:21PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Have you looked at the series I fixed up before pushing out in 'pu' last
+> night, specifically 5948e2a and 01a7dae?  If you actually built and tested
+> 5948e2a, you'd notice that the test in that commit *must* expect failure.
+
+Aah. Now I see the point, thanks for explaining! :-)
+
+--3cI6DWK3Xt33P8nt
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhrMY4ACgkQe81tAgORUJaBCwCfckssb6vxow4KApUs4DBwc4IN
+inoAoIBNDy5KaXZCLy4lUmJeA8C0asZP
+=37K/
+-----END PGP SIGNATURE-----
+
+--3cI6DWK3Xt33P8nt--
