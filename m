@@ -1,118 +1,127 @@
-From: Marius Storm-Olsen <marius@storm-olsen.com>
-Subject: Re: [PATCH 04/12] Avoid calling signal(SIGPIPE, ..) for
- MinGW builds.
-Date: Wed, 02 Jul 2008 12:03:15 +0200
-Message-ID: <486B5263.1060805@storm-olsen.com>
-References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <7vod5gbpza.fsf@gitster.siamese.dyndns.org>
-Reply-To: marius@storm-olsen.com
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [PATCH] Disconnect stash from its base commit
+Date: Wed, 02 Jul 2008 19:59:47 +0900
+Message-ID: <20080702195947.6117@nanako3.lavabit.com>
+References: <7vskuuoygp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="------------enig94E121D973D1E12534E9D2EB"
-Cc: prohaska@zib.de, Johannes Sixt <johannes.sixt@telecom.at>,  git@vger.kernel.org, msysgit@googlegroups.com,  Marius Storm-Olsen <mstormo_git@storm-olsen.com>
-To: Junio C Hamano <junio@pobox.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 12:04:50 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.247])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Olivier Marin <dkr+ml.git@free.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 13:01:40 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KDzCg-00018T-15
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 12:04:46 +0200
-Received: by wa-out-0708.google.com with SMTP id n36so7053134wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 03:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:face:content-type
-         :x-spam-checker-version:x-spam-status:x-spam-level:x-dspam-signature
-         :x-dspam-probability:x-dspam-confidence:x-spam-score:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        bh=Zybj1wYR7iQTchf4lRiPMUgjfw3hkleM66pFUWGtN9k=;
-        b=V/yvdfWtoLqFFx9gAeXsiD/x21Nx5ZjJ5tEzP4UZ28cnnnJZ4jHktQ940fRj8WJHjA
-         Vzm1K/4RT/tA8jFvmxa5UrPt9sUICXppAaDE41uPgjNRCeUd22u/Lpr1Ezgl6uVoVsMW
-         hWC7onWhjHgHWJ89nlSUvfUb4KCzoCzt 
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:face:content-type
-         :x-spam-checker-version:x-spam-status:x-spam-level:x-dspam-signature
-         :x-dspam-probability:x-dspam-confidence:x-spam-score:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=VAsn4zXaTQFhaWhm3AU2ykUQONckJZkSwa06lvLyQb2PfFtCpccl3k2uq/ApmLUnzv
-         9rM13w5gXipf5D5YlglZ1fRVQWQjUcs3ngpnnyCMhwyMSJ/5Vce4p3IkT3gxyfZx3Gq6
-         FzAp2K3qDGSo5AimfYRWyCYKVDm63SkQUcsoo=
-Received: by 10.114.171.1 with SMTP id t1mr548502wae.13.1214993026626;
-        Wed, 02 Jul 2008 03:03:46 -0700 (PDT)
-Received: by 10.107.117.4 with SMTP id u4gr2562prm.0;
-	Wed, 02 Jul 2008 03:03:46 -0700 (PDT)
-X-Sender: marius@storm-olsen.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.90.92.14 with SMTP id p14mr8905754agb.18.1214993026111; Wed, 02 Jul 2008 03:03:46 -0700 (PDT)
-Received: from init.linpro.no (init.linpro.no [87.238.46.2]) by mx.google.com with ESMTP id 22si7899223yxr.2.2008.07.02.03.03.45; Wed, 02 Jul 2008 03:03:46 -0700 (PDT)
-Received-SPF: neutral (google.com: 87.238.46.2 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) client-ip=87.238.46.2;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 87.238.46.2 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) smtp.mail=marius@storm-olsen.com
-Received: from nat0.troll.no ([62.70.27.100] helo=[127.0.0.1]) (Authenticated Sender=marius@storm-olsen.com) by init.linpro.no with esmtpa (Exim 4.50 #1 (Debian)) id 1KDzBK-00077N-7k; Wed, 02 Jul 2008 12:03:22 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7vod5gbpza.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9 Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1 KOEmUlJISdYPgEgehw+cTZEf6xeF
- yoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on spamtrap
-X-Spam-Status: No, hits=-10.2 required=5.0 tests=DSPAM=-10.19694  version=2.63
-X-Spam-Level: 
-X-DSPAM-Signature: !DSPAM:486b4c65131261230822988!
-X-DSPAM-Probability: -2.0000
-X-DSPAM-Confidence: 0.9997
-X-Spam-Score: -1.4 (-)
-Sender: msysgit@googlegroups.com
+	id 1KE05U-0002wu-PM
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 13:01:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753960AbYGBLA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 07:00:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbYGBLA1
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 07:00:27 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:45784 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753565AbYGBLA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 07:00:26 -0400
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id 65CEAC8412;
+	Wed,  2 Jul 2008 06:00:17 -0500 (CDT)
+Received: from nanako3.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id N7S3SG8O72X9; Wed, 02 Jul 2008 06:00:25 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=rbYCiNTD22rRM0RryxiVQLzpHcvy3n4OU9ZE0qbMBmTH77hd5x2NQpN2/ieCOPY5i5Y7mb5LNSkLh1QH3PFRk90dAy1Vn4BE8LeQzmZ3RiktY7XjLCaBKhHUddpf9Hep/DOkktk2RyLpC2NJCa/TC71p30AKVjnl2KFMUTYwWJk=;
+  h=From:Subject:To:Cc:Date:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vskuuoygp.fsf@gitster.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87127>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87128>
 
+A stash records the state of the files in the working tree as a merge
+between the HEAD and another commit that records the state of the index,
+that in turn is a child commit of the HEAD commit.  In order to later
+apply (or pop) the stash, however, only the tree objects of these three
+commits are necessary.
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig94E121D973D1E12534E9D2EB
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+This patch changes the structure of a stash to use a parentless new commit
+that has the same tree as the HEAD commit, in place of the HEAD commit.
+This way, a stash does not keep the history that leads to the HEAD commit
+reachable, even if the stash is kept forever.
 
-Junio C Hamano said the following on 02.07.2008 11:22:
-> Steffen Prohaska <prohaska@zib.de> writes:
->=20
->> From: Marius Storm-Olsen <mstormo_git@storm-olsen.com>
->>
->> SIGPIPE isn't supported in MinGW.
->=20
-> Shouldn't #ifdef be on SIGPIPE not on __MINGW32__?
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
 
-That's certainly a good suggestion. :-)
+ The patch in the message Olivier quoted alone will be insufficient.  This
+ is an update to that patch.
 
---=20
-=2Emarius [@] storm-olsen [.com]
-'if you know what you're doing, it's not research'
+ Documentation/git-stash.txt |   14 +++++++-------
+ git-stash.sh                |    3 +++
+ t/t3903-stash.sh            |    2 +-
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 23ac331..17c65e9 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -101,18 +101,18 @@ DISCUSSION
+ ----------
+ 
+ A stash is represented as a commit whose tree records the state of the
+-working directory, and its first parent is the commit at `HEAD` when
+-the stash was created.  The tree of the second parent records the
++working directory, and its first parent is the commit that has the same
++tree as the `HEAD`.  The tree of the second parent records the
+ state of the index when the stash is made, and it is made a child of
+-the `HEAD` commit.  The ancestry graph looks like this:
++the first commit.  The ancestry graph looks like this:
+ 
+             .----W
+            /    /
+-     -----H----I
++	  H*---I
+ 
+-where `H` is the `HEAD` commit, `I` is a commit that records the state
+-of the index, and `W` is a commit that records the state of the working
+-tree.
++where `H{asterisk}` is a commit with the same tree as the `HEAD`, `I` is
++a commit that records the state of the index, and `W` is a commit that
++records the state of the working tree.
+ 
+ 
+ EXAMPLES
+diff --git a/git-stash.sh b/git-stash.sh
+index 4938ade..8f374b3 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -54,6 +54,9 @@ create_stash () {
+ 	fi
+ 	msg=$(printf '%s: %s' "$branch" "$head")
+ 
++	# create the base commit that is parentless
++	b_commit=$(printf 'base of %s\n' "$msg" | git commit-tree "HEAD:")
++
+ 	# state of the index
+ 	i_tree=$(git write-tree) &&
+ 	i_commit=$(printf 'index on %s\n' "$msg" |
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 54d99ed..b083c04 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -32,7 +32,7 @@ index 0cfbf08..00750ed 100644
+ EOF
+ 
+ test_expect_success 'parents of stash' '
+-	test $(git rev-parse stash^) = $(git rev-parse HEAD) &&
++	test $(git rev-parse stash^^{tree}) = $(git rev-parse HEAD^{tree}) &&
+ 	git diff stash^2..stash > output &&
+ 	test_cmp output expect
+ '
+-- 
+1.5.6
 
---------------enig94E121D973D1E12534E9D2EB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFIa1JkKzzXl/njVP8RAtISAJ9v44OSY9lfDag/PfmD0z+vaTqU2QCgpG/Y
-1QvQ/B9anTnQgGG3JN+OP5Q=
-=cKBi
------END PGP SIGNATURE-----
-
---------------enig94E121D973D1E12534E9D2EB--
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
