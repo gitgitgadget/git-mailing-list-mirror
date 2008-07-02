@@ -1,115 +1,115 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: RFC: grafts generalised
-Date: Wed, 02 Jul 2008 18:43:22 +0200
-Message-ID: <g4gb7a$ket$1@ger.gmane.org>
-References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 08/12] fast-import: MinGW does not have
+ getppid().  So do not print it.
+Date: Wed, 2 Jul 2008 17:52:42 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807021741210.9925@racer>
+References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <1214987532-23640-5-git-send-email-prohaska@zib.de> <1214987532-23640-6-git-send-email-prohaska@zib.de> <1214987532-23640-7-git-send-email-prohaska@zib.de> <1214987532-23640-8-git-send-email-prohaska@zib.de> <7vzlp0bq2l.fsf@gitster.siamese.dyndns.org>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 18:44:38 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: prohaska@zib.de, Johannes Sixt <johannes.sixt@telecom.at>,  git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <junio@pobox.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 18:55:37 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yx-out-2122.google.com ([74.125.44.24])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE5Rb-0005Sw-6o
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 18:44:35 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbYGBQni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 12:43:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751731AbYGBQni
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 12:43:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:56266 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751404AbYGBQnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 12:43:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KE5QZ-0003fQ-Fb
-	for git@vger.kernel.org; Wed, 02 Jul 2008 16:43:31 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Jul 2008 16:43:31 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Jul 2008 16:43:31 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <m3lk0kfdo1.fsf@localhost.localdomain>
-Sender: git-owner@vger.kernel.org
+	id 1KE5cG-0001Nj-Dl
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 18:55:36 +0200
+Received: by yx-out-2122.google.com with SMTP id 22so108030yxm.63
+        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 09:54:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=CvAsGkybnmsdIuNQ0ftGFatysn7zLMaTEq+5ZD+y94w=;
+        b=qEJEEMeOTbcI037skkJg30X1sHhmjoM1bP/lT+VyoIMUfje824FRzcKngbDc4HBH7k
+         Sjyd7bAIdKouXhwYr6fyyhVBUWb1VrtC7wT4a15i8uS/Q/dT38mhQ00vU2GKVZGnUpM0
+         /vT0R1nru4RiAFKNHBGR7stMU9oQDMPl4O910=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=HBzlYHwGo8f1OEtKv2rGnBsxH0VMdkTjMb21y74yH1kDldHMYWFMnHi+iHN9eGQZkh
+         5XN8KcAhJjMQqO0hOElIXevSDJzjFYcmkCqwJ5WP/iPpkru3zn44/HY76Gy8ccADLUjq
+         znvC2l39Klft4/f8PGs4L/aPWuvgevHzGXI3o=
+Received: by 10.114.176.1 with SMTP id y1mr575611wae.4.1215017676600;
+        Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
+Received: by 10.106.239.31 with SMTP id m31gr2571prh.0;
+	Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.140.139.6 with SMTP id m6mr312255rvd.20.1215017676300; Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 7si8435616yxg.1.2008.07.02.09.54.35; Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 02 Jul 2008 16:54:35 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp036) with SMTP; 02 Jul 2008 18:54:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+VM3AlZqWVv5Sy79Oav6jrdGkyD6B64ttG2rrKJq VfPIRu5QILIj1F
+X-X-Sender: gene099@racer
+In-Reply-To: <7vzlp0bq2l.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87159>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87160>
 
-Jakub Narebski venit, vidit, dixit 02.07.2008 18:35:
-> "Stephen R. van den Berg" <srb@cuci.nl> writes:
-> 
->> I'm in the process of converting and stitching and patching vast amounts
->> of initially disjunct CVS and SVN repositories into larger complete
->> histories inside a single git repository.  Recreating history as
->> accurately as possible.
->>
->> The problem I encounter is that any number of times I have to "edit"
->> history in a non-parameterable fashion, in any of the following ways:
->> - Change parents.
->> - Add merges.
->> - Change author, committer, commitdate, authordate.
->> - Change the tree (because of conversion errors in the automated
->>   conversion process) belonging to a single commit.
->> - Retrofit a patch which has to ripple through all of history until
->>   the present.
->>
->> The only things which are easily done at the moment are:
->> Change parents and add merges.  This can be accomplished fairly easily
->> using the grafts file.
->> The other changes are messy at best and need to be parameterised into the
->> form of a shell script so that git filter-branch can have a go at it.
-> [...]
-> 
->> I propose the following:
->> - Extend git fsck to do more sanity checks on the content of the grafts
->>   file (to make it more difficult to shoot yourself in the foot with
->>   that file; my feet will be grateful).
->> - Extend the grafts file format to support something like the following syntax:
->>
->> commit eb03813cdb999f25628784bb4f07b3f4c8bfe3f6
->> Parent: 7bc72e647d54c2f713160b22e2e08c39d86c7c28
->> Merge: 3b3da24960a82a479b9ad64affab50226df02abe 13b8f53e8ccec3b08eeb6515e6a10a2a
->> Merge: ac719ed37270558f21d89676fce97eab4469b0f1
->> Tree: 32fc99814b97322174dbe97ec320cf32314959e2
->> Author: Foo Bar (FooBar) <foo@bar>
->> AuthorDate: Sat Jun 6 13:50:44 1998 +0000
->> Commit: Foo Bar (FooBar) <foo@bar>
->> CommitDate: Sat Jun 7 13:50:44 1998 +0000
->> Logmessage: First line of logmessage override
->> Logmessage: Second line of logmessage override
->> Logmessage: Etc.
-> [...]
-> 
-> First, if I remember correctly (from KernelTrap and now defunct Kernel
-> Traffic and one issue of Git Traffic) the 'graft' mechanizm was
-> created so it would be possible to "graft" (join) historical
-> conversion repository with the "current work" git repository (started
-> from zero when git was deemed good enough for Linux kernel
-> development).  The same mechanism is used for shallow clone, where one
-> goes in the opposite direction, shortening history instead of joining
-> two repositories (two histories).
-> 
-> The fact that git-filter-branch (and earlier cg-admin-rewrite-hist)
-> respects grafts, and rewrites history so that grafts are no-op and are
-> not needed further is a bit of side-effect.  So I think that it would
-> be better to provide generic git-filter-branch filter which can
-> understand this "generalized grafts" file format, or rather
-> 'description of changes' file.  Put it in contrib/, and here you
-> go...
-> 
 
-Maybe the upcoming git-sequencer could be the appropriate place? It 
-tries to achieve just that: edit history by specifying a list of 
-commands. The currently planned set of commands would need to be 
-amended, but the framework should be in place.
+Hi,
 
-Michael
+On Wed, 2 Jul 2008, Junio C Hamano wrote:
+
+> Steffen Prohaska <prohaska@zib.de> writes:
+> 
+> > diff --git a/fast-import.c b/fast-import.c
+> > index e72b286..271b93c 100644
+> > --- a/fast-import.c
+> > +++ b/fast-import.c
+> > @@ -391,7 +391,9 @@ static void write_crash_report(const char *err)
+> >  
+> >  	fprintf(rpt, "fast-import crash report:\n");
+> >  	fprintf(rpt, "    fast-import process: %d\n", getpid());
+> > +#ifndef __MINGW32__
+> >  	fprintf(rpt, "    parent process     : %d\n", getppid());
+> > +#endif
+> >  	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, DATE_LOCAL));
+> >  	fputc('\n', rpt);
+> >  
+> > -- 
+> > 1.5.6.1.255.g32571
+> 
+> It does not matter too much for this part that writes crash report, but
+> keeping the file format the same across platforms will make it easier for
+> tools to read output, so as a general principle, I think this is a
+> suboptimal solution to the issue.  How about throwing something like this
+> in MinGW specific header files?
+> 
+>         #define getppid() 0
+
+Of course, we could also implement it, using NtQueryInformationProcess() 
+as suggested by Google.
+
+Ciao,
+Dscho
+
+		
