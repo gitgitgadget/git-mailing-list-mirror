@@ -1,90 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Disconnect stash from its base commit
-Date: Wed, 02 Jul 2008 12:01:35 -0700
-Message-ID: <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org>
-References: <20080702195947.6117@nanako3.lavabit.com>
- <alpine.DEB.1.00.0807021447200.9925@racer>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 06/12] connect: Fix custom ports with plink
+ (Putty's ssh)
+Date: Wed, 2 Jul 2008 21:04:20 +0200
+Message-ID: <200807022104.20146.johannes.sixt@telecom.at>
+References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-5-git-send-email-prohaska@zib.de> <1214987532-23640-6-git-send-email-prohaska@zib.de>
+Reply-To: johannes.sixt@telecom.at
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Olivier Marin <dkr+ml.git@free.fr>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 02 21:02:54 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+To: prohaska@zib.de
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 21:05:55 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.25])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE7bI-00055C-NM
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 21:02:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbYGBTBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 15:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbYGBTBr
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 15:01:47 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49404 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433AbYGBTBq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 15:01:46 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E3C02BDED;
-	Wed,  2 Jul 2008 15:01:45 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A6BF32BDEB; Wed,  2 Jul 2008 15:01:38 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 50D22626-4869-11DD-B165-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
-Sender: git-owner@vger.kernel.org
+	id 1KE7dv-0005z1-6G
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 21:05:52 +0200
+Received: by yw-out-2122.google.com with SMTP id 8so239367yws.63
+        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 12:04:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=MN3x5+viFELOhXjyrf/az5jdPgRQ86YuvH7AFtQgZA4=;
+        b=WlsRhdYZmLikjMNg6dtRxh+w0to7+jnS9edLHV6h+pcXT4hiSp8Sbp7BTfW3UaPRzd
+         yfCWnuwZWHB5LFTYeW9A91+bdul/oxW9AvaYHFNQKPyKC9y+JvOD6WuSXNlDNXsRQ601
+         TgriLdylfdyh2AmKWxtsj6EHQQBx877HtHRqY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from
+         :to:subject:date:user-agent:cc:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
+        b=Q0Wkgr9CVRCkAZI5MDMn3QDZVslDkg078zrjKENenVurl04sFPRezkozJ9XPcrXq5m
+         H+VuD/ZoAN2yWpWiCxGmPfyylO5n+GQiB08SvM72le24VutjsX3INynvtffIUlsk2aGO
+         THBWQLLSC79CgFuclJAbQPI3YoT2XTl7MVhPg=
+Received: by 10.115.18.18 with SMTP id v18mr582704wai.26.1215025462946;
+        Wed, 02 Jul 2008 12:04:22 -0700 (PDT)
+Received: by 10.106.193.17 with SMTP id q17gr2580prf.0;
+	Wed, 02 Jul 2008 12:04:22 -0700 (PDT)
+X-Sender: johannes.sixt@telecom.at
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.193.1 with SMTP id q1mr4842166waf.12.1215025462560; Wed, 02 Jul 2008 12:04:22 -0700 (PDT)
+Received: from smtp5.srv.eunet.at (smtp5.srv.eunet.at [193.154.160.227]) by mx.google.com with ESMTP id 7si8607370yxg.1.2008.07.02.12.04.21; Wed, 02 Jul 2008 12:04:22 -0700 (PDT)
+Received-SPF: neutral (google.com: 193.154.160.227 is neither permitted nor denied by best guess record for domain of johannes.sixt@telecom.at) client-ip=193.154.160.227;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 193.154.160.227 is neither permitted nor denied by best guess record for domain of johannes.sixt@telecom.at) smtp.mail=johannes.sixt@telecom.at
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19]) by smtp5.srv.eunet.at (Postfix) with ESMTP id 7DD3413A37E; Wed,  2 Jul 2008 21:04:20 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1]) by dx.sixt.local (Postfix) with ESMTP id 41EDD1D155; Wed,  2 Jul 2008 21:04:20 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1214987532-23640-6-git-send-email-prohaska@zib.de>
+Content-Disposition: inline
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87180>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87181>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> This patch changes the structure of a stash to use a parentless new 
->> commit that has the same tree as the HEAD commit, in place of the HEAD 
->> commit. This way, a stash does not keep the history that leads to the 
->> HEAD commit reachable, even if the stash is kept forever.
+On Mittwoch, 2. Juli 2008, Steffen Prohaska wrote:
+> From: Edward Z. Yang <edwardzyang@thewritingpot.com>
 >
-> May I register my suspicion that this is the wrong direction to go?
+> PuTTY requires -P while OpenSSH requires -p; if plink is detected
+> as GIT_SSH, use the alternate flag.
 >
-> I actually find it quite nice that I can easily see in gitk where I 
-> spawned off a certain stash, indeed, how the recent stash history 
-> (manually specified with "stash@{0} stash@{1} stash@{2}" [*1*]), relates 
-> to the current branch's history.
+> Signed-off-by: Edward Z. Yang <edwardzyang@thewritingpot.com>
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
+>  connect.c |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
+>
+> diff --git a/connect.c b/connect.c
+> index 574f42f..0d007f3 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -599,11 +599,13 @@ struct child_process *git_connect(int fd[2], const
+> char *url_orig, conn->argv = arg = xcalloc(6, sizeof(*arg));
+>  	if (protocol == PROTO_SSH) {
+>  		const char *ssh = getenv("GIT_SSH");
+> +		int putty = ssh && strstr(ssh, "plink");
+>  		if (!ssh) ssh = "ssh";
+>
+>  		*arg++ = ssh;
+>  		if (port) {
+> -			*arg++ = "-p";
+> +			/* P is for PuTTY, p is for OpenSSH */
+> +			*arg++ = putty ? "-P" : "-p";
+>  			*arg++ = port;
+>  		}
+>  		*arg++ = host;
 
-A stash may primarily be for applying the change to random place, but
-where it was created is not a useless information.  The very original use
-case that was in the discussion "git stash" (actually its original form
-"git save") was first posted was "I am in the middle of something, and get
-interrupted.  Stash the changes away to switch branches to deal with the
-emergency for a while so that I can later come back to where I was, and I
-want both saving away and coming back easy operations".  A stash _can_ be
-applied to any random other state, but "coming back" is very much part of
-what it should have supported, and not recording the base commit means we
-would lose that capability.
+What about installing a wrapper script, plinkssh, that does this:
 
-	Side note.  In addition to the current "stash apply" and "stash
-	pop", "stash branch $stash newbranchname" that does
+#!/bin/bash
 
-        	git checkout -b newbranchanme $stash^
+if test "$1" = -p; then
+	port="-P $2"
+	shift; shift
+fi
 
-	(i.e. create a new branch starting from the state you were in)
-	might be a good ingredient to support a more git-like workflow to
-	resume.  If your original branch gained extra commits, was
-	rewound, or was rebased during the emergency/distraction, you may
-	not have anywhere to apply/pop the stash without conflicts when
-	you want to "come back" with normal
+exec plink $port "$@"
 
-        	git checkout somebranch && git stash pop
+and require plink users to set GIT_SSH=plinkssh?
 
-	But that imaginary "stash branch" command would always give you
-	the exact state you were in and creates a clean fork to finish
-	what you were doing, and continue.
-
-So the base commit is an integral part of what a stash is, and I agree
-with you that an unexpiring stash that pins the whole history beind it is
-a feature.  It is not unncessary cruft that accumulates that we need to
-worry about.
+-- Hannes
