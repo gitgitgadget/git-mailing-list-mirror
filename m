@@ -1,73 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-add--interactive: manual hunk editing mode
-Date: Wed, 2 Jul 2008 14:13:53 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807021412300.9925@racer>
-References: <20080701101114.GA6379@sigill.intra.peff.net> <1214912674-9443-1-git-send-email-trast@student.ethz.ch> <7v7ic4hmj5.fsf@gitster.siamese.dyndns.org> <20080702080200.GA21367@sigill.intra.peff.net> <7vd4lwemja.fsf@gitster.siamese.dyndns.org>
- <20080702083214.GA22301@sigill.intra.peff.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: how do I remove a tag on a remote repository I pushed to ?
+Date: Wed, 2 Jul 2008 15:24:47 +0200
+Message-ID: <20080702132447.GH4729@genesis.frugalware.org>
+References: <46d6db660807020552x400b8f3x81f8bf6970729b0c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 02 15:17:21 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vDpvzslK0qRw06MN"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 15:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE2Ct-0001Un-NF
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 15:17:12 +0200
+	id 1KE2LE-00053a-Gj
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 15:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353AbYGBNPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 09:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbYGBNPt
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 09:15:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34788 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752185AbYGBNPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 09:15:49 -0400
-Received: (qmail invoked by alias); 02 Jul 2008 13:15:46 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp005) with SMTP; 02 Jul 2008 15:15:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+gOxYPfoOgj0ou2etk3thEAARS+k7huYPmS6G0Wa
-	ZxT18IW0y+/6uz
-X-X-Sender: gene099@racer
-In-Reply-To: <20080702083214.GA22301@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1753638AbYGBNYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 09:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753118AbYGBNYw
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 09:24:52 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:50208 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751185AbYGBNYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 09:24:51 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 2BDA91B2545;
+	Wed,  2 Jul 2008 15:24:50 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B14A944697;
+	Wed,  2 Jul 2008 14:55:23 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id CC7451190498; Wed,  2 Jul 2008 15:24:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46d6db660807020552x400b8f3x81f8bf6970729b0c@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87132>
 
-Hi,
 
-On Wed, 2 Jul 2008, Jeff King wrote:
+--vDpvzslK0qRw06MN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> On Wed, Jul 02, 2008 at 01:08:09AM -0700, Junio C Hamano wrote:
-> 
-> > > So if the problem is "old perl", I don't think it is an issue. Are 
-> > > there modern perl installations in the wild that don't have 
-> > > File::Temp?
-> > 
-> > The thing is, I think I heard quite similar explanation why Test::More 
-> > is safe to use when the patch to add t/t9700 was submit.  Then what 
-> > happened?
-> 
-> ISTR the Test::More problem was reported by Linus, who is a Fedora user? 
-> I tried searching for any reasonable information on which of the core 
-> perl modules are installed by default on Fedora systems, but didn't come 
-> up with anything useful.
-> 
-> I really have no clue as to what is out there, and I suspect we must 
-> either play it totally safe, or push the limits and wait for people to 
-> complain about breakage.
+On Wed, Jul 02, 2008 at 02:52:58PM +0200, Christian MICHON <christian.michon@gmail.com> wrote:
+> I've seen here how to remove remote branches, but was there any hint
+> on how to perform the same removal on remote tags ?
 
-I wonder why bother trying to import things when you do not need them to 
-begin with!  I mean, it is _obvious_ that in this case, we want .git/ to 
-be writable _anyway_, so why not stick with a fixed name in that?
+The same way:
 
-Ciao,
-Dscho
+git push origin :refs/tags/mytag
+
+--vDpvzslK0qRw06MN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkhrgZ8ACgkQe81tAgORUJY5qQCfbeSNkKrGeZqFyVkl/UAkuJVJ
+ejkAoJdi8CpZgjwUAXQ/QaxEhNgY5nM4
+=WWPF
+-----END PGP SIGNATURE-----
+
+--vDpvzslK0qRw06MN--
