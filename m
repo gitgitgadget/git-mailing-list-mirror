@@ -1,87 +1,99 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 04/12] Avoid calling signal(SIGPIPE, ..) for
- MinGW builds.
-Date: Wed, 2 Jul 2008 16:29:09 +0200
-Message-ID: <43A38130-39B6-41C8-B57E-A4405476CA34@zib.de>
-References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <7vod5gbpza.fsf@gitster.siamese.dyndns.org> <486B5263.1060805@storm-olsen.com>
-Reply-To: prohaska@zib.de
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, Marius Storm-Olsen <mstormo_git@storm-olsen.com>
-To: Marius Storm-Olsen <marius@storm-olsen.com>, Junio C Hamano <junio@pobox.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 16:30:09 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.244])
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: RFC: grafts generalised
+Date: Wed, 2 Jul 2008 16:35:19 +0200
+Message-ID: <20080702143519.GA8391@cuci.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 16:36:30 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE3LE-0005NM-SX
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 16:29:53 +0200
-Received: by wa-out-0708.google.com with SMTP id n36so213410wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 07:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:from:to:in-reply-to:subject:references:message-id
-         :content-type:content-transfer-encoding:mime-version:date:cc
-         :x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
-        bh=T3FHF9y2PQVfo7Oq3X6ED1/tYkxAKeYvIduWhVBDdBs=;
-        b=NEq2isLfi+NaCUqr3gNCnAp3Os7J3A+dgM5cKgSeTC/liVA1Sb2YRRHb6tcf1UfGCt
-         0/ApACAxCyPD/g9Hiqa9XM7rqN9ZeE4llSOgNTMaIkGdrc1LvKgZ+Iiesn1SDHKIrKbc
-         9nT1TG+iSGq9Q762unaaH2UoR1qq3Tf6r0IEc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from
-         :to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mailer:reply-to
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere;
-        b=hEx4311dIX19HwVpb0uZDphPJlwhs5ntI6tPeK8Yj2mgL9unlLe2L2EiWb9k1/u9AO
-         SduJBYLalhXGDhpPKt4KzV6wXojxayjC9QP3VGuwc9w8MznUiZVKb6YVZzmbNVJiukOy
-         hg299OPXX4meN9ypsV7F6AMoW5rhJv1d+ZKC4=
-Received: by 10.114.160.1 with SMTP id i1mr566835wae.0.1215008934245;
-        Wed, 02 Jul 2008 07:28:54 -0700 (PDT)
-Received: by 10.107.3.34 with SMTP id f34gr2568pri.0;
-	Wed, 02 Jul 2008 07:28:54 -0700 (PDT)
-X-Sender: prohaska@zib.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.100.43.13 with SMTP id q13mr4937273anq.20.1215008933671; Wed, 02 Jul 2008 07:28:53 -0700 (PDT)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id 22si8200074yxr.2.2008.07.02.07.28.52; Wed, 02 Jul 2008 07:28:53 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m62ESkiL002995; Wed, 2 Jul 2008 16:28:51 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db94382.pool.einsundeins.de [77.185.67.130]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m62ESiZB025944 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Wed, 2 Jul 2008 16:28:45 +0200 (MEST)
-In-Reply-To: <486B5263.1060805@storm-olsen.com>
-X-Mailer: Apple Mail (2.924)
-Sender: msysgit@googlegroups.com
+	id 1KE3RT-000057-Gq
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 16:36:19 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753979AbYGBOfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 10:35:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753550AbYGBOfW
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 10:35:22 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:38718 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752538AbYGBOfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 10:35:21 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 7C1675465; Wed,  2 Jul 2008 16:35:19 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87143>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87144>
 
+I'm in the process of converting and stitching and patching vast amounts
+of initially disjunct CVS and SVN repositories into larger complete
+histories inside a single git repository.  Recreating history as
+accurately as possible.
 
+The problem I encounter is that any number of times I have to "edit"
+history in a non-parameterable fashion, in any of the following ways:
+- Change parents.
+- Add merges.
+- Change author, committer, commitdate, authordate.
+- Change the tree (because of conversion errors in the automated
+  conversion process) belonging to a single commit.
+- Retrofit a patch which has to ripple through all of history until
+  the present.
 
-On Jul 2, 2008, at 12:03 PM, Marius Storm-Olsen wrote:
+The only things which are easily done at the moment are:
+Change parents and add merges.  This can be accomplished fairly easily
+using the grafts file.
+The other changes are messy at best and need to be parameterised into the
+form of a shell script so that git filter-branch can have a go at it.
+This parameterisation is doable for author/committer/dates in most cases
+(but not pretty), but is rather (too) convoluted for ripple-through
+patches.
 
-> Junio C Hamano said the following on 02.07.2008 11:22:
->> Steffen Prohaska <prohaska@zib.de> writes:
->>> From: Marius Storm-Olsen <mstormo_git@storm-olsen.com>
->>>
->>> SIGPIPE isn't supported in MinGW.
->> Shouldn't #ifdef be on SIGPIPE not on __MINGW32__?
->
-> That's certainly a good suggestion. :-)
+You have to imagine that the whole tree has lots of interconnects
+already (merges), and changing the tree at a point in history which has
+to ripple through is a mess, because all references and interconnects
+need to be rewritten as well.
 
-I reverted this in 4msysgit and will remove the patch from the
-series.
+I propose the following:
+- Extend git fsck to do more sanity checks on the content of the grafts
+  file (to make it more difficult to shoot yourself in the foot with
+  that file; my feet will be grateful).
+- Extend the grafts file format to support something like the following syntax:
 
-	Steffen
+commit eb03813cdb999f25628784bb4f07b3f4c8bfe3f6
+Parent: 7bc72e647d54c2f713160b22e2e08c39d86c7c28
+Merge: 3b3da24960a82a479b9ad64affab50226df02abe 13b8f53e8ccec3b08eeb6515e6a10a2a
+Merge: ac719ed37270558f21d89676fce97eab4469b0f1
+Tree: 32fc99814b97322174dbe97ec320cf32314959e2
+Author: Foo Bar (FooBar) <foo@bar>
+AuthorDate: Sat Jun 6 13:50:44 1998 +0000
+Commit: Foo Bar (FooBar) <foo@bar>
+CommitDate: Sat Jun 7 13:50:44 1998 +0000
+Logmessage: First line of logmessage override
+Logmessage: Second line of logmessage override
+Logmessage: Etc.
+ 
+- Whereas not specified fields default to not altering the commit for
+  those fields.
+  E.g.
+
+commit eb03813cdb999f25628784bb4f07b3f4c8bfe3f6
+Parent: 7bc72e647d54c2f713160b22e2e08c39d86c7c28
+
+  Would alter just the parent, nothing else.
+- Keep backward compatibility with the old format.
+
+Obviously, the use case for this is to change the tree as needed, then
+run git filter-branch to actually get things in permanently, after which
+it becomes clonable.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+
+You are confused; but this is your normal state.
