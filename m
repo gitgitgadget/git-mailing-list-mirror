@@ -1,56 +1,88 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: RFC: grafts generalised
-Date: Wed, 2 Jul 2008 21:36:55 +0200
-Message-ID: <20080702193655.GB21297@leksak.fem-net>
-References: <20080702182510.GC29559@glandium.org> <20080702183701.GE16235@cuci.nl> <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <g4gb7a$ket$1@ger.gmane.org> <20080702174255.GB16235@cuci.nl> <20080702182510.GC29559@glandium.org> <g4gho9$g42$1@ger.gmane.org> <20080702143519.GA8391@cuci.nl> <20080702193157.GA21297@leksak.fem-net>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: Re: [PATCH] Disconnect stash from its base commit
+Date: Thu, 3 Jul 2008 01:24:01 +0530
+Message-ID: <20080702195401.GA17214@toroid.org>
+References: <20080702195947.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0807021447200.9925@racer> <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
-	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 02 21:37:57 2008
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 21:55:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE89M-0001Od-8X
-	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 21:37:56 +0200
+	id 1KE8Pw-00074s-FY
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 21:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626AbYGBTg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 15:36:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbYGBTg6
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 15:36:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45606 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752218AbYGBTg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 15:36:58 -0400
-Received: (qmail invoked by alias); 02 Jul 2008 19:36:56 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp034) with SMTP; 02 Jul 2008 21:36:56 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/759QQlxj7739HY6dFWXregifXW7W3MjtFMgyxRA
-	Os7PfuA+EM9WT/
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KE88N-00067L-1o; Wed, 02 Jul 2008 21:36:55 +0200
+	id S1752699AbYGBTyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 15:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYGBTyF
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 15:54:05 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:42671 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752085AbYGBTyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 15:54:04 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id DFEE255840C;
+	Wed,  2 Jul 2008 21:54:01 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 3B314ADC305; Thu,  3 Jul 2008 01:24:01 +0530 (IST)
 Content-Disposition: inline
-In-Reply-To: <20080702193157.GA21297@leksak.fem-net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.79
+In-Reply-To: <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87187>
 
-A short typo fix:
-> I wonder if grafts can be used in combination with sequencer in such a
-> way that you rewrite foo~20000..foo~19950 and then fake the parents of
-> foo~19949 to be the rewritten once.
+At 2008-07-02 12:01:35 -0700, gitster@pobox.com wrote:
+>
+> 	But that imaginary "stash branch" command would always give you
+> 	the exact state you were in and creates a clean fork to finish
+> 	what you were doing, and continue.
 
-s/once/ones/
+Nice idea. Something as simple as the appended diff?
 
-To give it some sense. Sorry ;)
+I reversed the stash/branch arguments so that one need specify only the
+branch name. Playing with it a little, it feels very useful.
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+-- ams
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 4938ade..d5ecd24 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -218,6 +218,21 @@ drop_stash () {
+ 	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
+ }
+ 
++apply_to_branch () {
++	have_stash || die 'Nothing to apply'
++
++	test -n "$1" || die 'No branch name specified'
++	branch=$1
++
++	if test -z "$2"
++	then
++		set x "$ref_stash@{0}"
++	fi
++	stash=$2
++
++	git-checkout -b $branch $stash^ && apply_stash $stash
++}
++
+ # Main command set
+ case "$1" in
+ list)
+@@ -264,6 +279,10 @@ pop)
+ 		drop_stash "$@"
+ 	fi
+ 	;;
++branch)
++	shift
++	apply_to_branch "$@"
++	;;
+ *)
+ 	if test $# -eq 0
+ 	then
