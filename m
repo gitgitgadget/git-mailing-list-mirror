@@ -1,71 +1,76 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: [KORG] Master downtime
-Date: Wed, 02 Jul 2008 16:00:07 -0700
-Message-ID: <486C0877.4070001@eaglescrag.net>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: RFC: grafts generalised
+Date: Thu, 3 Jul 2008 01:46:44 +0200
+Message-ID: <20080702234644.GC21297@leksak.fem-net>
+References: <m3lk0kfdo1.fsf@localhost.localdomain> <g4gb7a$ket$1@ger.gmane.org> <20080702174255.GB16235@cuci.nl> <20080702182510.GC29559@glandium.org> <g4gho9$g42$1@ger.gmane.org> <20080702143519.GA8391@cuci.nl> <20080702183701.GE16235@cuci.nl> <20080702193157.GA21297@leksak.fem-net> <37fcd2780807021342j75f351a5sa525b892caedf965@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: users@kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	support@osuosl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 03 01:09:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org,
+	Mike Hommey <mh@glandium.org>,
+	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 01:47:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEBSE-00044Y-71
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 01:09:38 +0200
+	id 1KEC37-00040u-Jl
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 01:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755236AbYGBXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 19:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbYGBXIm
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 19:08:42 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:47541 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755244AbYGBXIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 19:08:41 -0400
-Received: from [10.255.255.199] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m62N0Efc030604
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 2 Jul 2008 16:00:15 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: ClamAV 0.88.7/7613/Tue Jul  1 20:19:29 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Wed, 02 Jul 2008 16:00:15 -0700 (PDT)
+	id S1751508AbYGBXqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 19:46:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbYGBXqs
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 19:46:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52302 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751386AbYGBXqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 19:46:48 -0400
+Received: (qmail invoked by alias); 02 Jul 2008 23:46:46 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp024) with SMTP; 03 Jul 2008 01:46:46 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX196nhkt/cZ6siVZBAx4cTk8MbXsI7gBPkV2ljZqiW
+	1/6U6jwk6jS8mV
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KEC28-0002xt-5J; Thu, 03 Jul 2008 01:46:44 +0200
+Content-Disposition: inline
+In-Reply-To: <37fcd2780807021342j75f351a5sa525b892caedf965@mail.gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87205>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Afternoon everyone,
+On Thu, Jul 03, 2008 at 12:42:30AM +0400, Dmitry Potapov wrote:
+> On Wed, Jul 2, 2008 at 11:31 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+> > I wonder if grafts can be used in combination with sequencer in such a
+> > way that you rewrite foo~20000..foo~19950 and then fake the parents of
+> > foo~19949 to be the rewritten once.
+> 
+> I don't think it is a good idea. During the normal work you should never
+> use grafts.
 
-Just a quick heads up we are going to be taking master down for hardware
-and software upgrades tomorrow, Thursday July 3rd 2008 at 15:00 UTC.
-During this time all back-end services, including wiki's, ssh and
-userweb to name a few things.
+I have written this in the context that Stephen only changes some commits
+from a long time ago (foo~20000) and then I showed a way how to avoid that
+sequencer rewrites the rest which takes so long.
+This is not related to "normal work", but to Stephen's use case (if I
+got it right).
 
-The hardware portion of the upgrade should be complete within an hour,
-and the software upgrades will likely take another hour or two - though
-even when master comes back up expect intermittent service for a few
-hours after that while we deal with things.  Likely ETA for all work
-completed is Friday July 4th 2008 at 00:00 UTC.  If there are
-complications, I will kick another e-mail off with updates.
+What I've meant, was:
+Instead of faking a lot of parents, changes and even merges using an
+extended grafts file, he could rewrite some patches - which can be fast -
+and then use _only one_ graft to change the parent to the changed and
+rewritten commit.
+This can be done iteratively and seems to be a good agreement in speed
+and reliability.
 
-If you have any questions, comments or concerns please don't hesitate to
-get ahold of me.
+Regards,
+  Stephan
 
-- - John 'Warthog9' Hawley
-Chief Kernel.org Admin
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
-
-iD8DBQFIbAh3/E3kyWU9dicRAhOCAJ46E9rGDXQWwXCV932UEvo+cuqQwgCaAhQm
-aWIIEVf7IFaTErGqHkx0Pag=
-=woIy
------END PGP SIGNATURE-----
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
