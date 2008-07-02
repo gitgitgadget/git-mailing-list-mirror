@@ -1,119 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 11/12] verify_path(): do not allow absolute
- paths
-Date: Wed, 2 Jul 2008 18:31:19 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807021830410.9925@racer>
-References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <1214987532-23640-5-git-send-email-prohaska@zib.de> <1214987532-23640-6-git-send-email-prohaska@zib.de> <1214987532-23640-7-git-send-email-prohaska@zib.de> <1214987532-23640-8-git-send-email-prohaska@zib.de> <1214987532-23640-9-git-send-email-prohaska@zib.de> <1214987532-23640-10-git-send-email-prohaska@zib.de> <1214987532-23640-11-git-send-email-prohaska@zib.de> <7vvdzobq0k.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807021713290.9925@racer> <6F445BD9-CE59-435A-AAF3-F380A7BCE29E@zib.de>
-Reply-To: Johannes.Schindelin@gmx.de
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: RFC: grafts generalised
+Date: Wed, 2 Jul 2008 19:42:55 +0200
+Message-ID: <20080702174255.GB16235@cuci.nl>
+References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <g4gb7a$ket$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junio@pobox.com>, Johannes Sixt <johannes.sixt@telecom.at>,  git@vger.kernel.org, msysgit@googlegroups.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 19:34:29 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.26])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Wed Jul 02 19:44:12 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE6Dd-0007fr-AJ
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 19:34:13 +0200
-Received: by yw-out-2122.google.com with SMTP id 8so190638yws.63
-        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 10:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        bh=apkDTp83hIPNajFwogSMI1UhBDfsYvfPNzTdcSkAuWA=;
-        b=gakCYUAFXXdFA5aDuoHNQiJrYkSwwkPOS30TXxhBHY0sEEkrOQwJNGEJTyZytK1Tcy
-         ve+xk16HT/o1KnBeNN5SGH0VZDpedtKvD92GCar0dJ07488vLCt2VXPT1EGYvuskQ9Uk
-         gOgD98YVhpD8V2mHoCL39J8RZJmPtRz4D9v6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=qd6j8JGcYQeqD7IYwYgdxYkq7ZtNWv5miyMuRvm7THQHNZJcPZINRS9+Qt5BDBDInf
-         kUPOIx4WZ/4TRopuxilRGCw1N8zau/ZAeNeRwJdcUj/9fYhe1/1CSZMdgsh2aNzB0iMw
-         evKpcJanhSohE5tKfyB5NygbbdLqIWz71iXiY=
-Received: by 10.141.14.14 with SMTP id r14mr517961rvi.0.1215019993616;
-        Wed, 02 Jul 2008 10:33:13 -0700 (PDT)
-Received: by 10.106.234.8 with SMTP id g8gr2575prh.0;
-	Wed, 02 Jul 2008 10:33:13 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.140.203.9 with SMTP id a9mr318139rvg.27.1215019993136; Wed, 02 Jul 2008 10:33:13 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 39si8484692yxd.0.2008.07.02.10.33.12; Wed, 02 Jul 2008 10:33:13 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 02 Jul 2008 17:33:11 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp032) with SMTP; 02 Jul 2008 19:33:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18cZUwG4tocMVdH/ULLBcVZp7nsiF4n+rAHyd4Ifo uXyK8L8UExwG5l
-X-X-Sender: gene099@racer
-In-Reply-To: <6F445BD9-CE59-435A-AAF3-F380A7BCE29E@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
-Sender: msysgit@googlegroups.com
+	id 1KE6ND-00032a-1G
+	for gcvg-git-2@gmane.org; Wed, 02 Jul 2008 19:44:07 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751386AbYGBRm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 13:42:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbYGBRm5
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 13:42:57 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:51636 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751016AbYGBRm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 13:42:56 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 8DCA65465; Wed,  2 Jul 2008 19:42:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <g4gb7a$ket$1@ger.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit-owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit-help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe@googlegroups.com>
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87167>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87168>
 
+Michael J Gruber wrote:
+>Maybe the upcoming git-sequencer could be the appropriate place? It 
+>tries to achieve just that: edit history by specifying a list of 
+>commands. The currently planned set of commands would need to be 
 
-Hi,
+That's the problem.  Like git filter-branch, git sequencer needs you to
+parameterise the changes, which, in my case, is hardly possible, since
+the changes are randomlike.
+Also, having to run the sequencer to dig 20000 commits into the past,
+then change something, then come back up and rewrite all following
+history and relations (parents/tags/merges) will take a sizeable amount
+of time.  I need something that can be changed at will, then viewed with
+gitk a second later.
 
-On Wed, 2 Jul 2008, Steffen Prohaska wrote:
+These edits are numerous and spread over many months, so the typical 
+history fixup-sessions involve periods where you make 30 random
+historicaledits per hour (which need to be viewed and checked every time
+immediately after making the change).  And say once every 4 months, you
+run it through git filter-branch to cast everything into stone.  A
+typical git filter-branch run takes 15 minutes on a repository this
+size.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-> On Jul 2, 2008, at 6:15 PM, Johannes Schindelin wrote:
-> 
-> >On Wed, 2 Jul 2008, Junio C Hamano wrote:
-> >
-> > >Steffen Prohaska <prohaska@zib.de> writes:
-> > >
-> > > >Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de> 
-> > > >Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> > >
-> > >No commit log message?  Justification?
-> >
-> >Justification: adding absolute paths was not caught properly on 
-> >Windows, and this was the easiest patch.
-> >
-> >However, IIRC, in the meantime we are nice to the user, and allow 
-> >absolute paths (which we turn into a relative path, or error out if it 
-> >is not under the current working directory).
-> >
-> >Steffen, can you revert the patch and verify that my memory does not 
-> >fail me?
-> 
-> Is
-> 
->   git add /c/msysgit/git/read-cache.c
-> 
-> an appropriate test?
-> 
-> It fails with
-> 
->   error: 'c:/msysgit/git/read-cache.c' is outside repository
-> 
-> no matter if the commit is reverted or not.
-
-Yes, that is enough.  It proves that the patch 11/12 is unnecessary and 
-should be removed from 4msysgit.git.
-
-Thanks,
-Dscho
+You are confused; but this is your normal state.
