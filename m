@@ -1,66 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 08/12] fast-import: MinGW does not have
- getppid().  So do not print it.
-Date: Wed, 2 Jul 2008 17:52:42 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807021741210.9925@racer>
-References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <1214987532-23640-5-git-send-email-prohaska@zib.de> <1214987532-23640-6-git-send-email-prohaska@zib.de> <1214987532-23640-7-git-send-email-prohaska@zib.de> <1214987532-23640-8-git-send-email-prohaska@zib.de> <7vzlp0bq2l.fsf@gitster.siamese.dyndns.org>
-Reply-To: Johannes.Schindelin@gmx.de
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: prohaska@zib.de, Johannes Sixt <johannes.sixt@telecom.at>,  git@vger.kernel.org, msysgit@googlegroups.com
-To: Junio C Hamano <junio@pobox.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 18:55:37 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 12/12] [TODO] setup: bring changes from
+ 4msysgit/next to next
+Date: Wed, 2 Jul 2008 19:08:09 +0200
+Message-ID: <D35A2542-3943-4BDB-AEDA-0F8B7052EF7D@zib.de>
+References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-1-git-send-email-prohaska@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <1214987532-23640-4-git-send-email-prohaska@zib.de> <1214987532-23640-5-git-send-email-prohaska@zib.de> <1214987532-23640-6-git-send-email-prohaska@zib.de> <1214987532-23640-7-git-send-email-prohaska@zib.de> <1214987532-23640-8-git-send-email-prohaska@zib.de> <1214987532-23640-9-git-send-email-prohaska@zib.de> <1214987532-23640-10-git-send-email-prohaska@zib.de> <1214987532-23640-11-git-send-email-prohaska@zib.de> <1214987532-23640-12-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807021716030.9925@racer>
+Reply-To: prohaska@zib.de
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, Junio C Hamano <gitster@pobox.com>, Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Johannes Sixt <johannes.sixt@telecom.at>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Jul 02 19:09:03 2008
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yx-out-2122.google.com ([74.125.44.24])
+Received: from yx-out-2122.google.com ([74.125.44.25])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KE5cG-0001Nj-Dl
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 18:55:36 +0200
-Received: by yx-out-2122.google.com with SMTP id 22so108030yxm.63
-        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 09:54:43 -0700 (PDT)
+	id 1KE5pC-0006Mu-BT
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2008 19:08:58 +0200
+Received: by yx-out-2122.google.com with SMTP id 22so114418yxm.63
+        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 10:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:received:x-sender:x-apparently-to
          :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        bh=CvAsGkybnmsdIuNQ0ftGFatysn7zLMaTEq+5ZD+y94w=;
-        b=qEJEEMeOTbcI037skkJg30X1sHhmjoM1bP/lT+VyoIMUfje824FRzcKngbDc4HBH7k
-         Sjyd7bAIdKouXhwYr6fyyhVBUWb1VrtC7wT4a15i8uS/Q/dT38mhQ00vU2GKVZGnUpM0
-         /vT0R1nru4RiAFKNHBGR7stMU9oQDMPl4O910=
+         :received:from:to:in-reply-to:subject:references:message-id
+         :content-type:content-transfer-encoding:mime-version:date:cc
+         :x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
+        bh=oub+1SS9TNCz8LtNSj4UUV8L2TUZdHc4i0yBbki5A/w=;
+        b=MnnKCaRGEKgQ2uRxlsaV2dhPiW2ZMcuLefQRsZaX9gcJbTUud0iR1eccNd4n47EYzc
+         Kfp9q8KQGFmEX9FsStrEVQsH8kP9Rtfiv9Vv+Ix68EOlBBAT799HGGJU7gDbJ8Y2WSy/
+         UJkLcEBfbaPAZfcJaiH9CcrkdiO0v59TSu6WI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere;
-        b=HBzlYHwGo8f1OEtKv2rGnBsxH0VMdkTjMb21y74yH1kDldHMYWFMnHi+iHN9eGQZkh
-         5XN8KcAhJjMQqO0hOElIXevSDJzjFYcmkCqwJ5WP/iPpkru3zn44/HY76Gy8ccADLUjq
-         znvC2l39Klft4/f8PGs4L/aPWuvgevHzGXI3o=
-Received: by 10.114.176.1 with SMTP id y1mr575611wae.4.1215017676600;
-        Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
-Received: by 10.106.239.31 with SMTP id m31gr2571prh.0;
-	Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from
+         :to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mailer:reply-to
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere;
+        b=bZetREHZRH2JeobJkfeRw/d3gCxLQa40WRM2YpW/O0mOKOxQp08ifnNmuqAJVtHKnu
+         b+YKXy2a8SOwNOn/I/r+jOl9z4tTccPBV+NU1v+gSutUrMn+4FpTqkFJNfAIRMksrGnI
+         fPq4rAPA3Bov2Ellvp/vDt3vV3LTH0/tr+qlQ=
+Received: by 10.114.58.6 with SMTP id g6mr576887waa.27.1215018476403;
+        Wed, 02 Jul 2008 10:07:56 -0700 (PDT)
+Received: by 10.107.3.34 with SMTP id f34gr2572pri.0;
+	Wed, 02 Jul 2008 10:07:56 -0700 (PDT)
+X-Sender: prohaska@zib.de
 X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.140.139.6 with SMTP id m6mr312255rvd.20.1215017676300; Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 7si8435616yxg.1.2008.07.02.09.54.35; Wed, 02 Jul 2008 09:54:36 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 02 Jul 2008 16:54:35 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp036) with SMTP; 02 Jul 2008 18:54:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+VM3AlZqWVv5Sy79Oav6jrdGkyD6B64ttG2rrKJq VfPIRu5QILIj1F
-X-X-Sender: gene099@racer
-In-Reply-To: <7vzlp0bq2l.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+Received: by 10.141.34.12 with SMTP id m12mr314579rvj.0.1215018476073; Wed, 02 Jul 2008 10:07:56 -0700 (PDT)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id 39si8451042yxd.0.2008.07.02.10.07.55; Wed, 02 Jul 2008 10:07:56 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m62H7kgH017957; Wed, 2 Jul 2008 19:07:51 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db94382.pool.einsundeins.de [77.185.67.130]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m62H7i0A004979 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Wed, 2 Jul 2008 19:07:45 +0200 (MEST)
+In-Reply-To: <alpine.DEB.1.00.0807021716030.9925@racer>
+X-Mailer: Apple Mail (2.924)
 Sender: msysgit@googlegroups.com
 Precedence: bulk
 X-Google-Loop: groups
@@ -72,44 +66,31 @@ List-Help: <mailto:msysgit-help@googlegroups.com>
 List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit-unsubscribe@googlegroups.com>
 X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87161>
 
 
-Hi,
 
-On Wed, 2 Jul 2008, Junio C Hamano wrote:
+On Jul 2, 2008, at 6:17 PM, Johannes Schindelin wrote:
 
-> Steffen Prohaska <prohaska@zib.de> writes:
-> 
-> > diff --git a/fast-import.c b/fast-import.c
-> > index e72b286..271b93c 100644
-> > --- a/fast-import.c
-> > +++ b/fast-import.c
-> > @@ -391,7 +391,9 @@ static void write_crash_report(const char *err)
-> >  
-> >  	fprintf(rpt, "fast-import crash report:\n");
-> >  	fprintf(rpt, "    fast-import process: %d\n", getpid());
-> > +#ifndef __MINGW32__
-> >  	fprintf(rpt, "    parent process     : %d\n", getppid());
-> > +#endif
-> >  	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, DATE_LOCAL));
-> >  	fputc('\n', rpt);
-> >  
-> > -- 
-> > 1.5.6.1.255.g32571
-> 
-> It does not matter too much for this part that writes crash report, but
-> keeping the file format the same across platforms will make it easier for
-> tools to read output, so as a general principle, I think this is a
-> suboptimal solution to the issue.  How about throwing something like this
-> in MinGW specific header files?
-> 
->         #define getppid() 0
+> On Wed, 2 Jul 2008, Steffen Prohaska wrote:
+>
+>>
+>> From: Johannes Sixt <johannes.sixt@telecom.at>
+>>
+>> Hannes,
+>> You introduced "minoffset" in 861429a7c37c7.
+>
+> AFAICT it was redone differently in 'next', because 'next' has this
+> ceiling dir thingie, which allows a different (much smaller) patch.
+>
+> It might be more sensible to base your patch series on 'next'...
 
-Of course, we could also implement it, using NtQueryInformationProcess() 
-as suggested by Google.
+Hmm.. it is based on next.  But obviously I needed to merge
+mingw's master to 4msysgit's master and resolve conflicts.
+Maybe I made the wrong decisions then.
 
-Ciao,
-Dscho
+Hannes,
+If you believe that your setup.c is good, then I'll copy your version
+to 4msysgit's master.
 
-		
+	Steffen
