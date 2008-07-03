@@ -1,152 +1,97 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH] git-apply tests need to be portable
-Date: Thu,  3 Jul 2008 12:00:20 -0400
-Message-ID: <1215100820-23140-1-git-send-email-dzickus@redhat.com>
-Cc: Don Zickus <dzickus@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 03 18:01:34 2008
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 0/3] Making remote tracking statistics available to other
+ tools
+Date: Thu, 03 Jul 2008 18:26:11 +0200
+Message-ID: <486CFDA3.9070704@free.fr>
+References: <20080701091347.GA11817@elte.hu> <80iqvq2bw0.fsf@tiny.isode.net> <20080701101414.GG31309@elte.hu> <7vlk0lmn32.fsf@gitster.siamese.dyndns.org> <7v3amsg1wx.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ingo Molnar <mingo@elte.hu>,
+	Bruce Stephens <bruce.stephens@isode.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 18:26:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KERFU-0007fo-Mb
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 18:01:33 +0200
+	id 1KERdm-0001DF-89
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 18:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbYGCQA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 12:00:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbYGCQA3
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 12:00:29 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:52162 "EHLO mx1.redhat.com"
+	id S1751760AbYGCQZk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 12:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYGCQZk
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 12:25:40 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:55753 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751802AbYGCQA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 12:00:28 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m63G0Li1015975
-	for <git@vger.kernel.org>; Thu, 3 Jul 2008 12:00:27 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m63G0K3o027645;
-	Thu, 3 Jul 2008 12:00:20 -0400
-Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m63G0Kot029817;
-	Thu, 3 Jul 2008 12:00:20 -0400
-Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m63G0KKq023167;
-	Thu, 3 Jul 2008 12:00:20 -0400
-Received: (from dzickus@localhost)
-	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m63G0KC9023166;
-	Thu, 3 Jul 2008 12:00:20 -0400
-X-Mailer: git-send-email 1.5.6.rc2.48.g13da
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1750725AbYGCQZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 12:25:39 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 85B9E12B746;
+	Thu,  3 Jul 2008 18:25:38 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 0134812B75C;
+	Thu,  3 Jul 2008 18:25:37 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <7v3amsg1wx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87295>
 
-When I created the tests for my git-apply patch, I accidently used the '-i'
-flag for sed.  Not all versions of sed handle this flag, so I converted
-those instances to output to a temp file and move that temp file back to the
-original file.
+Junio C Hamano a =E9crit :
+> The one I sent out was a bit hacky as the existing implementation ins=
+ide
+> git-checkout was not designed to be cleanly reusable.
+>=20
+> Here is a cleaned up series that could be applied.
+>=20
+> [PATCH 1/3] Refactor "tracking statistics" code used by "git checkout=
+"
+> [PATCH 2/3] git-status: show the remote tracking statistics
+> [PATCH 3/3] git-branch -v: show the remote tracking statistics
 
-Thanks to Jim Meyering for noticing this!
+Sorry, but the third patch does not work for me. FWIU, the problem come=
+s from
+the revision walking code that is not reentrant because of the object c=
+ache.
+IOW, calling stats_tracking_info() more than once does not work: object=
+s
+states changed after first call.
 
----
+I do not understand the code enough yet and I failed to fix it. The onl=
+y way
+I found is by clearing obj_hash (object.c) but this seems the wrong thi=
+ng to
+do.
 
-Junio, I am not sure if you want me to resend the whole patch again or is a
-small update like this preferred.  I am indifferent either way.
+Ideas?
 
-Cheers,
-Don
----
- t/t4127-apply-same-fn.sh |   33 ++++++++++++++++++++++-----------
- 1 files changed, 22 insertions(+), 11 deletions(-)
+This test case should trigger the bug:
 
-diff --git a/t/t4127-apply-same-fn.sh b/t/t4127-apply-same-fn.sh
-index 2a6ed77..2726a29 100755
---- a/t/t4127-apply-same-fn.sh
-+++ b/t/t4127-apply-same-fn.sh
-@@ -14,10 +14,12 @@ test_expect_success setup '
- 	git commit -m initial
- '
- test_expect_success 'apply same filename with independent changes' '
--	sed -i -e "s/^d/z/" same_fn &&
-+	sed -e "s/^d/z/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff > patch0 &&
- 	git add same_fn &&
--	sed -i -e "s/^i/y/" same_fn &&
-+	sed -e "s/^i/y/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff >> patch0 &&
- 	cp same_fn same_fn2 &&
- 	git reset --hard &&
-@@ -27,10 +29,12 @@ test_expect_success 'apply same filename with independent changes' '
- 
- test_expect_success 'apply same filename with overlapping changes' '
- 	git reset --hard
--	sed -i -e "s/^d/z/" same_fn &&
-+	sed -e "s/^d/z/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff > patch0 &&
- 	git add same_fn &&
--	sed -i -e "s/^e/y/" same_fn &&
-+	sed -e "s/^e/y/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff >> patch0 &&
- 	cp same_fn same_fn2 &&
- 	git reset --hard &&
-@@ -41,10 +45,12 @@ test_expect_success 'apply same filename with overlapping changes' '
- test_expect_success 'apply same new filename after rename' '
- 	git reset --hard
- 	git mv same_fn new_fn
--	sed -i -e "s/^d/z/" new_fn &&
-+	sed -e "s/^d/z/" new_fn > f &&
-+	mv f new_fn &&
- 	git add new_fn &&
- 	git diff -M --cached > patch1 &&
--	sed -i -e "s/^e/y/" new_fn &&
-+	sed -e "s/^e/y/" new_fn > f &&
-+	mv f new_fn &&
- 	git diff >> patch1 &&
- 	cp new_fn new_fn2 &&
- 	git reset --hard &&
-@@ -55,11 +61,13 @@ test_expect_success 'apply same new filename after rename' '
- test_expect_success 'apply same old filename after rename -- should fail.' '
- 	git reset --hard
- 	git mv same_fn new_fn
--	sed -i -e "s/^d/z/" new_fn &&
-+	sed -e "s/^d/z/" new_fn > f &&
-+	mv f new_fn &&
- 	git add new_fn &&
- 	git diff -M --cached > patch1 &&
- 	git mv new_fn same_fn
--	sed -i -e "s/^e/y/" same_fn &&
-+	sed -e "s/^e/y/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff >> patch1 &&
- 	git reset --hard &&
- 	test_must_fail git apply patch1
-@@ -68,15 +76,18 @@ test_expect_success 'apply same old filename after rename -- should fail.' '
- test_expect_success 'apply A->B (rename), C->A (rename), A->A -- should pass.' '
- 	git reset --hard
- 	git mv same_fn new_fn
--	sed -i -e "s/^d/z/" new_fn &&
-+	sed -e "s/^d/z/" new_fn > f &&
-+	mv f new_fn &&
- 	git add new_fn &&
- 	git diff -M --cached > patch1 &&
- 	git commit -m "a rename" &&
- 	git mv other_fn same_fn
--	sed -i -e "s/^e/y/" same_fn &&
-+	sed -e "s/^e/y/" same_fn > f &&
-+	mv f same_fn &&
- 	git add same_fn &&
- 	git diff -M --cached >> patch1 &&
--	sed -i -e "s/^g/x/" same_fn &&
-+	sed -e "s/^g/x/" same_fn > f &&
-+	mv f same_fn &&
- 	git diff >> patch1 &&
- 	git reset --hard HEAD^ &&
- 	git apply patch1
--- 
-1.5.6.rc2.48.g13da
+$ for i in a b c; do echo $i>$i && git add $i && git commit -m $i; done
+$ git clone . clone1
+$ cd clone1
+$ git checkout -b b1 origin/master
+$ git reset --hard HEAD~
+$ echo d>d && git add d && git commit -m d
+$ git checkout -b b2 origin/master
+$ git reset --hard HEAD~
+$ git merge b1
+
+$ git branch -v
+  b1     c07015a [ahead 1, behind 1] d
+* b2     c07015a d
+  master 08ca18b c
+
+b1 and b2 are both 1 commit ahead and 1 commit behind.
+
+$ git branch -D b1
+$ git branch -v
+* b2     c07015a [ahead 1, behind 1] d
+  master 08ca18b c
+
+deleting b1 show us the side effect.
+
+Olivier.
