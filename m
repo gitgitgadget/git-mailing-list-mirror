@@ -1,78 +1,178 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: "make test" works again (sort-of) on cygwin.
-Date: Thu, 03 Jul 2008 18:44:28 +0100
-Message-ID: <486D0FFC.5090308@ramsay1.demon.co.uk>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 3/7] Documentation: complicate example of "man
+	git-command"
+Date: Thu, 3 Jul 2008 14:18:31 -0400
+Message-ID: <20080703181831.GB29429@fieldses.org>
+References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu> <Pine.GSO.4.62.0806301706090.7190@harper.uchicago.edu> <20080701162358.GA18305@fieldses.org> <7vmyl1kvn6.fsf@gitster.siamese.dyndns.org> <20080702213148.GA26921@fieldses.org> <Pine.GSO.4.62.0807022010280.10323@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 19:50:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jon Loeliger <jdl@jdl.com>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 03 20:19:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KESwe-0008AG-CN
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 19:50:12 +0200
+	id 1KETPA-0003mP-4N
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 20:19:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754982AbYGCRsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 13:48:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754976AbYGCRsh
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 13:48:37 -0400
-Received: from anchor-post-37.mail.demon.net ([194.217.242.87]:55885 "EHLO
-	anchor-post-37.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754982AbYGCRsf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 13:48:35 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-37.mail.demon.net with esmtp (Exim 4.68)
-	id 1KESv4-0003Kh-Nz; Thu, 03 Jul 2008 17:48:35 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1753223AbYGCSSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 14:18:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbYGCSSl
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 14:18:41 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:40129 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752522AbYGCSSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 14:18:39 -0400
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1KETO4-0007oz-1G; Thu, 03 Jul 2008 14:18:32 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.62.0807022010280.10323@harper.uchicago.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87300>
 
-Hi *,
+On Wed, Jul 02, 2008 at 08:45:59PM -0500, Jonathan Nieder wrote:
+> J. Bruce Fields wrote:
+> 
+> > On Tue, Jul 01, 2008 at 04:54:53PM -0700, Junio C Hamano wrote:
+> >
+> >> We would want to mention the typesetting convention early in the manuals
+> >> (git(7), gittutorial(7) and user-manual.html) as well, so how about...
+> >> 
+> >> 	Conventions used in this document
+> >>         ---------------------------------
+> >> 
+> >> 	When talking about a git subcommand 'cmd', this documentation
+> >> 	typesets the name of it like 'git-cmd', and that is the name you
+> >> 	ask for its manual page.
+> >> 
+> >>         Examples are typeset like this: `$ git cmd` (`$` is your command
+> >> 	prompt, do not actually type it to your shell).  Note that a
+> >> 	subcommand is specified as the first parameter to the 'git'
+> >> 	program when you actually run it from the command line.
+> > 
+> > I'm not convinced this last sentence is necessary.
+> 
+> I agree, but I think it doesn't hurt. I think the point was to
+> establish the word and concept "subcommand".
 
-Having upgraded to version 1.5.6 (via tarball), I can "make test" once
-again, without crashing my machine. (well, it grinds to a halt, so that
-I have to pull the power cord, followed by the battery!) I have been
-unable to do that since v1.5.3!
+We don't need to define it.  (The word "subcommand" is pretty intuitive,
+especially for anyone with some commandline experience, which we do
+assume throughout.)
 
-I spent many hours (not recently) trying to determine the reason for
-the crash, but it seems to be essentially "random gremlins" :-)
-However, since I mostly use Linux, I've not been very motivated to
-find a solution, particularly when git works fine (touch wood) when
-used for real work. (i.e. only "make test" crashes my machine).
-Also, as Alex and Shawn have not reported problems, I have assumed
-it is something specific to my environment. Dunno.
+> > > [example showing typographical conventions]
+> > 
+> > Typographical conventions shouldn't need so much explanation.
+> 
+> Yes, I suppose. I'm used to printed manuals having a page on
+> the meaning of different typefaces inside, but that's a bit
+> of a different situation.
 
-Anyhow, the "sort-of" in the subject line, relates to the fact that
-I am seeing some test failures.  In particular, all tests in
-t0004-unwritable.sh and tests 21->24 in t3700-add.sh. All of these
-tests involve chmod/permissions ...
+Yes.
 
-I haven't spent too long trying to debug this, but looking at the
-first (actually second) test in t0004, I did an strace on git-write-tree.
-After wading through the output, it seems that cygwin allows mkdir()
-to succeed in the (un-writable) .git/object directory; eg. when
-writing the tree object 47d832... it succeeds in making the 47 directory
-(which does have write permission) followed by the d832... file.
-So I tried this by hand:
+> > I'm curious: Jonathan, was this the original patch the result of a
+> > real-life instance of confusion?  What happened?
+> 
+> No, I'm actually a bit ashamed to have sent the patch... I was just
+> changing `git subcommand` to `git-subcommand` wherever it was the name
+> of a command, rather than the command line to run it, that was in
+> question. Consistency would have made the old example awkward, so I
+> looked around for alternatives.
 
-    $ mkdir obj
-    $ chmod a-w obj
-    $ echo file >obj/file
-    bash: obj/file: Permission denied
-    $ mkdir obj/dir
-    $
+That being the case, I'd rather leave the text as is; I'm uncomfortable
+adding new text to address something that isn't in practice a problem.
 
-OK.
+--b.
 
-[Junio, in the tarball, the test files t5304-prune.sh and
-t7610-mergetool.sh do not have the executable bit set]
-
-ATB,
-
-Ramsay Jones
+> 
+> Why worry about whether the man pages have no consistent rule about
+> dashes? Since it is not obvious why the man pages use the dashed form
+> when they do, I think a fraction of people will naturally use the
+> dashed form by default. That means trouble once Git 1.6.0 comes out
+> (e.g. see Ingo's recent post
+> <http://thread.gmane.org/gmane.comp.version-control.git/87012/focus=87020>).
+> 
+> Here's a patch implementing Junio's suggestion, because I do like it.
+> Please let me know what you think (especially ideas for making it
+> shorter).
+> 
+> Thanks for all your thoughts so far. Sorry I took so long to get back.
+> 
+> --- %< --- %< --- %< ----
+> Subject: gittutorial(7): add "Conventions used in this document" section
+>     
+> The manual page for the git subcommand invoked as "git clone" is
+> named git-clone(1), and similarly for the rest of the git
+> subcommands. This patch should make the convention a little
+> clearer when it is introduced at the beginning of gittutorial(7).
+> 
+> Thanks to Junio C Hamano for the idea and wording.
+> 
+> It remains to make an analogous change for user-manual.html
+> and maybe git(1).
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+> ---
+>  Documentation/gittutorial.txt |   35 ++++++++++++++++++++++++++++++-----
+>  1 files changed, 30 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/gittutorial.txt
+> b/Documentation/gittutorial.txt
+> index 036a27c..51ad814 100644
+> --- a/Documentation/gittutorial.txt
+> +++ b/Documentation/gittutorial.txt
+> @@ -19,12 +19,37 @@ If you are instead primarily interested in using
+> git to fetch a project,
+>  for example, to test the latest version, you may prefer to start with
+>  the first two chapters of link:user-manual.html[The Git User's Manual].
+>  
+> -First, note that you can get documentation for a command such as
+> -`git log --graph` with:
+> +Conventions used in this document
+> +---------------------------------
+>  
+> -------------------------------------------------
+> -$ man git-log
+> -------------------------------------------------
+> +When discussing a git subcommand 'cmd', this documentation
+> +typesets the name of it like 'git-cmd', and that is the name you
+> +ask for its manual page by.
+> +
+> +Examples are typeset like this: `$ git cmd`. (`$` is your command
+> +prompt; do not actually type it to your shell.) A subcommand
+> +is specified as the first parameter to the 'git' program
+> +when you actually run it from the command line.
+> +
+> +So a typical command description may go like this:
+> +
+> +To propagate the changes you made back to the original subversion
+> +repository, you would use the 'git-svn dcommit' command. It does
+> +these things (long description here).  Some examples:
+> +
+> +------------
+> +$ ... some example command sequence ...
+> +$ git svn dcommit
+> +------------
+> +
+> +For full details, type:
+> +
+> +------------
+> +$ man git-svn
+> +------------
+> +
+> +Introducing yourself to git
+> +---------------------------
+>  
+>  It is a good idea to introduce yourself to git with your name and
+>  public email address before doing any operation.  The easiest
+> -- 
+> 1.5.5.GIT
+> 
