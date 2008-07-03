@@ -1,102 +1,106 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 03/14] Write to a stack log when stack is modified
-Date: Thu, 3 Jul 2008 23:05:45 +0100
-Message-ID: <b0943d9e0807031505n5b119a6fxf0b050d72b59352a@mail.gmail.com>
-References: <20080612052913.23549.69687.stgit@yoghurt>
-	 <20080612053424.23549.64457.stgit@yoghurt>
-	 <b0943d9e0806170324j12605a55m41b582ad09925cce@mail.gmail.com>
-	 <20080617123138.GA6932@diana.vm.bytemark.co.uk>
-	 <b0943d9e0806170711w6da8e841p3ac83a59a81f6577@mail.gmail.com>
-	 <20080617153247.GA12520@diana.vm.bytemark.co.uk>
-	 <20080701201355.GA19096@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 1/4] Add git-sequencer shell prototype
+Date: Thu, 03 Jul 2008 15:11:45 -0700
+Message-ID: <7vlk0iy5we.fsf@gitster.siamese.dyndns.org>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+ <1214879914-17866-2-git-send-email-s-beyer@gmx.net>
+ <7vbq1f68rh.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807031142540.9925@racer>
+ <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+ <1214879914-17866-2-git-send-email-s-beyer@gmx.net>
+ <7vbq1f68rh.fsf@gitster.siamese.dyndns.org>
+ <20080703210950.GC6677@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 00:06:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jul 04 00:12:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEWwx-0001gE-Su
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 00:06:48 +0200
+	id 1KEX2w-0003RL-J4
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 00:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754699AbYGCWFt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 18:05:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754392AbYGCWFt
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 18:05:49 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:26791 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753890AbYGCWFs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 18:05:48 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1199362rvb.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2008 15:05:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qruHfer2sighZy598lU1AO40rde9uX7bUbqyNPs6Rgg=;
-        b=Al5L6Q3o0EkS8/IN7KEmNmIHnn7THaqawcstH36lcCZdd9VWUNCd0bcuuFv/CnGaBp
-         Q9zFdEJZly0OP1hD9d7dK/ZYnSvwlevF26UpO3dcqG3tA2JBqlGL/k2byk5j80vmv0Qf
-         2i17xaKkw2mkLM42Z10WyyEXoFMyNW6GYrVLM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=vzgQfxlOXmPSx4k/kPEFy50mZUbAYdaOSSI1SH/XSd7QOTQ5KpfhTZw6/ek9ebbg4J
-         kqv/Jt/w5YpoTJhTZMuvd/1gcZ7fiNDzy3TD2VA6zL4oJUuMlSQZYTkExc/lZVa0tGKL
-         XVUh1kHUcKaG2PSWLZqYj9tahMwT7MaFE4pfU=
-Received: by 10.114.52.1 with SMTP id z1mr1789579waz.42.1215122745248;
-        Thu, 03 Jul 2008 15:05:45 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Thu, 3 Jul 2008 15:05:45 -0700 (PDT)
-In-Reply-To: <20080701201355.GA19096@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1756694AbYGCWL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 18:11:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbYGCWL4
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 18:11:56 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56973 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756694AbYGCWLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 18:11:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6EA6A12491;
+	Thu,  3 Jul 2008 18:11:54 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 74AF812490; Thu,  3 Jul 2008 18:11:48 -0400 (EDT)
+In-Reply-To: <20080703210950.GC6677@leksak.fem-net> (Stephan Beyer's message
+ of "Thu, 3 Jul 2008 23:09:50 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0B73576E-494D-11DD-8038-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87329>
 
-2008/7/1 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2008-06-17 17:32:47 +0200, Karl Hasselstr=F6m wrote:
+Stephan Beyer <s-beyer@gmx.net> writes:
+
+> +		sed -e 's/[$"\\]/\\&/g' -n -e '
+>  			s/^Author: \(.*\)$/GIT_AUTHOR_NAME="\1"/p;
+>  			s/^Email: \(.*\)$/GIT_AUTHOR_EMAIL="\1"/p;
+>  			s/^Date: \(.*\)$/GIT_AUTHOR_DATE="\1"/p
+> ###
 >
->> On 2008-06-17 15:11:42 +0100, Catalin Marinas wrote:
->>
->> > 2008/6/17 Karl Hasselstr=F6m <kha@treskal.com>:
->> >
->> > > On 2008-06-17 11:24:53 +0100, Catalin Marinas wrote:
->> > >
->> > > > 2008/6/12 Karl Hasselstr=F6m <kha@treskal.com>:
->> > > >
->> > > > >  class _Directory(object):
->> > > > > -    def __init__(self, needs_current_series =3D True):
->> > > > > +    def __init__(self, needs_current_series =3D True, log =3D=
- True):
->> > > >
->> > > > i.e. we make log =3D False here by default.
->> > >
->> > > I might not have understood precisely what you meant; but I
->> > > don't think API backwards compatibilty should be an issue here?
->> > > I simply fix all callers. If log should default to true or false
->> > > is immaterial -- it just means some extra text in one or the
->> > > other of two equally common cases.
->> >
->> > Not an issue, I just favour the existing one when the two cases
->> > are almost equal.
->>
->> Fair enough. I'll change it.
+> Is escaping $, " and \ enough?
+
+Look at how it is done in git-sh-setup get_author_ident_from_commit.
+
+>> > +	if test -n "$failed"
+>> > +	then
+>> > +		# XXX: This is just a stupid hack:
+>> > +		with_author git apply $apply_opts --reject --index "$PATCH"
+>> 
+>> Please don't do this without being asked, if you are planning to use this
+>> in "am" when 3-way fallback was not asked.  It _may_ make sense to give an
+>> option to the users to ask for .rej if they prefer to work that way better
+>> than working with 3-way merge fallback, but doing this without being asked
+>> is not acceptable.
 >
-> I had an even better idea: no default value. Every caller gets to say
-> either log =3D True or log =3D False, which makes it immediately obvi=
-ous
-> to the reader. (That is, every caller still using the old
-> infrastructure; with the new infrastructure, we log if and only if a
-> transaction is run.)
+> The --reject was just a mind marker for that what I actually think is
+> useful and less annoying than the current behavior:
+>
+>> > +		die_to_continue 'Patch failed. See the .rej files.'
+>> > +		# XXX: We actually needed a git-apply flag that creates
+>> > +		# conflict markers and sets the DIFF_STATUS_UNMERGED flag.
+>> 
+>> That is what -3way is all about, and this codepath is when the user did
+>> not ask for it, isn't it?
+>
+> Now imagine you apply a patch that cannot be applied 100% cleanly and
+> you don't have the 3-way base in the repo. You know what happens?
 
-=46air enough.
+Do you think I don't?  You can check who invented 3way by running "git
+log" or "git blame" on git-am.sh ;-)
 
---=20
-Catalin
+I think you misread my "That is what -3way is all about".  That remark is
+about the comment you have about "creates conflict markers".  The conflict
+markers is only possible because we do 3-way merge when you ran "am -3".
+If you do not have the base object but only a blob and an unapplicable
+patch, you cannot do "here is our change since common ancestor, and here
+is their change the patch wants to make" conflict markers, because you do
+not have the common ancestor.
+
+> Yes, the patch is completly rejected, because apply is atomic.
+> And I think a git-apply option that results in a non-atomic behavior,
+> that creates conflict markers (and no .rej files), would be a great
+> usability feature for the "patch" insn in sequencer.
+
+Yes, I think I already said in the message you are responding to that it
+may make sense to have such an option (but at the same time we should
+remember that nobody asked to add --reject to "git am").
