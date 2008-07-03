@@ -1,55 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ':/<oneline prefix>' notation doesn't support full file syntax
-Date: Thu, 03 Jul 2008 01:34:16 -0700
-Message-ID: <7vfxqr2won.fsf@gitster.siamese.dyndns.org>
-References: <279b37b20807022242q69ad2fcbwb8c11a9d6165272d@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: about c8af1de9 (git status uses pager)
+Date: Thu, 3 Jul 2008 13:11:02 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807031303080.9925@racer>
+References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr>
+ <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org> <20080703021541.GK18147@mail.rocksoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:23:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tim Stoakes <tim@stoakes.net>
+X-From: git-owner@vger.kernel.org Thu Jul 03 14:23:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KENq5-0002ud-B3
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:23:05 +0200
+	id 1KENqK-0002ud-1l
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755087AbYGCMJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbYGCMJ3
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:09:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41087 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755016AbYGCMJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:09:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7EE5DD012;
-	Thu,  3 Jul 2008 04:34:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BDAE5D005; Thu,  3 Jul 2008 04:34:23 -0400 (EDT)
-In-Reply-To: <279b37b20807022242q69ad2fcbwb8c11a9d6165272d@mail.gmail.com>
- (Eric Raible's message of "Wed, 2 Jul 2008 22:42:52 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DA648AF2-48DA-11DD-A175-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1757496AbYGCMM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756437AbYGCMM6
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:12:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36581 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757482AbYGCMM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:12:57 -0400
+Received: (qmail invoked by alias); 03 Jul 2008 12:12:55 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp020) with SMTP; 03 Jul 2008 14:12:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19AE6E2EqhAF8W2lzy2W8eLZGlvq+ZF0N3xgbNkBj
+	fzuSIRSqslS5ya
+X-X-Sender: gene099@racer
+In-Reply-To: <20080703021541.GK18147@mail.rocksoft.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87272>
 
-"Eric Raible" <raible@gmail.com> writes:
+Hi,
 
-> % git rev-parse ":/object name":sha1_name.c
-> :/object name:sha1_name.c
-> fatal: ambiguous argument ':/object name:sha1_name.c': unknown
-> revision or path not in the working tree.
-> Use '--' to separate paths from revisions
->
-> A quick look at int sha1_name.c:get_sha1() shows that it doesn't
-> even try to make this work.  Is this worth fixing?
+On Thu, 3 Jul 2008, Tim Stoakes wrote:
 
-Is there anything to fix?  In that example, you are looking for a commit
-that talks about "object name:sha1_name.c" in the comment.
+> This [changing git status to use the pager automatically] was quite a 
+> nasty change to sneak on people I think.
+
+Well, I think that a command producing pages and pages of output without 
+stopping is useless.  Therefore, _I_ maintain that it makes tons of sense.
+
+Of course, if you find enough support for a patch reverting it, I might 
+have to accept the fact that "git status" becomes less useful for me.
+
+Ciao,
+Dscho
