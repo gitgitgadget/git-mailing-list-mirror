@@ -1,57 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: grafts generalised
-Date: Wed, 02 Jul 2008 17:28:50 -0700
-Message-ID: <7vy74j6cal.fsf@gitster.siamese.dyndns.org>
-References: <20080702143519.GA8391@cuci.nl>
- <20080703001331.GF12567@machine.or.cz> <20080703001614.GG12567@machine.or.cz>
+Subject: Re: [BUG] Git looks for repository in wrong directory
+Date: Wed, 02 Jul 2008 17:31:35 -0700
+Message-ID: <7vtzf76c60.fsf@gitster.siamese.dyndns.org>
+References: <200807030216.28921.bombe@pterodactylus.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 03 02:30:02 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?utf-8?B?4oCYQm9tYmXigJk=?= Roden <bombe@pterodactylus.net>
+X-From: git-owner@vger.kernel.org Thu Jul 03 02:32:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEChx-00054Y-Qx
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:29:58 +0200
+	id 1KECkZ-0005bN-9F
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751562AbYGCA3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 20:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYGCA3A
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:29:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41415 "EHLO
+	id S1751691AbYGCAbn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jul 2008 20:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbYGCAbn
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:31:43 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42065 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbYGCA27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 20:28:59 -0400
+	with ESMTP id S1751623AbYGCAbm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jul 2008 20:31:42 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 39752A29C;
-	Wed,  2 Jul 2008 20:28:57 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 20ABBA324;
+	Wed,  2 Jul 2008 20:31:41 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 946E1A298; Wed,  2 Jul 2008 20:28:52 -0400 (EDT)
-In-Reply-To: <20080703001614.GG12567@machine.or.cz> (Petr Baudis's message of
- "Thu, 3 Jul 2008 02:16:14 +0200")
+ ESMTPSA id 76A73A323; Wed,  2 Jul 2008 20:31:38 -0400 (EDT)
+In-Reply-To: <200807030216.28921.bombe@pterodactylus.net> (David
+ =?utf-8?B?4oCYLiBCb21iZeKAmQ==?= Roden's message of "Thu, 3 Jul 2008 02:16:26
+ +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0632B2B0-4897-11DD-B243-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 67E3B5A4-4897-11DD-89E8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87213>
 
-Petr Baudis <pasky@suse.cz> writes:
+David =E2=80=98Bombe=E2=80=99 Roden  <bombe@pterodactylus.net> writes:
 
-> On Thu, Jul 03, 2008 at 02:13:31AM +0200, Petr Baudis wrote:
->>   So, the real solution is to take the commit objects you want to
->> modify, create new commit objects, then graft the new commit on all the
->> old commit children. It fits neatly in the Git philosophy, there is no
->> need at all to tweak the current infrastructure for this and it should
->> be trivial to automate, too.
+> git clone r1 r1.git
+> cd r1
+> echo b > b
+> git add b
+> git commit -m "b"
+> cd ..
+> git ls-remote r1
+> git ls-remote r1/.
 >
->   Oops, sorry; I stopped reading the branch of the thread I thought was
-> going off on a different tangent one post too early. :-)
+> shows that Git searches for a repository in the wrong place. I think =
+the last=20
+> two commands should output exactly the same but "git ls-remote r1" ac=
+tually=20
+> lists the contents of "r1.git". Is that a bug or is this (extremely=20
+> confusing) behaviour intended?
 
-What you wrote was a very good summary of what Dmitry suggested earlier
-;-)
+This is age old usability feature that lets you say "ls-remote r1" even
+when you do *not* have "r1.git", and is not limited to the local file
+transport but also applicable when peeking a remote repository over the
+native transport.
+
+If you have both, you already have found the way to disambiguate ;-)
