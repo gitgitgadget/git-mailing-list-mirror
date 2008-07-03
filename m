@@ -1,77 +1,69 @@
 From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH 02/15] Documentation: fix gitlinks
-Date: Wed, 2 Jul 2008 23:54:38 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0807022347200.16085@harper.uchicago.edu>
+Subject: [PATCH 01/15] git-format-patch(1): fix stray \ in output
+Date: Wed, 2 Jul 2008 23:47:05 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807022332540.16085@harper.uchicago.edu>
 References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
  <7viqvqov01.fsf@gitster.siamese.dyndns.org> <Pine.GSO.4.62.0807022322380.16085@harper.uchicago.edu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Dan McGee <dpmcgee@gmail.com>,
-	"Dana L. How" <danahow@gmail.com>,
-	"J. Bruce Fields" <bfields@citi.umich.edu>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Jon Loeliger <jdl@jdl.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 10:25:05 2008
+X-From: git-owner@vger.kernel.org Thu Jul 03 10:25:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEK7k-0002yW-LE
+	id 1KEK7l-0002yW-A4
 	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754123AbYGCG7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755546AbYGCG7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 3 Jul 2008 02:59:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752669AbYGCG5x
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:53 -0400
-Received: from smtp01.uchicago.edu ([128.135.12.77]:42557 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754731AbYGCG5v
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:51 -0400
+Received: from smtp01.uchicago.edu ([128.135.12.77]:48442 "EHLO
 	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752460AbYGCEyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 00:54:41 -0400
+	with ESMTP id S1752145AbYGCErb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 00:47:31 -0400
 Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m634sctR007371;
-	Wed, 2 Jul 2008 23:54:38 -0500
+	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m634l6BF006907;
+	Wed, 2 Jul 2008 23:47:06 -0500
 Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m634sc0M017877;
-	Wed, 2 Jul 2008 23:54:38 -0500 (CDT)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m634l5ec017536;
+	Wed, 2 Jul 2008 23:47:06 -0500 (CDT)
 X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
 In-Reply-To: <Pine.GSO.4.62.0807022322380.16085@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87240>
+
+In listing blocks (set off by rows of dashes), the usual
+formatting characters of asciidoc are instead rendered verbatim.
+When the escaped double-hyphen of olden days is moved into such a
+block along with other formatting improvements, it becomes
+backslash-dash-dash.
+
+So we remove the backslash.
 
 Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
 ---
- Documentation/git-repack.txt  |    2 +-
- Documentation/user-manual.txt |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-format-patch.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 0d72e83..c956aff 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -72,7 +72,7 @@ OPTIONS
- 	`git-update-server-info`.  This option skips
- 	updating local catalog files needed to publish
- 	this repository (or a direct copy of it)
--	over HTTP or FTP.  See gitlink:git-update-server-info[1].
-+	over HTTP or FTP.  See linkgit:git-update-server-info[1].
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 894b82d..3c9192a 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -206,7 +206,7 @@ For each commit a separate file is created in the current directory.
+ project:
+ +
+ ------------
+-$ git format-patch \--root origin
++$ git format-patch --root origin
+ ------------
  
- --window=[N]::
- --depth=[N]::
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index ca13266..cbfc5d0 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1303,7 +1303,7 @@ $ git diff -3 file.txt		# diff against stage 3
- $ git diff --theirs file.txt	# same as the above.
- -------------------------------------------------
- 
--The linkgit:git-log[1] and gitk[1] commands also provide special help
-+The linkgit:git-log[1] and linkgit:gitk[1] commands also provide special help
- for merges:
- 
- -------------------------------------------------
+ * The same as the previous one:
 -- 
 1.5.5.GIT
