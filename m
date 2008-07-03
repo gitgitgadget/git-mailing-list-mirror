@@ -1,77 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: RFC: grafts generalised
-Date: Thu, 3 Jul 2008 02:21:17 +0200
-Message-ID: <20080703002117.GH12567@machine.or.cz>
-References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <20080702173203.GA16235@cuci.nl>
+Date: Wed, 02 Jul 2008 17:28:50 -0700
+Message-ID: <7vy74j6cal.fsf@gitster.siamese.dyndns.org>
+References: <20080702143519.GA8391@cuci.nl>
+ <20080703001331.GF12567@machine.or.cz> <20080703001614.GG12567@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Jul 03 02:22:17 2008
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 03 02:30:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KECaV-0002qY-L3
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:22:16 +0200
+	id 1KEChx-00054Y-Qx
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbYGCAVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 20:21:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751916AbYGCAVT
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:21:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52652 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751623AbYGCAVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 20:21:18 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 4CC0B2C4C04C; Thu,  3 Jul 2008 02:21:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080702173203.GA16235@cuci.nl>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751562AbYGCA3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 20:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYGCA3A
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:29:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41415 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbYGCA27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 20:28:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 39752A29C;
+	Wed,  2 Jul 2008 20:28:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 946E1A298; Wed,  2 Jul 2008 20:28:52 -0400 (EDT)
+In-Reply-To: <20080703001614.GG12567@machine.or.cz> (Petr Baudis's message of
+ "Thu, 3 Jul 2008 02:16:14 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0632B2B0-4897-11DD-B243-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87212>
 
-On Wed, Jul 02, 2008 at 07:32:03PM +0200, Stephen R. van den Berg wrote:
-> Also, the graft mechanism specifically is intended as a temporary
-> solution until one uses filter-branch to "finalise" the result into a
-> proper repository which becomes cloneable.
+Petr Baudis <pasky@suse.cz> writes:
 
-Grafts are _much_ older than filter-branch and I'm not sure where did
-you get this idea; do we claim that in any documentation?
+> On Thu, Jul 03, 2008 at 02:13:31AM +0200, Petr Baudis wrote:
+>>   So, the real solution is to take the commit objects you want to
+>> modify, create new commit objects, then graft the new commit on all the
+>> old commit children. It fits neatly in the Git philosophy, there is no
+>> need at all to tweak the current infrastructure for this and it should
+>> be trivial to automate, too.
+>
+>   Oops, sorry; I stopped reading the branch of the thread I thought was
+> going off on a different tangent one post too early. :-)
 
-> >The fact that git-filter-branch (and earlier cg-admin-rewrite-hist)
-> >respects grafts, and rewrites history so that grafts are no-op and are
-> >not needed further is a bit of side-effect.
-> 
-> I beg to differ.  It's not a side effect, it's the proper way to get
-> rid of the grafts file.  Grafts are temporary and ugly.  In proper
-> repositories they are a sign of transition to a proper state.
-> The proper state is attained by using git filter-branch.
-
-There's nothing ugly or necessarily temporary about grafts. One example
-of completely valid usage is adding previous history of a project to it
-later.
-
-First, you don't need to carry around all the archived baggage you are
-probably rarely going to access anyway if you don't need to; changing a
-VCS is ideal cutoff point.
-
-Second, you don't need to worry about doing perfect conversion at the
-moment of the switch.
-
-Third, even if you think you have done it perfectly, it will turn out
-later that something is wrong anyway.
-
-Fourth, it may not be actually _clear_ what the canonical history should
-be. Consider linux-kernel, you can graft the BitKeeper history (or one
-of possible candidates for the ideal conversion, though one is AFAIK
-clearly favoured), or you could also graft commit-per-tarball history
-even from the times before BitKeeper; you certainly don't want either in
-the current main history DAG.
-
--- 
-				Petr "Pasky" Baudis
-The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
+What you wrote was a very good summary of what Dmitry suggested earlier
+;-)
