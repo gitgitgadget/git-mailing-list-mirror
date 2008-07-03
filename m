@@ -1,88 +1,58 @@
-From: David =?utf-8?q?=E2=80=98Bombe=E2=80=99_Roden?= 
-	<bombe@pterodactylus.net>
-Subject: Re: [BUG] Git looks for repository in wrong directory
-Date: Thu, 3 Jul 2008 03:05:15 +0200
-Message-ID: <200807030305.17767.bombe@pterodactylus.net>
-References: <200807030216.28921.bombe@pterodactylus.net> <7vtzf76c60.fsf@gitster.siamese.dyndns.org>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: [PATCH] fix typoed config option 'indexversion' in man page.
+Date: Thu, 3 Jul 2008 03:07:33 +0200 (CEST)
+Message-ID: <alpine.LNX.1.00.0807030303580.30922@localhost>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1280002.VB2i74BkSF";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 03 03:06:21 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 03:08:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEDHA-0004IX-OL
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 03:06:21 +0200
+	id 1KEDJJ-0004mQ-Dx
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 03:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930AbYGCBFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 21:05:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752115AbYGCBFV
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 21:05:21 -0400
-Received: from wing.pterodactylus.net ([89.207.253.13]:34496 "HELO
-	pterodactylus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751901AbYGCBFU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 21:05:20 -0400
-Received: (qmail 13839 invoked from network); 3 Jul 2008 01:05:18 -0000
-Received: from unknown (HELO ?192.168.178.19?) (10.98.86.10)
-  by 10.98.86.1 with SMTP; 3 Jul 2008 01:05:18 -0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vtzf76c60.fsf@gitster.siamese.dyndns.org>
+	id S1751714AbYGCBHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 21:07:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYGCBHg
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 21:07:36 -0400
+Received: from mail.bredband2.net ([82.209.166.4]:6614 "EHLO
+	smtp.bredband2.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751562AbYGCBHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 21:07:36 -0400
+Received: (qmail 9205 invoked from network); 3 Jul 2008 01:06:47 -0000
+Received: from lkf-194-200-233-83.3.cust.bredband2.com (HELO mika.l3ib.org) ([83.233.200.194])
+          (envelope-sender <mikachu@gmail.com>)
+          by smtp.bredband2.net (qmail-ldap-1.03) with SMTP
+          for <gitster@pobox.com>; 3 Jul 2008 01:06:47 -0000
+User-Agent: Alpine 1.00 (LNX )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87216>
 
---nextPart1280002.VB2i74BkSF
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+---
 
-On Thursday 03 July 2008 02:31:35 Junio C Hamano wrote:
+Noticed by David Parra on #git.
 
-> This is age old usability feature that lets you say "ls-remote r1" even
-> when you do *not* have "r1.git"
+  Documentation/config.txt |    2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
 
-Is it just me or does that sentence not make any sense at all? ;)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 52d01b8..fd56dac 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -945,7 +945,7 @@ pack.threads::
+  	Specifying 0 will cause git to auto-detect the number of CPU's
+  	and set the number of threads accordingly.
 
-I mean, _of cource_ I want the contents of "r1" if I say "give me the conte=
-nts=20
-of r1". I could understand if Git looked in "r1.git" if there was no "r1" b=
-ut=20
-the way it is currently done is plain wrong. IMHO, of course.
-
-
-> If you have both, you already have found the way to disambiguate ;-)
-
-Yes, _now_ I know. In my opinion it=E2=80=99s very unintuitive and should b=
-e changed.=20
-And if=E2=80=94for some strange reason=E2=80=94this is to be kept as a comp=
-atibility feature=20
-it should at least be documented somewhere in large red blinking letters th=
-at=20
-under certain circumstances Git doesn=E2=80=99t care about the path you giv=
-e it but=20
-simply chooses to look somewhere else. :)
-
-
-	David
-
---nextPart1280002.VB2i74BkSF
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkhsJc0ACgkQsh8Hgp5TwkOTRwCglHikaeUn50CC1Cgad+43SyxR
-DmwAoLSQBc5r77Vsjtrwl1d2FdwUYr8/
-=9hLf
------END PGP SIGNATURE-----
-
---nextPart1280002.VB2i74BkSF--
+-pack.indexVersion::
++pack.indexversion::
+  	Specify the default pack index version.  Valid values are 1 for
+  	legacy pack index used by Git versions prior to 1.5.2, and 2 for
+  	the new pack index with capabilities for packs larger than 4 GB
+-- 
+1.5.6.GIT
