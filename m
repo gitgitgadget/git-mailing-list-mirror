@@ -1,61 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Non-inetd git-daemon hangs in syslog(3)/fclose(3) if --syslog
- --verbose accessing non-repositories
-Date: Thu, 3 Jul 2008 13:45:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807031343440.9925@racer>
-References: <200807031400.36315.brian.foster@innova-card.com>
+From: "Eric Raible" <raible@gmail.com>
+Subject: PATCH: allow ':/<oneline prefix>' notation to specify a specific file
+Date: Thu, 3 Jul 2008 01:52:45 -0700
+Message-ID: <279b37b20807030152g13492d5dxf21367ab17719993@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:53:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 14:53:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEOJ6-0005Az-HK
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:53:04 +0200
+	id 1KEOIn-0005Az-4D
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755969AbYGCMrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:47:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755907AbYGCMrX
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:47:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33768 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755810AbYGCMrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:47:22 -0400
-Received: (qmail invoked by alias); 03 Jul 2008 12:47:20 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp047) with SMTP; 03 Jul 2008 14:47:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19/kZdAF9h/jVCniEx5xPD1sODdLRCAOfu4Hkva+m
-	WE+YZLQlEw2KAg
-X-X-Sender: gene099@racer
-In-Reply-To: <200807031400.36315.brian.foster@innova-card.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1759851AbYGCMlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:41:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759846AbYGCMlo
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:41:44 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:58798 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759834AbYGCMln (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:41:43 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so777464wfd.4
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 05:41:43 -0700 (PDT)
+Received: by 10.143.30.16 with SMTP id h16mr3488161wfj.44.1215075165360;
+        Thu, 03 Jul 2008 01:52:45 -0700 (PDT)
+Received: by 10.142.14.12 with HTTP; Thu, 3 Jul 2008 01:52:45 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87282>
 
-Hi,
+Although the rev-parse documentation claims that the tree-ish:path/to/file
+syntax is applicable to all tree-ish forms this is not so when using the
+:/ "oneline prefix" syntax introduced in v1.5.0.1-227-g28a4d94.
 
-On Thu, 3 Jul 2008, Brian Foster wrote:
+This patch allows git show ":/PATCH: allow":sha1_name.c to show the
+change to the file changed by this patch.
 
->  I've seen several reports of what seems to be the following
->  problem, but no fixes.
->
-> [describes that git-daemon -v syslog()s in a signal handler, which is 
->  unsupported]
+Signed-off-by: Eric Raible <raible@gmail.com>
+---
+ sha1_name.c |   15 +++++++++++++--
+ 1 files changed, 13 insertions(+), 2 deletions(-)
 
-I reported this bug earlier, and my workaround was to comment out the 
-syslog() in the signal handler, but I have no real fix for that, either.
+diff --git a/sha1_name.c b/sha1_name.c
+index b0b2167..a1acfcd 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -684,6 +684,7 @@ int get_sha1_with_mode(const char *name, unsigned
+char *sha1, unsigned *mode)
+ 	int ret, bracket_depth;
+ 	int namelen = strlen(name);
+ 	const char *cp;
++	char *copy, *colon;
 
-Unfortunately, the wise people on this list did not have an idea either, 
-at least they did not share it with me.
-
-Ciao,
-Dscho
+ 	*mode = S_IFINVALID;
+ 	ret = get_sha1_1(name, namelen, sha1);
+@@ -697,8 +698,18 @@ int get_sha1_with_mode(const char *name, unsigned
+char *sha1, unsigned *mode)
+ 		int stage = 0;
+ 		struct cache_entry *ce;
+ 		int pos;
+-		if (namelen > 2 && name[1] == '/')
+-			return get_sha1_oneline(name + 2, sha1);
++		if (namelen > 2 && name[1] == '/') {
++			name += 2;
++			colon = strrchr(name, ':');
++			if (!get_sha1_oneline(name, sha1) || !colon)
++				return 0;
++			copy = xstrdup(name);
++			*(colon = strrchr(copy, ':')) = '\0';
++			ret = get_sha1_oneline(copy, sha1) ||
++				get_tree_entry(sha1, colon+1, sha1, mode);
++			free(copy);
++			return ret;
++		}
+ 		if (namelen < 3 ||
+ 		    name[2] != ':' ||
+ 		    name[1] < '0' || '3' < name[1])
+-- 
+1.5.6.1.1356.g3be5f.dirty
