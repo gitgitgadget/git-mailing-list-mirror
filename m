@@ -1,63 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] Documentation: complicate example of "man
- git-command"
-Date: Thu, 03 Jul 2008 00:44:41 -0700
-Message-ID: <7vvdzn2yza.fsf@gitster.siamese.dyndns.org>
-References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
- <20080701162358.GA18305@fieldses.org>
- <7vmyl1kvn6.fsf@gitster.siamese.dyndns.org>
- <200807030806.37771.chriscool@tuxfamily.org>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: RFC: grafts generalised
+Date: Thu, 3 Jul 2008 09:11:43 +0200
+Message-ID: <20080703071143.GC27419@cuci.nl>
+References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <20080702173203.GA16235@cuci.nl> <20080703002117.GH12567@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Jonathan Nieder <jrnieder@uchicago.edu>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jon Loeliger <jdl@jdl.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 10:28:22 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 03 10:28:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEKA1-0002yW-6m
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:27:25 +0200
+	id 1KEKAL-0002yW-Oc
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756660AbYGCIVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 04:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755617AbYGCIT2
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 04:19:28 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45162 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937024AbYGCHpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 03:45:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9C7CCCBB1;
-	Thu,  3 Jul 2008 03:44:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A920DCB9A; Thu,  3 Jul 2008 03:44:50 -0400 (EDT)
-In-Reply-To: <200807030806.37771.chriscool@tuxfamily.org> (Christian Couder's
- message of "Thu, 3 Jul 2008 08:06:37 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EF9C49A2-48D3-11DD-A5D9-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756628AbYGCIVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 04:21:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755547AbYGCITR
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 04:19:17 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:43901 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934978AbYGCHLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 03:11:48 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id A08465466; Thu,  3 Jul 2008 09:11:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080703002117.GH12567@machine.or.cz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87261>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Petr Baudis wrote:
+>On Wed, Jul 02, 2008 at 07:32:03PM +0200, Stephen R. van den Berg wrote:
+>> Also, the graft mechanism specifically is intended as a temporary
+>> solution until one uses filter-branch to "finalise" the result into a
+>> proper repository which becomes cloneable.
 
-> Anyway if we want to get there, perhaps we should use "git help svn" above 
-> instead of "man git-svn". (Yeah "git help help" might be confusing at 
-> first.)
+>Grafts are _much_ older than filter-branch and I'm not sure where did
+>you get this idea; do we claim that in any documentation?
 
-I do not particularly like advocating "git help" too strongly like that.
-I prefer to keep the user perception of "git" to be just "one of the
-programs, nothing special".
+Not in direct documentation, but it is what breaths down from posts on
+the mailinglist like:
 
-If you want to learn about "cat", you say "man cat".  If you want to learn
-about git, you say "man git", and while you *can* say "git help", the
-point is you do *not* have to.  You do not have to run "git" to learn
-about it.
+http://kerneltrap.org/mailarchive/git/2008/6/10/2085624
+
+Jakub Narebski:
+>Then if possible use git-filter-branch to make history recorded in
+>grafts file permanent...
+
+Petr Baudis wrote:
+>There's nothing ugly or necessarily temporary about grafts. One example
+>of completely valid usage is adding previous history of a project to it
+>later.
+
+>First, you don't need to carry around all the archived baggage you are
+>probably rarely going to access anyway if you don't need to; changing a
+>VCS is ideal cutoff point.
+
+That depends on the project, of course, and is not a valid statement in
+general.  Part of the charm of full history is that git-blame and
+git-bisect work, at arbitrary points in the past.
+
+>Second, you don't need to worry about doing perfect conversion at the
+>moment of the switch.
+
+Well, you do, if you intend to make it cloneable.
+
+>Third, even if you think you have done it perfectly, it will turn out
+>later that something is wrong anyway.
+
+Not necessarily.  I have automated the checkout-verification-process which
+basically checks out every revision from the respective old repository
+and binary-compares it with the corresponding revision in the git
+repository.  This ensures a full binary match across the board.
+With respect to historical merges, I agree, those might not be
+completely correctly grafted, but the level of correctness can be
+determined at will, and once we achieve somewhere around 99% accuracy,
+we consider it done (for this project).
+
+>Fourth, it may not be actually _clear_ what the canonical history should
+>be.
+
+That depends on the project.  In my project it *is* clear, so this point
+doesn't make any difference.
+
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+
+This is a day for firm decisions!  Or is it?
