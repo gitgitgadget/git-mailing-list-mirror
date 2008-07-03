@@ -1,53 +1,67 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH 0/3] Making remote tracking statistics available to other
- tools
-Date: Thu, 03 Jul 2008 21:25:30 +0200
-Message-ID: <486D27AA.405@free.fr>
-References: <20080701091347.GA11817@elte.hu> <80iqvq2bw0.fsf@tiny.isode.net> <20080701101414.GG31309@elte.hu> <7vlk0lmn32.fsf@gitster.siamese.dyndns.org> <7v3amsg1wx.fsf@gitster.siamese.dyndns.org> <486CFDA3.9070704@free.fr> <7v8wwi23dr.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Git looks for repository in wrong directory
+Date: Thu, 03 Jul 2008 12:28:12 -0700
+Message-ID: <7v4p7622er.fsf@gitster.siamese.dyndns.org>
+References: <200807030216.28921.bombe@pterodactylus.net>
+ <7vtzf76c60.fsf@gitster.siamese.dyndns.org>
+ <200807030305.17767.bombe@pterodactylus.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ingo Molnar <mingo@elte.hu>,
-	Bruce Stephens <bruce.stephens@isode.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 21:26:06 2008
+Cc: git@vger.kernel.org
+To: David =?utf-8?B?4oCYQm9tYmXigJk=?= Roden <bombe@pterodactylus.net>
+X-From: git-owner@vger.kernel.org Thu Jul 03 21:29:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEURI-0003WC-3P
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 21:25:56 +0200
+	id 1KEUUZ-00056O-9W
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 21:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbYGCTY7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 15:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbYGCTY6
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 15:24:58 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:48439 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753635AbYGCTY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 15:24:58 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id F20A912B6CC;
-	Thu,  3 Jul 2008 21:24:56 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 5A66F12B73B;
-	Thu,  3 Jul 2008 21:24:56 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <7v8wwi23dr.fsf@gitster.siamese.dyndns.org>
+	id S1753881AbYGCT2W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 15:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753780AbYGCT2W
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 15:28:22 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48789 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753402AbYGCT2V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 15:28:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4920E112BE;
+	Thu,  3 Jul 2008 15:28:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 936BE112BD; Thu,  3 Jul 2008 15:28:17 -0400 (EDT)
+In-Reply-To: <200807030305.17767.bombe@pterodactylus.net> (David
+ =?utf-8?B?4oCYLiBCb21iZeKAmQ==?= Roden's message of "Thu, 3 Jul 2008 03:05:15
+ +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 31C23780-4936-11DD-A7C4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87308>
 
-Junio C Hamano a =C3=A9crit :
->=20
->  remote.c                 |    4 +++
->  revision.h               |    1 +
->  t/t6040-tracking-info.sh |   52 ++++++++++++++++++++++++++++++++++++=
-++++++++++
->  3 files changed, 57 insertions(+), 0 deletions(-)
+David =E2=80=98Bombe=E2=80=99 Roden  <bombe@pterodactylus.net> writes:
 
-Tested: it works. Thanks.
+>> If you have both, you already have found the way to disambiguate ;-)
+>
+> Yes, _now_ I know. In my opinion it=E2=80=99s very unintuitive and sh=
+ould be changed.=20
+I'm of mixed mind about this.
 
-Olivier.
+I am guessing that the original motivation was that people can have
+unversioned "project/" that perhaps is an extract from the tarball and
+"project.git/" that is version-controlled by git, and when they want to
+talk about the repository they can say either "project.git" and "projec=
+t"
+to get to the git-managed one, even if "project/" directory exists.
+
+It may be an improvement if we checked to see if the original name does
+refer to a git repository and use that without falling back.  Even thou=
+gh
+I do not personally care so deeply about this, I won't be opposed to su=
+ch
+an improvement.
