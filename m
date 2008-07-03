@@ -1,76 +1,89 @@
 From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: finding deleted file names
-Date: Thu, 3 Jul 2008 03:12:44 +0200
-Message-ID: <237967ef0807021812r3ccbfbacg2cb6b12358d2ee2e@mail.gmail.com>
-References: <93c3eada0807021701m13b7adddv51537f4cf9d52533@mail.gmail.com>
+Subject: Re: [PATCH] fix typoed config option 'indexversion' in man page.
+Date: Thu, 3 Jul 2008 03:24:59 +0200
+Message-ID: <237967ef0807021824i2d825c6ej4defcf5b56a48ae2@mail.gmail.com>
+References: <alpine.LNX.1.00.0807030303580.30922@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: geoffrey.russell@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 03 03:13:47 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 03:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEDOK-0005k3-52
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 03:13:44 +0200
+	id 1KEDaA-00083i-2b
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 03:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739AbYGCBMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 21:12:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbYGCBMq
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 21:12:46 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:3629 "EHLO
+	id S1752154AbYGCBZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 21:25:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbYGCBZA
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 21:25:00 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:10906 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507AbYGCBMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 21:12:45 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so724609rvb.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2008 18:12:44 -0700 (PDT)
+	with ESMTP id S1751901AbYGCBY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 21:24:59 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so728908rvb.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2008 18:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=jIMa2xzWB6MH2wrJlIGpGjqruCt+uXzUP9KMxYGeAjs=;
-        b=OlwtS2i28jOlLICgN5wvYsbOA5AguL+n7vwnq4mKVCYV/7lWeKnyWXVschY4IY4L1X
-         B9dRVtLHEfhmWeCpBUErExEZZ5fVtLe9EmCwMEZr9KwPXALzJQfA4LHkSqJWLOX5JDyL
-         9eMVgNZqWLkhmctSTxO7XBGMNmmlSdV4TTp2I=
+        bh=3/IovmWcfIjW8rnnQghuYw2i4aFi2QqczhTlaqyWFvw=;
+        b=EjtuxsmeuWQsKRHuQMKsff3+orNnHaU7vNp7OohDy7UqgJTBxCnN8vEJiBvP5sP4G2
+         uFay78UVaTveWYf7eA+gRBIRmuyq8YNUqS5Z+Il+HnjsPR0X8gcE9i0eYfsZ6rbjkFhn
+         P/NAf191Zkmu0jQm32R61xNgjDpN5LHxHfJd4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=k/cFF2RfTuwE8uEI1qLyG0SkFSewwXiTTHayUoVmZOvALG2APFPqvEL3GDdSB6biKa
-         gIg3iVW1MQefpujFpJmGylmBG1fpJYMRuUUte6QlIXgT2a0ykQVx8u711lzfxt6GyHf8
-         4L5OOKxxAxQ+59uEit9t85e5UXhkyj5Z+VlIc=
-Received: by 10.141.34.12 with SMTP id m12mr4785122rvj.26.1215047564808;
-        Wed, 02 Jul 2008 18:12:44 -0700 (PDT)
-Received: by 10.141.68.4 with HTTP; Wed, 2 Jul 2008 18:12:44 -0700 (PDT)
-In-Reply-To: <93c3eada0807021701m13b7adddv51537f4cf9d52533@mail.gmail.com>
+        b=Ka1KJ1F4bZWBzftKOe/NYvyV6IVXKot05L4FG4BbbFwLvJrTSIGodHvOHH73vA/dje
+         80tuB5FXXY/jPylVacuqbLv3soRnFBoP7+V4nm3Sqi9iAht3AjqyAVC6HpdKgpktxP0h
+         ch6kAADn0eR164Kgm+FYCWsbx1z0LjuCDMQEI=
+Received: by 10.140.135.19 with SMTP id i19mr4780666rvd.70.1215048299604;
+        Wed, 02 Jul 2008 18:24:59 -0700 (PDT)
+Received: by 10.141.68.4 with HTTP; Wed, 2 Jul 2008 18:24:59 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0807030303580.30922@localhost>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87218>
 
-2008/7/3 Geoff Russell <geoffrey.russell@gmail.com>:
-> git diff --diff-filter=D --name-only HEAD@{'7 days ago'}
->
-> finds files deleted during the last 7 days, but if my repository is
-> only 6 days old I get a
-> fatal error.
->
-> fatal: bad object HEAD@{7 days ago}
->
-> Is there something that says "since repository creation", ie., go back as far
-> as possible, but no further? Is there a symbolic name for the initial commit?
+Blah, ignore me of course. I broke the old rule of not sending patches
+after midnight :).
 
-There's no symbolic name for it, since there might not be only one initial
-commit. git.git for example has at least three root commits. You will
-probably get what you want with $(git rev-list HEAD|tail -1). If your
-history is very large, $(git rev-list --reverse HEAD|head -1) is slightly
-faster, but usually not enough to offset typing --reverse :).
+2008/7/3 Mikael Magnusson <mikachu@gmail.com>:
+> ---
+>
+> Noticed by David Parra on #git.
+>
+>  Documentation/config.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 52d01b8..fd56dac 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -945,7 +945,7 @@ pack.threads::
+>        Specifying 0 will cause git to auto-detect the number of CPU's
+>        and set the number of threads accordingly.
+>
+> -pack.indexVersion::
+> +pack.indexversion::
+>        Specify the default pack index version.  Valid values are 1 for
+>        legacy pack index used by Git versions prior to 1.5.2, and 2 for
+>        the new pack index with capabilities for packs larger than 4 GB
+> --
+> 1.5.6.GIT
+>
+>
+
+
 
 -- 
 Mikael Magnusson
