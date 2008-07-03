@@ -1,72 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix describe --tags --long so it does not segfault
-Date: Wed, 02 Jul 2008 21:23:28 -0700
-Message-ID: <7vvdzn4mv3.fsf@gitster.siamese.dyndns.org>
-References: <20080703023245.GA31579@spearce.org>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: Re: finding deleted file names
+Date: Thu, 3 Jul 2008 05:18:18 +0200
+Message-ID: <237967ef0807022018t31912870gf0490acf5ccef5eb@mail.gmail.com>
+References: <93c3eada0807021701m13b7adddv51537f4cf9d52533@mail.gmail.com>
+	 <237967ef0807021812r3ccbfbacg2cb6b12358d2ee2e@mail.gmail.com>
+	 <93c3eada0807021945la3e565csc50eed4b14feb9c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mikael Magnusson <mikachu@gmail.com>,
-	Mark Burton <markb@ordern.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: geoffrey.russell@gmail.com
 X-From: git-owner@vger.kernel.org Thu Jul 03 10:25:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEK7j-0002yW-70
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:25:03 +0200
+	id 1KEK7g-0002yW-JL
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367AbYGCG7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 02:59:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbYGCG5t
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60458 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191AbYGCEXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 00:23:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D6686BA6C;
-	Thu,  3 Jul 2008 00:23:36 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EA8C0BA6A; Thu,  3 Jul 2008 00:23:31 -0400 (EDT)
-In-Reply-To: <20080703023245.GA31579@spearce.org> (Shawn O. Pearce's message
- of "Thu, 3 Jul 2008 02:32:45 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CE519EF8-48B7-11DD-85BF-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755046AbYGCG73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 02:59:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbYGCG5o
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:44 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:16033 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754607AbYGCDSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 23:18:21 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so767671rvb.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2008 20:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=g4r+JwHCgE87i16tGkSbTiIqisnPx2+eAwBF58NvUDo=;
+        b=k7+RkPw0U6bcQ65ZS8InNCNqqjVViakHhb7gaW+I5cug1Vl12g7jQ1PilRWk56psrt
+         S8ifsObguP8vFA12SZjIkv97grj+plLEvjXbX3ZttEDc1uu2j9eXlfQ/0cZFTnomdJan
+         F4eW0IEBZP8NgnhWsfhMXry10xJkjbKQFP6BA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=O/1n6Ft7lUYRTWlTgI4ZcmqxW2zfQ2q6aVszNwhowZLYEiOPJrfaQfSXIV2Zc5BbwL
+         6XYB2dCiGu7SAiUmUI4sXmSWTGL+rgd4IJ25ViCi+jcM/C7XG0JBMsoJ877o4++FFMwD
+         2xhA1zTKo+EIhcYOc1FHkZSkFhSRe9V4KXaj8=
+Received: by 10.141.20.7 with SMTP id x7mr4826739rvi.61.1215055098871;
+        Wed, 02 Jul 2008 20:18:18 -0700 (PDT)
+Received: by 10.141.68.4 with HTTP; Wed, 2 Jul 2008 20:18:18 -0700 (PDT)
+In-Reply-To: <93c3eada0807021945la3e565csc50eed4b14feb9c3@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87248>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
-
-> If we match a lightweight (non-annotated tag) as the name to
-> output and --long was requested we do not have a tag, nor do
-> we have a tagged object to display.  Instead we must use the
-> object we were passed as input for the long format display.
+2008/7/3 Geoff Russell <geoffrey.russell@gmail.com>:
+> On Thu, Jul 3, 2008 at 10:42 AM, Mikael Magnusson <mikachu@gmail.com> wrote:
+>> 2008/7/3 Geoff Russell <geoffrey.russell@gmail.com>:
+>>> git diff --diff-filter=D --name-only HEAD@{'7 days ago'}
+>>>
+>>> finds files deleted during the last 7 days, but if my repository is
+>>> only 6 days old I get a
+>>> fatal error.
+>>>
+>>> fatal: bad object HEAD@{7 days ago}
+>>>
+>>> Is there something that says "since repository creation", ie., go back as far
+>>> as possible, but no further? Is there a symbolic name for the initial commit?
+>>
+>> There's no symbolic name for it, since there might not be only one initial
+>> commit. git.git for example has at least three root commits. You will
+>> probably get what you want with $(git rev-list HEAD|tail -1). If your
+>> history is very large, $(git rev-list --reverse HEAD|head -1) is slightly
+>> faster, but usually not enough to offset typing --reverse :).
 >
-> Reported-by: Mark Burton <markb@ordern.com>
-> Backtraced-by: Mikael Magnusson <mikachu@gmail.com>
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
+> Thanks for this, but I'm a little confused.
 >
->  Thanks Mikael, the backtrace really made it easy to figure out
->  what the breakage was here.
+> If I do a "git init", there must be a first commit after this? Isn't
+> this the first commit, how
+> can there be more than one first commit?
 
-Thanks.  I'll squash this in and apply to 'maint'.  Perhaps 1.5.6.2
-after the 4th holiday.
+In git.git, the gitk subdirectory has a separate root because it was merged
+with the subtree merge strategy, so if you go down the second parent of that
+merge commit, you'll end up not at the start of the git history. You can
+see this if you just fetch any other repo into your current one and merge it.
+Just add everything with conflict markers in if it conflicts and commit,
+then look at gitk :). (and obviously then revert the merge or whatever).
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index c6be259..2fb672c 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -139,4 +139,6 @@ check_describe "test1-lightweight-*" --tags --match="test1-*"
- 
- check_describe "test2-lightweight-*" --tags --match="test2-*"
- 
-+check_describe "test2-lightweight-*" --long --tags --match="test2-*" HEAD^
-+
- test_done
+Btw, after you git init, there are 0 commits, the first commit is created
+when you run git commit the first time.
+
+-- 
+Mikael Magnusson
