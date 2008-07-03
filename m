@@ -1,167 +1,77 @@
 From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Re: [PATCH 3/7] Documentation: complicate example of "man git-command"
-Date: Wed, 2 Jul 2008 20:45:59 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0807022010280.10323@harper.uchicago.edu>
+Subject: Re: [RFC/PATCH 7/7] Documentation formatting and cleanup
+Date: Wed, 2 Jul 2008 21:28:17 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807022110460.10323@harper.uchicago.edu>
 References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
- <Pine.GSO.4.62.0806301706090.7190@harper.uchicago.edu> <20080701162358.GA18305@fieldses.org>
- <7vmyl1kvn6.fsf@gitster.siamese.dyndns.org> <20080702213148.GA26921@fieldses.org>
+ <Pine.GSO.4.62.0806301730230.7190@harper.uchicago.edu> <486A2C8C.5050204@free.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-851401618-1215052097=:10323"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Jon Loeliger <jdl@jdl.com>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 10:25:11 2008
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 03 10:25:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEK7d-0002yW-1H
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:24:57 +0200
+	id 1KEK7e-0002yW-Fz
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110AbYGCG7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 02:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbYGCG5b
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:31 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:41431 "EHLO
+	id S1752253AbYGCG7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 02:59:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbYGCG5g
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:36 -0400
+Received: from smtp02.uchicago.edu ([128.135.12.75]:43568 "EHLO
 	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752247AbYGCBqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 21:46:50 -0400
+	with ESMTP id S1753507AbYGCC2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 22:28:50 -0400
 Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m631k4k9008194;
-	Wed, 2 Jul 2008 20:46:04 -0500
+	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m632SKjD011225;
+	Wed, 2 Jul 2008 21:28:20 -0500
 Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m631jxCt011505;
-	Wed, 2 Jul 2008 20:45:59 -0500 (CDT)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m632SIij012788;
+	Wed, 2 Jul 2008 21:28:18 -0500 (CDT)
 X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <20080702213148.GA26921@fieldses.org>
+In-Reply-To: <486A2C8C.5050204@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87245>
 
-J. Bruce Fields wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Tue, Jul 01, 2008 at 04:54:53PM -0700, Junio C Hamano wrote:
->
->> We would want to mention the typesetting convention early in the manuals
->> (git(7), gittutorial(7) and user-manual.html) as well, so how about...
->> 
->> 	Conventions used in this document
->>         ---------------------------------
->> 
->> 	When talking about a git subcommand 'cmd', this documentation
->> 	typesets the name of it like 'git-cmd', and that is the name you
->> 	ask for its manual page.
->> 
->>         Examples are typeset like this: `$ git cmd` (`$` is your command
->> 	prompt, do not actually type it to your shell).  Note that a
->> 	subcommand is specified as the first parameter to the 'git'
->> 	program when you actually run it from the command line.
-> 
-> I'm not convinced this last sentence is necessary.
+---559023410-851401618-1215052097=:10323
+Content-Type: TEXT/PLAIN; charset=X-UNKNOWN
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I agree, but I think it doesn't hurt. I think the point was to
-establish the word and concept "subcommand".
+Olivier Marin wrote:
 
-> > [example showing typographical conventions]
-> 
-> Typographical conventions shouldn't need so much explanation.
+> Jonathan Nieder a =E9crit :
+> > [184 KB patch online at
+> > <http://home.uchicago.edu/~jrnieder/20080701-git-doc-style.txt>]
+>=20
+> You did a lot of:
+>=20
+> > -replaced; you need to use a tool such as linkgit:git-diff[1] or the "p=
+ickaxe"
+> > +replaced; you need to use a tool such as `git-diff` or the "pickaxe"
+>=20
+> Are those kind of changes really an improvement?
 
-Yes, I suppose. I'm used to printed manuals having a page on
-the meaning of different typefaces inside, but that's a bit
-of a different situation.
+I should have also added
 
-> I'm curious: Jonathan, was this the original patch the result of a
-> real-life instance of confusion?  What happened?
+=09SEE ALSO
+=09--------
 
-No, I'm actually a bit ashamed to have sent the patch... I was just
-changing `git subcommand` to `git-subcommand` wherever it was the name
-of a command, rather than the command line to run it, that was in
-question. Consistency would have made the old example awkward, so I
-looked around for alternatives.
+=09linkgit:git-diff[1], ...
 
-Why worry about whether the man pages have no consistent rule about
-dashes? Since it is not obvious why the man pages use the dashed form
-when they do, I think a fraction of people will naturally use the
-dashed form by default. That means trouble once Git 1.6.0 comes out
-(e.g. see Ingo's recent post
-<http://thread.gmane.org/gmane.comp.version-control.git/87012/focus=87020>).
+but I was trying to keep my changes minimal.  I'll send some suggestions
+for see also sections ome time this week; I haven't found time to prune
+down the lists of cross references I have in my tree now.  Thanks for
+the reminder.
 
-Here's a patch implementing Junio's suggestion, because I do like it.
-Please let me know what you think (especially ideas for making it
-shorter).
-
-Thanks for all your thoughts so far. Sorry I took so long to get back.
-
---- %< --- %< --- %< ----
-Subject: gittutorial(7): add "Conventions used in this document" section
-    
-The manual page for the git subcommand invoked as "git clone" is
-named git-clone(1), and similarly for the rest of the git
-subcommands. This patch should make the convention a little
-clearer when it is introduced at the beginning of gittutorial(7).
-
-Thanks to Junio C Hamano for the idea and wording.
-
-It remains to make an analogous change for user-manual.html
-and maybe git(1).
-
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
----
- Documentation/gittutorial.txt |   35 ++++++++++++++++++++++++++++++-----
- 1 files changed, 30 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/gittutorial.txt
-b/Documentation/gittutorial.txt
-index 036a27c..51ad814 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -19,12 +19,37 @@ If you are instead primarily interested in using
-git to fetch a project,
- for example, to test the latest version, you may prefer to start with
- the first two chapters of link:user-manual.html[The Git User's Manual].
- 
--First, note that you can get documentation for a command such as
--`git log --graph` with:
-+Conventions used in this document
-+---------------------------------
- 
--------------------------------------------------
--$ man git-log
--------------------------------------------------
-+When discussing a git subcommand 'cmd', this documentation
-+typesets the name of it like 'git-cmd', and that is the name you
-+ask for its manual page by.
-+
-+Examples are typeset like this: `$ git cmd`. (`$` is your command
-+prompt; do not actually type it to your shell.) A subcommand
-+is specified as the first parameter to the 'git' program
-+when you actually run it from the command line.
-+
-+So a typical command description may go like this:
-+
-+To propagate the changes you made back to the original subversion
-+repository, you would use the 'git-svn dcommit' command. It does
-+these things (long description here).  Some examples:
-+
-+------------
-+$ ... some example command sequence ...
-+$ git svn dcommit
-+------------
-+
-+For full details, type:
-+
-+------------
-+$ man git-svn
-+------------
-+
-+Introducing yourself to git
-+---------------------------
- 
- It is a good idea to introduce yourself to git with your name and
- public email address before doing any operation.  The easiest
--- 
-1.5.5.GIT
+Jonathan
+---559023410-851401618-1215052097=:10323--
