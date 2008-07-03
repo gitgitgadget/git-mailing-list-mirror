@@ -1,64 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-add--interactive: remove hunk coalescing
-Date: Thu, 03 Jul 2008 14:46:03 -0700
-Message-ID: <7vwsk2y738.fsf@gitster.siamese.dyndns.org>
-References: <1215035956-26192-1-git-send-email-trast@student.ethz.ch>
- <7vtzf77wjp.fsf@gitster.siamese.dyndns.org>
- <7vod5f7w3f.fsf@gitster.siamese.dyndns.org>
- <200807032124.22037.trast@student.ethz.ch>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Patches for qgit on MacOS X
+Date: Fri, 4 Jul 2008 07:46:13 +1000
+Message-ID: <e5bfff550807031446g54fc4f93x73636b2c49b03981@mail.gmail.com>
+References: <48665027.3090406@free.fr>
+	 <e5bfff550806300300s2a0c0e60sdaa86453116c531f@mail.gmail.com>
+	 <4869E55C.2020608@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jul 03 23:53:38 2008
+To: "Olivier Croquette" <ocroquette@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 03 23:53:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEWkD-00067I-N7
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 23:53:38 +0200
+	id 1KEWkD-00067I-2d
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 23:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756351AbYGCVqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 17:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756384AbYGCVqT
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 17:46:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50514 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753735AbYGCVqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 17:46:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3173412206;
-	Thu,  3 Jul 2008 17:46:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 83ED112205; Thu,  3 Jul 2008 17:46:10 -0400 (EDT)
-In-Reply-To: <200807032124.22037.trast@student.ethz.ch> (Thomas Rast's
- message of "Thu, 3 Jul 2008 21:24:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7563C81A-4949-11DD-8FBB-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1756066AbYGCVqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 17:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756321AbYGCVqR
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 17:46:17 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:60725 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386AbYGCVqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 17:46:15 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so430314ywe.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 14:46:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BEIEgmT9ScfFWv6Ul5wNjhgUiQbxytBxRedJ0olki28=;
+        b=K83pLWBYapO9l+ma0+IIFFRPwOZ7dH1GJzBHT3qrbzrVF5t9aRKtpgUFdVniypfTJa
+         KJK+cjs8cjjjWCUppcVPS3ufebS4UM5BWS1RjPcHkPapGdJEB5jJCgFlz8XDyNZs4uIK
+         AXExd0dC4ETVYre8H3U7VIoPV8xv7TW1hDT4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=RmByVg1KgG3a4JzLlR6FRSU3MPI7HSDPVKcuDvAkz/RiJkqF20fYSnqDwoAHOFnYf5
+         EYnZZyKDCrRkgNjRlSLZ+ObYLHTc0gB8Ldk0KIKZYVUk5TQjRNzzVoKRwwf3H3Sti08D
+         9LIwcJpqUkeeJSwVld2xN0Rl4ph2UwZ5L9deQ=
+Received: by 10.142.203.19 with SMTP id a19mr69916wfg.179.1215121573916;
+        Thu, 03 Jul 2008 14:46:13 -0700 (PDT)
+Received: by 10.142.231.11 with HTTP; Thu, 3 Jul 2008 14:46:13 -0700 (PDT)
+In-Reply-To: <4869E55C.2020608@free.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87326>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
-> Junio C Hamano wrote:
->> 
->> > Blindly concatenating the above two and feeding them to "git apply" *may*
->> > happen to work by accident, not by design.  This very much feels like a
->> > hack of "This works most of the time for me, your mileage may vary" kind,
->> > which we would want to avoid when we can.
->> 
->> Well, I changed my mind.  Let's run with this and see what happens.
+On Tue, Jul 1, 2008 at 6:05 PM, Olivier Croquette <ocroquette@free.fr> wrote:
+> Marco Costalba wrote, On 30/06/08 12:00:
+>>
+>> Thanks for the patches, I'll apply them.
 >
-> In support of this being a feature of git-apply, notice that it even
-> handles the situation correctly where the context of a hunk has been
-> influenced by previous hunks, as in...
+> Great!
+>
+>> Can I ask why don't you use qgit-2.X series ?
+>
+> Sure you can, it is just because I overlooked the existence of the
+> version 2 :)
+>
+> After compiling qt4-mac from source (it took quite some time), I have been
+> able to compile qgit2 too without a hitch, so I guess the patch is
+> irrelevant for qgit2. Are you using a different mechanism to access the
+> environment?
+>
 
-That's what meant by my earlier "application is hunk-by-hunk in nature"
-and we are in agreement.  The fact it works that way is not quite by
-design and close to being "by accident", but I do not foresee anybody
-changing it in the near future, so...
+Sorry for my late reply, but I'm traveling these days.
+
+No I don't use a different mechanism I always access the environment
+through the Qt libraries, so probably the improvment is in Qt4 over
+Qt3.
+
+Marco
