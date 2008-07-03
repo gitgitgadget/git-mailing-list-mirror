@@ -1,112 +1,91 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Question about git-merge-stupid
-Date: Thu, 3 Jul 2008 14:33:14 +0200
-Message-ID: <20080703123314.GS4729@genesis.frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ':/<oneline prefix>' notation doesn't support full file syntax
+Date: Thu, 3 Jul 2008 13:38:57 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807031333150.9925@racer>
+References: <279b37b20807022242q69ad2fcbwb8c11a9d6165272d@mail.gmail.com>  <7vfxqr2won.fsf@gitster.siamese.dyndns.org> <279b37b20807030150t2e9cbcc8wf099a5872568af8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="45kFsbCJmK9J4C/8"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:36:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 14:52:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEO31-0007XG-6i
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:36:27 +0200
+	id 1KEOIj-0005Az-8d
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757916AbYGCMdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:33:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757572AbYGCMdT
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:33:19 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:53453 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755690AbYGCMdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:33:18 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 01EDD1B24FC;
-	Thu,  3 Jul 2008 14:33:16 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A496A44698;
-	Thu,  3 Jul 2008 14:03:17 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5DDF911901F1; Thu,  3 Jul 2008 14:33:14 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1757271AbYGCMkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:40:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYGCMkw
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:40:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38114 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757248AbYGCMkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:40:51 -0400
+Received: (qmail invoked by alias); 03 Jul 2008 12:40:49 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp062) with SMTP; 03 Jul 2008 14:40:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX190KX5ipJ90TXUQUHvN31oH5gYQ1nUEonTK1HNc3Q
+	eNnpsbCk8e7WCQ
+X-X-Sender: gene099@racer
+In-Reply-To: <279b37b20807030150t2e9cbcc8wf099a5872568af8@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87279>
-
-
---45kFsbCJmK9J4C/8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87280>
 
 Hi,
 
-I'm trying to understand what is the difference between different merge
-strategies. git-merge-stupid is something I failed to understand from
-the git history/code/documentation, so I'm asking here.
+On Thu, 3 Jul 2008, Eric Raible wrote:
 
-1) From git history:
+> On Thu, Jul 3, 2008 at 1:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > "Eric Raible" <raible@gmail.com> writes:
+> >
+> > Is there anything to fix?  In that example, you are looking for a 
+> > commit that talks about "object name:sha1_name.c" in the comment.
+> 
+> Yes.  What if I'm looking for specific file (i.e. sha1_name.c) in the 
+> commit described by ":/object name:", just like I can do with 
+> 28a4d9404:sha1_name.c?
+> 
+> This is not ambiguous if we first consider the entire string as the 
+> prefix. If that fails we look for a filename after the final ':'.
 
-It seems git-merge-stupid was created by 2276aa6 when Junio renamed
--resolve to -stupid and let -resolve use read-tree. Actually
+It is super-expensive, as you have to look through the whole history just 
+to find that you do not find anything.
 
-        git show 2276aa6:git-merge-stupid.sh
+And then, it could be that you do find a commit that starts with that 
+string, but what you really wanted it a file, not a commit.
 
-says -stupid uses read-tree as well.
+And then, a file name can contain colons.  What to do in that case?
 
-2) From code:
+I think your "fix" is not worth it.  ":/<oneline>" is to help you find a 
+commit, and it will only ever find the first commit anyway, so you are 
+probably better off using
 
-It seems -stupid is better than -resolve when there are multiple bases.
--resolve just passes all bases to read-tree, while -stupid tries to find
-the best one. It does it by counting unmerged entries and the less one
-is a better.
+	$ git show $(git log --pretty=format:%H:path/to/file.c \
+		--grep=^<oneline>)
 
-Here is what I tried:
+to begin with.
 
-A - B - C
-      X   \
-  \ D - E - F
+Really, the only reason I ever wrote support for ":/blah" is when someone 
+less-than-helpful says "In commit 'Bla bla bla' you broke XYZ" and I want 
+to
+	$ git show :/Bla
 
-(Where 'A' adds 'a.c' while the contents 'a', etc.)
+Nowadays, however, I would
 
-$ git reset --hard e
-$ git merge -s resolve c
-Trying simple merge.
-Merge made by resolve.
+	$ git log -p --grep=^Bla
 
-So it seems resolve does not completely fail if there are multiple
-bases, either.
+so I'd vote to remove the ":/" syntax altogether.  We need not even 
+concern ourselves with scripts using that syntax, since the semantics are 
+so limited that nobody should use it in scripts anyway.
 
-I would like to write a testcase that ensures git-merge-stupid really
-picks the best base, but I don't know exactly in what situation can the
-number of unmerged entires differ.
-
-3) From documentation:
-
-Actually -stupid is missing from Documentation/merge-strategies.txt. I
-plan to send a patch to add it, once I understnad what it does. :-)
-
-Thanks.
-
-[ Writing to Linus as suggested by Dscho, adding Junio to CC as -
-according to git log - both strategy created by him. ]
-
---45kFsbCJmK9J4C/8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhsxwoACgkQe81tAgORUJbIVwCfXwMsAGd0BUCysLWXtNZGfm/h
-ilAAn2UNspdEdOObItJme6R4GKIwfAyu
-=J6h/
------END PGP SIGNATURE-----
-
---45kFsbCJmK9J4C/8--
+Ciao,
+Dscho
