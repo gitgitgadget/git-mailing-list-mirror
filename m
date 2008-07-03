@@ -1,56 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: bug found (Re: git-fast-export SIGSEGV on solaris + backtrace)
-Date: Thu, 3 Jul 2008 13:50:39 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807031350050.9925@racer>
-References: <4869B91B.9000709@posdata.co.kr> <486C248E.4060205@gmail.com> <7vk5g32wve.fsf@gitster.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: OT: Re: [PATCH 08/15] gitdiffcore(7): fix awkward wording
+Date: Thu, 3 Jul 2008 07:56:52 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807030752190.28699@harper.uchicago.edu>
+References: <20080703013733.BIF31353@m4500-01.uchicago.edu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: namsh@posdata.co.kr, git@vger.kernel.org,
-	Pieter de Bie <pdebie@ai.rug.nl>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 15:07:07 2008
+Cc: Chris Shoemaker <c.shoemaker@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 03 15:07:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEOUl-0001lY-QY
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 15:05:36 +0200
+	id 1KEOVg-0001lY-Pm
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 15:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbYGCMwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:52:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbYGCMwf
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:52:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39471 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752314AbYGCMwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:52:34 -0400
-Received: (qmail invoked by alias); 03 Jul 2008 12:52:33 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp019) with SMTP; 03 Jul 2008 14:52:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX187y/p3ZJE7p8tf+xwXXYdVR2vUnb8Di1/dvWnDdF
-	+9X8FoJqZOvAt4
-X-X-Sender: gene099@racer
-In-Reply-To: <7vk5g32wve.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1759511AbYGCM44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761223AbYGCM4z
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:56:55 -0400
+Received: from smtp02.uchicago.edu ([128.135.12.75]:38795 "EHLO
+	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761204AbYGCM4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:56:54 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m63Cuqr4026556;
+	Thu, 3 Jul 2008 07:56:52 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m63Cuqcx028852;
+	Thu, 3 Jul 2008 07:56:52 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <20080703013733.BIF31353@m4500-01.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87286>
 
-Hi,
+[Junio: sorry for the duplicate message. It occured to me too late 
+that a clarification might fix some confusion for the rest of the
+readers of the list, too.]
 
-On Thu, 3 Jul 2008, Junio C Hamano wrote:
+Junio C Hamano wrote:
 
-> What was I smoking when I applied df6a7ff (builtin-fast-export: Add 
-> importing and exporting of revision marks, 2008-06-11), I have to 
-> wonder...
+> Jonathan Nieder <jrnieder@uchicago.edu> writes:
+>
+>>> The phrase "diff outputs" sounds awkward to my ear (I think
+>>> "output" is meant to be used as a substantive noun.)
+>>
+>> Ack! that phrase made no sense. If you know what I meant and
+>> what it's called, I'd like to know :)
+>>
+>> Thanks,
+>> Jonathan
+>
+> As a bistander to this exchange, I am confused.  Who is acking whose
+> comment here?
 
-FWIW I missed it in my review, too...  Well, Junio, it seems we should 
-avoid smoking together for a while.
+I wrote:
 
-Ciao,
-Dscho
+> Sorry, I meant something to the same effect as "Agh". I should have
+> just gone to sleep.
+
+But perhaps more important for my meaning is that by "that phrase" I
+meant the phrase "substantive noun". I meant that "output" is a sort
+of fluid substance and so is rarely supposed to be plural unless
+outputs with different qualities are being discussed, but the phrase
+"substantive noun" conveys none of that at all. In fact, I think the
+phrase "substantive noun" just means "noun". Hence my dismay at not
+making any sense.
+
+Sorry about the confusion.
+
+Jonathan
