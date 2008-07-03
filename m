@@ -1,55 +1,138 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH/rfc] gitweb: open files (e.g. indextext.html) in utf8
- mode
-Date: Thu, 03 Jul 2008 11:39:38 +0200
-Message-ID: <486C9E5A.9@gmail.com>
-References: <20080702121317.10819.qmail@bca5b84cb0e0a0.315fe32.mid.smarden.org> <m3prpwflus.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 06/12] connect: Fix custom ports with plink
+ (Putty's ssh)
+Date: Thu, 3 Jul 2008 13:29:27 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807031313140.9925@racer>
+References: <486C425D.8090904@thewritingpot.com>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?UmVjYWkgT2t0YcWf?= <roktas@debian.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:24:09 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com, msysGit <msysgit@googlegroups.com>,  junio@pobox.com
+To: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Jul 03 14:32:54 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.243])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KENql-0002ud-Vm
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:23:48 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758832AbYGCMWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754124AbYGCMWs
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:22:48 -0400
-Received: from gv-out-0910.google.com ([216.239.58.187]:44354 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755299AbYGCMWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:22:46 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so168317gvc.37
-        for <git@vger.kernel.org>; Thu, 03 Jul 2008 05:22:43 -0700 (PDT)
-Received: by 10.125.162.17 with SMTP id p17mr1933722mko.67.1215077983061;
-        Thu, 03 Jul 2008 02:39:43 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.205.155])
-        by mx.google.com with ESMTPS id g28sm20590337fkg.8.2008.07.03.02.39.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Jul 2008 02:39:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <m3prpwflus.fsf@localhost.localdomain>
-Sender: git-owner@vger.kernel.org
+	id 1KENzX-0006RG-JO
+	for gcvm-msysgit@m.gmane.org; Thu, 03 Jul 2008 14:32:52 +0200
+Received: by wa-out-0708.google.com with SMTP id n36so1341916wag.21
+        for <gcvm-msysgit@m.gmane.org>; Thu, 03 Jul 2008 05:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=Qg183WsPdSgAaDKNnbhc0TF33m6ep59G5tCyRUSU8Q8=;
+        b=SsLx9myWHAmaX9h5+OM26BZCGOJzkvyeuSc5ChlRqP2rWoDrRDv2HOV3uvBt3aBmi8
+         6tI2YA2biBzuntkZQmPxbSmxIa/GY/Et48dPGm/T71IJ7YXZlYWvKw7RavwRyriH+Uuq
+         cy/MCgk0bNkWslUgXEXl4zYHOQfPQuLC88vJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=T0Rrx0qYT3MDmcmSZVmq+tpnUpn2+yOBT3huOlgi/VVr+7pP51mLiVWJ1TJXWDw+Zj
+         7eBX3aGXdBmomMUuwi+QpRmLkDHTEianpkpqNxEp4qDG97NquK5DmQlDHPtH6s+xQ58F
+         BwwAj56WeLxJrDBfHf5UJQzWWqGlqYeLga7yk=
+Received: by 10.114.27.19 with SMTP id a19mr4035waa.8.1215088312289;
+        Thu, 03 Jul 2008 05:31:52 -0700 (PDT)
+Received: by 10.107.113.4 with SMTP id q4gr2593prm.0;
+	Thu, 03 Jul 2008 05:31:52 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.100.144.18 with SMTP id r18mr28564and.24.1215088311852; Thu, 03 Jul 2008 05:31:51 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 22si64742yxr.2.2008.07.03.05.31.21; Thu, 03 Jul 2008 05:31:51 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 03 Jul 2008 12:31:20 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp039) with SMTP; 03 Jul 2008 14:31:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/8gTBGVzH8tYXrRn0MMH3hYwoV9iau45uDsTsISJ V0rV62cdQqQtRK
+X-X-Sender: gene099@racer
+In-Reply-To: <486C425D.8090904@thewritingpot.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87274>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87275>
 
-Jakub Narebski wrote:
-> Second, what is minimal Perl version and Perl configuration (installed
-> modules) that support "use open qw(:std :utf8);"?
 
-open is in core (-> corelist), and "qw(:std :utf)" works here with Perl
-5.8.8.  Perl 5.6 doesn't have it, but gitweb doesn't support Perl 5.6
-anyway (e.g. "binmode STDOUT, ':utf8';" doesn't work with Perl 5.6).  So
-it should be fine compatibility-wise.
+Hi,
 
--- Lea
+On Wed, 2 Jul 2008, Edward Z. Yang wrote:
+
+> Johannes Sixt wrote:
+> > What about installing a wrapper script, plinkssh, that does this:
+> > [snip]
+> 
+> Well, the patch is shorter :-)
+
+But you have to do it for every SSH backend that you might want to 
+support.
+
+And you have to recompile.
+
+> 1. It's been tested, it works. I haven't tried the script yet, so I 
+>    don't know if it works.
+
+Sorry, that argument does not fly.  "My patch is better, because I did not 
+test your patch."
+
+> 2. Git historically doesn't use bash, so the script would have to be 
+>    rewritten in Perl or plain sh or tcl or something.
+
+That is so totally untrue.  We have Perl scripts and Shell scripts (for 
+which we need the bash), and then we have the two GUIs which use Tcl/Tk.
+
+Actually, we only have so few Perl scripts left that it might be possible 
+to ship a version of Git on Windows without Perl.  The only script that 
+needs to be converted to a builtin is add -i.
+
+The rest of the scripts are shell.
+
+So this argument is totally bogus.
+
+> 3. It's less brittle than the wrapper script if we decide to have Git 
+>    pass more params to OpenSSH.
+
+Granted, should we decide one day to use more elaborate features of 
+OpenSSH, then we would have to change the script, too.
+
+But most likely, Plink support would be broken by that update _anyway_, 
+since it does not grok the OpenSSH options directly.
+
+And guess what is easier to fix, a script that rewrites the arguments from 
+OpenSSH syntax to Plink syntax, or a C program with over 78,000 code 
+lines that has to be recompiled?
+
+> 4. It's "more native".
+
+Would it not be even more native if we just linked in libssl?  Would you 
+write the patch?
+
+Further, would you like to convert and maintain all people's wrapper 
+scripts to C code inside Git?
+
+BTW what is the reason why Hannes' mail does not appear to be the mail 
+you replied to in GMane, but the patch Steffen sent?
+
+Ciao,
+Dscho
