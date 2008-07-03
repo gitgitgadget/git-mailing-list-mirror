@@ -1,95 +1,131 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: RFC: grafts generalised
-Date: Thu, 3 Jul 2008 09:11:43 +0200
-Message-ID: <20080703071143.GC27419@cuci.nl>
-References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <20080702173203.GA16235@cuci.nl> <20080703002117.GH12567@machine.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/12] MinGW: Convert CR/LF to LF in tag
+ signatures
+Date: Thu, 3 Jul 2008 12:08:58 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807031208050.9925@racer>
+References: <15FB2EE9-298D-41D1-B66A-DDC786282ECB@zib.de> <1214987532-23640-2-git-send-email-prohaska@zib.de> <1214987532-23640-3-git-send-email-prohaska@zib.de> <200807022046.28141.johannes.sixt@telecom.at>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 03 10:28:37 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: prohaska@zib.de, msysGit <msysgit@googlegroups.com>, git@vger.kernel.org,  Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Jul 03 13:12:06 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.26])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEKAL-0002yW-Oc
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:27:46 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756628AbYGCIVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 04:21:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755547AbYGCITR
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 04:19:17 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:43901 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934978AbYGCHLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 03:11:48 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id A08465466; Thu,  3 Jul 2008 09:11:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080703002117.GH12567@machine.or.cz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+	id 1KEMjD-0002Le-VK
+	for gcvm-msysgit@m.gmane.org; Thu, 03 Jul 2008 13:11:56 +0200
+Received: by yw-out-2122.google.com with SMTP id 8so458749yws.63
+        for <gcvm-msysgit@m.gmane.org>; Thu, 03 Jul 2008 04:11:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=mCCAOsrFIid8wbQdO9Daro5ULW7SLPqU5fQwwUaOOR4=;
+        b=pbg/4UpFjjMJYFRcrP4M+yW9yyuITpSbmkRLulRNqGMD2NxzrZcOa+oFHnmsgNehEe
+         RRLfJ/UUKztZuXsuKL3pipbAQ+mf1j73t8y8/al6FDGjZqx5Dbuv4kAQLxuLM4Rd64+b
+         +C6MsU36gtTFgboDwR3XXeQ/I02GdCI6dOXEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=E/g1KsyN9OCCaV5Fi2mTGF4Rir7cp3hzYjYXgt7tOID2Q4tfwPIMMXTHZYxilnfKRC
+         KkEf26cC+UOpJOT+uC1FNjkKyl8MqnUpuGHeLvG/oUWm2pLHROlqHGFlcfQNI7B4Q5Rt
+         MTNwkgTYBVls5tbwwZ5ve01ap+fZb7ps5s7Hw=
+Received: by 10.141.2.19 with SMTP id e19mr573452rvi.3.1215083454285;
+        Thu, 03 Jul 2008 04:10:54 -0700 (PDT)
+Received: by 10.106.234.8 with SMTP id g8gr2591prh.0;
+	Thu, 03 Jul 2008 04:10:54 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.77.1 with SMTP id z1mr5365232waa.15.1215083452804; Thu, 03 Jul 2008 04:10:52 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 7si9485131yxg.1.2008.07.03.04.10.52; Thu, 03 Jul 2008 04:10:52 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 03 Jul 2008 11:10:51 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp048) with SMTP; 03 Jul 2008 13:10:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18rmtsqFo8r8vBMH0b/Bkjj32s6s26MrKTvSDd99y fej5EdqPcT9UBf
+X-X-Sender: gene099@racer
+In-Reply-To: <200807022046.28141.johannes.sixt@telecom.at>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87261>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87262>
 
-Petr Baudis wrote:
->On Wed, Jul 02, 2008 at 07:32:03PM +0200, Stephen R. van den Berg wrote:
->> Also, the graft mechanism specifically is intended as a temporary
->> solution until one uses filter-branch to "finalise" the result into a
->> proper repository which becomes cloneable.
 
->Grafts are _much_ older than filter-branch and I'm not sure where did
->you get this idea; do we claim that in any documentation?
+Hi,
 
-Not in direct documentation, but it is what breaths down from posts on
-the mailinglist like:
+On Wed, 2 Jul 2008, Johannes Sixt wrote:
 
-http://kerneltrap.org/mailarchive/git/2008/6/10/2085624
+> On Mittwoch, 2. Juli 2008, Steffen Prohaska wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > On Windows, gpg outputs CR/LF signatures.  But since the tag
+> > messages are already stripped of the CR by stripspace(), it is
+> > arguably nicer to do the same for the tag signature.  Actually,
+> > this patch does not look for CR/LF, but strips all CRs
+> > from the signature.
+> >
+> > [ spr: ported code to use strbuf ]
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> > ---
+> >  builtin-tag.c |   14 ++++++++++++++
+> >  1 files changed, 14 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/builtin-tag.c b/builtin-tag.c
+> > index e675206..77977ba 100644
+> > --- a/builtin-tag.c
+> > +++ b/builtin-tag.c
+> > @@ -241,6 +241,20 @@ static int do_sign(struct strbuf *buffer)
+> >  	if (finish_command(&gpg) || !len || len < 0)
+> >  		return error("gpg failed to sign the tag");
+> >
+> > +#ifdef __MINGW32__
+> > +	/* strip CR from the line endings */
+> > +	{
+> > +		int i, j;
+> > +		for (i = j = 0; i < buffer->len; i++)
+> > +			if (buffer->buf[i] != '\r') {
+> > +				if (i != j)
+> > +					buffer->buf[j] = buffer->buf[i];
+> > +				j++;
+> > +			}
+> > +		strbuf_setlen(buffer, j);
+> > +	}
+> > +#endif
+> > +
+> >  	return 0;
+> >  }
+> 
+> Do we need the #ifdef __MINGW32__? Can't we just strip CRs unconditionally? It 
+> shouldn't hurt on Unix anyway.
 
-Jakub Narebski:
->Then if possible use git-filter-branch to make history recorded in
->grafts file permanent...
+I agree, and I would even like to refactor this into its own function.  
+Probably even move it to strbuf.[ch].
 
-Petr Baudis wrote:
->There's nothing ugly or necessarily temporary about grafts. One example
->of completely valid usage is adding previous history of a project to it
->later.
-
->First, you don't need to carry around all the archived baggage you are
->probably rarely going to access anyway if you don't need to; changing a
->VCS is ideal cutoff point.
-
-That depends on the project, of course, and is not a valid statement in
-general.  Part of the charm of full history is that git-blame and
-git-bisect work, at arbitrary points in the past.
-
->Second, you don't need to worry about doing perfect conversion at the
->moment of the switch.
-
-Well, you do, if you intend to make it cloneable.
-
->Third, even if you think you have done it perfectly, it will turn out
->later that something is wrong anyway.
-
-Not necessarily.  I have automated the checkout-verification-process which
-basically checks out every revision from the respective old repository
-and binary-compares it with the corresponding revision in the git
-repository.  This ensures a full binary match across the board.
-With respect to historical merges, I agree, those might not be
-completely correctly grafted, but the level of correctness can be
-determined at will, and once we achieve somewhere around 99% accuracy,
-we consider it done (for this project).
-
->Fourth, it may not be actually _clear_ what the canonical history should
->be.
-
-That depends on the project.  In my project it *is* clear, so this point
-doesn't make any difference.
-
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-This is a day for firm decisions!  Or is it?
+Ciao,
+Dscho
