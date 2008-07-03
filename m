@@ -1,85 +1,58 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: RFC: grafts generalised
-Date: Thu, 3 Jul 2008 09:30:41 +0200
-Message-ID: <20080703073041.GA28566@cuci.nl>
-References: <20080702143519.GA8391@cuci.nl> <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com> <37fcd2780807021058r5ed820cfmdc98f98f36d5c8ae@mail.gmail.com> <20080702181021.GD16235@cuci.nl> <486C6B8E.5040202@viscovery.net>
+Date: Thu, 03 Jul 2008 09:42:45 +0200
+Message-ID: <486C82F5.6080405@viscovery.net>
+References: <20080702143519.GA8391@cuci.nl> <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com> <37fcd2780807021058r5ed820cfmdc98f98f36d5c8ae@mail.gmail.com> <20080702181021.GD16235@cuci.nl> <486C6B8E.5040202@viscovery.net> <20080703073041.GA28566@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 03 10:27:37 2008
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Jul 03 10:27:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEK9v-0002yW-Ri
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:27:20 +0200
+	id 1KEK9z-0002yW-9a
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 10:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756641AbYGCIVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 04:21:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbYGCITU
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 04:19:20 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:50414 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937010AbYGCHaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 03:30:46 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 15BD35465; Thu,  3 Jul 2008 09:30:41 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <486C6B8E.5040202@viscovery.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756655AbYGCIVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 04:21:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755612AbYGCITY
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 04:19:24 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:41494 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S937020AbYGCHmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 03:42:47 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KEJSn-0007tc-IL; Thu, 03 Jul 2008 09:42:45 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3F50F54D; Thu,  3 Jul 2008 09:42:45 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080703073041.GA28566@cuci.nl>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87259>
 
-Johannes Sixt wrote:
->Stephen R. van den Berg schrieb:
->> Dmitry Potapov wrote:
->>> On second thought, it may be not necessary. You can extract an old commit
->>> object, edit it, put it into Git with a new SHA1, and then use the graft file to
->>> replace all references from an old to a new one. And you will be able to see
->>> changes immediately in gitk.
+Stephen R. van den Berg schrieb:
+> Actually, ripple-through changes are rare.  In the current project it
+> seems I need exactly one, but it's buried deep in the past (sadly).
+> The reason why I need it, is to make sure that git-bisect will work for
+> any revision in the past (i.e. the tree contained/contains some
+> too-clever-for-their-own-good $Revision$-expansion dependencies)
 
->> Hmmmm, interesting thought.  That just might solve my problem.
+But you do know that you don't need to apply the change *now*; you can
+apply it at bisect-time? Unless you expect you or your mere mortal
+coworkers are going to do dozens of bisects into that part of the history,
+I wouldn't change history *like*this*. But of course, I don't understand
+the circumstances enough, so... just my 2 cents.
 
->I don't think it would.
-
->You want to apply a patch through a part of the history. To do that, it is
->not sufficient to apply the patch to only one commit/tree and then fake
->parenthood of its child commits. You still need to apply the patch to all
->children.
-
-I am aware of that.
-There are actually two common cases:
-- Historical changes which are confined and don't ripple through.  The
-  above solution works just fine for that.
-- Ripple-through changes.  They indeed need to be applied to every tree
-  in the first-parent chain.  Even though this is going to take a
-  considerable amount of time, there still are certain advantages to
-  doing this using the method described above:
-  + You can apply the patch to every commit/tree "interactively" if you want.
-    (Yes, I know, git-sequencer supports this one as well, but not the
-    next point).
-  + You can view the change at any point in time (including in relation to the
-    tree that follows it), right after making the amendments (without letting
-    it ripple through to the end).
-  + The ripple-through does not need to be performed in topological order,
-    i.e. eventually you'll have to touch everything, but you can do it
-    in the order you see fit (whatever is most efficient to work on).
-  + If, at some point during the ripple-through process, you find out
-    that you forgot some change(s), you can abort or restart the
-    ripple-through without having spent all that time waiting for a
-    full-ripple-through.
-
-Actually, ripple-through changes are rare.  In the current project it
-seems I need exactly one, but it's buried deep in the past (sadly).
-The reason why I need it, is to make sure that git-bisect will work for
-any revision in the past (i.e. the tree contained/contains some
-too-clever-for-their-own-good $Revision$-expansion dependencies)
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-This is a day for firm decisions!  Or is it?
+-- Hannes
