@@ -1,76 +1,127 @@
-From: Tim Stoakes <tim@stoakes.net>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 3 Jul 2008 11:45:41 +0930
-Message-ID: <20080703021541.GK18147@mail.rocksoft.com>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Implement "git stash branch <newbranch> <stash>"
+Date: Thu, 3 Jul 2008 07:53:16 +0530
+Message-ID: <20080703022316.GA25433@toroid.org>
+References: <20080702195947.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0807021447200.9925@racer> <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org> <20080702195401.GA17214@toroid.org> <7vprpw80bw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 09:00:46 2008
+X-From: git-owner@vger.kernel.org Thu Jul 03 09:00:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEInq-0002Wt-3G
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 09:00:26 +0200
+	id 1KEIno-0002Wt-Qe
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 09:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780AbYGCG7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 02:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754449AbYGCG5j
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:39 -0400
-Received: from hosted01.westnet.com.au ([203.10.1.211]:60194 "EHLO
-	hosted01.westnet.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753635AbYGCCkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 22:40:25 -0400
-X-Greylist: delayed 1453 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jul 2008 22:40:24 EDT
-Received: from hosted01.westnet.com.au (hosted01.westnet.com.au [127.0.0.1])
-	by hosted01.westnet.com.au (Postfix) with SMTP id 7C64F2BF031;
-	Thu,  3 Jul 2008 10:16:09 +0800 (WST)
-Received: from mail.stoakes.net (dsl-202-173-137-105.sa.westnet.com.au [202.173.137.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hosted01.westnet.com.au (Postfix) with ESMTP id 157182BEFD4;
-	Thu,  3 Jul 2008 10:16:08 +0800 (WST)
-Received: from noodle.stoakes.net (unknown [192.168.20.209])
-	by mail.stoakes.net (Postfix) with ESMTP id 35FE728C172;
-	Thu,  3 Jul 2008 21:16:07 +0930 (CST)
-Received: by noodle.stoakes.net (Postfix, from userid 1000)
-	id 33EF27F033; Thu,  3 Jul 2008 11:45:41 +0930 (CST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1755453AbYGCG7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 02:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753883AbYGCG5e
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 02:57:34 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:49122 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752988AbYGCCXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 22:23:20 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 7FAC255831A;
+	Thu,  3 Jul 2008 04:23:16 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 1F4ECADC305; Thu,  3 Jul 2008 07:53:16 +0530 (IST)
 Content-Disposition: inline
-In-Reply-To: <7vtzfln5zw.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-PMX-Branch: TNG-Outgoing
+In-Reply-To: <7vprpw80bw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87224>
 
-Junio C Hamano(gitster@pobox.com)@220608-03:01:
-> Having said all that, I have to say I am regretting to have accepted that
-> patch to enable pager on status, not because it bothers me personally (it
-> doesn't primarily because I practically never run git-status because I
-> consider the command useless and living almost always in Emacs helps), but
-> because in principle changing anything that existing users are used to is
-> bad.
-> 
-> Jeff had a patch to allow boolean configuration variable "pager.<command>"
-> to override the built-in pager settings during 1.5.6 cycle, and I think it
-> was a reasonable approach to take.  People who want to page output from
-> git-status can then set "pager.status = true" in their configuration (and
-> then we can revert c8af1de (make git-status use a pager, 2008-04-23)).
-> Alternatively we could keep the current status-quo for the default, and
-> people can say "pager.status = false" in their configuration.
+Restores the stashed state on a new branch rooted at the commit on which
+the stash was originally created, so that conflicts caused by subsequent
+changes on the original branch can be dealt with.
 
-I'd really like to see this. Setting core.pager to `less -FSRX` or
-similar is not useful for me - I *want* to have -X for eg. `git diff`,
-but I don't want paging at all for status.
+(Thanks to Junio for this nice idea.)
+---
+ Documentation/git-stash.txt |   19 ++++++++++++++++++-
+ git-stash.sh                |   21 +++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 1 deletions(-)
 
-This was quite a nasty change to sneak on people I think.
-
-Tim
-
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 23ac331..cfc1c28 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -8,8 +8,11 @@ git-stash - Stash the changes in a dirty working directory away
+ SYNOPSIS
+ --------
+ [verse]
+-'git stash' (list | show [<stash>] | apply [<stash>] | clear | drop [<stash>] | pop [<stash>])
++'git stash' list
++'git stash' (show | apply | drop | pop ) [<stash>]
++'git stash' branch <branchname> [<stash>]
+ 'git stash' [save [<message>]]
++'git stash' clear
+ 
+ DESCRIPTION
+ -----------
+@@ -81,6 +84,20 @@ tree's changes, but also the index's ones. However, this can fail, when you
+ have conflicts (which are stored in the index, where you therefore can no
+ longer apply the changes as they were originally).
+ 
++branch <branchname> [<stash>]::
++
++	Creates and checks out a new branch named `<branchname>` starting from
++	the commit at which the `<stash>` was originally created, applies the
++	changes recorded in `<stash>` to the new working tree, and drops the
++	`<stash>` if that completes successfully. When no `<stash>` is given,
++	applies the latest one.
+++
++This is useful if the branch on which you ran `git stash save` has
++changed enough that `git stash apply` fails due to conflicts. Since
++the stash is applied on top of the commit that was HEAD at the time
++`git stash` was run, it restores the originally stashed state with
++no conflicts.
++
+ clear::
+ 	Remove all the stashed states. Note that those states will then
+ 	be subject to pruning, and may be difficult or impossible to recover.
+diff --git a/git-stash.sh b/git-stash.sh
+index 4938ade..8e50b03 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -218,6 +218,23 @@ drop_stash () {
+ 	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
+ }
+ 
++apply_to_branch () {
++	have_stash || die 'Nothing to apply'
++
++	test -n "$1" || die 'No branch name specified'
++	branch=$1
++
++	if test -z "$2"
++	then
++		set x "$ref_stash@{0}"
++	fi
++	stash=$2
++
++	git-checkout -b $branch $stash^ &&
++	apply_stash $stash &&
++	drop_stash $stash
++}
++
+ # Main command set
+ case "$1" in
+ list)
+@@ -264,6 +281,10 @@ pop)
+ 		drop_stash "$@"
+ 	fi
+ 	;;
++branch)
++	shift
++	apply_to_branch "$@"
++	;;
+ *)
+ 	if test $# -eq 0
+ 	then
 -- 
-Tim Stoakes
+1.5.6
