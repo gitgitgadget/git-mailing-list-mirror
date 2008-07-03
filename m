@@ -1,89 +1,90 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: [PATCH] fix typoed config option 'indexversion' in man page.
-Date: Thu, 3 Jul 2008 03:24:59 +0200
-Message-ID: <237967ef0807021824i2d825c6ej4defcf5b56a48ae2@mail.gmail.com>
-References: <alpine.LNX.1.00.0807030303580.30922@localhost>
+From: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+Subject: Re: [PATCH 06/12] connect: Fix custom ports with plink
+ (Putty's ssh)
+Date: Wed, 02 Jul 2008 23:07:09 -0400
+Message-ID: <486C425D.8090904@thewritingpot.com>
+Reply-To: edwardzyang@thewritingpot.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 03:25:58 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: gitster@pobox.com, msysGit <msysgit@googlegroups.com>, junio@pobox.com
+To: git@vger.kernel.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Jul 03 05:08:23 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.174])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEDaA-00083i-2b
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 03:25:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbYGCBZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 21:25:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbYGCBZA
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 21:25:00 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:10906 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901AbYGCBY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 21:24:59 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so728908rvb.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2008 18:24:59 -0700 (PDT)
+	id 1KEFBD-0003JW-UM
+	for gcvm-msysgit@m.gmane.org; Thu, 03 Jul 2008 05:08:20 +0200
+Received: by py-out-1314.google.com with SMTP id u10so1103799pyb.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2008 20:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3/IovmWcfIjW8rnnQghuYw2i4aFi2QqczhTlaqyWFvw=;
-        b=EjtuxsmeuWQsKRHuQMKsff3+orNnHaU7vNp7OohDy7UqgJTBxCnN8vEJiBvP5sP4G2
-         uFay78UVaTveWYf7eA+gRBIRmuyq8YNUqS5Z+Il+HnjsPR0X8gcE9i0eYfsZ6rbjkFhn
-         P/NAf191Zkmu0jQm32R61xNgjDpN5LHxHfJd4=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received:date
+         :from:subject:to:cc:message-id:mime-version:content-type
+         :content-transfer-encoding:user-agent:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=UsJp50v846ZOso+dM1gZAoCIud3CpsK1PN+nuUOnmpo=;
+        b=gC0eD3l7tPwSmheS4QhCB4YNvHYMLajnppl5ddAYtXS8dAmHE66VHCRvOugh1ghtEf
+         I5hHv+okiEnQ8pyddeHtTKHoI++1V5GdDGhUcfc+ZP5miMiCx4SoKpoU57fKa63bHPkm
+         AKqkBo5UGIAdR8n/LohnRZu1ozFlDKZrU4D3Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ka1KJ1F4bZWBzftKOe/NYvyV6IVXKot05L4FG4BbbFwLvJrTSIGodHvOHH73vA/dje
-         80tuB5FXXY/jPylVacuqbLv3soRnFBoP7+V4nm3Sqi9iAht3AjqyAVC6HpdKgpktxP0h
-         ch6kAADn0eR164Kgm+FYCWsbx1z0LjuCDMQEI=
-Received: by 10.140.135.19 with SMTP id i19mr4780666rvd.70.1215048299604;
-        Wed, 02 Jul 2008 18:24:59 -0700 (PDT)
-Received: by 10.141.68.4 with HTTP; Wed, 2 Jul 2008 18:24:59 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.00.0807030303580.30922@localhost>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date
+         :from:subject:to:cc:message-id:mime-version:content-type
+         :content-transfer-encoding:user-agent:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=jLIC35fLY78wUzWKmtULXgChocIKd9/NkVIgl9gr1xTTzihtpbtbFA2lTUGd37uHAc
+         rrStZ07AUAdSfzrVAbymEN0/LCL24XfVx9VAREQOlIKgTemDJDpVsIlwoO+nVFJZBXAB
+         Y0hnQi0g87i/d5MZDIUuaV6cXdjKL91Sz3AIM=
+Received: by 10.140.192.9 with SMTP id p9mr549270rvf.8.1215054437429;
+        Wed, 02 Jul 2008 20:07:17 -0700 (PDT)
+Received: by 10.107.113.4 with SMTP id q4gr2585prm.0;
+	Wed, 02 Jul 2008 20:07:17 -0700 (PDT)
+X-Sender: edwardzyang@thewritingpot.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.90.78.10 with SMTP id a10mr10080537agb.12.1215054436903; Wed, 02 Jul 2008 20:07:16 -0700 (PDT)
+Received: from mta5.srv.hcvlny.cv.net (mta5.srv.hcvlny.cv.net [167.206.4.200]) by mx.google.com with ESMTP id b1si549154pyh.3.2008.07.02.20.07.16; Wed, 02 Jul 2008 20:07:16 -0700 (PDT)
+Received-SPF: neutral (google.com: 167.206.4.200 is neither permitted nor denied by best guess record for domain of edwardzyang@thewritingpot.com) client-ip=167.206.4.200;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 167.206.4.200 is neither permitted nor denied by best guess record for domain of edwardzyang@thewritingpot.com) smtp.mail=edwardzyang@thewritingpot.com
+Received: from [192.168.0.10] (ool-18e45099.dyn.optonline.net [24.228.80.153]) by mta5.srv.hcvlny.cv.net (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007)) with ESMTP id <0K3E008LUU04WV30@mta5.srv.hcvlny.cv.net> for msysgit@googlegroups.com; Wed, 02 Jul 2008 23:07:16 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87218>
-
-Blah, ignore me of course. I broke the old rule of not sending patches
-after midnight :).
-
-2008/7/3 Mikael Magnusson <mikachu@gmail.com>:
-> ---
->
-> Noticed by David Parra on #git.
->
->  Documentation/config.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 52d01b8..fd56dac 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -945,7 +945,7 @@ pack.threads::
->        Specifying 0 will cause git to auto-detect the number of CPU's
->        and set the number of threads accordingly.
->
-> -pack.indexVersion::
-> +pack.indexversion::
->        Specify the default pack index version.  Valid values are 1 for
->        legacy pack index used by Git versions prior to 1.5.2, and 2 for
->        the new pack index with capabilities for packs larger than 4 GB
-> --
-> 1.5.6.GIT
->
->
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87219>
 
 
+Johannes Sixt wrote:
+ > What about installing a wrapper script, plinkssh, that does this:
+ > [snip]
 
--- 
-Mikael Magnusson
+Well, the patch is shorter :-)
+
+Joking aside, it's a good question. I guess I prefer the patch because:
+
+1. It's been tested, it works. I haven't tried the script yet, so I 
+don't know if it works.
+
+2. Git historically doesn't use bash, so the script would have to be 
+rewritten in Perl or plain sh or tcl or something.
+
+3. It's less brittle than the wrapper script if we decide to have Git 
+pass more params to OpenSSH.
+
+4. It's "more native".
+
+I don't know if these are compelling enough reasons, though.
+
+(cc'ed everyone else, whoops)
