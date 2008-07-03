@@ -1,67 +1,81 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 3 Jul 2008 15:37:30 +0200
-Message-ID: <08353871-5C94-4E97-9589-DC3980C47CD4@wincent.com>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org> <20080703021541.GK18147@mail.rocksoft.com> <alpine.DEB.1.00.0807031303080.9925@racer>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Brian Foster <brian.foster@innova-card.com>
+Subject: Re: Non-inetd git-daemon hangs in syslog(3)/fclose(3) if --syslog --verbose accessing non-repositories
+Date: Thu, 3 Jul 2008 15:52:26 +0200
+Message-ID: <200807031552.26615.brian.foster@innova-card.com>
+References: <200807031400.36315.brian.foster@innova-card.com> <alpine.DEB.1.00.0807031343440.9925@racer>
+Reply-To: Brian Foster <brian.foster@innova-card.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tim Stoakes <tim@stoakes.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 03 15:39:16 2008
+X-From: git-owner@vger.kernel.org Thu Jul 03 15:54:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEP1j-000770-Gq
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 15:39:11 +0200
+	id 1KEPGC-0004eC-Lg
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 15:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901AbYGCNiM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 09:38:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbYGCNiK
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 09:38:10 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:34193 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082AbYGCNiK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 09:38:10 -0400
-Received: from cuzco.lan (249.pool85-53-23.dynamic.orange.es [85.53.23.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m63DbVOK020470
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 3 Jul 2008 09:37:33 -0400
-In-Reply-To: <alpine.DEB.1.00.0807031303080.9925@racer>
-X-Mailer: Apple Mail (2.924)
+	id S1756305AbYGCNxN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 09:53:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbYGCNxL
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 09:53:11 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:56873 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001AbYGCNxI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 09:53:08 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so244410yxm.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 06:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id:sender;
+        bh=BfqIPDZjTcBvIjAe3StPJEObG1yCsgf9ze6vh3JZoP4=;
+        b=vD91W+L84mqpRLF7cwik0xltogehnS6YM9BnO5Wm+Ux2MIhQdHZPJidW0H+iR3dI5V
+         xouaAnoFCZCBKN/ZJcVa6Biqj2v71WJfyU1rhiAihUp+/MrLYbTPRgNNfYwcEZ4dIiVY
+         lbpz9H/9dEclpmnx9c6NaKul/DQInuy0qeZK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:reply-to:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:sender;
+        b=EA2T0ncXJo12LAbUW2BTyMiztBCiIw69Y6p8pmazRIsFHkV8H6uPYJ/mtIUC+bQ8jj
+         aDF0t/H9ytCNQ0AQubuKt59Ue+SGgr/ty9C89oOA4YqbNXY1ZyVZxs/Ty1RXoEwrZEj+
+         4CYWEToYN8KZkfuarrQgZo9GRTpCPOvPYKAZw=
+Received: by 10.114.121.1 with SMTP id t1mr372880wac.55.1215093184305;
+        Thu, 03 Jul 2008 06:53:04 -0700 (PDT)
+Received: from innova-card.com ( [81.252.61.1])
+        by mx.google.com with ESMTPS id 3sm172992fge.3.2008.07.03.06.52.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jul 2008 06:53:02 -0700 (PDT)
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+In-Reply-To: <alpine.DEB.1.00.0807031343440.9925@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87291>
 
-El 3/7/2008, a las 14:11, Johannes Schindelin escribi=F3:
+On Thursday 03 July 2008 Johannes Schindelin wrote:
+> On Thu, 3 Jul 2008, Brian Foster wrote:
+> >[... describes that git-daemon -v syslog()s in a signal handler,
+> >  which is unsupported ...]
+>=20
+> I reported this bug earlier [ ... ]
 
-> Hi,
->
-> On Thu, 3 Jul 2008, Tim Stoakes wrote:
->
->> This [changing git status to use the pager automatically] was quite =
-a
->> nasty change to sneak on people I think.
->
-> Well, I think that a command producing pages and pages of output =20
-> without
-> stopping is useless.  Therefore, _I_ maintain that it makes tons of =20
-> sense.
+ Ah, yes, I've (now) found the (long!) thread,
+ about log-rotation (which, as you observe, is
+ not the problem).  Sorry for the duplication.
 
-Ditto. For me, the change was very welcome. Sure, usually the status =20
-output is short, but on those occasions where it isn't (big file =20
-reorganizations etc) I was quite sick of doing the "git status, oops =20
-that output was too long let's try again, git -p status" dance. It was =
-=20
-also incongruous with my very first experiences with Git, where I had =20
-been pleasantly surprised that "git log" automatically invoked the =20
-pager whereas "svn log" just spewed output into my console until ^C.
+cheers!
+	-blf-
 
-Cheers,
-Wincent
+--=20
+=E2=80=9CHow many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
+sso.com
