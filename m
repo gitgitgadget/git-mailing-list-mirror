@@ -1,78 +1,61 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 3 Jul 2008 22:10:34 +0200
-Message-ID: <E80011CA-A8D7-4019-8CE4-CDA226A75608@wincent.com>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org> <20080703021541.GK18147@mail.rocksoft.com> <alpine.DEB.1.00.0807031303080.9925@racer> <08353871-5C94-4E97-9589-DC3980C47CD4@wincent.com> <20080703190829.GA18205@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tim Stoakes <tim@stoakes.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 03 22:14:07 2008
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Cherry picking instead of merges.
+Date: Thu, 3 Jul 2008 22:13:54 +0200
+Message-ID: <20080703201354.GA3546@steel.home>
+References: <20080703182650.GA11166@old.davidb.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 03 22:14:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEVBh-0003qS-DT
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 22:13:53 +0200
+	id 1KEVCi-0004Ap-GV
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 22:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756120AbYGCUMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2008 16:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756096AbYGCUMU
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 16:12:20 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:45406 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756058AbYGCUMT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jul 2008 16:12:19 -0400
-Received: from cuzco.lan (249.pool85-53-23.dynamic.orange.es [85.53.23.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m63KAYr5004381
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 3 Jul 2008 16:10:36 -0400
-In-Reply-To: <20080703190829.GA18205@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.924)
+	id S1751830AbYGCUN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 16:13:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbYGCUN6
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 16:13:58 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49844 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871AbYGCUN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 16:13:57 -0400
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20xf4EDTSQ==
+Received: from tigra.home (Fae7d.f.strato-dslnet.de [195.4.174.125])
+	by post.webmailer.de (fruni mo59) (RZmta 16.45)
+	with ESMTP id g05a87k63Jx4cl for <git@vger.kernel.org>;
+	Thu, 3 Jul 2008 22:13:55 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C755D277BD
+	for <git@vger.kernel.org>; Thu,  3 Jul 2008 22:13:54 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 7205D56D27; Thu,  3 Jul 2008 22:13:54 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080703182650.GA11166@old.davidb.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87313>
 
-El 3/7/2008, a las 21:08, Jeff King escribi=F3:
-
-> On Thu, Jul 03, 2008 at 03:37:30PM +0200, Wincent Colaiuta wrote:
+David Brown, Thu, Jul 03, 2008 20:26:50 +0200:
+> Yesterday, one developer cherry picked company B's changes into a branch.
+> It appears he resolved the conflicts for each commit, which should make
+> bisecting easier.
 >
->>>> This [changing git status to use the pager automatically] was =20
->>>> quite a
->>>> nasty change to sneak on people I think.
->>>
->>> Well, I think that a command producing pages and pages of output
->>> without stopping is useless.  Therefore, _I_ maintain that it makes
->>> tons of  sense.
->>
->> Ditto. For me, the change was very welcome. Sure, usually the status
->> output is short, but on those occasions where it isn't (big file
->> reorganizations etc) I was quite sick of doing the "git status, oops
->> that output was too long let's try again, git -p status" dance. It =20
->> was
->> also incongruous with my very first experiences with Git, where I ha=
-d
->> been pleasantly surprised that "git log" automatically invoked the
->> pager whereas "svn log" just spewed output into my console until ^C.
->
-> I think there is not much point in discussing whether "git status"
-> should use a pager. It is obvious at this point that some people love
-> it, and some people despise it, and it seems to be a matter of =20
-> personal
-> preference. The only sane way forward seems to be configurable paging=
-=2E
+> The problem is that we now have very divergent history.
 
-I completely agree. I just don't like it when people use words like =20
-"nasty" and "sneak" to describe a change that was discussed in one =20
-short and one long thread prior to being incorporated. But you're =20
-right; there's no sense in discussing the "whether" any more.
+...and have absolutely no idea on what were the changes of the company
+B were made.
 
-Cheers,
-Wincent
+> Any advice on how to make use of how he resolved conflicts in order to
+> merge company B's changes in using git-merge. ...
+
+Let that developer do the merge next time? Or let the B do a merge
+with a commonly accepted base?
