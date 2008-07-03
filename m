@@ -1,49 +1,97 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: RFC: grafts generalised
-Date: Thu, 3 Jul 2008 02:16:14 +0200
-Message-ID: <20080703001614.GG12567@machine.or.cz>
-References: <20080702143519.GA8391@cuci.nl> <20080703001331.GF12567@machine.or.cz>
+From: David =?utf-8?q?=E2=80=98Bombe=E2=80=99_Roden?= 
+	<bombe@pterodactylus.net>
+Subject: [BUG] Git looks for repository in wrong directory
+Date: Thu, 3 Jul 2008 02:16:26 +0200
+Message-ID: <200807030216.28921.bombe@pterodactylus.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Jul 03 02:17:13 2008
+Content-Type: multipart/signed;
+  boundary="nextPart3156964.kHAUVueWX4";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 03 02:17:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KECVc-0001PZ-LY
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:17:13 +0200
+	id 1KECVu-0001Su-GQ
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 02:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbYGCAQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2008 20:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbYGCAQQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:16:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59916 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751499AbYGCAQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2008 20:16:15 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 9ED0E1E4C026; Thu,  3 Jul 2008 02:16:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080703001331.GF12567@machine.or.cz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751650AbYGCAQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2008 20:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbYGCAQe
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jul 2008 20:16:34 -0400
+Received: from wing.pterodactylus.net ([89.207.253.13]:50616 "HELO
+	pterodactylus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751623AbYGCAQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2008 20:16:33 -0400
+Received: (qmail 22132 invoked from network); 3 Jul 2008 00:16:30 -0000
+Received: from unknown (HELO ?192.168.178.19?) (10.98.86.10)
+  by 10.98.86.1 with SMTP; 3 Jul 2008 00:16:30 -0000
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87210>
 
-On Thu, Jul 03, 2008 at 02:13:31AM +0200, Petr Baudis wrote:
->   So, the real solution is to take the commit objects you want to
-> modify, create new commit objects, then graft the new commit on all the
-> old commit children. It fits neatly in the Git philosophy, there is no
-> need at all to tweak the current infrastructure for this and it should
-> be trivial to automate, too.
+--nextPart3156964.kHAUVueWX4
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-  Oops, sorry; I stopped reading the branch of the thread I thought was
-going off on a different tangent one post too early. :-)
+Hi.
 
--- 
-				Petr "Pasky" Baudis
-The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
+The following sequence:
+
+mkdir r1
+cd r1
+git init
+echo a > a
+git add a
+git commit -m "a"
+cd ..
+git clone r1 r1.git
+cd r1
+echo b > b
+git add b
+git commit -m "b"
+cd ..
+git ls-remote r1
+git ls-remote r1/.
+
+shows that Git searches for a repository in the wrong place. I think the la=
+st=20
+two commands should output exactly the same but "git ls-remote r1" actually=
+=20
+lists the contents of "r1.git". Is that a bug or is this (extremely=20
+confusing) behaviour intended?
+
+This also afflicts the behaviour of "git-pull" and friends. I cloned a=20
+directory and tried to pull new commits but I repeatedly got stuck with an=
+=20
+older commit. I have to move a second directory that was named like the fir=
+st=20
+directory, only with an appended ".git", out of the way so that I could=20
+access the repository I asked for.
+
+Used Git version is 1.5.6.1 on Linux 2.6.25.6 (Gentoo/x86).
+
+
+	David
+
+--nextPart3156964.kHAUVueWX4
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkhsGlwACgkQsh8Hgp5TwkPbNgCgi6oRP82cJ+W/W8rve8DpGSon
+s9EAoLoYVP2UCQ6s+Mu2OZ9UEV+vcm32
+=gxzY
+-----END PGP SIGNATURE-----
+
+--nextPart3156964.kHAUVueWX4--
