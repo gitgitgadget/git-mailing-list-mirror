@@ -1,56 +1,50 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: RFC: grafts generalised
-Date: Thu, 3 Jul 2008 11:37:19 +0200
-Message-ID: <20080703093719.GD29838@cuci.nl>
-References: <20080702143519.GA8391@cuci.nl> <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com> <37fcd2780807021058r5ed820cfmdc98f98f36d5c8ae@mail.gmail.com> <20080702181021.GD16235@cuci.nl> <486C6B8E.5040202@viscovery.net> <20080703073041.GA28566@cuci.nl> <486C82F5.6080405@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: PATCH: allow ':/<oneline prefix>' notation to specify a specific
+ file
+Date: Thu, 3 Jul 2008 13:53:13 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807031352350.9925@racer>
+References: <279b37b20807030152g13492d5dxf21367ab17719993@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:53:11 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 15:06:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEOIj-0005Az-TR
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:52:42 +0200
+	id 1KEOVb-0001lY-IG
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 15:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757269AbYGCMlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756641AbYGCMk7
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:40:59 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:41934 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756482AbYGCMk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:40:58 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 479AA4E02; Thu,  3 Jul 2008 11:37:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <486C82F5.6080405@viscovery.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757878AbYGCMzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757860AbYGCMzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:55:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48744 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757745AbYGCMzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:55:07 -0400
+Received: (qmail invoked by alias); 03 Jul 2008 12:55:05 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp042) with SMTP; 03 Jul 2008 14:55:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/j+dxT3Jzj8RPWUzX8lhv/OZjrysYRuIRynU53lH
+	2I0KM8JRYmMs1D
+X-X-Sender: gene099@racer
+In-Reply-To: <279b37b20807030152g13492d5dxf21367ab17719993@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87284>
 
-Johannes Sixt wrote:
->Stephen R. van den Berg schrieb:
->> Actually, ripple-through changes are rare.  In the current project it
->> seems I need exactly one, but it's buried deep in the past (sadly).
->> The reason why I need it, is to make sure that git-bisect will work for
->> any revision in the past (i.e. the tree contained/contains some
->> too-clever-for-their-own-good $Revision$-expansion dependencies)
+Hi,
 
->But you do know that you don't need to apply the change *now*; you can
->apply it at bisect-time? Unless you expect you or your mere mortal
->coworkers are going to do dozens of bisects into that part of the history,
->I wouldn't change history *like*this*. But of course, I don't understand
->the circumstances enough, so... just my 2 cents.
+is there a reason you break the mail thread quite a couple of times?  It 
+makes it really hard to follow when you get 300+ mails a day.
 
-That is exactly the case, I do expect dozens of bisects.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-This is a day for firm decisions!  Or is it?
+Thankyouverymuch,
+Dscho
