@@ -1,85 +1,188 @@
-From: "Adam Brewster" <adambrewster@gmail.com>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Thu, 3 Jul 2008 19:13:09 -0400
-Message-ID: <c376da900807031613pc63639du356946f8daeabb29@mail.gmail.com>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com>
-	 <c376da900806301549r6044cd35r5a23baa405570808@mail.gmail.com>
-	 <7vzlp1jh1o.fsf@gitster.siamese.dyndns.org>
-	 <486AC8E0.60002@verizon.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>
-To: "Mark Levedahl" <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Fri Jul 04 01:14:24 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC/PATCH] Remove 'stupid' merge strategy.
+Date: Fri,  4 Jul 2008 01:18:21 +0200
+Message-ID: <1215127101-14932-1-git-send-email-vmiklos@frugalware.org>
+References: <alpine.LFD.1.10.0807030947360.18105@woody.linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 01:19:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEY0L-0002vL-8T
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 01:14:21 +0200
+	id 1KEY4y-00040G-Tn
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 01:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756358AbYGCXNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 19:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbYGCXNX
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 19:13:23 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:16309 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756246AbYGCXNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 19:13:22 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so443870ywe.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2008 16:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wOvJ5wVbcplZoadXdR4bh5SlkK9D3z1vAxEf5MmjkNY=;
-        b=W0JrlFel1kus0IDK8ZPVhFXUvcvJCPUe9Wi0TcLuXKO9KLcJ9pJ+23TufHRWHtx3LG
-         aUun87Z7Ts/xGbv2bR7BNt8jKUj8mDA5MBPJ+GsAIYCq+gy+YQbuijVO6oOAazbnfxRr
-         d6Cdjkpls7KpJj3h+b0SI6wPFP69Us1yjJfvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oB4jFTT8jlEZgH/PPRqhJ+tWj7pGyG4ridedY+hCuxKClUlRApPxJVE/6H2faZzRe3
-         POV6B5XSa+WvRJZE1OcA4sV/Ghkrw6EhJaRMFCDyJL1ab8YNqTYdPdKTu0+mu3Y/M5WW
-         DCi8wC8b3WQd9Ukxv1RL0vQXYWDNV37bOe10A=
-Received: by 10.151.42.6 with SMTP id u6mr1044508ybj.213.1215126789480;
-        Thu, 03 Jul 2008 16:13:09 -0700 (PDT)
-Received: by 10.150.205.18 with HTTP; Thu, 3 Jul 2008 16:13:09 -0700 (PDT)
-In-Reply-To: <486AC8E0.60002@verizon.net>
-Content-Disposition: inline
+	id S1756346AbYGCXSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 19:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756380AbYGCXSK
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 19:18:10 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:48425 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756198AbYGCXSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 19:18:09 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id 125D61DDC5B;
+	Fri,  4 Jul 2008 01:18:07 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 8A6741A9833; Fri,  4 Jul 2008 01:18:21 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.1
+In-Reply-To: <alpine.LFD.1.10.0807030947360.18105@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87334>
 
-Hi Mark,
+As pointed out by Linus, this strategy tries to take the best merge
+base, but 'recursive' just does it better. If one needs something more
+than 'resolve' then he/she should really use 'recursive' and not
+'stupid'.
+---
 
-Thank you for your help, and I'm sorry I didn't get back to you sooner.
+On Thu, Jul 03, 2008 at 10:08:54AM -0700, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> I think -stupid should probably be removed.
 
+Here is an attempt to do so.
+
+> The history of -stupid is from doing the simple single-tree resolve
+> that
+> git-read-tree can do, but then doing the obvious hack of just trying
+> to
+> pick the base that gives the least number of conflicts.
 >
-> I have implemented (in script form) a different approach: basically, I just
-> keep a local copy of the refs pushed out via bundle in refs/remotes/*, just
-> as for any other remote, and then use those as the basis for later bundles.
-> My longer term goal is to integrate this into git push, so that with a
-> properly configured remote "git push foo" will create a bundle based upon
-> the local knowledge of the remote's basis and update the local copy of the
-> refs.
+> HOWEVER.
 >
-> [...]
+>  (...)
 
-That's a good way to do things.  I tend to like my system better
-because it's a little more flexible and it doesn't pollute git-branch
--a and gitk --all, also as I said before I like the bundle creation
-and the basis update to be separated.
+Thanks for the detailed answer.
 
-How do you deal with the case where you want to include remote refs in
-the bundle?  Don't they get saved as
-refs/remotes/remote/remotes/somewhere-else/master?
+ .gitignore          |    1 -
+ Makefile            |    3 +-
+ git-merge-stupid.sh |   80 ---------------------------------------------------
+ 3 files changed, 1 insertions(+), 83 deletions(-)
+ delete mode 100755 git-merge-stupid.sh
 
-Adam
+diff --git a/.gitignore b/.gitignore
+index 4ff2fec..8054d9d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -75,7 +75,6 @@ git-merge-one-file
+ git-merge-ours
+ git-merge-recursive
+ git-merge-resolve
+-git-merge-stupid
+ git-merge-subtree
+ git-mergetool
+ git-mktag
+diff --git a/Makefile b/Makefile
+index 78e08d3..bddd1a7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -241,7 +241,6 @@ SCRIPT_SH += git-merge-octopus.sh
+ SCRIPT_SH += git-merge-one-file.sh
+ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-merge.sh
+-SCRIPT_SH += git-merge-stupid.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-parse-remote.sh
+ SCRIPT_SH += git-pull.sh
+@@ -1429,7 +1428,7 @@ check-docs::
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+-		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
++		git-merge-resolve | git-merge-subtree | \
+ 		git-fsck-objects | git-init-db | \
+ 		git-?*--?* ) continue ;; \
+ 		esac ; \
+diff --git a/git-merge-stupid.sh b/git-merge-stupid.sh
+deleted file mode 100755
+index f612d47..0000000
+--- a/git-merge-stupid.sh
++++ /dev/null
+@@ -1,80 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2005 Linus Torvalds
+-#
+-# Resolve two trees, 'stupid merge'.
+-
+-# The first parameters up to -- are merge bases; the rest are heads.
+-bases= head= remotes= sep_seen=
+-for arg
+-do
+-	case ",$sep_seen,$head,$arg," in
+-	*,--,)
+-		sep_seen=yes
+-		;;
+-	,yes,,*)
+-		head=$arg
+-		;;
+-	,yes,*)
+-		remotes="$remotes$arg "
+-		;;
+-	*)
+-		bases="$bases$arg "
+-		;;
+-	esac
+-done
+-
+-# Give up if we are given two or more remotes -- not handling octopus.
+-case "$remotes" in
+-?*' '?*)
+-	exit 2 ;;
+-esac
+-
+-# Find an optimum merge base if there are more than one candidates.
+-case "$bases" in
+-?*' '?*)
+-	echo "Trying to find the optimum merge base."
+-	G=.tmp-index$$
+-	best=
+-	best_cnt=-1
+-	for c in $bases
+-	do
+-		rm -f $G
+-		GIT_INDEX_FILE=$G git read-tree -m $c $head $remotes \
+-			 2>/dev/null ||	continue
+-		# Count the paths that are unmerged.
+-		cnt=`GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l`
+-		if test $best_cnt -le 0 -o $cnt -le $best_cnt
+-		then
+-			best=$c
+-			best_cnt=$cnt
+-			if test "$best_cnt" -eq 0
+-			then
+-				# Cannot do any better than all trivial merge.
+-				break
+-			fi
+-		fi
+-	done
+-	rm -f $G
+-	common="$best"
+-	;;
+-*)
+-	common="$bases"
+-	;;
+-esac
+-
+-git update-index --refresh 2>/dev/null
+-git read-tree -u -m $common $head $remotes || exit 2
+-echo "Trying simple merge."
+-if result_tree=$(git write-tree  2>/dev/null)
+-then
+-	exit 0
+-else
+-	echo "Simple merge failed, trying Automatic merge."
+-	if git-merge-index -o git-merge-one-file -a
+-	then
+-		exit 0
+-	else
+-		exit 1
+-	fi
+-fi
+-- 
+1.5.6.1
