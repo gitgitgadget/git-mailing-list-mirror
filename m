@@ -1,113 +1,136 @@
-From: "Adam Brewster" <adambrewster@gmail.com>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Thu, 3 Jul 2008 19:38:21 -0400
-Message-ID: <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com>
-	 <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com>
-	 <20080702032155.GA13581@sigill.intra.peff.net>
-	 <200807021144.46423.jnareb@gmail.com>
-	 <20080703195915.GA18532@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH (WIP)] Git.pm: Add get_config() method and related subroutines
+Date: Fri, 4 Jul 2008 01:45:12 +0200
+Message-ID: <200807040145.14724.jnareb@gmail.com>
+References: <200807031824.55958.jnareb@gmail.com> <486D36CB.3090400@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Mark Levedahl" <mdl123@verizon.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Jakub Narebski" <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 01:39:24 2008
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 01:46:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEYOZ-0008Lz-3R
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 01:39:23 +0200
+	id 1KEYVi-0001JX-2d
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 01:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756749AbYGCXi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 19:38:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756650AbYGCXi0
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 19:38:26 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:47228 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753360AbYGCXiZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 19:38:25 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so446320ywe.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2008 16:38:22 -0700 (PDT)
+	id S1753798AbYGCXpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 19:45:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753745AbYGCXpt
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 19:45:49 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:24119 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458AbYGCXps (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 19:45:48 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1235613rvb.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 16:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=RNFwSTZjeAaYG8qGwXCHUHucPo+VW70WIMD+ihKiZHg=;
-        b=COnfIIgnqp70bbqnl7YhOJG/bvdjPds7wx8poNHK0ovpzAUC35iyIFLzn3e97R+JeJ
-         KEWnXB2vow/LuBbffgSNRCIvkE/ZL7z8tJSAx7/yWAsfSF3oyzEPoT/e7MzJkkDRnQEs
-         xD2adt9GpD81Hf7NqttCBo8hBwLgPafUlEjZE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=dEuQ3MGC05nHOl0mJSW3Vd1WvoWFKaqAWobr16ykU/Y=;
+        b=UniOXRj0QJMsOimSE3l1Ba4zisRERdxSfWRt4ZRN3foJwiYNSVcWkO2vzIi9CKW8ki
+         BI5fjCFc12b8DD0P9FxOV6QWntijNVrJYAlr3pZa7H+bkaYpt2qu2SGIYxUd7QfFrW6l
+         FDHe6PkDZa1ccGVP9voK3PvTm0CH1nDp1ygF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=JBLVbKCwpLAWhhpuIQBv5kP2QsJ1eS27lg9vfz+snD/bb+4ydA/hZv5mlbpL1zyNhI
-         NER/If/H6ReUHJP4FZqsZRHU8Gr/J+kcXLLSbAobP7wwRa1umQzuc/Mxj6A9aJ1edXjO
-         9x3mSBo15+wMpJwOSf0xBkRt650vpjeNTzhyI=
-Received: by 10.150.206.21 with SMTP id d21mr1047569ybg.227.1215128301982;
-        Thu, 03 Jul 2008 16:38:21 -0700 (PDT)
-Received: by 10.150.205.18 with HTTP; Thu, 3 Jul 2008 16:38:21 -0700 (PDT)
-In-Reply-To: <20080703195915.GA18532@sigill.intra.peff.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Qk0emAVR9hfkDQHVylNB50DDDVY13jV4d4+DYnp5LgwMXTwsY39lBqItcivjv514ib
+         zsaKF+A97ygoc468+PN5szGkYs/B5A7FoRhHICYgyhyleBzM2jMnHArzBbYvR2ucipDY
+         3TSaz8rC3IFBhm0dQYhA291A9+VESp/xyOzQ8=
+Received: by 10.115.14.1 with SMTP id r1mr1895708wai.206.1215128747462;
+        Thu, 03 Jul 2008 16:45:47 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.222.3])
+        by mx.google.com with ESMTPS id i5sm3109498mue.2.2008.07.03.16.45.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jul 2008 16:45:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <486D36CB.3090400@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87337>
 
+Lea Wiemann wrote:
+> Jakub Narebski wrote:
+>>
+>> Add get_config([PREFIX]) method [...]
 >
-> Yes, certainly it is more flexible to have them split. I find Adam's
-> argument the most compelling, though. Think about moving commits as a
-> multi-step protocol:
->
->  1. Local -> Remote: Here are some new commits, basis..current
->  2. Remote -> Local: OK, I am now at current.
->  3. Local: update basis to current
->
-> git-push has the luxury of asking for "basis" each time, so we know it
-> is correct. But with bundles, we can't do that. And failing to update
-> "basis" means we will send some extra commits next time. But updating
-> "basis" when we shouldn't means that the next bundle will be broken.
->
-> So I think even if people _do_ want to update "basis" when they create
-> the bundle (because it is more convenient, and they are willing to
-> accept the possibility of losing sync), it is trivial to create that
-> workflow on top of the separate components. But I can see why somebody
-> might prefer the separate components, and it is hard to create them if
-> the feature is lumped into "git-bundle" (meaning in such a way that you
-> cannot perform the steps separately; obviously git-bundle --basis would
-> be equivalent).
->
-> But I am not a bundle user, so that is just my outsider perspective.
->
-> -Peff
->
+> FWIW, I don't think it'll make much of a difference for gitweb, since
+> the 'git config -l' output is cached anyway, but it's good someone's
+> extracting this.  Do you have any user for that function besides gitweb?
 
-How does everybody feel about the following:
+If I remember correctly git-cvsserver used to have Perl parser for
+_simplified_ config format, but now it uses `git config -l -z` or
+`git config -l`.  Other git commands written in Perl which uses a lot
+of configuration option could use it, like git-svn or git-send-email,
+although for them shaving a little bit of execution time is not that
+important (git-svn from what I understand still calls git-config
+for each config variable).
+ 
+>>  * Should config_val_to_bool and config_val_to_int throw error or
+>>    just return 'undef' on invalid values?
+> 
+> I suspect that if you have, say, command line tools, throwing an error
+> is better UI behavior than silently ignoring the entry.  And developers
+> can always catch errors if they want to.
 
-- Leave git-basis as a small perl script.
+Actually for ->config_bool(<VARIABLE>) throwing error was the _only
+way_ to distinguish between *non-existent* config variable (which we
+can test using exists($config{<VARIABLE>}) when using ->get_config(),
+and for which ->config_bool(<VARIABLE>) returned 'undef'), and
+*non-bolean* value (for which config_val_to_bool($config{<VARIABLE>})
+can return 'undef', and for which ->config_bool(<VARIABLE>) threw
+error).
+ 
+So we don't _need_ to _throw_ an error; we can detect error condition
+in other way.
 
-- Add a -b/--basis option in git-bundle that calls git-basis.  Any
-objects mentioned in the output would be excluded from the bundle.
-Multiple --basis options will call git-basis once with several
-arguments to generate the intersection of specified bases.
+>>  * Is "return wantarray ? %config : \%config;" DWIM-mery good style?
+> 
+> Gitweb uses it as well, and it seems reasonable IMVHO.
 
-- (maybe) Add an option "--update-bases" to automatically call
-git-basis --update after the bundle is created successfully.
+Errr... if I remember correctly, the code in gitweb is by yours truly
+:-), and as I have stated I am *not* a Perl hacker.
+ 
+>>  * Should ->get_config() use ->command_output_pipe, or simpler
+>>    ->command() method, reading whole config into array?
+> 
+> Does it make a difference?  If you're worried about performance, config
+> files are so short that it won't matter; use the easier path.
 
-- Change the syntax a bit so git-basis --show does what git-basis
-alone does now (because the user will no longer need to interact with
-that command).
+I think using ->command() would be easier...
+ 
+>>  * What should ->get_config() method be named? ->get_config()
+>>    or perhaps ->config_hash(), or ->config_hashref()?
+> 
+> Regarding the method naming, how about making this an object oriented
+> interface?  [...] if you can wait a week or so, you could maybe
+> integrate this into the Git::Repo interface [...]
 
-There's still plenty of potential for improvements, like a --gc mode
-to clean up basis files, a --rewind option to undo an incorrect
---update, or improvements in the way it calculates intersections, but
-I think that with these changes the system is as simple as possible
-while maximizing flexibility, utility, and usability.
+I'd rather have both functional (of sorts) and object interface.
+Git::Repo / Git::Config could use methods / subroutines from Git.pm;
 
-Adam
+>>  * What should ->get_config() have as an optional parameter:
+>>    PREFIX (/^$prefix/o), or simply SECTION (/^(?:$section)\./o)?
+> 
+> Off the top of my head, I don't see much need for a prefix parameter, so
+> I'd go for 'section'.
+
+O.K. (that is by the way how it is done in gitweb).
+ 
+> I haven't been able to answer all of the questions, but I hope this helps.
+
+Thanks a lot!
+
+-- 
+Jakub Narebski
+Poland
