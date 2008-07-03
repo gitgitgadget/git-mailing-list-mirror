@@ -1,76 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: about c8af1de9 (git status uses pager)
-Date: Thu, 3 Jul 2008 15:08:29 -0400
-Message-ID: <20080703190829.GA18205@sigill.intra.peff.net>
-References: <alpine.LNX.1.10.0806212319410.22036@fbirervta.pbzchgretzou.qr> <19f34abd0806211430x3d7195d8idc61b7103f899947@mail.gmail.com> <7vzlpe8nyo.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0806212343560.18093@fbirervta.pbzchgretzou.qr> <alpine.LNX.1.10.0806221107540.15126@fbirervta.pbzchgretzou.qr> <7vtzflolis.fsf@gitster.siamese.dyndns.org> <7vtzfln5zw.fsf@gitster.siamese.dyndns.org> <20080703021541.GK18147@mail.rocksoft.com> <alpine.DEB.1.00.0807031303080.9925@racer> <08353871-5C94-4E97-9589-DC3980C47CD4@wincent.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 2/3] git-add--interactive: remove hunk coalescing
+Date: Thu, 3 Jul 2008 21:24:13 +0200
+Message-ID: <200807032124.22037.trast@student.ethz.ch>
+References: <1215035956-26192-1-git-send-email-trast@student.ethz.ch> <7vtzf77wjp.fsf@gitster.siamese.dyndns.org> <7vod5f7w3f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tim Stoakes <tim@stoakes.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 21:09:35 2008
+Content-Type: multipart/signed;
+  boundary="nextPart86797036.yBi7A5U0oE";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 21:25:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEUBS-0005eM-Qv
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 21:09:35 +0200
+	id 1KEUQW-0003Fy-QR
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 21:25:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbYGCTIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 15:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbYGCTIc
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 15:08:32 -0400
-Received: from peff.net ([208.65.91.99]:4052 "EHLO peff.net"
+	id S1753489AbYGCTYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 15:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbYGCTYJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 15:24:09 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:24763 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752673AbYGCTIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 15:08:31 -0400
-Received: (qmail 3257 invoked by uid 111); 3 Jul 2008 19:08:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 03 Jul 2008 15:08:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jul 2008 15:08:29 -0400
-Content-Disposition: inline
-In-Reply-To: <08353871-5C94-4E97-9589-DC3980C47CD4@wincent.com>
+	id S1753253AbYGCTYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 15:24:07 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 3 Jul 2008 21:24:04 +0200
+Received: from [192.168.0.2] ([84.75.156.10]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 3 Jul 2008 21:24:04 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vod5f7w3f.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 03 Jul 2008 19:24:04.0708 (UTC) FILETIME=[5B296A40:01C8DD42]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87306>
 
-On Thu, Jul 03, 2008 at 03:37:30PM +0200, Wincent Colaiuta wrote:
+--nextPart86797036.yBi7A5U0oE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->>> This [changing git status to use the pager automatically] was quite a
->>> nasty change to sneak on people I think.
->>
->> Well, I think that a command producing pages and pages of output
->> without stopping is useless.  Therefore, _I_ maintain that it makes
->> tons of  sense.
->
-> Ditto. For me, the change was very welcome. Sure, usually the status
-> output is short, but on those occasions where it isn't (big file
-> reorganizations etc) I was quite sick of doing the "git status, oops
-> that output was too long let's try again, git -p status" dance. It was
-> also incongruous with my very first experiences with Git, where I had
-> been pleasantly surprised that "git log" automatically invoked the
-> pager whereas "svn log" just spewed output into my console until ^C.
+Junio C Hamano wrote:
+>=20
+> > Blindly concatenating the above two and feeding them to "git apply" *ma=
+y*
+> > happen to work by accident, not by design.  This very much feels like a
+> > hack of "This works most of the time for me, your mileage may vary" kin=
+d,
+> > which we would want to avoid when we can.
+>=20
+> Well, I changed my mind.  Let's run with this and see what happens.
 
-I think there is not much point in discussing whether "git status"
-should use a pager. It is obvious at this point that some people love
-it, and some people despise it, and it seems to be a matter of personal
-preference. The only sane way forward seems to be configurable paging.
-So the next steps are:
+In support of this being a feature of git-apply, notice that it even
+handles the situation correctly where the context of a hunk has been
+influenced by previous hunks, as in
 
-  - getting a configurable paging patch that is good enough; I just
-    posted another trial, but there are still a few caveats. I would
-    love to hear commentary on whether people find it acceptable.
+@@ -1,2 +1,3 @@
+ foo
++quux
+ bar
+@@ -1,3 +1,4 @@
+ foo
+ quux
++abc
+ bar
 
-  - once there is a patch, there is still the matter of "on by default,
-    make people configure off" versus "off by default, make people
-    configure on". And then you can make arguments about how the default
-    changes the new user experience, but hopefully there will be a
-    little less vehemence on both sides, since it is "here's what new
-    users should see" and not "here's what I am forced to see every
-    day".
+With Don Zickus' recent patch, it also handles patches that go over
+the same file twice.
 
--Peff
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+
+
+--nextPart86797036.yBi7A5U0oE
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkhtJ2UACgkQqUud07tmzP0ePgCeMSCDyMaMGLC6/M80wbwvzSci
+qOkAn1hZyq+epq3f99NsBcA7qBJjEDqg
+=2ijV
+-----END PGP SIGNATURE-----
+
+--nextPart86797036.yBi7A5U0oE--
