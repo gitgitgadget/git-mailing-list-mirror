@@ -1,86 +1,56 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: PATCH: allow ':/<oneline prefix>' notation to specify a specific file
-Date: Thu, 3 Jul 2008 01:52:45 -0700
-Message-ID: <279b37b20807030152g13492d5dxf21367ab17719993@mail.gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: RFC: grafts generalised
+Date: Thu, 3 Jul 2008 11:37:19 +0200
+Message-ID: <20080703093719.GD29838@cuci.nl>
+References: <20080702143519.GA8391@cuci.nl> <37fcd2780807021019t76008bbfq265f8bf15f59c178@mail.gmail.com> <37fcd2780807021058r5ed820cfmdc98f98f36d5c8ae@mail.gmail.com> <20080702181021.GD16235@cuci.nl> <486C6B8E.5040202@viscovery.net> <20080703073041.GA28566@cuci.nl> <486C82F5.6080405@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 14:53:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jul 03 14:53:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEOIn-0005Az-4D
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:52:45 +0200
+	id 1KEOIj-0005Az-TR
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 14:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759851AbYGCMlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 08:41:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759846AbYGCMlo
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:41:44 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:58798 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759834AbYGCMln (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 08:41:43 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so777464wfd.4
-        for <git@vger.kernel.org>; Thu, 03 Jul 2008 05:41:43 -0700 (PDT)
-Received: by 10.143.30.16 with SMTP id h16mr3488161wfj.44.1215075165360;
-        Thu, 03 Jul 2008 01:52:45 -0700 (PDT)
-Received: by 10.142.14.12 with HTTP; Thu, 3 Jul 2008 01:52:45 -0700 (PDT)
+	id S1757269AbYGCMlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 08:41:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756641AbYGCMk7
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 08:40:59 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:41934 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756482AbYGCMk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 08:40:58 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 479AA4E02; Thu,  3 Jul 2008 11:37:19 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <486C82F5.6080405@viscovery.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87283>
 
-Although the rev-parse documentation claims that the tree-ish:path/to/file
-syntax is applicable to all tree-ish forms this is not so when using the
-:/ "oneline prefix" syntax introduced in v1.5.0.1-227-g28a4d94.
+Johannes Sixt wrote:
+>Stephen R. van den Berg schrieb:
+>> Actually, ripple-through changes are rare.  In the current project it
+>> seems I need exactly one, but it's buried deep in the past (sadly).
+>> The reason why I need it, is to make sure that git-bisect will work for
+>> any revision in the past (i.e. the tree contained/contains some
+>> too-clever-for-their-own-good $Revision$-expansion dependencies)
 
-This patch allows git show ":/PATCH: allow":sha1_name.c to show the
-change to the file changed by this patch.
+>But you do know that you don't need to apply the change *now*; you can
+>apply it at bisect-time? Unless you expect you or your mere mortal
+>coworkers are going to do dozens of bisects into that part of the history,
+>I wouldn't change history *like*this*. But of course, I don't understand
+>the circumstances enough, so... just my 2 cents.
 
-Signed-off-by: Eric Raible <raible@gmail.com>
----
- sha1_name.c |   15 +++++++++++++--
- 1 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index b0b2167..a1acfcd 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -684,6 +684,7 @@ int get_sha1_with_mode(const char *name, unsigned
-char *sha1, unsigned *mode)
- 	int ret, bracket_depth;
- 	int namelen = strlen(name);
- 	const char *cp;
-+	char *copy, *colon;
-
- 	*mode = S_IFINVALID;
- 	ret = get_sha1_1(name, namelen, sha1);
-@@ -697,8 +698,18 @@ int get_sha1_with_mode(const char *name, unsigned
-char *sha1, unsigned *mode)
- 		int stage = 0;
- 		struct cache_entry *ce;
- 		int pos;
--		if (namelen > 2 && name[1] == '/')
--			return get_sha1_oneline(name + 2, sha1);
-+		if (namelen > 2 && name[1] == '/') {
-+			name += 2;
-+			colon = strrchr(name, ':');
-+			if (!get_sha1_oneline(name, sha1) || !colon)
-+				return 0;
-+			copy = xstrdup(name);
-+			*(colon = strrchr(copy, ':')) = '\0';
-+			ret = get_sha1_oneline(copy, sha1) ||
-+				get_tree_entry(sha1, colon+1, sha1, mode);
-+			free(copy);
-+			return ret;
-+		}
- 		if (namelen < 3 ||
- 		    name[2] != ':' ||
- 		    name[1] < '0' || '3' < name[1])
+That is exactly the case, I do expect dozens of bisects.
 -- 
-1.5.6.1.1356.g3be5f.dirty
+Sincerely,
+           Stephen R. van den Berg.
+
+This is a day for firm decisions!  Or is it?
