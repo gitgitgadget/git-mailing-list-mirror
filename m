@@ -1,68 +1,113 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: "make test" works again (sort-of) on cygwin.
-Date: Thu, 3 Jul 2008 22:26:37 +0200
-Message-ID: <20080703202637.GC3546@steel.home>
-References: <486D0FFC.5090308@ramsay1.demon.co.uk>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [RFC/PATCH (WIP)] Git.pm: Add get_config() method and related
+ subroutines
+Date: Thu, 03 Jul 2008 22:30:03 +0200
+Message-ID: <486D36CB.3090400@gmail.com>
+References: <200807031824.55958.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jul 03 22:27:47 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 22:31:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEVP1-0008Ho-Gc
-	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 22:27:39 +0200
+	id 1KEVSz-0001GU-LP
+	for gcvg-git-2@gmane.org; Thu, 03 Jul 2008 22:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbYGCU0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 16:26:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbYGCU0k
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 16:26:40 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:44243 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752294AbYGCU0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 16:26:39 -0400
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20xf4EDTSQ==
-Received: from tigra.home (Fae7d.f.strato-dslnet.de [195.4.174.125])
-	by post.webmailer.de (mrclete mo28) (RZmta 16.45)
-	with ESMTP id 3066d4k63I1sRF ; Thu, 3 Jul 2008 22:26:37 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C7C4B277BD;
-	Thu,  3 Jul 2008 22:26:37 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id B585D56D27; Thu,  3 Jul 2008 22:26:37 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <486D0FFC.5090308@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752675AbYGCUao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 16:30:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYGCUao
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 16:30:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:37836 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586AbYGCUan (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 16:30:43 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so414394ywe.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 13:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=EGRpn9rTjYN8gh4IXcCw0OPtT0eianLN2jSmcZZWfmE=;
+        b=V+Cx2wbPUJhXyOHu4yPYgC9hAch2Bs+ad6IVw1kpVOlrU77U1bMIyPw9ZASTi+Nv55
+         IzHZHhtKGUtFkcOtV1MEt7D2DHLkUOrRdsmjSIhnkVplskZNEsgB/2kUPx7vmhzg9Uro
+         216Cg4l7U0v0EfrGnGgxebwytfKBWoAmcwZoY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=lmoRuvGeEk9LR5OA8k34axNbQ48Z8nm0XvkqgaVPwnjvvbrx1GZ4jD92hlR5ZFTHuJ
+         CrQN3pLb1JucjBGmjAPXU5vlfUpD65rdIpaMyoKhVS4FwQoM2MNZX47S8ALL5EvUqvu5
+         76kdbzIjAqdeQEL0w7dWs1eHYZB+CwQHOi/4s=
+Received: by 10.115.73.20 with SMTP id a20mr1180151wal.32.1215117035929;
+        Thu, 03 Jul 2008 13:30:35 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.221.215])
+        by mx.google.com with ESMTPS id 28sm1177086fkx.1.2008.07.03.13.30.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jul 2008 13:30:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200807031824.55958.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87316>
 
-Ramsay Jones, Thu, Jul 03, 2008 19:44:28 +0200:
-> I spent many hours (not recently) trying to determine the reason for
-> the crash, but it seems to be essentially "random gremlins" :-)
-> However, since I mostly use Linux, I've not been very motivated to
-> find a solution, particularly when git works fine (touch wood) when
-> used for real work. (i.e. only "make test" crashes my machine).
-> Also, as Alex and Shawn have not reported problems, I have assumed
-> it is something specific to my environment. Dunno.
+Jakub Narebski wrote:
+> Add get_config([PREFIX]) method [...]
+>
+> I hope I am not repeating [Lea's] work.
 
-I haven't tried to run the test on XP recently (it is a production
-workstation, after all), but the last time I risked it was locked up
-hard. Win2k runs (and I even can work, well, browse, on it)
+No, you're not.  (You could've checked my repo at
+<http://repo.or.cz/w/git/gitweb-caching.git> ;-).)
 
-> Anyhow, the "sort-of" in the subject line, relates to the fact that
-> I am seeing some test failures.  In particular, all tests in
-> t0004-unwritable.sh and tests 21->24 in t3700-add.sh. All of these
-> tests involve chmod/permissions ...
+FWIW, I don't think it'll make much of a difference for gitweb, since
+the 'git config -l' output is cached anyway, but it's good someone's
+extracting this.  Do you have any user for that function besides gitweb?
 
-Don't run "make test" as root (or "backup operator" on windows).
-OTOH, a windows machine is almost useless, unless you're a member of
-local administrators group (which includes "backup" permission).
+>  * Should config_val_to_bool and config_val_to_int throw error or
+>    just return 'undef' on invalid values?
+
+I suspect that if you have, say, command line tools, throwing an error
+is better UI behavior than silently ignoring the entry.  And developers
+can always catch errors if they want to.
+
+>  * Is "return wantarray ? %config : \%config;" DWIM-mery good style?
+
+Gitweb uses it as well, and it seems reasonable IMVHO.
+
+>  * Should ->get_config() use ->command_output_pipe, or simpler
+>    ->command() method, reading whole config into array?
+
+Does it make a difference?  If you're worried about performance, config
+files are so short that it won't matter; use the easier path.
+
+>  * What should ->get_config() method be named? ->get_config()
+>    or perhaps ->config_hash(), or ->config_hashref()?
+
+Regarding the method naming, how about making this an object oriented
+interface?  Bless the hash, and allow calls like
+$config_hash->get('key').  I'm not sure how to name the constructor, but
+if you can wait a week or so, you could maybe integrate this into the
+Git::Repo interface (under Git/Config.pm), so you'd end up with ...
+
+    Git::Repo->new(directory => 'repo.git')->config->get('key')
+
+... where config() transparently parses the config file if it hasn't
+been read already.  (The Git.pm API admittedly seems a little messy --
+I'll post about that later -- so adding it to Git::Repo might be better
+indeed.)
+
+>  * What should ->get_config() have as an optional parameter:
+>    PREFIX (/^$prefix/o), or simply SECTION (/^(?:$section)\./o)?
+
+Off the top of my head, I don't see much need for a prefix parameter, so
+I'd go for 'section'.
+
+I haven't been able to answer all of the questions, but I hope this helps.
+
+-- Lea
