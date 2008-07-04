@@ -1,69 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [StGit PATCH 2/2] Implement "stg refresh --edit" again
-Date: Fri, 4 Jul 2008 09:32:54 +0200
-Message-ID: <200807040932.56166.jnareb@gmail.com>
-References: <20080704063755.9637.23750.stgit@yoghurt> <20080704064036.9637.52951.stgit@yoghurt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 09:34:36 2008
+From: Pedro Melo <melo@simplicidade.org>
+Subject: Re: [OT] Your branch is ahead of the tracked remote branch 'origin/master' by 50 commits.
+Date: Fri, 4 Jul 2008 09:35:31 +0100
+Message-ID: <25F65C20-1B9B-4626-AD06-449D8613D394@simplicidade.org>
+References: <20080701091347.GA11817@elte.hu> <7vlk0mne5d.fsf@gitster.siamese.dyndns.org> <20080701100725.GE31309@elte.hu> <20080701111601.GT4729@genesis.frugalware.org> <20080701112235.GC11809@elte.hu>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Fri Jul 04 10:36:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEfoP-0000NF-EA
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 09:34:33 +0200
+	id 1KEgmO-00036F-Cb
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 10:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667AbYGDHdf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jul 2008 03:33:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755678AbYGDHdf
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 03:33:35 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:64106 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755652AbYGDHde (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 03:33:34 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1413877rvb.1
-        for <git@vger.kernel.org>; Fri, 04 Jul 2008 00:33:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=QjylIRgBR3Y1NOaJ+33GU/2DBmViZtmGFibPuXA7OwQ=;
-        b=O0OT2ZUQc7KBwqp9yyc7mU8ej9MoBHm98tYCmNmAtkDWynwL0kUhTK/HLneaWu3GnI
-         4YTNRVuunpxEZZcWfmmDplVCw5c1Frmn5XGmZVNm8787KC++TUc3r+tBUR/14jCQdeov
-         kBdFTkkPlS3gE+CI/ZhZgo7Q8LFQ3jJBiqrck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=WYwhg8kqLTtCKMlPwSJWnNc5Oic0ioLko2FDvAQYF7p5Kl8Snptb1bkbpmkn/QokNR
-         6ON47fe+szdEm/SuGsDGQrLFW3k5lm0xjKBYc+p/39dvrswq1qs80t9izNgpQB1cQ+z9
-         F3l8Wis11EQQrq2ev2HTScqO9r8ZhMvvFOJac=
-Received: by 10.114.180.1 with SMTP id c1mr2983750waf.85.1215156813557;
-        Fri, 04 Jul 2008 00:33:33 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.222.3])
-        by mx.google.com with ESMTPS id 4sm1382808fge.5.2008.07.04.00.33.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Jul 2008 00:33:32 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080704064036.9637.52951.stgit@yoghurt>
-Content-Disposition: inline
+	id S1752872AbYGDIff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 04:35:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbYGDIff
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 04:35:35 -0400
+Received: from mail.sl.pt ([212.55.140.13]:35080 "EHLO sl.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752630AbYGDIfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 04:35:34 -0400
+Received: (qmail 14252 invoked from network); 4 Jul 2008 08:35:31 -0000
+Received: from unknown (HELO [10.0.0.128]) (melo@[195.23.56.26])
+          (envelope-sender <melo@simplicidade.org>)
+          by mail-sl (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 4 Jul 2008 08:35:31 -0000
+In-Reply-To: <20080701112235.GC11809@elte.hu>
+Jabber-Id: melo@simplicidade.org
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87372>
 
-Karl Hasselstr=C3=B6m napisa=C5=82:
+Hi,
 
-> The -e/--edit flag to "stg refresh" was dropped between v0.13 and
-> v0.14, causing severe user dissatisfaction. This patch restores it
+On Jul 1, 2008, at 12:22 PM, Ingo Molnar wrote:
+> [ Oh, and i could switch between git versions without having to  
+> rebuild
+>   ;-) ]
 
-Thanks a lot!
---=20
-Jakub Narebski
-Poland
+hmms... Can you just use
+
+version=`git-describe`
+./configure --prefix=/usr/local/git-$version
+make && sudo make install
+sudo sh -c 'rm -f /usr/local/git && ln -s /usr/local/git-$version / 
+usr/local/git'
+
+and stick /usr/local/git/bin in your path?
+
+Changing git versions is just a ln -s away.
+
+Best regards,
+-- 
+Pedro Melo
+Blog: http://www.simplicidade.org/notes/
+XMPP ID: melo@simplicidade.org
+Use XMPP!
