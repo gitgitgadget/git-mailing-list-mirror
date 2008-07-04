@@ -1,68 +1,58 @@
-From: "Denis Bueno" <dbueno@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: can't push to ransom ssh port ?
-Date: Fri, 4 Jul 2008 09:33:09 -0400
-Message-ID: <6dbd4d000807040633l6210e0cdtf37293ba44a52374@mail.gmail.com>
+Date: Fri, 4 Jul 2008 14:32:45 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807041432060.9925@racer>
 References: <912ec82a0807040628k14c8acd1ree9d82b68f69e080@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Neshama Parhoti" <pneshama@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 15:34:13 2008
+To: Neshama Parhoti <pneshama@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 15:35:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KElQS-0002ER-9p
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 15:34:12 +0200
+	id 1KElRo-0002jg-K3
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 15:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753480AbYGDNdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 09:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753478AbYGDNdM
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 09:33:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:16279 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753599AbYGDNdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 09:33:11 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so463086fgg.17
-        for <git@vger.kernel.org>; Fri, 04 Jul 2008 06:33:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=KVsRiCRpVICQof6nHRmBbyMccbV5Qi0d8x5bdxIdrTo=;
-        b=D37xsZb0lz7DuXtsYqMXLJmjhQKKQqAnoD/kqpQiORNqPcCzrutq8y3dlpnwYanLq2
-         Yev/Yk9SbhPl+ykH8OGeexWZTt+m30dr4xhn0JaiGSVElx2nN3FJ2u2gjULWUQvhF6t1
-         XRkHXAOGXoivo3aepmqCHdTTVtdKX74a4OLhU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=owobWSyi3o0lHkvDKPFfqMMo/6pwgoRAMmrO4cQ3NKr8KdS5jEKsqKS66UxJSgUxL5
-         PNoFBXhlCI6kn0OOrZQGwya218NN4UBzTOfcchE+18HGS2fAFdvuOFI9wPUnYsoMCsKp
-         jeoDvipERGHeFpZ/MD2fSkoZIIvmL7fZXhZho=
-Received: by 10.86.29.19 with SMTP id c19mr817093fgc.28.1215178389556;
-        Fri, 04 Jul 2008 06:33:09 -0700 (PDT)
-Received: by 10.86.30.2 with HTTP; Fri, 4 Jul 2008 06:33:09 -0700 (PDT)
+	id S1753659AbYGDNej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 09:34:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753627AbYGDNej
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 09:34:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56308 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753581AbYGDNej (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 09:34:39 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 13:34:37 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp052) with SMTP; 04 Jul 2008 15:34:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180uwFxcLk0Q5RN9QSaL8kd8Hvkcv7QoOnh5ZxXxu
+	6nZ6ZNctRghtWB
+X-X-Sender: gene099@racer
 In-Reply-To: <912ec82a0807040628k14c8acd1ree9d82b68f69e080@mail.gmail.com>
-Content-Disposition: inline
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87389>
 
-On Fri, Jul 4, 2008 at 09:28, Neshama Parhoti <pneshama@gmail.com> wrote:
+Hi,
+
+On Fri, 4 Jul 2008, Neshama Parhoti wrote:
+
+> Doing the following:
+> 
+> git push myuser@myip:~/gitrepo
+> 
+> Connects to ssh port 22 on myip.
+> 
 > Is there a way to tell git to connect to a random port X ?
 
->From the man page for git-push (git push --help):
+You could use a URL like "ssh://myuser@myip:X/home/myuser/gitrepo".
 
-   One of the following notations can be used to name the remote repository:
-
-   ....
-   o ssh://[user@]host.xz[:port]/path/to/repo.git/
-
--- 
-                              Denis
+Hth,
+Dscho
