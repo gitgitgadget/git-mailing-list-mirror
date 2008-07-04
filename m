@@ -1,65 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: "make test" works again (sort-of) on cygwin.
-Date: Fri, 4 Jul 2008 02:04:54 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807040201500.2849@eeepc-johanness>
-References: <486D0FFC.5090308@ramsay1.demon.co.uk>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Question about git-merge-stupid
+Date: Fri, 4 Jul 2008 02:07:01 +0200
+Message-ID: <20080704000701.GX4729@genesis.frugalware.org>
+References: <20080703123314.GS4729@genesis.frugalware.org> <alpine.LFD.1.10.0807030947360.18105@woody.linux-foundation.org> <7v4p76y154.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 04 02:06:16 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="1xJJiECQTZ8+YlWm"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 02:08:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEYoI-0004t3-T1
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:05:59 +0200
+	id 1KEYqH-0005Qw-Qe
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116AbYGDAE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 20:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752895AbYGDAE5
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:04:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47034 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751136AbYGDAE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 20:04:57 -0400
-Received: (qmail invoked by alias); 04 Jul 2008 00:04:55 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp004) with SMTP; 04 Jul 2008 02:04:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jrZp8ciSjDXzPNr0cBVGlmLzMLR1jf8R+Nxxjy5
-	tpTte4BkYz9z8x
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <486D0FFC.5090308@ramsay1.demon.co.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753262AbYGDAHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 20:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbYGDAHE
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:07:04 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:55046 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752580AbYGDAHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 20:07:03 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 4DDE01B2575;
+	Fri,  4 Jul 2008 02:07:02 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 8C32B44698;
+	Fri,  4 Jul 2008 01:36:48 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id A3D6A11901F1; Fri,  4 Jul 2008 02:07:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v4p76y154.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87342>
 
-Hi,
 
-On Thu, 3 Jul 2008, Ramsay Jones wrote:
+--1xJJiECQTZ8+YlWm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hi *,
-> 
-> Having upgraded to version 1.5.6 (via tarball), I can "make test" once
-> again, without crashing my machine.
+On Thu, Jul 03, 2008 at 04:54:31PM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> It is called stupid for a reason ;-).
+>=20
+> It has been sitting there as an example for a long time, and I do
+> not think anybody minds removing it.
 
-Earlier, I would have been more than ready to suggest using msysGit.  But 
-as I became more than just frustrated with "users" (after all, Git users 
-are supposed to be developers), I refrain more and more from doing so.
+OK, then should I resend a patch that moves it to contrib/examples?
 
-Having said that, you _might_ get lucky trying msysGit, even from Cygwin.  
-Just do not complain to me when it does not work.
+--1xJJiECQTZ8+YlWm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-P.S.: if it does not work, and you fix a few issues, but have problems 
-with others, I might be more inclined to help you, just because you did 
-fix some issues.
+iEYEARECAAYFAkhtaaUACgkQe81tAgORUJbtfgCbBwUX8tJpCsIsYRy7qMf/bYoY
+PzsAn1k1+kSNl7voXE4hfDLknceAmoMm
+=Vern
+-----END PGP SIGNATURE-----
+
+--1xJJiECQTZ8+YlWm--
