@@ -1,119 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Fri, 4 Jul 2008 02:44:10 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807040237580.2849@eeepc-johanness>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com>  <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com>  <20080702032155.GA13581@sigill.intra.peff.net>  <200807021144.46423.jnareb@gmail.com>  <20080703195915.GA18532@sigill.intra.peff.net>
- <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: RFC: grafts generalised
+Date: Fri, 4 Jul 2008 02:43:53 +0200
+Message-ID: <200807040243.54739.jnareb@gmail.com>
+References: <20080702143519.GA8391@cuci.nl> <m3lk0kfdo1.fsf@localhost.localdomain> <20080702173203.GA16235@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 02:45:15 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Fri Jul 04 02:45:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZQF-0004NU-2f
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:45:11 +0200
+	id 1KEZQT-0004Ph-U3
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbYGDAoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 20:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754061AbYGDAoN
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:44:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53201 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754043AbYGDAoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 20:44:12 -0400
-Received: (qmail invoked by alias); 04 Jul 2008 00:44:10 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp048) with SMTP; 04 Jul 2008 02:44:10 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19S+tEwgRlSEsCZLoVUOItceBuLwDQ0vE0E7m29Us
-	UXDCDUYoxyI8O0
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1754041AbYGDAo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 20:44:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754061AbYGDAo2
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:44:28 -0400
+Received: from rv-out-0506.google.com ([209.85.198.233]:61112 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754041AbYGDAo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 20:44:27 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1257216rvb.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2008 17:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GHvsyRUvosAI/RcOxoDymjnFNUEFpaWa8gkHcRwE2xE=;
+        b=xJHbDqOHNq97oeWbwGeCAM/fO2ytDHg70fu/Iic1zjs96+ITM28xPb1jAP+rm22MxY
+         m6uUYbA89ChTFLmlANkFQMJwWkWz7hQb551leWU/A2gdbGodCXZmszq+eD7idmPAOJtt
+         zCEes0wl7X9E0higUec2VaOl2sE03I7RUvceM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ti++f0H1Lr9Ssbti0wa9R3gmAq47XMag7/qa3m92NsNaGtrN4gZdFzxIGMSKrKEE99
+         ysWM3bXC9x+JUXO5SCjMXhaEvvLUiGeWWFuTkxxQ7RuT2BvdMYlyLOpCitnqWXpBPszw
+         WBbYD1QRH9VyIyOHHHVLz/V3ut1gL6q6EUdqQ=
+Received: by 10.114.184.11 with SMTP id h11mr1579167waf.175.1215132266947;
+        Thu, 03 Jul 2008 17:44:26 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.222.3])
+        by mx.google.com with ESMTPS id y34sm1214518iky.10.2008.07.03.17.43.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jul 2008 17:44:25 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080702173203.GA16235@cuci.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87350>
 
-Hi,
-
-On Thu, 3 Jul 2008, Adam Brewster wrote:
-
-> > Yes, certainly it is more flexible to have them split. I find Adam's 
-> > argument the most compelling, though. Think about moving commits as a 
-> > multi-step protocol:
-> >
-> >  1. Local -> Remote: Here are some new commits, basis..current
-> >  2. Remote -> Local: OK, I am now at current.
-> >  3. Local: update basis to current
-> >
-> > git-push has the luxury of asking for "basis" each time, so we know it 
-> > is correct. But with bundles, we can't do that. And failing to update 
-> > "basis" means we will send some extra commits next time. But updating 
-> > "basis" when we shouldn't means that the next bundle will be broken.
-> >
-> > So I think even if people _do_ want to update "basis" when they create 
-> > the bundle (because it is more convenient, and they are willing to 
-> > accept the possibility of losing sync), it is trivial to create that 
-> > workflow on top of the separate components. But I can see why somebody 
-> > might prefer the separate components, and it is hard to create them if 
-> > the feature is lumped into "git-bundle" (meaning in such a way that 
-> > you cannot perform the steps separately; obviously git-bundle --basis 
-> > would be equivalent).
-> >
-> > But I am not a bundle user, so that is just my outsider perspective.
+On Wed, 2 July 2008, Stephen R. van den Berg wrote:
+> Jakub Narebski wrote:
+>>
+>> [...] So I think that it would
+>> be better to provide generic git-filter-branch filter which can
+>> understand this "generalized grafts" file format, or rather
+>> 'description of changes' file.  Put it in contrib/, and here you
+>> go...
 > 
-> How does everybody feel about the following:
-> 
-> - Leave git-basis as a small perl script.
+> The problem is that the process of fixing history is an iterative one,
+> which can take many months, and everytime you make a change, the
+> correctness needs to be viewed using gitk.
+[...]
 
-I'd rather not.
+I wanted to propose that git-filter-branch generic "generalized grafts"
+file based filter should be accompanied by extending gitk so it
+understand this format to...
 
-> - Add a -b/--basis option in git-bundle that calls git-basis.  Any 
->   objects mentioned in the output would be excluded from the bundle.  
->   Multiple --basis options will call git-basis once with several 
->   arguments to generate the intersection of specified bases.
+...but after reading wonderfull suggestion to create new commits with
+corrected contents, and insert them (replace older version by them)
+using grafts, thought and brought independently by Dmitry Potapov and
+Petr Baudis, I think that you would be best with extending gitk to
+support this way instead.
 
-So the only function of -b would be to fork() && exec() a _shell_ script?  
-I don't like that at all.
+You would have to extend gitk to maintain reverse revision mapping
+(from revision to its children), and then you would be able to edit
+history interactively from within gitk, with gitk correcting its
+internal structures to redisplay changed commits, and creating commits
+and doing grafting behind the scenes for later git-filter-branch
+run.
 
-> - (maybe) Add an option "--update-bases" to automatically call git-basis 
->   --update after the bundle is created successfully.
-
-Rather, have it as a feature to auto-detect if there is a ".basis" file of 
-the same basename (or, rather ".state", a I find "basis" less than 
-descriptive), and rewrite it if it was there.
-
-It could be forced by a to-be-introduced "--state" option to git-bundle.
-
-> There's still plenty of potential for improvements, like a --gc mode
-> to clean up basis files,
-
-umm, why?  "rm" is not simple enough?
-
-> a --rewind option to undo an incorrect --update,
-
-Rather hard, would you not think?  The information is either not there, or 
-you store loads of cruft in the .state file.
-
-> or improvements in the way it calculates intersections,
-
-Umm.  How so?
-
-> but I think that with these changes the system is as simple as possible 
-> while maximizing flexibility, utility, and usability.
-
-I am not convinced.  This sort of feature belongs into git-bundle.  It 
-certainly does not deserve being blessed by yet-another git-* command, 
-when we are constantly being bashed for having _way_ too many _already_.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Poland
