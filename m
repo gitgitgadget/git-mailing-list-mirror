@@ -1,74 +1,58 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH/RFC] Fix some warnings (on cygwin) to allow -Werror
-Date: Fri, 4 Jul 2008 11:46:36 +0200
-Message-ID: <E4D3A379-9EB2-49D1-AD42-CFFC453A2B08@zib.de>
-References: <486CF5A9.5060104@ramsay1.demon.co.uk>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 04 11:48:08 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] help.c: Add support for htmldir relative to
+ git_exec_path()
+Date: Fri, 4 Jul 2008 13:35:24 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807041334010.9925@racer>
+References: <394A4A6F-3D31-4E38-A312-B49DE54FBBDD@zib.de> <1215162566-16062-1-git-send-email-prohaska@zib.de> <7vk5g2uhi9.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 14:38:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEhtf-0000wT-Q2
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 11:48:08 +0200
+	id 1KEkYO-0004XH-6e
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 14:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752627AbYGDJrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 05:47:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYGDJrF
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 05:47:05 -0400
-Received: from mailer.zib.de ([130.73.108.11]:65411 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751190AbYGDJrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 05:47:04 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m649kG7b012285;
-	Fri, 4 Jul 2008 11:46:22 +0200 (CEST)
-Received: from [192.168.178.22] (p5499FDC0.dip.t-dialin.net [84.153.253.192])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m649kB3f018010
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 4 Jul 2008 11:46:12 +0200 (MEST)
-In-Reply-To: <486CF5A9.5060104@ramsay1.demon.co.uk>
-X-Mailer: Apple Mail (2.924)
+	id S1753580AbYGDMhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 08:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbYGDMhV
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 08:37:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60021 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753572AbYGDMhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 08:37:20 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 12:37:18 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp043) with SMTP; 04 Jul 2008 14:37:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18aWpgB9bUaKpG+6LZjrq401f4lNmeUUosTuwkSVZ
+	wke4vfc+WV5V27
+X-X-Sender: gene099@racer
+In-Reply-To: <7vk5g2uhi9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87383>
 
+Hi,
 
-On Jul 3, 2008, at 5:52 PM, Ramsay Jones wrote:
+On Fri, 4 Jul 2008, Junio C Hamano wrote:
 
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> ---
->
-> Despite the subject line, this should be useful on any system for
-> which uint32_t is defined to be unsigned long rather than
-> unsigned int. (and where the return type of htonl() is similarly
-> defined).
+> Could you check if there are copy-and-pasted duplicated code you can 
+> factor out before continuing this direction?
 
-For MINGW, we fixed these warnings in the compat layer, see cd800eecc2:
+Note also that Hannes tried very hard to get rid of those ugly "#ifdef 
+__MINGW32__"s by declaring/overriding functions in git-compat-util.h.
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index a87cc96..6bc049a 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -186,6 +186,10 @@ pid_t mingw_spawnvpe(const char *cmd, const char  
-**argv, char **env);
-  void mingw_execvp(const char *cmd, char *const *argv);
-  #define execvp mingw_execvp
+I think that is such a good practice that we should not stop here.
 
-+static inline unsigned int git_ntohl(unsigned int x)
-+{ return (unsigned int)ntohl(x); }
-+#define ntohl git_ntohl
-+
-  sig_handler_t mingw_signal(int sig, sig_handler_t handler);
-  #define signal mingw_signal
-
-	Steffen
+Ciao,
+Dscho
