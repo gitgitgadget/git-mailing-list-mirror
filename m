@@ -1,72 +1,49 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Fix apply --recount handling of no-EOL line
-Date: Fri,  4 Jul 2008 21:10:14 +0200
-Message-ID: <1215198614-22148-1-git-send-email-trast@student.ethz.ch>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: dumb protocol problems
+Date: Fri, 04 Jul 2008 12:10:53 -0700
+Message-ID: <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
+References: <20080704190007.GU28001@tigger.digitaltorque.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 21:11:04 2008
+X-From: git-owner@vger.kernel.org Fri Jul 04 21:12:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEqgQ-0001vx-No
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:11:03 +0200
+	id 1KEqhK-0002Bw-UI
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493AbYGDTKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 15:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbYGDTKE
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:10:04 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:40883 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750722AbYGDTKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 15:10:03 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 4 Jul 2008 21:10:01 +0200
-Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 4 Jul 2008 21:10:00 +0200
-X-Mailer: git-send-email 1.5.6.1.330.g2ff03
-X-OriginalArrivalTime: 04 Jul 2008 19:10:01.0022 (UTC) FILETIME=[8EB2E5E0:01C8DE09]
+	id S1753314AbYGDTLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 15:11:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbYGDTLA
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:11:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40875 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752891AbYGDTLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 15:11:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 793D817BE2;
+	Fri,  4 Jul 2008 15:10:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0578917BE0; Fri,  4 Jul 2008 15:10:55 -0400 (EDT)
+In-Reply-To: <20080704190007.GU28001@tigger.digitaltorque.ca> (Michael P.
+ Soulier's message of "Fri, 4 Jul 2008 15:00:07 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EF35ABD2-49FC-11DD-8CD7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87411>
 
-If a patch modifies the last line of a file that previously had no
-terminating '\n', it looks like
+"Michael P. Soulier" <msoulier@digitaltorque.ca> writes:
 
--old text
-\ No newline at end of file
-+new text
+> git --version
+> git version 1.5.6.rc0
 
-Hence, a '\' line does not signal the end of the hunk.  This modifies
-'git apply --recount' to take this into account.
+That snapshot lacks this fix:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-This is just the straightforward fix.  A more elaborate solution might
-check if the previous line was a ' ' and '+', and if so, consider the
-hunk terminated anyway.
-
-- Thomas
-
- builtin-apply.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 194f03b..fb85a5b 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -931,7 +931,7 @@ static void recount_diff(char *line, int size, struct fragment *fragment)
- 			newlines++;
- 			continue;
- 		case '\\':
--			break;
-+			continue;
- 		case '@':
- 			ret = size < 3 || prefixcmp(line, "@@ ");
- 			break;
--- 
-1.5.6.1.330.g2ff03
+	6eec46b (fix sha1_pack_index_name(), 2008-05-28)
