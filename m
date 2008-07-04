@@ -1,79 +1,64 @@
-From: "Michael P. Soulier" <msoulier@digitaltorque.ca>
-Subject: Re: dumb protocol problems
-Date: Fri, 4 Jul 2008 15:19:24 -0400
-Message-ID: <20080704191924.GV28001@tigger.digitaltorque.ca>
-References: <20080704190007.GU28001@tigger.digitaltorque.ca> <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix apply --recount handling of no-EOL line
+Date: Fri, 4 Jul 2008 20:34:17 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807042034040.9925@racer>
+References: <1215198614-22148-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xYeFQzU4VZLrHqxU"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 21:20:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 04 21:37:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEqpo-0004hr-5p
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:20:44 +0200
+	id 1KEr5n-000118-4G
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbYGDTTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 15:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbYGDTTq
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:19:46 -0400
-Received: from mail.storm.ca ([209.87.239.66]:33315 "EHLO mail.storm.ca"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750848AbYGDTTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 15:19:46 -0400
-Received: from kanga.digitaltorque.ca (hs-216-106-102-70.storm.ca [216.106.102.70])
-	by mail.storm.ca (8.14.2+Sun/8.14.2) with ESMTP id m64JJUhK010242;
-	Fri, 4 Jul 2008 15:19:35 -0400 (EDT)
-Received: from tigger.digitaltorque.ca (tigger.digitaltorque.ca [192.168.1.3])
-	by kanga.digitaltorque.ca (Postfix) with ESMTP id 7166A6;
-	Fri,  4 Jul 2008 15:23:08 -0400 (EDT)
-Received: by tigger.digitaltorque.ca (Postfix, from userid 500)
-	id E67DF23F8A; Fri,  4 Jul 2008 15:19:24 -0400 (EDT)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1751139AbYGDTgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 15:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751567AbYGDTgL
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:36:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56148 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750976AbYGDTgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 15:36:10 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 19:36:08 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp002) with SMTP; 04 Jul 2008 21:36:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4fI9Kp/X4YAIytuqk8aMOEr/qtMmmroK62NZHea
+	YpGgwTt/olyqXB
+X-X-Sender: gene099@racer
+In-Reply-To: <1215198614-22148-1-git-send-email-trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87413>
 
+Hi,
 
---xYeFQzU4VZLrHqxU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 4 Jul 2008, Thomas Rast wrote:
 
-On 04/07/08 Junio C Hamano said:
+> If a patch modifies the last line of a file that previously had no
+> terminating '\n', it looks like
+> 
+> -old text
+> \ No newline at end of file
+> +new text
 
-> That snapshot lacks this fix:
->=20
-> 	6eec46b (fix sha1_pack_index_name(), 2008-05-28)
+Oh!
 
-Confirmed, it works now.=20
+> Hence, a '\' line does not signal the end of the hunk.  This modifies
+> 'git apply --recount' to take this into account.
+> 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Thanks,
-Mike
---=20
-Michael P. Soulier <msoulier@digitaltorque.ca>
-"Any intelligent fool can make things bigger and more complex... It
-takes a touch of genius - and a lot of courage to move in the opposite
-direction." --Albert Einstein
+ACK!
 
---xYeFQzU4VZLrHqxU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFIbne8KGqCc1vIvggRAryFAJ4yj47FWJi9tLxGzkPSOunzMz3LMQCggyQs
-+9EZcmubOxEXmD4tHXhEaBM=
-=d2uk
------END PGP SIGNATURE-----
-
---xYeFQzU4VZLrHqxU--
+Ciao,
+Dscho
