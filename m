@@ -1,67 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH 1/4] Add git-sequencer shell prototype
-Date: Fri, 4 Jul 2008 03:11:51 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807040309580.2849@eeepc-johanness>
-References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807031142540.9925@racer> <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
- <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <20080703210950.GC6677@leksak.fem-net> <alpine.DEB.1.00.0807040138090.2849@eeepc-johanness> <20080704010616.GH6677@leksak.fem-net>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: [PATCH 03/15] manpages: fix bogus whitespace
+Date: Thu, 3 Jul 2008 20:14:20 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807032001110.24268@harper.uchicago.edu>
+References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
+ <7viqvqov01.fsf@gitster.siamese.dyndns.org> <Pine.GSO.4.62.0807022322380.16085@harper.uchicago.edu>
+ <Pine.GSO.4.62.0807022354520.16085@harper.uchicago.edu>
+ <7vprpuwmjj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jul 04 03:13:13 2008
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 03:15:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZrI-0001aW-6f
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:13:08 +0200
+	id 1KEZtt-00027C-KK
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:15:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758103AbYGDBME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 21:12:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758037AbYGDBME
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:12:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47445 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755632AbYGDBLx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 21:11:53 -0400
-Received: (qmail invoked by alias); 04 Jul 2008 01:11:51 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp018) with SMTP; 04 Jul 2008 03:11:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18jBoZr4nsjwnfpV8wRtXpHeGwHkW3HGC+WVDlZLV
-	QlzKvdH5bNO6i8
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080704010616.GH6677@leksak.fem-net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1753621AbYGDBOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 21:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbYGDBOv
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:14:51 -0400
+Received: from smtp02.uchicago.edu ([128.135.12.75]:43930 "EHLO
+	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753189AbYGDBOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 21:14:50 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m641ERsF030468;
+	Thu, 3 Jul 2008 20:14:27 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m641ELVA024512;
+	Thu, 3 Jul 2008 20:14:21 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <7vprpuwmjj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87355>
 
-Hi,
+Junio C Hamano wrote:
 
-On Fri, 4 Jul 2008, Stephan Beyer wrote:
-
-> Johannes Schindelin wrote:
->
-> > and you can easily abort a rebase if you explicitely asked for an 
-> > invalid strategy.
+> Jonathan Nieder <jrnieder@uchicago.edu> writes:
 > 
-> Aborting after fixing a lot of conflicts in the sequencer process is 
-> really annoying.
+>> -	is successful.	This option disables the output shown by
+>> +	is successful.  This option disables the output shown by
+> 
+> How did you find *this* one?  It took me a few minutes to finally notice
+> that you are talking about the HT.  In other words, I had to work hard to
+> get distracted by it.
 
-I think it should use rerere (if activated, which I have given up 
-advocating to be the default).
+I use vim with listchars=tab:>-,nbsp:~,trail:$ (I was bit too
+many times by Makefiles mysteriously breaking) so the tab is
+visibile.
 
-> So I've chosen to never abort automatically.
+If it feels like too much churn for no visible effect, I don't
+mind if you drop the patch. I feel bad for sending so many
+documentation patches that don't add to the content in any
+significant way.
 
-Who said anything about automatically?  Of _course_, the user has to abort 
-it.  Or try to continue with "git sequencer --continue -s ours".
-
-Ciao,
-Dscho
+Jonathan
