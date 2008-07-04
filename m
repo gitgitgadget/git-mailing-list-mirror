@@ -1,83 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Fri, 4 Jul 2008 15:51:11 -0400
-Message-ID: <20080704195110.GA3752@sigill.intra.peff.net>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com> <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com> <20080702032155.GA13581@sigill.intra.peff.net> <200807021144.46423.jnareb@gmail.com> <20080703195915.GA18532@sigill.intra.peff.net> <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com>
+From: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+Subject: Re: [PATCH 06/12] connect: Fix custom ports with plink
+ (Putty's ssh)
+Date: Fri, 04 Jul 2008 16:05:48 -0400
+Message-ID: <486E829C.608@thewritingpot.com>
+References: <486C425D.8090904@thewritingpot.com> <alpine.DEB.1.00.0807031313140.9925@racer>
+Reply-To: edwardzyang@thewritingpot.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 21:52:21 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: msysGit <msysgit@googlegroups.com>, git@vger.kernel.org, gitster@pobox.com, junio@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Jul 04 22:07:04 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.241])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KErKM-0005Xa-JW
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:52:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbYGDTvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 15:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYGDTvT
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:51:19 -0400
-Received: from peff.net ([208.65.91.99]:2627 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751826AbYGDTvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 15:51:19 -0400
-Received: (qmail 3531 invoked by uid 111); 4 Jul 2008 19:51:14 -0000
-Received: from c-75-75-7-53.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.7.53)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 04 Jul 2008 15:51:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jul 2008 15:51:11 -0400
-Content-Disposition: inline
-In-Reply-To: <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id 1KErYY-0001Dt-Gn
+	for gcvm-msysgit@m.gmane.org; Fri, 04 Jul 2008 22:07:01 +0200
+Received: by wa-out-0708.google.com with SMTP id n36so2885143wag.21
+        for <gcvm-msysgit@m.gmane.org>; Fri, 04 Jul 2008 13:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received:date
+         :from:subject:in-reply-to:to:cc:message-id:mime-version:content-type
+         :content-transfer-encoding:references:user-agent:reply-to:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=kO9IKCgVtngt8VqkcDsBN69b4f3NcGNJKo0iUXZ/7mU=;
+        b=qPW5yB87uTBrAvZ5+4N/U06XVp8s2tIXKkeqfD6IFix45jvZBcTSMwPk30EMr2mbsg
+         wAOqZwmnvwQu5UdgRthMO/K4oM0b8zQqb0ocuxu1PWNjvwdyGeSkDn6qLy1GMLBLz41P
+         xgA5oMB4jArTFMFTrEV8PC2eqJgxejAVu6v70=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date
+         :from:subject:in-reply-to:to:cc:message-id:mime-version:content-type
+         :content-transfer-encoding:references:user-agent:reply-to:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=YNLNPXcT5ZQ4UXAuNknLnGZcR9rlTrHqnmBEr8BpqIdhZ7GLlkRtrPH663kq5eRYpb
+         M7aBMZEObVwUvsIRbhRBVMCSxLPbbfQU65+Xp6rVYbInLaLZAOhVMsHczUUMETzy/sRn
+         Mpy2F2RSFTf9YZSlu2M25Td9adHx87OBn7/8c=
+Received: by 10.114.27.19 with SMTP id a19mr146778waa.8.1215201957663;
+        Fri, 04 Jul 2008 13:05:57 -0700 (PDT)
+Received: by 10.107.3.34 with SMTP id f34gr2611pri.0;
+	Fri, 04 Jul 2008 13:05:57 -0700 (PDT)
+X-Sender: edwardzyang@thewritingpot.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.90.78.10 with SMTP id a10mr2120398agb.12.1215201957073; Fri, 04 Jul 2008 13:05:57 -0700 (PDT)
+Received: from mta2.srv.hcvlny.cv.net (mta2.srv.hcvlny.cv.net [167.206.4.197]) by mx.google.com with ESMTP id a28si213156pye.0.2008.07.04.13.05.56; Fri, 04 Jul 2008 13:05:57 -0700 (PDT)
+Received-SPF: neutral (google.com: 167.206.4.197 is neither permitted nor denied by best guess record for domain of edwardzyang@thewritingpot.com) client-ip=167.206.4.197;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 167.206.4.197 is neither permitted nor denied by best guess record for domain of edwardzyang@thewritingpot.com) smtp.mail=edwardzyang@thewritingpot.com
+Received: from [192.168.0.10] (ool-18e45099.dyn.optonline.net [24.228.80.153]) by mta2.srv.hcvlny.cv.net (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007)) with ESMTP id <0K3H00IJ8ZTWRFD0@mta2.srv.hcvlny.cv.net> for msysgit@googlegroups.com; Fri, 04 Jul 2008 16:05:56 -0400 (EDT)
+In-reply-to: <alpine.DEB.1.00.0807031313140.9925@racer>
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87415>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87416>
 
-On Thu, Jul 03, 2008 at 07:38:21PM -0400, Adam Brewster wrote:
 
-> There's still plenty of potential for improvements, like a --gc mode
-> to clean up basis files, a --rewind option to undo an incorrect
-> --update, or improvements in the way it calculates intersections, but
-> I think that with these changes the system is as simple as possible
-> while maximizing flexibility, utility, and usability.
+> Sorry, that argument does not fly.  "My patch is better, because I did not 
+> test your patch."
 
-I was thinking about Mark's approach, and I think there are two distinct
-differences from yours:
+Just tested, the patch works.
 
-  1. he updates the basis upon bundle creation, rather than as a
-     separate step (and I have already commented on this)
+> That is so totally untrue.  We have Perl scripts and Shell scripts (for 
+> which we need the bash), and then we have the two GUIs which use Tcl/Tk.
 
-  2. he stores the basis in the refs hierarchy
+I came up with that conclusion by grepping the Git source code for the 
+word bash; no results. Granted, it's still a null point because the 
+proposed script doesn't use any bash-specific features.
 
-I actually think '2' makes a lot of sense. Storing the basis as refs
-gets you:
+> Further, would you like to convert and maintain all people's wrapper 
+> scripts to C code inside Git?
 
-  - an easy implementation; you use existing git tools
+I was under the impression that wrapper scripts were for fleshing out 
+new APIs and implementing non-performance critical functionality, 
+without all the overhead of writing in C. There is little to no overhead 
+from this patch.
 
-  - correct reachability analysis, since the refs will be taken into
-    account by git-fsck, meaning you won't ever accidentally prune
-    your basis objects
+Anyway, Johannes still makes some pretty compelling points for the 
+wrapper script, so you can count me +1 for the wrapper.
 
-  - free logging of your basis history, in the form of reflogs
+> BTW what is the reason why Hannes' mail does not appear to be the mail 
+> you replied to in GMane, but the patch Steffen sent?
 
-  - free gc in the usual reflog way
+I actually did a "Reply" and so he was the only one who got the email at 
+first. Then I resent it to the list, as well as the other CC'ed people.
 
-IIRC, Mark suggested putting them under refs/remotes/<bundle>, and you
-objected that you didn't want to clutter that hierarchy. If that is a
-problem, you can always use refs/basis/<bundle>, which will be ignored
-by gitk and "git branch -a", but will be correctly handled by other
-tools.
-
-And then suddenly your perl script gets a lot simpler, and is either a
-short shell script, or even better, can be written in C as part of
-git-bundle. So you would have something like "git bundle --update-basis
-<basis>" instead of "git-basis", and a config option like
-"bundle.autoUpdateBasis" to update the basis whenever you create a
-bundle.
-
--Peff
+(Thus my comment at the bottom)
