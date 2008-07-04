@@ -1,100 +1,90 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH/v2] git-basis, a script to manage bases for git-bundle
-Date: Fri, 04 Jul 2008 12:47:09 -0400
-Message-ID: <486E540D.8000008@gmail.com>
-References: <1214272713-7808-1-git-send-email-adambrewster@gmail.com> <c376da900807011836i76363d74n7f1b87d66ba34cd6@mail.gmail.com> <20080702032155.GA13581@sigill.intra.peff.net> <200807021144.46423.jnareb@gmail.com> <20080703195915.GA18532@sigill.intra.peff.net> <c376da900807031638l219229bcy983ed994b37512c9@mail.gmail.com> <alpine.DEB.1.00.0807040237580.2849@eeepc-johanness>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Cherry picking instead of merges.
+Date: Fri, 4 Jul 2008 09:47:49 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0807040939150.2815@woody.linux-foundation.org>
+References: <20080703182650.GA11166@old.davidb.org> <alpine.LFD.1.10.0807031403380.2815@woody.linux-foundation.org> <20080703223949.GA23092@old.davidb.org> <20080704001003.GA19053@atjola.homenet> <20080704044032.GA4445@old.davidb.org>
+ <alpine.LFD.1.10.0807032221190.2815@woody.linux-foundation.org> <486DC4F2.70608@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Adam Brewster <adambrewster@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 04 18:48:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Brown <git@davidb.org>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jul 04 18:49:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEoSC-0003r0-GW
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 18:48:12 +0200
+	id 1KEoT0-0004Cd-3z
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 18:49:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992AbYGDQrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 12:47:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753725AbYGDQrO
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 12:47:14 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:43953 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753459AbYGDQrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 12:47:13 -0400
-Received: by an-out-0708.google.com with SMTP id d40so258282and.103
-        for <git@vger.kernel.org>; Fri, 04 Jul 2008 09:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=i7W3Wp6/zKJF1+DrZt6Y3EKkVyfH5q9yR+4ISFGGXnA=;
-        b=SXtTqoGPCh4146axz6F2//xDFrc4YI+xxn8yq7JNtU+FpztA1nEPqdSck4Y/jQL0fQ
-         Z+rWwETCseJ/+lHLrPsYxWxF7yX/a/Bfsn/cixXHQOgSGEFYN1j6vaJMb2dQKrsvL1p6
-         v0IY7YVmk7JN3u4fe+5vMleW3jMUXeqWogs1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=wAqhJJQiEjl1GFPJ9AKx+PbXai4ANQWCLyXodxAHiqKP4kh6OEQzQ/yRgkUT39SBun
-         Zk0fizzb2MNkv4Yei1Lq0xTUxNMAokOsAQUCkRdwCvnrA1NpZxSzRb8g6/TPIqB1i8ka
-         nJQsD4JBdCes8V5hTX/MsixYFJsDrhSb4G6tc=
-Received: by 10.100.41.11 with SMTP id o11mr1085592ano.144.1215190032597;
-        Fri, 04 Jul 2008 09:47:12 -0700 (PDT)
-Received: from ?192.168.1.117? ( [71.246.235.165])
-        by mx.google.com with ESMTPS id 30sm890519yxk.4.2008.07.04.09.47.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Jul 2008 09:47:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <alpine.DEB.1.00.0807040237580.2849@eeepc-johanness>
+	id S1757340AbYGDQsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 12:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757239AbYGDQsD
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 12:48:03 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51413 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756416AbYGDQsB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jul 2008 12:48:01 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m64Glong021546
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Jul 2008 09:47:52 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m64Glndh008513;
+	Fri, 4 Jul 2008 09:47:50 -0700
+In-Reply-To: <486DC4F2.70608@viscovery.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.365 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87403>
 
-Johannes Schindelin wrote:
-> I am not convinced.  This sort of feature belongs into git-bundle.  It 
-> certainly does not deserve being blessed by yet-another git-* command, 
-> when we are constantly being bashed for having _way_ too many _already_.
->
-> Ciao,
-> Dscho
->
->   
-Actually, I would like to see "normal" interface for git-bundle handled 
-by git-push, git-fetch, and git-remote. We fixed the retrieve side to 
-use git-fetch before first integration, but didn't understand the 
-semantics for creation well-enough to put into git-push. Right now, we 
-can do "git remote add bundle-nick <path-to-bundle>" and set up the remote.
 
-We should have "git push bundle-nick"  create the new bundle, updating 
-the basis refs kept somewhere in refs/* (possibly refs/remotes, possibly 
-refs/bundles?).
 
-However, we need two helpers to maintain the basis refs, both I believe 
-should be sub-commands of git-remote:
+On Fri, 4 Jul 2008, Johannes Sixt wrote:
+> 
+> FWIW, the same thing in different words is written in section
+> 
+> "Why bisecting merge commits can be harder than bisecting linear history"
+> 
+> of Documentation/user-manual.txt.
 
-- a "rewind" function to roll the refs back to a previous state because 
-the bundle didn't get applied, whatever. This is well supported by 
-reflogs, is "expire anything *newer* than time", and for convenience 
-should apply to all refs for the given remote so the user doesn't have 
-to invoke per branch on the remote. e.g., "git remote rewind bundle-nick 
-3.days.ago".
+I don't think that's the same thign at all.
 
-- a "prune" function to remove any branch for the remote that is not 
-known to the local refs/heads/* hierarchy. This is needed to support 
-cleaning up pruned topic branches. Could be a special behavior of "git 
-remote prune" triggered by the remote being a bundle, but that might be 
-confusing a perhaps need a new sub-command name. Perhaps, "git remote 
-prune-non-local bundle-nick"
+That section basically says "just keep things linear". Which I very much 
+disagree with. Trying to keep things linear just doesn't work if you work 
+together with other people - since you have to rewrite history.
 
-If we did the above, then git-bundle can be relegated to plumbing and 
-bundles become better integrated to the porcelain.
+So my argument was the exact _reverse_. Don't try to keep things linear, 
+because it doesn't _work_ right. Do the merges. They will very seldom 
+cause subtle merge problems (non-subtle ones are much more common, but 
+trivial to handle), and they will mean that you can work effectively 
+togethr with other people.
 
-Mark
+And then, _if_ you have a merge that you really cannot figure out why it 
+breaks, at that point you can _temporarily_ linearize the git history 
+after-the-fact just as easily as you would ever have done before-the-fact.
+
+In other words: linearization throws away real and useful information. You 
+can always linearize afterwards for bisection purposes or whatever, but 
+you can never _un_linearize because you've thrown away the information.
+
+So it's much better to just do merges and keep the history, and then there 
+are ways to rewrite the history later if you really need it.
+
+That said - I think it's good practice and perfectly sane to do things 
+like git-rebase to rewrite the history in a _private_ tree that contains 
+only your own modifications and has never been public (where "applied 
+emailed patches from others" still counts as your own work).
+
+The "don't linearize" mantra really only is about commits that have ever 
+been in anybody elses repository (and whether they _came_ from there, or 
+whether they came from you but were public to others is immaterial).
+
+			Linus
