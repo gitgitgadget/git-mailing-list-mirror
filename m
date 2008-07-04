@@ -1,66 +1,150 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Re: [PATCH 03/15] manpages: fix bogus whitespace
-Date: Thu, 3 Jul 2008 20:14:20 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0807032001110.24268@harper.uchicago.edu>
-References: <Pine.GSO.4.62.0806301650530.7190@harper.uchicago.edu>
- <7viqvqov01.fsf@gitster.siamese.dyndns.org> <Pine.GSO.4.62.0807022322380.16085@harper.uchicago.edu>
- <Pine.GSO.4.62.0807022354520.16085@harper.uchicago.edu>
- <7vprpuwmjj.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [RFC/PATCH 1/4] Add git-sequencer shell prototype
+Date: Fri, 4 Jul 2008 03:53:26 +0200
+Message-ID: <20080704015326.GI6677@leksak.fem-net>
+References: <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807031142540.9925@racer> <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <20080703210950.GC6677@leksak.fem-net> <alpine.DEB.1.00.0807040138090.2849@eeepc-johanness> <20080704003857.GG6677@leksak.fem-net> <alpine.DEB.1.00.0807040252490.2849@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 03:15:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 04 03:54:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZtt-00027C-KK
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:15:50 +0200
+	id 1KEaVK-0000Zn-Su
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621AbYGDBOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 21:14:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbYGDBOv
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:14:51 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:43930 "EHLO
-	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753189AbYGDBOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 21:14:50 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m641ERsF030468;
-	Thu, 3 Jul 2008 20:14:27 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m641ELVA024512;
-	Thu, 3 Jul 2008 20:14:21 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <7vprpuwmjj.fsf@gitster.siamese.dyndns.org>
+	id S1754338AbYGDBxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 21:53:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754047AbYGDBxd
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:53:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33017 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754007AbYGDBxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 21:53:32 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 01:53:31 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp029) with SMTP; 04 Jul 2008 03:53:31 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18KtuU0dlMKjiKUpFEaloTXgscXkAMkYsmpzPUxi+
+	GjWWWUO9L9Gguf
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KEaUI-0001qG-Si; Fri, 04 Jul 2008 03:53:26 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807040252490.2849@eeepc-johanness>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87356>
 
-Junio C Hamano wrote:
+Hi,
 
-> Jonathan Nieder <jrnieder@uchicago.edu> writes:
+On Fri, Jul 04, 2008 at 03:03:37AM +0200, Johannes Schindelin wrote:
+> On Fri, 4 Jul 2008, Stephan Beyer wrote:
+> > On Fri, Jul 04, 2008 at 01:53:21AM +0200, Johannes Schindelin wrote:
+> > > On Thu, 3 Jul 2008, Stephan Beyer wrote:
+> > > > Btw, another root commit problem is btw that it's not possible to 
+> > > > cherry-pick root commits.
+> > > 
+> > > That is a problem to be fixed in cherry-pick, not in sequencer.  Care 
+> > > to take care of that?
+> > 
+> > Not at the moment but that's one of the things I note down for later ;-)
 > 
->> -	is successful.	This option disables the output shown by
->> +	is successful.  This option disables the output shown by
+> Well, logically, it should come _before_ you use it in sequencer.  And you 
+> should use it in sequencer.
+
+Yet nobody seems to have asked for a cherry-pick that is able to pick
+root commits and sequencer is not closed source after GSoC, so this can
+be added whenever there is need and time for it.
+That's what I wanted to say with "note down for later". ;-)
+
+> > I don't get the light bulb.  You're talking about "the merge", I am
+> > talking about fast-forward on picks.
 > 
-> How did you find *this* one?  It took me a few minutes to finally notice
-> that you are talking about the HT.  In other words, I had to work hard to
-> get distracted by it.
+> Ooops.  I think I was talking about a later comment of Junio's.
+> 
+> The thing is, if you try to pick a commit, and the current revision is 
+> already the parent of that commit, I think it would be wrong to redo the 
+> commit, pretending that the current time and committer were applying that 
+> commit.
 
-I use vim with listchars=tab:>-,nbsp:~,trail:$ (I was bit too
-many times by Makefiles mysteriously breaking) so the tab is
-visibile.
+Right.
 
-If it feels like too much churn for no visible effect, I don't
-mind if you drop the patch. I feel bad for sending so many
-documentation patches that don't add to the content in any
-significant way.
+> IMO the --signoff should check if the sign off is present (must be the 
+> last one, as if we redid that commit), and if it is, fast-forward.
+> 
+> If it is missing, we need to redo the commit.
 
-Jonathan
+That's a good point.
+Checked that and it's even a bug in the sequencer: on fast-forwards, no
+signoff is added.
+
+This should fix that:
+--- a/git-sequencer.sh
++++ b/git-sequencer.sh
+@@ -219,8 +219,6 @@ pick_one () {
+ 		fi
+ 		;;
+ 	esac
+-	test -n "$SIGNOFF" &&
+-		what="$what -s"
+ 	$use_perform git $what "$@"
+ }
+ 
+@@ -973,16 +971,21 @@ insn_pick () {
+ 		$use_perform git commit --amend $EDIT $signoff --no-verify \
+ 			--author "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" \
+ 			--message="$MESSAGE"
+-	else
++	elif test -n "$AUTHOR"
++	then
+ 		# correct author if AUTHOR is set
+-		test -n "$AUTHOR" &&
+-			$use_perform git commit --amend $EDIT --no-verify -C HEAD \
+-				--author "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>"
+-		# XXX: a git-cherry-pick --author could be nicer here
++		$use_perform git commit --amend $EDIT --no-verify -C HEAD \
++			--author "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>"
++	elif test -n "$MESSAGE"
++	then
+ 		# correct commit message if MESSAGE is set
+-		test -n "$MESSAGE" &&
+-			$use_perform git commit --amend $EDIT $signoff --no-verify \
+-				-C HEAD --message="$MESSAGE"
++		$use_perform git commit --amend $EDIT $signoff --no-verify \
++			-C HEAD --message="$MESSAGE"
++	elif test -n "$SIGNOFF"
++	then
++		# only add signoff
++		$use_perform git commit --amend $EDIT $signoff --no-verify \
++			-C HEAD
+ 	fi
+ 
+ 	return 0
+###
+
+Ah, and that is poorly tested, but not untested. :) See:
+	$ git checkout -b seq-proto-dev3 HEAD^
+	Switched to a new branch "seq-proto-dev3"
+	$ git sequencer
+	mark :1
+	pick seq-proto-dev2
+	ref refs/test/no
+	reset :1
+	pick --signoff seq-proto-dev2
+Now: seq-proto-dev3 has signoff and seq-proto-dev2 and refs/test/no have the
+same SHA1.  And the test suite passes.
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
