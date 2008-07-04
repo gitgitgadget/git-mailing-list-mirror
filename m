@@ -1,88 +1,60 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Can I remove stg sync --undo ?
-Date: Fri, 4 Jul 2008 23:05:11 +0100
-Message-ID: <b0943d9e0807041505oc15660bpcd62a62100e517b9@mail.gmail.com>
-References: <20080702072524.GA26805@diana.vm.bytemark.co.uk>
-	 <b0943d9e0807031502x5f7c4babtd65511d7966c69f6@mail.gmail.com>
-	 <20080704020918.GA30669@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git sequencer prototype
+Date: Fri, 04 Jul 2008 15:09:41 -0700
+Message-ID: <7vwsk1ti6y.fsf@gitster.siamese.dyndns.org>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+ <20080704210052.GA6984@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 00:06:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 00:11:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEtPx-0005xk-0K
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 00:06:13 +0200
+	id 1KEtUk-0007DD-NE
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 00:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbYGDWFN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jul 2008 18:05:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752597AbYGDWFN
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 18:05:13 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:19546 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383AbYGDWFL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Jul 2008 18:05:11 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1731633rvb.1
-        for <git@vger.kernel.org>; Fri, 04 Jul 2008 15:05:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=38mojeKxVCmcQ3fO6JPdm1UobEJBRll5H+9sEzUjpDo=;
-        b=NTe1DSzoPv5OcYjwCaZvCud/Zycgqgdkia0/POEtW8SgbOlHvK8We1qp3CuNnYPASr
-         43/lJEvi2AKET1nec4PNUNylf4e1mPCtAPhEUuGm2Y/m6/97hb6NsQVA+DRs6Bag3OrJ
-         +gnbw4oJMzvjG7td0jpaU/XOezRHLHtqeoQL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Dx7pci5hA1e3ks9UklHBVSKDT/OEKvKqlQQtPrTOoKaDcWNL5wB4lv+NRzm5QxUpdZ
-         2KlFtKkORDfHkidwWlpJDN+wnvRmj2o1yeW6vSnBW9HBVYw6WC22cACorLtwIbeL177V
-         wacH3MNhvVWrS/85ugxhMzvy63quQXPWHDTQk=
-Received: by 10.114.73.1 with SMTP id v1mr166478waa.166.1215209111329;
-        Fri, 04 Jul 2008 15:05:11 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Fri, 4 Jul 2008 15:05:11 -0700 (PDT)
-In-Reply-To: <20080704020918.GA30669@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1754080AbYGDWJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 18:09:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753997AbYGDWJz
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 18:09:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48600 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756862AbYGDWJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 18:09:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8CB7E18B77;
+	Fri,  4 Jul 2008 18:09:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CE19D18B6E; Fri,  4 Jul 2008 18:09:43 -0400 (EDT)
+In-Reply-To: <20080704210052.GA6984@steel.home> (Alex Riesen's message of
+ "Fri, 4 Jul 2008 23:00:52 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EC9F8D48-4A15-11DD-9528-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87421>
 
-2008/7/4 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2008-07-03 23:02:28 +0100, Catalin Marinas wrote:
->> The sync performs three operations - push, merge and refresh (if the
->> refresh is automatic after merge, it doesn't update the backup
->> information since it was done by merge).
->>
->> If merge fails, the refresh is manual after solving the conflicts. I
->> suspect this will be recorded as a separate step for undo
+Alex Riesen <raa.lkml@gmail.com> writes:
+
+> Stephan Beyer, Tue, Jul 01, 2008 04:38:30 +0200:
+>> Hi,
+>> 
+>> here is the patchset for the git-sequencer prototype, documentation,
+>> test suite and a first git-am and git-rebase-i migration.
+>> Indeed, monster patches. ;)
 >
-> Yeah, the new undo stuff will currently handle sync just like e.g.
-> push and pop: write one log entry when the command's all done, plus
-> one extra just before the conflicting push if there is one. So you ca=
-n
-> always undo the entire command; and in case of conflicts, you also
-> have the option of undoing just the conflicting push. Is this enough
-> for sync?
+> BTW, how about renaming it in something short: git seq. There is
+> already a seq(1) in GNU coreutils, which does roughly the same (prints
+> a sequence of numbers), why not reuse the name?
 
-There are two operations that can conflict for sync - pushing a patch
-and the actual sync'ing, i.e. a three-way merge with the patch to be
-synchronised with (kind of fold).
-
->> (BTW, is resolved take into account for undo?).
->
-> Hmmm, what do you mean by "resolved"?
-
-The current resolved command - the clearing of the conflicting entries
-in the index.
-
---=20
-Catalin
+Is it advantageous to use shorter but less descriptive name for this
+command?  It will be a backend to am/rebase and not something the users
+will type from the command line, won't it?
