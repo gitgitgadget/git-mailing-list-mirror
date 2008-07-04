@@ -1,49 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Michael P. Soulier" <msoulier@digitaltorque.ca>
 Subject: Re: dumb protocol problems
-Date: Fri, 04 Jul 2008 12:10:53 -0700
-Message-ID: <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
-References: <20080704190007.GU28001@tigger.digitaltorque.ca>
+Date: Fri, 4 Jul 2008 15:19:24 -0400
+Message-ID: <20080704191924.GV28001@tigger.digitaltorque.ca>
+References: <20080704190007.GU28001@tigger.digitaltorque.ca> <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 21:12:03 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xYeFQzU4VZLrHqxU"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 21:20:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEqhK-0002Bw-UI
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:11:59 +0200
+	id 1KEqpo-0004hr-5p
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbYGDTLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 15:11:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbYGDTLA
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:11:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40875 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752891AbYGDTLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 15:11:00 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 793D817BE2;
-	Fri,  4 Jul 2008 15:10:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0578917BE0; Fri,  4 Jul 2008 15:10:55 -0400 (EDT)
-In-Reply-To: <20080704190007.GU28001@tigger.digitaltorque.ca> (Michael P.
- Soulier's message of "Fri, 4 Jul 2008 15:00:07 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EF35ABD2-49FC-11DD-8CD7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751696AbYGDTTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 15:19:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbYGDTTq
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:19:46 -0400
+Received: from mail.storm.ca ([209.87.239.66]:33315 "EHLO mail.storm.ca"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750848AbYGDTTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 15:19:46 -0400
+Received: from kanga.digitaltorque.ca (hs-216-106-102-70.storm.ca [216.106.102.70])
+	by mail.storm.ca (8.14.2+Sun/8.14.2) with ESMTP id m64JJUhK010242;
+	Fri, 4 Jul 2008 15:19:35 -0400 (EDT)
+Received: from tigger.digitaltorque.ca (tigger.digitaltorque.ca [192.168.1.3])
+	by kanga.digitaltorque.ca (Postfix) with ESMTP id 7166A6;
+	Fri,  4 Jul 2008 15:23:08 -0400 (EDT)
+Received: by tigger.digitaltorque.ca (Postfix, from userid 500)
+	id E67DF23F8A; Fri,  4 Jul 2008 15:19:24 -0400 (EDT)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vbq1dv51e.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87412>
 
-"Michael P. Soulier" <msoulier@digitaltorque.ca> writes:
 
-> git --version
-> git version 1.5.6.rc0
+--xYeFQzU4VZLrHqxU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That snapshot lacks this fix:
+On 04/07/08 Junio C Hamano said:
 
-	6eec46b (fix sha1_pack_index_name(), 2008-05-28)
+> That snapshot lacks this fix:
+>=20
+> 	6eec46b (fix sha1_pack_index_name(), 2008-05-28)
+
+Confirmed, it works now.=20
+
+Thanks,
+Mike
+--=20
+Michael P. Soulier <msoulier@digitaltorque.ca>
+"Any intelligent fool can make things bigger and more complex... It
+takes a touch of genius - and a lot of courage to move in the opposite
+direction." --Albert Einstein
+
+--xYeFQzU4VZLrHqxU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFIbne8KGqCc1vIvggRAryFAJ4yj47FWJi9tLxGzkPSOunzMz3LMQCggyQs
++9EZcmubOxEXmD4tHXhEaBM=
+=d2uk
+-----END PGP SIGNATURE-----
+
+--xYeFQzU4VZLrHqxU--
