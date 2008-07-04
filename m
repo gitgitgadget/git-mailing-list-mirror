@@ -1,85 +1,199 @@
-From: "J.H." <warthog9@kernel.org>
-Subject: Re: [KORG] Master downtime
-Date: Thu, 03 Jul 2008 17:14:40 -0700
-Message-ID: <486D6B70.7080702@kernel.org>
-References: <486C0877.4070001@eaglescrag.net>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [RFC/PATCH 1/4] Add git-sequencer shell prototype
+Date: Fri, 4 Jul 2008 02:38:57 +0200
+Message-ID: <20080704003857.GG6677@leksak.fem-net>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807031142540.9925@racer> <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <20080703210950.GC6677@leksak.fem-net> <alpine.DEB.1.00.0807040138090.2849@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: users@kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	support@osuosl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 02:38:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 04 02:40:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZJp-00032C-P8
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:38:34 +0200
+	id 1KEZLI-0003Ia-Nb
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754007AbYGDAhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 20:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753947AbYGDAhg
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:37:36 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:51813 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753934AbYGDAhf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 20:37:35 -0400
-X-Greylist: delayed 1243 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jul 2008 20:37:35 EDT
-Received: from [10.255.255.201] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m640Ek06014213
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 3 Jul 2008 17:14:47 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <486C0877.4070001@eaglescrag.net>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: ClamAV 0.88.7/7626/Thu Jul  3 02:17:56 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Thu, 03 Jul 2008 17:14:47 -0700 (PDT)
+	id S1753947AbYGDAjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 20:39:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753946AbYGDAjF
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:39:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42430 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753900AbYGDAjD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 20:39:03 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 00:39:01 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp012) with SMTP; 04 Jul 2008 02:39:01 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+N5ghrCFON+iaXMsOdFMrCOKnOIvTPpiBWzoRrU/
+	mMPoXFvxPwa53I
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KEZKD-0006vl-18; Fri, 04 Jul 2008 02:38:57 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807040138090.2849@eeepc-johanness>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87347>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Just a heads up the downtime is running a hair long, be about another
-half hour.
+On Fri, Jul 04, 2008 at 01:53:21AM +0200, Johannes Schindelin wrote:
+> On Thu, 3 Jul 2008, Stephan Beyer wrote:
+> > Btw, another root commit problem is btw that it's not possible to 
+> > cherry-pick root commits.
+> 
+> That is a problem to be fixed in cherry-pick, not in sequencer.  Care to 
+> take care of that?
 
-- - John 'Warthog9' Hawley
-Chief Kernel.org Admin
+Not at the moment but that's one of the things I note down for later ;-)
 
-J.H. wrote:
-| Afternoon everyone,
-|
-| Just a quick heads up we are going to be taking master down for hardware
-| and software upgrades tomorrow, Thursday July 3rd 2008 at 15:00 UTC.
-| During this time all back-end services, including wiki's, ssh and
-| userweb to name a few things.
-|
-| The hardware portion of the upgrade should be complete within an hour,
-| and the software upgrades will likely take another hour or two - though
-| even when master comes back up expect intermittent service for a few
-| hours after that while we deal with things.  Likely ETA for all work
-| completed is Friday July 4th 2008 at 00:00 UTC.  If there are
-| complications, I will kick another e-mail off with updates.
-|
-| If you have any questions, comments or concerns please don't hesitate to
-| get ahold of me.
-|
-| - John 'Warthog9' Hawley
-| Chief Kernel.org Admin
-- --
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+And btw, somehow it is still open for me if builtin sequencer should be
+a git-cherry-pick user (for pick) or if git-cherry-pick should be a
+sequencer user (which would result in a change of usage on cherry-pick
+conflicts).
 
-iD8DBQFIbWtw/E3kyWU9dicRAk15AJ0VJ2H1C6h4LzJTEr5gtR3O/f+n+QCfVjGm
-B1B7vbCBeovitXQx1tRZ9+Y=
-=NDJ+
------END PGP SIGNATURE-----
+> > Johannes Schindelin wrote:
+> > > > > +# Usage: pick_one (cherry-pick|revert) [-*|--edit] sha1
+> > > > > +pick_one () {
+> > > > > +	what="$1"
+> > > > > +	# we just assume that this is either cherry-pick or revert
+> > > > > +	shift
+> > > > > +
+> > > > > +	# check for fast-forward if no options are given
+> > > > > +	if expr "x$1" : 'x[^-]' >/dev/null
+> > > > > +	then
+> > > > > +		test "$(git rev-parse --verify "$1^")" = \
+> > > > > +			"$(git rev-parse --verify HEAD)" &&
+> > > > > +			output git reset --hard "$1" &&
+> > > > > +			return
+> > > > > +	fi
+> > > > > +	test "$1" != '--edit' -a "$what" = 'revert' &&
+> > > > > +		what='revert --no-edit'
+> > > > 
+> > > > This looks somewhat wrong.
+> > > > 
+> > > > When the history looks like ---A---B and we are at A, cherry-picking B can
+> > > > be optimized to just advancing to B, but that optimization has a slight
+> > > > difference (or two) in the semantics.
+> > > > 
+> > > >  (1) The committer information would not record the user and time of the
+> > > >      sequencer operation, which actually may be a good thing.
+> > > 
+> > > This is debatable.  But I think you are correct, for all the same reasons 
+> > > why a merge can result in a fast-forward.
+> > 
+> > Dscho, you mean me by referring to 'you' here, right?
+> 
+> Nope.
+> 
+> > Otherwise I'm a bit confused: "For the same reasons why a merge can 
+> > result in a fast-forward we should not do fast forward here" ;-)
+> 
+> What I meant: there is no use here to redo it.  It has already be done, 
+> and redoing just pretends that the girl calling sequencer tried to pretend 
+> that she did it.
+> 
+> If the merge has been done already, it should not be redone.
+> 
+> Only if the user _explicitely_ specified a merge strategy, there _might_ 
+> be a reason to redo the merge, but I still doubt it.
+
+I don't get the light bulb.  You're talking about "the merge", I am
+talking about fast-forward on picks.
+Perhaps I got Junio wrong, too.
+
+I try a simple example just to go sure that we're talking about the
+same.
+
+We have commits
+
+  A ---- B ---- C ---- D
+       HEAD
+
+A is parent of B, B of C, C of D.
+
+Now we do:
+	pick C
+	pick --signoff D
+(Assume that the Signed-off-by: line is missing on D)
+
+Without fast-forward, we get
+
+  A ---- B ---- C ---- D
+          \
+           `--- C'---- D'
+                     HEAD
+
+C' differs in C only in the committer data, perhaps only committer date.
+
+With fast-forward, we get:
+
+  A ---- B ---- C ---- D
+                 \
+                  `--- D'
+                     HEAD
+
+If Junio meant with
+>  (1) The committer information would not record the user and time of the
+>      sequencer operation, which actually may be a good thing.
+that he thinks the first variant is the way to go, I strongly disagree.
+But perhaps I'm getting everyone wrong these days ;)
+
+
+> > > >  (2) When $what is revert, this codepath shouldn't be exercised, 
+> > > >  should it?
+> > > 
+> > > Yes.
+> > 
+> > I haven't done a check intentionally, but there was a stupid thinko.
+> > So you're right.
+> > 
+> > But: this will only be a bug if the commit that _comes next in the
+> > original history_ is to be reverted.
+> 
+> Does not matter.  It's a bug.
+> 
+> A bug is almost always in the details, a corner-case, but it almost always 
+> needs fixing nevertheless.
+
+Of course ;)
+
+> > Nonetheless, purely tested:
+> 
+> "Nevertheless", maybe?  "untested", maybe?
+
+No, I tested it once. ;-)
+(For the new single-quoted variant I've changed the author name in
+t3350).
+
+> > Johannes Schindelin wrote:
+> > > I'd not check in sequencer for the strategy.  Especially given that we 
+> > > want to support user-written strategies in the future.
+> > 
+> > I don't know how this is planned to look like, but perhaps 
+> > --list-strategies may make sense here, too.
+> 
+> No.  You just do not check for strategies.  Period.  git-merge does that, 
+> and you can easily abort a rebase if you explicitely asked for an invalid 
+> strategy.
+
+Hmm, my dream of the "robust sequencing after sanity check passed" is
+dead with your "period".
+So I'll have to check what happens, when e.g. "--strategy=hours" is used.
+(I mean, you should be in a safe state to do git sequencer --edit and
+correct "hours" to "ours'.)
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
