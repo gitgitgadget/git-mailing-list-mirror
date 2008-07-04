@@ -1,110 +1,72 @@
-From: "Michael P. Soulier" <msoulier@digitaltorque.ca>
-Subject: dumb protocol problems
-Date: Fri, 4 Jul 2008 15:00:07 -0400
-Message-ID: <20080704190007.GU28001@tigger.digitaltorque.ca>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2uzDqHpccQJpqF2n"
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Fix apply --recount handling of no-EOL line
+Date: Fri,  4 Jul 2008 21:10:14 +0200
+Message-ID: <1215198614-22148-1-git-send-email-trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 21:01:19 2008
+X-From: git-owner@vger.kernel.org Fri Jul 04 21:11:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEqX0-0007Dl-Mr
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:01:19 +0200
+	id 1KEqgQ-0001vx-No
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 21:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbYGDTAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 15:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751725AbYGDTAU
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:00:20 -0400
-Received: from mail.storm.ca ([209.87.239.66]:64437 "EHLO mail.storm.ca"
+	id S1751493AbYGDTKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 15:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbYGDTKE
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 15:10:04 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:40883 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751708AbYGDTAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 15:00:19 -0400
-Received: from kanga.digitaltorque.ca (hs-216-106-102-70.storm.ca [216.106.102.70])
-	by mail.storm.ca (8.14.2+Sun/8.14.2) with ESMTP id m64J0D4M008608
-	for <git@vger.kernel.org>; Fri, 4 Jul 2008 15:00:18 -0400 (EDT)
-Received: from tigger.digitaltorque.ca (tigger.digitaltorque.ca [192.168.1.3])
-	by kanga.digitaltorque.ca (Postfix) with ESMTP id 330076
-	for <git@vger.kernel.org>; Fri,  4 Jul 2008 15:03:51 -0400 (EDT)
-Received: by tigger.digitaltorque.ca (Postfix, from userid 500)
-	id A8A8023F8A; Fri,  4 Jul 2008 15:00:07 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	id S1750722AbYGDTKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 15:10:03 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 4 Jul 2008 21:10:01 +0200
+Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 4 Jul 2008 21:10:00 +0200
+X-Mailer: git-send-email 1.5.6.1.330.g2ff03
+X-OriginalArrivalTime: 04 Jul 2008 19:10:01.0022 (UTC) FILETIME=[8EB2E5E0:01C8DE09]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87410>
 
+If a patch modifies the last line of a file that previously had no
+terminating '\n', it looks like
 
---2uzDqHpccQJpqF2n
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-old text
+\ No newline at end of file
++new text
 
-I'm in a situation where sharing via http is my simplest method, although I
-will migrate to use git-daemon in the near future.=20
+Hence, a '\' line does not signal the end of the hunk.  This modifies
+'git apply --recount' to take this into account.
 
-I'm on CentOS 4.6, Apache works fine, the bare repository is viewable and
-there's a info/refs file like there should be.=20
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-msoulier@espresso:~/temp$ cat /var/www/git/cqr.git/info/refs
-0a27e2807d8d3c32aa8912d01c939bd1cdd0df68        refs/heads/master
+This is just the straightforward fix.  A more elaborate solution might
+check if the previous line was a ' ' and '+', and if so, consider the
+hunk terminated anyway.
 
-But cloning fails.=20
+- Thomas
 
-git clone http://espresso.nssg.mitel.com/gitdir/cqr.git
-Initialize cqr/.git
-Initialized empty Git repository in /usr/home/msoulier/temp/cqr/.git/
-Getting alternates list for http://espresso.nssg.mitel.com/gitdir/cqr.git
-Getting pack list for http://espresso.nssg.mitel.com/gitdir/cqr.git
-Getting index for pack d22362ff6cdd729015f787a7eae057e079fcee39
-Getting pack d22362ff6cdd729015f787a7eae057e079fcee39
- which contains 0a27e2807d8d3c32aa8912d01c939bd1cdd0df68
-error: packfile
-/usr/home/msoulier/temp/cqr/.git/objects/pack/pack-d22362ff6cdd729015f787a7=
-eae057e079fcee39.pack
-size changed
-fatal: packfile
-/usr/home/msoulier/temp/cqr/.git/objects/pack/pack-d22362ff6cdd729015f787a7=
-eae057e079fcee39.pack
-cannot be accessed
+ builtin-apply.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-This is not on NFS, it's an LVM filesystem on a local disk.=20
-
-msoulier@espresso:~/temp$ df -h .
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/VolGroup00-LogVol00
-                       36G   22G   13G  64% /
-
-I'm not sure what the issue could be.=20
-
-git --version
-git version 1.5.6.rc0
-
-I'll start by picking up the latest.=20
-
-Thanks,
-Mike
---=20
-Michael P. Soulier <msoulier@digitaltorque.ca>
-"Any intelligent fool can make things bigger and more complex... It
-takes a touch of genius - and a lot of courage to move in the opposite
-direction." --Albert Einstein
-
---2uzDqHpccQJpqF2n
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFIbnM3KGqCc1vIvggRAvLaAJ0UcvjgAFHw1lkD7qnpZ75nc+bztgCeJkzJ
-2LFLHWGlHBp4P2HWucdreS4=
-=/Oli
------END PGP SIGNATURE-----
-
---2uzDqHpccQJpqF2n--
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 194f03b..fb85a5b 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -931,7 +931,7 @@ static void recount_diff(char *line, int size, struct fragment *fragment)
+ 			newlines++;
+ 			continue;
+ 		case '\\':
+-			break;
++			continue;
+ 		case '@':
+ 			ret = size < 3 || prefixcmp(line, "@@ ");
+ 			break;
+-- 
+1.5.6.1.330.g2ff03
