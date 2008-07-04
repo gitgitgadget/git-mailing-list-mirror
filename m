@@ -1,58 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: ':/<oneline prefix>' notation doesn't support full file syntax
-Date: Fri, 4 Jul 2008 02:33:51 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807040232200.2849@eeepc-johanness>
-References: <279b37b20807022242q69ad2fcbwb8c11a9d6165272d@mail.gmail.com>  <7vfxqr2won.fsf@gitster.siamese.dyndns.org>  <279b37b20807030150t2e9cbcc8wf099a5872568af8@mail.gmail.com> <56b7f5510807031127j10e33f3bl516180f7a9b5b5db@mail.gmail.com>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: [KORG] Master downtime
+Date: Thu, 03 Jul 2008 17:14:40 -0700
+Message-ID: <486D6B70.7080702@kernel.org>
+References: <486C0877.4070001@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eric Raible <raible@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 04 02:34:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: users@kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
+	support@osuosl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 04 02:38:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZGG-0002RJ-5t
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:34:52 +0200
+	id 1KEZJp-00032C-P8
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 02:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928AbYGDAdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 20:33:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753922AbYGDAdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:33:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57424 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753920AbYGDAdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 20:33:54 -0400
-Received: (qmail invoked by alias); 04 Jul 2008 00:33:51 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp018) with SMTP; 04 Jul 2008 02:33:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19KStUI2s9KYvZWyJesuXNlY4EjgFER1VPZ9nOF45
-	vXBD6yQcmweIrV
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <56b7f5510807031127j10e33f3bl516180f7a9b5b5db@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1754007AbYGDAhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 20:37:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753947AbYGDAhg
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 20:37:36 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:51813 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753934AbYGDAhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 20:37:35 -0400
+X-Greylist: delayed 1243 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jul 2008 20:37:35 EDT
+Received: from [10.255.255.201] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m640Ek06014213
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 3 Jul 2008 17:14:47 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <486C0877.4070001@eaglescrag.net>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/7626/Thu Jul  3 02:17:56 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Thu, 03 Jul 2008 17:14:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87346>
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, 3 Jul 2008, Dana How wrote:
+Just a heads up the downtime is running a hair long, be about another
+half hour.
 
-> I was surprised to see Dscho advocating removing this feature 
-> altogether.
+- - John 'Warthog9' Hawley
+Chief Kernel.org Admin
 
-Why is everybody surprised when I admit mistakes?
+J.H. wrote:
+| Afternoon everyone,
+|
+| Just a quick heads up we are going to be taking master down for hardware
+| and software upgrades tomorrow, Thursday July 3rd 2008 at 15:00 UTC.
+| During this time all back-end services, including wiki's, ssh and
+| userweb to name a few things.
+|
+| The hardware portion of the upgrade should be complete within an hour,
+| and the software upgrades will likely take another hour or two - though
+| even when master comes back up expect intermittent service for a few
+| hours after that while we deal with things.  Likely ETA for all work
+| completed is Friday July 4th 2008 at 00:00 UTC.  If there are
+| complications, I will kick another e-mail off with updates.
+|
+| If you have any questions, comments or concerns please don't hesitate to
+| get ahold of me.
+|
+| - John 'Warthog9' Hawley
+| Chief Kernel.org Admin
+- --
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
 
-Granted, --grep did not exist when I wrote :/ but now it does, and there 
-is no good reason to keep an ill-defined construct in Git when we have 
-something better.
-
-Ciao,
-Dscho
+iD8DBQFIbWtw/E3kyWU9dicRAk15AJ0VJ2H1C6h4LzJTEr5gtR3O/f+n+QCfVjGm
+B1B7vbCBeovitXQx1tRZ9+Y=
+=NDJ+
+-----END PGP SIGNATURE-----
