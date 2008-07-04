@@ -1,100 +1,67 @@
-From: "J.H." <warthog9@kernel.org>
-Subject: Re: [KORG] Master downtime
-Date: Thu, 03 Jul 2008 18:10:23 -0700
-Message-ID: <486D787F.2090205@kernel.org>
-References: <486C0877.4070001@eaglescrag.net> <486D6B70.7080702@kernel.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH 1/4] Add git-sequencer shell prototype
+Date: Fri, 4 Jul 2008 03:11:51 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807040309580.2849@eeepc-johanness>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807031142540.9925@racer> <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+ <1214879914-17866-2-git-send-email-s-beyer@gmx.net> <7vbq1f68rh.fsf@gitster.siamese.dyndns.org> <20080703210950.GC6677@leksak.fem-net> <alpine.DEB.1.00.0807040138090.2849@eeepc-johanness> <20080704010616.GH6677@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: users@kernel.org, linux-kernel <linux-kernel@vger.kernel.org>,
-	support@osuosl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 04 03:11:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jul 04 03:13:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEZpm-0001De-0q
-	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:11:34 +0200
+	id 1KEZrI-0001aW-6f
+	for gcvg-git-2@gmane.org; Fri, 04 Jul 2008 03:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471AbYGDBKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2008 21:10:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbYGDBKg
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:10:36 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:57021 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752941AbYGDBKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2008 21:10:35 -0400
-Received: from [10.255.255.201] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m641ATT1020240
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 3 Jul 2008 18:10:30 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <486D6B70.7080702@kernel.org>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: ClamAV 0.88.7/7634/Thu Jul  3 16:36:18 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Thu, 03 Jul 2008 18:10:30 -0700 (PDT)
+	id S1758103AbYGDBME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2008 21:12:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758037AbYGDBME
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jul 2008 21:12:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47445 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755632AbYGDBLx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2008 21:11:53 -0400
+Received: (qmail invoked by alias); 04 Jul 2008 01:11:51 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp018) with SMTP; 04 Jul 2008 03:11:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18jBoZr4nsjwnfpV8wRtXpHeGwHkW3HGC+WVDlZLV
+	QlzKvdH5bNO6i8
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080704010616.GH6677@leksak.fem-net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87354>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Hey all,
+On Fri, 4 Jul 2008, Stephan Beyer wrote:
 
-Sorry about the delay grub decided to be 'helpful' which delayed me a
-bit.  Anyway the system is up, it's finishing up grabbing all of the
-updates but it should be in a reasonably usable state.  So if you don't
-mind getting kicked off for 10 minutes more sometime later this evening,
-to reboot into the latest kernel, master is open for business.
+> Johannes Schindelin wrote:
+>
+> > and you can easily abort a rebase if you explicitely asked for an 
+> > invalid strategy.
+> 
+> Aborting after fixing a lot of conflicts in the sequencer process is 
+> really annoying.
 
-Git has already been reported as non-functioning and that is being
-looked into.  If you have further problems, report them on the
-kernel.org admin IRC channel, or e-mail ftpadmin.
+I think it should use rerere (if activated, which I have given up 
+advocating to be the default).
 
-- - John 'Warthog9' Hawley
-Chief Kernel.org Admin
+> So I've chosen to never abort automatically.
 
-J.H. wrote:
-| Just a heads up the downtime is running a hair long, be about another
-| half hour.
-|
-| - John 'Warthog9' Hawley
-| Chief Kernel.org Admin
-|
-| J.H. wrote:
-| | Afternoon everyone,
-| |
-| | Just a quick heads up we are going to be taking master down for hardware
-| | and software upgrades tomorrow, Thursday July 3rd 2008 at 15:00 UTC.
-| | During this time all back-end services, including wiki's, ssh and
-| | userweb to name a few things.
-| |
-| | The hardware portion of the upgrade should be complete within an hour,
-| | and the software upgrades will likely take another hour or two - though
-| | even when master comes back up expect intermittent service for a few
-| | hours after that while we deal with things.  Likely ETA for all work
-| | completed is Friday July 4th 2008 at 00:00 UTC.  If there are
-| | complications, I will kick another e-mail off with updates.
-| |
-| | If you have any questions, comments or concerns please don't hesitate to
-| | get ahold of me.
-| |
-| | - John 'Warthog9' Hawley
-| | Chief Kernel.org Admin
-- --
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+Who said anything about automatically?  Of _course_, the user has to abort 
+it.  Or try to continue with "git sequencer --continue -s ours".
 
-iD8DBQFIbXh+/E3kyWU9dicRAlaMAJ9YO+iMq+lGJwfAUXAjF1aQ47OsDACeMRp4
-1/DT/k4BjXKgqNwpNy36ZRY=
-=PL28
------END PGP SIGNATURE-----
+Ciao,
+Dscho
