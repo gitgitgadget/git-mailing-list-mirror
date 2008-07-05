@@ -1,72 +1,110 @@
-From: Pieter de Bie <frimmirf@gmail.com>
-Subject: Re: About -X<option>
-Date: Sat, 5 Jul 2008 15:48:07 +0200
-Message-ID: <AB745D70-D23A-4742-A5B3-DC1B6CAD9C30@ai.rug.nl>
-References: <alpine.DEB.1.00.0807051454060.3334@eeepc-johanness> <20080705133245.GH4729@genesis.frugalware.org>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC/PATCH] Fix t7601-merge-pull-config.sh on AIX
+Date: Sat,  5 Jul 2008 16:23:58 +0200
+Message-ID: <1215267838-19402-1-git-send-email-vmiklos@frugalware.org>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Jul 05 15:49:15 2008
+	Olivier Marin <dkr@freesurf.fr>, git@vger.kernel.org,
+	Mike Ralphson <mike@abacus.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 16:24:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KF88W-00061l-9m
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 15:49:12 +0200
+	id 1KF8gu-0007v7-Mj
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 16:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbYGENsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 09:48:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbYGENsO
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 09:48:14 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:26938 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751134AbYGENsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 09:48:13 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so899340ugf.16
-        for <git@vger.kernel.org>; Sat, 05 Jul 2008 06:48:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:to:in-reply-to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :references:x-mailer:from;
-        bh=D4FUxzGDBYZUodVBVg/RP007qwllHhvhV0WwI6DzQtc=;
-        b=HsDG7cMRwtliWH8pe3J7G1FORl3/ALB4oxMRjmeKsgXdVjCAGvmZthIUFx62nVD1aS
-         cGIkP6T51JSzTEX9iyi3PDXtdgERORXNmjCD7xzI/YCP3WOwvaXcVWFmzGl6cUGzoJsj
-         LAqy8ofGuAw+j5Vs+t7OT0vtdjLZfAeSotxbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:to:in-reply-to:content-type:content-transfer-encoding
-         :mime-version:subject:date:references:x-mailer:from;
-        b=I4yij//h2WrtYLK5pBr1YDf0Qrzeew4n8DEX6FChEbNHYJg3WslN3HO0dfb6JwgNqL
-         zrXR84uhgtvBS2FhjIKBLW/VHBG4fSE42qK6C1A65zcofOl6JRumcJxW7+yhltJg5ME0
-         y7VTj7j54MwY+HR2OGY5SdAfvdnZG2RfM8fTM=
-Received: by 10.66.221.6 with SMTP id t6mr3142598ugg.55.1215265691535;
-        Sat, 05 Jul 2008 06:48:11 -0700 (PDT)
-Received: from ?192.168.1.11? ( [85.145.147.28])
-        by mx.google.com with ESMTPS id 29sm736452uga.42.2008.07.05.06.48.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jul 2008 06:48:09 -0700 (PDT)
-In-Reply-To: <20080705133245.GH4729@genesis.frugalware.org>
-X-Mailer: Apple Mail (2.924)
+	id S1751156AbYGEOXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 10:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbYGEOXr
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 10:23:47 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:52967 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793AbYGEOXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 10:23:47 -0400
+Received: from vmobile.example.net (dsl5401C7D7.pool.t-online.hu [84.1.199.215])
+	by yugo.frugalware.org (Postfix) with ESMTP id 4AF871DDC5B;
+	Sat,  5 Jul 2008 16:23:44 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 1FD9A1A9CEF; Sat,  5 Jul 2008 16:23:59 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.1.322.ge904b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87447>
 
+The test failed on AIX (and likely other OS, such as apparently OSX)
+where wc -l outputs whitespace.
 
-On 5 jul 2008, at 15:32, Miklos Vajna wrote:
+Also, avoid unnecessary eval in conflict_count().
 
-> As a user I would think that it tells git-merge to first try  
-> 'recursive'
-> then 'theirs'.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+
+On Fri, Jul 04, 2008 at 06:49:03PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> In any case, this feels like an unnecessary use of eval.  The call
+> site
+> you have look like this:
 >
+>       conflict_count resolve_count
+>
+> but it is more natural if you are programming in shell to call it
+> like:
+>
+>       resolve_count=$(count_conflicts)
 
-I agree with this. Perhaps there's an easy fix: how about a colon?
+Changed.
 
-	git pull -s recursive:theirs
+> If you are going to do numerical comparison in later versions, you can
+> just drop the dq around parameters of test:
+>
+>       test $count_three = $count_two
 
-might be more intuitive?
+Changed.
+
+Mike, could you please confirm that this solves your problem as well?
+
+ t/t7601-merge-pull-config.sh |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index 32585f8..95b4d71 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -70,10 +70,10 @@ test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octo
+ 
+ conflict_count()
+ {
+-	eval $1=`{
++	{
+ 		git diff-files --name-only
+ 		git ls-files --unmerged
+-	} | wc -l`
++	} | wc -l
+ }
+ 
+ # c4 - c5
+@@ -115,15 +115,15 @@ test_expect_success 'merge picks up the best result' '
+ 	git config pull.twohead "recursive resolve" &&
+ 	git reset --hard c5 &&
+ 	git merge -s resolve c6
+-	conflict_count resolve_count &&
++	resolve_count=$(conflict_count) &&
+ 	git reset --hard c5 &&
+ 	git merge -s recursive c6
+-	conflict_count recursive_count &&
++	recursive_count=$(conflict_count) &&
+ 	git reset --hard c5 &&
+ 	git merge c6
+-	conflict_count auto_count &&
+-	test "$auto_count" = "$recursive_count" &&
+-	test "$auto_count" != "$resolve_count"
++	auto_count=$(conflict_count) &&
++	test $auto_count = $recursive_count &&
++	test $auto_count != $resolve_count
+ '
+ 
+ test_done
+-- 
+1.5.6.1.322.ge904b.dirty
