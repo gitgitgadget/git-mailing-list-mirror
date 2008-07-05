@@ -1,274 +1,109 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Move 'stupid' merge strategy to contrib.
-Date: Sat,  5 Jul 2008 16:43:51 +0200
-Message-ID: <1215269031-19559-1-git-send-email-vmiklos@frugalware.org>
-References: <20080704000701.GX4729@genesis.frugalware.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 16:44:44 2008
+From: "Adam Brewster" <adambrewster@gmail.com>
+Subject: [PATCH/v3] bundle.c: added --stdin option to git-bundle
+Date: Sat, 5 Jul 2008 12:30:53 -0400
+Message-ID: <c376da900807050930i6d1da898s624be58adc6f1751@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Mark Levedahl" <mdl123@verizon.net>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Jakub Narebski" <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 05 18:32:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KF90D-0004rf-V4
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 16:44:42 +0200
+	id 1KFAgB-00029q-1u
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 18:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbYGEOnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 10:43:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbYGEOnj
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 10:43:39 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39428 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbYGEOni (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 10:43:38 -0400
-Received: from vmobile.example.net (dsl5401C7D7.pool.t-online.hu [84.1.199.215])
-	by yugo.frugalware.org (Postfix) with ESMTP id 971381DDC5B;
-	Sat,  5 Jul 2008 16:43:36 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 97CBA1A9CEF; Sat,  5 Jul 2008 16:43:51 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.1.322.ge904b.dirty
-In-Reply-To: <20080704000701.GX4729@genesis.frugalware.org>
+	id S1752238AbYGEQbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 12:31:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYGEQbG
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 12:31:06 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:15213 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913AbYGEQbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 12:31:05 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so707807ywe.1
+        for <git@vger.kernel.org>; Sat, 05 Jul 2008 09:30:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=Z+ZyNk51Zur0fUHpmPL1gOjddmoeeYhRHPBQN71lxb8=;
+        b=KcCzWEtnOW+idsYJ/20ZIdS8HG7LsQn48ChNiGpMAlfm8veKNRAHLxDq+j8y/3tYXW
+         LcSosef27cadxvfs1i2neAIR+MFusN4Mm6kEqTEhQgq5n7bXsv1f+HgcJz4+2vTiJ1Un
+         aRMy+0gkdo/I1fZOebxG5rs40FrrMj7kLSXgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=AvGAaqpMWPF7Ul0+qwOut4botVFNv+J1CpPOOqiCkXhu2ASYaLMPB6J0fxxxb89NQw
+         j/szs+/0706H9scti86UqjujEuLvMZ2QpitOAkq04QEkPOmM1z8Qb+/PvFeJ+rPlPxpP
+         qBur1U/hitYYZn/jKP94FFVXUEmotWxHPL/Hs=
+Received: by 10.151.110.9 with SMTP id n9mr4303767ybm.161.1215275453230;
+        Sat, 05 Jul 2008 09:30:53 -0700 (PDT)
+Received: by 10.150.205.18 with HTTP; Sat, 5 Jul 2008 09:30:53 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87449>
 
-As pointed out by Linus, this strategy tries to take the best merge
-base, but 'recursive' just does it better. If one needs something more
-than 'resolve' then he/she should really use 'recursive' and not
-'stupid'.
-
-Given that it may still serve as a good example, don't remove it, just
-move it to contrib/examples.
+Signed-off-by: Adam Brewster <asb@bu.edu>
 ---
+It seems that the consensus is that the other half of my original
+patch is no good.  You have some pretty good ideas about how to
+correctly address the problem I was trying to solve, and I look
+forward to seeing them actually implemented.
 
-On Fri, Jul 04, 2008 at 02:07:01AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Jul 03, 2008 at 04:54:31PM -0700, Junio C Hamano
-> <gitster@pobox.com> wrote:
-> > It is called stupid for a reason ;-).
-> >
-> > It has been sitting there as an example for a long time, and I do
-> > not think anybody minds removing it.
->
-> OK, then should I resend a patch that moves it to contrib/examples?
+For now, I offer separately the modification I made to bundle.c to
+allow git-bundle to handle the --stdin option.  There is no
+accompanying change to the documentation because it already implies
+that this option is available.
 
-Here is one.
+ bundle.c |   22 ++++++++++++++++++++--
+ 1 files changed, 20 insertions(+), 2 deletions(-)
 
- .gitignore                           |    1 -
- Makefile                             |    3 +-
- contrib/examples/git-merge-stupid.sh |   80 ++++++++++++++++++++++++++++++++++
- git-merge-stupid.sh                  |   80 ----------------------------------
- 4 files changed, 81 insertions(+), 83 deletions(-)
- create mode 100755 contrib/examples/git-merge-stupid.sh
- delete mode 100755 git-merge-stupid.sh
+diff --git a/bundle.c b/bundle.c
+index 0ba5df1..b44a4af 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -227,8 +227,26 @@ int create_bundle(struct bundle_header *header,
+const char *path,
 
-diff --git a/.gitignore b/.gitignore
-index 4ff2fec..8054d9d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -75,7 +75,6 @@ git-merge-one-file
- git-merge-ours
- git-merge-recursive
- git-merge-resolve
--git-merge-stupid
- git-merge-subtree
- git-mergetool
- git-mktag
-diff --git a/Makefile b/Makefile
-index 78e08d3..bddd1a7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -241,7 +241,6 @@ SCRIPT_SH += git-merge-octopus.sh
- SCRIPT_SH += git-merge-one-file.sh
- SCRIPT_SH += git-merge-resolve.sh
- SCRIPT_SH += git-merge.sh
--SCRIPT_SH += git-merge-stupid.sh
- SCRIPT_SH += git-mergetool.sh
- SCRIPT_SH += git-parse-remote.sh
- SCRIPT_SH += git-pull.sh
-@@ -1429,7 +1428,7 @@ check-docs::
- 	do \
- 		case "$$v" in \
- 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
--		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
-+		git-merge-resolve | git-merge-subtree | \
- 		git-fsck-objects | git-init-db | \
- 		git-?*--?* ) continue ;; \
- 		esac ; \
-diff --git a/contrib/examples/git-merge-stupid.sh b/contrib/examples/git-merge-stupid.sh
-new file mode 100755
-index 0000000..f612d47
---- /dev/null
-+++ b/contrib/examples/git-merge-stupid.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Linus Torvalds
-+#
-+# Resolve two trees, 'stupid merge'.
+        /* write references */
+        argc = setup_revisions(argc, argv, &revs, NULL);
+-       if (argc > 1)
+-               return error("unrecognized argument: %s'", argv[1]);
 +
-+# The first parameters up to -- are merge bases; the rest are heads.
-+bases= head= remotes= sep_seen=
-+for arg
-+do
-+	case ",$sep_seen,$head,$arg," in
-+	*,--,)
-+		sep_seen=yes
-+		;;
-+	,yes,,*)
-+		head=$arg
-+		;;
-+	,yes,*)
-+		remotes="$remotes$arg "
-+		;;
-+	*)
-+		bases="$bases$arg "
-+		;;
-+	esac
-+done
++       for (i = 1; i < argc; i++) {
++               if ( !strcmp(argv[i], "--stdin") ) {
++                       char line[1000];
++                               while (fgets(line, sizeof(line),
+stdin) != NULL) {
++                               int len = strlen(line);
++                               if (len && line[len - 1] == '\n')
++                                       line[--len] = '\0';
++                               if (!len)
++                                       break;
++                               if (line[0] == '-')
++                                       die("options not supported in
+--stdin mode");
++                               if (handle_revision_arg(line, &revs, 0, 1))
++                                       die("bad revision '%s'", line);
++                       }
++                       continue;
++               }
 +
-+# Give up if we are given two or more remotes -- not handling octopus.
-+case "$remotes" in
-+?*' '?*)
-+	exit 2 ;;
-+esac
-+
-+# Find an optimum merge base if there are more than one candidates.
-+case "$bases" in
-+?*' '?*)
-+	echo "Trying to find the optimum merge base."
-+	G=.tmp-index$$
-+	best=
-+	best_cnt=-1
-+	for c in $bases
-+	do
-+		rm -f $G
-+		GIT_INDEX_FILE=$G git read-tree -m $c $head $remotes \
-+			 2>/dev/null ||	continue
-+		# Count the paths that are unmerged.
-+		cnt=`GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l`
-+		if test $best_cnt -le 0 -o $cnt -le $best_cnt
-+		then
-+			best=$c
-+			best_cnt=$cnt
-+			if test "$best_cnt" -eq 0
-+			then
-+				# Cannot do any better than all trivial merge.
-+				break
-+			fi
-+		fi
-+	done
-+	rm -f $G
-+	common="$best"
-+	;;
-+*)
-+	common="$bases"
-+	;;
-+esac
-+
-+git update-index --refresh 2>/dev/null
-+git read-tree -u -m $common $head $remotes || exit 2
-+echo "Trying simple merge."
-+if result_tree=$(git write-tree  2>/dev/null)
-+then
-+	exit 0
-+else
-+	echo "Simple merge failed, trying Automatic merge."
-+	if git-merge-index -o git-merge-one-file -a
-+	then
-+		exit 0
-+	else
-+		exit 1
-+	fi
-+fi
-diff --git a/git-merge-stupid.sh b/git-merge-stupid.sh
-deleted file mode 100755
-index f612d47..0000000
---- a/git-merge-stupid.sh
-+++ /dev/null
-@@ -1,80 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2005 Linus Torvalds
--#
--# Resolve two trees, 'stupid merge'.
--
--# The first parameters up to -- are merge bases; the rest are heads.
--bases= head= remotes= sep_seen=
--for arg
--do
--	case ",$sep_seen,$head,$arg," in
--	*,--,)
--		sep_seen=yes
--		;;
--	,yes,,*)
--		head=$arg
--		;;
--	,yes,*)
--		remotes="$remotes$arg "
--		;;
--	*)
--		bases="$bases$arg "
--		;;
--	esac
--done
--
--# Give up if we are given two or more remotes -- not handling octopus.
--case "$remotes" in
--?*' '?*)
--	exit 2 ;;
--esac
--
--# Find an optimum merge base if there are more than one candidates.
--case "$bases" in
--?*' '?*)
--	echo "Trying to find the optimum merge base."
--	G=.tmp-index$$
--	best=
--	best_cnt=-1
--	for c in $bases
--	do
--		rm -f $G
--		GIT_INDEX_FILE=$G git read-tree -m $c $head $remotes \
--			 2>/dev/null ||	continue
--		# Count the paths that are unmerged.
--		cnt=`GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l`
--		if test $best_cnt -le 0 -o $cnt -le $best_cnt
--		then
--			best=$c
--			best_cnt=$cnt
--			if test "$best_cnt" -eq 0
--			then
--				# Cannot do any better than all trivial merge.
--				break
--			fi
--		fi
--	done
--	rm -f $G
--	common="$best"
--	;;
--*)
--	common="$bases"
--	;;
--esac
--
--git update-index --refresh 2>/dev/null
--git read-tree -u -m $common $head $remotes || exit 2
--echo "Trying simple merge."
--if result_tree=$(git write-tree  2>/dev/null)
--then
--	exit 0
--else
--	echo "Simple merge failed, trying Automatic merge."
--	if git-merge-index -o git-merge-one-file -a
--	then
--		exit 0
--	else
--		exit 1
--	fi
--fi
--- 
-1.5.6.1.322.ge904b.dirty
++               return error("unrecognized argument: %s'", argv[i]);
++       }
+
+        for (i = 0; i < revs.pending.nr; i++) {
+                struct object_array_entry *e = revs.pending.objects + i;
+--
+1.5.5.1.211.g65ea3.dirty
