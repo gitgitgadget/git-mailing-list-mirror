@@ -1,77 +1,103 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: can I configure git clone to preserve the '.git' when it makes
-	the initial dir
-Date: Sat, 5 Jul 2008 01:22:41 +0200
-Message-ID: <20080704232241.GD28515@leksak.fem-net>
-References: <p06240819c49453b4beda@[192.168.1.105]>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 04/15] Add new test to ensure git-merge handles
+	pull.twohead and pull.octopus
+Date: Sat, 5 Jul 2008 02:26:34 +0200
+Message-ID: <20080705002634.GF4729@genesis.frugalware.org>
+References: <cover.1214581610.git.vmiklos@frugalware.org> <99b931de28ab3017269d15c334c83e242d025489.1214581610.git.vmiklos@frugalware.org> <e2b179460807040934m27e752e7s4f6a786d45d3bc53@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 01:23:57 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="F1UMmCLUB5xxGl5w"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Olivier Marin <dkr@freesurf.fr>
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 02:27:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KEudA-00074y-5Y
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 01:23:56 +0200
+	id 1KEvcm-0004Ao-16
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 02:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbYGDXWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2008 19:22:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbYGDXWw
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 19:22:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33218 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751416AbYGDXWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2008 19:22:52 -0400
-Received: (qmail invoked by alias); 04 Jul 2008 23:22:50 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp043) with SMTP; 05 Jul 2008 01:22:50 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+9wb1zsX69ecEw9Ch4oUZ5Mpg53qWHrQR4Peppll
-	+JswyRb9EMXZMr
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KEubx-0005Aj-Md; Sat, 05 Jul 2008 01:22:41 +0200
+	id S1752355AbYGEA0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2008 20:26:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbYGEA0i
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jul 2008 20:26:38 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:57803 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752317AbYGEA0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2008 20:26:37 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 24DBD1B24FE;
+	Sat,  5 Jul 2008 02:26:35 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1CBA44465E;
+	Sat,  5 Jul 2008 01:55:47 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 7AB7911901F1; Sat,  5 Jul 2008 02:26:34 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <p06240819c49453b4beda@[192.168.1.105]>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+In-Reply-To: <e2b179460807040934m27e752e7s4f6a786d45d3bc53@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87425>
 
-Hi,
 
-Stephen Bannasch wrote:
-> As I'm moving to more use of git I find it very helpful to keep the  
-> '.git' suffix on the names of directories in which I have git  
-> repositories. This makes it easier to distinguish between checkouts  
-> using different SCMs.
+--F1UMmCLUB5xxGl5w
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When you finally fall in love with git, you won't want to
-use another SCM. :)
-Even, if you have to, there is git-cvs{exportcommit,import}, git-svn,
-and some other more or less working interfaces from git to other SCMs.
+On Fri, Jul 04, 2008 at 05:34:05PM +0100, Mike Ralphson <mike.ralphson@gmai=
+l.com> wrote:
+> > +conflict_count()
+> > +{
+> > +       eval $1=3D`{
+> > +               git diff-files --name-only
+> > +               git ls-files --unmerged
+> > +       } | wc -l`
+> > +}
+> > +
+>=20
+> This here causes the test to fail on AIX (and likely other OS, such as
+> apparently OSX) where wc -l outputs whitespace. See
+> http://article.gmane.org/gmane.comp.version-control.git/80450
+>=20
+> Here we want the line count not just a return value, so is the
+> following acceptable?
+>=20
+> diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+> index 32585f8..9b6097d 100755
+> --- a/t/t7601-merge-pull-config.sh
+> +++ b/t/t7601-merge-pull-config.sh
+> @@ -73,7 +73,7 @@ conflict_count()
+>         eval $1=3D`{
+>                 git diff-files --name-only
+>                 git ls-files --unmerged
+> -       } | wc -l`
+> +       } | wc -l | tr -d \ `
+>  }
 
-Perhaps it's also worth having a look at http://kitenet.net/~joey/code/mr/
-(I've never used it, but heard of people who like using it.)
+At least it does not break the test for me on Linux. But haven't this
+cause you problems in git-merge.sh?  I copied this code chunk from
+there.
 
-> Is there a way to configure git clone to preserve the '.git' suffix when 
-> creating a directory?
+> Anyway, I thought we preferred $() to backticks?
 
-I don't know a configuration for that, but you can simply do:
-	git clone <repository> <reponame>.git
-(e.g.	git clone git://example.com/foo.git foo.git)
+See above, but sure, we can.
 
-But, btw, I think some unofficial convention is, that the ".git" suffix
-indicates a bare repository and without that suffix it is a checked out
-working tree.
+--F1UMmCLUB5xxGl5w
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Regards,
-  Stephan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+iEYEARECAAYFAkhuv7oACgkQe81tAgORUJZULgCeL6n0kMQo8lAh/U0BH8cXuxFQ
+h7UAnj4SHBGWdRzDEV3RZXduZ0jJfFgn
+=DHA4
+-----END PGP SIGNATURE-----
+
+--F1UMmCLUB5xxGl5w--
