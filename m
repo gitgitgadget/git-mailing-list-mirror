@@ -1,67 +1,85 @@
-From: "Thomas Adam" <thomas.adam22@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: git sequencer prototype
-Date: Sat, 5 Jul 2008 11:12:36 +0100
-Message-ID: <18071eea0807050312m2f5a60ebyb86177f6b10f3a7e@mail.gmail.com>
-References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
-	 <20080704210052.GA6984@steel.home>
-	 <7vwsk1ti6y.fsf@gitster.siamese.dyndns.org>
-	 <20080705081321.GA4935@blimp.local>
+Date: Sat, 5 Jul 2008 12:13:31 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807051210530.3334@eeepc-johanness>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net> <20080704210052.GA6984@steel.home> <7vwsk1ti6y.fsf@gitster.siamese.dyndns.org> <20080705081321.GA4935@blimp.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Stephan Beyer" <s-beyer@gmx.net>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Alex Riesen" <fork0@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Jul 05 12:13:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Alex Riesen <fork0@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Jul 05 12:14:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KF4lr-00025Q-Mb
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 12:13:36 +0200
+	id 1KF4mj-0002H0-08
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 12:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbYGEKMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 06:12:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYGEKMj
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 06:12:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:4087 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183AbYGEKMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 06:12:38 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so883912ugf.16
-        for <git@vger.kernel.org>; Sat, 05 Jul 2008 03:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=YkcMXD9d23pGIAXkFkcojukAJKA/NIyPPlWWCYP+yrw=;
-        b=rThkI9eyYBzN6jeMLaCCHGfltOyZZrqF/Pp9ANsdLb6FSu6aix5nIV6sKnMvWfVPru
-         y94rTEfvPCGpxaTcg0o+ZWPLXeUED3IY/TRv1NfZyY80vbxvJtlzRQ1/EYWJ87jrHnID
-         PkGi3901yqlznlYb3MKZygF55P88stnT3raMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AxuPGC83McXOfb1e+dxz3YebK8iaSFG+gpk/DUa9BGzuQk5tfZkXflEXx7SSNnwY02
-         uB0fvvOou0UU6d/7yI7oS5RzaQnIiizSRiuEDAEe9JFOyxxUFjfKR1mEy8QgBoQw9Q56
-         70ORAKrp9okHm6rvzMxrV5b25B5Q9UpTufF1g=
-Received: by 10.103.18.19 with SMTP id v19mr808851mui.113.1215252756521;
-        Sat, 05 Jul 2008 03:12:36 -0700 (PDT)
-Received: by 10.103.46.1 with HTTP; Sat, 5 Jul 2008 03:12:36 -0700 (PDT)
+	id S1751567AbYGEKNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 06:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbYGEKNc
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 06:13:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47571 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751134AbYGEKNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 06:13:31 -0400
+Received: (qmail invoked by alias); 05 Jul 2008 10:13:30 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp014) with SMTP; 05 Jul 2008 12:13:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+nrCEPMVGnYPZI3VsLX1zwJjSYeYwiBNiHeV5Ndw
+	2YAbchn/9yhfRK
+X-X-Sender: user@eeepc-johanness
 In-Reply-To: <20080705081321.GA4935@blimp.local>
-Content-Disposition: inline
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87441>
 
-2008/7/5 Alex Riesen <fork0@users.sourceforge.net>:
+Hi,
+
+On Sat, 5 Jul 2008, Alex Riesen wrote:
+
+> Junio C Hamano, Sat, Jul 05, 2008 00:09:41 +0200:
+> > Alex Riesen <raa.lkml@gmail.com> writes:
+> > 
+> > > Stephan Beyer, Tue, Jul 01, 2008 04:38:30 +0200:
+> > >> 
+> > >> here is the patchset for the git-sequencer prototype, 
+> > >> documentation, test suite and a first git-am and git-rebase-i 
+> > >> migration. Indeed, monster patches. ;)
+> > >
+> > > BTW, how about renaming it in something short: git seq. There is 
+> > > already a seq(1) in GNU coreutils, which does roughly the same 
+> > > (prints a sequence of numbers), why not reuse the name?
+> > 
+> > Is it advantageous to use shorter but less descriptive name for this 
+> > command?  It will be a backend to am/rebase and not something the 
+> > users will type from the command line, won't it?
+> 
+> There is not a huge lot of possible meanings of "seq" in the given 
+> context. Somehow I find it hard to believe someone will be confused by a 
+> backend command with a short name "seq" (seq-uence-something?)
+
+It might be a bit confusing, since "seq" _produces_ sequences, and 
+"sequencer" is kind of an assembly line, getting commits in a sequence and 
+then applying the corresponding changes in order.
+
+> It'll make the lines shorter, less need to wrap them.
+
+By that reasoning, we should have git-a, git-b, ... but that would not 
+improve readability.
+
 > BTW, what does "am" (git am) mean?
 
-I always thought of it as "apply mbox".
+It means "applymbox", but that name was already taken.  And "am" turned 
+out _not_ to replace "applymbox" right away as was expected, so it is a 
+bit of unfortunate history.
 
--- Thomas Adam
+Ciao,
+Dscho
