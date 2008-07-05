@@ -1,78 +1,97 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Move read_revisions_from_stdin from builtin-rev-list.c
-	to revision.c
-Date: Sat, 5 Jul 2008 22:48:49 +0200
-Message-ID: <20080705204849.GJ4729@genesis.frugalware.org>
-References: <7vod5crydx.fsf@gitster.siamese.dyndns.org> <1215290434-27694-1-git-send-email-adambrewster@gmail.com> <1215290434-27694-2-git-send-email-adambrewster@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kgkihKxW3Un7xdgA"
-Cc: git@vger.kernel.org, gitster@pobox.com, mdl123@verizon.net,
-	Johannes.Schindelin@gmx.de, jnareb@gmail.com,
-	Adam Brewster <asb@bu.edu>
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 22:49:56 2008
+Subject: [PATCH] Move 'stupid' merge strategy to contrib.
+Date: Sat,  5 Jul 2008 23:00:07 +0200
+Message-ID: <1215291607-20781-1-git-send-email-vmiklos@frugalware.org>
+References: <1215269031-19559-1-git-send-email-vmiklos@frugalware.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 23:00:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFEhb-00087y-BI
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 22:49:51 +0200
+	id 1KFEsH-0002k7-34
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 23:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbYGEUsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 16:48:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYGEUsw
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 16:48:52 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:60271 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752664AbYGEUsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 16:48:51 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E59D21B251D;
-	Sat,  5 Jul 2008 22:48:49 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0CDC54465E;
-	Sat,  5 Jul 2008 22:17:32 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 2F83711901F1; Sat,  5 Jul 2008 22:48:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1215290434-27694-2-git-send-email-adambrewster@gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752908AbYGEU74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 16:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752874AbYGEU74
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 16:59:56 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:36043 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752797AbYGEU7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 16:59:55 -0400
+Received: from vmobile.example.net (dsl5401C7D7.pool.t-online.hu [84.1.199.215])
+	by yugo.frugalware.org (Postfix) with ESMTP id C2F141DDC5B;
+	Sat,  5 Jul 2008 22:59:53 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id ACFDA1A9CEF; Sat,  5 Jul 2008 23:00:07 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.1.322.ge904b.dirty
+In-Reply-To: <1215269031-19559-1-git-send-email-vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87466>
 
+As pointed out by Linus, this strategy tries to take the best merge
+base, but 'recursive' just does it better. If one needs something more
+than 'resolve' then he/she should really use 'recursive' and not
+'stupid'.
 
---kgkihKxW3Un7xdgA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Given that it may still serve as a good example, don't remove it, just
+move it to contrib/examples.
+---
 
-On Sat, Jul 05, 2008 at 04:40:32PM -0400, Adam Brewster <adambrewster@gmail.com> wrote:
-> Some other commands might like to support the --stdin option like
-> git-rev-list.  Since they don't want to depend on builtin-rev-list, the
-> function has to be somewhere else.
+n Sat, Jul 05, 2008 at 04:43:51PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> Here is one.
 
-I think it's fine to move such a function, but this is a false commit
-message, you can use read_revisions_from_stdin() from builtin-bundle if
-it lives in builtin-rev-list.c as well.
+Oops, I forgot -M with format-patch.
 
->  mode change 100644 => 100755 builtin-rev-list.c
->  mode change 100644 => 100755 revision.c
+ .gitignore                                         |    1 -
+ Makefile                                           |    3 +--
+ .../examples/git-merge-stupid.sh                   |    0
+ 3 files changed, 1 insertions(+), 3 deletions(-)
+ rename git-merge-stupid.sh => contrib/examples/git-merge-stupid.sh (100%)
 
-Hm? ;-)
-
---kgkihKxW3Un7xdgA
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhv3jEACgkQe81tAgORUJYz6wCcC0QUJt5d2jQ+zgJMu4PhGVWL
-gjAAnRg7gjWM1MRLYll5n0AfH/0OtVoC
-=2Mzg
------END PGP SIGNATURE-----
-
---kgkihKxW3Un7xdgA--
+diff --git a/.gitignore b/.gitignore
+index 4ff2fec..8054d9d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -75,7 +75,6 @@ git-merge-one-file
+ git-merge-ours
+ git-merge-recursive
+ git-merge-resolve
+-git-merge-stupid
+ git-merge-subtree
+ git-mergetool
+ git-mktag
+diff --git a/Makefile b/Makefile
+index 78e08d3..bddd1a7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -241,7 +241,6 @@ SCRIPT_SH += git-merge-octopus.sh
+ SCRIPT_SH += git-merge-one-file.sh
+ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-merge.sh
+-SCRIPT_SH += git-merge-stupid.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-parse-remote.sh
+ SCRIPT_SH += git-pull.sh
+@@ -1429,7 +1428,7 @@ check-docs::
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+-		git-merge-resolve | git-merge-stupid | git-merge-subtree | \
++		git-merge-resolve | git-merge-subtree | \
+ 		git-fsck-objects | git-init-db | \
+ 		git-?*--?* ) continue ;; \
+ 		esac ; \
+diff --git a/git-merge-stupid.sh b/contrib/examples/git-merge-stupid.sh
+similarity index 100%
+rename from git-merge-stupid.sh
+rename to contrib/examples/git-merge-stupid.sh
+-- 
+1.5.6.1.322.ge904b.dirty
