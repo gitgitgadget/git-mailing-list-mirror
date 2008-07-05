@@ -1,62 +1,81 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: "make test" works again (sort-of) on cygwin.
-Date: Sat, 05 Jul 2008 21:09:31 +0100
-Message-ID: <486FD4FB.6070803@ramsay1.demon.co.uk>
-References: <486D0FFC.5090308@ramsay1.demon.co.uk> <20080703202637.GC3546@steel.home>
+Subject: Re: [PATCH/RFC] Fix some warnings (on cygwin) to allow -Werror
+Date: Sat, 05 Jul 2008 21:56:44 +0100
+Message-ID: <486FE00C.7020207@ramsay1.demon.co.uk>
+References: <486CF5A9.5060104@ramsay1.demon.co.uk> <E4D3A379-9EB2-49D1-AD42-CFFC453A2B08@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: GIT Mailing-list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 06 00:36:52 2008
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jul 06 00:37:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFGNA-00089U-5t
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 00:36:52 +0200
+	id 1KFGNR-0008CQ-4g
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 00:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbYGEWfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 18:35:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbYGEWfw
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 18:35:52 -0400
-Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:3587 "EHLO
-	anchor-post-36.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751655AbYGEWfv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jul 2008 18:35:51 -0400
-X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Jul 2008 18:35:51 EDT
+	id S1752243AbYGEWgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 18:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbYGEWgJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 18:36:09 -0400
+Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:4044 "EHLO
+	anchor-post-35.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752133AbYGEWgJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jul 2008 18:36:09 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-36.mail.demon.net with esmtp (Exim 4.67)
-	id 1KFGDk-000JFV-Jr; Sat, 05 Jul 2008 22:27:08 +0000
+	by anchor-post-35.mail.demon.net with esmtp (Exim 4.67)
+	id 1KFGDr-0005a8-Hz; Sat, 05 Jul 2008 22:27:16 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <20080703202637.GC3546@steel.home>
+In-Reply-To: <E4D3A379-9EB2-49D1-AD42-CFFC453A2B08@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87473>
 
-Alex Riesen wrote:
-> Ramsay Jones, Thu, Jul 03, 2008 19:44:28 +0200:
+Steffen Prohaska wrote:
+> On Jul 3, 2008, at 5:52 PM, Ramsay Jones wrote:
 > 
->> Anyhow, the "sort-of" in the subject line, relates to the fact that
->> I am seeing some test failures.  In particular, all tests in
->> t0004-unwritable.sh and tests 21->24 in t3700-add.sh. All of these
->> tests involve chmod/permissions ...
+>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>> ---
+>>
+>> Despite the subject line, this should be useful on any system for
+>> which uint32_t is defined to be unsigned long rather than
+>> unsigned int. (and where the return type of htonl() is similarly
+>> defined).
 > 
-> Don't run "make test" as root (or "backup operator" on windows).
-> OTOH, a windows machine is almost useless, unless you're a member of
-> local administrators group (which includes "backup" permission).
+> For MINGW, we fixed these warnings in the compat layer, see cd800eecc2:
+> 
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index a87cc96..6bc049a 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -186,6 +186,10 @@ pid_t mingw_spawnvpe(const char *cmd, const char  
+> **argv, char **env);
+>   void mingw_execvp(const char *cmd, char *const *argv);
+>   #define execvp mingw_execvp
+> 
+> +static inline unsigned int git_ntohl(unsigned int x)
+> +{ return (unsigned int)ntohl(x); }
+> +#define ntohl git_ntohl
+> +
+>   sig_handler_t mingw_signal(int sig, sig_handler_t handler);
+>   #define signal mingw_signal
 > 
 
-Ah, yes... I am a "Computer administator" aren't I ;-) I totally forgot!
+Yes, I had something similar at one point (but not in compat).
+However, not all of these warnings are solved by the above.
+For example, the changes to builtin-fast-export.c, builtin-pack-objects.c,
+and pack-check.c do not involve ntohl() at all. (some hunks in other
+files do not involve ntohl() either).
 
-Hmm, but is that really the reason for these failures? After all, (referring
-to the example you snipped) the permissions are respected for creating
-files in the directory, just not directories.  Is the "root" user on
-windows only selectively omnipotent?
-
+When the PRIu32 macro idea was suggested (I think it was Simon 'corecode' Schubert
+who first mentioned it), I thought it would look so ugly, no one would
+agree to such a patch...  Having implemented it, well I guess it's not
+quite as bad as I feared ;-) YMMV!
 
 ATB,
 
