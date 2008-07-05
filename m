@@ -1,96 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git daemon: avoid calling syslog() from a signal
- handler
-Date: Sat, 5 Jul 2008 12:05:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807051201320.3334@eeepc-johanness>
-References: <200807031400.36315.brian.foster@innova-card.com> <alpine.DEB.1.00.0807031343440.9925@racer> <200807031552.26615.brian.foster@innova-card.com> <alpine.DEB.1.00.0807031531320.9925@racer> <alpine.DEB.1.00.0807031624020.9925@racer>
- <7vej68u6mr.fsf@gitster.siamese.dyndns.org>
+From: "Thomas Adam" <thomas.adam22@gmail.com>
+Subject: Re: git sequencer prototype
+Date: Sat, 5 Jul 2008 11:12:36 +0100
+Message-ID: <18071eea0807050312m2f5a60ebyb86177f6b10f3a7e@mail.gmail.com>
+References: <1214879914-17866-1-git-send-email-s-beyer@gmx.net>
+	 <20080704210052.GA6984@steel.home>
+	 <7vwsk1ti6y.fsf@gitster.siamese.dyndns.org>
+	 <20080705081321.GA4935@blimp.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Foster <brian.foster@innova-card.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 12:06:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Stephan Beyer" <s-beyer@gmx.net>, git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Alex Riesen" <fork0@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Jul 05 12:13:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KF4f3-0000GC-HS
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 12:06:33 +0200
+	id 1KF4lr-00025Q-Mb
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 12:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbYGEKF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 06:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbYGEKF2
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 06:05:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44987 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751191AbYGEKF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 06:05:27 -0400
-Received: (qmail invoked by alias); 05 Jul 2008 10:05:24 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp068) with SMTP; 05 Jul 2008 12:05:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/z6a4nkxHzcVe9AyKCGA8Zx0oWVUTpSttBeLeKpa
-	/JsD2HEj0SASSM
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vej68u6mr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751310AbYGEKMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 06:12:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYGEKMj
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 06:12:39 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:4087 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751183AbYGEKMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 06:12:38 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so883912ugf.16
+        for <git@vger.kernel.org>; Sat, 05 Jul 2008 03:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YkcMXD9d23pGIAXkFkcojukAJKA/NIyPPlWWCYP+yrw=;
+        b=rThkI9eyYBzN6jeMLaCCHGfltOyZZrqF/Pp9ANsdLb6FSu6aix5nIV6sKnMvWfVPru
+         y94rTEfvPCGpxaTcg0o+ZWPLXeUED3IY/TRv1NfZyY80vbxvJtlzRQ1/EYWJ87jrHnID
+         PkGi3901yqlznlYb3MKZygF55P88stnT3raMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=AxuPGC83McXOfb1e+dxz3YebK8iaSFG+gpk/DUa9BGzuQk5tfZkXflEXx7SSNnwY02
+         uB0fvvOou0UU6d/7yI7oS5RzaQnIiizSRiuEDAEe9JFOyxxUFjfKR1mEy8QgBoQw9Q56
+         70ORAKrp9okHm6rvzMxrV5b25B5Q9UpTufF1g=
+Received: by 10.103.18.19 with SMTP id v19mr808851mui.113.1215252756521;
+        Sat, 05 Jul 2008 03:12:36 -0700 (PDT)
+Received: by 10.103.46.1 with HTTP; Sat, 5 Jul 2008 03:12:36 -0700 (PDT)
+In-Reply-To: <20080705081321.GA4935@blimp.local>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87440>
 
-Hi,
+2008/7/5 Alex Riesen <fork0@users.sourceforge.net>:
+> BTW, what does "am" (git am) mean?
 
-On Sat, 5 Jul 2008, Junio C Hamano wrote:
+I always thought of it as "apply mbox".
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Signal handlers should never call syslog(), as that can raise signals 
-> > of its own.
-> >
-> > Instead, call the syslog() from the master process.
-> 
-> Earlier parts seem to make sense but I am puzzled by these changes.
-> 
-> > @@ -929,7 +945,8 @@ static int service_loop(int socknum, int *socklist)
-> >  	for (;;) {
-> >  		int i;
-> >  
-> > -		if (poll(pfd, socknum, -1) < 0) {
-> > +		i = poll(pfd, socknum, 1);
-> > +		if (i < 0) {
-> >  			if (errno != EINTR) {
-> >  				error("poll failed, resuming: %s",
-> >  				      strerror(errno));
-> > @@ -937,6 +954,10 @@ static int service_loop(int socknum, int *socklist)
-> >  			}
-> >  			continue;
-> >  		}
-> > +		if (i == 0) {
-> > +			check_dead_children();
-> > +			continue;
-> > +		}
-> 
-> So you will check every 1ms to see if there are new dead children, but why
-> is this necessary?
-
-This comes from me not reading the man page for poll() properly.  Of 
-course, I want to check every second: syslog timestamps the messages with 
-a resolution of 1 second, AFAIR, or at least some of them do.
-
-So if you could just squash in this patch, that would be smashing:
-
--- snipsnap --
-@@ -945,8 +945,8 @@ static int service_loop(int socknum, int *socklist)
- 	for (;;) {
- 		int i;
- 
--		i = poll(pfd, socknum, 1);
-+		i = poll(pfd, socknum, 1000);
- 		if (i < 0) {
- 			if (errno != EINTR) {
- 				error("poll failed, resuming: %s",
- 				      strerror(errno));
+-- Thomas Adam
