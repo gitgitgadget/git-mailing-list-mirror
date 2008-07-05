@@ -1,92 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git, merging, and News/Relnotes files
-Date: Sat, 5 Jul 2008 13:03:00 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807051253000.2815@woody.linux-foundation.org>
-References: <g4n7j6$359$1@ger.gmane.org> <alpine.LFD.1.10.0807051119170.2815@woody.linux-foundation.org> <486FC65C.70602@thewritingpot.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: pdebie@ai.rug.nl, Git Mailing List <git@vger.kernel.org>
-To: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
-X-From: git-owner@vger.kernel.org Sat Jul 05 22:04:37 2008
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: [PATCH v4 0/3]
+Date: Sat,  5 Jul 2008 16:40:31 -0400
+Message-ID: <1215290434-27694-1-git-send-email-adambrewster@gmail.com>
+References: <7vod5crydx.fsf@gitster.siamese.dyndns.org>
+Cc: gitster@pobox.com, mdl123@verizon.net, Johannes.Schindelin@gmx.de,
+	jnareb@gmail.com, adambrewster@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 05 22:41:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFDzo-0005OI-1i
-	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 22:04:36 +0200
+	id 1KFEZs-00068Q-Tr
+	for gcvg-git-2@gmane.org; Sat, 05 Jul 2008 22:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbYGEUDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 16:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752194AbYGEUDi
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 16:03:38 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37535 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752167AbYGEUDh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jul 2008 16:03:37 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m65K30qZ017073
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 5 Jul 2008 13:03:01 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m65K30Nq004158;
-	Sat, 5 Jul 2008 13:03:00 -0700
-In-Reply-To: <486FC65C.70602@thewritingpot.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.362 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752746AbYGEUks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 16:40:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744AbYGEUks
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 16:40:48 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:47841 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675AbYGEUkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 16:40:47 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so734742ywe.1
+        for <git@vger.kernel.org>; Sat, 05 Jul 2008 13:40:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=xmFqhYiJj/PgJbdaBoZjbDbbjBGgAeweKYuQy6vWilM=;
+        b=WAHbAtNLDpqcSBUg3KZeg/P6VZUp6aowuEpo16c1ZBdR2WOxo2Qo3N9Zw/ABlrgkhg
+         h0cC/Bp8FAYWFm57oo8Z4W9sKWB9rpR0nTlZHgh9yoEGy88kpp4fy5OycQHzXLU6kvJf
+         36gCrhwi6ieR5bF/WiqGFZnxfNfn41aBtihuw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=EBhVO2Ptg1QsYn1Wuw272SeeQHodBGexOu8qD2sfzJsJ5LZPVWQ5nD2uUHWYaEHxla
+         e9SrKbfvFd7aR+iNCra5TDlPxoMSULdT+cQaAwwQD4FD6ir+Dr6pk3Hniak8e2LypvKs
+         QN5EkQDm0AJ5gzPJDro1MtcCuhH0HBN0nBvkE=
+Received: by 10.151.145.17 with SMTP id x17mr4743288ybn.20.1215290437022;
+        Sat, 05 Jul 2008 13:40:37 -0700 (PDT)
+Received: from MBE.internal ( [65.96.168.20])
+        by mx.google.com with ESMTPS id 9sm2733970yxs.5.2008.07.05.13.40.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Jul 2008 13:40:36 -0700 (PDT)
+Received: by MBE.internal (Postfix, from userid 1000)
+	id C9AD910499B; Sat,  5 Jul 2008 16:40:34 -0400 (EDT)
+X-Mailer: git-send-email 1.5.5.1.211.g65ea3.dirty
+In-Reply-To: <7vod5crydx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87461>
 
 
+Sorry for the idiotic wrapping problems in my last email.
 
-On Sat, 5 Jul 2008, Edward Z. Yang wrote:
-> 
-> I'm slightly surprised no one suggested that I can the file, given that
-> both Git and the Linux kernel don't have one.
+Previously, I was trying to keep from changing any of the important stuff,
+like git-rev-list, but I should know better than cut-and-pasting code.
 
-Well, I personally think ChangeLog files are a total waste of time. You're 
-much better off autogenerating those from the real logs, I think.
+As requested, I've broken the change into a multiple of patches.  First moving
+read_revisions_from_stdin to revision.c, next modifying git-bundle to handle
+--stdin, and finally a patch adding my old git-basis to contrib.
 
-[ Although in all honesty, I also think we could improve on our reporting 
-  tools, and have ways to perhaps highlight big or important changes some 
-  way ]
-
-But a NEWS file that actually talks about new features is a different 
-thing. It can make lots of sense to maintain something like that, so I 
-wouldn't suggest canning it if it works for you. I'm not convinced it 
-would work for the kernel, but I suspect it can work really well for other 
-projects.
-
-> > For example, the default 'union' merge will literally _duplicate_ 
-> > identical that were added in both branches. So if you cherry-pick a commit 
-> > so that it exists both in the branch you are merging _and_ the branch you 
-> > are merging into, then any additions to the NEWS file will basically show 
-> > up twice, and yet auto-merge "cleanly".
-> 
-> I suppose that's why we have git reset --hard HEAD~. :-) I will
-> certainly keep this gotcha in mind.
-
-Well, the real problem with a clean automatic merge is not that it can't 
-be undone (or better yet - fixed: just edit the NEWS file and then do a 
-"git commit --amend NEWS" to fix up the atomatic merge), but the fact that 
-most of the time you'll simply never even notice.
-
-IOW, when something merges cleanly (and the 'union' merge will basically 
-always do so), the most common case is probably that people won't even 
-_look_ at the end result - especially if it works fine most of the time. 
-
-That's why a trivial conflict can often be better than a silently clean 
-merge: at least it forces people to spend a small amount of brainpower to 
-look at the obvious fix.
-
-But hey, give it a try. Maybe you'll like the union merge, together with 
-occasional manual fixups. Or maybe you'll decide that a specialized merge 
-strategy isn't that painful after all (or can find somebody who already 
-went through the pain and wrote one you can use).
-
-		Linus
+I think I've corrected all of the style issues you pointed out, and I've also 
+tried to craft more informative commit messages.
