@@ -1,110 +1,82 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: [PATCH] Fix grammar in git-rev-parse(1).
-Date: Sun, 6 Jul 2008 22:34:21 +0200
-Message-ID: <237967ef0807061334t681ad234vdb37cfe56af2e483@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
+Date: Mon, 7 Jul 2008 00:39:52 +0400
+Message-ID: <20080706203951.GB1721@dpotapov.dyndns.org>
+References: <20080620082034.GA24913@elte.hu> <m3d4mcmq20.fsf@localhost.localdomain> <37fcd2780807060916h7d8c4e6mba7f30570d527dc3@mail.gmail.com> <7vprpqdbjx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 06 22:35:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 22:41:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFax6-0006lo-Pk
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 22:35:21 +0200
+	id 1KFb2Y-00085f-5s
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 22:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756397AbYGFUeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 16:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756916AbYGFUeX
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 16:34:23 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:47954 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756385AbYGFUeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 16:34:22 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so2362396rvb.1
-        for <git@vger.kernel.org>; Sun, 06 Jul 2008 13:34:21 -0700 (PDT)
+	id S1757096AbYGFUj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 16:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757051AbYGFUj7
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 16:39:59 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:51145 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756385AbYGFUj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 16:39:58 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so566383nfc.21
+        for <git@vger.kernel.org>; Sun, 06 Jul 2008 13:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=PAQvWjdgkggc5ge5w5LTLi3xvOO5D08yhPA9fNk5X8c=;
-        b=KmGp4/FY+yt/Gm3Rnwy8IcFiVMnENin6BJLMl3llFvZsJiRdjE9nzGVNV8019lvoD7
-         jQ9kGG/qazXTFdpl2ojsLl+BTc4+W0/ooWAuMRK+Z6B3ngKFngooGtdLMw6zPRlcIs47
-         ZbxN8Ko9f22GxGX4pEBpspxt10sxmIBttqIf8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=qWPFXUZubHn7+BAwbVdsV4rOgdRlWkav6sulj1YVKFQ=;
+        b=fwsw4cAblCu8Q1mQOFlpww2ClxrkbbZuQgJNWWgd1vFyCG52QZVKjOFgCbSaUO2nex
+         /UoIuRNhnAzfJ+rsZ66GY+2fLO+29ErxVJ1GLWP/dGZ/TH9yQMOjE7XuRnjgdJ+OmpDu
+         Cz5CxPjtV5wVSO8R0xbCvgVMQnIcJ0wySkvvk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Mq1Uf49TSbLB3xhn7RAUE7VDoqD+o2gytUUSikWuEkh9dmYEC4AvlsU3dPMIh6LEUf
-         PK0KZvtRPVbYR5trn87NWp81lL5+RKuOinqE1l5ox91M4NCFMFz27LHdzBMAZkrzS5wh
-         3+Kv7ysY2DQ15tntHE0N2wO/ffQnbrJp3YiqE=
-Received: by 10.141.168.16 with SMTP id v16mr1674344rvo.233.1215376461705;
-        Sun, 06 Jul 2008 13:34:21 -0700 (PDT)
-Received: by 10.141.68.4 with HTTP; Sun, 6 Jul 2008 13:34:21 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fDi88NeWxFwVEsCDyeFgE6Omn1cU3R9gblOY6Carka9mzdLX4fb2obcFRuey8QRVRW
+         72n7fD5e2Jnal/rEiimh788+h1jNLflVaWe9TXLKbKOOw1bDR1oP9mjoYdOfBDrZtf7/
+         bpLVYaycv3hVmw/W0C9aN56HJlntuSYW04iMQ=
+Received: by 10.210.117.1 with SMTP id p1mr2458544ebc.4.1215376797393;
+        Sun, 06 Jul 2008 13:39:57 -0700 (PDT)
+Received: from localhost ( [85.141.151.81])
+        by mx.google.com with ESMTPS id z37sm4997183ikz.6.2008.07.06.13.39.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 06 Jul 2008 13:39:56 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <7vprpqdbjx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87552>
 
----
- Documentation/git-rev-parse.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+On Sun, Jul 06, 2008 at 01:04:18PM -0700, Junio C Hamano wrote:
+>     Two other shorthands for naming a set that is formed by a commit
+>     and its parent commits exists.  `r1{caret}@` notation means all
+>     parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
+>     its all parents.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 59e95ad..ba65bfa 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -301,9 +301,9 @@ It is the set of commits that are reachable from
-either one of
- `r1` or `r2` but not from both.
+So, I would say that rev^! is shorthand for rev^@..rev, but it does not
+actually work:
 
- Two other shorthands for naming a set that is formed by a commit
--and its parent commits exists.  `r1{caret}@` notation means all
-+and its parent commits exist.  The `r1{caret}@` notation means all
- parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
--its all parents.
-+all of its parents.
+git rev-list 7ac749c^@..7ac749c
+fatal: ambiguous argument '7ac749c^@..7ac749c': unknown revision or path
+not in the working tree.
 
- Here are a handful of examples:
+yet "^rev^@ rev" syntax does:
 
--- 
-1.5.6.GIT
+git rev-list ^7ac749c^@ 7ac749c
+7ac749c96d143ba4f76723959892cbaddbe8ed07
 
+Is it a bug or feature?
 
-2008/7/6 Junio C Hamano <gitster@pobox.com>:
-> "Dmitry Potapov" <dpotapov@gmail.com> writes:
->
->> On Fri, Jun 20, 2008 at 2:05 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>>
->>> There is shortcut for rev^..rev, namely rev^! (I'm not sure if it is
->>> documented anywhere, though),
->>
->> The latter is not exactly a shortcut for the former.  You can try it at any
->> merge commit, and you will see different log. For instance, in Git repo:
->> ...
->> So, I believe, rev^! means --first-parent rev^..rev
->
-> Not quite.  From Documentation/git-rev-parse.txt:
->
->    SPECIFYING RANGES
->    -----------------
->
->    Two other shorthands for naming a set that is formed by a commit
->    and its parent commits exists.  `r1{caret}@` notation means all
->    parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
->    its all parents.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Puzzled...
 
-
-
--- 
-Mikael Magnusson
+Dmitry
