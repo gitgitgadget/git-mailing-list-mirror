@@ -1,97 +1,95 @@
-From: Adam Brewster <adambrewster@gmail.com>
-Subject: [PATCH] Teach git-bundle to read revision arguments from stdin like
-Date: Sun,  6 Jul 2008 10:28:58 -0400
-Message-ID: <1215354538-1469-3-git-send-email-adambrewster@gmail.com>
-References: <7v63rjrfqz.fsf@gitster.siamese.dyndns.org>
- <1215354538-1469-1-git-send-email-adambrewster@gmail.com>
- <1215354538-1469-2-git-send-email-adambrewster@gmail.com>
-Cc: gitster@pobox.com, mdl123@verizon.net, Johannes.Schindelin@gmx.de,
-	jnareb@gmail.com, vmiklos@frugalware.org,
-	Adam Brewster <adambrewster@gmail.com>,
-	Adam Brewster <asb@bu.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 06 16:30:06 2008
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Add a test for "git stash branch"
+Date: Sun, 6 Jul 2008 20:15:42 +0530
+Message-ID: <20080706144542.GA8677@toroid.org>
+References: <20080702195947.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0807021447200.9925@racer> <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org> <20080702195401.GA17214@toroid.org> <7vprpw80bw.fsf@gitster.siamese.dyndns.org> <20080703022316.GA25433@toroid.org> <7v63rn61yj.fsf@gitster.siamese.dyndns.org> <20080703061605.GB3815@toroid.org> <20080706112333.GA6477@toroid.org> <alpine.LSU.1.00.0807061453540.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 06 16:46:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFVFd-0003Td-Rc
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 16:30:06 +0200
+	id 1KFVVh-0000Uf-Ew
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 16:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756619AbYGFO3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 10:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756563AbYGFO3J
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 10:29:09 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:28579 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756309AbYGFO3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 10:29:05 -0400
-Received: by an-out-0708.google.com with SMTP id d40so354229and.103
-        for <git@vger.kernel.org>; Sun, 06 Jul 2008 07:29:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=2ChMx+qBi7H0Z6SvA+844CwizozQGNYBJ96eSMN1Sic=;
-        b=StEwuj2KqhmKMkkvRx2StRWzVDzBpMLi3+bgGi9oNLKALMJwRosgisLHg9IwddOcJr
-         QmsqnraD+8CcUEaiB3jBBqfkpKKSzbeIsG04CyqtHbL7vyDgZt3HybH8r2pfb7Lr37Yk
-         qxlfc7Rmw13iZWMVxjZvREIuY36ee761XUDW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=DFmeNK6nvpRfYXmbkw24R37Knk5vUcSy0kypCM475il/VHJ69T70lfAH2qzb3v4ckL
-         VXcTGWWsBrQPySFuqYS7D49R3fTwjbzbc/SDtbwneZOzLm9BE7Nw7oBujoiwKER6wmeD
-         tTLubGEgpTttipbR1MI5YoVkDBFViPETy4drE=
-Received: by 10.100.108.20 with SMTP id g20mr2186542anc.105.1215354543051;
-        Sun, 06 Jul 2008 07:29:03 -0700 (PDT)
-Received: from MBE.internal ( [65.96.169.255])
-        by mx.google.com with ESMTPS id 9sm3568534yxs.5.2008.07.06.07.28.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jul 2008 07:28:59 -0700 (PDT)
-Received: by MBE.internal (Postfix, from userid 1000)
-	id 83799104A20; Sun,  6 Jul 2008 10:28:58 -0400 (EDT)
-X-Mailer: git-send-email 1.5.5.1.211.g65ea3.dirty
-In-Reply-To: <1215354538-1469-2-git-send-email-adambrewster@gmail.com>
+	id S1756856AbYGFOpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 10:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756905AbYGFOpn
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 10:45:43 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:34432 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756900AbYGFOpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 10:45:43 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 979F1558320;
+	Sun,  6 Jul 2008 16:45:41 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 41C0B840001; Sun,  6 Jul 2008 20:15:43 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0807061453540.3486@wbgn129.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87533>
 
-This patch allows the caller to feed the revision parameters to
-git-bundle from its standard input.  This way, a script do not have to
-worry about limitation of the length of command line.
+Make sure that applying the stash to a new branch after a conflicting
+change doesn't result in an error when you try to commit.
 
-Documentation/git-bundle.txt says that git-bundle takes arguments
-acceptable to git-rev-list.  Obviously some arguments that git-rev-list
-handles don't make sense for git-bundle (e.g. --bisect) but --stdin is
-pretty reasonable.
-
-Signed-off-by: Adam Brewster <asb@bu.edu>
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
 ---
- bundle.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 0ba5df1..8d486f3 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -227,8 +227,14 @@ int create_bundle(struct bundle_header *header, const char *path,
+At 2008-07-06 14:54:44 +0200, Johannes.Schindelin@gmx.de wrote:
+>
+> AFAICS the previous version is in 'next' already: 
+> 656b50345239293929ad8c639c5f1941c6b867ad
+
+Oh, I see, thanks. I misunderstood the request. Here's a separate patch
+to just add the test.
+
+Sorry for the noise.
+
+-- ams
+
+ t/t3903-stash.sh |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
+
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 54d99ed..6d89218 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -117,4 +117,28 @@ test_expect_success 'stash pop' '
+ 	test 0 = $(git stash list | wc -l)
+ '
  
- 	/* write references */
- 	argc = setup_revisions(argc, argv, &revs, NULL);
--	if (argc > 1)
--		return error("unrecognized argument: %s'", argv[1]);
++cat > expect << EOF
++diff --git a/file b/file
++index 7601807..5716ca5 100644
++--- a/file
+++++ b/file
++@@ -1 +1 @@
++-baz
+++bar
++EOF
 +
-+	for (i = 1; i < argc; i++) {
-+		if (!strcmp(argv[i], "--stdin")) {
-+			read_revisions_from_stdin(&revs);
-+			continue;
-+		}
-+		return error("unrecognized argument: %s'", argv[i]);
-+	}
- 
- 	for (i = 0; i < revs.pending.nr; i++) {
- 		struct object_array_entry *e = revs.pending.objects + i;
++test_expect_success 'stash apply' '
++	echo foo > file &&
++	git commit file -m first
++	echo bar > file &&
++	git stash &&
++	echo baz > file &&
++	git commit file -m second &&
++	git stash branch stashbranch &&
++	git commit file -m alternate\ second &&
++	git diff master..stashbranch > output &&
++	test_cmp output expect &&
++	test 0 = $(git stash list | wc -l)
++'
++
+ test_done
 -- 
-1.5.5.1.211.g65ea3.dirty
+1.5.6
