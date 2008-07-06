@@ -1,76 +1,67 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH/rfc] git-svn.perl: workaround assertions in svn library
-	1.5.0
-Date: Sun, 6 Jul 2008 19:28:50 +0000
-Message-ID: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/14] Build in merge
+Date: Sun, 06 Jul 2008 12:39:33 -0700
+Message-ID: <7v8wweer9m.fsf@gitster.siamese.dyndns.org>
+References: <0cde1e7c930589364318b2d0344b345453e23586.1214918017.git.vmiklos@frugalware.org> <7vej67jt1e.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0807061433480.3486@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Jul 06 21:29:19 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org,
+	Olivier Marin <dkr@freesurf.fr>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 06 21:40:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFZvB-0007Ch-FL
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 21:29:17 +0200
+	id 1KFa6F-00021P-2a
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 21:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757159AbYGFT2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 15:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755646AbYGFT2S
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 15:28:18 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:34831 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755485AbYGFT2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 15:28:17 -0400
-Received: (qmail 32548 invoked by uid 1000); 6 Jul 2008 19:28:50 -0000
-Content-Disposition: inline
+	id S1751258AbYGFTjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 15:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbYGFTjp
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 15:39:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60032 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbYGFTjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 15:39:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0D38A1BFBE;
+	Sun,  6 Jul 2008 15:39:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3EBEC1BFB9; Sun,  6 Jul 2008 15:39:36 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0807061433480.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+ (Johannes Schindelin's message of "Sun, 6 Jul 2008 14:38:23 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 488C5928-4B93-11DD-91B8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87547>
 
-With subversion 1.5.0 (C and perl libraries) the git-svn selftest
-t9101-git-svn-props.sh fails at test 25 and 26.  The following commands
-cause assertions in the svn library
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
- $ cd deeply
- $ git-svn propget svn:ignore .
- perl: /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_ra/ra_loader.c:674: svn_ra_get_dir: Assertion `*path != '/'' failed.
- Aborted
+> But given that you seem so sick and tired of string_list, and rather have 
+> a code duplication, I will not argue to that end anymore.
 
- $ git-svn propget svn:ignore ..
- perl: /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_subr/path.c:120: svn_path_join: Assertion `is_canonical(component, clen)' failed.
+You are probably very confused if you think I am saying I'd rather have
+duplication.
 
-With this commit, git-svn makes sure the path doesn't start with a
-slash, and is not a dot, working around these assertions.
+Look at "unsorted_path_list_lookup()" in builtin-merge.c and think again.
+Look at "path_list_append_strategy()" in builtin-merge.c and think again.
 
-The breakage was reported by Lucas Nussbaum through
- http://bugs.debian.org/489108
+If you are adding the same amount of code _anyway_, why not write using
+more appropriate data structure for the job?
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- git-svn.perl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+The path_list has its uses.  It's wonderful when you have existing
+structures that you would need to keep in core anyway and being able to
+look them up via string keys.  But that does not mean it is (nor should be
+"improved" to be) a good match for other forms of (ab)uses.
 
-I ran into this on Debian/unstable.  With svn 1.5.0 the selftest fails
-without the patch, with svn 1.4.6 it succeeds with and without the
-patch.  I'm not familar with the svn interfaces, not sure whether this
-is a regression in subversion, or a bug in git-svn.
-
-
-diff --git a/git-svn.perl b/git-svn.perl
-index f789a6e..a366c89 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -643,6 +643,8 @@ sub canonicalize_path {
- 	$path =~ s#/[^/]+/\.\.##g;
- 	$path =~ s#/$##g;
- 	$path =~ s#^\./## if $dot_slash_added;
-+	$path =~ s#^/##;
-+	$path =~ s#^\.$##;
- 	return $path;
- }
- 
--- 
-1.5.6
+The way it was used by initializing with pointer to a static array
+location is clearly a misuse.  When using ->util field to store things
+other than pointers to preexisting structures, the use of the API becomes
+clunky and we discussed this issue about another patch.  That's all I was
+saying.
