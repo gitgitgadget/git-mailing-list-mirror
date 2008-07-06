@@ -1,77 +1,63 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] branch -v: Prevent garbage output on remote refs
-Date: Sun,  6 Jul 2008 05:24:39 -0400
-Message-ID: <1215336279-99480-1-git-send-email-benji@silverinsanity.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 06 11:26:48 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.6.2
+Date: Sun, 06 Jul 2008 02:30:20 -0700
+Message-ID: <7vprprgy1f.fsf@gitster.siamese.dyndns.org>
+References: <7vy74fo9t4.fsf@gitster.siamese.dyndns.org>
+ <m38wwffn3b.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 11:31:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFQW7-00060f-LH
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 11:26:48 +0200
+	id 1KFQag-0006wo-Gk
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 11:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbYGFJYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 05:24:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbYGFJYq
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 05:24:46 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:54594 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883AbYGFJYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 05:24:45 -0400
-Received: from localhost.localdomain (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	by silverinsanity.com (Postfix) with ESMTP id C287C1FFC021;
-	Sun,  6 Jul 2008 09:24:41 +0000 (UTC)
-X-Mailer: git-send-email 1.5.6.2.337.gf6537
+	id S1752157AbYGFJad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 05:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbYGFJad
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 05:30:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39261 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128AbYGFJac (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 05:30:32 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 975371DC9F;
+	Sun,  6 Jul 2008 05:30:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C57461DC9E; Sun,  6 Jul 2008 05:30:23 -0400 (EDT)
+In-Reply-To: <m38wwffn3b.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Sun, 06 Jul 2008 01:09:08 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2C631BBA-4B3E-11DD-BAD5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87509>
 
-The stat string was only initialized if the ref was local, but was
-always used in a printf.  This meant that whatever data was on the
-stack got printed.  In the case of "branch -av", this was probably the
-tracking information of the last local branch.  If the case of "branch
--rv", this was "@???" in my case.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The RPM binary packages for a few architectures are also provided as
+>> courtesy.  As the machine I cut them at kernel.org has been updated to FC9
+>> recently, their filenames now have .fc9. in them.
+>> 
+>>   RPMS/$arch/git-*-1.5.6.2-1.fc9.$arch.rpm	(RPM)
+>
+> This unfortunately includes also SRPMS (.src.rpm), even though the
+> source RPM from git repository is not distribution specific.  I think
+> that src.rpm should drop '.fc9.' from name
 
- After looking through the second get of changes I pulled, I tried this:
+It is whatever rpmbuild command does.  Not my problem.
 
- $ git branch -av
- * master                 3195299 [ahead 1] Make rebase save ORIG_HEAD if changing current branch
-   origin/HEAD            08b51f5 [ahead 1] Merge branch 'qq/maint'
-   origin/gitk-for-paulus 7d8856d [ahead 1] gitk: Update German translation.
-
- Huh. That doesn't look right...  Let's try just showing the remotes:
-
- $ git branch -rv
-   origin/HEAD            08b51f5 @???Merge branch 'qq/maint'
-   origin/gitk-for-paulus 7d8856d @???gitk: Update German translation.
-
- That's definately not good.
-
- I guess that other people either have a compiler that is more careful about
- clearing stack variables, or don't use "branch -v".
-
- builtin-branch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index e9423d1..470c59f 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -327,7 +327,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	if (verbose) {
- 		struct strbuf subject;
- 		const char *sub = " **** invalid ref ****";
--		char stat[128];
-+		char stat[128] = "";
- 
- 		strbuf_init(&subject, 0);
- 
--- 
-1.5.6.2.336.g3195
+Having said that, I vaguely recall some people from non Fedora nor RH
+distros based on RPM were talking about how their .spec file would be
+different from the one for FC.  Presumably the resulting SRPM would be
+also distro specific, wouldn't it?
