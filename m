@@ -1,95 +1,80 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] Add a test for "git stash branch"
-Date: Sun, 6 Jul 2008 20:15:42 +0530
-Message-ID: <20080706144542.GA8677@toroid.org>
-References: <20080702195947.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0807021447200.9925@racer> <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org> <20080702195401.GA17214@toroid.org> <7vprpw80bw.fsf@gitster.siamese.dyndns.org> <20080703022316.GA25433@toroid.org> <7v63rn61yj.fsf@gitster.siamese.dyndns.org> <20080703061605.GB3815@toroid.org> <20080706112333.GA6477@toroid.org> <alpine.LSU.1.00.0807061453540.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: Git, merging, and News/Relnotes files
+Date: Sun, 6 Jul 2008 18:53:42 +0400
+Message-ID: <37fcd2780807060753h26d9391crff5f9ba5531db654@mail.gmail.com>
+References: <g4n7j6$359$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 06 16:46:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 16:54:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFVVh-0000Uf-Ew
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 16:46:41 +0200
+	id 1KFVdQ-0003H1-PS
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 16:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756856AbYGFOpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 10:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756905AbYGFOpn
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 10:45:43 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:34432 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756900AbYGFOpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 10:45:43 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 979F1558320;
-	Sun,  6 Jul 2008 16:45:41 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 41C0B840001; Sun,  6 Jul 2008 20:15:43 +0530 (IST)
+	id S1756774AbYGFOxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 10:53:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756736AbYGFOxn
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 10:53:43 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:29553 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756019AbYGFOxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 10:53:42 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1780158wfd.4
+        for <git@vger.kernel.org>; Sun, 06 Jul 2008 07:53:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fXeW5tDXRb2gAYOQJdajg0biTtgOrgGWDUX/OO8KEy0=;
+        b=JU6rQH2AfyDuB1s0WEp0JPvbPTgR/NZ4PyuYftejTi/S3c/IOS/5taFN/xXjYfbdcC
+         wqQYgbGPp2s1rCoYEOxHGK0+pzptq/e5UHBHy3Q1qAE3wA78tsICVgHcAeVEBu2e/T7/
+         stKeq+at+fTFUcW5Evk7M9v2nRyMuR1EkYeIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=VW8j1Eq0phxNIyMo2jxCZKMn7mpPVB4zLNunVPL3Q80QnmrgipQV0me/dF9WI0vHIE
+         +i/Q4IgrsgWhzVOafcRb8UWECcru0LMtZ7BO/V9AgpiUkJOLbb2aXOdUxUbWO+WPtkGt
+         aYyIUWO/2Yulc7eGM+h/jmv/Z8gxqH3wj0sbk=
+Received: by 10.143.17.5 with SMTP id u5mr951507wfi.98.1215356022417;
+        Sun, 06 Jul 2008 07:53:42 -0700 (PDT)
+Received: by 10.143.32.3 with HTTP; Sun, 6 Jul 2008 07:53:42 -0700 (PDT)
+In-Reply-To: <g4n7j6$359$1@ger.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0807061453540.3486@wbgn129.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87534>
 
-Make sure that applying the stash to a new branch after a conflicting
-change doesn't result in an error when you try to commit.
+On Sat, Jul 5, 2008 at 11:24 AM, Edward Z. Yang
+<edwardzyang@thewritingpot.com> wrote:
+> As a policy on a project that I manage, almost every commit warrants a
+> change to our NEWS (changelog) file, which end-users can browse to get
+> an in-depth idea of the changes that have happened from the last
+> release. If it's an added feature, the changelog includes a description
+> of how to use it; if it's a fixed bug, it briefly describes what
+> happened. Internal changes may or may not get added, depending on the
+> visibility of the APIs affected.
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
+I believe it is better to put all this information directly to the commit
+message using some special tagging, so you can extract it automatically
+at the release time and generate the changelog file for users. You may
+edit the generated changelog and commit it directly before release.
 
-At 2008-07-06 14:54:44 +0200, Johannes.Schindelin@gmx.de wrote:
->
-> AFAICS the previous version is in 'next' already: 
-> 656b50345239293929ad8c639c5f1941c6b867ad
+Having one file changed on almost every commit is not a good idea, and
+not only because it will cause unnecessary conflicts but also it may
+considerable increase the size of the whole repository. By default, the
+delta compression has limit 50, which means that every 50 change of file
+will become its full copy. If the changelog file is changed very often
+and it is long, it may turn out that changelog alone takes as much space
+as the rest of the source tree.
 
-Oh, I see, thanks. I misunderstood the request. Here's a separate patch
-to just add the test.
-
-Sorry for the noise.
-
--- ams
-
- t/t3903-stash.sh |   24 ++++++++++++++++++++++++
- 1 files changed, 24 insertions(+), 0 deletions(-)
-
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 54d99ed..6d89218 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -117,4 +117,28 @@ test_expect_success 'stash pop' '
- 	test 0 = $(git stash list | wc -l)
- '
- 
-+cat > expect << EOF
-+diff --git a/file b/file
-+index 7601807..5716ca5 100644
-+--- a/file
-++++ b/file
-+@@ -1 +1 @@
-+-baz
-++bar
-+EOF
-+
-+test_expect_success 'stash apply' '
-+	echo foo > file &&
-+	git commit file -m first
-+	echo bar > file &&
-+	git stash &&
-+	echo baz > file &&
-+	git commit file -m second &&
-+	git stash branch stashbranch &&
-+	git commit file -m alternate\ second &&
-+	git diff master..stashbranch > output &&
-+	test_cmp output expect &&
-+	test 0 = $(git stash list | wc -l)
-+'
-+
- test_done
--- 
-1.5.6
+Dmitry
