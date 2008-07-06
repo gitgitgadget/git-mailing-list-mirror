@@ -1,109 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] better git-submodule status output
-Date: Sun, 6 Jul 2008 18:29:23 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807061821340.7342@eeepc-johanness>
-References: <20080701150119.GE5852@joyeux> <7vhcb3o7q3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0807061456100.3486@wbgn129.biozentrum.uni-wuerzburg.de> <20080706160758.GA23385@jhaampe.org>
+From: Sylvain Joyeux <sylvain.joyeux@dfki.de>
+Subject: Re: [PATCH] fix "git-submodule add a/b/c/repository"
+Date: Sun, 6 Jul 2008 18:11:01 +0200
+Message-ID: <20080706161101.GB23385@jhaampe.org>
+References: <20080701150025.GD5852@joyeux> <7vd4lro7ct.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Sylvain Joyeux <sylvain.joyeux@dfki.de>
-X-From: git-owner@vger.kernel.org Sun Jul 06 18:30:19 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 18:37:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFX7y-0004oC-ER
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 18:30:18 +0200
+	id 1KFXF4-0006iQ-7Z
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 18:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757317AbYGFQ3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 12:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757227AbYGFQ3U
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 12:29:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47056 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756804AbYGFQ3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 12:29:19 -0400
-Received: (qmail invoked by alias); 06 Jul 2008 16:29:17 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp052) with SMTP; 06 Jul 2008 18:29:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ji0hgICoj57ubvZpyUd8T8BzLPw82gkvgJRJef4
-	fiwZxd63gAUnwZ
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080706160758.GA23385@jhaampe.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1757227AbYGFQgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 12:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756804AbYGFQgf
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 12:36:35 -0400
+Received: from mx1.polytechnique.org ([129.104.30.34]:44102 "EHLO
+	mx1.polytechnique.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756686AbYGFQge (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 12:36:34 -0400
+X-Greylist: delayed 1709 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Jul 2008 12:36:34 EDT
+Received: from jhaampe.org (p5B3CCD36.dip.t-dialin.net [91.60.205.54])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by ssl.polytechnique.org (Postfix) with ESMTP id F38D433178;
+	Sun,  6 Jul 2008 18:11:02 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vd4lro7ct.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Sun Jul  6 18:11:03 2008 +0200 (CEST))
+X-Spam-Flag: No, tests=bogofilter, spamicity=0.013534, queueID=AEE903317A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87540>
 
-Hi,
-
-On Sun, 6 Jul 2008, Sylvain Joyeux wrote:
-
-> > > Which one is the commit message ;-)?
-> > 
-> > I think it is clear that Sylvain has not read 
-> > Documentation/SubmittingPatches yet.
+> > +test_expect_success 'adding an already-existing repository deep in the directory hierarchy' '
+> > +
+> > +        mkdir dir0 &&
+> > +        mkdir dir0/dir1 &&
+> > +        git clone init dir0/dir1/init &&
+> > +        git-submodule add dir0/dir1/init &&
+> > +        git-submodule status | grep "dir0/dir1/init"
+> > +'
 > 
-> Sylvain *has* read SubmittingPatches but has not understood every detail 
-> of this very long document.
-
-Oh.  But you should have already seen on this list that almost everybody 
-puts the oneline as subject, the commit message as first part of the mail 
-body, then a "--", optionally some personal stuff that should not go into
-the commit message, and then the diffstat and all the rest.
-
-IOW the mail body should look like the output of format-patch, optionally 
-some comments between "--" and the diffstat.
-
-Write a patch for SubmittingPatches.
- 
-> > If you could enlighten me on what is wrong ...
+> I am not sure if this is fixing a sane use case.  "submodule add" is
+> documented to take:
 > 
-> > > People who rely on working submodule support, do you have any 
-> > > feedback on this patch?
-> > 
-> > Not yet.  Will test/comment when the spurious "fetch" is fixed.
->
-> I thought that the only thing that 'fetch' does is update FETCH_HEAD.
+>     'git submodule' [--quiet] add [-b branch] [--] <repository> [<path>]
+> 
+> and you are adding at dir0/dir1/init a submodule that will interact with "init"
+> repository, so shouldn't that command line be something like:
+> 
+> 	git submodule add init dir0/dir1/init
 
-Uhoh.  'fetch' fetches.  Which means it does not only update something.
+ 	git submodule add dir0/dir1/init
 
-> My problem is that doing the fetch is the only way to know what is the 
-> status of the submodule w.r.t. the registered commit. If you have a 
-> better way to get that information, I'm all ears :P
+Is supposed to add the repository already checked-out in dir0/dir1/init as a
+submodule, at the same location.
 
-Are you sure that you understand the submodule thing enough to patch 
-git-submodule?
+ 	git submodule add init dir0/dir1/init
+    
+Would clone dir0/dir1/init at ./init and add ./init as a submodule. This is
+actually what the current git-submodule (wrongly) does.
 
-There are three states that are interesting:
-
-- the committed submodule state:
-
-  You get this in the superproject by "git ls-tree HEAD -- <dir>"
-
-- the local HEAD of the submodule:
-
-  (cd "<dir>" && git rev-parse --verify HEAD)
-
-- the HEAD of the default branch of the upstream repository of the 
-  submodule:
-
-  (cd "<dir>" && git ls-remote origin HEAD)
-
-  NOTE: this does not have to do _anything_ with the submodule: you can 
-  easily have two independent branches (see "html" and "next" in git.git), 
-  and the submodule is free to be pinned to whatever commit is available
-  in the upstream repository.
-
-  It is even possible that it is pinned to a commit that is only reachable 
-  from a tag, not from a branch.
-
-Hth,
-Dscho
+Sylvain
